@@ -13,3 +13,12 @@ export const feature_bunny_snout: FeatureChoiced = {
     return <FeatureDropdownInput buttons {...props} />;
   },
 };
+
+export const feature_mouse_snout: FeatureChoiced = {
+  name: 'Snout',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};

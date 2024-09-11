@@ -32,3 +32,12 @@
 
 /datum/bodypart_overlay/mutant/ears/bunny_ears/get_global_feature_list()
 	return SSaccessories.ears_list_bunny
+
+/// Mouse ears
+//
+/obj/item/organ/internal/ears/mouse
+	preference = "feature_mouse_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/mouse_ears
+
+/datum/bodypart_overlay/mutant/ears/mouse_ears/get_global_feature_list()
+	return SSaccessories.ears_list_mouse

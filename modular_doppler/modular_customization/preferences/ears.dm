@@ -3,12 +3,14 @@
 	var/list/ears_list_dog
 	var/list/ears_list_fox
 	var/list/ears_list_bunny
+	var/list/ears_list_mouse
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
 	ears_list_dog = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/dog)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
 	ears_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fox)["default_sprites"]
 	ears_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bunny)["default_sprites"]
+	ears_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/mouse)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -164,6 +166,36 @@
 
 /datum/preference/choiced/bunny_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_bunny[value]
+	return generate_ears_icon(chosen_ears)
+
+//	Mouse
+/datum/preference/choiced/mouse_ears
+	savefile_key = "feature_mouse_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/mouse_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_mouse)
+
+/datum/preference/choiced/mouse_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == MOUSE)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/mouse_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/mouse/none::name
+
+/datum/preference/choiced/mouse_ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == MOUSE)
+		target.dna.features["ears"] = value
+
+/datum/preference/choiced/mouse_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_mouse[value]
 	return generate_ears_icon(chosen_ears)
 
 

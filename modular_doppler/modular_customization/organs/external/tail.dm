@@ -77,3 +77,17 @@
 /datum/bodypart_overlay/mutant/tail/bunny/get_global_feature_list()
 	return SSaccessories.tails_list_bunny
 
+/// Mouse tail
+//
+/obj/item/organ/external/tail/mouse
+	preference = "feature_mouse_tail"
+	dna_block = null
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
+
+/datum/bodypart_overlay/mutant/tail/mouse
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/mouse/get_global_feature_list()
+	return SSaccessories.tails_list_mouse
+

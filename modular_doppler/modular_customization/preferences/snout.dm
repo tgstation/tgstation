@@ -1,10 +1,13 @@
 /// SSAccessories setup
 /datum/controller/subsystem/accessories
 	var/list/snouts_list_bunny
+	var/list/snouts_list_mouse
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
 	snouts_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts_more/bunny)["default_sprites"] // FLAKY DEFINE: this should be using DEFAULT_SPRITE_LIST
+	snouts_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts_more/mouse)["default_sprites"]
+
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -91,6 +94,36 @@
 
 /datum/preference/choiced/bunny_snout/icon_for(value)
 	var/datum/sprite_accessory/chosen_snout = SSaccessories.snouts_list_bunny[value]
+	return generate_snout_icon(chosen_snout)
+
+//	Mouse
+/datum/preference/choiced/mouse_snout
+	savefile_key = "feature_mouse_snout"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Snout"
+
+/datum/preference/choiced/mouse_snout/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.snouts_list_mouse)
+
+/datum/preference/choiced/mouse_snout/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/snout_variation)
+	if(chosen_variation == MOUSE)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/mouse_snout/create_default_value()
+	return /datum/sprite_accessory/snouts_more/mouse/none::name
+
+/datum/preference/choiced/mouse_snout/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.snout_type == MOUSE)
+		target.dna.features["snout"] = value
+
+/datum/preference/choiced/mouse_snout/icon_for(value)
+	var/datum/sprite_accessory/chosen_snout = SSaccessories.snouts_list_mouse[value]
 	return generate_snout_icon(chosen_snout)
 
 /// Proc to gen that icon

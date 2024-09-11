@@ -14,6 +14,6 @@
 	icon_state = "rabbit2"
 
 /datum/sprite_accessory/tails/bunny/bunny2
-	name = "Bunny (curly)"
+	name = "Bunny (Curly)"
 	icon_state = "bunny2"
 
