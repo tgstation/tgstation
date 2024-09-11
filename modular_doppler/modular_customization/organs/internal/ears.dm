@@ -68,6 +68,15 @@
 /datum/bodypart_overlay/mutant/ears/deer_ears/get_global_feature_list()
 	return SSaccessories.ears_list_deer
 
+/// Fish ears
+//
+/obj/item/organ/internal/ears/fish
+	preference = "feature_fish_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/fish_ears
+
+/datum/bodypart_overlay/mutant/ears/fish_ears/get_global_feature_list()
+	return SSaccessories.ears_list_fish
+
 /// Bug ears
 //
 /obj/item/organ/internal/ears/bug

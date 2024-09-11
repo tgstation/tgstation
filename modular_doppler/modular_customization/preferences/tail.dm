@@ -6,6 +6,7 @@
 	var/list/tails_list_mouse
 	var/list/tails_list_bird
 	var/list/tails_list_deer
+	var/list/tails_list_fish
 	var/list/tails_list_bug
 	var/list/tails_list_synth
 	var/list/tails_list_humanoid
@@ -18,6 +19,7 @@
 	tails_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mouse)["default_sprites"]
 	tails_list_bird = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bird)["default_sprites"]
 	tails_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/deer)["default_sprites"]
+	tails_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fish)["default_sprites"]
 	tails_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bug)["default_sprites"]
 	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/synthetic)["default_sprites"]
 	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
@@ -350,6 +352,36 @@
 
 /datum/preference/choiced/deer_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_deer[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Fish
+/datum/preference/choiced/fish_tail
+	savefile_key = "feature_fish_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/fish_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_fish)
+
+/datum/preference/choiced/fish_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == FISH)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/fish_tail/create_default_value()
+	return /datum/sprite_accessory/tails/fish/none::name
+
+/datum/preference/choiced/fish_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == FISH)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/fish_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fish[value]
 	return generate_tail_icon(chosen_tail)
 
 //	Bug

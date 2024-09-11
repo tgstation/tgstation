@@ -7,6 +7,7 @@
 	var/list/ears_list_mouse
 	var/list/ears_list_monkey
 	var/list/ears_list_deer
+	var/list/ears_list_fish
 	var/list/ears_list_bug
 	var/list/ears_list_humanoid
 	var/list/ears_list_synthetic
@@ -20,6 +21,7 @@
 	ears_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/mouse)["default_sprites"]
 	ears_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/monkey)["default_sprites"]
 	ears_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/deer)["default_sprites"]
+	ears_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fish)["default_sprites"]
 	ears_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bug)["default_sprites"]
 	ears_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/humanoid)["default_sprites"]
 	ears_list_synthetic = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/synthetic)["default_sprites"]
@@ -299,6 +301,37 @@
 /datum/preference/choiced/deer_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_deer[value]
 	return generate_ears_icon(chosen_ears)
+
+//	Fish
+/datum/preference/choiced/fish_ears
+	savefile_key = "feature_fish_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/fish_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_fish)
+
+/datum/preference/choiced/fish_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == FISH)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/fish_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/fish/none::name
+
+/datum/preference/choiced/fish_ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == FISH)
+		target.dna.features["ears"] = value
+
+/datum/preference/choiced/fish_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_fish[value]
+	return generate_ears_icon(chosen_ears)
+
 
 //	Bug
 /datum/preference/choiced/bug_ears

@@ -68,6 +68,15 @@ export const feature_deer_tail: FeatureChoiced = {
   },
 };
 
+export const feature_fish_tail: FeatureChoiced = {
+  name: 'Tail',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
 export const feature_synth_tail: FeatureChoiced = {
   name: 'Tail',
   component: (

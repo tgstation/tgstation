@@ -130,6 +130,19 @@
 /datum/bodypart_overlay/mutant/tail/deer/get_global_feature_list()
 	return SSaccessories.tails_list_deer
 
+/// Fish tail
+//
+/obj/item/organ/external/tail/fish
+	preference = "feature_fish_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
+
+/datum/bodypart_overlay/mutant/tail/fish
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
+	return SSaccessories.tails_list_fish
+
 /// Synth tail
 //
 /obj/item/organ/external/tail/synthetic
