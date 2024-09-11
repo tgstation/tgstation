@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Ctrl+click on equipped uniforms enables suit sensors as expected"
