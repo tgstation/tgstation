@@ -8,4 +8,3 @@
 /datum/sprite_accessory/ears_more/mouse/mouse2
 	name = "Mouse"
 	icon_state = "mouse2"
-
