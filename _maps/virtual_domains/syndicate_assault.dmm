@@ -1103,7 +1103,7 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "SX" = (
-/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/vending/medical/syndicate/cybersun,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "TB" = (

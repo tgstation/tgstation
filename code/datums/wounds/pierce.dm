@@ -42,14 +42,26 @@
 		if(1 to 6)
 			victim.bleed(blood_bled, TRUE)
 		if(7 to 13)
-			victim.visible_message("<span class='smalldanger'>Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone].</span>", span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
+				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			victim.bleed(blood_bled, TRUE)
 		if(14 to 19)
-			victim.visible_message("<span class='smalldanger'>A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!</span>", span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
+				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 			victim.bleed(blood_bled)
 		if(20 to INFINITY)
-			victim.visible_message(span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"), span_danger("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
+				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			victim.bleed(blood_bled)
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))

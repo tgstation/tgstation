@@ -27,6 +27,8 @@
 	var/elevation = 8
 	/// If this bed can be deconstructed using a wrench
 	var/can_deconstruct = TRUE
+	/// Directions in which the bed has its headrest on the left side.
+	var/left_headrest_dirs = NORTHEAST
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
@@ -58,7 +60,7 @@
 	update_buckle_vars(newdir)
 
 /obj/structure/bed/proc/update_buckle_vars(newdir)
-	buckle_lying = newdir & NORTHEAST ? 270 : 90
+	buckle_lying = newdir & left_headrest_dirs ? 270 : 90
 
 /obj/structure/bed/atom_deconstruct(disassembled = TRUE)
 	if(build_stack_type)
@@ -83,6 +85,8 @@
 	icon_state = "med_down"
 	base_icon_state = "med"
 	anchored = FALSE
+	left_headrest_dirs = SOUTHWEST
+	buckle_lying = 270
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1

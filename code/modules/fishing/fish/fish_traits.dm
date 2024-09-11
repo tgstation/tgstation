@@ -132,9 +132,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
-	// These fish are easier to catch with shiny lure
+	// These fish are easier to catch with shiny hook
 	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
 		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
+
+/datum/fish_trait/shiny_lover/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	. = ..()
+	// These fish are harder to find without a shiny hook
+	if(rod.hook && rod.hook.fishing_hook_traits & FISHING_HOOK_SHINY)
+		.[MULTIPLICATIVE_FISHING_MOD] = 0.5
 
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"
@@ -325,7 +331,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /**
  * Useful for those species with the parthenogenesis trait if you don't want them to mate with each other,
- * or for similar shenanigeans, I don't know.
+ * or for similar shenanigans, I don't know.
  * Otherwise you could just set the stable_population to 1.
  */
 /datum/fish_trait/no_mating
@@ -415,7 +421,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic
 	name = "Toxic"
-	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not reccomended."
+	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 2.5)
 

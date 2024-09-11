@@ -36584,6 +36584,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mzv" = (
+/obj/docking_port/stationary/syndicate/northeast,
+/turf/open/space/basic,
+/area/space)
 "mzx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -72485,7 +72489,7 @@
 /turf/closed/wall,
 /area/station/medical/surgery/theatre)
 "yfF" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
@@ -118682,7 +118686,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+mzv
 dDB
 dDB
 dDB
