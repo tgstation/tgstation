@@ -14,6 +14,16 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/snout_color::savefile_key
 	return data
 
+/datum/preference/choiced/cat_snout/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/snout_color::savefile_key
+	return data
+
+/datum/preference/choiced/bird_snout/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/snout_color::savefile_key
+	return data
+
 
 /// Snoot colors!
 /datum/preference/tri_color/snout_color

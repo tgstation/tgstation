@@ -23,6 +23,17 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
 	icon_state = /datum/sprite_accessory/snouts/none::icon_state
 
+/datum/sprite_accessory/snouts_more/cat/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
+	icon_state = /datum/sprite_accessory/snouts/none::icon_state
+
+/datum/sprite_accessory/snouts_more/bird/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
+	icon_state = /datum/sprite_accessory/snouts/none::icon_state
+
+
 /// Ears
 /datum/sprite_accessory/ears/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
@@ -86,6 +97,11 @@
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/mouse/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/bird/none
 	icon = /datum/sprite_accessory/tails/none::icon
 	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
 	icon_state = /datum/sprite_accessory/tails/none::icon_state

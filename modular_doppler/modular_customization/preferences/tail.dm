@@ -4,6 +4,7 @@
 	var/list/tails_list_fox
 	var/list/tails_list_bunny
 	var/list/tails_list_mouse
+	var/list/tails_list_bird
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -11,6 +12,7 @@
 	tails_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fox)["default_sprites"]
 	tails_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bunny)["default_sprites"]
 	tails_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mouse)["default_sprites"]
+	tails_list_bird = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bird)["default_sprites"]
 
 
 /datum/dna
@@ -281,6 +283,36 @@
 
 /datum/preference/choiced/mouse_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_mouse[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Bird
+/datum/preference/choiced/bird_tail
+	savefile_key = "feature_bird_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/bird_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_bird)
+
+/datum/preference/choiced/bird_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == BIRD)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/bird_tail/create_default_value()
+	return /datum/sprite_accessory/tails/bird/none::name
+
+/datum/preference/choiced/bird_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == BIRD)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/bird_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bird[value]
 	return generate_tail_icon(chosen_tail)
 
 

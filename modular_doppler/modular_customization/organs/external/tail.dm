@@ -91,3 +91,15 @@
 /datum/bodypart_overlay/mutant/tail/mouse/get_global_feature_list()
 	return SSaccessories.tails_list_mouse
 
+/// Bird tail
+//
+/obj/item/organ/external/tail/bird
+	preference = "feature_bird_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bird
+
+/datum/bodypart_overlay/mutant/tail/bird
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/bird/get_global_feature_list()
+	return SSaccessories.tails_list_bird
