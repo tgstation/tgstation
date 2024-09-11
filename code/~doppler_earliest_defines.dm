@@ -7,33 +7,6 @@
 /// Hi!  This file is here to work around some order-of-operations issues consistent humans & a couple other things have.
 /// If our overrides aren't loaded in early enough default TG stuff will end up in the critical [1] slot and break things.
 
-/// Snouts
-/datum/sprite_accessory/snouts/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
-	icon_state = "none"
-
-/datum/sprite_accessory/snouts_more/bunny/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
-	icon_state = /datum/sprite_accessory/snouts/none::icon_state
-
-/datum/sprite_accessory/snouts_more/mouse/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
-	icon_state = /datum/sprite_accessory/snouts/none::icon_state
-
-/datum/sprite_accessory/snouts_more/cat/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
-	icon_state = /datum/sprite_accessory/snouts/none::icon_state
-
-/datum/sprite_accessory/snouts_more/bird/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
-	icon_state = /datum/sprite_accessory/snouts/none::icon_state
-
-
 /// Ears
 /datum/sprite_accessory/ears/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
@@ -107,6 +80,11 @@
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /// Lizard exclusive 🦎
+/datum/sprite_accessory/snouts/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOSNOUT
+	icon_state = "none"
+
 /datum/sprite_accessory/lizard_markings/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = "No Markings"
