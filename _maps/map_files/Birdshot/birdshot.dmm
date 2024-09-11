@@ -56607,11 +56607,6 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"tqI" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter/room)
 "tqV" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 5
@@ -90959,7 +90954,7 @@ awH
 gAV
 qkq
 wRy
-tqI
+urz
 vDS
 ugt
 lVv
