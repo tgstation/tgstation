@@ -103,3 +103,56 @@
 
 /datum/bodypart_overlay/mutant/tail/bird/get_global_feature_list()
 	return SSaccessories.tails_list_bird
+
+/// Bug tail
+//
+/obj/item/organ/external/tail/bug
+	preference = "feature_bug_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/bug
+
+/datum/bodypart_overlay/mutant/tail/bug
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/bug/get_global_feature_list()
+	return SSaccessories.tails_list_bug
+
+/// Deer tail
+//
+/obj/item/organ/external/tail/deer
+	preference = "feature_deer_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/deer
+
+/datum/bodypart_overlay/mutant/tail/deer
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/deer/get_global_feature_list()
+	return SSaccessories.tails_list_deer
+
+/// Synth tail
+//
+/obj/item/organ/external/tail/synthetic
+	preference = "feature_synth_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/synthetic
+
+/datum/bodypart_overlay/mutant/tail/synthetic
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/synthetic/get_global_feature_list()
+	return SSaccessories.tails_list_synth
+
+
+/// Humanoid tail
+//
+/obj/item/organ/external/tail/humanoid
+	preference = "feature_humanoid_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/humanoid
+
+/datum/bodypart_overlay/mutant/tail/humanoid
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/humanoid/get_global_feature_list()
+	return SSaccessories.tails_list_humanoid

@@ -24,6 +24,27 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
 	return data
 
+/datum/preference/choiced/deer_ears/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
+	return data
+
+/datum/preference/choiced/bug_ears/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
+	return data
+
+/datum/preference/choiced/humanoid_ears/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
+	return data
+
+/datum/preference/choiced/synthetic_ears/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/ears_color::savefile_key
+	return data
+
+
 /// Ears colors!
 /datum/preference/tri_color/ears_color
 	priority = PREFERENCE_PRIORITY_BODY_TYPE

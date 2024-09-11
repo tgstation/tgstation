@@ -40,3 +40,39 @@ export const feature_mouse_ears: FeatureChoiced = {
     return <FeatureDropdownInput buttons {...props} />;
   },
 };
+
+export const feature_deer_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
+export const feature_bug_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
+export const feature_humanoid_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
+export const feature_synth_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};

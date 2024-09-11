@@ -5,6 +5,10 @@
 	var/list/tails_list_bunny
 	var/list/tails_list_mouse
 	var/list/tails_list_bird
+	var/list/tails_list_deer
+	var/list/tails_list_bug
+	var/list/tails_list_synth
+	var/list/tails_list_humanoid
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -13,7 +17,10 @@
 	tails_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bunny)["default_sprites"]
 	tails_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mouse)["default_sprites"]
 	tails_list_bird = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bird)["default_sprites"]
-
+	tails_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/deer)["default_sprites"]
+	tails_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bug)["default_sprites"]
+	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/synthetic)["default_sprites"]
+	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -313,6 +320,126 @@
 
 /datum/preference/choiced/bird_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bird[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Deer
+/datum/preference/choiced/deer_tail
+	savefile_key = "feature_deer_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/deer_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_deer)
+
+/datum/preference/choiced/deer_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == DEER)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/deer_tail/create_default_value()
+	return /datum/sprite_accessory/tails/deer/none::name
+
+/datum/preference/choiced/deer_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == DEER)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/deer_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_deer[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Bug
+/datum/preference/choiced/bug_tail
+	savefile_key = "feature_bug_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/bug_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_bug)
+
+/datum/preference/choiced/bug_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == BUG)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/bug_tail/create_default_value()
+	return /datum/sprite_accessory/tails/bug/none::name
+
+/datum/preference/choiced/bug_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == BUG)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/bug_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bug[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Synth
+/datum/preference/choiced/synth_tail
+	savefile_key = "feature_synth_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/synth_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_synth)
+
+/datum/preference/choiced/synth_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == SYNTHETIC)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/synth_tail/create_default_value()
+	return /datum/sprite_accessory/tails/synthetic/none::name
+
+/datum/preference/choiced/synth_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == SYNTHETIC)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/synth_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_synth[value]
+	return generate_tail_icon(chosen_tail)
+
+//	Humanoid
+/datum/preference/choiced/humanoid_tail
+	savefile_key = "feature_humanoid_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/humanoid_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_humanoid)
+
+/datum/preference/choiced/humanoid_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == HUMANOID)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/humanoid_tail/create_default_value()
+	return /datum/sprite_accessory/tails/humanoid/none::name
+
+/datum/preference/choiced/humanoid_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == HUMANOID)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/humanoid_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_humanoid[value]
 	return generate_tail_icon(chosen_tail)
 
 

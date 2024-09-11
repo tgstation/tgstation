@@ -4,12 +4,16 @@
 #define CAT "cat"
 #define DOG "dog"
 #define FOX "fox"
-#define LIZARD "lizard"
+#define LIZARD "lizard" // ears
 #define BUNNY "bunny"
-#define BIRD "bird"
+#define BIRD "bird" // ears
 #define MOUSE "mouse"
-#define FISH "fish"
-#define MONKEY "monkey"
+#define FISH "fish" // ears and tail
+#define MONKEY "monkey" // ears
+#define DEER "deer"
+#define BUG "bug" // ears and tail
+#define SYNTHETIC "synthetic"
+#define HUMANOID "humanoid"
 
 ///	This list gets read by the dropdown pref when a player chooses what type of sprite accessory to access
 GLOBAL_LIST_INIT(mutant_variations, list(
@@ -22,4 +26,8 @@ GLOBAL_LIST_INIT(mutant_variations, list(
 	MOUSE,
 	FISH,
 	MONKEY,
+	DEER,
+	BUG,
+	SYNTHETIC,
+	HUMANOID,
 ))

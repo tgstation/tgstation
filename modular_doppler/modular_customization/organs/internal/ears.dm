@@ -41,3 +41,41 @@
 
 /datum/bodypart_overlay/mutant/ears/mouse_ears/get_global_feature_list()
 	return SSaccessories.ears_list_mouse
+
+/// Deer ears
+//
+/obj/item/organ/internal/ears/deer
+	preference = "feature_deer_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/deer_ears
+
+/datum/bodypart_overlay/mutant/ears/deer_ears/get_global_feature_list()
+	return SSaccessories.ears_list_deer
+
+/// Bug ears
+//
+/obj/item/organ/internal/ears/bug
+	preference = "feature_bug_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/bug_ears
+
+/datum/bodypart_overlay/mutant/ears/bug_ears/get_global_feature_list()
+	return SSaccessories.ears_list_bug
+
+/// Humanoid ears
+//
+/obj/item/organ/internal/ears/humanoid
+	preference = "feature_humanoid_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/humanoid_ears
+
+/datum/bodypart_overlay/mutant/ears/humanoid_ears/get_global_feature_list()
+	return SSaccessories.ears_list_humanoid
+
+/// Synthetic ears
+//
+/obj/item/organ/internal/ears/synthetic
+	preference = "feature_synth_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/synthetic_ears
+
+/datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()
+	return SSaccessories.ears_list_synthetic
+
+

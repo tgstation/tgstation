@@ -33,6 +33,26 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
 
+/datum/sprite_accessory/ears_more/deer/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
+/datum/sprite_accessory/ears_more/bug/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
+/datum/sprite_accessory/ears_more/humanoid/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
+/datum/sprite_accessory/ears_more/synthetic/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
 /// Tail time
 /datum/sprite_accessory/tails/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
@@ -75,6 +95,26 @@
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/bird/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/deer/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/bug/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/synthetic/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/humanoid/none
 	icon = /datum/sprite_accessory/tails/none::icon
 	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
