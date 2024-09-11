@@ -54,6 +54,13 @@
 				"-trusted"
 			],
 			"preLaunchTask": "Build All (low memory mode)"
+		},
+		{
+			"type": "opendream",
+			"request": "launch",
+			"name": "Launch OpenDream (requires extension, 64 bit rustg, and an SS14 account)",
+			"preLaunchTask": "OpenDream: compile ${command:CurrentDME}",
+			"json_path": "${workspaceFolder}/${command:CurrentJson}"
 		}
 	]
 }
