@@ -1,4 +1,4 @@
-//Nodes that are found inside Bepis Disks. Announced over the common channel since they are very, very easy to miss niche stuff.
+//Nodes that are found inside Bepis Disks.
 
 /datum/techweb_node/light_apps
 	id = TECHWEB_NODE_LIGHT_APPS
@@ -38,7 +38,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-	announce_channels = list(RADIO_CHANNEL_COMMON)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/aus_security
 	id = TECHWEB_NODE_AUS_SECURITY
@@ -51,7 +51,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-	announce_channels = list(RADIO_CHANNEL_COMMON)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/interrogation
 	id = TECHWEB_NODE_INTERROGATION
@@ -64,7 +64,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-	announce_channels = list(RADIO_CHANNEL_COMMON)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/sticky_advanced
 	id = TECHWEB_NODE_STICKY_ADVANCED
@@ -91,7 +91,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-	announce_channels = list(RADIO_CHANNEL_COMMON)
+	announce_channels = list(RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mod_experimental
 	id = TECHWEB_NODE_MOD_EXPERIMENTAL
@@ -118,4 +118,4 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-	announce_channels = list(RADIO_CHANNEL_COMMON)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
