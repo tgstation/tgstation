@@ -508,10 +508,6 @@
 	required_slots = list(ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_OCLOTHING)
 	/// List of traits added when the suit is activated
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
-	/// The "tongue" that filters our voice for us
-	var/obj/item/organ/internal/tongue/robot/robotic_voice
-	/// reference to our tongue so we can replace it when the mod is removed
-	var/obj/item/organ/internal/tongue/old_tongue
 
 /obj/item/mod/module/infiltrator/on_install()
 	mod.item_flags |= EXAMINE_SKIP
@@ -521,25 +517,30 @@
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
+	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
+	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	user_tongue.temp_say_mod = "states"
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
-	old_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
-	old_tongue.Remove(mod.wearer, special = TRUE)
-	old_tongue.forceMove(src)
-	robotic_voice = new()
-	robotic_voice.Insert(mod.wearer)
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
-	qdel(robotic_voice)
-	old_tongue.Insert(mod.wearer)
-	old_tongue = null
+	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
+	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
 	if(deleting)
 		return
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(head_cover))
 		head_cover.flash_protect = initial(head_cover.flash_protect)
+
+/obj/item/mod/module/infiltrator/proc/on_speech_modification(datum/source)
+	SIGNAL_HANDLER
+	if(!mod.active)
+		return
+	//Prevent speech modifications if the suit is active
+	return PREVENT_MODIFY_SPEECH
 
 ///Medbeam - Medbeam but built into a modsuit
 /obj/item/mod/module/medbeam
