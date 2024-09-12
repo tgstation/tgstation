@@ -3,7 +3,7 @@
 /**
  * Uplinks
  *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in its contents). Then add 'uses.'
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
@@ -227,9 +227,12 @@
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
 		if(item.stock_key in stock_list)
 			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
@@ -288,6 +291,13 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+		if("buy_raw_tc")
+			if (uplink_handler.telecrystals <= 0)
+				return
+			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			if(!desired_amount || desired_amount < 1)
+				return
+			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE

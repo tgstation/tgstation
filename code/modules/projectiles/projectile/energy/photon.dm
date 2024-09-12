@@ -37,7 +37,7 @@
 		do_sparks(rand(1, 4), FALSE, src)
 
 /**
- * When traveling to a new turf, throws a probability to generate a hotspot across it's path.
+ * When traveling to a new turf, throws a probability to generate a hotspot across its path.
  */
 /obj/projectile/energy/photon/proc/scorch_earth(turf/open/floor/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

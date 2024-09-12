@@ -13,13 +13,16 @@
 /datum/element/lifesteal/Attach(datum/target, flat_heal = 10)
 	. = ..()
 	src.flat_heal = flat_heal
-	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
+	target.AddElementTrait(TRAIT_ON_HIT_EFFECT, REF(src), /datum/element/on_hit_effect)
+	RegisterSignal(target, COMSIG_ON_HIT_EFFECT, PROC_REF(do_lifesteal))
 
-/datum/element/lifesteal/Detach(datum/target)
-	qdel(target.GetComponent(/datum/component/on_hit_effect))
+/datum/element/lifesteal/Detach(datum/source)
+	UnregisterSignal(source, COMSIG_ON_HIT_EFFECT)
+	REMOVE_TRAIT(source, TRAIT_ON_HIT_EFFECT, REF(src))
 	return ..()
 
-/datum/element/lifesteal/proc/do_lifesteal(datum/element_owner, atom/heal_target, atom/damage_target, hit_zone)
+/datum/element/lifesteal/proc/do_lifesteal(datum/source, atom/heal_target, atom/damage_target, hit_zone, throw_hit)
+	SIGNAL_HANDLER
 	if(isliving(heal_target) && isliving(damage_target))
 		var/mob/living/healing = heal_target
 		var/mob/living/damaging = damage_target

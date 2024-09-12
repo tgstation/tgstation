@@ -703,7 +703,7 @@
 		y_rate = 1
 
 /**
- * Wrapper for walk_towards, not reccomended, as it's movement ends up being a bit stilted
+ * Wrapper for walk_towards, not reccomended, as its movement ends up being a bit stilted
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
  *

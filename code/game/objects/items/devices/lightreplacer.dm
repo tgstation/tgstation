@@ -133,7 +133,7 @@
 			if(src.uses >= max_uses)
 				break
 
-			//consume the item only if it's an light tube,bulb or shard
+			//consume the item only if it's a light tube, bulb or shard
 			loaded = FALSE
 			if(istype(item_to_check, /obj/item/light))
 				var/obj/item/light/found_light = item_to_check
@@ -208,7 +208,7 @@
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 		on_a_light = TRUE
-	if(!on_a_light) //So we dont give a ballon alert when we just used replace_light
+	if(!on_a_light) //So we don't give a balloon alert when we just used replace_light
 		user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
 
 /**
@@ -324,6 +324,12 @@
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/lightreplacer/cyborg/advanced
+	name = "high capacity light replacer"
+	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_high"
+	max_uses = 50
 
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"

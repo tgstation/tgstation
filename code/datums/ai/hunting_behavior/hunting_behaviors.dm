@@ -139,6 +139,10 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
 	always_reset_target = TRUE
 
+/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode
+	always_reset_target = TRUE
+	switch_combat_mode = TRUE
+
 /datum/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE
 	///the ability we will use

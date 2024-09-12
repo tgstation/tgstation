@@ -34,7 +34,7 @@
 	var/merge_type = null
 	/// The weight class the stack has at amount > 2/3rds max_amount
 	var/full_w_class = WEIGHT_CLASS_NORMAL
-	/// Determines whether the item should update it's sprites based on amount.
+	/// Determines whether the item should update its sprites based on amount.
 	var/novariants = TRUE
 	/// List that tells you how much is in a single unit.
 	var/list/mats_per_unit
@@ -177,7 +177,7 @@
 	/**
 	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
 	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
-	 * this stack if grinding was successfull
+	 * this stack if grinding was successful
 	 */
 	use(available_amount, check = FALSE)
 	return available_amount == current_amount
@@ -302,7 +302,7 @@
 	data["recipes"] = recursively_build_recipes(recipes)
 	return data
 
-/obj/item/stack/ui_act(action, params)
+/obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -369,7 +369,7 @@
 /obj/item/stack/proc/radial_check(mob/builder)
 	if(QDELETED(builder) || QDELETED(src))
 		return FALSE
-	if(builder.incapacitated())
+	if(builder.incapacitated)
 		return FALSE
 	if(!builder.is_holding(src))
 		return FALSE

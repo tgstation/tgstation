@@ -138,6 +138,7 @@
 		"reagentgrinder",
 		"microwave_engineering",
 		"smartfridge",
+		"dehydrator",
 		"sheetifier",
 		"fat_sucker",
 		"dish_drive",
@@ -164,9 +165,12 @@
 	prereq_ids = list(TECHWEB_NODE_FISHING_EQUIP)
 	design_ids = list(
 		"fishing_rod_tech",
+		"fishing_gloves",
+		"mod_fishing",
 		"stabilized_hook",
 		"auto_reel",
 		"fish_analyzer",
+		"bluespace_fish_case",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)

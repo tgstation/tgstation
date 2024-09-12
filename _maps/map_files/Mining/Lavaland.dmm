@@ -3266,11 +3266,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
-"qB" = (
-/obj/machinery/smartfridge/drying_rack,
-/obj/item/food/cheese/firm_cheese,
-/turf/open/floor/wood/parquet,
-/area/mine/lobby/raptor)
 "qH" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningbathroomprivate";
@@ -3894,13 +3889,6 @@
 	dir = 4
 	},
 /area/mine/lounge)
-"uT" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "uU" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
@@ -5918,6 +5906,13 @@
 	},
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/mine/cafeteria)
+"HW" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer2{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/mine/maintenance/service)
 "HX" = (
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -7410,6 +7405,14 @@
 "PT" = (
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/mechbay)
+"PU" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/crime_reference/directional/west,
+/turf/open/floor/iron/smooth,
+/area/mine/laborcamp)
 "PV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8095,14 +8098,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Ub" = (
-/obj/item/kirbyplants/random,
-/obj/machinery/light/small/directional/west,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/crime_reference/directional/west,
-/turf/open/floor/iron/smooth,
-/area/mine/laborcamp)
 "Uc" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -8619,6 +8614,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/south)
+"WW" = (
+/obj/machinery/smartfridge/drying/rack,
+/obj/item/food/cheese/firm_cheese,
+/turf/open/floor/wood/parquet,
+/area/mine/lobby/raptor)
 "WX" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Storage"
@@ -26350,7 +26350,7 @@ rX
 Zt
 rX
 Zt
-Ub
+PU
 Tu
 MW
 HS
@@ -41494,7 +41494,7 @@ pU
 pU
 pU
 uj
-uT
+HW
 pU
 pU
 pU
@@ -52054,7 +52054,7 @@ aj
 CV
 CV
 Km
-qB
+WW
 eL
 Ah
 VI

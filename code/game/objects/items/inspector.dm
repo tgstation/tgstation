@@ -92,7 +92,7 @@
 	if(!cell_cover_open)
 		. += "Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool."
 		return
-	. += "It's cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
+	. += "Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool."
 	if(!cell)
 		. += "The slot for a cell is empty."
 	else

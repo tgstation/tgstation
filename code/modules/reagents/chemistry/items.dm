@@ -109,7 +109,7 @@
 		to_chat(user, span_notice("You switch the chemical analyzer to provide a detailed description of each reagent."))
 		scanmode = DETAILED_CHEM_OUTPUT
 	else
-		to_chat(user, span_notice("You switch the chemical analyzer to not include reagent descriptions in it's report."))
+		to_chat(user, span_notice("You switch the chemical analyzer to not include reagent descriptions in its report."))
 		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/ph_meter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

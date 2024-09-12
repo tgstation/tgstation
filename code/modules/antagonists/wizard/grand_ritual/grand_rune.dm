@@ -19,7 +19,7 @@
 	pixel_y = 16
 	pixel_z = -48
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	/// How many prior grand rituals have been completed?
@@ -147,7 +147,7 @@
 			haunt_color = spell_colour, \
 			haunt_duration = 10 SECONDS, \
 			aggro_radius = 0, \
-			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies..."), \
+			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldly energies..."), \
 		)
 		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
 	cheese_sacrificed += length(cheese_to_haunt)
@@ -253,7 +253,7 @@
 	while(created < to_create && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
-		// We don't want them close to each other - at least 1 tile of seperation
+		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
 		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things

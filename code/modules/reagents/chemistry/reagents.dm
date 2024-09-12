@@ -24,7 +24,7 @@
 	var/ph = 7
 	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
-	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
+	///the purity of the reagent on creation (i.e. when it's added to a mob and its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
 	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
 	var/mass
@@ -270,7 +270,7 @@ Primarily used in reagents/reaction_agents
 	return creation_purity / normalise_num_to
 
 /**
- * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to its inverse one.
  *
  * Arguments
  * * purity - Overrides the purity used for determining the inverse purity.

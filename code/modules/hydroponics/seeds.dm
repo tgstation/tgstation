@@ -40,7 +40,7 @@
 	var/potency = 10
 	/// Amount of growth sprites the plant has.
 	var/growthstages = 6
-	// Chance that a plant will mutate in each stage of it's life.
+	// Chance that a plant will mutate in each stage of its life.
 	var/instability = 5
 	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0
@@ -616,3 +616,27 @@
 
 /obj/item/grown/get_plant_seed()
 	return seed
+
+/obj/item/seeds/proc/perform_reagent_pollination(obj/item/seeds/donor)
+	var/list/datum/plant_gene/reagent/valid_reagents = list()
+	for(var/datum/plant_gene/reagent/donor_reagent in donor.genes)
+		var/repeated = FALSE
+		for(var/datum/plant_gene/reagent/receptor_reagent in genes)
+			if(donor_reagent.reagent_id == receptor_reagent.reagent_id)
+				if(receptor_reagent.rate < donor_reagent.rate)
+					receptor_reagent.rate = donor_reagent.rate
+					// sucessful pollination/upgrade, we stop here.
+					reagents_from_genes()
+					return
+				else
+					repeated = TRUE
+					break
+
+		if(!repeated)
+			valid_reagents += donor_reagent
+
+	if(length(valid_reagents))
+		// pick a valid reagent that our receptor seed don't have and add the gene to it
+		var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
+		genes += selected_reagent.Copy()
+		reagents_from_genes()

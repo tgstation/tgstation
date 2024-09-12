@@ -5,6 +5,8 @@
 	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
@@ -191,6 +193,8 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	icon_state = "sheet-leather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \
@@ -241,6 +245,8 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon_state = "sinew"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/sinew
+	drop_sound = 'sound/effects/meatslap.ogg'
+	pickup_sound = 'sound/effects/meatslap.ogg'
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -342,6 +348,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
@@ -355,6 +363,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-wetleather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
+	pickup_sound = 'sound/items/skin_pick_up.ogg'
+	drop_sound = 'sound/items/skin_drop.ogg'
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
 	/// Kelvin to start drying

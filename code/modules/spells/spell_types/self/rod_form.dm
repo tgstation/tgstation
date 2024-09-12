@@ -122,7 +122,7 @@
 	return TRUE
 
 /**
- * Called when the wizard rod reaches it's maximum distance
+ * Called when the wizard rod reaches its maximum distance
  * or is otherwise stopped by something.
  * Dumps out the wizard, and deletes.
  */

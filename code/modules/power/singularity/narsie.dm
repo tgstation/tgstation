@@ -306,7 +306,7 @@
 
 /**
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
- * called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion
+ * called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches its conclusion
  */
 /proc/cult_ending_helper(ending_type = CULT_VICTORY_NUKE)
 	switch(ending_type)

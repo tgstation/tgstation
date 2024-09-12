@@ -399,6 +399,42 @@
 	result = /obj/item/food/donkpocket/gondola
 	category = CAT_PASTRY
 
+/datum/crafting_recipe/food/donkpocket/deluxe
+	time = 15
+	name = "Deluxe Donk-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/onion_slice/red = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe/nocarb
+	time = 15
+	name = "Deluxe Meat-pocket"
+	reqs = list(
+		/obj/item/organ/internal/heart = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/slab = 1,
+		/obj/item/food/grown/herbs = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe/nocarb
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe/vegan
+	time = 15
+	name = "Deluxe Donk-roll"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/tofu = 2
+	)
+	result = /obj/item/food/donkpocket/deluxe/vegan
+	category = CAT_PASTRY
+
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin
@@ -566,6 +602,16 @@
 		/obj/item/food/grown/bluecherries = 1
 	)
 	result = /obj/item/food/cherrycupcake/blue
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/jupitercupcake
+	name = "Jupiter-cup-cake"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/grown/mushroom/jupitercup = 1,
+		/datum/reagent/consumable/caramel = 3,
+	)
+	result = /obj/item/food/jupitercupcake
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/honeybun

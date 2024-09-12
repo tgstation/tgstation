@@ -87,10 +87,10 @@
 	PRIVATE_PROC(TRUE)
 
 	if(QDELETED(holder))
-		stack_trace("an equilibrium is missing it's holder.")
+		stack_trace("an equilibrium is missing its holder.")
 		return FALSE
 	if(QDELETED(reaction))
-		stack_trace("an equilibrium is missing it's reaction.")
+		stack_trace("an equilibrium is missing its reaction.")
 		return FALSE
 	if(!length(reaction.required_reagents))
 		stack_trace("an equilibrium is missing required reagents.")

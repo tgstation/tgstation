@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/refill_dug()
 	. = ..()
 	GLOB.dug_up_basalt -= src
-	set_basalt_light(src)
+	set_basalt_light()
 
 /turf/open/misc/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
@@ -162,14 +162,14 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
-	set_basalt_light(src)
+	set_basalt_light()
 
-/proc/set_basalt_light(turf/open/floor/B)
-	switch(B.icon_state)
+/turf/open/misc/asteroid/basalt/proc/set_basalt_light()
+	switch(icon_state)
 		if("basalt1", "basalt2", "basalt3")
-			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
+			set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //more light
 		if("basalt5", "basalt9")
-			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
+			set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA) //barely anything!
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 

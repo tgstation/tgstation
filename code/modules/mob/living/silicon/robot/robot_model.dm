@@ -233,6 +233,7 @@
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
 		return
+	cyborg.drop_all_held_items()
 	cyborg.model = new_model
 	cyborg.update_module_innate()
 	new_model.rebuild_modules()
@@ -326,7 +327,7 @@
 /obj/item/robot_model/proc/check_menu(mob/living/silicon/robot/user, obj/item/robot_model/old_model)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(user.model != old_model)
 		return FALSE

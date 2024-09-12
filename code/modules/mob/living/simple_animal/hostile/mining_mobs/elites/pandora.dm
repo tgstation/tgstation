@@ -7,8 +7,8 @@
  * # Pandora
  *
  * A box with a similar design to the Hierophant which trades large, single attacks for more frequent smaller ones.
- * As it's health gets lower, the time between it's attacks decrease.
- * It's attacks are as follows:
+ * As its health gets lower, the time between its attacks decrease.
+ * Its attacks are as follows:
  * - Fires hierophant blasts in a straight line.  Can only fire in a straight line in 8 directions, being the diagonals and cardinals.
  * - Creates a box of hierophant blasts around the target.  If they try to run away to avoid it, they'll very likely get hit.
  * - Teleports the pandora from one location to another, almost identical to Hierophant.

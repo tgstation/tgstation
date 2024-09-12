@@ -241,3 +241,46 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
+
+/obj/item/clothing/accessory/press_badge
+	name = "press badge"
+	desc = "A blue press badge that clearly identifies the wearer as a member of the media. While it signifies press affiliation, it does not grant any special privileges or rights no matter how much the wearer yells about it."
+	desc_controls = "Click person with it to show them it"
+	icon_state = "press_badge"
+	attachment_slot = NONE // actually NECK but that doesn't make sense
+	/// The name of the person in the badge
+	var/journalist_name
+	/// The name of the press person is working for
+	var/press_name
+
+/obj/item/clothing/accessory/press_badge/examine(mob/user)
+	. = ..()
+	if(!journalist_name || !press_name)
+		. += span_notice("Use it in hand to input information")
+		return
+
+	. += span_notice("It belongs to <b>[journalist_name]</b>, <b>[press_name]</b>")
+
+/obj/item/clothing/accessory/press_badge/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!journalist_name)
+		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", MAX_NAME_LEN)
+	if(!press_name)
+		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", MAX_CHARTER_LEN)
+
+/obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return
+
+	var/mob/living/interacting_living = interacting_with
+	if(user.combat_mode)
+		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
+		examine(interacting_living)
+		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
+		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+	else
+		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
+		examine(interacting_living)
+		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
+		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

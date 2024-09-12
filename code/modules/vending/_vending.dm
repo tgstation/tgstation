@@ -283,7 +283,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	register_context()
 
 /obj/machinery/vending/Destroy()
-	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	QDEL_NULL(sec_radio)
@@ -397,7 +396,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				return
 
 /**
- * Build the inventory of the vending machine from it's product and record lists
+ * Build the inventory of the vending machine from its product and record lists
  *
  * This builds up a full set of /datum/data/vending_products from the product list of the vending machine type
  * Arguments:
@@ -832,8 +831,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  * Args:
  * * turf/target: The turf to fall onto. Cannot be null.
  * * damage: The raw numerical damage to do by default.
- * * chance_to_crit: The percent chance of a critical hit occuring. Default: 0
- * * forced_crit_case: If given a value from crushing.dm, [target] and it's contents will always be hit with that specific critical hit. Default: null
+ * * chance_to_crit: The percent chance of a critical hit occurring. Default: 0
+ * * forced_crit_case: If given a value from crushing.dm, [target] and its contents will always be hit with that specific critical hit. Default: null
  * * paralyze_time: The time, in deciseconds, a given mob/living will be paralyzed for if crushed.
  * * crush_dir: The direction the crush is coming from. Default: dir of src to [target].
  * * damage_type: The type of damage to do. Default: BRUTE
@@ -989,7 +988,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/list/weighted_crits = list()
 
 	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
-	weighted_crits[CRUSH_CRIT_PARAPALEGIC] = 80
+	weighted_crits[CRUSH_CRIT_PARAPLEGIC] = 80
 	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
 	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
 
@@ -1028,7 +1027,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			if(left_leg || right_leg)
 				carbon_target.visible_message(span_danger("[carbon_target]'s legs shatter with a sickening crunch!"), span_userdanger("Your legs shatter with a sickening crunch!"))
 			return TRUE
-		if(CRUSH_CRIT_PARAPALEGIC) // paralyze this binch
+		if(CRUSH_CRIT_PARAPLEGIC) // paralyze this binch
 			// the new paraplegic gets like 4 lines of losing their legs so skip them
 			if (!iscarbon(atom_target))
 				return FALSE
@@ -1185,16 +1184,18 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if (!HAS_AI_ACCESS(user))
-		if(seconds_electrified && !(machine_stat & NOPOWER))
-			if(shock(user, 100))
-				return
+	if (HAS_AI_ACCESS(user))
+		return ..()
 
-		if(tilted && !user.buckled && !isAdminGhostAI(user))
-			to_chat(user, span_notice("You begin righting [src]."))
-			if(do_after(user, 5 SECONDS, target=src))
-				untilt(user)
+	if(seconds_electrified && !(machine_stat & NOPOWER))
+		if(shock(user, 100))
 			return
+
+	if(tilted && !user.buckled)
+		to_chat(user, span_notice("You begin righting [src]."))
+		if(do_after(user, 5 SECONDS, target=src))
+			untilt(user)
+		return
 
 	return ..()
 
@@ -1257,6 +1258,15 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			ref = REF(record),
 		)
 
+		var/atom/printed = record.product_path
+		// If it's not GAGS and has no innate colors we have to care about, we use DMIcon
+		if(ispath(printed, /atom) \
+			&& (!initial(printed.greyscale_config) || !initial(printed.greyscale_colors)) \
+			&& !initial(printed.color) \
+		)
+			static_record["icon"] = initial(printed.icon)
+			static_record["icon_state"] = initial(printed.icon_state)
+
 		var/list/category = record.category || default_category
 		if (!isnull(category))
 			if (!(category["name"] in categories))
@@ -1309,7 +1319,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	.["extended_inventory"] = extended_inventory
 
-/obj/machinery/vending/ui_act(action, params)
+/obj/machinery/vending/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1758,7 +1768,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			)
 			.["vending_machine_input"] += list(data)
 
-/obj/machinery/vending/custom/ui_act(action, params)
+/obj/machinery/vending/custom/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(throwing)
 	var/target_zone
 	///The initial direction of the thrower of the thrownthing for building the trajectory of the throw.
 	var/init_dir
-	///The maximum number of turfs that the thrownthing will travel to reach it's target.
+	///The maximum number of turfs that the thrownthing will travel to reach its target.
 	var/maxrange
 	///Turfs to travel per tick
 	var/speed

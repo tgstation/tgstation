@@ -131,7 +131,7 @@
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 
-/// Puts a brick inside the pillow, increasing it's damage
+/// Puts a brick inside the pillow, increasing its damage
 /obj/item/pillow/proc/become_bricked()
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)

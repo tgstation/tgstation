@@ -155,7 +155,7 @@
 	if(off_cooldown(holder, equilibrium, 2, "hercuri_freeze"))
 		return
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	holder.my_atom.visible_message("The reaction frosts over, releasing its chilly contents!")
 	var/radius = max((equilibrium.step_target_vol/50), 1)
 	freeze_radius(holder, equilibrium, 200, radius, 60 SECONDS) //drying agent exists
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)

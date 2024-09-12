@@ -117,7 +117,7 @@
 			data["requests"] = request_list
 	return data
 
-/obj/machinery/computer/message_monitor/ui_act(action, params)
+/obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .
@@ -139,7 +139,7 @@
 				return TRUE
 
 			authenticated = TRUE
-			success_message = "YOU SUCCESFULLY LOGGED IN!"
+			success_message = "YOU SUCCESSFULLY LOGGED IN!"
 
 			return TRUE
 		if("link_server")

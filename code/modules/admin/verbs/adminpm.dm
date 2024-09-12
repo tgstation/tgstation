@@ -246,7 +246,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			request = "[request] an Administrator."
 		else
 			request = "[request] [recipient_print_key]."
-		//get message text, limit it's length.and clean/escape html
+		//get message text, limit its length.and clean/escape html
 		msg = input(src,"Message:", request) as message|null
 		msg = trim(msg)
 

@@ -398,7 +398,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+/obj/machinery/computer/scan_consolenew/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/static/list/gene_letters = list("A", "T", "C", "G");
 	var/static/gene_letter_count = length(gene_letters)
 

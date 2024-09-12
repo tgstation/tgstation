@@ -4,7 +4,7 @@
 #define SHOWER_NORMAL_TEMP 300
 #define SHOWER_BOILING "boiling"
 #define SHOWER_BOILING_TEMP 400
-/// The volume of it's internal reagents the shower applies to everything it sprays.
+/// The volume of its internal reagents the shower applies to everything it sprays.
 #define SHOWER_SPRAY_VOLUME 5
 /// How much the volume of the shower's spay reagents are amplified by when it sprays something.
 #define SHOWER_EXPOSURE_MULTIPLIER 2 // Showers effectively double exposed reagents
@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
 	var/refill_rate = 0.5
-	///Does the shower have a water recycler to recollect it's water supply?
+	///Does the shower have a water recycler to recollect its water supply?
 	var/has_water_reclaimer = TRUE
 	///Which mode the shower is operating in.
 	var/mode = SHOWER_MODE_UNTIL_EMPTY

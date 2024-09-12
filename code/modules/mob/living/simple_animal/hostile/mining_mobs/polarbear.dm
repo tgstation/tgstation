@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
-	desc = "An aggressive animal that defends it's territory with incredible power. These beasts don't run from their enemies."
+	desc = "An aggressive animal that defends its territory with incredible power. These beasts don't run from their enemies."
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "polarbear"
 	icon_living = "polarbear"

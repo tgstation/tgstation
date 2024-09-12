@@ -10,6 +10,18 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/stomach_pump/mechanic
+	name = "Nutrient Processing Purge"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/stomach_pump,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(HAS_TRAIT(target, TRAIT_HUSK))

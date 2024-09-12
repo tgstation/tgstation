@@ -395,7 +395,10 @@
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
-	if (incapacitated())
+	if (incapacitated)
+		shake_up_animation()
+
+/mob/proc/shake_up_animation()
 		var/direction = prob(50) ? -1 : 1
 		animate(src, pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
 		animate(pixel_x = pixel_x - (SHAKE_ANIMATION_OFFSET * 2 * direction), time = 1)
@@ -647,6 +650,12 @@
 
 /// Randomise a body part and organ of this mob
 /mob/living/carbon/proc/bioscramble(scramble_source)
+	if(!(mob_biotypes & MOB_ORGANIC))
+		return FALSE
+
+	if (HAS_TRAIT(src, TRAIT_GENELESS))
+		return FALSE
+
 	if (run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [scramble_source]!") >= 100)
 		return FALSE
 

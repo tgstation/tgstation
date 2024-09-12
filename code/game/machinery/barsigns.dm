@@ -425,7 +425,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /datum/barsign/maltroach
 	name = "Maltroach"
 	icon_state = "maltroach"
-	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
+	desc = "Mothroaches politely greet you into the bar, or are they greeting each other?"
 	neon_color = "#649e8a"
 
 /datum/barsign/rock_bottom

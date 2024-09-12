@@ -69,6 +69,11 @@
 	var/list/target_corner //Top left or bottom right corner
 	var/list/spawn_offset //bounding_coords is ONLY the shuttle, not the space around it, so offset spawn_tiles or stuff spawns on the walls of the shuttle
 
+	// Bounding coords sticky to either the top right or bottom left corner of the template, depending on proximity to docking port
+	// If we sticky to the bottom right corner, then [1] and [2] will be the bottom right corner, so we need to invert it
+	if(bounding_coords[1] > bounding_coords[3])
+		bounding_coords = list(bounding_coords[3], bounding_coords[4], bounding_coords[1], bounding_coords[2])
+
 	switch(direction)
 		if(NORTH) //we're travelling north (so people get pushed south)
 			step_dir = list(1, 0)
@@ -100,7 +105,6 @@
 			var/corner_delta = list(bounding_coords[3] - bounding_coords[1], bounding_coords[2] - bounding_coords[4])
 			//Get the corner tile, but jump over the shuttle and then continue unto the cordon
 			spawning_turfs_miss.Add(locate(target_corner[1] + corner_delta[1] * step_dir[1] + step_dir[1] * i + spawn_offset[1], target_corner[2] + corner_delta[2] * step_dir[2] + step_dir[2] * i + spawn_offset[2], port.z))
-
 
 /datum/shuttle_event/simple_spawner/event_process()
 	. = ..()

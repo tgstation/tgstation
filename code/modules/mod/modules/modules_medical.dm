@@ -225,8 +225,7 @@
 		organ_evacced.Remove(target, special = TRUE)
 		organ_evacced.forceMove(get_turf(target))
 
-	if (!organ.Insert(target))
-		organ.forceMove(drop_location())
+	organ.Insert(target)
 	organ = null
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
@@ -411,12 +410,40 @@
 		/datum/surgery/advanced/pacify,
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/brainwashing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/nerve_grounding/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/muscled_veins/mechanic,
 		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_hook/mechanic,
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
 		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_imprint/mechanic,
 		/datum/surgery/advanced/bioware/cortex_folding,
+		/datum/surgery/advanced/bioware/cortex_folding/mechanic,
+	)
+
+/obj/item/mod/module/surgical_processor/emergency
+	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
+		perform advanced surgeries on the go. This one came pre-loaded with some emergency surgeries."
+	device = /obj/item/surgical_processor/mod/emergency
+
+/obj/item/surgical_processor/mod/emergency
+	loaded_surgeries = list(
+		/datum/surgery/healing/combo/upgraded/femto,
+		/datum/surgery/blood_filter,
+		/datum/surgery/brain_surgery,
+		/datum/surgery/coronary_bypass,
+		/datum/surgery/ear_surgery,
+		/datum/surgery/eye_surgery,
+		/datum/surgery/hepatectomy,
+		/datum/surgery/revival,
+		/datum/surgery/stomach_pump,
+		/datum/surgery/advanced/wing_reconstruction,
 	)

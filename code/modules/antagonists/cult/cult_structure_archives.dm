@@ -2,7 +2,7 @@
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
 #define VEIL_WALKER "Veil Walker Set"
-#define CRIMSON_FOCUS "Crimson Focus"
+#define CRIMSON_MEDALLION "Crimson Medallion"
 
 // Cult archives. Gives out utility items.
 /obj/structure/destructible/cult/item_dispenser/archives
@@ -38,11 +38,11 @@
 		options += extra_item
 
 /obj/structure/destructible/cult/item_dispenser/archives/extra_options()
-	if(!cult_team?.unlocked_heretic_items[CRIMSON_FOCUS_UNLOCKED])
+	if(!cult_team?.unlocked_heretic_items[CRIMSON_MEDALLION_UNLOCKED])
 		return
-	return list(CRIMSON_FOCUS = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "crimson_focus"),
-			OUTPUT_ITEMS = list(/obj/item/clothing/neck/heretic_focus/crimson_focus),
+	return list(CRIMSON_MEDALLION = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/neck.dmi', icon_state = "crimson_medallion"),
+			OUTPUT_ITEMS = list(/obj/item/clothing/neck/heretic_focus/crimson_medallion),
 			),
 	)
 
@@ -56,4 +56,4 @@
 #undef CULT_BLINDFOLD
 #undef CURSE_ORB
 #undef VEIL_WALKER
-#undef CRIMSON_FOCUS
+#undef CRIMSON_MEDALLION

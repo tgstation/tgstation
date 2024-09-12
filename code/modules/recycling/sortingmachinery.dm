@@ -216,6 +216,7 @@
 	layer = BELOW_OBJ_LAYER
 	pass_flags_self = PASSSTRUCTURE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	w_class = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/delivery/big/interact(mob/user)
 	if(!attempt_pre_unwrap_contents(user))
@@ -309,7 +310,7 @@
 	return data
 
 /** User clicks a button on the tagger */
-/obj/item/dest_tagger/ui_act(action, params)
+/obj/item/dest_tagger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

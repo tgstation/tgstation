@@ -32,7 +32,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/meteor/dark_matteor/process(seconds_per_tick)
-	//meteor's warp quickly contracts then slowly expands it's ring
+	//meteor's warp quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
 	animate(time = seconds_per_tick*7, transform = matrix())
 

@@ -161,11 +161,14 @@
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
 		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/lobotomy/mechanic,
 		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/vein_threading/mechanic,
 		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		/datum/surgery_step/heal/combo/upgraded,
 		/datum/surgery_step/pacify,
-		/datum/surgery_step/revive,
+		/datum/surgery_step/pacify/mechanic,
 	)
 
 //Pad & Pad Terminal
@@ -261,7 +264,7 @@
 	data["status_report"] = status_report
 	return data
 
-/obj/machinery/computer/piratepad_control/ui_act(action, params)
+/obj/machinery/computer/piratepad_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

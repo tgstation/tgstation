@@ -12,6 +12,19 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/gastrectomy/mechanic
+	name = "Engine Diagnostic"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/mechanic_unwrench,
+		/datum/surgery_step/incise_heart/mechanic,
+		/datum/surgery_step/coronary_bypass/mechanic,
+		/datum/surgery_step/mechanic_wrench,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(target_heart) || target_heart.damage < 60 || target_heart.operated)
@@ -32,6 +45,17 @@
 	success_sound = 'sound/surgery/scalpel2.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
+
+/datum/surgery_step/incise_heart/mechanic
+	name = "access engine internals (scalpel or crowbar)"
+	implements = list(
+		TOOL_SCALPEL = 95,
+		TOOL_CROWBAR = 95,
+		/obj/item/melee/energy/sword = 65,
+		/obj/item/knife = 45,
+		/obj/item/shard = 35)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/incise_heart/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -87,6 +111,17 @@
 	success_sound = 'sound/surgery/hemostat1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
 
+/datum/surgery_step/coronary_bypass/mechanic
+	name = "perform maintenance (hemostat or wrench)"
+	implements = list(
+		TOOL_HEMOSTAT = 90,
+		TOOL_WRENCH = 90,
+		TOOL_WIRECUTTER = 35,
+		/obj/item/stack/package_wrap = 15,
+		/obj/item/stack/cable_coil = 5)
+	preop_sound = 'sound/items/ratchet.ogg'
+	success_sound = 'sound/machines/doorclick.ogg'
+
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
 		user,
@@ -102,6 +137,8 @@
 	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(target_heart) //slightly worrying if we lost our heart mid-operation, but that's life
 		target_heart.operated = TRUE
+		if(target_heart.organ_flags & ORGAN_EMP) //If our organ is failing due to an EMP, fix that
+			target_heart.organ_flags &= ~ORGAN_EMP
 	display_results(
 		user,
 		target,

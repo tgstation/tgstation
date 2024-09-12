@@ -11,8 +11,8 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
-	invocation = "Carnis chirurgia"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "CL'M M'N!" // "CLAIM MINE", but also almost "KALI MA"
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 	hand_path = /obj/item/melee/touch_attack/flesh_surgery
@@ -83,7 +83,7 @@
 
 	return .
 
-/// If cast on an organ, we'll restore it's health and even un-fail it.
+/// If cast on an organ, we'll restore its health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)
 	if(to_heal.damage == 0)
 		to_heal.balloon_alert(caster, "already in good condition!")

@@ -311,7 +311,7 @@
 
 	return data
 
-/obj/structure/reflector/ui_act(action, params)
+/obj/structure/reflector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

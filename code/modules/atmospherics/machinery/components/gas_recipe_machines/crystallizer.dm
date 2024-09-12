@@ -106,7 +106,7 @@
 		return TRUE
 	return FALSE
 
-///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
+///Injects the gases from the input inside the internal gasmix, the amount is dependent on the gas_input var
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
@@ -300,7 +300,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -141,6 +141,7 @@
 		return TRUE
 
 	warrant.alert_owner(user, src, target.name, "One of your outstanding warrants has been completely paid.")
+	warrant.valid = FALSE
 	return TRUE
 
 /// Finishes printing, resets the printer.

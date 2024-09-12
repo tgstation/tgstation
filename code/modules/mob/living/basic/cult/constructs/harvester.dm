@@ -80,9 +80,9 @@
 	var/datum/objective/eldergod/summon_objective = locate() in cult_status.cult_team.objectives
 
 	if(summon_objective.check_completion())
-		the_construct.master = cult_status.cult_team.blood_target
+		the_construct.construct_master = cult_status.cult_team.blood_target
 
-	if(!the_construct.master)
+	if(!the_construct.construct_master)
 		to_chat(the_construct, span_cult_italic("You have no master to seek!"))
 		the_construct.seeking = FALSE
 		return
@@ -122,8 +122,8 @@
 		to_chat(the_construct, span_cult_italic("Nar'Sie has completed her harvest!"))
 		return
 
-	the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-	var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
+	the_construct.construct_master = pick(GLOB.cult_narsie.souls_needed)
+	var/mob/living/real_target = the_construct.construct_master //We can typecast this way because Narsie only allows /mob/living into the souls list
 	to_chat(the_construct, span_cult_italic("You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!"))
 	desc = "Activate to track Nar'Sie!"
 	button_icon_state = "sintouch"
@@ -150,32 +150,32 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 5
-	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
+	playstyle_string = span_bold("You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!")
 	theme = THEME_HERETIC
 
 /mob/living/basic/construct/harvester/heretic/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
 	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))
+	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, TYPE_PROC_REF(/datum/mind, enslave_mind_to_creator))
+	RegisterSignal(src, COMSIG_MOB_ENSLAVED_TO, PROC_REF(link_master))
 
+/mob/living/basic/construct/harvester/heretic/proc/link_master(mob/self, mob/master)
+	src.construct_master = master
+	RegisterSignal(construct_master, COMSIG_LIVING_DEATH, PROC_REF(on_master_death))
+	SIGNAL_HANDLER
 
-/**
- * Somewhat janky proc called when a heretic monster's master dies
- * Used to kill any living Rusted Harvester
- */
-/mob/living/proc/on_master_death()
-	return
+/mob/living/basic/construct/harvester/heretic/proc/on_master_death(mob/self, mob/master)
+	SIGNAL_HANDLER
+	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master [construct_master] perishes! Without [construct_master.p_their()] support, your body crumbles..."))
+	visible_message(span_alert("[src] suddenly crumbles to dust!"))
+	death()
 
 /mob/living/basic/construct/harvester/heretic/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	// They're pretty fragile so this is probably necessary to prevent bullshit deaths.
 	if(user == src)
 		return
 	return ..()
-
-/mob/living/basic/construct/harvester/heretic/on_master_death()
-	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master perishes! Without its support, your body crumbles..."))
-	visible_message(span_alert("[src] suddenly crumbles to dust!"))
-	death()
 
 /mob/living/basic/construct/harvester/heretic/grant_abilities()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
@@ -233,9 +233,6 @@
 	. = ..()
 	the_construct = Target
 	the_construct.seeking = TRUE
-	var/datum/antagonist/heretic_monster/antag = IS_HERETIC_MONSTER(the_construct)
-	if(antag)
-		the_construct.master = antag.master
 
 // no real reason for most of this weird oldcode
 /datum/action/innate/seek_master/Activate()

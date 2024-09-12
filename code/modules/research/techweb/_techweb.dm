@@ -317,11 +317,7 @@
 	var/points_rewarded
 	if(completed_experiment.points_reward)
 		add_point_list(completed_experiment.points_reward)
-		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
-		var/list/english_list_keys = list()
-		for(var/points_type in completed_experiment.points_reward)
-			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
-		points_rewarded += "[english_list(english_list_keys)] points"
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding [completed_experiment.get_points_reward_text()]"
 		result_text += points_rewarded
 	result_text += "!"
 
@@ -332,16 +328,16 @@
 	return techweb_point_display_generic(research_points)
 
 /datum/techweb/proc/enqueue_node(id, mob/user)
-	var/mob/living/carbon/human/human_user = user
-	var/is_rd = FALSE
-	if(human_user.wear_id)
-		var/list/access = human_user.wear_id.GetAccess()
+	var/queue_first = FALSE
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human_user = user
+		var/list/access = human_user.wear_id?.GetAccess()
 		if(ACCESS_RD in access)
-			is_rd = TRUE
+			queue_first = TRUE
 
 	if(id in research_queue_nodes)
-		if(is_rd)
-			research_queue_nodes.Remove(id)
+		if(queue_first)
+			research_queue_nodes.Remove(id) // Remove to be able to place first
 		else
 			return FALSE
 
@@ -349,7 +345,7 @@
 		if(research_queue_nodes[node_id] == user)
 			research_queue_nodes.Remove(node_id)
 
-	if (is_rd)
+	if (queue_first)
 		research_queue_nodes.Insert(1, id)
 	research_queue_nodes[id] = user
 

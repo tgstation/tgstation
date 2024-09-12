@@ -69,7 +69,7 @@
 
 	return data
 
-/datum/cellular_emporium/ui_act(action, params)
+/datum/cellular_emporium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -38,6 +38,13 @@
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD
+	required_other = TRUE
+
+/datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
+	. = ..()	
+	if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity) || holder.has_reagent(/datum/reagent/consumable/liquidelectricity/enriched))
+		return FALSE
+
 
 /datum/chemical_reaction/stable_plasma
 	results = list(/datum/reagent/stable_plasma = 1)
@@ -600,6 +607,18 @@
 	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1, /datum/reagent/water = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+//salt electrolysis
+/datum/chemical_reaction/saltelectrolysis
+	results = list(/datum/reagent/chlorine = 2.5, /datum/reagent/sodium = 2.5)
+	required_reagents = list(/datum/reagent/consumable/salt = 5)
+	required_catalysts = list(/datum/reagent/consumable/liquidelectricity = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+/datum/chemical_reaction/saltelectrolysis/enriched
+	required_catalysts = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
+
+
 //butterflium
 /datum/chemical_reaction/butterflium
 	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/nutriment = 1)

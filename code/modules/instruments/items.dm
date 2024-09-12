@@ -17,7 +17,7 @@
 /obj/item/instrument/Initialize(mapload)
 	. = ..()
 	song = new(src, allowed_instrument_ids, instrument_range)
-	allowed_instrument_ids = null //We don't need this clogging memory after it's used.
+	allowed_instrument_ids = null //We don't need this clogging memory after its used.
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
@@ -27,7 +27,7 @@
 	if(!ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
+	if(user.incapacitated || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
 /obj/item/instrument/suicide_act(mob/living/user)

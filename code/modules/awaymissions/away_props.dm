@@ -1,6 +1,6 @@
 /obj/effect/oneway
 	name = "one way effect"
-	desc = "Only lets things in from it's dir."
+	desc = "Only lets things in from its dir."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "field_dir"
 	invisibility = INVISIBILITY_MAXIMUM
@@ -13,7 +13,7 @@
 
 /obj/effect/wind
 	name = "wind effect"
-	desc = "Creates pressure effect in it's direction. Use sparingly."
+	desc = "Creates pressure effect in its direction. Use sparingly."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "field_dir"
 	invisibility = INVISIBILITY_MAXIMUM

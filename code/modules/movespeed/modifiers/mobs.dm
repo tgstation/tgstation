@@ -172,3 +172,6 @@
 
 /datum/movespeed_modifier/basilisk_overheat
 	multiplicative_slowdown = -18
+
+/datum/movespeed_modifier/magic_ties
+	multiplicative_slowdown = 0.5

@@ -332,7 +332,7 @@
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_MISSILE_STRIKE, strike_cooldown_time)
 	podspawn(list(
 		"target" = target_turf,
-		"style" = STYLE_MISSILE,
+		"style" = /datum/pod_style/missile,
 		"effectMissile" = TRUE,
 		"explosionSize" = list(0,0,1,2)
 	))

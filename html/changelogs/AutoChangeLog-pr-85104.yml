@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed roundstart monkeys not having monkified"
-  - bugfix: "Fixed being \"de-monkified\" while dead making it difficult to actually de-monkey you going forward"
-  - bugfix: "Fixed genetic scanner showing dead mobs as \"transforming\""

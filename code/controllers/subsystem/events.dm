@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(events)
 	var/list/running = list()
 	///cache of currently running events, for lag checking.
 	var/list/currentrun = list()
-	///The next world.time that a naturally occuring random event can be selected.
+	///The next world.time that a naturally occurring random event can be selected.
 	var/scheduled = 0
 	///The lower bound for how soon another random event can be scheduled.
 	var/frequency_lower = 2.5 MINUTES
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(events)
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
 /**
- * Selects a random event based on whether it can occur and it's 'weight'(probability)
+ * Selects a random event based on whether it can occur and its 'weight'(probability)
  *
  * Arguments:
  * * excluded_event - The event path we will be foregoing, if present.
