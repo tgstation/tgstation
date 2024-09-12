@@ -136,4 +136,4 @@
 	if(!length(available_machines))
 		return
 	system = pick(available_machines)
-	system.announce(AUTO_ANNOUNCE_NODE, display_name, channels = announce_channels)
+	system.announce(AUTO_ANNOUNCE_NODE, display_name, channels = channels_to_use)
