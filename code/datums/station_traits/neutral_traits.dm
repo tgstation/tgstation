@@ -544,3 +544,16 @@
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
+
+/// Outside threats or infestations like Nuclear Operatives, Aliens or etc can't spawn. Blob infection is a exception.
+/datum/station_trait/naval_patrol
+	name = "Naval Patrol"
+	report_message = "Your sector falls within the patrol route of our corporate Naval fleet. While no external threats or infestations can breach this perimeter - internal issues on station will still remain your concern."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE
+
+	dynamic_category = RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
+	threat_reduction = 10
+	dynamic_threat_id = "Naval Patrol"
