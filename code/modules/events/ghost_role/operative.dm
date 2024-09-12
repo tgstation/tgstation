@@ -32,6 +32,13 @@
 
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
+	// If we have a Station Trait "Naval Patrol" it will not prevent the Lone Ops but just announce it presence
+	// You should've secured that disk! Not even Navy will stop a disk-sniffing-determined Lone Operative
+	if(GLOB.dynamic_ruleset_categories == RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS)
+		minor_announce(
+			message = "We've detected a fast-moving, human-sized, blood-red blip on radar heading towards [GLOB.station_name]. It somehow evaded our engagement protocols and is now within your proximity. The situation is yours to handle, no reply.",
+			title = "Nanotrasen Navy Update",
+		)
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")
 	operative.log_message("was spawned as a lone operative by an event.", LOG_GAME)
 	spawned_mobs += operative
