@@ -44,7 +44,7 @@
 	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "ti" = (
-/obj/machinery/vending/boozeomat/all_access{
+/obj/machinery/vending/boozeomat{
 	onstation = 0
 	},
 /turf/open/floor/wood/tile,

@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/jumpercable = FISH_ICON_ELECTRIC,
 		/obj/item/fish/lavaloop = FISH_ICON_WEAPON,
 		/obj/item/fish/mastodon = FISH_ICON_BONE,
+		/obj/item/fish/pike/armored = FISH_ICON_WEAPON,
 		/obj/item/fish/pufferfish = FISH_ICON_CHUNKY,
 		/obj/item/fish/sand_crab = FISH_ICON_CRAB,
 		/obj/item/fish/skin_crab = FISH_ICON_CRAB,
@@ -87,6 +88,20 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/structure/closet/crate/necropolis/tendril,
 	))
 
+
+	///List of multipliers used to make fishes more common compared to everything else depending on bait quality, indexed from best to worst.
+	var/static/weight_result_multiplier = list(
+		TRAIT_GREAT_QUALITY_BAIT = 9,
+		TRAIT_GOOD_QUALITY_BAIT = 3.5,
+		TRAIT_BASIC_QUALITY_BAIT = 2,
+	)
+	///List of exponents used to level out the table weight differences between fish depending on bait quality.
+	var/static/weight_leveling_exponents = list(
+		TRAIT_GREAT_QUALITY_BAIT = 0.7,
+		TRAIT_GOOD_QUALITY_BAIT = 0.55,
+		TRAIT_BASIC_QUALITY_BAIT = 0.4,
+	)
+
 /datum/fish_source/New()
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
 		return
@@ -139,8 +154,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		// In the future non-fish rewards can have variable difficulty calculated here
 		return
 
-	var/list/fish_list_properties = collect_fish_properties()
 	var/obj/item/fish/caught_fish = result
+	var/list/fish_properties = SSfishing.fish_properties[caught_fish]
 	// Baseline fish difficulty
 	. += initial(caught_fish.fishing_difficulty_modifier)
 
@@ -148,18 +163,18 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(rod.bait)
 		var/obj/item/bait = rod.bait
 		//Fav bait makes it easier
-		var/list/fav_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, favorite_bait)]
+		var/list/fav_bait = fish_properties[FISH_PROPERTIES_FAV_BAIT]
 		for(var/bait_identifer in fav_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += FAV_BAIT_DIFFICULTY_MOD
 		//Disliked bait makes it harder
-		var/list/disliked_bait = fish_list_properties[caught_fish][NAMEOF(caught_fish, disliked_bait)]
+		var/list/disliked_bait = fish_properties[FISH_PROPERTIES_BAD_BAIT]
 		for(var/bait_identifer in disliked_bait)
 			if(is_matching_bait(bait, bait_identifer))
 				. += DISLIKED_BAIT_DIFFICULTY_MOD
 
 	// Matching/not matching fish traits and equipment
-	var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
+	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
 
 	var/additive_mod = 0
 	var/multiplicative_mod = 1
@@ -173,8 +188,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	. *= multiplicative_mod
 
 /// In case you want more complex rules for specific spots
-/datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
-	return pick_weight(get_modified_fish_table(rod,fisherman))
+/datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
 
 /**
  * Used to register signals or add traits and the such right after conditions have been cleared
@@ -198,7 +213,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	var/obj/item/fish/caught = source.reward_path
 	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-	var/turf/fishing_spot = get_turf(source.lure)
+	var/turf/fishing_spot = get_turf(source.float)
 	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
 	if(source.used_rod)
 		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
@@ -259,23 +274,6 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		caught_fish.randomize_size_and_weight()
 	return reward
 
-/// Cached fish list properties so we don't have to initalize fish every time, init deffered
-GLOBAL_LIST(fishing_property_cache)
-
-/// Awful workaround around initial(x.list_variable) not being a thing while trying to keep some semblance of being structured
-/proc/collect_fish_properties()
-	if(GLOB.fishing_property_cache == null)
-		var/list/fish_property_table = list()
-		for(var/fish_type in subtypesof(/obj/item/fish))
-			var/obj/item/fish/fish = new fish_type(null, FALSE)
-			fish_property_table[fish_type] = list()
-			fish_property_table[fish_type][NAMEOF(fish, favorite_bait)] = fish.favorite_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, disliked_bait)] = fish.disliked_bait.Copy()
-			fish_property_table[fish_type][NAMEOF(fish, fish_traits)] = fish.fish_traits.Copy()
-			QDEL_NULL(fish)
-		GLOB.fishing_property_cache = fish_property_table
-	return GLOB.fishing_property_cache
-
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
@@ -285,9 +283,9 @@ GLOBAL_LIST(fishing_property_cache)
 	return table
 
 /// Builds a fish weights table modified by bait/rod/user properties
-/datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	var/obj/item/bait = rod.bait
-	///An exponent used to level out the difference in probabilities between fishes/mobs on the table depending on bait quality.
+	///An exponent used to level out the table weight differences between fish depending on bait quality.
 	var/leveling_exponent = 0
 	///Multiplier used to make fishes more common compared to everything else.
 	var/result_multiplier = 1
@@ -296,18 +294,15 @@ GLOBAL_LIST(fishing_property_cache)
 	var/list/final_table = fish_table.Copy()
 
 	if(bait)
-		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
-			result_multiplier = 9
-			leveling_exponent = 0.5
-		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-			result_multiplier = 3.5
-			leveling_exponent = 0.25
-		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
-			result_multiplier = 2
-			leveling_exponent = 0.1
-		final_table -= FISHING_DUD
+		for(var/trait in weight_result_multiplier)
+			if(HAS_TRAIT(bait, trait))
+				result_multiplier = weight_result_multiplier[trait]
+				weight_leveling_exponents = weight_leveling_exponents[trait]
+				break
 
-	var/list/fish_list_properties = collect_fish_properties()
+
+	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
+		final_table -= FISHING_DUD
 
 
 	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
@@ -317,59 +312,100 @@ GLOBAL_LIST(fishing_property_cache)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
 		if(ispath(result, /obj/item/fish))
-			//Modify fish roll chance
-			var/obj/item/fish/caught_fish = result
-
 			if(bait)
 				final_table[result] = round(final_table[result] * result_multiplier, 1)
-				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
-					//Bait matching likes doubles the chance
-					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
-					for(var/bait_identifer in fav_bait)
-						if(is_matching_bait(bait, bait_identifer))
-							final_table[result] *= 2
-					//Bait matching dislikes
-					var/list/disliked_bait = fish_list_properties[result][NAMEOF(caught_fish, disliked_bait)]
-					for(var/bait_identifer in disliked_bait)
-						if(is_matching_bait(bait, bait_identifer))
-							final_table[result] = round(final_table[result] * 0.5, 1)
+				var/mult = bait.check_bait(result)
+				final_table[result] = round(final_table[result] * mult, 1)
+				if(mult > 1 && HAS_TRAIT(bait, TRAIT_BAIT_ALLOW_FISHING_DUD))
+					final_table -= FISHING_DUD
 			else
-				final_table[result] = round(final_table[result] * 0.15, 1) //Fishing without bait is not going to be easy
+				final_table[result] = round(final_table[result] * FISH_WEIGHT_MULT_WITHOUT_BAIT, 1) //Fishing without bait is not going to be easy
 
 			// Apply fish trait modifiers
-			var/list/fish_traits = fish_list_properties[caught_fish][NAMEOF(caught_fish, fish_traits)]
-			var/additive_mod = 0
-			var/multiplicative_mod = 1
-			for(var/fish_trait in fish_traits)
-				var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
-				var/list/mod = trait.catch_weight_mod(rod, fisherman)
-				additive_mod += mod[ADDITIVE_FISHING_MOD]
-				multiplicative_mod *= mod[MULTIPLICATIVE_FISHING_MOD]
-
-			final_table[result] += additive_mod
-			final_table[result] = round(final_table[result] * multiplicative_mod, 1)
+			final_table[result] = get_fish_trait_catch_mods(final_table[result], result, rod, fisherman, location)
 
 		if(final_table[result] <= 0)
 			final_table -= result
 
-	///here we even out the chances of fishie based on bait quality: better baits lead rarer fishes being more common.
-	if(leveling_exponent)
-		var/highest_fish_weight
-		var/list/collected_fish_weights = list()
-		for(var/fishable in final_table)
-			if(ispath(fishable, /obj/item/fish))
-				var/fish_weight = fish_table[fishable]
-				collected_fish_weights[fishable] = fish_weight
-				if(fish_weight > highest_fish_weight)
-					highest_fish_weight = fish_weight
 
-		for(var/fish in collected_fish_weights)
-			var/difference = highest_fish_weight - collected_fish_weights[fish]
-			if(!difference)
-				continue
-			final_table[fish] += round(difference**leveling_exponent, 1)
+	if(leveling_exponent)
+		level_out_fish(final_table, leveling_exponent)
 
 	return final_table
+
+///A proc that levels out the weights of various fish, leading to rarer fishes being more common.
+/datum/fish_source/proc/level_out_fish(list/table, exponent)
+	var/highest_fish_weight
+	var/list/collected_fish_weights = list()
+	for(var/fishable in table)
+		if(ispath(fishable, /obj/item/fish))
+			var/fish_weight = table[fishable]
+			collected_fish_weights[fishable] = fish_weight
+			if(fish_weight > highest_fish_weight)
+				highest_fish_weight = fish_weight
+
+	for(var/fish in collected_fish_weights)
+		var/difference = highest_fish_weight - collected_fish_weights[fish]
+		if(!difference)
+			continue
+		table[fish] += round(difference**exponent, 1)
+
+/datum/fish_source/proc/get_fish_trait_catch_mods(weight, obj/item/fish/fish, obj/item/fishing_rod/rod, mob/user, atom/location)
+	if(!ispath(fish, /obj/item/fish))
+		return weight
+	var/multiplier = 1
+	for(var/fish_trait in SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS])
+		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
+		var/list/mod = trait.catch_weight_mod(rod, user, location, fish)
+		weight += mod[ADDITIVE_FISHING_MOD]
+		multiplier *= mod[MULTIPLICATIVE_FISHING_MOD]
+
+	return round(weight * multiplier, 1)
+
+///returns true if this fishing spot has fish that are shown in the catalog.
+/datum/fish_source/proc/has_known_fishes()
+	for(var/reward in fish_table)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			return TRUE
+	return FALSE
+
+///Add a string with the names of catchable fishes to the examine text.
+/datum/fish_source/proc/get_catchable_fish_names(mob/user, atom/location, list/examine_text)
+	var/list/known_fishes = list()
+
+	var/obj/item/fishing_rod/rod = user.get_active_held_item()
+	if(!istype(rod))
+		rod = null
+
+	for(var/reward in fish_table)
+		if(!ispath(reward, /obj/item/fish))
+			continue
+		var/obj/item/fish/prototype = reward
+		if(initial(prototype.show_in_catalog))
+			var/init_name = initial(prototype.name)
+			if(rod)
+				var/init_weight = fish_table[reward]
+				var/weight = (rod.bait ? rod.bait.check_bait(prototype) : 1)
+				weight = get_fish_trait_catch_mods(weight, reward, rod, user, location)
+				if(weight > init_weight)
+					init_name = span_bold(init_name)
+					if(weight/init_weight >= 3.5)
+						init_name = "<u>init_name</u>"
+				else if(weight < init_weight)
+					init_name = span_small(reward)
+			known_fishes += init_name
+
+	if(!length(known_fishes))
+		return
+
+	var/info = "You can catch the following fish here"
+
+	if(rod)
+		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
+	examine_text += span_info("[info]: [english_list(known_fishes)].")
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)
@@ -388,7 +424,7 @@ GLOBAL_LIST(fishing_property_cache)
 		explosive_spawn(turf, exploded_turfs[turf], multiplier)
 	exploded_turfs = null
 
-/datum/fish_source/proc/explosive_spawn(location, severity, multiplier = 1)
+/datum/fish_source/proc/explosive_spawn(atom/location, severity, multiplier = 1)
 	for(var/i in 1 to (severity + 2))
 		if(!prob((100 + 100 * severity)/i * multiplier))
 			continue
@@ -404,3 +440,101 @@ GLOBAL_LIST(fishing_property_cache)
 			reward.pixel_y = rand(-9, 9)
 		if(severity >= EXPLODE_DEVASTATE)
 			reward.ex_act(EXPLODE_LIGHT)
+
+/**
+ * Called by /datum/autowiki/fish_sources unless the catalog entry for this fish source is null.
+ * It should Return a list of entries with keys named "name", "icon", "weight" and "notes"
+ * detailing the contents of this fish source.
+ */
+/datum/fish_source/proc/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+	var/list/only_fish = list()
+
+	var/total_weight = 0
+	var/total_weight_without_bait = 0
+	var/total_weight_no_fish = 0
+
+	var/list/tables_by_quality = list()
+	var/list/total_weight_by_quality = list()
+	var/list/total_weight_by_quality_no_fish = list()
+
+	for(var/obj/item/fish/fish as anything in fish_table)
+		var/weight = fish_table[fish]
+		if(fish != FISHING_DUD)
+			total_weight += weight
+		if(!ispath(fish, /obj/item/fish))
+			total_weight_without_bait += weight
+			total_weight_no_fish += weight
+			continue
+		if(initial(fish.show_in_catalog))
+			only_fish += fish
+		total_weight_without_bait += round(fish_table[fish] * FISH_WEIGHT_MULT_WITHOUT_BAIT, 1)
+
+	for(var/trait in weight_result_multiplier)
+		var/list/table_copy = fish_table.Copy()
+		table_copy -= FISHING_DUD
+		var/exponent = weight_leveling_exponents[trait]
+		var/multiplier = weight_result_multiplier[trait]
+		for(var/fish as anything in table_copy)
+			if(!ispath(fish, /obj/item/fish))
+				continue
+			table_copy[fish] = round(table_copy[fish] * multiplier, 1)
+
+		level_out_fish(table_copy, exponent)
+		tables_by_quality[trait] = table_copy
+
+		var/tot_weight = 0
+		var/tot_weight_no_fish = 0
+		for(var/result in table_copy)
+			var/weight = table_copy[result]
+			tot_weight += weight
+			if(!ispath(result, /obj/item/fish))
+				tot_weight_no_fish += weight
+		total_weight_by_quality[trait] = tot_weight
+		total_weight_by_quality_no_fish[trait] = tot_weight_no_fish
+
+	//show the improved weights in ascending orders for fish.
+	tables_by_quality = reverseList(tables_by_quality)
+
+	if(FISHING_DUD in fish_table)
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_DUD,
+			FISH_SOURCE_AUTOWIKI_ICON = "",
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(fish_table[FISHING_DUD]/total_weight_without_bait),
+			FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = "WITHOUT A BAIT",
+			FISH_SOURCE_AUTOWIKI_NOTES = "Unless you have a magnet or rescue hook or you know what you're doing, always use a bait",
+		))
+
+	for(var/obj/item/fish/fish as anything in only_fish)
+		var/weight = fish_table[fish]
+		var/deets = "Can be caught indefinitely"
+		if(fish in fish_counts)
+			deets = "It's quite rare and can only be caught up to [fish_counts[fish]] times"
+			if(fish in fish_count_regen)
+				deets += " every [DisplayTimeText(fish::breeding_timeout)]"
+		var/list/weight_deets = list()
+		for(var/trait in tables_by_quality)
+			weight_deets += "[round(PERCENT(tables_by_quality[trait][fish]/total_weight_by_quality[trait]), 0.1)]%"
+		var/weight_suffix = "([english_list(weight_deets, and_text = ", ")])"
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = wiki.escape_value(full_capitalize(initial(fish.name))),
+			FISH_SOURCE_AUTOWIKI_ICON = FISH_AUTOWIKI_FILENAME(fish),
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(weight/total_weight),
+			FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = weight_suffix,
+			FISH_SOURCE_AUTOWIKI_NOTES = deets,
+		))
+
+	if(total_weight_no_fish) //There are things beside fish that we can catch.
+		var/list/weight_deets = list()
+		for(var/trait in tables_by_quality)
+			weight_deets += "[round(PERCENT(total_weight_by_quality_no_fish[trait]/total_weight_by_quality[trait]), 0.1)]%"
+		var/weight_suffix = "([english_list(weight_deets, and_text = ", ")])"
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_OTHER,
+			FISH_SOURCE_AUTOWIKI_ICON = FISH_SOURCE_AUTOWIKI_QUESTIONMARK,
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(total_weight_no_fish/total_weight),
+			FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = weight_suffix,
+			FISH_SOURCE_AUTOWIKI_NOTES = "Who knows what it may be. Try and find out",
+		))
+
+	return data
