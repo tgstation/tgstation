@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "Teleport blocker implants now prevent implantees from jaunting."
