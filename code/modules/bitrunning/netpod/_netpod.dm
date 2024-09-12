@@ -2,7 +2,6 @@
 
 
 /obj/machinery/netpod
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "netpod"
 
 	base_icon_state = "netpod"

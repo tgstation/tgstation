@@ -355,12 +355,8 @@
 	invisibility = 101
 	},
 /obj/structure/table,
-/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/escape{
-	pixel_y = 8
-	},
-/obj/item/pen/fourcolor{
-	pixel_y = 8
-	},
+/obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/escape,
+/obj/item/pen/fourcolor,
 /turf/open/indestructible/white,
 /area/lavaland/surface/outdoors/virtual_domain)
 "wz" = (
@@ -480,17 +476,13 @@
 /turf/closed/indestructible/binary,
 /area/virtual_domain/fullbright)
 "FI" = (
-/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
-	pixel_y = 12
-	},
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /obj/structure/table/glass,
 /turf/open/floor/carpet,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Gg" = (
 /obj/structure/table/glass,
-/obj/item/gun/magic/staff/honk{
-	pixel_y = 8
-	},
+/obj/item/gun/magic/staff/honk,
 /turf/open/floor/carpet,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Hq" = (
@@ -600,9 +592,7 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 "NW" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/spray/waterflower/superlube{
-	pixel_y = 8
-	},
+/obj/item/reagent_containers/spray/waterflower/superlube,
 /turf/open/floor/carpet,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Ok" = (
@@ -659,9 +649,7 @@
 	invisibility = 101
 	},
 /obj/structure/table,
-/obj/item/flashlight/lamp/bananalamp{
-	pixel_y = 8
-	},
+/obj/item/flashlight/lamp/bananalamp,
 /turf/open/indestructible/white,
 /area/lavaland/surface/outdoors/virtual_domain)
 "Sg" = (

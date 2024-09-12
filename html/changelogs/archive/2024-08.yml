@@ -821,3 +821,10 @@
   - bugfix: Stagger animation is no longer horrilbly jittery
   Xackii:
   - qol: revolver in roundstart holsters is on the last slot and not on first
+2024-08-30:
+  SmArtKar:
+  - bugfix: Projectiles no longer always play turf hit sound
+  - balance: Plexagon Crew Manifest is now a default PDA app for everyone, and is
+      free.
+  - balance: Plexagon Crew Manifest no longer provides Detomatix resistance, but security
+      records and status display control now do.

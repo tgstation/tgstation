@@ -31,7 +31,7 @@
 /obj/structure/guillotine
 	name = "guillotine"
 	desc = "A large structure used to remove the heads of traitors and treasonists."
-	icon = 'icons/obj/structures/guillotine.dmi'
+	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
 	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "guilliotine"

@@ -117,6 +117,7 @@
 	anchored = TRUE
 	density = TRUE
 	move_resist = INFINITY
+	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	appearance_flags = LONG_GLIDE
@@ -344,6 +345,7 @@
 	icon = 'icons/effects/magic.dmi'
 	icon_state = "tornado"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 8 SECONDS
 	movement_type = PHASING

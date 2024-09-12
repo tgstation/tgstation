@@ -1,7 +1,7 @@
 /obj/structure/spirit_board
 	name = "spirit board"
 	desc = "A wooden board with letters etched into it, used in seances."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "spirit_board"
 	resistance_flags = FLAMMABLE
 	density = TRUE

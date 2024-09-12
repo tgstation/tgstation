@@ -149,11 +149,10 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aM" = (
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	dir = 8
+	name = "Emergency Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aO" = (
@@ -164,12 +163,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aQ" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
 /obj/docking_port/mobile/emergency{
 	name = "Tram emergency shuttle"
-	},
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -199,8 +197,7 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock";
-	dir = 8
+	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

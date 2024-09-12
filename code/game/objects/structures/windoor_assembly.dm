@@ -20,9 +20,7 @@
 	//Vars to help with the icon's name
 	///Does the windoor open to the left or right?
 	var/facing = "l"
-	/// Whether this can make a secure windoor at all
-	var/can_secure = TRUE
-	/// Whether or not this creates a secure windoor
+	///Whether or not this creates a secure windoor
 	var/secure = FALSE
 	/**
 	  * Windoor (window door) assembly -Nodrak
@@ -162,7 +160,7 @@
 						name = "windoor assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
-			else if(istype(W, /obj/item/stack/sheet/plasteel) && can_secure && !secure)
+			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.get_amount() < 2)
 					to_chat(user, span_warning("You need more plasteel to do this!"))
@@ -303,23 +301,22 @@
 
 /obj/structure/windoor_assembly/proc/finish_door()
 	var/obj/machinery/door/window/windoor
-
-	var/created_type = get_created_type()
-	windoor = new created_type(loc)
-
 	if(secure)
+		windoor = new /obj/machinery/door/window/brigdoor(loc)
 		if(facing == "l")
-			windoor.icon_state = "left_secure_open"
-			windoor.base_state = "left_secure"
+			windoor.icon_state = "leftsecureopen"
+			windoor.base_state = "leftsecure"
 		else
-			windoor.icon_state = "right_secure_open"
-			windoor.base_state = "right_secure"
+			windoor.icon_state = "rightsecureopen"
+			windoor.base_state = "rightsecure"
+
 	else
+		windoor = new /obj/machinery/door/window(loc)
 		if(facing == "l")
-			windoor.icon_state = "left_open"
+			windoor.icon_state = "leftopen"
 			windoor.base_state = "left"
 		else
-			windoor.icon_state = "right_open"
+			windoor.icon_state = "rightopen"
 			windoor.base_state = "right"
 
 	windoor.setDir(dir)
@@ -350,9 +347,6 @@
 
 	qdel(src)
 
-/// Returns the typepath of windoor to make
-/obj/structure/windoor_assembly/proc/get_created_type()
-	return secure ? /obj/machinery/door/window/brigdoor : /obj/machinery/door/window
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
@@ -376,11 +370,3 @@
 
 	update_appearance()
 	return
-
-/obj/structure/windoor_assembly/half
-	icon = 'icons/obj/doors/windoor_half.dmi'
-	name = "short windoor Assembly"
-	can_secure = FALSE
-
-/obj/structure/windoor_assembly/half/get_created_type()
-	return /obj/machinery/door/window/half
