@@ -778,12 +778,26 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_malf_core"
 
+/datum/action/innate/core_return/Grant(mob/new_owner)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_SILICON_AI_VACATE_APC, PROC_REF(returned_to_core))
+
+/datum/action/innate/core_return/proc/returned_to_core(datum/source)
+	SIGNAL_HANDLER
+
+	Remove(source)
+	UnregisterSignal(source, COMSIG_SILICON_AI_VACATE_APC)
+
 /datum/action/innate/core_return/Activate()
 	var/obj/machinery/power/apc/apc = owner.loc
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	apc.malfvacate()
+	if(SEND_SIGNAL(owner, COMSIG_SILICON_AI_CORE_STATUS) & COMPONENT_CORE_ALL_GOOD)
+		apc.malfvacate()
+	else
+		to_chat(owner, span_danger("Linked core not detected!"))
+		return
 	qdel(src)
 
 /mob/living/silicon/ai/proc/toggle_camera_light()

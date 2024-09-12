@@ -340,11 +340,12 @@
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
 			else
-				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		mob_exit(occupant, forced = TRUE)
-		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
-			occupant.SetSleeping(destruction_sleep_duration)
+		else
+			mob_exit(occupant, forced = TRUE)
+			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+				occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)

@@ -5023,7 +5023,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "PR" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
 /area/virtual_domain)
