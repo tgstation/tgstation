@@ -142,13 +142,13 @@ export const moth_markings_color: Feature<string[]> = {
   component: FeatureTriColorInput,
 };
 
-export const has_wings: FeatureToggle = {
+export const wing_type: FeatureChoiced = {
   name: 'Add Part: Wings',
   category: 'GAMEPLAY',
   description: `
     When toggled, adds wings to your character.
   `,
-  component: CheckboxInput,
+  component: FeatureDropdownInput,
 };
 
 export const wings_color: Feature<string[]> = {

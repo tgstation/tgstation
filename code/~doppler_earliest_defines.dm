@@ -3,9 +3,21 @@
 #define DOPPLER_SPRITE_ACCESSORY_NOTAIL "No Tail"
 #define DOPPLER_SPRITE_ACCESSORY_NOEARS "No Ears"
 #define DOPPLER_SPRITE_ACCESSORY_NOSNOUT "No Snout"
+#define DOPPLER_SPRITE_ACCESSORY_NOWINGS "No Wings"
 
 /// Hi!  This file is here to work around some order-of-operations issues consistent humans & a couple other things have.
 /// If our overrides aren't loaded in early enough default TG stuff will end up in the critical [1] slot and break things.
+
+/// Wings
+/datum/sprite_accessory/wings_more/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOWINGS
+	icon_state = "none"
+
+/datum/sprite_accessory/moth_wings/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOWINGS
+	icon_state = "none"
 
 /// Ears
 /datum/sprite_accessory/ears/none
@@ -170,3 +182,4 @@
 #undef DOPPLER_SPRITE_ACCESSORY_NOTAIL
 #undef DOPPLER_SPRITE_ACCESSORY_NOEARS
 #undef DOPPLER_SPRITE_ACCESSORY_NOSNOUT
+#undef DOPPLER_SPRITE_ACCESSORY_NOWINGS

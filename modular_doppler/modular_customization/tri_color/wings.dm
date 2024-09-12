@@ -1,9 +1,8 @@
-// Gotta add to the selector too
-// TODO: can we migrate off of moth_wings for this?
-/*/datum/preference/choiced/wings/compile_constant_data()
+// Gotta add to the selector
+/datum/preference/choiced/wings/compile_constant_data()
 	var/list/data = ..()
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/wings_color::savefile_key
-	return data*/
+	return data
 
 /// Wing colors!
 /datum/preference/tri_color/wings_color
