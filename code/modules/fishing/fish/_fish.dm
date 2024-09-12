@@ -142,8 +142,8 @@
 	var/experisci_scannable = TRUE
 	/// cooldown on creating tesla zaps
 	COOLDOWN_DECLARE(electrogenesis_cooldown)
-	/// power of the tesla zap created by the fish in a bioelectric generator
-	var/electrogenesis_power = 10 MEGA JOULES
+	/// power of the tesla zap created by the fish in a bioelectric generator. Scales with size.
+	var/electrogenesis_power = 2 MEGA JOULES
 
 	/// The beauty this fish provides to the aquarium it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
@@ -234,6 +234,7 @@
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
 	size = new_size
+	electrogenesis_power = initial(electrogenesis_power) * size * 0.1
 	var/init_icon_state = initial(inhand_icon_state)
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
@@ -863,7 +864,7 @@
 	if(recently_petted)
 		to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
 		return
-	if(electrogenesis_power > 15 MEGA JOULES)
+	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && electrogenesis_power > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?
 	recently_petted = TRUE
 	SEND_SIGNAL(src, COMSIG_FISH_PETTED)
