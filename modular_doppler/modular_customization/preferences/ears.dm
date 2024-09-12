@@ -541,4 +541,3 @@
 		overlay.color = limb.owner.dna.features["ears_color_3"]
 		return overlay
 	return ..()
-
