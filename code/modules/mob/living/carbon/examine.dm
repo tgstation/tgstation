@@ -472,24 +472,32 @@
 	return
 
 /mob/living/carbon/human/get_hud_examine_info(mob/living/user)
+	. = list()
+
 	var/perpname = get_face_name(get_id_name(""))
+	var/title = ""
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (user.stat == CONSCIOUS || isobserver(user)) && user != src)
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
 			. += "Rank: [target_record.rank]"
 			. += "<a href='?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			. += separator_hr("Medical & Security Analysis")
+			title = separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
 			. += get_sechud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
-			. += separator_hr("Medical Analysis")
+			title = separator_hr("Medical Analysis")
 			. += get_medhud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			. += separator_hr("Security Analysis")
+			title = separator_hr("Security Analysis")
 			. += get_sechud_examine_info(user, target_record)
+
+	// applies the separator correctly without an extra line break
+	if(title && length(.))
+		.[1] = title + .[1]
+	return .
 
 /// Collects information displayed about src when examined by a user with a medical HUD.
 /mob/living/carbon/proc/get_medhud_examine_info(mob/living/user, datum/record/crew/target_record)
@@ -554,5 +562,10 @@
 		if(101 to INFINITY)
 			age_text = "withering away"
 	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))
+
+	if(istype(w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/undershirt = w_uniform
+		if(undershirt.has_sensor == BROKEN_SENSORS)
+			. += list(span_notice("The [undershirt]'s medical sensors are sparking."))
 
 #undef ADD_NEWLINE_IF_NECESSARY

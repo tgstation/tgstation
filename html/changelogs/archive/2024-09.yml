@@ -320,3 +320,16 @@
   r3dj4ck0424:
   - bugfix: The Syndicate have cleared up the static preventing them from sending
       their battlecruisers to Birdshot Station. Watch out, crew!
+2024-09-12:
+  LT3:
+  - qol: Quick repair suit sensors by hitting yourself with cable coil
+  - qol: Improved feedback for broken suit sensors
+  - bugfix: Ctrl+click on equipped uniforms enables suit sensors as expected
+  Melbert:
+  - bugfix: Med/sec hud examine
+  SmArtKar:
+  - bugfix: You can no longer pick up large parcels with evidence bags due to them
+      being normal-sized items
+  carlarctg:
+  - rscadd: Added an increasing chance for malfunction on repeated failed polling
+      for MM helmets
