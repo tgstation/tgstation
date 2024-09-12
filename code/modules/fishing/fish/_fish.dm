@@ -1063,6 +1063,7 @@
 	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
 		calculated_price *= 0.05
 	return round(calculated_price)
+
 /obj/item/fish/proc/get_happiness_value()
 	var/happiness_value = 0
 	if(recently_petted)
@@ -1076,7 +1077,11 @@
 		happiness_value++
 	if(ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
 		happiness_value++
-	return happiness_value
+	if(bites_amount) // ouch
+		happiness_value -= 2
+	if(health < initial(health) * 0.6)
+		happiness_value -= 1
+	return clamp(happiness_value, FISH_SAD, FISH_VERY_HAPPY)
 
 /obj/item/fish/proc/pet_fish(mob/living/user)
 	if(recently_petted)
