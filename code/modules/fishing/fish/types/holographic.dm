@@ -17,7 +17,6 @@
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
-	experisci_scannable = FALSE
 	beauty = /obj/item/fish/goldfish::beauty
 
 /obj/item/fish/holo/Initialize(mapload, apply_qualities = TRUE)
