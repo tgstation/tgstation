@@ -25,6 +25,9 @@
 	obj_flags = UNIQUE_RENAME
 	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
 
+	/// Flags for fish variables that would otherwise be TRUE/FALSE
+	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
+
 	/// width of aquarium visual icon
 	var/sprite_width
 	/// height of aquarium visual icon
@@ -59,16 +62,12 @@
 	var/status = FISH_ALIVE
 	///icon used when the fish is dead, ifset.
 	var/icon_state_dead
-	///If this fish should do the flopping animation
-	var/do_flop_animation = TRUE
 
 	/// Current fish health. Dies at 0.
 	var/health = 100
 	/// The message shown when the fish dies.
 	var/death_text = "%SRC dies."
 
-	/// Should this fish type show in fish catalog
-	var/show_in_catalog = TRUE
 	/// How rare this fish is in the random cases
 	var/random_case_rarity = FISH_RARITY_BASIC
 
@@ -138,8 +137,6 @@
 	var/min_pressure = WARNING_LOW_PRESSURE
 	var/max_pressure = HAZARD_HIGH_PRESSURE
 
-	/// If this fish type counts towards the Fish Species Scanning experiments
-	var/experisci_scannable = TRUE
 	/// cooldown on creating tesla zaps
 	COOLDOWN_DECLARE(electrogenesis_cooldown)
 	/// power of the tesla zap created by the fish in a bioelectric generator
@@ -147,8 +144,6 @@
 
 	/// The beauty this fish provides to the aquarium it's inserted in.
 	var/beauty = FISH_BEAUTY_GENERIC
-	///have we recently pet this fish
-	var/recently_petted = FALSE
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -159,9 +154,9 @@
 	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED), beauty)
 
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
-	if(do_flop_animation)
+	if(fish_flags & FISH_DO_FLOP_ANIM)
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
-	check_environment()
+	check_flopping()
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
@@ -225,15 +220,28 @@
 
 	update_size_and_weight(new_size, new_weight)
 
+/obj/item/fish/proc/remove_fillet_type()
+	if(!fillet_type)
+		return
+	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
+	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+
+/obj/item/fish/proc/add_fillet_type()
+	if(!fillet_type)
+		return
+	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
+	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
 	if(size)
-		if(fillet_type)
-			RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
+		remove_fillet_type()
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
+
 	size = new_size
+
 	var/init_icon_state = initial(inhand_icon_state)
 	switch(size)
 		if(0 to FISH_SIZE_TINY_MAX)
@@ -265,11 +273,7 @@
 		inhand_icon_state = "[inhand_icon_state]_wielded"
 		AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
-	if(fillet_type)
-		var/init_fillets = initial(num_fillets)
-		var/amount = max(round(init_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
-		num_fillets = amount
-		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, num_fillets, 0.5 SECONDS * num_fillets, screentip_verb = "Cut")
+	add_fillet_type()
 
 	if(weight)
 		for(var/reagent_type in grind_results)
@@ -425,7 +429,7 @@
 
 /obj/item/fish/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	check_environment()
+	check_flopping()
 
 /obj/item/fish/proc/enter_stasis()
 	ADD_TRAIT(src, TRAIT_FISH_STASIS, INNATE_TRAIT)
@@ -454,11 +458,11 @@
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
 
-/obj/item/fish/proc/check_environment()
+/obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
 		return
 
-	if(!do_flop_animation)
+	if(!(fish_flags & FISH_DO_FLOP_ANIM))
 		return
 
 	// Do additional stuff
@@ -492,7 +496,7 @@
 			status = FISH_ALIVE
 			health = initial(health) // since the fishe has been revived
 			last_feeding = world.time //reset hunger
-			check_environment()
+			check_flopping()
 			START_PROCESSING(SSobj, src)
 		if(FISH_DEAD)
 			status = FISH_DEAD
@@ -507,6 +511,51 @@
 	update_appearance()
 	update_fish_force()
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
+
+/obj/item/fish/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if(NAMEOF(src, status))
+			if(var_value != FISH_DEAD && var_value != FISH_ALIVE)
+				var_value = var_value ? FISH_ALIVE : FISH_DEAD
+			set_status(var_value)
+		if(NAMEOF(src, size))
+			if(!isnum(var_value) || var_value == 0)
+				return FALSE
+			update_size_and_weight(var_value, weight)
+		if(NAMEOF(src, weight))
+			if(!isnum(var_value) || var_value == 0)
+				return FALSE
+			update_size_and_weight(size, var_value)
+		if(NAMEOF(src, health))
+			if(!isnum(var_value))
+				return FALSE
+			adjust_health(health)
+		if(NAMEOF(src, fish_flags))
+			var/old_fish_flags = fish_flags
+			fish_flags = var_value
+			if((old_fish_flags ^ fish_flags) & FISH_DO_FLOP_ANIM) //the flopping flag wasn't added nor removed
+				return TRUE
+			if(fish_flags & FISH_DO_FLOP_ANIM)
+				RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
+			else
+				UnregisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START)
+			check_flopping()
+		if(NAMEOF(src, fillet_type))
+			if(!ispath(var_value))
+				return FALSE
+			remove_fillet_type()
+			fillet_type = var_value
+			add_fillet_type()
+		if(NAMEOF(src, num_fillets))
+			if(!isnum(var_value))
+				return FALSE
+			remove_fillet_type()
+			num_fillets = var_value
+			add_fillet_type()
+		else
+			return ..()
+
+	return TRUE
 
 /obj/item/fish/expose_reagents(list/reagents, datum/reagents/source, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
 	. = ..()
@@ -846,7 +895,7 @@
 	return round(calculated_price)
 /obj/item/fish/proc/get_happiness_value()
 	var/happiness_value = 0
-	if(recently_petted)
+	if(fish_flags & FISH_FLAG_PETTED)
 		happiness_value++
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER) || min((world.time - last_feeding) / feeding_frequency, 1) < 0.5)
 		happiness_value++
@@ -860,15 +909,18 @@
 	return happiness_value
 
 /obj/item/fish/proc/pet_fish(mob/living/user)
-	if(recently_petted)
+	if(fish_flags & FISH_FLAG_PETTED)
 		to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
 		return
 	if(electrogenesis_power > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?
-	recently_petted = TRUE
+	fish_flags |= FISH_FLAG_PETTED
 	SEND_SIGNAL(src, COMSIG_FISH_PETTED)
 	to_chat(user, span_notice("[src] dances around!"))
-	addtimer(VARSET_CALLBACK(src, recently_petted, FALSE), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
+
+/obj/item/fish/proc/undo_petted()
+	fish_flags &= ~FISH_FLAG_PETTED
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

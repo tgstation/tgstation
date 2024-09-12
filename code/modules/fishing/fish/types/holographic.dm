@@ -3,7 +3,7 @@
 	name = "holographic goldfish"
 	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
 	icon_state = /obj/item/fish/goldfish::icon_state
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 	random_case_rarity = FISH_RARITY_NOPE
 	dedicated_in_aquarium_icon_state = /obj/item/fish/goldfish::dedicated_in_aquarium_icon_state
 	aquarium_vc_color = /obj/item/fish/goldfish::aquarium_vc_color

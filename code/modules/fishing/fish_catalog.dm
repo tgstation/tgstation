@@ -17,7 +17,7 @@
 	if(!fish_info)
 		fish_info = list()
 		for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
-			if(!initial(fish.show_in_catalog))
+			if(!(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 				continue
 			var/list/fish_data = list()
 			fish_data["name"] = initial(fish.name)
