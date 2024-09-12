@@ -156,7 +156,7 @@
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(fish_flags & FISH_DO_FLOP_ANIM)
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
-	check_flopping()
+		check_flopping()
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
