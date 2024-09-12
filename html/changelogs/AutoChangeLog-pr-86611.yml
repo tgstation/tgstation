@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Fixed up a couple of Void Heretic rework descriptions."

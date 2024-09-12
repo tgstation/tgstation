@@ -129,6 +129,10 @@
 	return TRUE
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
