@@ -1,8 +1,10 @@
 \-\-- Setting up the Game \-\--
 
-To play the game you need: -\> Two Players -\> Two decks of exactly 40
-cards. No more than 4 copies of a single card in the deck. -\> A coin
--\> \[Optional\] A holodeck on the TGC setting
+To play the game you need: <br>
+-\> Two Players <br>
+-\> Two decks of exactly 40 cards. No more than 4 copies of a single card in the deck. <br>
+-\> A coin <br>
+-\> \[Optional\] A holodeck on the TGC setting <br>
 
 Flip the coin to decide who goes first, then keep the coin next to the
 other player, flipped with heads up. Both players start with 20
