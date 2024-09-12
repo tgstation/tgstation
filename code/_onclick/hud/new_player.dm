@@ -28,7 +28,7 @@
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
-/// Display buttons for relevant station traits
+/// Load and then display the buttons for relevant station traits
 /datum/hud/new_player/proc/show_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
@@ -45,26 +45,33 @@
 		LAZYSET(shown_station_trait_buttons, trait, sign_up_button)
 		RegisterSignal(trait, COMSIG_QDELETING, PROC_REF(remove_station_trait_button))
 
-	if(hud_version != HUD_STYLE_STANDARD)
+	place_station_trait_buttons()
+
+/// Display the buttosn for relevant station traits.
+/datum/hud/new_player/proc/place_station_trait_buttons()
+	if(hud_version != HUD_STYLE_STANDARD || !mymob?.client)
 		return
 
 	var/y_offset = 397
 	var/x_offset = 233
 	var/y_button_offset = 27
-	var/x_button_offset = 27
+	var/x_button_offset = -27
 	var/iteration = 0
 	for(var/trait in shown_station_trait_buttons)
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = shown_station_trait_buttons[trait]
 		iteration++
 		sign_up_button.screen_loc = offset_to_screen_loc(x_offset, y_offset, mymob.client.view)
-		y_offset += y_button_offset
 		mymob.client.screen |= sign_up_button
 		if (iteration >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
 			iteration = 0
 			y_offset = 397
-			x_offset -= x_button_offset
+			x_offset += x_button_offset
+		else
+			y_offset += y_button_offset
 
+/// Remove a station trait button, then re-order the rest.
 /datum/hud/new_player/proc/remove_station_trait_button(datum/station_trait/trait)
+	SIGNAL_HANDLER
 	var/atom/movable/screen/lobby/button/sign_up/remove_me = LAZYACCESS(shown_station_trait_buttons, trait)
 	if(!remove_me)
 		return
@@ -72,7 +79,7 @@
 	UnregisterSignal(trait, COMSIG_QDELETING)
 	static_inventory -= remove_me
 	qdel(remove_me)
-	show_station_trait_buttons()
+	place_station_trait_buttons()
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
