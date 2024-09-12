@@ -232,7 +232,7 @@
 	jostle_pain_mult = 0
 	ignore_throwspeed_threshold = TRUE
 	embed_chance = 100
-	rip_time = 10
+	rip_time = 1 SECONDS
 	fall_chance = 5
 
 // More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code

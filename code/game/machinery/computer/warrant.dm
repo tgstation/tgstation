@@ -153,11 +153,7 @@
 
 /// Prints a ticket for a listed fine.
 /obj/machinery/computer/warrant/proc/print_ticket(mob/user, list/params)
-	var/internal_source
-	if(source)
-		internal_source = source
-	else
-		internal_source = get_turf(src)
+	var/internal_source = source || get_turf(src)
 
 	if(printing)
 		balloon_alert(internal_source, "printer busy")
