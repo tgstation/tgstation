@@ -210,11 +210,14 @@
 
 ///The internal fishing rod of the athletic fishing gloves. The more athletic you're, the easier the minigame will be.
 /obj/item/fishing_rod/mob_fisher/athletic
+	name = "athletics fishing gloves"
 	icon = /obj/item/clothing/gloves/fishing::icon
 	icon_state = /obj/item/clothing/gloves/fishing::icon_state
 	line = null
 	bait = null
-	ui_description = "The integrated fishing rod of a pair of athletic fishing gloves"
+	ui_description = "A pair of gloves to fish without a fishing rod while training your athletics."
+	wiki_description = "<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b> It may hurt the user when catching larger fish."
+	show_in_wiki = TRUE //Show this cool pair of gloves in the wiki.
 
 /obj/item/fishing_rod/mob_fisher/athletic/Initialize(mapload)
 	. = ..()

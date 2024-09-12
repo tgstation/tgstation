@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes:
-  - bugfix: "some bot paths will show up to users with diagnostic huds again"

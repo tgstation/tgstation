@@ -153,6 +153,7 @@
 	RemoveElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		REMOVE_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak hidden")
 		loc.visible_message(span_notice("Light shifts around [loc], making the cloak around them invisible!"))
 
@@ -163,5 +164,6 @@
 	AddElement(/datum/element/heretic_focus)
 
 	if(isliving(loc))
+		ADD_TRAIT(loc, TRAIT_RESISTLOWPRESSURE, REF(src))
 		loc.balloon_alert(loc, "cloak revealed")
 		loc.visible_message(span_notice("A kaleidoscope of colours collapses around [loc], a cloak appearing suddenly around their person!"))
