@@ -57,14 +57,14 @@
 
 /datum/preference/choiced/fluff/icon_for(value)
 	var/datum/sprite_accessory/fluff = SSaccessories.fluff_list[value]
-	var/icon/final_icon = icon(fluff.icon, "m_fluff_[fluff.icon_state]_BEHIND")
-	final_icon.Blend(icon(fluff.icon, "m_fluff_[fluff.icon_state]_FRONT"), ICON_OVERLAY)
+	var/icon/final_icon = icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ")
+	final_icon.Blend(icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ"), ICON_OVERLAY)
 	return final_icon
 
 /// Overwrite lives here
 //	This is for the triple color channel
 /datum/bodypart_overlay/mutant/fluff
-	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_BEHIND | EXTERNAL_BEHIND_2 | EXTERNAL_BEHIND_3
+	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_ADJACENT | EXTERNAL_ADJACENT_2 | EXTERNAL_ADJACENT_3
 	feature_key_sprite = "fluff"
 
 /datum/bodypart_overlay/mutant/fluff/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
@@ -75,19 +75,19 @@
 	if(draw_layer == bitflag_to_layer(EXTERNAL_FRONT))
 		overlay.color = limb.owner.dna.features["fluff_color_1"]
 		return overlay
-	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND))
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT))
 		overlay.color = limb.owner.dna.features["fluff_color_1"]
 		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_FRONT_2))
 		overlay.color = limb.owner.dna.features["fluff_color_2"]
 		return overlay
-	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_2))
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_2))
 		overlay.color = limb.owner.dna.features["fluff_color_2"]
 		return overlay
 	else if(draw_layer == bitflag_to_layer(EXTERNAL_FRONT_3))
 		overlay.color = limb.owner.dna.features["fluff_color_3"]
 		return overlay
-	else if(draw_layer == bitflag_to_layer(EXTERNAL_BEHIND_3))
+	else if(draw_layer == bitflag_to_layer(EXTERNAL_ADJACENT_3))
 		overlay.color = limb.owner.dna.features["fluff_color_3"]
 		return overlay
 	return ..()
