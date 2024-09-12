@@ -100,7 +100,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return 0
 
-	src.say("Your timed sentence has started. Please feel the weight of your crimes.")
+	say("Your timed sentence has started. Please feel the weight of your crimes.")
 
 	activation_time = world.time
 	timing = TRUE
