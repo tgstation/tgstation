@@ -1,8 +1,7 @@
 /obj/structure/chair
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'icons/obj/structures/chairs.dmi'
+	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = TRUE
@@ -67,7 +66,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
 		return
 	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
-		var/image/echair_over_overlay = image('icons/obj/structures/chairs.dmi', loc, "echair_over")
+		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
@@ -159,6 +158,14 @@
 	gen_armrest()
 	return ..()
 
+/obj/structure/chair/comfy/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	cut_overlay(armrest)
+	QDEL_NULL(armrest)
+	gen_armrest()
+	return ..()
+
 /obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
@@ -208,7 +215,7 @@
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/comfy/shuttle/tactical
@@ -232,7 +239,7 @@
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/office/tactical
@@ -251,7 +258,7 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
-MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
 /obj/structure/chair/stool/narsie_act()
 	return
@@ -284,7 +291,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool)
 /obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
 	M.pixel_y -= 4
 
-MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/stool/bamboo
 	name = "bamboo stool"
@@ -299,7 +306,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
-	icon = 'icons/obj/structures/chairs.dmi'
+	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
@@ -425,7 +432,6 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	origin_type = /obj/structure/chair/wood/wings
 
 /obj/structure/chair/old
-	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "strange chair"
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
@@ -520,7 +526,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 /obj/item/chair/plastic
 	name = "folding plastic chair"
 	desc = "Somehow, you can always find one under the wrestling ring."
-	icon = 'icons/obj/structures/chairs.dmi'
+	icon = 'icons/obj/chairs.dmi'
 	icon_state = "folded_chair"
 	inhand_icon_state = "folded_chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'

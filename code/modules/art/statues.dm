@@ -3,7 +3,6 @@
 #define SCULPT_SOUND_INCREMENT 4
 
 /obj/structure/statue
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/art/statue.dmi'

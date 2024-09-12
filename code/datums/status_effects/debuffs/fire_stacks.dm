@@ -136,6 +136,12 @@
 	/// Type of mob light emitter we use when on fire
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+	if(owner.on_fire)
+		return
+
+	return "[owner.p_They()] [owner.p_are()] covered in something flammable."
+
 /datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
 	SIGNAL_HANDLER
 
@@ -221,8 +227,9 @@
 		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
 
 	victim.adjust_bodytemperature(amount_to_heat)
-	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
-	victim.add_mob_memory(/datum/memory/was_burning)
+	if (!(HAS_TRAIT(victim, TRAIT_RESISTHEAT)))
+		victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
+		victim.add_mob_memory(/datum/memory/was_burning)
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -293,6 +300,9 @@
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
+
+/datum/status_effect/fire_handler/wet_stacks/get_examine_text()
+	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	adjust_stacks(-0.5 * seconds_between_ticks)

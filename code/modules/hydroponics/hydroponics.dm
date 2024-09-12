@@ -1,12 +1,12 @@
 
 /obj/machinery/hydroponics
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	interaction_flags_click = FORBID_TELEKINESIS_REACH

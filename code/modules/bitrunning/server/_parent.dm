@@ -2,7 +2,6 @@
  * The base object for the quantum server
  */
 /obj/machinery/quantum_server
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "quantum server"
 
 	circuit = /obj/item/circuitboard/machine/quantum_server

@@ -103,8 +103,15 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/protein = 4, //The halluginogen comes from the fish trait.
 	)
+
+///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
+/obj/item/food/fishmeat/gunner_jellyfish/supply
+
+/obj/item/food/fishmeat/gunner_jellyfish/supply/Initialize(mapload)
+	food_reagents[/datum/reagent/toxin/mindbreaker/fish] = 2
+	return ..()
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"
