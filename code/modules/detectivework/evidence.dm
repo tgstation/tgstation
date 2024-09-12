@@ -10,7 +10,7 @@
 	item_flags = NOBLUDGEON
 
 /obj/item/evidencebag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with == loc || !isitem(interacting_with) || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+	if(interacting_with == loc || !isitem(interacting_with) || HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return NONE
 	if(evidencebagEquip(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
