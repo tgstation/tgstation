@@ -404,7 +404,7 @@
 	if(!rune.Adjacent(cultist))
 		return FALSE
 
-	if(cultist.incapacitated())
+	if(cultist.incapacitated)
 		return FALSE
 
 	if(cultist.stat == DEAD)
@@ -427,7 +427,7 @@
 	if(QDELETED(tool) || !cultist.is_holding(tool))
 		return FALSE
 
-	if(cultist.incapacitated() || cultist.stat == DEAD)
+	if(cultist.incapacitated || cultist.stat == DEAD)
 		to_chat(cultist, span_warning("You can't draw a rune right now."))
 		return FALSE
 

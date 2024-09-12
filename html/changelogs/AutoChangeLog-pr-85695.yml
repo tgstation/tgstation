@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - balance: "Removes the research requirement from cyborg endoskeletons, meaning they can be built at roundstart again."

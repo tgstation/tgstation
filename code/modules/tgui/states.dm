@@ -67,7 +67,7 @@
 	else if(stat)
 		return UI_DISABLED
 	// Update UIs if incapicitated but concious.
-	else if(incapacitated())
+	else if(incapacitated)
 		return UI_UPDATE
 	return UI_INTERACTIVE
 

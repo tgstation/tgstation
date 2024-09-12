@@ -1,2 +1,2 @@
 output_name = "rplasmaglass_table"
-template = "bitmask/table.toml"
+template = "bitmask/diagonal_32x32.toml"

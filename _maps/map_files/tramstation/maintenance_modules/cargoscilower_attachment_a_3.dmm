@@ -20,12 +20,8 @@
 "h" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 10
-	},
-/obj/item/stock_parts/power_store/cell/high/empty{
-	pixel_y = 10
-	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "n" = (
@@ -49,9 +45,7 @@
 /area/station/maintenance/starboard/central)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "J" = (
@@ -76,9 +70,7 @@
 "R" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/radio/off{
-	pixel_y = 9
-	},
+/obj/item/radio/off,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "S" = (
@@ -95,16 +87,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/stock_parts/power_store/cell/empty{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/stock_parts/power_store/cell/empty{
-	pixel_x = 7;
-	pixel_y = 9
+	pixel_x = -5
 	},
 /obj/item/stock_parts/power_store/cell/empty{
 	pixel_x = 2;
-	pixel_y = 16
+	pixel_y = 8
+	},
+/obj/item/stock_parts/power_store/cell/empty{
+	pixel_x = 7
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)

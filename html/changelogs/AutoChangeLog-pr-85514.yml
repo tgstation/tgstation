@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Hydraulic clamps (the mech tool) can force powered doors open again."

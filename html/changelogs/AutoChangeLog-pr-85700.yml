@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Ash drakes no longer get stuck in flight if their target changes Z levels or is destroyed and doesn't spawn lavaland turfs after the lava arena attack ends"

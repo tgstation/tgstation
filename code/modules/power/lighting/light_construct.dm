@@ -38,22 +38,6 @@
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/structure/light_construct/setDir(newdir)
-	. = ..()
-	switch(dir)
-		if(NORTH)
-			pixel_x = 0
-			pixel_y = 24
-		if(SOUTH)
-			pixel_x = 0
-			pixel_y = 16
-		if(EAST)
-			pixel_x = 0
-			pixel_y = 0
-		if(WEST)
-			pixel_x = 0
-			pixel_y = 0
-
 /obj/structure/light_construct/get_cell()
 	return cell
 

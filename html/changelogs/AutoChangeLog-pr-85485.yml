@@ -1,4 +1,0 @@
-author: "Astrogem2"
-delete-after: True
-changes:
-  - bugfix: "Raw durathread bundles and sinew strands no longer make metal clang sounds."

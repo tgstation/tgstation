@@ -3,12 +3,12 @@
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
-	icon = 'icons/obj/machines/air_alarm.dmi'
-	icon_state = "alarm"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "alarmp"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
-	req_access = list(ACCESS_ATMOSPHERICS)
+	req_access = list(ACCESS_ENGINEERING)
 	max_integrity = 250
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
@@ -83,12 +83,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	fire = 90
 	acid = 30
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
-
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_wires(new /datum/wires/airalarm(src))
-
 	if(ndir)
 		setDir(ndir)
 
@@ -124,7 +121,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		/obj/item/circuit_component/air_alarm_scrubbers,
 		/obj/item/circuit_component/air_alarm_vents
 	))
-	AddComponent(/datum/component/examine_balloon)
 
 	GLOB.air_alarms += src
 	update_appearance()
@@ -346,15 +342,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 
 	return data
 
-/obj/machinery/airalarm/ui_act(action, params)
+/obj/machinery/airalarm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
-	if((locked && !HAS_SILICON_ACCESS(usr)) || (HAS_SILICON_ACCESS(usr) && aidisabled))
+	var/mob/user = ui.user
+	if((locked && !HAS_SILICON_ACCESS(user)) || (HAS_SILICON_ACCESS(user) && aidisabled))
 		return
 
-	var/mob/user = usr
 	var/area/area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 
 	ASSERT(!isnull(area))
@@ -469,7 +465,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 			var/threshold_type = params["threshold_type"]
 			var/value = params["value"]
 			tlv.set_value(threshold_type, value)
-			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			check_enviroment()
 
@@ -480,7 +476,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 				return
 			var/threshold_type = params["threshold_type"]
 			tlv.reset_value(threshold_type)
-			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			check_enviroment()
 
@@ -497,7 +493,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 				disconnect_sensor()
 
 		if ("lock")
-			togglelock(usr)
+			togglelock(user)
 			return TRUE
 
 	update_appearance()
@@ -532,27 +528,25 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 				icon_state = "alarm_b1"
 		return ..()
 
-	icon_state = isnull(connected_sensor) ? "alarm" : "alarm_remote"
+	icon_state = isnull(connected_sensor) ? "alarmp" : "alarmp_remote"
 	return ..()
 
 /obj/machinery/airalarm/update_overlays()
 	. = ..()
-	// Open panels will only display a light on the final buildstage
-	if(panel_open)
-		if(buildstage == AIR_ALARM_BUILD_COMPLETE)
-			. += mutable_appearance(icon, "light-out", layer, src, plane)
+
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
-		. += mutable_appearance(icon, "light-out", layer, src, plane)
-		return ..()
+	var/state
+	if(danger_level == AIR_ALARM_ALERT_HAZARD)
+		state = "alarm1"
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+		state = "alarm2"
+	else
+		state = "alarm0"
 
-	var/alert_level = danger_level
-	var/area/our_area = get_area(src)
-	if(our_area.active_alarms[ALARM_ATMOS])
-		alert_level = 2
-	. += mutable_appearance(icon, "light-[alert_level]")
-	. += emissive_appearance(icon, "light-[alert_level]", src, alpha)
+	. += mutable_appearance(icon, state)
+	. += emissive_appearance(icon, state, src, alpha = src.alpha)
 
 /// Check the current air and update our danger level.
 /// [/obj/machinery/airalarm/var/danger_level]
@@ -626,6 +620,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	if(should_apply)
 		selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 /obj/machinery/airalarm/proc/speak(warning_message)
 	if(machine_stat & (BROKEN|NOPOWER))

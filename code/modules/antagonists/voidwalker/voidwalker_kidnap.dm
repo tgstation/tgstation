@@ -72,6 +72,8 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 /obj/effect/wisp_mobile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 
+	maybe_loop_us(movement_dir)
+
 	var/obj/food = locate(food_type) in loc
 	if(!food)
 		return
@@ -93,6 +95,23 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	gone.remove_traits(wisp_driver_traits, REF(src))
 	to_chat(gone, span_boldwarning("You feel it would be very bad to get caught again."))
 	qdel(src)
+
+/// Loop us around, maybe, if we're going to bump into a wall
+/obj/effect/wisp_mobile/proc/maybe_loop_us(movement_dir)
+	var/turf/check_turf = get_step(get_turf(src), movement_dir)
+	if(!check_turf?.density) //we're not facing a wall, so dont do anything
+		return
+
+	// Loop us to the other side
+	var/reversed_dir = turn(movement_dir, 180)
+	check_turf = get_turf(src)
+
+	while(!check_turf.density)
+		check_turf = get_step(check_turf, reversed_dir)
+
+	// We found the wall on the opposite side, so take two steps back (one to get off the wall, another to not be wall adjacent)
+	check_turf = get_step(get_step(check_turf, movement_dir), movement_dir)
+	forceMove(check_turf)
 
 /// we only exist to be eaten by wisps for food 😔👊
 /obj/effect/wisp_food

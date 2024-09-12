@@ -18,8 +18,10 @@
 	var/has_water_reclaimer = TRUE
 	///Units of water to reclaim per second
 	var/reclaim_rate = 0.5
+	///Amount of shift the pixel for placement
+	var/pixel_shift = 14
 
-SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 /obj/structure/sink/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -30,20 +32,30 @@ SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
 
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(100, NO_REACT)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(dispensedreagent, 100)
-	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
-	find_and_hang_on_wall()
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 
 /obj/structure/sink/examine(mob/user)
 	. = ..()
 	if(has_water_reclaimer)
 		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
 	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
-
-/obj/structure/sink/wall_mount_common_plane(direction)
-	return TRUE
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -234,8 +246,9 @@ SINK_DIRECTIONAL_HELPERS(/obj/structure/sink)
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 	pixel_z = 4
+	pixel_shift = 16
 
-SINK_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sink/gasstation
 	name = "plasma fuel station"

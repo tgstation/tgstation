@@ -40,7 +40,7 @@
 	name = "locked door"
 	desc = "This door only opens under certain conditions. It looks virtually indestructible."
 	icon = 'icons/obj/doors/puzzledoor/default.dmi'
-	icon_state = "closed"
+	icon_state = "door_closed"
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
@@ -75,24 +75,6 @@
 	if(!isnull(puzzle_id) && uses_queuelinks)
 		SSqueuelinks.add_to_queue(src, puzzle_id)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
-	update_appearance()
-
-/obj/machinery/door/puzzle/update_icon_state()
-	. = ..()
-	switch(animation)
-		if("opening")
-			icon_state = "opening"
-		if("closing")
-			icon_state = "closing"
-		else
-			icon_state = density ? "closed" : "open_top"
-
-/obj/machinery/door/puzzle/update_overlays()
-	. = ..()
-	if(!density)
-		// If we're open we layer the bit below us "above" any mobs so they can walk through
-		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
@@ -107,14 +89,14 @@
 /obj/machinery/door/puzzle/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 0.7 SECONDS
+			return 1.0 SECONDS
 
 /obj/machinery/door/puzzle/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.5 SECONDS
+			return 0.8 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 0.7 SECONDS
+			return 1.0 SECONDS
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()

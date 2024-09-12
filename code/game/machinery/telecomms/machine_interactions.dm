@@ -2,7 +2,6 @@
 // of basic interactions with the machines.
 
 /obj/machinery/telecomms
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
 	var/tempfreq = FREQ_COMMON
@@ -83,7 +82,7 @@
 
 	return data
 
-/obj/machinery/telecomms/ui_act(action, params)
+/obj/machinery/telecomms/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

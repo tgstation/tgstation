@@ -94,6 +94,10 @@
 		needed_slots -= needed_slot
 	return !length(needed_slots)
 
+/// Additional checks for whenever a module can be installed into a suit or not
+/obj/item/mod/module/proc/can_install(obj/item/mod/control/mod)
+	return TRUE
+
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.wearer)
@@ -200,7 +204,7 @@
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
-	if(!(allow_flags & MODULE_ALLOW_INCAPACITATED) && mod.wearer.incapacitated(IGNORE_GRAB))
+	if(!(allow_flags & MODULE_ALLOW_INCAPACITATED) && INCAPACITATED_IGNORING(mod.wearer, INCAPABLE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
 	if(!used())

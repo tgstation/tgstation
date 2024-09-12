@@ -1,5 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes:
-  - bugfix: "illustrious ethereals now properly get the tenacious trait"
-  - code_imp: "more species features have been moved to their individual body parts."

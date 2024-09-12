@@ -13,7 +13,11 @@
 
 /turf/closed/wall/bathhouse
 	desc = "It's cool to the touch, pleasantly so."
-	icon = 'icons/turf/walls/bathroom_wall.dmi'
+	icon = 'icons/turf/shuttleold.dmi'
+	icon_state = "block"
+	base_icon_state = "block"
+	smoothing_flags = NONE
+	canSmoothWith = null
 	rust_resistance = RUST_RESISTANCE_BASIC
 
 /area/ruin/powered/mailroom
@@ -40,7 +44,7 @@
 	mood_message = "I feel like I am being watched..."
 
 /area/ruin/bughabitat
-	name = "\improper Entemology Outreach Center"
+	name = "\improper Entomology Outreach Center"
 	mood_bonus = 1
 	mood_message = "This place seems strangely serene."
 

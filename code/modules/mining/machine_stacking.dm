@@ -62,7 +62,7 @@
 			))
 	return data
 
-/obj/machinery/mineral/stacking_unit_console/ui_act(action, list/params)
+/obj/machinery/mineral/stacking_unit_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

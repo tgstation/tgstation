@@ -9,6 +9,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/shipping_container/Initialize(mapload)
 	. = ..()

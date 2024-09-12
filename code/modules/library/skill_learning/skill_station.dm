@@ -2,7 +2,6 @@
 #define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
 /obj/machinery/skill_station
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper Skillsoft station"
 	desc = "Learn skills with only minimal chance for brain damage."
 
@@ -253,7 +252,7 @@
 		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 
-/obj/machinery/skill_station/ui_act(action, list/params)
+/obj/machinery/skill_station/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -115,6 +115,7 @@
 	icon_state = "frontwalltop"
 	density = FALSE
 	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+	plane = ABOVE_GAME_PLANE
 
 
 /obj/structure/fluff/bus/passable/seat
@@ -206,6 +207,7 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"

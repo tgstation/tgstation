@@ -6,7 +6,8 @@
 		return
 
 	. = ..()
-	if(update_overlay)
+	// And now, separately for cleanness, the lighting changing
+	if(!update_state)
 		switch(charging)
 			if(APC_NOT_CHARGING)
 				set_light_color(COLOR_SOFT_RED)
@@ -19,96 +20,88 @@
 
 	set_light(0)
 
+/obj/machinery/power/apc/update_icon_state()
+	if(!update_state)
+		icon_state = "apc0"
+		return ..()
+	if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
+		var/basestate = "apc[cell ? 2 : 1]"
+		if(update_state & UPSTATE_OPENED1)
+			icon_state = (update_state & (UPSTATE_MAINT|UPSTATE_BROKE)) ? "apcmaint" : basestate
+		else if(update_state & UPSTATE_OPENED2)
+			icon_state = "[basestate][((update_state & UPSTATE_BROKE) || malfhack) ? "-b" : null]-nocover"
+		return ..()
+	if(update_state & UPSTATE_BROKE)
+		icon_state = "apc-b"
+		return ..()
+	if(update_state & UPSTATE_WIREEXP)
+		icon_state = "apcewires"
+		return ..()
+	if(update_state & UPSTATE_MAINT)
+		icon_state = "apc0"
+	return ..()
+
 /obj/machinery/power/apc/update_overlays()
 	. = ..()
-
-	if(update_overlay & UPOVERLAY_TERMINAL)
-		. += mutable_appearance(icon, "terminal")
-
-	if(update_overlay & UPSTATE_CELL_IN)
-		. += mutable_appearance(icon, "cell")
-
-	if(update_overlay & UPSTATE_WIREEXP)
-		. += mutable_appearance(icon, "tray")
-
-		if(update_overlay & UPOVERLAY_ELECTRONICS_INSERT)
-			. += mutable_appearance(icon, "electronics")
-		if(update_overlay & UPOVERLAY_TERMINAL)
-			. += mutable_appearance(icon, "wires_secured")
-
-	// Wallening todo: this will render below the byond darkness plane when screwed? open, and get cut off
-	// Figure out how you want to handle that, thanks
-	if(update_overlay & UPSTATE_OPENED1)
-		. += mutable_appearance(icon, "hatch-open")
-	else if(!(update_overlay & UPSTATE_OPENED2))
-		. += mutable_appearance(icon, "hatch-shut")
-
-	if(!locked)
-		. += mutable_appearance(icon, "apc_unlocked")
-
-	if(update_overlay & UPSTATE_BROKE)
-		. += mutable_appearance(icon, "broken_overlay")
-
-	if((machine_stat & (BROKEN|MAINT)))
+	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
-	// If we're emagged, these'll get temporarially overrided by the flickering overlay
-	. += mutable_appearance(icon, "state-[charging]")
-	. += emissive_appearance(icon, "state-[charging]", src)
-
-	if(!operating || update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2))
+	. += mutable_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]", src)
+	. += mutable_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]", src)
+	if(!operating)
 		return
 
-	. += mutable_appearance(icon, "equip-[equipment]")
-	. += emissive_appearance(icon, "equip-[equipment]", src)
-	. += mutable_appearance(icon, "light-[lighting]")
-	. += emissive_appearance(icon, "light-[lighting]", src)
-	. += mutable_appearance(icon, "enviro-[environ]")
-	. += emissive_appearance(icon, "enviro-[environ]", src)
+	. += mutable_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]", src)
+	. += mutable_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]", src)
+	. += mutable_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]", src)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
 	SIGNAL_HANDLER
+	. = NONE
+
+	// Handle icon status:
+	var/new_update_state = NONE
+	if(machine_stat & BROKEN)
+		new_update_state |= UPSTATE_BROKE
+	if(machine_stat & MAINT)
+		new_update_state |= UPSTATE_MAINT
+
+	if(opened)
+		new_update_state |= (opened << UPSTATE_COVER_SHIFT)
+		if(cell)
+			new_update_state |= UPSTATE_CELL_IN
+
+	else if(panel_open)
+		new_update_state |= UPSTATE_WIREEXP
+
+	if(new_update_state != update_state)
+		update_state = new_update_state
+		. |= UPDATE_ICON_STATE
 
 	// Handle overlay status:
 	var/new_update_overlay = NONE
 	if(operating)
 		new_update_overlay |= UPOVERLAY_OPERATING
 
-	if(locked)
-		new_update_overlay |= UPOVERLAY_LOCKED
+	if(!update_state)
+		if(locked)
+			new_update_overlay |= UPOVERLAY_LOCKED
 
-	if(terminal)
-		new_update_overlay |= UPOVERLAY_TERMINAL
-	// Handle icon status:
-	if(machine_stat & BROKEN)
-		new_update_overlay |= UPSTATE_BROKE
-	if(machine_stat & MAINT)
-		new_update_overlay |= UPSTATE_MAINT
-
-	if(opened)
-		new_update_overlay |= (opened << UPSTATE_COVER_SHIFT)
-	if(cell)
-		new_update_overlay |= UPSTATE_CELL_IN
-
-	if(panel_open)
-		new_update_overlay |= UPSTATE_WIREEXP
-
-	if(has_electronics)
-		new_update_overlay |= UPOVERLAY_ELECTRONICS_INSERT
-
-	if(has_electronics == APC_ELECTRONICS_SECURED)
-		new_update_overlay |= UPOVERLAY_ELECTRONICS_FASTENED
-
-	new_update_overlay |= (charging << UPOVERLAY_CHARGING_SHIFT)
-	new_update_overlay |= (equipment << UPOVERLAY_EQUIPMENT_SHIFT)
-	new_update_overlay |= (lighting << UPOVERLAY_LIGHTING_SHIFT)
-	new_update_overlay |= (environ << UPOVERLAY_ENVIRON_SHIFT)
+		new_update_overlay |= (charging << UPOVERLAY_CHARGING_SHIFT)
+		new_update_overlay |= (equipment << UPOVERLAY_EQUIPMENT_SHIFT)
+		new_update_overlay |= (lighting << UPOVERLAY_LIGHTING_SHIFT)
+		new_update_overlay |= (environ << UPOVERLAY_ENVIRON_SHIFT)
 
 	if(new_update_overlay != update_overlay)
 		update_overlay = new_update_overlay
-		return UPDATE_OVERLAYS
-	return NONE
+		. |= UPDATE_OVERLAYS
+
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
@@ -116,15 +109,7 @@
 
 // Shows a dark-blue interface for a moment. Shouldn't appear on cameras.
 /obj/machinery/power/apc/proc/flicker_hacked_icon()
-	var/image/hacker_image = image(icon = icon, loc = src, icon_state = "emagged", layer = FLOAT_LAYER)
-	if(!(update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2)))
-		hacker_image.add_overlay(mutable_appearance(icon, "equip-emag"))
-		hacker_image.add_overlay(emissive_appearance(icon, "equip-emag", src))
-		hacker_image.add_overlay(mutable_appearance(icon, "light-emag"))
-		hacker_image.add_overlay(emissive_appearance(icon, "light-emag", src))
-		hacker_image.add_overlay(mutable_appearance(icon, "enviro-emag"))
-		hacker_image.add_overlay(emissive_appearance(icon, "enviro-emag", src))
-
+	var/image/hacker_image = image(icon = 'icons/obj/machines/wallmounts.dmi', loc = src, icon_state = "apcemag", layer = FLOAT_LAYER)
 	var/list/mobs_to_show = list()
 	// Collecting mobs the APC can see for this animation, rather than mobs that can see the APC. Important distinction, intended such that mobs on camera / with XRAY cannot see the flicker.
 	for(var/mob/viewer in view(src))

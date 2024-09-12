@@ -1,5 +1,4 @@
 /obj/machinery/mech_bay_recharge_port
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
 	icon = 'icons/obj/machines/mech_bay.dmi'
@@ -115,7 +114,7 @@
 		ui = new(user, src, "MechBayPowerConsole", name)
 		ui.open()
 
-/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
+/obj/machinery/computer/mech_bay_power_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

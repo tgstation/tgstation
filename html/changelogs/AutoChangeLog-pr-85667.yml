@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - balance: "Multiple gloves/shoes that had armor values but failed to apply them got fixed"

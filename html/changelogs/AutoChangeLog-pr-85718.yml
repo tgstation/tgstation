@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - image: "Durand shield got a glowup"
-  - bugfix: "Durand shield no longer instantly drains its battery"
-  - bugfix: "Mech UI no longer lies about the amount of power your mech has left"
