@@ -42,7 +42,7 @@
 [BARTENDER]
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
-"# Required Character Age" = 0
+"# Required Character Age" = 21
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
@@ -63,7 +63,7 @@
 [CAPTAIN]
 "# Playtime Requirements" = 180
 "# Required Account Age" = 14
-"# Required Character Age" = 0
+"# Required Character Age" = 30
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
@@ -91,14 +91,14 @@
 [CHIEF_ENGINEER]
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
-"# Required Character Age" = 0
+"# Required Character Age" = 25
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
 [CHIEF_MEDICAL_OFFICER]
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
-"# Required Character Age" = 0
+"# Required Character Age" = 30
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
@@ -154,14 +154,14 @@
 [HEAD_OF_PERSONNEL]
 "# Playtime Requirements" = 180
 "# Required Account Age" = 10
-"# Required Character Age" = 0
+"# Required Character Age" = 25
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
 [HEAD_OF_SECURITY]
 "# Playtime Requirements" = 300
 "# Required Account Age" = 14
-"# Required Character Age" = 0
+"# Required Character Age" = 25
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
@@ -217,14 +217,14 @@
 [QUARTERMASTER]
 "# Playtime Requirements" = 0
 "# Required Account Age" = 7
-"# Required Character Age" = 0
+"# Required Character Age" = 21
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
 [RESEARCH_DIRECTOR]
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
-"# Required Character Age" = 0
+"# Required Character Age" = 25
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
@@ -266,7 +266,7 @@
 [VETERAN_ADVISOR]
 "# Playtime Requirements" = 6000
 "# Required Account Age" = 7
-"# Required Character Age" = 0
+"# Required Character Age" = 45
 "# Spawn Positions" = 0
 "# Total Positions" = 0
 
