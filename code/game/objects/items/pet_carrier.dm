@@ -5,7 +5,7 @@
 /obj/item/pet_carrier
 	name = "pet carrier"
 	desc = "A big white-and-blue pet carrier. Good for carrying <s>meat to the chef</s> cute animals around."
-	icon = 'icons/obj/storage/pet_carrier.dmi'
+	icon = 'icons/obj/pet_carrier.dmi'
 	base_icon_state = "pet_carrier"
 	icon_state = "pet_carrier_open"
 	inhand_icon_state = "pet_carrier"
@@ -182,7 +182,7 @@
 	add_occupant(target)
 
 /obj/item/pet_carrier/proc/add_occupant(mob/living/occupant)
-	if(occupant in occupants || !istype(occupant))
+	if((occupant in occupants) || !istype(occupant))
 		return
 	occupant.forceMove(src)
 	occupants += occupant

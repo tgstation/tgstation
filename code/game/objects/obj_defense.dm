@@ -1,3 +1,4 @@
+
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
 	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))

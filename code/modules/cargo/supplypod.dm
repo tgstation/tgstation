@@ -546,6 +546,7 @@
 	glow_effect.icon_state = "pod_glow_" + style::glow_color
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 	RegisterSignal(glow_effect, COMSIG_QDELETING, PROC_REF(remove_glow))
 
 /obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -591,6 +592,7 @@
 	icon_state = "pod_glow_green"
 	desc = ""
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 255
 
@@ -725,10 +727,12 @@
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
 	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
-	for (var/i in 1 to length(smoke_effects))
+	var/turf/our_turf = get_turf(drop_location())
+	for ( var/i in 1 to length(smoke_effects))
 		var/obj/effect/supplypod_smoke/smoke_part = new (drop_location())
 		if (i == 1)
 			smoke_part.layer = FLY_LAYER
+			SET_PLANE(smoke_part, ABOVE_GAME_PLANE, our_turf)
 			smoke_part.icon_state = "smoke_start"
 		smoke_part.transform = matrix().Turn(rotation)
 		smoke_effects[i] = smoke_part

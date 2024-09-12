@@ -426,7 +426,7 @@
 
 /**
  * When the ore vent cannot spawn a mob due to being blocked from all sides, we cause some MILD, MILD explosions.
- * Explosion matches a gibtonite light explosion, as a way to clear neartby solid structures, with a high likelyhood of breaking the NODE drone.
+ * Explosion matches a gibtonite light explosion, as a way to clear nearby solid structures, with a high likelihood of breaking the NODE drone.
  */
 /obj/structure/ore_vent/proc/anti_cheese()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = FALSE)

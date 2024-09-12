@@ -1,5 +1,4 @@
 /obj/machinery/power/emitter
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/machines/engine/singularity.dmi'
@@ -422,7 +421,7 @@
 	. = ..()
 
 /obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
-	if(user.incapacitated() || !istype(user))
+	if(user.incapacitated || !istype(user))
 		return
 	for(var/atom/movable/atom in get_turf(src))
 		if(atom.density && (atom != src && atom != buckled_mob))

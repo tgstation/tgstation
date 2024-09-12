@@ -51,7 +51,7 @@
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
 		balloon_alert(user, "circuit installed")
 		buildstage = AIR_ALARM_BUILD_NO_WIRES
 		update_appearance()
@@ -182,6 +182,7 @@
 /obj/item/wallframe/airalarm
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms."
-	icon = 'icons/obj/machines/air_alarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
+	pixel_shift = 27
