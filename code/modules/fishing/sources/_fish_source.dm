@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/currently_on_regen
 	/// Text shown as baloon alert when you roll a dud in the table
 	var/duds = list("it was nothing", "the hook is empty")
-	/// Baseline difficulty for fishing in this spot
+	/// Baseline difficulty for fishing in this spot. THIS IS ADDED TO THE DEFAULT DIFFICULTY OF THE MINIGAME (15)
 	var/fishing_difficulty = FISHING_DEFAULT_DIFFICULTY
 	/// How the spot type is described in fish catalog section about fish sources, will be skipped if null
 	var/catalog_description
@@ -127,6 +127,19 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /// Called below above proc, in case the fishing source has anything to do that isn't denial
 /datum/fish_source/proc/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return
+
+///Comsig proc from the fishing minigame for 'calculate_difficulty'
+/datum/fish_source/proc/calculate_difficulty_minigame(datum/fishing_challenge/challenge, reward_path, obj/item/fishing_rod/rod, mob/fisherman, list/difficulty_holder)
+	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
+	difficulty_holder[1] += calculate_difficulty(reward_path, rod, fisherman)
+
+	// Difficulty modifier added by the fisher's skill level
+	if(!(challenge.special_effects & FISHING_MINIGAME_RULE_NO_EXP))
+		difficulty_holder[1] += fisherman.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)
+
+	if(challenge.special_effects & FISHING_MINIGAME_RULE_KILL)
+		challenge.RegisterSignal(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, TYPE_PROC_REF(/datum/fishing_challenge, hurt_fish))
 
 /**
  * Calculates the difficulty of the minigame:
@@ -187,7 +200,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	. += additive_mod
 	. *= multiplicative_mod
 
-/// In case you want more complex rules for specific spots
+///Comsig proc from the fishing minigame for 'roll_reward'
+/datum/fish_source/proc/roll_reward_minigame(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
+	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
+	rewards += roll_reward(rod, fisherman, location)
+
+/// Returns a typepath or a special value which we use for spawning dispensing a reward later.
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
 
