@@ -2,7 +2,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
-	icon = 'icons/obj/structures/aquarium/supplies.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -101,7 +101,7 @@
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/structures/aquarium/supplies.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -113,7 +113,7 @@
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/structures/aquarium/supplies.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
@@ -122,7 +122,16 @@
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, icon, beauty = beauty)
+	//It's important that we register the signals before the component is attached.
+	RegisterSignals(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
+	AddComponent(/datum/component/aquarium_content, beauty = beauty)
+	ADD_TRAIT(src, TRAIT_UNIQUE_AQUARIUM_CONTENT, INNATE_TRAIT)
+
+/obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
+	SIGNAL_HANDLER
+	visual.icon = icon
+	visual.icon_state = icon_state
+	visual.layer_mode = layer_mode
 
 /obj/item/aquarium_prop/rocks
 	name = "decorative rocks"

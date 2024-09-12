@@ -19,7 +19,6 @@
  * Cooldown for melee is on mech_melee_attack also because exploits
  */
 /obj/vehicle/sealed/mecha
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "exosuit"
 	desc = "Exosuit"
 	icon = 'icons/mob/rideables/mecha.dmi'
@@ -341,11 +340,12 @@
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
 			else
-				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
+				mob_exit(ai, silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		mob_exit(occupant, forced = TRUE)
-		if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
-			occupant.SetSleeping(destruction_sleep_duration)
+		else
+			mob_exit(occupant, forced = TRUE)
+			if(!isbrain(occupant)) // who would win.. 1 brain vs 1 sleep proc..
+				occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
@@ -587,7 +587,7 @@
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell && cell.maxcharge)
@@ -659,7 +659,7 @@
 	if(phasing)
 		balloon_alert(user, "not while [phasing]!")
 		return
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	if(!get_charge())
 		return

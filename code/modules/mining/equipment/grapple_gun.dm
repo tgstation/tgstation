@@ -3,14 +3,14 @@
 /obj/item/grapple_gun
 	name = "grapple gun"
 	desc = "A small specialised airgun capable of launching a climbing hook into a distant rock face and pulling the user toward it via motorised zip-line. A handy tool for traversing the craggy landscape of lavaland!"
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "grapple_gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "gun"
 	item_flags = NOBLUDGEON
 	///overlay when the hook is retracted
-	var/static/mutable_appearance/hook_overlay = new(icon = 'icons/obj/mining_zones/equipment.dmi', icon_state = "grapple_gun_hooked")
+	var/static/mutable_appearance/hook_overlay = new(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")
 	///is the hook retracted
 	var/hooked = TRUE
 	///addtimer id for launching the user

@@ -690,7 +690,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "kw" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/infested_frigate)
 "kS" = (

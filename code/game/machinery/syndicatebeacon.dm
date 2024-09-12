@@ -2,7 +2,6 @@
 //Singularity beacon
 ////////////////////////////////////////
 /obj/machinery/power/singularity_beacon
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/machines/engine/singularity.dmi'

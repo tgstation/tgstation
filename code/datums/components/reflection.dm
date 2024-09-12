@@ -124,7 +124,9 @@
 	///The filter is added to the reflection holder; the matrix is not, otherwise that'd go affecting the filter.
 	if(reflection_matrix)
 		reflection.transform = reflection_matrix
-	if(reflected_dir != NORTH && reflected_dir != SOUTH)
+	if(reflected_dir == NORTH)
+		reflection.transform = reflection.transform.Scale(1, -1)
+	else if(reflected_dir != SOUTH)
 		reflection.transform = reflection.transform.Scale(-1, 1)
 	LAZYSET(reflected_movables, target, reflection)
 	reflection_holder.vis_contents += reflection

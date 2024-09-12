@@ -74,7 +74,6 @@
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
-	SEND_SIGNAL(orbiter, COMSIG_ATOM_BEGAN_ORBITING, parent)
 
 	var/matrix/initial_transform = matrix(orbiter.transform)
 	orbiter_list[orbiter] = initial_transform
@@ -109,8 +108,7 @@
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
-	SEND_SIGNAL(orbiter, COMSIG_ATOM_STOPPED_ORBITING, parent)
-	orbiter.SpinAnimation(0, 0, parallel = FALSE)
+	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiter_list[orbiter],/matrix)) //This is ugly.
 		orbiter.transform = orbiter_list[orbiter]
 	orbiter_list -= orbiter
