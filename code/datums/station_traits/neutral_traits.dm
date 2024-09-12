@@ -555,5 +555,5 @@
 	can_revert = FALSE
 
 	dynamic_category = RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
-	threat_reduction = 10
+	threat_reduction = 15
 	dynamic_threat_id = "Naval Patrol"
