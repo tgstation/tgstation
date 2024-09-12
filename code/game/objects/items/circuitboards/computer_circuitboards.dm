@@ -413,7 +413,7 @@
 /obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		ballon_alert(user, "board mode is broken!")
+		balloon_alert(user, "board mode is broken!")
 		return
 	silence_announcements = !silence_announcements
 	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
