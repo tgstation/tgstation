@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Quick repair suit sensors by hitting yourself with cable coil"
-  - qol: "Improved feedback for broken suit sensors"
