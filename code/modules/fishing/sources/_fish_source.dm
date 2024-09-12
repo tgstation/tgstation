@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
-	/// It true, repeated and large explosions won't be as efficient. This is usually meant for global fish sources.
+	/// It true, repeated and large explosions won't be as efficient. This is usually for fish sources that cover multiple turfs (i.e. rivers, oceans).
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		return
 	for(var/path in fish_counts)
 		if(!(path in fish_table))
-			stack_trace("path [path] found in the 'fish_counts' list but not in the fish_table one of [type]")
+			stack_trace("path [path] found in the 'fish_counts' list but not in the 'fish_table'")
 
 /datum/fish_source/Destroy()
 	exploded_turfs = null
@@ -259,7 +259,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if(reward_path in fish_counts) // This is limited count result
+	if(!isnull(fish_counts[reward_path])) // This is limited count result
+		//Somehow, we're trying to spawn an expended reward.
+		if(fish_counts[reward_path] <= 0)
+			return null
 		fish_counts[reward_path] -= 1
 		var/regen_time = fish_count_regen?[reward_path]
 		if(regen_time)
@@ -297,7 +300,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/get_fish_table()
 	var/list/table = fish_table.Copy()
 	for(var/result in table)
-		if(fish_counts[result] == 0)
+		if(!isnull(fish_counts[result]) && fish_counts[result] <= 0)
 			table -= result
 	return table
 
@@ -310,7 +313,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/result_multiplier = 1
 
 
-	var/list/final_table = fish_table.Copy()
+	var/list/final_table = get_fish_table()
 
 	if(bait)
 		for(var/trait in weight_result_multiplier)
