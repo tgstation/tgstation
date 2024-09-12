@@ -4,3 +4,4 @@
 /datum/sprite_accessory/ears_more/fish/default
 	name = "Shark"
 	icon_state = "shark"
+ 

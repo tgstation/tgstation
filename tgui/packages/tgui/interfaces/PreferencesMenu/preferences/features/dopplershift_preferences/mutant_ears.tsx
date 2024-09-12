@@ -41,6 +41,15 @@ export const feature_bunny_ears: FeatureChoiced = {
   },
 };
 
+export const feature_bird_ears: FeatureChoiced = {
+  name: 'Ears',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
 export const feature_mouse_ears: FeatureChoiced = {
   name: 'Ears',
   component: (

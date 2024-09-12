@@ -122,6 +122,7 @@
 /obj/item/organ/external/tail/deer
 	preference = "feature_deer_tail"
 	dna_block = null
+	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/deer
 
 /datum/bodypart_overlay/mutant/tail/deer
@@ -135,6 +136,7 @@
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
 	dna_block = null
+	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
 
 /datum/bodypart_overlay/mutant/tail/fish

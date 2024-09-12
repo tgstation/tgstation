@@ -5,6 +5,7 @@
 	var/list/ears_list_fox
 	var/list/ears_list_bunny
 	var/list/ears_list_mouse
+	var/list/ears_list_bird
 	var/list/ears_list_monkey
 	var/list/ears_list_deer
 	var/list/ears_list_fish
@@ -19,6 +20,7 @@
 	ears_list_fox = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fox)["default_sprites"]
 	ears_list_bunny = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bunny)["default_sprites"]
 	ears_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/mouse)["default_sprites"]
+	ears_list_bird = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bird)["default_sprites"]
 	ears_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/monkey)["default_sprites"]
 	ears_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/deer)["default_sprites"]
 	ears_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fish)["default_sprites"]
@@ -212,6 +214,36 @@
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_bunny[value]
 	return generate_ears_icon(chosen_ears)
 
+//	Bird
+/datum/preference/choiced/bird_ears
+	savefile_key = "feature_bird_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/bird_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_bird)
+
+/datum/preference/choiced/bird_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == BIRD)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/bird_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/bird/none::name
+
+/datum/preference/choiced/bird_ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == BIRD)
+		target.dna.features["ears"] = value
+
+/datum/preference/choiced/bird_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_bird[value]
+	return generate_ears_icon(chosen_ears)
+
 //	Mouse
 /datum/preference/choiced/mouse_ears
 	savefile_key = "feature_mouse_ears"
@@ -331,7 +363,6 @@
 /datum/preference/choiced/fish_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_fish[value]
 	return generate_ears_icon(chosen_ears)
-
 
 //	Bug
 /datum/preference/choiced/bug_ears

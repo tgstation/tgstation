@@ -8,10 +8,10 @@
 #define BUNNY "bunny"
 #define BIRD "bird"
 #define MOUSE "mouse"
-#define FISH "fish" // ears and tail
+#define FISH "fish"
 #define MONKEY "monkey"
 #define DEER "deer"
-#define BUG "bug" // ears and tail
+#define BUG "bug"
 #define SYNTHETIC "synthetic"
 #define HUMANOID "humanoid"
 
