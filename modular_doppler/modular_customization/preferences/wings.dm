@@ -26,7 +26,7 @@
 			return .
 	if(target.dna.features["wings"])
 		if(target.dna.features["wings"] != /datum/sprite_accessory/wings_more/none::name && target.dna.features["wings"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/wings)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/wings/more)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 
@@ -107,11 +107,11 @@
 
 /// Overwrite lives here
 //	This is for the triple color channel
-/datum/bodypart_overlay/mutant/wings
+/datum/bodypart_overlay/mutant/wings/more
 	layers = EXTERNAL_FRONT | EXTERNAL_FRONT_2 | EXTERNAL_FRONT_3 | EXTERNAL_BEHIND | EXTERNAL_BEHIND_2 | EXTERNAL_BEHIND_3
 	feature_key_sprite = "wings"
 
-/datum/bodypart_overlay/mutant/wings/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/wings/more/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
 	if(limb == null)
 		return ..()
 	if(limb.owner == null)
