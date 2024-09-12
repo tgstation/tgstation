@@ -201,7 +201,7 @@
 		/obj/item/fish,
 	)
 
-/obj/item/fish/swordfish/get_force_rank()
+/obj/item/fish/pike/armored/get_force_rank()
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			force -= 11
