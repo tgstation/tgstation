@@ -251,6 +251,9 @@ SUBSYSTEM_DEF(wardrobe)
 	if(!stock_info)
 		stock_miss++
 		requested_object = new requested_type(location)
+		if(!SSatoms.initialized)
+			// This gets used early in server init but some objects need initialization to get their visuals correct
+			SSatoms.InitAtom(requested_object)
 		return requested_object
 
 	var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
@@ -262,6 +265,9 @@ SUBSYSTEM_DEF(wardrobe)
 		stack_trace("We somehow ended up with a qdeleted or null object in SSwardrobe's stock. Something's weird, likely to do with reinsertion. Typepath of [requested_type]")
 		stock_miss++
 		requested_object = new requested_type(location)
+		if(!SSatoms.initialized)
+			// This gets used early in server init but some objects need initialization to get their visuals correct
+			SSatoms.InitAtom(requested_object)
 		return requested_object
 
 	if(location)
