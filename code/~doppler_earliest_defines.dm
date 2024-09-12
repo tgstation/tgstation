@@ -19,6 +19,16 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOWINGS
 	icon_state = "none"
 
+/datum/sprite_accessory/moth_antennae/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Antennae"
+	icon_state = "none"
+
+/datum/sprite_accessory/fluff/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = "No Fluff"
+	icon_state = "none"
+
 /// Ears
 /datum/sprite_accessory/ears/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'

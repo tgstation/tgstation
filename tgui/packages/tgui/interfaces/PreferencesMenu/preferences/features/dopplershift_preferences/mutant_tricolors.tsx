@@ -165,11 +165,6 @@ export const has_moth_wings: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const moth_wings_color: Feature<string[]> = {
-  name: 'Moth Wings Color',
-  component: FeatureTriColorInput,
-};
-
 export const has_antennae: FeatureToggle = {
   name: 'Add Part: Antennae',
   category: 'GAMEPLAY',
@@ -179,21 +174,11 @@ export const has_antennae: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const antennae_color: Feature<string[]> = {
-  name: 'Antennae Color',
-  component: FeatureTriColorInput,
-};
-
-export const has_moth_antennae: FeatureToggle = {
-  name: 'Add Part: Moth Antennae',
+export const has_fluff: FeatureToggle = {
+  name: 'Add Part: Fluff',
   category: 'GAMEPLAY',
   description: `
-    When toggled, adds matrix-colored moth antennae to your character.
+    When toggled, adds fluff to your character.
   `,
   component: CheckboxInput,
-};
-
-export const moth_antennae_color: Feature<string[]> = {
-  name: 'Moth Antennae Color',
-  component: FeatureTriColorInput,
 };
