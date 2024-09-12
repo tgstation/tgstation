@@ -1,5 +1,8 @@
 /datum/sprite_accessory/wings_more
 	icon = 'modular_doppler/modular_customization/accessories/icons/non_species_specific/avian/avian_wings.dmi'
+	dimension_x = 46
+	dimension_y = 34
+	center = TRUE
 
 /datum/sprite_accessory/wings_more/harpy_alt
 	name = "Harpy (Alt)"
