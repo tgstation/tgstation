@@ -48,9 +48,12 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	if(threat_reduction)
 		GLOB.dynamic_station_traits[src] = threat_reduction
 	if(dynamic_category)
-		GLOB.dynamic_ruleset_categories = dynamic_category
+		GLOB.dynamic_ruleset_categories &= ~RULESET_CATEGORY_DEFAULT
+		GLOB.dynamic_ruleset_categories |= dynamic_category
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
+		if(SSstation.initialized)
+			SSstation.display_lobby_traits()
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
@@ -58,7 +61,13 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
-	GLOB.dynamic_station_traits.Remove(src)
+	GLOB.lobby_station_traits -= src
+	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+	GLOB.dynamic_station_traits -= src
+	if(dynamic_category)
+		GLOB.dynamic_ruleset_categories &= ~dynamic_category
+		if(GLOB.dynamic_ruleset_categories == NONE)
+			GLOB.dynamic_ruleset_categories = RULESET_CATEGORY_DEFAULT
 	destroy_lobby_buttons()
 	return ..()
 
@@ -125,13 +134,15 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /// Remove all of our active lobby buttons
 /datum/station_trait/proc/destroy_lobby_buttons()
 	for (var/atom/movable/screen/button as anything in lobby_buttons)
-		var/mob/hud_owner = button.get_mob()
-		qdel(button)
+		var/mob/dead/new_player/hud_owner = button.get_mob()
 		if (QDELETED(hud_owner))
+			qdel(button)
 			continue
-		var/datum/hud/using_hud = hud_owner.hud_used
-		using_hud?.show_hud(using_hud?.hud_version)
-	lobby_buttons = list()
+		var/datum/hud/new_player/using_hud = hud_owner.hud_used
+		if(!using_hud)
+			qdel(button)
+			continue
+		using_hud.remove_station_trait_button(src)
 
 /// Called when overriding a pulsar star command report message.
 /datum/station_trait/proc/get_pulsar_message()
