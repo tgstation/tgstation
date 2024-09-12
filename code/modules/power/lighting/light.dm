@@ -688,6 +688,7 @@
 	return
 
 /obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	break_light_tube()
 	return TRUE
 

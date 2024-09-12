@@ -71,6 +71,7 @@
 	update_appearance()
 
 /obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(pai)
 		return pai.on_saboteur(source, disrupt_duration)
 

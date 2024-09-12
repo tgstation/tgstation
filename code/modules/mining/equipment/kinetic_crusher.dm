@@ -175,6 +175,7 @@
 	update_appearance()
 
 /obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_light_on(FALSE)
 	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
 	return TRUE

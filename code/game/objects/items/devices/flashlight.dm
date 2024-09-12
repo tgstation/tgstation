@@ -285,6 +285,7 @@
 
 /// when hit by a light disruptor - turns the light off, forces the light to be disabled for a few seconds
 /obj/item/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(light_on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)

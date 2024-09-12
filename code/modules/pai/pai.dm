@@ -353,6 +353,7 @@
 	return TRUE
 
 /mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_silence_if_lower(disrupt_duration)
 	balloon_alert(src, "muted!")
 	return TRUE

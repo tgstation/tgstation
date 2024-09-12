@@ -296,6 +296,7 @@
 	return attack_hand(user)
 
 /obj/machinery/power/floodlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	atom_break(ENERGY) // technically,
 	return TRUE
 

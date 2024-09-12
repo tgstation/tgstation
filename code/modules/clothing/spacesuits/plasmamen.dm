@@ -194,6 +194,7 @@
 	update_item_action_buttons()
 
 /obj/item/clothing/head/helmet/space/plasmaman/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!helmet_on)
 		return FALSE
 	helmet_on = FALSE

@@ -128,6 +128,7 @@
 	return ..()
 
 /obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
 		set_broadcasting(FALSE)
 		return TRUE

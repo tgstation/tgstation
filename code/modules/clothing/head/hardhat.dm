@@ -60,6 +60,7 @@
 	set_light_on(FALSE)
 
 /obj/item/clothing/head/utility/hardhat/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(on)
 		toggle_helmet_light()
 		return TRUE

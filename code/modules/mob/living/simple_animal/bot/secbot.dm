@@ -167,6 +167,7 @@
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!(security_mode_flags & SECBOT_SABOTEUR_AFFECTED))
 		security_mode_flags |= SECBOT_SABOTEUR_AFFECTED
 		addtimer(CALLBACK(src, PROC_REF(remove_saboteur_effect)), disrupt_duration)

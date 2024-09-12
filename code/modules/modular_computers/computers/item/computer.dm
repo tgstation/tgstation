@@ -754,6 +754,7 @@
 
 //Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
 /obj/item/modular_computer/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!has_light)
 		return
 	set_light_on(FALSE)

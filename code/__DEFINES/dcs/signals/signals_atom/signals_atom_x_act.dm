@@ -93,3 +93,7 @@
 /// Args: (obj/item/inserting, mob/living/user)
 #define COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT "atom_storage_item_interact_insert"
 	#define BLOCK_STORAGE_INSERT (1<<0)
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS 1

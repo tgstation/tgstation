@@ -54,6 +54,7 @@
 	default_color = new_ethereal.dna.features["ethcolor"]
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	RegisterSignal(new_ethereal, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+	RegisterSignal(new_ethereal, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(hit_by_saboteur))
 	RegisterSignal(new_ethereal, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(new_ethereal, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(refresh_light_color))
 	ethereal_light = new_ethereal.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
@@ -70,6 +71,7 @@
 	UnregisterSignal(former_ethereal, list(
 		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_ATOM_EMP_ACT,
+		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_LIGHT_EATER_ACT,
 		COMSIG_LIVING_HEALTH_UPDATE,
 	))
@@ -122,7 +124,7 @@
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
-/datum/species/ethereal/on_saboteur(mob/living/carbon/human/source, disrupt_duration)
+/datum/species/ethereal/proc/hit_by_saboteur(mob/living/carbon/human/source, disrupt_duration)
 	EMPeffect = TRUE
 	refresh_light_color(source)
 	to_chat(source, span_warning("Something inside of you crackles in a bad way."))

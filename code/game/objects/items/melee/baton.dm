@@ -514,6 +514,7 @@
 	qdel(src)
 
 /obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!active)
 		return
 	turn_off()

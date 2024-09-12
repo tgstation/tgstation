@@ -255,6 +255,7 @@
 	return ..()
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
 	return TRUE

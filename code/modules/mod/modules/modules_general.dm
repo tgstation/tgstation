@@ -398,6 +398,7 @@
 	set_light_on(active)
 
 /obj/item/mod/module/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(active)
 		on_deactivation()
 		return TRUE

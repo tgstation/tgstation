@@ -156,6 +156,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	toggle_on(FALSE)
 
 /obj/machinery/porta_turret/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
 	return TRUE
 
