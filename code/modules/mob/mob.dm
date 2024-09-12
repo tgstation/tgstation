@@ -83,13 +83,12 @@
 		add_to_dead_mob_list()
 	else
 		add_to_alive_mob_list()
+	update_incapacitated()
 	set_focus(src)
 	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
+
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	setup_hud_traits()
@@ -414,9 +413,21 @@
 
 	return null
 
-///Is the mob incapacitated
-/mob/proc/incapacitated(flags)
-	return
+/// Called whenever anything that modifes incapacitated is ran, updates it and sends a signal if it changes
+/// Returns TRUE if anything changed, FALSE otherwise
+/mob/proc/update_incapacitated()
+	SIGNAL_HANDLER
+	var/old_incap = incapacitated
+	incapacitated = build_incapacitated()
+	if(old_incap == incapacitated)
+		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_MOB_INCAPACITATE_CHANGED, old_incap, incapacitated)
+	return TRUE
+
+/// Returns an updated incapacitated bitflag. If a flag is set it means we're incapacitated in that case
+/mob/proc/build_incapacitated()
+	return NONE
 
 /**
  * This proc is called whenever someone clicks an inventory ui slot.
@@ -512,29 +523,29 @@
 		return
 
 	face_atom(examinify)
-	var/list/result
+	var/result_combined
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		var/ref_to_atom = ref(examinify)
+		var/ref_to_atom = REF(examinify)
 		var/examine_time = client.recent_examines[ref_to_atom]
 		if(examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW))
-			result = examinify.examine_more(src)
+			var/list/result = examinify.examine_more(src)
 			if(!length(result))
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
+			result_combined = jointext(result, "<br>")
+
 		else
-			result = examinify.examine(src)
-			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
-	else
-		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
-	if(result.len)
-		for(var/i in 1 to (length(result) - 1))
-			result[i] += "\n"
+	if(!result_combined)
+		var/list/result = examinify.examine(src)
+		var/atom_title = examinify.examine_title(src, thats = TRUE)
+		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
+		result_combined = (atom_title ? "[span_slightly_larger(separator_hr("[atom_title]."))]" : "") + jointext(result, "<br>")
 
-	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
+	to_chat(src, examine_block(span_infoplain(result_combined)))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 /mob/proc/blind_examine_check(atom/examined_thing)
@@ -543,7 +554,7 @@
 
 /mob/living/blind_examine_check(atom/examined_thing)
 	//need to be next to something and awake
-	if(!Adjacent(examined_thing) || incapacitated())
+	if(!Adjacent(examined_thing) || incapacitated)
 		to_chat(src, span_warning("Something is there, but you can't see it!"))
 		return FALSE
 
@@ -630,7 +641,7 @@
 	// check to see if their face is blocked or, if not, a signal blocks it
 	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
@@ -702,7 +713,7 @@
 	if(ismecha(loc))
 		return
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	var/obj/item/I = get_active_held_item()

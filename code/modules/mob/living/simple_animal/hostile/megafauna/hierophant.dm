@@ -72,29 +72,40 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/cross_blasts,
 							   /datum/action/innate/megafauna_attack/blink_spam)
 
-	var/burst_range = 3 //range on burst aoe
-	var/beam_range = 5 //range on cross blast beams
-	var/chaser_speed = 3 //how fast chasers are currently
-	var/major_attack_cooldown = 6 SECONDS //base cooldown for major attacks
-	var/chaser_cooldown_time = 10.1 SECONDS //base cooldown for spawning chasers
-	var/chaser_cooldown = 0
-	var/arena_cooldown_time = 20 SECONDS //base cooldown for making arenas
-	var/arena_cooldown = 0
-	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
-	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
-	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
-	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
+	/// range on burst aoe
+	var/burst_range = 3
+	/// range on cross blast beams
+	var/beam_range = 5
+	/// how fast chasers are currently
+	var/chaser_speed = 3
+	/// base delay for major attacks
+	var/major_attack_cooldown = 6 SECONDS
+	/// base delay for spawning chasers
+	var/chaser_cooldown_time = 10.1 SECONDS
+	/// the current chaser cooldown
+	COOLDOWN_DECLARE(chaser_cooldown)
+	/// base delay for making arenas
+	var/arena_cooldown_time = 20 SECONDS
+	COOLDOWN_DECLARE(arena_cooldown)
+	/// if we're doing something that requires us to stand still and not attack
+	var/blinking = FALSE
+	/// weakref to our "home base" beacon
+	var/datum/weakref/spawned_beacon_ref
+	/// If we are sitting at home base and not doing anything
+	var/sitting_at_center = TRUE
+	/// timer id for any active attempts to "go home"
+	var/respawn_timer_id = null
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
-	spawned_beacon = new(loc)
+	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
 	AddComponent(/datum/component/boss_music, 'sound/lavaland/hiero_boss.ogg', 145 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
-	QDEL_NULL(spawned_beacon)
-	. = ..()
+	QDEL_NULL(spawned_beacon_ref)
+	return ..()
 
 /datum/action/innate/megafauna_attack/blink
 	name = "Blink To Target"
@@ -127,11 +138,11 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_CHASER])
-		chaser_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_CHASER]
+		COOLDOWN_START(src, chaser_cooldown, cooldown_updates[COOLDOWN_UPDATE_SET_CHASER])
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER])
 		chaser_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER]
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_ARENA])
-		arena_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ARENA]
+		COOLDOWN_START(src, arena_cooldown, cooldown_updates[COOLDOWN_UPDATE_SET_ARENA])
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA])
 		arena_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]
 
@@ -179,7 +190,7 @@ Difficulty: Hard
 			possibilities += "cross_blast_spam"
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
-		if(chaser_cooldown < world.time)
+		if(COOLDOWN_FINISHED(src, chaser_cooldown))
 			if(prob(anger_modifier * 2))
 				possibilities = list("chaser_swarm")
 			else
@@ -194,7 +205,7 @@ Difficulty: Hard
 					chaser_swarm(blink_counter, target_slowness, cross_counter)
 			return
 
-	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
+	if(COOLDOWN_FINISHED(src, chaser_cooldown)) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
@@ -311,7 +322,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/arena_trap(mob/victim) //trap a target in an arena
 	var/turf/T = get_turf(victim)
-	if(!istype(victim) || victim.stat == DEAD || !T || arena_cooldown > world.time)
+	if(!istype(victim) || victim.stat == DEAD || !T || !COOLDOWN_FINISHED(src, arena_cooldown))
 		return
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
@@ -397,23 +408,30 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
 	hierophant_burst(src, original, burst_range, spread_speed)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	. = ..()
-	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
-		if(target || loc == spawned_beacon.loc)
-			timeout_time = initial(timeout_time)
-		else
-			timeout_time--
-		if(timeout_time <= 0 && !did_reset)
-			did_reset = TRUE
-			visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
-			blink(spawned_beacon)
-			adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
-			wander = FALSE
-			if(health > maxHealth * 0.9)
-				visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
-			else
-				visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\""))
+	if(!isnull(new_target))
+		deltimer(respawn_timer_id)
+		respawn_timer_id = null
+		return
+	if(respawn_timer_id || client || !spawned_beacon_ref)
+		return
+	respawn_timer_id = addtimer(CALLBACK(src, PROC_REF(send_me_home)), 30 SECONDS, flags = TIMER_STOPPABLE|TIMER_DELETE_ME)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/send_me_home()
+	respawn_timer_id = null
+	var/obj/effect/hierophant/beacon = spawned_beacon_ref.resolve()
+	if(!beacon || client)
+		return
+	sitting_at_center = TRUE
+	visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
+	blink(beacon)
+	adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
+	wander = FALSE
+	if(health > maxHealth * 0.9)
+		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
+	else
+		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\""))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
 	if(health > 0 || stat == DEAD)
@@ -444,14 +462,15 @@ Difficulty: Hard
 	. = ..()
 	if(. && target && !targets_the_same)
 		visible_message(span_hierophant_warning("\"[pick(target_phrases)]\""))
-		if(spawned_beacon && loc == spawned_beacon.loc && did_reset)
+		var/obj/effect/hierophant/beacon = spawned_beacon_ref.resolve()
+		if(beacon && loc == beacon.loc && sitting_at_center)
 			arena_trap(src)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(src && . && !blinking)
 		wander = TRUE
-		did_reset = FALSE
+		sitting_at_center = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
@@ -496,7 +515,7 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
-	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
+	sitting_at_center = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
 	anger_modifier = clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)

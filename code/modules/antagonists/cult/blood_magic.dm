@@ -79,7 +79,7 @@
 			return
 		qdel(nullify_spell)
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
+	if(QDELETED(src) || owner.incapacitated || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
 		return
 	to_chat(owner,span_warning("You begin to carve unnatural symbols into your flesh!"))
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -137,7 +137,7 @@
 	..()
 
 /datum/action/innate/cult/blood_spell/IsAvailable(feedback = FALSE)
-	if(!IS_CULTIST(owner) || owner.incapacitated() || (!charges && deletes_on_empty))
+	if(!IS_CULTIST(owner) || owner.incapacitated || (!charges && deletes_on_empty))
 		return FALSE
 	return ..()
 
@@ -263,7 +263,7 @@
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
 	var/image/sparkle_image = image('icons/effects/cult.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
-	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", sparkle_image, NONE)
+	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult, "cult_apoc", sparkle_image, NONE)
 
 	addtimer(CALLBACK(clicked_on, TYPE_PROC_REF(/atom/, remove_alt_appearance), "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 	to_chat(caller, span_cult_bold("[clicked_on] has been cursed with living nightmares!"))
@@ -515,7 +515,7 @@
 		to_chat(user, span_warning("You must pick a valid rune!"))
 		return
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
-	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune)
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated || !actual_selected_rune)
 		return
 	var/turf/dest = get_turf(actual_selected_rune)
 	if(dest.is_blocked_turf(TRUE))
@@ -701,7 +701,7 @@
 /obj/item/melee/blood_magic/construction/proc/check_menu(mob/user)
 	if(!istype(user))
 		CRASH("The cult construct selection radial menu was accessed by something other than a valid user.")
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -967,7 +967,7 @@
 /obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		CRASH("The Blood Rites manipulator radial menu was accessed by something other than a valid user.")
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 

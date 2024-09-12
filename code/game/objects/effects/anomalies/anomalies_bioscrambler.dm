@@ -89,10 +89,12 @@
 	duration = 0.5 SECONDS
 	color = COLOR_LIME
 	var/max_alpha = 255
+	///How far the effect would scale in size
+	var/amount_to_scale = 2
 
 /obj/effect/temp_visual/circle_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
-	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
+	animate(src, transform = matrix().Scale(amount_to_scale), time = duration, flags = ANIMATION_PARALLEL)
 	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
@@ -104,3 +106,7 @@
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
+/obj/effect/temp_visual/circle_wave/void_conduit
+	color = COLOR_FULL_TONER_BLACK
+	duration = 12 SECONDS
+	amount_to_scale = 12
