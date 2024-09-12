@@ -489,7 +489,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	reset_ai_status()
-	able_to_run = update_able_to_run()
+	update_able_to_run()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER
