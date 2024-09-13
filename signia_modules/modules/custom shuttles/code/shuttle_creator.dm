@@ -36,8 +36,6 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	var/datum/shuttle_creator_overlay_holder/overlay_holder
 	//After designation
 	var/linkedShuttleId
-	var/shuttle_limit = CONFIG_GET(number/max_shuttle_count)
-	var/max_shuttle_size = CONFIG_GET(number/max_shuttle_size)
 
 /obj/item/shuttle_creator/Initialize(mapload)
 	. = ..()
@@ -57,9 +55,9 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	..()
 	if(linkedShuttleId)
 		return
-	if(GLOB.custom_shuttle_count > shuttle_limit && !override_max_shuttles)
+	if(GLOB.custom_shuttle_count > CUSTOM_SHUTTLE_LIMIT && !override_max_shuttles)
 		to_chat(user, "<span class='warning'>Too many shuttles have been created.</span>")
-		message_admins("[ADMIN_FLW(user)] attempted to create a shuttle, however [shuttle_limit] have already been created.")
+		message_admins("[ADMIN_FLW(user)] attempted to create a shuttle, however [CUSTOM_SHUTTLE_LIMIT] have already been created.")
 		return
 	if(!internal_shuttle_creator)
 		return
@@ -235,8 +233,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	//Clear highlights
 	overlay_holder.clear_highlights()
 	GLOB.custom_shuttle_count ++
-	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [shuttle_limit])")
-	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [shuttle_limit])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
+	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
 	return TRUE
 
 /obj/item/shuttle_creator/proc/create_shuttle_area(mob/user)
@@ -278,8 +276,8 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	if(!turfs)
 		to_chat(usr, "<span class='warning'>Shuttles must be created in an airtight space, ensure that the shuttle is airtight, including corners.</span>")
 		return FALSE
-	if(turfs.len + loggedTurfs.len > max_shuttle_size)
-		to_chat(usr, "<span class='warning'>The [src]'s internal cooling system wizzes violently and a message appears on the screen, \"Caution, this device can only handle the creation of shuttles up to [max_shuttle_size] units in size. Please reduce your shuttle by [turfs.len-max_shuttle_size]. Sorry for the inconvinience\"</span>")
+	if(turfs.len + loggedTurfs.len > SHUTTLE_CREATOR_MAX_SIZE)
+		to_chat(usr, "<span class='warning'>The [src]'s internal cooling system wizzes violently and a message appears on the screen, \"Caution, this device can only handle the creation of shuttles up to [SHUTTLE_CREATOR_MAX_SIZE] units in size. Please reduce your shuttle by [turfs.len-SHUTTLE_CREATOR_MAX_SIZE]. Sorry for the inconvinience\"</span>")
 		return FALSE
 	//Check to see if it's a valid shuttle
 	for(var/i in 1 to turfs.len)
