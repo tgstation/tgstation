@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	if(threat_reduction)
 		GLOB.dynamic_station_traits[src] = threat_reduction
 	if(dynamic_category)
-		GLOB.dynamic_ruleset_categories = dynamic_category
+		GLOB.dynamic_ruleset_categories |= dynamic_category
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
 	if(trait_processes)

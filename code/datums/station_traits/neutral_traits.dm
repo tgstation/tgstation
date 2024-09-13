@@ -540,6 +540,7 @@
 	weight = 1
 	show_in_report = TRUE
 	can_revert = FALSE
+	blacklist = list(/datum/station_trait/naval_patrol)
 
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
@@ -550,9 +551,10 @@
 	name = "Naval Patrol"
 	report_message = "Your sector falls within the patrol route of our corporate Naval fleet. While no external threats or infestations can breach this perimeter - internal issues on station will still remain your concern."
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 1
+	weight = 2
 	show_in_report = TRUE
 	can_revert = FALSE
+	blacklist = list(/datum/station_trait/background_checks)
 
 	dynamic_category = RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	threat_reduction = 15
