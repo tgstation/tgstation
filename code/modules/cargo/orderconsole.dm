@@ -384,7 +384,7 @@
 			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
-			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
+			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.pack.name != order_name)
 					continue

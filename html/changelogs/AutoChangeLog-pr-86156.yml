@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - balance: "double the melting point of hull and halves the thermal transfer so plasma fire should lose less heat and harder to melt it"

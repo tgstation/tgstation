@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Refactored some functions related to line-of-sight and reach to improve performance."

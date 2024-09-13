@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - code_imp: "that one cool haunted donk outpost ruins tripwires and such use a subsystem instead of globals. no real gameplay effect"

@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "The recharging relics now work on ethereal cells."
+  - balance: "EMP now affects ethereal's hunger."
