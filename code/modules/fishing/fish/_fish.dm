@@ -219,18 +219,6 @@
 
 	update_size_and_weight(new_size, new_weight)
 
-/obj/item/fish/proc/remove_fillet_type()
-	if(!fillet_type)
-		return
-	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
-	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
-
-/obj/item/fish/proc/add_fillet_type()
-	if(!fillet_type)
-		return
-	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
-	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
-
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
@@ -293,6 +281,21 @@
 		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
 
 	update_fish_force()
+
+/obj/item/fish/proc/remove_fillet_type()
+	if(!fillet_type)
+		return
+	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
+	var/time = PERFORM_ALL_TESTS(fish_size_weight) ? 0 : 0.5 SECONDS * amount
+	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+
+/obj/item/fish/proc/add_fillet_type()
+	if(!fillet_type)
+		return
+	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
+	var/time = PERFORM_ALL_TESTS(fish_size_weight) ? 0 : 0.5 SECONDS * amount
+	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+	return amount //checked by a unit test
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()

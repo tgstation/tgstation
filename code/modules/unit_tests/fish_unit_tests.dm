@@ -20,11 +20,20 @@
 /datum/unit_test/fish_size_weight
 
 /datum/unit_test/fish_size_weight/Run()
-	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
+	var/obj/structure/table/table = allocate(/obj/structure/table)
+	var/obj/item/fish/fish = new /obj/item/fish/testdummy (table.loc)
 	TEST_ASSERT_EQUAL(fish.grind_results[/datum/reagent], 20, "the test fish has [fish.grind_results[/datum/reagent]] units of reagent when it should have 20")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
-	var/expected_num_fillets = round(FISH_SIZE_BULKY_MAX / FISH_FILLET_NUMBER_SIZE_DIVISOR * 2, 1)
-	TEST_ASSERT_EQUAL(fish.num_fillets, expected_num_fillets, "the test fish has [fish.num_fillets] number of fillets when it should have [expected_num_fillets]")
+	var/mob/living/carbon/human/consistent/chef = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/knife/kitchen/blade = allocate(/obj/item/knife/kitchen)
+	var/fish_fillet_type = fish.fillet_type
+	var/expected_num_fillets = fish.expected_num_fillets
+	blade.melee_attack_chain(chef, fish)
+	var/counted_fillets = 0
+	for(var/atom/movable/content in table.loc.contents)
+		if(istype(content, fish_fillet_type))
+			counted_fillets++
+	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have [expected_num_fillets]")
 
 ///Checks that fish breeding works correctly.
 /datum/unit_test/fish_breeding
@@ -85,6 +94,11 @@
 	stable_population = INFINITY
 	breeding_timeout = 0
 	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+/obj/item/fish/testdummy/add_fillet_type()
+	expected_num_fillets = ..()
+	return expected_num_fillets
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
