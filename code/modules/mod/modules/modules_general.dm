@@ -1015,15 +1015,16 @@
 			qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/fishing_glove/on_suit_activation()
+	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(!equipped)
 		return
-	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped)
 
 /obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber

@@ -16,13 +16,17 @@
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-
+	///How much sitting on this chair influences fishing difficulty
+	var/fishing_modifier = -3
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 	if(!has_buckled_mobs() && can_buckle)
 		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
@@ -134,6 +138,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+	fishing_modifier = -4
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -151,6 +156,7 @@
 	max_integrity = 70
 	buildstackamount = 2
 	item_chair = null
+	fishing_modifier = -5
 	// The mutable appearance used for the overlay over buckled mobs.
 	var/mutable_appearance/armrest
 
@@ -226,11 +232,13 @@
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
+	fishing_modifier = -10
 
 /obj/structure/chair/office
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+	fishing_modifier = -4
 	icon_state = "officechair_dark"
 
 /obj/structure/chair/office/Initialize(mapload)
@@ -245,6 +253,10 @@
 /obj/structure/chair/office/tactical
 	name = "tactical swivel chair"
 
+/obj/structure/chair/office/tactical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -10)
+
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
 
@@ -256,6 +268,7 @@
 	icon_state = "stool"
 	can_buckle = FALSE
 	buildstackamount = 1
+	fishing_modifier = -2
 	item_chair = /obj/item/chair/stool
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
@@ -302,6 +315,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
+	fishing_modifier = -5
 
 /obj/item/chair
 	name = "chair"
@@ -436,6 +450,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
 	item_chair = null
+	fishing_modifier = 4
 
 /obj/structure/chair/bronze
 	name = "brass chair"
@@ -445,6 +460,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
+	fishing_modifier = -12 //the pinnacle of Ratvarian technology.
 	/// Total rotations made
 	var/turns = 0
 
@@ -484,6 +500,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
+	fishing_modifier = -20 //it only lives for 25 seconds, so we make them worth it.
 
 /obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
 	return NONE
@@ -505,6 +522,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
+	fishing_modifier = -8
 
 /obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
 	Mob.pixel_y += 2

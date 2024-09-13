@@ -31,14 +31,20 @@
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
+///From /datum/fishing_challenge/New: (datum/fishing_challenge/challenge)
+#define COMSIG_MOB_BEGIN_FISHING "mob_begin_fishing"
+///From /datum/fishing_challenge/start_minigame_phase: (datum/fishing_challenge/challenge)
+#define COMSIG_MOB_BEGIN_FISHING_MINIGAME "mob_begin_fishing_minigame"
+///From /datum/fishing_challenge/completed: (datum/fishing_challenge/challenge, win)
+#define COMSIG_MOB_COMPLETE_FISHING "mob_complete_fishing"
+
 /// Rolling a reward path for a fishing challenge
 #define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
 /// Adjusting the difficulty of a rishing challenge, often based on the reward path
 #define COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY "fishing_get_difficulty"
 /// Fishing challenge completed
-#define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)
-#define COMSIG_FISH_SOURCE_REWARD_DISPENSED "mob_fish_source_reward_dispensed"
+#define COMSIG_FISH_SOURCE_REWARD_DISPENSED "fish_source_reward_dispensed"
 
 /// Called when you try to use fishing rod on anything
 #define COMSIG_PRE_FISHING "pre_fishing"
