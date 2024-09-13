@@ -297,13 +297,13 @@
 	var/obj/item/clothing/gloves/noodling = allocate(/obj/item/clothing/gloves)
 	noodling.AddComponent(/datum/component/profound_fisher)
 	angler.equip_to_slot(noodling, ITEM_SLOT_GLOVES)
-	angler.melee_attack(spot, ignore_cooldown = TRUE)
+	angler.UnarmedAttack(spot, proximity_flag = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy])
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a fishing spot (component)")
 
 	///As a final test, let's see how it goes with a fish source containing every single fish subtype.
 	qdel(comp)
-	spot.AddComponent(/datum/component/fihing_pot, GLOB.preset_fish_sources[/datum/fish_source/unit_test_all_fish])
+	spot.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/unit_test_all_fish])
 	fisher.melee_attack(spot, ignore_cooldown = TRUE)
 
 /datum/fish_source/unit_test_explosive

@@ -116,7 +116,7 @@
 		return null
 	var/obj/effect/fishing_float/float = new(get_turf(target), target)
 	playsound(float, 'sound/effects/splash.ogg', 100)
-	if(!PERFORM_ALL_TESTS(fish_source))
+	if(!PERFORM_ALL_TESTS(fish_sources))
 		var/happiness_percentage = living_parent.ai_controller?.blackboard[BB_BASIC_HAPPINESS] / 100
 		var/fishing_speed = 10 SECONDS - round(4 SECONDS * happiness_percentage)
 		if(!do_after(living_parent, fishing_speed, target = target) && !QDELETED(fish_spot))
