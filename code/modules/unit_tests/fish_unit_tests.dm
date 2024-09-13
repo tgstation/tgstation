@@ -290,10 +290,14 @@
 	fisher.melee_attack(spot, ignore_cooldown = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy] != 1)
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a lazy fishing spot (element)")
-	///For good measure, let's try it again, but with the component this time.
+	///For good measure, let's try it again, but with the component this time, and a human mob and gloves
 	spot.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
 	var/datum/component/comp = spot.AddComponent(/datum/component/fishing_spot, source)
-	fisher.melee_attack(spot, ignore_cooldown = TRUE)
+	var/mob/living/carbon/human/consistent/angler = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/clothing/gloves/noodling = allocate(/obj/item/clothing/gloves)
+	noodling.AddComponent(/datum/component/profound_fisher)
+	angler.equip_to_slot(noodling, ITEM_SLOT_GLOVES)
+	angler.melee_attack(spot, ignore_cooldown = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy])
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a fishing spot (component)")
 

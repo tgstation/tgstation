@@ -64,9 +64,12 @@
 
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
-	if(!source.client || !should_fish_on(source, attack_target))
+	if(!should_fish_on(source, attack_target))
 		return
-	INVOKE_ASYNC(src, PROC_REF(begin_fishing), source, attack_target)
+	if(source.client)
+		INVOKE_ASYNC(src, PROC_REF(begin_fishing), source, attack_target)
+	else
+		INVOKE_ASYNC(src, PROC_REF(pretend_fish), attack_target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/profound_fisher/proc/pre_attack(mob/living/source, atom/target)
