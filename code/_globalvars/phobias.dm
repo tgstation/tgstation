@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"authority" = construct_phobia_regex("authority"),
 	"birds" = construct_phobia_regex("birds"),
 	"blood" = construct_phobia_regex("blood"),
-	"brainrot" = construct_phobia_regex("brainrot")
+	"brainrot" = construct_phobia_regex("brainrot"),
 	"carps" = construct_phobia_regex("carps"),
 	"clowns" = construct_phobia_regex("clowns"),
 	"conspiracies" = construct_phobia_regex("conspiracies"),
