@@ -272,15 +272,32 @@
 	growth_rate = 100
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
-/datum/unit_test/explosive_fishing
+/datum/unit_test/fish_sources
 
-/datum/unit_test/explosive_fishing/Run()
-	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test]
+/datum/unit_test/fish_sources/Run()
+	var/datum/fish_source/source = GLOB.preset_fish_sources[/datum/fish_source/unit_test_explosive]
 	source.spawn_reward_from_explosion(run_loc_floor_bottom_left, 1)
 	if(source.fish_counts[/obj/item/wrench])
 		TEST_FAIL("The unit test item wasn't removed/spawned from fish_table during 'spawn_reward_from_explosion'.")
 
-/datum/fish_source/unit_test
+	///From here, we check that the profound_fisher as well as fish source procs for rolling rewards don't fail.
+	source = GLOB.preset_fish_sources[/datum/fish_source/unit_test_profound_fisher]
+	var/turf/open/spot = allocate(/turf/open)
+	spot.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+	var/mob/living/basic/fisher = allocate(/mob/living/basic)
+	fisher.AddComponent(/datum/component/profound_fisher)
+	fisher.set_combat_mode(FALSE)
+	fisher.melee_attack(spot, ignore_cooldown = TRUE)
+	if(source.fish_counts[/obj/item/fish/testdummy] != 1)
+		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a lazy fishing spot (element)")
+	///For good measure, let's try it again, but with the component this time.
+	spot.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+	spot.AddComponent(/datum/component/fishing_spot, source)
+	fisher.melee_attack(spot, ignore_cooldown = TRUE)
+	if(source.fish_counts[/obj/item/fish/testdummy])
+		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a fishing spot (component)")
+
+/datum/fish_source/unit_test_explosive
 	fish_table = list(
 		/obj/item/wrench = 1,
 		/obj/item/screwdriver = INFINITY,
@@ -289,6 +306,10 @@
 		/obj/item/wrench = 1,
 		/obj/item/screwdriver = 0,
 	)
+
+/datum/fish_source/unit_test_profound_fisher
+	fish_table = list(/obj/item/fish/testdummy = 1)
+	fish_counts = list(/obj/item/fish/testdummy = 2)
 
 #undef TRAIT_FISH_TESTING
 
