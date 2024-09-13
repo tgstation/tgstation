@@ -42,6 +42,9 @@
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
 	var/true_absorbtion = (!isnull(target.client) || !isnull(target.mind) || !isnull(target.last_mind))
+	if (!true_absorbtion)
+		to_chat(owner, span_changeling(span_bold("You absorb [target], but their weak DNA is not enough to satisfy your hunger.")))
+
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
 		if (true_absorbtion)
