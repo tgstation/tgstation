@@ -2914,6 +2914,7 @@
 #include "code\modules\admin\smites\nugget.dm"
 #include "code\modules\admin\smites\petrify.dm"
 #include "code\modules\admin\smites\phobia_ocky_icky.dm"
+#include "code\modules\admin\smites\phobia_brainrot.dm"
 #include "code\modules\admin\smites\puzzgrid.dm"
 #include "code\modules\admin\smites\puzzle.dm"
 #include "code\modules\admin\smites\rod.dm"
