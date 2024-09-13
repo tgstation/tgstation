@@ -1645,9 +1645,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "hr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/dinnerware{
-	onstation = 0
-	},
+/obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "ht" = (
@@ -2368,9 +2366,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/coffee{
-	onstation = 0
-	},
+/obj/machinery/vending/coffee,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "ku" = (
@@ -2744,9 +2740,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/hall)
 "lU" = (
-/obj/machinery/vending/hydronutrients{
-	onstation = 0
-	},
+/obj/machinery/vending/hydronutrients,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)

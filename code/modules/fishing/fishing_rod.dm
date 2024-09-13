@@ -221,7 +221,7 @@
 
 /obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	//this prevent trying to use telekinesis to fish (which would be broken anyway)
-	if(!user.contains(src))
+	if(!user.contains(src) || (user.combat_mode && !isturf(interacting_with)) ||HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return ..()
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 

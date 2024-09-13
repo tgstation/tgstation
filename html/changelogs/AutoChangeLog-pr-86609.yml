@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - code_imp: "Minor obsession code cleanup"
+  - admin: "Admins can now see players who were previously obsessed but had been \"cured\" from the trauma"

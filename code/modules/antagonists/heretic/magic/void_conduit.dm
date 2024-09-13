@@ -1,8 +1,8 @@
 /datum/action/cooldown/spell/conjure/void_conduit
 	name = "Void Conduit"
 	desc = "Opens a gate to the Void; it releases an intermittent pulse that damages windows and airlocks, \
-		while afflicting Heathens with  void chill. \
-		Heretics receive are granted the cold resistance and low pressure resistance."
+		while afflicting Heathens with void chill. \
+		Affected Heretics instead receive low pressure resistance."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
