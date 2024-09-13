@@ -1,13 +1,12 @@
 
 https://github.com/Vect0r2/Signia-Station/pull/11
 
-## \<Disabler Sniper>
+## \<Custom Shuttles>
 
 Module ID: CUSTOM_SHUTTLES
 
 ### Description:
-Adds a disabler sniper rifle.
-
+Lets you build custom shuttles via a shuttle creator
 ### TG Proc/File Changes:
 
 N/A
