@@ -161,7 +161,6 @@ The following conditions are valid:
 - **{var_name} is '{value}'**: The variable named *var_name* has a specific value.
 - **{var_name} is not '{value}'**: The variable named *var_name* does not have a specific value.
 - **{var_name} like '{regex}'**: The variable named *var_name* matches the provided regex.
-- **{var_name} not like '{regex}'**: The variable named *var_name* does not match the provided regex.
 
 #### `any`
 
