@@ -6381,7 +6381,6 @@
 #include "code\modules\wiremod\shell\shell_items.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
-#include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
@@ -6402,4 +6401,5 @@
 #include "signia_modules\modules\custom shuttles\code\shuttle_creator_actions.dm"
 #include "signia_modules\modules\custom shuttles\code\shuttle_creator_console.dm"
 #include "signia_modules\modules\custom shuttles\code\shuttle_eye.dm"
+#include "code\ze_genesis_call\genesis_call.dm"
 // END_INCLUDE
