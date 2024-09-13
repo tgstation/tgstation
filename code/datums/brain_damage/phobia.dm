@@ -172,6 +172,10 @@
 		return TRUE
 	return ..()
 
+/datum/brain_trauma/mild/phobia/brainrot
+	phobia_type = "brainrot"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/carps
 	phobia_type = "carps"
 	random_gain = FALSE
