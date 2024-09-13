@@ -392,7 +392,7 @@
 			return
 
 	// Find a blood decal or create a new one.
-	var/obj/effect/decal/cleanable/B = locate() in T // DOPPLER EDIT - ORIGINAL: var/obj/effect/decal/cleanable/blood/B = locate() in T
+	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
 		// DOPPLER EDIT CHANGE START - ORIGINAL: B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 		if(hasgreenblood(src))
