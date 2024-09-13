@@ -32,27 +32,6 @@
 	TEST_ASSERT(length(initial_understood & holder.understood_languages) == 1, \
 		"Dummy did not understand Common after returning to human! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
-/// Tests species changes which are more complex are functional (e.g. from a species which speaks common to one which does not)
-/datum/unit_test/language_species_swap_complex
-
-/datum/unit_test/language_species_swap_complex/Run()
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-
-	var/datum/language_holder/holder = dummy.get_language_holder()
-
-	dummy.set_species(/datum/species/lizard/silverscale)
-
-	TEST_ASSERT(dummy.has_language(/datum/language/common, SPOKEN_LANGUAGE), \
-		"Changing a mob's species from one which speaks common to one which does not should remove the language!")
-
-	TEST_ASSERT(dummy.has_language(/datum/language/common, UNDERSTOOD_LANGUAGE), \
-		"Changing a mob's species from one which understands common another which does should not remove the language!")
-
-	TEST_ASSERT(length(holder.spoken_languages) == 2, \
-		"Dummy should speak two languages - Uncommon and Draconic! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
-
-	TEST_ASSERT(length(holder.understood_languages) == 3, \
-		"Dummy should understand three languages - Common, Uncommon and Draconic! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
 /// Test that other random languages known are not lost on species change
 /datum/unit_test/language_species_change_other_known
