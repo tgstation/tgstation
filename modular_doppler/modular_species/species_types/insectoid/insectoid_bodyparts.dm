@@ -23,9 +23,19 @@
 /obj/item/bodypart/leg/left/digitigrade/insectoid
 	icon_greyscale = 'modular_doppler/modular_species/species_types/insectoid/icons/bodyparts.dmi'
 
+/obj/item/bodypart/leg/left/digitigrade/insectoid/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_INSECTOID
+
 /obj/item/bodypart/leg/right/insectoid
 	icon_greyscale = 'modular_doppler/modular_species/species_types/insectoid/icons/bodyparts.dmi'
 	limb_id = SPECIES_INSECTOID
 
 /obj/item/bodypart/leg/right/digitigrade/insectoid
 	icon_greyscale = 'modular_doppler/modular_species/species_types/insectoid/icons/bodyparts.dmi'
+
+/obj/item/bodypart/leg/right/digitigrade/insectoid/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_INSECTOID
