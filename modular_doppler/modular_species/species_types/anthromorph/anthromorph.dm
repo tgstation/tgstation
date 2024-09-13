@@ -27,7 +27,11 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
 	)
 
-/datum/species/golem/get_species_lore()
+
+/datum/species/anthromorph/get_species_description()
+	return "Nothing yet."
+
+/datum/species/anthromorph/get_species_lore()
 	return list(
 		"Nothing yet.",
 	)
