@@ -274,7 +274,7 @@
 
 	if(weight)
 		for(var/reagent_type in grind_results)
-			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+			grind_results[reagent_type] /= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 	weight = new_weight
 
 	if(weight >= FISH_WEIGHT_SLOWDOWN)
@@ -288,7 +288,7 @@
 		mob.update_equipment_speed_mods()
 
 	for(var/reagent_type in grind_results)
-		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 
 	update_fish_force()
 
