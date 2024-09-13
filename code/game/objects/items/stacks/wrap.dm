@@ -102,13 +102,6 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
-/obj/item/stack/package_wrap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	if(isitem(storage_holder))
-		// Don't insert if the target can be wrapped
-		var/obj/item/item = storage_holder
-		return !item.can_be_package_wrapped()
-	return TRUE
-
 /obj/item/stack/package_wrap/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE
@@ -118,6 +111,8 @@
 	if(isitem(interacting_with))
 		var/obj/item/item = interacting_with
 		if(!item.can_be_package_wrapped())
+			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+				return NONE // put it in the bag instead of yelling
 			balloon_alert(user, "can't be wrapped!")
 			return ITEM_INTERACT_BLOCKING
 		if(user.is_holding(item))
