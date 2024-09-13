@@ -140,6 +140,11 @@
 	#define SPEECH_SAYMODE 10
 	#define SPEECH_MODS 11
 
+///from /datum/component/speechmod/handle_speech(): ()
+#define COMSIG_TRY_MODIFY_SPEECH "try_modify_speech"
+	///Return value if we prevent speech from being modified
+	#define PREVENT_MODIFY_SPEECH 1
+
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)

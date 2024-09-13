@@ -805,10 +805,12 @@
 	var/timer = 0
 	var/static/list/banned_turfs = typecacheof(list(/turf/open/space, /turf/closed))
 
-/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/lava_staff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(interacting_with.atom_storage || SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/lava_staff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(timer > world.time)
 		return NONE
 	if(is_type_in_typecache(interacting_with, banned_turfs))
