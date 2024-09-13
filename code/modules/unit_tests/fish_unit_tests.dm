@@ -21,7 +21,7 @@
 
 /datum/unit_test/fish_size_weight/Run()
 	var/obj/structure/table/table = allocate(/obj/structure/table)
-	var/obj/item/fish/fish = new /obj/item/fish/testdummy (table.loc)
+	var/obj/item/fish/testdummy/fish = new /obj/item/fish/testdummy (table.loc)
 	TEST_ASSERT_EQUAL(fish.grind_results[/datum/reagent], 20, "the test fish has [fish.grind_results[/datum/reagent]] units of reagent when it should have 20")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
 	var/mob/living/carbon/human/consistent/chef = allocate(/mob/living/carbon/human/consistent)

@@ -287,14 +287,14 @@
 		return
 	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
 	var/time = PERFORM_ALL_TESTS(fish_size_weight) ? 0 : 0.5 SECONDS * amount
-	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+	RemoveElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, time, screentip_verb = "Cut")
 
 /obj/item/fish/proc/add_fillet_type()
 	if(!fillet_type)
 		return
 	var/amount = max(round(num_fillets * size / FISH_FILLET_NUMBER_SIZE_DIVISOR, 1), 1)
 	var/time = PERFORM_ALL_TESTS(fish_size_weight) ? 0 : 0.5 SECONDS * amount
-	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, 0.5 SECONDS * amount, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, time, screentip_verb = "Cut")
 	return amount //checked by a unit test
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
