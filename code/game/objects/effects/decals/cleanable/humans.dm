@@ -438,7 +438,13 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 		if(istype(bumped_atom, /obj/structure/window))
 			land_on_window(bumped_atom)
 		else
-			var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc)
+			// DOPPLER EDIT CHANGE BEGIN - ORIGINAL: var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc)
+			var/obj/effect/decal/cleanable/final_splatter
+			if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/green))
+				final_splatter = new /obj/effect/decal/cleanable/blood/green/splatter/over_window(prev_loc)
+			else
+				final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc)
+			// DOPPLER EDIT CHANGE END
 			final_splatter.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
 			final_splatter.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
 	else // This will only happen if prev_loc is not even a turf, which is highly unlikely.
@@ -449,7 +455,13 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
 	if(!the_window.fulltile)
 		return
-	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new
+	// DOPPLER EDIT CHANGE BEGIN - ORIGINAL: var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new
+	var/obj/effect/decal/cleanable/final_splatter
+	if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/green))
+		final_splatter = new /obj/effect/decal/cleanable/blood/green/splatter/over_window(prev_loc)
+	else
+		final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc)
+	// DOPPLER EDIT CHANGE END
 	final_splatter.forceMove(the_window)
 	the_window.vis_contents += final_splatter
 	the_window.bloodied = TRUE

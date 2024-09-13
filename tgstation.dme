@@ -6646,6 +6646,7 @@
 #include "modular_doppler\modular_medical\wounds\wound_effects.dm"
 #include "modular_doppler\modular_mob_spawn\code\mob_spawn.dm"
 #include "modular_doppler\modular_sounds\code\sounds.dm"
+#include "modular_doppler\modular_species\code\bloodsplatter.dm"
 #include "modular_doppler\modular_species\species_types\insectoid\insectoid.dm"
 #include "modular_doppler\modular_species\species_types\insectoid\insectoid_bodyparts.dm"
 #include "modular_doppler\modular_species\species_types\monkey\monkeys.dm"
