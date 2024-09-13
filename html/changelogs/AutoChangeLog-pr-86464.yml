@@ -1,0 +1,5 @@
+author: "Oxotnak"
+delete-after: True
+changes:
+  - rscadd: "health analyzer now able to print scanned results via Ctrl-shift-click!"
+  - qol: "text from healthscan proc now use < br >"
