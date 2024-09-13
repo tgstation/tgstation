@@ -3,3 +3,7 @@
 	name = "Anthromorph Pattern"
 	icon_state = "anthromorph"
 	gender_specific = FALSE
+
+/datum/sprite_accessory/lizard_markings/anthromorph/no_head
+	name = "Anthromorph Pattern (Headless)"
+	icon_state = "anthromorph_n"
