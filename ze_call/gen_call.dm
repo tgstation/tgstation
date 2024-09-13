@@ -42,7 +42,6 @@
  * Priority is given to these lines of code in REVERSE order of declaration in the .dme
  * Which is why this file has a funky name
  * So this is what we use to call world.Genesis()
- * It's a nameless, no-op function, because it does absolutely nothing
  * It exists to hold a static var which is initialized to null
  * It's on /world to hide it from reflection
  * Painful right? Good, now you share my suffering

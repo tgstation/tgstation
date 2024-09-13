@@ -553,3 +553,9 @@ MAX_POSITIVE_QUIRKS 6
 # If the value is lower than 1, it'll tend to even out the odds
 # If higher than 1, it'll lean toward common spawns even more.
 RANDOM_LOOT_WEIGHT_MODIFIER 1
+
+
+### Custom shuttle
+
+MAX_SHUTTLES 6
+MAX_SHUTTLE_SIZE 1000
