@@ -7,7 +7,6 @@
 /obj/item/bodypart/chest/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
 	limb_id = SPECIES_ANTHROMORPH
-	is_dimorphic = FALSE
 
 /obj/item/bodypart/arm/left/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
