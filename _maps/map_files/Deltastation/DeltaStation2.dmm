@@ -39806,7 +39806,7 @@
 /area/station/tcommsat/server)
 "jQx" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "jQB" = (
@@ -47502,7 +47502,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "lMF" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 8
 	},
@@ -67689,7 +67689,7 @@
 "qVn" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)

@@ -116,7 +116,6 @@
 	// Light projects out backwards from the dir of the light
 	set_light(l_dir = REVERSE_DIR(dir))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(break_if_moved)
@@ -688,10 +687,10 @@
 	tube?.burn()
 	return
 
-/obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	break_light_tube()
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER

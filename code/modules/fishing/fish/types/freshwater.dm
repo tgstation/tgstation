@@ -139,7 +139,7 @@
 		/datum/fish_trait/electrogenesis,
 	)
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
-	electrogenesis_power = 20 MEGA JOULES
+	electrogenesis_power = 6.7 MEGA JOULES
 	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/tadpole

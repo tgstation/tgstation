@@ -112,6 +112,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
+/// Trait for when you can no longer gain body heat
+#define TRAIT_HYPOTHERMIC "body_hypothermic"
 ///For when you've gotten a power from a dna vault
 #define TRAIT_USED_DNA_VAULT "used_dna_vault"
 /// For when you want to be able to touch hot things, but still want fire to be an issue.
@@ -235,6 +237,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PROFOUND_FISHER "profound_fisher"
 /// If an atom has this trait, then you can toss a bottle with a message in it.
 #define TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION "message_in_a_bottle_location"
+/// Stops other objects of the same type from being inserted inside the same aquarium it's in.
+#define TRAIT_UNIQUE_AQUARIUM_CONTENT "unique_aquarium_content"
 /// This trait lets you evaluate someone's fitness level against your own
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 /// These mobs have particularly hygienic tongues
@@ -656,7 +660,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ASHSTORM_IMMUNE "ashstorm_immune"
 #define TRAIT_SNOWSTORM_IMMUNE "snowstorm_immune"
 #define TRAIT_RADSTORM_IMMUNE "radstorm_immune"
-#define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
 /// Cannot be grabbed by goliath tentacles
@@ -1274,6 +1277,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
+
+/**
+ *
+ * This trait is used in some interactions very high in the interaction chain to allow
+ * certain atoms to be skipped by said interactions if the user is in combat mode.
+ *
+ * Its primarily use case is for stuff like storage and tables, to allow things like emags to be bagged
+ * (because in some contexts you might want to be emagging a bag, and in others you might want to be storing it.)
+ *
+ * This is only checked by certain items explicitly so you can't just add the trait and expect it to work.
+ * (This may be changed later but I chose to do it this way to avoid messing up interactions which require combat mode)
+ */
+#define TRAIT_COMBAT_MODE_SKIP_INTERACTION "combat_mode_skip_interaction"
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
