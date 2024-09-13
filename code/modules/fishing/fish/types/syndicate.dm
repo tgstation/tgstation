@@ -46,6 +46,7 @@
 		/datum/fish_trait/mixotroph,
 		/datum/fish_trait/electrogenesis,
 	)
+	electrogenesis_power = 0.9 MEGA JOULES
 	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/chainsawfish

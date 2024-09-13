@@ -61,6 +61,8 @@
 	var/obj/item/fishing_rod/used_rod
 	/// float visual
 	var/obj/effect/fishing_float/float
+	///The physical fishing spot our float is hovering
+	var/atom/location
 	/// Background icon state from fishing_hud.dmi
 	var/background = "background_default"
 	/// Fish icon state from fishing_hud.dmi
@@ -107,31 +109,19 @@
 	///The background as shown in the minigame, and the holder of the other visual overlays
 	var/atom/movable/screen/fishing_hud/fishing_hud
 
-/datum/fishing_challenge/New(datum/component/fishing_spot/comp, reward_path, obj/item/fishing_rod/rod, mob/user)
+/datum/fishing_challenge/New(datum/component/fishing_spot/comp, obj/item/fishing_rod/rod, mob/user)
 	src.user = user
-	src.reward_path = reward_path
-	src.used_rod = rod
-	var/atom/spot = comp.parent
-	float = new(get_turf(spot), spot)
+	used_rod = rod
+	location = comp.parent
+	float = new(get_turf(location), location)
 	float.spin_frequency = rod.spin_frequency
-	RegisterSignal(spot, COMSIG_QDELETING, PROC_REF(on_spot_gone))
+	RegisterSignal(location, COMSIG_QDELETING, PROC_REF(on_spot_gone))
+	RegisterSignal(comp, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	RegisterSignal(comp.fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
+	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
+	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
 	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_COMPLETED, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
-
-	/// Fish minigame properties
-	if(ispath(reward_path,/obj/item/fish))
-		var/obj/item/fish/fish = reward_path
-		var/movement_path = initial(fish.fish_movement_type)
-		mover = new movement_path(src)
-		// Apply fish trait modifiers
-		var/list/fish_list_properties = SSfishing.fish_properties
-		var/list/fish_traits = fish_list_properties[fish][NAMEOF(fish, fish_traits)]
-		for(var/fish_trait in fish_traits)
-			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
-			trait.minigame_mod(rod, user, src)
-	else
-		mover = new /datum/fish_movement(src)
 
 	/// Enable special parameters
 	if(rod.line)
@@ -157,23 +147,6 @@
 
 	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
 
-	if(special_effects & FISHING_MINIGAME_RULE_KILL && ispath(reward_path,/obj/item/fish))
-		RegisterSignal(comp.fish_source, COMSIG_FISH_SOURCE_REWARD_DISPENSED, PROC_REF(hurt_fish))
-
-	difficulty += comp.fish_source.calculate_difficulty(reward_path, rod, user, src)
-	difficulty = clamp(round(difficulty), FISHING_EASY_DIFFICULTY - 5, 100)
-
-	if(difficulty > FISHING_EASY_DIFFICULTY)
-		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
-
-	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
-		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
-
-	mover.adjust_to_difficulty()
-
-	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
-	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
-
 /datum/fishing_challenge/Destroy(force)
 	if(!completed)
 		complete(win = FALSE)
@@ -185,12 +158,12 @@
 	SStgui.close_uis(src)
 	user = null
 	used_rod = null
+	location = null
 	QDEL_NULL(mover)
 	return ..()
 
 /datum/fishing_challenge/proc/send_alert(message)
-	var/turf/float_turf = get_turf(float)
-	float_turf?.balloon_alert(user, message)
+	location?.balloon_alert(user, message)
 
 /datum/fishing_challenge/proc/on_spot_gone(datum/source)
 	SIGNAL_HANDLER
@@ -224,7 +197,7 @@
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
 	to_chat(user, span_notice("You start fishing..."))
-	playsound(float, 'sound/effects/splash.ogg', 100)
+	playsound(location, 'sound/effects/splash.ogg', 100)
 
 ///Set the timers for lure that need to be spun at intervals.
 /datum/fishing_challenge/proc/set_lure_timers()
@@ -266,7 +239,7 @@
 /datum/fishing_challenge/proc/on_float_or_user_move(datum/source)
 	SIGNAL_HANDLER
 
-	if(!user.CanReach(float))
+	if(!user.CanReach(location))
 		user.balloon_alert(user, "too far!")
 		interrupt()
 
@@ -345,12 +318,13 @@
 					user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
 	if(win)
 		if(reward_path != FISHING_DUD)
-			playsound(float, 'sound/effects/bigsplash.ogg', 100)
+			playsound(location, 'sound/effects/bigsplash.ogg', 100)
 	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_COMPLETED, user, win)
 	if(!QDELETED(src))
 		qdel(src)
 
 /datum/fishing_challenge/proc/start_baiting_phase(penalty = FALSE)
+	reward_path = null //In case we missed the biting phase, set the path back to null
 	var/wait_time
 	last_baiting_click = world.time
 	if(penalty)
@@ -370,8 +344,13 @@
 
 /datum/fishing_challenge/proc/start_biting_phase()
 	phase = BITING_PHASE
-	// Trashing animation
-	playsound(float, 'sound/effects/fish_splash.ogg', 100)
+
+	var/list/rewards = list()
+	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, used_rod, user, location, rewards)
+	if(length(rewards))
+		reward_path = pick(rewards)
+	playsound(location, 'sound/effects/fish_splash.ogg', 100)
+
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
 		switch(fish_icon)
 			if(FISH_ICON_DEF)
@@ -440,7 +419,41 @@
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
 		reward.adjust_health(reward.health - damage)
 
+///Get the difficulty and other variables, than start the minigame
 /datum/fishing_challenge/proc/start_minigame_phase(auto_reel = FALSE)
+	var/list/difficulty_holder = list(0)
+	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, reward_path, used_rod, user, difficulty_holder)
+	difficulty = difficulty_holder[1]
+	//If you manage to be so well-equipped and skilled to completely crush the difficulty, just skip to the reward.
+	if(difficulty <= 0)
+		complete(TRUE)
+		return
+	difficulty = clamp(round(difficulty), FISHING_MINIMUM_DIFFICULTY, 100)
+
+	if(difficulty > FISHING_DEFAULT_DIFFICULTY)
+		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
+
+	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
+		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
+
+	/// Fish minigame properties
+	if(ispath(reward_path,/obj/item/fish))
+		var/obj/item/fish/fish = reward_path
+		var/movement_path = initial(fish.fish_movement_type)
+		mover = new movement_path(src)
+		// Apply fish trait modifiers
+		var/list/fish_traits = SSfishing.fish_properties[fish][FISH_PROPERTIES_TRAITS]
+		for(var/fish_trait in fish_traits)
+			var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait]
+			trait.minigame_mod(used_rod, user, src)
+	else
+		mover = new /datum/fish_movement(src)
+
+	mover.adjust_to_difficulty()
+
+	bait_height -= round(difficulty * BAIT_HEIGHT_DIFFICULTY_MALUS)
+	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
+
 	if(auto_reel)
 		completion *= 1.3
 	else
