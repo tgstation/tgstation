@@ -6645,6 +6645,7 @@
 #include "modular_doppler\modular_medical\wounds\wound_effects.dm"
 #include "modular_doppler\modular_mob_spawn\code\mob_spawn.dm"
 #include "modular_doppler\modular_sounds\code\sounds.dm"
+#include "modular_doppler\modular_species\species_types\golem\golem.dm"
 #include "modular_doppler\modular_species\species_types\monkey\monkeys.dm"
 #include "modular_doppler\modular_species\species_types\primitive_demihuman\primitive_demihuman.dm"
 #include "modular_doppler\modular_species\species_types\slugcats\slugcat.dm"
