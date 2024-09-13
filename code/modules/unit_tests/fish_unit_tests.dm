@@ -292,10 +292,15 @@
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a lazy fishing spot (element)")
 	///For good measure, let's try it again, but with the component this time.
 	spot.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
-	spot.AddComponent(/datum/component/fishing_spot, source)
+	var/datum/component/comp = spot.AddComponent(/datum/component/fishing_spot, source)
 	fisher.melee_attack(spot, ignore_cooldown = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy])
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a fishing spot (component)")
+
+	///As a final test, let's see how it goes with a fish source containing every single fish subtype.
+	qdel(comp)
+	spot.AddComponent(/datum/component/fihing_pot, GLOB.preset_fish_sources[/datum/fish_source/unit_test_all_fish])
+	fisher.melee_attack(spot, ignore_cooldown = TRUE)
 
 /datum/fish_source/unit_test_explosive
 	fish_table = list(
@@ -310,6 +315,13 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
+
+/datum/fish_source/unit_test_all_fish
+
+/datum/fish_source/unit_test_all_fish/New()
+	for(var/fish_type as anything in subtypesof(/obj/item/fish))
+		fish_table[fish_type] = 10
+	return ..()
 
 #undef TRAIT_FISH_TESTING
 
