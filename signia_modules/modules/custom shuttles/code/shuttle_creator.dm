@@ -70,7 +70,6 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 		to_chat(user, "<span class='warning'>You need to define a shuttle area first.</span>")
 		return
 	if(istype(target, /obj/machinery/computer/shuttle/custom_shuttle))
-		to_chat(user, "<span class='warning'>targeted console</span>")
 		if(!linkedShuttleId)
 			to_chat(user, "<span class='warning'>Error, no defined shuttle linked to device</span>")
 			return
@@ -79,7 +78,6 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 		to_chat(user, "<span class='notice'>Console linked successfully!</span>")
 		return
 	else if(istype(target, /obj/machinery/computer/camera_advanced/shuttle_docker/custom))
-		to_chat(user, "<span class='warning'>targeted targeter</span>")
 		if(!linkedShuttleId)
 			to_chat(user, "<span class='warning'>Error, no defined shuttle linked to device</span>")
 			return
