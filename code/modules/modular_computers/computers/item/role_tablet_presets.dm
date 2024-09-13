@@ -467,6 +467,7 @@
 
 /obj/item/modular_computer/pda/pun_pun
 	name = "monkey PDA"
+	icon_state = "/obj/item/modular_computer/pda/pun_pun"
 	greyscale_colors = "#ffcc66#914800"
 	starting_programs = list(
 		/datum/computer_file/program/bounty_board,
