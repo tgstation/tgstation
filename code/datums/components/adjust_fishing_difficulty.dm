@@ -7,7 +7,12 @@
 
 /datum/component/adjust_fishing_difficulty/Initialize(modifier, slots = NONE)
 	if(!ismovable(parent) || !modifier)
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
+
+	if(!isitem(parent))
+		var/atom/movable/movable_parent = parent
+		if(!movable_parent.can_buckle)
+			return COMPONENT_INCOMPATIBLE
 
 	src.modifier = modifier
 	src.slots = slots
