@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(atoms)
 
 	set_tracked_initalized(INITIALIZATION_INNEW_REGULAR, "base state") // This gets overidden immediately in InitializeAtoms
 	InitializeAtoms()
+	base_initialized = INITIALIZATION_INNEW_REGULAR // Backup in case the base state is removed for some reason
 
 	return SS_INIT_SUCCESS
 
