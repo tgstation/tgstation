@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Having the Overflow Role set to On will properly ensure you get that role at a High priority as intended by the game code."
+  - bugfix: "Job selection is now a little bit more random. Fixes an unintentional bias in random job assignment that could lead to feast-or-famine for roles where everyone is assigned one job and nobody is assigned another job."

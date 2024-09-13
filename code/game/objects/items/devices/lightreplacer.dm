@@ -325,6 +325,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
+/obj/item/lightreplacer/cyborg/advanced
+	name = "high capacity light replacer"
+	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_high"
+	max_uses = 50
+
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"
 	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."

@@ -313,7 +313,7 @@
 		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
 		return FALSE
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
 		return FALSE
 

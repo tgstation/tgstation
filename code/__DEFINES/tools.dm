@@ -46,3 +46,9 @@
 ///This is a number I got by quickly searching up the temperature to melt iron/glass, though not really realistic.
 ///This is used for places where lighters should not be hot enough to be used as a welding tool on.
 #define HIGH_TEMPERATURE_REQUIRED 1500
+
+/**
+ * A helper for checking if an item interaction should be skipped.
+ * This is only used explicitly because some interactions may not want to ever be skipped.
+ */
+#define SHOULD_SKIP_INTERACTION(target, item, user) (HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && user.combat_mode)

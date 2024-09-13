@@ -174,7 +174,9 @@
 			var/damage_to_apply = owner.maxHealth * (caster_mob.get_total_damage() / caster_mob.maxHealth)
 
 			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-			owner.blood_volume = caster_mob.blood_volume
+			// Only transfer blood if both mobs are supposed to have a blood volume
+			if (initial(owner.blood_volume) > 0 && initial(caster_mob.blood_volume) > 0 && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && !HAS_TRAIT(caster_mob, TRAIT_NOBLOOD))
+				owner.blood_volume = caster_mob.blood_volume
 
 	for(var/datum/action/bodybound_action as anything in caster_mob.actions)
 		if(bodybound_action.target != caster_mob)
@@ -212,8 +214,9 @@
 	caster_mob.fully_heal(HEAL_DAMAGE) // Remove all of our damage before setting our health to a proportion of the former transformed mob's health
 	var/damage_to_apply = caster_mob.maxHealth * (owner.get_total_damage() / owner.maxHealth)
 	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-
-	caster_mob.blood_volume = owner.blood_volume
+	// Only transfer blood if both mobs are supposed to have a blood volume
+	if (initial(owner.blood_volume) > 0 && initial(caster_mob.blood_volume) > 0 && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && !HAS_TRAIT(caster_mob, TRAIT_NOBLOOD))
+		caster_mob.blood_volume = owner.blood_volume
 
 /datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source, gibbed)
 	var/datum/action/cooldown/spell/shapeshift/source_spell = source_weakref.resolve()
