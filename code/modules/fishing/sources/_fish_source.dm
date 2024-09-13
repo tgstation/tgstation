@@ -259,7 +259,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if(!isnull(fish_counts[reward_path])) // This is limited count result
+	var/area/area = get_area(fishing_spot)
+	if(!(area.area_flags & UNLIMITED_FISHING) && !isnull(fish_counts[reward_path])) // This is limited count result
 		//Somehow, we're trying to spawn an expended reward.
 		if(fish_counts[reward_path] <= 0)
 			return null
