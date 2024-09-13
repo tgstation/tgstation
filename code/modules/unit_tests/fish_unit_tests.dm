@@ -282,29 +282,29 @@
 
 	///From here, we check that the profound_fisher as well as fish source procs for rolling rewards don't fail.
 	source = GLOB.preset_fish_sources[/datum/fish_source/unit_test_profound_fisher]
-	var/turf/open/spot = allocate(/turf/open)
-	spot.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+	run_loc_floor_bottom_left.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
 	var/mob/living/basic/fisher = allocate(/mob/living/basic)
 	fisher.AddComponent(/datum/component/profound_fisher)
 	fisher.set_combat_mode(FALSE)
-	fisher.melee_attack(spot, ignore_cooldown = TRUE)
+	fisher.melee_attack(run_loc_floor_bottom_left, ignore_cooldown = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy] != 1)
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a lazy fishing spot (element)")
 	///For good measure, let's try it again, but with the component this time, and a human mob and gloves
-	spot.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
-	var/datum/component/comp = spot.AddComponent(/datum/component/fishing_spot, source)
+	run_loc_floor_bottom_left.RemoveElement(/datum/element/lazy_fishing_spot, /datum/fish_source/unit_test_profound_fisher)
+	var/datum/component/comp = run_loc_floor_bottom_left.AddComponent(/datum/component/fishing_spot, source)
 	var/mob/living/carbon/human/consistent/angler = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/gloves/noodling = allocate(/obj/item/clothing/gloves)
 	noodling.AddComponent(/datum/component/profound_fisher)
 	angler.equip_to_slot(noodling, ITEM_SLOT_GLOVES)
-	angler.UnarmedAttack(spot, proximity_flag = TRUE)
+	angler.UnarmedAttack(run_loc_floor_bottom_left, proximity_flag = TRUE)
 	if(source.fish_counts[/obj/item/fish/testdummy])
 		TEST_FAIL("The unit test profound fisher didn't catch the test fish on a fishing spot (component)")
+	qdel(comp)
 
 	///As a final test, let's see how it goes with a fish source containing every single fish subtype.
+	comp = run_loc_floor_bottom_left.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/unit_test_all_fish])
+	fisher.melee_attack(run_loc_floor_bottom_left, ignore_cooldown = TRUE)
 	qdel(comp)
-	spot.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/unit_test_all_fish])
-	fisher.melee_attack(spot, ignore_cooldown = TRUE)
 
 /datum/fish_source/unit_test_explosive
 	fish_table = list(
