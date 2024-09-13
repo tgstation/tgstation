@@ -67,7 +67,7 @@
 /datum/unit_test/fish_scanning/Run()
 	var/scannable_fishes = 0
 	for(var/obj/item/fish/fish_prototype as anything in subtypesof(/obj/item/fish))
-		if(initial(fish_prototype.experisci_scannable))
+		if(initial(fish_prototype.fish_flags) & FISH_FLAG_EXPERIMENT_SCANNABLE)
 			scannable_fishes++
 	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
 		fish_scan = new fish_scan
@@ -84,7 +84,7 @@
 	fish_traits = list(/datum/fish_trait/dummy)
 	stable_population = INFINITY
 	breeding_timeout = 0
-	show_in_catalog = FALSE //skipped by the autowiki unit test.
+	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
