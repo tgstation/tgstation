@@ -170,42 +170,72 @@ class ConditionalRule:
 # A single conditional expression
 class WhenCondition(ConditionalRule):
     condition: str
-    match_set: Optional[re.Match]
-    match_not_set: Optional[re.Match]
-    match_equal: Optional[re.Match]
-    match_not_equal: Optional[re.Match]
-    match_like: Optional[re.Match]
+    match_set: Optional[re.Match[str]]
+    match_not_set: Optional[re.Match[str]]
+    match_equal: Optional[re.Match[str]]
+    match_not_equal: Optional[re.Match[str]]
+    match_like: Optional[re.Match[str]]
 
     def __init__(self, condition: str):
         self.condition = condition
-        self.match_set = re.match(r"(.+) is set", condition)
-        self.match_not_set = re.match(r"(.+) is not set", condition)
-        self.match_equal = re.match(r"(.+) is '(.+)'", condition)
-        self.match_not_equal = re.match(r"(.+) is not '(.+)'", condition)
-        self.match_like = re.match(r"(.+) like '(.+)'", condition)
+        self.match_set = re.match("(.+) is set", condition)
+        self.match_not_set = re.match("(.+) is not set", condition)
+        self.match_equal = re.match("(.+) is '(.+)'", condition)
+        self.match_not_equal = re.match("(.+) is not '(.+)'", condition)
+        self.match_like = re.match("(.+) like '(.+)'", condition)
+        matches = 0
+        if self.match_set is not None:
+            matches = matches + 1
+        if self.match_not_set is not None:
+            matches = matches + 1
+        if self.match_equal is not None:
+            matches = matches + 1
+        if self.match_not_equal is not None:
+            matches = matches + 1
+        if self.match_like is not None:
+            matches = matches + 1
+        if (matches != 1):
+            raise RuntimeError(f"Conditional rule must be either is set, is not set, is 'value', is not 'value', or like 'regex'. Instead found: {condition}")
 
     def is_met(self, identified: Content) -> bool:
         var_edits = identified.var_edits
 
-        if self.match_set:
+        if self.match_set is not None:
             var_name = self.match_set.group(1)
             return var_name in var_edits
 
-        elif self.match_not_set:
+        elif self.match_not_set is not None:
             var_name = self.match_not_set.group(1)
             return var_name not in var_edits
 
-        elif self.match_equal:
-            var_name, expected_value = self.match_equal.groups()
-            return var_name in var_edits and var_edits[var_name] == expected_value
+        elif self.match_equal is not None:
+            var_name = self.match_equal.group(1)
+            expected_value = self.match_equal.group(2)
+            if var_name not in var_edits:
+                return False
+            if (isinstance(var_edits[var_name], float)):
+                # If something is a float (number), check it as an int and a float
+                # Hack for integer value parsing
+                if var_edits[var_name] % 1 == 0:
+                    return str(int(var_edits[var_name])).strip() == expected_value.strip()
+            return str(var_edits[var_name]).strip() == expected_value.strip()
 
-        elif self.match_not_equal:
-            var_name, unexpected_value = self.match_not_equal.groups()
-            return var_name not in var_edits or var_edits[var_name] != unexpected_value
+        elif self.match_not_equal is not None:
+            var_name = self.match_not_equal.group(1)
+            unexpected_value = self.match_not_equal.group(2)
+            if var_name not in var_edits:
+                return True
+            if (isinstance(var_edits[var_name], float)):
+                # If something is a float (number), check it as an int and a float
+                # Hack for integer value parsing
+                if var_edits[var_name] % 1 == 0:
+                    return str(int(var_edits[var_name])).strip() != expected_value.strip()
+            return str(var_edits[var_name]).strip() != expected_value.strip()
 
-        elif self.match_like:
-            var_name, pattern = self.match_like.groups()
-            return var_name in var_edits and re.match(pattern, var_edits[var_name])
+        elif self.match_like is not None:
+            var_name = self.match_like.group(1)
+            pattern = self.match_like.group(2)
+            return (var_name in var_edits) and re.match(pattern, str(var_edits[var_name]))
 
         return False
 
@@ -228,11 +258,11 @@ class WhenGroup(ConditionalRule):
             elif "any" in condition:
                 return WhenGroup(condition["any"], all_group=False)
             else:
-                raise MapParseError(f"Unknown conditional group in when clause: {list(condition.keys())[0]}")
+                raise RuntimeError(f"Unknown conditional group in when clause: {list(condition.keys())[0]}")
         elif isinstance(condition, str):
             return WhenCondition(condition)
         else:
-            raise MapParseError(f"Invalid condition type: {type(condition)}")
+            raise RuntimeError(f"Invalid condition type: {type(condition)}")
 
     def is_met(self, identified: Content) -> bool:
         if self.all_group:
