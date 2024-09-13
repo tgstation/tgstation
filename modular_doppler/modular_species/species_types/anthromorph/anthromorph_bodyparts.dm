@@ -23,9 +23,19 @@
 /obj/item/bodypart/leg/left/digitigrade/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
 
+/obj/item/bodypart/leg/left/digitigrade/anthromorph/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_ANTHROMORPH
+
 /obj/item/bodypart/leg/right/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
 	limb_id = SPECIES_ANTHROMORPH
 
 /obj/item/bodypart/leg/right/digitigrade/anthromorph
 	icon_greyscale = 'modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi'
+
+/obj/item/bodypart/leg/right/digitigrade/anthromorph/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_ANTHROMORPH
