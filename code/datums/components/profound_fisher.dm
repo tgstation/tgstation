@@ -121,8 +121,8 @@
 		if(!do_after(source, fishing_speed, target = target) && !QDELETED(fish_spot))
 			qdel(float)
 			return
-	var/reward_loot = fish_spot.roll_reward(our_rod, parent)
-	fish_spot.dispense_reward(reward_loot, parent, target)
+	var/reward_loot = fish_spot.roll_reward(our_rod, source)
+	fish_spot.dispense_reward(reward_loot, source, target)
 	playsound(float, 'sound/effects/bigsplash.ogg', 100)
 	qdel(float)
 
