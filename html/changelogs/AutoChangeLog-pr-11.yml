@@ -1,0 +1,4 @@
+author: "Vect0r2"
+delete-after: True
+changes:
+  - rscadd: "You can now build custom shuttles"
