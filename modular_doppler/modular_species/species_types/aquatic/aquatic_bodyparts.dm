@@ -23,9 +23,19 @@
 /obj/item/bodypart/leg/left/digitigrade/aquatic
 	icon_greyscale = 'modular_doppler/modular_species/species_types/aquatic/icons/bodyparts.dmi'
 
+/obj/item/bodypart/leg/left/digitigrade/aquatic/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_AQUATIC
+
 /obj/item/bodypart/leg/right/aquatic
 	icon_greyscale = 'modular_doppler/modular_species/species_types/aquatic/icons/bodyparts.dmi'
 	limb_id = SPECIES_AQUATIC
 
 /obj/item/bodypart/leg/right/digitigrade/aquatic
 	icon_greyscale = 'modular_doppler/modular_species/species_types/aquatic/icons/bodyparts.dmi'
+
+/obj/item/bodypart/leg/right/digitigrade/aquatic/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(limb_id == SPECIES_LIZARD)
+		limb_id = SPECIES_AQUATIC
