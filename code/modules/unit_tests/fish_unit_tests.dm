@@ -30,10 +30,10 @@
 	var/expected_num_fillets = fish.expected_num_fillets
 	blade.melee_attack_chain(chef, fish)
 	var/counted_fillets = 0
-	for(var/atom/movable/content in table.loc.contents)
+	for(var/atom/movable/content as anything in table.loc.contents)
 		if(istype(content, fish_fillet_type))
 			counted_fillets++
-	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have [expected_num_fillets]")
+	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have been [expected_num_fillets]")
 
 ///Checks that fish breeding works correctly.
 /datum/unit_test/fish_breeding
