@@ -17,6 +17,7 @@
 // here we are adding it again (but only for crafting, maploaded and spawned donuts work fine).
 // Until the issues with crafted items' reagents are resolved this will have to do
 /datum/crafting_recipe/food/donut/on_craft_completion(mob/user, atom/result)
+	. = ..()
 	var/obj/item/food/donut/donut_result = result
 	if(donut_result.is_decorated)
 		donut_result.reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
