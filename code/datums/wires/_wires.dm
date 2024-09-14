@@ -160,11 +160,11 @@
 	if(is_cut(wire))
 		cut_wires -= wire
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
-		on_cut(wire, mend = TRUE, source = source)
+		on_cut(wire, mend = TRUE)
 	else
 		cut_wires += wire
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
-		on_cut(wire, mend = FALSE, source = source)
+		on_cut(wire, mend = FALSE)
 
 /datum/wires/proc/cut_color(color, source)
 	cut(get_wire(color), source)

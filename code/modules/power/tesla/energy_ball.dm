@@ -9,6 +9,8 @@
 #define MACHINERY (BLOB + 1)
 #define BLOB (STRUCTURE + 1)
 #define STRUCTURE (1)
+#define ZAP_TESLA_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_GENERATES_POWER //SINGLO_POWER edit
+
 
 /// The Tesla engine
 /obj/energy_ball
@@ -199,7 +201,7 @@
 	C.investigate_log("has been dusted by an energy ball.", INVESTIGATE_DEATHS)
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, cutoff = 4e5, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets = list())
+/proc/tesla_zap(atom/source, zap_range = 3, power, cutoff = 4e5, zap_flags = ZAP_TESLA_FLAGS, list/shocked_targets = list()) //SINGLO_POWER edit
 	if(QDELETED(source))
 		return
 	if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
