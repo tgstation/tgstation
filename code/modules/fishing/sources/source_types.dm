@@ -68,6 +68,7 @@
 		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -79,6 +80,7 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	explosive_malus = TRUE
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
@@ -92,6 +94,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	explosive_malus = TRUE
 
 /datum/fish_source/portal
 	fish_table = list(
@@ -255,7 +258,7 @@
 		fish_table[reward_path] = rand(1, 4)
 
 ///Difficulty has to be calculated before the rest, because of how it influences jump chances
-/datum/fish_source/portal/random/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/portal/random/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	. += rand(-10, 15)
 
@@ -370,7 +373,7 @@
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
-		/obj/item/fish/slimefish = 4
+		/obj/item/fish/slimefish = 4,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
@@ -400,6 +403,15 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+
+/datum/fish_source/holographic/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/obj/item/fish/prototype = /obj/item/fish/holo/checkered
+	return LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Holographic Fish",
+		FISH_SOURCE_AUTOWIKI_ICON = FISH_AUTOWIKI_FILENAME(prototype),
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Holographic fish disappears outside the Holodeck",
+	))
 
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -445,7 +457,7 @@
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
-		RANDOM_SEED = 16,
+		FISHING_RANDOM_SEED = 16,
 		/obj/item/seeds/grass = 6,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
@@ -454,12 +466,54 @@
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
 		/obj/item/seeds/grass = 4,
-		RANDOM_SEED = 4,
+		FISHING_RANDOM_SEED = 4,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+/datum/fish_source/hydro_tray/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+	var/total_weight = 0
+	var/critter_weight = 0
+	var/seed_weight = 0
+	var/other_weight = 0
+	var/dud_weight = fish_table[FISHING_DUD]
+	for(var/content in fish_table)
+		var/weight = fish_table[content]
+		total_weight += weight
+		if(ispath(content, /mob/living))
+			critter_weight += weight
+		else if(ispath(content, /obj/item/food/grown) || ispath(content, /obj/item/seeds) || content == FISHING_RANDOM_SEED)
+			seed_weight += weight
+		else if(content != FISHING_DUD)
+			other_weight += weight
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_DUD,
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(dud_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = "WITHOUT A BAIT",
+		FISH_SOURCE_AUTOWIKI_NOTES = "",
+	))
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Critter",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(critter_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_NOTES = "A small creature, usually a frog or an axolotl",
+	))
+
+	if(other_weight)
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = "Other Stuff",
+			FISH_SOURCE_AUTOWIKI_DUD = "",
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(other_weight/total_weight),
+			FISH_SOURCE_AUTOWIKI_NOTES = "Other stuff, who knows...",
+		))
+
+	return data
 
 /datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	if(!istype(parent, /obj/machinery/hydroponics/constructable))

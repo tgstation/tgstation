@@ -3128,7 +3128,7 @@
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
 "zC" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "zE" = (
