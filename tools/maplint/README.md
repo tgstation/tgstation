@@ -131,16 +131,6 @@ help: Pugs haven't existed on Sol since 2450.
   banned: true
 ```
 
-### `disabled`
-
-The disabled flag can be set in the root if the rule should be skipped. This is convenient if you have lints for a feature which is not ready to be linted against.
-
-```yml
-disabled: true
-/mob/dog/pug:
-  banned: true
-```
-
 ### `when` - Conditional Rules
 
 Sometimes it may be necessary for a rule to be given conditions which have to be met before it needs to be applied. All children of the when node must be satisfied for the rule to execute.
