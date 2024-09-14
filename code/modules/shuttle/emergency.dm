@@ -251,7 +251,6 @@
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
 		)
-		hijack_shuttle_event(user.mind, SSshuttle.emergency.hijack_status)
 	hijack_hacking = FALSE
 
 /obj/machinery/computer/emergency_shuttle/proc/announce_hijack_stage()
@@ -318,26 +317,6 @@
 	authorized = null
 
 	. = ..()
-
-/// Try and spawn a hijack shuttle event. set force to TRUE for guaranteed something
-/obj/machinery/computer/emergency_shuttle/proc/hijack_shuttle_event(datum/mind/evil_mind, hijack_stage)
-	for(var/datum/antagonist/antag as anything in evil_mind.antag_datums)
-		if(!antag.hijack_shuttle_events)
-			continue
-		if(antag.hijack_shuttle_events?.Find("[hijack_stage]")) // convert into string, integer lists are too limiting, and we got defines to acces them as strings
-			var/shuttle_event = pick_weight(antag.hijack_shuttle_events["[hijack_stage]"])
-
-			if(shuttle_event == null)
-				continue //multi antag represent
-
-			var/obj/docking_port/mobile/port = SSshuttle.emergency
-
-			if(!port)
-				return
-
-			port.add_shuttle_event(shuttle_event)
-			message_admins("Hijack by [ADMIN_LOOKUPFLW(evil_mind.current)] has added '[shuttle_event]' to [port].")
-			return
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"

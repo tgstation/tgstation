@@ -48,4 +48,33 @@
 
 	remove_from_list_when_spawned = FALSE
 
+///CARPTIDE! CARPTIDE! CARPTIDE! Magical carp will attack the shuttle!
+/datum/shuttle_event/simple_spawner/carp/magic
+	name = "Magical Carp Nest! (Very Dangerous!)"
+	spawning_list = list(/mob/living/basic/carp/magic = 12, /mob/living/basic/carp/magic/chaos = 3)
+	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE | SHUTTLE_EVENT_MISS_SHUTTLE
 
+	event_probability = 0
+	activation_fraction = 0.2
+	spawn_probability_per_process = 20
+
+	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
+
+/// Spawns some player controlled fire sharks
+/datum/shuttle_event/simple_spawner/player_controlled/fire_shark
+	name = "Three player controlled fire sharks! (Dangerous!)"
+	spawning_list = list(/mob/living/basic/heretic_summon/fire_shark = 3)
+	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
+
+	event_probability = 0
+	activation_fraction = 0.2
+	spawn_probability_per_process = 100
+	spawns_per_spawn = 3
+
+	spawn_anyway_if_no_player = FALSE
+	ghost_alert_string = "Would you like to be a fire shark attacking the shuttle?"
+	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
+
+	role_type = ROLE_SENTIENCE

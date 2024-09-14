@@ -83,3 +83,40 @@
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_hand = /obj/item/storage/briefcase/hitchiker
 	internals_slot = ITEM_SLOT_LPOCKET
+
+/datum/shuttle_event/simple_spawner/player_controlled/human/nukie
+	name = "Nuclear Operative (Dangerous as heck)!"
+	spawning_list = list(/mob/living/carbon/human = 1)
+	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
+	outfit = /datum/outfit/deathmatch_loadout/nukie
+
+	event_probability = 0
+	spawn_probability_per_process = 100
+
+	spawn_anyway_if_no_player = FALSE
+	ghost_alert_string = "Would you like to be a nuclear operative to assault the shuttle?"
+	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE
+
+	role_type = ROLE_NUCLEAR_OPERATIVE
+
+/datum/outfit/shuttle_nukie
+	name = "Shuttle Nuclear Operative"
+
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	back = /obj/item/mod/control/pre_equipped/nuclear
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
+	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	l_pocket = /obj/item/grenade/syndieminibomb
+	implants = list(/obj/item/implant/explosive)
+	suit_store = /obj/item/tank/internals/emergency_oxygen
+
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+	backpack_contents = list(
+		/obj/item/ammo_box/c10mm,
+		/obj/item/ammo_box/magazine/m12g = 2,
+		/obj/item/pen/edagger,
+		/obj/item/reagent_containers/hypospray/medipen/atropine,
+	)

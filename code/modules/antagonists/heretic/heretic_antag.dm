@@ -28,24 +28,6 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/heretic/heretic_gain.ogg'
 
-	hijack_shuttle_events = list(
-		EVENT_STAGE_2 = list(
-						/datum/shuttle_event/simple_spawner/black_hole = 3,
-						/datum/shuttle_event/simple_spawner/player_controlled/fire_shark = 5,
-						null = 92,
-						),
-		EVENT_STAGE_3 = list(
-						/datum/shuttle_event/simple_spawner/black_hole = 5,
-						/datum/shuttle_event/simple_spawner/player_controlled/fire_shark = 10,
-						null = 85,
-						),
-		EVENT_STAGE_4 = list(
-						/datum/shuttle_event/simple_spawner/black_hole = 10,
-						/datum/shuttle_event/simple_spawner/player_controlled/fire_shark = 20,
-						null = 70,
-						),
-	)
-
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
