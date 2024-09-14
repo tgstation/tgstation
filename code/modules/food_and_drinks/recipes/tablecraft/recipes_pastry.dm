@@ -21,7 +21,6 @@
 	if(donut_result.is_decorated)
 		donut_result.reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 
-
 /datum/crafting_recipe/food/donut/chaos
 	name = "Chaos donut"
 	reqs = list(
