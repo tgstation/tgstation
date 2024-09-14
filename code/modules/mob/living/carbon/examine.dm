@@ -481,6 +481,7 @@
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			. += separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
+			. += "<br>"
 			. += get_sechud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
@@ -510,6 +511,7 @@
 		. += "\[Record Missing\]"
 	. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a>"
 	. += "<a href='?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
+	. = jointext(., "<br>")
 
 /// Collects information displayed about src when examined by a user with a security HUD.
 /mob/living/carbon/proc/get_sechud_examine_info(mob/living/user, datum/record/crew/target_record)
@@ -532,6 +534,7 @@
 		. += "<a href='?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>\
 			<a href='?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>\
 			<a href='?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"
+	. = jointext(., "<br>")
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
