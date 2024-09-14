@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Storage and Tables are now a lower priority action, meaning some uses of items on storage should work... better, now. Here's hoping at least, report any oddities."
-  - refactor: "Note: For an overwhelming majority of items, **combat mode** will attempt to attack/insert into the target, while **non-combat-mode** will attempt to use on a target. This means screwdrivering or emagging a MODsuit must be done on non-combat-mode, as combat mode will simply put the screwdriver or emag into its storage. Same applies to tables, though when in doubt, RMB may help (for things which are also weapons, like mops)."
-  - refactor: "Refactored escape pod storage, now they actually properly show as unlocked on red alert and above."

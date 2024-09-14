@@ -1,5 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - rscadd: "The Wraith Cloaking Module is now available in the uplink, costs 3 TC."
-  - code_imp: "the saboteur handgun now uses a  generic proc rather than a signal"

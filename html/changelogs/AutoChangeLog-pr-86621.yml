@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Delta: The disposal unit in the curator's office is now properly connected to the disposals system."
