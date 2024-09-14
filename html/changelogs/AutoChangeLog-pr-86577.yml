@@ -1,0 +1,6 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - qol: "The 'direction' circuit component now also returns the distance of its target."
+  - balance: "Most circuit shells and the generic component and generic circuit have had their size reduced."
+  - balance: "The airlock circuit shell has had its size increased."
