@@ -109,8 +109,8 @@
 				continue //So all they're left with are shoes and uniform.
 			if(person_contents == human_sent.shoes)
 				continue
-		person_sent.temporarilyRemoveItemFromInventory(person_contents)
-		if (!person_contents)
+		var/unequipped = person_sent.temporarilyRemoveItemFromInventory(person_contents)
+		if (!unequipped)
 			continue
 		person_contents.moveToNullspace()
 		victim_belongings.Add(WEAKREF(person_contents))
