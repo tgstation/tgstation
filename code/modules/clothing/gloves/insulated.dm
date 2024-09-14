@@ -16,7 +16,7 @@
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/clothing/gloves/color/yellow/Initialize(mapload)
-	. = .()
+	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 10)
 
 /obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
