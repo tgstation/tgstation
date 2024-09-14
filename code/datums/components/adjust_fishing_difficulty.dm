@@ -47,7 +47,7 @@
 		return
 	var/mob/living/holder = movable_parent.loc
 	var/obj/item/item = parent
-	if(!(holder.get_slot_by_item(movable_parent) & (slots || item.slot_flags)))
+	if(holder.get_slot_by_item(movable_parent) & (slots || item.slot_flags))
 		update_user(holder, removing)
 
 /datum/component/adjust_fishing_difficulty/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
