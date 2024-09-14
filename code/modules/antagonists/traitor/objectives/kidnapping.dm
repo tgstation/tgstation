@@ -235,7 +235,7 @@
 		var/unequipped = sent_mob.temporarilyRemoveItemFromInventory(belonging)
 		if (!unequipped)
 			continue
-		unequipped.moveToNullspace()
+		belonging.moveToNullspace()
 		target_belongings.Add(WEAKREF(belonging))
 
 	var/datum/market_item/hostage/market_item = sent_mob.process_capture(rand(1000, 3000))
