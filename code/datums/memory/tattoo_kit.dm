@@ -47,10 +47,10 @@
 		balloon_alert(tattoo_artist, "no limb to tattoo!")
 		return
 	if(HAS_TRAIT_FROM(tattoo_target, TRAIT_NOT_ENGRAVABLE, ENGRAVED_TRAIT))
-		balloon_alert(tattoo_artist, "bodypart has already been engraved!")
+		balloon_alert(tattoo_artist, "bodypart already tattooed!")
 		return
 	if(HAS_TRAIT(tattoo_target, TRAIT_NOT_ENGRAVABLE))
-		balloon_alert(tattoo_artist, "bodypart cannot be engraved!")
+		balloon_alert(tattoo_artist, "bodypart cannot be tattooed!")
 		return
 	var/datum/memory/memory_to_tattoo = tattoo_artist.mind.select_memory("tattoo")
 	if(!memory_to_tattoo || !tattoo_artist.Adjacent(tattoo_holder) || !tattoo_holder.get_bodypart(selected_zone))
