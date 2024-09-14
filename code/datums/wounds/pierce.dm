@@ -192,7 +192,6 @@
 /datum/wound/pierce/bleed/moderate
 	name = "Minor Skin Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	// melbert todo : check if cold packs actually help with this
 	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
 		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
 		Follow with food and a rest period."

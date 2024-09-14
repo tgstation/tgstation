@@ -33,8 +33,6 @@
 	var/last_scan_text
 	var/scanner_busy = FALSE
 
-	var/print = FALSE
-
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
 	register_item_context()
@@ -62,8 +60,6 @@
 /obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
-	if(!user.can_read(src) || user.is_blind())
-		return ITEM_INTERACT_BLOCKING
 
 	var/mob/living/M = interacting_with
 
@@ -73,12 +69,20 @@
 
 	// Clumsiness/brain damage check
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
-		user.visible_message(span_warning("[user] analyzes the floor's vitals!"), \
-							span_notice("You stupidly try to analyze the floor's vitals!"))
-		to_chat(user, "[span_info("Analyzing results for <b>The floor</b>:<br>\tOverall status: <b>Healthy</b>")]\
-				<br>[span_info("Key: <font color='#00cccc'>Suffocation</font>/<font color='#00cc66'>Toxin</font>/<font color='#ffcc33'>Burn</font>/<font color='#ff3333'>Brute</font>")]\
-				<br>[span_info("\tDamage specifics: <font color='#66cccc'>0</font>-<font color='#00cc66'>0</font>-<font color='#ff9933'>0</font>-<font color='#ff3333'>0</font>")]\
-				<br>[span_info("Body temperature: ???")]")
+		var/turf/scan_turf = get_turf(user)
+		user.visible_message(
+			span_warning("[user] analyzes [scan_turf]'s vitals!"),
+			span_notice("You stupidly try to analyze [scan_turf]'s vitals!"),
+		)
+
+		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([station_time_timestamp()]):</span><br>"
+		floor_text += "<span class='info ml-1'>Overall status: <i>Unknown</i></span><br>"
+		floor_text += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
+		floor_text += "<span class='info ml-1'>Body temperature: [scan_turf?.return_air()?.return_temperature() || "???"]</span><br>"
+
+		if(user.can_read(src) && !user.is_blind())
+			to_chat(user, examine_block(floor_text))
+		last_scan_text = floor_text
 		return
 
 	if(ispodperson(M) && !advanced)
@@ -89,22 +93,23 @@
 	balloon_alert(user, "analyzing vitals")
 	playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50)
 
+	var/readability_check = user.can_read(src) && !user.is_blind()
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
-			healthscan(user, M, mode, advanced)
+			if(readability_check)
+				healthscan(user, M, mode, advanced)
 			last_scan_text = healthscan(user, M, mode, advanced, tochat = FALSE)
 		if (SCANMODE_WOUND)
-			woundscan(user, M, src)
+			if(readability_check)
+				woundscan(user, M, src)
 
 	add_fingerprint(user)
 
 /obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
-	if(!user.can_read(src) || user.is_blind())
-		return ITEM_INTERACT_BLOCKING
-
-	chemscan(user, interacting_with)
+	if(user.can_read(src) && !user.is_blind())
+		chemscan(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/healthanalyzer/add_item_context(
@@ -148,7 +153,7 @@
 	var/tox_loss = target.getToxLoss()
 	var/fire_loss = target.getFireLoss()
 	var/brute_loss = target.getBruteLoss()
-	var/mob_status = (target.stat == DEAD ? span_alert("<b>Deceased</b>") : "<b>[round(target.health/target.maxHealth,0.01)*100]% healthy</b>")
+	var/mob_status = (target.stat == DEAD ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = span_alert("<b>Deceased</b>")
@@ -156,12 +161,8 @@
 
 	render_list += "[span_info("Analyzing results for <b>[target]</b> ([station_time_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/humantarget = target
-		if(humantarget.undergoing_cardiac_arrest() && humantarget.stat != DEAD)
-			render_list += "<span class='alert ml-1'><b>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</b></span><br>"
-		if(humantarget.has_reagent(/datum/reagent/inverse/technetium))
-			advanced = TRUE
+	if(!advanced && target.has_reagent(/datum/reagent/inverse/technetium))
+		advanced = TRUE
 
 	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode, tochat)
 
@@ -202,7 +203,11 @@
 	// Body part damage report
 	if(iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
-		if(brute_loss > 0 || fire_loss > 0 || oxy_loss > 0 || tox_loss > 0 || fire_loss > 0)
+		var/any_damage = brute_loss > 0 || fire_loss > 0 || oxy_loss > 0 || tox_loss > 0 || fire_loss > 0
+		var/any_missing = length(carbontarget.bodyparts) < (carbontarget.dna?.species?.max_bodypart_count || 6)
+		var/any_wounded = length(carbontarget.all_wounds)
+		var/any_embeds = carbontarget.has_embedded_objects()
+		if(any_damage || (mode == SCANNER_VERBOSE && (any_missing || any_wounded || any_embeds)))
 			render_list += "<hr>"
 			var/dmgreport = "<span class='info ml-1'>Body status:</span>\
 							<font face='Verdana'>\
@@ -224,7 +229,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				// Follow same body zone list every time so it's consistent across all humans
-				for(var/zone in BODY_ZONES_ALL)
+				for(var/zone in GLOB.all_body_zones)
 					var/obj/item/bodypart/limb = carbontarget.get_bodypart(zone)
 					if(isnull(limb))
 						dmgreport += "<tr>"
@@ -334,7 +339,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				var/cyberimp_name = tochat ? capitalize(cyberimp.get_examine_string(user)) : capitalize(cyberimp.name)
+				var/cyberimp_name = tochat ? capitalize(cyberimp.examine_title(user)) : capitalize(cyberimp.name)
 				LAZYADD(cyberimps, cyberimp_name)
 		if(LAZYLEN(cyberimps))
 			if(!render)
@@ -343,11 +348,10 @@
 			render_list += "<span class='notice ml-2'>[english_list(cyberimps, and_text = ", and ")]</span><br>"
 
 		render_list += "<hr>"
+
 		//Genetic stability
-		if(advanced && humantarget.has_dna())
-			if(humantarget.dna.stability != initial(humantarget.dna.stability))
-				render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
-			mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk)
+		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
+			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
 		// Hulk and body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
@@ -436,9 +440,9 @@
 /obj/item/healthanalyzer/proc/print_report(mob/user)
 	var/obj/item/paper/report_paper = new(get_turf(src))
 
-	report_paper.color = COLOR_STARLIGHT
-	report_paper.name = "Health scan report"
-	var/report_text = "<center><B>Health scan report. Time of scan: [station_time_timestamp()]</B></center><HR><BR>"
+	report_paper.color = "#99ccff"
+	report_paper.name = "health scan report - [station_time_timestamp()]"
+	var/report_text = "<center><B>Health scan report. Time of retrieval: [station_time_timestamp()]</B></center><HR>"
 	report_text += last_scan_text
 
 	report_paper.add_raw_text(report_text)

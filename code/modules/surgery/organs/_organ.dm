@@ -335,7 +335,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		tech_text = "[round((damage / maxHealth)*100, 1)]% damaged"
+		tech_text = "[round((damage / maxHealth) * 100, 1)]% damaged"
 
 	if(organ_flags & ORGAN_FAILING)
 		. = "<font color='#cc3333'>[tech_text || "Non-Functional"]</font>"
@@ -357,6 +357,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(tech_text)
 		. = "<font color='#33cc33'>[tech_text]</font>"
+
+	return .
 
 /// Determines if this organ is shown when a user has condensed scans enabled
 /obj/item/organ/proc/show_on_condensed_scans()

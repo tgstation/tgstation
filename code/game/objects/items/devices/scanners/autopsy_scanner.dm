@@ -109,10 +109,8 @@
 			autopsy_information += "[symptom.name] - [symptom.desc]<br>"
 
 	var/obj/item/paper/autopsy_report = new(user.drop_location())
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	autopsy_report.name = "autopsy report of [scanned] - [station_time_timestamp()])"
 	autopsy_report.add_raw_text(autopsy_information.Join("\n"))
-	autopsy_report.add_stamp(sheet.icon_class_name("stamp-cmo"), 260, 5, 0, "stamp-cmo") // melbert todo : placeholder until i get a cross img
 	autopsy_report.color = "#99ccff"
 	autopsy_report.update_appearance()
 	user.put_in_hands(autopsy_report)
