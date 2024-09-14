@@ -14,6 +14,12 @@
 /obj/machinery/power/energy_accumulator/gravity_generator/RefreshParts()
 	. = ..()
 
+/obj/machinery/power/energy_accumulator/gravity_generator/RefreshParts()
+	. = ..()
+	var/power_multiplier = 0
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		power_multiplier += capacitor.tier
+	input_power_multiplier = power_multiplier
 
 /obj/machinery/power/energy_accumulator/gravity_generator/examine(mob/user)
 	. = ..()
