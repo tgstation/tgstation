@@ -8780,6 +8780,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/portable_atmospherics/pump/lil_pump,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "dpH" = (
@@ -34861,6 +34862,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "lVy" = (
@@ -39824,6 +39826,7 @@
 	pixel_x = 15;
 	pixel_y = 7
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nHu" = (
@@ -40328,6 +40331,7 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/engineering/break_room)
 "nQH" = (
@@ -47787,6 +47791,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/engineering/break_room)
 "qxN" = (
@@ -51215,6 +51220,7 @@
 	pixel_y = 6
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "rDj" = (
@@ -59049,6 +59055,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
+"ugt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/small,
+/area/station/engineering/break_room)
 "ugA" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -63699,6 +63712,7 @@
 "vDS" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/engineering/break_room)
 "vDV" = (
@@ -65714,6 +65728,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/supermatter/room)
 "wjG" = (
@@ -70035,6 +70050,7 @@
 /area/station/maintenance/starboard/central)
 "xwn" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "xwr" = (
@@ -88362,9 +88378,9 @@ kMe
 kMe
 nDJ
 lWV
-mWB
+cYt
 wjw
-kMe
+gAV
 tDu
 ccA
 oPa
@@ -90938,9 +90954,9 @@ awH
 gAV
 qkq
 wRy
-ayK
+urz
 vDS
-aWA
+ugt
 lVv
 nHq
 exQ

@@ -8,6 +8,13 @@
 	///The item won't be inserted into the aquarium, but will early return attackby anyway.
 	#define COMSIG_CANNOT_INSERT_IN_AQUARIUM (1<<1)
 
+///Updates the appearance of a newly generated aquarium content visual:(visual)
+#define COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE "aquarium_content_apply_appearance"
+///Updates the base position of an aquarium content visual:(aquarium, visual)
+#define AQUARIUM_CONTENT_RANDOMIZE_POSITION "aquarium_content_randomize_position"
+///Updates the animation of an aquarium content visual:(aquarium, visual)
+#define COMSIG_AQUARIUM_CONTENT_DO_ANIMATION "aquarium_content_do_animation"
+
 // Fish signals
 #define COMSIG_FISH_STATUS_CHANGED "fish_status_changed"
 #define COMSIG_FISH_STIRRED "fish_stirred"
@@ -24,6 +31,10 @@
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
+/// Rolling a reward path for a fishing challenge
+#define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
+/// Adjusting the difficulty of a rishing challenge, often based on the reward path
+#define COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY "fishing_get_difficulty"
 /// Fishing challenge completed
 #define COMSIG_FISHING_CHALLENGE_COMPLETED "fishing_completed"
 /// Sent to the fisherman when the reward is dispensed: (reward)

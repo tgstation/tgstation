@@ -114,7 +114,7 @@
 		attacking_item.use(1)
 		return
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [attacking_item]..."))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
