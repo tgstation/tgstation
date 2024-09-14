@@ -26,14 +26,11 @@
 			QDEL_NULL(active_hotspot)
 	else
 		for(var/direction in GLOB.cardinals)
-			var/turf/potentially_open = get_step(src, direction)
-			if(!isopenturf(potentially_open))
+			var/turf/open/open = get_step(src, direction)
+			if(!isopenturf(open) || !open.active_hotspot)
 				continue
-			var/turf/open/potentially_hotboxed = potentially_open
-			if(!potentially_hotboxed.active_hotspot)
-				continue
-			var/existing_directions = potentially_hotboxed.active_hotspot.smoothing_junction
-			potentially_hotboxed.active_hotspot.set_smoothed_icon_state(existing_directions | REVERSE_DIR(direction))
+			var/existing_directions = open.active_hotspot.smoothing_junction
+			open.active_hotspot.set_smoothed_icon_state(existing_directions | REVERSE_DIR(direction))
 			hotspot_around |= direction
 
 	active_hotspot = new_lad
