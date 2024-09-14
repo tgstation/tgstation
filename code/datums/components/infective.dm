@@ -15,6 +15,18 @@
 	if(!islist(diseases))
 		diseases = islist(diseases)
 
+	///Make sure the diseases list is populated with instances of diseases so that it doesn't have to be for each AddComponent call.
+	for(var/datum/disease/disease as anything in diseases)
+		if(!disease) //invalid entry somehow, remove.
+			diseases -= disease
+		if(ispath(disease, /datum/disease))
+			var/datum/disease/instance = new disease
+			diseases -= disease
+			diseases += instance
+		else if(!istype(disease))
+			stack_trace("found [isdatum(disease) ? "an instance of [disease.type]" : disease] inside the diseases list argument for [type]")
+			diseases -= disease
+
 	src.diseases = diseases
 
 	if(expire_in)
