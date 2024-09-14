@@ -35,16 +35,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /datum/armor/mask_gas
 	bio = 100
 
-/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	if(!isinhands && cig)
-		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
-	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
-
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 	init_fov()
+
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -52,6 +49,11 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		var/obj/item/gas_filter/inserted_filter = new starting_filter_type(src)
 		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
+
+/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(!isinhands && cig)
+		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 
 /obj/item/clothing/mask/gas/Destroy()
 	QDEL_LAZYLIST(gas_filters)
@@ -241,6 +243,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	. = ..()
 	if(.)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	if(!fishing_modifier)
+		return
 	if(up)
 		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
 	else
