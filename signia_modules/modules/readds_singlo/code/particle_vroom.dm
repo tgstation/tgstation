@@ -23,7 +23,6 @@
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'signia_modules/modules/readds_singlo/sounds/particle_accelerator.dmi'
-	icon_state = "none"
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 500
