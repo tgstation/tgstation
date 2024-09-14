@@ -17,7 +17,7 @@
 
 	///Make sure the diseases list is populated with instances of diseases so that it doesn't have to be for each AddComponent call.
 	for(var/datum/disease/disease as anything in diseases)
-		if(!disease) //invalid entry somehow, remove.
+		if(!disease) //empty entry, remove.
 			diseases -= disease
 		if(ispath(disease, /datum/disease))
 			var/datum/disease/instance = new disease
