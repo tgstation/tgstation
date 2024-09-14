@@ -15,18 +15,6 @@
 	if(!islist(diseases))
 		diseases = islist(diseases)
 
-	///Make sure the diseases list is populated with instances of diseases and nothing else.
-	for(var/datum/disease/disease as anything in diseases)
-		if(!disease) //invalid entry somehow, remove.
-			diseases -= disease
-		if(ispath(disease, /datum/disease))
-			var/datum/disease/instance = new disease
-			diseases -= disease
-			diseases += instance
-		else if(!istype(disease))
-			stack_trace("found [isdatum(disease) ? "an instance of [disease.type]" : disease] inside the diseases list argument for [type]")
-			diseases -= disease
-
 	src.diseases = diseases
 
 	if(expire_in)
@@ -116,7 +104,7 @@
 
 	if(!is_weak)
 		var/appendage_zone = feeder.held_items.Find(source)
-		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 		try_infect(feeder, appendage_zone)
 
 	for(var/datum/disease/disease as anything in diseases)
