@@ -51,16 +51,21 @@
 		update_user(holder, removing)
 
 /datum/component/adjust_fishing_difficulty/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
-	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
-		var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[modifier]% " : ""
-		var/method = "Wearing [source.p_them()]"
-		if(!isitem(source))
-			method = "Buckling to [source.p_them()]"
-		else
-			var/obj/item/item = source
-			if((slots || item.slot_flags) & ITEM_SLOT_HANDS)
-				method = "Holding [source.p_them()]"
-		examine_text += span_nicegreen("[method] will make fishing [percent][modifier > 0 ? "easier" : "harder"].")
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		return
+	var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[modifier]% " : ""
+	var/method = "Wearing [source.p_them()]"
+	if(!isitem(source))
+		method = "Buckling to [source.p_them()]"
+	else
+		var/obj/item/item = source
+		if((slots || item.slot_flags) & ITEM_SLOT_HANDS)
+			method = "Holding [source.p_them()]"
+	var/text = "[method] will make fishing [percent][modifier > 0 ? "easier" : "harder"]."
+	if(modifier > 0)
+		examine_text += span_nicegreen(text)
+	else
+		examine_text += span_danger(text)
 
 /datum/component/adjust_fishing_difficulty/proc/on_buckle(atom/movable/source, mob/living/buckled_mob, forced)
 	SIGNAL_HANDLER

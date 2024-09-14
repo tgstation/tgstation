@@ -228,6 +228,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	if(!success)
 		return
 	var/turf/fishing_spot = get_turf(challenge.float)

@@ -19,20 +19,20 @@
 	///How much sitting on this chair influences fishing difficulty
 	var/fishing_modifier = -3
 
+/obj/structure/chair/Initialize(mapload)
+	. = ..()
+	if(prob(0.2))
+		name = "tactical [name]"
+		fishing_modifier -= 4
+	MakeRotate()
+	if(can_buckle && fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
 	if(!has_buckled_mobs() && can_buckle)
 		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
-	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
-
-
-/obj/structure/chair/Initialize(mapload)
-	. = ..()
-	if(prob(0.2))
-		name = "tactical [name]"
-	MakeRotate()
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
@@ -268,7 +268,6 @@
 	icon_state = "stool"
 	can_buckle = FALSE
 	buildstackamount = 1
-	fishing_modifier = -2
 	item_chair = /obj/item/chair/stool
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
@@ -315,7 +314,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 2
 	item_chair = /obj/item/chair/stool/bamboo
-	fishing_modifier = -5
 
 /obj/item/chair
 	name = "chair"

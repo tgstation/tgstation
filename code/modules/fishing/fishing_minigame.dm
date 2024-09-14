@@ -433,7 +433,6 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	return TRUE
 
 /datum/fishing_challenge/proc/update_difficulty()
-	SIGNAL_HANDLER
 	if(phase != MINIGAME_PHASE)
 		return
 	var/old_difficulty = difficulty
@@ -455,7 +454,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 ///Get the difficulty and other variables, than start the minigame
 /datum/fishing_challenge/proc/start_minigame_phase(auto_reel = FALSE)
 	SEND_SIGNAL(user, COMSIG_MOB_BEGIN_FISHING_MINIGAME, src)
-	if(!get_difficulty()) //we total'ed 0 or less difficulty, instant win.
+	if(!get_difficulty()) //we totalized 0 or less difficulty, instant win.
 		return
 
 	if(difficulty > FISHING_DEFAULT_DIFFICULTY)
