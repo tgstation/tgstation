@@ -2,7 +2,6 @@
 	name = "EM Containment Grid"
 	desc = "This launches the Alpha particles, might not want to stand near this end."
 	icon = 'signia_modules/modules/readds_singlo/sounds/particle_accelerator.dmi'
-	icon_state = "none"
 	var/fire_delay = 50
 	var/last_shot = 0
 
