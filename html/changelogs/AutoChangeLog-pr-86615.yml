@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "fixes basic AI that are supposed to pause during actions not pausing"
