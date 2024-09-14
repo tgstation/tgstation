@@ -1,13 +1,10 @@
 /mob/living/basic/mouse
-	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "mouse"
 	desc = "This cute little guy just loves the taste of uninsulated electrical cables. Isn't he adorable?"
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
 	held_state = "mouse_gray"
-	shadow_type = SHADOW_SMALL
-	shadow_offset_y = 2
 
 	maxHealth = 5
 	health = 5

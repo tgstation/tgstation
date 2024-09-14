@@ -51,7 +51,7 @@
 /obj/structure/fluff/preserved_borer
 	name = "preserved borer exhibit"
 	desc = "A preserved cortical borer. Probably been there long enough to not last long outside the exhibit."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "preservedborer"
 	density = TRUE
 
@@ -122,7 +122,7 @@
 	anchored = TRUE
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 
 /obj/item/paper/fluff/museum/noend
 	name = "scrambled note"
@@ -159,7 +159,7 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	onstation_override = TRUE
+	all_products_free = TRUE
 
 /obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
 	return NONE

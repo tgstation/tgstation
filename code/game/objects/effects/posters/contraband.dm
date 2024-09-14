@@ -19,7 +19,7 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/contraband/free_tonto
 	name = "Free Tonto"

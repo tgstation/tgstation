@@ -18,16 +18,13 @@
 /area/template_noop)
 "u" = (
 /obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 8
-	},
+/obj/machinery/recharger,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "v" = (
 /obj/structure/table,
 /obj/item/stack/medical/ointment{
-	heal_burn = 10;
-	pixel_y = 8
+	heal_burn = 10
 	},
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
@@ -39,20 +36,15 @@
 /area/template_noop)
 "I" = (
 /obj/structure/table,
-/obj/item/gun/energy/laser{
-	pixel_y = 8
-	},
+/obj/item/gun/energy/laser,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "J" = (
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack{
-	heal_brute = 10;
-	pixel_y = 8
+	heal_brute = 10
 	},
-/obj/item/soap{
-	pixel_y = 8
-	},
+/obj/item/soap,
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 

@@ -1,6 +1,6 @@
 /obj/structure/reflector
 	name = "reflector base"
-	icon = 'icons/obj/machines/engine/reflector.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "reflector_map"
 	desc = "A base for reflector assemblies."
 	anchored = FALSE

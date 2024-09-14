@@ -11,7 +11,6 @@
  * Filing Cabinets
  */
 /obj/structure/filingcabinet
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "filing cabinet"
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/service/bureaucracy.dmi'
@@ -57,7 +56,7 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (P.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()

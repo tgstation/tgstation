@@ -70,7 +70,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /** Handles initializing the material.
  *
- * Arugments:
+ * Arguments:
  * - _id: The ID the material should use. Overrides the existing ID.
  */
 /datum/material/proc/Initialize(_id, ...)
@@ -159,7 +159,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.barefootstep = turf_sound_override + "barefoot"
 			O.clawfootstep = turf_sound_override + "claw"
 			O.heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	if(alpha < 255 && !iswallturf(T))
+	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
 		setup_glow(T)
 	T.rust_resistance = mat_rust_resistance

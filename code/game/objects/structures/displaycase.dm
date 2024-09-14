@@ -1,7 +1,6 @@
 /obj/structure/displaycase
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "display case"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -160,7 +159,7 @@
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(attacking_item, user)
-		return TRUE //cancel the attack chain, wether we successfully placed an item or not
+		return TRUE //cancel the attack chain, whether we successfully placed an item or not
 	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
@@ -223,7 +222,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
