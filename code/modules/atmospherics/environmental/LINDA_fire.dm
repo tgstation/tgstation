@@ -77,7 +77,7 @@
 	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
 		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
 
-		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature))
+		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature))
 		if(COOLDOWN_FINISHED(src, fire_puff_cooldown))
 			playsound(src, 'sound/effects/fire_puff.ogg', 50)
 			COOLDOWN_START(src, fire_puff_cooldown, 5 SECONDS)
