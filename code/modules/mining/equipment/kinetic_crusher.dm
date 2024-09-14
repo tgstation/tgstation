@@ -504,7 +504,25 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retool_kit_sword"
 	denied_type = /obj/item/crusher_trophy/retool_kit
+	var/retool_icon = "crusher_sword"
+	var/retool_icon_inhand = "crusher_sword0"
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
 
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/KA, mob/user)
+	. = ..()
+	if(.)
+		KA.icon_state = retool_icon
+		KA.inhand_icon_state = retool_icon_inhand
+		if(iscarbon(KA.loc))
+			var/mob/living/carbon/holder = KA.loc
+			holder.update_held_items()
+
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/KA)
+	KA.icon_state = initial(KA.icon_state)
+	KA.inhand_icon_state = initial(KA.inhand_icon_state)
+	if(iscarbon(KA.loc))
+		var/mob/living/carbon/holder = KA.loc
+		holder.update_held_items()
+	..()
