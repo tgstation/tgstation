@@ -178,10 +178,10 @@
 	obj_damage = 25
 	speed = 0.1
 	paralyze_chance = 0
+	current_size = 0.9
 
 /mob/living/basic/gorilla/genetics/Initialize(mapload)
 	. = ..()
-	transform *= 0.9
 	qdel(GetComponent(/datum/component/amputating_limbs))
 
 #undef GORILLA_HANDS_LAYER
