@@ -17,7 +17,7 @@
 	stinger_sound = 'sound/ambience/antag/ling_alert.ogg'
 
 	hijack_shuttle_events = list(
-		"3" = list(
+		EVENT_STAGE_3 = list(
 			/datum/shuttle_event/simple_spawner/meteor/dust/meaty = 1,
 			null = 2,
 		),

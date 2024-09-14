@@ -1,5 +1,6 @@
 /// Spawn projectiles towards the shuttle
 /datum/shuttle_event/simple_spawner/projectile
+	/// Spread of the fired projectiles, to add some flair to it
 	var/angle_spread = 0
 
 /datum/shuttle_event/simple_spawner/projectile/post_spawn(atom/movable/spawnee)

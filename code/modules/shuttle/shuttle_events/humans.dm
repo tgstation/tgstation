@@ -1,4 +1,6 @@
+/// Human spawning events, with the ability to give them outfits!
 /datum/shuttle_event/simple_spawner/player_controlled/human
+	/// Outfits equipped to human mobs we send to the shuttle
 	var/datum/outfit/outfit = /datum/outfit/job/assistant
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/post_spawn(atom/movable/spawnee)

@@ -19,12 +19,16 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	hijack_shuttle_events = list(
 		EVENT_STAGE_1 = list(/datum/shuttle_event/simple_spawner/carp/magic = 1),
 		EVENT_STAGE_2 = list(
-						/datum/shuttle_event/simple_spawner/projectile/fireball = 3,
-						null = 97,
+						/datum/shuttle_event/simple_spawner/projectile/fireball = 10,
+						null = 90,
 						),
 		EVENT_STAGE_3 = list(
-						/datum/shuttle_event/simple_spawner/projectile/fireball = 5,
-						null = 95,
+						/datum/shuttle_event/simple_spawner/projectile/fireball = 30,
+						null = 70,
+						),
+		EVENT_STAGE_3 = list(
+						/datum/shuttle_event/simple_spawner/projectile/fireball = 50,
+						null = 50,
 						),
 	)
 

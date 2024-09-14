@@ -324,7 +324,7 @@
 	for(var/datum/antagonist/antag as anything in evil_mind.antag_datums)
 		if(!antag.hijack_shuttle_events)
 			continue
-		if(antag.hijack_shuttle_events?.Find("[hijack_stage]"))
+		if(antag.hijack_shuttle_events?.Find("[hijack_stage]")) // convert into string, integer lists are too limiting, and we got defines to acces them as strings
 			var/shuttle_event = pick_weight(antag.hijack_shuttle_events["[hijack_stage]"])
 
 			if(shuttle_event == null)
