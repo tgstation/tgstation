@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	/// If ran during dynamic, do we reduce the total threat? Will be overridden by config if set
 	var/threat_reduction = 0
 	/// Which ruleset flags to allow dynamic to use. null to disregard
-	var/dynamic_category = null
+	var/dynamic_category = NONE
 	/// Trait should not be instantiated in a round if its type matches this type
 	var/abstract_type = /datum/station_trait
 
@@ -48,8 +48,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	if(threat_reduction)
 		GLOB.dynamic_station_traits[src] = threat_reduction
 	if(dynamic_category)
-		GLOB.dynamic_ruleset_categories &= ~RULESET_CATEGORY_DEFAULT
-		GLOB.dynamic_ruleset_categories |= dynamic_category
+		GLOB.dynamic_ruleset_categories = dynamic_category
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
 		if(SSstation.initialized)
@@ -60,15 +59,11 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 /datum/station_trait/Destroy()
+	destroy_lobby_buttons()
 	SSstation.station_traits -= src
 	GLOB.lobby_station_traits -= src
-	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	GLOB.dynamic_station_traits -= src
-	if(dynamic_category)
-		GLOB.dynamic_ruleset_categories &= ~dynamic_category
-		if(GLOB.dynamic_ruleset_categories == NONE)
-			GLOB.dynamic_ruleset_categories = RULESET_CATEGORY_DEFAULT
-	destroy_lobby_buttons()
+	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	return ..()
 
 /// Returns the type of info the centcom report has on this trait, if any.

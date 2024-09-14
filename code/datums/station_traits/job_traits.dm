@@ -84,7 +84,7 @@
 /datum/station_trait/job/cargorilla
 	name = "Cargo Gorilla"
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
-	weight = 1
+	weight = 0
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 	can_roll_antag = CAN_ROLL_NEVER
 	job_to_add = /datum/job/cargo_gorilla
@@ -258,7 +258,7 @@
 
 /datum/station_trait/job/pun_pun/New()
 	. = ..()
-	if(SSticker.HasRoundStarted() || !GLOB.the_one_and_only_punpun) //Make sure we don't have two Pun Puns if loaded before the start of the round.
+	if(!SSticker.HasRoundStarted() || !GLOB.the_one_and_only_punpun) //Make sure we don't have two Pun Puns if loaded before the start of the round.
 		return
 	new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
 	qdel(GLOB.the_one_and_only_punpun)

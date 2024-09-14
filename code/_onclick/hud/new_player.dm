@@ -33,15 +33,14 @@
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
-		if (!trait.can_display_lobby_button(mymob.client))
+		if (QDELETED(trait) || !trait.can_display_lobby_button(mymob.client))
 			remove_station_trait_button(trait)
 			continue
 		if(LAZYACCESS(shown_station_trait_buttons, trait))
-			return
+			continue
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
-		sign_up_button.SlowInit()
 		trait.setup_lobby_button(sign_up_button)
-		static_inventory += sign_up_button
+		static_inventory |= sign_up_button
 		LAZYSET(shown_station_trait_buttons, trait, sign_up_button)
 		RegisterSignal(trait, COMSIG_QDELETING, PROC_REF(remove_station_trait_button))
 
@@ -72,13 +71,13 @@
 /// Remove a station trait button, then re-order the rest.
 /datum/hud/new_player/proc/remove_station_trait_button(datum/station_trait/trait)
 	SIGNAL_HANDLER
-	var/atom/movable/screen/lobby/button/sign_up/remove_me = LAZYACCESS(shown_station_trait_buttons, trait)
-	if(!remove_me)
+	var/atom/movable/screen/lobby/button/sign_up/button = LAZYACCESS(shown_station_trait_buttons, trait)
+	if(!button)
 		return
 	LAZYREMOVE(shown_station_trait_buttons, trait)
 	UnregisterSignal(trait, COMSIG_QDELETING)
-	static_inventory -= remove_me
-	qdel(remove_me)
+	static_inventory -= button
+	qdel(button)
 	place_station_trait_buttons()
 
 /atom/movable/screen/lobby
