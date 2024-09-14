@@ -34,7 +34,7 @@
 	packin_up()
 	landingzone = GLOB.areas_by_type[landingzone]
 	if (isnull(landingzone))
-		WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
+		stack_trace("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 		landingzone = get_area(src)
 
 /obj/machinery/computer/cargo/express/on_construction(mob/user)
@@ -47,8 +47,6 @@
 	return ..()
 
 /obj/machinery/computer/cargo/express/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-
 	if (tool.GetID() && allowed(user))
 		locked = !locked
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the interface."))
@@ -73,6 +71,8 @@
 
 		to_chat(user, span_alert("[src] is already linked to [beacon]."))
 		return ITEM_INTERACT_FAILURE
+
+	return NONE
 
 /obj/machinery/computer/cargo/express/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
