@@ -1,0 +1,4 @@
+author: "TheSmallBlue"
+delete-after: True
+changes:
+  - qol: "The z-level button got a refresh! It's now applied to more places and it should be simpler to use."

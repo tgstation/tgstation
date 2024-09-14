@@ -110,7 +110,7 @@
 	if(world.time <= usr.next_move)
 		return 1
 
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return 1
 
 	if(ismob(usr))
@@ -143,7 +143,7 @@
 	screen_loc = ui_building
 
 /atom/movable/screen/area_creator/Click()
-	if(usr.incapacitated() || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(usr.incapacitated || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
@@ -159,33 +159,6 @@
 
 /atom/movable/screen/language_menu/Click()
 	usr.get_language_holder().open_language_menu(usr)
-
-/atom/movable/screen/floor_menu
-	name = "change floor"
-	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "floor_change"
-	screen_loc = ui_floor_menu
-
-/atom/movable/screen/floor_menu/Initialize(mapload)
-	. = ..()
-	register_context()
-
-/atom/movable/screen/floor_menu/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-
-	context[SCREENTIP_CONTEXT_LMB] = "Go up a floor"
-	context[SCREENTIP_CONTEXT_RMB] = "Go down a floor"
-	return CONTEXTUAL_SCREENTIP_SET
-
-/atom/movable/screen/floor_menu/Click(location,control,params)
-	var/list/modifiers = params2list(params)
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
-		usr.down()
-		return
-
-	usr.up()
-	return
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -204,7 +177,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(usr, INCAPABLE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -294,7 +267,7 @@
 		return TRUE
 	if(world.time <= user.next_move)
 		return TRUE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -379,6 +352,34 @@
 /atom/movable/screen/combattoggle/robot
 	icon = 'icons/hud/screen_cyborg.dmi'
 	screen_loc = ui_borg_intents
+
+/atom/movable/screen/floor_changer
+	name = "change floor"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "floor_change"
+	screen_loc = ui_floor_changer
+	var/vertical = FALSE
+
+/atom/movable/screen/floor_changer/Click(location,control,params)
+	var/list/modifiers = params2list(params)
+
+	var/mouse_position
+
+	if(vertical)
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_Y))
+	else
+		mouse_position = text2num(LAZYACCESS(modifiers, ICON_X))
+
+	if(mouse_position > 16)
+		usr.up()
+		return
+
+	usr.down()
+	return
+
+/atom/movable/screen/floor_changer/vertical
+	icon_state = "floor_change_v"
+	vertical = TRUE
 
 /atom/movable/screen/spacesuit
 	name = "Space suit cell status"
@@ -471,7 +472,7 @@
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
