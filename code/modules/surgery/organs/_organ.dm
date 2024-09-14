@@ -330,7 +330,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EMP)
 		. = "<font color='#cc3333'>EMP-Derived Failure</font>"
 		if(add_tooltips)
-			. = span_tooltip("Replace surgically or wait for EMP to subside.", .)
+			. = span_tooltip("Repair or replace surgically.", .)
 		return .
 
 	var/tech_text = ""
