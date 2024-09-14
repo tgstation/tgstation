@@ -416,7 +416,7 @@
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 
-obj/item/clothing/head/hooded/shark_hood/Initialize(mapload)
+/obj/item/clothing/head/hooded/shark_hood/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
 
