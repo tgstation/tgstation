@@ -93,7 +93,7 @@
 /obj/effect/hotspot
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon = 'icons/effects/atmos/fire.dmi'
+	icon = 'icons/effects/fire.dmi'
 	icon_state = "light"
 	layer = GASFIRE_LAYER
 	blend_mode = BLEND_ADD
