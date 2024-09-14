@@ -401,9 +401,6 @@ class Lint:
         if "help" in data:
             self.help = data.pop("help")
 
-        if "disabled" in data:
-            self.disabled = data.pop("disabled")
-
         expect(isinstance(self.help, str) or self.help is None, "Lint help must be a string.")
 
         self.rules = {}
@@ -412,9 +409,6 @@ class Lint:
             self.rules[TypepathExtra(typepath)] = Rules(rules)
 
     def run(self, map_data: DMM) -> list[MaplintError]:
-        if self.disabled:
-            return list()
-
         all_failures: list[MaplintError] = []
         (width, height) = map_data.size()
 
