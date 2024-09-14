@@ -503,7 +503,7 @@
 	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retool_kit_sword"
-	denied_type = list(/obj/item/crusher_trophy/retool_kit)
+	denied_type = /obj/item/crusher_trophy/retool_kit
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
