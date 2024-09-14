@@ -15,6 +15,19 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
 	hardcore_random_bonus = TRUE
+
+	hijack_shuttle_events = list(
+		EVENT_STAGE_1 = list(/datum/shuttle_event/simple_spawner/carp/magic = 1),
+		EVENT_STAGE_2 = list(
+						/datum/shuttle_event/simple_spawner/projectile/fireball = 3,
+						null = 97,
+						),
+		EVENT_STAGE_3 = list(
+						/datum/shuttle_event/simple_spawner/projectile/fireball = 5,
+						null = 95,
+						),
+	)
+
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -34,6 +47,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
 	show_name_in_check_antagonists = TRUE
+	hijack_shuttle_events = /datum/antagonist/wizard::hijack_shuttle_events
 	/// The wizard team this wizard minion is part of.
 	var/datum/team/wizard/wiz_team
 

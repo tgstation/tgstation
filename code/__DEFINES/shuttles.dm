@@ -120,3 +120,10 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
+
+// Hijack stages as used in hijack_shuttle_events.
+// We uhhh, can't just count from 1 to 4 like the hijack counter because we're used in lists and integers and list work very differently than strings in lists
+#define EVENT_STAGE_1 "1"
+#define EVENT_STAGE_2 "2"
+#define EVENT_STAGE_3 "3"
+#define EVENT_STAGE_4 "4"

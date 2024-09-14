@@ -20,9 +20,20 @@
 	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
 
 	hijack_shuttle_events = list(
-		STAGE_2 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 50),
-		STAGE_3 = list(/datum/shuttle_event/simple_spawner/black_hole = 2, NONE = 50),
-		STAGE_4 = list(/datum/shuttle_event/simple_spawner/black_hole = 3, NONE = 50),
+		EVENT_STAGE_2 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 3,
+						null = 97,
+						),
+		EVENT_STAGE_3 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 5,
+						/datum/shuttle_event/simple_spawner/player_controlled/human/nukie = 1,
+						null = 94,
+						),
+		EVENT_STAGE_4 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 10,
+						/datum/shuttle_event/simple_spawner/player_controlled/human/nukie = 5,
+						null = 85,
+						),
 	)
 
 	///The flag of uplink that this traitor is supposed to have.

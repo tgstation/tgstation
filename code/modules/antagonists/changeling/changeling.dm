@@ -15,6 +15,14 @@
 	default_custom_objective = "Consume the station's most valuable genomes."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/ambience/antag/ling_alert.ogg'
+
+	hijack_shuttle_events = list(
+		"3" = list(
+			/datum/shuttle_event/simple_spawner/meteor/dust/meaty = 1,
+			null = 2,
+		),
+	)
+
 	/// Whether to give this changeling objectives or not
 	var/give_objectives = TRUE
 	/// Weather we assign objectives which compete with other lings

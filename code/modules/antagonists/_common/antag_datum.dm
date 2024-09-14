@@ -67,9 +67,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// Shuttle events we can spawn during hijack
 	/// Formatted as below:
 	/// 	list(
-	///			STAGE_2 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 50),
-	///			STAGE_3 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 30),
-	///			STAGE_4 = list(/datum/shuttle_event/simple_spawner/black_hole = 1, NONE = 20),
+	///			"2" = list(/datum/shuttle_event/simple_spawner/black_hole = 1, null = 50),
+	///			"3" = list(/datum/shuttle_event/simple_spawner/black_hole = 1, null = 30),
+	///			"4" = list(/datum/shuttle_event/simple_spawner/black_hole = 1, null = 20),
 	/// 	)
 	var/list/hijack_shuttle_events = list()
 

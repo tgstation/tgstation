@@ -224,6 +224,8 @@
 		AddElement(/datum/element/embed)
 	AddElement(/datum/element/connect_loc, projectile_connections)
 
+	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
+
 /obj/projectile/proc/Range()
 	range--
 	if(wound_bonus != CANT_WOUND)

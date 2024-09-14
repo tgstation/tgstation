@@ -7,5 +7,6 @@
 
 	if(isprojectile(spawnee))
 		var/obj/projectile/pew = spawnee
-		var/angle = angle2dir(dir2angle(port.preferred_direction) - 180) + rand(-angle_spread, angle_spread)
-		pew.fire()
+		var/angle = dir2angle(angle2dir(dir2angle(port.preferred_direction) - 180)) + rand(-angle_spread, angle_spread)
+		pew.fire(angle)
+

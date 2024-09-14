@@ -60,6 +60,8 @@
 	spawn_probability_per_process = 100
 	spawns_per_spawn = 3
 
+	hit_the_shuttle_chance = 4
+
 /datum/shuttle_event/simple_spawner/player_controlled/human/nukie
 	name = "Nuclear Operative (Dangerous as heck)!"
 	spawning_list = list(/mob/living/carbon/human = 1)
@@ -76,3 +78,36 @@
 
 	role_type = ROLE_NUCLEAR_OPERATIVE
 
+/datum/outfit/shuttle_nukie
+	name = "Shuttle Nuclear Operative"
+
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	back = /obj/item/mod/control/pre_equipped/nuclear
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
+	belt = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
+	l_pocket = /obj/item/grenade/syndieminibomb
+	implants = list(/obj/item/implant/explosive)
+	suit_store = /obj/item/tank/internals/emergency_oxygen
+
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+	backpack_contents = list(
+		/obj/item/ammo_box/c10mm,
+		/obj/item/ammo_box/magazine/m12g = 2,
+		/obj/item/pen/edagger,
+		/obj/item/reagent_containers/hypospray/medipen/atropine,
+	)
+
+/datum/shuttle_event/simple_spawner/projectile/fireball //bap bap bapaba bap
+	name = "Fireball Burst (Very bad!)"
+	activation_fraction = 0.5 // this doesn't matter for hijack events but just in case its forced
+
+	spawning_list = list(/obj/projectile/magic/fireball = 10)
+	angle_spread = 10
+	spawns_per_spawn = 10
+	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE | SHUTTLE_EVENT_HIT_SHUTTLE
+	spawn_probability_per_process = 100
+
+	remove_from_list_when_spawned = TRUE
+	self_destruct_when_empty = TRUE

@@ -9,6 +9,25 @@
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
 	stinger_sound = 'sound/ambience/antag/ops.ogg'
+
+	hijack_shuttle_events = list(
+		EVENT_STAGE_2 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 5,
+						/datum/shuttle_event/simple_spawner/player_controlled/human/nukie = 10,
+						null = 85,
+						),
+		EVENT_STAGE_3 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 10,
+						/datum/shuttle_event/simple_spawner/player_controlled/human/nukie = 20,
+						null = 70,
+						),
+		EVENT_STAGE_4 = list(
+						/datum/shuttle_event/simple_spawner/black_hole = 20,
+						/datum/shuttle_event/simple_spawner/player_controlled/human/nukie = 40,
+						null = 40,
+						),
+	)
+
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
 	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.

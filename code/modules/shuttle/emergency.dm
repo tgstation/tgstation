@@ -320,14 +320,14 @@
 	. = ..()
 
 /// Try and spawn a hijack shuttle event. set force to TRUE for guaranteed something
-/obj/machinery/computer/emergency_shuttle/proc/hijack_shuttle_event(datum/mind/evil_mind, hijack_stage, force = FALSE)
+/obj/machinery/computer/emergency_shuttle/proc/hijack_shuttle_event(datum/mind/evil_mind, hijack_stage)
 	for(var/datum/antagonist/antag as anything in evil_mind.antag_datums)
 		if(!antag.hijack_shuttle_events)
 			continue
-		if(antag.hijack_shuttle_events?.Find(hijack_stage))
-			var/shuttle_event = pick_weight(antag.hijack_shuttle_events[hijack_stage])
+		if(antag.hijack_shuttle_events?.Find("[hijack_stage]"))
+			var/shuttle_event = pick_weight(antag.hijack_shuttle_events["[hijack_stage]"])
 
-			if(shuttle_event == NONE)
+			if(shuttle_event == null)
 				continue //multi antag represent
 
 			var/obj/docking_port/mobile/port = SSshuttle.emergency
@@ -335,8 +335,8 @@
 			if(!port)
 				return
 
-			port.event_list.Add(new shuttle_event (port))
-			message_admins("Hijack by [ADMIN_LOOKUPFLW(evil_mind.current)] has added '[typepath]' to [port].")
+			port.add_shuttle_event(shuttle_event)
+			message_admins("Hijack by [ADMIN_LOOKUPFLW(evil_mind.current)] has added '[shuttle_event]' to [port].")
 			return
 
 /obj/docking_port/mobile/emergency
@@ -560,6 +560,11 @@
 					areas += E
 				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
+
+				//Tell the events we're starting, so they can time their spawns or do some other stuff
+				for(var/datum/shuttle_event/event as anything in event_list)
+					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
+
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
@@ -574,10 +579,6 @@
 
 				if(!is_reserved_level(z))
 					CRASH("Emergency shuttle did not move to transit z-level!")
-
-				//Tell the events we're starting, so they can time their spawns or do some other stuff
-				for(var/datum/shuttle_event/event as anything in event_list)
-					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
 			SSshuttle.checkHostileEnvironment()
@@ -645,7 +646,7 @@
 	var/list/names = list()
 	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event))
 		if(prob(initial(event.event_probability)))
-			event_list.Add(new event(src))
+			add_shuttle_event(event)
 			names += initial(event.name)
 	if(LAZYLEN(names))
 		log_game("[capitalize(name)] has selected the following shuttle events: [english_list(names)].")

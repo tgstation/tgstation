@@ -7,11 +7,11 @@
 	if(ishuman(spawnee))
 		prepare_human(spawnee)
 
-/datum/shuttle_event/simple_spawner/player_controlled/human/prepare_human(mob/living/carbon/human/human)
+/datum/shuttle_event/simple_spawner/player_controlled/human/proc/prepare_human(mob/living/carbon/human/human)
 	human.equipOutfit(new outfit ())
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/greytide
-	name = "Greytide!"
+	name = "Greytide! (10 assistants)"
 	spawning_list = list(/mob/living/carbon/human = 10)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
 	outfit = /datum/outfit/job/assistant/breath_mask
@@ -28,12 +28,18 @@
 
 	role_type = ROLE_HERMIT
 
+/datum/outfit/job/assistant/breath_mask
+	name = "Assistant - Breathmask"
+	mask = /obj/item/clothing/mask/breath
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	internals_slot = ITEM_SLOT_LPOCKET
+
 /datum/shuttle_event/simple_spawner/player_controlled/human/greytide/interns
-	name = "Intern Wave"
+	name = "Intern Wave (Unarmed, 10 interns)"
 	event_probability = 0
 	outfit = /datum/outfit/centcom/centcom_intern/unarmed
 
-	spawn_anyway_if_no_player = TRUE
+	spawn_anyway_if_no_player = FALSE
 	ghost_alert_string = "Would you like to be a centcom intern shot at the shuttle?"
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/greytide/interns/activate()
@@ -42,14 +48,16 @@
 	minor_announce("We're sending you our bravest interns, please let them in when they arrive.",
 		title = "Emergency Shuttle", alert = TRUE)
 
+/datum/shuttle_event/simple_spawner/player_controlled/human/greytide/interns/armed
+	name = "Intern Wave (Armed, 10 interns)"
+	event_probability = 0
+	outfit = /datum/outfit/centcom/centcom_intern
 
-/datum/outfit/job/assistant/breath_mask
-	name = "Assistant - Breathmask"
-	mask = /obj/item/clothing/mask/breath
-	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	spawn_anyway_if_no_player = FALSE
+	ghost_alert_string = "Would you like to be a centcom intern shot at the shuttle?"
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/hitchhiker
-	name = "Hitchhiker!"
+	name = "Hitchhiker! (Harmless, single ghost spawn)"
 	spawning_list = list(/mob/living/carbon/human = 1)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
 	outfit = /datum/outfit/job/assistant/hitchhiker
@@ -70,3 +78,6 @@
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/eva
 	head = /obj/item/clothing/head/helmet/space/eva
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	r_hand = /obj/item/storage/briefcase/hitchiker
+	internals_slot = ITEM_SLOT_LPOCKET
