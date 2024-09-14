@@ -110,6 +110,8 @@
 			if(person_contents == human_sent.shoes)
 				continue
 		person_sent.temporarilyRemoveItemFromInventory(person_contents)
+		if (!person_contents)
+			continue
 		person_contents.moveToNullspace()
 		victim_belongings.Add(WEAKREF(person_contents))
 
