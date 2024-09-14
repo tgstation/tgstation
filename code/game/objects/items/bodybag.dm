@@ -103,6 +103,12 @@
 	loc.visible_message(span_warning("[user] suddenly appears in front of [loc]!"), span_userdanger("[user] breaks free of [src]!"))
 	qdel(src)
 
+/obj/item/bodybag/bluespace/redspace
+	name = "suspicious body bag"
+	desc = "A folded body bag designed for the storage and transportation of probably-cadavers. Has a suspiciously red paintjob. Do they never consider disguising their gadgets?"
+	icon_state = "redbodybag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace/redspace
+
 /obj/item/bodybag/environmental
 	name = "environmental protection bag"
 	desc = "A folded, reinforced bag designed to protect against exoplanetary environmental storms."

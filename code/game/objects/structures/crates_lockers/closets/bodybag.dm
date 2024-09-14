@@ -174,6 +174,13 @@
 	folding_bodybag.update_weight_class(max_weight_of_contents)
 	the_folder.put_in_hands(folding_bodybag)
 
+/obj/structure/closet/body_bag/bluespace/redspace
+	name = "suspicious body bag"
+	desc = "An unfolded body bag designed for the storage and transportation of probably-cadavers. Has a suspiciously red paintjob. Do they never consider disguising their gadgets?"
+	icon = 'icons/obj/medical/bodybag.dmi'
+	icon_state = "redbodybag"
+	foldedbag_path = /obj/item/bodybag/bluespace/redspace
+
 /// Environmental bags. They protect against bad weather.
 
 /obj/structure/closet/body_bag/environmental

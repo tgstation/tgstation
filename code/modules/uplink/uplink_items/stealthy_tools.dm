@@ -84,6 +84,15 @@
 	item = /obj/item/jammer
 	cost = 5
 
+/datum/uplink_item/stealthy_tools/bodybag_red
+	name = "Syndicate Bluespace Bodybag"
+	desc = "This sleek bodybag that we stole from Nanotrasen is bigger on the inside, making it perfect for moving the remains of your targets around surreptitiously. \
+			We even gave it a snazzy new paintjob, free of charge! And no, you can't buy an unpainted version."
+	item = /obj/item/bodybag/bluespace/redspace
+	cost = 6
+	surplus = 30
+	uplink_item_flags = NONE
+
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
