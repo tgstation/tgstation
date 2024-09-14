@@ -412,7 +412,7 @@
 /obj/structure/flatpack_cart
 	name = "flatpack cart"
 	desc = "A cart specifically made to hold flatpacks from a flatpacker, evenly distributing weight. Convenient!"
-	icon = 'icons/mob/rideables/vehicles.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "flatcart"
 	density = TRUE
 	opacity = FALSE

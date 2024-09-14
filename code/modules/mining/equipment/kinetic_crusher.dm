@@ -6,7 +6,7 @@
  * a good tradeoff and a decent playstyle.
  */
 /obj/item/kinetic_crusher
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	inhand_icon_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -49,7 +49,6 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -175,10 +174,11 @@
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
-/obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
+/obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_light_on(FALSE)
 	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
 	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent

@@ -25,8 +25,8 @@
 "ee" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ge" = (
@@ -56,6 +56,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "ii" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -63,9 +64,7 @@
 "jQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/dice{
-	pixel_y = 7
-	},
+/obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kt" = (
@@ -137,9 +136,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/deck{
-	pixel_y = 12
-	},
+/obj/effect/spawner/random/entertainment/deck,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "uH" = (
@@ -179,9 +176,7 @@
 "yF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/steam_vent,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "zp" = (
@@ -277,9 +272,6 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "LS" = (
@@ -359,9 +351,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Sp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "SD" = (

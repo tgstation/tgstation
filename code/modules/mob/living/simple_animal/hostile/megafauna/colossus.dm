@@ -164,6 +164,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	light_system = OVERLAY_LIGHT
 	light_range = 2.5
 	light_power = 1.2
@@ -355,7 +356,7 @@
 
 		for(var/obj/item/to_strip in new_clown.get_equipped_items())
 			new_clown.dropItemToGround(to_strip)
-		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
+		new_clown.dress_up_as_job(SSjob.get_job_type(/datum/job/clown))
 		clowned_mob_refs += clown_ref
 
 	return TRUE

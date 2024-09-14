@@ -24,6 +24,9 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	drop_sound = 'sound/items/handling/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -135,7 +138,7 @@
 
 /// re create the appearance
 /datum/overlay_info/proc/add_decal(turf/the_turf)
-	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, null, null, FALSE, null)
+	the_turf.AddElement(/datum/element/decal, icon, icon_state, direction, null, null, alpha, color, null, FALSE, null)
 
 /obj/item/construction/rtd/Initialize(mapload)
 	. = ..()
@@ -195,6 +198,7 @@
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)

@@ -268,9 +268,11 @@
 				qdel(thing)
 	var/datum/reagents/holder = locate() in parts
 	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
-			result.reagents.clear_reagents()
-			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
+			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+				result.reagents.clear_reagents()
+			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
+				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		parts -= holder
 		qdel(holder)
 	result.CheckParts(parts, recipe)
@@ -308,7 +310,6 @@
 	var/datum/reagents/holder
 	var/list/surroundings
 	var/list/Deletion = list()
-	var/data
 	var/amt
 	var/list/requirements = list()
 	if(R.reqs)
@@ -358,7 +359,7 @@
 							SD = new S.type()
 							Deletion += SD
 						S.use(amt)
-						SD = locate(S.type) in Deletion
+						SD = SD || locate(S.type) in Deletion // SD might be already set here, no sense in searching for it again
 						SD.amount += amt
 						continue main_loop
 					else
@@ -366,9 +367,9 @@
 						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
-							data = S.amount
-							S = locate(S.type) in Deletion
-							S.add(data)
+							SD = SD || locate(S.type) in Deletion
+							SD.add(S.amount) // add the amount to our tally stack, SD
+							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
 						surroundings -= S
 			else
 				var/atom/movable/I

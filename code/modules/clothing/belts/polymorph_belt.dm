@@ -104,8 +104,13 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
+	can_be_shared = FALSE
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
+
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/cast(mob/living/cast_on)
+	cast_on = owner //make sure this is only affecting the wearer of the belt
+	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/remove_from)
 	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
@@ -114,6 +119,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/before_cast(mob/living/cast_on)
+	cast_on = owner
 	. = ..()
 	if (. & SPELL_CANCEL_CAST)
 		return

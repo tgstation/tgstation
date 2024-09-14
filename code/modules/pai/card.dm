@@ -1,7 +1,7 @@
 /obj/item/pai_card
 	custom_premium_price = PAYCHECK_COMMAND * 1.25
 	desc = "Downloads personal AI assistants to accompany its owner or others."
-	icon = 'icons/obj/devices/aicards.dmi'
+	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -27,7 +27,6 @@
 	update_appearance()
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/pai_card/attackby(obj/item/used, mob/user, params)
 	if(pai && istype(used, /obj/item/encryptionkey))
@@ -71,8 +70,8 @@
 	emotion_icon = initial(emotion_icon)
 	update_appearance()
 
-/obj/item/pai_card/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/pai_card/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(pai)
 		return pai.on_saboteur(source, disrupt_duration)
 
@@ -237,7 +236,7 @@
 	request_spam = TRUE
 	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	balloon_alert(user, "pAI assistance requested")
-	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/devices/aicards.dmi', "pai")
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 
 	notify_ghosts(
 		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",

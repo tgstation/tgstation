@@ -85,6 +85,11 @@
 	update_icon_state()
 	balloon_alert(user, "mode: [desc[mode]]")
 
+/obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door) && !isturf(interacting_with))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
 /obj/item/door_remote/attack_self_secondary(mob/user)
 	var/choice = tgui_alert(user, message = "", src.name, list/buttons = list("Configure remote", "Handle access requests"), timeout = 10 SECONDS)
 	if(choice == "Configure remote")
