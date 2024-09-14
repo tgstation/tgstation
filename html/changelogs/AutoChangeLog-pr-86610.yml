@@ -1,6 +1,0 @@
-author: "Vect0r2"
-delete-after: True
-changes:
-  - qol: "Adds an additional cable from birdshot SMES units"
-  - qol: "Adds two air pumps to birdshot science"
-  - bugfix: "bird engineering storage is now connected to the powernet"
