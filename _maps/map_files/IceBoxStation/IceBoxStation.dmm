@@ -21813,7 +21813,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "gkN" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "gkP" = (
@@ -25804,7 +25804,7 @@
 "hul" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/north,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "huq" = (
@@ -40898,10 +40898,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "lOV" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -42554,7 +42551,7 @@
 	},
 /area/station/security/brig/entrance)
 "mqI" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "mqL" = (
@@ -56941,9 +56938,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qtv" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -74199,7 +74193,7 @@
 /area/station/security/prison/rec)
 "vwG" = (
 /obj/machinery/vending/security{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -269753,7 +269747,7 @@ wNO
 wNO
 wNO
 bln
-qtv
+bln
 fwx
 kDs
 kDs

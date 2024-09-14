@@ -1,4 +1,4 @@
-//Contains a bunch of procs for different types, but in the end it just lets you restyle the bodypart overlay so thats why its here
+//Contains a bunch of procs for different types, but in the end it just lets you restyle the bodypart overlay so that's why it's here
 
 ///Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list("Cabbage" = /datum/sprite_accessory/cabbage)
 /obj/item/organ/proc/get_valid_restyles()
@@ -22,7 +22,7 @@
 	if(src.body_zone == body_zone)
 		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
-///Invoke async so we dont break signals
+///Invoke async so we don't break signals
 /obj/item/bodypart/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
@@ -41,7 +41,7 @@
 			target_organ = valid_features[1]
 		if(2 to INFINITY)
 			var/choose_options = list()
-			var/name_to_organ = list() //literally so I dont have to loop again after someones made their choice
+			var/name_to_organ = list() //literally so I don't have to loop again after someone's made their choice
 			for(var/obj/item/organ/organ_choice as anything in valid_features)
 				choose_options[organ_choice.name] = image(organ_choice)
 				name_to_organ[organ_choice.name] = organ_choice
@@ -56,7 +56,7 @@
 
 	target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
-///Invoke async so we dont break signals
+///Invoke async so we don't break signals
 /obj/item/organ/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 

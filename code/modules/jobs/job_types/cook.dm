@@ -82,7 +82,7 @@
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)
+	var/datum/job/cook/other_chefs = SSjob.get_job_type(jobtype)
 	if(other_chefs) // If there's other Chefs, you're a Cook
 		if(other_chefs.cooks > 0)//Cooks
 			id_trim = /datum/id_trim/job/cook

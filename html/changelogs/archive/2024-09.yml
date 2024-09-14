@@ -250,3 +250,160 @@
       pragma
   lbnesquik:
   - rscadd: Add a capacity upgrade for janitorial cyborg light replacers
+2024-09-11:
+  00-Steven:
+  - bugfix: Fixed being buckled to medical/roller beds making you always use the headrest
+      as a footrest.
+  - bugfix: Fixed bedsheets/diskies/plushies/etc put on medical/roller beds facing
+      the wrong direction.
+  - bugfix: Fixed bedsheets/diskies/plushies/etc put on any bed facing the wrong direction
+      on some beds.
+  - image: Ian bedsheets actually have more than one direction, and so can be put
+      on beds properly.
+  Absolucy:
+  - rscadd: Tomato smudges on the floor are now considered valid to bloodcrawl into
+      and out of.
+  Ben10Omintrix:
+  - bugfix: deers now correctly emote with nearby friends
+  - bugfix: fixes being able to transform into polymorphed mobs by riding them
+  Bisar:
+  - balance: AIs piloting mechs no longer die if they hit the supermatter, nor do
+      they harmlessly snap back to their core. The shock now causes them to produce
+      a massive EMP.
+  - balance: Undid a balance change I did during the malf AI refactor. The doomsday
+      countdown will no longer stop if a malf AI dominates a mech.
+  - bugfix: Fixed a few bugs with AI shunting and AI mech death.
+  - bugfix: The binary conversion circuit component should work again.
+  - code_imp: The component also now supports representing negative numbers.
+  BumbertoEko:
+  - bugfix: Mimes french kisses now activate the sm
+  DaCoolBoss:
+  - bugfix: Added missing entries to server config file iceruinblacklist.txt
+  EnterTheJake:
+  - rscadd: New Heretic Side Knowledge, Void Prison.
+  - rscadd: New Void Spell Void Conduit has now replaced Void Blast.
+  - balance: Void Chill is now a stacking debuff, upon reaching the cap, makes the
+      target unable to heat up.
+  - balance: Aristocrat's way now grants immunity to ice and water slips on cold turfs.
+  - balance: ' Void Cloak now grants low pressure resistance when visible.'
+  - balance: Void Phase and Void pull have received a minor CD reduction.
+  - balance: Seeking Blade now applies a couple of stacks of void chill.
+  - balance: ' Void Heretic Ascension has been overhauled, it''s now protects the
+      heretic from projectiles, destroys windows and airlocks and applies void chills
+      to non heretics.'
+  - image: Void Blade and Void Chill have received some new sprites.
+  Ghommie:
+  - bugfix: Fixes mystery boxes breaking after a single use.
+  Melbert:
+  - qol: You can watch entertainment monitors from up to seven tiles away, though
+      you still need to be adjacent(or telekinetic, or a silicon) if you want to change
+      the channel.
+  - qol: The way examine looks has been updated.
+  - qol: A person's ID card no longer appears with a big icon on examine. You can
+      now click on their ID card (in the chat box) to get a bigger picture of it,
+      as well as information about them.
+  - refactor: Much of examine backend code has been refactored, report any odd looking
+      text.
+  - bugfix: Trash cannons can be filled with fuel and fired again
+  SmArtKar:
+  - bugfix: Fixed missing felinid ear preference
+  - bugfix: Fixed locker shoving closing and opening the locker thrice, sending its
+      victim to the backrooms
+  - bugfix: You no longer return to the station cuffed after being sacrificed by a
+      heretic
+  SuperNovaa41:
+  - bugfix: Fixes getting negative moodlet from fire while immune
+  SyncIt21:
+  - bugfix: Mediborg omnitool displays error message for wrong tool in surgery step
+  hack-wrench:
+  - rscadd: tape recorder now records speaker name
+  r3dj4ck0424:
+  - bugfix: The Syndicate have cleared up the static preventing them from sending
+      their battlecruisers to Birdshot Station. Watch out, crew!
+2024-09-12:
+  LT3:
+  - qol: Quick repair suit sensors by hitting yourself with cable coil
+  - qol: Improved feedback for broken suit sensors
+  - bugfix: Ctrl+click on equipped uniforms enables suit sensors as expected
+  Melbert:
+  - bugfix: Med/sec hud examine
+  SmArtKar:
+  - bugfix: You can no longer pick up large parcels with evidence bags due to them
+      being normal-sized items
+  carlarctg:
+  - rscadd: Added an increasing chance for malfunction on repeated failed polling
+      for MM helmets
+2024-09-13:
+  Bisar:
+  - bugfix: Fixed up a couple of Void Heretic rework descriptions.
+  EnterTheJake:
+  - rscadd: The Wraith Cloaking Module is now available in the uplink, costs 3 TC.
+  - code_imp: the saboteur handgun now uses a  generic proc rather than a signal
+  Ghommie:
+  - balance: With enough preparation, good skills and equipment, you can manage to
+      skip the minigame phase of fishing by reducing the difficulty all the way down
+      to 0.
+  - balance: Fish electrogenesis now scales with size.
+  - rscadd: Pun Pun is a playable crewmember during Monkey Day (14 December).
+  - bugfix: Fixing fishing not caring whether a reward is limited or not.
+  Melbert:
+  - refactor: Storage and Tables are now a lower priority action, meaning some uses
+      of items on storage should work... better, now. Here's hoping at least, report
+      any oddities.
+  - refactor: 'Note: For an overwhelming majority of items, **combat mode** will attempt
+      to attack/insert into the target, while **non-combat-mode** will attempt to
+      use on a target. This means screwdrivering or emagging a MODsuit must be done
+      on non-combat-mode, as combat mode will simply put the screwdriver or emag into
+      its storage. Same applies to tables, though when in doubt, RMB may help (for
+      things which are also weapons, like mops).'
+  - refactor: Refactored escape pod storage, now they actually properly show as unlocked
+      on red alert and above.
+  Rhials:
+  - balance: Teleport blocker implants now prevent implantees from jaunting.
+  SmArtKar:
+  - bugfix: You no longer die from bloodloss after polymorphing back from an ahealed
+      simplemob
+  Xander3359:
+  - qol: Infiltrator mod hides your voice
+  - bugfix: Infiltrator suit now hides moth wings/antenna
+  - bugfix: hidden moth wings are no longer capable of flight
+2024-09-14:
+  FlufflesTheDog:
+  - bugfix: Echolocation no longer breaks when witnessing a hologram
+  - bugfix: Echolocation no longer breaks when witnessing a fulton extraction
+  - bugfix: Humanoid NPCs are no longer invisible to echolocation users
+  JohnFulpWillard:
+  - rscadd: Lighters now use and require welding fuel to work, but can be used as
+      a welding tool for tasks that don't require much heat.
+  LT3:
+  - qol: Medical HUD and crew console can now detect broken (shorted out) suit sensors
+      needing repair
+  Oxotnak:
+  - rscadd: health analyzer now able to print scanned results via Ctrl-shift-click!
+  - qol: text from healthscan proc now use < br >
+  Rhials:
+  - bugfix: Removes some doubled-up railings on the wizard den/ragin' mages shuttle.
+  SmArtKar:
+  - code_imp: Minor obsession code cleanup
+  - admin: Admins can now see players who were previously obsessed but had been "cured"
+      from the trauma
+  TheBoondock:
+  - balance: double the melting point of hull and halves the thermal transfer so plasma
+      fire should lose less heat and harder to melt it
+  Timberpoes:
+  - bugfix: Having the Overflow Role set to On will properly ensure you get that role
+      at a High priority as intended by the game code.
+  - bugfix: Job selection is now a little bit more random. Fixes an unintentional
+      bias in random job assignment that could lead to feast-or-famine for roles where
+      everyone is assigned one job and nobody is assigned another job.
+  Vect0r2:
+  - qol: Adds an additional cable from birdshot SMES units
+  - qol: Adds two air pumps to birdshot science
+  - bugfix: bird engineering storage is now connected to the powernet
+  carlarctg:
+  - bugfix: The recharging relics now work on ethereal cells.
+  - balance: EMP now affects ethereal's hunger.
+  mc-oofert:
+  - rscadd: you may weld a crate
+  - code_imp: that one cool haunted donk outpost ruins tripwires and such use a subsystem
+      instead of globals. no real gameplay effect
