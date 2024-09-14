@@ -495,3 +495,16 @@
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
+
+//cosmetic items for changing the crusher's look
+
+/obj/item/crusher_trophy/retool_kit
+	name = "crusher sword retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit_sword"
+	denied_type = list(/obj/item/crusher_trophy/retool_kit)
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to have the appearance of a sword"
+
