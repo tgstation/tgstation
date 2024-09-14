@@ -8,7 +8,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	//Has this already been used?
 	var/burntout = FALSE
-	//Amount of time this takes between charge pulses.
+	//How many times this charges your items.
+	var/cycle_amount = 4
+	//Amount of time this takes between charges.
 	var/cycle_time = 0.5 SECONDS
 	//How many times this will charge your gear and emit sparks
 	var/pulse_amount = 4
@@ -25,18 +27,17 @@
 
 /obj/item/inducer_cell/interact(mob/user)
 	if(!burntout)
-		do_sparks(number = 2, source = src)
+		do_sparks(number = 1, source = src)
 		playsound(src, SFX_SPARKS, 65, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		inductive_charge()
-		burntout = TRUE
 		icon_state = "inducer_cell"
+		inductive_charge()
 	return ..()
 
 /obj/item/inducer_cell/proc/inductive_charge(mob/user)
-	if(src.loc != user.loc)
-
+	if(!locate(user) in loc) //muh machine's gone, delete myself because im disarmed
+		qdel(src)
 		return
-	src.Shake(2, 1, cycle_time)
+	src.Shake(4, 4, cycle_time)
 	pulse_amount--
 	if(pulse_amount <= 0)
 		addtimer(CALLBACK(src, PROC_REF(inductive_charge)), cycle_time)
@@ -47,3 +48,11 @@
 	if(chargables.len)
 		var/obj/item/stock_parts/power_store/charging = pick(chargables)
 		charging.charge += min(charging.maxcharge - charging.charge, charging.maxcharge/(rand(charge_lower, charge_upper)))
+
+/obj/item/inducer_cell/Destroy()
+	for(var/mob/living/living_mob in range(zap_range, src))
+		to_chat(living_mob, span_warning("You are struck by an arc of electricity!"))
+		src.Beam(living_mob, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
+		living_mob.electrocute_act(zap_damage, src, 1, SHOCK_NOGLOVES, stun_time, stun_time, stun_time)
+	do_sparks(number = 4, source = src)
+	return ..()

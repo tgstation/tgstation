@@ -32,6 +32,11 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/contraband/punch_shit/directional/west,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Donk";
+	paint_colour = "#c65102";
+	pixel_y = -32
+	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "av" = (
@@ -1510,6 +1515,11 @@
 	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
+"tf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
 "tn" = (
 /turf/closed/indestructible/binary,
 /area/deathmatch)
@@ -1875,6 +1885,21 @@
 /obj/structure/flora/bush/fullgrass/style_2,
 /turf/open/floor/grass,
 /area/deathmatch)
+"zd" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "splatter";
+	paint_colour = "#3d1c0c";
+	pixel_x = 32;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Gib";
+	paint_colour = "#551111";
+	pixel_x = 32
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
 "zo" = (
 /obj/machinery/conveyor/auto{
 	dir = 8
@@ -2036,6 +2061,7 @@
 	pixel_x = -11;
 	pixel_y = 7
 	},
+/obj/structure/sign/poster/contraband/self_ai_liberation/directional/north,
 /turf/open/floor/grass,
 /area/deathmatch)
 "Bv" = (
@@ -2096,6 +2122,15 @@
 /obj/structure/mystery_box/guns,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
+/area/deathmatch)
+"CD" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "face";
+	paint_colour = "#40b488";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/open/indestructible/stone,
 /area/deathmatch)
 "CH" = (
 /obj/structure/mecha_wreckage/ripley/deathripley{
@@ -2324,6 +2359,16 @@
 /area/deathmatch)
 "Fs" = (
 /obj/machinery/vending/hotdog,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Donk";
+	paint_colour = "#c65102";
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "nay";
+	paint_colour = "#8b0000";
+	pixel_x = 32
+	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "Fy" = (
@@ -2632,6 +2677,7 @@
 /obj/structure/fluff/fake_camera{
 	dir = 10
 	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/deathmatch)
 "Je" = (
@@ -2709,6 +2755,7 @@
 /area/deathmatch)
 "JS" = (
 /obj/item/cigbutt,
+/obj/structure/sign/poster/contraband/d_day_promo/directional/south,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "Kj" = (
@@ -2796,6 +2843,27 @@
 /obj/structure/flora/bush{
 	pixel_y = -6;
 	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Le" = (
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north{
+	pixel_y = 36;
+	pixel_x = 3
+	},
+/obj/structure/sign/poster/contraband/clown/directional/north,
+/obj/structure/sign/poster/ripped/directional/north{
+	pixel_x = -14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ll" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "ghost";
+	paint_colour = "#551111";
+	pixel_x = 32;
+	pixel_y = -8
 	},
 /turf/open/floor/grass,
 /area/deathmatch)
@@ -4479,7 +4547,7 @@ BB
 BB
 BB
 BB
-Jr
+Le
 zM
 Md
 OY
@@ -4819,11 +4887,11 @@ Jr
 LQ
 pa
 Jr
-XX
+tf
 gK
 Jr
 gc
-Jr
+CD
 iv
 Jr
 qP
@@ -4916,10 +4984,10 @@ nw
 vv
 tn
 tn
-tn
-tn
-tn
-tn
+vv
+Ur
+Jr
+vv
 tn
 "}
 (16,1,1) = {"
@@ -4977,7 +5045,7 @@ vv
 tn
 tn
 vv
-Ur
+Jr
 Jr
 Gx
 tn
@@ -7289,8 +7357,8 @@ vv
 lP
 vv
 Gd
-Gd
-Gd
+Ll
+zd
 Gd
 Gd
 Os
