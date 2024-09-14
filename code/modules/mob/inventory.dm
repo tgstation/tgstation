@@ -344,8 +344,8 @@
 	return I
 
 //for when the item will be immediately placed in a loc other than the ground
-/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE, idrop = FALSE)
-	. = doUnEquip(I, force, newloc, FALSE, idrop, silent = silent)
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
+	. = doUnEquip(I, force, newloc, FALSE, silent = silent)
 	I.do_drop_animation(src)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC

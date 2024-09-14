@@ -232,9 +232,10 @@
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 
-		var/unequipped = sent_mob.transferItemToLoc(belonging, idrop = TRUE)
+		var/unequipped = sent_mob.temporarilyRemoveItemFromInventory(belonging)
 		if (!unequipped)
 			continue
+		unequipped.moveToNullspace()
 		target_belongings.Add(WEAKREF(belonging))
 
 	var/datum/market_item/hostage/market_item = sent_mob.process_capture(rand(1000, 3000))

@@ -109,7 +109,8 @@
 				continue //So all they're left with are shoes and uniform.
 			if(person_contents == human_sent.shoes)
 				continue
-		person_sent.transferItemToLoc(person_contents, idrop = TRUE)
+		person_sent.temporarilyRemoveItemFromInventory(person_contents)
+		person_contents.moveToNullspace()
 		victim_belongings.Add(WEAKREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
