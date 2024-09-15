@@ -4,11 +4,11 @@
  * Arguments:
  * * amount The amount that will be used to adjust the mob's health
  * * updating_health If the mob's health should be immediately updated to the new value
- * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
+ * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like TRAIT_GODMODE
  */
 /mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = FALSE
-	if(forced || !(status_flags & GODMODE))
+	if(forced || !HAS_TRAIT(src, TRAIT_GODMODE))
 		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2), DAMAGE_PRECISION)
 		if(updating_health)
 			updatehealth()

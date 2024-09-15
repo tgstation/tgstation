@@ -13,7 +13,7 @@
 /area/ruin/powered/lavaland_phone_booth)
 "k" = (
 /obj/machinery/vending/snack/green{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/lavaland_atmos,
@@ -66,7 +66,7 @@
 /area/ruin/powered/lavaland_phone_booth)
 "W" = (
 /obj/machinery/vending/cigarette{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/lavaland_atmos,

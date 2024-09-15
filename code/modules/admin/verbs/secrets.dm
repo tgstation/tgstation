@@ -84,7 +84,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			var/datum/job/sec_job = SSjob.get_job_type(/datum/job/security_officer)
 			sec_job.total_positions = -1
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")

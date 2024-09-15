@@ -356,7 +356,7 @@
 
 		for(var/obj/item/to_strip in new_clown.get_equipped_items())
 			new_clown.dropItemToGround(to_strip)
-		new_clown.dress_up_as_job(SSjob.GetJobType(/datum/job/clown))
+		new_clown.dress_up_as_job(SSjob.get_job_type(/datum/job/clown))
 		clowned_mob_refs += clown_ref
 
 	return TRUE
@@ -527,8 +527,7 @@
 	. = ..()
 	if(isliving(arrived) && holder_animal)
 		var/mob/living/possessor = arrived
-		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
-		possessor.status_flags |= GODMODE
+		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM, TRAIT_GODMODE), STASIS_MUTE)
 		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
 		escape.Grant(holder_animal)
@@ -536,8 +535,7 @@
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	for(var/mob/living/possessor in src)
-		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
-		possessor.status_flags &= ~GODMODE
+		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM, TRAIT_GODMODE), STASIS_MUTE)
 		if(kill || !isanimal_or_basicmob(loc))
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)

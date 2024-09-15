@@ -666,7 +666,7 @@
 	return ..()
 
 /mob/living/silicon/robot/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= -maxHealth) //die only once
@@ -1015,7 +1015,7 @@
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
 
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.get_job_type(/datum/job/cyborg)
 
 	.[cyborg_job_ref.title] = minutes
 
