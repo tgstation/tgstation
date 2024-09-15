@@ -117,7 +117,6 @@
 		GLOB.station_turfs -= src
 	return ..()
 
-
 /turf/closed/wall/examine(mob/user)
 	. += ..()
 	. += deconstruction_hints(user)
