@@ -153,9 +153,10 @@
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
 
-// Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
-// and a good time.
-
+/**
+ * Bar staff, mobs with the TRAIT_GODMODE trait (as long as they stay in the shuttle)
+ * that just want to make sure people have drinks and a good shuttle time.
+ */
 /mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."

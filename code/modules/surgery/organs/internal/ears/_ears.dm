@@ -64,7 +64,7 @@
  * * ddeaf: Handles temporary deafness, 1 ddeaf = 2 seconds of deafness, by default (with no multiplier)
  */
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg = 0, ddeaf = 0)
-	if(owner.status_flags & GODMODE)
+	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		update_temp_deafness()
 		return
 
@@ -85,7 +85,7 @@
 	if(isnull(owner))
 		return
 
-	if(owner.status_flags & GODMODE)
+	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		deaf = 0
 
 	if(deaf > 0)

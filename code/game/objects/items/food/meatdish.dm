@@ -57,7 +57,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/nutriment/fat/oil = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	bite_consumption = 4.5
 	crafting_complexity = FOOD_COMPLEXITY_1
@@ -99,13 +99,19 @@
 
 /obj/item/food/fishmeat/gunner_jellyfish
 	name = "filleted gunner jellyfish"
-	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
+	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic when raw."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "jellyfish_fillet"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/toxin/mindbreaker = 2,
+		/datum/reagent/consumable/nutriment/protein = 4, //The halluginogen comes from the fish trait.
 	)
+
+///Premade gunner jellyfish fillets from supply orders. Contains the halluginogen that'd be normally from the fish trait.
+/obj/item/food/fishmeat/gunner_jellyfish/supply
+
+/obj/item/food/fishmeat/gunner_jellyfish/supply/Initialize(mapload)
+	food_reagents[/datum/reagent/toxin/mindbreaker/fish] = 2
+	return ..()
 
 /obj/item/food/fishmeat/armorfish
 	name = "cleaned armorfish"

@@ -177,10 +177,8 @@
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return
-	if(ismob(target))
-		var/mob/mob_target = target
-		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
-			return
+	if(HAS_TRAIT(target, TRAIT_GODMODE))
+		return
 	if(iseffect(target)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
