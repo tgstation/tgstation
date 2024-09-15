@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		for(var/trait in weight_result_multiplier)
 			if(HAS_TRAIT(bait, trait))
 				result_multiplier = weight_result_multiplier[trait]
-				weight_leveling_exponents = weight_leveling_exponents[trait]
+				leveling_exponent = weight_leveling_exponents[trait]
 				break
 
 
