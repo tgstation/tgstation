@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "empdisable"
-	//trap wont damage mobs in its faction
+	//trap won't damage mobs in its faction. set this to null to make it attack everyone
 	faction = list(ROLE_SYNDICATE)
 	invisibility = INVISIBILITY_ABSTRACT
 	plane = ABOVE_GAME_PLANE
@@ -279,12 +279,6 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 		GLOB.selfdestructs_when_boss_dies -= src
 	return ..()
 
-/obj/effect/overloader_trap/proc/check_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
-
 /obj/effect/overloader_trap/HasProximity(mob/living)
 	if(!locate(host_machine) in loc) //muh machine's gone, delete myself because im disarmed
 		qdel(src)
@@ -294,20 +288,20 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
-	if (!isliving(living)) //ensure the guy triggering us is alive
+	if (!isliving(living))
 		return
-	if (living.stat && check_faction(living)) //and make sure it ain't someone on our team
+	if (!living.stat) //ensure the guy triggering us is alive
 		return
-	COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
-	trap_alerted()
+	if (!faction_check_atom(living)) //and make sure it ain't someone on our team
+		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
+		trap_alerted()
 
 /obj/effect/overloader_trap/proc/trap_alerted()
-	if(host_machine in loc)
+	if(host_machine in loc) //if someone breaks or moves the machine before the trap goes off, this should fail to do anything
 		visible_message(span_boldwarning("Sparks fly from [host_machine] as it shakes vigorously!"))
 		do_sparks(number = 3, source = host_machine)
 		host_machine.Shake(2, 1, trigger_delay)
 		addtimer(CALLBACK(src, PROC_REF(trap_effect)), trigger_delay)
-	//if someone breaks or moves the machine before the trap goes off, this should fail to do anything
 
 /obj/effect/overloader_trap/proc/trap_effect()
 	for(var/mob/living/living_mob in range(shock_range, src))
