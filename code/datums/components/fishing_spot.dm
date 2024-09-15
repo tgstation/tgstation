@@ -24,6 +24,7 @@
 /datum/component/fishing_spot/Destroy()
 	fish_source.on_fishing_spot_del(src)
 	fish_source = null
+	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)

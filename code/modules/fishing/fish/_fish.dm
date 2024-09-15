@@ -452,7 +452,7 @@
 	var/make_edible = TRUE
 	if(weight)
 		for(var/reagent_type in grind_results)
-			grind_results[reagent_type] /= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+			grind_results[reagent_type] /= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 		if(reagents) //This fish has reagents. Adjust the maximum volume of the reagent holder and do some math to adjut the reagents too.
 			var/new_weight_ratio = new_weight / weight
 			var/volume_diff = reagents.maximum_volume * new_weight_ratio - reagents.maximum_volume
@@ -486,7 +486,7 @@
 		mob.update_equipment_speed_mods()
 
 	for(var/reagent_type in grind_results)
-		grind_results[reagent_type] *= FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1)
+		grind_results[reagent_type] *= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
 
 	update_fish_force()
 
