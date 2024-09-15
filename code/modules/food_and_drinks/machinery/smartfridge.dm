@@ -199,11 +199,11 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
 
-	. += structure_examine()
+	. += jointext(structure_examine(), "<br>")
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()
-	. = ""
+	. = list()
 
 	if(welded_down)
 		. += span_info("It's moorings are firmly [EXAMINE_HINT("welded")] to the floor.")
