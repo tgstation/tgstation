@@ -128,6 +128,11 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 /// Cranial fissure wound.
 #define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
+// NOVA EDIT ADDITION BEGIN - MUSCLE AND SYNTH WOUNDS
+// Have to put it here so I can use it in the global list of wound series
+/// See muscle.dm and robotic_blunt.dm
+#define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
+
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
 

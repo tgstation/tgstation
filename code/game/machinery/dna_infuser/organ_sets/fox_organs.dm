@@ -6,4 +6,4 @@
 	visual = TRUE
 	damage_multiplier = 2
 
-	sprite_accessory_override = /datum/sprite_accessory/ears/fox
+//	DOPPLER EDIT, removal - old code: sprite_accessory_override = /datum/sprite_accessory/ears/fox

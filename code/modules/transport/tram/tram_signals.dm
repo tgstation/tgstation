@@ -150,8 +150,8 @@
 			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
 			. += span_notice("The status display reads: Check track sensor.")
 		if(TRANSPORT_REMOTE_FAULT)
-			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
-			. += span_notice("The status display reads: Check tram controller.")
+			. += span_notice("The blue [EXAMINE_HINT("telecoms failure")] light is on.")
+			. += span_notice("The status display reads: Check telecommunications network.")
 		if(TRANSPORT_LOCAL_FAULT)
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
@@ -246,10 +246,10 @@
 		operating_status = TRANSPORT_REMOTE_FAULT
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
+		if(isnull(linked_sensor))
+			link_sensor()
+		wake_sensor()
 
-	if(isnull(linked_sensor))
-		link_sensor()
-	wake_sensor()
 	update_operating()
 
 /obj/machinery/transport/crossing_signal/on_set_machine_stat()
@@ -304,6 +304,8 @@
 	// degraded signal operating conditions of any type show blue
 	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram.controller_status & COMM_ERROR)
+		idle_aspect = XING_STATE_MALF
 
 	// Check for stopped states. Will kill the process since tram starting up will restart process.
 	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)

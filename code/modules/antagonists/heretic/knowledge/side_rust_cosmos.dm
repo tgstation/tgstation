@@ -86,7 +86,7 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, some cable coil, and 5 sheets of titanium into a Rust Walker. \
+	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
@@ -95,7 +95,7 @@
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
@@ -104,11 +104,3 @@
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 	depth = 8
 
-/datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
-	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
-	if(!ritual_head)
-		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
-
-	// Spill out any brains or stuff before we delete it.
-	ritual_head.drop_organs()
-	return ..()

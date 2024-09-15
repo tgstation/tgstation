@@ -1,5 +1,5 @@
 /obj/item/clothing/shoes/cult
-	name = "\improper Nar'Sien invoker boots"
+	name = "\improper Nar'Sian boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
 	inhand_icon_state = null
@@ -10,7 +10,7 @@
 	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt
-	name = "cultist boots"
+	name = "\improper Nar'Sian invoker boots"
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost

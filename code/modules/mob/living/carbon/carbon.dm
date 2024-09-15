@@ -1206,7 +1206,7 @@
 	return bodyparts.len > 2 && ..()
 
 /mob/living/carbon/proc/hypnosis_vulnerable()
-	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
@@ -1435,7 +1435,13 @@
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	if(!isturf(loc))
 		return
-	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
+	// DOPPLER EDIT CHANGE BEGIN - ORIGINAL: var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
+	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter
+	if(hasgreenblood(src))
+		our_splatter = new /obj/effect/decal/cleanable/blood/hitsplatter/green(loc)
+	else
+		our_splatter = new /obj/effect/decal/cleanable/blood/hitsplatter(loc)
+	// DOPPLER EDIT CHANGE END
 	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)

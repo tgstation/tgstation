@@ -41227,9 +41227,9 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/customs)
 "ohN" = (
-/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "oig" = (
@@ -52468,6 +52468,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "rYx" = (
@@ -53177,6 +53178,7 @@
 	name = "Detective Requests Console"
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/detectiveboard/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "smf" = (
@@ -93312,7 +93314,7 @@ hIm
 azq
 iTv
 wMg
-wKr
+lql
 vtr
 mcV
 iGq

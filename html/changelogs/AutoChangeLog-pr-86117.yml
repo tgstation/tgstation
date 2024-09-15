@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "beams now take into account the pixel offsets of both origin and target more accurately.."

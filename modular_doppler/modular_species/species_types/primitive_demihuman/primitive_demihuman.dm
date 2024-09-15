@@ -56,9 +56,15 @@
 	hearthkin.dna.remove_mutation(/datum/mutation/human/olfaction)
 
 /datum/species/human/felinid/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.set_haircolor("#323442", update = FALSE)
-	human_for_preview.set_hairstyle("Blunt Bangs Alt", update = TRUE)
-	human_for_preview.skin_tone = "mediterranean"
+	human_for_preview.dna.ear_type = CAT
+	human_for_preview.dna.features["ears"] = "Coeurl"
+	human_for_preview.dna.features["ears_color_1"] = "#e9eff5"
+	human_for_preview.dna.features["ears_color_2"] = "#f5afaf"
+	human_for_preview.dna.features["ears_color_3"] = "#222222"
+	human_for_preview.set_haircolor("#E9EFF5", update = FALSE)
+	human_for_preview.set_hairstyle("Fluffy long", update = TRUE)
+	human_for_preview.skin_tone = "albino"
+	regenerate_organs(human_for_preview)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
 	var/obj/item/organ/external/tail/cat/cat_tail = human_for_preview.get_organ_by_type(/obj/item/organ/external/tail/cat)

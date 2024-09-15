@@ -51,7 +51,7 @@ ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... f
 				temporary_rod.set_slot(new line_type(temporary_rod), ROD_SLOT_LINE)
 
 			var/result_table = list()
-			var/modified_table = spot.get_modified_fish_table(temporary_rod,user)
+			var/modified_table = spot.get_modified_fish_table(temporary_rod, user, null)
 			for(var/result_type in spot.fish_table) // through this not modified to display 0 chance ones too
 				var/list/info = list()
 				info["result"] = result_type

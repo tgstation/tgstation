@@ -52,7 +52,7 @@
 #define BYPASS_DOOR_CHECKS 2
 
 //used in design to specify which machine can build it
-//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatible.
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
 #define AUTOLATHE (1<<2) //Prints basic designs without research
@@ -66,6 +66,10 @@
 #define AWAY_IMPRINTER (1<<9)
 /// For wiremod/integrated circuits. Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
+// DOPPLER EDIT ADDITION
+/// Can be made by the orderable colony fabricator
+#define COLONY_FABRICATOR (1<<11)
+// DOPPLER EDIT END
 
 #define HYPERTORUS_INACTIVE 0 // No or minimal energy
 #define HYPERTORUS_NOMINAL 1 // Normal operation

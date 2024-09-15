@@ -23,13 +23,16 @@ handles linking back and forth.
 	var/mat_container_flags = NONE
 	///List of signals to hook onto the local container
 	var/list/mat_container_signals
+	///Typecache for items that the silo will accept through this remote no matter what
+	var/list/whitelist_typecache
 
 /datum/component/remote_materials/Initialize(
 	mapload,
 	allow_standalone = TRUE,
 	force_connect = FALSE,
 	mat_container_flags = NONE,
-	list/mat_container_signals = null
+	list/mat_container_signals = null,
+	list/whitelist_typecache = null
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +40,7 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 	src.mat_container_signals = mat_container_signals
+	src.whitelist_typecache = whitelist_typecache
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
@@ -93,6 +97,9 @@ handles linking back and forth.
 		allowed_items = /obj/item/stack \
 	)
 
+	if (whitelist_typecache)
+		mat_container.allowed_item_typecache |= whitelist_typecache
+
 /datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
 	if(isnull(silo))
 		return
@@ -140,7 +147,7 @@ handles linking back and forth.
 		return
 
 	if(silo)
-		mat_container.user_insert(target, user, parent)
+		mat_container.user_insert(target, user, parent, (whitelist_typecache && is_type_in_typecache(target, whitelist_typecache)))
 
 	return COMPONENT_NO_AFTERATTACK
 

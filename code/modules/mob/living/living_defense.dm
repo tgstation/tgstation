@@ -252,7 +252,7 @@
 /**
  * Called when this mob is grabbed by another mob.
  */
-/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
+/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE, grabbed_part) // DOPPLER EDIT CHANGE - ORIGINAL: /mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 
@@ -269,6 +269,7 @@
 		return FALSE
 
 	grippedby(user)
+	update_incapacitated()
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/user, instant = FALSE)

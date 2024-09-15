@@ -45,3 +45,19 @@
 /datum/loadout_item/head/welding
 	name = "Welding Mask"
 	item_path = /obj/item/clothing/head/utility/welding
+
+/datum/loadout_item/head/soft_helmet
+	name = "Soft Helmet"
+	item_path = /obj/item/clothing/head/frontier_colonist_helmet
+
+/datum/loadout_item/head/frontier_cap
+	name = "Frontier Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist
+
+/datum/loadout_item/head/frontier_med
+	name = "Frontier Medical Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist/medic
+
+/datum/loadout_item/head/colonial_cap
+	name = "Colonial Cap"
+	item_path = /obj/item/clothing/head/hats/colonial

@@ -273,7 +273,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
-	// Parallax layers are independant of hud, they care about client
+	// Parallax layers are independent of hud, they care about client
 	// Not doing this will just create a bunch of hard deletes
 	set_new_hud(hud_owner = null)
 
@@ -335,7 +335,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
-	absolute = TRUE //Status of seperation
+	absolute = TRUE //Status of separation
 	speed = 3
 	layer = 30
 

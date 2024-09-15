@@ -252,6 +252,26 @@
 	item_path = /obj/item/clothing/suit/wizrobe/marisa/fake
 
 /*
+*	COLONIST
+*/
+
+/datum/loadout_item/suit/frontier
+	name = "Frontier Trenchcoat"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist
+
+/datum/loadout_item/suit/frontier_short
+	name = "Frontier Jacket"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short
+
+/datum/loadout_item/suit/frontier_med
+	name = "Frontier Medical Jacket"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical
+
+/datum/loadout_item/suit/frontier_flak
+	name = "Frontier Flak Jacket"
+	item_path = /obj/item/clothing/suit/frontier_colonist_flak
+
+/*
 *	MISC
 */
 

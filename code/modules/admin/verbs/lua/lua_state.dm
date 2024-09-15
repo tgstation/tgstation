@@ -41,7 +41,10 @@ GLOBAL_PROTECT(lua_state_stack)
 		return
 	display_name = _name
 	internal_id = DREAMLUAU_NEW_STATE()
-	if(!isnum(internal_id))
+	if(isnull(internal_id))
+		stack_trace("dreamluau is not loaded")
+		qdel(src)
+	else if(!isnum(internal_id))
 		stack_trace(internal_id)
 		qdel(src)
 
