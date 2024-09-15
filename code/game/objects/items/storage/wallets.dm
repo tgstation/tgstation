@@ -111,10 +111,8 @@
 		cached_flat_icon = getFlatIcon(src)
 	return cached_flat_icon
 
-/obj/item/storage/wallet/get_examine_string(mob/user, thats = FALSE)
-	if(front_id)
-		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
-	return ..()
+/obj/item/storage/wallet/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/storage/wallet/proc/update_label()
 	if(front_id)
@@ -175,4 +173,3 @@
 /obj/item/storage/wallet/money/PopulateContents()
 	for(var/iteration in 1 to pick(3, 4))
 		new /obj/item/holochip(src, rand(50, 450))
-

@@ -122,6 +122,7 @@
 	background_icon_state = "bg_alien"
 	cooldown_time = 1 SECONDS
 	melee_cooldown_time = 0
+	can_be_shared = FALSE
 
 /datum/action/cooldown/toggle_seethrough/Remove(mob/remove_from)
 	var/datum/component/seethrough_mob/transparency = target

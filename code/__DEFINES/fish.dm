@@ -67,9 +67,11 @@
 #define FISHING_MINIGAME_RULE_FLIP (1 << 5)
 ///Skip the biting phase and go straight to the minigame, avoiding the penalty for having slow reflexes.
 #define FISHING_MINIGAME_AUTOREEL (1 << 6)
+///The fish will fade in and out at intervals
+#define FISHING_MINIGAME_RULE_CAMO (1 << 7)
 
 ///all the effects that are active and will last for a few seconds before triggering a cooldown
-#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP)
+#define FISHING_MINIGAME_ACTIVE_EFFECTS (FISHING_MINIGAME_RULE_ANTIGRAV|FISHING_MINIGAME_RULE_FLIP|FISHING_MINIGAME_RULE_CAMO)
 
 /// The default additive value for fishing hook catch weight modifiers.
 #define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
@@ -156,8 +158,8 @@
 #define AQUARIUM_FLUID_SALTWATER "Saltwater"
 #define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
 #define AQUARIUM_FLUID_AIR "Air"
-#define AQUARIUM_FLUID_ANADROMOUS "Adaptive to both Freshwater and Saltwater"
-#define AQUARIUM_FLUID_ANY_WATER "Adaptive to all kind of water"
+#define AQUARIUM_FLUID_ANADROMOUS "Anadromous"
+#define AQUARIUM_FLUID_ANY_WATER "Any Fluid"
 
 ///Fluff. The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
@@ -182,3 +184,41 @@
 //Minigame defines
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
+
+///Defines for fish properties from the collect_fish_properties proc
+#define FISH_PROPERTIES_FAV_BAIT "fav_bait"
+#define FISH_PROPERTIES_BAD_BAIT "bad_bait"
+#define FISH_PROPERTIES_TRAITS "fish_traits"
+#define FISH_PROPERTIES_BEAUTY_SCORE "beauty_score"
+#define FISH_PROPERTIES_EVOLUTIONS "evolutions"
+
+///Define for favorite and disliked baits that aren't just item typepaths.
+#define FISH_BAIT_TYPE "Type"
+#define FISH_BAIT_FOODTYPE "Foodtype"
+#define FISH_BAIT_REAGENT "Reagent"
+#define FISH_BAIT_VALUE "Value"
+#define FISH_BAIT_AMOUNT "Amount"
+
+
+///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
+#define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15
+
+/**
+ * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have
+ * quite ambiguous names/icon_states like "checkered" or "pike"
+ */
+#define FISH_AUTOWIKI_FILENAME(fish) SANITIZE_FILENAME("[initial(fish.icon_state)]_wiki_fish")
+
+///The list keys for the autowiki for fish sources
+#define FISH_SOURCE_AUTOWIKI_NAME "name"
+#define FISH_SOURCE_AUTOWIKI_ICON "icon"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT "weight"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX "weight_suffix"
+#define FISH_SOURCE_AUTOWIKI_NOTES "notes"
+
+///Special value for the name key that always comes first when the data is sorted, regardless of weight.
+#define FISH_SOURCE_AUTOWIKI_DUD "Nothing"
+///Special value for the name key that always comes last
+#define FISH_SOURCE_AUTOWIKI_OTHER "Other Stuff"
+///The filename for the icon for "other stuff" which we don't articulate about on the autowiki
+#define FISH_SOURCE_AUTOWIKI_QUESTIONMARK "questionmark"
