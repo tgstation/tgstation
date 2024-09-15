@@ -826,10 +826,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 	if(!iscarbon(user) && !isdrone(user))
 		return
-	var/mob/living/user_living = user
-	if(user_living.incapacitated)
-		return
-
 	attempt_insert(dropping, user)
 	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
