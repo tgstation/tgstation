@@ -9,3 +9,6 @@
 
 // felinid traits
 #define TRAIT_FELINE "feline_aspect"
+
+// Green blood traits
+#define TRAIT_GREEN_BLOOD "green_blood"
