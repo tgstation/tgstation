@@ -407,3 +407,37 @@
   - rscadd: you may weld a crate
   - code_imp: that one cool haunted donk outpost ruins tripwires and such use a subsystem
       instead of globals. no real gameplay effect
+2024-09-15:
+  Ben10Omintrix:
+  - bugfix: fixes basic AI that are supposed to pause during actions not pausing
+  Bisar:
+  - qol: The 'direction' circuit component now also returns the distance of its target.
+  - balance: Most circuit shells and the generic component and generic circuit have
+      had their size reduced.
+  - balance: The airlock circuit shell has had its size increased.
+  DaCoolBoss:
+  - rscadd: Adds the Syndicate Lab to the Icemoon ruin pool.
+  IndieanaJones:
+  - balance: Gorillas made from giving monkeys genetic damage are weaker than their
+      normal counterparts.
+  LT3:
+  - bugfix: Fixed a mislabelled corpse disposal in Icebox medbay, probably less dead
+      bodies showing up in cargo
+  - bugfix: Fixed certain clothing sending suit sensor data when it shouldn't be capable
+  SmArtKar:
+  - image: Updated glowing yellow extract sprite
+  - image: Tanks inside of tank holders have received new sprites
+  - image: Added a new sprite for mediborg surgical saws
+  - spellcheck: Fixed a typo in DeForest medical crates
+  - code_imp: Non-innate engraving blockers should work now (none as of now)
+  - balance: Humans that never had a player controlling them no longer count towards
+      changeling absorption counter
+  TheSmallBlue:
+  - qol: The z-level button got a refresh! It's now applied to more places and it
+      should be simpler to use.
+  Thunder12345:
+  - bugfix: 'Delta: The disposal unit in the curator''s office is now properly connected
+      to the disposals system.'
+  Zytolg:
+  - qol: The Birdshot Tool Storage has been resupplied. New tools are at the crews
+      displosal.
