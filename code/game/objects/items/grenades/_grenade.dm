@@ -51,6 +51,8 @@
 	var/shrapnel_radius
 	///Did we add the component responsible for spawning shrapnel to this?
 	var/shrapnel_initialized
+	///Possible timers that can be assigned for detonation
+	var/possible_fuse_time = list("Instant", 3, 4, 5)
 
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
@@ -220,7 +222,7 @@
 
 	. = TRUE
 
-	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", possible_fuse_time)
 	if (isnull(newtime))
 		return
 	if(!user.can_perform_action(src))
