@@ -157,7 +157,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/external/snout
-	name = "lizard snout"
+	name = "snout" // DOPPLER EDIT, old code: 	name = "lizard snout"
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
 

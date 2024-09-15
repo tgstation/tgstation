@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	/datum/strippable_item/mob_item_slot/belt,
 	/datum/strippable_item/mob_item_slot/pocket/left,
 	/datum/strippable_item/mob_item_slot/pocket/right,
+	/datum/strippable_item/mob_item_slot/tail, // Doppler station edit - tail slot for strip menu!
 	/datum/strippable_item/hand/left,
 	/datum/strippable_item/hand/right,
 	/datum/strippable_item/mob_item_slot/handcuffs,
