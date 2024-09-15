@@ -13,39 +13,39 @@
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
-	//Max shots per firing of the gun.
+	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
-	//Shots currently loaded. Should never be more than max_shots_per_fire.
+	///Shots currently loaded. Should never be more than max_shots_per_fire.
 	var/shots_in_gun = 1
-	//shots added to gun, per piece of ammo loaded.
+	///shots added to gun, per piece of ammo loaded.
 	var/shots_per_load = 1
-	//Accepted "ammo" type
+	///Accepted "ammo" type
 	var/obj/item/ammo_type = /obj/item/ammo_casing/strilka310
-	//Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
+	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
 	var/obj/item/projectile_type = /obj/projectile/bullet/strilka310
-	//If the gun has anything in it.
+	///If the gun has anything in it.
 	var/loaded_gun = TRUE
-	//If the gun is currently loaded with its maximum capacity.
+	///If the gun is currently loaded with its maximum capacity.
 	var/fully_loaded_gun = TRUE
-	//delay in firing the gun after lighting
+	///delay in firing the gun after lighting
 	var/fire_delay = 5
-	//Delay between shots
+	///Delay between shots
 	var/shot_delay = 3
-	//If the gun shakes the camera when firing
+	///If the gun shakes the camera when firing
 	var/firing_shakes_camera = TRUE
-	//sound of firing for all but last shot
+	///sound of firing for all but last shot
 	var/fire_sound = 'sound/weapons/gun/general/mountedgun.ogg'
-	//sound of firing for last shot
+	///sound of firing for last shot
 	var/last_fire_sound = 'sound/weapons/gun/general/mountedgunend.ogg'
 
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(!anchorable_gun) // Can't anchor an unanchorable gun.
+	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
 		return FALSE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-//Covers Reloading and lighting of the gun
+///Covers Reloading and lighting of the gun
 /obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
 	var/ignition_message = used_item.ignition_effect(src, user) // Checks if item used can ignite stuff.
 	if(istype(used_item, ammo_type))
@@ -72,11 +72,11 @@
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("Gun is not loaded!","",2)
+		balloon_alert_to_viewers("gun is not loaded!","",2)
 		return
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
 		for(var/mob/shaken_mob in urange(10, src))
-			if((shaken_mob.stat == CONSCIOUS)&&(firing_shakes_camera == TRUE))
+			if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera == TRUE)
 				shake_camera(shaken_mob, 3, 1)
 			icon_state = icon_state_fire
 		if(loaded_gun)
