@@ -25,28 +25,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-/mob/living/proc/testme()
-	var/list/choiced = list("one", "two", "three")
-	var/list/stuff = tgui_input_checkboxes(src, message = "test", title = "still testing", items = choiced)
-	var/list/indexed = stuff[2]
-	var/list/returned_choices
-	for(var/choice in indexed)
-		returned_choices += choiced[choice]
-	return returned_choices
-
-
-
-/mob/living/proc/testme()
-	var/list/choiced = list("one", "two", "three")
-	var/list/stuff = tgui_input_checkboxes(src, message = "test", title = "still testing", items = choiced))
-	var/list/indexed = stuff[2]
-	var/list/returned_choices
-	for(var/choice in indexed)
-		returned_choices += choiced[choice]
-	return returned_choices
-
-
-
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)
 		// The status effect calls on_remove when its mob is deleted

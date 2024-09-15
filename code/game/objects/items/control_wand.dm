@@ -1,6 +1,7 @@
 #define WAND_OPEN "open"
 #define WAND_BOLT "bolt"
 #define WAND_EMERGENCY "emergency"
+#define WAND_HANDLE_REQUESTS "requests"
 
 /obj/item/door_remote
 	icon_state = "remote"
@@ -28,17 +29,6 @@
 	/// Like above, an ID to a door, but if you get rejected, you get a five minute cooldown before you can send another request
 	/// to this remote.
 	var/recent_rejections = list()
-	/// The name that gets sent back to IDs that send access requests to this remote. Defaults to department.
-	var/response_name = null
-	var/listening = FALSE
-	/// A list of paired items, the first being the ID card requesting access, the second being the door that access is requested for.
-	/// They'll only be able to request one door per ID, both so we're not cramming this full of lists that need to be GC'd and to make
-	/// remote requests kind of a pain in the ass and a situation where they should request adding the access to their ID from the relevant
-	/// head of staff.
-	var/open_requests = list()
-	/// Like above, an ID to a door, but if you get rejected, you get a five minute cooldown before you can send another request
-	/// to this remote.
-	var/recent_rejections = list()
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -50,7 +40,7 @@
 	if(get(loc, /mob/living))
 		set_listen_for_requests(src, loc)
 	else
-		RegisterSignal(COMSIG_ITEM_PICKUP, PROC_REF(set_listen_for_requests))
+		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(set_listen_for_requests))
 
 /obj/item/door_remote/proc/set_listen_for_requests(datum/source, atom/new_location)
 	SIGNAL_HANDLER
@@ -70,7 +60,6 @@
 		return COMPONENT_NOT_ON_THE_LIST_PAL
 	open_requests[ID_requesting] = requested_door
 	ID_requesting.visible_message(span_notice("Sedate text pulses slowly on [ID_requesting]: REQUEST RECEIVED BY _[response_name]_, PLEASE WAIT."), vision_distance = 1)
-	addtimer(CALLBACK(src, PROC_REF(expire_access_request), ID_requesting), 30 SECONDS)
 	return COMPONENT_REQUEST_RECEIVED
 
 /obj/item/door_remote/proc/expire_access_request(obj/item/card/id/ID_requesting)
@@ -80,19 +69,18 @@
 		open_requests -= ID_requesting
 		ID_requesting.visible_message(span_notice("A bland banner blinks on [ID_requesting]: RESPONSE TIMEOUT FOR _[response_name]_."), vision_distance = 1)
 
-
-
-
-
 /obj/item/door_remote/attack_self(mob/user)
-	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
-	switch(mode)
+	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access", WAND_HANDLE_REQUESTS = "Handle access requests")
+	var/choice = show_radial_menu(user, user, desc, radius = 32)
+	switch(choice)
 		if(WAND_OPEN)
-			mode = WAND_BOLT
-		if(WAND_BOLT)
-			mode = WAND_EMERGENCY
-		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
+		if(WAND_BOLT)
+			mode = WAND_BOLT
+		if(WAND_EMERGENCY)
+			mode = WAND_EMERGENCY
+		if(WAND_HANDLE_REQUESTS)
+			handle_requests(user)
 	update_icon_state()
 	balloon_alert(user, "mode: [desc[mode]]")
 
@@ -101,19 +89,34 @@
 		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/door_remote/attack_self_secondary(mob/user)
-	var/choice = tgui_alert(user, message = "", src.name, list/buttons = list("Configure remote", "Handle access requests"), timeout = 10 SECONDS)
-	if(choice == "Configure remote")
-		configure_remote(user)
-	else if (choice == "Handle access requests")
-		handle_requests(user)
-	else
-		return
+///obj/item/door_remote/attack_self_secondary(mob/user)
+//	var/choice = tgui_alert(user, message = "", src.name, list/buttons = list("Configure remote", "Handle access requests"), timeout = 10 SECONDS)
+//	if(choice == "Configure remote")
+//		configure_remote(user)
+//	else if (choice == "Handle access requests")
+//		handle_requests(user)
+//	else
+//		return
 
-/obj/item/door_remote/proc/configure_remote(mob/user)
-
-/obj/item/door_remote/proc/handle_requests()
-	tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, )
+/obj/item/door_remote/proc/handle_requests(mob/user)
+	// TGUI doesn't like when you feed associative arrays from BYOND into its functions that want
+	// primitives so we get a little saucy here.
+	var/list/parsed_requests = list()
+	for(var/obj/item/card/id/request_item in open_requests)
+		var/obj/machinery/camera/nearest_camera = null
+		// Open requests is an associated list of (id_card : door_requested), but when we
+		// handle requests we'll dynamically check if the door is in-sight of a functional
+		// camera; presumably the remote holder will also have access to those cameras from
+		// their telescreen so they can make sure whoever has that ID is the person in question
+		// after all, it's not like someone would steal the remote, right?
+		var/obj/machinery/door/airlock/requested_door = open_requests[request_item]
+		for(var/obj/machinery/camera/smile_youre_on_camera in view(7, requested_door))
+			if(smile_youre_on_camera.is_operational && (get_dist(smile_youre_on_camera, requested_door) <= smile_youre_on_camera.view_range))
+				nearest_camera = smile_youre_on_camera
+				break
+		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]][nearest_camera ? "([nearest_camera.c_tag])" : get_area(requested_door)]"
+	parsed_requests += list("\[OPERATION\] Clear all requests", "\[OPERATION\] Stop listening for requests", "\[OPERATION\] [span_danger("!CAUTION!")] Set automatic request response. [span_danger("!CAUTION!")]")
+	tgui_input_checkboxes(user = user, message = "Handle requests", title = "Select", items = parsed_requests)
 
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -194,10 +197,8 @@
 	region_access = REGION_ALL_STATION
 
 /obj/item/door_remote/command
-/obj/item/door_remote/command
 	name = "command door remote"
 	department = "command"
-	response_name = "CAPTAIN"
 	response_name = "CAPTAIN"
 	region_access = REGION_COMMAND
 
@@ -205,21 +206,17 @@
 	name = "engineering door remote"
 	department = "engi"
 	response_name = "CHIEF ENGINEER"
-	response_name = "CHIEF ENGINEER"
 	region_access = REGION_ENGINEERING
 
 /obj/item/door_remote/research_director
 	name = "research door remote"
 	department = "sci"
 	response_name = "RESEARCH DIRECTOR"
-	response_name = "RESEARCH DIRECTOR"
 	region_access = REGION_RESEARCH
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
 	department = "security"
-	/// Warden wishes they were a head
-	response_name = "HEAD OF SEC~~!*$-- WARDEN"
 	/// Warden wishes they were a head
 	response_name = "HEAD OF SEC~~!*$-- WARDEN"
 	region_access = REGION_SECURITY
@@ -229,20 +226,17 @@
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	department = "cargo"
 	response_name = "QUARTERMASTER"
-	response_name = "QUARTERMASTER"
 	region_access = REGION_SUPPLY
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
 	department = "med"
 	response_name = "CHIEF MEDICAL OFFICER"
-	response_name = "CHIEF MEDICAL OFFICER"
 	region_access = REGION_MEDBAY
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
 	department = "civilian"
-	response_name = "HEAD OF PERSONNEL"
 	response_name = "HEAD OF PERSONNEL"
 	region_access = REGION_GENERAL
 

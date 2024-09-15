@@ -39,8 +39,6 @@ SUBSYSTEM_DEF(id_access)
 	var/spare_id_safe_code = ""
 	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
 	var/remotes_listening_by_region = list()
-	/// Associated list of regions; entries are null until getting LAZYADD'd a ref to a given remote once it gets registered
-	var/remotes_listening_by_region = list()
 
 /datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -130,22 +128,14 @@ SUBSYSTEM_DEF(id_access)
 
 	station_regions = REGION_AREA_STATION
 	remotes_listening_by_region = list(
-		REGION_ALL_STATION = null,
-		REGION_SECURITY = null,
-		REGION_MEDBAY = null,
-		REGION_RESEARCH = null,
-		REGION_ENGINEERING = null,
-		REGION_SUPPLY = null,
-		REGION_COMMAND = null,
-	)
-	remotes_listening_by_region = list(
-		REGION_ALL_STATION = null,
-		REGION_SECURITY = null,
-		REGION_MEDBAY = null,
-		REGION_RESEARCH = null,
-		REGION_ENGINEERING = null,
-		REGION_SUPPLY = null,
-		REGION_COMMAND = null,
+		REGION_ALL_STATION = list(),
+		REGION_SECURITY = list(),
+		REGION_MEDBAY = list(),
+		REGION_RESEARCH = list(),
+		REGION_ENGINEERING = list(),
+		REGION_SUPPLY = list(),
+		REGION_COMMAND = list(),
+		REGION_GENERAL = list(),
 	)
 
 /// Instantiate trim singletons and add them to a list.
