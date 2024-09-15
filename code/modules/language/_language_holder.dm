@@ -507,6 +507,11 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 	understood_languages = null
 	spoken_languages = null
 
+/datum/language_holder/empty/grant_language(language, language_flags = ALL, source = LANGUAGE_MIND)
+	if(language == /datum/language/common && source = LANGUAGE_ATOM)
+		CRASH("wtf empty lang holder has common with language atom")
+	return ..()
+
 /datum/language_holder/universal
 	understood_languages = null
 	spoken_languages = null
