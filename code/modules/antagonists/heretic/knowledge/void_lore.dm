@@ -137,7 +137,7 @@
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a gate to the void itself, which releases pulses that destroy airlocks and windows while freezing heathens."
+	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."

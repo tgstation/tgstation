@@ -1,0 +1,1247 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/item/petri_dish/random,
+/obj/item/paper/fluff/junkmail_generic{
+	name = "weird note"
+	},
+/obj/item/paper/guides/antag/supermatter_sliver,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"aP" = (
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/cup/soda_cans/beer{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/soda_cans/beer{
+	pixel_x = 6
+	},
+/obj/structure/closet/mini_fridge,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"bn" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/petri_dish{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/mortar{
+	pixel_x = -17;
+	pixel_y = 1
+	},
+/obj/item/pestle{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/structure/microscope,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"bx" = (
+/obj/item/cigbutt,
+/turf/template_noop,
+/area/template_noop)
+"bC" = (
+/obj/machinery/navbeacon{
+	location = "syndielab_beacon1";
+	codes_txt = "patrol;next_patrol=syndielab_beacon2"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"cd" = (
+/obj/structure/chair/sofa/corp/left,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"cg" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/warm/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"ci" = (
+/obj/structure/flora/bush/pointy/style_3{
+	pixel_y = -4;
+	pixel_x = 6
+	},
+/obj/structure/flora/bush/ferny/style_2{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
+	},
+/area/ruin/syndielab)
+"cu" = (
+/obj/machinery/door/airlock/security{
+	desc = "It opens and closes. Menacingly!";
+	name = "Syndicate Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"cM" = (
+/mob/living/basic/trooper/syndicate/ranged/shotgun,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"cP" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/wall/r_wall/syndicate/nodiagonal{
+	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
+	name = "plastitanium wall"
+	},
+/area/ruin/syndielab)
+"dD" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/bbqsauce{
+	pixel_y = 8;
+	pixel_x = -9
+	},
+/obj/item/reagent_containers/condiment/donksauce{
+	pixel_y = 5;
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"el" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"ex" = (
+/obj/structure/flora/tree/jungle/small/style_4{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/structure/flora/bush/sunny{
+	pixel_y = 12;
+	pixel_x = 12
+	},
+/obj/structure/flora/bush/fullgrass/style_2,
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
+	},
+/area/ruin/syndielab)
+"ey" = (
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"gE" = (
+/obj/machinery/vending/donksnack{
+	onstation_override = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"hl" = (
+/obj/machinery/navbeacon{
+	location = "syndielab_beacon2";
+	codes_txt = "patrol;next_patrol=syndielab_beacon3"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"hn" = (
+/obj/machinery/computer/telecomms/monitor{
+	dir = 8;
+	icon_keyboard = "syndie_key"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"hu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"iy" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"iQ" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/radio/off{
+	pixel_x = 8
+	},
+/obj/item/radio/off{
+	pixel_x = -5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"lW" = (
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/ruins/hauntedtradingpost/receipt/alternate,
+/obj/item/pen,
+/obj/item/paper/guides/antag/nuke_instructions,
+/obj/item/cigarette/syndicate,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/item/sticker/syndicate,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"mi" = (
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/west,
+/obj/item/vending_refill/donksoft{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/vending_refill/donksnackvendor,
+/obj/structure/closet/crate/freezer/donk,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"na" = (
+/obj/item/climbing_hook,
+/obj/item/pickaxe/silver{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/t_scanner/adv_mining_scanner{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/hatchet/wooden{
+	pixel_y = -7;
+	pixel_x = -3
+	},
+/obj/structure/closet/crate/preopen,
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/west,
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"nD" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/microwave,
+/obj/machinery/light/warm/directional/east,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"nT" = (
+/obj/machinery/atmospherics/components/binary/pump/on/dark/hidden{
+	dir = 1;
+	target_pressure = 180
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"oA" = (
+/obj/structure/syndicate_uplink_beacon,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"oY" = (
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/east{
+	cable_layer = 1
+	},
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"pK" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/airalarm/directional/north,
+/obj/item/implanter/radio,
+/obj/item/implantcase{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/traitor_bug{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"qy" = (
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/gas/syndicate,
+/obj/structure/rack,
+/obj/machinery/light/warm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"qC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"ry" = (
+/obj/item/clothing/shoes/workboots/mining{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"rH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"rO" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"sa" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"sj" = (
+/obj/structure/chair/office/tactical{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"sp" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"sV" = (
+/obj/machinery/vending/donksofttoyvendor{
+	onstation_override = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"tb" = (
+/obj/machinery/light/warm/directional/north,
+/obj/effect/decal/cleanable/oil/streak,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"tC" = (
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"uT" = (
+/obj/structure/table/wood,
+/obj/item/ammo_casing/shotgun/scatterlaser{
+	pixel_y = 6;
+	pixel_x = 1
+	},
+/obj/item/ammo_casing/shotgun/buckshot{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/syndielab)
+"uX" = (
+/obj/structure/flora/bush/ferny{
+	pixel_y = 2;
+	pixel_x = -2
+	},
+/obj/machinery/air_sensor{
+	chamber_id = "syndielab_biodome"
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
+	},
+/area/ruin/syndielab)
+"vr" = (
+/obj/structure/sign/poster/contraband/revolver/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"vE" = (
+/obj/structure/safe,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/storage/wallet/money{
+	desc = "It can hold a few small and personal things."
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"vO" = (
+/obj/machinery/door/airlock/survival_pod{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"wh" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/trash/ready_donk{
+	pixel_x = 6
+	},
+/obj/structure/sign/poster/contraband/eat/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"wj" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"wl" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"wJ" = (
+/obj/structure/rack,
+/obj/item/storage/backpack/satchel,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/suit/hooded/explorer/syndicate{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"xa" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"xg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"xr" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/security{
+	desc = "It opens and closes. Menacingly!";
+	name = "Syndicate Airlock"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"yW" = (
+/turf/open/floor/carpet/red,
+/area/ruin/syndielab)
+"AD" = (
+/obj/structure/bookcase,
+/obj/item/book/manual/fish_catalog{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/book/manual/nuclear{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/book/manual/wiki/cytology{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"AR" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal{
+	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
+	name = "plastitanium wall"
+	},
+/area/ruin/syndielab)
+"AX" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/syndielab)
+"Co" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"CS" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Dd" = (
+/obj/item/storage/bag/trash/filled,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"De" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/trash/semki{
+	pixel_y = 12
+	},
+/obj/item/soap/syndie,
+/obj/structure/noticeboard/directional/east,
+/obj/item/paper/fluff/junkmail_generic{
+	name = "weird note"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"EY" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/security/glass{
+	desc = "It opens and closes. Menacingly!";
+	name = "Syndicate Airlock"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Fz" = (
+/obj/structure/cable/layer1,
+/obj/machinery/power/terminal{
+	cable_layer = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"FJ" = (
+/obj/machinery/light/warm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Gi" = (
+/obj/machinery/navbeacon{
+	location = "syndielab_beacon4";
+	codes_txt = "patrol;next_patrol=syndielab_beacon1"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"GL" = (
+/obj/structure/chair/office/tactical,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"GV" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/security{
+	desc = "It opens and closes. Menacingly!";
+	name = "Syndicate Airlock"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Hq" = (
+/obj/item/seeds/lavaland/cactus{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/seeds/lavaland/cactus{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/obj/item/seeds/lavaland/fireblossom{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/item/stack/ore/glass/basalt{
+	amount = 50;
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/structure/closet/crate/secure/cybersun/dawn,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"Hs" = (
+/obj/structure/rack,
+/obj/item/storage/bag/trash,
+/obj/item/pushbroom,
+/obj/item/storage/bag/trash{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/structure/cable/layer1,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"HH" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/paper/guides/antag/hdd_extraction{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/tcomms{
+	pixel_x = 12;
+	pixel_y = 1
+	},
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"HS" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"IQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/mob/living/basic/bot/dedbot,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Jc" = (
+/obj/effect/overloader_trap{
+	uses_remaining = 1;
+	shock_damage = 55;
+	shock_range = 2;
+	machine_overload_damage = 160
+	},
+/obj/machinery/telecomms/hub,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"JF" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
+/obj/item/assembly/signaler/cyborg{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/obj/item/assembly/voice{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"Ka" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/security/glass{
+	desc = "It opens and closes. Menacingly!";
+	name = "Syndicate Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"KV" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("syndielab_biodome"="Biodome Atmos");
+	dir = 4;
+	name = "gas tank monitor";
+	desc = "This computer connects to and controls the sensors and equipment in a nearby pressurised gas reservoir.";
+	icon_keyboard = "syndie_key"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Lt" = (
+/obj/item/paper/fluff/operative,
+/obj/structure/noticeboard/directional/north,
+/obj/structure/cable/layer1,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"MW" = (
+/turf/template_noop,
+/area/template_noop)
+"NM" = (
+/obj/structure/sign/poster/contraband/donk_co/directional/east,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Qj" = (
+/obj/structure/flora/bush/grassy{
+	pixel_x = 15;
+	pixel_y = 3
+	},
+/obj/structure/flora/bush,
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
+	dir = 1;
+	chamber_id = "syndielab_biodome"
+	},
+/turf/open/floor/grass{
+	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
+	},
+/area/ruin/syndielab)
+"QO" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/computer_disk/syndicate/camera_app{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/crowbar/hammer{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"Sq" = (
+/obj/structure/rack,
+/obj/item/pinata/donk{
+	pixel_y = 10
+	},
+/obj/item/storage/box/party_poppers{
+	pixel_y = 1;
+	pixel_x = 7
+	},
+/obj/item/storage/box/firecrackers{
+	pixel_x = -8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Te" = (
+/obj/machinery/navbeacon{
+	location = "syndielab_beacon3";
+	codes_txt = "patrol;next_patrol=syndielab_beacon4"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Tl" = (
+/obj/item/stack/tile/carpet/donk/thirty{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/toy/plush/donkpocket{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/obj/item/stack/tile/carpet/donk/thirty{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/toy/plush/donkpocket{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/stack/package_wrap,
+/obj/structure/closet/crate/preopen,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"Ts" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/sign/poster/contraband/c20r/directional/north,
+/obj/item/anomaly_releaser{
+	pixel_y = 6
+	},
+/obj/item/anomaly_releaser,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"TB" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"UF" = (
+/obj/machinery/door/airlock/survival_pod/glass{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"UM" = (
+/obj/item/ammo_box/c9mm,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/structure/closet/crate/secure/gorlex_weapons{
+	req_one_access = list("syndicate")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndielab)
+"Vf" = (
+/obj/effect/decal/cleanable/molten_object,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/stack/ore/plasma{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Vu" = (
+/obj/structure/aquarium/donkfish,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"VO" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Wn" = (
+/obj/machinery/computer/terminal{
+	dir = 4;
+	upperinfo = "ERROR - NO FINGERPRINT MATCH ON FILE!";
+	tguitheme = "syndicate";
+	desc = "An state-of-the-art lab terminal. The Cybersun Industries logo is imprinted just below the screen.";
+	content = list("<b>*Solid Matter Analyzer and Research Terminal*");
+	name = "lab terminal";
+	icon_screen = "tcboss";
+	icon_keyboard = "syndie_key"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Wo" = (
+/obj/structure/table/wood,
+/obj/item/ammo_casing/shotgun/fletchette{
+	pixel_y = 6
+	},
+/obj/item/ammo_casing/shotgun/fletchette{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/shotgun/musket,
+/turf/open/floor/carpet/red,
+/area/ruin/syndielab)
+"WO" = (
+/obj/item/trash/boritos/red{
+	pixel_y = -9;
+	pixel_x = -5
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+"Xe" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/paint/red{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/paint_palette{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/obj/item/mod/paint,
+/obj/structure/sign/poster/contraband/energy_swords/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Xm" = (
+/obj/structure/closet/crate/secure/trashcart,
+/obj/item/relic,
+/obj/item/storage/bag/trash/filled{
+	pixel_y = 1;
+	pixel_x = 6
+	},
+/obj/item/storage/bag/trash/filled{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/storage/bag/trash/filled{
+	pixel_y = -1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Xt" = (
+/turf/closed/mineral/snowmountain/icemoon,
+/area/icemoon/underground/explored)
+"YH" = (
+/obj/item/storage/medkit,
+/obj/structure/sign/poster/contraband/free_key/directional/south,
+/obj/structure/rack,
+/obj/item/stack/medical/suture,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/reagent_containers/hypospray/medipen/atropine,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Ze" = (
+/obj/machinery/porta_turret/syndicate/energy/cybersun,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"Zx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/smes/magical/cybersun{
+	cable_layer = 1;
+	input_level = 180000;
+	output_level = 200000;
+	dir = 1
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/syndielab)
+"ZW" = (
+/obj/structure/chair/sofa/corp/right,
+/mob/living/basic/trooper/syndicate/ranged/shotgun,
+/obj/machinery/light/warm/directional/north,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/syndielab)
+
+(1,1,1) = {"
+MW
+MW
+MW
+MW
+Xt
+Xt
+bx
+MW
+MW
+Xt
+MW
+MW
+MW
+MW
+MW
+MW
+"}
+(2,1,1) = {"
+MW
+MW
+MW
+MW
+Xt
+AR
+AR
+vO
+AR
+Xt
+Xt
+Xt
+Xt
+MW
+MW
+MW
+"}
+(3,1,1) = {"
+MW
+MW
+Xt
+Xt
+Xt
+AR
+cg
+xg
+AR
+AR
+cP
+AR
+Xt
+Xt
+Xt
+MW
+"}
+(4,1,1) = {"
+MW
+AR
+AR
+AR
+AR
+AR
+AR
+UF
+AR
+na
+mi
+AR
+AR
+AR
+Xt
+Xt
+"}
+(5,1,1) = {"
+Xt
+AR
+aa
+Wn
+bC
+EY
+el
+el
+AR
+iQ
+iy
+vE
+Xe
+AR
+AR
+Xt
+"}
+(6,1,1) = {"
+Xt
+AR
+Ts
+sj
+FJ
+AR
+qy
+el
+AR
+AD
+ry
+ey
+VO
+Tl
+AR
+Xt
+"}
+(7,1,1) = {"
+Xt
+AR
+bn
+Vf
+xa
+AR
+Ze
+Gi
+cu
+el
+ey
+wl
+sa
+Hq
+AR
+Xt
+"}
+(8,1,1) = {"
+Xt
+AR
+AR
+AR
+EY
+AR
+qC
+qC
+AR
+tb
+HS
+ey
+sp
+UM
+AR
+Xt
+"}
+(9,1,1) = {"
+Xt
+AR
+pK
+KV
+el
+nT
+Qj
+ex
+qC
+el
+Sq
+cM
+Hs
+AR
+AR
+Xt
+"}
+(10,1,1) = {"
+Xt
+AR
+JF
+sj
+el
+qC
+uX
+ci
+qC
+el
+oY
+Fz
+Zx
+AR
+Xt
+Xt
+"}
+(11,1,1) = {"
+Xt
+AR
+Jc
+oA
+FJ
+AR
+qC
+qC
+AR
+GV
+AR
+qC
+qC
+AR
+Xt
+MW
+"}
+(12,1,1) = {"
+Xt
+AR
+HH
+GL
+hl
+IQ
+rH
+rH
+xr
+Te
+hu
+TB
+lW
+AR
+Xt
+MW
+"}
+(13,1,1) = {"
+Xt
+AR
+QO
+hn
+el
+Xm
+rO
+aP
+AR
+Lt
+AX
+yW
+YH
+AR
+Xt
+MW
+"}
+(14,1,1) = {"
+Xt
+AR
+AR
+AR
+EY
+qC
+qC
+qC
+AR
+ZW
+uT
+yW
+Vu
+AR
+Xt
+MW
+"}
+(15,1,1) = {"
+Xt
+Xt
+AR
+gE
+el
+wj
+dD
+Co
+AR
+cd
+Wo
+yW
+Dd
+AR
+Xt
+MW
+"}
+(16,1,1) = {"
+MW
+Xt
+AR
+sV
+NM
+tC
+tC
+tC
+Ka
+WO
+vr
+CS
+wJ
+AR
+Xt
+MW
+"}
+(17,1,1) = {"
+MW
+Xt
+AR
+AR
+AR
+nD
+wh
+De
+AR
+AR
+AR
+AR
+AR
+AR
+MW
+MW
+"}
+(18,1,1) = {"
+MW
+MW
+Xt
+Xt
+AR
+AR
+AR
+AR
+AR
+Xt
+Xt
+Xt
+Xt
+Xt
+Xt
+MW
+"}
+(19,1,1) = {"
+MW
+MW
+MW
+Xt
+Xt
+Xt
+Xt
+Xt
+Xt
+Xt
+MW
+MW
+MW
+MW
+MW
+MW
+"}

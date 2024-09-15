@@ -13,6 +13,9 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 	beauty = FISH_BEAUTY_BAD
 
+/obj/item/fish/emulsijack/get_fish_taste()
+	return list("raw fish" = 2, "acid" = 1) //no scales
+
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
 	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
@@ -46,6 +49,7 @@
 		/datum/fish_trait/mixotroph,
 		/datum/fish_trait/electrogenesis,
 	)
+	electrogenesis_power = 0.9 MEGA JOULES
 	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/chainsawfish
@@ -92,6 +96,9 @@
 /obj/item/fish/chainsawfish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/fish/chainsawfish/get_fish_taste()
+	return list("raw fish" = 2.5, "anger" = 1)
 
 /obj/item/fish/chainsawfish/update_icon_state()
 	if(status == FISH_DEAD)
@@ -201,7 +208,13 @@
 		/obj/item/fish,
 	)
 
-/obj/item/fish/swordfish/get_force_rank()
+/obj/item/fish/pike/armored/get_fish_taste()
+	return list("raw fish" = 2.5, "metal" = 1)
+
+/obj/item/fish/pike/armored/get_fish_taste()
+	return list("cooked fish" = 2.5, "metal" = 1)
+
+/obj/item/fish/pike/armored/get_force_rank()
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			force -= 11
