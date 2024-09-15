@@ -2,3 +2,7 @@
 #define SPECIES_FELINE_PRIMITIVE "primitive_felinid"
 // Slugcats, from Talon III.
 #define SPECIES_SLUGCAT "slugcat"
+
+#define SPECIES_ANTHROMORPH "anthromorph"
+#define SPECIES_AQUATIC "aquatic"
+#define SPECIES_INSECTOID "insectoid"
