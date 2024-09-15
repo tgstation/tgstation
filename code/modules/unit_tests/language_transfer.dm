@@ -42,7 +42,7 @@
 
 	dummy.set_species(/datum/species/lizard/silverscale)
 
-	var/text/common_sources = holder.understood_languages[/datum/language/common]
+	var/list/common_sources = holder.understood_languages[/datum/language/common]
 	var/sources = ""
 	for(var/source in common_sources)
 		sources += "[source] "
