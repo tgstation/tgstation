@@ -40898,10 +40898,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "lOV" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
