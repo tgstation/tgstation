@@ -34,7 +34,7 @@
 	packin_up()
 	landingzone = GLOB.areas_by_type[landingzone]
 	if (isnull(landingzone))
-		stack_trace("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
+		WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 		landingzone = get_area(src)
 
 /obj/machinery/computer/cargo/express/on_construction(mob/user)
