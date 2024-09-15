@@ -343,10 +343,12 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(staffcooldown + staffwait > world.time)
 		return ITEM_INTERACT_BLOCKING
 

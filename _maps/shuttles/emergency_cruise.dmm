@@ -220,7 +220,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "fL" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
 "fY" = (
@@ -2262,7 +2262,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Xu" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
