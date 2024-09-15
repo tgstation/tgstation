@@ -40,6 +40,7 @@
 	var/charge_time = 1.5 SECONDS
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
+	var/current_inhand_icon_state = "crusher"
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -181,7 +182,7 @@
 	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
-	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "[current_inhand_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 	return ..()
 
 /obj/item/kinetic_crusher/update_overlays()
@@ -505,6 +506,7 @@
 	icon_state = "retool_kit_sword"
 	denied_type = /obj/item/crusher_trophy/retool_kit
 	var/retool_icon = "crusher_sword"
+	var/retool_inhand_icon = "crusher_sword"
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
@@ -513,14 +515,16 @@
 	. = ..()
 	if(.)
 		KA.icon_state = retool_icon
-		KA.inhand_icon_state = retool_icon
+		KA.current_inhand_icon_state = retool_inhand_icon
+		KA.inhand_icon_state = "[KA.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
 		if(iscarbon(KA.loc))
 			var/mob/living/carbon/holder = KA.loc
 			holder.update_held_items()
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/KA)
 	KA.icon_state = initial(KA.icon_state)
-	KA.inhand_icon_state = initial(KA.inhand_icon_state)
+	KA.current_inhand_icon_state = initial(KA.current_inhand_icon_state)
+	KA.inhand_icon_state = "[KA.current_inhand_icon_state]0"
 	if(iscarbon(KA.loc))
 		var/mob/living/carbon/holder = KA.loc
 		holder.update_held_items()
