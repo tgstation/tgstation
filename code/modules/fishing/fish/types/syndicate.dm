@@ -214,7 +214,7 @@
 /obj/item/fish/pike/armored/get_fish_taste()
 	return list("cooked fish" = 2.5, "metal" = 1)
 
-/obj/item/fish/swordfish/get_force_rank()
+/obj/item/fish/pike/armored/get_force_rank()
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			force -= 11

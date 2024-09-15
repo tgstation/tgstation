@@ -275,13 +275,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
 
-/datum/fish_source/proc/regen_count(reward_path, regen_time)
+/datum/fish_source/proc/regen_count(reward_path)
+	if(!LAZYACCESS(currently_on_regen, reward_path))
+		return
 	fish_counts[reward_path] += 1
 	currently_on_regen[reward_path] -= 1
-	if(!currently_on_regen[reward_path])
+	if(currently_on_regen[reward_path] <= 0)
 		LAZYREMOVE(currently_on_regen, reward_path)
-	else
-		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
+		return
+	var/regen_time = fish_count_regen[reward_path]
+	addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
@@ -463,6 +466,24 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			reward.pixel_y = rand(-9, 9)
 		if(severity >= EXPLODE_DEVASTATE)
 			reward.ex_act(EXPLODE_LIGHT)
+
+///Called when releasing a fish in a fishing spot with the TRAIT_CATCH_AND_RELEASE trait.
+/datum/fish_source/proc/readd_fish(obj/item/fish/fish, mob/living/releaser)
+	var/is_morbid = HAS_MIND_TRAIT(releaser, TRAIT_MORBID)
+	var/is_naive = HAS_MIND_TRAIT(releaser, TRAIT_NAIVE)
+	if(fish.status == FISH_DEAD) //ded fish won't repopulate the sea.
+		if(is_naive || is_morbid)
+			releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+		return
+	if(((fish.type in fish_table) != is_morbid) || is_naive)
+		releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+	if(isnull(fish_counts[fish.type])) //This fish can be caught indefinitely so it won't matter.
+		return
+	//If this fish population isn't recovering from recent losses, we just increase it.
+	if(!LAZYACCESS(currently_on_regen, fish.type))
+		fish_counts[fish.type] += 1
+	else
+		regen_count(fish.type)
 
 /**
  * Called by /datum/autowiki/fish_sources unless the catalog entry for this fish source is null.
