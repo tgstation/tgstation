@@ -6,6 +6,11 @@
 // Baseline fishing difficulty levels
 #define FISHING_DEFAULT_DIFFICULTY 15
 #define FISHING_EASY_DIFFICULTY 10
+/**
+ * The minimum value of the difficulty of the minigame (unless it reaches 0 than it's auto-win)
+ * Any lower than this and the fish will be way too lethargic for the minigame to be engaging in the slightest.
+ */
+#define FISHING_MINIMUM_DIFFICULTY 6
 
 /// Difficulty modifier when bait is fish's favorite
 #define FAV_BAIT_DIFFICULTY_MOD -5
@@ -136,6 +141,10 @@
 #define FISH_WEIGHT_SLOWDOWN_EXPONENT 0.54
 ///Used to calculate the force of the fish by comparing (1 + log(weight/this_define)) and the w_class of the item.
 #define FISH_WEIGHT_FORCE_DIVISOR 250
+///The multiplier used in the FISH_WEIGHT_BITE_DIVISOR define
+#define FISH_WEIGHT_GRIND_TO_BITE_MULT 0.4
+///Used to calculate how many bites a fish can take and therefore the amount of reagents it has.
+#define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
 ///The breeding timeout for newly instantiated fish is multiplied by this.
 #define NEW_FISH_BREEDING_TIMEOUT_MULT 2
@@ -158,8 +167,8 @@
 #define AQUARIUM_FLUID_SALTWATER "Saltwater"
 #define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
 #define AQUARIUM_FLUID_AIR "Air"
-#define AQUARIUM_FLUID_ANADROMOUS "Adaptive to both Freshwater and Saltwater"
-#define AQUARIUM_FLUID_ANY_WATER "Adaptive to all kind of water"
+#define AQUARIUM_FLUID_ANADROMOUS "Anadromous"
+#define AQUARIUM_FLUID_ANY_WATER "Any Fluid"
 
 ///Fluff. The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
@@ -185,10 +194,15 @@
 /// The height of the minigame slider. Not in pixels, but minigame units.
 #define FISHING_MINIGAME_AREA 1000
 
+///The fish needs to be cooked for at least this long so that it can be safely eaten
+#define FISH_SAFE_COOKING_DURATION 30 SECONDS
+
 ///Defines for fish properties from the collect_fish_properties proc
 #define FISH_PROPERTIES_FAV_BAIT "fav_bait"
 #define FISH_PROPERTIES_BAD_BAIT "bad_bait"
 #define FISH_PROPERTIES_TRAITS "fish_traits"
+#define FISH_PROPERTIES_BEAUTY_SCORE "beauty_score"
+#define FISH_PROPERTIES_EVOLUTIONS "evolutions"
 
 ///Define for favorite and disliked baits that aren't just item typepaths.
 #define FISH_BAIT_TYPE "Type"
@@ -196,3 +210,27 @@
 #define FISH_BAIT_REAGENT "Reagent"
 #define FISH_BAIT_VALUE "Value"
 #define FISH_BAIT_AMOUNT "Amount"
+
+
+///We multiply the weight of fish inside the loot table by this value if we are goofy enough to fish without a bait.
+#define FISH_WEIGHT_MULT_WITHOUT_BAIT 0.15
+
+/**
+ * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have
+ * quite ambiguous names/icon_states like "checkered" or "pike"
+ */
+#define FISH_AUTOWIKI_FILENAME(fish) SANITIZE_FILENAME("[initial(fish.icon_state)]_wiki_fish")
+
+///The list keys for the autowiki for fish sources
+#define FISH_SOURCE_AUTOWIKI_NAME "name"
+#define FISH_SOURCE_AUTOWIKI_ICON "icon"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT "weight"
+#define FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX "weight_suffix"
+#define FISH_SOURCE_AUTOWIKI_NOTES "notes"
+
+///Special value for the name key that always comes first when the data is sorted, regardless of weight.
+#define FISH_SOURCE_AUTOWIKI_DUD "Nothing"
+///Special value for the name key that always comes last
+#define FISH_SOURCE_AUTOWIKI_OTHER "Other Stuff"
+///The filename for the icon for "other stuff" which we don't articulate about on the autowiki
+#define FISH_SOURCE_AUTOWIKI_QUESTIONMARK "questionmark"

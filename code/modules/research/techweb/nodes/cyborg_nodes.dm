@@ -44,6 +44,7 @@
 		"borg_upgrade_restart",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_service
 	id = TECHWEB_NODE_BORG_SERVICES
@@ -59,6 +60,7 @@
 		"borg_upgrade_service_cookbook",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_mining
 	id = TECHWEB_NODE_BORG_MINING
@@ -71,6 +73,7 @@
 		"borg_upgrade_diamonddrill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_medical
 	id = TECHWEB_NODE_BORG_MEDICAL
@@ -87,6 +90,7 @@
 		"borg_upgrade_surgicalomnitool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_utility
 	id = TECHWEB_NODE_BORG_UTILITY
@@ -99,11 +103,13 @@
 		"borg_upgrade_expand",
 		"borg_upgrade_prt",
 		"borg_upgrade_plunger",
+		"borg_upgrade_high_capacity_replacer",
 		"borg_upgrade_selfrepair",
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_utility/New()
 	. = ..()
@@ -122,6 +128,7 @@
 		"borg_upgrade_inducer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Implants root node
 /datum/techweb_node/passive_implants
@@ -143,6 +150,7 @@
 		"c38_trac",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_implants
 	id = TECHWEB_NODE_CYBER_IMPLANTS
@@ -156,6 +164,7 @@
 		"ci-herculean",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/New()
 	..()
@@ -173,6 +182,7 @@
 		"ci-antistun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/integrated_toolsets
 	id = TECHWEB_NODE_INTERGRATED_TOOLSETS
@@ -185,6 +195,7 @@
 		"ci-surgery",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs
 	id = TECHWEB_NODE_CYBER_ORGANS
@@ -201,6 +212,7 @@
 		"cybernetic_heart_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs_upgraded
 	id = TECHWEB_NODE_CYBER_ORGANS_UPGRADED
@@ -220,6 +232,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/people/augmented_organs)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs_adv
 	id = TECHWEB_NODE_CYBER_ORGANS_ADV
@@ -235,3 +248,4 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/people/android = TECHWEB_TIER_5_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)

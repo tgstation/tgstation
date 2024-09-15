@@ -32,7 +32,7 @@
 	return ..()
 
 /mob/living/basic/drone/mob_try_pickup(mob/living/user, instant=FALSE)
-	if(stat == DEAD || status_flags & GODMODE)
+	if(stat == DEAD || HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	return ..()
 

@@ -132,6 +132,9 @@
 	return ..()
 
 /obj/item/organ/internal/monster_core/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
 	try_apply(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
