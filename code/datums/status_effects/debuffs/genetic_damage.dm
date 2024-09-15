@@ -58,9 +58,8 @@
 		message = "Minor genetic damage detected."
 
 	if(message)
-		if(tochat)
-			message = span_tooltip("Irreparable under normal circumstances - will decay over time.", message)
-		render_list += "<span class='alert ml-1'>[message]</span><br>"
+		render_list += conditional_tooltip("<span class='alert ml-1'>[message]</span>", "Irreparable under normal circumstances - will decay over time.", tochat)
+		render_list += "<br>"
 
 #undef GORILLA_MUTATION_CHANCE_PER_SECOND
 #undef GORILLA_MUTATION_MINIMUM_DAMAGE

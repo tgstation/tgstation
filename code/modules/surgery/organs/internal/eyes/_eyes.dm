@@ -127,22 +127,25 @@
 		return
 	if(owner.is_blind())
 		if(advanced)
-			if(owner.is_blind_from(EYE_DAMAGE))
-				return "Subject is blind from eye damage."
-			if(owner.is_blind_from(GENETIC_MUTATION))
-				return "Subject is genetically blind."
 			if(owner.is_blind_from(QUIRK_TRAIT))
-				return "Subject is permanently blind."
+				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+			if(owner.is_blind_from(TRAUMA_TRAIT))
+				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically blind.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
 		return "Subject is blind."
 	if(owner.is_nearsighted())
 		if(advanced)
-			if(owner.is_nearsighted_from(EYE_DAMAGE))
-				return "Subject is nearsighted from eye damage."
-			if(owner.is_nearsighted_from(GENETIC_MUTATION))
-				return "Subject is genetically nearsighted."
 			if(owner.is_nearsighted_from(QUIRK_TRAIT))
-				return "Subject is permanently nearsighted."
+				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is nearsighted from eye damage.", "Repair surgically or use medication such as [/datum/reagent/medicine/oculine::name]. Prescription glasses will assuage the effects.", add_tooltips)
 		return "Subject is nearsighted."
+	return ""
 
 /obj/item/organ/internal/eyes/show_on_condensed_scans()
 	// Always show if we have an appendix

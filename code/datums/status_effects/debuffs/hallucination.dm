@@ -43,11 +43,8 @@
 
 	if(!advanced)
 		return
-	var/message = "Subject is hallucinating."
-	if(tochat)
-		message = span_tooltip("Supply antipsychotic medication.", message)
-
-	render_list += "<span class='info ml-1'>[message]</span><br>"
+	render_list += conditional_tooltip("<span class='info ml-1'>Subject is hallucinating.</span>", "Supply antipsychotic medication.", tochat)
+	render_list += "<br>"
 
 /// Signal proc for [COMSIG_CARBON_CHECKING_BODYPART],
 /// checking bodyparts while hallucinating can cause them to appear more damaged than they are

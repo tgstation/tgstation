@@ -89,10 +89,7 @@
 
 /obj/item/organ/internal/appendix/get_status_text(advanced, add_tooltips)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
-		. = "<font color='#ff9933'>Inflamed</font>"
-		if(add_tooltips)
-			. = span_tooltip("Remove surgically.", .)
-		return .
+		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
 	return ..()
 
 #undef APPENDICITIS_PROB

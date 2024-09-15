@@ -264,22 +264,13 @@
 		var/trauma_desc = ""
 		switch(trauma.resilience)
 			if(TRAUMA_RESILIENCE_SURGERY)
-				trauma_desc = "Severe "
-				if(add_tooltips)
-					trauma_desc = span_tooltip("Repair via brain surgery.", trauma_desc)
+				trauma_desc = conditional_tooltip("Severe ", "Repair via brain surgery.", add_tooltips)
 			if(TRAUMA_RESILIENCE_LOBOTOMY)
-				trauma_desc = "Deep-rooted "
-				if(add_tooltips)
-					trauma_desc = span_tooltip("Repair via Lobotomy.", trauma_desc)
+				trauma_desc = conditional_tooltip("Deep-rooted ", "Repair via Lobotomy.", add_tooltips)
 			if(TRAUMA_RESILIENCE_WOUND)
-				trauma_desc = "Fracture-derived "
-				if(add_tooltips)
-					trauma_desc = span_tooltip("Repair via treatment of wounds afflicting the head.", trauma_desc)
+				trauma_desc = conditional_tooltip("Fracture-derived ", "Repair via treatment of wounds afflicting the head.", add_tooltips)
 			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
-				trauma_desc = "Permanent "
-				if(add_tooltips)
-					trauma_desc = span_tooltip("Irreparable under normal circumstances.", trauma_desc)
-
+				trauma_desc = conditional_tooltip("Permanent ", "Irreparable under normal circumstances.", add_tooltips)
 		trauma_desc += capitalize(trauma.scan_desc)
 		LAZYADD(trauma_text, trauma_desc)
 	if(LAZYLEN(trauma_text))
