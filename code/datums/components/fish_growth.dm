@@ -51,10 +51,11 @@
 	if(ispath(result_type, /datum/fish_evolution))
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[result_type]
 		result = source.create_offspring(evolution.new_fish_type, evolution = evolution)
-		result.breeding_wait = source.breeding_wait
-		result.last_feeding = source.last_feeding
+		var/obj/item/fish/fishie = result
+		fishie.breeding_wait = source.breeding_wait
+		fishie.last_feeding = source.last_feeding
 		var/health_percent = source.health / initial(source.health)
-		result.adjust_health(result.health * health_percent)
+		fishie.adjust_health(fishie.health * health_percent)
 	else
 		result = new result_type (location)
 		if(location != source.loc)

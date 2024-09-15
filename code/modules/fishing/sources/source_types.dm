@@ -569,12 +569,12 @@
 		/obj/item/fish/fryish/nessie = 1,
 	)
 	fish_counts = list(
-		/obj/item/fish/fryish = 10
+		/obj/item/fish/fryish = 10,
 		/obj/item/fish/fryish/fritterish = 4,
 		/obj/item/fish/fryish/nessie = 1,
 	)
 	fish_count_regen = list(
-		/obj/item/fish/chainsawfish = 2 MINUTES,
-		/obj/item/fish/pike/armored = 6 MINUTES,
+		/obj/item/fish/fryish = 2 MINUTES,
+		/obj/item/fish/fryish/fritterish = 6 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13

@@ -169,10 +169,10 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	new_fish_type = /obj/item/fish/fryish/fritterish
 	conditions_note = "Fryish will grow into it over time."
 
-/datum/fish_evolution/nessiefish
+/datum/fish_evolution/nessie
 	name = "???"
-	new_fish_type = /obj/item/fish/fryish/nessiefish
-	conditions_note = "The final stage of fritterfish growth. They gotta be big!"
+	new_fish_type = /obj/item/fish/fryish/nessie
+	conditions_note = "The final stage of fritterfish growth. It gotta be big!"
 	show_result_on_wiki = FALSE
 
 /datum/fish_evolution/nessiefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)

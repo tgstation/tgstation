@@ -141,8 +141,18 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
-	if(is_matching_bait(rod.bait, SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT])) //we like this bait anyway
-		return
+
+	var/list/fav_baits = SSfishing.fish_properties[fish_type][FISH_PROPERTIES_FAV_BAIT]
+	for(var/identifier in fav_baits)
+		if(is_matching_bait(rod.bait, identifier)) //we like this bait anyway
+			return
+
+	var/list/bad_baits = SSfishing.fish_properties[fish_type][FISH_PROPERTIES_BAD_BAIT]
+	for(var/identifier in bad_baits)
+		if(is_matching_bait(rod.bait, identifier)) //we hate this bait.
+			.[MULTIPLICATIVE_FISHING_MOD] = 0
+			return
+
 	if(!HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) && !HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
