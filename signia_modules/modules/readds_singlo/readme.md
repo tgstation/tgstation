@@ -1,36 +1,28 @@
-<!-- This should be copy-pasted into the root of your module folder as readme.md -->
+https://github.com/Vect0r2/Signia-Station/pull/13
+https://github.com/Vect0r2/Signia-Station/pull/14
 
-https://github.com/Vect0r2/Signia-Station/pull/<!--PR Number-->
+## \<Readds Singlo>
 
-## \<Readds Singlo> <!--Title of your addition.-->
-
-Module ID: SINGLO_POWER <!-- Uppercase, UNDERSCORE_CONNECTED name of your module, that you use to mark files. This is so people can case-sensitive search for your edits, if any. -->
+Module ID: SINGLO_POWER
 
 ### Description:
 
-<!-- Here, try to describe what your PR does, what features it provides and any other directly useful information. -->
+Readds the singlo & tesla as power sources.
+### TODO:
+Give the Particle emitter gas interactions
+let you order shit
 
 ### TG Proc/File Changes:
-
-- N/A
-<!-- If you edited any core procs, you should list them here. You should specify the files and procs you changed.
-E.g:
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
--->
+`code/modules/power/tesla/energy_ball.dm`
 
 ### Modular Overrides:
 
 - N/A
-<!-- If you added a new modular override (file or code-wise) for your module, you should list it here. Code files should specify what procs they changed, in case of multiple modules using the same file.
-E.g:
-- `modular_signia/master_files/sound/my_cool_sound.ogg`
-- `modular_signia/master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
--->
+
 
 ### Defines:
 
 - N/A
-<!-- If you needed to add any defines, mention the files you added those defines in, along with the name of the defines. -->
 
 ### Included files that are not contained in this module:
 
@@ -39,5 +31,4 @@ E.g:
 
 ### Credits:
 
-<!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code. -->
-code\modules\power\tesla\energy_ball.dm
+vect0r-readding

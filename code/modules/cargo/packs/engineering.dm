@@ -291,6 +291,40 @@
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engine/particle_accelerator
+	name = "Particle Accelerator"
+	desc = "Powers the singlo & tesla coil"
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_CE
+	contains = list(/obj/machinery/particle_accelerator/control_box,
+	/obj/structure/particle_accelerator/end_cap,
+	/obj/structure/particle_accelerator/power_box,
+	/obj/structure/particle_accelerator/fuel_chamber,
+	/obj/structure/particle_accelerator/particle_emitter/center,
+	/obj/structure/particle_accelerator/particle_emitter/left,
+	/obj/structure/particle_accelerator/particle_emitter/right,
+	)
+	crate_name = "tesla coil crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/singlo_gen
+	name = "Singlo crate"
+	desc = "oh. you really fucked up now."
+	access = ACCESS_CE
+	cost = CARGO_CRATE_VALUE * 30
+	contains = list(/obj/machinery/the_singularitygen)
+	crate_name = "tesla coil crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/tesla_gen
+	name = "Tesla Ball order"
+	desc = "Zap."
+	cost = CARGO_CRATE_VALUE * 30
+	access = ACCESS_CE
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	crate_name = "tesla coil crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"
 	desc = "The new and improved fusion reactor."
