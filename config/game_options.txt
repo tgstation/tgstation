@@ -365,6 +365,7 @@ ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES slugcat
+ROUNDSTART_RACES anthromorph
 ROUNDSTART_RACES aquatic
 
 ## Races that are better than humans in some ways, but worse in others
