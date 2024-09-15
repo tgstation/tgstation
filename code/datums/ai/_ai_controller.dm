@@ -323,15 +323,15 @@ multiple modular subtrees with behaviors
 
 	if(QDELETED(final_target))
 		return FALSE
-
+	var/params = list2params(modifiers)
 	var/mob/living/living_pawn = pawn
 	if(isnull(combat_mode))
-		living_pawn.ClickOn(final_target, modifiers)
+		living_pawn.ClickOn(final_target, params)
 		return TRUE
 
 	var/old_combat_mode = living_pawn.combat_mode
 	living_pawn.set_combat_mode(combat_mode)
-	living_pawn.ClickOn(final_target, list2params(modifiers))
+	living_pawn.ClickOn(final_target, params)
 	living_pawn.set_combat_mode(old_combat_mode)
 	return TRUE
 
