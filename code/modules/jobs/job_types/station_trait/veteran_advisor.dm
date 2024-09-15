@@ -38,7 +38,6 @@
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()
-	. = ..()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
 		if(spawn_point.name != "Security Officer")
 			continue
@@ -47,6 +46,8 @@
 			continue
 		spawn_point.used = TRUE
 		break
+	if(!.) // Try to fall back to "our" landmark
+		. = ..()
 	if(!.)
 		log_mapping("Job [title] ([type]) couldn't find a round start spawn point.")
 
