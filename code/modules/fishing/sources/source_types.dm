@@ -558,3 +558,23 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
+
+/datum/fish_source/deepfryer
+	catalog_description = "Deep Fryers"
+	fish_table = list(
+		/obj/item/food/badrecipe = 15,
+		/obj/item/food/nugget = 5,
+		/obj/item/fish/fryish = 40,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/fryish = 10
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/chainsawfish = 2 MINUTES,
+		/obj/item/fish/pike/armored = 6 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13

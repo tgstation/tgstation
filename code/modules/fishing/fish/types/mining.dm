@@ -29,8 +29,8 @@
 	var/anger = 0
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
-	///at which rate the crab gains maturation
-	var/growth_rate = 100 / (10 MINUTES) * 10
+	///how long does it take for this crabbie to grow
+	var/growth_time = 10 MINUTES
 
 /obj/item/fish/chasm_crab/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -62,17 +62,17 @@
 	else if(weight >= 1500)
 		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
 
-	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
+	AddComponent(/datum/component/fish_growth, lob_type, growth_time * multiplier)
 
-/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
+/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
-	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	var/hunger = get_hunger()
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
-		anger += growth_rate * 2 * seconds_per_tick
+		anger += growth
 		return COMPONENT_DONT_GROW
 
 	if(hunger >= 0.4) //I'm hungry and angry
-		anger += growth_rate * 0.6 * seconds_per_tick
+		anger += growth
 
 	if(!isaquarium(loc))
 		return
@@ -81,10 +81,10 @@
 	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
-		anger += growth_rate * 0.25 * seconds_per_tick
+		anger += growth
 	var/fish_count = length(aquarium.get_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
-		anger += growth_rate * 0.3 * seconds_per_tick
+		anger += growth
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 

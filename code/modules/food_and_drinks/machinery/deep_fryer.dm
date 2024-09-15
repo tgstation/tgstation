@@ -63,6 +63,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	reagents.add_reagent(/datum/reagent/consumable/nutriment/fat/oil, 25)
 	fry_loop = new(src, FALSE)
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
+	AddElement(/datum/component/lazy_fishing_spot, /datum/fish_source/deepfryer)
 
 /obj/machinery/deepfryer/Destroy()
 	QDEL_NULL(fry_loop)

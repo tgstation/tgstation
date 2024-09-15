@@ -277,7 +277,7 @@
 		crabbie = null
 
 /obj/item/fish/chasm_crab/instant_growth
-	growth_rate = 100
+	growth_time = 1 SECONDS // one life tick, really
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
 /datum/unit_test/fish_sources
