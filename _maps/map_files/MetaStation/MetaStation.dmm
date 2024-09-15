@@ -6073,7 +6073,6 @@
 	pixel_y = 3
 	},
 /obj/item/circuitboard/machine/exoscanner,
-/obj/structure/cable,
 /obj/item/exodrone{
 	pixel_y = 11
 	},
@@ -90019,7 +90018,7 @@ gbC
 oor
 oqo
 dcp
-oqo
+oor
 dXI
 rAQ
 oor
