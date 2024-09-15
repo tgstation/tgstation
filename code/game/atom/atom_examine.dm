@@ -31,7 +31,7 @@
 			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
 		// Weird bit but ensures that if the final element has its own "and" we don't add another one
 		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], " and ")) ? ", " : " and ")
-		var/post_descriptor =examine_post_descriptor(user)
+		var/post_descriptor = examine_post_descriptor(user)
 		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][length(post_descriptor) ? " [jointext(post_descriptor, " ")]" : ""]."
 
 	if(reagents)
