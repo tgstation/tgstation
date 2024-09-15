@@ -15,8 +15,6 @@
 /obj/item/bodypart/head/snail
 	head_flags = HEAD_EYESPRITES | HEAD_DEBRAIN | HEAD_FACIAL_HAIR | HEAD_HAIR
 
-
-
 /// Extending species to support alternate digilegs
 /datum/species
 	var/list/digi_leg_overrides = list(

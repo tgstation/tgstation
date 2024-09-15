@@ -3,4 +3,6 @@
 // Slugcats, from Talon III.
 #define SPECIES_SLUGCAT "slugcat"
 
+#define SPECIES_ANTHROMORPH "anthromorph"
+#define SPECIES_AQUATIC "aquatic"
 #define SPECIES_INSECTOID "insectoid"
