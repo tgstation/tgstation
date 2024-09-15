@@ -156,7 +156,7 @@
 		copied_appearance.pixel_x = 0
 		copied_appearance.pixel_y = 0
 		copied_appearance.transform = matrix()
-	if(!iscarbon(input)) //wacky overlay people get generated everytime
+	if(input.icon && input.icon_state)
 		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance
 

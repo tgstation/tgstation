@@ -1,4 +1,5 @@
 /turf/open/water
+	name = "water"
 	gender = PLURAL
 	desc = "Shallow water."
 	icon = 'icons/turf/floors.dmi'

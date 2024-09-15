@@ -1,4 +1,5 @@
 #define TRAIT_FISH_TESTING "made_you_read_this"
+#define FISH_REAGENT_AMOUNT (10 * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
 ///Ensures that all fish have an aquarium icon state and that sprite_width and sprite_height have been set.
 /datum/unit_test/fish_aquarium_icons
@@ -21,7 +22,10 @@
 
 /datum/unit_test/fish_size_weight/Run()
 	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
-	TEST_ASSERT_EQUAL(fish.grind_results[/datum/reagent], 20, "the test fish has [fish.grind_results[/datum/reagent]] units of reagent when it should have 20")
+	var/datum/reagent/reagent = fish.reagents?.has_reagent(/datum/reagent/fishdummy)
+	TEST_ASSERT(reagent, "the test fish doesn't have the test reagent.[fish.reagents ? "" : " It doesn't even have a reagent holder."]")
+	var/expected_units = FISH_REAGENT_AMOUNT * fish.weight / FISH_WEIGHT_BITE_DIVISOR
+	TEST_ASSERT_EQUAL(reagent.volume, expected_units, "the test fish has [reagent.volume] units of the test reagent when it should have [expected_units]")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
 	var/expected_num_fillets = round(FISH_SIZE_BULKY_MAX / FISH_FILLET_NUMBER_SIZE_DIVISOR * 2, 1)
 	TEST_ASSERT_EQUAL(fish.num_fillets, expected_num_fillets, "the test fish has [fish.num_fillets] number of fillets when it should have [expected_num_fillets]")
@@ -93,7 +97,7 @@
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
 	diff_traits_inheritability = 100
-	reagents_to_add = list(/datum/reagent = 10)
+	reagents_to_add = list(/datum/reagent/fishdummy = FISH_REAGENT_AMOUNT)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -101,6 +105,10 @@
 
 /datum/fish_trait/dummy/two
 	incompatible_traits = list(/datum/fish_trait/dummy)
+
+/datum/reagent/fishdummy
+	name = "fish test reagent"
+	description = "It smells fishy."
 
 /obj/structure/aquarium/traits
 	allow_breeding = TRUE
@@ -283,12 +291,63 @@
 /datum/fish_source/unit_test
 	fish_table = list(
 		/obj/item/wrench = 1,
-		/obj/item/screwdriver = INFINITY,
+		/obj/item/screwdriver = INFINITY, //infinite weight, so if fish counts doesn't work as intended, this'll be always picked.
 	)
 	fish_counts = list(
 		/obj/item/wrench = 1,
-		/obj/item/screwdriver = 0,
+		/obj/item/screwdriver = 0, //this should never be picked.
 	)
 
+/datum/unit_test/edible_fish
+
+/datum/unit_test/edible_fish/Run()
+	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy/food)
+	var/datum/component/edible/edible = fish.GetComponent(/datum/component/edible)
+	TEST_ASSERT(edible, "Fish is not edible")
+	edible.eat_time = 0
+	TEST_ASSERT(fish.GetComponent(/datum/component/infective), "Fish doesn't have the infective component")
+	var/bite_size = edible.bite_consumption
+
+	var/mob/living/carbon/human/consistent/gourmet = allocate(/mob/living/carbon/human/consistent)
+
+	var/food_quality = edible.get_perceived_food_quality(gourmet)
+	TEST_ASSERT(food_quality < 0, "Humans don't seem to dislike raw, unprocessed fish when they should")
+	ADD_TRAIT(gourmet, TRAIT_FISH_EATER, TRAIT_FISH_TESTING)
+	food_quality = edible.get_perceived_food_quality(gourmet)
+	TEST_ASSERT(food_quality >= LIKED_FOOD_QUALITY_CHANGE, "mobs with the TRAIT_FISH_EATER traits don't seem to like fish when they should")
+	REMOVE_TRAIT(gourmet, TRAIT_FISH_EATER, TRAIT_FISH_TESTING)
+
+	fish.attack(gourmet, gourmet)
+	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/consumable/nutriment/protein), "Human doesn't have ingested protein after eating fish")
+	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/blood), "Human doesn't have ingested blood after eating fish")
+	TEST_ASSERT(gourmet.has_reagent(/datum/reagent/fishdummy), "Human doesn't have the reagent from /datum/fish_trait/dummy after eating fish")
+
+	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [fish.health]")
+
+	var/obj/item/organ/internal/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
+	belly.reagents.clear_reagents()
+
+	fish.set_status(FISH_ALIVE)
+	TEST_ASSERT(!fish.bites_amount, "bites_amount wasn't reset after the fish revived")
+
+	fish.update_size_and_weight(fish.size, FISH_WEIGHT_BITE_DIVISOR)
+	fish.AddElement(/datum/element/fried_item, FISH_SAFE_COOKING_DURATION)
+	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish didn't die after being cooked")
+	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Value: [bite_size]")
+	TEST_ASSERT(!(edible.foodtypes & (RAW|GORE)), "Fish still has the GORE and/or RAW foodtypes flags after being cooked")
+	TEST_ASSERT(!fish.GetComponent(/datum/component/infective), "Fish still has the infective component after being cooked for long enough")
+
+
+	food_quality = edible.get_perceived_food_quality(gourmet)
+	TEST_ASSERT(food_quality >= 0, "Humans still dislike fish, even when it's cooked")
+	fish.attack(gourmet, gourmet)
+	TEST_ASSERT(!gourmet.has_reagent(/datum/reagent/blood), "Human has ingested blood from eating a fish when it shouldn't since the fish has been cooked")
+
+	TEST_ASSERT(QDELETED(fish), "The fish is not being deleted, despite having sustained enough bites. Reagents volume left: [fish.reagents.total_volume]")
+
+/obj/item/fish/testdummy/food
+	average_weight = FISH_WEIGHT_BITE_DIVISOR * 2 //One bite, it's death; the other, it's gone.
+
+#undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
 
