@@ -159,7 +159,7 @@
 					span_danger("You spit out a string of blood from the blow to your chest!"),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
-        // DOPPLER EDIT ADDITION BEGIN - Green blood color
+				 // DOPPLER EDIT ADDITION BEGIN - Green blood color
 				if(hasgreenblood(victim))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(victim.loc, victim.dir)
 				else
