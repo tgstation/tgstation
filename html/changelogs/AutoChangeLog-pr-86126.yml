@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed morbid mobs (coroners) not enjoying room beauty and aquariums in their own weird ways."
+  - rscadd: "You an now release fish after catching it for a positive moodlet (or to repopulate certain fishing spot with rare fish)."

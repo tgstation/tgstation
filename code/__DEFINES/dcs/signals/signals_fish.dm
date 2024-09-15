@@ -33,6 +33,9 @@
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)
 #define COMSIG_FISH_FORCE_UPDATED "fish_force_updated"
 
+///From /obj/item/fish/interact_with_atom_secondary, sent to the target: (fish)
+#define COMSIG_FISH_RELEASED_INTO "fish_released_into"
+
 /// Rolling a reward path for a fishing challenge
 #define COMSIG_FISHING_CHALLENGE_ROLL_REWARD "fishing_roll_reward"
 /// Adjusting the difficulty of a rishing challenge, often based on the reward path
