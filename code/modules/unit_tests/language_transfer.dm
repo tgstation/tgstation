@@ -42,8 +42,8 @@
 
 	dummy.set_species(/datum/species/lizard/silverscale)
 
-	var/list/common_sources = holder.understood_languages[/datum/language/common]
-	var/sources = ""
+	var/list/common_sources = holder.spoken_languages[/datum/language/common]
+	var/sources = "[holder.type] - "
 	for(var/source in common_sources)
 		sources += "[source] "
 	stack_trace(sources)
