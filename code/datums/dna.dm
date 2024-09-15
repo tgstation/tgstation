@@ -150,7 +150,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, mutation_type, class)
 	return force_give(new mutation_type (class, time, copymut = mutation))
 
-/datum/dna/proc/remove_mutation(mutation_type)
+/datum/dna/proc/remove_mutation(datum/mutation/human/mutation_type, mutadone)
+	if((mutation_type.mutadone_proof && mutadone))
+		return FALSE
 	SEND_SIGNAL(holder, COMSIG_CARBON_LOSE_MUTATION, mutation_type)
 	return force_lose(get_mutation(mutation_type))
 
@@ -479,7 +481,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/stored/add_mutation(mutation_name) //no mutation changes on stored dna.
 	return
 
-/datum/dna/stored/remove_mutation(mutation_name)
+/datum/dna/stored/remove_mutation(mutation_name, mutadone)
 	return
 
 /datum/dna/stored/check_mutation(mutation_name)

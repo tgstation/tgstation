@@ -381,7 +381,10 @@
 
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/human_mob = spawned_mob
-		human_mob.set_species(species_type)
+		// ignore if it's already the same
+		if(human_mob.dna.species != species_type)
+			human_mob.set_species(species_type)
+
 		human_mob.equipOutfit(outfit)
 
 	op_mind.special_role = role_to_play
@@ -424,12 +427,22 @@
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
 
-	monkey_man.make_clever_and_no_dna_scramble()
+	monkey_man.crewlike_monkify()
+
+	// fuck you i am no longer playing around. this goes against the entire soul of the item
+	RegisterSignal(monkey_man, COMSIG_SPECIES_LOSS, PROC_REF(allergy))
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 
 	var/obj/item/implant/explosive/imp = new(src)
 	imp.implant(monkey_man, user)
+
+/obj/item/antag_spawner/loadout/monkey_man/proc/allergy(mob/living/second_lifer, datum/species/folly_species)
+	SIGNAL_HANDLER
+	// no brain or items. organs are funny though
+	// timer is long to let them panic and consider their folly, and because allergies take a while
+	second_lifer.visible_message(span_bolddanger("[second_lifer] starts swelling unhealthily in size. It looks like they had an allergic reaction to becoming a [folly_species]!"))
+	second_lifer.inflate_gib(drop_bitflags = DROP_ORGANS|DROP_BODYPARTS, gib_time = 25 SECONDS, anim_time = 40 SECONDS)
 
 /datum/outfit/syndicate_monkey
 	name = "Syndicate Monkey Agent Kit"
