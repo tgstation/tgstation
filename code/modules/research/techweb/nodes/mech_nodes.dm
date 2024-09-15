@@ -36,6 +36,7 @@
 		"mech_radio",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_clown
 	id = TECHWEB_NODE_MECH_CLOWN
@@ -60,6 +61,7 @@
 		"borg_transform_clown",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY) //The dread upon security when they hear this...
 
 /datum/techweb_node/mech_medical
 	id = TECHWEB_NODE_MECH_MEDICAL
@@ -96,6 +98,7 @@
 		"clarke_peri",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 
 /datum/techweb_node/mech_combat
 	id = TECHWEB_NODE_MECH_COMBAT
@@ -112,6 +115,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_assault
 	id = TECHWEB_NODE_MECH_ASSAULT
@@ -132,6 +136,7 @@
 		"durand_targ",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_light
 	id = TECHWEB_NODE_MECH_LIGHT
@@ -152,6 +157,7 @@
 		"gygax_targ",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_heavy
 	id = TECHWEB_NODE_MECH_HEAVY
@@ -172,6 +178,7 @@
 		"savannah_ivanov_targ",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_infiltrator
 	id = TECHWEB_NODE_MECH_INFILTRATOR
@@ -192,6 +199,7 @@
 		"phazon_targ",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/justice
 	id = "mecha_justice"
@@ -222,6 +230,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_firearms
 	id = TECHWEB_NODE_MECH_FIREARMS
@@ -237,6 +246,7 @@
 		"mech_carbine_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_heavy_arms
 	id = TECHWEB_NODE_MECH_HEAVY_ARMS
@@ -252,6 +262,7 @@
 		"mech_missile_rack_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mech_equip_bluespace
 	id = TECHWEB_NODE_MECH_EQUIP_BLUESPACE
@@ -264,3 +275,4 @@
 		"mech_wormhole_gen",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE)
