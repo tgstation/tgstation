@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed a mislabelled corpse disposal in Icebox medbay, probably less dead bodies showing up in cargo"
