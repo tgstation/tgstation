@@ -367,3 +367,77 @@
   - qol: Infiltrator mod hides your voice
   - bugfix: Infiltrator suit now hides moth wings/antenna
   - bugfix: hidden moth wings are no longer capable of flight
+2024-09-14:
+  FlufflesTheDog:
+  - bugfix: Echolocation no longer breaks when witnessing a hologram
+  - bugfix: Echolocation no longer breaks when witnessing a fulton extraction
+  - bugfix: Humanoid NPCs are no longer invisible to echolocation users
+  JohnFulpWillard:
+  - rscadd: Lighters now use and require welding fuel to work, but can be used as
+      a welding tool for tasks that don't require much heat.
+  LT3:
+  - qol: Medical HUD and crew console can now detect broken (shorted out) suit sensors
+      needing repair
+  Oxotnak:
+  - rscadd: health analyzer now able to print scanned results via Ctrl-shift-click!
+  - qol: text from healthscan proc now use < br >
+  Rhials:
+  - bugfix: Removes some doubled-up railings on the wizard den/ragin' mages shuttle.
+  SmArtKar:
+  - code_imp: Minor obsession code cleanup
+  - admin: Admins can now see players who were previously obsessed but had been "cured"
+      from the trauma
+  TheBoondock:
+  - balance: double the melting point of hull and halves the thermal transfer so plasma
+      fire should lose less heat and harder to melt it
+  Timberpoes:
+  - bugfix: Having the Overflow Role set to On will properly ensure you get that role
+      at a High priority as intended by the game code.
+  - bugfix: Job selection is now a little bit more random. Fixes an unintentional
+      bias in random job assignment that could lead to feast-or-famine for roles where
+      everyone is assigned one job and nobody is assigned another job.
+  Vect0r2:
+  - qol: Adds an additional cable from birdshot SMES units
+  - qol: Adds two air pumps to birdshot science
+  - bugfix: bird engineering storage is now connected to the powernet
+  carlarctg:
+  - bugfix: The recharging relics now work on ethereal cells.
+  - balance: EMP now affects ethereal's hunger.
+  mc-oofert:
+  - rscadd: you may weld a crate
+  - code_imp: that one cool haunted donk outpost ruins tripwires and such use a subsystem
+      instead of globals. no real gameplay effect
+2024-09-15:
+  Ben10Omintrix:
+  - bugfix: fixes basic AI that are supposed to pause during actions not pausing
+  Bisar:
+  - qol: The 'direction' circuit component now also returns the distance of its target.
+  - balance: Most circuit shells and the generic component and generic circuit have
+      had their size reduced.
+  - balance: The airlock circuit shell has had its size increased.
+  DaCoolBoss:
+  - rscadd: Adds the Syndicate Lab to the Icemoon ruin pool.
+  IndieanaJones:
+  - balance: Gorillas made from giving monkeys genetic damage are weaker than their
+      normal counterparts.
+  LT3:
+  - bugfix: Fixed a mislabelled corpse disposal in Icebox medbay, probably less dead
+      bodies showing up in cargo
+  - bugfix: Fixed certain clothing sending suit sensor data when it shouldn't be capable
+  SmArtKar:
+  - image: Updated glowing yellow extract sprite
+  - image: Tanks inside of tank holders have received new sprites
+  - image: Added a new sprite for mediborg surgical saws
+  - spellcheck: Fixed a typo in DeForest medical crates
+  - code_imp: Non-innate engraving blockers should work now (none as of now)
+  - balance: Humans that never had a player controlling them no longer count towards
+      changeling absorption counter
+  TheSmallBlue:
+  - qol: The z-level button got a refresh! It's now applied to more places and it
+      should be simpler to use.
+  Thunder12345:
+  - bugfix: 'Delta: The disposal unit in the curator''s office is now properly connected
+      to the disposals system.'
+  Zytolg:
+  - qol: The Birdshot Tool Storage has been resupplied. New tools are at the crews
+      displosal.
