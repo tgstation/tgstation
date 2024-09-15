@@ -196,6 +196,15 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"cu" = (
+/obj/structure/flora/bush/sparsegrass/style_3,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "end";
+	paint_colour = "#a1a1a1";
+	pixel_x = 32
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
 "cv" = (
 /obj/structure/flora/bush/pale/style_3{
 	pixel_y = -3;
@@ -394,9 +403,7 @@
 /area/deathmatch)
 "fu" = (
 /obj/structure/flora/bush/flowers_pp,
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "fw" = (
@@ -743,6 +750,10 @@
 	},
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"kc" = (
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
 "kf" = (
 /obj/structure/table_frame/wood,
 /turf/open/indestructible/hotelwood,
@@ -963,9 +974,7 @@
 /area/deathmatch)
 "mQ" = (
 /obj/structure/flora/bush/lavendergrass/style_3,
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "nf" = (
@@ -1579,9 +1588,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "tK" = (
@@ -2393,9 +2400,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "FP" = (
@@ -2572,9 +2577,7 @@
 /obj/structure/flora/bush/lavendergrass/style_2{
 	pixel_y = -15
 	},
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "Hi" = (
@@ -2733,9 +2736,7 @@
 /obj/effect/decal/cleanable/rubble{
 	pixel_x = 5
 	},
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "JO" = (
@@ -3249,9 +3250,7 @@
 	pixel_x = 8;
 	pixel_y = 10
 	},
-/obj/structure/fence{
-	dir = 4
-	},
+/obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
 "OS" = (
@@ -5575,7 +5574,7 @@ OY
 lS
 OY
 wH
-Jr
+RE
 UH
 Gp
 Xi
@@ -6237,7 +6236,7 @@ OY
 eP
 RE
 qf
-JP
+cu
 SD
 lk
 FP
@@ -7237,11 +7236,11 @@ vv
 vv
 vv
 tD
-oV
-oV
+kc
+kc
 Hg
-oV
-oV
+kc
+kc
 JN
 FN
 mQ

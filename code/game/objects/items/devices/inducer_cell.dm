@@ -35,11 +35,12 @@
 
 /obj/item/inducer_cell/proc/inductive_charge(mob/user)
 	if(!locate(user) in loc) //muh machine's gone, delete myself because im disarmed
+		punishment()
 		qdel(src)
 		return
 	src.Shake(4, 4, cycle_time)
 	pulse_amount--
-	if(pulse_amount <= 0)
+	if(pulse_amount > 0)
 		addtimer(CALLBACK(src, PROC_REF(inductive_charge)), cycle_time)
 	var/list/chargables = list()
 	for(var/obj/item/stock_parts/power_store/cells in user.get_all_contents())
@@ -49,10 +50,9 @@
 		var/obj/item/stock_parts/power_store/charging = pick(chargables)
 		charging.charge += min(charging.maxcharge - charging.charge, charging.maxcharge/(rand(charge_lower, charge_upper)))
 
-/obj/item/inducer_cell/Destroy()
+/obj/item/inducer_cell/proc/punishment()
 	for(var/mob/living/living_mob in range(zap_range, src))
 		to_chat(living_mob, span_warning("You are struck by an arc of electricity!"))
 		src.Beam(living_mob, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 		living_mob.electrocute_act(zap_damage, src, 1, SHOCK_NOGLOVES, stun_time, stun_time, stun_time)
 	do_sparks(number = 4, source = src)
-	return ..()
