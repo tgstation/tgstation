@@ -503,7 +503,7 @@
 	name = "crusher sword retool kit"
 	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "retool_kit_sword"
+	icon_state = "retool_kit"
 	denied_type = /obj/item/crusher_trophy/retool_kit
 	var/retool_icon = "crusher_sword"
 	var/retool_inhand_icon = "crusher_sword"
@@ -529,3 +529,15 @@
 		var/mob/living/carbon/holder = KA.loc
 		holder.update_held_items()
 	..()
+
+/obj/item/crusher_trophy/retool_kit/harpoon
+	name = "crusher harpoon retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a harpoon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_harpoon"
+	retool_inhand_icon = "crusher_harpoon"
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to have the appearance of a harpoon"
