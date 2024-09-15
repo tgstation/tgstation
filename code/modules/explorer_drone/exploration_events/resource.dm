@@ -218,7 +218,7 @@
 	success_log = "Received a gift from a stranger."
 	delay_message = "Enduring..."
 	action_text = "Accept gift."
-	loot_type = /obj/item/cardpack/series_one
+	loot_type = /obj/item/stack/spacecash/c100
 
 // EXPLORATION_SITE_SPACE 2/2
 /datum/exploration_event/simple/resource/comms_satellite

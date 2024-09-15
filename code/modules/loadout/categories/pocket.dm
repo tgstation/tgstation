@@ -126,10 +126,6 @@
 	name = "Plush (Snake)"
 	item_path = /obj/item/toy/plush/snakeplushie
 
-/datum/loadout_item/pocket_items/card_binder
-	name = "Card Binder"
-	item_path = /obj/item/storage/card_binder
-
 /datum/loadout_item/pocket_items/card_deck
 	name = "Playing Card Deck"
 	item_path = /obj/item/toy/cards/deck

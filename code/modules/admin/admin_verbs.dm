@@ -255,38 +255,6 @@ ADMIN_VERB(set_dynex_scale, R_FUN, "Set DynEx Scale", "Set the scale multiplier 
 ADMIN_VERB(atmos_control, R_DEBUG|R_SERVER, "Atmos Control Panel", "Open the atmospherics control panel.", ADMIN_CATEGORY_DEBUG)
 	SSair.ui_interact(user.mob)
 
-ADMIN_VERB(reload_cards, R_DEBUG, "Reload Cards", "Reload all TCG cards.", ADMIN_CATEGORY_DEBUG)
-	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
-		return
-	SStrading_card_game.reloadAllCardFiles()
-
-ADMIN_VERB(validate_cards, R_DEBUG, "Validate Cards", "Validate the card settings.", ADMIN_CATEGORY_DEBUG)
-	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
-		return
-	var/message = SStrading_card_game.check_cardpacks(SStrading_card_game.card_packs)
-	message += SStrading_card_game.check_card_datums()
-	if(message)
-		message_admins(message)
-	else
-		message_admins("No errors found in card rarities or overrides.")
-
-ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "Test Cardpack Distribution", "Test the distribution of a card pack.", ADMIN_CATEGORY_DEBUG)
-	if(!SStrading_card_game.loaded)
-		message_admins("The card subsystem is not currently loaded")
-		return
-	var/pack = tgui_input_list(user, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
-	if(!pack)
-		return
-	var/batch_count = tgui_input_number(user, "How many times should we open it?", "Don't worry, I understand")
-	var/batch_size = tgui_input_number(user, "How many cards per batch?", "I hope you remember to check the validation")
-	var/guar = tgui_input_number(user, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
-	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
-
-ADMIN_VERB(print_cards, R_DEBUG, "Print Cards", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
-	SStrading_card_game.printAllCards()
-
 ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/ability_recipient)
 	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/static/list/actions_by_name = list()

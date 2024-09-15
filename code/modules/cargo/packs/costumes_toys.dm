@@ -228,20 +228,6 @@
 	)
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/tcg
-	name = "Big-Ass Booster Pack Pack"
-	desc = "A bumper load of NT TCG Booster Packs of varying series. Collect them all!"
-	cost = 1000
-	contains = list()
-	crate_name = "booster pack pack"
-	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
-
-/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
-	var/cardpacktype
-	for(var/i in 1 to 10)
-		cardpacktype = pick(subtypesof(/obj/item/cardpack))
-		new cardpacktype(C)
-
 /datum/supply_pack/costumes_toys/stickers
 	name = "Sticker Pack Crate"
 	desc = "This crate contains a random assortment of stickers."

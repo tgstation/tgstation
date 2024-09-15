@@ -36,7 +36,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		/obj/item/canvas,
 		/obj/item/paper,
 		/obj/item/photo,
-		/obj/item/tcgcard,
 	)
 	/// List of types which should be allowed to be faxed if hacked
 	var/static/list/exotic_types = list(
@@ -434,8 +433,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return "[state_prefix]_food"
 	if (istype(item, /obj/item/throwing_star))
 		return "[state_prefix]_star"
-	if (istype(item, /obj/item/tcgcard))
-		return "[state_prefix]_tcg"
 	if (istype(item, /obj/item/folder/biscuit))
 		return "[state_prefix]_pbiscuit"
 	return "[state_prefix]_paper"
