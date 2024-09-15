@@ -4,14 +4,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
 	},
-/obj/item/trash/waffles{
-	pixel_x = 1
-	},
 /obj/item/chair/stool/bar,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
-	},
 /obj/item/clothing/suit/apron/chef{
 	pixel_x = -6
 	},
@@ -163,11 +156,8 @@
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "bR" = (
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
-	},
 /obj/structure/table/reinforced,
+/obj/item/trash/tray,
 /turf/open/indestructible/large/textured,
 /area/deathmatch)
 "bW" = (
@@ -195,15 +185,6 @@
 "cg" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /turf/open/indestructible/asphalt/outdoors,
-/area/deathmatch)
-"cu" = (
-/obj/structure/flora/bush/sparsegrass/style_3,
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "end";
-	paint_colour = "#a1a1a1";
-	pixel_x = 32
-	},
-/turf/open/floor/grass,
 /area/deathmatch)
 "cv" = (
 /obj/structure/flora/bush/pale/style_3{
@@ -427,10 +408,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
 	},
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
-	},
+/obj/item/trash/tray,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "fE" = (
@@ -529,10 +507,6 @@
 /area/deathmatch)
 "gL" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/trash/waffles{
-	pixel_x = 3;
-	pixel_y = -8
-	},
 /turf/open/floor/grass,
 /area/deathmatch)
 "gQ" = (
@@ -583,10 +557,6 @@
 /area/deathmatch)
 "hS" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/trash/can{
-	pixel_x = -8;
-	pixel_y = 10
-	},
 /obj/structure/fence,
 /turf/open/indestructible/stone,
 /area/deathmatch)
@@ -750,10 +720,6 @@
 	},
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
-"kc" = (
-/obj/structure/fence,
-/turf/open/floor/grass,
-/area/deathmatch)
 "kf" = (
 /obj/structure/table_frame/wood,
 /turf/open/indestructible/hotelwood,
@@ -791,6 +757,7 @@
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/no_nightlight/directional/east,
+/obj/item/trash/tray,
 /turf/open/indestructible,
 /area/deathmatch)
 "kA" = (
@@ -961,7 +928,7 @@
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "Newton";
 	pixel_y = 32;
-	paint_colour = "#8b0000"
+	paint_colour = "#9b1010"
 	},
 /turf/open/floor/grass,
 /area/deathmatch)
@@ -1073,15 +1040,8 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "ol" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/trash/can{
-	pixel_x = 8;
-	pixel_y = 10
-	},
-/obj/structure/fence{
-	dir = 1
-	},
-/turf/open/indestructible/stone,
+/obj/structure/fence,
+/turf/open/floor/grass,
 /area/deathmatch)
 "or" = (
 /turf/template_noop,
@@ -1090,6 +1050,10 @@
 /obj/structure/hedge/opaque,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/light_emitter/fake_outdoors,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "blueprint";
+	paint_colour = "#558edf"
+	},
 /turf/open/floor/grass,
 /area/deathmatch)
 "ot" = (
@@ -1263,10 +1227,7 @@
 	pixel_y = 14;
 	pixel_x = -15
 	},
-/obj/item/trash/waffles{
-	pixel_x = 3;
-	pixel_y = -8
-	},
+/obj/item/trash/tray,
 /turf/open/floor/grass,
 /area/deathmatch)
 "qi" = (
@@ -1282,6 +1243,13 @@
 	dir = 9
 	},
 /turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"qo" = (
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/stone,
 /area/deathmatch)
 "qt" = (
 /obj/effect/turf_decal/box/corners,
@@ -1339,6 +1307,11 @@
 	pixel_y = 1
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "matt";
+	pixel_y = -32;
+	paint_colour = "#dfa955"
+	},
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "rn" = (
@@ -1384,11 +1357,12 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "rG" = (
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Cyber";
+	pixel_y = -32;
+	paint_colour = "#80D0BD"
 	},
-/turf/open/indestructible/asphalt/outdoors,
+/turf/open/indestructible/stone,
 /area/deathmatch)
 "rQ" = (
 /obj/structure/flora/bush/flowers_br,
@@ -1529,6 +1503,10 @@
 /obj/structure/sign/poster/contraband/cc64k_ad/directional/west,
 /turf/open/indestructible/stone,
 /area/deathmatch)
+"ti" = (
+/obj/structure/sign/poster/contraband/clown/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
 "tn" = (
 /turf/closed/indestructible/binary,
 /area/deathmatch)
@@ -1574,9 +1552,9 @@
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "tC" = (
-/obj/item/trash/waffles,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+/obj/item/trash/tray,
 /turf/open/indestructible/large/textured,
 /area/deathmatch)
 "tD" = (
@@ -1685,9 +1663,28 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"ve" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/can{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
 "vh" = (
 /obj/item/food/badrecipe/moldy{
 	pixel_x = 4
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Sleeping Carp";
+	pixel_y = -32;
+	paint_colour = "#a02ba2"
 	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
@@ -1707,6 +1704,12 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "shotgun";
+	pixel_y = 34;
+	paint_colour = "#EEDDEE";
+	pixel_x = 14
+	},
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "vB" = (
@@ -1838,10 +1841,6 @@
 /obj/structure/closet/crate/bin,
 /obj/machinery/light/no_nightlight/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
-	},
 /turf/open/indestructible,
 /area/deathmatch)
 "yx" = (
@@ -1850,7 +1849,7 @@
 	pixel_x = 5
 	},
 /obj/structure/fence/cut/large{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/deathmatch)
@@ -1898,11 +1897,11 @@
 	icon_state = "splatter";
 	paint_colour = "#3d1c0c";
 	pixel_x = 32;
-	pixel_y = -6
+	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "Gib";
-	paint_colour = "#551111";
+	paint_colour = "#EEDDEE";
 	pixel_x = 32
 	},
 /turf/open/floor/grass,
@@ -1926,9 +1925,9 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "zJ" = (
-/obj/item/trash/waffles,
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/tray,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "zM" = (
@@ -1957,22 +1956,15 @@
 "zX" = (
 /obj/machinery/light/no_nightlight/directional/south,
 /obj/structure/closet/crate/secure/wafflecorp,
-/obj/item/trash/waffles,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 3
+/obj/item/trash/tray{
+	pixel_y = -4
 	},
-/obj/item/trash/waffles{
-	pixel_x = 2;
+/obj/item/trash/tray,
+/obj/item/trash/tray{
+	pixel_y = 4
+	},
+/obj/item/plate{
 	pixel_y = 6
-	},
-/obj/item/trash/waffles{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/trash/waffles{
-	pixel_x = 4;
-	pixel_y = 12
 	},
 /turf/open/indestructible/plating,
 /area/deathmatch)
@@ -2263,16 +2255,30 @@
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "Ee" = (
-/obj/item/trash/waffles{
-	pixel_x = -6;
-	pixel_y = -8
+/obj/structure/flora/bush/sparsegrass/style_3,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "end";
+	paint_colour = "#EEDDEE";
+	pixel_x = 32
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/asphalt/outdoors,
+/turf/open/floor/grass,
 /area/deathmatch)
 "Eh" = (
 /obj/structure/flora/bush/fullgrass,
 /turf/open/floor/grass,
+/area/deathmatch)
+"Ey" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "EC" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -2791,10 +2797,7 @@
 /area/deathmatch)
 "Kv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/waffles{
-	pixel_x = 3;
-	pixel_y = -8
-	},
+/obj/item/trash/tray,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "Kx" = (
@@ -2848,21 +2851,14 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "Le" = (
-/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north{
-	pixel_y = 36;
-	pixel_x = 3
-	},
-/obj/structure/sign/poster/contraband/clown/directional/north,
-/obj/structure/sign/poster/ripped/directional/north{
-	pixel_x = -14
-	},
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north,
 /turf/open/indestructible/stone,
 /area/deathmatch)
 "Ll" = (
 /obj/structure/hedge/opaque,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "ghost";
-	paint_colour = "#551111";
+	paint_colour = "#EEDDEE";
 	pixel_x = 32;
 	pixel_y = -8
 	},
@@ -2870,10 +2866,6 @@
 /area/deathmatch)
 "Lp" = (
 /obj/effect/decal/cleanable/rubble,
-/obj/item/trash/can{
-	pixel_x = -8;
-	pixel_y = 10
-	},
 /obj/structure/fence/end,
 /turf/open/indestructible/stone,
 /area/deathmatch)
@@ -3246,10 +3238,6 @@
 	pixel_x = -12;
 	pixel_y = -9
 	},
-/obj/item/trash/can{
-	pixel_x = 8;
-	pixel_y = 10
-	},
 /obj/structure/fence,
 /turf/open/floor/grass,
 /area/deathmatch)
@@ -3288,13 +3276,13 @@
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Po" = (
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "corgi";
+	pixel_y = -32;
+	paint_colour = "#b39b43"
 	},
-/obj/structure/table/reinforced,
-/turf/open/indestructible,
+/turf/open/indestructible/stone,
 /area/deathmatch)
 "PA" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -3465,6 +3453,12 @@
 /obj/item/cigbutt,
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
+"Sg" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/item/food/waffles,
+/turf/open/indestructible,
+/area/deathmatch)
 "Sl" = (
 /obj/effect/decal/cleanable/wrapping,
 /obj/item/gun/ballistic/automatic/m90/unrestricted{
@@ -3531,12 +3525,11 @@
 /turf/open/floor/grass,
 /area/deathmatch)
 "Te" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/item/food/waffles{
+	pixel_y = 14
 	},
-/turf/open/indestructible/stone,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
 /area/deathmatch)
 "Th" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3596,7 +3589,7 @@
 /turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "Ua" = (
-/obj/item/trash/waffles,
+/obj/item/trash/tray,
 /obj/item/broken_bottle{
 	pixel_x = 4;
 	pixel_y = 5
@@ -3861,12 +3854,13 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "Xu" = (
-/obj/effect/turf_decal/siding/wideplating_new/dark,
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	pixel_y = -32;
+	paint_colour = "#e91f1f"
 	},
-/turf/open/indestructible/asphalt/outdoors,
+/turf/open/floor/grass,
 /area/deathmatch)
 "XB" = (
 /obj/structure/flora/bush/lavendergrass/style_4{
@@ -3952,13 +3946,14 @@
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "YO" = (
-/obj/item/trash/waffles{
-	pixel_x = 1;
-	pixel_y = 8
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "uboa";
+	pixel_y = -32;
+	paint_colour = "#291933"
 	},
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/table/reinforced,
-/turf/open/indestructible,
+/turf/open/indestructible/asphalt/outdoors,
 /area/deathmatch)
 "YX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4246,7 +4241,7 @@ or
 or
 tn
 Od
-Te
+qP
 zM
 kp
 OY
@@ -4416,7 +4411,7 @@ tn
 BB
 dB
 Jr
-pa
+Po
 BB
 tn
 tn
@@ -4451,7 +4446,7 @@ or
 "}
 (7,1,1) = {"
 tn
-rG
+OY
 OY
 cg
 Jr
@@ -4494,7 +4489,7 @@ sd
 rs
 jZ
 Jr
-Jr
+ti
 vv
 tn
 or
@@ -4732,7 +4727,7 @@ gQ
 OY
 mt
 OY
-Xu
+cg
 Jr
 Hi
 vv
@@ -4922,12 +4917,12 @@ ka
 ka
 vv
 tn
-or
-or
-or
-or
-or
-or
+tn
+tn
+tn
+tn
+tn
+tn
 "}
 (15,1,1) = {"
 tn
@@ -5165,7 +5160,7 @@ FW
 Jr
 fQ
 Jr
-Jr
+rG
 vv
 tn
 "}
@@ -5213,7 +5208,7 @@ kb
 jB
 kb
 uW
-Jr
+qo
 Jr
 Jr
 Jr
@@ -5270,7 +5265,7 @@ lW
 hk
 uo
 hk
-ol
+MM
 MM
 lW
 Yp
@@ -5305,7 +5300,7 @@ Jr
 Ml
 oV
 va
-Jr
+qo
 Jr
 Jr
 Jr
@@ -5389,7 +5384,7 @@ yj
 yj
 yj
 LS
-Ee
+kp
 Ua
 vF
 Zq
@@ -5789,9 +5784,9 @@ fV
 fV
 fV
 Vi
-YO
 Ri
 Ri
+Sg
 OG
 PA
 Mn
@@ -5903,7 +5898,7 @@ tn
 vv
 XF
 fV
-Po
+Ri
 fV
 fV
 hB
@@ -6121,7 +6116,7 @@ UH
 aT
 Jr
 pr
-Gd
+Xu
 BB
 tn
 or
@@ -6143,7 +6138,7 @@ tn
 vv
 PL
 Zd
-Zd
+Te
 Je
 Je
 Je
@@ -6236,7 +6231,7 @@ OY
 eP
 RE
 qf
-cu
+Ee
 SD
 lk
 FP
@@ -6353,7 +6348,7 @@ OY
 kp
 BI
 OY
-eP
+YO
 BB
 tn
 tn
@@ -6576,7 +6571,7 @@ tn
 tn
 pP
 HM
-SM
+Ey
 kb
 AG
 SW
@@ -7126,7 +7121,7 @@ ZB
 ZB
 ZB
 ZB
-cU
+ve
 BB
 OC
 oL
@@ -7236,11 +7231,11 @@ vv
 vv
 vv
 tD
-kc
-kc
+ol
+ol
 Hg
-kc
-kc
+ol
+ol
 JN
 FN
 mQ

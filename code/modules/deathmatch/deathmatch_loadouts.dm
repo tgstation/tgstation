@@ -567,6 +567,16 @@
 	l_hand = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/knife/combat
 	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
+	implants = list(/obj/item/implant/explosive, /obj/item/implant/weapons_auth)
+
+/datum/outfit/deathmatch_loadout/syndicate/post_equip(mob/living/carbon/human/player, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/dogtags = player.wear_id
+	dogtags.registered_name = player.real_name
+	dogtags.update_label()
+	dogtags.update_icon()
+	return ..()
 
 /datum/outfit/deathmatch_loadout/syndicate/cybersun
 	name = "Deathmatch: Cybersun Troubleshooter"
@@ -609,15 +619,6 @@
 	l_hand = /obj/item/gun/ballistic/shotgun/lethal
 	r_pocket = /obj/item/grenade/frag
 	backpack_contents = list(/obj/item/ammo_casing/shotgun/buckshot = 4,)
-
-/datum/outfit/deathmatch_loadout/syndicate/gorlex/post_equip(mob/living/carbon/human/player, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/obj/item/card/id/dogtags = player.wear_id
-	dogtags.registered_name = player.real_name
-	dogtags.update_label()
-	dogtags.update_icon()
-	return ..()
 
 /datum/outfit/deathmatch_loadout/syndicate/waffle
 	name = "Deathmatch: Waffle Corporate Security"
