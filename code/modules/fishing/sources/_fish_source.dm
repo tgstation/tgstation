@@ -474,7 +474,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(is_naive || is_morbid)
 			releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
 		return
-	if((fish.type in fish_table) != is_morbid || is_naive)
+	if(((fish.type in fish_table) != is_morbid) || is_naive)
 		releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
 	if(isnull(fish_counts[fish.type])) //This fish can be caught indefinitely so it won't matter.
 		return
