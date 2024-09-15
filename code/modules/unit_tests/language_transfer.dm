@@ -42,7 +42,11 @@
 
 	dummy.set_species(/datum/species/lizard/silverscale)
 
-	sleep(3 SECONDS) //testing
+	var/text/common_sources = holder.understood_languages[/datum/language/common]
+	var/sources = ""
+	for(var/source in common_sources)
+		sources += "[source] "
+	stack_trace(sources)
 
 	TEST_ASSERT(!dummy.has_language(/datum/language/common, SPOKEN_LANGUAGE), \
 		"Changing a mob's species from one which speaks common to one which does not should remove the language!")
