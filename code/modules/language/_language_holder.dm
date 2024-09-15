@@ -510,10 +510,8 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/empty/New()
 	if(length(understood_languages) || length(spoken_languages) || length(blocked_languages))
 		// For some reason the above declaration setting them to null is not working
-		stack_trace("Empty language holder should have no languages")
-		understood_languages = null
-		spoken_languages = null
-		blocked_languages = null
+		// stack_trace("Empty language holder should have no languages")
+		remove_all_languages()
 	return ..()
 
 /datum/language_holder/universal
