@@ -34,6 +34,10 @@
 	item_path = /obj/item/kinetic_crusher
 	cost_per_order = 650
 
+/datum/orderable_item/mining/crusher_retool_kit
+	item_path = /obj/item/crusher_trophy/retool_kit
+	cost_per_order = 150
+
 /datum/orderable_item/mining/resonator
 	item_path = /obj/item/resonator
 	cost_per_order = 710
