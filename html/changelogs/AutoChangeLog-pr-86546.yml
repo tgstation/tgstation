@@ -1,6 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - qol: "Infiltrator mod hides your voice"
-  - bugfix: "Infiltrator suit now hides moth wings/antenna"
-  - bugfix: "hidden moth wings are no longer capable of flight"
