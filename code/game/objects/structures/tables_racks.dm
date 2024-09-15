@@ -55,6 +55,8 @@
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
@@ -224,36 +226,24 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/construction/rcd))
-		return NONE
+// This extends base item interaction because tables default to blocking 99% of interactions
+/obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	var/deck_act_value = NONE
 	if(istype(tool, /obj/item/toy/cards/deck))
-		deck_act_value = deck_act(user, tool, modifiers, TRUE)
-	// Continue to placing if we don't do anything else
-	if(deck_act_value != NONE)
-		return deck_act_value
-
-	if(!user.combat_mode)
-		return table_place_act(user, tool, modifiers)
-
-	return NONE
-
-/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
+		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/toy/cards/deck))
-		. = deck_act(user, tool, modifiers, FALSE)
 	else if(istype(tool, /obj/item/riding_offhand))
 		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
-	if(. != NONE)
+	if(.)
 		return .
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		return table_place_act(user, tool, modifiers)
 
 	return NONE
@@ -865,6 +855,7 @@
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	register_context()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
 /obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -892,8 +883,11 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+/obj/structure/rack/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS

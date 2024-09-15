@@ -83,7 +83,7 @@
 
 		victim.visible_message(span_warning("[victim]'s [current_bodypart.name] instinctively starts feeling [candidate]!"))
 		if (!victim.anchored && !prob(victim.combat_mode ? LIVING_FLESH_COMBAT_TOUCH_CHANCE : LIVING_FLESH_TOUCH_CHANCE))
-			victim.start_pulling(candidate, supress_message = TRUE)
+			INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, start_pulling), candidate, supress_message = TRUE)
 			return
 
 		var/active_hand = victim.active_hand_index

@@ -145,11 +145,11 @@ ALLOW_RANDOM_EVENTS
 #FORBID_STATION_TRAITS
 
 ## Multiplier for earliest start time of dangerous events.
-## Set to 0 to make dangerous events avaliable from round start.
+## Set to 0 to make dangerous events available from round start.
 EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
-## Set to 0 to make dangerous events avaliable for all populations.
+## Set to 0 to make dangerous events available for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
 ## The lower bound, in deciseconds, for how soon another random event can be scheduled.
@@ -195,7 +195,7 @@ CONFIG_GATEWAY_CHANCE 0
 ## ACCESS ###
 
 ## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
-## This is useful for accomodating both low and high population rounds on the same server.
+## This is useful for accommodating both low and high population rounds on the same server.
 ## Comment this out or set to 0 to disable this automatic toggle.
 MINIMAL_ACCESS_THRESHOLD 20
 
@@ -208,7 +208,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Uncomment to give assistants maint access.
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
-## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+## Uncoment to give security maint access. Note that if you deactivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
@@ -242,7 +242,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 0/commented out for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
-## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
+## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specified in that file.
 ## Set to 4 for "specified", silicons will start with an existing lawset. (If no specified lawset is identified, the AI will spawn with asimov.)
 
 
@@ -350,7 +350,7 @@ SILICON_MAX_LAW_AMOUNT 12
 
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
-## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
+## Uncommenting races will allow them to be chosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
 ## See code/__DEFINES/DNA.dm for more options than the ones below.
 
@@ -463,7 +463,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
-## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
+## How many wirechewing rodents you want to spawn on exposed maintenance wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
 MICE_ROUNDSTART 10
 

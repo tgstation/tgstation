@@ -36,7 +36,6 @@
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
-
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"

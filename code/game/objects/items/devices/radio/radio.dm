@@ -121,19 +121,17 @@
 		return
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
 
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/radio/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/radio/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
 		set_broadcasting(FALSE)
-		return COMSIG_SABOTEUR_SUCCESS
+		return TRUE
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -353,7 +351,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && !HAS_TRAIT(talking_living, TRAIT_DEAF) && radio_noise)
+		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 			SEND_SOUND(talking_living, 'sound/misc/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -396,12 +394,12 @@
 	if(message_mods[RADIO_EXTENSION] == MODE_L_HAND || message_mods[RADIO_EXTENSION] == MODE_R_HAND)
 		// try to avoid being heard double
 		if (loc == speaker && ismob(speaker))
-			var/mob/M = speaker
-			var/idx = M.get_held_index_of_item(src)
+			var/mob/mob_speaker = speaker
+			var/idx = mob_speaker.get_held_index_of_item(src)
 			// left hands are odd slots
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
-	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
+	talk_into(speaker, raw_message, spans=spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)
@@ -431,7 +429,7 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && HAS_TRAIT(holder, TRAIT_DEAF) && !radio_noise)
+	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 		return
 
 	var/list/spans = data["spans"]
@@ -535,6 +533,11 @@
 		. += overlay_mic_idle
 	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
+
+/obj/item/radio/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode && tool.tool_behaviour == TOOL_SCREWDRIVER)
+		return screwdriver_act(user, tool)
+	return ..()
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
