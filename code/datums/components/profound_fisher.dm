@@ -116,7 +116,7 @@
 	var/obj/effect/fishing_float/float = new(get_turf(target), target)
 	playsound(float, 'sound/effects/splash.ogg', 100)
 	if(!PERFORM_ALL_TESTS(fish_sources))
-		var/happiness_percentage = source.ai_controller?.blackboard[BB_BASIC_HAPPINESS] / 100
+		var/happiness_percentage = source.ai_controller?.blackboard[BB_BASIC_HAPPINESS] * 0.01
 		var/fishing_speed = 10 SECONDS - round(4 SECONDS * happiness_percentage)
 		if(!do_after(source, fishing_speed, target = target) && !QDELETED(fish_spot))
 			qdel(float)
