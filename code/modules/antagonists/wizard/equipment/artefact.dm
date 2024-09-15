@@ -431,10 +431,10 @@
 		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
 	)
 
-/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/runic_vendor_scepter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(scepter_is_busy_recharging)
 		user.balloon_alert(user, "busy!")
 		return ITEM_INTERACT_BLOCKING
