@@ -1,25 +1,25 @@
 /obj/item/reagent_containers/condiment/flour/small_ration
 	name = "small flour sack"
 	desc = "A maritime ration-sized portion of flour, containing just enough to make a single good loaf of bread to fuel the day."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	list_reagents = list(/datum/reagent/consumable/flour = 15)
 
 /obj/item/reagent_containers/condiment/rice/small_ration
 	name = "small rice sack"
 	desc = "A maritime ration-sized portion of rice, containing just enough to make the universe's saddest rice dish."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	list_reagents = list(/datum/reagent/consumable/rice = 10)
 
 /obj/item/reagent_containers/condiment/sugar/small_ration
 	name = "small sugar sack"
 	desc = "A maritime ration-sized portion of sugar, containing just enough to make the day just a tiny bit sweeter."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	list_reagents = list(/datum/reagent/consumable/sugar = 10)
 
 /obj/item/reagent_containers/condiment/small_ration_korta_flour
 	name = "small korta flour sack"
 	desc = "A maritime ration-sized portion of korta flour, containing just enough to make a single good loaf of bread to fuel the day."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	icon_state = "flour_korta"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
@@ -30,13 +30,13 @@
 /obj/item/reagent_containers/condiment/soymilk/small_ration
 	name = "small soy milk"
 	desc = "It's soy milk. White and nutritious goodness! This one is significantly smaller than normal cartons; just enough to make some rootdough with."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	list_reagents = list(/datum/reagent/consumable/soymilk = 15)
 
 /obj/item/reagent_containers/condiment/milk/small_ration
 	name = "small milk"
 	desc = "It's milk. White and nutritious goodness! This one is significantly smaller than normal cartons; just enough to make some cheese with."
-	icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi'
 	list_reagents = list(/datum/reagent/consumable/milk = 15)
 
 /obj/item/reagent_containers/cup/glass/bottle/small/tiny
