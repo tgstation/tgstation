@@ -520,6 +520,7 @@
 		if(iscarbon(KA.loc))
 			var/mob/living/carbon/holder = KA.loc
 			holder.update_held_items()
+		KA.update_appearance()
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/KA)
 	KA.icon_state = initial(KA.icon_state)
@@ -528,6 +529,7 @@
 	if(iscarbon(KA.loc))
 		var/mob/living/carbon/holder = KA.loc
 		holder.update_held_items()
+	KA.update_appearance()
 	..()
 
 /obj/item/crusher_trophy/retool_kit/harpoon
