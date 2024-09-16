@@ -133,7 +133,7 @@
 		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, energy = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
 		if(accumulated_energy)
 			for(var/i in 1 to zap_count)
-				var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, portion = ZAP_ENERGY_DISCHARGE_PORTION ** INVERSE(zap_count))
+				var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, portion = 1 - (1 - ZAP_ENERGY_DISCHARGE_PORTION) ** INVERSE(zap_count))
 				supermatter_zap(src, range = range, zap_str = discharged_energy, zap_flags = flags, zap_cutoff = src.zap_cutoff, power_level = internal_energy, zap_icon = src.zap_icon)
 		last_high_energy_accumulation_perspective_machines = SSmachines.times_fired
 	if(prob(5))
