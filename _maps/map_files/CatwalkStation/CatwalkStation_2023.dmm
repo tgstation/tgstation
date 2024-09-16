@@ -506,6 +506,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/security/interrogation)
+"aki" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "lawyer_shutters";
+	name = "Law Office Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/service/lawoffice)
 "ako" = (
 /obj/structure/railing/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1769,7 +1777,7 @@
 /area/station/hallway/primary/fore)
 "aHD" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "virology maintenance"
+	name = "Virology Maintenance"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5643,7 +5651,7 @@
 "bUS" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "abandonedcafe";
-	name = "Maintenance Cafe shutters";
+	name = "Maintenance Cafe Shutters";
 	dir = 8
 	},
 /obj/structure/table,
@@ -7893,7 +7901,7 @@
 /area/station/science/robotics/lab)
 "cFL" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "service hall maintenance access"
+	name = "Service Hall Maintenance Access"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10034,7 +10042,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_Outside_shutters";
-	name = "Outside shutters"
+	name = "Outside Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -11223,7 +11231,7 @@
 /area/station/cargo/storage)
 "dLO" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "CE's maintenance access"
+	name = "CE's Maintenance Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
 /turf/open/floor/plating,
@@ -17637,7 +17645,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
@@ -17809,7 +17817,7 @@
 /obj/structure/table,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "abandonedcafe";
-	name = "Maintenance Cafe shutters";
+	name = "Maintenance Cafe Shutters";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -20292,10 +20300,6 @@
 /area/station/security/range)
 "gMI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "hydropony's shutters"
-	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -20303,6 +20307,10 @@
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/green/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hydropony_shutters";
+	name = "Hydropony's Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gMO" = (
@@ -25931,7 +25939,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 6
@@ -29901,7 +29909,7 @@
 "jKZ" = (
 /obj/machinery/door/airlock/maintenance{
 	id_tag = "courtlockdown";
-	name = "courtroom maintenance"
+	name = "Courtroom Maintenance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31029,7 +31037,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_space";
-	name = "chapel shutters"
+	name = "Chapel Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/chapel)
@@ -32636,7 +32644,7 @@
 "kFT" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -32662,7 +32670,7 @@
 "kGO" = (
 /obj/machinery/door/airlock/maintenance{
 	id_tag = "courtlockdown";
-	name = "courtroom maintenance"
+	name = "Courtroom Maintenance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36880,7 +36888,7 @@
 /area/station/service/kitchen/coldroom)
 "mbK" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "virology maintenance"
+	name = "Virology Maintenance"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38519,7 +38527,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "courtlockdown";
-	name = "lockdown shutters"
+	name = "Lockdown Shutters"
 	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
@@ -39866,7 +39874,7 @@
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydropony_shutters";
-	name = "hydropony's shutters"
+	name = "Hydropony's Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -42264,10 +42272,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "nOt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "hydropony's shutters"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics"
@@ -42275,6 +42279,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/effect/turf_decal/tile/green/full,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hydropony_shutters";
+	name = "Hydropony's Shutters"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "nOw" = (
@@ -43794,7 +43802,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydropony_shutters";
-	name = "hydropony's shutters"
+	name = "Hydropony's Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
@@ -52086,7 +52094,7 @@
 /area/station/maintenance/starboard/lesser)
 "rea" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "virology maintenance"
+	name = "Virology Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
@@ -52419,15 +52427,15 @@
 "rkK" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/guides/jobs/hydroponics,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "hydropony's shutters"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hydropony_shutters";
+	name = "Hydropony's Shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rkN" = (
@@ -52855,15 +52863,15 @@
 	id_tag = "courtlockdown";
 	name = "Courtroom"
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "courtlockdown";
-	name = "lockdown shutters"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/court,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "courtlockdown";
+	name = "Lockdown Shutters"
+	},
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "rro" = (
@@ -58780,7 +58788,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 5
@@ -60096,7 +60104,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /turf/open/floor/plating/reinforced,
 /area/station/engineering/supermatter)
@@ -61658,7 +61666,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "lawyer_shutters";
-	name = "law office shutters"
+	name = "Law Office Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61916,7 +61924,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "detective_shutters";
-	name = "detective's office shutters"
+	name = "Detective's Office Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
@@ -67387,7 +67395,7 @@
 /area/station/service/library/private)
 "wiO" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "CE's maintenance access"
+	name = "CE's Maintenance Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
 /obj/structure/cable,
@@ -70244,10 +70252,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance/storage)
 "xhO" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "hydropony's shutters"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics"
@@ -70256,6 +70260,10 @@
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hydropony_shutters";
+	name = "Hydropony's Shutters"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "xhT" = (
@@ -70982,7 +70990,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chapel_shutters_space";
-	name = "chapel shutters"
+	name = "Chapel Shutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/chapel)
@@ -71585,7 +71593,7 @@
 "xGf" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "SM_shutters";
-	name = "SM's shutters"
+	name = "SM's Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -100733,7 +100741,7 @@ jOE
 jOE
 leX
 uoV
-rNG
+aki
 jOE
 jOE
 mDF
