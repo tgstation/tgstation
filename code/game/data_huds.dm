@@ -28,6 +28,8 @@
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U))
 		return FALSE
+	if(U.has_sensor < HAS_SENSORS)
+		return FALSE
 	if(U.sensor_mode <= SENSOR_VITALS)
 		return FALSE
 	return TRUE
@@ -227,7 +229,11 @@ Medical HUD! Basic mode needs suit sensors on.
 				holder.icon_state = "hudbuff"
 			if(null)
 				holder.icon_state = "hudhealthy"
-
+				if(ishuman(src))
+					var/mob/living/carbon/human/crew = src
+					var/obj/item/clothing/under/uniform = crew.w_uniform
+					if(uniform && uniform.has_sensor == BROKEN_SENSORS)
+						holder.icon_state = "hudnosensor"
 
 /***********************************************
 FAN HUDs! For identifying other fans on-sight.

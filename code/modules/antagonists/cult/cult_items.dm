@@ -1223,6 +1223,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
 	block_sound = 'sound/weapons/effects/ric5.ogg'
+	shield_bash_sound = 'sound/effects/glassknock.ogg'
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)

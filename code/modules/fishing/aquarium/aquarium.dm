@@ -295,7 +295,7 @@
 		else
 			dead_fish++
 
-	var/morb = HAS_TRAIT(user, TRAIT_MORBID)
+	var/morb = HAS_MIND_TRAIT(user, TRAIT_MORBID)
 	//Check if there are live fish - good mood
 	//All fish dead - bad mood.
 	//No fish - nothing.
@@ -310,9 +310,9 @@
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
 	.["allowBreeding"] = allow_breeding
-	.["FishData"] = list()
+	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
-	.["PropData"] = list()
+	.["propData"] = list()
 	for(var/atom/movable/item in contents)
 		if(isfish(item))
 			var/obj/item/fish/fish = item
@@ -338,7 +338,7 @@
 	.["minTemperature"] = min_fluid_temp
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
-	.["heart_icon"] = 'icons/effects/effects.dmi'
+	.["heartIcon"] = 'icons/effects/effects.dmi'
 
 /obj/structure/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -425,7 +425,7 @@
 		new /obj/item/fish/goldfish/gill(src)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 	else
-		new /obj/item/fish/three_eyes/gill(src)
+		new /obj/item/fish/goldfish/three_eyes/gill(src)
 		reagents.add_reagent(/datum/reagent/toxin/mutagen, 2) //three eyes goldfish feed on mutagen.
 
 

@@ -91,7 +91,7 @@
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom) && HAS_TRAIT(hit_atom, TRAIT_PAPER_MASTER))
 		var/mob/living/carbon/hit_carbon = hit_atom
-		if(hit_carbon.can_catch_item(TRUE))
+		if(hit_carbon.can_catch_item(src, skip_throw_mode_check = TRUE))
 			hit_carbon.throw_mode_on(THROW_MODE_TOGGLE)
 
 	. = ..()

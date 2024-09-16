@@ -285,7 +285,7 @@
 /datum/deathmatch_lobby/proc/join(mob/player)
 	if (playing || !player)
 		return
-	if(!(player.ckey in players+observers))
+	if(!(player.ckey in (players+observers)))
 		if (players.len >= map.max_players)
 			add_observer(player)
 		else

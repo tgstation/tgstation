@@ -195,6 +195,9 @@
 /// Trait given by a fulton extraction pack
 #define FULTON_PACK_TRAIT "fulton-pack"
 
+/// Trait from mob/living/update_transform()
+#define UPDATE_TRANSFORM_TRAIT "update_transform"
+
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
 /// Trait granted by [/obj/item/rod_of_asclepius]
@@ -297,3 +300,6 @@
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"

@@ -56951,7 +56951,7 @@
 /turf/closed/wall,
 /area/station/maintenance/port/aft)
 "tdR" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

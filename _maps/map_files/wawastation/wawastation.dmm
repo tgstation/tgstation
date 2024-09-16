@@ -15077,7 +15077,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "ftK" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
@@ -33124,7 +33124,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "lIZ" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "lJo" = (
@@ -34147,7 +34147,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "mds" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/camera/autoname/directional/west,
