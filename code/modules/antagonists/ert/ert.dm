@@ -236,6 +236,8 @@
 	if(isplasmaman(H))
 		H.equipOutfit(plasmaman_outfit)
 		H.open_internals(H.get_item_for_held_index(2))
+	else
+		H.dna.species.give_important_for_life(H)
 	H.equipOutfit(outfit)
 
 	if(isplasmaman(H))
