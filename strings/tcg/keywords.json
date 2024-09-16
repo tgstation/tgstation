@@ -13,6 +13,6 @@
 	"Immunity": "The creature cannot be affected by card effects or combat of its immunity type. This includes both friendly and opposing effects",
 	"On Equip": "This effect is activated once its item cost is paid and it enters the battlefield, equipping itself to a chosen card on your side of the field (Unless otherwise stated)",
 	"On Summon": "This effect is activated once its creature cost is paid and it enters the battlefield",
-	"Squad Tactics": "When this creature attacks an opponent's creature and defeats it in combat, the owner of the defeated card takes 1 lifeshard of damage from combat",
+	"Squad Tactics": "This effect is activated when a card is added to your hand.",
 	"Taunt": "The following effect triggers when this card is on the field and any other card is added to your hand."
 }
