@@ -14,6 +14,7 @@
 		"inventory-suit_storage.png" = 'icons/ui/inventory/suit_storage.png',
 		"inventory-id.png" = 'icons/ui/inventory/id.png',
 		"inventory-belt.png" = 'icons/ui/inventory/belt.png',
+		"inventory-tail.png" = 'icons/ui/inventory/tail.png', // DOPPLER ADDITION - tail item slot
 		"inventory-back.png" = 'icons/ui/inventory/back.png',
 		"inventory-pocket.png" = 'icons/ui/inventory/pocket.png',
 		"inventory-collar.png" = 'icons/ui/inventory/collar.png',

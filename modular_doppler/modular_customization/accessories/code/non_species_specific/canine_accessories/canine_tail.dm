@@ -13,6 +13,10 @@
 	name = "Straight"
 	icon_state = "straighttail"
 
+/datum/sprite_accessory/tails/dog/shortpup
+	name = "Short"
+	icon_state = "shortpup"
+
 /datum/sprite_accessory/tails/fox
 	icon = 'modular_doppler/modular_customization/accessories/icons/non_species_specific/canine/canine_tail.dmi'
 

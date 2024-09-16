@@ -23,6 +23,7 @@
 /// Monkey tail
 //	now waggable!
 /obj/item/organ/external/tail/monkey
+	name = "monkey tail"
 	wag_flags = WAG_ABLE
 
 /obj/item/organ/external/tail/monkey/Initialize(mapload)
@@ -33,6 +34,7 @@
 /// Mouse tail
 //	Monkey and mouse tail get a (secret) additional inventory slot
 /obj/item/organ/external/tail/mouse
+	name = "mouse tail"
 	preference = "feature_mouse_tail"
 	dna_block = null
 	wag_flags = WAG_ABLE
