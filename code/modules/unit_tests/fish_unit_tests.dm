@@ -266,8 +266,8 @@
 	var/secs_not_decisecs = init_growth * 0.1
 	TEST_ASSERT_EQUAL(aquarium.crabbie.growth_time, init_growth, "the aquarium test crab should have a growth time of [secs_not_decisecs] second")
 
-	var/hunger = aquarium.crab.get_hunger()
-	crab_growth.on_fish_life(crab, secs_not_decisecs) //give the fish growth component a small push.
+	var/hunger = aquarium.crabbie.get_hunger()
+	crab_growth.on_fish_life(crabbie, secs_not_decisecs) //give the fish growth component a small push.
 
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
 	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab hunger: [hunger]")
@@ -281,7 +281,7 @@
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		trait.apply_to_mob(lobster)
 
-	var/obj/item/fish/testdummy/dummy = allocate(obj/item/fish/testdummy)
+	var/obj/item/fish/testdummy/dummy = allocate(/obj/item/fish/testdummy)
 	var/datum/component/fish_growth/dummy_growth = dummy.AddComponent(/datum/component/fish_growth, /datum/fish_evolution/dummy/two, init_growth, use_drop_loc = FALSE)
 	dummy_growth.on_fish_life(dummy, secs_not_decisecs)
 	TEST_ASSERT(!QDELETED(dummy), "The fish has grown when it shouldn't have")
