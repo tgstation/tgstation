@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 					if(weight/init_weight >= 3.5)
 						init_name = "<u>init_name</u>"
 				else if(weight < init_weight)
-					init_name = span_small(reward)
+					init_name = span_small(init_name)
 			known_fishes += init_name
 
 	if(!length(known_fishes))
