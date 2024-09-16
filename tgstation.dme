@@ -6709,6 +6709,7 @@
 #include "modular_doppler\modular_species\species_types\anthromorph\anthromorph_bodyparts.dm"
 #include "modular_doppler\modular_species\species_types\aquatic\aquatic.dm"
 #include "modular_doppler\modular_species\species_types\aquatic\aquatic_bodyparts.dm"
+#include "modular_doppler\modular_species\species_types\golem\golem.dm"
 #include "modular_doppler\modular_species\species_types\insectoid\insectoid.dm"
 #include "modular_doppler\modular_species\species_types\insectoid\insectoid_bodyparts.dm"
 #include "modular_doppler\modular_species\species_types\monkey\monkeys.dm"
