@@ -204,11 +204,12 @@
  *
  * * [list_reagents][list] - list to add. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
  * * [data][list] - additional data to add
+ * * [added_purity][number] - an override to the default purity for each reagent to add.
  */
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data = null)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data = null, added_purity = null)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data)
+		add_reagent(r_id, amt, data, added_purity = added_purity)
 
 /**
  * Removes a specific reagent. can supress reactions if needed
@@ -589,10 +590,11 @@
  */
 /datum/reagents/proc/multiply_reagents(multiplier = 1)
 	var/list/cached_reagents = reagent_list
-	if(!total_volume)
+	if(!total_volume || multiplier == 1)
 		return
 	var/change = (multiplier - 1) //Get the % change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
+		_multiply_reagent(reagent, change)
 		if(change > 0)
 			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
@@ -600,6 +602,28 @@
 
 	update_total()
 	handle_reactions()
+
+/**
+ * Multiplies a single inside this holder by a specific amount
+ * Arguments
+ * * reagent_path - The path of the reagent we want to multiply the volume of.
+ * * multiplier - the amount to multiply each reagent by
+ */
+/datum/reagents/proc/multiply_single_reagent(reagent_path, multiplier = 1)
+	var/datum/reagent/reagent = locate(reagent_path) in reagent_list
+	if(!reagent || multiplier == 1)
+		return
+	var/change = (multiplier - 1) //Get the % change
+	_multiply_reagent(reagent, change)
+	update_total()
+	handle_reactions()
+
+///Proc containing the operations called by both multiply_reagents() and multiply_single_reagent()
+/datum/reagents/proc/_multiply_reagent(datum/reagent/reagent, change)
+	if(change > 0)
+		add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+	else
+		remove_reagent(reagent.type, abs(reagent.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

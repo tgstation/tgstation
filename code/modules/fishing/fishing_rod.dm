@@ -220,7 +220,7 @@
 		return BEAM_CANCEL_DRAW
 
 /obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	//this prevent trying to use telekinesis to fish (which would be broken anyway)
+	//this prevent trying to use telekinesis to fish (which would be broken anyway), also whacking people with a rod.
 	if(!user.contains(src) || (user.combat_mode && !isturf(interacting_with)) ||HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return ..()
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
@@ -703,5 +703,8 @@
 		if(NORTH)
 			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
 			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
+
+	override_origin_pixel_x += origin.pixel_x
+	override_origin_pixel_y += origin.pixel_y
 
 #undef FISHING_ROD_REEL_CAST_RANGE
