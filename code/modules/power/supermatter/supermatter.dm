@@ -12,15 +12,6 @@
 #define OBJECT (LOWEST + 1)
 #define LOWEST (1)
 
-// Zap energy accumulation keys.
-/// Normal zap energy accumulation key from normal operations.
-#define ZAP_ENERGY_ACCUMULATION_NORMAL "normal"
-/// High energy zap energy accumulation key from high energy extra effects.
-#define ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY "high"
-
-/// Zap energy discharge portion per tick.
-#define ZAP_ENERGY_DISCHARGE_PORTION 0.04
-
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -1112,5 +1103,3 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 #undef MACHINERY
 #undef OBJECT
 #undef LOWEST
-#undef ZAP_ENERGY_ACCUMULATION_NORMAL
-#undef ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY

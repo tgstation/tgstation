@@ -130,7 +130,7 @@
 	if(zap_count >= 1)
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 		var/delta_time = (SSmachines.times_fired - last_high_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
-		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
+		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, energy = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
 		if(accumulated_energy)
 			for(var/i in 1 to zap_count)
 				var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, portion = ZAP_ENERGY_DISCHARGE_PORTION ** INVERSE(zap_count))
