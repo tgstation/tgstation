@@ -263,6 +263,8 @@
 	for(var/datum/brain_trauma/trauma as anything in traumas)
 		var/trauma_desc = ""
 		switch(trauma.resilience)
+			if(TRAUMA_RESILIENCE_BASIC)
+				trauma_desc = conditional_tooltip("Mild ", "Repair via brain surgery or medication such as [/datum/reagent/medicine/neurine::name].", add_tooltips)
 			if(TRAUMA_RESILIENCE_SURGERY)
 				trauma_desc = conditional_tooltip("Severe ", "Repair via brain surgery.", add_tooltips)
 			if(TRAUMA_RESILIENCE_LOBOTOMY)
