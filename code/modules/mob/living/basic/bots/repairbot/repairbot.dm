@@ -34,7 +34,7 @@
 	///our iron rods
 	var/obj/item/stack/rods/our_rods
 	///our rcd object we use to deconstruct when emagged
-	var/obj/item/construction/rcd/deconstruction_device
+	var/obj/item/construction/rcd/repairbot/deconstruction_device
 	///possible interactions
 	var/static/list/possible_stack_interactions = list(
 		/obj/item/stack/sheet/iron = typecacheof(list(/obj/structure/girder)),
@@ -81,10 +81,6 @@
 	our_crowbar = new(src)
 	our_screwdriver = new(src)
 	our_rods = new(src, our_rods::max_amount)
-	//testing purposes
-	our_iron = new(src, our_iron::max_amount)
-	our_glass = new(src, 50)
-	our_tiles = new(src, 50)
 	set_color(toolbox_color)
 	START_PROCESSING(SSobj, src)
 
@@ -92,7 +88,12 @@
 	add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	toolbox_color = new_color
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/stack/potential_stack, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers)
+	if(!istype(potential_stack, /obj/item/stack))
+		return ..()
+	attempt_merge(potential_stack, user)
+
+/mob/living/basic/bot/repairbot/proc/attempt_merge(obj/item/stack/potential_stack, mob/living/user)
 	var/static/list/our_contents = list(/obj/item/stack/sheet/iron, /obj/item/stack/sheet/glass, /obj/item/stack/tile, /obj/item/stack/rods)
 	for(var/obj/item/stack/content as anything in our_contents)
 		if(!istype(potential_stack, content))
@@ -102,26 +103,26 @@
 			potential_stack.forceMove(src)
 			return
 		if(our_sheet.amount >= our_sheet.max_amount)
-			user.balloon_alert(user, "full!")
+			user?.balloon_alert(user, "full!")
 			return
 		if(!our_sheet.can_merge(potential_stack))
 			return
 		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
 		to_move.forceMove(src)
 		return
-	return ..()
 
 /mob/living/basic/bot/repairbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/stack/sheet/iron) && isnull(our_iron))
+	if(istype(arrived, /obj/item/stack/sheet/iron) && isnull(our_iron)) //show iron tiles and glass in our hands
 		our_iron = arrived
+		update_appearance()
 	if(istype(arrived, /obj/item/stack/sheet/glass) && isnull(our_glass))
 		our_glass = arrived
+		update_appearance()
 	if(istype(arrived, /obj/item/stack/tile) && isnull(our_tiles))
 		our_tiles = arrived
 	if(istype(arrived, /obj/item/stack/rods) && isnull(our_rods))
 		our_rods = arrived
-	update_appearance()
 
 /mob/living/basic/bot/repairbot/UnarmedAttack(atom/target, proximity_flag, list/modifiers)
 	. = ..()
@@ -130,7 +131,11 @@
 		return
 
 	if(bot_access_flags & BOT_COVER_EMAGGED)
-		deconstruction_device.interact_with_atom_secondary(src, target, modifiers)
+		emagged_interactions(target, modifiers)
+		return
+
+	if(istype(target, /obj/item/stack))
+		attempt_merge(target, src)
 		return
 
 	//priority interactions
@@ -170,6 +175,24 @@
 		if(is_type_in_typecache(target, possible_tool_interactions[tool.type]) && !combat_mode)
 			tool.melee_attack_chain(src, target)
 			return
+
+/mob/living/basic/bot/repairbot/proc/emagged_interactions(atom/target, modifiers)
+	if(!istype(target, /mob/living/silicon/robot))
+		deconstruction_device.interact_with_atom_secondary(target, src, modifiers)
+		return
+	if(HAS_TRAIT(target, TRAIT_MOB_TIPPED))
+		return
+	var/old_combat_mode = combat_mode
+	set_combat_mode(TRUE)
+	target.attack_hand_secondary(src, modifiers) //tip the guy!
+	set_combat_mode(old_combat_mode)
+
+/mob/living/basic/bot/repairbot/start_pulling(atom/movable/movable_pulled, state, force, supress_message)
+	. = ..()
+	if(pulling)
+		setGrabState(GRAB_AGGRESSIVE) //automatically aggro grab everything!
+
+
 
 /mob/living/basic/bot/repairbot/Exited(atom/movable/gone, direction)
 	if(gone == our_welder)
@@ -261,9 +284,13 @@
 	max_fuel = INFINITY
 	starting_fuel = TRUE
 
+/obj/item/construction/rcd/repairbot
+	matter = INFINITY
+
 /mob/living/basic/bot/repairbot/mob_pickup(mob/living/user)
 	var/obj/item/carried_repairbot/carried = new(get_turf(src))
 	carried.set_bot(src)
+	carried.add_atom_colour(toolbox_color, FIXED_COLOUR_PRIORITY)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(carried)
 

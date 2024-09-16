@@ -303,6 +303,8 @@
 ///behavior to interact with atoms
 /datum/ai_behavior/bot_interact
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	///should we remove the target afterwards?
+	var/clear_target = TRUE
 
 /datum/ai_behavior/bot_interact/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -324,6 +326,10 @@
 /datum/ai_behavior/bot_interact/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
-	controller.clear_blackboard_key(target_key)
+	if(clear_target)
+		controller.clear_blackboard_key(target_key)
 	if(!succeeded && !isnull(target))
 		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+
+/datum/ai_behavior/bot_interact/keep_target
+	clear_target = FALSE

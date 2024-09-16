@@ -176,3 +176,7 @@ DEFINE_BITFIELD(repairbot_flags, list(
 #define BB_DECONSTRUCT_TARGET "deconstruct_target"
 ///key that holds our speech timer
 #define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"
+///key that holds our target borg
+#define BB_ROBOT_TARGET "robot_target"
+///key that holds materials we can refill
+#define BB_REFILLABLE_TARGET "refillable_target"

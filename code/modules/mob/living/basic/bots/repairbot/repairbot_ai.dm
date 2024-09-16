@@ -4,6 +4,8 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/repairbot_speech,
 		/datum/ai_planning_subtree/manage_unreachable_list,
+		/datum/ai_planning_subtree/mug_robot,
+		/datum/ai_planning_subtree/refill_materials,
 		/datum/ai_planning_subtree/repairbot_deconstruction,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/replace_floors/breaches,
@@ -26,6 +28,71 @@
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
 
+///subtree to refill our stacks
+/datum/ai_planning_subtree/refill_materials
+
+/datum/ai_planning_subtree/refill_materials/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	var/static/list/refillable_items = typecacheof(list(
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/tile,
+	))
+	if(!controller.blackboard_key_exists(BB_REFILLABLE_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/bot_search/refillable_target, BB_REFILLABLE_TARGET, refillable_items)
+		return
+	controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_REFILLABLE_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_behavior/bot_search/refillable_target
+	action_cooldown = 10 SECONDS
+
+/datum/ai_behavior/bot_search/refillable_target/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
+	var/static/list/desired_types = list(
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/tile,
+	)
+	for(var/object_type in desired_types)
+		if(!istype(my_target, object_type))
+			continue
+		var/obj/item/stack/sheet_type = locate(object_type) in controller.pawn
+		if(isnull(sheet_type))
+			return TRUE //we dont have any of it!
+		if(sheet_type.amount < sheet_type.max_amount && sheet_type.can_merge(my_target))
+			return TRUE
+	return FALSE
+
+/datum/ai_planning_subtree/mug_robot
+
+/datum/ai_planning_subtree/mug_robot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	var/mob/living/basic/bot/living_bot = controller.pawn
+	if(!(living_bot.bot_access_flags & BOT_COVER_EMAGGED))
+		return
+	var/static/list/robot_targets = typecacheof(
+		/mob/living/silicon/robot,
+	)
+	if(!controller.blackboard_key_exists(BB_ROBOT_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/bot_search/valid_robot, BB_ROBOT_TARGET, robot_targets)
+		return
+	if(!living_bot.pulling)
+		controller.queue_behavior(/datum/ai_behavior/drag_target, BB_ROBOT_TARGET)
+	else
+		controller.queue_behavior(/datum/ai_behavior/bot_interact/tip_robot, BB_ROBOT_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_behavior/bot_search/valid_robot
+
+/datum/ai_behavior/bot_search/valid_robot/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
+	return (!HAS_TRAIT(my_target, TRAIT_MOB_TIPPED)) && can_see(controller.pawn, my_target)
+
+/datum/ai_behavior/bot_interact/tip_robot
+
+/datum/ai_behavior/bot_interact/tip_robot/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	if(succeeded)
+		var/mob/living/living_pawn = controller.pawn
+		living_pawn.stop_pulling()
+
 ///subtree to deconstruct things when we're emagged
 /datum/ai_planning_subtree/repairbot_deconstruction
 
@@ -33,15 +100,16 @@
 	var/mob/living/basic/bot/living_bot = controller.pawn
 	if(!(living_bot.bot_access_flags & BOT_COVER_EMAGGED))
 		return
-	var/static/list/things_to_deconstruct = typecacheof(
+	var/static/list/things_to_deconstruct = typecacheof(list(
 		/obj/structure/window,
 		/turf/open/floor,
 		/turf/closed/wall,
-	)
+	))
 	if(!controller.blackboard_key_exists(BB_DECONSTRUCT_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/bot_search/deconstructable, BB_DECONSTRUCT_TARGET, things_to_deconstruct)
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/bot_interact, BB_DECONSTRUCT_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/bot_search/deconstructable
 
