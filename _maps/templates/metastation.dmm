@@ -1,0 +1,484 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"b" = (
+/obj/machinery/power/energy_accumulator/gravity_generator,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"d" = (
+/obj/machinery/field/generator/anchored,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"e" = (
+/obj/machinery/the_singularitygen/tesla,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"i" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/space)
+"j" = (
+/obj/machinery/the_singularitygen,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"m" = (
+/obj/structure/cable,
+/obj/structure/particle_accelerator/fuel_chamber{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"n" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/space)
+"o" = (
+/obj/machinery/power/energy_accumulator/tesla_coil,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"p" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/wall/r_wall,
+/area/space)
+"q" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/plating,
+/area/space)
+"t" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/space)
+"u" = (
+/turf/open/space/basic,
+/area/space)
+"x" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/space)
+"y" = (
+/obj/machinery/power/emitter,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"z" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"B" = (
+/obj/machinery/particle_accelerator/control_box{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"C" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/plating,
+/area/space)
+"E" = (
+/obj/structure/particle_accelerator/particle_emitter/left{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"G" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/space)
+"J" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"L" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/wall/r_wall,
+/area/space)
+"M" = (
+/turf/open/floor/plating/airless,
+/area/space)
+"O" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space)
+"P" = (
+/obj/machinery/power/emitter,
+/obj/machinery/power/emitter,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"R" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Supermatter Engine Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/holosign/barrier/atmos/sturdy,
+/turf/open/floor/plating,
+/area/space)
+"S" = (
+/obj/machinery/field/generator/anchored,
+/turf/open/floor/plating/airless,
+/area/space)
+"T" = (
+/obj/structure/particle_accelerator/particle_emitter/right{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"V" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"W" = (
+/obj/structure/cable,
+/obj/structure/particle_accelerator/end_cap{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"Y" = (
+/obj/structure/cable,
+/obj/structure/particle_accelerator/power_box{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"Z" = (
+/obj/structure/cable,
+/obj/structure/particle_accelerator/particle_emitter/center{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+
+(1,1,1) = {"
+a
+x
+R
+x
+p
+a
+x
+C
+x
+L
+p
+x
+q
+G
+a
+"}
+(2,1,1) = {"
+a
+d
+V
+j
+b
+b
+M
+W
+M
+o
+o
+y
+V
+y
+a
+"}
+(3,1,1) = {"
+a
+d
+V
+e
+b
+b
+M
+m
+B
+o
+o
+P
+V
+y
+a
+"}
+(4,1,1) = {"
+a
+d
+V
+V
+V
+V
+M
+Y
+M
+V
+V
+V
+V
+V
+a
+"}
+(5,1,1) = {"
+a
+d
+V
+V
+V
+V
+T
+Z
+E
+V
+V
+V
+V
+V
+a
+"}
+(6,1,1) = {"
+a
+u
+u
+u
+u
+u
+u
+n
+u
+u
+u
+u
+u
+u
+a
+"}
+(7,1,1) = {"
+a
+z
+z
+z
+z
+z
+z
+n
+z
+z
+z
+z
+z
+z
+a
+"}
+(8,1,1) = {"
+a
+z
+u
+u
+u
+u
+u
+n
+u
+u
+u
+u
+u
+z
+a
+"}
+(9,1,1) = {"
+a
+z
+u
+u
+u
+u
+u
+n
+u
+u
+u
+u
+u
+z
+a
+"}
+(10,1,1) = {"
+a
+z
+u
+u
+u
+u
+u
+n
+u
+u
+u
+u
+u
+z
+t
+"}
+(11,1,1) = {"
+a
+O
+u
+u
+S
+M
+M
+M
+M
+M
+S
+u
+u
+O
+x
+"}
+(12,1,1) = {"
+a
+z
+u
+u
+M
+u
+u
+u
+u
+u
+M
+u
+u
+z
+t
+"}
+(13,1,1) = {"
+a
+z
+u
+u
+M
+u
+u
+u
+u
+u
+M
+u
+u
+z
+a
+"}
+(14,1,1) = {"
+a
+z
+u
+u
+M
+u
+u
+J
+u
+u
+M
+u
+u
+z
+a
+"}
+(15,1,1) = {"
+a
+z
+u
+u
+M
+u
+u
+u
+u
+u
+M
+u
+u
+z
+a
+"}
+(16,1,1) = {"
+a
+i
+u
+u
+M
+u
+u
+u
+u
+u
+M
+u
+u
+z
+a
+"}
+(17,1,1) = {"
+a
+O
+u
+u
+S
+M
+M
+M
+M
+M
+S
+u
+u
+O
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
