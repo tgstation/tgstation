@@ -758,8 +758,12 @@
 
 /obj/effect/fishing_float/Initialize(mapload, atom/spot)
 	. = ..()
+	if(!spot)
+		return
 	if(ismovable(spot)) // we want the float and therefore the fishing line to stay connected with the fishing spot.
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
+	SET_BASE_PIXEL(spot.pixel_x, spot.pixel_y)
+	SET_BASE_VISUAL_PIXEL(spot.pixel_w, spot.pixel_z)
 
 /obj/effect/fishing_float/proc/follow_movable(atom/movable/source)
 	SIGNAL_HANDLER

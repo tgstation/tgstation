@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Added a small vertical margin to ID card image in new examine panel to ensure that it doesn't collide with text"
