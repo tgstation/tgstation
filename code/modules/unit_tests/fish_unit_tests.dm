@@ -165,13 +165,21 @@
 	new_fish_type = /obj/item/fish/clownfish
 	new_traits = list(/datum/fish_trait/dummy/two)
 	removed_traits = list(/datum/fish_trait/dummy)
+	show_on_wiki = FALSE
 
+///This is used by both fish_evolution and fish_growth unit tests.
 /datum/fish_evolution/dummy/two
 	new_fish_type = /obj/item/fish/goldfish
 
 /datum/fish_evolution/dummy/two/New()
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
+
+///During the fish_growth unit test, we spawn a fish outside of the aquarium and check that this actually stops it from growing
+/datum/fish_evolution/dummy/two/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
+	. = ..()
+	if(!isaquarium(source.loc))
+		return COMPONENT_DONT_GROW
 
 // we want no default spawns in this unit test
 /datum/chasm_detritus/restricted/bodies/no_defaults
@@ -247,27 +255,40 @@
 	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
 	return ..()
 
-///Check that you can actually raise a chasm crab without errors.
-/datum/unit_test/raise_a_chasm_crab
+///Check that the fish growth component works.
+/datum/unit_test/fish_growth
 
-/datum/unit_test/raise_a_chasm_crab/Run()
+/datum/unit_test/fish_growth/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
+	aquarium.crabbie.name = "Crabbie"
+	var/datum/component/fish_growth/crab_growth = aquarium.crabbie.GetComponent(/datum/component/fish_growth)
 	var/init_growth = /obj/item/fish/chasm_crab/instant_growth::growth_time
 	var/secs_not_decisecs = init_growth * 0.1
 	TEST_ASSERT_EQUAL(aquarium.crabbie.growth_time, init_growth, "the aquarium test crab should have a growth time of [secs_not_decisecs] second")
 
-	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, secs_not_decisecs) //give the fish growth component a small push.
+	var/hunger = aquarium.crab.get_hunger()
+	crab_growth.on_fish_life(crab, secs_not_decisecs) //give the fish growth component a small push.
 
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
-	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all.")
+	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab hunger: [hunger]")
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
 	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
+	TEST_ASSERT_EQUAL(lobster.name, "Crabbie", "The lobstrosity didn't inherit the aquarium chasm crab's custom name")
 	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
 
 	//While ideally impossible to have all traits because of incompatible ones, I want to be sure they don't error out.
 	for(var/trait_type in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		trait.apply_to_mob(lobster)
+
+	var/obj/item/fish/testdummy/dummy = allocate(obj/item/fish/testdummy)
+	var/datum/component/fish_growth/dummy_growth = dummy.AddComponent(/datum/component/fish_growth, /datum/fish_evolution/dummy/two, init_growth, use_drop_loc = FALSE)
+	dummy_growth.on_fish_life(dummy, secs_not_decisecs)
+	TEST_ASSERT(!QDELETED(dummy), "The fish has grown when it shouldn't have")
+	dummy.forceMove(aquarium)
+	dummy_growth.on_fish_life(dummy, secs_not_decisecs)
+	var/obj/item/fish/dummy_boogaloo = locate(/datum/fish_evolution/dummy/two::new_fish_type) in aquarium
+	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")
 
 /obj/structure/aquarium/crab
 	allow_breeding = TRUE //needed for growing up
@@ -396,4 +417,3 @@
 
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
-
