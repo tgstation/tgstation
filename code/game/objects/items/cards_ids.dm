@@ -1700,11 +1700,11 @@
 		return
 
 	///forge the ID if not forged.
-	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN, encode = FALSE)
 	if(!after_input_check(user))
 		return TRUE
 	if(input_name)
-		input_name = sanitize_name(input_name, allow_numbers = TRUE)
+		input_name = reject_bad_name(input_name, allow_numbers = TRUE)
 	if(!input_name)
 		// Invalid/blank names give a randomly generated one.
 		if(user.gender == MALE)
