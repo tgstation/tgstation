@@ -441,3 +441,35 @@
   Zytolg:
   - qol: The Birdshot Tool Storage has been resupplied. New tools are at the crews
       displosal.
+2024-09-16:
+  Ghommie:
+  - bugfix: Fishing with baits works again.
+  - bugfix: Water turfs from the crashed site ruin on lavaland are no longer named
+      "lavaland atmos".
+  - bugfix: Fixed morbid mobs (coroners) not enjoying room beauty and aquariums in
+      their own weird ways.
+  - rscadd: You an now release fish after catching it for a positive moodlet (or to
+      repopulate certain fishing spot with rare fish).
+  - bugfix: Bitrunning fishing spots no longer deplete limited loot from outside the
+      virtual reality.
+  - bugfix: The treasure chest from the beach is no longer anchored to the floor.
+  - bugfix: Fixed aquarium props not showing up inside the aquarium.
+  - admin: godmode is now a datum trait instead of a bitflag. This means the process
+      for toggling it is a little different now.
+  - rscadd: Whole, unprocessed fish is now edible. However it's pretty much reccomended
+      to grill or fry it for over 30 spess seconds before attempting to eat it.
+  - bugfix: germ-covered, dirty food no longer tries to infect you through contact.
+  - bugfix: Fixed the offsets of the chimp shotgun when held.
+  - qol: Add a screentip to shields and pillows' right-click function (shoving people).
+  - rscadd: Automated announcement systems now announce researched nodes to their
+      respective departments. You can stop this by either disabling the announcement
+      systems or by using a multitool on the circuitboard of the console you're researching
+      nodes from.
+  - bugfix: Fixed the force of swordfish and armored pikes
+  - rscadd: Gave the detective an ID that can flipped to look like an assistant ID.
+  - balance: The detective camera is now silent and doesn't flash.
+  Jewelry-x:
+  - spellcheck: fixed typos on heretic's "Lionhunter's Rifle"
+  vinylspiders:
+  - bugfix: fixes being able to use chuunibyou shouts while mute
+  - bugfix: fixed crafted donuts not getting any sprinkles, ever
