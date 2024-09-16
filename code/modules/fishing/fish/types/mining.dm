@@ -57,10 +57,11 @@
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
 			multiplier += 0.8
 
-	if(weight <= 800)
-		multiplier -= 0.1 * round((1000 - weight) / 200)
-	else if(weight >= 1500)
-		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
+
+	if(weight <= (average_weight - 200))
+		multiplier -= 0.1 * round((average_weight - weight) / 200)
+	else if(weight >= (average_weight + 500))
+		multiplier += min(0.1 * round((weight - average_weight) / 500), 2)
 
 	AddComponent(/datum/component/fish_growth, lob_type, growth_time * multiplier)
 

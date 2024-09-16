@@ -685,7 +685,7 @@
 
 ///Returns the 0-1 value for hunger
 /obj/item/fish/proc/get_hunger()
-	. = 1 - CLAMP01((world.time - last_feeding) / feeding_frequency)
+	. = CLAMP01((world.time - last_feeding) / feeding_frequency)
 	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
 		return min(., 0.2)
 
@@ -1033,11 +1033,11 @@
 				possible_evolutions += evolution
 
 	var/list/types = spawn_types || list(type)
-	var/list/second_fish_types = second_fish.spawn_types || list(second_fish.type)
 	if(length(possible_evolutions))
 		chosen_evolution = pick(possible_evolutions)
 		chosen_type = chosen_evolution.new_fish_type
 	else if(second_fish)
+		var/list/second_fish_types = second_fish.spawn_types || list(second_fish.type)
 		var/recessive = HAS_TRAIT(src, TRAIT_FISH_RECESSIVE)
 		var/recessive_partner = HAS_TRAIT(second_fish, TRAIT_FISH_RECESSIVE)
 		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)

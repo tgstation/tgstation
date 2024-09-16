@@ -152,7 +152,7 @@
 		return
 	var/multiplier = (size / average_size) * (weight / average_weight)
 
-	AddComponent(/datum/component/fish_growth, next_type, growth_time * multiplier)
+	AddComponent(/datum/component/fish_growth, next_type, growth_time * multiplier, use_drop_loc = FALSE)
 
 /obj/item/fish/fryish/get_fish_taste()
 	return list("fried fish" = 1)

@@ -11,8 +11,10 @@
 	var/use_drop_loc
 	///Is the parent deleted once the result is spawned?
 	var/del_on_grow
+	///Will the result inherit the name of the fish if that was changed from the initial name.
+	var/inherit_name
 
-/datum/component/fish_growth/Initialize(result_type, growth_time, use_drop_loc = TRUE, del_on_grow = TRUE)
+/datum/component/fish_growth/Initialize(result_type, growth_time, use_drop_loc = TRUE, del_on_grow = TRUE, inherit_name = TRUE)
 	. = ..()
 	if(!isfish(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -26,6 +28,7 @@
 	growth_rate = 100 / growth_time
 	src.use_drop_loc = use_drop_loc
 	src.del_on_grow = del_on_grow
+	src.inherit_name = inherit_name
 
 /datum/component/fish_growth/CheckDupeComponent(result_type, growth_time, use_drop_loc = TRUE, del_on_grow = TRUE)
 	if(result_type == src.result_type)
@@ -47,8 +50,9 @@
 
 /datum/component/fish_growth/proc/finish_growing(obj/item/fish/source)
 	var/atom/location = use_drop_loc ? source.drop_location() : source.loc
+	var/is_evo = ispath(result_type, /datum/fish_evolution)
 	var/atom/movable/result
-	if(ispath(result_type, /datum/fish_evolution))
+	if(is_evo)
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[result_type]
 		result = source.create_offspring(evolution.new_fish_type, evolution = evolution)
 		var/obj/item/fish/fishie = result
@@ -67,6 +71,17 @@
 				trait.apply_to_mob(result)
 
 			addtimer(CALLBACK(result, TYPE_PROC_REF(/mob/living/basic, hop_on_nearby_turf)), 0.1 SECONDS)
+
+	if(is_evo || location == source.loc)
+		var/message_verb = del_on_grow ? "grows into" : "generates"
+		location.visible_message(span_notice("[source] [message_verb] \a [result]."), vision_distance = 3)
+
+	if(inherit_name && source.name != initial(source.name))
+		if(ismob(result))
+			var/mob/mob = result
+			mob.fully_replace_character_name(mob.name, source.name)
+		else
+			result.name = source.name
 
 	SEND_SIGNAL(source, COMSIG_FISH_FINISH_GROWING, result)
 
