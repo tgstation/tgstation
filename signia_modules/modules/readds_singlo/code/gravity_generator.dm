@@ -32,6 +32,7 @@
 
 /obj/machinery/power/energy_accumulator/gravity_generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
+	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/energy_accumulator/gravity_generator/attackby(obj/item/W, mob/user, params)
