@@ -4,7 +4,7 @@
 		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
-//		/obj/machinery/vending/deforest_medvend,
+		/obj/machinery/vending/deforest_medvend,
 	)
 
 /obj/effect/spawner/random/vending/colavend //These can serve both snacks AND drinks so it's kinda both of them?
@@ -13,7 +13,7 @@
 		/obj/machinery/vending/imported/yangyu,
 		/obj/machinery/vending/imported/mothic,
 		/obj/machinery/vending/imported/tiziran,
-//		/obj/machinery/vending/deforest_medvend,
+		/obj/machinery/vending/deforest_medvend,
 	)
 
 /datum/supply_pack/vending/imported/fill(obj/structure/closet/crate/target_crate)
