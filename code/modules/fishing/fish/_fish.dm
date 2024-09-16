@@ -648,6 +648,9 @@
 		if(trait_type in incompatible_traits)
 			continue
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(isnull(trait))
+			stack_trace("Couldn't find trait [trait_type] in the global fish traits list")
+			continue
 		if(!isnull(trait.fish_whitelist) && !(type in trait.fish_whitelist))
 			continue
 		if(length(fish_traits & trait.incompatible_traits))

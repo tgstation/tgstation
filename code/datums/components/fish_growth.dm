@@ -39,14 +39,11 @@
 /datum/component/fish_growth/proc/on_fish_life(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD) //It died just now.
-		warning("ded")
 		return
 	var/deciseconds_elapsed = seconds_per_tick * 10
 	var/growth = growth_rate * deciseconds_elapsed
 	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth) & COMPONENT_DONT_GROW)
-		warning("oh no")
 		return
-	warning("yes we can")
 	maturation += growth
 	if(maturation >= 100)
 		finish_growing(source)
