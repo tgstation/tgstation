@@ -742,7 +742,7 @@
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
 
-#undef FISH_SIZE_WEIGHT_GROWTH_MALUS_MULT
+#undef FISH_SIZE_WEIGHT_GROWTH_MALUS
 #undef FISH_GROWTH_MULT
 #undef FISH_GROWTH_PEAK
 
