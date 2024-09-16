@@ -287,7 +287,7 @@
 	icon_state = "fishing"
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
-	custom_price = PAYCHECK_CREW * 2.5
+	custom_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
