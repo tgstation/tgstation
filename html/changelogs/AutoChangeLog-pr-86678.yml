@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored how examines display item properties. A lot of them are now displayed as tags that you can hover over to receive details about, like item size, resistances and materials an object is made of."
+  - qol: "Protection classes now better elaborate on thermal resistances of items, displaying the exact temperatures they can protect you from."
