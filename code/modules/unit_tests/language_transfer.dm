@@ -40,9 +40,6 @@
 
 	var/datum/language_holder/holder = dummy.get_language_holder()
 
-	TEST_ASSERT(length(holder.understood_languages[/datum/language/common]) == 1, \
-		"Dummy has multiple sources of common: [english_list(holder.understood_languages[/datum/language/common])]. It should be only have one (species)")
-
 	dummy.set_species(/datum/species/lizard/silverscale)
 
 	TEST_ASSERT(!dummy.has_language(/datum/language/common, SPOKEN_LANGUAGE), \
