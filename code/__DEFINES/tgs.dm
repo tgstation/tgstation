@@ -3,7 +3,6 @@
 
 #define TGS_DMAPI_VERSION "7.3.0"
 
-
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
 // CONFIGURATION
