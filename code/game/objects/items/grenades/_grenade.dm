@@ -51,8 +51,8 @@
 	var/shrapnel_radius
 	///Did we add the component responsible for spawning shrapnel to this?
 	var/shrapnel_initialized
-	///Possible timers that can be assigned for detonation
-	var/possible_fuse_time = list("Instant", 3, 4, 5)
+	///Possible timers that can be assigned for detonation. Values are strings in SECONDS
+	var/list/possible_fuse_time = list("Instant", "3", "4", "5")
 
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
@@ -212,7 +212,10 @@
 		return FALSE
 	if(change_det_time())
 		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+		if(det_time == 0)
+			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+		else
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 		return TRUE
 
 /obj/item/grenade/multitool_act(mob/living/user, obj/item/tool)
@@ -230,25 +233,40 @@
 	if(newtime == "Instant" && change_det_time(0))
 		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
 		return
-	newtime = round(newtime)
+	newtime = round(text2num(newtime))
 	if(change_det_time(newtime))
 		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 
-/obj/item/grenade/proc/change_det_time(time) //Time uses real time.
+/**
+ * Sets det_time to a number in SECONDS
+ *
+ * if time is passed as an argument, `det_time` will be `time SECONDS`
+ *
+ * Cycles the duration of the fuse of the grenade `det_time` based on the options provided in list/possible_fuse_time
+*/
+/obj/item/grenade/proc/change_det_time(time)
 	. = TRUE
+	//Multitool
 	if(!isnull(time))
-		det_time = round(clamp(time * 10, 0, 5 SECONDS))
+		det_time = round(clamp(time SECONDS, 0, 5 SECONDS)) //This is fine for now but consider making this a variable if you want >5s fuse
+		return
+
+	//Screwdriver
+	if(det_time == 0)
+		det_time = "Instant"
 	else
-		var/previous_time = det_time
-		switch(det_time)
-			if (0)
-				det_time = 3 SECONDS
-			if (3 SECONDS)
-				det_time = 5 SECONDS
-			if (5 SECONDS)
-				det_time = 0
-		if(det_time == previous_time)
-			det_time = 5 SECONDS
+		det_time = num2text(det_time/10)
+
+	var/old_selection = possible_fuse_time.Find(det_time) //Position of det_time in the list
+	if(old_selection >= possible_fuse_time.len)
+		det_time = possible_fuse_time[1]
+	else
+		det_time = possible_fuse_time[old_selection+1]
+
+	if(det_time == "Instant")
+		det_time = 0 //String to num conversion because I hate coders
+		return
+	det_time = text2num(det_time) SECONDS
 
 /obj/item/grenade/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
