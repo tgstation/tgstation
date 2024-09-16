@@ -130,9 +130,11 @@
 	if(zap_count >= 1)
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 		var/delta_time = (SSmachines.times_fired - last_high_energy_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
-		if(delta_time)
+		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
+		if(accumulated_energy)
 			for(var/i in 1 to zap_count)
-				supermatter_zap(src, range, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time, flags, zap_cutoff = src.zap_cutoff * delta_time, power_level = internal_energy, zap_icon = src.zap_icon)
+				var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, portion = ZAP_ENERGY_DISCHARGE_PORTION ** INVERSE(zap_count))
+				supermatter_zap(src, range = range, zap_str = discharged_energy, zap_flags = flags, zap_cutoff = src.zap_cutoff, power_level = internal_energy, zap_icon = src.zap_icon)
 			last_high_energy_zap_perspective_machines = SSmachines.times_fired
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
