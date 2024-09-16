@@ -140,11 +140,12 @@
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
-			// NON-MODULE CHANGE for eyelids
 			if(IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || (parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT)))
+				// show the eyes as open
 				eye_right.color = eye_color_right
 				eye_left.color = eye_color_left
 			else
+				// show the eyes as closed, and as such color them like eyelids wound be colored
 				var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
 				base_color[2] *= 0.85
 				base_color[3] *= 0.85
