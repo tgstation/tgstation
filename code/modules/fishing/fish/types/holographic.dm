@@ -13,7 +13,6 @@
 	average_size = /obj/item/fish/goldfish::average_size
 	average_weight = /obj/item/fish/goldfish::average_weight
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
-	grind_results = null
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
@@ -27,6 +26,9 @@
 		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD), 1 MINUTES)
 		return
 	holo_area.linked.add_to_spawned(src)
+
+/obj/item/fish/holo/make_edible(weight_val)
+	return
 
 /obj/item/fish/holo/set_status(new_status, silent = FALSE)
 	. = ..()

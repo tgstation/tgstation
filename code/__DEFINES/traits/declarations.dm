@@ -26,6 +26,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESTRAINED "restrained"
 /// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sources of undesity will still apply. Always define a unique source when adding a new instance of this!
 #define TRAIT_UNDENSE "undense"
+/// Makes the mob immune to damage and several other ailments.
+#define TRAIT_GODMODE "godmode"
 /// Expands our FOV by 30 degrees if restricted
 #define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
@@ -221,12 +223,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STAGGER "no_stagger"
 /// Getting hit by thrown movables won't push you away
 #define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush"
+/// This mob likes to eat fish. Raw, uncut fish.
+#define TRAIT_FISH_EATER "fish_eater"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
 ///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
 #define TRAIT_SCARY_FISHERMAN "scary_fisherman"
+/// Atoms with this trait can be right-clicked with a fish to release them, presumably back in the fishing spot they were caught from.
+#define TRAIT_CATCH_AND_RELEASE "catch_and_release"
 ///This trait lets you get the size and weight of the fish by examining them
 #define TRAIT_EXAMINE_FISH "examine_fish"
 ///This trait lets you roughly know if the fish is dead, starving, drowning or sick by examining them
@@ -741,6 +747,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
+/// If this item's been bbq grilled
+#define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
@@ -802,6 +810,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
 #define TRAIT_CONTRABAND_BLOCKER "contraband_blocker"
+/// For edible items that cannot be composted inside hydro trays
+#define TRAIT_UNCOMPOSTABLE "uncompostable"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -838,6 +848,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 #define TRAIT_STRONG_STOMACH "strong_stomach"
+#define TRAIT_VEGETARIAN "trait_vegetarian"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
@@ -962,6 +973,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+#define TRAIT_FISH_WELL_COOKED "fish_well_cooked"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
