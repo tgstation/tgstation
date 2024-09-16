@@ -41,6 +41,7 @@
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
 	var/current_inhand_icon_state = "crusher"
+	var/projectile_icon = "pulse1"
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
