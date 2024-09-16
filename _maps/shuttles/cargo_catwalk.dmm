@@ -166,9 +166,7 @@
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "S" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	name = "Supply Shuttle Airlock"
-	},
+/obj/machinery/door/airlock/survival_pod/glass,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/iron/smooth,
 /area/shuttle/supply)
@@ -189,9 +187,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/supply)
 "Y" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	name = "Supply Shuttle Airlock"
-	},
+/obj/machinery/door/airlock/survival_pod/glass,
 /obj/docking_port/mobile/supply{
 	dir = 4
 	},
