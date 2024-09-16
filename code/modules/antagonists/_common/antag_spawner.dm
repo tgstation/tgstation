@@ -83,7 +83,7 @@
 		app.wiz_team = master_wizard.wiz_team
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
-	app_mind.set_assigned_role(SSjob.GetJobType(/datum/job/wizard_apprentice))
+	app_mind.set_assigned_role(SSjob.get_job_type(/datum/job/wizard_apprentice))
 	app_mind.special_role = ROLE_WIZARD_APPRENTICE
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
@@ -424,15 +424,7 @@
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
 
-	monkey_man.dna.add_mutation(/datum/mutation/human/clever)
-	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in monkey_man.dna.mutations)
-		mutation.mutadone_proof = TRUE
-		mutation.instability = 0
-
-	// Extra backup!
-	ADD_TRAIT(monkey_man, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
-	// Anything else requires enough effort that they deserve it.
+	monkey_man.make_clever_and_no_dna_scramble()
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 

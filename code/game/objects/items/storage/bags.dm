@@ -155,13 +155,13 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
-/obj/item/storage/bag/ore/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit [inserted] into [src]. \
+/obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [tool] into [src]. \
 			Perhaps you should break it down first, or find an ore box."))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
-	return TRUE
+	return NONE
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -274,8 +274,6 @@
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
 /obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
-	if(user.incapacitated)
-		return
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
 	return CLICK_ACTION_SUCCESS
@@ -607,6 +605,7 @@
 	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
 
