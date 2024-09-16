@@ -268,6 +268,7 @@
 		return FALSE
 
 	grippedby(user)
+	update_incapacitated()
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/user, instant = FALSE)
@@ -537,7 +538,7 @@
 	return 20
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE || QDELETED(src))
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || QDELETED(src))
 		return
 
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])

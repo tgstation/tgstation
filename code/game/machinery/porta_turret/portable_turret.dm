@@ -25,7 +25,6 @@ DEFINE_BITFIELD(turret_flags, list(
 ))
 
 /obj/machinery/porta_turret
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"
@@ -136,15 +135,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!has_cover)
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
 	AddElement(/datum/element/hostile_machine)
 
 ///Toggles the turret on or off depending on the value of the turn_on arg.
 /obj/machinery/porta_turret/proc/toggle_on(turn_on = TRUE)
 	if(on == turn_on)
 		return
-	if(on && !COOLDOWN_FINISHED(src, disabled_time))
+	if(turn_on && !COOLDOWN_FINISHED(src, disabled_time))
 		return
 	on = turn_on
 	check_should_process()
@@ -158,10 +155,10 @@ DEFINE_BITFIELD(turret_flags, list(
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), duration + 1) //the cooldown isn't over until the tick after its end.
 	toggle_on(FALSE)
 
-/obj/machinery/porta_turret/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/porta_turret/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(set_disabled), disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/porta_turret/proc/check_should_process()
 	if (datum_flags & DF_ISPROCESSING)
@@ -576,7 +573,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	// If we aren't shooting heads then return a threatcount of 0
 	if (!(turret_flags & TURRET_FLAG_SHOOT_HEADS))
-		var/datum/job/apparent_job = SSjob.GetJob(perp.get_assignment())
+		var/datum/job/apparent_job = SSjob.get_job(perp.get_assignment())
 		if(apparent_job?.job_flags & JOB_HEAD_OF_STAFF)
 			return 0
 
@@ -915,13 +912,12 @@ DEFINE_BITFIELD(turret_flags, list(
 	name = "turret control panel"
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
-	icon_state = "control"
+	icon_state = "control_standby"
 	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
-	pixel_y = -5 // Shift it down far enough to fit the south facing state correctly
 	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE
 	/// Variable dictating if linked turrets will shoot lethal projectiles
@@ -1095,18 +1091,15 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret.setState(enabled, lethal, shoot_cyborgs)
 	update_appearance()
 
-/obj/machinery/turretid/update_overlays()
-	. = ..()
+/obj/machinery/turretid/update_icon_state()
 	if(machine_stat & NOPOWER)
-		return
-	if(enabled)
-		. += mutable_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]")
-		. += emissive_appearance(icon, "[base_icon_state]_[lethal ? "kill" : "stun"]", src, alpha = src.alpha)
-	else
-		. += mutable_appearance(icon, "[base_icon_state]_standby")
-		. += emissive_appearance(icon, "[base_icon_state]_standby", src, alpha = src.alpha)
-
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/turretid)
+		icon_state = "[base_icon_state]_off"
+		return ..()
+	if (enabled)
+		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
+		return ..()
+	icon_state = "[base_icon_state]_standby"
+	return ..()
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
@@ -1115,6 +1108,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/turretid)
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
+	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()

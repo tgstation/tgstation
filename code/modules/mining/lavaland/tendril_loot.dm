@@ -226,7 +226,7 @@
 /obj/item/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
-	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue-on"
 	inhand_icon_state = "lantern-blue-on"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -269,7 +269,7 @@
 /obj/effect/wisp
 	name = "friendly wisp"
 	desc = "Happy to light your way."
-	icon = 'icons/obj/mining_zones/artefacts.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
 	light_system = OVERLAY_LIGHT
 	light_range = 6
@@ -425,8 +425,7 @@
 	if(!user)
 		return
 
-	user.status_flags &= ~GODMODE
-	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
+	user.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 	user.forceMove(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
@@ -437,8 +436,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
-	user.status_flags |= GODMODE
+	user.add_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 
 	user_ref = WEAKREF(user)
 
@@ -587,7 +585,7 @@
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "A celestial ladder that violates the laws of physics."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder00"
 
 /obj/item/jacobs_ladder/attack_self(mob/user)

@@ -3,7 +3,6 @@
 #define SCULPT_SOUND_INCREMENT 4
 
 /obj/structure/statue
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/art/statue.dmi'
@@ -37,7 +36,7 @@
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=1))
+		if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return FALSE
 		user.balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))

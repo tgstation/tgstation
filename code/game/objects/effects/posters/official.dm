@@ -15,7 +15,7 @@
 	icon_state = "random_official"
 	never_random = TRUE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 //This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wierd as a poster item
 /obj/structure/sign/poster/official/random/directional
 	printable = FALSE

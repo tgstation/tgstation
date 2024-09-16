@@ -107,9 +107,7 @@
 "U" = (
 /obj/structure/lattice,
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/donkpockets_single{
-	pixel_y = 12
-	},
+/obj/effect/spawner/random/food_or_drink/donkpockets_single,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "V" = (

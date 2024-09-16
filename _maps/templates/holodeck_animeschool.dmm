@@ -10,58 +10,34 @@
 /area/template_noop)
 "n" = (
 /obj/structure/table,
-/obj/item/paper{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/item/clothing/under/costume/schoolgirl{
-	pixel_y = 8
-	},
-/obj/item/toy/katana{
-	pixel_y = 8
-	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/item/clothing/under/costume/schoolgirl,
+/obj/item/toy/katana,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (
 /obj/structure/table/wood,
-/obj/item/toy/crayon/white{
-	pixel_y = 8
-	},
+/obj/item/toy/crayon/white,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "x" = (
 /obj/structure/table,
-/obj/item/paper{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/item/clothing/under/costume/schoolgirl/orange{
-	pixel_y = 8
-	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/item/clothing/under/costume/schoolgirl/orange,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "E" = (
 /obj/structure/table/wood,
-/obj/item/food/grown/apple{
-	pixel_y = 8
-	},
+/obj/item/food/grown/apple,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "H" = (
 /obj/structure/table,
-/obj/item/paper{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/item/clothing/under/costume/schoolgirl{
-	pixel_y = 8
-	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "R" = (
@@ -72,38 +48,22 @@
 /area/template_noop)
 "S" = (
 /obj/structure/table,
-/obj/item/paper{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/item/clothing/under/costume/schoolgirl/green{
-	pixel_y = 8
-	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/item/clothing/under/costume/schoolgirl/green,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "T" = (
 /obj/structure/table,
-/obj/item/paper{
-	pixel_y = 8
-	},
-/obj/item/pen{
-	pixel_y = 8
-	},
-/obj/item/clothing/under/costume/schoolgirl/red{
-	pixel_y = 8
-	},
+/obj/item/paper,
+/obj/item/pen,
+/obj/item/clothing/under/costume/schoolgirl/red,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "Y" = (
 /obj/structure/table/wood,
-/obj/item/folder{
-	pixel_y = 8
-	},
-/obj/item/melee/baton/telescopic{
-	pixel_y = 8
-	},
+/obj/item/folder,
+/obj/item/melee/baton/telescopic,
 /turf/open/floor/holofloor,
 /area/template_noop)
 

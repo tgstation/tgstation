@@ -343,7 +343,6 @@
 	var/list/window_overlays = list()
 	for(var/visual in air_contents.return_visuals(get_turf(src)))
 		var/image/new_visual = image(visual, layer = FLOAT_LAYER)
-		new_visual.pixel_z = -12 // Weird offset artifacting? might be my fault idk
 		new_visual.filters = alpha_filter
 		window_overlays += new_visual
 	window.overlays = window_overlays
@@ -398,7 +397,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 
 	var/pressure = air_contents.return_pressure()

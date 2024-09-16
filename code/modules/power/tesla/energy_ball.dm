@@ -19,6 +19,7 @@
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
 	density = TRUE
+	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
 	light_range = 6
 	move_resist = INFINITY
@@ -186,8 +187,8 @@
 
 /obj/energy_ball/proc/dust_mobs(atom/A)
 	if(isliving(A))
-		var/mob/living/L = A
-		if(L.incorporeal_move || L.status_flags & GODMODE)
+		var/mob/living/living = A
+		if(living.incorporeal_move || HAS_TRAIT(living, TRAIT_GODMODE))
 			return
 	if(!iscarbon(A))
 		return

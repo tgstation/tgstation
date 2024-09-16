@@ -466,24 +466,23 @@ world
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
+	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
-
-	// Expand our canvas to fit if we're too big
-	if(render_icon)
-		var/icon/active_icon = icon(curicon)
-		if(active_icon.Width() != 32 || active_icon.Height() != 32)
-			flat.Scale(active_icon.Width(), active_icon.Height())
 
 	var/curblend = appearance.blend_mode || defblend
 
@@ -527,10 +526,10 @@ world
 				continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
-			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
-			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add.Width())
-			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
-			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
+			addX1 = min(flatX1, layer_image.pixel_x + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + add.Width())
+			addY1 = min(flatY1, layer_image.pixel_y + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
 
 			if (
 				addX1 != flatX1 \
@@ -552,7 +551,7 @@ world
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
 
 		if(appearance.color)
 			if(islist(appearance.color))

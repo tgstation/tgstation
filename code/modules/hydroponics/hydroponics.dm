@@ -1,12 +1,12 @@
 
 /obj/machinery/hydroponics
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
@@ -139,8 +139,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// Edibles and pills can be composted.
-	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+	// Edibles can be composted (most of the times).
+	if(IS_EDIBLE(held_item) && HAS_TRAIT(held_item, TRAIT_UNCOMPOSTABLE))
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -855,7 +855,10 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+		if(IS_EDIBLE(reagent_source))
+			if(HAS_TRAIT(reagent_source, TRAIT_UNCOMPOSTABLE))
+				to_chat(user, "[reagent_source] cannot be composted in its current state")
+				return
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 			SEND_SIGNAL(reagent_source, COMSIG_ITEM_ON_COMPOSTED, user)

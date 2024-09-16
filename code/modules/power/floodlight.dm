@@ -8,7 +8,7 @@
 	name = "floodlight frame"
 	desc = "A metal frame that requires wiring and a light tube to become a flood light."
 	max_integrity = 100
-	icon = 'icons/obj/machines/lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE
 
@@ -127,10 +127,9 @@
 	state = FLOODLIGHT_NEEDS_LIGHTS
 
 /obj/machinery/power/floodlight
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "floodlight"
 	desc = "A pole with powerful mounted lights on it. Due to its high power draw, it must be powered by a direct connection to a wire node."
-	icon = 'icons/obj/machines/lighting.dmi'
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight"
 	density = TRUE
 	max_integrity = 100
@@ -151,7 +150,6 @@
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	register_context()
 
 /obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
@@ -297,10 +295,10 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/power/floodlight/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/power/floodlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	atom_break(ENERGY) // technically,
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/power/floodlight/atom_break(damage_flag)
 	. = ..()

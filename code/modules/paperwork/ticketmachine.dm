@@ -8,6 +8,10 @@
 	base_icon_state = "ticketmachine"
 	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
+	maptext_height = 26
+	maptext_width = 32
+	maptext_x = 7
+	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
 	///Increment the ticket number whenever the HOP presses his button
 	var/ticket_number = 0
@@ -38,7 +42,7 @@
 /obj/machinery/ticket_machine/on_deconstruction(disassembled = TRUE)
 	new /obj/item/wallframe/ticket_machine(loc)
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/examine(mob/user)
 	. = ..()
@@ -71,6 +75,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
+	pixel_shift = 32
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -113,8 +118,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 		controller.id = null
 		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
-
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
@@ -152,31 +155,27 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
 		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
+/obj/machinery/ticket_machine/update_icon()
+	. = ..()
+	handle_maptext()
+
 /obj/machinery/ticket_machine/update_icon_state()
-	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "ticketmachine_off"
-	else if(ticket_number == max_number)
-		icon_state = "ticketmachine_nopaper"
-	else
-		icon_state = "ticketmachine"
+	switch(ticket_number) //Gives you an idea of how many tickets are left
+		if(0 to 99)
+			icon_state = "[base_icon_state]"
+		if(100)
+			icon_state = "[base_icon_state]_empty"
 	return ..()
 
-/obj/machinery/ticket_machine/update_overlays()
-	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
-
-	var/number_string = "[current_number]"
-	var/text_len = length(number_string)
-	var/start_x = 12 - (2*text_len)
-
-	for(var/i=1; i <= text_len, i++)
-		var/mutable_appearance/number_overlay = mutable_appearance('icons/testing/Font_Minimal.dmi', number_string[i])
-		number_overlay.blend_mode = BLEND_SUBTRACT
-		number_overlay.pixel_x = start_x
-		number_overlay.pixel_y = -14
-		. += number_overlay
-		start_x = start_x + 4
+/obj/machinery/ticket_machine/proc/handle_maptext()
+	switch(current_number) //This is here to handle maptext offsets so that the numbers align.
+		if(0 to 9)
+			maptext_x = 9
+		if(10 to 99)
+			maptext_x = 6
+		if(100)
+			maptext_x = 4
+	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()

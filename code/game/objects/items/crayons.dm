@@ -384,7 +384,7 @@
 				. = TRUE
 		if("select_stencil")
 			var/stencil = params["item"]
-			if(stencil in all_drawables + randoms)
+			if(stencil in (all_drawables + randoms))
 				drawtype = stencil
 				. = TRUE
 				text_buffer = ""
@@ -485,7 +485,7 @@
 		temp = "symbol"
 	else if(drawing in drawings)
 		temp = "drawing"
-	else if(drawing in graffiti|oriented)
+	else if(drawing in (graffiti|oriented))
 		temp = "graffiti"
 
 	var/graf_rot
@@ -827,7 +827,6 @@
 	return (isfloorturf(surface) || iswallturf(surface))
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
-	var/mob/living/carbon/human/H = user
 	var/used = min(charges_left, 10)
 	if(is_capped || !actually_paints || !use_charges(user, 10, FALSE))
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
@@ -842,7 +841,7 @@
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
-		H.update_lips("spray_face", paint_color)
+		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
@@ -866,7 +865,10 @@
 /obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)
 	if(iscarbon(target))
 		return TRUE
-	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+	if(is_capped && HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		// specifically don't try to use a capped spraycan on stuff like bags and tables, just place it
+		return FALSE
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE))
 		return TRUE
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		return TRUE
@@ -897,7 +899,7 @@
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target
-			human_target.update_lips("spray_face", paint_color)
+			human_target.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 		use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
@@ -968,6 +970,10 @@
 
 /obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
+		if(!interacting_with.color)
+			// let's be generous and assume if they're trying to match something with no color, while capped,
+			// we shouldn't be blocking further interactions
+			return NONE
 		balloon_alert(user, "take the cap off first!")
 		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
@@ -1003,9 +1009,6 @@
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/toy/crayon/spraycan/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
