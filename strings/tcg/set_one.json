@@ -106,7 +106,7 @@
 			"id": "botanist",
 			"name": "Botanist",
 			"desc": "The Botanist is in charge of keeping the station's food supply happy, healthy, and preferably not laced with hallucinogens.",
-			"rules": "Start of turn: Heal 1 healthshard.",
+			"rules": "Start of turn: Heal 1 lifeshard.",
 			"icon_state": "botanist",
 			"power": "0",
 			"resolve": "3",
