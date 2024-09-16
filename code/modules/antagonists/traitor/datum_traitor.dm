@@ -1,8 +1,3 @@
-///all the employers that are syndicate
-#define FLAVOR_FACTION_SYNDICATE "syndicate"
-///all the employers that are Nanotrasen
-#define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
-
 /datum/antagonist/traitor
 	name = "\improper Traitor"
 	roundend_category = "traitors"
@@ -187,21 +182,15 @@
 
 /datum/antagonist/traitor/proc/pick_employer()
 	if(!employer)
-		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
 		var/list/possible_employers = list()
 
-		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers)
 
 		if(istype(ending_objective, /datum/objective/hijack))
 			possible_employers -= GLOB.normal_employers
 		else //escape or martyrdom
 			possible_employers -= GLOB.hijack_employers
 
-		switch(faction)
-			if(FLAVOR_FACTION_SYNDICATE)
-				possible_employers -= GLOB.nanotrasen_employers
-			if(FLAVOR_FACTION_NANOTRASEN)
-				possible_employers -= GLOB.syndicate_employers
 		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
@@ -418,6 +407,3 @@
 		sword.worn_icon_state = "e_sword_on_red"
 
 		H.update_held_items()
-
-#undef FLAVOR_FACTION_SYNDICATE
-#undef FLAVOR_FACTION_NANOTRASEN

@@ -165,33 +165,20 @@ GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
-///employers that are from Nanotrasen
-GLOBAL_LIST_INIT(nanotrasen_employers, list(
-	"Champions of Evil",
-	"Corporate Climber",
-	"Gone Postal",
-	"Internal Affairs Agent",
-	"Legal Trouble",
-))
 
 ///employers who hire agents to do the hijack
 GLOBAL_LIST_INIT(hijack_employers, list(
 	"Animal Rights Consortium",
 	"Bee Liberation Front",
-	"Gone Postal",
 	"Tiger Cooperative Fanatic",
 	"Waffle Corporation Terrorist",
 ))
 
 ///employers who hire agents to do a task and escape... or martyrdom. whatever
 GLOBAL_LIST_INIT(normal_employers, list(
-	"Champions of Evil",
-	"Corporate Climber",
 	"Cybersun Industries",
 	"Donk Corporation",
 	"Gorlex Marauders",
-	"Internal Affairs Agent",
-	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
 ))
