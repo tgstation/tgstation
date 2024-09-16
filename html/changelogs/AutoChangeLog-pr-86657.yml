@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Your UI no longer breaks after being kidnapped by a contractor"
+  - qol: "Being kidnapped by a contractor no longer dumps all of your boxes and belts"
