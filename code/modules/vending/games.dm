@@ -9,7 +9,8 @@
 			"name" = "Cards",
 			"icon" = "diamond",
 			"products" = list(
-				/obj/item/toy/cards/deck = 5,
+				/obj/item/toy/cards/deck = 5
+				custom_price = PAYCHECK_COMMAND * 5 ,
 				/obj/item/toy/cards/deck/blank = 3,
 				/obj/item/toy/cards/deck/blank/black = 3,
 				/obj/item/toy/cards/deck/cas = 3,
