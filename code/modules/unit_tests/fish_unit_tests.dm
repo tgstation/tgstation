@@ -267,7 +267,7 @@
 	TEST_ASSERT_EQUAL(aquarium.crabbie.growth_time, init_growth, "the aquarium test crab should have a growth time of [secs_not_decisecs] second")
 
 	var/hunger = aquarium.crabbie.get_hunger()
-	crab_growth.on_fish_life(crabbie, secs_not_decisecs) //give the fish growth component a small push.
+	crab_growth.on_fish_life(aquarium.crabbie, secs_not_decisecs) //give the fish growth component a small push.
 
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
 	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab hunger: [hunger]")
