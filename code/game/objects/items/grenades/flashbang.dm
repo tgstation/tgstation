@@ -4,6 +4,7 @@
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	possible_fuse_time = list(3, 4, 5)
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
 /obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
@@ -49,6 +50,22 @@
 			living_mob.Paralyze(5)
 			living_mob.Knockdown(30)
 		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
+
+/obj/item/grenade/flashbang/change_det_time(time) //Time uses real time.
+	. = TRUE
+	if(!isnull(time))
+		det_time = round(clamp(time * 10, 3 SECONDS, 5 SECONDS))
+	else
+		var/previous_time = det_time
+		switch(det_time)
+			if (3 SECONDS)
+				det_time = 4 SECONDS
+			if (4 SECONDS)
+				det_time = 5 SECONDS
+			if (5 SECONDS)
+				det_time = 3 SECONDS
+		if(det_time == previous_time)
+			det_time = 5 SECONDS
 
 /obj/item/grenade/stingbang
 	name = "stingbang"
