@@ -260,17 +260,12 @@
 
 /datum/unit_test/fish_growth/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	aquarium.crabbie.name = "Crabbie"
-	var/datum/component/fish_growth/crab_growth = aquarium.crabbie.GetComponent(/datum/component/fish_growth)
-	var/init_growth = /obj/item/fish/chasm_crab/instant_growth::growth_time
-	var/secs_not_decisecs = init_growth * 0.1
-	TEST_ASSERT_EQUAL(aquarium.crabbie.growth_time, init_growth, "the aquarium test crab should have a growth time of [secs_not_decisecs] second")
+	var/datum/component/fish_growth/crab_growth = aquarium.crabbie.AddComponent(/datum/component/fish_growth, aquarium.crabbie.lob_type, 1 SECONDS)
 
-	var/hunger = aquarium.crabbie.get_hunger()
-	crab_growth.on_fish_life(aquarium.crabbie, secs_not_decisecs) //give the fish growth component a small push.
+	crab_growth.on_fish_life(aquarium.crabbie, seconds_per_tick = 1) //give the fish growth component a small push.
 
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
-	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab hunger: [hunger]")
+	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab maturation: [crab_growth.maturation]%.")
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
 	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
 	TEST_ASSERT_EQUAL(lobster.name, "Crabbie", "The lobstrosity didn't inherit the aquarium chasm crab's custom name")
@@ -282,11 +277,12 @@
 		trait.apply_to_mob(lobster)
 
 	var/obj/item/fish/testdummy/dummy = allocate(/obj/item/fish/testdummy)
-	var/datum/component/fish_growth/dummy_growth = dummy.AddComponent(/datum/component/fish_growth, /datum/fish_evolution/dummy/two, init_growth, use_drop_loc = FALSE)
-	dummy_growth.on_fish_life(dummy, secs_not_decisecs)
+	var/datum/component/fish_growth/dummy_growth = dummy.AddComponent(/datum/component/fish_growth, /datum/fish_evolution/dummy/two, 1 SECONDS, use_drop_loc = FALSE)
+	dummy.last_feeding = world.time
+	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
 	TEST_ASSERT(!QDELETED(dummy), "The fish has grown when it shouldn't have")
 	dummy.forceMove(aquarium)
-	dummy_growth.on_fish_life(dummy, secs_not_decisecs)
+	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
 	var/obj/item/fish/dummy_boogaloo = locate(/datum/fish_evolution/dummy/two::new_fish_type) in aquarium
 	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")
 
@@ -298,6 +294,8 @@
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
 	crabbie = new(src)
+	crabbie.name = "Crabbie"
+	crabbie.last_feeding = world.time
 
 /obj/structure/aquarium/crab/Exited(atom/movable/gone)
 	. = ..()
@@ -305,7 +303,6 @@
 		crabbie = null
 
 /obj/item/fish/chasm_crab/instant_growth
-	growth_time = 1 SECONDS // one life tick, really
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
 /datum/unit_test/fish_sources

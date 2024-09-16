@@ -32,18 +32,21 @@
 
 /datum/component/fish_growth/CheckDupeComponent(result_type, growth_time, use_drop_loc = TRUE, del_on_grow = TRUE)
 	if(result_type == src.result_type)
-		src.growth_rate = 100 / growth_time
+		growth_rate = 100 / growth_time
 		return TRUE //copy the growth rate and kill the new component
 	return FALSE
 
 /datum/component/fish_growth/proc/on_fish_life(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
+	if(source.status == FISH_DEAD) //It died just now.
+		warning("ded")
+		return
 	var/deciseconds_elapsed = seconds_per_tick * 10
 	var/growth = growth_rate * deciseconds_elapsed
-	if(source.status == FISH_DEAD) //It died just now.
-		return
 	if(SEND_SIGNAL(source, COMSIG_FISH_BEFORE_GROWING, seconds_per_tick, growth) & COMPONENT_DONT_GROW)
+		warning("oh no")
 		return
+	warning("yes we can")
 	maturation += growth
 	if(maturation >= 100)
 		finish_growing(source)

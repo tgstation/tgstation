@@ -29,8 +29,6 @@
 	var/anger = 0
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
-	///how long does it take for this crabbie to grow
-	var/growth_time = 10 MINUTES
 
 /obj/item/fish/chasm_crab/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -63,7 +61,7 @@
 	else if(weight >= (average_weight + 500))
 		multiplier += min(0.1 * round((weight - average_weight) / 500), 2)
 
-	AddComponent(/datum/component/fish_growth, lob_type, growth_time * multiplier)
+	AddComponent(/datum/component/fish_growth, lob_type, 10 MINUTES * multiplier)
 
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
