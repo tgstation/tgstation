@@ -161,11 +161,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/disable_process = SM_PROCESS_ENABLED
 
 	///Stores the time of when the last zap occurred
-	var/last_energy_accumulation = 0
+	var/last_power_zap = 0
 	///Stores the tick of the machines subsystem of when the last zap energy accumulation occurred. Gives a passage of time in the perspective of SSmachines.
 	var/last_energy_accumulation_perspective_machines = 0
 	///Same as [last_energy_accumulation_perspective_machines], but based around the high energy zaps found in handle_high_power().
-	var/last_high_energy_zap_perspective_machines = 0
+	var/last_high_energy_accumulation_perspective_machines = 0
 	/// Accumulated energy to be transferred from supermatter zaps.
 	var/list/zap_energy_accumulation = list()
 	///Do we show this crystal in the CIMS modular program
@@ -310,7 +310,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	zap_factors = calculate_zap_transmission_rate()
 	var/delta_time = (SSmachines.times_fired - last_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
 	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
-	if(accumulated_energy && (last_energy_accumulation + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
@@ -326,7 +326,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		)
 		zap_energy_accumulation[ZAP_ENERGY_ACCUMULATION_NORMAL] -= discharged_energy
 
-	last_energy_accumulation = world.time
+		last_power_zap = world.time
 	last_energy_accumulation_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
@@ -730,7 +730,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		stack_trace("Supermatter powered for the first time without being logged. Internal energy factors: [json_encode(internal_energy_factors)]")
 		activation_logged = TRUE // so we dont spam the log.
 	else if(!internal_energy)
-		last_energy_accumulation = world.time
+		last_power_zap = world.time
 		last_energy_accumulation_perspective_machines = SSmachines.times_fired
 	return additive_power
 
