@@ -512,25 +512,25 @@
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
 
-/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/KA, mob/user)
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/H, mob/user)
 	. = ..()
 	if(.)
-		KA.icon_state = retool_icon
-		KA.current_inhand_icon_state = retool_inhand_icon
-		KA.inhand_icon_state = "[KA.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
-		if(iscarbon(KA.loc))
-			var/mob/living/carbon/holder = KA.loc
+		H.icon_state = retool_icon
+		H.current_inhand_icon_state = retool_inhand_icon
+		H.inhand_icon_state = "[H.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
+		if(iscarbon(H.loc))
+			var/mob/living/carbon/holder = H.loc
 			holder.update_held_items()
-		KA.update_appearance()
+		H.update_appearance()
 
-/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/KA)
-	KA.icon_state = initial(KA.icon_state)
-	KA.current_inhand_icon_state = initial(KA.current_inhand_icon_state)
-	KA.inhand_icon_state = "[KA.current_inhand_icon_state]0"
-	if(iscarbon(KA.loc))
-		var/mob/living/carbon/holder = KA.loc
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/H)
+	H.icon_state = initial(H.icon_state)
+	H.current_inhand_icon_state = initial(H.current_inhand_icon_state)
+	H.inhand_icon_state = "[H.current_inhand_icon_state]0"
+	if(iscarbon(H.loc))
+		var/mob/living/carbon/holder = H.loc
 		holder.update_held_items()
-	KA.update_appearance()
+	H.update_appearance()
 	..()
 
 /obj/item/crusher_trophy/retool_kit/harpoon
