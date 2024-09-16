@@ -502,6 +502,7 @@
 	icon_state = "fishing_rod_telescopic"
 	desc = "A lightweight, ergonomic, easy to store telescopic fishing rod. "
 	inhand_icon_state = null
+	custom_price = PAYCHECK_CREW * 9
 	force = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
