@@ -41,10 +41,6 @@
 	human_for_preview.dna.features["ears"] = "Fox"
 	human_for_preview.dna.features["ears_color_1"] = "#776155"
 	human_for_preview.dna.features["ears_color_2"] = "#ffffff"
-	human_for_preview.dna.tail_type = FOX
-	human_for_preview.dna.features["tail_other"] = "Fox"
-	human_for_preview.dna.features["tail_color_1"] = "#776155"
-	human_for_preview.dna.features["tail_color_2"] = "#ffffff"
 	human_for_preview.set_haircolor("#574036", update = FALSE)
 	human_for_preview.set_hairstyle("Stacy Bun", update = TRUE)
 	human_for_preview.eye_color_left = "#C4F87A"

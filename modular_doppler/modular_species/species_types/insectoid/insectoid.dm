@@ -44,9 +44,6 @@
 	human_for_preview.dna.ear_type = BUG
 	human_for_preview.dna.features["ears"] = "Straight"
 	human_for_preview.dna.features["ears_color_1"] = "#ffffff"
-	human_for_preview.dna.tail_type = BUG
-	human_for_preview.dna.features["tail_other"] = "Bug"
-	human_for_preview.dna.features["tail_color_1"] = "#383942"
 	human_for_preview.eye_color_left = "#46C346"
 	human_for_preview.eye_color_right = "#46C346"
 	regenerate_organs(human_for_preview)

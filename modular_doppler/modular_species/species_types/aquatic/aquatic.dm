@@ -44,9 +44,6 @@
 	human_for_preview.dna.features["ears"] = "Shark"
 	human_for_preview.dna.features["ears_color_1"] = "#C2756A"
 	human_for_preview.dna.features["ears_color_2"] = "#FCB39F"
-	human_for_preview.dna.tail_type = FISH
-	human_for_preview.dna.features["tail_other"] = "Shark"
-	human_for_preview.dna.features["tail_color_1"] = "#c2756a"
 	human_for_preview.set_haircolor("#221711", update = FALSE)
 	human_for_preview.set_hairstyle("Blunt Bangs", update = TRUE)
 	human_for_preview.eye_color_left = "#77B077"
