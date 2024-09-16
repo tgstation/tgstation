@@ -619,7 +619,7 @@
 	fish_traits = fixed_traits?.Copy() || list()
 
 	var/list/same_traits = x_traits & y_traits
-	var/list/all_traits = (x_traits|y_traits)-removed_traits
+	var/list/all_traits = (y_traits ? (x_traits|y_traits) : x_traits) - removed_traits
 
 	/// a list of incompatible traits that'll be filled as it goes on. Don't let any such trait pass onto the fish.
 	var/list/incompatible_traits = list()
@@ -649,7 +649,7 @@
 			continue
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		if(isnull(trait))
-			stack_trace("Couldn't find trait [trait_type] in the global fish traits list")
+			stack_trace("Couldn't find trait [trait_type || "null"] in the global fish traits list")
 			continue
 		if(!isnull(trait.fish_whitelist) && !(type in trait.fish_whitelist))
 			continue
