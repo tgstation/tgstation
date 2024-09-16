@@ -231,7 +231,7 @@
 						dmgreport += "<td><font color='#cc3333'>-</font></td>"
 						dmgreport += "<td><font color='#ff9933'>-</font></td>"
 						dmgreport += "</tr>"
-						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: Dismembered</span></td></tr>"
+						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [conditional_tooltip("Dismembered", "Reattach or replace surgically.", tochat)]</span></td></tr>"
 						continue
 					var/has_any_embeds = length(limb.embedded_objects) >= 1
 					var/has_any_wounds = length(limb.wounds) >= 1
