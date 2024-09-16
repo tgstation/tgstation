@@ -304,7 +304,7 @@
 	/obj/structure/particle_accelerator/particle_emitter/left,
 	/obj/structure/particle_accelerator/particle_emitter/right,
 	)
-	crate_name = "tesla coil crate"
+	crate_name = "particle accelerator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engine/singlo_gen
@@ -313,7 +313,7 @@
 	access = ACCESS_CE
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list(/obj/machinery/the_singularitygen)
-	crate_name = "tesla coil crate"
+	crate_name = "singlo crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engine/tesla_gen
@@ -322,7 +322,15 @@
 	cost = CARGO_CRATE_VALUE * 30
 	access = ACCESS_CE
 	contains = list(/obj/machinery/the_singularitygen/tesla)
-	crate_name = "tesla coil crate"
+	crate_name = "tesla ball crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/gravity_generator
+	name = "Gravity Generator Crate"
+	desc = "Generates power from the gravity of a singularity."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/machinery/power/energy_accumulator/gravity_generator = 4)
+	crate_name = "gravity generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engine/hypertorus_fusion_reactor
