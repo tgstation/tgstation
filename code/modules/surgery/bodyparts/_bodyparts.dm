@@ -469,7 +469,7 @@
 		return FALSE
 	if (!forced)
 		if(!isnull(owner))
-			if (owner.status_flags & GODMODE)
+			if (HAS_TRAIT(owner, TRAIT_GODMODE))
 				return FALSE
 			if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
 				return FALSE

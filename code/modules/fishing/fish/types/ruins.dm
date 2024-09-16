@@ -26,6 +26,9 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	beauty = FISH_BEAUTY_BAD
 
+/obj/item/fish/mastodon/make_edible(weight_val)
+	return //it's all bones and gibs.
+
 ///From the cursed spring
 /obj/item/fish/soul
 	name = "soulfish"
@@ -50,6 +53,15 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+38
 	random_case_rarity = FISH_RARITY_NOPE
 
+/obj/item/fish/soul/get_food_types()
+	return MEAT|RAW|GORE //Not-so-quite-seafood
+
+/obj/item/fish/soul/get_fish_taste()
+	return list("meat" = 2, "soulfulness" = 1)
+
+/obj/item/fish/soul/get_fish_taste_cooked()
+	return list("cooked meat" = 2)
+
 ///From the cursed spring
 /obj/item/fish/skin_crab
 	name = "skin crab"
@@ -71,3 +83,8 @@
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	random_case_rarity = FISH_RARITY_NOPE
 
+/obj/item/fish/skin_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/skin_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)

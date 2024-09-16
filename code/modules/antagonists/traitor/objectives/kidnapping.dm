@@ -228,13 +228,14 @@
 
 	var/mob/living/carbon/human/sent_mob = entered_atom
 
-	for(var/obj/item/belonging in sent_mob.gather_belongings())
+	for(var/obj/item/belonging in sent_mob.gather_belongings(FALSE, FALSE))
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 
-		var/unequipped = sent_mob.transferItemToLoc(belonging)
+		var/unequipped = sent_mob.temporarilyRemoveItemFromInventory(belonging)
 		if (!unequipped)
 			continue
+		belonging.moveToNullspace()
 		target_belongings.Add(WEAKREF(belonging))
 
 	var/datum/market_item/hostage/market_item = sent_mob.process_capture(rand(1000, 3000))

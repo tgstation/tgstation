@@ -33,6 +33,10 @@
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = 'icons/hud/screen_midnight.dmi'
+	static_inventory += floor_change
+
 
 	zone_select = new /atom/movable/screen/zone_sel(null, src)
 	zone_select.icon = ui_style
