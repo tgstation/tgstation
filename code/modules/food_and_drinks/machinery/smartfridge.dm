@@ -203,7 +203,7 @@
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()
-	. = ""
+	. = list()
 
 	if(welded_down)
 		. += span_info("It's moorings are firmly [EXAMINE_HINT("welded")] to the floor.")
