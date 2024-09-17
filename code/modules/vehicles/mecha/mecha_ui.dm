@@ -182,7 +182,7 @@
 			ui_selected_module_index = text2num(params["index"])
 			return TRUE
 		if("changename")
-			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN, default = name)
+			var/userinput =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 			if(!userinput)
 				return
 			if(is_ic_filtered(userinput) || is_soft_ic_filtered(userinput))

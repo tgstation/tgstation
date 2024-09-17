@@ -116,7 +116,7 @@
 	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
 			return
-		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
+		var/str =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!user.can_perform_action(src))
 			return
 		if(!str || !length(str))

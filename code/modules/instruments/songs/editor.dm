@@ -94,7 +94,7 @@
 		if("import_song")
 			var/song_text = ""
 			do
-				song_text = tgui_input_text(user, "Please paste the entire song, formatted:", name, max_length = (MUSIC_MAXLINES * MUSIC_MAXLINECHARS), multiline = TRUE)
+				song_text =REVERT_ME_PLEASE_THANK_YOU_SAN7890, multiline = TRUE)
 				if(!in_range(parent, user))
 					return
 

@@ -322,7 +322,7 @@
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
-	var/n_name = tgui_input_text(usr, "Enter a paper label", "Paper Labelling", max_length = MAX_NAME_LEN)
+	var/n_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(isnull(n_name) || n_name == "")
 		return
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))

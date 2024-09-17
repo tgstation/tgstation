@@ -23,7 +23,7 @@
 /obj/item/picket_sign/proc/retext(mob/user, obj/item/writing_instrument)
 	if(!user.can_write(writing_instrument))
 		return
-	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 30)
+	var/txt =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(txt && user.can_perform_action(src))
 		label = txt
 		name = "[label] sign"

@@ -166,7 +166,7 @@
 	. += span_notice("Alt-click to set your war cry.")
 
 /obj/item/spear/explosive/click_alt(mob/user)
-	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
+	var/input =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(input)
 		war_cry = input
 	return CLICK_ACTION_SUCCESS

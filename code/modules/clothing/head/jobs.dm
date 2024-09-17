@@ -323,7 +323,7 @@
 		balloon_alert(user, "too big!")
 		return
 
-	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	var/desired_phrase =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
@@ -349,7 +349,7 @@
 	user.put_in_inactive_hand(found_item)
 
 /obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
-	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
+	var/new_prefix =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
 	set_prefix(new_prefix)

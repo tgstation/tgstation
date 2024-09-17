@@ -85,7 +85,7 @@
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+		var/namechoice =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!namechoice)
 			return
 		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
@@ -158,7 +158,7 @@
 		if(engraved)
 			to_chat(user, span_warning("This plaque has already been engraved."))
 			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+		var/namechoice =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!namechoice)
 			return
 		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")

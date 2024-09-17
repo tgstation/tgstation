@@ -50,7 +50,7 @@
 	if(!user.can_write(I))
 		return
 
-	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
+	var/new_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(user.get_active_held_item() != I)
 		return
 	if(!user.can_perform_action(src))

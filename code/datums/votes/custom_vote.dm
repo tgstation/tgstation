@@ -84,7 +84,7 @@
 
 	default_choices = list()
 	for(var/i in 1 to MAX_CUSTOM_VOTE_OPTIONS)
-		var/option = tgui_input_text(vote_creator, "Please enter an option, or hit cancel to finish. [MAX_CUSTOM_VOTE_OPTIONS] max.", "Options", max_length = MAX_NAME_LEN)
+		var/option =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!vote_creator?.client)
 			return FALSE
 		if(!option)

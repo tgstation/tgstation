@@ -233,7 +233,7 @@
 			if(!user.can_write(I))
 				return
 			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
-			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
+			box.boxtag +=REVERT_ME_PLEASE_THANK_YOU_SAN7890
 			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")

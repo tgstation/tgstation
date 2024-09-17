@@ -80,7 +80,7 @@
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
-		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
+		var/txt =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(txt && user.can_perform_action(src))
 			scribble = txt
 	else
@@ -111,7 +111,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
+	var/n_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated)
 		name = "photo[(n_name ? "- '[n_name]'" : null)]"

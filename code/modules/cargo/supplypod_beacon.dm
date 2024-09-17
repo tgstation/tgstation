@@ -105,7 +105,7 @@
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(IS_WRITING_UTENSIL(W)) //give a tag that is visible from the linked express console
 		return ..()
-	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
+	var/new_beacon_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 	if(isnull(new_beacon_name))
 		return
 	if(!user.can_perform_action(src))

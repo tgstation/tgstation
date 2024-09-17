@@ -272,7 +272,7 @@
 		return FALSE
 
 	if(initial(rune_to_scribe.req_keyword))
-		chosen_keyword = tgui_input_text(cultist, "Keyword for the new rune", "Words of Power", max_length = MAX_NAME_LEN)
+		chosen_keyword =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!chosen_keyword)
 			drawing_a_rune = FALSE
 			start_scribe_rune(tool, cultist)
