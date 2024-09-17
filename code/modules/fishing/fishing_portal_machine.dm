@@ -41,7 +41,7 @@
 	long_range_link = FALSE
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		max_fishing_spots += matter_bin.tier * 0.5
-	max_fishing_spots = round(max_fishing_spots)
+	max_fishing_spots = ROUND_UP(max_fishing_spots)
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		if(capacitor.tier >= 3)
 			long_range_link = TRUE
