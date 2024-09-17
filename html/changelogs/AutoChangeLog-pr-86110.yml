@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Whole, unprocessed fish is now edible. However it's pretty much reccomended to grill or fry it for over 30 spess seconds before attempting to eat it."
-  - bugfix: "germ-covered, dirty food no longer tries to infect you through contact."

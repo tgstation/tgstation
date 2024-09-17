@@ -543,9 +543,9 @@
 		var/list/result = examinify.examine(src)
 		var/atom_title = examinify.examine_title(src, thats = TRUE)
 		SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
-		result_combined = (atom_title ? "[span_slightly_larger(separator_hr("[atom_title]."))]" : "") + jointext(result, "<br>")
+		result_combined = (atom_title ? fieldset_block("[span_slightly_larger(atom_title)].", jointext(result, "<br>"), "examine_block") : examine_block(jointext(result, "<br>")))
 
-	to_chat(src, examine_block(span_infoplain(result_combined)))
+	to_chat(src, span_infoplain(result_combined))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 /mob/proc/blind_examine_check(atom/examined_thing)

@@ -1469,6 +1469,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	mut_organs += mutantliver
 	mut_organs += mutantstomach
 	mut_organs += mutantappendix
+	list_clear_nulls(mut_organs)
 	return mut_organs
 
 /datum/species/proc/get_types_to_preload()

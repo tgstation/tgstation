@@ -74,7 +74,7 @@
 	icon_state_dead = "slimefish_dead"
 	sprite_width = 7
 	sprite_height = 7
-	do_flop_animation = FALSE //it already has a cute bouncy wiggle. :3
+	fish_flags = parent_type::fish_flags & ~FISH_DO_FLOP_ANIM //it already has a cute bouncy wiggle. :3
 	random_case_rarity = FISH_RARITY_VERY_RARE
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
 	stable_population = 4
