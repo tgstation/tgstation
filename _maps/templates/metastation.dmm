@@ -1,48 +1,55 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall/r_wall,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "b" = (
 /obj/machinery/power/energy_accumulator/gravity_generator,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
+"c" = (
+/turf/open/floor/plating/airless,
+/area/station/engineering/supermatter/room)
 "d" = (
-/obj/machinery/field/generator/anchored,
 /obj/structure/lattice/catwalk,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "e" = (
 /obj/machinery/the_singularitygen/tesla,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
+"g" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/station/engineering/supermatter)
 "j" = (
 /obj/machinery/the_singularitygen,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "m" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/fuel_chamber{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "n" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "o" = (
 /obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "p" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "q" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -51,35 +58,34 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "t" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "u" = (
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "x" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "y" = (
 /obj/machinery/power/emitter,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "z" = (
 /obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/template_noop)
+/turf/open/floor/plating/airless,
+/area/station/engineering/supermatter/room)
 "B" = (
 /obj/machinery/particle_accelerator/control_box{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "C" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -89,35 +95,40 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "E" = (
 /obj/structure/particle_accelerator/particle_emitter/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "G" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "L" = (
 /obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/r_wall,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "M" = (
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter)
 "O" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/template_noop)
+/turf/open/space/basic,
+/area/station/engineering/supermatter)
 "P" = (
 /obj/machinery/power/emitter,
 /obj/machinery/power/emitter,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
+"Q" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/space/basic,
+/area/station/engineering/supermatter/room)
 "R" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -127,42 +138,42 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/plating,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "S" = (
 /obj/machinery/field/generator/anchored,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter)
 "T" = (
 /obj/structure/particle_accelerator/particle_emitter/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "V" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "W" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/end_cap{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "Y" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/power_box{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 "Z" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/particle_emitter/center{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/station/engineering/supermatter/room)
 
 (1,1,1) = {"
 a
@@ -188,9 +199,9 @@ V
 j
 b
 b
-M
+c
 W
-M
+c
 o
 o
 y
@@ -200,12 +211,12 @@ a
 "}
 (3,1,1) = {"
 a
-d
+Q
 V
 e
 b
 b
-M
+c
 m
 B
 o
@@ -222,9 +233,9 @@ V
 V
 V
 V
-M
+c
 Y
-M
+c
 V
 V
 V
@@ -336,7 +347,7 @@ t
 "}
 (11,1,1) = {"
 a
-O
+z
 u
 u
 S
@@ -348,7 +359,7 @@ M
 S
 u
 u
-O
+z
 x
 "}
 (12,1,1) = {"
@@ -357,11 +368,11 @@ z
 u
 u
 M
-u
-u
-u
-u
-u
+O
+O
+O
+O
+O
 M
 u
 u
@@ -374,11 +385,11 @@ z
 u
 u
 M
-u
-u
-u
-u
-u
+O
+O
+O
+O
+O
 M
 u
 u
@@ -391,11 +402,11 @@ z
 u
 u
 M
-u
-u
-V
-u
-u
+O
+O
+g
+O
+O
 M
 u
 u
@@ -408,11 +419,11 @@ z
 u
 u
 M
-u
-u
-u
-u
-u
+O
+O
+O
+O
+O
 M
 u
 u
@@ -421,15 +432,15 @@ a
 "}
 (16,1,1) = {"
 a
-O
+z
 u
 u
 M
-u
-u
-u
-u
-u
+O
+O
+O
+O
+O
 M
 u
 u
@@ -438,7 +449,7 @@ a
 "}
 (17,1,1) = {"
 a
-O
+z
 u
 u
 S
@@ -450,7 +461,7 @@ M
 S
 u
 u
-O
+z
 a
 "}
 (18,1,1) = {"
