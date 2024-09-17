@@ -35,8 +35,6 @@
 /datum/component/itempicky/proc/particularly(datum/source, obj/item/pickingup)
 	SIGNAL_HANDLER
 	// if we were passed the output of a callback, check against that
-	// otherwise resolve our pointer
-	var/tertiary_result = tertiary_condition?.Invoke()
-	if(!tertiary_result && !is_type_in_typecache(pickingup, whitelist))
+	if(!tertiary_condition?.Invoke() && !is_type_in_typecache(pickingup, whitelist))
 		to_chat(source, span_warning("[replacetext(message, "%TARGET", pickingup)]"))
 		return COMPONENT_LIVING_CANT_PUT_IN_HAND

@@ -44,9 +44,11 @@
 	. = ..()
 	if(alien_speed)
 		update_alien_speed()
-	LoadComponent(/datum/component/itempicky, xeno_allowed_items, \
-	span_alien("Your claws lack the dexterity to hold %TARGET."), \
-	CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_has_trait), src, TRAIT_ADVANCEDTOOLUSER))
+	LoadComponent( \
+		/datum/component/itempicky, \
+		xeno_allowed_items, \
+		span_alien("Your claws lack the dexterity to hold %TARGET."), \
+		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_has_trait), src, TRAIT_ADVANCEDTOOLUSER))
 
 /mob/living/carbon/alien/create_internal_organs()
 	organs += new /obj/item/organ/internal/brain/alien
