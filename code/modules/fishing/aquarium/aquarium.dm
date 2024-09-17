@@ -295,7 +295,7 @@
 		else
 			dead_fish++
 
-	var/morb = HAS_TRAIT(user, TRAIT_MORBID)
+	var/morb = HAS_MIND_TRAIT(user, TRAIT_MORBID)
 	//Check if there are live fish - good mood
 	//All fish dead - bad mood.
 	//No fish - nothing.

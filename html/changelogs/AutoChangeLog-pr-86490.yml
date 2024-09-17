@@ -1,4 +1,0 @@
-author: "TwistedSilicon"
-delete-after: True
-changes:
-  - bugfix: "Mech equipment is no longer broken in the UI for specific conditions."

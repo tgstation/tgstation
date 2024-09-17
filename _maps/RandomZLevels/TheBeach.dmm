@@ -738,7 +738,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
 "jF" = (
-/obj/machinery/vending/boozeomat/all_access{
+/obj/machinery/vending/boozeomat{
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. May not work for bartenders that don't have Nanotrasen bank accounts."
 	},
 /turf/open/floor/wood/large,
@@ -2766,7 +2766,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach)
 "Il" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "It" = (

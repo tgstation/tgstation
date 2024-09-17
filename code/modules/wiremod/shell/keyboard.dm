@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/keyboard_shell/Initialize(mapload)
 	. = ..()

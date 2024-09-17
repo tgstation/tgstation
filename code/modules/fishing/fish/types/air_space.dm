@@ -40,6 +40,12 @@
 		),
 	)
 
+/obj/item/fish/sand_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/sand_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)
+
 /obj/item/fish/bumpy
 	name = "bump-fish"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"

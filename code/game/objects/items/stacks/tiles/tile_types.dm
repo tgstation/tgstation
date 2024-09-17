@@ -68,7 +68,7 @@
  * Place our tile on a plating, or replace it.
  *
  * Arguments:
- * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
+ * * target_plating - Instance of the plating we want to place on. Replaced during successful executions.
  * * user - The mob doing the placing.
  */
 /obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user)
@@ -1259,7 +1259,7 @@
 	inhand_icon_state = "tile-catwalk"
 	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	turf_type = /turf/open/floor/catwalk_floor
-	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
+	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with each other
 	tile_reskin_types = list(
 		/obj/item/stack/tile/catwalk_tile,
 		/obj/item/stack/tile/catwalk_tile/iron,
