@@ -124,5 +124,5 @@
 	mood_bonus = 3
 	mood_message = "I feel at ease here."
 	ambientsounds = list(
-		'sound/instrumental/aurora_caelus_short.ogg',
+		'sound/instrumental/ambience/aurora_caelus/aurora_caelus_short.ogg',
 		)

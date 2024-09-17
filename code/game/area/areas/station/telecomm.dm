@@ -12,7 +12,7 @@
 		'sound/instrumental/ambience/engineering/ambitech.ogg',
 		'sound/instrumental/ambience/engineering/ambitech2.ogg',
 		'sound/instrumental/ambience/engineering/ambitech3.ogg',
-		'sound/instrumental/ambience/ambimystery.ogg',
+		'sound/instrumental/ambience/misc/ambimystery.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/engineering
 

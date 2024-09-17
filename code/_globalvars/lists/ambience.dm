@@ -25,24 +25,24 @@ GLOBAL_LIST_INIT(holy_ambience,list(
 ))
 
 GLOBAL_LIST_INIT(danger_ambience,list(
-	'sound/instrumental/ambience/ambidanger.ogg',
-	'sound/instrumental/ambience/ambidanger2.ogg',
+	'sound/instrumental/ambience/misc/ambidanger.ogg',
+	'sound/instrumental/ambience/misc/ambidanger2.ogg',
 ))
 
 GLOBAL_LIST_INIT(ruins_ambience,list(
 	'sound/instrumental/ambience/ambicave.ogg',
-	'sound/instrumental/ambience/ambidanger.ogg',
-	'sound/instrumental/ambience/ambidanger2.ogg',
+	'sound/instrumental/ambience/misc/ambidanger.ogg',
+	'sound/instrumental/ambience/misc/ambidanger2.ogg',
 	'sound/instrumental/ambience/maintenance/ambimaint1.ogg',
-	'sound/instrumental/ambience/ambimine.ogg',
-	'sound/instrumental/ambience/ambimystery.ogg',
-	'sound/instrumental/ambience/ambiruin.ogg',
-	'sound/instrumental/ambience/ambiruin2.ogg',
-	'sound/instrumental/ambience/ambiruin3.ogg',
-	'sound/instrumental/ambience/ambiruin4.ogg',
-	'sound/instrumental/ambience/ambiruin5.ogg',
-	'sound/instrumental/ambience/ambiruin6.ogg',
-	'sound/instrumental/ambience/ambiruin7.ogg',
+	'sound/instrumental/ambience/ruin/ambimine.ogg',
+	'sound/instrumental/ambience/misc/ambimystery.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin2.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin3.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin4.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin5.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin6.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin7.ogg',
 	'sound/instrumental/ambience/engineering/ambitech3.ogg',
 ))
 
@@ -60,20 +60,20 @@ GLOBAL_LIST_INIT(engi_ambience,list(
 
 GLOBAL_LIST_INIT(mining_ambience, list(
 	'sound/instrumental/ambience/ambicave.ogg',
-	'sound/instrumental/ambience/ambidanger.ogg',
-	'sound/instrumental/ambience/ambidanger2.ogg',
-	'sound/instrumental/ambience/ambilava1.ogg',
-	'sound/instrumental/ambience/ambilava2.ogg',
-	'sound/instrumental/ambience/ambilava3.ogg',
+	'sound/instrumental/ambience/misc/ambidanger.ogg',
+	'sound/instrumental/ambience/misc/ambidanger2.ogg',
+	'sound/instrumental/ambience/lavaland/ambilava1.ogg',
+	'sound/instrumental/ambience/lavaland/ambilava2.ogg',
+	'sound/instrumental/ambience/lavaland/ambilava3.ogg',
 	'sound/instrumental/ambience/maintenance/ambimaint1.ogg',
-	'sound/instrumental/ambience/ambimine.ogg',
-	'sound/instrumental/ambience/ambiruin.ogg',
-	'sound/instrumental/ambience/ambiruin2.ogg',
-	'sound/instrumental/ambience/ambiruin3.ogg',
-	'sound/instrumental/ambience/ambiruin4.ogg',
-	'sound/instrumental/ambience/ambiruin5.ogg',
-	'sound/instrumental/ambience/ambiruin6.ogg',
-	'sound/instrumental/ambience/ambiruin7.ogg',
+	'sound/instrumental/ambience/ruin/ambimine.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin2.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin3.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin4.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin5.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin6.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin7.ogg',
 ))
 
 GLOBAL_LIST_INIT(icemoon_ambience,list(
@@ -100,12 +100,12 @@ GLOBAL_LIST_INIT(virology_ambience,list(
 ))
 
 GLOBAL_LIST_INIT(spooky_ambience,list(
-	'sound/instrumental/ambience/ambimo1.ogg',
-	'sound/instrumental/ambience/ambimo2.ogg',
-	'sound/instrumental/ambience/ambimystery.ogg',
-	'sound/instrumental/ambience/ambiodd.ogg',
-	'sound/instrumental/ambience/ambiruin6.ogg',
-	'sound/instrumental/ambience/ambiruin7.ogg',
+	'sound/instrumental/ambience/medical/ambimo1.ogg',
+	'sound/instrumental/ambience/medical/ambimo2.ogg',
+	'sound/instrumental/ambience/misc/ambimystery.ogg',
+	'sound/instrumental/ambience/misc/ambiodd.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin6.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin7.ogg',
 ))
 
 GLOBAL_LIST_INIT(space_ambience,list(
@@ -143,25 +143,25 @@ GLOBAL_LIST_INIT(maint_ambience,list(
 GLOBAL_LIST_INIT(away_ambience,list(
 	'sound/instrumental/ambience/engineering/ambiatmos.ogg',
 	'sound/instrumental/ambience/engineering/ambiatmos2.ogg',
-	'sound/instrumental/ambience/ambidanger.ogg',
-	'sound/instrumental/ambience/ambidanger2.ogg',
+	'sound/instrumental/ambience/misc/ambidanger.ogg',
+	'sound/instrumental/ambience/misc/ambidanger2.ogg',
 	'sound/instrumental/ambience/maintenance/ambimaint.ogg',
-	'sound/instrumental/ambience/ambiodd.ogg',
-	'sound/instrumental/ambience/ambiruin.ogg',
-	'sound/instrumental/ambience/ambiruin2.ogg',
-	'sound/instrumental/ambience/ambiruin3.ogg',
-	'sound/instrumental/ambience/ambiruin4.ogg',
-	'sound/instrumental/ambience/ambiruin5.ogg',
-	'sound/instrumental/ambience/ambiruin6.ogg',
-	'sound/instrumental/ambience/ambiruin7.ogg',
+	'sound/instrumental/ambience/misc/ambiodd.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin2.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin3.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin4.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin5.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin6.ogg',
+	'sound/instrumental/ambience/ruin/ambiruin7.ogg',
 	'sound/instrumental/ambience/engineering/ambitech.ogg',
 	'sound/instrumental/ambience/engineering/ambitech2.ogg',
 ))
 
 GLOBAL_LIST_INIT(reebe_ambience,list(
-	'sound/instrumental/ambience/ambireebe1.ogg',
-	'sound/instrumental/ambience/ambireebe2.ogg',
-	'sound/instrumental/ambience/ambireebe3.ogg',
+	'sound/instrumental/ambience/misc/ambireebe1.ogg',
+	'sound/instrumental/ambience/misc/ambireebe2.ogg',
+	'sound/instrumental/ambience/misc/ambireebe3.ogg',
 ))
 
 GLOBAL_LIST_INIT(creepy_ambience,list(

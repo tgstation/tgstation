@@ -55,7 +55,7 @@
 
 /area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
-	ambientsounds = list('sound/instrumental/ambience/ambivapor1.ogg')
+	ambientsounds = list('sound/instrumental/ambience/misc/ambivapor1.ogg')
 
 
 //Ruin of Hotel
@@ -335,7 +335,7 @@
 /area/ruin/space/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
 	icon_state = "os_delta_ai"
-	ambientsounds = list('sound/instrumental/ambience/ambimalf.ogg', 'sound/instrumental/ambience/engineering/ambitech.ogg', 'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambiatmos.ogg', 'sound/instrumental/ambience/engineering/ambiatmos2.ogg')
+	ambientsounds = list('sound/instrumental/ambience/misc/ambimalf.ogg', 'sound/instrumental/ambience/engineering/ambitech.ogg', 'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambiatmos.ogg', 'sound/instrumental/ambience/engineering/ambiatmos2.ogg')
 
 /area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
@@ -546,14 +546,14 @@
 
 /area/ruin/space/abandoned_tele
 	name = "\improper Abandoned Teleporter"
-	ambientsounds = list('sound/instrumental/ambience/ambimalf.ogg', 'sound/instrumental/signal.ogg')
+	ambientsounds = list('sound/instrumental/ambience/misc/ambimalf.ogg', 'sound/instrumental/signal.ogg')
 
 //OLD AI SAT
 
 /area/ruin/space/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
 	ambientsounds = list('sound/instrumental/ambience/engineering/ambisin2.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/ambience/general/ambigen9.ogg', 'sound/instrumental/ambience/engineering/ambitech.ogg',\
-											'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambitech3.ogg', 'sound/instrumental/ambience/ambimystery.ogg')
+											'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambitech3.ogg', 'sound/instrumental/ambience/misc/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
 // CRASHED PRISON SHUTTLE
