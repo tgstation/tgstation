@@ -548,3 +548,15 @@
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a harpoon"
+
+/obj/item/crusher_trophy/retool_kit/dagger
+	name = "crusher dagger retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a dual dagger and mini-blaster on a chain."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_dagger"
+	retool_inhand_icon = "crusher_dagger"
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to have the appearance of a dual dagger and blaster"
