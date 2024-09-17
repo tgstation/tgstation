@@ -409,6 +409,10 @@ SUBSYSTEM_DEF(id_access)
 	if(trim.assignment)
 		id_card.assignment = trim.assignment
 
+	var/datum/job/trim_job = trim.find_job()
+	if (!isnull(trim_job) && !isnull(id_card.registered_account))
+		id_card.registered_account.account_job = trim_job
+
 	id_card.update_label()
 	id_card.update_icon()
 
