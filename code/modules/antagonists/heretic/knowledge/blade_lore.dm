@@ -423,7 +423,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_blade.ogg',
+		sound = 'sound/instrumental/antag/heretic/ascend_blade.ogg',
 		color_override = "pink",
 	)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)

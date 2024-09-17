@@ -9,7 +9,7 @@
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	stinger_sound = 'sound/instrumental/antag/tatoralert.ogg'
 	VAR_PRIVATE
 		datum/team/brother_team/team
 

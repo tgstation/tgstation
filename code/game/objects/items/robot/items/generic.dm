@@ -378,7 +378,7 @@
 			carbon.adjust_confusion(6 SECONDS)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/announcer/harmalarm.ogg', 70, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
