@@ -32,15 +32,15 @@ Slimecrossing Weapons
 		damtype = pick(BRUTE, BURN, TOX, OXY)
 	switch(damtype)
 		if(BRUTE)
-			hitsound = 'sound/weapons/bladeslice.ogg'
+			hitsound = 'sound/items/weapons/bladeslice.ogg'
 			attack_verb_continuous = string_list(list("slashes", "slices", "cuts"))
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
-			hitsound = 'sound/weapons/sear.ogg'
+			hitsound = 'sound/items/weapons/sear.ogg'
 			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
 			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
-			hitsound = 'sound/weapons/pierce.ogg'
+			hitsound = 'sound/items/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
 			attack_verb_simple = string_list(list("poison", "dose", "toxify"))
 		if(OXY)

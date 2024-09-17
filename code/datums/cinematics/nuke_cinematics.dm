@@ -86,7 +86,7 @@
 
 /datum/cinematic/nuke/no_core/play_nuke_effect()
 	flick("station_intact", screen)
-	play_cinematic_sound(sound('sound/instrumental/signal.ogg'))
+	play_cinematic_sound(sound('sound/ambience/misc/signal.ogg'))
 	stoplag(10 SECONDS)
 
 /// The syndicate nuclear bomb was activated, but just missed the station by a whole z-level!

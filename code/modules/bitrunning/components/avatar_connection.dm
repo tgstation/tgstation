@@ -69,7 +69,7 @@
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)
 
-	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
+	avatar.playsound_local(avatar, 'sound/effects/magic/blink.ogg', 25, TRUE)
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS) // I'm in
 

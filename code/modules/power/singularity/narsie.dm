@@ -68,7 +68,7 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	sound_to_playing_players('sound/creatures/narsie_rises.ogg')
+	sound_to_playing_players('sound/mobs/creatures/narsie_rises.ogg')
 
 	var/area/area = get_area(src)
 	if(area)
@@ -124,7 +124,7 @@
 			summon_objective.killed = TRUE
 
 	send_to_playing_players(span_narsie(span_bold(pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-"))))
-	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
+	sound_to_playing_players('sound/effects/magic/demon_dies.ogg', 50)
 
 /obj/narsie/vv_get_dropdown()
 	. = ..()

@@ -8,7 +8,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
@@ -90,7 +90,7 @@
 	alpha = 180
 	damage = 30
 	damage_type = TOX
-	hitsound = 'sound/weapons/punch3.ogg'
+	hitsound = 'sound/items/weapons/punch3.ogg'
 	trigger_range = 0
 	ignored_factions = list(FACTION_HERETIC)
 	range = 15

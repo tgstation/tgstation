@@ -47,7 +47,7 @@
 	volume = 15
 
 /datum/looping_sound/clock
-	mid_sounds = list('sound/instrumental/ticking_clock.ogg' = 1)
+	mid_sounds = list('sound/ambience/misc/ticking_clock.ogg' = 1)
 	mid_length = 40
 	volume = 50
 	ignore_walls = FALSE

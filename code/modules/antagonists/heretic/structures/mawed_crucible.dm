@@ -6,7 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "crucible"
 	base_icon_state = "crucible"
-	break_sound = 'sound/hallucinations/wail.ogg'
+	break_sound = 'sound/effects/hallucinations/wail.ogg'
 	light_power = 1
 	anchored = TRUE
 	density = TRUE

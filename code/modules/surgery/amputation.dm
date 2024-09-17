@@ -52,8 +52,8 @@
 		/obj/item/knife/butcher = 25,
 	)
 	time = 64
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
 
 /datum/surgery_step/sever_limb/mechanic
@@ -79,7 +79,7 @@
 		TOOL_SCALPEL = 25,
 	)
 	time = 30
-	preop_sound = 'sound/surgery/saw.ogg'
+	preop_sound = 'sound/items/handling/surgery/saw.ogg'
 	success_sound = 'sound/items/wood_drop.ogg'
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

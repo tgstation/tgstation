@@ -306,13 +306,13 @@
 	PRESET /datum/preset_holoimage/nanotrasenprivatesecurity
 	NAME James Reed
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 10
-	SOUND sound/weapons/laser.ogg
+	SOUND sound/items/weapons/laser.ogg
 	DELAY 15
 	SAY Just go! I'll keep it busy, there's an outpost south of here with an elevator to the surface.
 	NAME Jacob Ullman

@@ -117,15 +117,15 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /area/ruin/space/has_grav/syndicate_forgotten_ship
 	name = "Syndicate Forgotten Ship"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/instrumental/ambience/misc/ambidanger.ogg', 'sound/instrumental/ambience/misc/ambidanger2.ogg', 'sound/instrumental/ambience/general/ambigen8.ogg', 'sound/instrumental/ambience/general/ambigen9.ogg')
+	ambientsounds = list('sound/ambience/misc/ambidanger.ogg', 'sound/ambience/misc/ambidanger2.ogg', 'sound/ambience/general/ambigen8.ogg', 'sound/ambience/general/ambigen9.ogg')
 
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod
 	name = "Syndicate Forgotten Cargo pod"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/instrumental/ambience/general/ambigen3.ogg', 'sound/instrumental/signal.ogg')
+	ambientsounds = list('sound/ambience/general/ambigen3.ogg', 'sound/ambience/misc/signal.ogg')
 
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault
 	name = "Syndicate Forgotten Vault"
 	icon_state = "syndie-ship"
-	ambientsounds = list('sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambitech3.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambitech3.ogg')
 	area_flags = NOTELEPORT | UNIQUE_AREA

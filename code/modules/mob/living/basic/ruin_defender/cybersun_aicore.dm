@@ -142,7 +142,7 @@
 
 /obj/effect/temp_visual/lightning_strike/proc/zap()
 	new/obj/effect/temp_visual/lightning_strike_zap(loc)
-	playsound(src, 'sound/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
+	playsound(src, 'sound/effects/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
 	if (!isturf(loc))
 		return
 	for(var/mob/living/victim in loc)

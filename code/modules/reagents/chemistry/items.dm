@@ -166,7 +166,7 @@
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, span_notice("You heat up the [I] with the [src]."))
-			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+			playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 			return
 		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
 			var/obj/item/reagent_containers/container = I
@@ -193,7 +193,7 @@
 		var/obj/item/reagent_containers/container = interacting_with
 		container.reagents.expose_temperature(get_temperature())
 		user.visible_message(span_notice("[user] heats up [src]."), span_notice("You heat up [src]."))
-		playsound(user, 'sound/chemistry/heatdam.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	else if(isitem(interacting_with))

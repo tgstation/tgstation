@@ -22,7 +22,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 20
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 

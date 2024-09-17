@@ -16,7 +16,7 @@
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = SFX_DEFAULT_FISH_SLAP
-	drop_sound = 'sound/creatures/fish/fish_drop1.ogg'
+	drop_sound = 'sound/mobs/creatures/fish/fish_drop1.ogg'
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME

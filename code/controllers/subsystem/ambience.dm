@@ -78,8 +78,8 @@ SUBSYSTEM_DEF(ambience)
 		'sound/items/welder2.ogg',
 		'sound/items/crowbar.ogg',
 		'sound/items/deconstruct.ogg',
-		'sound/instrumental/source_holehit3.ogg',
-		'sound/instrumental/ambience//misc/cavesound3.ogg',
+		'sound/ambience/misc/source_holehit3.ogg',
+		'sound/ambience//misc/cavesound3.ogg',
 	)
 
 /area/station/maintenance/play_ambience(mob/M, sound/override_sound, volume)

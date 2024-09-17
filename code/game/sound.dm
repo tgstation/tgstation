@@ -221,19 +221,19 @@
 		if(SFX_BODYFALL)
 			soundin = pick('sound/effects/bodyfall1.ogg','sound/effects/bodyfall2.ogg','sound/effects/bodyfall3.ogg','sound/effects/bodyfall4.ogg')
 		if(SFX_PUNCH)
-			soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
+			soundin = pick('sound/items/weapons/punch1.ogg','sound/items/weapons/punch2.ogg','sound/items/weapons/punch3.ogg','sound/items/weapons/punch4.ogg')
 		if(SFX_CLOWN_STEP)
 			soundin = pick('sound/effects/footstep/clownstep1.ogg','sound/effects/footstep/clownstep2.ogg')
 		if(SFX_SUIT_STEP)
 			soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
 		if(SFX_SWING_HIT)
-			soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
+			soundin = pick('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg')
 		if(SFX_HISS)
-			soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
+			soundin = pick('sound/mobs/voice/hiss1.ogg','sound/mobs/voice/hiss2.ogg','sound/mobs/voice/hiss3.ogg','sound/mobs/voice/hiss4.ogg')
 		if(SFX_PAGE_TURN)
 			soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 		if(SFX_RICOCHET)
-			soundin = pick( 'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+			soundin = pick( 'sound/items/weapons/effects/ric1.ogg', 'sound/items/weapons/effects/ric2.ogg','sound/items/weapons/effects/ric3.ogg','sound/items/weapons/effects/ric4.ogg','sound/items/weapons/effects/ric5.ogg')
 		if(SFX_TERMINAL_TYPE)
 			soundin = pick(list(
 				'sound/machines/terminal_button01.ogg',
@@ -248,21 +248,21 @@
 		if(SFX_DESECRATION)
 			soundin = pick('sound/misc/desecration-01.ogg', 'sound/misc/desecration-02.ogg', 'sound/misc/desecration-03.ogg')
 		if(SFX_IM_HERE)
-			soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+			soundin = pick('sound/effects/hallucinations/im_here1.ogg', 'sound/effects/hallucinations/im_here2.ogg')
 		if(SFX_CAN_OPEN)
 			soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 		if(SFX_BULLET_MISS)
-			soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
+			soundin = pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg')
 		if(SFX_REVOLVER_SPIN)
-			soundin = pick('sound/weapons/gun/revolver/spin1.ogg', 'sound/weapons/gun/revolver/spin2.ogg', 'sound/weapons/gun/revolver/spin3.ogg')
+			soundin = pick('sound/items/weapons/gun/revolver/spin1.ogg', 'sound/items/weapons/gun/revolver/spin2.ogg', 'sound/items/weapons/gun/revolver/spin3.ogg')
 		if(SFX_LAW)
 			soundin = pick(list(
-				'sound/voice/beepsky/creep.ogg',
-				'sound/voice/beepsky/god.ogg',
-				'sound/voice/beepsky/iamthelaw.ogg',
-				'sound/voice/beepsky/insult.ogg',
-				'sound/voice/beepsky/radio.ogg',
-				'sound/voice/beepsky/secureday.ogg',
+				'sound/mobs/voice/beepsky/creep.ogg',
+				'sound/mobs/voice/beepsky/god.ogg',
+				'sound/mobs/voice/beepsky/iamthelaw.ogg',
+				'sound/mobs/voice/beepsky/insult.ogg',
+				'sound/mobs/voice/beepsky/radio.ogg',
+				'sound/mobs/voice/beepsky/secureday.ogg',
 			))
 		if(SFX_HONKBOT_E)
 			soundin = pick(list(
@@ -274,16 +274,16 @@
 				'sound/items/WEEOO1.ogg',
 				'sound/machines/buzz-sigh.ogg',
 				'sound/machines/ping.ogg',
-				'sound/magic/Fireball.ogg',
+				'sound/effects/magic/Fireball.ogg',
 				'sound/misc/sadtrombone.ogg',
-				'sound/voice/beepsky/creep.ogg',
-				'sound/voice/beepsky/iamthelaw.ogg',
-				'sound/voice/hiss1.ogg',
-				'sound/weapons/bladeslice.ogg',
-				'sound/weapons/flashbang.ogg',
+				'sound/mobs/voice/beepsky/creep.ogg',
+				'sound/mobs/voice/beepsky/iamthelaw.ogg',
+				'sound/mobs/voice/hiss1.ogg',
+				'sound/items/weapons/bladeslice.ogg',
+				'sound/items/weapons/flashbang.ogg',
 			))
 		if(SFX_GOOSE)
-			soundin = pick('sound/creatures/goose1.ogg', 'sound/creatures/goose2.ogg', 'sound/creatures/goose3.ogg', 'sound/creatures/goose4.ogg')
+			soundin = pick('sound/mobs/creatures/goose1.ogg', 'sound/mobs/creatures/goose2.ogg', 'sound/mobs/creatures/goose3.ogg', 'sound/mobs/creatures/goose4.ogg')
 		if(SFX_WARPSPEED)
 			soundin = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 		if(SFX_SM_CALM)
@@ -437,7 +437,7 @@
 		if(SFX_ROCK_TAP)
 			soundin = pick('sound/effects/rocktap1.ogg', 'sound/effects/rocktap2.ogg', 'sound/effects/rocktap3.ogg')
 		if(SFX_SEAR)
-			soundin = 'sound/weapons/sear.ogg'
+			soundin = 'sound/items/weapons/sear.ogg'
 		if(SFX_REEL)
 			soundin = pick(
 				'sound/items/reel1.ogg',
@@ -464,13 +464,13 @@
 			)
 		if(SFX_SCREECH)
 			soundin = pick(
-				'sound/creatures/monkey/monkey_screech_1.ogg',
-				'sound/creatures/monkey/monkey_screech_2.ogg',
-				'sound/creatures/monkey/monkey_screech_3.ogg',
-				'sound/creatures/monkey/monkey_screech_4.ogg',
-				'sound/creatures/monkey/monkey_screech_5.ogg',
-				'sound/creatures/monkey/monkey_screech_6.ogg',
-				'sound/creatures/monkey/monkey_screech_7.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_1.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_2.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_3.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_4.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_5.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_6.ogg',
+				'sound/mobs/creatures/monkey/monkey_screech_7.ogg',
 			)
 		if(SFX_TOOL_SWITCH)
 			soundin = 'sound/items/handling/tool_switch.ogg'
@@ -508,12 +508,12 @@
 				'sound/effects/muffspeech/muffspeech9.ogg',
 			)
 		if(SFX_DEFAULT_FISH_SLAP)
-			soundin = 'sound/creatures/fish/fish_slap1.ogg'
+			soundin = 'sound/mobs/creatures/fish/fish_slap1.ogg'
 		if(SFX_ALT_FISH_SLAP)
-			soundin = 'sound/creatures/fish/fish_slap2.ogg'
+			soundin = 'sound/mobs/creatures/fish/fish_slap2.ogg'
 		if(SFX_FISH_PICKUP)
 			soundin = pick(
-				'sound/creatures/fish/fish_pickup1.ogg',
-				'sound/creatures/fish/fish_pickup2.ogg',
+				'sound/mobs/creatures/fish/fish_pickup1.ogg',
+				'sound/mobs/creatures/fish/fish_pickup2.ogg',
 			)
 	return soundin

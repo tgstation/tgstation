@@ -29,9 +29,9 @@
 	/// Can we toggle this light on and off (used for contexual screentips only)
 	var/toggle_context = TRUE
 	/// The sound the light makes when it's turned on
-	var/sound_on = 'sound/weapons/magin.ogg'
+	var/sound_on = 'sound/items/weapons/magin.ogg'
 	/// The sound the light makes when it's turned off
-	var/sound_off = 'sound/weapons/magout.ogg'
+	var/sound_off = 'sound/items/weapons/magout.ogg'
 	/// Should the flashlight start turned on?
 	var/start_on = FALSE
 
@@ -359,7 +359,7 @@
 	light_range = 5 // A little better than the standard flashlight.
 	light_power = 0.8
 	light_color = "#99ccff"
-	hitsound = 'sound/weapons/genhit1.ogg'
+	hitsound = 'sound/items/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp

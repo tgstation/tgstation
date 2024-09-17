@@ -302,7 +302,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	cooldown = 0 SECONDS
 	stamina_damage = 0
 	knockdown_time = 14 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
@@ -335,7 +335,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	affect_cyborg = is_stun_mode
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
 	stun_animation = is_stun_or_sleep
-	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
+	on_stun_sound = is_stun_or_sleep ? 'sound/items/weapons/egloves.ogg' : null
 
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
 	update_appearance()
@@ -418,7 +418,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())

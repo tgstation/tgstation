@@ -162,7 +162,7 @@
 // just drops the box at their feet, "quiet" and "sneaky"
 /obj/item/choice_beacon/augments/spawn_option(obj/choice_path, mob/living/user)
 	new choice_path(get_turf(user))
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
+	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"

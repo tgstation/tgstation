@@ -111,7 +111,7 @@
 /datum/hallucination/station_message/supermatter_delam
 
 /datum/hallucination/station_message/supermatter_delam/start()
-	SEND_SOUND(hallucinator, 'sound/magic/charge.ogg')
+	SEND_SOUND(hallucinator, 'sound/effects/magic/charge.ogg')
 	to_chat(hallucinator, span_boldannounce("You feel reality distort for a moment..."))
 	return ..()
 

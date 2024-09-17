@@ -29,7 +29,7 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
-	usesound = 'sound/weapons/empty.ogg'
+	usesound = 'sound/items/weapons/empty.ogg'
 	var/datum/buffer // simple machine buffer for device linkage
 	var/mode = 0
 	var/apc_scanner = TRUE

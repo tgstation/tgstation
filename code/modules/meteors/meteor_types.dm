@@ -203,7 +203,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
+	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 
@@ -368,7 +368,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
 	empulse(src, 3, 8)
 
 //Meaty Ore
@@ -464,6 +464,6 @@
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+	meteorsound = pick('sound/effects/hallucinations/im_here1.ogg','sound/effects/hallucinations/im_here2.ogg')
 
 #undef DEFAULT_METEOR_LIFETIME

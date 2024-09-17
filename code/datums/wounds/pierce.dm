@@ -6,7 +6,7 @@
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
-	sound_effect = 'sound/weapons/slice.ogg'
+	sound_effect = 'sound/items/weapons/slice.ogg'
 	processes = TRUE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)

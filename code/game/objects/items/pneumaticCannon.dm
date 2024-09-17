@@ -39,7 +39,7 @@
 	var/charge_tick = 0
 	var/charge_type
 	var/selfcharge = FALSE
-	var/fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	var/fire_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	var/spin_item = TRUE //Do the projectiles spin when launched?
 	trigger_guard = TRIGGER_GUARD_NORMAL
 

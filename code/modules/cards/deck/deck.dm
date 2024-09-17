@@ -209,7 +209,7 @@
 	cardgame_desc = "suspicious card game"
 	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	force = 5
 	throwforce = 10
 	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")

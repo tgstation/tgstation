@@ -67,8 +67,8 @@
 	inhand_icon_state = "handdrill"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
-	usesound = 'sound/weapons/drill.ogg'
-	hitsound = 'sound/weapons/drill.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/pickaxe/drill/cyborg
@@ -98,8 +98,8 @@
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
-	usesound = 'sound/weapons/sonic_jackhammer.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
 
 /obj/item/pickaxe/improvised
@@ -312,10 +312,10 @@
 	wound_bonus = -10
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonk", "bludgeon", "pound")
-	drop_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	drop_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	block_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
+	block_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS

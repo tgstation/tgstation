@@ -23,7 +23,7 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	base_lighting_alpha = 200
 	base_lighting_color = "#FFF4AA"
 	sound_environment = SOUND_ENVIRONMENT_PLAIN
-	ambientsounds = list('sound/instrumental/ambience/beach/shore.ogg', 'sound/instrumental/ambience/misc/ambiodd.ogg','sound/instrumental/ambience/medical/ambinice.ogg')
+	ambientsounds = list('sound/ambience/beach/shore.ogg', 'sound/ambience/misc/ambiodd.ogg','sound/ambience/medical/ambinice.ogg')
 
 /area/awaymission/museum/cafeteria
 	name = "Nanotrasen Museum Cafeteria"

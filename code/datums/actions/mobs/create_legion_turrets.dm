@@ -18,7 +18,7 @@
 
 /// Creates new legion turrets around the owner between the minimum and maximum
 /datum/action/cooldown/mob_cooldown/create_legion_turrets/proc/create(atom/target)
-	playsound(owner, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
+	playsound(owner, 'sound/effects/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possible_locations = list()
 	for(var/turf/checked_turf in oview(owner, 4)) //Only place the turrets on open turfs
 		if(checked_turf.is_blocked_turf())
@@ -94,7 +94,7 @@
 /// Used for the legion turret.
 /obj/projectile/beam/legion
 	name = "blood pulse"
-	hitsound = 'sound/magic/magic_missile.ogg'
+	hitsound = 'sound/effects/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
 	light_color = COLOR_SOFT_RED

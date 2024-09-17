@@ -39,7 +39,7 @@
 	faction = list(FACTION_HOSTILE)
 	melee_damage_lower = 20
 	melee_damage_upper = 40 //pranked.....
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"

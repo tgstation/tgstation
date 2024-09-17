@@ -5,7 +5,7 @@
 	screen.icon_state = null
 	flick("intro_cult", screen)
 	stoplag(2.5 SECONDS)
-	play_cinematic_sound(sound('sound/magic/enter_blood.ogg'))
+	play_cinematic_sound(sound('sound/effects/magic/enter_blood.ogg'))
 	stoplag(2.8 SECONDS)
 	play_cinematic_sound(sound('sound/machines/terminal_off.ogg'))
 	stoplag(2 SECONDS)
@@ -20,10 +20,10 @@
 /datum/cinematic/cult_fail/play_cinematic()
 	screen.icon_state = "station_intact"
 	stoplag(2 SECONDS)
-	play_cinematic_sound(sound('sound/creatures/narsie_rises.ogg'))
+	play_cinematic_sound(sound('sound/mobs/creatures/narsie_rises.ogg'))
 	stoplag(6 SECONDS)
 	play_cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
 	stoplag(1 SECONDS)
-	play_cinematic_sound(sound('sound/magic/demon_dies.ogg'))
+	play_cinematic_sound(sound('sound/effects/magic/demon_dies.ogg'))
 	stoplag(3 SECONDS)
 	special_callback?.Invoke()

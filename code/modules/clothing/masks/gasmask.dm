@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/gas/welding/update_icon_state()
 	. = ..()

@@ -67,12 +67,12 @@
 	image_icon_state = "e_sword_on_red"
 
 /datum/hallucination/nearby_fake_item/e_sword/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), 'sound/weapons/saberon.ogg', 35, TRUE)
+	hallucinator.playsound_local(get_turf(holder), 'sound/items/weapons/saberon.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		hallucinator.playsound_local(get_turf(holder), 'sound/weapons/saberoff.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(holder), 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/double_bladed

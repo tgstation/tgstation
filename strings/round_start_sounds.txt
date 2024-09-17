@@ -1,4 +1,4 @@
-sound/instrumental/title1.mod
-sound/instrumental/title2.ogg
-sound/instrumental/title3.ogg
-sound/instrumental/clown.ogg
+sound/instrumental/music/lobby_music/title1.mod
+sound/instrumental/music/lobby_music/title2.ogg
+sound/instrumental/music/lobby_music/title3.ogg
+sound/instrumental/music/lobby_music/clown.ogg

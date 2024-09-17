@@ -134,11 +134,11 @@
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
-	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/stepsound = 'sound/vehicles/mecha/mechstep.ogg'
 	///Sound played when the mech walks
-	var/turnsound = 'sound/mecha/mechturn.ogg'
+	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 	///Sounds for types of melee attack
-	var/brute_attack_sound = 'sound/weapons/punch4.ogg'
+	var/brute_attack_sound = 'sound/items/weapons/punch4.ogg'
 	var/burn_attack_sound = 'sound/items/welder.ogg'
 	var/tox_attack_sound = 'sound/effects/spray2.ogg'
 	///Sound on wall destroying

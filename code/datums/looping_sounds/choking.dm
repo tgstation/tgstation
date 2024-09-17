@@ -1,5 +1,5 @@
 /datum/looping_sound/choking
-	mid_sounds = list('sound/creatures/gag1.ogg' = 1, 'sound/creatures/gag2.ogg' = 1, 'sound/creatures/gag3.ogg' = 1, 'sound/creatures/gag4.ogg' = 1, 'sound/creatures/gag5.ogg' = 1)
+	mid_sounds = list('sound/mobs/creatures/gag1.ogg' = 1, 'sound/mobs/creatures/gag2.ogg' = 1, 'sound/mobs/creatures/gag3.ogg' = 1, 'sound/mobs/creatures/gag4.ogg' = 1, 'sound/mobs/creatures/gag5.ogg' = 1)
 	mid_length = 1.6 SECONDS
 	mid_length_vary = 0.3 SECONDS
 	each_once = TRUE

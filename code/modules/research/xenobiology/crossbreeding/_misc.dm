@@ -154,7 +154,7 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE)
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)

@@ -53,60 +53,60 @@
 
 /datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/voice/human/womanlaugh.ogg'
+		return 'sound/mobs/voice/human/womanlaugh.ogg'
 	return pick(
-		'sound/voice/human/manlaugh1.ogg',
-		'sound/voice/human/manlaugh2.ogg',
+		'sound/mobs/voice/human/manlaugh1.ogg',
+		'sound/mobs/voice/human/manlaugh2.ogg',
 	)
 
 
 /datum/species/human/felinid/get_cough_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cough1.ogg',
-			'sound/voice/human/female_cough2.ogg',
-			'sound/voice/human/female_cough3.ogg',
-			'sound/voice/human/female_cough4.ogg',
-			'sound/voice/human/female_cough5.ogg',
-			'sound/voice/human/female_cough6.ogg',
+			'sound/mobs/voice/human/female_cough1.ogg',
+			'sound/mobs/voice/human/female_cough2.ogg',
+			'sound/mobs/voice/human/female_cough3.ogg',
+			'sound/mobs/voice/human/female_cough4.ogg',
+			'sound/mobs/voice/human/female_cough5.ogg',
+			'sound/mobs/voice/human/female_cough6.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cough1.ogg',
-		'sound/voice/human/male_cough2.ogg',
-		'sound/voice/human/male_cough3.ogg',
-		'sound/voice/human/male_cough4.ogg',
-		'sound/voice/human/male_cough5.ogg',
-		'sound/voice/human/male_cough6.ogg',
+		'sound/mobs/voice/human/male_cough1.ogg',
+		'sound/mobs/voice/human/male_cough2.ogg',
+		'sound/mobs/voice/human/male_cough3.ogg',
+		'sound/mobs/voice/human/male_cough4.ogg',
+		'sound/mobs/voice/human/male_cough5.ogg',
+		'sound/mobs/voice/human/male_cough6.ogg',
 	)
 
 
 /datum/species/human/felinid/get_cry_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cry1.ogg',
-			'sound/voice/human/female_cry2.ogg',
+			'sound/mobs/voice/human/female_cry1.ogg',
+			'sound/mobs/voice/human/female_cry2.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cry1.ogg',
-		'sound/voice/human/male_cry2.ogg',
-		'sound/voice/human/male_cry3.ogg',
+		'sound/mobs/voice/human/male_cry1.ogg',
+		'sound/mobs/voice/human/male_cry2.ogg',
+		'sound/mobs/voice/human/male_cry3.ogg',
 	)
 
 
 /datum/species/human/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/voice/human/female_sneeze1.ogg'
-	return 'sound/voice/human/male_sneeze1.ogg'
+		return 'sound/mobs/voice/human/female_sneeze1.ogg'
+	return 'sound/mobs/voice/human/male_sneeze1.ogg'
 
 /datum/species/human/felinid/get_sigh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/voice/human/female_sigh.ogg'
-	return 'sound/voice/human/male_sigh.ogg'
+		return 'sound/mobs/voice/human/female_sigh.ogg'
+	return 'sound/mobs/voice/human/male_sigh.ogg'
 
 /datum/species/human/felinid/get_sniff_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/voice/human/female_sniff.ogg'
-	return 'sound/voice/human/male_sniff.ogg'
+		return 'sound/mobs/voice/human/female_sniff.ogg'
+	return 'sound/mobs/voice/human/male_sniff.ogg'
 
 
 

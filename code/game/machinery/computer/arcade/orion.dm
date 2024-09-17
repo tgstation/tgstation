@@ -421,7 +421,7 @@
 	var/sheriff = remove_crewmember(target) //I shot the sheriff
 	if(target)
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder
-	playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+	playsound(loc,'sound/items/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	if(!settlers.len || !alive)
 		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 		if(obj_flags & EMAGGED)

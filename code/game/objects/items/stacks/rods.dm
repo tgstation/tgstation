@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	max_amount = 50
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
-	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	hitsound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	embed_type = /datum/embed_data/rods
 	novariants = TRUE
 	matter_amount = 2

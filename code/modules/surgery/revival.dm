@@ -56,8 +56,8 @@
 		/obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 5 SECONDS
-	success_sound = 'sound/magic/lightningbolt.ogg'
-	failure_sound = 'sound/magic/lightningbolt.ogg'
+	success_sound = 'sound/effects/magic/lightningbolt.ogg'
+	failure_sound = 'sound/effects/magic/lightningbolt.ogg'
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE

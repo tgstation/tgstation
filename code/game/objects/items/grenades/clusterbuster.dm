@@ -13,7 +13,7 @@
 	var/base_state = "clusterbang"
 	var/payload = /obj/item/grenade/flashbang/cluster
 	var/payload_spawner = /obj/effect/payload_spawner
-	var/prime_sound = 'sound/weapons/armbomb.ogg'
+	var/prime_sound = 'sound/items/weapons/armbomb.ogg'
 	var/min_spawned = 4
 	var/max_spawned = 8
 	var/segment_chance = 35
