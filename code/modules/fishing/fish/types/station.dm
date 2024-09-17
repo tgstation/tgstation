@@ -220,6 +220,6 @@
 	fish_movement_type = /datum/fish_movement
 	beauty = FISH_BEAUTY_EXCELLENT
 	fishing_difficulty_modifier = 45
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	is_bait = FALSE
 	next_type = null
