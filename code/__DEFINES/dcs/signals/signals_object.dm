@@ -418,10 +418,6 @@
 ///sent to the projectile when successfully embedding into something
 #define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
-/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
-#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
-	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
-
 // /obj/vehicle/sealed/car/vim signals
 
 ///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()

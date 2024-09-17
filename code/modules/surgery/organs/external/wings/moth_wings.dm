@@ -45,7 +45,13 @@
 		return FALSE
 	if(owner.throwing)
 		return FALSE
-	if (owner.has_gravity())
+	if(owner.has_gravity())
+		return FALSE
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
+			return FALSE //Can't fly with hidden wings
+	if(burnt)
 		return FALSE
 	var/datum/gas_mixture/current = owner.loc.return_air()
 	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))

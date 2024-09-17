@@ -44,6 +44,8 @@
 	user.update_mouse_pointer()
 
 /obj/item/minebot_remote_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/minebot_remote_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

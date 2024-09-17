@@ -125,7 +125,7 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.GetJobType(/datum/job/unassigned), player_account = FALSE)
+	var/datum/bank_account/blank_bank_account = new("Unassigned", SSjob.get_job_type(/datum/job/unassigned), player_account = FALSE)
 	registered_account = blank_bank_account
 	registered_account.replaceable = TRUE
 
@@ -174,10 +174,10 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /**
  * Helper proc, checks whether the ID card can hold any given set of wildcards.
@@ -987,6 +987,11 @@
 
 	return ..()
 
+/obj/item/card/id/advanced/proc/after_input_check(mob/user)
+	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
+		return FALSE
+	return TRUE
+
 /obj/item/card/id/advanced/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
@@ -1289,7 +1294,7 @@
 	. = ..()
 	registered_account = new(player_account = FALSE)
 	registered_account.account_id = ADMIN_ACCOUNT_ID // this is so bank_card_talk() can work.
-	registered_account.account_job = SSjob.GetJobType(/datum/job/admin)
+	registered_account.account_job = SSjob.get_job_type(/datum/job/admin)
 	registered_account.account_balance += 999999 // MONEY! We add more money to the account every time we spawn because it's a debug item and infinite money whoopie
 
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
@@ -1441,6 +1446,44 @@
 	assigned_icon_state = "assigned_syndicate"
 	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
+
+/// An ID that you can flip with attack_self_secondary, overriding the appearance of the ID (useful for plainclothes detectives for example).
+/obj/item/card/id/advanced/plainclothes
+	name = "Plainclothes ID"
+	///The trim that we use as plainclothes identity
+	var/alt_trim = /datum/id_trim/job/assistant
+
+/obj/item/card/id/advanced/plainclothes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Show/Flip ID"
+
+/obj/item/card/id/advanced/plainclothes/examine(mob/user)
+	. = ..()
+	if(trim_assignment_override)
+		. += span_smallnotice("it's currently under plainclothes identity.")
+	else
+		. += span_smallnotice("flip it to switch to the plainclothes identity.")
+
+/obj/item/card/id/advanced/plainclothes/attack_self(mob/user)
+	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sided ID", list("Show", "Flip"))
+	if(!popup_input || !after_input_check(user))
+		return TRUE
+	if(popup_input == "Show")
+		return ..()
+	balloon_alert(user, "flipped")
+	if(trim_assignment_override)
+		SSid_access.remove_trim_from_chameleon_card(src)
+	else
+		SSid_access.apply_trim_to_chameleon_card(src, alt_trim)
+	update_label()
+	update_appearance()
+
+/obj/item/card/id/advanced/plainclothes/update_label()
+	if(!trim_assignment_override)
+		return ..()
+	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/datum/id_trim/fake = SSid_access.trim_singletons_by_path[alt_trim]
+	name = "[name_string] ([fake.assignment])"
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
@@ -1724,11 +1767,6 @@
 			registered_account = account
 			to_chat(user, span_notice("Your account number has been automatically assigned."))
 
-/obj/item/card/id/advanced/chameleon/proc/after_input_check(mob/user)
-	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return FALSE
-	return TRUE
-
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
 	. = ..()
 
@@ -1924,10 +1962,10 @@
 
 /obj/item/card/cardboard/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/card/cardboard/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]"
+/obj/item/card/cardboard/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 /obj/item/card/cardboard/examine(mob/user)
 	. = ..()

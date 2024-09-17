@@ -19,11 +19,13 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
 	RegisterSignal(parent, COMSIG_NPC_FISHING, PROC_REF(return_fishing_spot))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
+	RegisterSignal(parent, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
 /datum/component/fishing_spot/Destroy()
 	fish_source.on_fishing_spot_del(src)
 	fish_source = null
+	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
@@ -70,15 +72,10 @@
 		return COMPONENT_NO_AFTERATTACK
 	// In case the fishing source has anything else to do before beginning to fish.
 	fish_source.on_start_fishing(rod, user, parent)
-	start_fishing_challenge(rod, user)
-	return COMPONENT_NO_AFTERATTACK
-
-/datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
-	/// Roll what we caught based on modified table
-	var/result = fish_source.roll_reward(rod, user, parent)
-	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
+	var/datum/fishing_challenge/challenge = new(src, rod, user)
 	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/fishing_spot/proc/return_fishing_spot(datum/source, list/fish_spot_container)
 	fish_spot_container[NPC_FISHING_SPOT] = fish_source
@@ -86,3 +83,7 @@
 /datum/component/fishing_spot/proc/explosive_fishing(atom/location, severity)
 	SIGNAL_HANDLER
 	fish_source.spawn_reward_from_explosion(location, severity)
+
+/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	fish_source.readd_fish(fish, releaser)
