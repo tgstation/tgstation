@@ -90,13 +90,14 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
+	status_flags = CANPUSH
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"
 	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/bear/snow/Initialize(mapload)
+/mob/living/basic/bear/snow/ancient/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_GODMODE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 
