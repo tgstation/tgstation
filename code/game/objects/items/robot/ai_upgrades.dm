@@ -4,22 +4,23 @@
 	desc = "You really shouldn't be seeing this"
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
+	///The upgrade that will be applied to the AI when installed
 	var/datum/ai_module/to_gift = /datum/ai_module
 
-/obj/item/aiupgrade/pre_attack(atom/A, mob/living/user, proximity)
+/obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, proximity)
 	if(!proximity)
 		return ..()
-	if(!isAI(A))
+	if(!isAI(target))
 		return ..()
-	var/mob/living/silicon/ai/AI = A
+	var/mob/living/silicon/ai/AI = target
 	var/datum/action/innate/ai/action = locate(to_gift.power_type) in AI.actions
-	var/datum/ai_module/AM = new to_gift
+	var/datum/ai_module/gifted_ability = new to_gift
 	if(!to_gift.upgrade)
 		if(!action)
 			var/ability = to_gift.power_type
-			var/datum/action/AC = new ability
-			AC.Grant(AI)
-		else if(AM.one_purchase)
+			var/datum/action/action = new ability
+			action.Grant(AI)
+		else if(gifted_ability.one_purchase)
 			to_chat(user, "[AI] already has an [src] installed!")
 			return
 		else
@@ -28,11 +29,11 @@
 			action.build_all_button_icons()
 	else
 		if(!action)
-			AM.upgrade(AI)
-			if(AM.unlock_text)
-				to_chat(AI, AM.unlock_text)
-			if(AM.unlock_sound)
-				AI.playsound_local(AI, AM.unlock_sound, 50, 0)
+			gifted_ability.upgrade(AI)
+			if(gifted_ability.unlock_text)
+				to_chat(AI, gifted_ability.unlock_text)
+			if(gifted_ability.unlock_sound)
+				AI.playsound_local(AI, gifted_ability.unlock_sound, 50, 0)
 		update_static_data(AI)
 	to_chat(user, span_notice("You install [src], upgrading [AI]."))
 	to_chat(AI, span_userdanger("[user] has upgraded you with [src]!"))
