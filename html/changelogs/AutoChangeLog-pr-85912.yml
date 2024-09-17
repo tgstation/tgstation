@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Gave the detective an ID that can flipped to look like an assistant ID."
-  - balance: "The detective camera is now silent and doesn't flash."

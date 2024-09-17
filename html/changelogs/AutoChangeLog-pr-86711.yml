@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Changing ID card's trim now properly adjusts linked bank account's job, allowing you to receive bounties for your new job"

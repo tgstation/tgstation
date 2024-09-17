@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - admin: "godmode is now a datum trait instead of a bitflag. This means the process for toggling it is a little different now."

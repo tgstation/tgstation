@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Automated announcement systems now announce researched nodes to their respective departments. You can stop this by either disabling the announcement systems or by using a multitool on the circuitboard of the console you're researching nodes from."

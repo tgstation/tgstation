@@ -21,14 +21,26 @@
 /datum/unit_test/fish_size_weight
 
 /datum/unit_test/fish_size_weight/Run()
-	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
+
+	var/obj/structure/table/table = allocate(/obj/structure/table)
+	var/obj/item/fish/testdummy/fish = new /obj/item/fish/testdummy (table.loc)
+	allocated += fish
 	var/datum/reagent/reagent = fish.reagents?.has_reagent(/datum/reagent/fishdummy)
 	TEST_ASSERT(reagent, "the test fish doesn't have the test reagent.[fish.reagents ? "" : " It doesn't even have a reagent holder."]")
 	var/expected_units = FISH_REAGENT_AMOUNT * fish.weight / FISH_WEIGHT_BITE_DIVISOR
 	TEST_ASSERT_EQUAL(reagent.volume, expected_units, "the test fish has [reagent.volume] units of the test reagent when it should have [expected_units]")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
-	var/expected_num_fillets = round(FISH_SIZE_BULKY_MAX / FISH_FILLET_NUMBER_SIZE_DIVISOR * 2, 1)
-	TEST_ASSERT_EQUAL(fish.num_fillets, expected_num_fillets, "the test fish has [fish.num_fillets] number of fillets when it should have [expected_num_fillets]")
+	var/mob/living/carbon/human/consistent/chef = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/knife/kitchen/blade = allocate(/obj/item/knife/kitchen)
+	var/fish_fillet_type = fish.fillet_type
+	var/expected_num_fillets = fish.expected_num_fillets
+	blade.melee_attack_chain(chef, fish)
+	var/counted_fillets = 0
+	for(var/atom/movable/content as anything in table.loc.contents)
+		if(istype(content, fish_fillet_type))
+			counted_fillets++
+			allocated += content
+	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have been [expected_num_fillets]")
 
 ///Checks that fish breeding works correctly.
 /datum/unit_test/fish_breeding
@@ -71,7 +83,7 @@
 /datum/unit_test/fish_scanning/Run()
 	var/scannable_fishes = 0
 	for(var/obj/item/fish/fish_prototype as anything in subtypesof(/obj/item/fish))
-		if(initial(fish_prototype.experisci_scannable))
+		if(initial(fish_prototype.fish_flags) & FISH_FLAG_EXPERIMENT_SCANNABLE)
 			scannable_fishes++
 	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
 		fish_scan = new fish_scan
@@ -88,7 +100,12 @@
 	fish_traits = list(/datum/fish_trait/dummy)
 	stable_population = INFINITY
 	breeding_timeout = 0
-	show_in_catalog = FALSE //skipped by the autowiki unit test.
+	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+/obj/item/fish/testdummy/add_fillet_type()
+	expected_num_fillets = ..()
+	return expected_num_fillets
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
