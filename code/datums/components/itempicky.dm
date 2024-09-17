@@ -5,13 +5,23 @@
 	var/whitelist
 	/// Message shown if you try to pick up an item not in the whitelist
 	var/message = "You don't like %TARGET, why would you hold it?"
+	/// An optional condition we check for overriding our whitelist;
+	/// can be a var or a callback
+	var/tertiary_condition = null
 
-/datum/component/itempicky/Initialize(whitelist, message)
+/datum/component/itempicky/Initialize(whitelist, message, tertiary_condition)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.whitelist = whitelist
 	if(message)
 		src.message = message
+	if(tertiary_condition)
+		if(istype(tertiary_condition, /datum/callback))
+			// if we're tracking some value that we won't be changing and
+			// isn't resolved logically by a callback, we'll resolve our reference to it instead
+			src.tertiary_condition = tertiary_condition
+		else
+			src.tertiary_condition = &tertiary_condition
 
 /datum/component/itempicky/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(particularly))
@@ -30,6 +40,9 @@
 
 /datum/component/itempicky/proc/particularly(datum/source, obj/item/pickingup)
 	SIGNAL_HANDLER
-	if(!is_type_in_typecache(pickingup, whitelist))
+	// if we were passed the output of a callback, check against that
+	// otherwise resolve our pointer
+	var/tertiary_result = (istype(tertiary_condition, /datum/callback) ? tertiary_condition?:Invoke() : *tertiary_condition)
+	if(!tertiary_result && !is_type_in_typecache(pickingup, whitelist))
 		to_chat(source, span_warning("[replacetext(message, "%TARGET", pickingup)]"))
 		return COMPONENT_LIVING_CANT_PUT_IN_HAND
