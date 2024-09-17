@@ -12,6 +12,7 @@ import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
+import { LorePage } from "./LorePage";
 
 enum Page {
   Antags,
@@ -20,6 +21,7 @@ enum Page {
   Species,
   Quirks,
   Loadout,
+  Lore,
 }
 
 const CharacterProfiles = (props: {
@@ -82,6 +84,10 @@ export const CharacterPreferenceWindow = (props) => {
       pageContents = <LoadoutPage />;
       break;
 
+    case Page.Lore:
+      pageContents = <LorePage />;
+      break;
+
     default:
       exhaustiveCheck(currentPage);
   }
@@ -119,7 +125,21 @@ export const CharacterPreferenceWindow = (props) => {
                   Character
                 </PageButton>
               </Stack.Item>
-
+              {
+                //DOPPLER EDIT: fancy flavour text & character report stuff
+              }
+              <Stack.Item grow>
+                <PageButton
+                 currentPage={currentPage}
+                 page={Page.Lore}
+                 setPage={setCurrentPage}
+                >
+                  Lore
+                </PageButton>
+              {
+                //DOPPLER EDIT END
+              }
+              </Stack.Item>
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}

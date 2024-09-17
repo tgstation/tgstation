@@ -138,6 +138,7 @@ export type PreferencesMenuData = {
       random_body: RandomSetting;
       [otherKey: string]: unknown;
     };
+    doppler_lore: Record<string, unknown>;
     secondary_features: Record<string, unknown>;
     supplemental_features: Record<string, unknown>;
     manually_rendered_features: Record<string, string>;
