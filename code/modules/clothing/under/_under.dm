@@ -242,7 +242,7 @@
  */
 /obj/item/clothing/under/proc/get_sensor_text(silent = TRUE)
 	if(has_sensor == BROKEN_SENSORS)
-		return "<font color='#cc3333'>Non-Functional. Repair with cable coil</font>"
+		return "<font color='#cc3333'>Non-Functional: Repair with cable coil</font>"
 
 	if(silent)
 		return ""
