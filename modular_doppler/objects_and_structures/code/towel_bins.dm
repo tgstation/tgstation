@@ -3,6 +3,7 @@
 	desc = "Seeing this really makes you think of how much worse your life would have been without towels. Seriously, who doesn't use towels?"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
+	base_icon_state = "linenbin"
 	anchored = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -17,25 +18,26 @@
 /obj/structure/towel_bin/empty
 	amount = 0
 	icon_state = "linenbin-empty"
+	base_icon_state = "linenbin"
 	anchored = FALSE
 
 
 /obj/structure/towel_bin/examine(mob/user)
 	. = ..()
 	if(amount <= 0)
-		. += "There are no towels in the bin."
+		. += "There are no towels in the [src]."
 	else
-		. += "There [amount == 1 ? "is one towel" : "are [amount] towels"] in the bin."
+		. += "There [amount == 1 ? "is one towel" : "are [amount] towels"] in the [src]."
 
 
 /obj/structure/towel_bin/update_icon_state()
 	switch(amount)
 		if(0)
-			icon_state = "linenbin-empty"
+			icon_state = "[base_icon_state]-empty"
 		if(1 to 5)
-			icon_state = "linenbin-half"
+			icon_state = "[base_icon_state]-half"
 		else
-			icon_state = "linenbin-full"
+			icon_state = "[base_icon_state]-full"
 	return ..()
 
 
@@ -142,3 +144,26 @@
 		hidden = null
 
 	add_fingerprint(user)
+
+
+/obj/structure/towel_bin/basket
+	name = "linen basket"
+	icon_state = "linenbasket-full"
+	base_icon_state = "linenbasket"
+
+/obj/structure/towel_bin/empty/basket/
+	name = "linen basket"
+	icon_state = "linenbasket-empty"
+	base_icon_state = "linenbasket"
+
+/obj/structure/towel_bin/basket/screwdriver_act(mob/living/user, obj/item/tool)
+	if(amount)
+		to_chat(user, span_warning("[src] must be empty first!"))
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.use_tool(src, user, 0.5 SECONDS, volume = 50))
+		to_chat(user, span_notice("You disassemble [src]."))
+		if(!(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION))
+			new /obj/item/food/grown/grass/thatch(loc, 2)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS

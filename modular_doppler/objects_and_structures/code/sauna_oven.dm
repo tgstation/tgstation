@@ -7,7 +7,7 @@
 /obj/structure/sauna_oven
 	name = "sauna oven"
 	desc = "A modest sauna oven with rocks. Add some fuel, pour some water and enjoy the moment."
-	icon = 'modular_nova/master_files/icons/obj/structures/sauna_oven.dmi'
+	icon = 'modular_doppler/objects_and_structures/icons/sauna_oven.dmi'
 	icon_state = "sauna_oven"
 	density = TRUE
 	anchored = TRUE

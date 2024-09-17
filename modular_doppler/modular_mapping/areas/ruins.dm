@@ -1,4 +1,4 @@
-// Nova Sector area ruins
+// Doppler Sector area ruins
 
 /area/ruin/unpowered/magic_hotsprings
 	name = "Magical Hotsprings"

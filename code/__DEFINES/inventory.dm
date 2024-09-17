@@ -111,17 +111,6 @@ DEFINE_BITFIELD(no_equip_flags, list(
 ///hides belts and riggings
 #define HIDEBELT (1<<14)
 
-//DOPPLER EDIT ADDITION: CUSTOM EAR TOGGLE FOR ANTHRO/ETC EAR SHOWING -
-/// Manually set this on items you want anthro ears to show on!
-#define SHOWSPRITEEARS (1<<15)
-/// Does this sprite hide the tail?
-#define HIDETAIL (1<<16)
-/// Does this sprite also hide the spine on tails? Realistically only useful for the clothes that have a special tail overlay, like MODsuits
-#define HIDESPINE (1<<17)
-/// If this has our taur variant, do we hide our taur part?
-#define HIDETAUR (1<<19)
-//NOVA EDIT ADDITION END
-
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
 #define CHEST (1<<1)
@@ -280,6 +269,8 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	/obj/item/forging/reagent_weapon, // DOPPLER EDIT ADDITION
+	/obj/item/gun/ballistic/bow, // DOPPLER EDIT ADDITION
 ))
 
 /// String for items placed into the left pocket.
