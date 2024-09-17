@@ -287,6 +287,7 @@
 	icon_state = "fishing"
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
+	custom_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -339,6 +340,7 @@
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
 	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/box/fishing_hooks/PopulateContents()
 	new /obj/item/fishing_hook/magnet(src)
@@ -355,6 +357,7 @@
 /obj/item/storage/box/fishing_lines
 	name = "fishing line set"
 	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/box/fishing_lines/PopulateContents()
 	new /obj/item/fishing_line/bouncy(src)
@@ -403,6 +406,7 @@
 	icon_state = "plasticbox"
 	foldable_result = null
 	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 9
 
 /obj/item/storage/box/fishing_lures/PopulateContents()
 	new /obj/item/paper/lures_instructions(src)
