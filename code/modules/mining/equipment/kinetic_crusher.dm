@@ -155,6 +155,7 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
+	destabilizer.icon_state = "[projectile_icon]"
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
@@ -200,7 +201,6 @@
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
-	icon_state = "pulse1"
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
