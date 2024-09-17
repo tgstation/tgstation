@@ -46,7 +46,7 @@
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
 	can_buckle = TRUE
 	buckle_lying = 0
-	playsound(src, 'sound/mobs/creatures/pony/snort.ogg', 50)
+	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
@@ -85,9 +85,9 @@
 	manual_emote("whinnies ANGRILY!")
 
 	playsound(src, pick(list(
-		'sound/mobs/creatures/pony/whinny01.ogg',
-		'sound/mobs/creatures/pony/whinny02.ogg',
-		'sound/mobs/creatures/pony/whinny03.ogg'
+		'sound/mobs/non-humanoids/pony/whinny01.ogg',
+		'sound/mobs/non-humanoids/pony/whinny02.ogg',
+		'sound/mobs/non-humanoids/pony/whinny03.ogg'
 	)), 50)
 
 /mob/living/basic/pony/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)

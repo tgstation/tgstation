@@ -67,7 +67,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
-	playsound(loc, 'sound/mobs/creatures/clown/hehe.ogg', 20)
+	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
 	switch(target.mob_mood.sanity)

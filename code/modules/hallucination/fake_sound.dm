@@ -63,7 +63,7 @@
 
 /datum/hallucination/fake_sound/normal/beepsky
 	volume = 35
-	sound_type = 'sound/mobs/voice/beepsky/freeze.ogg'
+	sound_type = 'sound/mobs/non-humanoids/beepsky/freeze.ogg'
 
 /datum/hallucination/fake_sound/normal/mech
 	volume = 40
@@ -219,9 +219,9 @@
 
 /datum/hallucination/fake_sound/weird/laugher
 	sound_type = list(
-		'sound/mobs/voice/human/womanlaugh.ogg',
-		'sound/mobs/voice/human/manlaugh1.ogg',
-		'sound/mobs/voice/human/manlaugh2.ogg',
+		'sound/mobs/humanoids/human/womanlaugh.ogg',
+		'sound/mobs/humanoids/human/manlaugh1.ogg',
+		'sound/mobs/humanoids/human/manlaugh2.ogg',
 	)
 
 /datum/hallucination/fake_sound/weird/phone
@@ -266,14 +266,14 @@
 	random_hallucination_weight = 2 // Some of these are ambience sounds too
 	volume = 25
 	sound_type = list(
-		'sound/mobs/voice/lowHiss1.ogg',
-		'sound/mobs/voice/lowHiss2.ogg',
-		'sound/mobs/voice/lowHiss3.ogg',
-		'sound/mobs/voice/lowHiss4.ogg',
-		'sound/mobs/voice/hiss1.ogg',
-		'sound/mobs/voice/hiss2.ogg',
-		'sound/mobs/voice/hiss3.ogg',
-		'sound/mobs/voice/hiss4.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
+		'sound/mobs/non-humanoids/hiss/hiss1.ogg',
+		'sound/mobs/non-humanoids/hiss/hiss2.ogg',
+		'sound/mobs/non-humanoids/hiss/hiss3.ogg',
+		'sound/mobs/non-humanoids/hiss/hiss4.ogg',
 	)
 
 /datum/hallucination/fake_sound/weird/radio_static

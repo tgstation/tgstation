@@ -183,7 +183,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
 			user.log_message("released Legion.", LOG_GAME)
 
-		var/sound/legion_sound = sound('sound/mobs/creatures/legion_spawn.ogg')
+		var/sound/legion_sound = sound('sound/mobs/non-humanoids/legion/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
 			if(is_valid_z_level(get_turf(M), T))
 				to_chat(M, span_userdanger("Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released."))

@@ -13,7 +13,7 @@
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 
-	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/mobs/voice/ed209_20sec.ogg')
+	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/mobs/non-humanoids/ed209/ed209_20sec.ogg')
 
 	var/lastfired = 0
 	var/shot_delay = 15
@@ -59,7 +59,7 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/mobs/voice/ed209_20sec.ogg', 'sound/mobs/voice/edplaceholder.ogg'), 50, FALSE)
+	playsound(src, pick('sound/mobs/non-humanoids/ed209/ed209_20sec.ogg', 'sound/mobs/non-humanoids/ed209/edplaceholder.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/items/weapons/laser.ogg'

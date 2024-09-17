@@ -85,11 +85,11 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Kweh!", "Bwark!"),
 		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps its wings!", "pecks at the ground!"),
 		BB_EMOTE_SOUND = list(
-			'sound/mobs/creatures/raptor_1.ogg',
-			'sound/mobs/creatures/raptor_2.ogg',
-			'sound/mobs/creatures/raptor_3.ogg',
-			'sound/mobs/creatures/raptor_4.ogg',
-			'sound/mobs/creatures/raptor_5.ogg',
+			'sound/mobs/non-humanoids/raptor_1.ogg',
+			'sound/mobs/non-humanoids/raptor_2.ogg',
+			'sound/mobs/non-humanoids/raptor_3.ogg',
+			'sound/mobs/non-humanoids/raptor_4.ogg',
+			'sound/mobs/non-humanoids/raptor_5.ogg',
 		),
 		BB_SPEAK_CHANCE = 2,
 	)

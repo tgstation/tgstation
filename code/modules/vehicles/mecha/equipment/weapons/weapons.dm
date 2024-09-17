@@ -200,7 +200,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
+	playsound(chassis, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(!M.can_hear())

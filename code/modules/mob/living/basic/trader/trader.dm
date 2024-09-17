@@ -69,7 +69,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/trader/jumpscare
 
-	sell_sound = 'sound/mobs/voice/hiss2.ogg'
+	sell_sound = 'sound/mobs/non-humanoids/hiss/hiss2.ogg'
 	species_path = /datum/species/skeleton
 	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
 	loot = list(/obj/effect/decal/remains/human)

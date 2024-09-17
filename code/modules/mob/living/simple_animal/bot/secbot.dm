@@ -25,12 +25,12 @@
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
 	automated_announcements = list(
-		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/mobs/voice/beepsky/criminal.ogg',
-		BEEPSKY_VOICED_FREEZE = 'sound/mobs/voice/beepsky/freeze.ogg',
-		BEEPSKY_VOICED_JUSTICE = 'sound/mobs/voice/beepsky/justice.ogg',
-		BEEPSKY_VOICED_YOUR_MOVE = 'sound/mobs/voice/beepsky/creep.ogg',
-		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/voice/beepsky/iamthelaw.ogg',
-		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/voice/beepsky/secureday.ogg',
+		BEEPSKY_VOICED_CRIMINAL_DETECTED = 'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		BEEPSKY_VOICED_FREEZE = 'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		BEEPSKY_VOICED_JUSTICE = 'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		BEEPSKY_VOICED_YOUR_MOVE = 'sound/mobs/non-humanoids/beepsky/creep.ogg',
+		BEEPSKY_VOICED_I_AM_THE_LAW = 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+		BEEPSKY_VOICED_SECURE_DAY = 'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 	)
 
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
@@ -509,7 +509,7 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/mobs/voice/beepsky/criminal.ogg', 'sound/mobs/voice/beepsky/justice.ogg', 'sound/mobs/voice/beepsky/freeze.ogg'), 50, FALSE)
+	playsound(src, pick('sound/mobs/non-humanoids/beepsky/criminal.ogg', 'sound/mobs/non-humanoids/beepsky/justice.ogg', 'sound/mobs/non-humanoids/beepsky/freeze.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()

@@ -133,10 +133,10 @@ GLOBAL_LIST_INIT(maint_ambience,list(
 	'sound/ambience/maintenance/ambimaint11.ogg',
 	'sound/ambience/maintenance/ambimaint12.ogg',
 	'sound/ambience/engineering/ambitech2.ogg',
-	'sound/mobs/voice/lowHiss1.ogg',
-	'sound/mobs/voice/lowHiss2.ogg',
-	'sound/mobs/voice/lowHiss3.ogg',
-	'sound/mobs/voice/lowHiss4.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+	'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
 	'sound/ambience/maintenance/maintambience.ogg',
 ))
 

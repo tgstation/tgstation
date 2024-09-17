@@ -1157,7 +1157,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"human_apoc",TRUE), duration)
 			images += A
-			SEND_SOUND(M, pick(sound('sound/instrumental/antag/bloodcult/bloodcult_gain.ogg'),sound('sound/mobs/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
+			SEND_SOUND(M, pick(sound('sound/instrumental/antag/bloodcult/bloodcult_gain.ogg'),sound('sound/misc/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
 			var/construct = pick("wraith","artificer","juggernaut")
 			var/image/B = image('icons/mob/nonhuman-player/cult.dmi',M,construct, ABOVE_MOB_LAYER)

@@ -43,7 +43,7 @@
 	maptext_height = 64
 	maptext_width = 64
 	mouse_opacity = MOUSE_OPACITY_ICON
-	death_sound = 'sound/mobs/creatures/space_dragon_roar.ogg'
+	death_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	can_buckle_to = FALSE

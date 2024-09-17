@@ -228,7 +228,7 @@
 	if(created_volume < 5)
 		playsound(location,'sound/effects/sparks1.ogg', 100, TRUE)
 	else
-		playsound(location,'sound/mobs/creatures/bee.ogg', 100, TRUE)
+		playsound(location,'sound/mobs/non-humanoids/bee/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
 		for(var/R in holder.reagent_list)
 			if(required_reagents[R])

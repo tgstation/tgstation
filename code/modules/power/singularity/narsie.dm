@@ -68,7 +68,7 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	sound_to_playing_players('sound/mobs/creatures/narsie_rises.ogg')
+	sound_to_playing_players('sound/instrumental/antag/bloodcult/narsie_rises.ogg')
 
 	var/area/area = get_area(src)
 	if(area)

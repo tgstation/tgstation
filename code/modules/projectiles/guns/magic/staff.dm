@@ -227,7 +227,7 @@
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
 	desc = "Honk."
-	fire_sound = 'sound/items/airhorn.ogg'
+	fire_sound = 'sound/items/airhorn/airhorn.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/honk
 	icon_state = "honker"
 	inhand_icon_state = "honker"

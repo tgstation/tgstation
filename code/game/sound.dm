@@ -229,7 +229,7 @@
 		if(SFX_SWING_HIT)
 			soundin = pick('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg')
 		if(SFX_HISS)
-			soundin = pick('sound/mobs/voice/hiss1.ogg','sound/mobs/voice/hiss2.ogg','sound/mobs/voice/hiss3.ogg','sound/mobs/voice/hiss4.ogg')
+			soundin = pick('sound/mobs/non-humanoids/hiss/hiss1.ogg','sound/mobs/non-humanoids/hiss/hiss2.ogg','sound/mobs/non-humanoids/hiss/hiss3.ogg','sound/mobs/non-humanoids/hiss/hiss4.ogg')
 		if(SFX_PAGE_TURN)
 			soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 		if(SFX_RICOCHET)
@@ -257,12 +257,12 @@
 			soundin = pick('sound/items/weapons/gun/revolver/spin1.ogg', 'sound/items/weapons/gun/revolver/spin2.ogg', 'sound/items/weapons/gun/revolver/spin3.ogg')
 		if(SFX_LAW)
 			soundin = pick(list(
-				'sound/mobs/voice/beepsky/creep.ogg',
-				'sound/mobs/voice/beepsky/god.ogg',
-				'sound/mobs/voice/beepsky/iamthelaw.ogg',
-				'sound/mobs/voice/beepsky/insult.ogg',
-				'sound/mobs/voice/beepsky/radio.ogg',
-				'sound/mobs/voice/beepsky/secureday.ogg',
+				'sound/mobs/non-humanoids/beepsky/creep.ogg',
+				'sound/mobs/non-humanoids/beepsky/god.ogg',
+				'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+				'sound/mobs/non-humanoids/beepsky/insult.ogg',
+				'sound/mobs/non-humanoids/beepsky/radio.ogg',
+				'sound/mobs/non-humanoids/beepsky/secureday.ogg',
 			))
 		if(SFX_HONKBOT_E)
 			soundin = pick(list(
@@ -276,14 +276,14 @@
 				'sound/machines/ping.ogg',
 				'sound/effects/magic/Fireball.ogg',
 				'sound/misc/sadtrombone.ogg',
-				'sound/mobs/voice/beepsky/creep.ogg',
-				'sound/mobs/voice/beepsky/iamthelaw.ogg',
-				'sound/mobs/voice/hiss1.ogg',
+				'sound/mobs/non-humanoids/beepsky/creep.ogg',
+				'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg',
+				'sound/mobs/non-humanoids/hiss/hiss1.ogg',
 				'sound/items/weapons/bladeslice.ogg',
 				'sound/items/weapons/flashbang.ogg',
 			))
 		if(SFX_GOOSE)
-			soundin = pick('sound/mobs/creatures/goose1.ogg', 'sound/mobs/creatures/goose2.ogg', 'sound/mobs/creatures/goose3.ogg', 'sound/mobs/creatures/goose4.ogg')
+			soundin = pick('sound/mobs/non-humanoids/goose/goose1.ogg', 'sound/mobs/non-humanoids/goose/goose2.ogg', 'sound/mobs/non-humanoids/goose/goose3.ogg', 'sound/mobs/non-humanoids/goose/goose4.ogg')
 		if(SFX_WARPSPEED)
 			soundin = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
 		if(SFX_SM_CALM)
@@ -464,13 +464,13 @@
 			)
 		if(SFX_SCREECH)
 			soundin = pick(
-				'sound/mobs/creatures/monkey/monkey_screech_1.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_2.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_3.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_4.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_5.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_6.ogg',
-				'sound/mobs/creatures/monkey/monkey_screech_7.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_1.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_2.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_3.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_4.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_5.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_6.ogg',
+				'sound/mobs/non-humanoids/monkey/monkey_screech_7.ogg',
 			)
 		if(SFX_TOOL_SWITCH)
 			soundin = 'sound/items/handling/tool_switch.ogg'
@@ -508,12 +508,12 @@
 				'sound/effects/muffspeech/muffspeech9.ogg',
 			)
 		if(SFX_DEFAULT_FISH_SLAP)
-			soundin = 'sound/mobs/creatures/fish/fish_slap1.ogg'
+			soundin = 'sound/mobs/non-humanoids/fish/fish_slap1.ogg'
 		if(SFX_ALT_FISH_SLAP)
-			soundin = 'sound/mobs/creatures/fish/fish_slap2.ogg'
+			soundin = 'sound/mobs/non-humanoids/fish/fish_slap2.ogg'
 		if(SFX_FISH_PICKUP)
 			soundin = pick(
-				'sound/mobs/creatures/fish/fish_pickup1.ogg',
-				'sound/mobs/creatures/fish/fish_pickup2.ogg',
+				'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
+				'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
 			)
 	return soundin

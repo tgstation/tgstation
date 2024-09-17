@@ -54,7 +54,7 @@
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/launch_towards_target(atom/target)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
 	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg', 25, TRUE)
-	playsound(owner, 'sound/mobs/voice/mook_leap_yell.ogg', 100, TRUE)
+	playsound(owner, 'sound/mobs/non-humanoids/mook/mook_leap_yell.ogg', 100, TRUE)
 	var/turf/target_turf = get_turf(target)
 
 	if(!target_turf.is_blocked_turf())

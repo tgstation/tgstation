@@ -17,7 +17,7 @@
 	melee_damage_upper = 8
 	attack_sound = 'sound/items/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	death_sound = 'sound/mobs/voice/mook_death.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
 	pixel_x = -16
@@ -244,7 +244,7 @@
 	melee_damage_upper = 10
 	gender = MALE
 	attack_sound = 'sound/items/weapons/stringsmash.ogg'
-	death_sound = 'sound/mobs/voice/mook_death.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/bard
 	///our guitar
 	var/obj/item/instrument/guitar/held_guitar

@@ -49,26 +49,26 @@
 	)
 	/// Monkey screeches
 	var/static/list/monkey_screeches = list(
-		'sound/mobs/creatures/monkey/monkey_screech_1.ogg',
-		'sound/mobs/creatures/monkey/monkey_screech_2.ogg',
-		'sound/mobs/creatures/monkey/monkey_screech_3.ogg',
-		'sound/mobs/creatures/monkey/monkey_screech_4.ogg',
+		'sound/mobs/non-humanoids/monkey/monkey_screech_1.ogg',
+		'sound/mobs/non-humanoids/monkey/monkey_screech_2.ogg',
+		'sound/mobs/non-humanoids/monkey/monkey_screech_3.ogg',
+		'sound/mobs/non-humanoids/monkey/monkey_screech_4.ogg',
 	)
 	/// Male screams
 	var/static/list/male_screams = list(
-		'sound/mobs/voice/human/malescream_1.ogg',
-		'sound/mobs/voice/human/malescream_2.ogg',
-		'sound/mobs/voice/human/malescream_3.ogg',
-		'sound/mobs/voice/human/malescream_4.ogg',
-		'sound/mobs/voice/human/malescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_5.ogg',
 	)
 	/// Female screams
 	var/static/list/female_screams = list(
-		'sound/mobs/voice/human/femalescream_1.ogg',
-		'sound/mobs/voice/human/femalescream_2.ogg',
-		'sound/mobs/voice/human/femalescream_3.ogg',
-		'sound/mobs/voice/human/femalescream_4.ogg',
-		'sound/mobs/voice/human/femalescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
 	)
 
 

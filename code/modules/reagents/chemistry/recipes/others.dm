@@ -640,18 +640,18 @@
 /datum/chemical_reaction/scream/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	/// List of screams to play.
 	var/static/list/screams = list(
-		'sound/mobs/voice/human/femalescream_1.ogg',
-		'sound/mobs/voice/human/femalescream_2.ogg',
-		'sound/mobs/voice/human/femalescream_3.ogg',
-		'sound/mobs/voice/human/femalescream_4.ogg',
-		'sound/mobs/voice/human/femalescream_5.ogg',
-		'sound/mobs/voice/human/malescream_1.ogg',
-		'sound/mobs/voice/human/malescream_2.ogg',
-		'sound/mobs/voice/human/malescream_3.ogg',
-		'sound/mobs/voice/human/malescream_4.ogg',
-		'sound/mobs/voice/human/malescream_5.ogg',
-		'sound/mobs/voice/human/malescream_6.ogg',
-		'sound/mobs/voice/human/wilhelm_scream.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+		'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg',
 	)
 
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)

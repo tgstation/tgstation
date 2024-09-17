@@ -38,7 +38,7 @@
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	gold_core_spawnable = NO_SPAWN
-	death_sound = 'sound/mobs/voice/hiss6.ogg'
+	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
 	habitable_atmos = null

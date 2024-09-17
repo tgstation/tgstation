@@ -77,7 +77,7 @@
 	cleanup_time = 10 SECONDS
 
 /datum/cinematic/nuke/clown/play_nuke_effect()
-	play_cinematic_sound(sound('sound/items/airhorn.ogg'))
+	play_cinematic_sound(sound('sound/items/airhorn/airhorn.ogg'))
 	flick("summary_selfdes", screen) //???
 
 /// A fake version of the nuclear detonation, where it winds up, but doesn't explode as the nuke core within was missing.
