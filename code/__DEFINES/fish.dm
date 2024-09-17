@@ -151,6 +151,17 @@
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
 #define NEW_FISH_LAST_FEEDING_MULT 0.5
 
+//IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
+
+///This fish is shown in the catalog and on the wiki (this only matters as an initial, compile-time value)
+#define FISH_FLAG_SHOW_IN_CATALOG (1<<0)
+///This fish has a flopping animation done through matrices
+#define FISH_DO_FLOP_ANIM (1<<1)
+///This fish has been petted in the last 30 seconds
+#define FISH_FLAG_PETTED (1<<2)
+///This fish can be scanned to complete fish scanning experiments
+#define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
+
 #define MIN_AQUARIUM_TEMP T0C
 #define MAX_AQUARIUM_TEMP (T0C + 100)
 #define DEFAULT_AQUARIUM_TEMP (T0C + 24)
