@@ -823,19 +823,19 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			balloon_alert(user, "unlock first!")
 			return
 
-		if(isnull(id_card))
+		if(isnull(id_card) && secure)
 			balloon_alert(user, "not yours to rename!")
 			return
 
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
-		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		var/str = tgui_input_text(user, "Locker Name", "Locker Name")
 		if(!isnull(str))
 			name = str
 			name_set = TRUE
 
-		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		str = tgui_input_text(user, "Locker Description", "Locker Description")
 		if(!isnull(str))
 			desc = str
 			desc_set = TRUE
