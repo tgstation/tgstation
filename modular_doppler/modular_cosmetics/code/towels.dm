@@ -20,6 +20,9 @@
 /// How many reagents can be wrung at once.
 #define TOWEL_WRING_AMOUNT 10
 
+/// Portion (out of 1) of reagents that are lost during the transfer from a towel to a container.
+#define SQUEEZING_DISPERSAL_RATIO 0.75
+
 
 /obj/item/towel
 	name = "towel"
@@ -54,7 +57,6 @@
 	. = ..()
 
 	create_reagents(max_reagent_volume)
-	// AddComponent(/datum/component/liquids_interaction, TYPE_PROC_REF(/obj/item/towel, attack_on_liquids_turf))
 	AddComponent(/datum/component/surgery_initiator) // Since you can do it with bedsheets, why not with towels too?
 
 	register_context()
@@ -222,9 +224,11 @@
 		to_chat(user, span_warning("[target] is full!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	// transfer_towel_reagents_to(target_bucket, reagents.total_volume, user, loss_factor = SQUEEZING_DISPERSAL_RATIO, make_used = TRUE) // If it didn't have enough space, oh well, you lost like 3/4th of what was in the towel anyway, there's just even more loss that way. Doesn't really matter.
+	transfer_towel_reagents_to(target_bucket.reagents, reagents.total_volume, user, loss_factor = SQUEEZING_DISPERSAL_RATIO, make_used = TRUE) // If it didn't have enough space, oh well, you lost like 3/4th of what was in the towel anyway, there's just even more loss that way. Doesn't really matter.
 
 	to_chat(user, span_notice("You wring the liquid out of [src], transferring some of it to [target]."))
+
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -286,15 +290,44 @@
 		var/datum/reagents/temp_holder = new(max_reagent_volume)
 		var/transfer_amount = min(reagents.total_volume, TOWEL_WRING_AMOUNT)
 
-		// transfer_towel_reagents_to(temp_holder, transfer_amount, user, loss_factor = TOWEL_WRING_LOSS_FACTOR, make_used = TRUE)
+		transfer_towel_reagents_to(temp_holder, transfer_amount, user, loss_factor = TOWEL_WRING_LOSS_FACTOR, make_used = TRUE)
 
-		// current_turf.add_liquid_from_reagents(temp_holder)
+		wring(user, current_turf, temp_holder) //because we don't have a liquids subsystem, this proc just imitates the try_splash from reagent_containers but only for turf
 
 		qdel(temp_holder)
 
 		user.visible_message(span_warning("[user] wrings [src], making a mess on \the [current_turf]!"), span_warning("You wring [src], making a mess on \the [current_turf]!"))
 		return CLICK_ACTION_SUCCESS
 
+/obj/item/towel/proc/wring(mob/user, atom/target, datum/reagents/reagent_holder)
+	var/reagent_text
+	user.visible_message(
+		span_danger("[user] splashes the contents of [src] onto [target]."),
+		span_danger("You splash the contents of [src] onto [target]."),
+		ignored_mobs = target,
+	)
+	SEND_SIGNAL(target, COMSIG_ATOM_SPLASHED)
+
+	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
+	splash_animation.icon_state = "splash_floor"
+	splash_animation.color = mix_color_from_reagents(reagent_holder.reagent_list)
+	target.flick_overlay_view(splash_animation, 1 SECONDS)
+
+	for(var/datum/reagent/reagent as anything in reagent_holder.reagent_list)
+		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
+
+	var/mob/thrown_by = thrownby?.resolve()
+	if(isturf(target) && reagent_holder.reagent_list.len && thrown_by)
+		log_combat(thrown_by, target, "splashed (thrown) [english_list(reagent_holder.reagent_list)]")
+		message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagent_holder.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
+
+	reagent_holder.expose(target, TOUCH)
+	log_combat(user, target, "splashed", reagent_text)
+	reagent_holder.clear_reagents()
+
+	return TRUE
 
 /obj/item/towel/machine_wash(obj/machinery/washing_machine/washer)
 	. = ..() // This isn't really needed, but I'm including it in case we ever get dyeable towels.
@@ -415,106 +448,74 @@
 	change_towel_shape(user, TOWEL_USED, silent)
 
 
-// /**
-//  * Helper to transfer reagents from the towel to something else, handling all
-//  * the work related to ensuring that the towel gets updated visually if it now
-//  * becomes dry, while also optionally applying a loss factor to the transfer.
-//  *
-//  * Arguments:
-//  * * target - Reagents target of the reagents transfer.
-//  * * amount - Amount of reagents that are going to be affected by the transfer.
-//  * Won't go above the maximum amount of volume of the target, and it will handle
-//  * making sure that it uses the right amount of reagents if the towel doesn't
-//  * have enough reagents in it for it.
-//  * * user - Mob that does the transfer, if any.
-//  * * loss_factor (optional) - Factor of reagents that get lost during transfer.
-//  * Defaults to 0.
-//  * * make_used (optional) - Whether or not we change the towel to the used sprite.
-//  * Defaults to `FALSE`.
-//  */
-// /obj/item/towel/proc/transfer_towel_reagents_to(datum/reagents/target, amount, mob/user, loss_factor = 0, make_used = FALSE)
-// 	if(!reagents.total_volume || !target || !amount)
-// 		return
+/**
+ * Helper to transfer reagents from the towel to something else, handling all
+ * the work related to ensuring that the towel gets updated visually if it now
+ * becomes dry, while also optionally applying a loss factor to the transfer.
+ *
+ * Arguments:
+ * * target - Reagents target of the reagents transfer.
+ * * amount - Amount of reagents that are going to be affected by the transfer.
+ * Won't go above the maximum amount of volume of the target, and it will handle
+ * making sure that it uses the right amount of reagents if the towel doesn't
+ * have enough reagents in it for it.
+ * * user - Mob that does the transfer, if any.
+ * * loss_factor (optional) - Factor of reagents that get lost during transfer.
+ * Defaults to 0.
+ * * make_used (optional) - Whether or not we change the towel to the used sprite.
+ * Defaults to `FALSE`.
+ */
+/obj/item/towel/proc/transfer_towel_reagents_to(datum/reagents/target, amount, mob/user, loss_factor = 0, make_used = FALSE)
+	if(!reagents.total_volume || !target || !amount)
+		return
 
-// 	amount = min(amount, reagents.total_volume, (target.maximum_volume - target.total_volume) / (1 - loss_factor))
+	amount = min(amount, reagents.total_volume, (target.maximum_volume - target.total_volume) / (1 - loss_factor))
 
-// 	if(!amount)
-// 		return
+	if(!amount)
+		return
 
-// 	reagents.trans_to(target, amount * (1 - loss_factor), no_react = TRUE, transferred_by = user)
+	reagents.trans_to(target, amount * (1 - loss_factor), no_react = TRUE, transferred_by = user)
 
-// 	if(loss_factor && reagents.total_volume)
-// 		reagents.remove_all(amount * loss_factor)
+	if(loss_factor && reagents.total_volume)
+		reagents.remove_all(amount * loss_factor)
 
-// 	if(!reagents.total_volume)
-// 		set_wet(FALSE, !make_used)
+	if(!reagents.total_volume)
+		set_wet(FALSE, !make_used)
 
-// 	if(make_used)
-// 		make_used(user, silent = TRUE)
-
-
-// /**
-//  * Helper to transfer reagents to the towel.
-//  *
-//  * Arguments:
-//  * * source - Reagents source of the reagents transfer.
-//  * * amount - Amount of reagents that are going to be affected by the transfer.
-//  * Won't go above the maximum amount of volume of the towel, and it will handle
-//  * making sure that it uses the right amount of reagents if the source doesn't
-//  * have enough reagents for it.
-//  * * user - Mob that does the transfer, if any.
-//  * * make_used (optional) - Whether or not we change the towel to the used sprite.
-//  * Defaults to `TRUE`.
-//  */
-// /obj/item/towel/proc/transfer_reagents_to_towel(datum/reagents/source, amount, mob/user, make_used = TRUE)
-// 	if(!source || !amount || !source.total_volume)
-// 		return
-
-// 	amount = min(amount, source.total_volume, reagents.maximum_volume - reagents.total_volume)
-
-// 	if(!amount)
-// 		return
-
-// 	source.trans_to(reagents, amount, no_react = TRUE, transferred_by = user)
-
-// 	if(!wet)
-// 		set_wet(TRUE, !make_used || shape == TOWEL_USED)
-
-// 	if(make_used)
-// 		make_used(user, silent = TRUE)
+	if(make_used)
+		make_used(user, silent = TRUE)
 
 
-// /**
-//  * The procedure for remove liquids from turf
-//  *
-//  * The object is called from liquid_interaction element.
-//  * The procedure check range of mop owner and tile, then check reagents in mop, if reagents volume < mop capacity - liquids absorbs from tile
-//  * In another way, input a chat about mop capacity
-//  * Arguments:
-//  * * towel - Towel used to absorb liquids
-//  * * tile - On which tile the towel will try to absorb liquids
-//  * * user - Who tries to absorb liquids with the towel
-//  * * liquids - Liquids that user tries to absorb with the towel
-//  */
-// /obj/item/towel/proc/attack_on_liquids_turf(turf/tile, mob/user, obj/effect/abstract/liquid_turf/liquids)
-// 	if(!in_range(user, tile))
-// 		return FALSE
+/**
+ * Helper to transfer reagents to the towel.
+ *
+ * Arguments:
+ * * source - Reagents source of the reagents transfer.
+ * * amount - Amount of reagents that are going to be affected by the transfer.
+ * Won't go above the maximum amount of volume of the towel, and it will handle
+ * making sure that it uses the right amount of reagents if the source doesn't
+ * have enough reagents for it.
+ * * user - Mob that does the transfer, if any.
+ * * make_used (optional) - Whether or not we change the towel to the used sprite.
+ * Defaults to `TRUE`.
+ */
+/obj/item/towel/proc/transfer_reagents_to_towel(datum/reagents/source, amount, mob/user, make_used = TRUE)
+	if(!source || !amount || !source.total_volume)
+		return
 
-// 	var/free_space = reagents.maximum_volume - reagents.total_volume
-// 	if(free_space <= 0)
-// 		to_chat(user, span_warning("Your [src] can't absorb any more liquid!"))
-// 		return TRUE
+	amount = min(amount, source.total_volume, reagents.maximum_volume - reagents.total_volume)
 
-// 	var/datum/reagents/temp_holder = liquids.take_reagents_flat(free_space)
-// 	temp_holder.trans_to(reagents, temp_holder.total_volume)
-// 	set_wet(reagents.total_volume)
-// 	make_used(user, silent = TRUE)
+	if(!amount)
+		return
 
-// 	to_chat(user, span_notice("You soak \the [src] with some liquids."))
+	source.trans_to(reagents, amount, no_react = TRUE, transferred_by = user)
 
-// 	qdel(temp_holder)
-// 	user.changeNext_move(CLICK_CD_MELEE)
-// 	return TRUE
+	if(!wet)
+		set_wet(TRUE, !make_used || shape == TOWEL_USED)
+
+	if(make_used)
+		make_used(user, silent = TRUE)
+
 
 #undef TOWEL_FOLDED
 #undef TOWEL_FULL
@@ -525,3 +526,4 @@
 #undef TOWEL_CLOTH_AMOUNT
 #undef TOWEL_WRING_LOSS_FACTOR
 #undef TOWEL_WRING_AMOUNT
+#undef SQUEEZING_DISPERSAL_RATIO

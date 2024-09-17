@@ -6736,6 +6736,7 @@
 #include "modular_doppler\objects_and_structures\code\icemoon_tiles.dm"
 #include "modular_doppler\objects_and_structures\code\sauna_oven.dm"
 #include "modular_doppler\objects_and_structures\code\towel_bins.dm"
+#include "modular_doppler\objects_and_structures\code\watercloset.dm"
 #include "modular_doppler\paycheck_rations\code\quirk.dm"
 #include "modular_doppler\paycheck_rations\code\rationpacks.dm"
 #include "modular_doppler\paycheck_rations\code\reagents.dm"

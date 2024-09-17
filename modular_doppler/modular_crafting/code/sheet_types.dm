@@ -92,6 +92,7 @@ GLOBAL_LIST_INIT(doppler_cardboard_recipes, list(
 // Cloth
 
 GLOBAL_LIST_INIT(doppler_cloth_recipes, list(
+	new/datum/stack_recipe("towel", /obj/item/towel, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("eyepatch", /obj/item/clothing/glasses/eyepatch, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("xenoarch bag", /obj/item/storage/bag/xenoarch, 4, category = CAT_CONTAINERS),
 ))
