@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "examining fishing spots while wielding a rod (with sufficient skill) now works."

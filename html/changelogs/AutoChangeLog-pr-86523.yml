@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Medical HUD and crew console can now detect broken (shorted out) suit sensors needing repair"

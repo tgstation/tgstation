@@ -228,7 +228,7 @@
 
 /obj/structure/closet/crate/deforest
 	name = "deforest medical crate"
-	desc = "A DeFortest brand crate of medical supplies."
+	desc = "A DeForest brand crate of medical supplies."
 	icon_state = "deforest"
 	base_icon_state = "deforest"
 

@@ -123,7 +123,7 @@
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
 	//It's important that we register the signals before the component is attached.
-	RegisterSignals(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
 	AddComponent(/datum/component/aquarium_content, beauty = beauty)
 	ADD_TRAIT(src, TRAIT_UNIQUE_AQUARIUM_CONTENT, INNATE_TRAIT)
 
