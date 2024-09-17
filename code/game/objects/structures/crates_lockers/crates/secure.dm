@@ -204,11 +204,26 @@
 			to_chat(user, span_warning("[src] is broken!"))
 	else ..()
 
-/obj/structure/closet/crate/secure/freezer/interdyne
+/obj/structure/closet/crate/secure/interdyne
 	name = "\improper Interdyne crate"
 	desc = "Crate belonging to Interdyne Pharmaceutics. Hopefully doesn't have bioweapons inside..."
-	icon_state = "interdynecrate_secure"
-	base_icon_state = "interdynecrate_secure"
+	icon_state = "interdynecrate"
+	base_icon_state = "interdynecrate"
+
+/obj/structure/closet/crate/secure/freezer/interdyne
+	name = "\improper Interdyne freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
+	icon_state = "interdynefreezer_secure"
+	base_icon_state = "interdynefreezer_secure"
+
+/obj/structure/closet/crate/secure/freezer/interdyne/blood
+	name = "\improper Interdyne blood freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
+
+/obj/structure/closet/crate/secure/freezer/interdyne/blood/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 13)
+		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/secure/freezer/donk
 	name = "\improper Donk Co. fridge"
