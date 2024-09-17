@@ -528,7 +528,7 @@ world << (*reference) // Deref to get the value, outputs "text AGAIN"
 
 // or modify the var remotely
 *reference = "text a THIRD TIME"
-world << pointed_at // outpus "text a THIRD TIME"
+world << pointed_at // outputs "text a THIRD TIME"
 ```
 
 The problem with this is twofold.
