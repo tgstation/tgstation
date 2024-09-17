@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user, datum/ui_state/state)
-	if(isdrone(user))
+	if(isdrone(user) || issilicon(user))
 		return UI_CLOSE
 	if(!isanimal_or_basicmob(user))
 		return ..()
