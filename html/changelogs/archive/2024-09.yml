@@ -407,3 +407,101 @@
   - rscadd: you may weld a crate
   - code_imp: that one cool haunted donk outpost ruins tripwires and such use a subsystem
       instead of globals. no real gameplay effect
+2024-09-15:
+  Ben10Omintrix:
+  - bugfix: fixes basic AI that are supposed to pause during actions not pausing
+  Bisar:
+  - qol: The 'direction' circuit component now also returns the distance of its target.
+  - balance: Most circuit shells and the generic component and generic circuit have
+      had their size reduced.
+  - balance: The airlock circuit shell has had its size increased.
+  DaCoolBoss:
+  - rscadd: Adds the Syndicate Lab to the Icemoon ruin pool.
+  IndieanaJones:
+  - balance: Gorillas made from giving monkeys genetic damage are weaker than their
+      normal counterparts.
+  LT3:
+  - bugfix: Fixed a mislabelled corpse disposal in Icebox medbay, probably less dead
+      bodies showing up in cargo
+  - bugfix: Fixed certain clothing sending suit sensor data when it shouldn't be capable
+  SmArtKar:
+  - image: Updated glowing yellow extract sprite
+  - image: Tanks inside of tank holders have received new sprites
+  - image: Added a new sprite for mediborg surgical saws
+  - spellcheck: Fixed a typo in DeForest medical crates
+  - code_imp: Non-innate engraving blockers should work now (none as of now)
+  - balance: Humans that never had a player controlling them no longer count towards
+      changeling absorption counter
+  TheSmallBlue:
+  - qol: The z-level button got a refresh! It's now applied to more places and it
+      should be simpler to use.
+  Thunder12345:
+  - bugfix: 'Delta: The disposal unit in the curator''s office is now properly connected
+      to the disposals system.'
+  Zytolg:
+  - qol: The Birdshot Tool Storage has been resupplied. New tools are at the crews
+      displosal.
+2024-09-16:
+  Ghommie:
+  - bugfix: Fishing with baits works again.
+  - bugfix: Water turfs from the crashed site ruin on lavaland are no longer named
+      "lavaland atmos".
+  - bugfix: Fixed morbid mobs (coroners) not enjoying room beauty and aquariums in
+      their own weird ways.
+  - rscadd: You an now release fish after catching it for a positive moodlet (or to
+      repopulate certain fishing spot with rare fish).
+  - bugfix: Bitrunning fishing spots no longer deplete limited loot from outside the
+      virtual reality.
+  - bugfix: The treasure chest from the beach is no longer anchored to the floor.
+  - bugfix: Fixed aquarium props not showing up inside the aquarium.
+  - admin: godmode is now a datum trait instead of a bitflag. This means the process
+      for toggling it is a little different now.
+  - rscadd: Whole, unprocessed fish is now edible. However it's pretty much reccomended
+      to grill or fry it for over 30 spess seconds before attempting to eat it.
+  - bugfix: germ-covered, dirty food no longer tries to infect you through contact.
+  - bugfix: Fixed the offsets of the chimp shotgun when held.
+  - qol: Add a screentip to shields and pillows' right-click function (shoving people).
+  - rscadd: Automated announcement systems now announce researched nodes to their
+      respective departments. You can stop this by either disabling the announcement
+      systems or by using a multitool on the circuitboard of the console you're researching
+      nodes from.
+  - bugfix: Fixed the force of swordfish and armored pikes
+  - rscadd: Gave the detective an ID that can flipped to look like an assistant ID.
+  - balance: The detective camera is now silent and doesn't flash.
+  Jewelry-x:
+  - spellcheck: fixed typos on heretic's "Lionhunter's Rifle"
+  vinylspiders:
+  - bugfix: fixes being able to use chuunibyou shouts while mute
+  - bugfix: fixed crafted donuts not getting any sprinkles, ever
+2024-09-17:
+  Ghommie:
+  - bugfix: You once again need to right click to use tackling gloves.
+  Melbert:
+  - qol: You can dump bodybags (with people inside them) down disposals
+  MelokGleb:
+  - spellcheck: busser is now Busser (with big B)
+  Pickle-Coding:
+  - bugfix: Fixes high energy supermatter zaps arcing through an unusually high amount
+      of objects and ignoring grounding rods.
+  PowerfulBacon:
+  - rscadd: Implements the ability to lint for required neighbors in maplint.
+  - rscadd: Adds conditional linting rules in maplint, allowing a lint to apply only
+      if certain conditions are met (Variable is/isn't set, Variable is/isn't a value,
+      Variable matches a regex).
+  SmArtKar:
+  - refactor: Refactored how examines display item properties. A lot of them are now
+      displayed as tags that you can hover over to receive details about, like item
+      size, resistances and materials an object is made of.
+  - qol: Protection classes now better elaborate on thermal resistances of items,
+      displaying the exact temperatures they can protect you from.
+  - bugfix: You can now craft things on tiles with windoors and railings on them.
+  - qol: Added a small vertical margin to ID card image in new examine panel to ensure
+      that it doesn't collide with text
+  - bugfix: Your UI no longer breaks after being kidnapped by a contractor
+  - qol: Being kidnapped by a contractor no longer dumps all of your boxes and belts
+  - bugfix: Dismantling walls with plasma cutters works once more
+  Time-Green:
+  - bugfix: Fixes plasmamen having all external organ species preferences
+  vinylspiders:
+  - bugfix: smartfridges and drying racks will now display their examine text information
+      mutlilined

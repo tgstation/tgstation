@@ -198,7 +198,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	// "It is called a cigarette"
 	AddComponent(/datum/component/edible,\
 		initial_reagents = list_reagents,\
-		food_flags = null,\
+		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
 		volume = 50,\
 		eat_time = 0 SECONDS,\
@@ -208,7 +208,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
-		show_examine = FALSE, \
 	)
 
 /obj/item/cigarette/Destroy()
