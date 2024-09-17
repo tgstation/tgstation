@@ -1,0 +1,1 @@
+#define ORGAN_SLOT_EXTERNAL_FLUFF "fluff"

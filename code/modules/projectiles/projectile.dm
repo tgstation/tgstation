@@ -330,8 +330,8 @@
 				var/splatter_dir = dir
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
-				if(isalien(living_target))
-					new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
+				if(isalien(living_target) || hasgreenblood(living_target)) // DOPPLER EDIT CHANGE - Green blood color - Original line: if(isalien(living_target))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(target_turf, splatter_dir) // DOPPLER EDIT CHANGE - Green blood color - Original line: new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 				if(prob(33))

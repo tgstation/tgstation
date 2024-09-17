@@ -365,6 +365,9 @@ ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES slugcat
+ROUNDSTART_RACES anthromorph
+ROUNDSTART_RACES aquatic
+ROUNDSTART_RACES insectoid
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
@@ -379,7 +382,7 @@ ROUNDSTART_RACES ethereal
 
 ## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
 #ROUNDSTART_RACES android
-#ROUNDSTART_RACES golem
+ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------
 
