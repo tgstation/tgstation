@@ -159,7 +159,8 @@ const Structures = (props) => {
     <Collapsible title="Structures">
       <Box>
         Normal Blobs will expand your reach and can be upgraded into special
-        blobs that perform certain functions.
+        blobs that perform certain functions. Bear in mind that expanding into
+        space has an 80% chance of failing!
       </Box>
       <br />
       <Box>You can upgrade normal blobs into the following types of blob:</Box>
