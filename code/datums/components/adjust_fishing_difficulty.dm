@@ -18,13 +18,14 @@
 	src.slots = slots
 
 /datum/component/adjust_fishing_difficulty/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
-	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
-
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_item_examine))
+	else
+		RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
+		RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_buckle_examine))
 
 	update_check()
 
@@ -50,17 +51,22 @@
 	if(holder.get_slot_by_item(movable_parent) & (slots || item.slot_flags))
 		update_user(holder, removing)
 
-/datum/component/adjust_fishing_difficulty/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
+/datum/component/adjust_fishing_difficulty/proc/on_item_examine(obj/item/item, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
+		return
+	var/method = "[(slots || item.slot_flags) & ITEM_SLOT_HANDS ? "Holding" : "Wearing"] [item.p_them()]"
+	add_examine_line(user, examine_text, method)
+
+/datum/component/adjust_fishing_difficulty/proc/on_buckle_examine(atom/movable/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		return
 	var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[modifier]% " : ""
-	var/method = "Wearing [source.p_them()]"
-	if(!isitem(source))
-		method = "Buckling to [source.p_them()]"
-	else
-		var/obj/item/item = source
-		if((slots || item.slot_flags) & ITEM_SLOT_HANDS)
-			method = "Holding [source.p_them()]"
+	add_examine_line(user, examine_text, "Buckling to [source.p_them()]")
+
+/datum/component/adjust_fishing_difficulty/proc/add_examine_line(mob/user, list/examine_text, method)
+	var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[modifier]% " : ""
 	var/text = "[method] will make fishing [percent][modifier > 0 ? "easier" : "harder"]."
 	if(modifier > 0)
 		examine_text += span_nicegreen(text)
