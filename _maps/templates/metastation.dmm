@@ -7,9 +7,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/engineering/supermatter/room)
-"c" = (
-/turf/open/floor/plating/airless,
-/area/station/engineering/supermatter/room)
 "d" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/energy_accumulator/grounding_rod,
@@ -20,15 +17,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/engineering/supermatter/room)
-"g" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/station/engineering/supermatter)
 "j" = (
 /obj/machinery/the_singularitygen,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/engineering/supermatter/room)
+"k" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/station/engineering/supermatter)
 "m" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/fuel_chamber{
@@ -115,20 +112,11 @@
 /turf/open/floor/plating/airless,
 /area/station/engineering/supermatter)
 "O" = (
+/turf/open/floor/plating/airless,
+/area/station/engineering/supermatter/room)
+"P" = (
 /turf/open/space/basic,
 /area/station/engineering/supermatter)
-"P" = (
-/obj/machinery/power/emitter,
-/obj/machinery/power/emitter,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
-"Q" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/power/energy_accumulator/grounding_rod,
-/obj/machinery/power/energy_accumulator/grounding_rod,
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
 "R" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -148,6 +136,12 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
+/area/station/engineering/supermatter/room)
+"U" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
+/turf/open/space/basic,
 /area/station/engineering/supermatter/room)
 "V" = (
 /obj/structure/lattice/catwalk,
@@ -199,9 +193,9 @@ V
 j
 b
 b
-c
+O
 W
-c
+O
 o
 o
 y
@@ -211,17 +205,17 @@ a
 "}
 (3,1,1) = {"
 a
-Q
+U
 V
 e
 b
 b
-c
+O
 m
 B
 o
 o
-P
+y
 V
 y
 a
@@ -233,9 +227,9 @@ V
 V
 V
 V
-c
+O
 Y
-c
+O
 V
 V
 V
@@ -368,11 +362,11 @@ z
 u
 u
 M
-O
-O
-O
-O
-O
+P
+P
+P
+P
+P
 M
 u
 u
@@ -385,11 +379,11 @@ z
 u
 u
 M
-O
-O
-O
-O
-O
+P
+P
+P
+P
+P
 M
 u
 u
@@ -402,11 +396,11 @@ z
 u
 u
 M
-O
-O
-g
-O
-O
+P
+P
+k
+P
+P
 M
 u
 u
@@ -419,11 +413,11 @@ z
 u
 u
 M
-O
-O
-O
-O
-O
+P
+P
+P
+P
+P
 M
 u
 u
@@ -436,11 +430,11 @@ z
 u
 u
 M
-O
-O
-O
-O
-O
+P
+P
+P
+P
+P
 M
 u
 u
