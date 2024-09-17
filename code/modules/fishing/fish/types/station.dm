@@ -172,7 +172,7 @@
 
 /obj/item/fish/fryish/fritterish
 	name = "fritterish"
-	desc = "A <u>deliciously</> extremophile alien fish. This one looks like a taiyaki."
+	desc = "A <u>deliciously</u> extremophile alien fish. This one looks like a taiyaki."
 	icon_state = "fritterish"
 	average_size = 50
 	average_weight = 1000
@@ -202,7 +202,7 @@
 
 /obj/item/fish/fryish/nessie
 	name = "nessie-fish"
-	desc = "A <u>deliciously</> extremophile alien fish. This one is so big, you could write legends about it."
+	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "nessiefish"
 	base_pixel_x = -16
