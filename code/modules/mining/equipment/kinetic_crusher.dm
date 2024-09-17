@@ -508,6 +508,7 @@
 	denied_type = /obj/item/crusher_trophy/retool_kit
 	var/retool_icon = "crusher_sword"
 	var/retool_inhand_icon = "crusher_sword"
+	var/retool_projectile_icon = "pulse1"
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
@@ -517,6 +518,7 @@
 	if(.)
 		H.icon_state = retool_icon
 		H.current_inhand_icon_state = retool_inhand_icon
+		H.projectile_icon = retool_projectile_icon
 		H.inhand_icon_state = "[H.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
 		if(iscarbon(H.loc))
 			var/mob/living/carbon/holder = H.loc
@@ -526,6 +528,7 @@
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/H)
 	H.icon_state = initial(H.icon_state)
 	H.current_inhand_icon_state = initial(H.current_inhand_icon_state)
+	H.projectile_icon = initial(H.projectile_icon)
 	H.inhand_icon_state = "[H.current_inhand_icon_state]0"
 	if(iscarbon(H.loc))
 		var/mob/living/carbon/holder = H.loc
@@ -541,6 +544,7 @@
 	denied_type = /obj/item/crusher_trophy/retool_kit
 	retool_icon = "crusher_harpoon"
 	retool_inhand_icon = "crusher_harpoon"
+	retool_projectile_icon = "pulse_harpoon"
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a harpoon"
