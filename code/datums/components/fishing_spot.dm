@@ -19,6 +19,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined_more))
 	RegisterSignal(parent, COMSIG_NPC_FISHING, PROC_REF(return_fishing_spot))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(explosive_fishing))
+	RegisterSignal(parent, COMSIG_FISH_RELEASED_INTO, PROC_REF(fish_released))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(link_to_fish_porter))
 	ADD_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 
@@ -26,6 +27,7 @@
 	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 	fish_source.on_fishing_spot_del(src)
 	fish_source = null
+	REMOVE_TRAIT(parent, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
@@ -89,3 +91,7 @@
 	if(istype(tool.buffer, /obj/machinery/fishing_portal_generator))
 		var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 		return portal.link_fishing_spot(fish_source, source, user)
+
+/datum/component/fishing_spot/proc/fish_released(datum/source, obj/item/fish/fish, mob/living/releaser)
+	SIGNAL_HANDLER
+	fish_source.readd_fish(fish, releaser)

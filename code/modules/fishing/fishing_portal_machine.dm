@@ -219,6 +219,7 @@
 			return
 
 	active = AddComponent(/datum/component/fishing_spot, selected_source)
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(use_power != NO_POWER_USE)
 		use_power = ACTIVE_POWER_USE
 	update_icon()
@@ -231,6 +232,8 @@
 			if(linked_fishing_spots[spot] == active.fish_source)
 				UnregisterSignal(spot, COMSIG_MOVABLE_Z_CHANGED)
 	QDEL_NULL(active)
+
+	REMOVE_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	if(!QDELETED(src))
 		if(use_power != NO_POWER_USE)
 			use_power = IDLE_POWER_USE

@@ -17,8 +17,8 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
-	thermal_conductivity = 0.04
-	heat_capacity = 10000
+	thermal_conductivity = 0.02
+	heat_capacity = 20000
 	tiled_dirt = TRUE
 
 /turf/open/misc/attackby(obj/item/W, mob/user, params)
