@@ -285,7 +285,7 @@ jobs:
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   completion_gate: # Serves as a non-moving target for branch rulesets
-    if: always()
+    if: always() && !cancelled()
     name: Completion Gate
     needs: [ test_windows, compare_screenshots, compile_all_maps, run_linters ]
     runs-on: ubuntu-latest
