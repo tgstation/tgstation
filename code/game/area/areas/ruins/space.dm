@@ -335,7 +335,7 @@
 /area/ruin/space/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
 	icon_state = "os_delta_ai"
-	ambientsounds = list('sound/instrumental/ambience/ambimalf.ogg', 'sound/instrumental/ambience/ambitech.ogg', 'sound/instrumental/ambience/ambitech2.ogg', 'sound/instrumental/ambience/ambiatmos.ogg', 'sound/instrumental/ambience/ambiatmos2.ogg')
+	ambientsounds = list('sound/instrumental/ambience/ambimalf.ogg', 'sound/instrumental/ambience/engineering/ambitech.ogg', 'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambiatmos.ogg', 'sound/instrumental/ambience/engineering/ambiatmos2.ogg')
 
 /area/ruin/space/ancientstation/delta/storage
 	name = "\improper Delta Station Storage"
@@ -552,8 +552,8 @@
 
 /area/ruin/space/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
-	ambientsounds = list('sound/instrumental/ambience/ambisin2.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/ambience/ambigen9.ogg', 'sound/instrumental/ambience/ambitech.ogg',\
-											'sound/instrumental/ambience/ambitech2.ogg', 'sound/instrumental/ambience/ambitech3.ogg', 'sound/instrumental/ambience/ambimystery.ogg')
+	ambientsounds = list('sound/instrumental/ambience/engineering/ambisin2.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/signal.ogg', 'sound/instrumental/ambience/general/ambigen9.ogg', 'sound/instrumental/ambience/engineering/ambitech.ogg',\
+											'sound/instrumental/ambience/engineering/ambitech2.ogg', 'sound/instrumental/ambience/engineering/ambitech3.ogg', 'sound/instrumental/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
 // CRASHED PRISON SHUTTLE
@@ -671,7 +671,7 @@
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	requires_power = FALSE
-	ambientsounds = list('sound/instrumental/ambience/ambigen12.ogg','sound/instrumental/ambience/ambigen13.ogg','sound/instrumental/ambience/ambinice.ogg')
+	ambientsounds = list('sound/instrumental/ambience/general/ambigen12.ogg','sound/instrumental/ambience/general/ambigen13.ogg','sound/instrumental/ambience/medical/ambinice.ogg')
 
 // the outlet
 /area/ruin/space/has_grav/the_outlet/storefront
