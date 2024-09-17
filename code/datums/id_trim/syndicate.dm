@@ -53,13 +53,20 @@
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	big_pointer = TRUE
 
-// Trim for Gorlex Marauder dogtags
+// Trim for deathmatch Syndicate agent outfits
 /datum/id_trim/syndicom/gorlex
 	assignment = "Gorlex Marauder"
 
-// Trim for Gorlex Marauder dogtags
+/datum/id_trim/syndicom/donk
+	assignment = "Gorlex Marauder"
+
+/datum/id_trim/syndicom/cybersun
+	assignment = "Gorlex Marauder"
+
 /datum/id_trim/syndicom/gorlex
 	assignment = "Gorlex Marauder"
+
+
 
 /// Trim for Syndicate mobs, outfits and corpses.
 /datum/id_trim/syndicom/captain

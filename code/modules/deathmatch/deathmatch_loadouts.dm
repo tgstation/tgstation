@@ -569,6 +569,7 @@
 	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
 	implants = list(/obj/item/implant/explosive, /obj/item/implant/weapons_auth)
 	var/jobname = "Syndicate Agent"
+	trim =
 
 /datum/outfit/deathmatch_loadout/syndicate/post_equip(mob/living/carbon/human/player, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -576,10 +577,7 @@
 	var/obj/item/card/id/idcard = player.wear_id
 	idcard.registered_name = player.real_name
 	idcard.assignment = jobname
-	idcard.trim_state = "trim_stationengineer"
-	idcard.department_color = COLOR_SYNDIE_RED
-	idcard.subdepartment_color = COLOR_SYNDIE_RED
-	idcard.trimstate = "trim_syndicate"
+	idcard.trim = /datum/id_trim/syndicom
 	return ..()
 
 /datum/outfit/deathmatch_loadout/syndicate/cybersun
