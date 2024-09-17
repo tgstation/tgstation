@@ -326,6 +326,12 @@
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
+		/datum/computer_file/program/borg_monitor,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/crew_manifest,
+		// /datum/computer_file/program/records/medical, //read only/unable to edit (good). Could add this to Mediborgs
+		// /datum/computer_file/program/records/security, //read only/unable to edit (good). Could add this to Peacekeepers
+		// /datum/computer_file/program/supermatter_monitor, //read only/unable to edit (good). Could add this to Engiborgs
 	)
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
