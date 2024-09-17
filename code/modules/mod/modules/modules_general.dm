@@ -1013,13 +1013,14 @@
 		var/obj/item/gloves = mod?.get_part_from_slot(ITEM_SLOT_GLOVES)
 		if(gloves && !QDELETED(mod))
 			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+	return ..()
 
 /obj/item/mod/module/fishing_glove/on_suit_activation()
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
-	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
-	if(!equipped)
+	if(!gloves)
 		return
-	if(gloves)
+	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped)
 
 /obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
