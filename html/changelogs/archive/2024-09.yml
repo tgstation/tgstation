@@ -473,3 +473,35 @@
   vinylspiders:
   - bugfix: fixes being able to use chuunibyou shouts while mute
   - bugfix: fixed crafted donuts not getting any sprinkles, ever
+2024-09-17:
+  Ghommie:
+  - bugfix: You once again need to right click to use tackling gloves.
+  Melbert:
+  - qol: You can dump bodybags (with people inside them) down disposals
+  MelokGleb:
+  - spellcheck: busser is now Busser (with big B)
+  Pickle-Coding:
+  - bugfix: Fixes high energy supermatter zaps arcing through an unusually high amount
+      of objects and ignoring grounding rods.
+  PowerfulBacon:
+  - rscadd: Implements the ability to lint for required neighbors in maplint.
+  - rscadd: Adds conditional linting rules in maplint, allowing a lint to apply only
+      if certain conditions are met (Variable is/isn't set, Variable is/isn't a value,
+      Variable matches a regex).
+  SmArtKar:
+  - refactor: Refactored how examines display item properties. A lot of them are now
+      displayed as tags that you can hover over to receive details about, like item
+      size, resistances and materials an object is made of.
+  - qol: Protection classes now better elaborate on thermal resistances of items,
+      displaying the exact temperatures they can protect you from.
+  - bugfix: You can now craft things on tiles with windoors and railings on them.
+  - qol: Added a small vertical margin to ID card image in new examine panel to ensure
+      that it doesn't collide with text
+  - bugfix: Your UI no longer breaks after being kidnapped by a contractor
+  - qol: Being kidnapped by a contractor no longer dumps all of your boxes and belts
+  - bugfix: Dismantling walls with plasma cutters works once more
+  Time-Green:
+  - bugfix: Fixes plasmamen having all external organ species preferences
+  vinylspiders:
+  - bugfix: smartfridges and drying racks will now display their examine text information
+      mutlilined

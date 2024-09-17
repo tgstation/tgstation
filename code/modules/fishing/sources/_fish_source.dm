@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
+		if(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			return TRUE
 	return FALSE
 
@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
+		if(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			var/init_name = initial(prototype.name)
 			if(rod)
 				var/init_weight = fish_table[reward]
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 					if(weight/init_weight >= 3.5)
 						init_name = "<u>init_name</u>"
 				else if(weight < init_weight)
-					init_name = span_small(reward)
+					init_name = span_small(init_name)
 			known_fishes += init_name
 
 	if(!length(known_fishes))
@@ -514,7 +514,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			total_weight_without_bait += weight
 			total_weight_no_fish += weight
 			continue
-		if(initial(fish.show_in_catalog))
+		if(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			only_fish += fish
 		total_weight_without_bait += round(fish_table[fish] * FISH_WEIGHT_MULT_WITHOUT_BAIT, 1)
 
