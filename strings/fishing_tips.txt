@@ -15,6 +15,8 @@ You may find worms by digging through sand, ash and snow.
 You can revive fish by using a Lazarus Injector on them. However, using Strange Reagent would be a smarter option here.
 You can feed fish outside of an aquarium by tapping them with a can of fish feed.
 More fishing rods and fish cases can be printed at the autolathe.
+You can link the fish portal generator to other fishing spots with a multitool. The maximum amount of fishing spots that can be linked and whether or not the link works on different z-levels depends on the quality of the machinery components.
+The actual name of the fishing portal generator is 'fish-porter 3000'. They're totally the same thing however.
 Seeking alternative ways to catch fish without bothering to do it yourself? Explosives can be thrown at fishing spots to get several (dead) fishes in a pinch.
 You can raise lobstrosities from chasm chrabs. However, lobstrosities can only be tamed with spare limbs or lavaloop fish while still young.
 Lavaloop fish make for dangerous yet somewhat effective throwing weapons against big fauna.
