@@ -809,13 +809,16 @@
 ///return first thing in L which has var/varname == value
 ///this is typecaste as list/L, but you could actually feed it an atom instead.
 ///completely safe to use
-/proc/get_element_by_var(list/inserted_list, varname, value)
+/proc/get_element_by_var(list/inserted_list, varname, value, poll_value = FALSE)
 	varname = "[varname]"
 	for(var/datum/checked_datum in inserted_list)
 		if(!checked_datum.vars.Find(varname))
 			continue
 		if(checked_datum.vars[varname] == value)
-			return checked_datum
+			if(poll_value)
+				return list(checked_datum, checked_datum.vars[varname])
+			else
+				return checked_datum
 
 
 ///Copies a list, and all lists inside it recusively
