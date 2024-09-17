@@ -164,6 +164,7 @@
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
+	base_icon_state = icon_state
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
 	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
@@ -252,20 +253,21 @@
 	//Remove the blood from the reagents holder and reward the player with some extra nutriment added to the fish.
 	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
 	var/datum/reagent/blood/blood = reagents.has_reagent(/datum/reagent/blood)
-	var/old_blood_volume = blood?.volume
+	var/old_blood_volume = blood ? blood.volume : 0 //we can't use the ?. operator since the above proc doesn't return null but 0
 	reagents.del_reagent(/datum/reagent/blood)
 
 	///Make space for the additional nutriment
-	var/volume_mult = 1
-	if(bites_amount)
-		var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
-		var/bites_left = initial_bites_left - bites_amount
-		volume_mult = initial_bites_left / bites_left
-	adjust_reagents_capacity((protein?.volume - old_blood_volume) * volume_mult)
-
-	///Add the extra nutriment
-	if(protein)
-		reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+	if(blood || protein)
+		var/volume_mult = 1
+		var/protein_volume = protein ? protein.volume : 0
+		if(bites_amount)
+			var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
+			var/bites_left = initial_bites_left - bites_amount
+			volume_mult = initial_bites_left / bites_left
+		adjust_reagents_capacity((protein.volume - old_blood_volume) * volume_mult)
+		///Add the extra nutriment
+		if(protein)
+			reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
 
 	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
 	edible.foodtypes &= ~(RAW|GORE)
@@ -389,7 +391,7 @@
 	if(status == FISH_DEAD && icon_state_dead)
 		icon_state = icon_state_dead
 	else
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
@@ -507,7 +509,7 @@
 				reagents.multiply_reagents(new_weight_ratio)
 				adjust_reagents_capacity(volume_diff)
 	else
-		maximum_weight = min(new_weight * 2, average_size * MAX_FISH_DEVIATION_COEFF)
+		maximum_weight = min(new_weight * 2, new_weight * MAX_FISH_DEVIATION_COEFF)
 
 	weight = new_weight
 

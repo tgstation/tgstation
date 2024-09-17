@@ -174,6 +174,8 @@
 	name = "fritterish"
 	desc = "A <u>deliciously</> extremophile alien fish. This one looks like a taiyaki."
 	icon_state = "fritterish"
+	average_size = 50
+	average_weight = 1000
 	sprite_width = 5
 	sprite_height = 3
 	stable_population = 5
@@ -184,9 +186,9 @@
 	next_type = /datum/fish_evolution/nessie
 	growth_time = 10 MINUTES
 
-/obj/item/fish/fryish/fritterish/Initialize(mapload)
+/obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	icon_state = pick("fritterish", "bernardfish", "matthewfish")
+	base_icon_state = icon_state = pick("fritterish", "bernardfish", "matthewfish")
 	switch(icon_state)
 		if("bernardfish")
 			name = "bernard-fish"

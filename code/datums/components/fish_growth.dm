@@ -18,23 +18,36 @@
 	. = ..()
 	if(!isfish(parent))
 		return COMPONENT_INCOMPATIBLE
-	var/evo_growth = ispath(result_type, /datum/fish_evolution)
-	RegisterSignal(parent, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
-	if(evo_growth)
-		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[result_type]
-		evolution.RegisterSignal(parent, COMSIG_FISH_BEFORE_GROWING, TYPE_PROC_REF(/datum/fish_evolution, growth_checks))
-		evolution.register_fish(parent)
 	src.result_type = result_type
 	growth_rate = 100 / growth_time
 	src.use_drop_loc = use_drop_loc
 	src.del_on_grow = del_on_grow
 	src.inherit_name = inherit_name
 
-/datum/component/fish_growth/CheckDupeComponent(result_type, growth_time, use_drop_loc = TRUE, del_on_grow = TRUE)
+/datum/component/fish_growth/CheckDupeComponent(
+	/datum/component/fish_growth/new_growth, // will be null
+	result_type,
+	growth_time,
+	use_drop_loc = TRUE,
+	del_on_grow = TRUE,
+	inherit_name = TRUE,
+)
 	if(result_type == src.result_type)
 		growth_rate = 100 / growth_time
 		return TRUE //copy the growth rate and kill the new component
 	return FALSE
+
+/datum/component/fish_growth/RegisterWithParent()
+	var/evo_growth = ispath(result_type, /datum/fish_evolution)
+	RegisterSignal(parent, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
+	if(!evo_growth)
+		return
+	var/datum/fish_evolution/evolution = GLOB.fish_evolutions[result_type]
+	evolution.RegisterSignal(parent, COMSIG_FISH_BEFORE_GROWING, TYPE_PROC_REF(/datum/fish_evolution, growth_checks))
+	evolution.register_fish(parent)
+
+/datum/component/fish_growth/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_FISH_LIFE, COMSIG_FISH_BEFORE_GROWING))
 
 /datum/component/fish_growth/proc/on_fish_life(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
