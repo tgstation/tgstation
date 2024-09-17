@@ -222,21 +222,21 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, reason)
 
 /**
- * Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
+ * Proc called when the COMSIG_MOB_COMPLETE_FISHING signal is sent.
  * Check if we've succeeded. If so, write into memory and dispense the reward.
  */
-/datum/fish_source/proc/on_challenge_completed(datum/fishing_challenge/source, mob/user, success)
+/datum/fish_source/proc/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	if(!success)
 		return
-	var/obj/item/fish/caught = source.reward_path
-	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-	var/turf/fishing_spot = get_turf(source.float)
-	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
-	if(source.used_rod)
-		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
-		source.used_rod.consume_bait(reward)
+	var/turf/fishing_spot = get_turf(challenge.float)
+	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, fishing_spot)
+	if(reward)
+		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
+	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
+	challenge.used_rod.consume_bait(reward)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
