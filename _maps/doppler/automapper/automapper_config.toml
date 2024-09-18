@@ -15,7 +15,7 @@
 map_files = ["icemoon_underground_icewalker_lower.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [150, 16, 1]
+coordinates = [170, 16, 1]
 trait_name = "Station"
 
 # Icecats Camp Upper Level
@@ -23,5 +23,5 @@ trait_name = "Station"
 map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [150, 16, 2]
+coordinates = [170, 16, 2]
 trait_name = "Station"
