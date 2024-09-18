@@ -18,8 +18,8 @@
 		src.tertiary_condition = tertiary_condition
 
 /datum/component/itempicky/Destroy(force)
-	. = ..()
 	tertiary_condition = null
+	return ..()
 
 /datum/component/itempicky/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(particularly))
