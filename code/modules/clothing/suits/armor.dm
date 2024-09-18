@@ -294,6 +294,10 @@
 	equip_delay_other = 60
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+
 /datum/armor/armor_riot
 	melee = 50
 	bullet = 10
@@ -412,6 +416,10 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+
+/obj/item/clothing/suit/armor/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 
 //All of the armor below is mostly unused
@@ -694,6 +702,10 @@
 		/obj/item/spear,
 		/obj/item/gun/ballistic/bow
 	)
+
+/obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 /datum/armor/military
 	melee = 45
