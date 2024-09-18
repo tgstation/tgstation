@@ -8,6 +8,7 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
+	fishing_modifier = 0
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
@@ -57,6 +58,7 @@
 	light_power = 0.8
 	light_color = "#ffcc99"
 	light_on = FALSE
+	fishing_modifier = 0
 	var/helmet_on = FALSE
 	var/smile = FALSE
 	var/smile_color = COLOR_RED
