@@ -249,7 +249,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
-	attack_sound = 'sound/effects/curse1.ogg'
+	attack_sound = 'sound/effects/curse/curse1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "simply misses"
 	speed = 0

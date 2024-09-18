@@ -1141,7 +1141,7 @@
 	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
 	target.apply_damage(damage = ishostile(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 	shattered = TRUE
 	moveToNullspace()
 	balloon_alert(user, "katana shattered")

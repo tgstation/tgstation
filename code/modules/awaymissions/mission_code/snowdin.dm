@@ -333,9 +333,9 @@
 	DELAY 10
 	SAY You don't need to tell me twice, I just need to swipe access and then..
 	DELAY 15
-	SOUND sound/effects/glassbr1.ogg
+	SOUND sound/effects/glass/glassbr1.ogg
 	DELAY 10
-	SOUND sound/effects/glassbr2.ogg
+	SOUND sound/effects/glass/glassbr2.ogg
 	DELAY 15
 	NAME Jacob Ullman
 	DELAY 10
@@ -353,7 +353,7 @@
 	DELAY 15
 	SOUND sound/effects/woodhit.ogg
 	DELAY 2
-	SOUND sound/effects/bodyfall3.ogg
+	SOUND sound/effects/bodyfall/bodyfall3.ogg
 	DELAY 5
 	SOUND sound/effects/meow1.ogg
 	DELAY 15

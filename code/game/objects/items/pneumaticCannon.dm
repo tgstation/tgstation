@@ -103,7 +103,7 @@
 /obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
 	if(needs_air == FALSE)
 		return
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	pressure_setting = pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : pressure_setting + 1
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE

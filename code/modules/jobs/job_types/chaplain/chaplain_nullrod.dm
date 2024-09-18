@@ -683,7 +683,7 @@
 	armour_penetration = 35
 	attack_verb_continuous = list("pulses", "mends", "cuts")
 	attack_verb_simple = list("pulse", "mend", "cut")
-	hitsound = 'sound/effects/sparks4.ogg'
+	hitsound = 'sound/effects/sparks/sparks4.ogg'
 	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
 // Ancient Spear - Slight armor penetration, based on the Brass Spear from the Clockcult game mode.

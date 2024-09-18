@@ -15,7 +15,7 @@
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
-	var/item_recycle_sound = 'sound/items/welder.ogg'
+	var/item_recycle_sound = 'sound/items/tools/welder.ogg'
 	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
@@ -239,7 +239,7 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 

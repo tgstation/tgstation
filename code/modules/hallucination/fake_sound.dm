@@ -49,13 +49,13 @@
 	sound_type = 'sound/machines/terminal_prompt.ogg'
 
 /datum/hallucination/fake_sound/normal/boom
-	sound_type = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+	sound_type = list('sound/effects/explosion/explosion1.ogg', 'sound/effects/explosion/explosion2.ogg')
 
 /datum/hallucination/fake_sound/normal/distant_boom
-	sound_type = 'sound/effects/explosionfar.ogg'
+	sound_type = 'sound/effects/explosion/explosionfar.ogg'
 
 /datum/hallucination/fake_sound/normal/glass
-	sound_type = list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
+	sound_type = list('sound/effects/glass/glassbr1.ogg', 'sound/effects/glass/glassbr2.ogg', 'sound/effects/glass/glassbr3.ogg')
 
 /datum/hallucination/fake_sound/normal/alarm
 	volume = 100
@@ -106,15 +106,15 @@
 		addtimer(CALLBACK(src, PROC_REF(mech_walk)), 1 SECONDS)
 
 /datum/hallucination/fake_sound/normal/wall_deconstruction
-	sound_type = 'sound/items/welder.ogg'
+	sound_type = 'sound/items/tools/welder.ogg'
 
 /datum/hallucination/fake_sound/normal/wall_deconstruction/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
-	queue_fake_sound(source, 'sound/items/welder2.ogg', delay = 10.5 SECONDS)
-	queue_fake_sound(source, 'sound/items/ratchet.ogg', delay = 12 SECONDS)
+	queue_fake_sound(source, 'sound/items/tools/welder2.ogg', delay = 10.5 SECONDS)
+	queue_fake_sound(source, 'sound/items/tools/ratchet.ogg', delay = 12 SECONDS)
 
 /datum/hallucination/fake_sound/normal/door_hacking
-	sound_type = 'sound/items/screwdriver.ogg'
+	sound_type = 'sound/items/tools/screwdriver.ogg'
 	volume = 30
 
 /datum/hallucination/fake_sound/normal/door_hacking/play_fake_sound(turf/source, sound_to_play)

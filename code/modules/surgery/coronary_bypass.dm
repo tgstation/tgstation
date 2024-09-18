@@ -54,7 +54,7 @@
 		/obj/item/melee/energy/sword = 65,
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/incise_heart/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -119,7 +119,7 @@
 		TOOL_WIRECUTTER = 35,
 		/obj/item/stack/package_wrap = 15,
 		/obj/item/stack/cable_coil = 5)
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

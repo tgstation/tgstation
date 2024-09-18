@@ -263,7 +263,7 @@ Burning extracts:
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
+	playsound(T, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
 	for(var/mob/living/target in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(target))
 		SSexplosions.med_mov_atom += target

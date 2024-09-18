@@ -717,7 +717,7 @@ Striking a noncultist, however, will tear their flesh."}
 			SSshuttle.block_recall(surplus)
 		totalcurses++
 		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
+		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 
 		if(!remaining_curses)
 			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
@@ -1004,7 +1004,7 @@ Striking a noncultist, however, will tear their flesh."}
 			T.visible_message(span_warning("[src] shatters and melts back into blood!"))
 			new /obj/effect/temp_visual/cult/sparks(T)
 			new /obj/effect/decal/cleanable/blood/splatter(T)
-			playsound(T, 'sound/effects/glassbr3.ogg', 100)
+			playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
 	qdel(src)
 
 /obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -1223,7 +1223,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/items/weapons/smash.ogg'
 	block_sound = 'sound/items/weapons/effects/ric5.ogg'
-	shield_bash_sound = 'sound/effects/glassknock.ogg'
+	shield_bash_sound = 'sound/effects/glass/glassknock.ogg'
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -1234,7 +1234,7 @@ Striking a noncultist, however, will tear their flesh."}
 					var/turf/T = get_turf(owner)
 					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
 					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glassbr3.ogg', 100)
+					playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
 					owner.Paralyze(25)
 					qdel(src)
 					return FALSE
@@ -1292,7 +1292,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(!..())
 			target.Paralyze(30)
 			new /obj/effect/temp_visual/cult/sparks(target)
-			playsound(target, 'sound/effects/glassbr3.ogg', 100)
+			playsound(target, 'sound/effects/glass/glassbr3.ogg', 100)
 			qdel(src)
 	else
 		..()

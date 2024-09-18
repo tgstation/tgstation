@@ -255,7 +255,7 @@
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 /datum/dimension_theme/meat
 	name = "Meat"

@@ -332,7 +332,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_held_items()
 
 	name = new_name
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(user, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'

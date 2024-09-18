@@ -139,7 +139,7 @@
 	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 	///Sounds for types of melee attack
 	var/brute_attack_sound = 'sound/items/weapons/punch4.ogg'
-	var/burn_attack_sound = 'sound/items/welder.ogg'
+	var/burn_attack_sound = 'sound/items/tools/welder.ogg'
 	var/tox_attack_sound = 'sound/effects/spray2.ogg'
 	///Sound on wall destroying
 	var/destroy_wall_sound = 'sound/effects/meteorimpact.ogg'

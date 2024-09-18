@@ -66,7 +66,7 @@
 		TOOL_SAW = 50,
 	)
 	time = 20 //WAIT I NEED THAT!!
-	preop_sound = 'sound/items/ratchet.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/doorclick.ogg'
 
 /datum/surgery_step/sever_limb/peg
@@ -80,7 +80,7 @@
 	)
 	time = 30
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
-	success_sound = 'sound/items/wood_drop.ogg'
+	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

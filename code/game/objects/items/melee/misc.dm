@@ -475,7 +475,7 @@
 		return NONE
 	if (istype(interacting_with, /obj/singularity) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
-		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -493,7 +493,7 @@
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	if(do_after(user, 10 SECONDS, target = user))
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
-		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
 		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."

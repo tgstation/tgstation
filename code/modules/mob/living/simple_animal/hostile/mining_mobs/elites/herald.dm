@@ -207,7 +207,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	death_message = "shatters violently!"
-	death_sound = 'sound/effects/glassbr1.ogg'
+	death_sound = 'sound/effects/glass/glassbr1.ogg'
 	del_on_death = TRUE
 	is_mirror = TRUE
 	move_resist = MOVE_FORCE_OVERPOWERING // no dragging your mirror around

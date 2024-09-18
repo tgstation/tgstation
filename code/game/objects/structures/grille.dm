@@ -288,7 +288,7 @@
 			else
 				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 80, TRUE)
 
 
 /obj/structure/grille/atom_deconstruct(disassembled = TRUE)

@@ -113,7 +113,7 @@
 			return
 		if(!user.transferItemToLoc(attack_item, src))
 			return
-		playsound(src, 'sound/items/screwdriver.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
 		diode = attack_item
 		balloon_alert(user, "installed \the [diode.name]")
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
@@ -148,7 +148,7 @@
 		if(!user.transferItemToLoc(single_crystal, src))
 			return
 		crystal_lens = single_crystal
-		playsound(src, 'sound/items/screwdriver2.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 			It can now be used to shine through obstacles at the cost of double the energy drain."))

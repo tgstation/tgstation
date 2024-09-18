@@ -176,7 +176,7 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src)
 	smoke.start()
-	playsound(src, 'sound/effects/explosion3.ogg', 100)
+	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100)
 	victim.apply_damage(damage_to_apply)
 
 /obj/effect/mine/minebot/can_trigger(atom/movable/on_who)

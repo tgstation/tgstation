@@ -184,7 +184,7 @@
 						span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"),
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
-			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
+			playsound(loc, 'sound/effects/sparks/sparks2.ogg', 50, TRUE, -1)
 			user.cell.use(0.5 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)

@@ -428,7 +428,7 @@
 	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		force = on_damage
 		damtype = BURN
 		update_brightness()
@@ -455,7 +455,7 @@
 	name = "lit [initial(name)]"
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	force = on_damage
 	damtype = BURN
 

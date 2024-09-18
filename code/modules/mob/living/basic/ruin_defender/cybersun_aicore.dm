@@ -77,7 +77,7 @@
 ///dramatic death animations
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/robot(my_turf)
-	playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/explosion/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
 	for (var/mob/witness in range(10, src))
 		if (!witness.client || !isliving(witness))
 			continue
@@ -119,7 +119,7 @@
 	. = ..()
 	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
 	new/obj/effect/temp_visual/lightning_strike(get_turf(target))
-	playsound(owner, 'sound/effects/sparks1.ogg', vol = 120, vary = TRUE)
+	playsound(owner, 'sound/effects/sparks/sparks1.ogg', vol = 120, vary = TRUE)
 
 /obj/effect/temp_visual/lightning_strike
 	name = "lightning strike"

@@ -39,7 +39,7 @@
 			else
 				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/pinata/atom_deconstruct(disassembled)
 	new debris(get_turf(src))

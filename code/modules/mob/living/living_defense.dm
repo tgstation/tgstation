@@ -657,7 +657,7 @@
 	var/shove_flags = target.get_shove_flags(src, weapon)
 	if(weapon)
 		do_attack_animation(target, used_item = weapon)
-		playsound(target, 'sound/effects/glassbash.ogg', 50, TRUE, -1)
+		playsound(target, 'sound/effects/glass/glassbash.ogg', 50, TRUE, -1)
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
 		playsound(target, 'sound/items/weapons/shove.ogg', 50, TRUE, -1)

@@ -301,7 +301,7 @@
 	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
-	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteorsound = 'sound/mobs/humanoids/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
 	threat = 5

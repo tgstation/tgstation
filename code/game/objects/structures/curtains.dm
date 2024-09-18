@@ -85,7 +85,7 @@
 			else
 				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 80, TRUE)
 
 /obj/structure/curtain/bounty
 	icon_type = "bounty"

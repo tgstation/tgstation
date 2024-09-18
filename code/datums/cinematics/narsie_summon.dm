@@ -22,7 +22,7 @@
 	stoplag(2 SECONDS)
 	play_cinematic_sound(sound('sound/instrumental/antag/bloodcult/narsie_rises.ogg'))
 	stoplag(6 SECONDS)
-	play_cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	play_cinematic_sound(sound('sound/effects/explosion/explosion_distant.ogg'))
 	stoplag(1 SECONDS)
 	play_cinematic_sound(sound('sound/effects/magic/demon_dies.ogg'))
 	stoplag(3 SECONDS)

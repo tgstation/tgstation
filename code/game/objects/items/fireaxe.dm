@@ -83,7 +83,7 @@
 	demolition_mod = 2
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	usesound = 'sound/items/crowbar.ogg'
+	usesound = 'sound/items/tools/crowbar.ogg'
 
 //boarding axe
 /obj/item/fireaxe/boardingaxe

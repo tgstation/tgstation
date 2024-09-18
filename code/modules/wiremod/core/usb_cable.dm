@@ -73,7 +73,7 @@
 			connection_description = "machine"
 
 		balloon_alert(user, "connected to [connection_description]")
-		playsound(src, 'sound/items/screwdriver2.ogg', 20, TRUE)
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 20, TRUE)
 
 		return TRUE
 

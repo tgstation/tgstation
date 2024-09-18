@@ -216,7 +216,7 @@
 	if(lit)
 		force = 5
 		damtype = BURN
-		hitsound = 'sound/items/welder.ogg'
+		hitsound = 'sound/items/tools/welder.ogg'
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)

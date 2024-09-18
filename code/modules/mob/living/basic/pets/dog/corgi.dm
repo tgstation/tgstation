@@ -116,7 +116,7 @@
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
 		if(do_after(user, 5 SECONDS, target = src))
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(get_turf(src), 'sound/items/welder2.ogg', 20, TRUE)
+			playsound(get_turf(src), 'sound/items/tools/welder2.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
 			icon_dead = "[icon_living]_shaved_dead"

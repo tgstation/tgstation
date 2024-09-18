@@ -44,7 +44,7 @@
 		if(BRUTE)
 			playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
@@ -81,7 +81,7 @@
 		if(BRUTE)
 			playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)

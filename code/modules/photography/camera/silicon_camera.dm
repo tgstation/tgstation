@@ -35,7 +35,7 @@
 		return
 
 	if(sound)
-		playsound(user, 'sound/items/wirecutter.ogg', 50, TRUE)
+		playsound(user, 'sound/items/tools/wirecutter.ogg', 50, TRUE)
 		balloon_alert(user, "camera mode [user.click_intercept == src ? "activated" : "deactivated"]")
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)

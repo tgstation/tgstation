@@ -15,7 +15,7 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
-	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
+	usesound = list('sound/effects/pickaxe/picaxe1.ogg', 'sound/effects/pickaxe/picaxe2.ogg', 'sound/effects/pickaxe/picaxe3.ogg')
 	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
@@ -213,7 +213,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 0.75
-	usesound = 'sound/items/ratchet.ogg'
+	usesound = 'sound/items/tools/ratchet.ogg'
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
@@ -260,7 +260,7 @@
 			sharpness = NONE
 			toolspeed = 0.75
 			update_weight_class(WEIGHT_CLASS_SMALL)
-			usesound = 'sound/items/ratchet.ogg'
+			usesound = 'sound/items/tools/ratchet.ogg'
 			attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 			attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 		if("Shovel")
@@ -276,10 +276,10 @@
 			sharpness = SHARP_POINTY
 			toolspeed = 0.5
 			update_weight_class(WEIGHT_CLASS_NORMAL)
-			usesound = 'sound/effects/picaxe1.ogg'
+			usesound = 'sound/effects/pickaxe/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, 'sound/items/ratchet.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
@@ -313,7 +313,7 @@
 	attack_verb_continuous = list("bonks", "bludgeons", "pounds")
 	attack_verb_simple = list("bonk", "bludgeon", "pound")
 	drop_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
-	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
+	pickup_sound = 'sound/items/handling/tools/crowbar_pickup.ogg'
 	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	block_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
@@ -355,7 +355,7 @@
 /obj/item/shovel/giant_wrench/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	usesound = (active ? 'sound/items/ratchet.ogg' : initial(usesound))
+	usesound = (active ? 'sound/items/tools/ratchet.ogg' : initial(usesound))
 	block_chance = (active ? 0 : initial(block_chance))
 	recoil_factor = (active ? 2 : initial(recoil_factor))
 	do_launch = (active ? FALSE : initial(do_launch))
@@ -363,7 +363,7 @@
 	armour_penetration = (active ? 30 : initial(armour_penetration))
 	if(user)
 		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)
