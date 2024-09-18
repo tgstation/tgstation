@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Xenomorph restrictions on items they can pick up have had their determining logic made more _robust_."
+  - code_imp: "The itempicky component (restricts what can be picked up via a whitelist) can now, optionally, have a callback fed to it to determine cases of bypassing that whitelist."
