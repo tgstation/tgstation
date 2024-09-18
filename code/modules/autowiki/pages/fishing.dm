@@ -23,7 +23,7 @@
 			upload_icon(icon(fish:icon, fish::icon_state, frame = 1), filename)
 		generated_icons[filename] = TRUE
 
-		if(!fish::show_in_catalog)
+		if(!(fish::fish_flags & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
 
 		var/list/properties = SSfishing.fish_properties[fish]
@@ -402,7 +402,7 @@
 	var/output = ""
 
 	for(var/obj/item/fish/fish as anything in GLOB.fishes_by_fish_evolution[evo_type])
-		if(!initial(fish.show_in_catalog))
+		if(!(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
 		output += include_template("Autowiki/FishEvolutionCandidate", list(
 			"name" = escape_value(full_capitalize(initial(fish.name))),
@@ -435,7 +435,7 @@
 	var/output = ""
 
 	for(var/obj/item/fish/fish as anything in catchables)
-		if(!initial(fish.show_in_catalog))
+		if(!(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
 		output += include_template("Autowiki/FishLureCatchables", list(
 			"name" = escape_value(full_capitalize(initial(fish.name))),

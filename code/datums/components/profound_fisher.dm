@@ -84,26 +84,26 @@
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /datum/component/profound_fisher/proc/should_fish_on(mob/living/user, atom/target)
-	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || GLOB.fishing_challenges_by_user[user])
 		return FALSE
 	if(user.combat_mode || !user.CanReach(target))
 		return FALSE
 	return TRUE
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
-	RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_GONE_FISHING), PROC_REF(actually_fishing_with_internal_rod))
+	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
-	UnregisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_GONE_FISHING))
+	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
 
 /datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
-	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(remove_profound_fisher))
+	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
 
 /datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
-	UnregisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING))
+	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
 
 /datum/component/profound_fisher/proc/pretend_fish(mob/living/source, atom/target)
 	if(DOING_INTERACTION_WITH_TARGET(source, target))
