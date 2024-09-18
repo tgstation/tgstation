@@ -6430,6 +6430,7 @@
 #include "modular_doppler\accessable_storage\accessable_storage.dm"
 #include "modular_doppler\accessable_storage\item.dm"
 #include "modular_doppler\accessable_storage\strippable.dm"
+#include "modular_doppler\administration\code\whitelisting.dm"
 #include "modular_doppler\advanced_reskin\code\advanced_reskin.dm"
 #include "modular_doppler\automapper\code\area_spawn_entries.dm"
 #include "modular_doppler\automapper\code\area_spawn_subsystem.dm"
