@@ -502,7 +502,7 @@
 
 	if(D.symptoms.len > 0)
 
-		var/new_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+		var/new_name = tgui_input_text(user, "Name your new disease", "New Name", max_length = MAX_NAME_LEN)
 		if(!new_name)
 			return
 		D.Refresh()

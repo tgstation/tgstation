@@ -42,7 +42,7 @@
 	if(!user.can_write(writing_instrument))
 		return
 
-	var/inputvalue =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
 
 	if(!inputvalue)
 		return

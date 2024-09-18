@@ -39,7 +39,7 @@
 	if(IS_WRITING_UTENSIL(used_item))
 		if(!user.can_write(used_item))
 			return
-		var/new_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+		var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
 		if((user.get_active_held_item() != used_item) || !user.can_perform_action(src))
 			return
 		if(new_name)

@@ -149,7 +149,7 @@
 	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return ..()
-		var/newname =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+		var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return ..()
 		if(!newname)

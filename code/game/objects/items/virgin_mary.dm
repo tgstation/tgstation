@@ -26,7 +26,7 @@
 
 	ADD_TRAIT(user, TRAIT_MAFIAINITIATE, TRAIT_GENERIC) // Adding the trait early because you could burn multiple at once for a very long name
 	to_chat(user, span_notice("As you burn the picture, a nickname comes to mind..."))
-	var/nickname =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+	var/nickname = tgui_input_text(user, "Pick a nickname", "Mafioso Nicknames", max_length = NICKNAME_CAP)
 	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
 		REMOVE_TRAIT(user, TRAIT_MAFIAINITIATE, TRAIT_GENERIC)

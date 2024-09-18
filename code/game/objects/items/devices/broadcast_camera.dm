@@ -51,7 +51,7 @@
 
 /obj/item/broadcast_camera/attack_self_secondary(mob/user, modifiers)
 	. = ..()
-	broadcast_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+	broadcast_name = tgui_input_text(user = user, title = "Broadcast Name", message = "What will be the name of your broadcast?", default = "[broadcast_name]", max_length = MAX_CHARTER_LEN)
 
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()

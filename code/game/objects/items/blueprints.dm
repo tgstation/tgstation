@@ -207,7 +207,7 @@
 /obj/item/blueprints/proc/edit_area(mob/user)
 	var/area/area_editing = get_area(src)
 	var/prevname = "[area_editing.name]"
-	var/new_name =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+	var/new_name = tgui_input_text(user, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
 	if(isnull(new_name) || !length(new_name) || new_name == prevname)
 		return
 

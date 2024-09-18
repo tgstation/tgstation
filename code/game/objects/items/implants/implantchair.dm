@@ -188,7 +188,7 @@
 	if(custom)
 		if(!user || !user.Adjacent(src))
 			return FALSE
-		objective =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
 		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
 	if(HAS_MIND_TRAIT(C, TRAIT_UNCONVERTABLE))

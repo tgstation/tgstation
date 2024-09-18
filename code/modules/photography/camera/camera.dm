@@ -264,9 +264,9 @@
 		if(can_customise)
 			var/customise = user.is_holding(new_photo) && tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = user.is_holding(new_photo) &&REVERT_ME_PLEASE_THANK_YOU_SAN7890
-				var/desc1 = user.is_holding(new_photo) &&REVERT_ME_PLEASE_THANK_YOU_SAN7890
-				var/caption = user.is_holding(new_photo) &&REVERT_ME_PLEASE_THANK_YOU_SAN7890
+				var/name1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+				var/desc1 = user.is_holding(new_photo) && tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+				var/caption = user.is_holding(new_photo) && tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 				if(desc1)

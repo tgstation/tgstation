@@ -57,7 +57,7 @@
 	if (!.)
 		return
 	var/mob/living/basic/guardian/standard/stand = owner
-	var/input =REVERT_ME_PLEASE_THANK_YOU_SAN7890
+	var/input = tgui_input_text(owner, "What do you want your battlecry to be?", "Battle Cry", max_length = max_length)
 	if(!input)
 		return
 	stand.battlecry = input
