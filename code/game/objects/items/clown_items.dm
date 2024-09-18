@@ -74,7 +74,7 @@
 /obj/item/soap/nanotrasen/cyborg
 
 /obj/item/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
+	desc = "A deluxe Waffle Corporation brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
 	inhand_icon_state = "soapdeluxe"
@@ -160,9 +160,6 @@
 	if(uses <= 0)
 		return CLEAN_BLOCKED
 	return ..()
-
-/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
-	return !user.combat_mode  // only cleans a storage item if on combat
 
 /*
  * Bike Horns

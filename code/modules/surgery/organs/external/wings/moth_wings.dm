@@ -69,6 +69,16 @@
 	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
 	source.setDir(source.client.intended_direction)
 
+///Checks if our wings are usable
+/obj/item/organ/external/wings/moth/proc/can_fly()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
+			return FALSE //Can't fly with hidden wings
+	if(isspaceturf(owner.loc) || burnt)
+		return FALSE //No flight in space/burnt wings
+	return TRUE
+
 ///check if our wings can burn off ;_;
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
 	SIGNAL_HANDLER

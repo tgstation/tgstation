@@ -5,7 +5,6 @@
 	icon_state = "crate"
 	base_icon_state = "crate"
 	req_access = null
-	can_weld_shut = FALSE
 	horizontal = TRUE
 	allow_objects = TRUE
 	allow_dense = TRUE
@@ -95,6 +94,9 @@
 		else if(secure)
 			. += "securecrateg"
 
+	if(welded)
+		. += icon_welded
+
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
 		lid.pixel_x = lid_x
@@ -174,6 +176,7 @@
 	can_install_electronics = FALSE
 	paint_jobs = null
 	elevation_open = 0
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
@@ -190,6 +193,7 @@
 	base_icon_state = "laundry"
 	elevation = 14
 	elevation_open = 14
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
@@ -221,6 +225,12 @@
 	name = "medical crate"
 	icon_state = "medicalcrate"
 	base_icon_state = "medicalcrate"
+
+/obj/structure/closet/crate/deforest
+	name = "deforest medical crate"
+	desc = "A DeForest brand crate of medical supplies."
+	icon_state = "deforest"
+	base_icon_state = "deforest"
 
 /obj/structure/closet/crate/medical/department
 	icon_state = "medical"
@@ -290,6 +300,24 @@
 	icon_state = "food"
 	base_icon_state = "food"
 
+/obj/structure/closet/crate/freezer/donk
+	name = "donk co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpcokets and foam ammunition fresh!"
+	icon_state = "donkcocrate"
+	base_icon_state = "donkcocrate"
+
+/obj/structure/closet/crate/freezer/interdyne
+	name = "interdyne freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
+
+/obj/structure/closet/crate/freezer/blood/interdyne
+	name = "interdyne blood freezer"
+	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
@@ -312,6 +340,12 @@
 	icon_state = "cargo"
 	base_icon_state = "cargo"
 
+/obj/structure/closet/crate/robust
+	name = "robust industries crate"
+	desc = "Robust Inustries LLC. crate. Feels oddly nostalgic."
+	icon_state = "robust"
+	base_icon_state = "robust"
+
 /obj/structure/closet/crate/cargo/mining
 	name = "mining crate"
 	icon_state = "mining"
@@ -321,6 +355,12 @@
 	name = "engineering crate"
 	icon_state = "engi_crate"
 	base_icon_state = "engi_crate"
+
+/obj/structure/closet/crate/nakamura
+	name = "nakamura engineering crate"
+	desc = "Crate from Nakamura Engineering, most likely containing engineering supplies or MODcores."
+	icon_state = "nakamura"
+	base_icon_state = "nakamura"
 
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"

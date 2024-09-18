@@ -638,5 +638,5 @@
 	if(length(valid_reagents))
 		// pick a valid reagent that our receptor seed don't have and add the gene to it
 		var/datum/plant_gene/reagent/selected_reagent = pick(valid_reagents)
-		genes += selected_reagent
+		genes += selected_reagent.Copy()
 		reagents_from_genes()

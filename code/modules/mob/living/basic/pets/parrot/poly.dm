@@ -191,9 +191,9 @@
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF77"
-	status_flags = GODMODE
 	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
+	status_flags = NONE
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	ai_controller = /datum/ai_controller/basic_controller/parrot/ghost
 	speech_probability_rate = 1
@@ -202,7 +202,7 @@
 /mob/living/basic/parrot/poly/ghost/Initialize(mapload)
 	// block anything and everything that could possibly happen with writing memory for ghosts
 	memory_saved = TRUE
-	ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_DONT_WRITE_MEMORY), INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	return ..()
 

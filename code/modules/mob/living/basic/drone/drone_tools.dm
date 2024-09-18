@@ -25,7 +25,7 @@
 	atom_storage.max_total_storage = 40
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_slots = 10
-	atom_storage.rustle_sound = FALSE
+	atom_storage.do_rustle = FALSE
 	atom_storage.set_holdable(drone_builtins)
 
 

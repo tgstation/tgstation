@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
 		if(isnull(extraction_point))
 			GLOB.total_extraction_beacons.Remove(point_ref)
+			continue
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
 	if(!length(possible_beacons))

@@ -31,9 +31,12 @@
 
 	var/detached = FALSE
 
-/datum/tgs_api/v5/New()
+	var/datum/tgs_http_handler/http_handler
+
+/datum/tgs_api/v5/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version, datum/tgs_http_handler/http_handler)
 	. = ..()
 	interop_version = version
+	src.http_handler = http_handler
 	TGS_DEBUG_LOG("V5 API created: [json_encode(args)]")
 
 /datum/tgs_api/v5/ApiVersion()

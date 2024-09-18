@@ -106,7 +106,7 @@
 		.["containerMaxVolume"] = drip_reagents.maximum_volume
 		.["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 
-/obj/machinery/iv_drip/ui_act(action, params)
+/obj/machinery/iv_drip/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -322,7 +322,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(reagent_container)
 		if(attached)
@@ -340,7 +340,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if(!usr.can_perform_action(src) || usr.incapacitated())
+	if(!usr.can_perform_action(src) || usr.incapacitated)
 		return
 	if(inject_only)
 		mode = IV_INJECTING

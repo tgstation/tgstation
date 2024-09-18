@@ -59,6 +59,16 @@
 /obj/item/clothing/suit/armor/vest/alt/sec
 	icon_state = "armor_sec"
 
+/obj/item/clothing/suit/armor/vest/press
+	name = "press armor vest"
+	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "armor_press"
+
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
@@ -284,6 +294,10 @@
 	equip_delay_other = 60
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+
 /datum/armor/armor_riot
 	melee = 50
 	bullet = 10
@@ -402,6 +416,10 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+
+/obj/item/clothing/suit/armor/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 
 //All of the armor below is mostly unused
@@ -684,6 +702,10 @@
 		/obj/item/spear,
 		/obj/item/gun/ballistic/bow
 	)
+
+/obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 /datum/armor/military
 	melee = 45
