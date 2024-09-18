@@ -19,6 +19,7 @@
 	)
 
 	AddComponent(/datum/component/martial_art_giver, style_to_give)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"

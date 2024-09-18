@@ -26,6 +26,7 @@
 	icon_living = "floor"
 	mob_size = MOB_SIZE_HUGE
 	mob_biotypes = MOB_SPECIAL
+	status_flags = NONE
 	death_message = ""
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0

@@ -254,7 +254,7 @@
 	if(!scanning.get_bodypart(BODY_ZONE_HEAD))
 		to_chat(user, span_warning("[scanning] doesn't have a head!"))
 		return
-	if(light_power < 1)
+	if(light_power < 0.5)
 		to_chat(user, span_warning("[src] isn't bright enough to see anything!"))
 		return
 
