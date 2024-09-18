@@ -31,3 +31,33 @@ export const custom_species_desc: Feature<string> = {
   description: "Appears when examined further. An overview of your species, ideally limited to commonly-known facts such as general physical appearances, origin world/sector, and so on. This should not be excessively long - you're better off sharing that information via IC interactions (or records) instead of expecting people to read it off your examine.",
   component: FeatureTextInput,
 };
+
+export const past_general_records: Feature<string> = {
+  name: "General records",
+  description: "A general overview of your character's employment history, both aboard and before the Nine Lives Promenade.",
+  component: FeatureTextInput,
+};
+
+export const past_medical_records: Feature<string> = {
+  name: "Medical records",
+  description: "An overview of your character's medical history, covering things like long-term conditions, prior surgeries, suggested medication, psychological evaluations, etc.",
+  component: FeatureTextInput,
+};
+
+export const past_security_records: Feature<string> = {
+  name: "Security records",
+  description: "An overview of your character's history with the law (or lack thereof). Can include things like previous offenses, cautionary information for other security personnel that need to interact with them, and more.",
+  component: FeatureTextInput,
+};
+
+export const exploitable_records: Feature<string> = {
+  name: "Classified records",
+  description: "Known on other bases as 'exploitables', covers sensitive information about your character or their affiliations that may not be generally public knowledge, and could conceivably be used or exploited by hostile actors. Information listed here does not have to be intrinsically negative for your character, especially if they have a positive history with the darker side of the sector.",
+  component: FeatureTextInput,
+};
+
+export const ooc_notes: Feature<string> = {
+  name: "OOC notes",
+  description: "Include anything you think people might need to know OOCly here, such as your boundaries, interaction preferences, any credits for material used to create your character, contact info, or more. Keep it short and sweet, though!",
+  component: FeatureTextInput,
+};

@@ -25,9 +25,7 @@ export const LorePage = () => {
       maxHeight="auto"
       >
         <LabeledList>
-          <Section
-           title="Character Details"
-          >
+          <Section title="Character Details">
             <PreferenceSingle
               act={act}
               pref_key="age"
@@ -53,9 +51,7 @@ export const LorePage = () => {
               maxHeight="auto"
             />
           </Section>
-          <Section
-           title="Species"
-          >
+          <Section title="Species">
             <PreferenceSingle
               act={act}
               pref_key="custom_species_name"
@@ -69,10 +65,39 @@ export const LorePage = () => {
               maxHeight="auto"
             />
          </Section>
-         <Section
-          title="Records"
-          >
-
+         <Section title="Records">
+            <PreferenceSingle
+              act={act}
+              pref_key="past_general_records"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="past_medical_records"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="past_security_records"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="exploitable_records"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
+          </Section>
+          <Section title="Notes">
+            <PreferenceSingle
+              act={act}
+              pref_key="ooc_notes"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
           </Section>
         </LabeledList>
       </Stack.Item>
