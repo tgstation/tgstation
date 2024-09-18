@@ -624,6 +624,10 @@
 	flags_inv = HIDEHAIR //Cover your head doctor!
 	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
 
+/obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
 	. = ..()
 	if(.)
@@ -665,6 +669,10 @@
 		A little useless now, given the technology available, but it certainly completes the look."
 	icon_state = "headmirror"
 	body_parts_covered = NONE
+
+/obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()

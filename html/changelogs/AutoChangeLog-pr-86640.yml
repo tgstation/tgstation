@@ -1,5 +1,0 @@
-author: "PowerfulBacon"
-delete-after: True
-changes:
-  - rscadd: "Implements the ability to lint for required neighbors in maplint."
-  - rscadd: "Adds conditional linting rules in maplint, allowing a lint to apply only if certain conditions are met (Variable is/isn't set, Variable is/isn't a value, Variable matches a regex)."

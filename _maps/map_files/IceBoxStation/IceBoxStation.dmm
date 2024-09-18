@@ -2371,12 +2371,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/library)
 "aJm" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/east{
@@ -257788,7 +257782,7 @@ qMm
 hUD
 pyJ
 lPh
-aJj
+hUD
 hUD
 ebb
 cYE
