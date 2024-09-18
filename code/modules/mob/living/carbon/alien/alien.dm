@@ -134,8 +134,8 @@ Des: Removes all infected images from the alien.
 	var/obj/item/organ/internal/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/obj/item/organ/internal/stomach/alien/frying_pan = new_xeno.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(melting_pot) && istype(frying_pan))
-		while (length(melting_pot.stomach_contents))
-			frying_pan.consume_thing(melting_pot.stomach_contents[1])
+		for (var/atom/movable/poor_sod as anything in melting_pot.stomach_contents)
+			frying_pan.consume_thing(poor_sod)
 	qdel(src)
 
 /// Changes the name of the xeno we are evolving into in order to keep the same numerical identifier the old xeno had.
