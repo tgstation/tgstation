@@ -225,7 +225,7 @@
 
 	if(holding && new_tank)//for when we are actually switching tanks
 		investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-		to_chat(user, span_notice("In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]"))
+		to_chat(user, span_notice("In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]."))
 		user.put_in_hands(holding)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = new_tank
@@ -233,7 +233,7 @@
 		playsound(src, list(insert_sound,remove_sound), sound_vol)
 	else if(holding)//we remove a tank
 		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
-		to_chat(user, span_notice("You remove [holding] from [src]"."))
+		to_chat(user, span_notice("You remove [holding] from [src]."))
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
