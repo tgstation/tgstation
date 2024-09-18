@@ -152,15 +152,6 @@
 		our_hot_group.add_to_group(src)
 /obj/effect/hotspot/set_smoothed_icon_state(new_junction)
 	smoothing_junction = new_junction
-	// If we have a connection down offset physically down so we render correctly
-	if(new_junction & SOUTH)
-		// this ensures things physically below us but visually overlapping us render how we would want
-		pixel_y = -16
-		pixel_z = 16
-	// Otherwise render normally, to avoid weird layering
-	else
-		pixel_y = 0
-		pixel_z = 0
 
 	update_color()
 
@@ -225,7 +216,6 @@
 	cut_overlays()
 
 	if(!(smoothing_junction & NORTH))
-		var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "[fire_stage]_frill")
 		frill.pixel_z = 32
 		add_overlay(frill)
 	var/heat_r = heat2colour_r(temperature)
@@ -233,9 +223,6 @@
 	var/heat_b = heat2colour_b(temperature)
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
-	// Note:
-	// Some of the overlays applied to hotspots are not 3/4th'd. They COULD be but we have not gotten to that point yet.
-	// Wallening todo?
 
 	if(cold_fire)
 		heat_r = 0
@@ -385,19 +372,21 @@
 	volume = 100
 	mid_length = 2 SECONDS
 	falloff_distance = 1
-//handle the grouping of hotspot and then determining an average center to play sound in
+///handle the grouping of hotspot and then determining an average center to play sound in
 /datum/hot_group
 	var/list/obj/effect/hotspot/spot_list = list()
+	///the sound center turf which the looping sound will play
 	var/turf/open/current_sound_loc
 	var/datum/looping_sound/fire/sound
 	var/tiles_limit = 80 // arbitrary limit so we dont have one giant group
-	//these lists and average var are to find the average center of a group
+	///these lists and average var are to find the average center of a group
 	var/list/x_coord = list()
 	var/list/y_coord = list()
 	var/list/z_coord = list()
 	var/average_x
 	var/average_y
 	var/average_Z
+	///the range for the sound to drop off based on the size of the group
 	var/drop_off_dist
 	COOLDOWN_DECLARE(update_sound_center)
 	//use to prevent hot group from expanding outside a room, a group spandin multiple rooms may have issue when they are cutoff and rebuilding groups like zas is too expensive
