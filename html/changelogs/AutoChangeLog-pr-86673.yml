@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "smartfridges and drying racks will now display their examine text information mutlilined"
