@@ -562,6 +562,10 @@
 	armor_type = /datum/armor/vest_durathread
 	dog_fashion = null
 
+/obj/item/clothing/suit/armor/vest/durathread/Initialize(mapload)
+	. = ..()
+	allowed |= /obj/item/clothing/suit/apron::allowed
+
 /datum/armor/vest_durathread
 	melee = 20
 	bullet = 10
