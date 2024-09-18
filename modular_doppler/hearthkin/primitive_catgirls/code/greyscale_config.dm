@@ -28,11 +28,11 @@
 /datum/greyscale_config/primitive_catgirl_boots
 	name = "Primitive Winter Boots"
 	icon_file = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/hearthkin/boots.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/hearthkin/hearthkinboots.json'
 
 /datum/greyscale_config/primitive_catgirl_boots/worn
 	name = "Primitive Winter Boots (Worn)"
-	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/hearthkin/boots_worn.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/hearthkin/hearthkinboots_worn.json'
 
 /datum/greyscale_config/primitive_catgirl_gauntlets
 	name = "Gauntlets"
