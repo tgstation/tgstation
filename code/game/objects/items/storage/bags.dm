@@ -575,7 +575,7 @@
 		new /obj/item/ammo_casing/harpoon(src)
 
 /obj/item/storage/bag/rebar_quiver
-	name = "Rebar Storage Quiver"
+	name = "rebar quiver"
 	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "rebar_quiver"
 	worn_icon_state = "rebar_quiver"
