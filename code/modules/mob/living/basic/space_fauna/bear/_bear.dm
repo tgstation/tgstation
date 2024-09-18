@@ -99,7 +99,7 @@
 
 /mob/living/basic/bear/snow/ancient/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(TRAIT_GODMODE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/basic/bear/russian
 	name = "combat bear"
