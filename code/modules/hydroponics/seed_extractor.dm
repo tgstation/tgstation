@@ -276,7 +276,7 @@
 		data["trait_db"] += trait_data
 	return data
 
-/obj/machinery/seed_extractor/ui_act(action, params)
+/obj/machinery/seed_extractor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

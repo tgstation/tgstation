@@ -41,8 +41,6 @@
 		set_light_on(TRUE)
 	update_brightness()
 	register_context()
-	if(toggle_context)
-		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
 
@@ -256,7 +254,7 @@
 	if(!scanning.get_bodypart(BODY_ZONE_HEAD))
 		to_chat(user, span_warning("[scanning] doesn't have a head!"))
 		return
-	if(light_power < 1)
+	if(light_power < 0.5)
 		to_chat(user, span_warning("[src] isn't bright enough to see anything!"))
 		return
 
@@ -286,12 +284,12 @@
 		setDir(user.dir)
 
 /// when hit by a light disruptor - turns the light off, forces the light to be disabled for a few seconds
-/obj/item/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/flashlight/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(light_on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/item/flashlight/pen
 	name = "penlight"
@@ -694,6 +692,9 @@
 	color = LIGHT_COLOR_GREEN
 	light_color = LIGHT_COLOR_GREEN
 
+/obj/item/flashlight/lantern/jade/on
+	start_on = TRUE
+
 /obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
@@ -959,14 +960,10 @@
 	var/dark_light_range = 2.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
-	var/on = FALSE
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()
-	if(on)
-		set_light(dark_light_range, dark_light_power)
-	else
-		set_light(0)
+	set_light(dark_light_range, dark_light_power)
 
 //type and subtypes spawned and used to give some eyes lights,
 /obj/item/flashlight/eyelight

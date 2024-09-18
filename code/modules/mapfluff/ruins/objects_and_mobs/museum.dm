@@ -159,7 +159,7 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	onstation_override = TRUE
+	all_products_free = TRUE
 
 /obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
 	return NONE

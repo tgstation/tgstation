@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(events)
 	var/list/running = list()
 	///cache of currently running events, for lag checking.
 	var/list/currentrun = list()
-	///The next world.time that a naturally occuring random event can be selected.
+	///The next world.time that a naturally occurring random event can be selected.
 	var/scheduled = 0
 	///The lower bound for how soon another random event can be scheduled.
 	var/frequency_lower = 2.5 MINUTES

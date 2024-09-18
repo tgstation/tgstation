@@ -45,12 +45,33 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/cakeslice/plain
 
+/obj/item/food/cake/plain/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cake/empty
+	name = "cake"
+	desc = "A custom cake made by an insane chef."
+	icon_state = "cake_custom"
+	foodtypes = GRAIN | DAIRY | SUGAR
+	slice_type = /obj/item/food/cakeslice/empty
+
+/obj/item/food/cakeslice/empty
+	name = "cake slice"
+	desc = "A slice of custom cake, made by an insane chef."
+	icon_state = "cake_custom_slice"
+	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cakeslice/empty/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cake/carrot
 	name = "carrot cake"
@@ -521,6 +542,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	slice_type = /obj/item/food/cakeslice/clown_slice
 	crafting_complexity = FOOD_COMPLEXITY_5
+	crafted_food_buff = /datum/status_effect/food/trait/waddle
 
 /obj/item/food/cakeslice/clown_slice
 	name = "clown cake slice"
@@ -534,6 +556,7 @@
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_5
+	crafted_food_buff = /datum/status_effect/food/trait/waddle
 
 /obj/item/food/cake/trumpet
 	name = "spaceman's cake"

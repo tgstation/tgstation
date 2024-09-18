@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "You no longer render on top of tall enough objects that get vertically offset when anchored to a table when standing on the tile directly to the north of them. Examples are soda and booze dispensers."
-  - bugfix: "Removing the vertical offset some objects get when anchored to a table can be done by unanchoring it at any point, rather than only on a table."

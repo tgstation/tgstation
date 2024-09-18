@@ -44,7 +44,7 @@
 	mood_message = "I feel like I am being watched..."
 
 /area/ruin/bughabitat
-	name = "\improper Entemology Outreach Center"
+	name = "\improper Entomology Outreach Center"
 	mood_bonus = 1
 	mood_message = "This place seems strangely serene."
 
@@ -75,3 +75,7 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
+/area/ruin/syndielab
+	name = "\improper Syndicate Lab"
+	ambience_index = AMBIENCE_DANGER
+	sound_environment = SOUND_ENVIRONMENT_CAVE

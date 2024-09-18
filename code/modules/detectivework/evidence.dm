@@ -7,16 +7,19 @@
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
+	item_flags = NOBLUDGEON
 
 /obj/item/evidencebag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(interacting_with == loc)
+	if(interacting_with == loc || !isitem(interacting_with) || HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return NONE
-	evidencebagEquip(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	if(evidencebagEquip(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/evidencebag/attackby(obj/item/I, mob/user, params)
-	if(evidencebagEquip(I, user))
-		return 1
+/obj/item/evidencebag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(evidencebagEquip(tool, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/evidencebag/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -27,7 +30,7 @@
 
 /obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored)
-		return
+		return FALSE
 
 	if(loc.atom_storage && I.atom_storage)
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
@@ -43,24 +46,24 @@
 
 	if(loc in I.get_all_contents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
 		to_chat(user, span_warning("You find putting [I] in [src] while it's still inside it quite difficult!"))
-		return
+		return TRUE
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, span_warning("[I] won't fit in [src]!"))
-		return
+		return TRUE
 
 	if(contents.len)
 		to_chat(user, span_warning("[src] already has something inside it!"))
-		return
+		return TRUE
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
 		if(I.loc.atom_storage) //in a container.
 			I.loc.atom_storage.remove_single(user, I, src)
 		if(!user.is_holding(I) || HAS_TRAIT(I, TRAIT_NODROP))
-			return
+			return TRUE
 
 	if(QDELETED(I))
-		return
+		return TRUE
 
 	user.visible_message(span_notice("[user] puts [I] into [src]."), span_notice("You put [I] inside [src]."),\
 	span_hear("You hear a rustle as someone puts something into a plastic bag."))
@@ -78,7 +81,7 @@
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.forceMove(src)
 	update_weight_class(I.w_class)
-	return 1
+	return TRUE
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)

@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   Dimmer,
+  NoticeBox,
   Section,
   Stack,
   Tabs,
@@ -27,6 +28,8 @@ import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 type UplinkItem = {
   id: string;
   name: string;
+  icon: string;
+  icon_state: string;
   cost: number;
   desc: string;
   category: string;
@@ -90,6 +93,8 @@ type ServerData = {
 type ItemExtraData = Item & {
   extraData: {
     ref?: string;
+    icon: string;
+    icon_state: string;
   };
 };
 
@@ -198,7 +203,6 @@ export class Uplink extends Component<{}, UplinkState> {
       shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
-
     const itemsToAdd = [...allItems];
     const items: ItemExtraData[] = [];
     itemsToAdd.push(...extra_purchasable);
@@ -224,19 +228,21 @@ export class Uplink extends Component<{}, UplinkState> {
       items.push({
         id: item.id,
         name: item.name,
+        icon: item.icon,
+        icon_state: item.icon_state,
         category: item.category,
         desc: (
-          <Box>
-            {item.desc}
+          <>
+            <Box>{item.desc}</Box>
             {(item.lock_other_purchases && (
-              <Box color="orange" bold>
+              <NoticeBox mt={1}>
                 Taking this item will lock you from further purchasing from the
                 marketplace. Additionally, if you have already purchased an
                 item, you will not be able to purchase this.
-              </Box>
+              </NoticeBox>
             )) ||
               null}
-          </Box>
+          </>
         ),
         cost: (
           <Box>
@@ -259,6 +265,8 @@ export class Uplink extends Component<{}, UplinkState> {
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
+          icon: item.icon,
+          icon_state: item.icon_state,
         },
       });
     }
@@ -274,25 +282,14 @@ export class Uplink extends Component<{}, UplinkState> {
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
     return (
-      <Window width={820} height={580} theme="syndicate">
-        <Window.Content scrollable={currentTab !== 0 || !has_objectives}>
-          <Stack vertical fill>
-            <Stack.Item>
-              <Section>
-                <Stack>
-                  <Stack.Item grow={1} align="center">
-                    <Box fontSize={0.8}>
-                      SyndOS Version 3.17 &nbsp;
-                      <Box color="green" as="span">
-                        Connection Secure
-                      </Box>
-                    </Box>
-                    <Box color="green" bold fontSize={1.2}>
-                      WELCOME, AGENT.
-                    </Box>
-                  </Stack.Item>
-                  <Stack.Item align="center">
-                    <Box bold fontSize={1.2}>
+      <Window width={700} height={600} theme="syndicate">
+        <Window.Content>
+          <Stack fill vertical>
+            {!!has_progression && (
+              <Stack.Item>
+                <Section fitted>
+                  <Stack fill>
+                    <Stack.Item p="4px">
                       <Tooltip
                         content={
                           (!!has_progression && (
@@ -347,61 +344,76 @@ export class Uplink extends Component<{}, UplinkState> {
                         }
                       >
                         {/* If we have no progression,
-                      just give them a generic title */}
+                                  just give them a generic title */}
                         {has_progression
                           ? calculateDangerLevel(progression_points, false)
                           : calculateDangerLevel(dangerDefault, false)}
                       </Tooltip>
-                    </Box>
-                    <Box color="good" bold fontSize={1.2} textAlign="right">
-                      {telecrystals} TC
-                    </Box>
-                  </Stack.Item>
-                </Stack>
-              </Section>
-            </Stack.Item>
-            <Stack.Item>
-              <Section fitted>
-                <Stack align="center">
-                  <Stack.Item grow={1}>
-                    <Tabs fluid textAlign="center">
-                      {!!has_objectives && (
-                        <>
-                          <Tabs.Tab
-                            selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}
-                          >
-                            Primary Objectives
-                          </Tabs.Tab>
-                          <Tabs.Tab
-                            selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}
-                          >
-                            Secondary Objectives
-                          </Tabs.Tab>
-                        </>
-                      )}
-                      <Tabs.Tab
-                        selected={currentTab === 2 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 2 })}
-                      >
-                        Market
-                      </Tabs.Tab>
-                    </Tabs>
-                  </Stack.Item>
-                  {!!lockable && (
-                    <Stack.Item mr={1}>
-                      <Button
-                        icon="times"
-                        content="Lock"
-                        color="transparent"
-                        onClick={() => act('lock')}
-                      />
                     </Stack.Item>
-                  )}
-                </Stack>
-              </Section>
-            </Stack.Item>
+
+                    <Stack.Item grow={1}>
+                      <Tabs fluid>
+                        {!!has_objectives && (
+                          <>
+                            <Tabs.Tab
+                              style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                              }}
+                              icon="star"
+                              selected={currentTab === 0}
+                              onClick={() => this.setState({ currentTab: 0 })}
+                            >
+                              Primary Objectives
+                            </Tabs.Tab>
+                            <Tabs.Tab
+                              style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                              }}
+                              icon="star-half-stroke"
+                              selected={currentTab === 1}
+                              onClick={() => this.setState({ currentTab: 1 })}
+                            >
+                              Secondary Objectives
+                            </Tabs.Tab>
+                          </>
+                        )}
+                        <Tabs.Tab
+                          style={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                          icon="store"
+                          selected={currentTab === 2 || !has_objectives}
+                          onClick={() => this.setState({ currentTab: 2 })}
+                        >
+                          Market
+                        </Tabs.Tab>
+                      </Tabs>
+                    </Stack.Item>
+
+                    {!!lockable && (
+                      <Stack.Item>
+                        <Button
+                          lineHeight={2.5}
+                          textAlign="center"
+                          icon="lock"
+                          color="transparent"
+                          px={2}
+                          onClick={() => act('lock')}
+                        >
+                          Lock
+                        </Button>
+                      </Stack.Item>
+                    )}
+                  </Stack>
+                </Section>
+              </Stack.Item>
+            )}
             <Stack.Item grow>
               {(currentTab === 0 && has_objectives && (
                 <PrimaryObjectiveMenu
@@ -444,9 +456,9 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <Section>
+                  <>
                     <GenericUplink
-                      currency=""
+                      currency={`${telecrystals} TC`}
                       categories={allCategories}
                       items={items}
                       handleBuy={(item: ItemExtraData) => {
@@ -471,7 +483,7 @@ export class Uplink extends Component<{}, UplinkState> {
                       </Dimmer>
                     )) ||
                       null}
-                  </Section>
+                  </>
                 )}
             </Stack.Item>
           </Stack>

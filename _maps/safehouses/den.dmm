@@ -18,7 +18,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "e" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -59,7 +59,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/turf_decal/trimline/yellow/corner{

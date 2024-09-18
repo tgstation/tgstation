@@ -84,3 +84,16 @@
 	grow = 0.05
 	spin = 2
 	color = "#fcffff77"
+
+/particles/smoke/cyborg
+	count = 5
+	spawning = 1
+	lifespan = 1 SECONDS
+	fade = 1.8 SECONDS
+	position = list(0, 0, 0)
+	scale = list(0.5, 0.5)
+	grow = 0.1
+
+/particles/smoke/cyborg/heavy_damage
+	lifespan = 0.8 SECONDS
+	fade = 0.8 SECONDS

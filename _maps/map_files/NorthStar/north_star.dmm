@@ -34444,6 +34444,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/structure/detectiveboard/directional/east,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "iWW" = (
@@ -52447,6 +52448,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/vending/cytopro,
 /turf/open/floor/iron,
 /area/station/science/cytology)
 "nxm" = (
@@ -52886,7 +52888,7 @@
 /area/station/hallway/secondary/exit)
 "nDj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "nDk" = (
@@ -55520,7 +55522,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/port/fore)
 "omh" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "omj" = (
@@ -67717,7 +67719,7 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "rtH" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)

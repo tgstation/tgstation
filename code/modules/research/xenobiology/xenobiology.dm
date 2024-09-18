@@ -715,13 +715,10 @@
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
 		return
-	if(isnull(potion_reason))
-		balloon_alert(user, "no reason for offering set!")
-		return
 	balloon_alert(user, "offering...")
 	being_used = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion! Reason: [span_boldnotice(potion_reason)]",
+		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion![potion_reason ? " Reason: [span_boldnotice(potion_reason)]" : ""]",
 		check_jobban = ROLE_SENTIENCE,
 		poll_time = 20 SECONDS,
 		checked_target = dumb_mob,
@@ -913,6 +910,8 @@
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
 		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+			if(interacting_with.atom_storage)
+				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("The [apply_to] can't be made any faster!"))
 			return ITEM_INTERACT_BLOCKING
 		apply_to.slowdown = 0
@@ -922,15 +921,6 @@
 	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/item/slimepotion/speed/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	if(!isitem(storage_holder))
-		return TRUE
-	if(istype(storage_holder, /obj/item/mod/control))
-		var/obj/item/mod/control/mod = storage_holder
-		return mod.slowdown_inactive <= 0
-	var/obj/item/storage_item = storage_holder
-	return storage_item.slowdown <= 0
 
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"

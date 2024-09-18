@@ -139,7 +139,6 @@
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
-		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
 	if(internal_cell)
@@ -251,7 +250,7 @@
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
 	if(computer_id_slot)
-		. += "\The [src] is displaying [computer_id_slot]."
+		. += "[src] is displaying [computer_id_slot]:"
 		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
@@ -727,6 +726,8 @@
 	UpdateDisplay()
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(!issilicon(user))
+		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
@@ -751,20 +752,16 @@
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
 
-/**
- * Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
- *
- * Called when sent COMSIG_HIT_BY_SABOTEUR.
- */
-/obj/item/modular_computer/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+//Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+/obj/item/modular_computer/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!has_light)
 		return
 	set_light_on(FALSE)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /**
  * Sets the computer's light color, if it has a light.

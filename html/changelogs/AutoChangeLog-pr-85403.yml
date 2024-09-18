@@ -1,5 +1,0 @@
-author: "Xackii"
-delete-after: True
-changes:
-  - bugfix: "Justice design no longer disappears"
-  - bugfix: "Mechs can attack other mechs in melee"

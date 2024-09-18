@@ -317,14 +317,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		current_page = WRAP(current_page + 1,1,pages+1)
 		update_screen_objects()
 
-/datum/radial_menu/proc/show_to(mob/M)
+/datum/radial_menu/proc/show_to(mob/M, offset_x = 0, offset_y = 0)
 	if(current_user)
 		hide()
 	if(!M.client || !anchor)
 		return
 	current_user = M.client
 	//Blank
-	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER)
+	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing", layer = RADIAL_BACKGROUND_LAYER, pixel_x = offset_x, pixel_y = offset_y)
 	SET_PLANE_EXPLICIT(menu_holder, ABOVE_HUD_PLANE, M)
 	menu_holder.appearance_flags |= KEEP_APART|RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	menu_holder.vis_contents += elements + close_button
@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, entry_animation = TRUE, click_on_hover = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice", autopick_single_option = TRUE, entry_animation = TRUE, click_on_hover = FALSE, user_space = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 
@@ -379,11 +379,18 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		menu.radius = radius
 	if(istype(custom_check))
 		menu.custom_check_callback = custom_check
-	menu.anchor = anchor
+	menu.anchor = user_space ? user : anchor
 	menu.radial_slice_icon = radial_slice_icon
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips, click_on_hover)
-	menu.show_to(user)
+	var/offset_x = 0
+	var/offset_y = 0
+	if (user_space)
+		var/turf/user_turf = get_turf(user)
+		var/turf/anchor_turf = get_turf(anchor)
+		offset_x = (anchor_turf.x - user_turf.x) * world.icon_size + anchor.pixel_x - user.pixel_x
+		offset_y = (anchor_turf.y - user_turf.y) * world.icon_size + anchor.pixel_y - user.pixel_y
+	menu.show_to(user, offset_x, offset_y)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
 	qdel(menu)

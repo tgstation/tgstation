@@ -119,7 +119,7 @@
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
 	antag_mind.special_role = ROLE_GLITCH
-	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
+	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
 	playsound(new_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into virtual antagonist by an event.")
@@ -176,7 +176,7 @@
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()
 	for(var/datum/weakref/creature_ref as anything in mutation_candidate_refs)
-		var/mob/living/creature = creature_ref.resolve()
+		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature) || creature.mind)
 			mutation_candidate_refs.Remove(creature_ref)
 

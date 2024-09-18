@@ -52,6 +52,9 @@
 	if(looking_for == belt)
 		return ITEM_SLOT_BELT
 
+	if(belt && (looking_for in belt))
+		return ITEM_SLOT_BELTPACK
+
 	if(looking_for == wear_id)
 		return ITEM_SLOT_ID
 
@@ -197,6 +200,9 @@
 				return
 			s_store = equipping
 			update_suit_storage()
+		if(ITEM_SLOT_BELTPACK)
+			if(!belt || !belt.atom_storage?.attempt_insert(equipping, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
+				not_handled = TRUE
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
@@ -368,7 +374,7 @@
 /// take the most recent item out of a slot or place held item in a slot
 
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
-	if(incapacitated())
+	if(incapacitated)
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)

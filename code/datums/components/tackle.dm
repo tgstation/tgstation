@@ -71,13 +71,10 @@
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+	if(!modifiers[RIGHT_CLICK] || modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
 		return
 
-	if(!modifiers[RIGHT_CLICK])
-		return
-
-	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
+	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated)
 		return
 
 	if(!clicked_atom || !(isturf(clicked_atom) || isturf(clicked_atom.loc)))

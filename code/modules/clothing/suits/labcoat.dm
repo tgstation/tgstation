@@ -38,6 +38,10 @@
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+
 /datum/armor/toggle_labcoat
 	bio = 50
 	fire = 50
@@ -54,6 +58,10 @@
 	desc = "A dark blue jacket for paramedics with reflective stripes."
 	icon_state = "labcoat_paramedic"
 	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/labcoat/paramedic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
 
 /obj/item/clothing/suit/toggle/labcoat/mad
 	name = "\proper The Mad's labcoat"

@@ -8,6 +8,8 @@
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
 	preview_outfit = /datum/outfit/spy
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Rob the station blind."
 	/// Whether an uplink has been created (successfully or at all)
 	var/uplink_created = FALSE
 	/// String displayed in the antag panel pointing the spy to where their uplink is.

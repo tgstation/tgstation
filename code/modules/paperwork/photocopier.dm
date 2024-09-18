@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	return data
 
-/obj/machinery/photocopier/ui_act(action, list/params)
+/obj/machinery/photocopier/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

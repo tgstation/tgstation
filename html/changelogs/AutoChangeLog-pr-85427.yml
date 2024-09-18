@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - bugfix: "Fixes SS13.wait not working when called multiple times before it finishes waiting."

@@ -15,6 +15,7 @@
 	close_sound_volume = 50
 	can_install_electronics = FALSE
 	elevation = 22
+	can_weld_shut = FALSE
 
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE
