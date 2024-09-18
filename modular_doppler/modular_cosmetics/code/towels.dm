@@ -57,8 +57,6 @@
 	. = ..()
 
 	create_reagents(max_reagent_volume)
-	AddComponent(/datum/component/surgery_initiator) // Since you can do it with bedsheets, why not with towels too?
-
 	register_context()
 	register_item_context()
 
@@ -129,7 +127,6 @@
 	. = ..()
 	if(!user.Adjacent(target_mob))
 		return
-
 
 	var/free_space = reagents.maximum_volume - reagents.total_volume
 	if(free_space <= 0)

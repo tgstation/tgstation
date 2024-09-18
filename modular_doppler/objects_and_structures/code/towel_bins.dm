@@ -151,10 +151,12 @@
 	icon_state = "linenbasket-full"
 	base_icon_state = "linenbasket"
 
-/obj/structure/towel_bin/empty/basket/
+/obj/structure/towel_bin/basket/empty/
 	name = "linen basket"
+	amount = 0
 	icon_state = "linenbasket-empty"
 	base_icon_state = "linenbasket"
+	anchored = FALSE
 
 /obj/structure/towel_bin/basket/screwdriver_act(mob/living/user, obj/item/tool)
 	if(amount)
@@ -167,3 +169,13 @@
 			new /obj/item/food/grown/grass/thatch(loc, 2)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
+
+/datum/crafting_recipe/towel_basket
+	name = "towel basket"
+	result = /obj/structure/towel_bin/basket/empty/
+	time = 0.5 SECONDS
+	reqs = list(
+		/obj/item/food/grown/grass/thatch = 2,
+	)
+	crafting_flags = CRAFT_CHECK_DENSITY
+	category = CAT_CONTAINERS
