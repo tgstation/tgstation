@@ -5,7 +5,6 @@
 
 ##RESPAWN
 #_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
-#_maps/RandomRuins/IceRuins/doppler/icemoon_underground_interdyne_base1.dmm
 #_maps/RandomRuins/IceRuins/doppler/icemoon_underground_icewalker_upper.dmm
 #_maps/RandomRuins/IceRuins/doppler/icemoon_underground_icewalker_lower.dmm
 
