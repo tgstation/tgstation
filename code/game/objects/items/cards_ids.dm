@@ -1704,7 +1704,7 @@
 	if(!after_input_check(user))
 		return TRUE
 	if(input_name)
-		input_name = reject_bad_name(input_name, allow_numbers = TRUE)
+		input_name = sanitize_name(input_name, allow_numbers = TRUE)
 	if(!input_name)
 		// Invalid/blank names give a randomly generated one.
 		if(user.gender == MALE)
