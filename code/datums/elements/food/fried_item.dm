@@ -17,28 +17,27 @@
 	var/atom/this_food = target
 
 	switch(fry_time)
-		if(0 to 15)
+		if(0 to 15 SECONDS)
 			this_food.add_atom_colour(fried_colors[1], FIXED_COLOUR_PRIORITY)
 			this_food.name = "lightly-fried [this_food.name]"
 			this_food.desc += " It's been lightly fried in a deep fryer."
 
-		if(15 to 50)
+		if(15 SECONDS to 50 SECONDS)
 			this_food.add_atom_colour(fried_colors[2], FIXED_COLOUR_PRIORITY)
 			this_food.name = "fried [this_food.name]"
 			this_food.desc += " It's been fried, increasing its tastiness value by [rand(1, 75)]%."
 
-		if(50 to 85)
+		if(50 SECONDS to 85 SECONDS)
 			this_food.add_atom_colour(fried_colors[3], FIXED_COLOUR_PRIORITY)
 			this_food.name = "deep-fried [this_food.name]"
 			this_food.desc += " Deep-fried to perfection."
 
-		if(85 to INFINITY)
+		if(85 SECONDS to INFINITY)
 			this_food.add_atom_colour(fried_colors[4], FIXED_COLOUR_PRIORITY)
 			this_food.name = "\proper the physical manifestation of the very concept of fried foods"
 			this_food.desc = "A heavily-fried... something. Who can tell anymore?"
 
 	ADD_TRAIT(this_food, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
-	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
 	this_food.AddComponent( \
@@ -49,6 +48,7 @@
 		foodtypes = FRIED, \
 		volume = this_food.reagents?.maximum_volume, \
 	)
+	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 
 /datum/element/fried_item/Detach(atom/source, ...)
 	for(var/color in fried_colors)
