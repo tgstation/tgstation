@@ -1,5 +1,5 @@
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, wound_clothing, sharpness=NONE)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
@@ -49,7 +49,7 @@
  * * bare_wound_bonus- The bare_wound_bonus of an attack
  * * wound_clothing- If this should damage clothing.
  */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, wound_clothing, attack_direction, damage_source)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, attack_direction, damage_source, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
@@ -253,10 +253,11 @@
 		for(var/obj/item/clothing/clothes as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.get_armor_rating(WOUND)
+			// Should attack also cause damage to the clothes?
 			if (wound_clothing)
 				if(wounding_type == WOUND_SLASH)
 					clothes.take_damage_zone(body_zone, damage, BRUTE)
-				else if(wounding_type == WOUND_BURN) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
+				else if(wounding_type == WOUND_BURN)
 					clothes.take_damage_zone(body_zone, damage, BURN)
 
 		if(!armor_ablation)

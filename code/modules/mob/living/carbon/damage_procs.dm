@@ -7,10 +7,10 @@
 	spread_damage = FALSE,
 	wound_bonus = 0,
 	bare_wound_bonus = 0,
-	wound_clothing = TRUE,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 	// Spread damage should always have def zone be null
 	if(spread_damage)
@@ -44,10 +44,10 @@
 	spread_damage = FALSE,
 	wound_bonus = 0,
 	bare_wound_bonus = 0,
-	wound_clothing = TRUE,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 
 	// Add relevant DR modifiers into blocked value to pass to parent
