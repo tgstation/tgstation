@@ -1,6 +1,6 @@
 {
 	"Animal Rights Consortium": {
-		"allies": "You may cooperate with other syndicate operatives if they support our cause. Maybe you can convince the Bee Liberation Front operatives to cooperate for once?",
+		"allies": "You may cooperate with other Syndicate operatives if they support our cause. Maybe you can convince the Bee Liberation Front operatives to cooperate for once?",
 		"goal": "The creatures of this world must be freed from the iron grasp of Nanotrasen, and you are their only hope!",
 		"introduction": "You are the ARC Terrorist.",
 		"roundend_report": "was an activist from the Animal Rights Consortium.",
@@ -8,7 +8,7 @@
 		"uplink": "The Syndicate have graciously given one of their uplinks for your task."
 	},
 	"Bee Liberation Front": {
-		"allies": "You may cooperate with other syndicate operatives if they support our cause. Maybe you can recruit an Animal Rights Consort to be useful for once?",
+		"allies": "You may cooperate with other Syndicate operatives if they support our cause. Maybe you can recruit an Animal Rights Consort to be useful for once?",
 		"goal": "We must prove ourselves to the Syndicate or we will not be able to join. Animal Rights Consort will roll us!",
 		"introduction": "You are the Bee Liberation Front Operative.",
 		"roundend_report": "was an activist of the Bee Liberation Front.",
@@ -32,12 +32,20 @@
 		"uplink": "You have connections to the black market for the deeds. Knock off a few loose weights, and your climb will be so much smoother."
 	},
 	"Cybersun Industries": {
-		"allies": "Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. All other syndicate operatives are not to be trusted.",
+		"allies": "Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. All other Syndicate operatives are not to be trusted.",
 		"goal": "Do not establish substantial presence on the designated facility, as larger incidents are harder to cover up.",
 		"introduction": "You are from Cybersun Industries.",
 		"roundend_report": "was a specialist from Cybersun Industries.",
 		"ui_theme": "syndicate",
-		"uplink": "You have been supplied the tools for the job in the form of a standard syndicate uplink."
+		"uplink": "You have been supplied the tools for the job in the form of a standard Syndicate uplink."
+	},
+	"Defector": {
+		"allies": "You are new to the secret agent business, be wary of others and look out for yourself.",
+		"goal": "The Syndicate picked the right time to offer you money. Do their dirty work for them and get paid.",
+		"introduction": "You are the Syndicate Defector.",
+		"roundend_report": "was a Syndicate defector.",
+		"ui_theme": "syndicate",
+		"uplink": "Last week you picked up a Syndicate uplink from a dead-drop. Now is the time to use it."
 	},
 	"Donk Corporation": {
 		"allies": "Members of Waffle Corp. are to be killed on sight; they are not allowed to be on the station while we're around.",
@@ -48,7 +56,7 @@
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
 	},
 	"Gone Postal": {
-		"allies": "If the syndicate learns of your plan, they're going to kill you and take your uplink. Take no chances.",
+		"allies": "If the Syndicate learns of your plan, they're going to kill you and take your uplink. Take no chances.",
 		"goal": "The preparations are finally complete. Today is the day you go postal. You're going to hijack the emergency shuttle and live a new life free of Nanotrasen.",
 		"introduction": "You're going postal today.",
 		"roundend_report": "simply went completely postal!",
@@ -63,14 +71,6 @@
 		"ui_theme": "syndicate",
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
 	},
-	"Internal Affairs Agent": {
-		"allies": "Do NOT reveal your agent status, to anyone. Work to root out corruption from the station from the shadows.",
-		"goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
-		"introduction": "You are the Internal Affairs Agent.",
-		"roundend_report": "was part of Nanotrasen Internal Affairs.",
-		"ui_theme": "ntos",
-		"uplink": "For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink."
-	},
 	"Legal Trouble": {
 		"allies": "Death to the Syndicate.",
 		"goal": "Try to finish your to-do list, and don't get caught. If they find out what you're actually doing, this scandal will go galactic.",
@@ -79,13 +79,37 @@
 		"ui_theme": "neutral",
 		"uplink": "You've connected to the black market to clean this mess up. If there's no evidence, there's no crime."
 	},
+	"Hired Mercenary": {
+		"allies": "The Syndicate hired you, but their agents are notoriously twitchy. Use your own judgment to decide who can be trusted.",
+		"goal": "This job pays enough to finally get out of the business. Complete your work, and you'll be sipping drinks on the beach in no time.",
+		"introduction": "You are the Syndicate Hired Mercenary.",
+		"roundend_report": "was a Syndicate hired mercenary.",
+		"ui_theme": "syndicate",
+		"uplink": "You've been supplied a Syndicate uplink for this mission."
+	},
 	"MI13": {
-		"allies": "You are the only operative we are sending, any others are fake. All other syndicate operatives are not to be trusted, with the exception of Cybersun operatives.",
+		"allies": "You are the only operative we are sending, any others are fake. All other Syndicate operatives are not to be trusted, with the exception of Cybersun operatives.",
 		"goal": "Avoid killing innocent personnel at all costs. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs.",
 		"introduction": "You are the MI13 Agent.",
 		"roundend_report": "was an MI13 agent.",
 		"ui_theme": "syndicate",
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
+	},
+	"Rival Saboteur": {
+		"allies": "Don't make your true alligences obvious. Syndicate agents could make unlikely allies if you could trick them into thinking you are one of them.",
+		"goal": "Sabotage the station to make this division look bad. Make this look like a Syndicate job, you can't let it be traced back to your sector.",
+		"introduction": "You are a saboteur from a rival division of nanotrasen.",
+		"roundend_report": "was a Rival Saboteur.",
+		"ui_theme": "ntos",
+		"uplink": "You have been given a captured Syndicate uplink to get your task done."
+	},
+	"Radicalized": {
+		"allies": "Down with Nanotrasen's tyrany! Surround yourself with likeminded indivduals.",
+		"goal": "Bring down the nanotrasen's establishment! You've got a list of targets in mind.",
+		"introduction": "You have been radicalized by the Syndicate.",
+		"roundend_report": "was radicalized by the Syndicate.",
+		"ui_theme": "syndicate",
+		"uplink": "After weeks of sending messages, the Syndicate has finally sent you your own personal uplink. So rad!"
 	},
 	"Tiger Cooperative Fanatic": {
 		"allies": "Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm!",
@@ -105,7 +129,7 @@
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
 	},
 	"Waffle Corporation Terrorist": {
-		"allies": "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
+		"allies": "Most other Syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
 		"goal": "Our investors need a demonstration of our pledge to destroying Nanotrasen. Let's give them a loud one!",
 		"introduction": "You are the Waffle Corporation Terrorist.",
 		"roundend_report": "was a terrorist from Waffle Corporation.",

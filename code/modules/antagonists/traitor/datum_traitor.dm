@@ -187,21 +187,14 @@
 
 /datum/antagonist/traitor/proc/pick_employer()
 	if(!employer)
-		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
 		var/list/possible_employers = list()
 
-		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers, GLOB.neutral_employers)
 
 		if(istype(ending_objective, /datum/objective/hijack))
-			possible_employers -= GLOB.normal_employers
+			possible_employers -= GLOB.never_hijack_employers
 		else //escape or martyrdom
 			possible_employers -= GLOB.hijack_employers
-
-		switch(faction)
-			if(FLAVOR_FACTION_SYNDICATE)
-				possible_employers -= GLOB.nanotrasen_employers
-			if(FLAVOR_FACTION_NANOTRASEN)
-				possible_employers -= GLOB.syndicate_employers
 		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
@@ -209,7 +202,7 @@
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	var/objective_count = 0
 
-	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
+	if(/*(GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && */prob(HIJACK_PROB))
 		is_hijacker = TRUE
 		objective_count++
 

@@ -153,46 +153,54 @@
 /// JSON file containing spy objectives
 #define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
 
-///employers that are from the syndicate
+///traitors that are from the syndicate or alligned with the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",
 	"Bee Liberation Front",
 	"Cybersun Industries",
+	"Defector",
 	"Donk Corporation",
 	"Gorlex Marauders",
+	"Hired Mercenary",
 	"MI13",
+	"Radicalized",
 	"Tiger Cooperative Fanatic",
 	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
-///employers that are from Nanotrasen
-GLOBAL_LIST_INIT(nanotrasen_employers, list(
+///traitors that are not from the syndicate
+GLOBAL_LIST_INIT(neutral_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
 	"Gone Postal",
-	"Internal Affairs Agent",
+	"Rival Saboteur",
 	"Legal Trouble",
 ))
 
-///employers who hire agents to do the hijack
+///employers who only hire agents to do the hijack
 GLOBAL_LIST_INIT(hijack_employers, list(
-	"Animal Rights Consortium",
-	"Bee Liberation Front",
 	"Gone Postal",
-	"Tiger Cooperative Fanatic",
 	"Waffle Corporation Terrorist",
 ))
 
-///employers who hire agents to do a task and escape... or martyrdom. whatever
-GLOBAL_LIST_INIT(normal_employers, list(
+///employers who might be hire agents to hyjack
+GLOBAL_LIST_INIT(maybe_hijack_employers, list(
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Tiger Cooperative Fanatic",
+	"Radicalized",
+))
+
+///employers who will never hire agents to hyjack
+GLOBAL_LIST_INIT(never_hijack_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
 	"Cybersun Industries",
+	"Defector",
 	"Donk Corporation",
-	"Gorlex Marauders",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
+	"Rival Saboteur",
 	"Waffle Corporation",
 ))
 

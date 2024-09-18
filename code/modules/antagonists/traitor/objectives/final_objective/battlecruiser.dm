@@ -24,7 +24,10 @@
 		nuke.r_code = random_nukecode()
 	team.nuke = nuke
 	team.update_objectives()
-	handler.owner.add_antag_datum(/datum/antagonist/battlecruiser/ally, team)
+	var/datum/antagonist/traitor/traitor_datum = handler.owner.has_antag_datum(/datum/antagonist/traitor)
+	for(var/employers in GLOB.syndicate_employers)
+		if(traitor_datum.employer == employers)
+			handler.owner.add_antag_datum(/datum/antagonist/battlecruiser/ally, team)
 
 
 /datum/traitor_objective/ultimate/battlecruiser/generate_ui_buttons(mob/user)
