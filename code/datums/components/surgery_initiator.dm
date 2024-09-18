@@ -90,11 +90,11 @@
 			continue
 		if(user == target && !(surgery.surgery_flags & SURGERY_SELF_OPERABLE))
 			continue
+		if(!iscarbon(target) && surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
+			continue
 
 		if(isnull(affecting))
 			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
-				continue
-			if(surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
 				continue
 		else
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
@@ -286,16 +286,16 @@
 		target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
 		return
 
+	if(!iscarbon(target) && surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
+		target.balloon_alert(user, "incompatible biology!")
+		return
+
 	if (!isnull(affecting_limb))
 		if(surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
 			target.balloon_alert(user, "not the right type of limb!")
 			return
 		if(surgery.targetable_wound && !affecting_limb.get_wound_type(surgery.targetable_wound))
 			target.balloon_alert(user, "no wound to operate on!")
-			return
-	else
-		if(surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
-			target.balloon_alert(user, "incompatible biology!")
 			return
 
 	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
