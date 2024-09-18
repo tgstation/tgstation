@@ -1,6 +1,7 @@
 /datum/surgery/healing
 	target_mobtypes = list(/mob/living)
 	requires_bodypart_type = NONE
+	mob_biotypes = NONE
 	replaced_by = /datum/surgery
 	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING
 	possible_locs = list(BODY_ZONE_CHEST)

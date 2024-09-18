@@ -20,6 +20,8 @@
 	var/list/possible_locs = list()
 	///Mobs that are valid to have surgery performed on them.
 	var/list/target_mobtypes = list(/mob/living/carbon/human)
+	///Mob types that are valid to have surgery performed on them
+	var/mob_biotypes = MOB_ORGANIC
 
 	///The person the surgery is being performed on. Funnily enough, it isn't always a carbon.
 	VAR_FINAL/mob/living/carbon/target

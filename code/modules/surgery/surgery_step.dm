@@ -172,7 +172,7 @@
 /datum/surgery_step/proc/update_surgery_mood(mob/living/target, surgery_state)
 	if(!target)
 		CRASH("Not passed a target, how did we get here?")
-	if(!surgery_effects_mood)
+	if(!surgery_effects_mood || isnull(target.mob_mood))
 		return
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.

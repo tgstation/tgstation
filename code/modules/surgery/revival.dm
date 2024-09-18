@@ -18,6 +18,7 @@
 /datum/surgery/revival/mechanic
 	name = "Full System Reboot"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	mob_biotypes = MOB_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

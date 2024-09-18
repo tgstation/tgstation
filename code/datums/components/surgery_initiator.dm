@@ -94,6 +94,8 @@
 		if(isnull(affecting))
 			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
 				continue
+			if(surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
+				continue
 		else
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
 				continue
@@ -130,7 +132,7 @@
 
 	var/required_tool_type = TOOL_CAUTERY
 	var/obj/item/close_tool = user.get_inactive_held_item()
-	var/is_robotic = the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC
+	var/is_robotic = (the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC) || (the_surgery.mob_biotypes & MOB_ROBOTIC)
 	if(is_robotic)
 		required_tool_type = TOOL_SCREWDRIVER
 
@@ -290,6 +292,10 @@
 			return
 		if(surgery.targetable_wound && !affecting_limb.get_wound_type(surgery.targetable_wound))
 			target.balloon_alert(user, "no wound to operate on!")
+			return
+	else
+		if(surgery.mob_biotypes && !(surgery.mob_biotypes & target.mob_biotypes))
+			target.balloon_alert(user, "incompatible biology!")
 			return
 
 	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
