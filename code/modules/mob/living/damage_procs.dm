@@ -13,6 +13,7 @@
  * * spread_damage - For carbons, spreads the damage across all bodyparts rather than just the targeted zone.
  * * wound_bonus - Bonus modifier for wound chance.
  * * bare_wound_bonus - Bonus modifier for wound chance on bare skin.
+ * * wound_clothing - If this should cause damage to clothing.
  * * sharpness - Sharpness of the weapon.
  * * attack_direction - Direction of the attack from the attacker to [src].
  * * attacking_item - Item that is attacking [src].
@@ -28,6 +29,7 @@
 	spread_damage = FALSE,
 	wound_bonus = 0,
 	bare_wound_bonus = 0,
+	wound_clothing = TRUE,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
