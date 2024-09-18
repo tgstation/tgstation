@@ -477,5 +477,13 @@
 /obj/item/fish/testdummy/food
 	average_weight = FISH_WEIGHT_BITE_DIVISOR * 2 //One bite, it's death; the other, it's gone.
 
+///Check that nothing wrong happens when randomizing size and weight of a fish
+/datum/unit_test/fish_randomize_size_weight
+
+/datum/unit_test/fish_randomize_size_weight/Run()
+	var/obj/item/storage/box/fish_debug/box = allocate(/obj/item/storage/box/fish_debug)
+	for(var/obj/item/fish/fish as anything in box)
+		fish.randomize_size_and_weight()
+
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING

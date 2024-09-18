@@ -25,7 +25,7 @@
 	src.inherit_name = inherit_name
 
 /datum/component/fish_growth/CheckDupeComponent(
-	/datum/component/fish_growth/new_growth, // will be null
+	datum/component/fish_growth/new_growth, // will be null
 	result_type,
 	growth_time,
 	use_drop_loc = TRUE,
