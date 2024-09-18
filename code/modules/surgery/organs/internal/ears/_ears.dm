@@ -128,6 +128,7 @@
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0
 
+
 /obj/item/organ/internal/ears/cat
 	name = "cat ears"
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -144,12 +145,9 @@
 
 /// Bodypart overlay for the horrible cat ears
 /datum/bodypart_overlay/mutant/cat_ears
-	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_HAIR
 	feature_key = "ears"
-
-	/// We dont color the inner part, which is the front layer
-	var/colorless_layer = EXTERNAL_FRONT
 
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
@@ -159,10 +157,26 @@
 		return FALSE
 	return TRUE
 
-/datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
-	if(draw_layer != bitflag_to_layer(colorless_layer))
-		return ..()
-	return overlay
+/datum/bodypart_overlay/mutant/cat_ears/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/base_ears = ..()
+
+	// Construct image of inner ears, apply to base ears as an overlay
+	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
+	var/list/icon_state_builder = list()
+	icon_state_builder += sprite_datum.gender_specific ? gender : "m"
+	icon_state_builder += "[feature_key]inner"
+	icon_state_builder += get_base_icon_state()
+	icon_state_builder += mutant_bodyparts_layertext(image_layer)
+
+	var/finished_icon_state = icon_state_builder.Join("_")
+
+	var/mutable_appearance/inner_ears = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer, appearance_flags = RESET_COLOR)
+
+	if(sprite_datum.center)
+		center_image(inner_ears, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+	base_ears.overlays += inner_ears
+	return base_ears
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
