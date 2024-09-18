@@ -9,12 +9,13 @@
 # Traits - Station (for station relatied edits), CentCom (for edits on the CC map), Mining (for edits on Lavaland)
 # More can be found in code\__DEFINES\maps.dm
 
+# ICEBOX MAP EDITS
 # Icecats Camp Lower Level
 [templates.icebox_icecats_lower]
 map_files = ["icemoon_underground_icewalker_lower.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [202, 16, 1]
+coordinates = [150, 16, 1]
 trait_name = "Station"
 
 # Icecats Camp Upper Level
@@ -22,5 +23,5 @@ trait_name = "Station"
 map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [202, 16, 2]
+coordinates = [150, 16, 2]
 trait_name = "Station"
