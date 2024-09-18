@@ -53,7 +53,6 @@
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
-	RegisterSignal(parent, COMSIG_FISH_PETTED, PROC_REF(on_fish_petted))
 
 	if(isfish(parent))
 		RegisterSignal(parent, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
@@ -167,11 +166,6 @@
 	if(vc_obj.layer)
 		current_aquarium.free_layer(vc_obj.layer)
 	vc_obj.layer = current_aquarium.request_layer(vc_obj.layer_mode)
-
-/datum/component/aquarium_content/proc/on_fish_petted()
-	SIGNAL_HANDLER
-
-	new /obj/effect/temp_visual/heart(get_turf(parent))
 
 /datum/component/aquarium_content/proc/on_removed(obj/structure/aquarium/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER

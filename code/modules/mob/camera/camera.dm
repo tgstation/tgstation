@@ -7,6 +7,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
+	status_flags = NONE
 	/// Toggles if the camera can move on shuttles
 	var/move_on_shuttle = FALSE
 	/// Toggles if the camera can use emotes

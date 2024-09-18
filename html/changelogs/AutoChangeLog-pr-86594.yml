@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can pet fish while holding them. Be wary of petting aggressive fish."

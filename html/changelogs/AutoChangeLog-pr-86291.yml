@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can now link fishing portal generators to other fishing spots with a multitool. The number of fishing spots that can be linked at once and whether the link can be activated from different z levels depends on the tier of the stock parts it's built with."

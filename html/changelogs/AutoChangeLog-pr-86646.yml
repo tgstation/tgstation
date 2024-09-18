@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Your current clothes and what chair you sit on can now influence the difficulty of fishing minigames. Having a bare minimum of fishing skill will let you distinguish which objects can help and which won't, so keep an eye out. Holding fishing toolboxes, fish analyzers or fish catalogs can also help."

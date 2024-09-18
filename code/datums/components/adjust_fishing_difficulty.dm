@@ -62,7 +62,6 @@
 	SIGNAL_HANDLER
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		return
-	var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[modifier]% " : ""
 	add_examine_line(user, examine_text, "Buckling to [source.p_them()]")
 
 /datum/component/adjust_fishing_difficulty/proc/add_examine_line(mob/user, list/examine_text, method)
