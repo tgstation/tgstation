@@ -238,6 +238,10 @@
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
 
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
 	if(isnull(.))

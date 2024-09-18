@@ -79,7 +79,7 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	var/gone_fishing = HAS_TRAIT(user, TRAIT_GONE_FISHING)
+	var/gone_fishing = GLOB.fishing_challenges_by_user[user]
 	if(currently_hooked || gone_fishing)
 		context[SCREENTIP_CONTEXT_LMB] = (gone_fishing && spin_frequency) ? "Spin" : "Reel in"
 		if(!gone_fishing)
@@ -411,7 +411,7 @@
 
 /// Ideally this will be replaced with generic slotted storage datum + display
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
-	if(fishing_line || HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
 	var/obj/item/current_item
 	switch(slot)
@@ -545,7 +545,7 @@
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return
 	//the fishing minigame uses the attack_self signal to let the user end it early without having to drop the rod.
-	if(HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(GLOB.fishing_challenges_by_user[user])
 		return COMPONENT_BLOCK_TRANSFORM
 
 ///Gives feedback to the user, makes it show up inhand, toggles whether it can be used for fishing.

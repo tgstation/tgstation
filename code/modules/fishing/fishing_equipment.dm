@@ -288,6 +288,8 @@
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
 	custom_price = PAYCHECK_CREW * 3
+	///How much holding this affects fishing difficulty
+	var/fishing_modifier = -2
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -296,6 +298,7 @@
 		/obj/item/fishing_rod,
 	))
 	atom_storage.exception_hold = exception_cache
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
@@ -326,6 +329,7 @@
 	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
+	fishing_modifier = -7
 
 /obj/item/storage/toolbox/fishing/master/PopulateContents()
 	new /obj/item/fishing_rod/telescopic/master(src)

@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/mothcoat/original/Initialize(mapload)
 	. = ..()
-
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
 	create_storage(storage_type = /datum/storage/pockets)
 
 /obj/item/clothing/suit/mothcoat/winter
