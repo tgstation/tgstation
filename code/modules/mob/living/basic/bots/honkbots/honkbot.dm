@@ -48,7 +48,7 @@
 		can_slip_callback = CALLBACK(src, PROC_REF(pre_slip)),\
 	)
 	AddComponent(/datum/component/stun_n_cuff,\
-		stun_sound = 'sound/items/AirHorn.ogg',\
+		stun_sound = 'sound/items/airhorn/AirHorn.ogg',\
 		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
 		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
 		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake,\

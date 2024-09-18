@@ -72,10 +72,10 @@
 
 /datum/species/human/get_laugh_sound(mob/living/carbon/human/human)
 	if(human.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/womanlaugh.ogg'
+		return 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg'
 	return pick(
-		'sound/mobs/humanoids/human/manlaugh1.ogg',
-		'sound/mobs/humanoids/human/manlaugh2.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
 	)
 
 /datum/species/human/get_sigh_sound(mob/living/carbon/human/human)

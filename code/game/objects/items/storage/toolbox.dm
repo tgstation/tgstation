@@ -17,8 +17,8 @@
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/items/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox/toolbox.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE

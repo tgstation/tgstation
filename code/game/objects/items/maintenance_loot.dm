@@ -22,7 +22,7 @@
 	grind_results = list(/datum/reagent/lead = 20)
 	pickup_sound = 'sound/items/handling/lead_pipe/lead_pipe_pickup.ogg'
 	drop_sound = 'sound/items/handling/lead_pipe/lead_pipe_drop.ogg'
-	hitsound = 'sound/items/handling/lead_pipe/lead_pipe_hit.ogg'
+	hitsound = 'sound/items/lead_pipe_hit.ogg'
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.
 //Add lead material to this once implemented.

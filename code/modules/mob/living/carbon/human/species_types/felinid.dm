@@ -53,10 +53,10 @@
 
 /datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/womanlaugh.ogg'
+		return 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg'
 	return pick(
-		'sound/mobs/humanoids/human/manlaugh1.ogg',
-		'sound/mobs/humanoids/human/manlaugh2.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
 	)
 
 

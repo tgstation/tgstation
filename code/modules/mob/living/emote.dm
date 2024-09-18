@@ -743,4 +743,4 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	return 'sound/mobs/humanoids/human/sigh/whistle/whistle1.ogg'
+	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'

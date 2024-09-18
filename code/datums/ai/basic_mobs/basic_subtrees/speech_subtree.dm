@@ -56,7 +56,7 @@
 /datum/ai_planning_subtree/random_speech/mouse
 	speech_chance = 1
 	speak = list("Squeak!", "SQUEAK!", "Squeak?")
-	sound = list('sound/mobs/non-humanoids/mouse.mousesqueek.ogg')
+	sound = list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg')
 	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
 

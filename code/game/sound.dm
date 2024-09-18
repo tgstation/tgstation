@@ -268,8 +268,8 @@
 			soundin = pick(list(
 				'sound/effects/pray.ogg',
 				'sound/effects/reee.ogg',
-				'sound/items/AirHorn.ogg',
-				'sound/items/AirHorn2.ogg',
+				'sound/items/airhorn/AirHorn.ogg',
+				'sound/items/airhorn/AirHorn2.ogg',
 				'sound/items/bikehorn.ogg',
 				'sound/items/WEEOO1.ogg',
 				'sound/machines/buzz-sigh.ogg',
@@ -431,20 +431,20 @@
 				'sound/machines/sm/accent/delam/33.ogg',
 			))
 		if(SFX_CRUNCHY_BUSH_WHACK)
-			soundin = pick('sound/machines/bush/crunchybushwhack1.ogg', 'sound/machines/bush/crunchybushwhack2.ogg', 'sound/machines/bush/crunchybushwhack3.ogg')
+			soundin = pick('sound/effects/bush/crunchybushwhack1.ogg', 'sound/effects/bush/crunchybushwhack2.ogg', 'sound/effects/bush/crunchybushwhack3.ogg')
 		if(SFX_TREE_CHOP)
-			soundin = pick('sound/effects/treechop1.ogg', 'sound/effects/treechop2.ogg', 'sound/effects/treechop3.ogg')
+			soundin = pick('sound/effects/treechop/treechop1.ogg', 'sound/effects/treechop/treechop2.ogg', 'sound/effects/treechop/treechop3.ogg')
 		if(SFX_ROCK_TAP)
 			soundin = pick('sound/effects/rock/rocktap1.ogg', 'sound/effects/rock/rocktap2.ogg', 'sound/effects/rock/rocktap3.ogg')
 		if(SFX_SEAR)
 			soundin = 'sound/items/weapons/sear.ogg'
 		if(SFX_REEL)
 			soundin = pick(
-				'sound/items/handling/reel/reel1.ogg',
-				'sound/items/handling/reel/reel2.ogg',
-				'sound/items/handling/reel/reel3.ogg',
-				'sound/items/handling/reel/reel4.ogg',
-				'sound/items/handling/reel/reel5.ogg',
+				'sound/items/reel/reel1.ogg',
+				'sound/items/reel/reel2.ogg',
+				'sound/items/reel/reel3.ogg',
+				'sound/items/reel/reel4.ogg',
+				'sound/items/reel/reel5.ogg',
 			)
 		if(SFX_RATTLE)
 			soundin = pick(

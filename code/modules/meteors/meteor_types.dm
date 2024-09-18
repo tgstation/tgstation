@@ -301,7 +301,7 @@
 	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
-	meteorsound = 'sound/mobs/humanoids/ethereal_revive_fail.ogg'
+	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
 	threat = 5
@@ -342,7 +342,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)

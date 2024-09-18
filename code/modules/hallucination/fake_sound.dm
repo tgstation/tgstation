@@ -219,9 +219,9 @@
 
 /datum/hallucination/fake_sound/weird/laugher
 	sound_type = list(
-		'sound/mobs/humanoids/human/womanlaugh.ogg',
-		'sound/mobs/humanoids/human/manlaugh1.ogg',
-		'sound/mobs/humanoids/human/manlaugh2.ogg',
+		'sound/mobs/humanoids/human/laugh/womanlaugh.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
 	)
 
 /datum/hallucination/fake_sound/weird/phone

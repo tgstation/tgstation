@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(danger_ambience,list(
 ))
 
 GLOBAL_LIST_INIT(ruins_ambience,list(
-	'sound/ambience/ambicave.ogg',
+	'sound/ambience/lavaland/ambicave.ogg',
 	'sound/ambience/misc/ambidanger.ogg',
 	'sound/ambience/misc/ambidanger2.ogg',
 	'sound/ambience/maintenance/ambimaint1.ogg',
@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(engi_ambience,list(
 ))
 
 GLOBAL_LIST_INIT(mining_ambience, list(
-	'sound/ambience/ambicave.ogg',
+	'sound/ambience/lavaland/ambicave.ogg',
 	'sound/ambience/misc/ambidanger.ogg',
 	'sound/ambience/misc/ambidanger2.ogg',
 	'sound/ambience/lavaland/ambilava1.ogg',

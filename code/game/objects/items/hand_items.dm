@@ -542,8 +542,8 @@
 	name = "kiss"
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
-	hitsound = 'sound/effects/kiss.ogg'
-	hitsound_wall = 'sound/effects/kiss.ogg'
+	hitsound = 'sound/effects/emotes/kiss.ogg'
+	hitsound_wall = 'sound/effects/emotes/kiss.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
