@@ -204,7 +204,7 @@
 			to_chat(user, span_warning("[src] is broken!"))
 	else ..()
 
-/obj/structure/closet/crate/secure/interdyne
+/obj/structure/closet/crate/secure/syndicate/interdyne
 	name = "\improper Interdyne crate"
 	desc = "Crate belonging to Interdyne Pharmaceutics. Hopefully doesn't have bioweapons inside..."
 	icon_state = "interdynecrate"
@@ -213,8 +213,8 @@
 /obj/structure/closet/crate/secure/freezer/interdyne
 	name = "\improper Interdyne freezer"
 	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
-	icon_state = "interdynefreezer_secure"
-	base_icon_state = "interdynefreezer_secure"
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
 
 /obj/structure/closet/crate/secure/freezer/interdyne/blood
 	name = "\improper Interdyne blood freezer"
