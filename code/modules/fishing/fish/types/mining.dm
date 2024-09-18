@@ -60,18 +60,22 @@
 		multiplier -= 0.1 * round((average_weight - weight) / 200)
 	else if(weight >= (average_weight + 500))
 		multiplier += min(0.1 * round((weight - average_weight) / 500), 2)
-
 	AddComponent(/datum/component/fish_growth, lob_type, 10 MINUTES * multiplier)
+
+/obj/item/fish/chasm_crab/pet_fish(mob/living/user)
+	. = ..()
+	if(.)
+		anger -= min(anger, 6.5)
 
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
-		anger += growth
+		anger += growth * 2
 		return COMPONENT_DONT_GROW
 
 	if(hunger >= 0.4) //I'm hungry and angry
-		anger += growth
+		anger += growth * 0.6
 
 	if(!isaquarium(loc))
 		return
@@ -80,10 +84,10 @@
 	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
-		anger += growth
+		anger += growth * 0.25
 	var/fish_count = length(aquarium.get_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
-		anger += growth
+		anger += growth * 0.3
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
