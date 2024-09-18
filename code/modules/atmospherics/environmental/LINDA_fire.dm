@@ -215,9 +215,6 @@
 /obj/effect/hotspot/proc/update_color()
 	cut_overlays()
 
-	if(!(smoothing_junction & NORTH))
-		frill.pixel_z = 32
-		add_overlay(frill)
 	var/heat_r = heat2colour_r(temperature)
 	var/heat_g = heat2colour_g(temperature)
 	var/heat_b = heat2colour_b(temperature)
@@ -434,7 +431,7 @@
 	else
 		saving_group = enemy_group
 		sacrificial_group = src
-	for(var/obj/effect/hotspot/reference in sacrificial_group.spot_list)
+	for(var/obj/effect/hotspot/reference as anything in sacrificial_group.spot_list)
 		reference.our_hot_group = saving_group
 	saving_group.spot_list += sacrificial_group.spot_list
 	saving_group.x_coord += sacrificial_group.x_coord
