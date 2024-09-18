@@ -6,27 +6,18 @@
 /area/ruin/unpowered/magic_hotsprings)
 "l" = (
 /obj/item/food/grown/bluecherries,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "o" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/tree/mushroom/blue/reverse{
-	desc = "An exotic tree from other lands. It's a mistery how it came to sprout here."
-	},
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "u" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "x" = (
 /turf/closed/mineral/snowmountain/icemoon/unscrapeable{
@@ -35,21 +26,11 @@
 	},
 /area/ruin/unpowered/magic_hotsprings)
 "y" = (
-/obj/structure/flora/tree/mushroom/blue/reverse,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "z" = (
 /obj/item/food/grown/mushroom/jupitercup,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/unpowered/magic_hotsprings)
-"C" = (
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "H" = (
 /mob/living/basic/lightgeist{
@@ -69,39 +50,18 @@
 /area/ruin/unpowered/magic_hotsprings)
 "O" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/unpowered/magic_hotsprings)
-"Q" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "U" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"V" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/tree/mushroom/blue{
-	desc = "An exotic tree from other lands. It's a mistery how it came to sprout here."
-	},
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/unpowered/magic_hotsprings)
 "Y" = (
 /obj/structure/flora/grass/jungle/b/style_random,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 "Z" = (
 /obj/item/food/grown/mushroom/libertycap,
-/turf/open/floor/grass/fairy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
+/turf/open/floor/grass/fairy/icemoon,
 /area/ruin/unpowered/magic_hotsprings)
 
 (1,1,1) = {"
@@ -164,7 +124,7 @@ a
 a
 a
 x
-C
+y
 x
 a
 a
@@ -176,18 +136,18 @@ a
 a
 a
 O
-Q
+o
 a
 a
 a
-C
+y
 Z
 O
 a
 x
 x
-C
-C
+y
+y
 x
 x
 a
@@ -196,21 +156,21 @@ a
 a
 a
 a
-Q
+o
 z
-C
-C
+y
+y
 Y
-C
-Q
-C
-C
-C
+y
+o
+y
+y
+y
 x
 u
 u
-C
-C
+y
+y
 x
 a
 "}
@@ -218,17 +178,17 @@ a
 a
 a
 a
-C
-C
-C
-Q
-C
-C
-C
+y
+y
+y
+o
+y
+y
+y
 y
 l
 Y
-C
+y
 z
 J
 x
@@ -239,20 +199,20 @@ a
 (7,1,1) = {"
 a
 a
-C
-C
+y
+y
 I
 I
-C
-C
-C
+y
+y
+y
 O
-C
-Q
-C
-C
+y
+o
+y
+y
 O
-C
+y
 a
 a
 a
@@ -260,22 +220,22 @@ a
 "}
 (8,1,1) = {"
 a
-C
-Q
+y
+o
 I
 I
 I
 I
-C
+y
 I
-C
+y
 I
 I
 I
-C
-C
-C
-C
+y
+y
+y
+y
 a
 a
 a
@@ -283,7 +243,7 @@ a
 (9,1,1) = {"
 a
 O
-C
+y
 I
 I
 I
@@ -295,17 +255,17 @@ I
 I
 I
 I
-C
+y
 I
-C
-Q
-C
+y
+o
+y
 a
 "}
 (10,1,1) = {"
 a
 l
-C
+y
 I
 H
 I
@@ -320,14 +280,14 @@ I
 I
 I
 H
-C
-C
+y
+y
 a
 "}
 (11,1,1) = {"
 a
-Q
-C
+o
+y
 I
 I
 I
@@ -342,14 +302,14 @@ I
 I
 I
 I
-C
+y
 O
 a
 "}
 (12,1,1) = {"
 a
-C
-C
+y
+y
 I
 I
 I
@@ -365,72 +325,72 @@ I
 I
 I
 l
-C
+y
 a
 "}
 (13,1,1) = {"
 a
 Y
-C
+y
 I
 I
 I
 I
 I
 I
-C
+y
 I
 I
 I
 I
 I
 I
-C
-C
-Q
+y
+y
+o
 a
 "}
 (14,1,1) = {"
 a
 Z
-C
-C
+y
+y
 I
 I
 I
-C
-C
-C
+y
+y
+y
 I
 I
 I
 I
-C
-C
+y
+y
 Y
-C
+y
 Z
 a
 "}
 (15,1,1) = {"
 a
 a
-C
+y
 l
-C
+y
 O
-C
-C
+y
+y
 o
-C
-C
-C
-C
-C
-C
-V
-C
-C
+y
+y
+y
+y
+y
+y
+o
+y
+y
 a
 a
 "}
@@ -438,20 +398,20 @@ a
 a
 a
 a
-C
-Q
-C
-C
-C
+y
+o
+y
+y
+y
 Y
 z
-C
-Q
-C
-C
-C
-C
-Q
+y
+o
+y
+y
+y
+y
+o
 a
 a
 a
@@ -461,18 +421,18 @@ a
 a
 a
 a
-C
-C
+y
+y
 a
 a
 a
-C
+y
 O
 a
 a
-C
+y
 O
-C
+y
 a
 a
 a
