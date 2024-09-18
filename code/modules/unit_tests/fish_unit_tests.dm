@@ -325,7 +325,7 @@
 
 /datum/unit_test/fish_growth/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	var/list/growth_comps = GetComponents(/datum/component/fish_growth) //Can't use GetComponent() without s because the comp is dupe-selective
+	var/list/growth_comps = aquarium.crabbie.GetComponents(/datum/component/fish_growth) //Can't use GetComponent() without s because the comp is dupe-selective
 	var/datum/component/fish_growth/crab_growth = growth_comps[1]
 
 	crab_growth.on_fish_life(aquarium.crabbie, seconds_per_tick = 1) //give the fish growth component a small push.
