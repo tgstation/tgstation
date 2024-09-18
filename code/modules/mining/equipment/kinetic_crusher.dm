@@ -560,3 +560,16 @@
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a dual dagger and blaster"
+
+/obj/item/crusher_trophy/retool_kit/emberskull
+	name = "embered skull"
+	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_sword"
+	retool_inhand_icon = "crusher_sword"
+	retool_projectile_icon = "pulse_skull"
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to appear corrupted by the necropolis"
