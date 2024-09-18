@@ -42,7 +42,7 @@
 	if(damage_amount <= 0)
 		return 0
 
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, wound_clothing, sharpness, attack_direction, attacking_item)
 
 	var/damage_dealt = 0
 	switch(damagetype)
@@ -56,6 +56,7 @@
 					forced = forced,
 					wound_bonus = wound_bonus,
 					bare_wound_bonus = bare_wound_bonus,
+					wound_clothing = wound_clothing,
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
@@ -74,6 +75,7 @@
 					forced = forced,
 					wound_bonus = wound_bonus,
 					bare_wound_bonus = bare_wound_bonus,
+					wound_clothing = wound_clothing,
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
@@ -91,7 +93,7 @@
 		if(BRAIN)
 			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, wound_clothing, sharpness, attack_direction, attacking_item)
 	return damage_dealt
 
 /**
