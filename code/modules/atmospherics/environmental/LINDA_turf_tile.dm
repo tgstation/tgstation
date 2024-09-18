@@ -50,6 +50,7 @@
 	///gas IDs of current active gas overlays
 	var/list/atmos_overlay_types
 	var/significant_share_ticker = 0
+	///the cooldown on playing a fire starting sound each time a tile is ignited
 	COOLDOWN_DECLARE(fire_puff_cooldown)
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
