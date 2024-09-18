@@ -325,7 +325,8 @@
 
 /datum/unit_test/fish_growth/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	var/datum/component/fish_growth/crab_growth = aquarium.crabbie.AddComponent(/datum/component/fish_growth, aquarium.crabbie.lob_type, 1 SECONDS)
+	var/list/growth_comps = GetComponents(/datum/component/fish_growth) //Can't use GetComponent() without s because the comp is dupe-selective
+	var/datum/component/fish_growth/crab_growth = growth_comps[1]
 
 	crab_growth.on_fish_life(aquarium.crabbie, seconds_per_tick = 1) //give the fish growth component a small push.
 
@@ -361,6 +362,7 @@
 	crabbie = new(src)
 	crabbie.name = "Crabbie"
 	crabbie.last_feeding = world.time
+	crabbie.AddComponent(/datum/component/fish_growth, crabbie.lob_type, 1 SECONDS)
 
 /obj/structure/aquarium/crab/Exited(atom/movable/gone)
 	. = ..()
