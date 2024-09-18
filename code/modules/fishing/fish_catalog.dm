@@ -6,6 +6,10 @@
 	custom_price = PAYCHECK_CREW * 2
 	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
 
+/obj/item/book/manual/fish_catalog/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4, ITEM_SLOT_HANDS)
+
 /obj/item/book/manual/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
