@@ -6537,6 +6537,8 @@
 #include "modular_doppler\hearthkin\primitive_production\code\farming.dm"
 #include "modular_doppler\hearthkin\primitive_production\code\glassblowing.dm"
 #include "modular_doppler\hearthkin\primitive_production\code\misc.dm"
+#include "modular_doppler\hearthkin\primitive_production\code\primitive_surgery.dm"
+#include "modular_doppler\hearthkin\primitive_production\code\primitive_tools.dm"
 #include "modular_doppler\hearthkin\primitive_production\code\production_skill.dm"
 #include "modular_doppler\hearthkin\primitive_production\code\wormfarm.dm"
 #include "modular_doppler\hearthkin\primitive_structures\code\fencing.dm"
