@@ -147,12 +147,12 @@
 
 
 /obj/structure/towel_bin/basket
-	name = "linen basket"
+	name = "towel basket"
 	icon_state = "linenbasket-full"
 	base_icon_state = "linenbasket"
 
 /obj/structure/towel_bin/basket/empty/
-	name = "linen basket"
+	name = "towel basket"
 	amount = 0
 	icon_state = "linenbasket-empty"
 	base_icon_state = "linenbasket"
