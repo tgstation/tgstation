@@ -1700,7 +1700,7 @@
 		return
 
 	///forge the ID if not forged.
-	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
 	if(input_name)
@@ -1730,7 +1730,7 @@
 		if(!after_input_check(user))
 			return TRUE
 
-	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_NAME_LEN)
+	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
 
@@ -1884,7 +1884,7 @@
 		return
 	switch(popup_input)
 		if("Name")
-			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
 			input_name = sanitize_name(input_name, allow_numbers = TRUE)
 			if(!after_input_check(user, item, input_name, scribbled_name))
 				return
@@ -1892,7 +1892,7 @@
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
-			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", max_length = MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
 			scribbled_assignment = sanitize(input_assignment)

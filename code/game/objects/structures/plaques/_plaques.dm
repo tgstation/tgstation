@@ -88,7 +88,7 @@
 		var/namechoice =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
@@ -161,7 +161,7 @@
 		var/namechoice =REVERT_ME_PLEASE_THANK_YOU_SAN7890
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
