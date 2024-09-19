@@ -2,7 +2,7 @@
 /datum/map_template/ruin/icemoon/underground/doppler/
 	prefix = "_maps/RandomRuins/IceRuins/doppler/"
 
-/datum/map_template/ruin/icemoon/nova/
+/datum/map_template/ruin/icemoon/doppler/
 	prefix = "_maps/RandomRuins/IceRuins/doppler/"
 
 /*----- Underground -----*/
