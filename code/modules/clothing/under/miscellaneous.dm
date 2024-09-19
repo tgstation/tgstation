@@ -58,6 +58,10 @@
 	can_adjust = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/under/misc/adminsuit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
+
 /datum/armor/clothing_under/adminsuit
 	melee = 100
 	bullet = 100
