@@ -541,7 +541,7 @@
 	if(total_static_energy_usage) //Use power from static power users.
 		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
 		terminal?.add_load(grid_used)
-		if(!QDELETED(cell) && total_static_energy_usage > grid_used)
+		if(total_static_energy_usage > grid_used && !QDELETED(cell))
 			cell.use(total_static_energy_usage - grid_used, force = TRUE)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
