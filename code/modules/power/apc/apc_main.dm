@@ -525,7 +525,7 @@
  * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
  */
 /obj/machinery/power/apc/proc/early_process()
-	if(cell && cell.charge < cell.maxcharge)
+	if(!QDELETED(cell) && cell.charge < cell.maxcharge)
 		last_charging = charging
 		charging = APC_NOT_CHARGING
 	if(isnull(area))
@@ -541,12 +541,8 @@
 	if(total_static_energy_usage) //Use power from static power users.
 		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
 		terminal?.add_load(grid_used)
-		if(QDELETED(cell))
-			return grid_used
-		var/cell_used = 0
-		if(total_static_energy_usage > grid_used)
-			cell_used += cell.use(total_static_energy_usage - grid_used, force = TRUE)
-		return grid_used + cell_used
+		if(!QDELETED(cell) && total_static_energy_usage > grid_used)
+			cell.use(total_static_energy_usage - grid_used, force = TRUE)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
