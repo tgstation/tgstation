@@ -60,3 +60,5 @@
 			. += span_deadsay("It looks like its system is corrupted and requires a reset.")
 
 	. += ..()
+
+#undef ADD_NEWLINE_IF_NECESSARY
