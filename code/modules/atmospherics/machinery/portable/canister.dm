@@ -397,7 +397,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 
 	var/pressure = air_contents.return_pressure()
@@ -566,7 +566,7 @@
 		"cellCharge" = internal_cell ? internal_cell.percent() : 0
 	)
 
-/obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+/obj/machinery/portable_atmospherics/canister/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

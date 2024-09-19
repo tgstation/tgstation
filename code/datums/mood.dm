@@ -288,7 +288,7 @@
 		if (SANITY_LEVEL_INSANE)
 			mood_screen_object.color = "#f15d36"
 
-	if (!conflicting_moodies.len) // theres no special icons, use the normal icon states
+	if (!conflicting_moodies.len) // there's no special icons, use the normal icon states
 		mood_screen_object.icon_state = "mood[mood_level]"
 		return
 
@@ -406,7 +406,7 @@
 		clear_mood_event(MOOD_CATEGORY_AREA_BEAUTY)
 		return
 
-	if(HAS_TRAIT(mob_parent, TRAIT_MORBID))
+	if(HAS_MIND_TRAIT(mob_parent, TRAIT_MORBID))
 		if(HAS_TRAIT(mob_parent, TRAIT_SNOB))
 			switch(area_to_beautify.beauty)
 				if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)

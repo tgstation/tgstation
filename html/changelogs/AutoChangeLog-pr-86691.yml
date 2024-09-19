@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - bugfix: "Downstream species not getting internals they need when joining ERT"

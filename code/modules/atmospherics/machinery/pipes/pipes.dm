@@ -27,12 +27,11 @@
 	volume = 35 * device_type
 	. = ..()
 
-///I have no idea why there's a new and at this point I'm too afraid to ask
-/obj/machinery/atmospherics/pipe/Initialize(mapload)
-	. = ..()
+/obj/machinery/atmospherics/pipe/setup_hiding()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
-	if(hide)
-		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+	// Registering on `COMSIG_OBJ_HIDE` would cause order of operations issues with undertile, so we register to run when undertile updates instead
+	RegisterSignal(src, COMSIG_UNDERTILE_UPDATED, PROC_REF(on_hide))
 
 /obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
 	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy() which calls temporarily_store_air()

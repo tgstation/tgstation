@@ -35,6 +35,9 @@
 	// (because the desired effect will just work out of the box)
 	if(istype(interacting_with, /obj/structure/sink) || istype(interacting_with, /obj/structure/mop_bucket/janitorialcart) || istype(interacting_with, /obj/machinery/hydroponics))
 		return NONE
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -154,7 +157,7 @@
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
 		return
@@ -229,6 +232,8 @@
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
+	pickup_sound = 'sound/items/pepper_spray_pick_up.ogg'
+	drop_sound = 'sound/items/pepper_spray_drop.ogg'
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null

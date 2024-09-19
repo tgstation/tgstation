@@ -449,3 +449,23 @@
 		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
 	)
+
+/datum/dimension_theme/bronze
+	name = "Bronze"
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "ratvarian_spear"
+	material = /datum/material/bronze
+	replace_walls = /turf/closed/wall/mineral/bronze
+	replace_floors = list(/turf/open/floor/bronze = 1, /turf/open/floor/bronze/flat = 1, /turf/open/floor/bronze/filled = 1)
+	replace_objs = list(
+		/obj/structure/girder = list(/obj/structure/girder/bronze = 1),
+		/obj/structure/window/fulltile = list(/obj/structure/window/bronze/fulltile = 1),
+		/obj/structure/window = list(/obj/structure/window/bronze = 1),
+		/obj/structure/statue = list(/obj/structure/statue/bronze/marx = 1), // karl marx was a servant of ratvar
+		/obj/structure/table = list(/obj/structure/table/bronze = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/chair = list(/obj/structure/chair/bronze = 1),
+		/obj/item/reagent_containers/cup/glass/trophy = list(/obj/item/reagent_containers/cup/glass/trophy/bronze_cup = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/bronze = 1),
+	)
+	sound = 'sound/magic/clockwork/fellowship_armory.ogg'

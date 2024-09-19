@@ -57,6 +57,13 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+
+/obj/item/stock_parts/power_store/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(!isturf(old_loc))
+		update_appearance()
+
+
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
  *

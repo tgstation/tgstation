@@ -1349,7 +1349,7 @@
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
-	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
+	description = "A powerful, acidic cleaner sold by Waffle Corp. Affects organic matter while leaving other objects unaffected."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
 	penetrates_skin = VAPOR
@@ -2950,7 +2950,7 @@
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead
 	name = "Lead"
-	description = "A dull metalltic element with a low melting point."
+	description = "A dull metallic element with a low melting point."
 	taste_description = "metal"
 	reagent_state = SOLID
 	color = "#80919d"

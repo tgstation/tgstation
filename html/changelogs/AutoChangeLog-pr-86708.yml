@@ -1,0 +1,4 @@
+author: "SmArtKar, Kapu"
+delete-after: True
+changes:
+  - bugfix: "Agent ID cards no longer display broken text when you put non-letter symbols as your name"

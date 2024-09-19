@@ -1,0 +1,12 @@
+borg_deathsound.ogg is spliced from two clips, both of which are under the CC Attribution license. The sound at https://freesound.org/people/simmfoc/sounds/28477/ was pitched down, sped up, and repeated a few times. https://freesound.org/people/nicStage/sounds/1522/ is then attached with a fadeout effect and lowered volume.
+
+all complianator sounds are licensed under CC-BY-SA by Michael Haugh (supermichael)
+
+The male sharp gasps in /sound/voice/human/ are from https://freesound.org/people/bacruz666/sounds/341908/ and https://freesound.org/people/nettoi/sounds/677540/, the female sharp gasps are from https://freesound.org/people/drotzruhn/sounds/405203/
+
+{
+human/male_sniff.ogg - https://freesound.org/people/Fluffayfish/sounds/327799/ , License: CC BY-NC 3.0
+human/male_sigh.ogg - https://freesound.org/people/giddster/sounds/336540/ , License: CC0
+human/female_sniff.ogg - https://freesound.org/people/SpliceSound/sounds/218307/ , License: CC0
+human/female_sigh.ogg - https://freesound.org/people/biawinter/sounds/408090/ , License: CC BY-NC 4.0
+} modified by grungussuss

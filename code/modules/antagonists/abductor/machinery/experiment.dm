@@ -86,7 +86,7 @@
 		data["occupant_status"] = mob_occupant.stat
 	return data
 
-/obj/machinery/abductor/experiment/ui_act(action, list/params)
+/obj/machinery/abductor/experiment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -190,7 +190,7 @@
 		H.forceMove(console.pad.teleport_target)
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	SSjob.SendToLateJoin(H, FALSE)
+	SSjob.send_to_late_join(H, FALSE)
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()

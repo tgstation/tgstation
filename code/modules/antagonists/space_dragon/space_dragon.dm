@@ -67,12 +67,12 @@
 	forge_objectives()
 	rift_ability = new()
 	owner.special_role = ROLE_SPACE_DRAGON
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
 /datum/antagonist/space_dragon/on_removal()
 	owner.special_role = null
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
@@ -173,7 +173,7 @@
  * Triggers when Space Dragon completes his objective.
  * Calls the shuttle with a coefficient of 3, making it impossible to recall.
  * Sets all of his rifts to allow for infinite sentient carp spawns
- * Also plays appropiate sounds and CENTCOM messages.
+ * Also plays appropriate sounds and CENTCOM messages.
  */
 /datum/antagonist/space_dragon/proc/victory()
 	objective_complete = TRUE
@@ -188,9 +188,9 @@
 		rift.time_charged = rift.max_charge
 
 /**
- * Gives Space Dragon their the rift speed buff permanantly and fully heals the user.
+ * Gives Space Dragon their the rift speed buff permanently and fully heals the user.
  *
- * Gives Space Dragon the enraged speed buff from charging rifts permanantly.
+ * Gives Space Dragon the enraged speed buff from charging rifts permanently.
  * Only happens in circumstances where Space Dragon completes their objective.
  * Also gives them a full heal.
  */

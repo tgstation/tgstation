@@ -2,7 +2,7 @@
 	name = "arm-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_R_ARM
-	icon_state = "implant-toolkit"
+	icon_state = "toolkit_generic"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
@@ -264,6 +264,7 @@
 /obj/item/organ/internal/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
+	icon_state = "toolkit_engineering"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/screwdriver/cyborg,
@@ -349,6 +350,7 @@
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+	icon_state = "toolkit_surgical"
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/retractor/augment,

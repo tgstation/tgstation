@@ -139,8 +139,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// Edibles and pills can be composted.
-	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+	// Edibles can be composted (most of the times).
+	if(IS_EDIBLE(held_item) && HAS_TRAIT(held_item, TRAIT_UNCOMPOSTABLE))
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -156,6 +156,11 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
+
+/obj/machinery/hydroponics/constructable/fullupgrade
+	name = "deluxe hydroponics tray"
+	desc = "A basin used to grown plants in, packed full of cutting-edge technology."
+	circuit = /obj/item/circuitboard/machine/hydroponics/fullupgrade
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
@@ -798,15 +803,7 @@
 			if(isnull(particles))
 				particles = new /particles/pollen()
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
-				var/list/datum/plant_gene/reagent/possible_reagents = list()
-				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
-					possible_reagents += reag
-				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
-				if(reagent_gene.can_add(myseed))
-					if(!reagent_gene.try_upgrade_gene(myseed))
-						myseed.genes += reagent_gene.Copy()
-					myseed.reagents_from_genes()
-					continue
+				myseed.perform_reagent_pollination(T.myseed)
 	if(!any_adjacent)
 		particles = null
 
@@ -858,7 +855,10 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+		if(IS_EDIBLE(reagent_source))
+			if(HAS_TRAIT(reagent_source, TRAIT_UNCOMPOSTABLE))
+				to_chat(user, "[reagent_source] cannot be composted in its current state")
+				return
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 			SEND_SIGNAL(reagent_source, COMSIG_ITEM_ON_COMPOSTED, user)
@@ -1090,10 +1090,14 @@
 /obj/machinery/hydroponics/click_ctrl(mob/user)
 	if(!anchored)
 		return NONE
+
+	update_use_power(ACTIVE_POWER_USE)
+
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
 		return CLICK_ACTION_BLOCKING
+
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 	return CLICK_ACTION_SUCCESS
