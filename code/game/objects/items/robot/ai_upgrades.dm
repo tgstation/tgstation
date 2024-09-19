@@ -18,8 +18,8 @@
 	if(!to_gift.upgrade)
 		if(!action)
 			var/ability = to_gift.power_type
-			var/datum/action/action = new ability
-			action.Grant(AI)
+			var/datum/action/gifted_action = new ability
+			gifted_action.Grant(AI)
 		else if(gifted_ability.one_purchase)
 			to_chat(user, "[AI] already has an [src] installed!")
 			return
