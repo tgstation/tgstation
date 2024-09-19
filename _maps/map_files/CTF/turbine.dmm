@@ -610,6 +610,13 @@
 	dir = 1
 	},
 /area/centcom/ctf)
+"Wr" = (
+/obj/effect/turf_decal/tile/red/full,
+/obj/structure/shipping_container/nanotrasen{
+	resistance_flags = 115
+	},
+/turf/open/floor/iron/large,
+/area/centcom/ctf)
 "XC" = (
 /obj/machinery/rnd/server{
 	resistance_flags = 115
@@ -1205,11 +1212,6 @@ MP
 yA
 Zp
 Zp
-no
-QO
-no
-QO
-no
 QO
 no
 no
@@ -1217,8 +1219,13 @@ QO
 no
 QO
 no
+no
 QO
 no
+QO
+no
+no
+QO
 no
 yA
 yA
@@ -2143,11 +2150,6 @@ zd
 yA
 no
 no
-no
-dx
-no
-dx
-no
 dx
 no
 no
@@ -2155,8 +2157,13 @@ dx
 no
 dx
 no
+no
 dx
-qH
+no
+dx
+no
+no
+Wr
 qH
 yA
 yA

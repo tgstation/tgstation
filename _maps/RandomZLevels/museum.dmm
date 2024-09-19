@@ -2377,6 +2377,9 @@
 "tl" = (
 /obj/item/food/cake/mothmallow,
 /obj/structure/table,
+/obj/item/keycard/blue{
+	puzzle_id = "museum_secret"
+	},
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
 "tq" = (
@@ -4343,8 +4346,8 @@
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum/mothroachvoid)
 "Jk" = (
-/obj/item/toy/plush/moth,
 /obj/machinery/light/small/dim/directional/west,
+/obj/item/toy/plush/moth,
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
 "Jl" = (
@@ -4456,13 +4459,6 @@
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/chasm/true/no_smooth,
-/area/awaymission/museum)
-"Ks" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/item/keycard/blue{
-	puzzle_id = "museum_secret"
-	},
-/turf/open/floor/carpet/executive,
 /area/awaymission/museum)
 "Kt" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -36716,7 +36712,7 @@ FK
 FK
 FK
 FK
-Ks
+CL
 aw
 XK
 aK
