@@ -238,6 +238,8 @@
 /obj/item/stack/sheet/cloth/ten,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/sheet/cloth/ten,
+/obj/item/stack/cable_coil/thirty,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "eq" = (
@@ -496,6 +498,11 @@
 /area/ruin/unpowered/primitive_catgirl_den)
 "la" = (
 /turf/open/floor/grass/fairy/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
+"lb" = (
+/obj/structure/window/green_glass_pane,
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "lg" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
@@ -965,13 +972,6 @@
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
-"vi" = (
-/obj/structure/rack/wooden,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
-/turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "vk" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1631,12 +1631,6 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
-"IF" = (
-/obj/item/target/archery{
-	dir = 1
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
 "II" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -1653,6 +1647,13 @@
 "IQ" = (
 /obj/machinery/smartfridge/wooden/produce_bin,
 /turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
+"IR" = (
+/obj/structure/rack/wooden,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "IS" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
@@ -2300,6 +2301,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
+"YA" = (
+/obj/item/target/archery{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "YE" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -3930,7 +3937,7 @@ NR
 (34,1,1) = {"
 NR
 NR
-iI
+lb
 uC
 qu
 Fj
@@ -3977,7 +3984,7 @@ NR
 (35,1,1) = {"
 NR
 NR
-iI
+lb
 uC
 qu
 Fj
@@ -4024,7 +4031,7 @@ NR
 (36,1,1) = {"
 NR
 NR
-iI
+lb
 uC
 qu
 Uk
@@ -4414,10 +4421,10 @@ EP
 Md
 NR
 NR
+dj
 NR
 NR
-NR
-NR
+WW
 Be
 Md
 Zu
@@ -4589,7 +4596,7 @@ NR
 NR
 NR
 Kd
-lx
+NR
 lx
 lx
 lx
@@ -4660,7 +4667,7 @@ mH
 Md
 lg
 kx
-vi
+IR
 BF
 lI
 JT
@@ -4674,7 +4681,7 @@ NR
 NR
 NR
 NR
-IF
+YA
 Md
 NR
 NR
@@ -4768,7 +4775,7 @@ NR
 NR
 NR
 NR
-IF
+YA
 Md
 Md
 NR
@@ -4862,7 +4869,7 @@ NR
 NR
 NR
 NR
-IF
+YA
 Md
 NR
 NR

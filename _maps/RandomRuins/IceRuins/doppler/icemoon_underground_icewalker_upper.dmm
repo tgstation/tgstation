@@ -460,7 +460,7 @@
 /area/ruin/unpowered/primitive_catgirl_den)
 "Fo" = (
 /obj/structure/rack/wooden,
-/obj/item/clothing/shoes/winterboots/ice_boots/primitive_catgirl_boots,
+/obj/item/storage/crayons,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "Fs" = (
@@ -2404,7 +2404,7 @@ ek
 ek
 ek
 Uv
-Gj
+kI
 ek
 ek
 ek
@@ -2615,7 +2615,7 @@ vP
 vP
 YK
 YK
-vP
+FB
 My
 Xg
 GN
@@ -3109,7 +3109,7 @@ ek
 ek
 ek
 Uv
-LR
+ek
 LR
 LR
 LR
@@ -3169,7 +3169,7 @@ GN
 GN
 GN
 Uv
-Fo
+Gs
 AW
 pH
 aN
@@ -3263,7 +3263,7 @@ GN
 GN
 GN
 Uv
-Fo
+Gs
 nN
 aN
 aN
