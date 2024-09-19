@@ -286,7 +286,7 @@
 		var/datum/fish_source/source = available_fish_sources[radial_name]
 		var/mutable_appearance/radial_icon = mutable_appearance('icons/hud/radial_fishing.dmi', source.radial_state)
 		if(!istype(source, /datum/fish_source/portal))
-			 //a little star on the top-left to distinguishs them from standard portals.
+			//a little star on the top-left to distinguishs them from standard portals.
 			radial_icon.add_overlay('icons/hud/radial_fishing.dmi', "linked_source")
 		choices[radial_name] = radial_icon
 
