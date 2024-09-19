@@ -47468,9 +47468,6 @@
 	department = "Mining";
 	name = "Mining Requests Console"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "qPs" = (
