@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		complete(FALSE)
 
 ///The multiplier of the fishing experience malus if the user's level is substantially above the difficulty.
-#define EXPERIENCE_MALUS_MULT 0.075
+#define EXPERIENCE_MALUS_MULT 0.08
 
 /datum/fishing_challenge/proc/complete(win = FALSE)
 	if(completed)
