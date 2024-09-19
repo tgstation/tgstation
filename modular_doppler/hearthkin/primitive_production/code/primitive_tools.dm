@@ -80,3 +80,15 @@
 /datum/crafting_recipe/primitive_recipe/primitive_chisel
 	name = "Primitive Chisel"
 	result = /obj/item/chisel/primitive
+
+/obj/item/mop/tribal
+    desc = "A primitive mop, made of cloth, sinew, and wood."
+
+/datum/crafting_recipe/mop
+    name = "Tribal Mop"
+    result = /obj/item/mop/tribal
+    reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
+                /obj/item/stack/sheet/cloth = 2,
+                /obj/item/stack/sheet/sinew = 1)
+    time = 3 SECONDS
+    category = CAT_TOOLS
