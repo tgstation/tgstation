@@ -1,8 +1,8 @@
-import { sendAct } from "../../backend";
-import { LabeledList } from "../../components/LabeledList";
-import { Stack } from "../../components/Stack";
+import { sendAct } from '../../backend';
+import { LabeledList } from '../../components/LabeledList';
+import { Stack } from '../../components/Stack';
 import features from './preferences/features';
-import { FeatureValueInput } from "./preferences/features/base";
+import { FeatureValueInput } from './preferences/features/base';
 
 export const PreferenceSingle = (props: {
   act: typeof sendAct;
@@ -22,17 +22,17 @@ export const PreferenceSingle = (props: {
 
   return (
     <LabeledList.Item
-     key={props.pref_key}
-     label={feature.name}
-     tooltip={feature.description}
-     verticalAlign="middle"
+      key={props.pref_key}
+      label={feature.name}
+      tooltip={feature.description}
+      verticalAlign="middle"
     >
       <Stack.Item grow>
         <FeatureValueInput
-         act={props.act}
-         feature={feature}
-         featureId={props.pref_key}
-         value={value}
+          act={props.act}
+          feature={feature}
+          featureId={props.pref_key}
+          value={value}
         />
       </Stack.Item>
     </LabeledList.Item>

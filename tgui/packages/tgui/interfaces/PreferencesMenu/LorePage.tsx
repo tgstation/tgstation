@@ -1,10 +1,10 @@
-import { useBackend } from "../../backend";
-import { Box } from "../../components/Box";
-import { LabeledList } from "../../components/LabeledList";
-import { Section } from "../../components/Section";
-import { Stack } from "../../components/Stack";
-import { PreferencesMenuData } from "./data";
-import { PreferenceSingle } from "./SinglePreference";
+import { useBackend } from '../../backend';
+import { Box } from '../../components/Box';
+import { LabeledList } from '../../components/LabeledList';
+import { Section } from '../../components/Section';
+import { Stack } from '../../components/Stack';
+import { PreferencesMenuData } from './data';
+import { PreferenceSingle } from './SinglePreference';
 
 export const LorePage = () => {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -14,15 +14,15 @@ export const LorePage = () => {
   return (
     <Box className="PreferencesMenu__Lore">
       <Stack.Item
-       basis="50%"
-       grow
-       style={{
-        background: 'rgba(0, 0, 0, 0.5)',
-        padding: '4px',
-      }}
-      overflowX="hidden"
-      overflowY="auto"
-      maxHeight="auto"
+        basis="50%"
+        grow
+        style={{
+          background: 'rgba(0, 0, 0, 0.5)',
+          padding: '4px',
+        }}
+        overflowX="hidden"
+        overflowY="auto"
+        maxHeight="auto"
       >
         <LabeledList>
           <Section title="Character Details">
@@ -64,7 +64,7 @@ export const LorePage = () => {
               preferences={dopplerLorePreferences}
             />
           </Section>
-         <Section title="Records">
+          <Section title="Records">
             <PreferenceSingle
               act={act}
               pref_key="past_general_records"
@@ -85,7 +85,7 @@ export const LorePage = () => {
               pref_key="exploitable_records"
               preferences={dopplerLorePreferences}
             />
-         </Section>
+          </Section>
           <Section title="Notes">
             <PreferenceSingle
               act={act}

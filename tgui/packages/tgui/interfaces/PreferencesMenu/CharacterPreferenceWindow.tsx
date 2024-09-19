@@ -8,7 +8,7 @@ import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { LoadoutPage } from './loadout/index';
-import { LorePage } from "./LorePage";
+import { LorePage } from './LorePage';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
@@ -130,15 +130,15 @@ export const CharacterPreferenceWindow = (props) => {
               }
               <Stack.Item grow>
                 <PageButton
-                 currentPage={currentPage}
-                 page={Page.Lore}
-                 setPage={setCurrentPage}
+                  currentPage={currentPage}
+                  page={Page.Lore}
+                  setPage={setCurrentPage}
                 >
                   Lore
                 </PageButton>
-              {
-                // DOPPLER EDIT END
-              }
+                {
+                  // DOPPLER EDIT END
+                }
               </Stack.Item>
               <Stack.Item grow>
                 <PageButton
