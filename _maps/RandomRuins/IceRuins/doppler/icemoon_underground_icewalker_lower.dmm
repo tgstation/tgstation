@@ -550,6 +550,10 @@
 "lI" = (
 /obj/structure/mirror/directional/west,
 /obj/structure/rack/wooden,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "lQ" = (
@@ -961,6 +965,13 @@
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
+"vi" = (
+/obj/structure/rack/wooden,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "vk" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1620,6 +1631,12 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
+"IF" = (
+/obj/item/target/archery{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
 "II" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -1745,6 +1762,10 @@
 "JT" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /obj/structure/rack/wooden,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "Kc" = (
@@ -4639,7 +4660,7 @@ mH
 Md
 lg
 kx
-uC
+vi
 BF
 lI
 JT
@@ -4653,7 +4674,7 @@ NR
 NR
 NR
 NR
-NR
+IF
 Md
 NR
 NR
@@ -4747,7 +4768,7 @@ NR
 NR
 NR
 NR
-NR
+IF
 Md
 Md
 NR
@@ -4841,7 +4862,7 @@ NR
 NR
 NR
 NR
-NR
+IF
 Md
 NR
 NR
@@ -4954,7 +4975,7 @@ lx
 lx
 lx
 lx
-lx
+NR
 dj
 NR
 NR
