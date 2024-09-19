@@ -23,7 +23,7 @@
 	/// How much force out jetpack can output per tick
 	var/drift_force = 1.5 NEWTONS
 	/// How much force this jetpack can output per tick to stabilize the user
-	var/stabilizer_force = 1 NEWTONS
+	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()

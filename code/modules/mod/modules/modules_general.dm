@@ -115,7 +115,7 @@
 	/// How much force this module can apply per tick
 	var/drift_force = 1.5 NEWTONS
 	/// How much force this module's stabilizier can put out
-	var/stabilizer_force = 1 NEWTONS
+	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
