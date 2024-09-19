@@ -39,3 +39,43 @@
 
 /datum/preference/text/custom_species_desc/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["custom_species_desc"] = value
+
+/*
+	Silicon specific things
+*/
+
+/datum/preference/text/silicon_short_desc
+	category = PREFERENCE_CATEGORY_DOPPLER_LORE
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "silicon_flavor_short_desc"
+	maximum_value_length = MAX_FLAVOR_SHORT_DESC_LEN
+
+/datum/preference/text/silicon_short_desc/apply_to_human(mob/living/carbon/human/target, value)
+	return // we handle this manually via pref lookups in appropriate procs
+
+/datum/preference/text/silicon_extended_desc
+	category = PREFERENCE_CATEGORY_DOPPLER_LORE
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "silicon_flavor_extended_desc"
+	maximum_value_length = MAX_FLAVOR_EXTENDED_DESC_LEN
+
+/datum/preference/text/silicon_extended_desc/apply_to_human(mob/living/carbon/human/target, value)
+	return
+
+/datum/preference/text/silicon_model_name
+	category = PREFERENCE_CATEGORY_DOPPLER_LORE
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "silicon_model_name"
+	maximum_value_length = 128
+
+/datum/preference/text/silicon_model_name/apply_to_human(mob/living/carbon/human/target, value)
+	return
+
+/datum/preference/text/silicon_model_desc
+	category = PREFERENCE_CATEGORY_DOPPLER_LORE
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "silicon_model_desc"
+	maximum_value_length = 4096
+
+/datum/preference/text/silicon_model_desc/apply_to_human(mob/living/carbon/human/target, value)
+	return

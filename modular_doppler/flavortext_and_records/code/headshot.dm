@@ -36,3 +36,9 @@
 		return
 
 	return TRUE
+
+/datum/preference/text/headshot/silicon
+	savefile_key = "silicon_headshot_url"
+
+/datum/preference/text/headshot/silicon/apply_to_human(mob/living/carbon/human/target, value)
+	return

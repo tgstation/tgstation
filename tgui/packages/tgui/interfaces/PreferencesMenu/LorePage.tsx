@@ -64,6 +64,33 @@ export const LorePage = () => {
               preferences={dopplerLorePreferences}
             />
           </Section>
+          <Section title="Silicon">
+            <PreferenceSingle
+              act={act}
+              pref_key="silicon_flavor_short_desc"
+              preferences={dopplerLorePreferences}
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="silicon_flavor_extended_desc"
+              preferences={dopplerLorePreferences}
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="silicon_model_name"
+              preferences={dopplerLorePreferences}
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="silicon_model_desc"
+              preferences={dopplerLorePreferences}
+            />
+            <PreferenceSingle
+              act={act}
+              pref_key="silicon_headshot_url"
+              preferences={dopplerLorePreferences}
+            />
+          </Section>
           <Section title="Records">
             <PreferenceSingle
               act={act}
