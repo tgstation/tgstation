@@ -75,7 +75,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/costume/bunnysuit
-	name = "Easter Bunny suit"
+	name = "easter bunny suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
@@ -88,7 +88,7 @@
 
 //Bunny bag!
 /obj/item/storage/backpack/satchel/bunnysatchel
-	name = "Easter Bunny satchel"
+	name = "easter bunny satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
 	inhand_icon_state = null
