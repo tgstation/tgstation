@@ -6483,6 +6483,7 @@
 #include "modular_doppler\cryosleep\code\jobs.dm"
 #include "modular_doppler\cryosleep\code\mind.dm"
 #include "modular_doppler\cryosleep\code\mood.dm"
+#include "modular_doppler\cryosleep\code\objective.dm"
 #include "modular_doppler\deforest_medical_items\code\healing_stack_items.dm"
 #include "modular_doppler\deforest_medical_items\code\illegal_injectors.dm"
 #include "modular_doppler\deforest_medical_items\code\injectors.dm"
