@@ -1,0 +1,5 @@
+author: "Vect0r2"
+delete-after: True
+changes:
+  - rscadd: "Added the remote power AI disk"
+  - code_imp: "made it possible to easily add new AI upgrade disks"
