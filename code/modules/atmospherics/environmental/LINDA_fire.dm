@@ -243,16 +243,16 @@
 		sparkle_overlay.alpha = sparkle_amt * 255
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
-		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged")
+		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/fire.dmi', "overcharged")
 		if(!(smoothing_junction & NORTH))
-			var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged_frill")
+			var/mutable_appearance/frill = mutable_appearance('icons/effects/fire.dmi', "overcharged_frill")
 			frill.pixel_z = 32
 			lightning_overlay.add_overlay(frill)
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
-		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmos/atmospherics.dmi', "fusion_gas")
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
 		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "druggy")
