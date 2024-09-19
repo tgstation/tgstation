@@ -84,16 +84,11 @@
 		return
 
 	var/applied_force = additional_force
-	if (!isnull(controlled_cap))
-		var/angle_diff = abs(inertia_angle - drifting_loop.angle)
-		if (angle_diff > 180)
-			angle_diff = 360 - angle_diff
-		applied_force = clamp(applied_force, 0, clamp(controlled_cap - drift_force * cos(angle_diff), 0, controlled_cap))
 
 	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * applied_force / parent.inertia_force_weight
 	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * applied_force / parent.inertia_force_weight
 
-	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, INERTIA_FORCE_CAP)
+	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, !isnull(controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
 	if(drift_force < 0.1) // Rounding issues
 		qdel(src)
 		return
