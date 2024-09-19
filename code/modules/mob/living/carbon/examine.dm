@@ -519,16 +519,6 @@
 	. += "<a href='?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a>"
 	. += "<a href='?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
 
-/// Collects information displayed about src when examined by a user with a medical HUD.
-/mob/living/carbon/human/get_medhud_examine_info(mob/living/user, datum/record/crew/target_record)
-	. = ..()
-
-	if(istype(w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/undershirt = w_uniform
-		var/sensor_text = undershirt.get_sensor_text()
-		if(sensor_text)
-			. += "Sensor Status: [sensor_text]"
-
 /// Collects information displayed about src when examined by a user with a security HUD.
 /mob/living/carbon/proc/get_sechud_examine_info(mob/living/user, datum/record/crew/target_record)
 	. = list()
