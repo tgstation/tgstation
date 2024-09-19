@@ -200,5 +200,6 @@
 	forceMove(destination)
 	destination.w_items += w_class
 	destination.contents += src
+	destination.cistern_items += src
 
 #undef CAFE_KEYCARD_TOILETS
