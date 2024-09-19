@@ -896,10 +896,6 @@
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/condiment,
 /obj/machinery/light/floor,
-/obj/machinery/door/poddoor/shutters/window/indestructible{
-	dir = 8;
-	id = "museum_cafeteria"
-	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
 "hp" = (
