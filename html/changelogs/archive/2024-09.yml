@@ -526,3 +526,33 @@
   - bugfix: borgs can perform organ manipulation surgery again
   deathrobotpunch:
   - rscadd: Added new fishing category to games vendor
+2024-09-19:
+  Bisar:
+  - bugfix: Xenomorph restrictions on items they can pick up have had their determining
+      logic made more _robust_.
+  - code_imp: The itempicky component (restricts what can be picked up via a whitelist)
+      can now, optionally, have a callback fed to it to determine cases of bypassing
+      that whitelist.
+  DaCoolBoss:
+  - spellcheck: Fixed typos in lead's description.
+  - spellcheck: Mice now love the taste of insulated electrical cables, not uninsulated
+      ones.
+  Ghommie:
+  - rscadd: You can now link fishing portal generators to other fishing spots with
+      a multitool. The number of fishing spots that can be linked at once and whether
+      the link can be activated from different z levels depends on the tier of the
+      stock parts it's built with.
+  - rscadd: You can pet fish while holding them. Be wary of petting aggressive fish.
+  Goat:
+  - bugfix: lockers and crates with no access requirements can now be renamed by anyone
+  Jewelry-x:
+  - bugfix: fixed a bug that allows autogrow to be turned on with no power.
+  - qol: made blob antag panel easier to read and more organized
+  - spellcheck: fixed a few typos in the blob panel
+  Kocma-san:
+  - bugfix: fixed disposal pipes on metastation, deltastation and icebox
+  SmArtKar:
+  - bugfix: Vore victims no longer get digested instantly when you evolve
+  - bugfix: Collars can no longer be used to null a pet's name
+  - bugfix: Snow bears are no longer impervious to all sources of damage
+  - bugfix: Cameras, living floors and ghost of poly no longer can be pushed around

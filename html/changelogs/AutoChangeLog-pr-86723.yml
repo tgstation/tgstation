@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "fixed a bug that allows autogrow to be turned on with no power."
