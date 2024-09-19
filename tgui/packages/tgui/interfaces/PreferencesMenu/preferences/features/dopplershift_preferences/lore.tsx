@@ -20,6 +20,12 @@ export const flavor_extended_desc: Feature<string> = {
   component: FeatureTextInput,
 };
 
+export const headshot_url: Feature<string> = {
+  name: "Headshot image (URL)",
+  description: "A https link to a hosted image of your character's headshot. Must be: no larger than 250x250px (you can use larger images, but they will be scaled down, and probably poorly above 500px), a jpg/png/jpeg file, and hosted on either Gyazo (i.gyazo.com), Byondhome (files.byondhome.com), Imgbox (images2.imgbox.com) or Catbox (files.catbox.moe). Transparent backgrounds are highly recommended (but only supported on .png files).",
+  component: FeatureShortTextInput,
+};
+
 export const custom_species_name: Feature<string> = {
   name: "Species name",
   description: "Appears when looked at. Leave blank to match a default coded race (such as Human).",

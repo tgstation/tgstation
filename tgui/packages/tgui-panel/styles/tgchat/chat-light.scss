@@ -1036,6 +1036,25 @@ h2.alert {
   flex-grow: 1;
 }
 
+// Larger images by text, used by flavor-text examines. No flex shenanigans.
+.large_img_by_text_container {
+  display: inline-block;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.large_img_by_text_container img {
+  width: 250px;
+  height: auto;
+  margin-right: 12px;
+  margin-top: 4px;
+  float: left;
+}
+
+.large_img_by_text_container .img_text {
+  flex-grow: 1;
+}
+
 $alert-stripe-colors: (
   'default': #b3bfff,
   'green': #adffad,

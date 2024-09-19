@@ -6501,6 +6501,7 @@
 #include "modular_doppler\face_mouse_preferences\code\face_mouse_pref.dm"
 #include "modular_doppler\flavortext_and_records\code\examine.dm"
 #include "modular_doppler\flavortext_and_records\code\flavor_text.dm"
+#include "modular_doppler\flavortext_and_records\code\headshot.dm"
 #include "modular_doppler\flavortext_and_records\code\records.dm"
 #include "modular_doppler\food_replicator\code\clothing.dm"
 #include "modular_doppler\food_replicator\code\medical.dm"

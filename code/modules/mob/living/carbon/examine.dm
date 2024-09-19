@@ -24,12 +24,12 @@
 	. = list()
 	// DOPPLER EDIT BEGIN - flavor text
 	if (dna.features["flavor_short_desc"])
-		. += dna.features["flavor_short_desc"]
+		. += "[dna.features["flavor_short_desc"]] [get_extended_description_href("\[👁️\]")]"
 	ADD_NEWLINE_IF_NECESSARY(.)
 	if (dna.features["custom_species_name"])
-		. += "[t_He] is [prefix_a_or_an(dna.features["custom_species_name"])] <em>[dna.features["custom_species_name"]]</em> of [dna.species.name] physiology."
+		. += "[t_He] [t_is] [prefix_a_or_an(dna.features["custom_species_name"])] <em>[get_species_description_href(dna.features["custom_species_name"])]</em> of [dna.species.name] physiology."
 	else
-		. += "[t_He] is [prefix_a_or_an(dna.species.name)] [dna.species.name]."
+		. += "[t_He] [t_is] [prefix_a_or_an(dna.species.name)] [get_species_description_href(dna.species.name)]."
 	// DOPPLER EDIT END
 	. += get_clothing_examine_info(user)
 	// give us some space between clothing examine and the rest

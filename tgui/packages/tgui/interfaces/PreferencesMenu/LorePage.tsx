@@ -50,6 +50,12 @@ export const LorePage = () => {
               preferences={dopplerLorePreferences}
               maxHeight="auto"
             />
+            <PreferenceSingle
+              act={act}
+              pref_key="headshot_url"
+              preferences={dopplerLorePreferences}
+              maxHeight="auto"
+            />
           </Section>
           <Section title="Species">
             <PreferenceSingle
