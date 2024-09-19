@@ -212,19 +212,19 @@ const RecordInfo = (props) => {
                 target_ref={crew_ref}
                 text={note}
               />
-              </LabeledList.Item>
-              {/* DOPPLER EDIT START - records & flavor text */}
-              <LabeledList.Item label="General Records">
-                <Box maxWidth="100%" preserveWhitespace>
-                  {past_general_records || 'N/A'}
-                </Box>
-              </LabeledList.Item>
-              <LabeledList.Item label="Past Security Records">
-                <Box maxWidth="100%" preserveWhitespace>
-                  {past_security_records || 'N/A'}
-                </Box>
-              </LabeledList.Item>
-              {/* DOPPLER EDIT END */}
+            </LabeledList.Item>
+            {/* DOPPLER EDIT START - records & flavor text */}
+            <LabeledList.Item label="General Records">
+              <Box maxWidth="100%" preserveWhitespace>
+                {past_general_records || 'N/A'}
+              </Box>
+            </LabeledList.Item>
+            <LabeledList.Item label="Past Security Records">
+              <Box maxWidth="100%" preserveWhitespace>
+                {past_security_records || 'N/A'}
+              </Box>
+            </LabeledList.Item>
+            {/* DOPPLER EDIT END */}
           </LabeledList>
         </Section>
       </Stack.Item>

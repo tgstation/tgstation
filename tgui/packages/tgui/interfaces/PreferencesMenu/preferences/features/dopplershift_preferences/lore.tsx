@@ -50,7 +50,7 @@ export const custom_species_desc: Feature<string> = {
 export const silicon_flavor_short_desc: Feature<string> = {
   name: 'Short description (Silicon)',
   description:
-    "Appears when shift-clicked or otherwise looked at when playing in an AI or cyborg shell. Analogous to a short description.",
+    'Appears when shift-clicked or otherwise looked at when playing in an AI or cyborg shell. Analogous to a short description.',
   component: FeatureTextInput,
 };
 
