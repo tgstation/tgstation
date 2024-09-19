@@ -8,7 +8,7 @@
 	icon_state = "jumpsuit"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "jumpsuit"
 	sensor_mode = SENSOR_COORDS
@@ -28,7 +28,7 @@
 	icon_state = "boots"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "boots"
 	armor_type = /datum/armor/colonist_clothing
@@ -194,7 +194,7 @@
 	icon_state = "mask"
 	worn_icon = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing.dmi',
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn.dmi',
 		BODYSHAPE_SNOUTED_T = 'modular_doppler/kahraman_equipment/icons/clothes/clothing_worn_digi.dmi')
 	worn_icon_state = "mask"
 	flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT

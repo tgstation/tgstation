@@ -237,7 +237,7 @@
 			if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
 			else if(!client)
-				npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
+				npc_message = "[t_He] [t_has] a blank, absent-minded stare and [t_has] been completely unresponsive to anything for [round(((world.time - lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon." // DOPPLER EDIT CHANGE - SSD_INDICATOR - ORIGINAL: npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
 			if(npc_message)
 				// give some space since this is usually near the end
 				ADD_NEWLINE_IF_NECESSARY(.)
