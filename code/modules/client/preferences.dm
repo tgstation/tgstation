@@ -105,7 +105,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		load_path(parent.ckey)
 		if(load_and_save && !fexists(path))
 			try_savefile_type_migration()
-		unlock_content = !!parent.IsByondMember()
+		var/byond_member = parent.IsByondMember()
+		if(isnull(byond_member)) // Connection failure, retry once
+			byond_member = parent.IsByondMember()
+			var/static/admins_warned = FALSE
+			if(!admins_warned)
+				admins_warned = TRUE
+				message_admins("Byond membership lookup had a connection failure for a user. This is most likely an issue on the byond side but if this consistently happens you should bother your server operator to look into it.")
+			if(isnull(byond_member)) // Retrying didn't work, warn the user
+				to_chat(parent, span_warning("There's been a connection failure while trying to check the status of your byond membership. Reconnecting may fix the issue, or byond could be experiencing downtime."))
+		unlock_content = !!byond_member
 		if(unlock_content)
 			max_save_slots = 8
 	else
