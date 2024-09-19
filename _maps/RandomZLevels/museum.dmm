@@ -896,6 +896,10 @@
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/condiment,
 /obj/machinery/light/floor,
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	dir = 8;
+	id = "museum_cafeteria"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
 "hp" = (
@@ -3958,7 +3962,7 @@
 /area/awaymission/museum)
 "FO" = (
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
@@ -4221,7 +4225,7 @@
 /area/awaymission/museum)
 "Id" = (
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/closed/indestructible/wood,
 /area/awaymission/museum)
@@ -5246,7 +5250,7 @@
 /obj/structure/fluff/fake_camera,
 /obj/effect/decal/puzzle_dots{
 	pixel_y = -32;
-	id = "museum_r_wing_puzzle"
+	id = "museum_right_wing"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -5335,7 +5339,7 @@
 	id = "museum_right_wing"
 	},
 /obj/machinery/puzzle/password/pin/directional/south{
-	id = "museum_r_wing_puzzle";
+	id = "museum_right_wing";
 	late_initialize_pop = 1
 	},
 /turf/open/floor/iron/dark,
@@ -5349,7 +5353,7 @@
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
 	pixel_x = -32;
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
