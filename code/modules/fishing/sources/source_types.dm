@@ -561,6 +561,8 @@
 	return new picked_path(get_turf(fishing_spot))
 
 /datum/fish_source/carp_rift
+	catalog_description = "Space Dragon Rifts"
+	radial_state = "carp"
 	fish_table = list(
 		FISHING_DUD = 3,
 		/obj/item/fish/baby_carp = 5,
