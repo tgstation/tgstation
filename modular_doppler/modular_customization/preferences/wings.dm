@@ -87,9 +87,7 @@
 
 /datum/preference/choiced/wings/icon_for(value)
 	var/datum/sprite_accessory/wings = SSaccessories.wings_list_more[value]
-	var/icon/final_icon = icon(wings.icon, "m_wings_[wings.icon_state]_BEHIND")
-	final_icon.Blend(icon(wings.icon, "m_wings_[wings.icon_state]_FRONT"), ICON_OVERLAY)
-	return final_icon
+	return generate_back_icon(wings, "wings")
 
 //	Moth Wings
 /datum/preference/choiced/moth_wings
