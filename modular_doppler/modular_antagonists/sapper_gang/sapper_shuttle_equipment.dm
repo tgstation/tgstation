@@ -9,8 +9,8 @@
 /obj/docking_port/mobile/pirate/sapper
 	name = "Sapper Shuttle"
 	callTime = 1 MINUTES
-	ignitionTime = 1 MINUTES
-	rechargeTime = 5 MINUTES
+	ignitionTime = 30 SECONDS
+	rechargeTime = 3 MINUTES
 	shuttle_id = "pirate_sapper"
 	movement_force = list("KNOCKDOWN"=3,"THROW"=0)
 	preferred_direction = NORTH
@@ -23,10 +23,6 @@
 	req_access = list(ACCESS_SAPPER_SHIP)
 	shuttleId = "pirate_sapper"
 	possible_destinations = "sapper_custom;"
-
-/obj/machinery/computer/shuttle/pirate/sapper/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/gps, "[get_area_name(get_turf(src))]")
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/sapper
 	name = "shuttle navigation computer"
