@@ -492,7 +492,7 @@ world
 		var/image/copy
 		// Add the atom's icon itself, without pixel_x/y offsets.
 		if(render_icon)
-			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=base_icon_dir)
+			copy = image(icon=curicon, icon_state=curstate, layer=appearance.layer, dir=base_icon_dir, appearance_flags = appearance.appearance_flags)
 			copy.color = appearance.color
 			copy.alpha = appearance.alpha
 			copy.blend_mode = curblend
@@ -519,7 +519,7 @@ world
 
 			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
-				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
+				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir, appearance_flags = appearance.appearance_flags)
 			else // 'I' is an appearance object.
 				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim)
 			if(!add)
