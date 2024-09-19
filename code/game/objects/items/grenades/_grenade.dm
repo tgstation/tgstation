@@ -255,7 +255,7 @@
 	if(det_time == 0)
 		det_time = "Instant"
 	else
-		det_time = num2text(det_time/10)
+		det_time = num2text(det_time * 0.1) 
 
 	var/old_selection = possible_fuse_time.Find(det_time) //Position of det_time in the list
 	if(old_selection >= possible_fuse_time.len)
