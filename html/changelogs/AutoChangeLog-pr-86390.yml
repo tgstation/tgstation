@@ -1,0 +1,8 @@
+author: "WebcomicArtist"
+delete-after: True
+changes:
+  - rscadd: "Added pipe-organ gun: a buildable object akin to trash cannon that takes pipegun rounds, and shoots up to 8 off at once."
+  - rscadd: "Added The Canister Gatling, a rapid fire but non-destructive cannon for skeleton pirates. Also Canister shot ammo."
+  - sound: "Added sounds for the above guns."
+  - image: "Added sprites for the guns as well."
+  - code_imp: "Added a whole \"mounted_gun\" class that is basically cannons but you aren't forced to use cannonballs as ammo and load them with gunpowder."
