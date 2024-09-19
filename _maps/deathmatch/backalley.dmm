@@ -213,10 +213,6 @@
 /obj/structure/barricade/security/murderdome,
 /turf/open/indestructible/stone,
 /area/deathmatch)
-"uB" = (
-/obj/structure/fence/end,
-/turf/open/indestructible/rockyground,
-/area/deathmatch)
 "uW" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -482,10 +478,6 @@
 "Pi" = (
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/random/maintenance/four,
-/turf/open/indestructible/rockyground,
-/area/deathmatch)
-"Ps" = (
-/obj/structure/fence/corner,
 /turf/open/indestructible/rockyground,
 /area/deathmatch)
 "PB" = (
@@ -948,7 +940,7 @@ xy
 Oz
 PN
 uY
-uB
+Oz
 Mh
 Oz
 Qa
@@ -1024,7 +1016,7 @@ Oz
 kc
 iQ
 Oz
-Ps
+Oz
 fT
 Oz
 sR

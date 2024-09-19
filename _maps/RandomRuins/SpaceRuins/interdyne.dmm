@@ -209,6 +209,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "kg" = (
+/obj/effect/mapping_helpers/broken_floor,
 /obj/item/toy/plush/beeplushie{
 	desc = "How did this get here?";
 	name = "Secret bee plushie"
@@ -2081,9 +2082,9 @@ Me
 Rn
 Rn
 Zi
-kg
 QD
-aF
+QD
+kg
 QD
 Eh
 Zi

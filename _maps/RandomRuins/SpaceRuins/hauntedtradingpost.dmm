@@ -5136,37 +5136,12 @@
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
-"SF" = (
-/obj/item/target/clown{
-	pixel_y = 3
-	},
-/obj/item/bikehorn,
-/obj/item/soap/syndie{
-	pixel_y = -9
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "SK" = (
 /obj/structure/cable/layer1,
 /obj/machinery/light/red/dim/directional/east,
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield,
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
-"SO" = (
-/obj/item/ammo_box/foambox{
-	pixel_x = -10;
-	pixel_y = 7
-	},
-/obj/item/mod/module/recycler/donk/safe{
-	pixel_y = -3;
-	pixel_x = 7
-	},
-/obj/item/gun/ballistic/automatic/pistol/toy{
-	pixel_y = -6;
-	pixel_x = -5
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "SQ" = (
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
@@ -7384,7 +7359,7 @@ ap
 YF
 yF
 HV
-SF
+SQ
 HV
 KG
 SQ
@@ -7474,7 +7449,7 @@ DX
 iz
 yF
 SQ
-SO
+SQ
 SQ
 fW
 SQ

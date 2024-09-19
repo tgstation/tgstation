@@ -5,7 +5,7 @@
 	icon_state = "container_blank"
 	max_integrity = 1000
 	bound_width = 96
-	bound_height = 32
+	bound_height = 64
 	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_ALL_MOB_LAYER

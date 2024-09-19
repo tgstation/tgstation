@@ -329,14 +329,16 @@
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "rM" = (
-/obj/structure/shipping_container/deforest,
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/fuel_pool/hivis,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/shipping_container/deforest,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "rZ" = (
@@ -391,12 +393,6 @@
 /obj/effect/decal/fakelattice{
 	density = 0
 	},
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"vV" = (
-/obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/bag/money,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "vW" = (
@@ -607,12 +603,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/indestructible/plating,
-/area/deathmatch)
-"EU" = (
-/obj/item/stack/rods/ten,
-/obj/effect/decal/cleanable/fuel_pool/hivis,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
 /area/deathmatch)
 "EX" = (
@@ -1619,11 +1609,11 @@ Sy
 Sy
 Sy
 Fa
-rM
+pO
 EH
 ry
 gN
-pO
+rM
 CX
 Ht
 Sy
@@ -1663,8 +1653,8 @@ yR
 Sm
 HV
 Sm
-EU
-vV
+AR
+AR
 Mq
 Js
 Se
@@ -1701,11 +1691,11 @@ Mt
 Mt
 Mt
 YR
-Sm
+Yt
 ii
 Sm
 Mq
-Yt
+AR
 AR
 xN
 Mt

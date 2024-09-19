@@ -209,10 +209,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"tI" = (
-/obj/structure/tank_holder/anesthetic,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "uo" = (
 /obj/machinery/computer/terminal{
 	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
@@ -240,14 +236,6 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"vM" = (
-/obj/structure/closet/cardboard,
-/obj/item/toy/plush/snakeplushie,
-/obj/item/bodypart/arm/left/robot/surplus,
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/toy/nuke,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "wh" = (
 /mob/living/basic/trooper/syndicate/ranged,
@@ -405,28 +393,11 @@
 /obj/item/wrench/medical,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"EJ" = (
-/obj/item/stack/sticky_tape/surgical,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Go" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/pill/cyanide{
 	pixel_y = 8
 	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"Gp" = (
-/obj/item/organ/internal/eyes/robotic/basic,
-/obj/item/kitchen/spoon,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"Hx" = (
-/obj/effect/decal/cleanable/plastic,
-/obj/structure/closet/crate/freezer,
-/obj/item/skillchip/entrails_reader,
-/obj/item/mod/module/health_analyzer,
-/obj/item/shovel,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "HE" = (
@@ -456,12 +427,6 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Ka" = (
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"Kk" = (
-/obj/item/wheelchair,
-/obj/item/screwdriver,
-/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Ky" = (
@@ -756,7 +721,7 @@ HE
 PM
 zZ
 hu
-vM
+CJ
 AB
 py
 io
@@ -778,7 +743,7 @@ QK
 CJ
 Um
 zb
-tI
+CJ
 CJ
 uG
 CJ
@@ -800,7 +765,7 @@ CJ
 eO
 qV
 CJ
-Kk
+CJ
 CJ
 zj
 Go
@@ -844,7 +809,7 @@ Dv
 rB
 JW
 CJ
-EJ
+CJ
 AB
 xw
 CJ
@@ -866,7 +831,7 @@ hv
 Ka
 CJ
 CJ
-Gp
+CJ
 CJ
 pD
 CJ
@@ -888,7 +853,7 @@ UJ
 RT
 Lh
 CJ
-Hx
+CJ
 CJ
 zu
 IS
