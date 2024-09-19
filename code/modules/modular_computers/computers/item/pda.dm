@@ -14,7 +14,8 @@
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
-
+	armor_type = /datum/armor/pda
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
@@ -49,6 +50,10 @@
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/cigarette,
 	)
+
+/datum/armor/pda
+	fire = 100
+	acid = 100
 
 /obj/item/modular_computer/pda/Initialize(mapload)
 	. = ..()
