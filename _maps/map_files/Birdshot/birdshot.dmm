@@ -25635,7 +25635,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
 "iTv" = (
-/obj/item/kirbyplants/random,
+/obj/machinery/skill_station,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "iTy" = (
