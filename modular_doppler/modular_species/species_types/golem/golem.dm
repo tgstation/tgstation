@@ -1,6 +1,7 @@
 //// Doppler Golems - Overwrites and continuiations of
 // code/modules/mob/living/carbon/human/species_types/golems.dm
 /datum/species/golem
+	preview_outfit = /datum/outfit/golem_preview
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_LAVA_IMMUNE,
@@ -25,6 +26,10 @@
 	)
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN //golem ERT
+
+/datum/outfit/golem_preview
+	name = "Golem (Species Preview)"
+	head = /obj/item/food/grown/poppy/geranium/fraxinella
 
 /datum/species/golem/get_species_lore()
 	return list(
