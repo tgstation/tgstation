@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - qol: "made it clearer that the expansion in space failed for blob instead of wildly flailing at space."
