@@ -37,7 +37,7 @@
 	. = ..()
 
 	if(tank_one || tank_two)
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove [tank_one || tank_two]"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove [tank_one || tank_two]"
 		. = CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item) && is_type_in_list(held_item, list(/obj/item/tank, /obj/item/assembly)))
 		context[SCREENTIP_CONTEXT_LMB] = "Attach [held_item]"
@@ -45,7 +45,7 @@
 
 	return . || NONE
 
-/obj/item/transfer_valve/item_ctrl_click(mob/user)
+/obj/item/transfer_valve/alt_click(mob/user)
 	if(tank_one)
 		split_gases()
 		valve_open = FALSE
