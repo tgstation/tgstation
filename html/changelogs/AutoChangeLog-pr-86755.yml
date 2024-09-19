@@ -1,0 +1,6 @@
+author: "Goat"
+delete-after: True
+changes:
+  - balance: "burn damage equal or under to ten will now damage your jumpsuit (does not apply to internal temp damage)"
+  - bugfix: "radiation burns no longer damage your jumpsuit."
+  - code_imp: "added a new var to applying damage to set if it should apply damage to clothes."
