@@ -3,9 +3,11 @@
 */
 
 /mob/living/proc/get_extended_description_href(input_text)
+	// Provides a href link with the `full_desc` arg, to be consumed by a Topic override (intended for flavour text descriptions)
 	return "<a href='?src=[REF(src)];full_desc=1;examine_time=[world.time]'>[input_text]</a>"
 
 /mob/living/proc/get_species_description_href(input_text)
+	// Provides a href link with the `species_info` arg, to be consumed by a Topic override (intended for species/model descriptions)
 	return "<a href='?src=[REF(src)];species_info=1;examine_time=[world.time]'>[input_text]</a>"
 
 /mob/living/proc/compile_examined_text(short_desc, extended_desc, headshot, ooc_notes)

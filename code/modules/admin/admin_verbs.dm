@@ -553,7 +553,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		// Finally, ensure the minds are tracked and in the manifest.
 		SSticker.minds += character.mind
 		if(ishuman(character))
-			GLOB.manifest.inject(character)
+			GLOB.manifest.inject(character, character.client)
 
 		number_made++
 		CHECK_TICK

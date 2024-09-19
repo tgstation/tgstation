@@ -243,7 +243,7 @@
 		SSquirks.AssignQuirks(humanc, humanc.client)
 
 	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
-		GLOB.manifest.inject(humanc)
+		GLOB.manifest.inject(humanc, humanc.client)
 
 	var/area/station/arrivals = GLOB.areas_by_type[/area/station/hallway/secondary/entry]
 	if(humanc && arrivals && !arrivals.power_environ) //arrivals depowered
