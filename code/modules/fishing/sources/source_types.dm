@@ -68,6 +68,7 @@
 		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -79,6 +80,7 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	explosive_malus = TRUE
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
@@ -92,6 +94,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	explosive_malus = TRUE
 
 /datum/fish_source/portal
 	fish_table = list(
@@ -103,12 +106,9 @@
 		/obj/item/fish/goldfish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
+	radial_state = "fish_tank"
 	///The name of this option shown in the radial menu on the fishing portal generator
 	var/radial_name = "Aquarium"
-	///The icon state shown for this option in the radial menu
-	var/radial_state = "fish_tank"
-	///The icon state of the overlay shown on the machine when active.
-	var/overlay_state = "portal_aquarium"
 
 /datum/fish_source/portal/beach
 	fish_table = list(
@@ -255,7 +255,7 @@
 		fish_table[reward_path] = rand(1, 4)
 
 ///Difficulty has to be calculated before the rest, because of how it influences jump chances
-/datum/fish_source/portal/random/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/portal/random/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	. += rand(-10, 15)
 
@@ -400,6 +400,12 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+
+/datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
+
+/datum/fish_source/holographic/on_fishing_spot_del(datum/component/fishing_spot/spot)
+	REMOVE_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src))
 
 /datum/fish_source/holographic/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
 	var/obj/item/fish/prototype = /obj/item/fish/holo/checkered

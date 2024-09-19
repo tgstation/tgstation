@@ -2371,12 +2371,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/library)
 "aJm" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/east{
@@ -40898,10 +40892,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "lOV" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -74196,7 +74187,7 @@
 /area/station/security/prison/rec)
 "vwG" = (
 /obj/machinery/vending/security{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -257791,7 +257782,7 @@ qMm
 hUD
 pyJ
 lPh
-aJj
+hUD
 hUD
 ebb
 cYE

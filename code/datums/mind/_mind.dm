@@ -106,7 +106,7 @@
 /datum/mind/New(_key)
 	key = _key
 	init_known_skills()
-	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
+	set_assigned_role(SSjob.get_job_type(/datum/job/unassigned)) // Unassigned by default.
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -251,7 +251,7 @@
 		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
-		var/datum/job/new_job = SSjob.GetJob(new_role)
+		var/datum/job/new_job = SSjob.get_job(new_role)
 		if (!new_job)
 			to_chat(usr, span_warning("Job not found."))
 			return

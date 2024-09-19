@@ -147,7 +147,7 @@
 		var/obj/item/food_item = new chosen(T)
 		ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(5))//Fry it!
-			food_item.AddElement(/datum/element/fried_item, rand(15, 60))
+			food_item.AddElement(/datum/element/fried_item, rand(15, 60) SECONDS)
 		if(prob(5))//Grill it!
 			food_item.AddElement(/datum/element/grilled_item, rand(30 SECONDS, 100 SECONDS))
 		if(prob(50))

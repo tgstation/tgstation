@@ -207,13 +207,15 @@
 	else
 		return FALSE
 
-/obj/item/extinguisher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/extinguisher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if (interacting_with.loc == user)
+	if(interacting_with.loc == user)
 		return NONE
+	// Always skip interaction if it's a bag or table (that's not on fire)
+	if(!(interacting_with.resistance_flags & ON_FIRE) && HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/extinguisher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(refilling)
 		refilling = FALSE
 		return NONE
