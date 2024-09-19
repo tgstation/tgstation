@@ -496,7 +496,6 @@ world
 			copy.color = appearance.color
 			copy.alpha = appearance.alpha
 			copy.blend_mode = curblend
-			copy.appearance_flags = appearance.appearance_flags
 			layers[copy] = appearance.layer
 
 		PROCESS_OVERLAYS_OR_UNDERLAYS(flat, appearance.underlays, 0)
