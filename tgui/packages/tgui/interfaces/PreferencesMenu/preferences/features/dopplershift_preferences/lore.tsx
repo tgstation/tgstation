@@ -1,6 +1,6 @@
 import { Feature, FeatureNumberInput, FeatureShortTextInput, FeatureTextInput } from '../base';
 
-export const age_chronological: Feature<string> = {
+export const age_chronological: Feature<number> = {
   name: 'Age (Chronological)',
   description: "The actual, physical age of your character. Applicable mostly in instances of prolonged cryogenic stasis or for lifeforms that mature or metabolize at much slower rates compared to 'standard' sector races.",
   component: FeatureNumberInput,

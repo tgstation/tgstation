@@ -1,4 +1,4 @@
-import { sendAct } from "../../backend"
+import { sendAct } from "../../backend";
 import { LabeledList } from "../../components/LabeledList";
 import { Stack } from "../../components/Stack";
 import features from './preferences/features';
@@ -8,10 +8,9 @@ export const PreferenceSingle = (props: {
   act: typeof sendAct;
   pref_key: string;
   preferences: Record<string, unknown>;
-  maxHeight: string;
 }) => {
   const feature = features[props.pref_key];
-  const value = props.preferences[props.pref_key]
+  const value = props.preferences[props.pref_key];
 
   if (feature === undefined) {
     return (
@@ -38,4 +37,4 @@ export const PreferenceSingle = (props: {
       </Stack.Item>
     </LabeledList.Item>
   );
-}
+};

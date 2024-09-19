@@ -8,11 +8,11 @@ import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { LoadoutPage } from './loadout/index';
+import { LorePage } from "./LorePage";
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
-import { LorePage } from "./LorePage";
 
 enum Page {
   Antags,
@@ -126,7 +126,7 @@ export const CharacterPreferenceWindow = (props) => {
                 </PageButton>
               </Stack.Item>
               {
-                //DOPPLER EDIT: fancy flavour text & character report stuff
+                // DOPPLER EDIT: fancy flavour text & character report stuff
               }
               <Stack.Item grow>
                 <PageButton
@@ -137,7 +137,7 @@ export const CharacterPreferenceWindow = (props) => {
                   Lore
                 </PageButton>
               {
-                //DOPPLER EDIT END
+                // DOPPLER EDIT END
               }
               </Stack.Item>
               <Stack.Item grow>
