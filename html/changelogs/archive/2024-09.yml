@@ -505,3 +505,99 @@
   vinylspiders:
   - bugfix: smartfridges and drying racks will now display their examine text information
       mutlilined
+2024-09-18:
+  Bumtickley00:
+  - bugfix: Penlights can once again be used to look at people's eyes and mouth.
+  Ghommie:
+  - bugfix: examining fishing spots while wielding a rod (with sufficient skill) now
+      works.
+  - rscadd: Your current clothes and what chair you sit on can now influence the difficulty
+      of fishing minigames. Having a bare minimum of fishing skill will let you distinguish
+      which objects can help and which won't, so keep an eye out. Holding fishing
+      toolboxes, fish analyzers or fish catalogs can also help.
+  Jewelry-x:
+  - bugfix: fixes description for blob reagents
+  SmArtKar:
+  - bugfix: Changing ID card's trim now properly adjusts linked bank account's job,
+      allowing you to receive bounties for your new job
+  - bugfix: Fixed petrification not removing NOBLOOD trait after ending
+  - bugfix: Fixed veteran advisor not spawning on security officer landmarks
+  SyncIt21:
+  - bugfix: borgs can perform organ manipulation surgery again
+  deathrobotpunch:
+  - rscadd: Added new fishing category to games vendor
+2024-09-19:
+  Bisar:
+  - bugfix: Xenomorph restrictions on items they can pick up have had their determining
+      logic made more _robust_.
+  - code_imp: The itempicky component (restricts what can be picked up via a whitelist)
+      can now, optionally, have a callback fed to it to determine cases of bypassing
+      that whitelist.
+  DaCoolBoss:
+  - spellcheck: Fixed typos in lead's description.
+  - spellcheck: Mice now love the taste of insulated electrical cables, not uninsulated
+      ones.
+  Ghommie:
+  - rscadd: You can now link fishing portal generators to other fishing spots with
+      a multitool. The number of fishing spots that can be linked at once and whether
+      the link can be activated from different z levels depends on the tier of the
+      stock parts it's built with.
+  - rscadd: You can pet fish while holding them. Be wary of petting aggressive fish.
+  Goat:
+  - bugfix: lockers and crates with no access requirements can now be renamed by anyone
+  Jewelry-x:
+  - bugfix: fixed a bug that allows autogrow to be turned on with no power.
+  - qol: made blob antag panel easier to read and more organized
+  - spellcheck: fixed a few typos in the blob panel
+  Kocma-san:
+  - bugfix: fixed disposal pipes on metastation, deltastation and icebox
+  SmArtKar:
+  - bugfix: Vore victims no longer get digested instantly when you evolve
+  - bugfix: Collars can no longer be used to null a pet's name
+  - bugfix: Snow bears are no longer impervious to all sources of damage
+  - bugfix: Cameras, living floors and ghost of poly no longer can be pushed around
+2024-09-20:
+  EnterTheJake:
+  - balance: Security Flashbangs can no longer be primed for instant detonation.
+  Goat:
+  - balance: burn damage equal or under to ten will now damage your jumpsuit (does
+      not apply to internal temp damage)
+  - bugfix: radiation burns no longer damage your jumpsuit.
+  - code_imp: added a new var to applying damage to set if it should apply damage
+      to clothes.
+  Jewelry-x:
+  - bugfix: Lobby crew manifest has colour again
+  - qol: made it clearer that the expansion in space failed for blob instead of wildly
+      flailing at space.
+  LT3:
+  - bugfix: Fixed missing examine text for the yellow medical HUD border regarding
+      suit sensors
+  SmArtKar:
+  - spellcheck: Fixed broken text display in atmos devices in which you can insert
+      a tank
+  - admin: Atmos logging no longer lies about everyone swapping tanks in devices even
+      if they only inserted/removed one
+  SmArtKar, Kapu:
+  - bugfix: Agent ID cards no longer display broken text when you put non-letter symbols
+      as your name
+  SyncIt21:
+  - bugfix: apc breaker properly shuts off all power
+  Vect0r2:
+  - rscadd: Added the remote power AI disk
+  - code_imp: made it possible to easily add new AI upgrade disks
+  WebcomicArtist:
+  - rscadd: 'Added pipe-organ gun: a buildable object akin to trash cannon that takes
+      pipegun rounds, and shoots up to 8 off at once.'
+  - rscadd: Added The Canister Gatling, a rapid fire but non-destructive cannon for
+      skeleton pirates. Also Canister shot ammo.
+  - sound: Added sounds for the above guns.
+  - image: Added sprites for the guns as well.
+  - code_imp: Added a whole "mounted_gun" class that is basically cannons but you
+      aren't forced to use cannonballs as ammo and load them with gunpowder.
+  carlarctg:
+  - bugfix: Added a null check to mood, because it caused runtimes. Nonhumans have
+      mood, but they never initialize it, yet surgery mood assumes it is.
+  - bugfix: Removed unnecessary ishuman check in the organizer, allowing it to work
+      on xenomorphs and other theoretical carbons.
+  thegrb93:
+  - bugfix: Downstream species not getting internals they need when joining ERT

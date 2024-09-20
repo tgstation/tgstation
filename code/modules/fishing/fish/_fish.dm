@@ -175,11 +175,24 @@
 		update_size_and_weight()
 
 	register_evolutions()
+	register_context()
 	register_item_context()
 
-/obj/item/fish/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/fish/add_item_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(HAS_TRAIT(source, TRAIT_CATCH_AND_RELEASE))
 		context[SCREENTIP_CONTEXT_RMB] = "Release"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/fish/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(src == held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Pet"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/fish_feed))
+		context[SCREENTIP_CONTEXT_LMB] = "Feed"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/fish_analyzer))
+		context[SCREENTIP_CONTEXT_LMB] = "Scan"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
@@ -1163,16 +1176,53 @@
 		happiness_value -= 1
 	return clamp(happiness_value, FISH_SAD, FISH_VERY_HAPPY)
 
+/obj/item/fish/attack_self(mob/living/user)
+	. = ..()
+	pet_fish(user)
+
 /obj/item/fish/proc/pet_fish(mob/living/user)
+	var/in_aquarium = isaquarium(loc)
+	if(status == FISH_DEAD)
+		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
+		return FALSE
+	if(!proper_environment())
+		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] not feeling well!"))
+		return FALSE
 	if(fish_flags & FISH_FLAG_PETTED)
-		to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
-		return
+		if(in_aquarium)
+			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
+		else
+			to_chat(user, span_warning("You try to pet [src] but [p_they()] squirms away!"))
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && GET_FISH_ELECTROGENESIS(src) > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?
 	fish_flags |= FISH_FLAG_PETTED
-	SEND_SIGNAL(src, COMSIG_FISH_PETTED)
-	to_chat(user, span_notice("[src] dances around!"))
+	new /obj/effect/temp_visual/heart(get_turf(src))
+	if((/datum/fish_trait/aggressive in fish_traits) && prob(50))
+		if(!in_aquarium)
+			user.visible_message(
+				span_warning("[src] dances around before biting [user]!"),
+				span_warning("[src] dances around before biting you!"),
+				vision_distance = DEFAULT_MESSAGE_RANGE - 3,
+			)
+		else
+			user.visible_message(
+				span_warning("[src] bites [user]'s hand!"),
+				span_warning("You pet [src] as you hold it, only for [p_them()] to happily bite back!"),
+				vision_distance = DEFAULT_MESSAGE_RANGE - 3,
+			)
+		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+		user.apply_damage((force * 0.2) + w_class * 2, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
+		playsound(src,'sound/weapons/bite.ogg', 45, TRUE, -1)
+	else
+		if(in_aquarium)
+			to_chat(user, span_notice("[src] dances around!"))
+		else
+			to_chat(user, span_notice("You pet [src] as you hold it."))
+		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
+	return TRUE
 
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED

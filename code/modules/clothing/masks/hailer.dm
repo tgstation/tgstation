@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	fishing_modifier = 0
 	unique_death = 'sound/voice/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
@@ -86,6 +87,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	fishing_modifier = 2
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
@@ -103,6 +105,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
