@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Changing a bank account's job to or from Curator actually changes whether they get a cut from painting patronage."
+  - admin: "VVediting a bank account's account_job actually updates what job the account is associated with. Currently only matters for Curators."
+  - admin: "VVediting a bank account's add_to_accounts actually removes it from or adds it to the job to account associations. Currently only matters for Curators."
