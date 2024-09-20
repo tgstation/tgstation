@@ -117,8 +117,7 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
 
 	// Finally, doing any effects on vote completion
-	if (final_winner) // if no one voted, or the vote cannot be won, final_winner will be null
-		current_vote.finalize_vote(final_winner)
+	current_vote.finalize_vote(final_winner)
 
 /**
  * One selection per person, and the selection with the most votes wins.

@@ -2,7 +2,7 @@
 	name = "Map"
 	default_message = "Vote for next round's map!"
 	count_method = VOTE_COUNT_METHOD_SINGLE
-	winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
+	winner_method = VOTE_WINNER_METHOD_NONE
 	display_statistics = FALSE
 
 /datum/vote/map_vote/New()
@@ -53,9 +53,7 @@
 	var/num_choices = length(default_choices - get_choices_invalid_for_population())
 	if(num_choices <= 1)
 		return "There [num_choices == 1 ? "is only one map" : "are no maps"] to choose from."
-	if(SSmapping.map_vote_rocked)
-		return VOTE_AVAILABLE
-	if(SSmapping.map_voted)
+	if(SSmap_vote.next_map_config)
 		return "The next map has already been selected."
 	return VOTE_AVAILABLE
 
@@ -97,20 +95,4 @@
 	return ..()
 
 /datum/vote/map_vote/finalize_vote(winning_option)
-	var/datum/map_config/winning_map = global.config.maplist[winning_option]
-	if(!istype(winning_map))
-		CRASH("[type] wasn't passed a valid winning map choice. (Got: [winning_option || "null"] - [winning_map || "null"])")
-
-	SSmapping.changemap(winning_map)
-	SSmapping.map_voted = TRUE
-	if(SSmapping.map_vote_rocked)
-		SSmapping.map_vote_rocked = FALSE
-
-/proc/revert_map_vote()
-	var/datum/map_config/override_map = SSmapping.config
-	if(isnull(override_map))
-		return
-
-	SSmapping.changemap(override_map)
-	log_game("The next map has been reset to [override_map.map_name].")
-	send_to_playing_players(span_boldannounce("The next map is: [override_map.map_name]."))
+	SSmap_vote.finalize_map_vote(src)
