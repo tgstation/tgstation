@@ -2254,6 +2254,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(.))
 		return
 
+	if(. <= UNCONSCIOUS || new_stat >= UNCONSCIOUS)
+		update_body() // to update eyes
+
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)

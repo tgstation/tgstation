@@ -1699,8 +1699,9 @@
 		to_chat(user, span_notice("You successfully reset the ID card."))
 		return
 
-	///forge the ID if not forged.
-	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
+	///forge the ID if not forged.s
+	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN, encode = FALSE)
+
 	if(!after_input_check(user))
 		return TRUE
 	if(input_name)
@@ -1888,7 +1889,7 @@
 			input_name = sanitize_name(input_name, allow_numbers = TRUE)
 			if(!after_input_check(user, item, input_name, scribbled_name))
 				return
-			scribbled_name = input_name
+			scribbled_name = input
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
