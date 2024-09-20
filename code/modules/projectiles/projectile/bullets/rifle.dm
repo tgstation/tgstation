@@ -140,7 +140,7 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 55
+	damage = 40
 	speed = 0.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
@@ -231,7 +231,7 @@
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
-	damage = 1 // It's a damn toy.
+	damage = 0 // It's a damn toy.
 	range = 10
 	shrapnel_type = null
 	embed_type = null
