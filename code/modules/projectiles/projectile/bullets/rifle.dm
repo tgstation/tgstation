@@ -148,8 +148,8 @@
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
-	wound_bonus = -15
-	bare_wound_bonus = 10
+	wound_bonus = -100
+	bare_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embed_type = /datum/embed_data/rebar_hydrogen
 	embed_falloff_tile = -3
