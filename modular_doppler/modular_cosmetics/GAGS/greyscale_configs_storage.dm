@@ -59,7 +59,7 @@
 
 /datum/greyscale_config/backpack/messenger
 	name = "Messenger Bag"
-	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/back/satchel.json'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/back/messenger.json'
 
 /datum/greyscale_config/backpack/messenger/worn
 	name = "Worn Messenger Bag"
