@@ -43,6 +43,11 @@ SUBSYSTEM_DEF(map_vote)
 			map_vote_cache[map_id] = max
 
 /datum/controller/subsystem/map_vote/proc/map_vote_notice(list/messages)
+	var/static/last_message_at
+	if(last_message_at == world.time)
+		message_admins("Call to [__PROC__] twice in one game tick. Yell at someone to condense messages.")
+	last_message_at = world.time
+
 	if(!islist(messages))
 		messages = args
 	to_chat(world, span_purple(examine_block("Map Vote\n<hr>\n[messages.Join("\n")]")))
@@ -51,10 +56,12 @@ SUBSYSTEM_DEF(map_vote)
 	if(already_voted)
 		message_admins("Attempted to finalize a map vote after a map vote has already been finalized.")
 		return
+	already_voted = TRUE
 
 	previous_cache = map_vote_cache.Copy()
 	for(var/map_id in map_vote.choices)
-		map_vote_cache[map_id] += map_vote.choices[map_id]
+		var/datum/map_config/map = config.maplist[map_id]
+		map_vote_cache[map_id] += map_vote.choices[map_id] * map.voteweight
 	sanitize_cache()
 	write_cache()
 
@@ -62,23 +69,38 @@ SUBSYSTEM_DEF(map_vote)
 		map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
 		return
 
-	var/winner = pick_weight(map_vote_cache)
-	map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
+	var/list/valid_maps = filter_cache_to_valid_maps()
+	if(!length(valid_maps))
+		map_vote_notice("No valid maps.")
+		return
+
+	var/winner = pick_weight(filter_cache_to_valid_maps())
 	set_next_map(config.maplist[winner])
-	write_cache()
+	map_vote_notice("Map Selected - [span_bold(next_map_config.map_name)]")
+
+	// do not reset tallies if only one map is even possible
+	if(length(valid_maps) > 1)
+		map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
+		write_cache()
+
+/datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
+	var/connected_players = length(GLOB.player_list)
+	var/list/valid_maps = list()
+	for(var/map_id in map_vote_cache)
+		var/datum/map_config/map = config.maplist[map_id]
+		if(!map.votable)
+			continue
+		if(connected_players < map.config_min_users)
+			continue
+		if(connected_players > map.config_max_users)
+			continue
+		valid_maps[map_id] = map_vote_cache[map_id]
+	return valid_maps
 
 /datum/controller/subsystem/map_vote/proc/set_next_map(datum/map_config/change_to)
 	if(!change_to.MakeNextMap())
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]!")
 		return FALSE
-
-	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
-	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
 	next_map_config = change_to
 	return TRUE
