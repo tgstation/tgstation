@@ -25,8 +25,16 @@
 	greyscale_colors = null
 	inhand_icon_state = null
 
+/obj/item/clothing/gloves/combat/wizard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //something something wizard casting
+
 /obj/item/clothing/gloves/combat/floortile
 	name = "floortile camouflage gloves"
 	desc = "Is it just me or is there a pair of gloves on the floor?"
 	icon_state = "ftc_gloves"
 	inhand_icon_state = "greyscale_gloves"
+
+/obj/item/clothing/gloves/combat/floortiletile/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //tacticool

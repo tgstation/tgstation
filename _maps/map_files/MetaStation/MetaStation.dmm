@@ -32453,7 +32453,7 @@
 /area/station/commons/toilet/restrooms)
 "lvY" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "lvZ" = (
@@ -35165,7 +35165,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "myZ" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "mzg" = (
@@ -47063,7 +47063,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "qJH" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -47467,9 +47467,6 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Mining";
 	name = "Mining Requests Console"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)

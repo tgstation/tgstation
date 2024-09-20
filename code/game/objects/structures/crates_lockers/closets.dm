@@ -157,8 +157,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	register_context()
 
 	if(opened)
-		opened = FALSE //nessassary because open() proc will early return if its true
-		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
+		opened = FALSE //necessary because open() proc will early return if its true
+		if(open(special_effects = FALSE)) //closets which are meant to be open by default don't need to be animated open
 			return
 	update_appearance()
 
@@ -823,19 +823,19 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			balloon_alert(user, "unlock first!")
 			return
 
-		if(isnull(id_card))
+		if(isnull(id_card) && secure)
 			balloon_alert(user, "not yours to rename!")
 			return
 
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
-		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
+		var/str = tgui_input_text(user, "Locker Name", "Locker Name")
 		if(!isnull(str))
 			name = str
 			name_set = TRUE
 
-		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
+		str = tgui_input_text(user, "Locker Description", "Locker Description")
 		if(!isnull(str))
 			desc = str
 			desc_set = TRUE
@@ -888,7 +888,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [weapon]", LOG_GAME)
 			update_appearance()
 
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
 		var/item_is_id = weapon.GetID()
 		if(!item_is_id)
 			return FALSE
@@ -914,8 +914,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/mouse_drop_receive(atom/movable/O, mob/living/user, params)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
-		return
-	if(!istype(user) || user.incapacitated || user.body_position == LYING_DOWN)
 		return
 	if(user == O) //try to climb onto it
 		return ..()
@@ -1068,7 +1066,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			addtimer(CALLBACK(src, PROC_REF(check_if_shake)), next_check_time)
 			return TRUE
 
-	// If we reach here, nobody is resisting, so dont shake
+	// If we reach here, nobody is resisting, so don't shake
 	return FALSE
 
 /obj/structure/closet/proc/bust_open()
@@ -1191,15 +1189,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
-	var/was_opened = opened
-	if(!toggle())
-		return
-	if(was_opened)
-		if (!target.Move(get_turf(src), get_dir(target, src)))
+	if(opened)
+		if (target.loc != loc)
 			return
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
 		span_userdanger("You're shoved into [src] by [shover.name]!"),

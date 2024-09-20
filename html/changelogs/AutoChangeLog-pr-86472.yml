@@ -1,4 +1,0 @@
-author: "Singul0"
-delete-after: True
-changes:
-  - bugfix: "Fixes makarov-stechkin mix up on forgotten ship virtual domain."
