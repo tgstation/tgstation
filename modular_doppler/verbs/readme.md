@@ -55,3 +55,4 @@ Adds keybinds for LOOC, Do, Do (Longer) and Whisper.
 ### Credits:
 Gandalf2k15 - porting and refactoring
 yooriss - do verb
+Kaostico - edition
