@@ -647,7 +647,7 @@
 	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
 		user.balloon_alert(user, "no more room!")
 		return
-	if(!do_after(user, 0.8 SECONDS, user))
+	if(!do_after(user, 1.2 SECONDS, user))
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
