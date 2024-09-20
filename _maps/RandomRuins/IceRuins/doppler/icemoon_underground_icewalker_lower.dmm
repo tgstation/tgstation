@@ -952,6 +952,10 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
+"uP" = (
+/obj/structure/hearthkin_rune_stone,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
 "uT" = (
 /obj/structure/rack/wooden,
 /obj/item/climbing_hook{
@@ -2013,6 +2017,10 @@
 	},
 /turf/open/misc/dirt/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
+"NA" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
 "NP" = (
 /obj/structure/stairs/wood{
 	dir = 4
@@ -2232,6 +2240,11 @@
 "TY" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
+"TZ" = (
+/obj/structure/wall_torch/spawns_lit/directional/south,
+/obj/structure/hearthkin_rune_stone,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "Ud" = (
 /obj/effect/turf_decal/siding/wood/corner,
@@ -2568,7 +2581,7 @@ Md
 NR
 NR
 xU
-NR
+uP
 NR
 NR
 NR
@@ -2903,7 +2916,7 @@ jf
 WW
 NR
 NR
-NR
+NA
 NR
 xU
 dj
@@ -3178,7 +3191,7 @@ sz
 Nz
 NR
 NR
-NR
+NA
 NR
 NR
 YX
@@ -3959,7 +3972,7 @@ eS
 NR
 Nb
 NR
-NR
+NA
 Md
 NR
 NR
@@ -4398,7 +4411,7 @@ jf
 NR
 ac
 NR
-NR
+NA
 NR
 NR
 su
@@ -4431,7 +4444,7 @@ qr
 Md
 Md
 Md
-NR
+uP
 NR
 "}
 (43,1,1) = {"
@@ -4483,7 +4496,7 @@ NR
 "}
 (44,1,1) = {"
 NR
-Be
+TZ
 Md
 Md
 Md
@@ -4613,7 +4626,7 @@ Kd
 NR
 YX
 NR
-NR
+NA
 NR
 NR
 NR
@@ -4944,7 +4957,7 @@ HB
 BA
 NR
 NR
-NR
+NA
 NR
 YA
 Md

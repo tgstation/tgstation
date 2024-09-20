@@ -1,7 +1,7 @@
 //Object code.
 /obj/structure/hearthkin_rune_stone
 	name = "rune stone"
-	desc = "A magnificent bronze calling horn, used by the Hearthkin to call upon their own."
+	desc = "A carved stone, with bright cyan runes inscribed upon it. A warning clearly states: HEARTHKIN SACRED LANDS. OUTLANDERS WILL BE KILLED UPON INVADING."
 	icon_state = "hearthkin_warning_stone"
 	icon = 'modular_doppler/hearthkin/primitive_structures/icons/decorations.dmi'
 	anchored = TRUE

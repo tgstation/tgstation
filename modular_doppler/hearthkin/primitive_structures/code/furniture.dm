@@ -81,6 +81,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
+	bound_height = 64
 	/// What material this rug is made of
 	var/build_stack_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
 	/// How many mats to drop when deconstructed

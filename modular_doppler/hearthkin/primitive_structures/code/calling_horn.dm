@@ -1,7 +1,7 @@
 //Object code.
 /obj/structure/calling_horn/hearthkin
 	name = "bronze calling horn"
-	desc = "A magnificent bronze calling horn, used by the Hearthkin to call upon their own."
+	desc = "A magnificent bronze calling horn, used by the Hearthkin to call upon their own. It doesn't seem to be working right now, though."
 	icon_state = "hearthkin_meeting_horn"
 	icon = 'modular_doppler/hearthkin/primitive_structures/icons/bronze_horn.dmi'
 	anchored = TRUE
