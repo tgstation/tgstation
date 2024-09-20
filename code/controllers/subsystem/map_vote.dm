@@ -19,6 +19,9 @@ SUBSYSTEM_DEF(map_vote)
 	/// Stores the previous map vote cache, used when a map vote is reverted.
 	var/list/previous_cache
 
+	/// Stores a formatted html string of the tally counts
+	var/tally_printout = span_red("Loading...")
+
 /datum/controller/subsystem/map_vote/Initialize()
 	if(!fexists(MAP_VOTE_CACHE_LOCATION))
 		map_vote_cache = json_decode(file2text(MAP_VOTE_CACHE_LOCATION))
@@ -28,6 +31,7 @@ SUBSYSTEM_DEF(map_vote)
 		sanitize_cache()
 	else
 		map_vote_cache = list()
+	update_tally_printout()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
@@ -64,6 +68,7 @@ SUBSYSTEM_DEF(map_vote)
 		map_vote_cache[map_id] += map_vote.choices[map_id] * map.voteweight
 	sanitize_cache()
 	write_cache()
+	update_tally_printout()
 
 	if(admin_override)
 		map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
@@ -82,6 +87,7 @@ SUBSYSTEM_DEF(map_vote)
 	if(length(valid_maps) > 1)
 		map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
 		write_cache()
+		update_tally_printout()
 
 /datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
 	var/connected_players = length(GLOB.player_list)
@@ -117,3 +123,10 @@ SUBSYSTEM_DEF(map_vote)
 	map_vote_notice("Next map reverted. Voting re-enabled.")
 
 #undef MAP_VOTE_CACHE_LOCATION
+
+/datum/controller/subsystem/map_vote/proc/update_tally_printout()
+	var/data = list()
+	for(var/map_id in map_vote_cache)
+		var/datum/map_config/map = config.maplist[map_id]
+		data += "[map.map_name] - [map_vote_cache[map_id]]"
+	tally_printout = examine_block("Current Tallies\n<hr>\n[data.Join("\n")]")
