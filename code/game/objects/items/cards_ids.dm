@@ -1886,7 +1886,7 @@
 	switch(popup_input)
 		if("Name")
 			var/raw_input = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
-			input_name = sanitize_name(raw_input, allow_numbers = TRUE)
+			var/input_name = sanitize_name(raw_input, allow_numbers = TRUE)
 			if(!after_input_check(user, item, input_name, scribbled_name))
 				return
 			scribbled_name = input_name
