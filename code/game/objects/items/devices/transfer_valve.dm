@@ -45,7 +45,7 @@
 
 	return . || NONE
 
-/obj/item/transfer_valve/alt_click(mob/user)
+/obj/item/transfer_valve/click_alt(mob/user)
 	if(tank_one)
 		split_gases()
 		valve_open = FALSE
