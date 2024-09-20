@@ -201,7 +201,6 @@
 		return
 
 	on = TRUE
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set on."))
 	update_appearance()
@@ -210,7 +209,6 @@
 	if(!on)
 		return
 	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED, owner)
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set off."))
 	on = FALSE
