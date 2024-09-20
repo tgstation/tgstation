@@ -349,7 +349,7 @@
 		src,
 		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
 		"Confirm Shuttle Call",
-		max_length = CALL_SHUTTLE_REASON_LENGTH,
+		max_length = MAX_MESSAGE_LEN,
 	)
 
 	if(incapacitated)
