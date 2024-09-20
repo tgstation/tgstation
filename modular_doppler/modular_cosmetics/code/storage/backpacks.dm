@@ -67,7 +67,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 // slimpacks
-/obj/item/storage/backpack/satchel/flat/custom
+/obj/item/storage/backpack/satchel/flat/empty/custom
 	name = "custom slimpack"
 	desc = "An ultra-light-weight slim storage option that fits above the belt."
 	icon_state = "slimpack"
@@ -75,6 +75,3 @@
 	greyscale_config = /datum/greyscale_config/backpack/slimpack
 	greyscale_config_worn = /datum/greyscale_config/backpack/slimpack/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/obj/item/storage/backpack/satchel/flat/custom/PopulateContents()
-	return

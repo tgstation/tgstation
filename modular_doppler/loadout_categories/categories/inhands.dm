@@ -23,6 +23,6 @@
 	name = "Rose Bouquet"
 	item_path = /obj/item/bouquet/rose
 
-/datum/loadout_item/inhand/backpack/slimpack
+/datum/loadout_item/inhand/slimpack
 	name = "Custom Slimpack"
-	item_path = /obj/item/storage/backpack/satchel/flat/custom
+	item_path = /obj/item/storage/backpack/satchel/flat/empty/custom
