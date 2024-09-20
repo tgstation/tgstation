@@ -837,7 +837,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			name = input_name
 			name_set = TRUE
 
-		input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
+		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
 
 		if(!isnull(input_desc))
 			desc = input_desc
