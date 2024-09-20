@@ -18,34 +18,34 @@
 
 
 
-/backpack/datum/loadout_item/backpack
+/datum/loadout_item/backpack
 	name = "Custom Backpack"
 	item_path = /obj/item/storage/backpack/custom
 
-/backpack/datum/loadout_item/backpack/industrial
+/datum/loadout_item/backpack/industrial
 	name = "Custom Industrial Backpack"
 	item_path = /obj/item/storage/backpack/industrial/custom
 
-/backpack/datum/loadout_item/backpack/satchel
+/datum/loadout_item/backpack/satchel
 	name = "Custom Satchel"
 	item_path = /obj/item/storage/backpack/satchel/custom
 
-/backpack/datum/loadout_item/backpack/satchel/industrial
+/datum/loadout_item/backpack/satchel/industrial
 	name = "Custom Industrial Satchel"
 	item_path = /obj/item/storage/backpack/satchel/eng/custom
 
-/backpack/datum/loadout_item/backpack/duffel
+/datum/loadout_item/backpack/duffel
 	name = "Custom Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/custom
 
-/backpack/datum/loadout_item/backpack/duffel/industrial
+/datum/loadout_item/backpack/duffel/industrial
 	name = "Custom Industrial Duffelbag"
 	item_path = /obj/item/storage/backpack/duffelbag/engineering/custom
 
-/backpack/datum/loadout_item/backpack/messenger
+/datum/loadout_item/backpack/messenger
 	name = "Custom Messenger Bag"
 	item_path = /obj/item/storage/backpack/messenger/custom
 
-/backpack/datum/loadout_item/backpack/messenger/industrial
+/datum/loadout_item/backpack/messenger/industrial
 	name = "Custom Industrial Messenger Bag"
 	item_path = /obj/item/storage/backpack/messenger/eng/custom
