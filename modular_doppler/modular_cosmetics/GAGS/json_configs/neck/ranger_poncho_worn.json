@@ -1,0 +1,30 @@
+{
+	"ranger_poncho": [
+		{
+			"type": "icon_state",
+			"icon_state": "ranger",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"ranger_poncho_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "ranger_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"big_pants": [
+		{
+			"type": "icon_state",
+			"icon_state": "big_pants_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
