@@ -71,7 +71,7 @@
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
 	return 0
 
-///returns local matter units available. overriden by rcd borg to return power units available
+///returns local matter units available. overridden by rcd borg to return power units available
 /obj/item/construction/proc/get_matter(mob/user)
 	return matter
 

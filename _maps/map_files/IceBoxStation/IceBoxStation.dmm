@@ -2371,12 +2371,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/library)
 "aJm" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/east{
@@ -21813,7 +21807,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/lobby)
 "gkN" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "gkP" = (
@@ -25804,7 +25798,7 @@
 "hul" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/north,
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "huq" = (
@@ -38494,6 +38488,7 @@
 	pixel_y = 32;
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
 	interior_airlock = "virology_airlock_control";
 	name = "Virology Access Controller";
 	req_access = list("virology")
@@ -40898,10 +40893,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "lOV" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -42554,7 +42546,7 @@
 	},
 /area/station/security/brig/entrance)
 "mqI" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "mqL" = (
@@ -56941,9 +56933,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/range)
-"qtv" = (
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "qtw" = (
 /obj/machinery/door/airlock/security{
 	name = "Prison Forestry"
@@ -74199,7 +74188,7 @@
 /area/station/security/prison/rec)
 "vwG" = (
 /obj/machinery/vending/security{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -78288,12 +78277,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"wLI" = (
-/obj/structure/flora/tree/pine/style_random,
-/obj/structure/marker_beacon/cerulean,
-/obj/effect/mapping_helpers/no_atoms_ontop,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "wLO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -257800,7 +257783,7 @@ qMm
 hUD
 pyJ
 lPh
-aJj
+hUD
 hUD
 ebb
 cYE
@@ -269758,9 +269741,9 @@ wNO
 (215,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wLI
+bln
+bln
+fwx
 kDs
 kDs
 kDs
@@ -270015,9 +269998,9 @@ wNO
 (216,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 kDs
 kDs
 kDs
@@ -270272,9 +270255,9 @@ wNO
 (217,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 bln
 hHG
 hHG
@@ -270529,7 +270512,7 @@ wNO
 (218,1,3) = {"
 wNO
 wNO
-wNO
+bln
 tkU
 tkU
 fwx
@@ -271303,7 +271286,7 @@ wNO
 tkU
 tkU
 tkU
-qtv
+bln
 hHG
 hHG
 hHG
@@ -273614,7 +273597,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -273871,7 +273854,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -274128,7 +274111,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -274385,7 +274368,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 tkU
 bln
 hHG
@@ -274641,9 +274624,9 @@ wNO
 (234,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 fwx
 hHG
 hHG
@@ -274899,8 +274882,8 @@ wNO
 wNO
 wNO
 fwx
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -275156,8 +275139,8 @@ wNO
 wNO
 wNO
 qzn
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -275413,8 +275396,8 @@ wNO
 wNO
 wNO
 liV
-wNO
-wNO
+bln
+bln
 bln
 hHG
 hHG
@@ -275669,9 +275652,9 @@ wNO
 (238,1,3) = {"
 wNO
 wNO
-wNO
-wNO
-wNO
+bln
+bln
+bln
 fwx
 hHG
 hHG
@@ -275928,7 +275911,7 @@ wNO
 wNO
 wNO
 wNO
-wNO
+bln
 bln
 hHG
 hHG

@@ -107,8 +107,16 @@
 	icon_state = "tuxedo"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/suit/tuxedo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+
 /obj/item/clothing/under/suit/carpskin
 	name = "carpskin suit"
 	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
 	icon_state = "carpskin_suit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/suit/carpskin/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
