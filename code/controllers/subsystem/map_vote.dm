@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(map_vote)
 	var/tally_printout = span_red("Loading...")
 
 /datum/controller/subsystem/map_vote/Initialize()
-	if(!fexists(MAP_VOTE_CACHE_LOCATION))
+	if(fexists(MAP_VOTE_CACHE_LOCATION))
 		map_vote_cache = json_decode(file2text(MAP_VOTE_CACHE_LOCATION))
 		var/carryover = CONFIG_GET(number/map_vote_tally_carryover_percentage)
 		for(var/map_id in map_vote_cache)
