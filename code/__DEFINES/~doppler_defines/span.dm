@@ -4,3 +4,5 @@
 #define span_cyan(str) ("<span class='cyan'>" + str + "</span>")
 #define span_orange(str) ("<span class='orange'>" + str + "</span>")
 #define span_yellow(str) ("<span class='yellow'>" + str + "</span>")
+#define span_rlooc(str) ("<span class='rlooc'>" + str + "</span>")
+#define span_emote(str) ("<span class='emote'>" + str + "</span>")
