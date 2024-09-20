@@ -564,6 +564,7 @@
 
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
+	radial_state = "fryer"
 	fish_table = list(
 		/obj/item/food/badrecipe = 15,
 		/obj/item/food/nugget = 5,
