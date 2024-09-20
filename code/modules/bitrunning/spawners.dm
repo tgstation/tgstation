@@ -38,7 +38,6 @@
 	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/costume/pirate/armored
-	ears = null
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/costume/pirate/bandana/armored
 	shoes = /obj/item/clothing/shoes/pirate/armored
