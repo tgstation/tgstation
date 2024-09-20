@@ -140,7 +140,7 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 30
+	damage = 35
 	speed = 0.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
