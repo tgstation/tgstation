@@ -79,7 +79,7 @@
 		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it "))
 	else
 		user.put_in_active_hand(input_shock_kit)
-		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
+		to_chat(user, span_notice("You cannot fit the shock kit onto the [name]!"))
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)

@@ -256,7 +256,7 @@
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
 
 	if(length(carp))
-		parts += "<br><span class='header'>The [name] was assisted by:</span>"
+		parts += span_header("<br>The [name] was assisted by:")
 		parts += "<ul class='playerlist'>"
 		var/list/players_to_carp_taken = list()
 		for(var/datum/mind/carpy as anything in carp)

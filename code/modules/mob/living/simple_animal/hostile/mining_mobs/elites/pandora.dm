@@ -51,25 +51,25 @@
 /datum/action/innate/elite_attack/singular_shot
 	name = "Singular Shot"
 	button_icon_state = "singular_shot"
-	chosen_message = "<span class='boldwarning'>You are now creating a single linear magic square.</span>"
+	chosen_message = span_boldwarning("You are now creating a single linear magic square.")
 	chosen_attack_num = SINGULAR_SHOT
 
 /datum/action/innate/elite_attack/magic_box
 	name = "Magic Box"
 	button_icon_state = "magic_box"
-	chosen_message = "<span class='boldwarning'>You are now attacking with a box of magic squares.</span>"
+	chosen_message = span_boldwarning("You are now attacking with a box of magic squares.")
 	chosen_attack_num = MAGIC_BOX
 
 /datum/action/innate/elite_attack/pandora_teleport
 	name = "Line Teleport"
 	button_icon_state = "pandora_teleport"
-	chosen_message = "<span class='boldwarning'>You will now teleport to your target.</span>"
+	chosen_message = span_boldwarning("You will now teleport to your target.")
 	chosen_attack_num = PANDORA_TELEPORT
 
 /datum/action/innate/elite_attack/aoe_squares
 	name = "AOE Blast"
 	button_icon_state = "aoe_squares"
-	chosen_message = "<span class='boldwarning'>Your attacks will spawn an AOE blast at your target location.</span>"
+	chosen_message = span_boldwarning("Your attacks will spawn an AOE blast at your target location.")
 	chosen_attack_num = AOE_SQUARES
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/OpenFire()

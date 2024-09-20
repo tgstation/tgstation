@@ -95,7 +95,7 @@
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
-	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	desc = span_warning("VRRRRRRR!!!")
 	armour_penetration = 100
 	force_on = 30
 

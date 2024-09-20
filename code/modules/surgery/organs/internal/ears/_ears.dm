@@ -9,10 +9,10 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
-	low_threshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
-	now_failing = "<span class='warning'>You are unable to hear at all!</span>"
-	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
-	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
+	low_threshold_passed = span_info("Your ears begin to resonate with an internal ring sometimes.")
+	now_failing = span_warning("You are unable to hear at all!")
+	now_fixed = span_info("Noise slowly begins filling your ears once more.")
+	low_threshold_cleared = span_info("The ringing in your ears has died down.")
 
 	/// `deaf` measures "ticks" of deafness. While > 0, the person is unable to hear anything.
 	var/deaf = 0

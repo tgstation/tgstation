@@ -14,8 +14,8 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
-	now_failing = "<span class='warning'>An explosion of pain erupts in your lower right abdomen!</span>"
-	now_fixed = "<span class='info'>The pain in your abdomen has subsided.</span>"
+	now_failing = span_warning("An explosion of pain erupts in your lower right abdomen!")
+	now_fixed = span_info("The pain in your abdomen has subsided.")
 
 	var/inflamation_stage = 0
 

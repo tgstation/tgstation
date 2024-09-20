@@ -1,6 +1,6 @@
 /obj/structure/destructible //a base for destructible structures
 	max_integrity = 100
-	var/break_message = "<span class='warning'>The strange, admin-y structure breaks!</span>" //The message shown when a structure breaks
+	var/break_message = span_warning("The strange, admin-y structure breaks!") //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/invoke_general.ogg' //The sound played when a structure breaks
 	var/list/debris = null //Parts left behind when a structure breaks, takes the form of list(path = amount_to_spawn)
 
