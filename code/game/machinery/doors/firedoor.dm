@@ -544,7 +544,7 @@
 		correct_state()
 
 /// We check for adjacency when using the primary attack.
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	if(welded || operating)
 		return
 
