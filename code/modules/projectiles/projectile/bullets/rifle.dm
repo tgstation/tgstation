@@ -92,7 +92,7 @@
 /obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 55
+	damage = 45
 	speed = 0.4
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
@@ -140,7 +140,7 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 55
+	damage = 35
 	speed = 0.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
@@ -148,12 +148,11 @@
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
-	wound_bonus = -15
-	bare_wound_bonus = 10
+	wound_bonus = -100
+	bare_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embed_type = /datum/embed_data/rebar_hydrogen
 	embed_falloff_tile = -3
-	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
 /obj/projectile/bullet/rebar/hydrogen/Impact(atom/A)
