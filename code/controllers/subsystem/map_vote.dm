@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(map_vote)
 #undef MAP_VOTE_CACHE_LOCATION
 
 /datum/controller/subsystem/map_vote/proc/update_tally_printout()
-	var/data = list()
+	var/list/data = list()
 	for(var/map_id in map_vote_cache)
 		var/datum/map_config/map = config.maplist[map_id]
 		data += "[map.map_name] - [map_vote_cache[map_id]]"
