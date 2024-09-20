@@ -50,7 +50,7 @@
 	body_parts_covered = GROIN|CHEST
 	greyscale_config = /datum/greyscale_config/primitive_catgirl_tunic
 	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_tunic/worn
-	greyscale_colors = "#cec8bf#faece4#594032"
+	greyscale_colors = "#ccd1db#dce0f2#594032"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	has_sensor = FALSE
 
@@ -124,15 +124,18 @@
 // Shoes
 
 /obj/item/clothing/shoes/winterboots/ice_boots/primitive_catgirl_boots
-	name = "primitive hiking boots"
-	desc = "A pair of heavy boots lined with fur and with soles special built to prevent slipping on ice."
-	icon_state = "boots"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
-	greyscale_config = /datum/greyscale_config/primitive_catgirl_boots
-	greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_boots/worn
-	greyscale_colors = "#594032#cec8bf"
-	flags_1 = IS_PLAYER_COLORABLE_1
+    name = "primitive hiking boots"
+    desc = "A pair of heavy boots lined with fur and with soles special built to prevent slipping on ice."
+    icon_state = "boots"
+    icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
+    worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/clothing_greyscale.dmi'
+    supports_variations_flags = CLOTHING_NO_VARIATION
+    supported_bodyshapes = null
+    bodyshape_icon_files = null
+    greyscale_config = /datum/greyscale_config/primitive_catgirl_boots
+    greyscale_config_worn = /datum/greyscale_config/primitive_catgirl_boots/worn
+    greyscale_colors = "#594032#cec8bf"
+    flags_1 = IS_PLAYER_COLORABLE_1
 
 // Neck
 

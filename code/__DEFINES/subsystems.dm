@@ -136,6 +136,7 @@
 #define INIT_ORDER_DBCORE 95
 #define INIT_ORDER_BLACKBOX 94
 #define INIT_ORDER_SERVER_MAINT 93
+#define INIT_ORDER_WHITELIST 92 // DOPPLER EDIT ADDITION - automatic whitelist refresh
 #define INIT_ORDER_INPUT 85
 #define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins can't do much without it
 #define INIT_ORDER_SOUNDS 83
@@ -155,6 +156,7 @@
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
+#define INIT_ORDER_AUTOMAPPER 51 // DOPPLER EDIT ADDITION - We need to load just before mapping.
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_AI_IDLE_CONTROLLERS 50
 #define INIT_ORDER_EARLY_ASSETS 48

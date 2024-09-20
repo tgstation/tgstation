@@ -5,6 +5,7 @@
 	name = "\improper Anthromorph"
 	plural_form = "Anthromorphic"
 	id = SPECIES_ANTHROMORPH
+	preview_outfit = /datum/outfit/anthro_preview
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 	)
@@ -27,6 +28,25 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
 	)
 
+/datum/outfit/anthro_preview
+	name = "Anthromorph (Species Preview)"
+	uniform = /obj/item/clothing/under/rank/security/officer/skirt
+
+/datum/species/anthromorph/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	human_for_preview.dna.features["mcolor"] = "#776155"
+	human_for_preview.dna.features["snout"] = "Fox (Long)"
+	human_for_preview.dna.features["snout_color_2"] = "#ffffff"
+	human_for_preview.dna.features["snout_color_3"] = "#776155"
+	human_for_preview.dna.ear_type = FOX
+	human_for_preview.dna.features["ears"] = "Fox"
+	human_for_preview.dna.features["ears_color_1"] = "#776155"
+	human_for_preview.dna.features["ears_color_2"] = "#ffffff"
+	human_for_preview.set_haircolor("#574036", update = FALSE)
+	human_for_preview.set_hairstyle("Stacy Bun", update = TRUE)
+	human_for_preview.eye_color_left = "#C4F87A"
+	human_for_preview.eye_color_right = "#C4F87A"
+	regenerate_organs(human_for_preview)
+	human_for_preview.update_body(is_creating = TRUE)
 
 /datum/species/anthromorph/get_species_description()
 	return "Nothing yet."

@@ -124,7 +124,7 @@
 
 /datum/preference/choiced/lizard_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_lizard[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Cat
 /datum/preference/choiced/tail_human // it's a lie
@@ -148,7 +148,7 @@
 
 /datum/preference/choiced/tail_human/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_human[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Dog
 /datum/preference/choiced/dog_tail
@@ -178,7 +178,7 @@
 
 /datum/preference/choiced/dog_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_dog[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Fox
 /datum/preference/choiced/fox_tail
@@ -208,7 +208,7 @@
 
 /datum/preference/choiced/fox_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fox[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Bunny
 /datum/preference/choiced/bunny_tail
@@ -238,7 +238,7 @@
 
 /datum/preference/choiced/bunny_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bunny[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Mouse
 /datum/preference/choiced/mouse_tail
@@ -268,7 +268,7 @@
 
 /datum/preference/choiced/mouse_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_mouse[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Bird
 /datum/preference/choiced/bird_tail
@@ -298,7 +298,7 @@
 
 /datum/preference/choiced/bird_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bird[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Monkey
 /datum/preference/choiced/monkey_tail
@@ -322,7 +322,7 @@
 
 /datum/preference/choiced/monkey_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_monkey[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Deer
 /datum/preference/choiced/deer_tail
@@ -352,7 +352,7 @@
 
 /datum/preference/choiced/deer_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_deer[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Fish
 /datum/preference/choiced/fish_tail
@@ -382,7 +382,7 @@
 
 /datum/preference/choiced/fish_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fish[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Bug
 /datum/preference/choiced/bug_tail
@@ -412,7 +412,7 @@
 
 /datum/preference/choiced/bug_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_bug[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Synth
 /datum/preference/choiced/synth_tail
@@ -442,7 +442,7 @@
 
 /datum/preference/choiced/synth_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_synth[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
 //	Humanoid
 /datum/preference/choiced/humanoid_tail
@@ -472,32 +472,59 @@
 
 /datum/preference/choiced/humanoid_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_humanoid[value]
-	return generate_tail_icon(chosen_tail)
+	return generate_back_icon(chosen_tail, "tail")
 
+#define WIDTH_WINGS_FILE 45
+#define HEIGHT_WINGS_FILE 34
+#define WIDTH_BIGTAILS_FILE 64
+#define HEIGHT_BIGTAILS_FILE 32
 
 /// Proc to gen that icon
 //	We don't wanna copy paste this
-/datum/preference/choiced/proc/generate_tail_icon(chosen_tail)
+/datum/preference/choiced/proc/generate_back_icon(chosen_tail, key)
 	var/datum/sprite_accessory/sprite_accessory = chosen_tail
 	var/icon/final_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_m", NORTH)
 
 	if (sprite_accessory.icon_state != "none")
-		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_BEHIND", NORTH)
+		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND", NORTH)
 		markings_icon_1.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_BEHIND_2", NORTH)
+		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_2", NORTH)
 		markings_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_BEHIND_3", NORTH)
+		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_3", NORTH)
 		markings_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
+		// A couple icon files use this plus-size setup; autocrop to generate better icons where possible
+		if(markings_icon_1.Width() == WIDTH_WINGS_FILE && markings_icon_1.Height() == HEIGHT_WINGS_FILE)
+			markings_icon_1.Crop(8, 2, 39, 33)
+			markings_icon_2.Crop(8, 2, 39, 33)
+			markings_icon_3.Crop(8, 2, 39, 33)
+		if(markings_icon_1.Width() == WIDTH_BIGTAILS_FILE && markings_icon_1.Height() == HEIGHT_BIGTAILS_FILE) // Plus-size tail files are simpler
+			markings_icon_1.Crop(17, 1, 48, 32)
+			markings_icon_2.Crop(17, 1, 48, 32)
+			markings_icon_3.Crop(17, 1, 48, 32)
+		// finally apply icons
+		markings_icon_1.Blend(final_icon, ICON_OVERLAY)
+		markings_icon_2.Blend(final_icon, ICON_OVERLAY)
+		markings_icon_3.Blend(final_icon, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_1, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_2, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_3, ICON_OVERLAY)
-		// front breaker
-		var/icon/markings_icon_1_f = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_FRONT", NORTH)
+		/// == front breaker ==
+		var/icon/markings_icon_1_f = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT", NORTH)
 		markings_icon_1_f.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/markings_icon_2_f = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_FRONT_2", NORTH)
+		var/icon/markings_icon_2_f = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_2", NORTH)
 		markings_icon_2_f.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/markings_icon_3_f = icon(sprite_accessory.icon, "m_tail_[sprite_accessory.icon_state]_FRONT_3", NORTH)
+		var/icon/markings_icon_3_f = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_3", NORTH)
 		markings_icon_3_f.Blend(COLOR_BLUE, ICON_MULTIPLY)
+		// A couple icon files use this plus-size setup; autocrop to generate better icons where possible
+		if(markings_icon_1_f.Width() == WIDTH_WINGS_FILE && markings_icon_1_f.Height() == HEIGHT_WINGS_FILE)
+			markings_icon_1_f.Crop(8, 2, 39, 33)
+			markings_icon_2_f.Crop(8, 2, 39, 33)
+			markings_icon_3_f.Crop(8, 2, 39, 33)
+		else if(markings_icon_1_f.Width() == WIDTH_BIGTAILS_FILE && markings_icon_1_f.Height() == HEIGHT_BIGTAILS_FILE) // Plus-size tail files are simpler
+			markings_icon_1_f.Crop(17, 1, 48, 32)
+			markings_icon_2_f.Crop(17, 1, 48, 32)
+			markings_icon_3_f.Crop(17, 1, 48, 32)
+		// finally apply icons
 		final_icon.Blend(markings_icon_1_f, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_2_f, ICON_OVERLAY)
 		final_icon.Blend(markings_icon_3_f, ICON_OVERLAY)
