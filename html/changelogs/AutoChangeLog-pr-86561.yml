@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - balance: "Meteor shielding is now purchasable at cargo even if it isn't the current station goal."
