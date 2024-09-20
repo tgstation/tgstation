@@ -28,7 +28,7 @@
 	if(!connected_smes)
 		balloon_alert(usr, "needs a connected SMES!")
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/machinery/power/smes/connector/display_ready()
 	if(!connected_smes)
@@ -54,22 +54,22 @@
 /obj/machinery/power/smes/connector/crowbar_act(mob/living/user, obj/item/tool)
 	if(!connector_free(user))
 		return ITEM_INTERACT_BLOCKING
-	. = ..()
+	return ..()
 
 /obj/machinery/power/smes/connector/wrench_act(mob/living/user, obj/item/tool)
 	if(!connector_free(user))
 		return ITEM_INTERACT_BLOCKING
-	. = ..()
+	return ..()
 
 /obj/machinery/power/smes/connector/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!connector_free(user))
 		return ITEM_INTERACT_BLOCKING
-	. = ..()
+	return ..()
 
 /// checks if the connector is free; if not, alerts a user and returns FALSE
 /obj/machinery/power/smes/connector/proc/connector_free(mob/living/user)
 	if(connected_smes)
-		balloon_alert(user, "disconnect [connected_smes] first!")
+		balloon_alert(user, "disconnect SMES first!")
 		return FALSE
 	return TRUE
 
@@ -99,7 +99,7 @@
 
 /obj/machinery/power/smes/connector/Destroy()
 	connected_smes?.disconnect_port() // in the unlikely but possible case a SMES is connected and this explodes
-	. = ..()
+	return ..()
 
 /// The actual portable part of the portable SMES system. Pretty useless without an actual connector.
 /obj/machinery/power/smesbank
@@ -117,16 +117,14 @@
 	var/charge = 0
 	/// The port this is connected to.
 	var/obj/machinery/power/smes/connector/connected_port
-	/// Was this portable power storage unit pre-mapped?
-	var/mapped = FALSE
 
 /obj/machinery/power/smesbank/on_construction(mob/user)
 	. = ..()
-	anchored = FALSE
+	set_anchored(FALSE)
 
 /obj/machinery/power/smesbank/Initialize(mapload)
 	. = ..()
-	if(mapped)
+	if(mapload)
 		mapped_setup()
 
 /obj/machinery/power/smesbank/interact(mob/user)
@@ -184,31 +182,33 @@
 /obj/machinery/power/smesbank/wrench_act(mob/living/user, obj/item/wrench)
 	if(connected_port)
 		wrench.play_tool_sound(src)
-		if(wrench.use_tool(src, user, 8 SECONDS))
-			user.visible_message( \
-				"[user] disconnects [src].", \
-				span_notice("You unfasten [src] from [connected_port]."), \
-				span_hear("You hear a ratchet."))
-			investigate_log("was disconnected from [connected_port] by [key_name(user)].", INVESTIGATE_ENGINE)
-			disconnect_port()
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
+		if(!wrench.use_tool(src, user, 8 SECONDS))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message( \
+			"[user] disconnects [src].", \
+			span_notice("You unfasten [src] from [connected_port]."), \
+			span_hear("You hear a ratchet."))
+		investigate_log("was disconnected from [connected_port] by [key_name(user)].", INVESTIGATE_ENGINE)
+		disconnect_port()
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
 	if(!possible_connector)
 		to_chat(user, span_notice("There's no power connector to connect to."))
 		return ITEM_INTERACT_BLOCKING
 	wrench.play_tool_sound(src)
-	if(wrench.use_tool(src, user, 4 SECONDS))
-		if(!connect_port(possible_connector))
-			to_chat(user, span_notice("[src] failed to connect to [possible_connector]."))
-			return ITEM_INTERACT_BLOCKING
-		user.visible_message( \
-			"[user] connects [src].", \
-			span_notice("You fasten [src] to [possible_connector]."), \
-			span_hear("You hear a ratchet."))
-		update_appearance()
-		investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
-		return ITEM_INTERACT_SUCCESS
+	if(!wrench.use_tool(src, user, 4 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	if(!connect_port(possible_connector))
+		to_chat(user, span_notice("[src] failed to connect to [possible_connector]."))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message( \
+		"[user] connects [src].", \
+		span_notice("You fasten [src] to [possible_connector]."), \
+		span_hear("You hear a ratchet."))
+	update_appearance()
+	investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
+	return ITEM_INTERACT_SUCCESS
 
 /// Attempt to connect the portable SMES to a given connector. Adapted from portable atmos connection code.
 /obj/machinery/power/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector)
@@ -225,8 +225,6 @@
 	connected_port.connected_smes = src
 	possible_connector.on_connect_smes()
 	set_anchored(TRUE) //Prevent movement
-	pixel_x = possible_connector.pixel_x
-	pixel_y = possible_connector.pixel_y
 	connected_port.update_appearance()
 	update_appearance()
 	return TRUE
@@ -239,8 +237,6 @@
 	connected_port.connected_smes = null
 	connected_port = null
 	set_anchored(FALSE)
-	pixel_x = 0
-	pixel_y = 0
 	update_appearance()
 
 /obj/machinery/power/smesbank/Destroy()
@@ -282,6 +278,3 @@
 
 /obj/machinery/power/smesbank/super/full
 	charge = 100 * STANDARD_BATTERY_CHARGE
-
-/obj/machinery/power/smesbank/super/full/mapped
-	mapped = TRUE
