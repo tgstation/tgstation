@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(doppler_plasteel_recipes, list(
 GLOBAL_LIST_INIT(doppler_rod_recipes, list(
 	new/datum/stack_recipe("crutch", /obj/item/cane/crutch, 3, time = 1 SECONDS, category = CAT_TOOLS),
 	new/datum/stack_recipe("torch mount", /obj/item/wallframe/torch_mount, 2, category = CAT_MISC),
+	new/datum/stack_recipe("towel bin", /obj/structure/towel_bin/empty, 2, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY, category = CAT_CONTAINERS),
 ))
 
 /obj/item/stack/rods/get_main_recipes()
@@ -92,6 +93,7 @@ GLOBAL_LIST_INIT(doppler_cardboard_recipes, list(
 // Cloth
 
 GLOBAL_LIST_INIT(doppler_cloth_recipes, list(
+	new/datum/stack_recipe("towel", /obj/item/towel, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("eyepatch", /obj/item/clothing/glasses/eyepatch, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("xenoarch bag", /obj/item/storage/bag/xenoarch, 4, category = CAT_CONTAINERS),
 ))

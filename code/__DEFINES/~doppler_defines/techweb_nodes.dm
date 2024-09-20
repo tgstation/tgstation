@@ -2,3 +2,7 @@
 #define TECHWEB_NODE_XENOARCH_BASIC "basic_xenoarch"
 #define TECHWEB_NODE_XENOARCH_MACHINES "xenoarch_machines"
 #define TECHWEB_NODE_XENOARCH_STORAGE "xenoarch_storage"
+#define TECHWEB_NODE_COLONY_APPLIANCES "colony_fabricator_appliances"
+#define TECHWEB_NODE_COLONY_FLATPACKS "colony_fabricator_flatpacks"
+#define TECHWEB_NODE_COLONY_STRUCTURES "colony_fabricator_structures"
+#define TECHWEB_NODE_COLONY_TOOLS "colony_fabricator_tools"

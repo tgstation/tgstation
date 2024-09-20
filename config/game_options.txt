@@ -368,6 +368,7 @@ ROUNDSTART_RACES slugcat
 ROUNDSTART_RACES anthromorph
 ROUNDSTART_RACES aquatic
 ROUNDSTART_RACES insectoid
+ROUNDSTART_RACES primitive_felinid
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
