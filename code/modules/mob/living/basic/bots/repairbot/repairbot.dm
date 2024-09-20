@@ -316,6 +316,7 @@
 /obj/item/weldingtool/repairbot
 	max_fuel = INFINITY
 	starting_fuel = TRUE
+	change_icons = FALSE
 
 /obj/item/construction/rcd/repairbot
 	matter = INFINITY
