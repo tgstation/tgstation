@@ -29,8 +29,6 @@
 
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
-	tank_one = null
-	tank_two = null
 	return ..()
 
 /obj/item/transfer_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)
