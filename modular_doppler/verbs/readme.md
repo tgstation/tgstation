@@ -6,9 +6,9 @@ MODULE ID: VERBS
 
 Adds the following new verbs:
 - LOOC: OOC with a default range of 7 tiles.
-- RLOOC: Like LOOC but a wall piercing version.
-- Subtle: Like Me but invisible to ghosts. Range can be 1 tile, choosing a character in this range or same tile.
-- Do: Prose like verb to narrate. Default range of 7 tiles.
+- LOOC (Wallpierce): Like LOOC but a wall piercing version.
+- Subtle (Anti-Ghost): Like Me but invisible to ghosts. Range can be 1 tile, choosing a character in this range or same tile.
+- Do: Like Me but not centered on character. Perfect for narrations. Default range of 7 tiles.
 - Do (Longer): Like Do but in a TGUI format.
 
 Adds keybinds for LOOC, Do, Do (Longer) and Whisper.
@@ -24,6 +24,7 @@ Adds keybinds for LOOC, Do, Do (Longer) and Whisper.
 
 ### Defines:
 
+- `code\__DEFINES\~doppler_defines\admin.dm` looc mute
 - `code\__DEFINES\~doppler_defines\banning.dm` looc ban define
 - `code\__DEFINES\~doppler_defines\keybindings.dm` looc, whisper and do keybinds
 - `code\__DEFINES\~doppler_defines\logging.dm` subtle log define
@@ -34,7 +35,6 @@ Adds keybinds for LOOC, Do, Do (Longer) and Whisper.
 
 ### Included files that are not contained in this module:
 
-- `code\__DEFINES\admin.dm` looc mute
 - `code\__HELPERS\logging\_logging.dm` subtle logging
 - `code\__HELPERS\logging\mob.dm` subtle messages readibility for admins
 - `code\__HELPERS\~doppler_helpers\chat.dm` subtle formatting helper
