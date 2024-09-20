@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - spellcheck: "Fixed broken text display in atmos devices in which you can insert a tank"
-  - admin: "Atmos logging no longer lies about everyone swapping tanks in devices even if they only inserted/removed one"
