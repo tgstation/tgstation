@@ -26,6 +26,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/engineering/supermatter)
+"l" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/plating/airless,
+/area/station/engineering/supermatter/room)
 "m" = (
 /obj/structure/cable,
 /obj/structure/particle_accelerator/fuel_chamber{
@@ -307,7 +312,7 @@ a
 "}
 (9,1,1) = {"
 a
-z
+l
 u
 u
 u
