@@ -82,12 +82,28 @@
 	max_integrity = 100
 	integrity_failure = 0.35
 	bound_height = 64
-	/// What material this rug is made of
-	var/build_stack_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
-	/// How many mats to drop when deconstructed
-	var/build_stack_amount = 4
-	/// If this rug can be deconstructed using a wrench
-	var/can_deconstruct = TRUE
+
+//Deconstruct code
+/obj/structure/rugs/pelt/attackby(obj/item/attacking_item, mob/user, params)
+    if(!istype(attacking_item, /obj/item/knife/))
+        return ..()
+    balloon_alert_to_viewers("cutting...")
+    if(!do_after(user, 5 SECONDS, target = src))
+        balloon_alert_to_viewers("stopped cutting")
+        return FALSE
+    deconstruct(TRUE)
+
+/obj/structure/rugs/pelt/atom_deconstruct(disassembled)
+	var/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide/polar_bear_hide = new(drop_location(), 4)
+	transfer_fingerprints_to(polar_bear_hide)
+	return ..()
+
+//Anchor code
+/obj/structure/rugs/pelt/click_ctrl(mob/user)
+	set_anchored(!anchored)
+	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
+
+//Crafting code
 
 /datum/crafting_recipe/white_pelts_rug
 	name = "White Pelts Rug"

@@ -8,14 +8,26 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
-	var/build_stack_type = /obj/item/stack/sheet/bronze
-	/// How many mats to drop when deconstructed
-	var/build_stack_amount = 10
-	/// If this horn can be deconstructed using a wrench
-	var/can_deconstruct = TRUE
+
+//Deconstruct code
+/obj/structure/calling_horn/hearthkin/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert_to_viewers("disassembling...")
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	deconstruct(TRUE)
+
+/obj/structure/calling_horn/hearthkin/atom_deconstruct(disassembled)
+	var/obj/item/stack/sheet/bronze/bronze = new(drop_location(), 10)
+	transfer_fingerprints_to(bronze)
+	return ..()
+
+//Anchor code
+/obj/structure/calling_horn/hearthkin/click_ctrl(mob/user)
+	set_anchored(!anchored)
+	balloon_alert(user, "[anchored ? "secured" : "unsecured"]")
 
 //Crafting code.
-
 /datum/crafting_recipe/bronze_calling_horn
 	name = "Bronze Calling Horn"
 	category = CAT_FURNITURE

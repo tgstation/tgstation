@@ -1,3 +1,12 @@
+//generic primitive recipe
+/datum/crafting_recipe/primitive_recipe
+    reqs = list(
+        /obj/item/stack/sheet/bone = 1,
+        /obj/item/stack/sheet/sinew = 1,
+    )
+    time = 4 SECONDS
+    category = CAT_TOOLS
+
 //ASH TOOL
 /obj/item/screwdriver/primitive
 	name = "primitive screwdriver"
