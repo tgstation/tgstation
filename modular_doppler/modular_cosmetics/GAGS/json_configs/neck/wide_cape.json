@@ -1,0 +1,22 @@
+{
+	"wide_cape": [
+		{
+			"type": "icon_state",
+			"icon_state": "wide_cape",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "wide_cape_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "wide_cape_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
