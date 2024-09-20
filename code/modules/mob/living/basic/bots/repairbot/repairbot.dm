@@ -13,6 +13,7 @@
 	can_be_held = TRUE
 	maxHealth = 100
 	path_image_color = "#80dae7"
+	bot_ui = "RepairBot"
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_ENGINEERING)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_ENGINEERING
@@ -60,6 +61,13 @@
 		REPAIRBOT_VOICED_STRINGS = 'sound/voice/repairbot/strings.ogg',
 		REPAIRBOT_VOICED_PASSION = 'sound/voice/repairbot/passionproject.ogg',
 	)
+	///types we can retrieve from our ui
+	var/static/list/retrievable_types = list(
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/tile,
+	)
+
 	///our flags
 	var/repairbot_flags = REPAIRBOT_FIX_BREACHES | REPAIRBOT_FIX_GIRDERS | REPAIRBOT_REPLACE_WINDOWS | REPAIRBOT_REPLACE_TILES | REPAIRBOT_BUILD_GIRDERS
 	///our color
@@ -250,12 +258,26 @@
 
 /mob/living/basic/bot/repairbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_access_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
-		data["custom_controls"]["fix_breaches"] = repairbot_flags & REPAIRBOT_FIX_BREACHES
-		data["custom_controls"]["replace_windows"] = repairbot_flags & REPAIRBOT_REPLACE_WINDOWS
-		data["custom_controls"]["replace_tiles"] = repairbot_flags & REPAIRBOT_REPLACE_TILES
-		data["custom_controls"]["fix_girders"] = repairbot_flags & REPAIRBOT_FIX_GIRDERS
-		data["custom_controls"]["build_girders"] = repairbot_flags & REPAIRBOT_BUILD_GIRDERS
+	data["repairbot_materials"] = list()
+	if((bot_access_flags & BOT_COVER_LOCKED) && !issilicon(user) && !isAdminGhostAI(user))
+		return data
+	data["custom_controls"]["fix_breaches"] = repairbot_flags & REPAIRBOT_FIX_BREACHES
+	data["custom_controls"]["replace_windows"] = repairbot_flags & REPAIRBOT_REPLACE_WINDOWS
+	data["custom_controls"]["replace_tiles"] = repairbot_flags & REPAIRBOT_REPLACE_TILES
+	data["custom_controls"]["fix_girders"] = repairbot_flags & REPAIRBOT_FIX_GIRDERS
+	data["custom_controls"]["build_girders"] = repairbot_flags & REPAIRBOT_BUILD_GIRDERS
+
+	for(var/data_path in retrievable_types)
+		var/atom/to_retrieve = locate(data_path) in src
+		if(isnull(to_retrieve))
+			continue
+
+		data["repairbot_materials"] += list(list(
+			"material_ref" = REF(to_retrieve),
+			"material_icon" = to_retrieve::icon,
+			"material_icon_state" = to_retrieve::icon_state,
+		))
+
 	return data
 
 /mob/living/basic/bot/repairbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -273,6 +295,17 @@
 			repairbot_flags ^= REPAIRBOT_FIX_GIRDERS
 		if("build_girders")
 			repairbot_flags ^= REPAIRBOT_BUILD_GIRDERS
+		if("remove_item")
+			var/item_params = params["item_reference"]
+			if(isnull(item_params))
+				return TRUE
+			var/obj/item/retrieved = locate(item_params) in contents
+			if(isnull(retrieved) || !is_type_in_list(retrieved, retrievable_types))
+				return TRUE
+			var/mob/living/user = ui.user
+			user.put_in_hands(retrieved)
+	return TRUE
+
 
 /mob/living/basic/bot/repairbot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()

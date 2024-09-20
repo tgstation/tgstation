@@ -99,6 +99,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_HANDS_BLOCKED,
 	)
+	///name of the UI we will attempt to open
+	var/bot_ui = "SimpleBot"
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
@@ -367,7 +369,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SimpleBot", name)
+		ui = new(user, src, bot_ui, name)
 		ui.open()
 
 /mob/living/basic/bot/click_alt(mob/user)
