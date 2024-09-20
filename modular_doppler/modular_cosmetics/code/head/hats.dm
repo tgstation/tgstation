@@ -5,6 +5,7 @@
 /obj/item/clothing/head/beret/medical/chemist
 	name = "chemist beret"
 	desc = "Not acid-proof!"
+	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#D15B1B"
@@ -12,6 +13,7 @@
 /obj/item/clothing/head/beret/medical/virologist
 	name = "virologist beret"
 	desc = "Sneezing in this expensive hat would be a waste of a good beret."
+	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#FFFFFF#198019"
