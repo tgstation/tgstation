@@ -71,3 +71,49 @@
 	)
 
 	result = /obj/structure/bed/double/pelt/black
+
+// Hearthkin Exclusive Decorations
+/obj/structure/rugs/pelt/
+	name = "white pelts rug"
+	desc = "A luxurious rug, made from bear pelts."
+	icon_state = "fur_rug_white"
+	icon = 'modular_doppler/hearthkin/primitive_structures/icons/fur_rugs.dmi'
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	integrity_failure = 0.35
+	/// What material this rug is made of
+	var/build_stack_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
+	/// How many mats to drop when deconstructed
+	var/build_stack_amount = 4
+	/// If this rug can be deconstructed using a wrench
+	var/can_deconstruct = TRUE
+
+/datum/crafting_recipe/white_pelts_rug
+	name = "White Pelts Rug"
+	category = CAT_FURNITURE
+	//recipe given to icecats as part of their spawner/team setting
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED | CRAFT_ONE_PER_TURF
+
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 4,
+	)
+
+	result = /obj/structure/rugs/pelt/
+
+/obj/structure/rugs/pelt/black
+	name = "black pelts rug"
+	desc = "A luxurious rug, made from bear pelts, and black dye."
+	icon_state = "fur_rug_black"
+	icon = 'modular_doppler/hearthkin/primitive_structures/icons/fur_rugs.dmi'
+
+/datum/crafting_recipe/black_pelts_rug
+	name = "Black Pelts Rug"
+	category = CAT_FURNITURE
+	//recipe given to icecats as part of their spawner/team setting
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED | CRAFT_ONE_PER_TURF
+
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 4,
+	)
+
+	result = /obj/structure/rugs/pelt/black
