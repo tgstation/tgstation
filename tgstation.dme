@@ -3261,7 +3261,6 @@
 #include "code\modules\antagonists\nukeop\equipment\overwatch_tools.dm"
 #include "code\modules\antagonists\nukeop\equipment\pinpointer.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\_nuclear_bomb.dm"
-#include "code\modules\antagonists\traitor\objectives\final_objective\no_escape.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\beer_nuke.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\self_destruct.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclear_bomb\syndicate_nuke.dm"
