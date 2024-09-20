@@ -293,8 +293,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/dist = get_dist(speaker, src) - message_range
 	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
-	if (message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
-		return FALSE // Too far away and don't have good hearing, you can't hear anything
+    if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
+        // Too far away and don't have good hearing, you can't hear anything
+        if(is_blind()) // Can't see them speak either
+            return FALSE
+        if(can_hear() || HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) // If we can't hear we want to continue to the default deaf message, except for signing
+            deaf_message = "[span_name("[speaker]")] [speaker.get_default_say_verb()] something, but you are too far away to understand [speaker.p_them()]."
+            deaf_type = MSG_VISUAL
+            message = deaf_message
+            return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
 	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
