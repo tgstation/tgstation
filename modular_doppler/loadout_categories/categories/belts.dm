@@ -61,6 +61,10 @@
 	name = "White Fannypack"
 	item_path = /obj/item/storage/belt/fannypack/white
 
+/datum/loadout_item/belts/fanny_pack_custom
+	name = "Fannypack"
+	item_path = /obj/item/storage/belt/fannypack/custom
+
 /datum/loadout_item/belts/lantern
 	name = "Lantern"
 	item_path = /obj/item/flashlight/lantern
@@ -85,6 +89,10 @@
 	name = "Medical Belt"
 	item_path = /obj/item/storage/belt/medical
 
+/datum/loadout_item/belts/medical/invisible
+	name = "Compact Medical Belt"
+	item_path = /obj/item/storage/belt/medical/invisible
+
 /datum/loadout_item/belts/security
 	name = "Security Belt"
 	item_path = /obj/item/storage/belt/security
@@ -92,6 +100,10 @@
 /datum/loadout_item/belts/utility
 	name = "Utility Belt"
 	item_path = /obj/item/storage/belt/utility
+
+/datum/loadout_item/belts/utility/invisible
+	name = "Compact Utility Belt"
+	item_path = /obj/item/storage/belt/utility/invisible
 
 /datum/loadout_item/belts/utility/chief
 	name = "Chief Engineer's Utility Belt"

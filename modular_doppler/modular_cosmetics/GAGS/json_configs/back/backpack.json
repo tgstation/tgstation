@@ -1,0 +1,40 @@
+{
+	"backpack": [
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_clasps",
+			"blend_mode": "overlay"
+		}
+	],
+	"backpack_industrial": [
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_industrial_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_industrial_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "backpack_industrial_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}
