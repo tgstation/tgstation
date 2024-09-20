@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 
 $background: #131313;
 $button: #1f1f1f;
@@ -7,29 +7,29 @@ $lightBorder: #bbbbbb;
 $lightHover: #eaeaea;
 
 $_channel_map: (
-  "Admin": #ffbbff,
-  "AI": #d65d95,
-  "CCom": #2681a5,
-  "Cling": #4c701f,
-  "Cmd": #fcdf03,
-  "Engi": #f37746,
-  "Hive": #855d85,
-  "io": #1e90ff,
-  "Me": #5975da,
-  "Med": #57b8f0,
-  "OOC": #cca300,
-  "Ent": #00ff99,
-  "Radio": #1ecc43,
-  "Say": #a4bad6,
-  "Sci": #c68cfa,
-  "Sec": #dd3535,
-  "Supp": #b88646,
-  "Svc": #6ca729,
-  "Synd": #8f4a4b,
+  'Admin': #ffbbff,
+  'AI': #d65d95,
+  'CCom': #2681a5,
+  'Cling': #4c701f,
+  'Cmd': #fcdf03,
+  'Engi': #f37746,
+  'Hive': #855d85,
+  'io': #1e90ff,
+  'Me': #5975da,
+  'Med': #57b8f0,
+  'OOC': #cca300,
+  'Ent': #00ff99,
+  'Radio': #1ecc43,
+  'Say': #a4bad6,
+  'Sci': #c68cfa,
+  'Sec': #dd3535,
+  'Supp': #b88646,
+  'Svc': #6ca729,
+  'Synd': #8f4a4b,
   // NOVA EDIT ADDITION START
-  "Whis": #7c7fd9,
-  "LOOC": #ffceb6,
-  "Do": #59da7e,
+  'Whis': #7c7fd9,
+  'LOOC': #ffceb6,
+  'Do': #59da7e,
   // NOVA EDIT ADDITION END
 );
 
