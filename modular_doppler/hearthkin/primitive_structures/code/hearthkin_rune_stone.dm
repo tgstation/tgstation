@@ -10,7 +10,7 @@
 	integrity_failure = 0.35
 	var/build_stack_type = /obj/item/stack/sheet/mineral/stone/
 	/// How many mats to drop when deconstructed
-	var/build_stack_amount = 15
+	var/build_stack_amount = 10
 	/// If this rune stone can be deconstructed using a wrench
 	var/can_deconstruct = TRUE
 
@@ -23,7 +23,7 @@
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED | CRAFT_ONE_PER_TURF
 
 	reqs = list(
-		/obj/item/stack/sheet/mineral/stone/ = 15,
+		/obj/item/stack/sheet/mineral/stone/ = 10,
 	)
 
 	result = /obj/structure/hearthkin_rune_stone

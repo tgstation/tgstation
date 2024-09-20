@@ -10,10 +10,9 @@
 	integrity_failure = 0.35
 	var/build_stack_type = /obj/item/stack/sheet/bronze
 	/// How many mats to drop when deconstructed
-	var/build_stack_amount = 15
+	var/build_stack_amount = 10
 	/// If this horn can be deconstructed using a wrench
 	var/can_deconstruct = TRUE
-	var/in_use = FALSE
 
 //Crafting code.
 
@@ -24,7 +23,7 @@
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND
 
 	reqs = list(
-		/obj/item/stack/sheet/bronze = 15,
+		/obj/item/stack/sheet/bronze = 10,
 	)
 
 	result = /obj/structure/calling_horn/hearthkin
