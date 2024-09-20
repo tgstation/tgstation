@@ -6701,6 +6701,7 @@
 #include "modular_doppler\modular_customization\preferences\snout.dm"
 #include "modular_doppler\modular_customization\preferences\tail.dm"
 #include "modular_doppler\modular_customization\preferences\wings.dm"
+#include "modular_doppler\modular_customization\tri_color\antennae.dm"
 #include "modular_doppler\modular_customization\tri_color\body_marking_lizard.dm"
 #include "modular_doppler\modular_customization\tri_color\body_marking_moth.dm"
 #include "modular_doppler\modular_customization\tri_color\cap.dm"
