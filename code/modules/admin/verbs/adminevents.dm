@@ -269,13 +269,21 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a 
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
-	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
+	command_report_footnote.message = tgui_input_text(
+		user,
+		"This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.",
+		"P.S.",
+	)
 	if(!command_report_footnote.message)
 		GLOB.communications_controller.block_command_report -= 1
 		qdel(command_report_footnote)
 		return
 
-	command_report_footnote.signature = tgui_input_text(user, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+	command_report_footnote.signature = tgui_input_text(
+		user,
+		"Whose signature will appear on this footnote?",
+		"Also sign here, here, aaand here.",
+	)
 
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"

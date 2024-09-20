@@ -61,7 +61,7 @@
 		return
 	var/list/objectives = list()
 	do
-		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing")
+		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing", max_length = MAX_MESSAGE_LEN)
 		if(objective)
 			objectives += objective
 	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")
