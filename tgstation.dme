@@ -6421,5 +6421,6 @@
 #include "signia_modules\modules\readds_singlo\code\particle_control.dm"
 #include "signia_modules\modules\readds_singlo\code\particle_emitter.dm"
 #include "signia_modules\modules\readds_singlo\code\particle_vroom.dm"
+#include "signia_modules\modules\readds_singlo\code\template_loader.dm"
 #include "ze_call\gen_call.dm"
 // END_INCLUDE
