@@ -1023,7 +1023,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/icon/target_icon = target
 		var/icon_base64 = icon2base64(target_icon)
 
-		if (target_icon.Height() > world.icon_size || target_icon.Width() > world.icon_size)
+		if (target_icon.Height() > ICONSIZE_Y || target_icon.Width() > ICONSIZE_X)
 			var/icon_md5 = md5(icon_base64)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
@@ -1077,14 +1077,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
 	filters += top_part_filter
 	var/filter_index = length(filters)
-	animate(filters[filter_index],y=-32,time=time)
+	animate(filters[filter_index],y=-ICONSIZE_Y,time=time)
 	//Appearing part
 	var/obj/effect/overlay/appearing_part = new
 	appearing_part.appearance = result_appearance
 	appearing_part.appearance_flags |= KEEP_TOGETHER | KEEP_APART
 	appearing_part.vis_flags = VIS_INHERIT_ID
 	appearing_part.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
-	animate(appearing_part.filters[1],y=-32,time=time)
+	animate(appearing_part.filters[1],y=-ICONSIZE_Y,time=time)
 	transformation_objects += appearing_part
 	//Transform effect thing
 	if(transform_appearance)
@@ -1131,19 +1131,19 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(!x_dimension || !y_dimension)
 		return
 
-	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+	if((x_dimension == ICONSIZE_X) && (y_dimension == ICONSIZE_Y))
 		return image_to_center
 
 	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
-	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
-	var/y_offset = -((y_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
+	var/x_offset = -((x_dimension / ICONSIZE_X) - 1) * (ICONSIZE_Y * 0.5)
+	var/y_offset = -((y_dimension / ICONSIZE_Y) - 1) * (ICONSIZE_X * 0.5)
 
-	//Correct values under world.icon_size
-	if(x_dimension < world.icon_size)
+	//Correct values under icon_size
+	if(x_dimension < ICONSIZE_X)
 		x_offset *= -1
-	if(y_dimension < world.icon_size)
+	if(y_dimension < ICONSIZE_Y)
 		y_offset *= -1
 
 	image_to_center.pixel_x = x_offset
@@ -1201,7 +1201,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
  */
 /proc/get_size_in_tiles(obj/target)
 	var/icon/size_check = icon(target.icon, target.icon_state)
-	var/size = size_check.Width() / world.icon_size
+	var/size = size_check.Width() / ICONSIZE_X
 
 	return size
 
@@ -1214,11 +1214,11 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/size = get_size_in_tiles(src)
 
 	if(dir in list(NORTH, SOUTH))
-		bound_width = size * world.icon_size
-		bound_height = world.icon_size
+		bound_width = size * ICONSIZE_X
+		bound_height = ICONSIZE_Y
 	else
-		bound_width = world.icon_size
-		bound_height = size * world.icon_size
+		bound_width = ICONSIZE_X
+		bound_height = size * ICONSIZE_Y
 
 /// Returns a list containing the width and height of an icon file
 /proc/get_icon_dimensions(icon_path)
@@ -1246,15 +1246,15 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
 
-	if(width > world.icon_size)
-		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-	if(height > world.icon_size)
-		alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-	if(width > world.icon_size || height > world.icon_size)
+	if(width > ICONSIZE_X)
+		alert_overlay.pixel_x = -(ICONSIZE_X / 2) * ((width - ICONSIZE_X) / ICONSIZE_X)
+	if(height > ICONSIZE_Y)
+		alert_overlay.pixel_y = -(ICONSIZE_Y / 2) * ((height - ICONSIZE_Y) / ICONSIZE_Y)
+	if(width > ICONSIZE_X || height > ICONSIZE_Y)
 		if(width >= height)
-			scale = world.icon_size / width
+			scale = ICONSIZE_X / width
 		else
-			scale = world.icon_size / height
+			scale = ICONSIZE_Y / height
 	alert_overlay.transform = alert_overlay.transform.Scale(scale)
 
 	return alert_overlay

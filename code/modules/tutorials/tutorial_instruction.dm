@@ -38,7 +38,7 @@
 
 	var/view = client?.view_size.getView()
 	maptext_width = view ? view_to_pixels(view)[1] : 480
-	pixel_x = (maptext_width - world.icon_size) * -0.5
+	pixel_x = (maptext_width - ICONSIZE_X) * -0.5
 
 	change_message(message)
 
