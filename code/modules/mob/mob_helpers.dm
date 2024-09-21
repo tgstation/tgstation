@@ -167,11 +167,11 @@
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/max = strength*ICONSIZE_ALL
+	var/min = -(strength*ICONSIZE_ALL)
 
 	//How much time to allot for each pixel moved
-	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/time_scalar = (1 / ICONSIZE_ALL) * TILES_PER_SECOND
 	var/last_x = oldx
 	var/last_y = oldy
 

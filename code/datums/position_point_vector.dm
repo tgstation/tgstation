@@ -91,9 +91,9 @@
 
 /datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
+		x = ((tile_x - 1) * ICONSIZE_X) + ICONSIZE_X * 0.5 + p_x + 1
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * world.icon_size) + world.icon_size * 0.5 + p_y + 1
+		y = ((tile_y - 1) * ICONSIZE_Y) + ICONSIZE_Y * 0.5 + p_y + 1
 	if(!isnull(tile_z))
 		z = tile_z
 
@@ -107,19 +107,19 @@
 	AM.pixel_y = return_py()
 
 /datum/point/proc/return_turf()
-	return locate(CEILING(x / world.icon_size, 1), CEILING(y / world.icon_size, 1), z)
+	return locate(CEILING(x / ICONSIZE_X, 1), CEILING(y / ICONSIZE_Y, 1), z)
 
 /datum/point/proc/return_coordinates() //[turf_x, turf_y, z]
-	return list(CEILING(x / world.icon_size, 1), CEILING(y / world.icon_size, 1), z)
+	return list(CEILING(x / ICONSIZE_X, 1), CEILING(y / ICONSIZE_Y, 1), z)
 
 /datum/point/proc/return_position()
 	return new /datum/position(src)
 
 /datum/point/proc/return_px()
-	return MODULUS(x, world.icon_size) - 16 - 1
+	return MODULUS(x, ICONSIZE_X) - 16 - 1
 
 /datum/point/proc/return_py()
-	return MODULUS(y, world.icon_size) - 16 - 1
+	return MODULUS(y, ICONSIZE_Y) - 16 - 1
 
 /datum/point/vector
 	/// Pixels per iteration
@@ -149,9 +149,9 @@
 /// Same effect as initiliaze_location, but without setting the starting_x/y/z
 /datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
+		x = ((tile_x - 1) * ICONSIZE_X) + ICONSIZE_X * 0.5 + p_x + 1
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * world.icon_size) + world.icon_size * 0.5 + p_y + 1
+		y = ((tile_y - 1) * ICONSIZE_Y) + ICONSIZE_Y * 0.5 + p_y + 1
 	if(!isnull(tile_z))
 		z = tile_z
 

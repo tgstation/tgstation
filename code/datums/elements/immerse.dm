@@ -142,8 +142,8 @@
  */
 /datum/element/immerse/proc/add_immerse_overlay(atom/movable/movable)
 	var/list/icon_dimensions = get_icon_dimensions(movable.icon)
-	var/width = icon_dimensions["width"] || world.icon_size
-	var/height = icon_dimensions["height"] || world.icon_size
+	var/width = icon_dimensions["width"] || ICONSIZE_X
+	var/height = icon_dimensions["height"] || ICONSIZE_Y
 
 	var/is_below_water = movable.layer < WATER_LEVEL_LAYER ? "underwater-" : ""
 
@@ -184,19 +184,19 @@
 	 * but since we want the appearance to stay where it should be,
 	 * we have to counteract this one.
 	 */
-	var/extra_width = (width - world.icon_size) * 0.5
-	var/extra_height = (height - world.icon_size) * 0.5
+	var/extra_width = (width - ICONSIZE_X) * 0.5
+	var/extra_height = (height - ICONSIZE_Y) * 0.5
 	var/mutable_appearance/overlay_appearance = new()
 	var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
-	var/last_i = width/world.icon_size
+	var/last_i = width/ICONSIZE_X
 	for(var/i in -1 to last_i)
 		var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
-		underwater.pixel_x = world.icon_size * i - extra_width
-		underwater.pixel_y = -world.icon_size - extra_height
+		underwater.pixel_x = ICONSIZE_X * i - extra_width
+		underwater.pixel_y = -ICONSIZE_Y - extra_height
 		overlay_appearance.overlays += underwater
 
 		var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
-		water_level.pixel_x = world.icon_size * i - extra_width
+		water_level.pixel_x = ICONSIZE_X * i - extra_width
 		water_level.pixel_y = -extra_height
 		overlay_appearance.overlays += water_level
 
