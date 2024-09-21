@@ -20,13 +20,16 @@
 	var/obj/item/part = locate(part_reference) in get_parts()
 	if(!istype(part) || user.incapacitated)
 		return
-	if(active || activating)
-		balloon_alert(user, "deactivate the suit first!")
+	if(activating)
+		balloon_alert(user, "currently unsealing/sealing!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	var/parts_to_check = parts - part
 	if(part.loc == src)
 		deploy(user, part)
+		if(active)
+			if(!delayed_seal_part(part))
+				return
 		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc != src)
@@ -34,6 +37,9 @@
 			choose_deploy(user)
 			break
 	else
+		if(active)
+			if(!delayed_seal_part(part))
+				return
 		retract(user, part)
 		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
@@ -164,11 +170,8 @@
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc == src)
 			continue
-		var/datum/mod_part/part_datum = get_part_datum(part)
-		if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
-			to_chat(wearer, span_notice("[part] [active ? part_datum.unsealed_message : part_datum.sealed_message]."))
-			playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			seal_part(part, is_sealed = !active)
+		delayed_seal_part(part)
+
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
 		if(ai_assistant)
@@ -183,6 +186,15 @@
 	activating = FALSE
 	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
+
+/obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part)
+	. = FALSE
+	var/datum/mod_part/part_datum = get_part_datum(part)
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
+		to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
+		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		seal_part(part, is_sealed = !part_datum.sealed)
+		return TRUE
 
 ///Seals or unseals the given part.
 /obj/item/mod/control/proc/seal_part(obj/item/clothing/part, is_sealed)

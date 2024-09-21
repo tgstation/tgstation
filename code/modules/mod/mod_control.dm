@@ -687,8 +687,6 @@
 			part.forceMove(src)
 			return
 		retract(wearer, part)
-		if(active)
-			INVOKE_ASYNC(src, PROC_REF(toggle_activate), wearer, TRUE)
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER
