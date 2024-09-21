@@ -1,4 +1,0 @@
-author: "MelokGleb"
-delete-after: True
-changes:
-  - bugfix: "doors in museum now work correctly"
