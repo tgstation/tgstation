@@ -260,8 +260,8 @@
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
-	///Dump em at 200 bruteloss.
-	if(vored_mob.getBruteLoss() >= 200)
+	///Dump 'em if they're dead.
+	if(vored_mob.stat == DEAD)
 		stop_consuming()
 
 /datum/action/consume/Remove(mob/remove_from)
