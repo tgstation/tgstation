@@ -399,6 +399,18 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,
 	)
 
+/datum/design/lead_pipe
+	name = "Lead Pipe"
+	id = "lead_pipe"
+	desc = "Yes, there's enough lead contamination in the iron you've provided to print a lead pipe."
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9)
+	build_path = /obj/item/lead_pipe
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_JOKE,
+	)
+
 /datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
