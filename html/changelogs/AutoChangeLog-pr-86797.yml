@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The Meta Central Virtual Domain now uses the proper ghost role spawner, meaning you can't eavesdrop on syndie comms using their headset."
