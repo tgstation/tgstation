@@ -167,8 +167,10 @@
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*ICONSIZE_ALL
-	var/min = -(strength*ICONSIZE_ALL)
+	var/max_x = strength*ICONSIZE_X
+	var/max_y = strength*ICONSIZE_Y
+	var/min_x = -(strength*ICONSIZE_X)
+	var/min_y = -(strength*ICONSIZE_Y)
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICONSIZE_ALL) * TILES_PER_SECOND
@@ -178,8 +180,8 @@
 	var/time_spent = 0
 	while(time_spent < duration)
 		//Get a random pos in our box
-		var/x_pos = rand(min, max) + oldx
-		var/y_pos = rand(min, max) + oldy
+		var/x_pos = rand(min_x, max_x) + oldx
+		var/y_pos = rand(min_y, max_y) + oldy
 
 		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
 		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))

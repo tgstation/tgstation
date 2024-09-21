@@ -1137,8 +1137,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
-	var/x_offset = -((x_dimension / ICONSIZE_X) - 1) * (ICONSIZE_Y * 0.5)
-	var/y_offset = -((y_dimension / ICONSIZE_Y) - 1) * (ICONSIZE_X * 0.5)
+	var/x_offset = -((x_dimension / ICONSIZE_X) - 1) * (ICONSIZE_X * 0.5)
+	var/y_offset = -((y_dimension / ICONSIZE_Y) - 1) * (ICONSIZE_Y * 0.5)
 
 	//Correct values under icon_size
 	if(x_dimension < ICONSIZE_X)

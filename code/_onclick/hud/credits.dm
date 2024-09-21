@@ -1,6 +1,6 @@
 #define CREDIT_ROLL_SPEED 125
 #define CREDIT_SPAWN_SPEED 10
-#define CREDIT_ANIMATE_HEIGHT (14 * ICONSIZE_ALL)
+#define CREDIT_ANIMATE_HEIGHT (14 * ICONSIZE_Y)
 #define CREDIT_EASE_DURATION 22
 #define CREDITS_PATH "[global.config.directory]/contributors.dmi"
 

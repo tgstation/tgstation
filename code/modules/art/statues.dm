@@ -348,7 +348,7 @@ Moving interrupts
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
 	//Single interruptible progress period
-	var/sculpting_period = round(sculpting_time / ICONSIZE_ALL) //this is just so it reveals pixels line by line for each.
+	var/sculpting_period = round(sculpting_time / ICONSIZE_Y) //this is just so it reveals pixels line by line for each.
 	var/interrupted = FALSE
 	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
 
