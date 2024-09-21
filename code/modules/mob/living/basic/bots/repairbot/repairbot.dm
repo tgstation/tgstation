@@ -320,6 +320,7 @@
 
 /obj/item/construction/rcd/repairbot
 	matter = INFINITY
+	has_ammobar = FALSE
 
 /mob/living/basic/bot/repairbot/mob_pickup(mob/living/user)
 	var/obj/item/carried_repairbot/carried = new(get_turf(src))
