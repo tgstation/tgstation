@@ -861,7 +861,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if(female_uniform)
 		building_icon = wear_female_version(
 			icon_state = t_state,
-			icon = building_icon,
+			icon = building_icon || file2use,
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
 		)
