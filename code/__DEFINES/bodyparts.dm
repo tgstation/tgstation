@@ -10,6 +10,10 @@
 #define LIMB_MAX_HP_ADVANCED 75 //Used by advanced robotic limbs.
 #define LIMB_MAX_HP_CORE 200 //Only use this for heads and torsos.
 
+#define LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS 2.5 //Used by surplus prosthesis limbs
+#define LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED 0.5 //Used by advanced robotic limbs.
+#define LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT 0.75 //Used by all limbs by default.
+
 /// Xenomorph Limbs
 #define LIMB_MAX_HP_ALIEN_LARVA 50 //Used by the weird larva chest and head. Did you know they have those?
 #define LIMB_MAX_HP_ALIEN_LIMBS 100 //Used by xenomorph limbs.
@@ -19,10 +23,7 @@
 /// A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 /// For instance, if a limb has 50 damage, and has a coefficient of 50%, the human is considered to have suffered 25 damage to their total health.
 
-#define LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED 0.5 //Used by advanced robotic limbs.
-#define LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT 0.75 //Used by all limbs by default.
 #define LIMB_BODY_DAMAGE_COEFFICIENT_TOTAL 1 //Used by heads and torsos
-#define LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS 2.5 //Used by surplus prosthesis limbs
 
 // EMP
 // Note most of these values are doubled on heavy EMP
