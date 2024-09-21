@@ -21,14 +21,26 @@
 /datum/unit_test/fish_size_weight
 
 /datum/unit_test/fish_size_weight/Run()
-	var/obj/item/fish/fish = allocate(/obj/item/fish/testdummy)
+
+	var/obj/structure/table/table = allocate(/obj/structure/table)
+	var/obj/item/fish/testdummy/fish = new /obj/item/fish/testdummy (table.loc)
+	allocated += fish
 	var/datum/reagent/reagent = fish.reagents?.has_reagent(/datum/reagent/fishdummy)
 	TEST_ASSERT(reagent, "the test fish doesn't have the test reagent.[fish.reagents ? "" : " It doesn't even have a reagent holder."]")
 	var/expected_units = FISH_REAGENT_AMOUNT * fish.weight / FISH_WEIGHT_BITE_DIVISOR
 	TEST_ASSERT_EQUAL(reagent.volume, expected_units, "the test fish has [reagent.volume] units of the test reagent when it should have [expected_units]")
 	TEST_ASSERT_EQUAL(fish.w_class, WEIGHT_CLASS_BULKY, "the test fish has w_class of [fish.w_class] when it should have been [WEIGHT_CLASS_BULKY]")
-	var/expected_num_fillets = round(FISH_SIZE_BULKY_MAX / FISH_FILLET_NUMBER_SIZE_DIVISOR * 2, 1)
-	TEST_ASSERT_EQUAL(fish.num_fillets, expected_num_fillets, "the test fish has [fish.num_fillets] number of fillets when it should have [expected_num_fillets]")
+	var/mob/living/carbon/human/consistent/chef = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/knife/kitchen/blade = allocate(/obj/item/knife/kitchen)
+	var/fish_fillet_type = fish.fillet_type
+	var/expected_num_fillets = fish.expected_num_fillets
+	blade.melee_attack_chain(chef, fish)
+	var/counted_fillets = 0
+	for(var/atom/movable/content as anything in table.loc.contents)
+		if(istype(content, fish_fillet_type))
+			counted_fillets++
+			allocated += content
+	TEST_ASSERT_EQUAL(counted_fillets, expected_num_fillets, "the test fish yielded [counted_fillets] fillets when it should have been [expected_num_fillets]")
 
 ///Checks that fish breeding works correctly.
 /datum/unit_test/fish_breeding
@@ -71,7 +83,7 @@
 /datum/unit_test/fish_scanning/Run()
 	var/scannable_fishes = 0
 	for(var/obj/item/fish/fish_prototype as anything in subtypesof(/obj/item/fish))
-		if(initial(fish_prototype.experisci_scannable))
+		if(initial(fish_prototype.fish_flags) & FISH_FLAG_EXPERIMENT_SCANNABLE)
 			scannable_fishes++
 	for(var/datum/experiment/scanning/fish/fish_scan as anything in typesof(/datum/experiment/scanning/fish))
 		fish_scan = new fish_scan
@@ -88,7 +100,12 @@
 	fish_traits = list(/datum/fish_trait/dummy)
 	stable_population = INFINITY
 	breeding_timeout = 0
-	show_in_catalog = FALSE //skipped by the autowiki unit test.
+	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
+	var/expected_num_fillets = 0 //used to know how many fillets should be gotten out of this fish
+
+/obj/item/fish/testdummy/add_fillet_type()
+	expected_num_fillets = ..()
+	return expected_num_fillets
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
@@ -172,6 +189,54 @@
 /datum/fish_evolution/dummy/two/New()
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
+
+///A test that checks that fishing portals can be linked and function as expected
+/datum/unit_test/fish_portal_gen_linking
+
+/datum/unit_test/fish_portal_gen_linking/Run()
+	var/mob/living/carbon/human/consistent/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/machinery/fishing_portal_generator/portal = allocate(/obj/machinery/fishing_portal_generator/no_power)
+	var/obj/structure/toilet/unit_test/fishing_spot = new(get_turf(user)) //This is deleted during the test
+	var/obj/structure/moisture_trap/extra_spot = allocate(/obj/structure/moisture_trap)
+	var/obj/machinery/hydroponics/constructable/inaccessible = allocate(/obj/machinery/hydroponics/constructable)
+	ADD_TRAIT(inaccessible, TRAIT_UNLINKABLE_FISHING_SPOT, INNATE_TRAIT)
+	var/obj/item/multitool/tool = allocate(/obj/item/multitool)
+	var/datum/fish_source/toilet/fish_source = GLOB.preset_fish_sources[/datum/fish_source/toilet]
+
+	portal.max_fishing_spots = 1 //We've no scrying orb to know if it'll be buffed or nerfed this in the future. We only have space for one here.
+	portal.activate(fish_source, user)
+	TEST_ASSERT(!portal.active, "[portal] was activated with a fish source from an unlinked fishing spot")
+	portal.multitool_act(user, tool)
+	TEST_ASSERT_EQUAL(tool.buffer, portal, "[portal] wasn't set as buffer for [tool]")
+	tool.melee_attack_chain(user, fishing_spot)
+	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "We tried linking [portal] to the fishing spot but didn't succeed.")
+	portal.activate(fish_source, user)
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot")
+	//Let's move the fishing spot away. This is fine as long as the portal moves to another z level, away from the toilet
+	var/turf/other_z_turf = pick(GLOB.newplayer_start)
+	portal.forceMove(other_z_turf)
+	TEST_ASSERT(!portal.active, "[portal] (not upgraded) is still active though the fishing spot is on another z-level.[portal.z == fishing_spot.z ? " Actually they're still on the same level!" : ""]")
+	portal.long_range_link = TRUE
+	portal.activate(fish_source, user)
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] can't acces a fish source from a linked fishing spot on a different z-level despite being upgraded")
+	fishing_spot.forceMove(other_z_turf)
+	portal.forceMove(get_turf(user))
+	TEST_ASSERT(portal.active?.fish_source == fish_source, "[portal] (upgraded) deactivated while changing z-level")
+	tool.melee_attack_chain(user, extra_spot)
+	TEST_ASSERT_EQUAL(length(portal.linked_fishing_spots), 1, "We managed to link to another fishing spot when there's only space for one")
+	TEST_ASSERT_EQUAL(LAZYACCESS(portal.linked_fishing_spots, fishing_spot), fish_source, "linking to another fishing spot fouled up the other linked spots")
+	QDEL_NULL(fishing_spot)
+	TEST_ASSERT(!portal.active, "[portal] is still linked to the fish source of the deleted fishing spot it's associated to")
+	tool.melee_attack_chain(user, inaccessible)
+	TEST_ASSERT(!length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
+
+/obj/machinery/fishing_portal_generator/no_power
+	use_power = NO_POWER_USE
+
+/obj/structure/toilet/unit_test/Initialize(mapload)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_FISHING_SPOT)) //Ensure this toilet has a fishing spot because only maploaded ones have it.
+		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
 
 // we want no default spawns in this unit test
 /datum/chasm_detritus/restricted/bodies/no_defaults

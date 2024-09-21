@@ -3,7 +3,12 @@
 	name = "Fish Encyclopedia"
 	desc = "Indexes all fish known to mankind (and related species)."
 	icon_state = "fishbook"
+	custom_price = PAYCHECK_CREW * 2
 	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
+
+/obj/item/book/manual/fish_catalog/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4, ITEM_SLOT_HANDS)
 
 /obj/item/book/manual/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -17,7 +22,7 @@
 	if(!fish_info)
 		fish_info = list()
 		for(var/obj/item/fish/fish as anything in subtypesof(/obj/item/fish))
-			if(!initial(fish.show_in_catalog))
+			if(!(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 				continue
 			var/list/fish_data = list()
 			fish_data["name"] = initial(fish.name)

@@ -1,0 +1,4 @@
+author: "Likteer"
+delete-after: True
+changes:
+  - bugfix: "Plasmamen envirohelmets no longer erroneously apply a slowdown."

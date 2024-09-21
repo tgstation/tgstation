@@ -14,6 +14,7 @@
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -28,6 +29,11 @@
 	name = "trailwarden oilcoat"
 	desc = "A masterfully handcrafted oilslick coat, supposedly makes for excellent camouflage among Sprout's vegetation. You can hear a faint electrical buzz emanating from the luminescent pattern."
 	greyscale_colors = "#32a87d"
+	hoodtype = /obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden
+
+/obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/trailwarden/equipped(mob/living/user, slot)
 	. = ..()
@@ -45,3 +51,9 @@
 	worn_icon = 'icons/mob/clothing/head/ethereal.dmi'
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR
+
+/obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden
+
+/obj/item/clothing/head/hooded/ethereal_rainhood/trailwarden/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
