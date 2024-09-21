@@ -42,7 +42,7 @@
 	"Defector": {
 		"allies": "You are new to the secret agent business, be wary of others and look out for yourself.",
 		"goal": "The Syndicate picked the right time to offer you money. Do their dirty work for them and get paid.",
-		"introduction": "You are the Syndicate Defector.",
+		"introduction": "You are a Syndicate Defector.",
 		"roundend_report": "was a Syndicate defector.",
 		"ui_theme": "syndicate",
 		"uplink": "Last week you picked up a Syndicate uplink from a dead-drop. Now is the time to use it."
@@ -82,7 +82,7 @@
 	"Hired Mercenary": {
 		"allies": "The Syndicate hired you, but their agents are notoriously twitchy. Use your own judgment to decide who can be trusted.",
 		"goal": "This job pays enough to finally get out of the business. Complete your work, and you'll be sipping drinks on the beach in no time.",
-		"introduction": "You are the Syndicate Hired Mercenary.",
+		"introduction": "You are a Syndicate Hired Mercenary.",
 		"roundend_report": "was a Syndicate hired mercenary.",
 		"ui_theme": "syndicate",
 		"uplink": "You've been supplied a Syndicate uplink for this mission."
@@ -96,7 +96,7 @@
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
 	},
 	"Rival Saboteur": {
-		"allies": "Don't make your true alligences obvious. The Syndicate are scum, but you might be able to work them to your advantage.",
+		"allies": "Don't make your true allegiances obvious. The Syndicate are scum, but you might be able to work them to your advantage.",
 		"goal": "Sabotage the station to make this division look bad. Make this look like a Syndicate job, you can't let it be traced back to your sector.",
 		"introduction": "You are a saboteur from a rival division of nanotrasen.",
 		"roundend_report": "was a Rival Saboteur.",
@@ -104,7 +104,7 @@
 		"uplink": "You have been given a captured Syndicate uplink to get your task done."
 	},
 	"Radicalized": {
-		"allies": "Down with Nanotrasen's tyrany! Surround yourself with likeminded indivduals.",
+		"allies": "Down with Nanotrasen! Surround yourself with like-minded individuals.",
 		"goal": "Bring down the nanotrasen's establishment! You've got a list of targets in mind.",
 		"introduction": "You have been radicalized by the Syndicate.",
 		"roundend_report": "was radicalized by the Syndicate.",

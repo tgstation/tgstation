@@ -153,7 +153,7 @@
 /// JSON file containing spy objectives
 #define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
 
-///traitors that are from the syndicate or alligned with the syndicate
+///traitors that are from the syndicate or aligned with the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",
 	"Bee Liberation Front",
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(maybe_hijack_employers, list(
 	"Radicalized",
 ))
 
-///employers who will never hire agents to hyjack
+///employers who will never hire agents to hijack
 GLOBAL_LIST_INIT(never_hijack_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
