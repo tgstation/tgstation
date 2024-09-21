@@ -31,9 +31,10 @@
 	return ..()
 
 /obj/machinery/power/manufacturing/smelter/process(seconds_per_tick)
-	if(!length(contents - circuit))
+	var/list/stacks = contents - circuit
+	if(!length(stacks))
 		return
-	var/obj/item/stack/ore/ore = (contents - circuit)[length(contents - circuit)]
+	var/obj/item/stack/ore/ore = stacks[length(contents - circuit)]
 	if(isnull(ore))
 		return
 	if(isnull(withheld) && surplus() >= power_cost)
