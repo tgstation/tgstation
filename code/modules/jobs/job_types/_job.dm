@@ -341,10 +341,10 @@
 	var/pda_slot = ITEM_SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(istype(back, /obj/item/storage/backpack))
+	if(ispath(back, /obj/item/storage/backpack))
 		/// DOPPLER SHIFT EDIT BEGIN
 		var/obj/back_as_obj = back
-		if(back_as_obj.type == initial(src.back))
+		if("[back_as_obj.type]" == "[initial(src.back)]")
 			switch(H.backpack)
 				if(GBACKPACK)
 					back = /obj/item/storage/backpack //Grey backpack
