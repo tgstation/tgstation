@@ -274,8 +274,6 @@
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
 /obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
-	if(user.incapacitated)
-		return
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
 	return CLICK_ACTION_SUCCESS
@@ -577,7 +575,7 @@
 		new /obj/item/ammo_casing/harpoon(src)
 
 /obj/item/storage/bag/rebar_quiver
-	name = "Rebar Storage Quiver"
+	name = "rebar quiver"
 	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "rebar_quiver"
 	worn_icon_state = "rebar_quiver"
@@ -607,7 +605,7 @@
 	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
 
@@ -649,7 +647,7 @@
 	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
 		user.balloon_alert(user, "no more room!")
 		return
-	if(!do_after(user, 0.8 SECONDS, user, IGNORE_USER_LOC_CHANGE))
+	if(!do_after(user, 1.2 SECONDS, user))
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]

@@ -987,6 +987,11 @@
 
 	return ..()
 
+/obj/item/card/id/advanced/proc/after_input_check(mob/user)
+	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
+		return FALSE
+	return TRUE
+
 /obj/item/card/id/advanced/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
@@ -1442,6 +1447,44 @@
 	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
+/// An ID that you can flip with attack_self_secondary, overriding the appearance of the ID (useful for plainclothes detectives for example).
+/obj/item/card/id/advanced/plainclothes
+	name = "Plainclothes ID"
+	///The trim that we use as plainclothes identity
+	var/alt_trim = /datum/id_trim/job/assistant
+
+/obj/item/card/id/advanced/plainclothes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Show/Flip ID"
+
+/obj/item/card/id/advanced/plainclothes/examine(mob/user)
+	. = ..()
+	if(trim_assignment_override)
+		. += span_smallnotice("it's currently under plainclothes identity.")
+	else
+		. += span_smallnotice("flip it to switch to the plainclothes identity.")
+
+/obj/item/card/id/advanced/plainclothes/attack_self(mob/user)
+	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sided ID", list("Show", "Flip"))
+	if(!popup_input || !after_input_check(user))
+		return TRUE
+	if(popup_input == "Show")
+		return ..()
+	balloon_alert(user, "flipped")
+	if(trim_assignment_override)
+		SSid_access.remove_trim_from_chameleon_card(src)
+	else
+		SSid_access.apply_trim_to_chameleon_card(src, alt_trim)
+	update_label()
+	update_appearance()
+
+/obj/item/card/id/advanced/plainclothes/update_label()
+	if(!trim_assignment_override)
+		return ..()
+	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/datum/id_trim/fake = SSid_access.trim_singletons_by_path[alt_trim]
+	name = "[name_string] ([fake.assignment])"
+
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. \
@@ -1656,8 +1699,9 @@
 		to_chat(user, span_notice("You successfully reset the ID card."))
 		return
 
-	///forge the ID if not forged.
-	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+	///forge the ID if not forged.s
+	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN, encode = FALSE)
+
 	if(!after_input_check(user))
 		return TRUE
 	if(input_name)
@@ -1687,7 +1731,7 @@
 		if(!after_input_check(user))
 			return TRUE
 
-	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_NAME_LEN)
+	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
 
@@ -1723,11 +1767,6 @@
 			account.bank_cards += src
 			registered_account = account
 			to_chat(user, span_notice("Your account number has been automatically assigned."))
-
-/obj/item/card/id/advanced/chameleon/proc/after_input_check(mob/user)
-	if(QDELETED(user) || QDELETED(src) || !user.client || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		return FALSE
-	return TRUE
 
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
 	. = ..()
@@ -1846,15 +1885,15 @@
 		return
 	switch(popup_input)
 		if("Name")
-			var/input_name = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = sanitize_name(input_name, allow_numbers = TRUE)
+			var/raw_input = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
+			var/input_name = sanitize_name(raw_input, allow_numbers = TRUE)
 			if(!after_input_check(user, item, input_name, scribbled_name))
 				return
 			scribbled_name = input_name
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
-			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
+			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", max_length = MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
 			scribbled_assignment = sanitize(input_assignment)

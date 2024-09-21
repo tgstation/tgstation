@@ -64,6 +64,11 @@
 
 	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
 
+/obj/item/fish/chasm_crab/pet_fish(mob/living/user)
+	. = ..()
+	if(.)
+		anger -= min(anger, 6.5)
+
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
 	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)

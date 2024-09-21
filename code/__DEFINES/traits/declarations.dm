@@ -26,6 +26,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESTRAINED "restrained"
 /// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sources of undesity will still apply. Always define a unique source when adding a new instance of this!
 #define TRAIT_UNDENSE "undense"
+/// Makes the mob immune to damage and several other ailments.
+#define TRAIT_GODMODE "godmode"
 /// Expands our FOV by 30 degrees if restricted
 #define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
@@ -229,12 +231,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
 ///lobstrosities and carps will prioritize/flee from those that have this trait (given by the skill-locked hat)
 #define TRAIT_SCARY_FISHERMAN "scary_fisherman"
+/// Atoms with this trait can be right-clicked with a fish to release them, presumably back in the fishing spot they were caught from.
+#define TRAIT_CATCH_AND_RELEASE "catch_and_release"
 ///This trait lets you get the size and weight of the fish by examining them
 #define TRAIT_EXAMINE_FISH "examine_fish"
 ///This trait lets you roughly know if the fish is dead, starving, drowning or sick by examining them
 #define TRAIT_EXAMINE_DEEPER_FISH "examine_deeper_fish"
 ///Trait given to turfs or objects that can be fished from
 #define TRAIT_FISHING_SPOT "fishing_spot"
+///This trait prevents the fishing spot from being linked to the fish-porter when a multitool is being used.
+#define TRAIT_UNLINKABLE_FISHING_SPOT "unlinkable_fishing_spot"
 ///Trait given to mobs that can fish without a rod
 #define TRAIT_PROFOUND_FISHER "profound_fisher"
 /// If an atom has this trait, then you can toss a bottle with a message in it.
@@ -1129,11 +1135,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// this object has been frozen
 #define TRAIT_FROZEN "frozen"
-
-/// Currently fishing
-#define TRAIT_GONE_FISHING "fishing"
-/// Currently fishing, and it's the active minigame phase
-#define TRAIT_ACTIVELY_FISHING "actively_fishing"
 
 /// Makes a character be better/worse at tackling depending on their wing's status
 #define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"

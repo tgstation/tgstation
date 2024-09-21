@@ -18,6 +18,11 @@
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 
+/obj/item/clothing/head/utility/welding/Initialize(mapload)
+	. = ..()
+	if(!up)
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
 /datum/armor/utility_welding
 	melee = 10
 	fire = 100
@@ -25,6 +30,13 @@
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	adjust_visor(user)
+
+/obj/item/clothing/head/utility/welding/adjust_visor(mob/user)
+	. = ..()
+	if(up)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+	else
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/head/utility/welding/update_icon_state()
 	. = ..()
