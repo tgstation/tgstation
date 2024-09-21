@@ -326,9 +326,13 @@
 	var/obj/machinery/digital_clock/bitrunner/my_clock
 	var/obj/machinery/digital_clock/bitrunner_power/my_power
 	var/datum/looping_sound/annoying_light_hum/annoying_light_hum
+	var/datum/looping_sound/vent_pump_overclock/fan_sound
 
 /obj/bitrunning/animatronic_controller/proc/start_night()
+	QDEL_NULL(annoying_light_hum)
+	QDEL_NULL(fan_sound)
 	annoying_light_hum = new(src, TRUE)
+	fan_sound = new(src, TRUE)
 	power_left = 100
 	minutes_passed = 0
 	security_attacks = 0
@@ -466,6 +470,7 @@
 	my_power.update_icon()
 	playsound(src, 'sound/misc/bitrunner/power_outage.ogg', vol = 100, vary = FALSE)
 	QDEL_NULL(annoying_light_hum)
+	QDEL_NULL(fan_sound)
 	for(var/obj/machinery/light/lightbulb in range(10, src))
 		if(lightbulb == left_light || lightbulb == right_light)
 			continue
@@ -594,6 +599,11 @@
 /obj/bitrunning/animatronic/proc/move_loop_postprocess(datum/move_loop/source, result)
 	SIGNAL_HANDLER
 	if(result == MOVELOOP_FAILURE)
+		if(moving_node.kill_node)
+			for(var/mob/living/carbon/human/possible_shithead in orange(1, src))
+				if(ishuman(possible_shithead))
+					our_controller.you_failed(src) // fuck you
+					return
 		if(moving_node.blocking_door) // We probably failed to move because the door was blocked.
 			on_blocked()
 			UnregisterSignal(current_movement, COMSIG_MOVELOOP_POSTPROCESS)

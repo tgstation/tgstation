@@ -33,14 +33,24 @@
 	skillchips = null
 	backpack_contents = null
 
-/datum/lazy_template/virtual_domain/janitor_work/mischief
-	name = "Janitorial Work: Mischief"
+/datum/lazy_template/virtual_domain/janitor_work/misdemeanor
+	name = "Janitorial Work: Misdemeanor"
+	desc = "A fight went down in Medical. Sanitize the operating theatre."
+	help_text = "Running through things in layers will help you organize. Blood first, then corpses, then weapons, for example."
+	key = "janitor_work_medbay"
+	map_name = "janitor_work_medbay"
+	reward_points = BITRUNNER_REWARD_LOW
+	difficulty = BITRUNNER_DIFFICULTY_LOW
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/janitor_work/felony
+	name = "Janitorial Work: Felony"
 	desc = "A syndicate incursion in the Cargo Bay was put down. Clean up the revolt."
 	help_text = "Take things one room at a time. Pace yourself and you will accomplish the work."
-	key = "janitor_work_mischief"
-	map_name = "janitor_work_mischief"
-	reward_points = BITRUNNER_REWARD_MIN
-	difficulty = BITRUNNER_DIFFICULTY_NONE
+	key = "janitor_work_felony"
+	map_name = "janitor_work_felony"
+	reward_points = BITRUNNER_REWARD_MEDIUM
+	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	test_only = FALSE
 
 /datum/lazy_template/virtual_domain/customer_push_test
@@ -91,6 +101,74 @@
 	shoes = /obj/item/clothing/shoes/sneakers/purple
 	skillchips = null
 	backpack_contents = null
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base
+	name = "Firearms and Target Identification Testing: Test"
+	desc = "Crewmember having issues identifying friend or foe? Put them in here. Generates materials!"
+	help_text = "Test domain for Firearms and Target Identification."
+	key = "watcher_hunt_base"
+	map_name = "watcher_hunt"
+	test_only = TRUE
+	var/target_score = 5000
+	var/round_time = 30 SECONDS
+	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
+	forced_outfit = /datum/outfit/job/prisoner
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/setup_domain(list/created_atoms)
+	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
+		custom_spawns += spawner
+	var/obj/machinery/digital_clock/score_card/our_controller = locate(/obj/machinery/digital_clock/score_card) in created_atoms
+	if(!our_controller)
+		CRASH("No score card!!!")
+	our_controller.target_score = target_score
+	for(var/obj/bitrunning/watcher_hunt_spawner/node in created_atoms)
+		our_controller.found_spawners.Add(node)
+		node.my_score = our_controller
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_mischief
+	name = "Target Identification Testing: Mischief"
+	help_text = "Lead your shots!"
+	key = "watcher_hunt_mischief"
+	difficulty = BITRUNNER_DIFFICULTY_NONE
+	test_only = FALSE
+	reward_points = BITRUNNER_REWARD_MIN
+	target_score = 5000
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_misdemeanor
+	name = "Target Identification Testing: Misdemeanor"
+	help_text = "Lead your shots!"
+	key = "watcher_hunt_misdemeanor"
+	difficulty = BITRUNNER_DIFFICULTY_LOW
+	test_only = FALSE
+	reward_points = BITRUNNER_REWARD_LOW
+	target_score = 10000
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_felony
+	name = "Target Identification Testing: Mischief"
+	help_text = "Lead your shots!"
+	key = "watcher_hunt_felony"
+	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
+	test_only = FALSE
+	reward_points = BITRUNNER_REWARD_MEDIUM
+	target_score = 15000
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_grand_felony
+	name = "Target Identification Testing: Mischief"
+	help_text = "Lead your shots!"
+	key = "watcher_hunt_grand_felony"
+	difficulty = BITRUNNER_DIFFICULTY_HIGH
+	test_only = FALSE
+	reward_points = BITRUNNER_REWARD_HIGH
+	target_score = 20000
+
+/datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_capital
+	name = "Target Identification Testing: Capital"
+	help_text = "Lead your shots!"
+	key = "watcher_hunt_capital"
+	difficulty = BITRUNNER_DIFFICULTY_OVERKILL
+	test_only = FALSE
+	reward_points = BITRUNNER_REWARD_EXTREME
+	target_score = 30000
 
 /datum/lazy_template/virtual_domain/pizza_guarding_base
 	name = "After-Hours Pizzeria Guarding: Base"
