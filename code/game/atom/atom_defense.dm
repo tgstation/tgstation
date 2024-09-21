@@ -25,7 +25,7 @@
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-	if(damage_type == BURN && resistance_flags & FIRE_PROOF || resistance_flags & LAVA_PROOF)
+	if(damage_type == BURN && damage_flag != "laser" && resistance_flags & FIRE_PROOF || resistance_flags & LAVA_PROOF)
 		return
 	damage_amount = run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 	if(damage_amount < DAMAGE_PRECISION)
