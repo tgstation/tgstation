@@ -96,7 +96,7 @@
 		"uplink": "You have been provided with a standard uplink to accomplish your task."
 	},
 	"Rival Saboteur": {
-		"allies": "Don't make your true alligences obvious. Syndicate agents could make unlikely allies if you could trick them into thinking you are one of them.",
+		"allies": "Don't make your true alligences obvious. The Syndicate are scum, but you might be able to work them to your advantage.",
 		"goal": "Sabotage the station to make this division look bad. Make this look like a Syndicate job, you can't let it be traced back to your sector.",
 		"introduction": "You are a saboteur from a rival division of nanotrasen.",
 		"roundend_report": "was a Rival Saboteur.",
@@ -109,7 +109,7 @@
 		"introduction": "You have been radicalized by the Syndicate.",
 		"roundend_report": "was radicalized by the Syndicate.",
 		"ui_theme": "syndicate",
-		"uplink": "After weeks of sending messages, the Syndicate has finally sent you your own personal uplink. So rad!"
+		"uplink": "After a lot of work and studying surfing underbelly web forums, you've pieced together your very own Syndicate uplink."
 	},
 	"Tiger Cooperative Fanatic": {
 		"allies": "Only the enlightened Tiger brethren can be trusted; all others must be expelled from this mortal realm!",
