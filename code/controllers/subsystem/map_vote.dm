@@ -46,14 +46,13 @@ SUBSYSTEM_DEF(map_vote)
 		if(count > max)
 			map_vote_cache[map_id] = max
 
-/datum/controller/subsystem/map_vote/proc/map_vote_notice(list/messages)
+/datum/controller/subsystem/map_vote/proc/send_map_vote_notice(...)
 	var/static/last_message_at
 	if(last_message_at == world.time)
 		message_admins("Call to [__PROC__] twice in one game tick. Yell at someone to condense messages.")
 	last_message_at = world.time
 
-	if(!islist(messages))
-		messages = args
+	var/list/messages = args.Copy()
 	to_chat(world, span_purple(examine_block("Map Vote\n<hr>\n[messages.Join("\n")]")))
 
 /datum/controller/subsystem/map_vote/proc/finalize_map_vote(datum/vote/map_vote/map_vote)
@@ -72,17 +71,17 @@ SUBSYSTEM_DEF(map_vote)
 	update_tally_printout()
 
 	if(admin_override)
-		map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
+		send_map_vote_notice("Admin Override is in effect. Map will not be changed.", "Tallies are recorded and saved.")
 		return
 
 	var/list/valid_maps = filter_cache_to_valid_maps()
 	if(!length(valid_maps))
-		map_vote_notice("No valid maps.")
+		send_map_vote_notice("No valid maps.")
 		return
 
 	var/winner = pick_weight(filter_cache_to_valid_maps())
 	set_next_map(config.maplist[winner])
-	map_vote_notice("Map Selected - [span_bold(next_map_config.map_name)]")
+	send_map_vote_notice("Map Selected - [span_bold(next_map_config.map_name)]")
 
 	// do not reset tallies if only one map is even possible
 	if(length(valid_maps) > 1)
@@ -121,7 +120,7 @@ SUBSYSTEM_DEF(map_vote)
 
 	already_voted = FALSE
 	admin_override = FALSE
-	map_vote_notice("Next map reverted. Voting re-enabled.")
+	send_map_vote_notice("Next map reverted. Voting re-enabled.")
 
 #undef MAP_VOTE_CACHE_LOCATION
 
