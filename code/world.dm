@@ -2,20 +2,6 @@
 //Try looking in /code/game/world.dm, where initialization order is defined
 
 /**
- * The game's world.icon_size is set right here. \
- * Ideally divisible by 16. \
- * Ideally a number. \
- * Can be a string (32x32), so more exotic coders
- * will be sad if you use this in math. \
- * Preferably use ICONSIZE_X or ICONSIZE_Y when you can.
- */
-#define ICONSIZE_ALL 32
-/// The X dimension of the ICONSIZE. This will more than likely be the bigger one.
-#define ICONSIZE_X 32
-/// The Y dimension of the ICONSIZE. This will more than likely be the smaller one.
-#define ICONSIZE_Y 32
-
-/**
  * # World
  *
  * Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying. ~ Arthur C. Clarke
@@ -33,7 +19,6 @@
 	fps = 20
 	cache_lifespan = 0
 	map_format = SIDE_MAP
-	icon_size = ICONSIZE_ALL
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

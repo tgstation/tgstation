@@ -1,5 +1,19 @@
 // Stuff that is relatively "core" and is used in other defines/helpers
 
+/**
+ * The game's world.icon_size. \
+ * Ideally divisible by 16. \
+ * Ideally a number. \
+ * Can be a string (32x32), so more exotic coders
+ * will be sad if you use this in math. \
+ * Preferably use ICONSIZE_X or ICONSIZE_Y when you can.
+ */
+#define ICONSIZE_ALL 32
+/// The X dimension of the ICONSIZE. This will more than likely be the bigger one.
+#define ICONSIZE_X 32
+/// The Y dimension of the ICONSIZE. This will more than likely be the smaller one.
+#define ICONSIZE_Y 32
+
 //Returns the hex value of a decimal number
 //len == length of returned string
 #define num2hex(X, len) num2text(X, len, 16)
