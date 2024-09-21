@@ -340,7 +340,7 @@
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
 	// How much blood lost per teleport (out of base 560 blood)
-	var/bleed_amount = 40
+	var/bleed_amount = 20
 
 /obj/item/syndicate_teleporter/Initialize(mapload)
 	. = ..()
@@ -520,16 +520,17 @@
 	var/mob/living/carbon/carbon_user = user
 
 	// always lose a bit
-	carbon_user.bleed(bleed_amount * 0.1)
+	carbon_user.bleed(bleed_amount * 0.25)
 	// sometimes lose a lot
 	// average evens out to 10 per teleport, but the randomness spices things up
 	if(prob(25) && bleed_amount)
 		playsound(src, 'sound/effects/wounds/pierce1.ogg', 40, vary = TRUE)
 		to_chat(user, span_warning("Blood visibly spurts out of your skin as [src] fails to teleport your body coherently!"))
-		carbon_user.bleed(bleed_amount * 0.9)
+		carbon_user.bleed(bleed_amount * 0.75)
 		carbon_user.spray_blood(pick(GLOB.alldirs), rand(1, 3))
 		return TRUE
-	else return FALSE
+
+	return FALSE
 	// retval used for picking wave type
 
 /// Visual effect spawned when teleporting
