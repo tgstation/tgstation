@@ -429,7 +429,6 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-		new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
 		var/blood_ejection = FALSE
 		if(!HAS_TRAIT(user, TRAIT_NOBLOOD))
 			blood_ejection = make_bloods(current_location, destination, user)
@@ -533,7 +532,7 @@
 	else return FALSE
 	// retval used for picking wave type
 
-/// Visual effect spawned when the bioscrambler scrambles your bio
+/// Visual effect spawned when teleporting
 /obj/effect/temp_visual/circle_wave/syndi_teleporter
 	duration = 0.25 SECONDS
 	color = COLOR_SYNDIE_RED
