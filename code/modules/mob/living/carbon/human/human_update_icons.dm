@@ -210,6 +210,24 @@ There are several things that need to be remembered:
 				feature_y_offset = glove_offset["y"]
 
 		gloves_overlay.pixel_y += feature_y_offset
+
+		if(!has_left_hand(check_disabled = FALSE))
+			var/atom/movable/alpha_filter_target = new(null)
+			alpha_filter_target.icon = 'icons/effects/effects.dmi'
+			alpha_filter_target.icon_state = "missingl"
+			alpha_filter_target.render_target = "*MissGloveL[REF(src)]"
+			gloves_overlay.add_overlay(alpha_filter_target)
+			qdel(alpha_filter_target)
+			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+		else if(!has_right_hand(check_disabled = FALSE))
+			var/atom/movable/alpha_filter_target = new(null)
+			alpha_filter_target.icon = 'icons/effects/effects.dmi'
+			alpha_filter_target.icon_state = "missingr"
+			alpha_filter_target.render_target = "*MissGloveR[REF(src)]"
+			gloves_overlay.add_overlay(alpha_filter_target)
+			qdel(alpha_filter_target)
+			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
