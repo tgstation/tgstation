@@ -18,7 +18,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
-	sharpness = SHARP_EDGED // i know the whole point of spears is that they're pointy, but edged is more devastating at the moment so
+	sharpness = SHARP_POINTY
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
