@@ -83,7 +83,7 @@
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/living/user, params)
 	if(IS_WRITING_UTENSIL(W) && !user.combat_mode)
-		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
+		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, max_length = MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)

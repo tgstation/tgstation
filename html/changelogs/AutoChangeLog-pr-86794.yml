@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - bugfix: "Virtual pirates were yelled at by the virtual syndicate and no longer have virtual syndicate headsets."

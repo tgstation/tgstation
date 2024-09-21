@@ -122,7 +122,7 @@
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
 		to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
 		return FALSE
-	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
+	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message", max_length = MAX_MESSAGE_LEN)
 	if(!message)
 		return FALSE
 	send_message(message, robot, user)

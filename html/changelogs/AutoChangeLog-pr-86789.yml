@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "moving or rotating a mech will cancel its hydraulic clamp action"

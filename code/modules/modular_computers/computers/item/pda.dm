@@ -326,6 +326,9 @@
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
+		/datum/computer_file/program/borg_monitor,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/crew_manifest,
 	)
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
