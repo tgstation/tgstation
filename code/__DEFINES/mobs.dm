@@ -701,8 +701,6 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
 #define BODYPARTS_HIGH_LAYER 24
-/// We need gloves to layer on top of modsuit chestplates due to reasons
-#define MOD_CHESTPLATE_LAYER 23.5
 /// Gloves layer
 #define GLOVES_LAYER 23
 /// Shoes layer
@@ -828,6 +826,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+
+/// We need gloves to layer on top of modsuit chestplates because we need the hole in the suit filled in if the user lacks a limb
+#define MOD_CHESTPLATE_LAYER GLOVES_LAYER+0.5
 
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
