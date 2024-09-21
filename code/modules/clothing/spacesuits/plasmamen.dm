@@ -70,6 +70,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	visor_flags_inv = HIDEEYES|HIDEFACE
+	slowdown = 0
 
 /datum/armor/space_plasmaman
 	bio = 100

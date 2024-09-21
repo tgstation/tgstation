@@ -405,14 +405,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("setCriminalName")
-			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", MAX_NAME_LEN, multiline = FALSE)
+			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
 			if(!temp_name)
 				return TRUE
 			criminal_name = temp_name
 			return TRUE
 
 		if("setCrimeData")
-			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", MAX_BROADCAST_LEN, multiline = TRUE)
+			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 			if(!temp_desc)
 				return TRUE
 			crime_description = temp_desc
@@ -703,7 +703,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(channel_name == potential_channel.channel_ID)
 			current_channel = potential_channel
 			break
-	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
+	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 	if(temp_message)

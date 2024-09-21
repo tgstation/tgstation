@@ -170,7 +170,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	if (panel_open)
 		return
-	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
+	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", max_length = 128)
 	if (!new_fax_name)
 		return ITEM_INTERACT_SUCCESS
 	if (new_fax_name != fax_name)

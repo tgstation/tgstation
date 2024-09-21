@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Durathread vests now fit botany items as well as armor items"
+  - code_imp: "Botany suits now all inherit the same list"

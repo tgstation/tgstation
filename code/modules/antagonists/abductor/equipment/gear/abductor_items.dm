@@ -189,8 +189,12 @@
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
-		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
-											Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]", "Enter command")
+		var/command = tgui_input_text(
+			user,
+			"Enter the command for your target to follow. Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]",
+			"Enter command",
+			max_length = MAX_MESSAGE_LEN,
+			)
 
 		if(!command)
 			return
@@ -215,7 +219,7 @@
 		if(living_target.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
-		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
+		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message", max_length = MAX_MESSAGE_LEN)
 		if(!message)
 			return
 		if(QDELETED(living_target) || living_target.stat == DEAD)

@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate
-	name = "Syndicate Tome"
+	name = "syndicate tome"
 	desc = "A very ominous tome resembling a bible."
 	icon_state ="ebook"
 	item_flags = NO_BLOOD_ON_ITEM

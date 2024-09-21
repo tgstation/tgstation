@@ -27,7 +27,7 @@
 	return ..()
 
 /datum/action/innate/cult/comm/Activate()
-	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
+	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood", max_length = MAX_MESSAGE_LEN)
 	if(!input || !IsAvailable(feedback = TRUE))
 		return
 

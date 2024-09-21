@@ -633,7 +633,7 @@
 /obj/item/attack_alien(mob/user, list/modifiers)
 	var/mob/living/carbon/alien/ayy = user
 
-	if(!user.can_hold_items(src))
+	if(!ayy.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
 			ayy.dropItemToGround(src)
 		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))

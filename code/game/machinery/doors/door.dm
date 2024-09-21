@@ -334,7 +334,7 @@
 	return
 
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	return
 
 /// Called when the user right-clicks on the door with a crowbar.

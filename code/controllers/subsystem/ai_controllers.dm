@@ -23,14 +23,12 @@ SUBSYSTEM_DEF(ai_controllers)
 /datum/controller/subsystem/ai_controllers/fire(resumed)
 	var/timer = TICK_USAGE_REAL
 	for(var/datum/ai_controller/ai_controller as anything in GLOB.ai_controllers_by_status[planning_status])
-		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
-			continue
-
 		if(!ai_controller.able_to_plan)
 			continue
 		ai_controller.SelectBehaviors(wait * 0.1)
+
 		if(!length(ai_controller.current_behaviors)) //Still no plan
-			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
+			ai_controller.planning_failed()
 
 	our_cost = MC_AVERAGE(our_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 

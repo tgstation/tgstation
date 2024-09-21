@@ -700,7 +700,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
-	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)

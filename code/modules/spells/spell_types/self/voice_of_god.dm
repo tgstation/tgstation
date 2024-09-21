@@ -25,7 +25,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command")
+	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 	if(!command)

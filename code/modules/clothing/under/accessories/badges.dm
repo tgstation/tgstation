@@ -264,9 +264,9 @@
 /obj/item/clothing/accessory/press_badge/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!journalist_name)
-		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", MAX_NAME_LEN)
+		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", max_length = MAX_NAME_LEN)
 	if(!press_name)
-		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", MAX_CHARTER_LEN)
+		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", max_length = MAX_CHARTER_LEN)
 
 /obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

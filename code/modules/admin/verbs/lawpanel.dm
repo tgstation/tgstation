@@ -24,7 +24,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	var/lawtype = tgui_input_list(user, "Select law type", "Law type", lawtypes)
 	if(isnull(lawtype))
 		return FALSE
-	var/lawtext = tgui_input_text(user, "Input law text", "Law text")
+	var/lawtext = tgui_input_text(user, "Input law text", "Law text") // admin verb so no max length and also any user-level input is config based already so ehhhh
 	if(!lawtext)
 		return FALSE
 	if(QDELETED(src) || QDELETED(borgo))

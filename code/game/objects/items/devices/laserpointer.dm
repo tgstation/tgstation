@@ -235,9 +235,12 @@
 		else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
+			var/always_fail = FALSE
+			if(istype(target_humanoid.glasses, /obj/item/clothing/glasses/eyepatch) && prob(50))
+				always_fail = TRUE
 
 			//chance to actually hit the eyes depends on internal component
-			if(prob(effectchance * diode.rating) && target_humanoid.flash_act(severity))
+			if(prob(effectchance * diode.rating) && !always_fail && target_humanoid.flash_act(severity))
 				outmsg = span_notice("You blind [target_humanoid] by shining [src] in [target_humanoid.p_their()] eyes.")
 				log_combat(user, target_humanoid, "blinded with a laser pointer", src)
 			else

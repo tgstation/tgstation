@@ -4,6 +4,7 @@
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	possible_fuse_time = list("3", "4", "5")
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
 /obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)

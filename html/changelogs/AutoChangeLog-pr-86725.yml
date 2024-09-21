@@ -1,0 +1,4 @@
+author: "GregariousJB"
+delete-after: True
+changes:
+  - rscadd: "Added three programs to cyborg PDAs: SiliConnect, AtmoZphere, and Crew Manifest"

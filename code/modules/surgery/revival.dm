@@ -47,6 +47,13 @@
 		return FALSE
 	return TRUE
 
+/datum/surgery/revival/mechanic/is_valid_target(mob/living/patient)
+	if (iscarbon(patient))
+		return FALSE
+	if (!(patient.mob_biotypes & (MOB_ROBOTIC|MOB_HUMANOID)))
+		return FALSE
+	return TRUE
+
 /datum/surgery_step/revive
 	name = "shock brain (defibrillator)"
 	implements = list(
