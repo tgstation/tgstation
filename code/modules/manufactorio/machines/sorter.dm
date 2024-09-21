@@ -23,7 +23,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	for(var/i=1, i <= length(sort_filters), i++)
+	for(var/i in 1 to length(sort_filters))
 		var/creating_type = sort_filters[i]
 		var/list/values = sort_filters[creating_type]
 		var/datum/sortrouter_filter/new_type = new creating_type(src)

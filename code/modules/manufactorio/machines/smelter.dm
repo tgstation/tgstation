@@ -16,7 +16,8 @@
 /obj/machinery/power/manufacturing/smelter/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(!isitem(receiving) || surplus() < power_cost  || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	if(!may_merge_in_contents(receiving) && length(contents - circuit) >= 5)
+	var/list/stacks = contents - circuit
+	if(!may_merge_in_contents(receiving) && length(stacks) >= 5)
 		return MANUFACTURING_FAIL_FULL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
@@ -34,7 +35,9 @@
 	var/list/stacks = contents - circuit
 	if(!length(stacks))
 		return
-	var/obj/item/stack/ore/ore = stacks[length(contents - circuit)]
+
+	var/list/stacks_preprocess = contents - circuit
+	var/obj/item/stack/ore/ore = stacks_preprocess[length(stacks_preprocess)]
 	if(isnull(ore))
 		return
 	if(isnull(withheld) && surplus() >= power_cost)

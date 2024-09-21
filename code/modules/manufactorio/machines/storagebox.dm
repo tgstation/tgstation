@@ -6,9 +6,10 @@
 	var/max_stuff = 16
 
 /obj/machinery/power/manufacturing/request_resource() //returns last inserted item
-	if(!length(contents - circuit))
+	var/list/real_contents = contents - circuit
+	if(!length(real_contents))
 		return
-	return (contents - circuit)[length(contents - circuit)]
+	return (real_contents)[length(real_contents)]
 
 /obj/machinery/power/manufacturing/storagebox/receive_resource(atom/movable/receiving, atom/from, receive_dir)
 	if(iscloset(receiving) && length(receiving.contents))
@@ -32,8 +33,7 @@
 
 /obj/machinery/power/manufacturing/storagebox/atom_destruction(damage_flag)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
-	for(var/atom/movable/movable as anything in contents - circuit)
-		movable.Move(drop_location())
+	dump_inventory_contents()
 	return ..()
 
 /obj/machinery/power/manufacturing/storagebox/attack_hand(mob/living/user, list/modifiers)
@@ -43,5 +43,4 @@
 	balloon_alert(user, "dumping..")
 	if(!do_after(user, 1.25 SECONDS, src))
 		return
-	for(var/atom/movable/movable as anything in contents - circuit)
-		movable.Move(drop_location())
+	dump_inventory_contents()

@@ -707,16 +707,16 @@
 /datum/component/personal_crafting/machine
 	ignored_flags = CRAFT_CHECK_DENSITY
 
-/datum/component/personal_crafting/machine/get_environment(atom/a, list/blacklist = null, radius_range = 1)
+/datum/component/personal_crafting/machine/get_environment(atom/crafter, list/blacklist = null, radius_range = 1)
 	. = list()
-	for(var/atom/movable/AM in a.contents)
-		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
+	for(var/atom/movable/content in crafter.contents)
+		if((content.flags_1 & HOLOGRAM_1) || (blacklist && (content.type in blacklist)))
 			continue
-		if(isitem(AM))
-			var/obj/item/item = AM
+		if(isitem(content))
+			var/obj/item/item = content
 			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
 				continue
-		. += AM
+		. += content
 
 /datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
 	return TRUE

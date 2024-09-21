@@ -16,9 +16,10 @@
 	. += generate_io_overlays(turn(dir, flip_side ? 90 : -90), COLOR_ORANGE) // OUT -- empty crate
 
 /obj/machinery/power/manufacturing/unloader/request_resource() //returns held crate if someone wants to do that for some reason
-	if(!length(contents - circuit))
+	var/list/real_contents = contents - circuit
+	if(!length(real_contents))
 		return
-	return (contents - circuit)[1]
+	return (real_contents)[1]
 
 /obj/machinery/power/manufacturing/unloader/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -29,7 +30,8 @@
 /obj/machinery/power/manufacturing/unloader/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(surplus() < power_to_unload_crate || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	if(length(contents - circuit))
+	var/list/real_contents = contents - circuit
+	if(length(real_contents))
 		return MANUFACTURING_FAIL_FULL
 
 	var/obj/structure/closet/as_closet = receiving
@@ -44,12 +46,13 @@
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/unloader/process(seconds_per_tick)
-	if(!length(contents - circuit))
+	var/list/real_contents = contents - circuit
+	if(!length(real_contents))
 		return PROCESS_KILL
 	if(surplus() < power_to_unload_crate)
 		return
 	add_load(power_to_unload_crate)
-	var/obj/structure/closet/closet = (contents - circuit)[1]
+	var/obj/structure/closet/closet = real_contents[1]
 	if(istype(closet))
 		return unload_crate(closet)
 	else

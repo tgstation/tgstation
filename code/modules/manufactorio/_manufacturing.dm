@@ -12,7 +12,9 @@
 	name = "base manufacture receiving type"
 	desc = "this shouldnt exist"
 	density = TRUE
+	/// Do we add the simple_rotation component and a text that we are powered by cable? Also allows unwrenching
 	var/may_be_moved = TRUE
+	/// Allow taking in mobs from conveyors?
 	var/allow_mob_bump_intake = FALSE
 
 /obj/machinery/power/manufacturing/Initialize(mapload)
@@ -106,7 +108,7 @@
 		return MANUFACTURING_FAIL_FULL
 	if(isnull(sending))
 		return MANUFACTURING_SUCCESS // for the sake of being used as a check
-	if(sending.loc == null || !sending.Move(next_turf, get_dir(src, next_turf)))
+	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(src, next_turf)))
 		sending.forceMove(next_turf)
 	return MANUFACTURING_SUCCESS
 

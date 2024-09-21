@@ -50,11 +50,12 @@
 				held_mats -= material
 			withholding = new material(null, new_amount)
 			return
-	if(!length(contents - circuit))
+	var/list/poor_saps = contents - circuit
+	if(!length(poor_saps))
 		return PROCESS_KILL
 	if(surplus() < crush_cost)
 		return
-	var/obj/victim = (contents - circuit)[length(contents - circuit)]
+	var/obj/victim = poor_saps[length(poor_saps)]
 	if(istype(victim)) //todo handling for other things
 		if(!length(victim.custom_materials))
 			add_load(crush_cost)
