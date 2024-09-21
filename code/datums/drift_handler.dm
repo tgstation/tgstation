@@ -79,9 +79,10 @@
 /datum/drift_handler/proc/newtonian_impulse(inertia_angle, start_delay, additional_force, controlled_cap)
 	SIGNAL_HANDLER
 	inertia_last_loc = parent.loc
+	// We've been told to move in the middle of deletion process, tell parent to create a new handler instead
 	if(!drifting_loop)
 		qdel(src)
-		return
+		return FALSE
 
 	var/applied_force = additional_force
 
@@ -91,10 +92,11 @@
 	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, !isnull(controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
 	if(drift_force < 0.1) // Rounding issues
 		qdel(src)
-		return
+		return TRUE
 
 	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
 	drifting_loop.set_delay(get_loop_delay(parent))
+	return TRUE
 
 /datum/drift_handler/proc/drifting_start()
 	SIGNAL_HANDLER
@@ -187,12 +189,13 @@
 		qdel(src)
 		return
 
-	block_inputs_until = world.time + glide_for
+	block_inputs_until = world.time + glide_for + 1
 	QDEL_IN(src, glide_for + 1)
 	qdel(drifting_loop)
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(allow_final_movement))
 
 /datum/drift_handler/proc/allow_final_movement(datum/source)
+	SIGNAL_HANDLER
 	// Some things want to allow movement out of spacedrift, we should let them
 	if(SEND_SIGNAL(parent, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT) & DRIFT_ALLOW_INPUT)
 		return
