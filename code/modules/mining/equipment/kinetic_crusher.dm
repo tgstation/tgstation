@@ -565,7 +565,7 @@
 	name = "embered skull"
 	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "retool_kit"
+	icon_state = "retool_kit_skull"
 	denied_type = /obj/item/crusher_trophy/retool_kit
 	retool_icon = "crusher_sword"
 	retool_inhand_icon = "crusher_sword"
