@@ -322,6 +322,12 @@
 	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
 	var/mob/living/silicon/silicon_owner
 
+/obj/item/modular_computer/pda/silicon/pai
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/chatclient,
+	)
+
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
