@@ -44,6 +44,11 @@
 	soundloop = new(src, start_immediately = TRUE)
 	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)
 	START_PROCESSING(SSobj, src)
+	build_view_turfs()
+
+/obj/structure/void_conduit/proc/build_view_turfs()
+	for(var/turf/affected_turf as anything in overlayed_turfs)
+		affected_turf.cut_overlay(void_overlay)
 	for(var/turf/affected_turf as anything in view(effect_range, src))
 		if(!isopenturf(affected_turf))
 			continue
@@ -61,6 +66,7 @@
 	return ..()
 
 /obj/structure/void_conduit/process(seconds_per_tick)
+	build_view_turfs()
 	do_conduit_pulse()
 
 ///Sends out a pulse
