@@ -601,3 +601,56 @@
       on xenomorphs and other theoretical carbons.
   thegrb93:
   - bugfix: Downstream species not getting internals they need when joining ERT
+2024-09-21:
+  00-Steven:
+  - bugfix: Changing a bank account's job to or from Curator actually changes whether
+      they get a cut from painting patronage.
+  - admin: VVediting a bank account's account_job actually updates what job the account
+      is associated with. Currently only matters for Curators.
+  - admin: VVediting a bank account's add_to_accounts actually removes it from or
+      adds it to the job to account associations. Currently only matters for Curators.
+  Bisar:
+  - balance: Meteor shielding is now purchasable at cargo even if it isn't the current
+      station goal.
+  DaCoolBoss:
+  - qol: '[Birdshot] Kitchen''s privacy shutters no longer cover parts of the cafeteria
+      table when open.'
+  - bugfix: '[Birdshot] Kitchen''s corridor windoor is now rotated correctly.'
+  Deadgebert:
+  - balance: Syndicate Rebar Bolt damage reduced to 45 from 55.
+  - balance: Hydrogen Bolt damage reduced to 35 from 55.
+  - balance: Syndicate Quiver reload is now interrupted by movement.
+  - balance: Syndicate Quiver reload increased to 1.2 seconds from 0.8 seconds.
+  - balance: Crossbow TC cost increased to 12 from 10.
+  - balance: Quiver size increased to normal from small.
+  FlufflesTheDog:
+  - bugfix: Icebox's virology airlock cycles properly again
+  Hardly3D:
+  - image: Resprited Short Bangs 2 & Double Buns
+  Iajret:
+  - bugfix: Mining mods can be charged with plasma once again
+  LT3:
+  - spellcheck: Fruit crate description now correctly warns that it contains lemons
+  Melbert:
+  - balance: Laser pointers have a 50% chance to fail when used on people wearing
+      eyepatches
+  - qol: Deceased and asleep humanoids will now close their eyes
+  MelokGleb:
+  - bugfix: doors in museum now work correctly
+  Rhials:
+  - bugfix: You can no longer backdoor security records using the Metastation Central
+      bitrunner domain.
+  SmArtKar:
+  - bugfix: Fixed wallmounts not being mountable by using a screwdriver on them
+  - bugfix: Fixed robotic revival surgery showing up for simplemobs
+  Xackii:
+  - bugfix: Gateway museum keycard now spawns in toilet properly.
+  carlarctg:
+  - bugfix: Legions borne from mimes can no longer talk
+  - spellcheck: Removes caps from many improper items
+  - qol: Adds shorthand alt-click for removing tanks from TTVs and adds context for
+      it
+  san7890:
+  - bugfix: A lot of instances where you could fill in 1024-character names (normal
+      limit is 42) have been patched out, along with too-long plaque names, too-long
+      descriptions, and more.

@@ -222,7 +222,7 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader
-	name = "Crusader's Armour"
+	name = "crusader's armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_BULKY

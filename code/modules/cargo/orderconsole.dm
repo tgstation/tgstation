@@ -235,7 +235,7 @@
 	var/reason = ""
 	if(requestonly && !self_paid)
 		working_list = SSshuttle.request_list
-		reason = tgui_input_text(user, "Reason", name)
+		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 

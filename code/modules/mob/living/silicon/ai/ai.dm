@@ -345,7 +345,12 @@
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
+	var/reason = tgui_input_text(
+		src,
+		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
+		"Confirm Shuttle Call",
+		max_length = MAX_MESSAGE_LEN,
+	)
 
 	if(incapacitated)
 		return
