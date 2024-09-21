@@ -62,10 +62,11 @@ SUBSYSTEM_DEF(map_vote)
 		return
 	already_voted = TRUE
 
+	var/flat = CONFIG_GET(number/map_vote_flat_bonus)
 	previous_cache = map_vote_cache.Copy()
 	for(var/map_id in map_vote.choices)
 		var/datum/map_config/map = config.maplist[map_id]
-		map_vote_cache[map_id] += map_vote.choices[map_id] * map.voteweight
+		map_vote_cache[map_id] += (map_vote.choices[map_id] * map.voteweight) + flat
 	sanitize_cache()
 	write_cache()
 	update_tally_printout()
