@@ -1,4 +1,4 @@
-#define MOTH_WING_FORCE 0.75 NEWTONS
+#define MOTH_WING_FORCE 1 NEWTONS
 
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
