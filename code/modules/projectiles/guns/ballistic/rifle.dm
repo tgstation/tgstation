@@ -192,7 +192,7 @@
 		spread = 50
 
 /obj/item/gun/ballistic/rifle/rebarxbow
-	name = "Heated Rebar Crossbow"
+	name = "heated rebar crossbow"
 	desc = "A handcrafted crossbow. \
 		   Aside from conventional sharpened iron rods, it can also fire specialty ammo made from the atmos crystalizer - zaukerite, metallic hydrogen, and healium rods all work. \
 		   Very slow to reload - you can craft the crossbow with a crowbar to loosen the crossbar, but risk a misfire, or worse..."
@@ -265,7 +265,7 @@
 		. += "[initial(icon_state)]" + "_bolt_locked"
 
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
-	name = "Stressed Rebar Crossbow"
+	name = "stressed rebar crossbow"
 	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a draw this crossbow a bit faster. Hopefully, it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
 	can_misfire = TRUE
@@ -274,7 +274,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
-	name = "Syndicate Rebar Crossbow"
+	name = "syndicate rebar crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
 			Holds three shots without a chance of exploding, and features a built in scope. Compatible with all known crossbow ammunition."
 	icon_state = "rebarxbowsyndie"

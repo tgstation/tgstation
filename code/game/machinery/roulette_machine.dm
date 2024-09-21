@@ -187,7 +187,7 @@
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
-			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", MAX_NAME_LEN)
+			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
 			if(!msg)
 				return
 			name = msg
@@ -456,7 +456,7 @@
 		"path" = /obj/structure/closet/supplypod/centcompod,
 		"spawn" = /obj/machinery/roulette
 	))
-	
+
 	qdel(src)
 
 #undef ROULETTE_DOZ_COL_PAYOUT

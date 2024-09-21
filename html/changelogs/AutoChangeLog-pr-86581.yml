@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "MetaStation's Drone Bay has been moved to be basically inside the normal cargo bay."
+  - rscadd: "To make room for it, the security cargo post was moved to the east of the mailing room:"
+  - rscadd: "The drone bay spot in maintenance has been cleared out by a gang of rowdy assistants, and turned into a drug den."

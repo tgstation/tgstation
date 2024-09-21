@@ -44,6 +44,7 @@
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
+	update_account_job_lists(job)
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
@@ -71,11 +72,22 @@
 	if(SSeconomy.bank_accounts_by_id["[account_id]"])
 		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
 	SSeconomy.bank_accounts_by_id["[account_id]"] = src
-	if(account_job)
-		LAZYADD(SSeconomy.bank_accounts_by_job[account_job.type], src)
+
+/**
+ * Proc places this account into the right place in the `SSeconomy.bank_accounts_by_job` list, if needed.
+ * If an old job is given, it removes it from its previous place first.
+ */
+/datum/bank_account/proc/update_account_job_lists(datum/job/new_job, datum/job/old_job)
+	if(!add_to_accounts)
+		return
+
+	if(old_job)
+		SSeconomy.bank_accounts_by_job[old_job.type] -= src
+	LAZYADD(SSeconomy.bank_accounts_by_job[new_job.type], src)
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
+	var/datum/job/old_job = account_job
 	var/old_balance = account_balance
 	. = ..()
 	switch(var_name)
@@ -83,11 +95,15 @@
 			if(add_to_accounts)
 				SSeconomy.bank_accounts_by_id -= "[old_id]"
 				setup_unique_account_id()
+		if(NAMEOF(src, account_job))
+			update_account_job_lists(account_job, old_job)
 		if(NAMEOF(src, add_to_accounts))
 			if(add_to_accounts)
 				setup_unique_account_id()
+				update_account_job_lists(account_job)
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
+				SSeconomy.bank_accounts_by_job[account_job.type] -= src
 		if(NAMEOF(src, account_balance))
 			add_log_to_history(var_value - old_balance, "Nanotrasen: Moderator Action")
 

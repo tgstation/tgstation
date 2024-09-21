@@ -470,7 +470,7 @@
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
+				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, max_length = MAX_NAME_LEN))
 				if(isnull(newplantname))
 					return
 				if(!user.can_perform_action(src))
@@ -478,7 +478,7 @@
 				name = "[LOWER_TEXT(newplantname)]"
 				plantname = newplantname
 			if("Seed Description")
-				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
+				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, max_length = MAX_DESC_LEN)
 				if(isnull(newdesc))
 					return
 				if(!user.can_perform_action(src))
@@ -487,7 +487,7 @@
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
+				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, max_length = MAX_DESC_LEN)
 				if(isnull(newproductdesc))
 					return
 				if(!user.can_perform_action(src))
