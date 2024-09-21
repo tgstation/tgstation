@@ -701,6 +701,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
 #define BODYPARTS_HIGH_LAYER 24
+/// We need gloves to layer on top of modsuit chestplates due to reasons
+#define MOD_CHESTPLATE_LAYER 23.5
 /// Gloves layer
 #define GLOVES_LAYER 23
 /// Shoes layer

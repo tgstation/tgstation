@@ -137,11 +137,6 @@
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	for(var/obj/item/part as anything in get_parts())
-		if(!force_deactivate && part.loc == src)
-			balloon_alert(user, "deploy all parts first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return FALSE
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -167,6 +162,8 @@
 	mod_link.end_call()
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	for(var/obj/item/part as anything in get_parts())
+		if(part.loc == src)
+			continue
 		var/datum/mod_part/part_datum = get_part_datum(part)
 		if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 			to_chat(wearer, span_notice("[part] [active ? part_datum.unsealed_message : part_datum.sealed_message]."))
@@ -219,9 +216,13 @@
 	active = is_on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.has_required_parts(mod_parts, need_extended = TRUE))
+				continue
 			module.on_suit_activation()
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.has_required_parts(mod_parts, need_extended = TRUE)) //it probably will runtime if we dont do this
+				continue
 			module.on_suit_deactivation()
 	update_speed()
 	update_appearance(UPDATE_ICON_STATE)

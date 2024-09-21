@@ -219,6 +219,10 @@
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
+	if(active)
+		balloon_alert(wearer, "deactivate the suit first!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
+		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(user, "retract parts first!")
@@ -227,6 +231,10 @@
 
 /obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
 	if(user != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
+		return
+	if(active)
+		balloon_alert(wearer, "deactivate the suit first!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
@@ -575,7 +583,7 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-	if(active)
+	if(active && new_module.has_required_parts(mod_parts, need_extended = TRUE))
 		new_module.on_suit_activation()
 	if(user)
 		balloon_alert(user, "[new_module] added")
