@@ -211,6 +211,9 @@
 	sprite_height = 4
 	average_size = 150
 	average_weight = 6000
+	health = 125
+	feeding_frequency = 5 MINUTES
+	breeding_timeout = 5 MINUTES
 	random_case_rarity = FISH_RARITY_NOPE
 	stable_population = 3
 	num_fillets = 2
