@@ -1,7 +1,7 @@
 /// Pocket items (Moved to backpack)
 /datum/loadout_category/pocket
-	category_name = "Other"
-	category_ui_icon = FA_ICON_QUESTION
+	category_name = "Items"
+	category_ui_icon = FA_ICON_PEN
 	type_to_generate = /datum/loadout_item/pocket_items
 	tab_order = /datum/loadout_category/head::tab_order + 5
 	/// How many pocket items are allowed
