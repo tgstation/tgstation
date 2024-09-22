@@ -8,12 +8,16 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 
+	///make the pet emit a sound when pet
+	var/emote_sound
+	///make the pet emote something when pet
+	var/emote
 	///optional cute message to send when you pet your pet!
 	var/emote_message
 	///actual moodlet given, defaults to the pet animal one
 	var/moodlet
 
-/datum/element/pet_bonus/Attach(datum/target, emote_message, moodlet = /datum/mood_event/pet_animal)
+/datum/element/pet_bonus/Attach(datum/target, emote_message, moodlet = /datum/mood_event/pet_animal, /datum/emote/emote, emote_sound)
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -36,4 +40,6 @@
 	SEND_SIGNAL(pet, COMSIG_ANIMAL_PET, petter, modifiers)
 	if(emote_message && prob(33))
 		pet.manual_emote(emote_message)
+		playsound(src, emote_sound, 50, TRUE, TRUE, FALSE)
+		pet.emote(emote)
 	petter.add_mood_event("petting_bonus", moodlet, pet)
