@@ -20,7 +20,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 "m" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32,7 +32,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 "n" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -71,7 +71,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -87,7 +87,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 "G" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -112,7 +112,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -173,7 +173,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/commons/cryopods)
+/area/station/hallway/secondary/entry)
 
 (1,1,1) = {"
 a
