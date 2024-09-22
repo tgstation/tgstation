@@ -412,7 +412,7 @@
 		return TRUE
 
 	//Reset durability to little random lower value cause we have crushed it so many times
-	var/size = specific_boulder::boulder_size
+	var/size = specific_boulder.boulder_size
 	if(size == BOULDER_SIZE_SMALL)
 		specific_boulder.durability = rand(2, BOULDER_SIZE_SMALL - 1)
 	else
