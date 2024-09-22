@@ -251,11 +251,10 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
+	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags |= GODMODE
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
@@ -266,7 +265,6 @@
 
 /datum/status_effect/caretaker_refuge/on_remove()
 	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags &= ~GODMODE
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))

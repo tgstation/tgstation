@@ -539,7 +539,7 @@
 	return 20
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE || QDELETED(src))
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || QDELETED(src))
 		return
 
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])

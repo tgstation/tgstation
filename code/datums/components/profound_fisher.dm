@@ -64,9 +64,12 @@
 
 /datum/component/profound_fisher/proc/on_unarmed_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
-	if(!source.client || !should_fish_on(source, attack_target))
+	if(!should_fish_on(source, attack_target))
 		return
-	INVOKE_ASYNC(src, PROC_REF(begin_fishing), source, attack_target)
+	if(source.client)
+		INVOKE_ASYNC(src, PROC_REF(begin_fishing), source, attack_target)
+	else
+		INVOKE_ASYNC(src, PROC_REF(pretend_fish), source, attack_target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/profound_fisher/proc/pre_attack(mob/living/source, atom/target)
@@ -77,34 +80,33 @@
 	if(source.client)
 		INVOKE_ASYNC(src, PROC_REF(begin_fishing), source, target)
 	else
-		INVOKE_ASYNC(src, PROC_REF(pretend_fish), target)
+		INVOKE_ASYNC(src, PROC_REF(pretend_fish), source, target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /datum/component/profound_fisher/proc/should_fish_on(mob/living/user, atom/target)
-	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || GLOB.fishing_challenges_by_user[user])
 		return FALSE
 	if(user.combat_mode || !user.CanReach(target))
 		return FALSE
 	return TRUE
 
 /datum/component/profound_fisher/proc/begin_fishing(mob/living/user, atom/target)
-	RegisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_GONE_FISHING), PROC_REF(actually_fishing_with_internal_rod))
+	RegisterSignal(user, COMSIG_MOB_BEGIN_FISHING, PROC_REF(actually_fishing_with_internal_rod))
 	our_rod.melee_attack_chain(user, target)
-	UnregisterSignal(user, SIGNAL_ADDTRAIT(TRAIT_GONE_FISHING))
+	UnregisterSignal(user, COMSIG_MOB_BEGIN_FISHING)
 
 /datum/component/profound_fisher/proc/actually_fishing_with_internal_rod(datum/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(source, TRAIT_PROFOUND_FISHER, REF(parent))
-	RegisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING), PROC_REF(remove_profound_fisher))
+	RegisterSignal(source, COMSIG_MOB_COMPLETE_FISHING, PROC_REF(remove_profound_fisher))
 
 /datum/component/profound_fisher/proc/remove_profound_fisher(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_PROFOUND_FISHER, TRAIT_GENERIC)
-	UnregisterSignal(source, SIGNAL_REMOVETRAIT(TRAIT_GONE_FISHING))
+	UnregisterSignal(source, COMSIG_MOB_COMPLETE_FISHING)
 
-/datum/component/profound_fisher/proc/pretend_fish(atom/target)
-	var/mob/living/living_parent = parent
-	if(DOING_INTERACTION_WITH_TARGET(living_parent, target))
+/datum/component/profound_fisher/proc/pretend_fish(mob/living/source, atom/target)
+	if(DOING_INTERACTION_WITH_TARGET(source, target))
 		return
 	var/list/fish_spot_container[NPC_FISHING_SPOT]
 	SEND_SIGNAL(target, COMSIG_NPC_FISHING, fish_spot_container)
@@ -113,13 +115,14 @@
 		return null
 	var/obj/effect/fishing_float/float = new(get_turf(target), target)
 	playsound(float, 'sound/effects/splash.ogg', 100)
-	var/happiness_percentage = living_parent.ai_controller?.blackboard[BB_BASIC_HAPPINESS] / 100
-	var/fishing_speed = 10 SECONDS - round(4 SECONDS * happiness_percentage)
-	if(!do_after(living_parent, fishing_speed, target = target) && !QDELETED(fish_spot))
-		qdel(float)
-		return
-	var/reward_loot = fish_spot.roll_reward(our_rod, parent)
-	fish_spot.dispense_reward(reward_loot, parent, target)
+	if(!PERFORM_ALL_TESTS(fish_sources))
+		var/happiness_percentage = source.ai_controller?.blackboard[BB_BASIC_HAPPINESS] * 0.01
+		var/fishing_speed = 10 SECONDS - round(4 SECONDS * happiness_percentage)
+		if(!do_after(source, fishing_speed, target = target) && !QDELETED(fish_spot))
+			qdel(float)
+			return
+	var/reward_loot = fish_spot.roll_reward(our_rod, source)
+	fish_spot.dispense_reward(reward_loot, source, target)
 	playsound(float, 'sound/effects/bigsplash.ogg', 100)
 	qdel(float)
 
@@ -127,3 +130,5 @@
 	line = /obj/item/fishing_line/reinforced
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
 	resistance_flags = INDESTRUCTIBLE
+	reel_overlay = null
+	show_in_wiki = FALSE //abstract fishing rod

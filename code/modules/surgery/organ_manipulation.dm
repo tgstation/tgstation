@@ -85,6 +85,8 @@
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
+	if(tool)
+		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
 	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
@@ -211,13 +213,24 @@
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
-			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+
+			if(user && target && user.Adjacent(target))
+				//tool check
+				var/obj/item/held_tool = user.get_active_held_item()
+				if(held_tool)
+					held_tool = held_tool.get_proxy_attacker_for(target, user)
+				if(held_tool != tool)
+					return SURGERY_STEP_FAIL
+
+				//organ check
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
+
+				//start operation
 				display_results(
 					user,
 					target,

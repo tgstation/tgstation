@@ -1176,10 +1176,10 @@
 	return TRUE
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
-	if(I?.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
+	if(I.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
 		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
 			span_notice("You start to remove electronics from the airlock assembly..."))
-		if(I.use_tool(src, user, 40, volume=100))
+		if(I.use_tool(src, user, 40, volume = 100))
 			deconstruct(TRUE, user)
 			return
 	if(seal)
@@ -1204,8 +1204,8 @@
 				var/time_to_open = 50
 				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
-				if(do_after(user, time_to_open, src))
-					if(check_electrified && shock(user,100))
+				if(I.use_tool(src, user, time_to_open, volume = 100))
+					if(check_electrified && shock(user, 100))
 						prying_so_hard = FALSE
 						return
 					open(BYPASS_DOOR_CHECKS)
@@ -2228,7 +2228,7 @@
 		if(!hasPower())
 			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
 			if(do_after(user, 15 SECONDS, target = src))
-				try_to_crowbar(null, user, TRUE)
+				try_to_crowbar(src, user, TRUE)
 				return TRUE
 		else
 			// always open from the space side

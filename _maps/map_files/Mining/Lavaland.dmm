@@ -8836,7 +8836,7 @@
 /area/mine/laborcamp/security)
 "Ya" = (
 /obj/machinery/vending/security{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10

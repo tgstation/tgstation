@@ -195,12 +195,8 @@
 		var/turf/inbetween_turf = center_turf
 
 		//this is the lowest overhead way of doing a loop in dm other than a goto. distance is guaranteed to be >= steps taken to target by this algorithm
-		var/list/steps = get_steps_to(inbetween_turf, target_turf)
-		if(isnull(steps))
-			return
-		steps.Cut(distance + 1)
-		for(var/direction in steps)
-			inbetween_turf = get_step(inbetween_turf, direction)
+		for(var/step_counter in 1 to distance)
+			inbetween_turf = get_step_towards(inbetween_turf, target_turf)
 
 			if(inbetween_turf == target_turf)//we've gotten to target's turf without returning due to turf opacity, so we must be able to see target
 				break
