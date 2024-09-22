@@ -284,7 +284,11 @@
 	var/list/choices = list()
 	for(var/radial_name in available_fish_sources)
 		var/datum/fish_source/source = available_fish_sources[radial_name]
-		choices[radial_name] = image(icon = 'icons/hud/radial_fishing.dmi', icon_state = source.radial_state)
+		var/mutable_appearance/radial_icon = mutable_appearance('icons/hud/radial_fishing.dmi', source.radial_state)
+		if(!istype(source, /datum/fish_source/portal))
+			//a little star on the top-left to distinguishs them from standard portals.
+			radial_icon.add_overlay('icons/hud/radial_fishing.dmi', "linked_source")
+		choices[radial_name] = radial_icon
 
 	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
 	if(!choice || !can_interact(user))
