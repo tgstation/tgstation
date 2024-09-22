@@ -68,8 +68,8 @@
 
 // slimpacks
 /obj/item/storage/backpack/satchel/flat/empty/custom
-	name = "custom slimpack"
-	desc = "An ultra-light-weight slim storage option that fits above the belt."
+	name = "custom flatpack"
+	desc = "An ultra-light-weight slim storage option that fits above the belt- or slipped into other bags or under floor tiles."
 	icon_state = "slimpack"
 	greyscale_colors = "#333333#FF0000"
 	greyscale_config = /datum/greyscale_config/backpack/slimpack
