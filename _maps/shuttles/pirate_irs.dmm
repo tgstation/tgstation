@@ -1153,6 +1153,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
 	},
+/obj/item/lead_pipe,
 /obj/item/flamethrower{
 	name = "Fallujah firehose";
 	desc = "Someone's got a friend in Syria!"

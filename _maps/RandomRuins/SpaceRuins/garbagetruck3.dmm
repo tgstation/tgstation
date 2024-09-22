@@ -300,6 +300,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pM" = (
+/obj/item/lead_pipe,
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/decal/cleanable/glass,
 /obj/item/restraints/handcuffs/cable/zipties/used,

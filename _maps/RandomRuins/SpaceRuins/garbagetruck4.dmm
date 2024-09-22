@@ -55,6 +55,10 @@
 /obj/item/trash/candy{
 	pixel_x = 7
 	},
+/obj/item/lead_pipe{
+	pixel_x = -2;
+	pixel_y = -4
+	},
 /obj/item/plate_shard{
 	pixel_x = 6;
 	pixel_y = 0
