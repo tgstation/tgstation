@@ -132,6 +132,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine. It is not food."
 	icon = 'icons/obj/cigarettes.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
 	throw_speed = 0.5
@@ -675,6 +676,27 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+
+/obj/item/cigarette/dart
+	name = "fat dart"
+	desc = "Chuff back this fat dart"
+	icon_state = "bigon"
+	icon_on = "bigon"
+	icon_off = "bigoff"
+	w_class = WEIGHT_CLASS_BULKY
+	smoketime = 18 MINUTES
+	chem_volume = 65
+	list_reagents = list(/datum/reagent/drug/nicotine = 45)
+	choke_time_max = 40 SECONDS
+	lung_harm = 2
+
+/obj/item/cigarette/dart/Initialize(mapload)
+	. = ..()
+	//the compiled icon state is how it appears when it's on.
+	//That's how we want it to show on orbies (little virtual PDA pets).
+	//However we should reset their appearance on runtime.
+	update_appearance(UPDATE_ICON_STATE)
 
 
 ////////////
