@@ -22,7 +22,7 @@
 	message = "claps."
 	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	audio_cooldown = 3 SECONDS
+	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
@@ -53,7 +53,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	audio_cooldown = 3 SECONDS
+	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	stat_allowed = SOFT_CRIT
