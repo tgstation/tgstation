@@ -192,8 +192,8 @@
 /**
  * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
  *
- * Calls do_secondary_hand_hit() from the caster onto the victim.
- * It's worth noting that victim will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
+ * Calls do_secondary_hand_hit() from the caster onto the target.
+ * It's worth noting that target will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
 
  * Does NOT check for antimagic on its own. Implement your own checks if you want the r-click to abide by it.
  */
@@ -204,20 +204,20 @@
 	if(!can_hit_with_hand(target, caster))
 		return FALSE
 
-	var/secondary_result = cast_on_secondary_hand_hit(hand, victim, caster)
+	var/secondary_result = cast_on_secondary_hand_hit(source, target, caster)
 	switch(secondary_result)
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
-			spell_feedback(caster)
-			caster.do_attack_animation(victim)
+			log_combat(caster, target, "cast the touch spell [name] on", source, "(secondary / alt cast)")
+			INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
+			caster.do_attack_animation(target)
 			caster.changeNext_move(CLICK_CD_MELEE)
-			victim.add_fingerprint(caster)
+			target.add_fingerprint(caster)
 			remove_hand(caster)
 
 		// Call normal will call the normal cast proc
 		if(SECONDARY_ATTACK_CALL_NORMAL)
-			on_hand_hit(hand, victim, caster)
+			on_hand_hit(source, target, caster)
 
 		// Cancel chain will do nothing,
 		if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
