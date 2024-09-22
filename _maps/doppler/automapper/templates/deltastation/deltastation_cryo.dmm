@@ -1,0 +1,112 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/commons/fitness/recreation)
+"d" = (
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/time_clock/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/commons/fitness/recreation)
+"e" = (
+/obj/machinery/computer/cryopod/directional/east,
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/fitness/recreation)
+"k" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/camera/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/commons/fitness/recreation)
+"l" = (
+/obj/structure/sign/poster/timeclock_psa,
+/turf/closed/wall,
+/area/station/commons/fitness/recreation)
+"v" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/commons/fitness/recreation)
+"F" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/commons/fitness/recreation)
+"G" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryopods"
+	},
+/obj/effect/landmark/navigate_destination{
+	location = "Cryopods"
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/fitness/recreation)
+"I" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/commons/fitness/recreation)
+"P" = (
+/obj/effect/landmark/start/hangover,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/station/commons/fitness/recreation)
+"Z" = (
+/obj/machinery/cryopod,
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/dark,
+/area/station/commons/fitness/recreation)
+
+(1,1,1) = {"
+l
+I
+G
+I
+a
+"}
+(2,1,1) = {"
+I
+Z
+P
+F
+I
+"}
+(3,1,1) = {"
+I
+Z
+v
+F
+I
+"}
+(4,1,1) = {"
+I
+d
+e
+k
+I
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

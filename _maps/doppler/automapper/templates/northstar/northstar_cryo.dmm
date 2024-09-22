@@ -1,0 +1,888 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bp" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"bV" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"bX" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"di" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/common/cafeteria)
+"dG" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/circuitboard/machine/processor{
+	pixel_y = 10
+	},
+/obj/item/circuitboard/machine/oven,
+/obj/item/circuitboard/machine/microwave{
+	pixel_y = -10
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"dP" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/grass,
+/area/station/common/cryopods)
+"eu" = (
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"eN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"fj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "comish_shutter"
+	},
+/turf/open/floor/plating,
+/area/station/commons/vacant_room/commissary)
+"fs" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/west,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"hm" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "comish_shutter"
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"hN" = (
+/turf/template_noop,
+/area/station/hallway/floor3/aft)
+"ia" = (
+/obj/structure/table,
+/obj/item/pai_card,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"ib" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+"ic" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"io" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryopods"
+	},
+/obj/effect/landmark/navigate_destination{
+	location = "Cryopods"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"kc" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"lt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"lv" = (
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"lO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/service{
+	name = "Vacant Commissary"
+	},
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room/commissary)
+"mU" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"ng" = (
+/obj/structure/chair,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"nB" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"nC" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"nQ" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"oz" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"oE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/floor3/aft)
+"oI" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"oZ" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"qE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"qF" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"qI" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"qP" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/cable,
+/obj/machinery/button/door/directional/north{
+	name = "Commissary Shutters";
+	pixel_x = -5;
+	id = "comish_shutter"
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Commissary Door";
+	pixel_x = 7;
+	id = "comish_door";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"rA" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+"rT" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryopods"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"se" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"si" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"sM" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"tv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/floor3/aft)
+"vN" = (
+/turf/closed/wall,
+/area/station/common/cafeteria)
+"wl" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/grass,
+/area/station/common/cryopods)
+"wR" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/east,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"zq" = (
+/obj/machinery/computer/cryopod/directional/south,
+/obj/machinery/time_clock/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"Ao" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/common/cryopods)
+"AB" = (
+/obj/structure/table,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"AR" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"CF" = (
+/turf/template_noop,
+/area/station/common/cafeteria)
+"CO" = (
+/turf/template_noop,
+/area/template_noop)
+"Dz" = (
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/floor3/aft)
+"ED" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Fk" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"FP" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/common/cafeteria)
+"FR" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/obj/machinery/holopad,
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+"Hk" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/stack/sheet/iron/ten,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Io" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end,
+/obj/structure/sign/poster/timeclock_psa/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"IB" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"IH" = (
+/turf/closed/wall,
+/area/station/common/cryopods)
+"JW" = (
+/obj/machinery/firealarm/directional/north,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"KR" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/station/common/cafeteria)
+"Lc" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"MQ" = (
+/obj/effect/turf_decal/stripes/full,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/service{
+	name = "Vacant Commissary";
+	id_tag = "comish_door"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Nk" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/chair/stool{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"NZ" = (
+/obj/structure/chair,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"Oy" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Po" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"PN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/sign/poster/timeclock_psa/directional/south,
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/floor3/aft)
+"QZ" = (
+/obj/structure/table,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"Sd" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+"Sf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"SN" = (
+/turf/closed/wall,
+/area/station/commons/vacant_room/commissary)
+"SW" = (
+/obj/structure/table,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/checker,
+/area/station/common/cafeteria)
+"Ty" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"TI" = (
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side,
+/area/station/hallway/floor3/aft)
+"Ut" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"UU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Vu" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"Wr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"WD" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+"XL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"XR" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "comish_shutter"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"Yt" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/vacant_room/commissary)
+"YW" = (
+/obj/effect/turf_decal/siding/thinplating_new/light/end{
+	dir = 1
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/common/cryopods)
+"Zv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/turf/open/floor/iron,
+/area/station/common/cafeteria)
+"ZM" = (
+/obj/effect/turf_decal/tile/green/opposingcorners{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/checker,
+/area/station/commons/vacant_room/commissary)
+
+(1,1,1) = {"
+hN
+vN
+vN
+vN
+vN
+vN
+vN
+CO
+CO
+CO
+CO
+CO
+CO
+CO
+"}
+(2,1,1) = {"
+hN
+vN
+JW
+ng
+SW
+oz
+qI
+CO
+CO
+CO
+CO
+CO
+CO
+CO
+"}
+(3,1,1) = {"
+hN
+di
+lv
+NZ
+ia
+oz
+eu
+CO
+CO
+CO
+CO
+CO
+CO
+CO
+"}
+(4,1,1) = {"
+Dz
+KR
+Vu
+Vu
+Vu
+Vu
+Ut
+fs
+ic
+bp
+Lc
+CF
+CF
+CO
+"}
+(5,1,1) = {"
+tv
+FP
+Wr
+qE
+Wr
+eN
+Zv
+nB
+bV
+bV
+bV
+bV
+IB
+CO
+"}
+(6,1,1) = {"
+TI
+di
+lv
+NZ
+QZ
+oz
+oI
+SN
+fj
+hm
+XR
+hm
+SN
+CO
+"}
+(7,1,1) = {"
+oE
+vN
+sM
+NZ
+AB
+oz
+Sf
+MQ
+UU
+ED
+Nk
+Oy
+Hk
+CO
+"}
+(8,1,1) = {"
+PN
+IH
+IH
+IH
+IH
+IH
+rT
+SN
+qP
+Sd
+ib
+rA
+AR
+CO
+"}
+(9,1,1) = {"
+oE
+Ao
+dP
+Po
+bX
+qF
+se
+SN
+oZ
+rA
+FR
+rA
+Yt
+CO
+"}
+(10,1,1) = {"
+oE
+io
+XL
+lt
+lt
+lt
+Ty
+SN
+kc
+ZM
+WD
+ZM
+nQ
+CO
+"}
+(11,1,1) = {"
+oE
+Ao
+wl
+YW
+mU
+Io
+zq
+SN
+si
+dG
+wR
+Fk
+nC
+CO
+"}
+(12,1,1) = {"
+CO
+IH
+IH
+IH
+IH
+IH
+IH
+SN
+SN
+SN
+SN
+lO
+SN
+CO
+"}
