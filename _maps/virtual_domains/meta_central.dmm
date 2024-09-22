@@ -112,7 +112,7 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "aT" = (
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "aV" = (

@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "pruned higher frequencies from the resonant shriek ability sound, making it lighter on the ears"
