@@ -974,7 +974,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(user.active_storage == src && user.client)
 			seeing += user
 		else
-			is_using -= user
+			hide_contents(user)
 	return seeing
 
 /**
@@ -1032,8 +1032,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * * mob/to_hide - the mob to hide the storage from
  */
 /datum/storage/proc/hide_contents(mob/to_hide)
-	if(!to_hide.client)
-		return TRUE
 	if(to_hide.active_storage == src)
 		to_hide.active_storage = null
 
@@ -1046,8 +1044,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	is_using -= to_hide
 
-	to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
-	to_hide.client.screen -= real_location.contents
+	if(to_hide.client)
+		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.client.screen -= real_location.contents
+	if (isnull(storage_interfaces[to_hide]))
+		var/observer_string = ""
+		if (LAZYLEN(to_hide.observers))
+			observer_string = "while they had [length(to_hide.observers)] observers "
+			var/viewing_us = 0
+			for (var/mob/potential_bad_evil_guy in to_hide.observers)
+				if (potential_bad_evil_guy in is_using)
+					viewing_us += 1
+			if (viewing_us)
+				observer_string += "[viewing_us] of whom had this storage open "
+		WARNING("[parent] had a null storage interface for [ui_user] during closing [observer_string]- this is a TM issue, yell at smartkar")
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 
@@ -1079,6 +1089,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
 	for (var/ui_user in storage_interfaces)
+		if (isnull(storage_interfaces[ui_user]))
+			var/observer_string = ""
+			if (LAZYLEN(ui_user.observers))
+				observer_string = "while they had [length(ui_user.observers)] observers "
+				var/viewing_us = 0
+				for (var/mob/potential_bad_evil_guy in ui_user.observers)
+					if (potential_bad_evil_guy in is_using)
+						viewing_us += 1
+				if (viewing_us)
+					observer_string += "[viewing_us] of whom had this storage open "
+			WARNING("[parent] had a null storage interface for [ui_user] during orient_storage [observer_string]- this is a TM issue, yell at smartkar")
+			storage_interfaces -= ui_user
+			continue
 		storage_interfaces[ui_user].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
 
 	var/current_x = screen_start_x
