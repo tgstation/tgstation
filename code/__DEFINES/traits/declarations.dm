@@ -991,7 +991,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///This fish is currently on cooldown and cannot splash ink unto people's faces
 #define TRAIT_FISH_INK_ON_COOLDOWN "fish_ink_on_cooldown"
 ///This fish requires two hands to carry even if smaller than FISH_SIZE_TWO_HANDS_REQUIRED, as long as it's bulky-sized.
-#define TRAIT_FISH_SHOULD_TWOHANDED "should_twohanded"
+#define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
+///This fish won't be killed when cooked.
+#define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"

@@ -599,3 +599,24 @@
 		/mob/living/basic/carp/mega = 2,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18
+
+/datum/fish_source/deepfryer
+	catalog_description = "Deep Fryers"
+	radial_state = "fryer"
+	fish_table = list(
+		/obj/item/food/badrecipe = 15,
+		/obj/item/food/nugget = 5,
+		/obj/item/fish/fryish = 40,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/fryish = 10,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/fryish = 2 MINUTES,
+		/obj/item/fish/fryish/fritterish = 6 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13

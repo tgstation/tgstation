@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "You can now fish new, tasty treats by the station deep fryers."
+  - rscadd: "You can now grow fish inside an aquarium by feeding them regularly (at 50% hunger for maximum growth)."
+  - rscadd: "Added the evolution for pikes to armored pikes."
