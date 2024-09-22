@@ -45,8 +45,8 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
  */
 /datum/fish_evolution/proc/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
 	SHOULD_CALL_PARENT(TRUE)
-	//chances are halved if only one parent has this evolution.
 	if(aquarium)
+		//chances are halved if only one parent has this evolution.
 		var/real_probability = (mate && (type in mate.evolution_types)) ? probability : probability/2
 		if(!prob(real_probability))
 			return FALSE
