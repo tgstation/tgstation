@@ -1057,7 +1057,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 					viewing_us += 1
 			if (viewing_us)
 				observer_string += "[viewing_us] of whom had this storage open "
-		WARNING("[parent] had a null storage interface for [ui_user] during closing [observer_string]- this is a TM issue, yell at smartkar")
+		WARNING("[parent] had a null storage interface for [to_hide] ([isobserver(to_hide) ? "observer" : "player"]) during closing [observer_string]- this is a TM issue, yell at smartkar")
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 
@@ -1099,7 +1099,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 						viewing_us += 1
 				if (viewing_us)
 					observer_string += "[viewing_us] of whom had this storage open "
-			WARNING("[parent] had a null storage interface for [ui_user] during orient_storage [observer_string]- this is a TM issue, yell at smartkar")
+			WARNING("[parent] had a null storage interface for [ui_user] ([isobserver(ui_user) ? "observer" : "player"]) during orient_storage [observer_string]- this is a TM issue, yell at smartkar")
 			storage_interfaces -= ui_user
 			continue
 		storage_interfaces[ui_user].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
