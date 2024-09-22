@@ -30,7 +30,7 @@
 	var/stop_listening_timer = null
 	var/setting_callbacks = list(
 		CALLBACK(src, PROC_REF(clear_requests)),
-		CALLBACK(src, PROC_REF(set_listen_for_requests),
+		CALLBACK(src, PROC_REF(set_listen_for_requests)),
 		CALLBACK(src, PROC_REF(set_auto_response)),
 		CALLBACK(src, PROC_REF(stop_listening))
 		)
