@@ -5,10 +5,10 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "c" = (
 /turf/closed/wall,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "g" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -20,7 +20,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 "m" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32,7 +32,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 "n" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -41,17 +41,16 @@
 	dir = 1
 	},
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/dorms,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
 	},
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -61,7 +60,7 @@
 	},
 /obj/structure/sign/poster/timeclock_psa/directional/north,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "v" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -72,12 +71,12 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "A" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -88,7 +87,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 "G" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -102,7 +101,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured_half,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "J" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -113,7 +112,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -121,24 +120,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "M" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/time_clock/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating_new/light/end,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/clothing,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/south,
@@ -147,7 +147,7 @@
 	},
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "U" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -157,7 +157,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/small,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "V" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/corner{
@@ -165,7 +165,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "Y" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -173,7 +173,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/hallway/secondary/entry)
+/area/station/commons/cryopods)
 
 (1,1,1) = {"
 a

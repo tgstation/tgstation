@@ -16,12 +16,12 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "d" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "e" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -36,7 +36,7 @@
 "f" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "g" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -51,13 +51,13 @@
 "h" = (
 /obj/structure/sign/poster/timeclock_psa,
 /turf/closed/wall,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "j" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "k" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -72,7 +72,7 @@
 "l" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "m" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -124,7 +124,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "t" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -180,7 +180,7 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "A" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -194,10 +194,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "D" = (
 /turf/closed/wall,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "E" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -225,7 +225,7 @@
 "I" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "J" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -248,7 +248,7 @@
 	},
 /obj/machinery/time_clock/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "M" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -258,7 +258,7 @@
 	},
 /obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "N" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 4
@@ -268,12 +268,12 @@
 	},
 /obj/machinery/computer/cryopod/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "O" = (
 /obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "P" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
@@ -302,7 +302,7 @@
 	name = "Tends-The-Garden"
 	},
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "U" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 8
@@ -311,7 +311,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "V" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -345,7 +345,7 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "Z" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4

@@ -13,7 +13,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "i" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -23,17 +23,17 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "j" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "p" = (
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/time_clock/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "q" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -44,7 +44,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "v" = (
 /obj/machinery/cryopod,
 /obj/effect/turf_decal/siding/white,
@@ -53,7 +53,7 @@
 	},
 /obj/structure/sign/poster/timeclock_psa/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "x" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -69,11 +69,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "C" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "I" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -83,7 +83,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "L" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -94,7 +94,7 @@
 /area/station/commons/fitness)
 "N" = (
 /turf/closed/wall,
-/area/station/common/cryopods)
+/area/station/commons/cryopods)
 "O" = (
 /obj/machinery/airalarm/directional/west,
 /turf/template_noop,
