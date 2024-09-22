@@ -27,9 +27,8 @@
 	var/parts_to_check = parts - part
 	if(part.loc == src)
 		deploy(user, part)
-		if(active)
-			if(!delayed_seal_part(part))
-				return
+		if(active && !delayed_seal_part(part))
+			return
 		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc != src)
@@ -37,9 +36,8 @@
 			choose_deploy(user)
 			break
 	else
-		if(active)
-			if(!delayed_seal_part(part))
-				return
+		if(active && !delayed_seal_part(part))
+			return
 		retract(user, part)
 		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
@@ -50,8 +48,8 @@
 
 /// Quickly deploys all parts (or retracts if all are on the wearer)
 /obj/item/mod/control/proc/quick_deploy(mob/user)
-	if(active || activating)
-		balloon_alert(user, "deactivate the suit first!")
+	if(activating)
+		balloon_alert(user, "currently sealing/unsealing!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	var/deploy = TRUE
@@ -63,7 +61,11 @@
 	for(var/obj/item/part as anything in get_parts())
 		if(deploy && part.loc == src)
 			deploy(null, part)
+			if(active && !delayed_seal_part(part))
+				return
 		else if(!deploy && part.loc != src)
+			if(active && !delayed_seal_part(part))
+				return
 			retract(null, part)
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
@@ -170,7 +172,7 @@
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc == src)
 			continue
-		delayed_seal_part(part)
+		delayed_seal_part(part, no_activation = TRUE)
 
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
@@ -187,17 +189,17 @@
 	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
-/obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part)
+/obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part, no_activation = FALSE)
 	. = FALSE
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		seal_part(part, is_sealed = !part_datum.sealed)
+		seal_part(part, is_sealed = !part_datum.sealed, no_activation = no_activation)
 		return TRUE
 
 ///Seals or unseals the given part.
-/obj/item/mod/control/proc/seal_part(obj/item/clothing/part, is_sealed)
+/obj/item/mod/control/proc/seal_part(obj/item/clothing/part, is_sealed, no_activation = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	part_datum.sealed = is_sealed
 	if(part_datum.sealed)
@@ -220,6 +222,22 @@
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
 		wearer.cutoff_internals()
+	if(!active || no_activation)
+		return
+	// these only matter during sealing and unsealing while active via deployment
+	if(is_sealed)
+		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.has_required_parts(list("[part.slot_flags]" = part_datum), need_extended = TRUE))
+				continue
+			module.on_suit_activation()
+	else
+		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.has_required_parts(list("[part.slot_flags]" = part_datum), need_extended = TRUE))
+				continue
+			module.on_suit_deactivation()
+			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
+				continue
+			module.deactivate(display_message = FALSE)
 
 /// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(is_on)
