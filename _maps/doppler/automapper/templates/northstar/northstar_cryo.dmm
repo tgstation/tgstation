@@ -153,6 +153,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/door/airlock{
+	id_tag = "comish_door";
+	name = "Vacant Commissary"
+	},
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "mU" = (
@@ -492,7 +496,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	id = "comish_door"
+	id_tag = "comish_door";
+	name = "Vacant Commissary"
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
