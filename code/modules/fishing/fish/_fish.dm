@@ -743,7 +743,7 @@
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
 	if(isaquarium(loc))
-		var/obj/structure/aquarium = loc
+		var/obj/structure/aquarium/aquarium = loc
 		if(!aquarium.reproduction_and_growth)
 			return
 	var/hunger = get_hunger()
