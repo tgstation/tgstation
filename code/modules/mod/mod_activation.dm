@@ -169,22 +169,30 @@
 	activating = TRUE
 	mod_link.end_call()
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
-	for(var/obj/item/part as anything in get_parts())
+	//deploy the control unit
+	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
+		playsound(src, active ? 'sound/machines/synth_no.ogg' : 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 8000)
+	else
+		activating = FALSE
+		return
+
+	for(var/obj/item/part as anything in get_parts()) //seals/unseals all deployed parts
 		if(part.loc == src)
 			continue
 		delayed_seal_part(part, no_activation = TRUE)
 
-	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
-		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
-		if(ai_assistant)
-			to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
-		finish_activation(is_on = !active)
-		if(active)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
-			if(!malfunctioning)
-				wearer.playsound_local(get_turf(src), 'sound/mecha/nominal.ogg', 50)
-		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+	//finish activation
+	to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
+	if(ai_assistant)
+		to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
+	finish_activation(is_on = !active)
+	if(active)
+		playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+		if(!malfunctioning)
+			wearer.playsound_local(get_turf(src), 'sound/mecha/nominal.ogg', 50)
+	else
+		playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+
 	activating = FALSE
 	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
