@@ -32,6 +32,7 @@
 
 /obj/item/flatpacked_machine/rtg
 	name = "flat-packed radioisotope thermoelectric generator"
+	desc = /obj/machinery/power/rtg/portable::desc
 	icon_state = "rtg_packed"
 	type_to_deploy = /obj/machinery/power/rtg/portable
 	custom_materials = list(

@@ -38,6 +38,7 @@
 
 /obj/item/flatpacked_machine/organics_ration_printer
 	name = "organic rations printer parts kit"
+	desc = /obj/machinery/biogenerator/foodricator::desc
 	icon = 'modular_doppler/colony_fabricator/icons/foodricator.dmi'
 	icon_state = "biogenerator_parts"
 	type_to_deploy = /obj/machinery/biogenerator/foodricator

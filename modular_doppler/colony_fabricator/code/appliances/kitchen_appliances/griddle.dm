@@ -26,6 +26,7 @@
 
 /obj/item/flatpacked_machine/frontier_griddle
 	name = "flat-packed tabletop griddle"
+	desc = /obj/machinery/griddle/frontier_tabletop::desc
 	icon = 'modular_doppler/colony_fabricator/icons/kitchen_stuff/griddle.dmi'
 	icon_state = "griddle_parts"
 	w_class = WEIGHT_CLASS_NORMAL

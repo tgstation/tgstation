@@ -114,7 +114,7 @@
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/stack/sheet/plastic_wall_panel/ten
+	build_path = /obj/item/stack/sheet/plastic_wall_panel
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + FABRICATOR_SUBCATEGORY_STRUCTURES,

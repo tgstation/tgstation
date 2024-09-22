@@ -227,9 +227,6 @@
 
 /datum/design/flatpack_turbine_team_fortress_two
 	name = "Flat-Packed Miniature Wind Turbine"
-	desc = "A deployable fabricator capable of producing other flat-packed machines and other special equipment tailored for \
-		rapidly constructing functional structures given resources and power. While it cannot be upgraded, it can be repacked \
-		and moved to any location you see fit. This one makes specialized engineering designs and tools."
 	id = "flatpack_turbine_team_fortress_two"
 	build_type = COLONY_FABRICATOR
 	materials = list(

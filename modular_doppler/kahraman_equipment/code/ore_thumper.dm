@@ -254,6 +254,7 @@
 // Item for deploying ore thumpers
 /obj/item/flatpacked_machine/ore_thumper
 	name = "flat-packed ore thumper"
+	desc = /obj/machinery/power/colony_ore_thumper::desc
 	icon = 'modular_doppler/kahraman_equipment/icons/ore_thumper_item.dmi'
 	icon_state = "thumper_packed"
 	type_to_deploy = /obj/machinery/power/colony_ore_thumper
