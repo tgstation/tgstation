@@ -1,4 +1,6 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
+#define BASE_COOLING (T0C - 192)
+#define BASE_HEATING (T20C + 271)
 
 /obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/machines/atmospherics/thermomachine.dmi'
@@ -30,8 +32,8 @@
 	var/target_temperature = T20C
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
-	var/base_heating = 140
-	var/base_cooling = 170
+	var/base_heating = BASE_HEATING
+	var/base_cooling = BASE_COOLING
 	var/color_index = 1
 
 /datum/armor/unary_thermomachine
@@ -91,8 +93,13 @@
 	var/calculated_laser_rating = 0
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		calculated_laser_rating += laser.tier
-	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
-	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+
+	// 73.15K with T1 stock parts
+	min_temperature = base_cooling - ((calculated_laser_rating * 2) + (calculated_laser_rating ** 2))
+	min_temperature = max(min_temperature, TCMB) // No going below 2.7K
+
+	// 573.15K with T1 stock parts
+	max_temperature = base_heating + (floor(calculated_laser_rating ** 3.25))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
 	var/colors_to_use = ""
@@ -381,3 +388,5 @@
 	icon_state = "thermo_base_1"
 
 #undef THERMOMACHINE_POWER_CONVERSION
+#undef BASE_COOLING
+#undef BASE_HEATING
