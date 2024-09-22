@@ -37,7 +37,7 @@ Notes:
 
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-	if (!thing || !params || (!title && !content) || !owner || !isnum(ICONSIZE_ALL))
+	if (!thing || !params || (!title && !content) || !owner || !isnum(ICON_SIZE_ALL))
 		return FALSE
 
 	if (!isnull(last_target))
@@ -50,7 +50,7 @@ Notes:
 	if (!init)
 		//Initialize some vars
 		init = 1
-		owner << output(list2params(list(ICONSIZE_ALL, control)), "[control]:tooltip.init")
+		owner << output(list2params(list(ICON_SIZE_ALL, control)), "[control]:tooltip.init")
 
 	showing = 1
 

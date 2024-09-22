@@ -44,7 +44,7 @@
 	if (isnull(viewer_client))
 		return
 
-	var/bound_width = ICONSIZE_X
+	var/bound_width = ICON_SIZE_X
 	if (ismovable(src))
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
@@ -64,7 +64,7 @@
 
 	animate(
 		balloon_alert,
-		pixel_y = ICONSIZE_Y * 1.2,
+		pixel_y = ICON_SIZE_Y * 1.2,
 		time = BALLOON_TEXT_TOTAL_LIFETIME(length_mult),
 		easing = SINE_EASING | EASE_OUT,
 	)

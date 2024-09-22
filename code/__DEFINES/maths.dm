@@ -193,16 +193,16 @@
 	var/new_x = starting.x
 	var/new_y = starting.y
 	while(pixel_x > 16)
-		pixel_x -= ICONSIZE_X
+		pixel_x -= ICON_SIZE_X
 		new_x++
 	while(pixel_x < -16)
-		pixel_x += ICONSIZE_X
+		pixel_x += ICON_SIZE_X
 		new_x--
 	while(pixel_y > 16)
-		pixel_y -= ICONSIZE_Y
+		pixel_y -= ICON_SIZE_Y
 		new_y++
 	while(pixel_y < -16)
-		pixel_y += ICONSIZE_Y
+		pixel_y += ICON_SIZE_Y
 		new_y--
 	new_x = clamp(new_x, 1, world.maxx)
 	new_y = clamp(new_y, 1, world.maxy)

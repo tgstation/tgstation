@@ -191,7 +191,7 @@
 	if(!offset_x && !offset_y && !force)
 		return
 
-	var/glide_rate = round(ICONSIZE_ALL / screenmob.glide_size * world.tick_lag, world.tick_lag)
+	var/glide_rate = round(ICON_SIZE_ALL / screenmob.glide_size * world.tick_lag, world.tick_lag)
 	C.previous_turf = posobj
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
@@ -297,8 +297,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-	var/static/pixel_grid_size = ICONSIZE_ALL * 15
-	var/static/parallax_scaler = ICONSIZE_ALL / pixel_grid_size
+	var/static/pixel_grid_size = ICON_SIZE_ALL * 15
+	var/static/parallax_scaler = ICON_SIZE_ALL / pixel_grid_size
 
 	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(view)

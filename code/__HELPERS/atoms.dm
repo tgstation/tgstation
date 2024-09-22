@@ -95,7 +95,7 @@
 		return 0
 	. = bounds_dist(start, end) + sqrt((((start.pixel_x + end.pixel_x) ** 2) + ((start.pixel_y + end.pixel_y) ** 2)))
 	if(centered)
-		. += ICONSIZE_ALL
+		. += ICON_SIZE_ALL
 
 /**
  * Check if there is already a wall item on the turf loc
@@ -336,6 +336,6 @@ rough example of the "cone" made by the 3 dirs checked
 	var/icon_width = icon_dimensions["width"]
 	var/icon_height = icon_dimensions["height"]
 	return list(
-		"x" = icon_width > ICONSIZE_X && pixel_x != 0 ? (icon_width - ICONSIZE_X) * 0.5 : 0,
-		"y" = icon_height > ICONSIZE_Y && pixel_y != 0 ? (icon_height - ICONSIZE_Y) * 0.5 : 0,
+		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
+		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)

@@ -3,16 +3,15 @@
 /**
  * The game's world.icon_size. \
  * Ideally divisible by 16. \
- * Ideally a number. \
- * Can be a string (32x32), so more exotic coders
- * will be sad if you use this in math. \
- * Preferably use ICONSIZE_X or ICONSIZE_Y when you can.
+ * Ideally a number, but it
+ * can be a string ("32x32"), so more exotic coders
+ * will be sad if you use this in math.
  */
-#define ICONSIZE_ALL 32
-/// The X dimension of the ICONSIZE. This will more than likely be the bigger one.
-#define ICONSIZE_X 32
-/// The Y dimension of the ICONSIZE. This will more than likely be the smaller one.
-#define ICONSIZE_Y 32
+#define ICON_SIZE_ALL 32
+/// The X/Width dimension of ICON_SIZE. This will more than likely be the bigger axis.
+#define ICON_SIZE_X 32
+/// The Y/Height dimension of ICON_SIZE. This will more than likely be the smaller axis.
+#define ICON_SIZE_Y 32
 
 //Returns the hex value of a decimal number
 //len == length of returned string
