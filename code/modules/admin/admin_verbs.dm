@@ -320,7 +320,7 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability", max_length = MAX_NAME_LEN)
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(ability_recipient)

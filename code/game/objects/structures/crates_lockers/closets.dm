@@ -830,14 +830,17 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
-		var/str = tgui_input_text(user, "Locker Name", "Locker Name")
-		if(!isnull(str))
-			name = str
+
+		var/input_name = tgui_input_text(user, "Locker Name", "Locker Name", max_length = MAX_NAME_LEN)
+
+		if(!isnull(input_name))
+			name = input_name
 			name_set = TRUE
 
-		str = tgui_input_text(user, "Locker Description", "Locker Description")
-		if(!isnull(str))
-			desc = str
+		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
+
+		if(!isnull(input_desc))
+			desc = input_desc
 			desc_set = TRUE
 
 		var/bit_flag = NONE

@@ -38488,6 +38488,7 @@
 	pixel_y = 32;
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
 	interior_airlock = "virology_airlock_control";
 	name = "Virology Access Controller";
 	req_access = list("virology")
