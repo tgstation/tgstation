@@ -163,6 +163,7 @@
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
+	max_integrity = 60
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
 	/// Reference to trap owner mob
@@ -175,7 +176,7 @@
 
 /obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
-		return ..()
+		return
 	var/mob/living/living_mob = entering_atom
 	if(WEAKREF(living_mob) == owner)
 		return
