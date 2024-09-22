@@ -159,7 +159,7 @@
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(attacking_item, user)
-		return TRUE //cancel the attack chain, wether we successfully placed an item or not
+		return TRUE //cancel the attack chain, whether we successfully placed an item or not
 	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
@@ -426,7 +426,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message

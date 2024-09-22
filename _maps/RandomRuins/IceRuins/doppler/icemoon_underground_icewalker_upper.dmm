@@ -349,6 +349,20 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
+"sB" = (
+/obj/structure/rack/wooden,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = 7
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_catgirl_den)
 "sE" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
@@ -889,17 +903,17 @@
 /area/ruin/unpowered/primitive_catgirl_den)
 "XV" = (
 /obj/structure/rack/wooden,
-/obj/item/reagent_containers/cup/glass/bottle/small{
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/cup/glass/bottle/small{
-	pixel_x = 1
-	},
-/obj/item/reagent_containers/cup/glass/bottle/small{
-	pixel_x = 7
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/wall_torch/spawns_lit/directional/west,
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = 7
+	},
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "Yj" = (
@@ -930,16 +944,16 @@
 /area/ruin/unpowered/primitive_catgirl_den)
 "YZ" = (
 /obj/structure/rack/wooden,
-/obj/item/reagent_containers/cup/glass/bottle/small{
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/cup/glass/bottle/small{
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/cup/glass/bottle{
 	pixel_x = 1
 	},
-/obj/item/reagent_containers/cup/glass/bottle/small{
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
 	pixel_x = 7
 	},
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
 /area/ruin/unpowered/primitive_catgirl_den)
 "Zv" = (
@@ -2192,7 +2206,7 @@ RX
 Uv
 Uv
 Uv
-YZ
+sB
 OG
 OG
 YZ

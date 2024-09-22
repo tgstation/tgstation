@@ -112,7 +112,7 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "aT" = (
-/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "aV" = (
@@ -4413,14 +4413,14 @@
 /area/virtual_domain)
 "Lq" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/glasses/hud/security/night{
-	pixel_x = -8;
-	pixel_y = -6
+/obj/item/clothing/glasses/night/colorless{
+	pixel_x = 5;
+	pixel_y = 7
 	},
-/obj/item/clothing/glasses/hud/security/night,
-/obj/item/clothing/glasses/hud/security/night{
-	pixel_x = 8;
-	pixel_y = 8
+/obj/item/clothing/glasses/night/colorless,
+/obj/item/clothing/glasses/night/colorless{
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -5023,7 +5023,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "PR" = (
-/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/machinery/vending/boozeomat/syndicate,
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
 /area/virtual_domain)

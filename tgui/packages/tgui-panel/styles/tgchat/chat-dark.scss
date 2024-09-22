@@ -1012,6 +1012,7 @@ em {
   width: 3em; // a css guru can probably dehardcode this later
   height: auto;
   margin-right: 12px;
+  margin-top: 6px;
 }
 
 .img_by_text_container .img_text {
@@ -1188,3 +1189,40 @@ $border-width-px: $border-width * 1px;
     background-color: darken(map.get($alert-stripe-colors, $color-name), 5);
   }
 }
+
+/* DOPPLER EDIT ADDITION START - DARK MODE CLASSES */
+
+.looc {
+  color: #d8b555;
+}
+
+.rlooc {
+  color: #b09448;
+}
+
+.pink {
+  color: #ff00ff;
+  font-weight: bold;
+}
+
+.brown {
+  color: #3d2009;
+  font-weight: bold;
+}
+
+.cyan {
+  color: #0ea1e6;
+  font-weight: bold;
+}
+
+.orange {
+  color: #b8761a;
+  font-weight: bold;
+}
+
+.yellow {
+  color: #c7b72c;
+  font-weight: bold;
+}
+
+// DOPPLER EDIT ADDITION END

@@ -55,7 +55,7 @@
 	var/datum/team/sapper/gang = new
 
 	new_character.forceMove(pick_n_take(spawn_locs))
-	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_sapper))
+	new_character.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_sapper))
 	new_character.mind.special_role = ROLE_SPACE_SAPPER
 	new_character.mind.add_antag_datum(/datum/antagonist/sapper, gang)
 	new_character.mind.active = TRUE
@@ -122,7 +122,7 @@
 
 	var/list/mind_list = list(mind_one, mind_two)
 	for(var/datum/mind/minds as anything in mind_list)
-		minds.set_assigned_role(SSjob.GetJobType(/datum/job/space_sapper))
+		minds.set_assigned_role(SSjob.get_job_type(/datum/job/space_sapper))
 		minds.special_role = ROLE_SPACE_SAPPER
 		minds.active = TRUE
 

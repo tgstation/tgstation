@@ -107,6 +107,7 @@
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE
 	var/is_audible = emote_type & EMOTE_AUDIBLE
+	var/space = should_have_space_before_emote(html_decode(msg)[1]) ? " " : "" // DOPPLER EDIT ADDITION
 
 	// Emote doesn't get printed to chat, runechat only
 	if(emote_type & EMOTE_RUNECHAT)
@@ -155,6 +156,7 @@
 			deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>",
 			self_message = msg,
 			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+			separation = space, // DOPPLER EDIT ADDITION
 		)
 	// Emote is entirely audible, no visible component
 	else if(is_audible)
@@ -162,6 +164,7 @@
 			message = msg,
 			self_message = msg,
 			audible_message_flags = EMOTE_MESSAGE,
+			separation = space, // DOPPLER EDIT ADDITION
 		)
 	// Emote is entirely visible, no audible component
 	else if(is_visual)
@@ -169,9 +172,40 @@
 			message = msg,
 			self_message = msg,
 			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+			separation = space, // DOPPLER EDIT ADDITION
 		)
 	else
 		CRASH("Emote [type] has no valid emote type set!")
+
+	// DOPPLER EDIT ADDITION START - AI QOL - RELAY EMOTES OVER HOLOPADS
+	var/obj/effect/overlay/holo_pad_hologram/hologram = GLOB.hologram_impersonators[user]
+	if(hologram)
+		if(is_important)
+			for(var/mob/living/viewer in viewers(world.view, hologram))
+				to_chat(viewer, msg)
+		else if(is_visual && is_audible)
+			hologram.audible_message(
+				message = msg,
+				deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>",
+				self_message = msg,
+				audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+				separation = space,
+			)
+		else if(is_audible)
+			hologram.audible_message(
+				message = msg,
+				self_message = msg,
+				audible_message_flags = EMOTE_MESSAGE,
+				separation = space,
+			)
+		else if(is_visual)
+			hologram.visible_message(
+				message = msg,
+				self_message = msg,
+				visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+				separation = space,
+			)
+	// DOPPLER EDIT ADDITION END
 
 	if(!isnull(user.client))
 		var/dchatmsg = "<b>[user]</b> [msg]"

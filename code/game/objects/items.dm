@@ -464,26 +464,35 @@
 	abstract_move(null)
 	forceMove(T)
 
-/obj/item/examine(mob/user) //This might be spammy. Remove?
-	. = ..()
-
-	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
+/obj/item/examine_tags(mob/user)
+	var/list/parent_tags = ..()
+	parent_tags.Insert(1, weight_class_to_text(w_class)) // To make size display first, otherwise it looks goofy
+	. = parent_tags
+	.[weight_class_to_text(w_class)] = "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
 
 	if(item_flags & CRUEL_IMPLEMENT)
-		. += "[src] seems quite practical for particularly <font color='red'>morbid</font> procedures and experiments."
+		.[span_red("morbid")] = "It seems quite practical for particularly <font color='red'>morbid</font> procedures and experiments."
+
+	if (siemens_coefficient == 0)
+		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
+	else if (siemens_coefficient <= 0.5)
+		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
 
 	if(resistance_flags & INDESTRUCTIBLE)
-		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
-	else
-		if(resistance_flags & LAVA_PROOF)
-			. += "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
-		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
-			. += "[src] looks pretty robust! It'd probably be able to withstand acid!"
-		if(resistance_flags & FREEZE_PROOF)
-			. += "[src] is made of cold-resistant materials."
-		if(resistance_flags & FIRE_PROOF)
-			. += "[src] is made of fire-retardant materials."
+		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
 		return
+
+	if(resistance_flags & LAVA_PROOF)
+		.["lavaproof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		.["acidproof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
+	if(resistance_flags & FREEZE_PROOF)
+		.["freezeproof"] = "It is made of cold-resistant materials."
+	if(resistance_flags & FIRE_PROOF)
+		.["fireproof"] = "It is made of fire-retardant materials."
+
+/obj/item/examine_descriptor(mob/user)
+	return "item"
 
 /obj/item/examine_more(mob/user)
 	. = ..()
@@ -651,7 +660,7 @@
 /obj/item/attack_alien(mob/user, list/modifiers)
 	var/mob/living/carbon/alien/ayy = user
 
-	if(!user.can_hold_items(src))
+	if(!ayy.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
 			ayy.dropItemToGround(src)
 		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
@@ -1202,13 +1211,13 @@
 	return TRUE
 
 /// Called before [obj/item/proc/use_tool] if there is a delay, or by [obj/item/proc/use_tool] if there isn't. Only ever used by welding tools and stacks, so it's not added on any other [obj/item/proc/use_tool] checks.
-/obj/item/proc/tool_start_check(mob/living/user, amount=0)
-	. = tool_use_check(user, amount)
+/obj/item/proc/tool_start_check(mob/living/user, amount=0, heat_required=0)
+	. = tool_use_check(user, amount, heat_required)
 	if(.)
 		SEND_SIGNAL(src, COMSIG_TOOL_START_USE, user)
 
 /// A check called by [/obj/item/proc/tool_start_check] once, and by use_tool on every tick of delay.
-/obj/item/proc/tool_use_check(mob/living/user, amount)
+/obj/item/proc/tool_use_check(mob/living/user, amount, heat_required)
 	return !amount
 
 /// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc. Returns TRUE on success, FALSE on failure.

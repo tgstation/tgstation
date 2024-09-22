@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - spellcheck: "fixed examine and balloon alert text for boulder refining machinery"
