@@ -6513,6 +6513,7 @@
 #include "modular_doppler\deforest_medical_items\code\chemicals\twitch.dm"
 #include "modular_doppler\deforest_medical_items\code\medstation_designs\blood.dm"
 #include "modular_doppler\deforest_medical_items\code\medstation_designs\medical.dm"
+#include "modular_doppler\disable_suicide\config_entries.dm"
 #include "modular_doppler\emotes\code\emotes.dm"
 #include "modular_doppler\emotes\code\hologram.dm"
 #include "modular_doppler\emotes\code\added_emotes\animal_sounds.dm"
