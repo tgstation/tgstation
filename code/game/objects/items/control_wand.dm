@@ -26,9 +26,14 @@
 	/// remote requests kind of a pain in the ass and a situation where they should request adding the access to their ID from the relevant
 	/// head of staff.
 	var/open_requests = list()
-	/// Like above, an ID to a door, but if you get rejected, you get a five minute cooldown before you can send another request
-	/// to this remote.
-	var/recent_rejections = list()
+	/// When the remote gets dropped, start a ten minute timer before we stop listening for requests
+	var/stop_listening_timer = null
+	var/setting_callbacks = list(
+		CALLBACK(src, PROC_REF(clear_requests)),
+		CALLBACK(src, PROC_REF(set_listen_for_requests),
+		CALLBACK(src, PROC_REF(set_auto_response)),
+		CALLBACK(src, PROC_REF(stop_listening))
+		)
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -42,11 +47,16 @@
 	else
 		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(set_listen_for_requests))
 
-/obj/item/door_remote/proc/set_listen_for_requests(datum/source, atom/new_location)
+
+/obj/item/door_remote/proc/set_listen_for_requests(datum/source, atom/new_location, setting_toggle = FALSE)
 	SIGNAL_HANDLER
 	/// If we were moved to a mob, start listening...
 	RegisterSignal(src, COMSIG_DOOR_REMOTE_ACCESS_REQUEST, PROC_REF(receive_access_request))
-	UnregisterSignal(COMSIG_ITEM_PICKUP)
+	if(!setting_toggle && (!listening || stop_listening_timer))
+		UnregisterSignal(COMSIG_ITEM_PICKUP)
+		if(stop_listening_timer)
+			deltimer(stop_listening_timer)
+			stop_listening_timer = null
 	SSid_access.add_listening_remote(region_access, src)
 
 /obj/item/door_remote/proc/receive_access_request(datum/source, obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
@@ -108,16 +118,36 @@
 		// handle requests we'll dynamically check if the door is in-sight of a functional
 		// camera; presumably the remote holder will also have access to those cameras from
 		// their telescreen so they can make sure whoever has that ID is the person in question
-		// after all, it's not like someone would steal the remote, right?
+		// It's not like someone would steal the remote, right?
 		var/obj/machinery/door/airlock/requested_door = open_requests[request_item]
+		// cards and airlocks are not indestructible so we wanna make sure they're still a type
+		if(!istype(request_item, obj/item/card/id) || !istype(requested_door, obj/machinery/door/airlock))
+			request_item = "ERR! Request signal lost! Contact the engineering department."
+			continue
 		for(var/obj/machinery/camera/smile_youre_on_camera in view(7, requested_door))
 			if(smile_youre_on_camera.is_operational && (get_dist(smile_youre_on_camera, requested_door) <= smile_youre_on_camera.view_range))
 				nearest_camera = smile_youre_on_camera
 				break
-		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]][nearest_camera ? "([nearest_camera.c_tag])" : get_area(requested_door)]"
-	parsed_requests += list("\[OPERATION\] Clear all requests", "\[OPERATION\] Stop listening for requests", "\[OPERATION\] [span_danger("!CAUTION!")] Set automatic request response. [span_danger("!CAUTION!")]")
-	tgui_input_checkboxes(user = user, message = "Handle requests", title = "Select", items = parsed_requests)
-
+		parsed_requests += "[request_item.registered_name] -> [open_requests[request_item]] ([nearest_camera ? nearest_camera.c_tag : get_area(requested_door)])"
+	parsed_requests +=
+	list(
+		"\[OPERATION\] Clear all requests" = PROC_REF(clear_requests),
+		(listening ? "\[OPERATION\] Stop listening for requests" = PROC_REF(stop_listening) : \
+		"\[OPERATION\] Start listening for requests" = PROC_REF(set_listen_for_requests),
+		"\[OPERATION\] !CAUTION! Set automatic request response. !CAUTION!)" = PROC_REF(set_auto_response))
+	var/choices = list(tgui_input_checkboxes(user = user, message = "Handle requests", title = "Select", items = parsed_requests))
+	if(!choices)
+		return
+	else
+		var/choices_indexes = list()
+		// checkbox input returns a list of tuples, first index is a string of whatever given index
+		// and second is the index from the original list that the given item should represent
+		for(var/tuple as anything in choices)
+			choices_indexes += tuple[2]
+		// at minimum, this will be three, because we add three options arbitrarily a few lines up
+		// for parsed requests
+		var/operation_check = len(parsed_requests)
+		if()
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
