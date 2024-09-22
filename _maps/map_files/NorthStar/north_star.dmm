@@ -25540,7 +25540,6 @@
 /area/station/science/auxlab)
 "gGB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/lead_pipe,
 /obj/structure/closet/cardboard/metal,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
@@ -51991,9 +51990,6 @@
 	name = "jumper cable";
 	pixel_x = -10;
 	pixel_y = 12
-	},
-/obj/item/lead_pipe{
-	pixel_x = -5
 	},
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 6;
