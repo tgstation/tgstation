@@ -1,7 +1,55 @@
+///	Tail storage datum
+/datum/storage/tail
+	insert_preposition = "on"
+	silent = FALSE
+	max_slots = 1
+	max_specific_storage = WEIGHT_CLASS_SMALL
+	max_total_storage = 50
+	do_rustle = FALSE
+	screen_start_x = 12
+	screen_pixel_x = 22
+
+/datum/storage/tail/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
+	. = ..()
+	set_holdable(list(
+		/obj/item/,
+		))
+
 /// Monkey tail
 //	now waggable!
 /obj/item/organ/external/tail/monkey
+	name = "monkey tail"
 	wag_flags = WAG_ABLE
+
+/obj/item/organ/external/tail/monkey/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/tail)
+	AddComponent(/datum/component/accessable_storage/organ)
+
+/// Mouse tail
+//	Monkey and mouse tail get a (secret) additional inventory slot
+/obj/item/organ/external/tail/mouse
+	name = "mouse tail"
+	preference = "feature_mouse_tail"
+	dna_block = null
+	wag_flags = WAG_ABLE
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
+
+/obj/item/organ/external/tail/mouse/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/tail)
+	AddComponent(/datum/component/accessable_storage/organ)
+
+/datum/bodypart_overlay/mutant/tail/mouse
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/mouse/get_global_feature_list()
+	return SSaccessories.tails_list_mouse
 
 /// Dog tail
 //	Buffs people if they're closeby while you're wagging it!
@@ -76,20 +124,6 @@
 
 /datum/bodypart_overlay/mutant/tail/bunny/get_global_feature_list()
 	return SSaccessories.tails_list_bunny
-
-/// Mouse tail
-//
-/obj/item/organ/external/tail/mouse
-	preference = "feature_mouse_tail"
-	dna_block = null
-	wag_flags = WAG_ABLE
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
-
-/datum/bodypart_overlay/mutant/tail/mouse
-	feature_key = "tail_other"
-
-/datum/bodypart_overlay/mutant/tail/mouse/get_global_feature_list()
-	return SSaccessories.tails_list_mouse
 
 /// Bird tail
 //
