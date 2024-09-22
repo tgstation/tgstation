@@ -1088,7 +1088,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/columns = clamp(max_slots, 1, screen_max_columns)
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
-	for (var/ui_user in storage_interfaces)
+	for (var/mob/ui_user as anything in storage_interfaces)
 		if (isnull(storage_interfaces[ui_user]))
 			var/observer_string = ""
 			if (LAZYLEN(ui_user.observers))
