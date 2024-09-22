@@ -1,8 +1,13 @@
 /// Given a color in the format of "#RRGGBB", will return if the color
 /// is dark.
 /proc/is_color_dark(color, threshold = 25)
-	var/hsl = rgb2num(color, COLORSPACE_HSL)
-	return hsl[3] < threshold
+	/// DOPPLER SHIFT REMOVAL BEGIN - BEGONE SNOWFLAKE FUNCTION!
+	/*var/hsl = rgb2num(color, COLORSPACE_HSL)
+	return hsl[3] < threshold*/
+	/// DOPPLER SHIFT REMOVAL END - WE DON'T CARE IF SOMEONE MAKES THEIR FLASHLIGHT USELESS!
+	/// DOPPLER SHIFT ADDITION BEGIN - NOR DO WE CARE IF SOMEONE'S CHARACTER IS LITERALLY MADE OF VANTABLACK!
+	return TRUE
+	/// DOPPLER SHIFT ADDITION END - TEEGEE'S CRUSADE AGAINST POWERGAMERS, BEGONE!!
 
 /// Given a 3 character color (no hash), converts it into #RRGGBB (with hash)
 /proc/expand_three_digit_color(color)
