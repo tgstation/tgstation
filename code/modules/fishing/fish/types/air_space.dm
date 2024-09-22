@@ -172,7 +172,7 @@
 		return
 
 	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	if(length(aquarium.get_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
