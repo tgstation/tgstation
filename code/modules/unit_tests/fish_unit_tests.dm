@@ -128,7 +128,7 @@
 	description = "It smells fishy."
 
 /obj/structure/aquarium/traits
-	allow_breeding = TRUE
+	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/crossbreeder/crossbreeder
 	var/obj/item/fish/testdummy/cloner/cloner
 	var/obj/item/fish/testdummy/sterile/sterile
@@ -155,7 +155,7 @@
 	fish_traits = list(/datum/fish_trait/no_mating)
 
 /obj/structure/aquarium/evolution
-	allow_breeding = TRUE
+	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/evolve/evolve
 	var/obj/item/fish/testdummy/evolve_two/evolve_two
 
@@ -353,7 +353,7 @@
 	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")
 
 /obj/structure/aquarium/crab
-	allow_breeding = TRUE //needed for growing up
+	reproduction_and_growth = TRUE //needed for growing up
 	///Our test subject
 	var/obj/item/fish/chasm_crab/instant_growth/crabbie
 

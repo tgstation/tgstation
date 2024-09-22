@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	if(source.get_hunger() >= 0.5) //too hungry to grow
 		return COMPONENT_DONT_GROW
 	var/obj/structure/aquarium/aquarium = source.loc
-	if(istype(aquarium) && !aquarium.allow_breeding) //the aquarium has breeding disabled
+	if(istype(aquarium) && !aquarium.reproduction_and_growth) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	else
 		aquarium = null

@@ -742,6 +742,10 @@
 
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
+	if(isaquarium(loc))
+		var/obj/structure/aquarium = loc
+		if(!aquarium.reproduction_and_growth)
+			return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
 		return
@@ -1041,7 +1045,7 @@
 		return FALSE
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return aquarium.reproduction_and_growth && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	var/obj/structure/aquarium/aquarium = loc

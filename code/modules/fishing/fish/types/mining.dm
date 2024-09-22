@@ -81,7 +81,7 @@
 		return
 
 	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
 		anger += growth * 0.25
