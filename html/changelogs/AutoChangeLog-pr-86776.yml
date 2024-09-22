@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "The fishing skill now positively affects fishing rod cast range and reeling objects outside of the minigame. Reeling objects also provides a pitiable amount of fishing experience."
+  - balance: "High fishing skill now reduces experience gained from low difficulty fishing spots."
+  - sound: "Removed noise from reeling sounds."

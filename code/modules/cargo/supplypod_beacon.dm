@@ -73,7 +73,9 @@
 
 /obj/item/supplypod_beacon/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
+	if (default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		pixel_x = 0
+		pixel_y = 0
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/supplypod_beacon/proc/unlink_console()
@@ -91,7 +93,7 @@
 	express_console = C//set the linked console var to the console
 	express_console.beacon = src//out with the old in with the news
 	update_status(SP_LINKED)
-	if (express_console.usingBeacon)
+	if (express_console.using_beacon)
 		update_status(SP_READY)
 	to_chat(user, span_notice("[src] linked to [C]."))
 
