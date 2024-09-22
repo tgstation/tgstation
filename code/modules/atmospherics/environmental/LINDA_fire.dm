@@ -94,7 +94,7 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "light"
+	icon_state = "1"
 	layer = GASFIRE_LAYER
 	blend_mode = BLEND_ADD
 	light_system = OVERLAY_LIGHT
