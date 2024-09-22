@@ -516,4 +516,12 @@
 				'sound/creatures/fish/fish_pickup1.ogg',
 				'sound/creatures/fish/fish_pickup2.ogg',
 			)
+		if(SFX_CAT_MEOW)
+			soundin = pick(
+				''
+			)
+		if(SFX_CAT_PURR)
+			soundin = pick(
+				''
+			)
 	return soundin

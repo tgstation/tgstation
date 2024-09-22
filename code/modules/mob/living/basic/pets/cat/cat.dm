@@ -52,6 +52,13 @@
 	///icon state of our cult icon
 	var/cult_icon_state = "cat_cult"
 
+/datum/emote/living/basic/pet/cat/meow
+	key = "meow"
+	key_third_person = "meows"
+	message = "meows!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
