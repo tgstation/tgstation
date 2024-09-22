@@ -517,11 +517,17 @@
 				'sound/creatures/fish/fish_pickup2.ogg',
 			)
 		if(SFX_CAT_MEOW)
-			soundin = pick(
-				''
-			)
+			soundin = pick_weight(list(
+				'sound/creatures/cat/cat_meow1.ogg' = 25,
+				'sound/creatures/cat/cat_meow2.ogg' = 25,
+				'sound/creatures/cat/cat_meow3.ogg' = 25,
+				'sound/creatures/cat/oranges_meow1.ogg' = 1,
+			))
 		if(SFX_CAT_PURR)
 			soundin = pick(
-				''
+				'sound/creatures/cat/cat_purr1.ogg',
+				'sound/creatures/cat/cat_purr2.ogg',
+				'sound/creatures/cat/cat_purr3.ogg',
+				'sound/creatures/cat/cat_purr4.ogg',
 			)
 	return soundin
