@@ -21,10 +21,6 @@
 	if(treat_path)
 		new treat_path(src)
 
-// incompatible storage by default stops attack chain, but this does not, allows pen renaming
-/obj/item/clothing/neck/human_petcollar/storage_insert_on_interacted_with(datum/storage/storage, obj/item/inserted, mob/living/user)
-	return is_type_in_typecache(inserted, storage.can_hold)
-
 /obj/item/clothing/neck/human_petcollar/leather
 	name = "leather pet collar"
 	icon_state = "leather"

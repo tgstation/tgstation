@@ -26,6 +26,11 @@ $_channel_map: (
   'Supp': #b88646,
   'Svc': #6ca729,
   'Synd': #8f4a4b,
+  // NOVA EDIT ADDITION START
+  'Whis': #7c7fd9,
+  'LOOC': #ffceb6,
+  'Do': #59da7e,
+  // NOVA EDIT ADDITION END
 );
 
 $channel_keys: map.keys($_channel_map) !default;

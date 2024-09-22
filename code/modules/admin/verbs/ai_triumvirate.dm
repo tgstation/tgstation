@@ -36,7 +36,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 		to_chat(usr, "This option is currently only usable during pregame. This may change at a later date.", confidential = TRUE)
 		return
 
-	var/datum/job/job = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/job = SSjob.get_job_type(/datum/job/ai)
 	if(!job)
 		to_chat(usr, "Unable to locate the AI job", confidential = TRUE)
 		CRASH("triple_ai() called, no /datum/job/ai to be found.")

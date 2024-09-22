@@ -1,7 +1,7 @@
 /obj/item/paper/paperslip/ration_ticket
 	name = "ration ticket - standard"
 	desc = "A little slip of paper that'll slot right into any cargo console and put your alotted food ration on the next shuttle to the station."
-	icon = 'modular_doppler/paycheck_rations/icons/tickets.dmi'
+	icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/tickets.dmi'
 	icon_state = "ticket_food"
 	default_raw_text = "Redeem this ticket in the nearest supply console to receive benefits."
 	color = COLOR_OFF_WHITE
@@ -24,9 +24,9 @@
 
 	// List of meat options we get
 	var/list/radial_meat_options = list(
-		"Standard Meats" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "meats"),
-		"Seafood Meats" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "meats_fish"),
-		"Tizirian Meats" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "meats_lizard"),
+		"Standard Meats" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "meats"),
+		"Seafood Meats" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "meats_fish"),
+		"Tizirian Meats" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "meats_lizard"),
 	)
 
 	var/meats_choice = show_radial_menu(user, object_we_attack, radial_meat_options, require_near = TRUE)
@@ -47,10 +47,10 @@
 
 	// List of produce options we get
 	var/list/radial_produce_options = list(
-		"Standard Produce" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "plants"),
-		"Alternative Produce" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_alt"),
-		"Mothic Produce" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_moth"),
-		"Tizirian Produce" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_lizard"),
+		"Standard Produce" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "plants"),
+		"Alternative Produce" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_alt"),
+		"Mothic Produce" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_moth"),
+		"Tizirian Produce" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "plants_lizard"),
 	)
 
 	var/produce_choice = show_radial_menu(user, object_we_attack, radial_produce_options, require_near = TRUE)
@@ -77,8 +77,8 @@
 
 	// List of flour options we get
 	var/list/radial_flour_options = list(
-		"Standard Flour" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "flour"),
-		"Korta Flour" = image(icon = 'modular_doppler/paycheck_rations/icons/food_containers.dmi', icon_state = "flour_korta"),
+		"Standard Flour" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "flour"),
+		"Korta Flour" = image(icon = 'modular_doppler/modular_quirks/paycheck_rations/icons/food_containers.dmi', icon_state = "flour_korta"),
 	)
 
 	var/flour_choice = show_radial_menu(user, object_we_attack, radial_flour_options, require_near = TRUE)
