@@ -48,3 +48,23 @@
 /datum/greyscale_config/maid_headband/worn
 	name = "Maid Headband (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/maid_costume_worn.dmi'
+
+
+//////////////
+//HYPOSPRAYS//
+//////////////
+
+/datum/greyscale_config/hypokit
+	name = "Hypospray Kit"
+	icon_file = 'modular_doppler/modular_items/hyposprays/icons/hypokits.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/items/hypokit.json'
+
+/datum/greyscale_config/hypospray_mkii
+	name = "Hypospray Mk. II"
+	icon_file = 'modular_doppler/modular_items/hyposprays/icons/hyposprays.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/items/hypospray.json'
+
+/datum/greyscale_config/hypovial
+	name = "Hypovial"
+	icon_file = 'modular_doppler/modular_items/hyposprays/icons/vials.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/items/hypovial.json'

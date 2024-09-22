@@ -162,6 +162,7 @@
 			CAT_TUBES = GLOB.reagent_containers[CAT_TUBES],
 			CAT_PILLS = GLOB.reagent_containers[CAT_PILLS],
 			CAT_PATCHES = GLOB.reagent_containers[CAT_PATCHES],
+			CAT_HYPOS = GLOB.reagent_containers[CAT_HYPOS], /// DOPPLER SHIFT ADDITION
 		)
 	return containers
 

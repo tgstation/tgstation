@@ -42,7 +42,7 @@
 				/obj/item/melee/cultblade/dagger,
 				/obj/item/melee/energy,
 				/obj/item/powersink, //this is a bulky item what
-				/obj/item/reagent_containers/hypospray/cmo,
+				/obj/item/hypospray/mkii/deluxe/cmo, /// DOPPLER SHIFT EDIT: changing to our hypospray path
 				/obj/item/spellbook,
 			)
 			var/obj/item/stashed_item = pick(stash_item_paths)

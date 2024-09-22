@@ -270,6 +270,11 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
+		/// DOPPLER SHIFT ADDITION BEGIN
+		/obj/item/storage/hypospraykit,
+		/obj/item/hypospray/mkii,
+		/obj/item/reagent_containers/cup/hypovial,
+		/// DOPPLER SHIFT ADDITION END
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/spray,
