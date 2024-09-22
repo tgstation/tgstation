@@ -216,7 +216,7 @@
 
 /datum/ai_planning_subtree/random_speech/cats
 	speech_chance = 10
-	sound = SFX_CAT_MEOW
+	sound = list(SFX_CAT_MEOW)
 	emote_hear = list("meows.")
 	emote_see = list("meows.")
 
