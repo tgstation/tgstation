@@ -1799,9 +1799,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 	if(compartmentLoadAccessCheck(user))
 		if(IS_WRITING_UTENSIL(attack_item))
-			name = tgui_input_text(user, "Set name", "Name", name, 20)
-			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
-			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
+			name = tgui_input_text(user, "Set name", "Name", name, max_length = 20)
+			desc = tgui_input_text(user, "Set description", "Description", desc, max_length = 60)
+			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 

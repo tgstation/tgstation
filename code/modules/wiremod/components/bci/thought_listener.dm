@@ -56,7 +56,7 @@
 	ready = FALSE
 
 /obj/item/circuit_component/thought_listener/proc/thought_listen(mob/living/owner)
-	var/message = tgui_input_text(owner, input_desc.value ? input_desc.value : "", input_name.value ? input_name.value : "Thought Listener", "")
+	var/message = tgui_input_text(owner, input_desc.value ? input_desc.value : "", input_name.value ? input_name.value : "Thought Listener", "", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(owner) || owner.stat >= SOFT_CRIT)
 		return
 	output.set_output(message)

@@ -99,7 +99,13 @@
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
+	var/message = tgui_input_text(
+		src,
+		"WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'",
+		"Announcement",
+		src.last_announcement,
+		max_length = MAX_MESSAGE_LEN,
+	)
 
 	if(!message || announcing_vox > world.time)
 		return

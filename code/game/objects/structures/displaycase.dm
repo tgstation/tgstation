@@ -426,7 +426,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message
