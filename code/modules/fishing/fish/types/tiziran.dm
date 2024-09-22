@@ -24,9 +24,20 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
+	fish_traits = list(/datum/fish_trait/hallucinogenic)
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 	beauty = FISH_BEAUTY_GOOD
+
+/obj/item/fish/gunner_jellyfish/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	AddElement(/datum/element/quality_food_ingredient, FOOD_COMPLEXITY_2)
+
+/obj/item/fish/gunner_jellyfish/get_fish_taste()
+	return list("cold jelly" = 2)
+
+/obj/item/fish/gunner_jellyfish/get_fish_taste_cooked()
+	return list("crunchy tenderness" = 2)
 
 /obj/item/fish/needlefish
 	name = "needlefish"
@@ -67,3 +78,9 @@
 /obj/item/fish/armorfish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GOOD_QUALITY_BAIT), INNATE_TRAIT)
+
+/obj/item/fish/chasm_crab/get_fish_taste()
+	return list("raw prawn" = 2)
+
+/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+	return list("cooked prawn" = 2)

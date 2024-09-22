@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Fixed multiple minor logic issues with code found by OpenDream's new pragma"

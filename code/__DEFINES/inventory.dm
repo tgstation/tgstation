@@ -110,6 +110,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDEMUTWINGS (1<<13)
 ///hides belts and riggings
 #define HIDEBELT (1<<14)
+///hides antennae
+#define HIDEANTENNAE (1<<15)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)

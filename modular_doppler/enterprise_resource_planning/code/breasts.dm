@@ -262,6 +262,22 @@
 	name = "Pair 12"
 	icon_state = "pair_12"
 
+/datum/sprite_accessory/breasts/pair/typeA
+	name = "Type A"
+	icon_state = "pair_type_a"
+
+/datum/sprite_accessory/breasts/pair/typeB
+	name = "Type B"
+	icon_state = "pair_type_b"
+
+/datum/sprite_accessory/breasts/pair/typeC
+	name = "Type C"
+	icon_state = "pair_type_c"
+
+/datum/sprite_accessory/breasts/pair/typeD
+	name = "Type D"
+	icon_state = "pair_type_d"
+
 /// SKINTONE VERSIONS
 /datum/sprite_accessory/breasts/skintone
 	icon = 'modular_doppler/enterprise_resource_planning/icons/mob/breasts_skintone.dmi'
@@ -319,3 +335,19 @@
 /datum/sprite_accessory/breasts/skintone/pair/size12
 	name = "Skintone Pair 12"
 	icon_state = "pair_12"
+
+/datum/sprite_accessory/breasts/skintone/pair/typeA
+	name = "Skintone Pair Type A"
+	icon_state = "pair_type_a"
+
+/datum/sprite_accessory/breasts/skintone/pair/typeB
+	name = "Skintone Pair Type B"
+	icon_state = "pair_type_b"
+
+/datum/sprite_accessory/breasts/skintone/pair/typeC
+	name = "Skintone Pair Type C"
+	icon_state = "pair_type_c"
+
+/datum/sprite_accessory/breasts/skintone/pair/typeD
+	name = "Skintone Pair Type D"
+	icon_state = "pair_type_d"

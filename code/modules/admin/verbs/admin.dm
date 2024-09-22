@@ -32,7 +32,7 @@ ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEG
 		tgui_alert(user, "[prisoner.name] is not prisoned.")
 		return
 
-	SSjob.SendToLateJoin(prisoner)
+	SSjob.send_to_late_join(prisoner)
 	message_admins("[key_name_admin(user)] has unprisoned [key_name_admin(prisoner)]")
 	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
 	BLACKBOX_LOG_ADMIN_VERB("Unprison")
@@ -181,6 +181,11 @@ ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTIO
 		if(MUTE_DEADCHAT)
 			mute_string = "deadchat and DSAY"
 			feedback_string = "Deadchat"
+		// DOPPLER EDIT ADDITION START - LOOC muting.
+		if(MUTE_LOOC)
+			mute_string = "LOOC"
+			feedback_string = "LOOC"
+		// DOPPLER EDIT ADDITION END - LOOC muting.
 		if(MUTE_INTERNET_REQUEST)
 			mute_string = "internet sound requests"
 			feedback_string = "Internet Sound Requests"

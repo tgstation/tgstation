@@ -314,14 +314,6 @@
 		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
-	switch (max_heat_protection_temperature)
-		if (400 to 1000)
-			. += "[src] offers the wearer limited protection from fire."
-		if (1001 to 1600)
-			. += "[src] offers the wearer some protection from fire."
-		if (1601 to 35000)
-			. += "[src] offers the wearer robust protection from fire."
-
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		. += "[src] increase the speed that you handcuff others."
 
@@ -356,6 +348,38 @@
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
+/obj/item/clothing/examine_tags(mob/user)
+	. = ..()
+	if (clothing_flags & THICKMATERIAL)
+		.["thick"] = "Protects from most injections and sprays."
+	if (clothing_flags & CASTING_CLOTHES)
+		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
+	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
+		.["pressureproof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+	if(flags_cover & PEPPERPROOF)
+		.["pepperproof"] = "Protects the wearer from the effects of pepperspray."
+	if (heat_protection || cold_protection)
+		var/heat_desc
+		var/cold_desc
+		switch (max_heat_protection_temperature)
+			if (400 to 1000)
+				heat_desc = "high"
+			if (1001 to 1600)
+				heat_desc = "very high"
+			if (1601 to 35000)
+				heat_desc = "extremely high"
+		switch (min_cold_protection_temperature)
+			if (160 to 272)
+				cold_desc = "low"
+			if (72 to 159)
+				cold_desc = "very low"
+			if (0 to 71)
+				cold_desc = "extremely low"
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc), " and ")] temperatures."
+
+/obj/item/clothing/examine_descriptor(mob/user)
+	return "clothing"
+
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
@@ -383,7 +407,7 @@
 				added_damage_header = TRUE
 			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
-		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))
 			var/list/things_blocked = list()
 			if(flags_cover & HEADCOVERSMOUTH)
 				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
@@ -393,7 +417,7 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
-		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 			var/list/parts_covered = list()
 			var/output_string = "It"
 			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
@@ -405,8 +429,19 @@
 			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
-		if(min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT)
-			readout += "It will insulate the wearer from [span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space")]."
+		var/heat_prot
+		switch (max_heat_protection_temperature)
+			if (400 to 1000)
+				heat_prot = "minor"
+			if (1001 to 1600)
+				heat_prot = "some"
+			if (1601 to 35000)
+				heat_prot = "extreme"
+		if (heat_prot)
+			. += "[src] offers the wearer [heat_protection] protection from heat, up to [max_heat_protection_temperature] kelvin."
+
+		if(min_cold_protection_temperature)
+			readout += "It will insulate the wearer from [min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"]."
 
 		if(!length(readout))
 			readout += "No armor or durability information available."
