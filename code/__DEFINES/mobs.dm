@@ -710,6 +710,10 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define FRONT_MUTATIONS_LAYER 29
 /// Damage indicators (cuts and burns)
 #define DAMAGE_LAYER 28
+/// DOPPLER SHIFT ADDITION BEGIN
+/// Just below clothing layer
+#define UNDER_UNIFORM_LAYER 27.5
+/// DOPPLER SHIFT ADDITION END
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 27
 /// DOPPLER SHIFT ADDITION BEGIN

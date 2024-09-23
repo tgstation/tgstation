@@ -65,7 +65,7 @@
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	objective = tgui_input_text(user, "Choose the objective to imprint on your victim's brain", "Brainwashing")
+	objective = tgui_input_text(user, "Choose the objective to imprint on your victim's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
 	if(!objective)
 		return SURGERY_STEP_FAIL
 	display_results(

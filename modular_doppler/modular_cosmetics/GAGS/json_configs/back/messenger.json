@@ -1,0 +1,40 @@
+{
+	"messenger": [
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_clasps",
+			"blend_mode": "overlay"
+		}
+	],
+	"messenger_industrial": [
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_industrial_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_industrial_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "messenger_industrial_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}

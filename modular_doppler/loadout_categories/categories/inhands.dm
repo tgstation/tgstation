@@ -26,3 +26,7 @@
 /datum/loadout_item/inhand/bouquet_rose
 	name = "Rose Bouquet"
 	item_path = /obj/item/bouquet/rose
+
+/datum/loadout_item/inhand/slimpack
+	name = "Custom Flatpack"
+	item_path = /obj/item/storage/backpack/satchel/flat/empty/custom

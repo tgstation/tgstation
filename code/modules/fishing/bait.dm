@@ -1,6 +1,6 @@
 /obj/item/bait_can
 	name = "can o bait"
-	desc = "there's a lot of them in there, getting them out takes a while though"
+	desc = "there's a lot of them in there, getting them out takes a while though."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "bait_can"
 	base_icon_state =  "bait_can"
@@ -112,7 +112,7 @@
 
 	var/list/known_fishes = list()
 	for(var/obj/item/fish/fish_type as anything in SSfishing.lure_catchables[type])
-		if(initial(fish_type.show_in_catalog))
+		if(initial(fish_type.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			known_fishes += initial(fish_type.name)
 
 	if(!length(known_fishes))

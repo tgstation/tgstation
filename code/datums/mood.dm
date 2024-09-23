@@ -406,7 +406,7 @@
 		clear_mood_event(MOOD_CATEGORY_AREA_BEAUTY)
 		return
 
-	if(HAS_TRAIT(mob_parent, TRAIT_MORBID))
+	if(HAS_MIND_TRAIT(mob_parent, TRAIT_MORBID))
 		if(HAS_TRAIT(mob_parent, TRAIT_SNOB))
 			switch(area_to_beautify.beauty)
 				if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)

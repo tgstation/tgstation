@@ -195,7 +195,7 @@
 
 /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!ishuman(target))
+	if(!isliving(target))
 		organ.forceMove(drop_location())
 		organ = null
 		return

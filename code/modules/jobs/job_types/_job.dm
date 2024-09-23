@@ -220,10 +220,20 @@
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 	equip_outfit_and_loadout(equipping.get_outfit(consistent), player_client?.prefs, visual_only)
 
-/datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
-	if(H && GLOB.announcement_systems.len)
-		//timer because these should come after the captain announcement
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(pick(GLOB.announcement_systems), TYPE_PROC_REF(/obj/machinery/announcement_system, announce), "NEWHEAD", H.real_name, H.job, channels), 1))
+/datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+	if(!human)
+		return
+	var/obj/machinery/announcement_system/system
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.newhead_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	system = pick(available_machines)
+	//timer because these should come after the captain announcement
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), CALLBACK(system, TYPE_PROC_REF(/obj/machinery/announcement_system, announce), AUTO_ANNOUNCE_NEWHEAD, human.real_name, human.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/player)
@@ -342,25 +352,29 @@
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(ispath(back, /obj/item/storage/backpack))
-		switch(H.backpack)
-			if(GBACKPACK)
-				back = /obj/item/storage/backpack //Grey backpack
-			if(GSATCHEL)
-				back = /obj/item/storage/backpack/satchel //Grey satchel
-			if(GDUFFELBAG)
-				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-			if(LSATCHEL)
-				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-			if(GMESSENGER)
-				back = /obj/item/storage/backpack/messenger //Grey messenger bag
-			if(DSATCHEL)
-				back = satchel //Department satchel
-			if(DDUFFELBAG)
-				back = duffelbag //Department duffel bag
-			if(DMESSENGER)
-				back = messenger //Department messenger bag
-			else
-				back = backpack //Department backpack
+		/// DOPPLER SHIFT EDIT BEGIN
+		var/obj/back_as_obj = back
+		if("[back_as_obj.type]" == "[initial(src.back)]")
+			switch(H.backpack)
+				if(GBACKPACK)
+					back = /obj/item/storage/backpack //Grey backpack
+				if(GSATCHEL)
+					back = /obj/item/storage/backpack/satchel //Grey satchel
+				if(GDUFFELBAG)
+					back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
+				if(LSATCHEL)
+					back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+				if(GMESSENGER)
+					back = /obj/item/storage/backpack/messenger //Grey messenger bag
+				if(DSATCHEL)
+					back = satchel //Department satchel
+				if(DDUFFELBAG)
+					back = duffelbag //Department duffel bag
+				if(DMESSENGER)
+					back = messenger //Department messenger bag
+				else
+					back = backpack //Department backpack
+		/// DOPPLER SHIFT EDIT END
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
@@ -381,10 +395,10 @@
 	if(visualsOnly)
 		return
 
-	var/datum/job/equipped_job = SSjob.GetJobType(jobtype)
+	var/datum/job/equipped_job = SSjob.get_job_type(jobtype)
 
 	if(!equipped_job)
-		equipped_job = SSjob.GetJob(equipped.job)
+		equipped_job = SSjob.get_job(equipped.job)
 
 	var/obj/item/card/id/card = equipped.wear_id
 

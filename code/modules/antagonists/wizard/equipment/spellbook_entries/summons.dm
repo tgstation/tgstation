@@ -74,7 +74,7 @@
 	cost = 4
 
 /datum/spellbook_entry/summon/curse_of_madness/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
-	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness")
+	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
 	curse_of_madness(user, message)

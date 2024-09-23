@@ -15,6 +15,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	w_class = WEIGHT_CLASS_TINY
 
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"

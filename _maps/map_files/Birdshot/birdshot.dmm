@@ -1680,17 +1680,17 @@
 "aGI" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/trash/can/food/pine_nuts{
-	pixel_x = 16;
-	pixel_y = 6
-	},
 /obj/machinery/cell_charger{
 	pixel_x = -1;
-	pixel_y = 2
+	pixel_y = 4
 	},
 /obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -1;
-	pixel_y = 1
+	pixel_y = 4
+	},
+/obj/item/assembly/timer{
+	pixel_x = 14;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -1759,12 +1759,15 @@
 /area/station/maintenance/department/engine/atmos)
 "aIr" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
 	name = "Kitchen Shutters"
 	},
-/turf/open/floor/iron/kitchen/small,
+/obj/effect/turf_decal/siding/end{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "aIu" = (
 /obj/structure/bookcase/random/reference,
@@ -8780,6 +8783,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/portable_atmospherics/pump/lil_pump,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "dpH" = (
@@ -11105,9 +11109,11 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding/end,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "elc" = (
 /obj/structure/cable,
@@ -14993,9 +14999,13 @@
 /obj/machinery/smartfridge,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/iron/kitchen/small,
+/obj/effect/turf_decal/siding/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "fGT" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -18623,6 +18633,7 @@
 /obj/structure/window/spawner/directional/east,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot_white,
+/obj/item/clothing/gloves/color/fyellow,
 /obj/item/stack/package_wrap{
 	pixel_y = 5
 	},
@@ -18633,6 +18644,12 @@
 	desc = "It smells of monkey business...";
 	name = "Empty Gorillacube Box"
 	},
+/obj/item/weldingtool,
+/obj/item/radio{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/assembly/signaler,
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/tools)
 "gRm" = (
@@ -19580,17 +19597,11 @@
 /area/station/commons/storage/tools)
 "hgd" = (
 /obj/structure/table,
-/obj/item/clothing/head/collectable/paper{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/screwdriver{
+	pixel_y = -6
 	},
-/obj/item/paper/crumpled{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/item/trash/candle{
-	pixel_x = 7;
-	pixel_y = 1
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 7
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -19953,6 +19964,10 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
+/obj/item/gps{
+	pixel_y = 5;
+	pixel_x = 13
+	},
 /obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -20005,20 +20020,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical/old{
-	pixel_x = 15;
-	pixel_y = 15
-	},
 /obj/item/crowbar/large{
 	pixel_y = 18
 	},
 /obj/item/clothing/head/costume/pirate{
-	pixel_x = 17;
-	pixel_y = -10
+	pixel_x = 15;
+	pixel_y = -3
 	},
 /obj/item/clothing/suit/hazardvest{
 	pixel_x = -3;
 	pixel_y = -2
+	},
+/obj/item/wrench{
+	pixel_y = 15
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -20217,9 +20231,11 @@
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 8
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/end,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "hrx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20399,6 +20415,7 @@
 	},
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/rack,
+/obj/item/hand_labeler,
 /obj/item/stack/cable_coil/five,
 /obj/item/pickaxe,
 /obj/item/wrench,
@@ -34445,6 +34462,10 @@
 "lNN" = (
 /obj/structure/table,
 /obj/item/toy/foamblade,
+/obj/item/analyzer{
+	pixel_y = 8;
+	pixel_x = -9
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
 "lNQ" = (
@@ -34861,6 +34882,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "lVy" = (
@@ -35175,6 +35197,18 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
+"lZs" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
+/obj/effect/turf_decal/siding/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/service/kitchen)
 "lZt" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -35237,12 +35271,12 @@
 /area/station/hallway/secondary/dock)
 "lZP" = (
 /obj/structure/table,
-/obj/item/clothing/head/fedora/det_hat/minor{
-	pixel_x = 7;
-	pixel_y = 9
-	},
 /obj/item/toy/eightball{
 	pixel_x = -4
+	},
+/obj/item/wirecutters{
+	pixel_y = 17;
+	pixel_x = 4
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
@@ -36170,7 +36204,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/folder/red{
+	pixel_y = 3
+	},
 /obj/item/food/monkeycube/bee{
 	name = "monkey cube";
 	pixel_y = 17
@@ -36180,6 +36216,9 @@
 	pixel_x = 6;
 	name = "monkey cube";
 	desc = "A new Nanotrasen classic, the monkey cube. Tastes like everything!"
+	},
+/obj/item/wirecutters{
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -36584,6 +36623,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mzv" = (
+/obj/docking_port/stationary/syndicate/northeast,
+/turf/open/space/basic,
+/area/space)
 "mzx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -39820,6 +39863,7 @@
 	pixel_x = 15;
 	pixel_y = 7
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nHu" = (
@@ -40240,9 +40284,16 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "nQa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40324,6 +40375,7 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/engineering/break_room)
 "nQH" = (
@@ -46988,6 +47040,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/machinery/firealarm/directional/south,
+/obj/item/storage/belt/utility,
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/tools)
 "qhh" = (
@@ -47783,6 +47836,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/engineering/break_room)
 "qxN" = (
@@ -51211,6 +51265,7 @@
 	pixel_y = 6
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "rDj" = (
@@ -52253,12 +52308,19 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/effect/spawner/random/food_or_drink/condiment,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/condiment,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "rVy" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -55501,12 +55563,19 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/effect/spawner/random/food_or_drink/donuts,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/donuts,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "sZo" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
@@ -59045,6 +59114,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
+"ugt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/small,
+/area/station/engineering/break_room)
 "ugA" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -63695,6 +63771,7 @@
 "vDS" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
+/obj/structure/cable,
 /turf/open/floor/iron/small,
 /area/station/engineering/break_room)
 "vDV" = (
@@ -65710,6 +65787,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/supermatter/room)
 "wjG" = (
@@ -67671,6 +67749,20 @@
 /obj/effect/decal/cleanable/molten_object,
 /obj/effect/landmark/event_spawn,
 /obj/structure/table,
+/obj/item/reagent_containers/cup/bottle/welding_fuel{
+	pixel_y = -3;
+	pixel_x = 13
+	},
+/obj/item/stack/sheet/iron/ten{
+	pixel_y = -6;
+	pixel_x = -2
+	},
+/obj/item/hand_labeler{
+	pixel_y = -15
+	},
+/obj/item/reagent_containers/cup/watering_can{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
 "wPd" = (
@@ -70031,6 +70123,7 @@
 /area/station/maintenance/starboard/central)
 "xwn" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "xwr" = (
@@ -72485,7 +72578,7 @@
 /turf/closed/wall,
 /area/station/medical/surgery/theatre)
 "yfF" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
 	},
@@ -88358,9 +88451,9 @@ kMe
 kMe
 nDJ
 lWV
-mWB
+cYt
 wjw
-kMe
+gAV
 tDu
 ccA
 oPa
@@ -90934,9 +91027,9 @@ awH
 gAV
 qkq
 wRy
-ayK
+urz
 vDS
-aWA
+ugt
 lVv
 nHq
 exQ
@@ -98462,7 +98555,7 @@ sJL
 sne
 aTg
 aTg
-aIr
+lZs
 bIN
 nUd
 bmY
@@ -118682,7 +118775,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+mzv
 dDB
 dDB
 dDB

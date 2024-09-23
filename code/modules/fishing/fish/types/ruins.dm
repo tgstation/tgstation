@@ -8,7 +8,7 @@
 	pixel_x = -16
 	sprite_width = 12
 	sprite_height = 7
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	random_case_rarity = FISH_RARITY_NOPE
 	fishing_difficulty_modifier = 30
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
@@ -26,6 +26,9 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	beauty = FISH_BEAUTY_BAD
 
+/obj/item/fish/mastodon/make_edible(weight_val)
+	return //it's all bones and gibs.
+
 ///From the cursed spring
 /obj/item/fish/soul
 	name = "soulfish"
@@ -36,7 +39,7 @@
 	average_size = 60
 	average_weight = 1200
 	stable_population = 4
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	beauty = FISH_BEAUTY_EXCELLENT
 	fish_movement_type = /datum/fish_movement/choppy //Glideless legacy movement? in my fishing minigame?
 	favorite_bait = list(
@@ -50,6 +53,15 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+38
 	random_case_rarity = FISH_RARITY_NOPE
 
+/obj/item/fish/soul/get_food_types()
+	return MEAT|RAW|GORE //Not-so-quite-seafood
+
+/obj/item/fish/soul/get_fish_taste()
+	return list("meat" = 2, "soulfulness" = 1)
+
+/obj/item/fish/soul/get_fish_taste_cooked()
+	return list("cooked meat" = 2)
+
 ///From the cursed spring
 /obj/item/fish/skin_crab
 	name = "skin crab"
@@ -60,7 +72,7 @@
 	average_size = 40
 	average_weight = 750
 	stable_population = 5
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	beauty = FISH_BEAUTY_GREAT
 	favorite_bait = list(
 		list(
@@ -71,3 +83,8 @@
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	random_case_rarity = FISH_RARITY_NOPE
 
+/obj/item/fish/skin_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/skin_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)

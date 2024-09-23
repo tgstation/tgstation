@@ -37,6 +37,12 @@
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
+/obj/item/fish/chasm_crab/get_fish_taste()
+	return list("raw crab" = 2)
+
+/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+	return list("cooked crab" = 2)
+
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
 /obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
 	. = ..()
@@ -57,6 +63,11 @@
 		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
 
 	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
+
+/obj/item/fish/chasm_crab/pet_fish(mob/living/user)
+	. = ..()
+	if(.)
+		anger -= min(anger, 6.5)
 
 /obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -125,6 +136,9 @@
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
 
+/obj/item/fish/boned/make_edible(weight_val)
+	return //it's all bones and no meat.
+
 /obj/item/fish/lavaloop
 	name = "lavaloop fish"
 	desc = "Due to its curvature, it can be used as make-shift boomerang."
@@ -163,6 +177,12 @@
 		sound_on_success = 'sound/weapons/parry.ogg',\
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
+
+/obj/item/fish/lavaloop/get_fish_taste()
+	return list("chewy fish" = 2)
+
+/obj/item/fish/lavaloop/get_food_types()
+	return SEAFOOD|MEAT|GORE //Well-cooked in lava
 
 /obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()

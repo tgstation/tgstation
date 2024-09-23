@@ -1,0 +1,21 @@
+{
+	"slimpack": [
+		{
+			"type": "icon_state",
+			"icon_state": "slimpack_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "slimpack_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "slimpack_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}
