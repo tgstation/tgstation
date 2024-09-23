@@ -59,7 +59,6 @@
 	. = ..()
 
 	energy = starting_energy || energy
-	check_energy()
 
 	START_PROCESSING(SSsinguloprocess, src)
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -71,7 +70,7 @@
 
 	singularity_component = WEAKREF(new_component)
 
-	expand(current_size)
+	check_energy()
 
 	for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
 		if (singu_beacon.active)
