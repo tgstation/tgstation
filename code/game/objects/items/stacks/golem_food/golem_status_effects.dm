@@ -221,19 +221,21 @@
 /datum/status_effect/golem/plasteel
 	overlay_state_prefix = "iron"
 	mineral_name = "plasteel"
-	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
+	applied_fluff = "Plasteel plates seal you tight. You feel tough!" // Doppler Edit - description
 	alert_icon_state = "sheet-plasteel"
-	alert_desc = "You are sealed against the cold, and against low pressure environments."
+	alert_desc = "You are sealed against the cold, low pressure environments, and are armored!" // Doppler Edit - description
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.physiology.damage_resistance += 10 // Doppler Edit - Gives them 5 extra damage resist. Most you can ever get out of this is probably 30 with xenobio.
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.physiology.damage_resistance -= 10 // Doppler Edit - And God taketh away.
 	return ..()
 
 /// Makes you reflect energy projectiles
