@@ -6,7 +6,7 @@
 /area/ruin)
 "dI" = (
 /obj/item/grown/bananapeel,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 9;
 	pixel_x = -13;
 	pixel_y = 10
@@ -78,19 +78,19 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/light/small/broken/directional/south,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "uc" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = -5;
 	dir = 5;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/item/gps/spaceruin,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -204,7 +204,7 @@
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Ij" = (
@@ -253,7 +253,7 @@
 "Pq" = (
 /obj/machinery/light/broken/directional/north,
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Qb" = (

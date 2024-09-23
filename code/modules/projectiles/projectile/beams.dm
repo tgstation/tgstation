@@ -136,7 +136,7 @@
 	damage_type = STAMINA
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/sear_disabler.ogg'
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/disabler_impact
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler

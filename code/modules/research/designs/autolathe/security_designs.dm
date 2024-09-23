@@ -23,11 +23,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38
-	name = "Speed Loader (.38) (Lethal)"
+	name = ".38 Casting (Lethal)"
 	id = "c38"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
-	build_path = /obj/item/ammo_box/c38
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	build_path = /obj/item/ammo_casing/c38
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
@@ -179,7 +179,7 @@
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
-	build_path = /obj/item/ammo_casing/a357
+	build_path = /obj/item/ammo_casing/c357
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

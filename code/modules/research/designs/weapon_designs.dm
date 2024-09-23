@@ -12,48 +12,48 @@
 	autolathe_exportable = FALSE //Redundant, there's already an autolathe version.
 
 /datum/design/c38_trac
-	name = "Speed Loader (.38 TRAC) (Less Lethal)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
+	name = ".38 TRAC Casing (Nonlethal)"
+	desc = "TRAC bullets embed a tracking implant within the target's body and are nonlethal. The implant's signal is incompatible with teleporters."
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ammo_box/c38/trac
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/ammo_casing/c38/trac
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_hotshot
-	name = "Speed Loader (.38 Hot Shot) (Very Lethal)"
-	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	name = ".38 Hot Shot Casing (Very Lethal)"
+	desc = "Hot Shot bullets contain an incendiary payload."
 	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/ammo_box/c38/hotshot
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/ammo_casing/c38/hotshot
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_iceblox
-	name = "Speed Loader (.38 Iceblox) (Lethal/Very Lethal (Lizardpeople))"
-	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	name = ".38 Iceblox Casing (Lethal/Very Lethal (Lizardpeople))"
+	desc = "Iceblox bullets contain a cryogenic payload."
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/ammo_box/c38/iceblox
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/ammo_casing/c38/iceblox
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_rubber
-	name = "Speed Loader (.38 Rubber) (Less Lethal)"
-	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
+	name = ".38 Rubber Casing (Less Lethal)"
+	desc = "Rubber bullets are bouncy and less-than-lethal."
 	id = "c38_rubber"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
-	build_path = /obj/item/ammo_box/c38/match/bouncy
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5)
+	build_path = /obj/item/ammo_casing/c38/match/bouncy
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)

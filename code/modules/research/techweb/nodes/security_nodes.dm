@@ -7,6 +7,7 @@
 		"toy_armblade",
 		"toygun",
 		"c38_rubber",
+		"c38_trac",
 		"sec_38",
 		"capbox",
 		"foam_dart",

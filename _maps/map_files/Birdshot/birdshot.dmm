@@ -45660,6 +45660,8 @@
 	},
 /obj/effect/spawner/random/armory/barrier_grenades,
 /obj/effect/spawner/random/armory/shotgun,
+/obj/effect/spawner/random/armory/battle_rifle/trac,
+/obj/effect/spawner/random/armory/battle_rifle_mag/trac,
 /turf/open/floor/plating,
 /area/station/ai_monitored/security/armory)
 "pJz" = (

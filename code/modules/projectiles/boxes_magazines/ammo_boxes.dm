@@ -2,7 +2,7 @@
 	name = "speed loader (.357)"
 	desc = "Designed to quickly reload revolvers."
 	icon_state = "357"
-	ammo_type = /obj/item/ammo_casing/a357
+	ammo_type = /obj/item/ammo_casing/c357
 	max_ammo = 7
 	caliber = CALIBER_357
 	multiple_sprites = AMMO_BOX_PER_BULLET
@@ -13,13 +13,13 @@
 /obj/item/ammo_box/a357/match
 	name = "speed loader (.357 Match)"
 	desc = "Designed to quickly reload revolvers. These rounds are manufactured within extremely tight tolerances, making them easy to show off trickshots with."
-	ammo_type = /obj/item/ammo_casing/a357/match
+	ammo_type = /obj/item/ammo_casing/c357/match
 	ammo_band_color = "#77828a"
 
 /obj/item/ammo_box/a357/phasic
 	name = "speed loader (.357 Phasic)"
 	desc = "Designed to quickly reload revolvers. Holds phasic ammo, also known as 'Ghost Lead', allowing it to pass through non-organic material."
-	ammo_type = /obj/item/ammo_casing/a357/phasic
+	ammo_type = /obj/item/ammo_casing/c357/phasic
 	ammo_band_color = "#693a6a"
 
 /obj/item/ammo_box/a357/heartseeker
@@ -27,7 +27,7 @@
 	desc = "Designed to quickly reload revolvers. Holds heartseeker ammo, which veers into targets with exceptional precision using \
 		an unknown method. It apparently predicts movement using neural pulses in the brain, but that's less marketable. \
 		As seen in the hit NTFlik horror-space western film, Forget-Me-Not! Brought to you by Roseus Galactic!"
-	ammo_type = /obj/item/ammo_casing/a357/heartseeker
+	ammo_type = /obj/item/ammo_casing/c357/heartseeker
 	ammo_band_color = "#a91e1e"
 
 /obj/item/ammo_box/c38
@@ -38,13 +38,15 @@
 	max_ammo = 6
 	caliber = CALIBER_38
 	multiple_sprites = AMMO_BOX_PER_BULLET
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
 
+/obj/item/ammo_box/c38/empty
+	start_empty = TRUE
+
 /obj/item/ammo_box/c38/trac
 	name = "speed loader (.38 TRAC)"
-	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body and are entirely nonlethal."
 	ammo_type = /obj/item/ammo_casing/c38/trac
 	ammo_band_color = "#7b6383"
 

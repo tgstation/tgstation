@@ -6,14 +6,18 @@
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
 	desc = "Contains three boxes of beanbag shotgun shells, three boxes \
-		of rubbershot shotgun shells and one of each special .38 speedloaders."
-	cost = CARGO_CRATE_VALUE * 8
+		of rubbershot shotgun shells, three .38 TRAC speedloaders, three .38 TRAC battle rifle magazines \
+		and one speedloader and battle rifle magazine of .38 Hot Shot and .38 Iceblox respectively."
+	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/beanbag = 3,
 					/obj/item/storage/box/rubbershot = 3,
-					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/trac = 3,
+					/obj/item/ammo_box/magazine/m38/trac = 3,
 					/obj/item/ammo_box/c38/hotshot,
+					/obj/item/ammo_box/magazine/m38/hotshot,
 					/obj/item/ammo_box/c38/iceblox,
+					/obj/item/ammo_box/magazine/m38/iceblox,
 				)
 	crate_name = "ammo crate"
 
@@ -203,15 +207,6 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/ballistic
-	name = "Combat Shotguns Crate"
-	desc = "For when the enemy absolutely needs to be replaced with lead. \
-		Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers."
-	cost = CARGO_CRATE_VALUE * 17.5
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat = 3,
-					/obj/item/storage/belt/bandolier = 3)
-	crate_name = "combat shotguns crate"
-
 /datum/supply_pack/security/armory/dragnet
 	name = "DRAGnet Crate"
 	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
@@ -247,6 +242,24 @@
 	contains = list(/obj/item/gun/energy/disabler/smg = 3)
 	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/battle_rifle
+	name = "NT BR-38 Crate"
+	desc = "An experimental energy-based ballistc battle rifle. Only available to \
+		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
+		Contains two NT BR-38 rifles and three magazines containing .38 TRAC."
+	cost = CARGO_CRATE_VALUE * 17.5
+	contains = list(/obj/item/gun/ballistic/automatic/battle_rifle/trac = 2,
+					/obj/item/ammo_box/magazine/m38/trac = 3)
+	crate_name = "battle rifle crate"
+
+/datum/supply_pack/security/armory/empty_38_mag_and_loader
+	name = "Empty .38 Magazine and Speedloader Crate"
+	desc = "Five empty .38 magazines and speedloaders."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/ammo_box/c38/empty = 5,
+					/obj/item/ammo_box/magazine/m38/empty = 5)
+	crate_name = "battle rifle crate"
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"

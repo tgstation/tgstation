@@ -76516,6 +76516,8 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/armory/shotgun,
+/obj/effect/spawner/random/armory/battle_rifle/trac,
+/obj/effect/spawner/random/armory/battle_rifle_mag/trac,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "wkl" = (

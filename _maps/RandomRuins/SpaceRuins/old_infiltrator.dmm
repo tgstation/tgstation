@@ -210,8 +210,8 @@
 "nF" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/ammo_casing/a357/match,
-/obj/item/ammo_casing/a357/match{
+/obj/item/ammo_casing/c357/match,
+/obj/item/ammo_casing/c357/match{
 	pixel_y = -4;
 	pixel_x = -7
 	},
@@ -306,7 +306,7 @@
 /area/ruin/space/unpowered)
 "uS" = (
 /obj/machinery/newscaster/directional/south,
-/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/c357/match,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "vi" = (
@@ -425,7 +425,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Cv" = (
-/obj/item/ammo_casing/a357/match,
+/obj/item/ammo_casing/c357/match,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "CC" = (

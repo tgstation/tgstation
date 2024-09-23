@@ -32087,6 +32087,8 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/armory/shotgun,
+/obj/effect/spawner/random/armory/battle_rifle/trac,
+/obj/effect/spawner/random/armory/battle_rifle_mag/trac,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "irb" = (

@@ -48,7 +48,6 @@
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
-	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
@@ -82,21 +81,29 @@
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
-	damage = 10
+	damage = 0
+	stamina = 25
+	armor_flag = ENERGY
+	wound_bonus = CANT_WOUND
+	shrapnel_type = null
+	sharpness = NONE
+	embed_type = null
 	ricochets_max = 0
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/disabler_impact
 
 /obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	var/mob/living/carbon/M = target
-	if(!istype(M))
+	var/mob/living/carbon/criminal_scum = target
+	if(!istype(criminal_scum))
 		return
 	var/obj/item/implant/tracking/c38/imp
-	for(var/obj/item/implant/tracking/c38/TI in M.implants) //checks if the target already contains a tracking implant
+	for(var/obj/item/implant/tracking/c38/TI in criminal_scum.implants) //checks if the target already contains a tracking implant
 		imp = TI
+		criminal_scum.apply_damage(damage * 0.4, STAMINA) //Just a bit of extra stamina damage if they're already implanted.
 		return
 	if(!imp)
-		imp = new /obj/item/implant/tracking/c38(M)
-		imp.implant(M)
+		imp = new /obj/item/implant/tracking/c38(criminal_scum)
+		imp.implant(criminal_scum)
 
 /obj/projectile/bullet/c38/hotshot //similar to incendiary bullets, but do not leave a flaming trail
 	name = ".38 Hot Shot bullet"
@@ -106,9 +113,9 @@
 /obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(6)
-		M.ignite_mob()
+		var/mob/living/carbon/criminal_scum = target
+		criminal_scum.adjust_fire_stacks(6)
+		criminal_scum.ignite_mob()
 
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
 	name = ".38 Iceblox bullet"
@@ -119,24 +126,24 @@
 /obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/M = target
-		M.adjust_bodytemperature(((100-blocked)/100)*(temperature - M.bodytemperature))
+		var/mob/living/criminal_scum = target
+		criminal_scum.adjust_bodytemperature(((100-blocked)/100)*(temperature - criminal_scum.bodytemperature))
 
 // .357 (Syndie Revolver)
 
-/obj/projectile/bullet/a357
+/obj/projectile/bullet/c357
 	name = ".357 bullet"
 	damage = 60
 	wound_bonus = -30
 
-/obj/projectile/bullet/a357/phasic
+/obj/projectile/bullet/c357/phasic
 	name = ".357 phasic bullet"
 	icon_state = "gaussphase"
 	damage = 35
 	armour_penetration = 100
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
-/obj/projectile/bullet/a357/heartseeker
+/obj/projectile/bullet/c357/heartseeker
 	name = ".357 heartseeker bullet"
 	icon_state = "gauss"
 	damage = 50
@@ -144,7 +151,7 @@
 	homing_turn_speed = 120
 
 // admin only really, for ocelot memes
-/obj/projectile/bullet/a357/match
+/obj/projectile/bullet/c357/match
 	name = ".357 match bullet"
 	ricochets_max = 5
 	ricochet_chance = 140

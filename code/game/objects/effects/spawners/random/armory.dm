@@ -45,6 +45,25 @@
 	icon_state = "shotgun"
 	loot = list(/obj/item/gun/ballistic/shotgun/riot)
 
+/obj/effect/spawner/random/armory/battle_rifle
+	name = "battle rifle spawner"
+	icon_state = "battle_rifle"
+	loot = list(/obj/item/gun/ballistic/automatic/battle_rifle)
+
+/obj/effect/spawner/random/armory/battle_rifle/trac
+	name = "TRAC battle rifle spawner"
+	loot = list(/obj/item/gun/ballistic/automatic/battle_rifle/trac)
+
+/obj/effect/spawner/random/armory/battle_rifle_mag
+	name = "battle rifle mag spawner"
+	icon_state = "battle_rifle_mag"
+	loot = list(/obj/item/ammo_box/magazine/m38)
+
+/obj/effect/spawner/random/armory/battle_rifle_mag/trac
+	name = "battle rifle TRAC mag spawner"
+	icon_state = "battle_rifle_mag"
+	loot = list(/obj/item/ammo_box/magazine/m38/trac)
+
 /obj/effect/spawner/random/armory/dragnet
 	name = "DRAGnet spawner"
 	icon_state = "dragnet"

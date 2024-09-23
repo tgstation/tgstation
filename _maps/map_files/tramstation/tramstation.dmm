@@ -24475,6 +24475,8 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/armory/shotgun,
+/obj/effect/spawner/random/armory/battle_rifle/trac,
+/obj/effect/spawner/random/armory/battle_rifle_mag/trac,
 /turf/open/floor/iron,
 /area/station/ai_monitored/security/armory)
 "hMs" = (

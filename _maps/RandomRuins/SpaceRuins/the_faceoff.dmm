@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aj" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 12
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
@@ -45,40 +45,40 @@
 /turf/template_noop,
 /area/template_noop)
 "bM" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = -1;
 	pixel_y = 5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 12
@@ -168,7 +168,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eI" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = -1;
 	pixel_y = 5
@@ -213,17 +213,17 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "gq" = (
-/obj/item/ammo_casing/a357/spent,
+/obj/item/ammo_casing/c357/spent,
 /obj/structure/barricade/wooden,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "gx" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -280,41 +280,41 @@
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
 "je" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 12
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -2;
 	pixel_y = -5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 6;
 	dir = 1
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = -6
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_y = 13;
 	pixel_x = -5
@@ -322,7 +322,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "jX" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9;
 	pixel_y = 9
@@ -354,7 +354,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "mC" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
@@ -392,7 +392,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "pl" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = -5
@@ -434,11 +434,11 @@
 /area/ruin/space)
 "qX" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9;
 	pixel_y = 9
@@ -455,7 +455,7 @@
 /area/ruin/space)
 "rU" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9
 	},
@@ -482,7 +482,7 @@
 /area/ruin/space)
 "su" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 12
@@ -541,7 +541,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "vA" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = -1;
 	pixel_y = 5
@@ -549,7 +549,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "vZ" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -2;
 	pixel_y = -5
@@ -588,7 +588,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "xi" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
@@ -726,7 +726,7 @@
 /area/ruin/space)
 "Dm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 12
 	},
@@ -786,7 +786,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "FQ" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -804,7 +804,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "GA" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
@@ -822,7 +822,7 @@
 /area/ruin/space)
 "HE" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
@@ -881,7 +881,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "JP" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
@@ -897,11 +897,11 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "Kd" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9;
 	pixel_y = 9
@@ -909,7 +909,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Kp" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
@@ -940,14 +940,14 @@
 /turf/open/floor/iron/dark/textured/airless,
 /area/ruin/space)
 "LM" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "LX" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 12
@@ -973,7 +973,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space)
 "Nc" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
@@ -1047,7 +1047,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "TH" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9
 	},
@@ -1065,7 +1065,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Uy" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 6
@@ -1102,36 +1102,36 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "Vn" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 4;
 	pixel_x = 14;
 	pixel_y = 14
 	},
-/obj/item/ammo_casing/a357/spent,
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent,
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = 9;
 	pixel_y = 9
@@ -1152,7 +1152,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "VB" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -1209,40 +1209,40 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "Zg" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -4;
 	pixel_y = -7
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 2;
 	pixel_y = 12
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 1;
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	pixel_x = 5;
 	pixel_y = -4
 	},
@@ -1259,7 +1259,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "ZP" = (
-/obj/item/ammo_casing/a357/spent{
+/obj/item/ammo_casing/c357/spent{
 	dir = 8;
 	pixel_x = 2;
 	pixel_y = 1
