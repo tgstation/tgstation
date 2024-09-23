@@ -456,7 +456,7 @@
 
 /// Proc to handle the countdown for our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/perform_emp_extreme_malfunction(mob/living/user)
-	balloon_alert(user, "HOLY FUCK THE GUN IS FUCKING EXPLODING, THROW IT, THROW IT NOW!")
+	balloon_alert(user, "UNLINT(HOLY FUCK THE GUN IS FUCKING EXPLODING, THROW IT, THROW IT NOW!)")
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(fucking_explodes_you)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE)
 
