@@ -399,14 +399,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ry" = (
-/obj/machinery/porta_turret/centcom_shuttle/weak{
-	dir = 4;
-	name = "Old Mining Turret";
-	lethal_projectile = /obj/projectile/kinetic/miner;
-	lethal_projectile_sound = 'sound/weapons/kinetic_accel.ogg';
-	stun_projectile = /obj/projectile/kinetic/miner;
-	stun_projectile_sound = 'sound/weapons/kinetic_accel.ogg'
-	},
+/obj/machinery/porta_turret/centcom_shuttle/weak/mining,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
 "rC" = (
