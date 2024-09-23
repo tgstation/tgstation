@@ -10,13 +10,6 @@
 
 	/// Is the obj a glasses icon with swappable item states?
 	var/is_swappable = FALSE
-	// /// if the item are glasses, this variable stores the item.
-	// var/obj/item/clothing/glasses/reskinned_glasses
-
-	// if(istype(src, /obj/item/clothing/glasses)) // TODO - Remove this mess about glasses, it shouldn't be necessary anymore.
-	// 	reskinned_glasses = src
-	// 	if(reskinned_glasses.can_switch_eye)
-	// 		is_swappable = TRUE
 
 	var/list/items = list()
 

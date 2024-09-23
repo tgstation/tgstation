@@ -1,0 +1,15 @@
+{
+	"fannypack": [
+		{
+			"type": "icon_state",
+			"icon_state": "fannypack_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fannypack_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}

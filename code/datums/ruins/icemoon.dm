@@ -64,7 +64,7 @@
 /datum/map_template/ruin/icemoon/frozen_phonebooth
 	name = "Ice-Ruin Frozen Phonebooth"
 	id = "frozen_phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
 	suffix = "icemoon_surface_phonebooth.dmm"
 
 /datum/map_template/ruin/icemoon/smoking_room
@@ -171,6 +171,12 @@
 	id = "icemoon_comms_agent"
 	description = "Radio signals are being detected and the source is this completely innocent pile of snow."
 	suffix = "icemoon_underground_comms_agent.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndie_lab
+	name = "Ice-Ruin Syndicate Lab"
+	id = "syndie_lab"
+	description = "A small laboratory and living space for Syndicate agents."
+	suffix = "icemoon_underground_syndielab.dmm"
 
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
