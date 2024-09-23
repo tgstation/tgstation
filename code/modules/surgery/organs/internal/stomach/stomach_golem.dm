@@ -5,7 +5,7 @@
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
-	hunger_modifier = 10 // golems burn fuel quickly
+	hunger_modifier = 5 // golems burn fuel quickly //but on doppler, not so quickly !! original: 10
 	/// How slow are you when the "hungry" icon appears?
 	var/min_hunger_slowdown = 0.5
 	/// How slow are you if you have absolutely nothing in the tank?
