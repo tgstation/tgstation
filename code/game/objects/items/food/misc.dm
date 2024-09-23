@@ -339,7 +339,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
-	name = "Bran Requests Cereal"
+	name = "bran requests cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
 	icon_state = "bran_requests"
 	food_reagents = list(
@@ -422,7 +422,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/crab_rangoon
-	name = "Crab Rangoon"
+	name = "crab rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "crabrangoon"

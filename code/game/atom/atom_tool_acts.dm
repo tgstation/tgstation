@@ -1,7 +1,7 @@
 /**
  * ## Item interaction
  *
- * Handles non-combat iteractions of a tool on this atom,
+ * Handles non-combat interactions of a tool on this atom,
  * such as using a tool on a wall to deconstruct it,
  * or scanning someone with a health analyzer
  */
@@ -14,7 +14,7 @@
 		if(tool_return)
 			return tool_return
 
-	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_right_clicking = text2num(LAZYACCESS(modifiers, RIGHT_CLICK))
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
 	if(is_left_clicking)
@@ -22,10 +22,8 @@
 		 * This is intentionally using `||` instead of `|` to short-circuit the signal calls
 		 * This is because we want to return early if ANY of these signals return a value
 		 *
-		 * This puts priority on the atom's signals, then the tool's signals, then the user's signals
-		 * So stuff like storage can be handled before stuff the item wants to do like cleaner component
-		 *
-		 * Future idea: Being on combat mode could change/reverse the priority of these signals
+		 * This puts priority on the atom's signals, then the tool's signals, then the user's signals,
+		 * so we can avoid doing two interactions at once
 		 */
 		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION, user, tool, modifiers) \
 			|| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers) \
@@ -50,6 +48,16 @@
 	if(interact_return)
 		return interact_return
 
+	// We have to manually handle storage in item_interaction because storage is blocking in 99% of interactions, which stifles a lot
+	// Yeah it sucks not being able to signalize this, but the other option is to have a second signal here just for storage which is also not great
+	if(atom_storage)
+		if(is_left_clicking)
+			if(atom_storage.insert_on_attack)
+				return atom_storage.item_interact_insert(user, tool)
+		else
+			if(atom_storage.open_storage(user) && atom_storage.display_contents)
+				return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /**
@@ -61,7 +69,7 @@
  *
  * Handles the tool_acts in particular, such as wrenches and screwdrivers.
  *
- * This can be overriden to handle unique "tool interactions"
+ * This can be overridden to handle unique "tool interactions"
  * IE using an item like a tool (when it's not actually one)
  * This is particularly useful for things that shouldn't be inserted into storage
  * (because tool acting runs before storage checks)
@@ -325,23 +333,3 @@
 /// Called on an object when a tool with analyzer capabilities is used to right click an object
 /atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
-
-/**
- * Called before this item is placed into a storage container
- * via the item clicking on the target atom
- *
- * Returning FALSE will prevent the item from being stored.
- */
-/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return TRUE
-
-/**
- * Called before an item is put into this atom's storage datum via the item clicking on this atom
- *
- * This can be used to add item-atom interactions that you want handled before inserting something into storage
- * (But it's also fairly snowflakey)
- *
- * Returning FALSE will block that item from being put into our storage.
- */
-/atom/proc/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	return TRUE

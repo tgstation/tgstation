@@ -12,6 +12,10 @@
 	clothing_traits = list(TRAIT_PLANT_SAFE)
 	armor_type = /datum/armor/gloves_botanic_leather
 
+/obj/item/clothing/gloves/botanic_leather/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
 /datum/armor/gloves_botanic_leather
 	bio = 50
 	fire = 70

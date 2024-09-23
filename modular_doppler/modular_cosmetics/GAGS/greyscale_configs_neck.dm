@@ -147,3 +147,17 @@
 /datum/greyscale_config/collar/spike/worn
 	name = "Spiked Collar (Worn)"
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/collar/spike_worn.json'
+
+///////////
+//MANTLES//
+///////////
+
+/datum/greyscale_config/mantle
+	name = "Mantle"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/mantle.json'
+
+/datum/greyscale_config/mantle/worn
+	name = "Mantle (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/neck/mantle_worn.json'
