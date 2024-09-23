@@ -69,24 +69,49 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += GLOB.sandbag_recipes
 
-/obj/item/emptysandbag
-	name = "empty sandbag"
+/obj/item/stack/sheet/mineral/emptysandbag
+	name = "empty sandbags"
+	singular_name = "empty sandbag"
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/mineral/emptysandbag/fifty
+	amount = 50
+
+/obj/item/stack/sheet/mineral/emptysandbag/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
-		to_chat(user, span_notice("You fill the sandbag."))
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
-		qdel(src)
-		if (Adjacent(user) && !issilicon(user))
-			user.put_in_hands(I)
-		G.use(1)
-	else
-		return ..()
+		if (G.get_amount() >= 1 && get_amount() >= 1)
+			to_chat(user, span_notice("You fill the sandbag."))
+			var/obj/item/stack/sheet/mineral/sandbags/I = new (get_turf(user))
+			if(!QDELETED(I))
+				I.add_fingerprint(user)
+			var/replace = user.get_inactive_held_item() == src
+			G.use(1)
+			use(1)
+			if(QDELETED(src) && replace && !QDELETED(I))
+				user.put_in_hands(I)
+		else
+			to_chat(user, span_warning("You need at least one piece of sand to fill an empty sandbag!"))
+		return
+	return ..()
+
+
+//000
+//obj/structure/bookcase/atom_deconstruct(disassembled = TRUE)
+//	var/atom/Tsec = drop_location()
+///	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
+//	for(var/obj/item/I in contents)
+//		if(!isbook(I)) //Wake me up inside
+//			continue
+//		I.forceMove(Tsec)
+///
+//prob(50) empty sandbag
+
+
 
 /*
  * Diamond

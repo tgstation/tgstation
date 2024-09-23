@@ -225,8 +225,8 @@
 	illustration = "sandbag"
 
 /obj/item/storage/box/emptysandbags/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/emptysandbag(src)
+	for(var/i in 1 to 2)
+		new /obj/item/stack/sheet/mineral/emptysandbag/fifty(src)
 
 /obj/item/storage/box/holy_grenades
 	name = "box of holy hand grenades"

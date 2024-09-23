@@ -216,6 +216,15 @@
 	)
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/sandbag
+	name = "Filled Sandbag"
+	result = /obj/item/stack/sheet/mineral/sandbags
+	reqs = list(
+		/obj/item/stack/ore/glass = 1,
+		/obj/item/stack/sheet/mineral/emptysandbag = 1,
+	)
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Pipe Cleaner Layer"
 	result = /obj/item/rcl/ghetto
