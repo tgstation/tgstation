@@ -149,6 +149,8 @@
 	color_source = ORGAN_COLOR_HAIR
 	feature_key = "ears"
 
+	var/inner_layer = EXTERNAL_FRONT
+
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
 
@@ -160,20 +162,15 @@
 /datum/bodypart_overlay/mutant/cat_ears/get_image(image_layer, obj/item/bodypart/limb)
 	var/mutable_appearance/base_ears = ..()
 
+	// Only add inner ears on the inner layer
+	if(image_layer != bitflag_to_layer(inner_layer))
+		return base_ears
+
 	// Construct image of inner ears, apply to base ears as an overlay
-	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
-	var/list/icon_state_builder = list()
-	icon_state_builder += sprite_datum.gender_specific ? gender : "m"
-	icon_state_builder += "[feature_key]inner"
-	icon_state_builder += get_base_icon_state()
-	icon_state_builder += mutant_bodyparts_layertext(image_layer)
-
-	var/finished_icon_state = icon_state_builder.Join("_")
-
-	var/mutable_appearance/inner_ears = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer, appearance_flags = RESET_COLOR)
-
-	if(sprite_datum.center)
-		center_image(inner_ears, sprite_datum.dimension_x, sprite_datum.dimension_y)
+	feature_key += "inner"
+	var/mutable_appearance/inner_ears = ..()
+	inner_ears.appearance_flags = RESET_COLOR
+	feature_key = initial(feature_key)
 
 	base_ears.overlays += inner_ears
 	return base_ears
