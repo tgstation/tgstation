@@ -157,6 +157,7 @@
 				var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
 				eye_right.color = eyelid_color
 				eye_left.color = eyelid_color
+
 		if(my_head.worn_face_offset)
 			my_head.worn_face_offset.apply_offset(eye_left)
 			my_head.worn_face_offset.apply_offset(eye_right)
@@ -718,7 +719,7 @@
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
-	eyes_layer = ABOVE_BODY_FRONT_HEAD_LAYER //NOVA EDIT - Roundstart Snails
+	eyes_layer = ABOVE_BODY_FRONT_HEAD_LAYER // DOPPLER EDIT - Roundstart Snails
 
 /obj/item/organ/internal/eyes/jelly
 	name = "jelly eyes"
