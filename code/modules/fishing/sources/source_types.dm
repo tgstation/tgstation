@@ -1,4 +1,6 @@
 /datum/fish_source/ocean
+	radial_state = "seaboat"
+	overlay_state = "portal_ocean"
 	fish_table = list(
 		FISHING_DUD = 10,
 		/obj/effect/spawner/message_in_a_bottle = 4,
@@ -33,9 +35,13 @@
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
+	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 
 /datum/fish_source/ice_fishing
 	catalog_description = "Ice-covered water"
+	radial_state = "ice"
+	overlay_state = "portal_ocean"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/arctic_char = 5,
@@ -47,6 +53,8 @@
 
 /datum/fish_source/river
 	catalog_description = "River water"
+	radial_state = "river"
+	overlay_state = "portal_river"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
@@ -72,6 +80,7 @@
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
+	radial_state = "palm_beach"
 	fish_table = list(
 		FISHING_DUD = 8,
 		/obj/item/fish/sand_crab = 10,
@@ -84,6 +93,7 @@
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed"
 	fish_table = list(
 		FISHING_DUD = 2,
 		/obj/item/fish/soul = 3,
@@ -295,12 +305,13 @@
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
 	background = "background_lavaland"
+	radial_state = "ground_hole"
+	overlay_state = "portal_chasm"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
 		/datum/chasm_detritus = 30,
 	)
-
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
 /datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
@@ -324,6 +335,8 @@
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
+	radial_state = "lava"
+	overlay_state = "portal_lava"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
@@ -367,6 +380,7 @@
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
+	radial_state = "garbage"
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
@@ -376,6 +390,7 @@
 
 /datum/fish_source/toilet
 	catalog_description = "Station toilets"
+	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
 	fish_table = list(
 		FISHING_DUD = 18,
@@ -435,6 +450,8 @@
 
 /datum/fish_source/oil_well
 	catalog_description = "Oil wells"
+	radial_state = "oil"
+	overlay_state = "portal_chasm" //close enough to pitch black
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/boned = 10,
@@ -457,6 +474,7 @@
 
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
+	radial_state = "hydro"
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
@@ -561,3 +579,24 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
+
+/datum/fish_source/deepfryer
+	catalog_description = "Deep Fryers"
+	radial_state = "fryer"
+	fish_table = list(
+		/obj/item/food/badrecipe = 15,
+		/obj/item/food/nugget = 5,
+		/obj/item/fish/fryish = 40,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/fryish = 10,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/fryish = 2 MINUTES,
+		/obj/item/fish/fryish/fritterish = 6 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13

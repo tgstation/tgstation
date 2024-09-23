@@ -654,3 +654,77 @@
   - bugfix: A lot of instances where you could fill in 1024-character names (normal
       limit is 42) have been patched out, along with too-long plaque names, too-long
       descriptions, and more.
+2024-09-22:
+  Ben10Omintrix:
+  - bugfix: botkeeper now displays bot's correct states!
+  Goat:
+  - bugfix: Virtual pirates were yelled at by the virtual syndicate and no longer
+      have virtual syndicate headsets.
+  GregariousJB:
+  - rscadd: 'Added three programs to cyborg PDAs: SiliConnect, AtmoZphere, and Crew
+      Manifest'
+  Kocma-san:
+  - bugfix: '"Visible to Network" in the fax interface is now displayed correctly'
+  LT3:
+  - bugfix: Fixed incomplete floodlights calling all light tubes broken
+  Likteer:
+  - bugfix: Plasmamen envirohelmets no longer erroneously apply a slowdown.
+  Rhials:
+  - bugfix: The Meta Central Virtual Domain now uses the proper ghost role spawner,
+      meaning you can't eavesdrop on syndie comms using their headset.
+  SyncIt21:
+  - bugfix: moving or rotating a mech will cancel its hydraulic clamp action
+  carlarctg:
+  - qol: Durathread vests now fit botany items as well as armor items
+  - code_imp: Botany suits now all inherit the same list
+  - rscadd: MetaStation's Drone Bay has been moved to be basically inside the normal
+      cargo bay.
+  - rscadd: 'To make room for it, the security cargo post was moved to the east of
+      the mailing room:'
+  - rscadd: The drone bay spot in maintenance has been cleared out by a gang of rowdy
+      assistants, and turned into a drug den.
+2024-09-23:
+  Bisar:
+  - balance: Changelings are now able to respec multiple times if they have absorbed
+      multiple humanoids, instead of it being toggled on if it was off during their
+      most recent absorb.
+  - balance: Last Resort is now an innate ability for changelings.
+  - code_imp: Added a little counter and a tgui function for displaying how many absorbs
+      lings have in their belly to spend for readaptions!
+  EnterTheJake:
+  - balance: Void Conduit has less range and no longer ignores Line of Sight.
+  Ghommie:
+  - rscadd: You can now fish new, tasty treats by the station deep fryers.
+  - rscadd: You can now grow fish inside an aquarium by feeding them regularly (at
+      50% hunger for maximum growth).
+  - rscadd: Added the evolution for pikes to armored pikes.
+  - rscadd: Added more customizable options to PDA virtual pets, which can be unlocked
+      by completing achievements.
+  - rscadd: Added a fat dart that can be rarely found in hacked cigarette vending
+      machines.
+  - image: added icon states for linkable fishing spots in the fish portal gen radial
+      menu.
+  - balance: The fishing skill now positively affects fishing rod cast range and reeling
+      objects outside of the minigame. Reeling objects also provides a pitiable amount
+      of fishing experience.
+  - balance: High fishing skill now reduces experience gained from low difficulty
+      fishing spots.
+  - sound: Removed noise from reeling sounds.
+  Likteer:
+  - rscdel: Intentional screaming has been unmuted. Now has a 5s cooldown instead.
+  Sealed101:
+  - spellcheck: fixed examine and balloon alert text for boulder refining machinery
+  SmArtKar:
+  - bugfix: Emergency shuttle console no longer reopens its UI on its own
+  - bugfix: Mapped in express supply consoles now work instead of displaying an empty
+      UI.
+  - bugfix: Emagged express supply consoles now display updated prices.
+  - refactor: Rewrote a large chunk of express supply console code
+  - balance: Express supply consoles now drop their upgrade disk upon being deconstructed,
+      and emagged consoles now will try to send at least one package to the station
+      if cargo budget doesn't have enough funds for all 5.
+  - bugfix: Fixed infective components not cleaning up disease datums after themselves
+  grungussuss:
+  - sound: pruned higher frequencies from the resonant shriek ability sound, making
+      it lighter on the ears
+  - sound: lavaland magma ambience has been changed
