@@ -1037,7 +1037,8 @@ h2.alert {
   flex-grow: 1;
 }
 
-// Larger images by text, used by flavor-text examines. No flex shenanigans.
+/*DOPPLER ADDITION START
+  Larger images by text, used by flavor-text examines. No flex shenanigans.*/
 .large_img_by_text_container {
   display: inline-block;
   align-items: center;
@@ -1055,6 +1056,7 @@ h2.alert {
 .large_img_by_text_container .img_text {
   flex-grow: 1;
 }
+/*DOPPLER ADDITION END*/
 
 $alert-stripe-colors: (
   'default': #b3bfff,

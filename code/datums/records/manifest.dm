@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		if(readied_player.new_character)
 			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
-			inject(readied_player.new_character, readied_player.client)
+			inject(readied_player.new_character, readied_player.client)	// DOPPLER EDIT, old code:	inject(readied_player.new_character)
 		CHECK_TICK
 
 /// Gets the current manifest.
@@ -131,7 +131,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		// Locked specifics
 		locked_dna = record_dna,
 		mind_ref = person.mind,
-		age_chronological = person_client?.prefs.read_preference(/datum/preference/numeric/chronological_age),
+		age_chronological = person_client?.prefs.read_preference(/datum/preference/numeric/chronological_age),	// DOPPLER EDIT ADDITION
 	)
 
 	new /datum/record/crew(

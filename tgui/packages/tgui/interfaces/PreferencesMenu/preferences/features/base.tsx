@@ -17,7 +17,7 @@ import {
   NumberInput,
   Slider,
   Stack,
-  TextArea,
+  TextArea /* DOPPLER EDIT ADDITION */,
 } from '../../../../components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';

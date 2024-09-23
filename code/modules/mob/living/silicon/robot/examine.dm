@@ -1,4 +1,6 @@
+/// DOPPLER ADDITION START, Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
+// DOPPLER ADDITION END
 
 /mob/living/silicon/robot/examine(mob/user)
 	. = list()

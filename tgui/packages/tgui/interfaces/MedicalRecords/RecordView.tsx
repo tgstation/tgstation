@@ -92,7 +92,9 @@ export const MedicalRecordView = (props) => {
             <LabeledList.Item label="Job">
               <EditableText field="job" target_ref={crew_ref} text={rank} />
             </LabeledList.Item>
+            {/* DOPPLER EDIT START */}
             <LabeledList.Item label="Physical Age">
+              {/* DOPPLER EDIT, old code: <LabeledList.Item label="Age"> */}
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}

@@ -165,12 +165,12 @@
 	/// Locked specific
 	datum/dna/locked_dna,
 	datum/mind/mind_ref,
-	age_chronological = 18,
+	age_chronological = 18,	// DOPPLER EDIT ADDITION
 )
 	. = ..()
 	src.locked_dna = locked_dna
 	src.mind_ref = WEAKREF(mind_ref)
-	src.age_chronological = age_chronological
+	src.age_chronological = age_chronological	// DOPPLER EDIT ADDITION
 	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
