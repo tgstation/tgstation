@@ -221,28 +221,34 @@
 /datum/status_effect/golem/plasteel
 	overlay_state_prefix = "iron"
 	mineral_name = "plasteel"
-	applied_fluff = "Plasteel plates seal you tight. You feel tough!" // Doppler Edit - description
+	applied_fluff = "Plasteel plates seal you tight. You feel tough!" // Doppler Edit, old code:	applied_fluff = "Plasteel plates seal you tight. You feel insulated!"
 	alert_icon_state = "sheet-plasteel"
-	alert_desc = "You are sealed against the cold, low pressure environments, and are armored!" // Doppler Edit - description
+	alert_desc = "You are sealed against the cold, low pressure environments, and are armored!" // Doppler Edit, old code:	alert_desc = "You are sealed against the cold, and against low pressure environments."
 
+//	 DOPPLER ADDITION START
 /datum/movespeed_modifier/status_effect/golem_plasteel
-	multiplicative_slowdown = 0.5 //Doppler Edit - Tank build?
+	multiplicative_slowdown = 0.5 // Tank build?
+// 	DOPPLER ADDITION END
 
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
+	// DOPPLER ADDITION START
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE)
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance += 15 // Doppler Edit - Gives them 15 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
+	golem_owner.physiology.damage_resistance += 15 // Gives them 15 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
+	// DOPPLER ADDITION END
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
+	// DOPPLER ADDITION START
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE)
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance -= 15 // Doppler Edit - And God taketh away.
+	golem_owner.physiology.damage_resistance -= 15 // And God taketh away.
+	// DOPPLER ADDITION END
 	return ..()
 
 /// Makes you reflect energy projectiles
