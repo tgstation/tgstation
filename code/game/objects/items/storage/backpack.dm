@@ -417,11 +417,11 @@
 	// How much time it takes to zip up (close) the duffelbag
 	var/zip_up_duration = 0.5 SECONDS
 	// Audio played during zipup
-	var/zip_up_sfx = 'sound/items/zip_up.ogg'
+	var/zip_up_sfx = 'sound/items/zip/zip_up.ogg'
 	// How much time it takes to unzip the duffel
 	var/unzip_duration = 2.1 SECONDS
 	// Audio played during unzip
-	var/unzip_sfx = 'sound/items/un_zip.ogg'
+	var/unzip_sfx = 'sound/items/zip/un_zip.ogg'
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
@@ -642,7 +642,7 @@
 	zip_slowdown = 0.3
 	// Faster unzipping. Utilizes the same noise as zipping up to fit the unzip duration.
 	unzip_duration = 0.5 SECONDS
-	unzip_sfx = 'sound/items/zip_up.ogg'
+	unzip_sfx = 'sound/items/zip/zip_up.ogg'
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."

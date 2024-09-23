@@ -200,7 +200,7 @@
 		var/obj/structure/legionnaire_bonfire/newpile = new /obj/structure/legionnaire_bonfire(loc)
 		mypile = newpile
 		mypile.myowner = src
-		playsound(get_turf(src),'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(get_turf(src),'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] summons a bonfire on [get_turf(src)]!"))
 		return
 	else
@@ -210,8 +210,8 @@
 			mypile.take_damage(100)
 			mypile = null
 			return
-		playsound(pileturf,'sound/items/fultext_deploy.ogg', 200, 1)
-		playsound(legionturf,'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
+		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
 		forceMove(pileturf)
 		visible_message(span_boldwarning("[src] forms from the bonfire!"))

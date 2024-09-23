@@ -618,7 +618,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	inhand_icon_state = "silencer"
 	toolspeed = 0.25
 	tool_behaviour = null
-	usesound = 'sound/items/pshoom.ogg'
+	usesound = 'sound/items/pshoom/pshoom.ogg'
 	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?

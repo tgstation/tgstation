@@ -338,7 +338,7 @@
 		balloon_alert(mod.wearer, "already ripped!")
 		return
 	balloon_alert(mod.wearer, "ripping clothing...")
-	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
+	playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE, frequency = -1)
 	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
@@ -369,7 +369,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 		ripped_clothing -= clothing
 	if(zipped)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
 /obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
@@ -382,7 +382,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 	ripped_clothing = list()
 	if(!deleting)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor

@@ -472,6 +472,6 @@
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised
-	block_sound = 'sound/items/trayhit2.ogg'
+	block_sound = 'sound/items/trayhit/trayhit2.ogg'
 
 #undef BATON_BASH_COOLDOWN

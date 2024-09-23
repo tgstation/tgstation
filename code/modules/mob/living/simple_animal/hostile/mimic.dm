@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/open_sound = 'sound/machines/crate/crate_open.ogg'
 	var/close_sound = 'sound/machines/crate/crate_close.ogg'
 	///sound played when the mimic attempts to eat more items than it can
-	var/full_sound = 'sound/items/trayhit2.ogg'
+	var/full_sound = 'sound/items/trayhit/trayhit2.ogg'
 	var/max_mob_size = MOB_SIZE_HUMAN
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock

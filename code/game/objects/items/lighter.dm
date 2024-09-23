@@ -105,9 +105,9 @@
 		heat = heat_while_on
 		START_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/zippo_on.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/lighter/zippo_on.ogg', 100, 1)
 		else
-			playsound(src.loc, 'sound/items/lighter_on.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg', 100, 1)
 		if(isliving(loc))
 			var/mob/living/male_model = loc
 			if(male_model.fire_stacks && !(male_model.on_fire))
@@ -120,9 +120,9 @@
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/zippo_off.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/lighter/zippo_off.ogg', 100, 1)
 		else
-			playsound(src.loc , 'sound/items/lighter_off.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/lighter_off.ogg', 100, 1)
 	set_light_on(lit)
 	update_appearance()
 

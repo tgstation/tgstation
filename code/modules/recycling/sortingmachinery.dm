@@ -32,7 +32,7 @@
 /obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
 	if(rip_open)
-		playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
 		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)

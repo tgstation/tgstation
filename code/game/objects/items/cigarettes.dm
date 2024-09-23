@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
-	playsound(src.loc, 'sound/items/cig_light.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -396,7 +396,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
-	playsound(src.loc, 'sound/items/cig_snuff.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))

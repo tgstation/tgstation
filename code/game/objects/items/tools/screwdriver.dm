@@ -68,7 +68,7 @@
 	icon_state = "screwdriver_a"
 	inhand_icon_state = "screwdriver_nuke"
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*5, /datum/material/silver=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
-	usesound = 'sound/items/pshoom.ogg'
+	usesound = 'sound/items/pshoom/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
 	greyscale_config_inhand_left = null

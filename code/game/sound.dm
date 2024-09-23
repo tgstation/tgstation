@@ -448,9 +448,9 @@
 			)
 		if(SFX_RATTLE)
 			soundin = pick(
-				'sound/items/rattle1.ogg',
-				'sound/items/rattle2.ogg',
-				'sound/items/rattle3.ogg',
+				'sound/items/rattle/rattle1.ogg',
+				'sound/items/rattle/rattle2.ogg',
+				'sound/items/rattle/rattle3.ogg',
 			)
 		if(SFX_PORTAL_CLOSE)
 			soundin = 'sound/effects/portal/portal_close.ogg'

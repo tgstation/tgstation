@@ -5,8 +5,8 @@
 	icon_state = "bodybag"
 	density = FALSE
 	mob_storage_capacity = 2
-	open_sound = 'sound/items/zip.ogg'
-	close_sound = 'sound/items/zip.ogg'
+	open_sound = 'sound/items/zip/zip.ogg'
+	close_sound = 'sound/items/zip/zip.ogg'
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0

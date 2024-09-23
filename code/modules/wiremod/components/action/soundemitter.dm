@@ -56,8 +56,8 @@
 		"Warn" = 'sound/machines/warning-buzzer.ogg',
 		"Slow Clap" = 'sound/machines/slowclap.ogg',
 		"Moth Buzz" = 'sound/mobs/humanoids/moth/scream_moth.ogg',
-		"Squeak" = 'sound/items/toysqueak1.ogg',
-		"Rip" = 'sound/items/poster_ripped.ogg',
+		"Squeak" = 'sound/mobs/toy_squeak/toysqueak1.ogg',
+		"Rip" = 'sound/items/poster/poster_ripped.ogg',
 		"Coinflip" = 'sound/items/coinflip.ogg',
 		"Megaphone" = 'sound/items/megaphone.ogg',
 		"Warpwhistle" = 'sound/effects/magic/warpwhistle.ogg',
@@ -66,7 +66,7 @@
 		"Flashbang" = 'sound/items/weapons/flashbang.ogg',
 		"Flash" = 'sound/items/weapons/flash.ogg',
 		"Whip" = 'sound/items/weapons/whip.ogg',
-		"Laugh Track" = 'sound/items/SitcomLaugh1.ogg',
+		"Laugh Track" = 'sound/items/sitcom_laugh/sitcomLaugh1.ogg',
 		"Gavel" = 'sound/items/gavel.ogg',
 	)
 	sound_file = add_option_port("Sound Option", component_options)

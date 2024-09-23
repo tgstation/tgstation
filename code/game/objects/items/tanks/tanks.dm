@@ -86,13 +86,13 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
-	playsound(loc, 'sound/items/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, 'sound/items/internals/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
-	playsound(loc, 'sound/items/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, 'sound/items/internals/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)

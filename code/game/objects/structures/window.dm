@@ -900,7 +900,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	armor_type = /datum/armor/none
 	knock_sound = SFX_PAGE_TURN
 	bash_sound = 'sound/items/weapons/slashmiss.ogg'
-	break_sound = 'sound/items/poster_ripped.ogg'
+	break_sound = 'sound/items/poster/poster_ripped.ogg'
 	hit_sound = 'sound/items/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-whole", layer = ABOVE_OBJ_LAYER - 0.1)

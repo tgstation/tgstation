@@ -33,7 +33,7 @@
 		user.put_in_active_hand(page)
 		to_chat(user, span_notice("You take [page] out of \the [src]."))
 		number_of_pages--
-		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
 		if(!number_of_pages)
 			icon_state = "pHbooklet_empty"
@@ -57,7 +57,7 @@
 	user.put_in_active_hand(P)
 	to_chat(user, span_notice("You take [P] out of \the [src]."))
 	number_of_pages--
-	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
 	if(!number_of_pages)
 		icon_state = "pHbookletEmpty"
