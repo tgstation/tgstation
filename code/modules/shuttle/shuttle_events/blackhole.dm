@@ -32,13 +32,20 @@
 	/// The beacon that is drawing the singularity closer to the escape shuttle
 	var/obj/machinery/power/singularity_beacon/syndicate/no_escape/beacon
 
+/datum/shuttle_event/simple_spawner/black_hole/no_escape/proc/announcement()
+	priority_announce(
+		text = "Sensors indicate that a black hole's gravitational field is affecting the region of space we are heading through.",
+		title = "The Orion Trail",
+		sound = 'sound/misc/notice1.ogg',
+		has_important_message = TRUE,
+		sender_override = "Emergency Shuttle",
+		color_override = "red",
+	)
+
 /datum/shuttle_event/simple_spawner/black_hole/no_escape/activate()
 	. = ..()
 
-	var/announce_message = "Sensors indicate that a black hole's gravitational field is affecting the region of space we are heading through."
-	var/announce_title = "The Orion Trail"
-	var/alert = TRUE
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), announce_message, announce_title, alert), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(announcement)), 5 SECONDS)
 	port.setTimer(port.timeLeft(1) + 1 MINUTES) // the singularity causes a time distortion
 
 /datum/shuttle_event/simple_spawner/black_hole/no_escape/event_process()
