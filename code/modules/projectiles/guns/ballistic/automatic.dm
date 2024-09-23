@@ -363,6 +363,7 @@
 		sees commercial sales. That, and trying to work out why the weapon's onboard computation systems suffer from so many calculation errors."
 	icon_state = "battle_rifle"
 	inhand_icon_state = "battle_rifle"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "battle_rifle"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
