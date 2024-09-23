@@ -1,6 +1,6 @@
-## Title: Modular Traits
+## Title: Modular Quirks
 
-MODULE ID: MODULAR_TRAITS
+MODULE ID: MODULAR_QUIRKS
 
 ### Description:
 

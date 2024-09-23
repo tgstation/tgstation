@@ -1,7 +1,7 @@
 /obj/item/anointing_oil
 	name = "anointing bloodresin"
 	desc = "And so Helgar Knife-Arm spoke to the Hearth, and decreed that all of the Kin who gave name to beasts would do so with conquest and blood."
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/objects.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/objects.dmi'
 	icon_state = "anointingbloodresin"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -9,7 +9,7 @@
 	var/being_used = FALSE
 
 /obj/item/anointing_oil/attack(mob/living/target_mob, mob/living/user, params)
-	if (!is_species(user, /datum/species/human/felinid/primitive))
+	if (!is_species(user, /datum/species/human/genemod/primitive))
 		to_chat(user, span_warning("You have no idea what this disgusting concoction is used for."))
 		return
 	if(being_used || !ismob(target_mob)) //originally this was going to check if the mob was friendly, but if an icecat wants to name some terror mob while it's tearing chunks out of them, why not?
@@ -48,7 +48,7 @@
 
 /obj/item/anointing_oil/examine(mob/user)
 	. = ..()
-	if(is_species(user, /datum/species/human/felinid/primitive))
+	if(is_species(user, /datum/species/human/genemod/primitive))
 		. += span_info("Using this on the local wildlife will allow you to give them a name.")
 
 /datum/crafting_recipe/anointing_oil
@@ -68,13 +68,13 @@
 /obj/item/frozen_breath
     name = "Frozen Breath"
     desc = "A strange brew, it smells minty and is extremely cold to the touch. It is rumored that a cold-hearted witch managed to make this, to mend the breath of her kindred."
-    icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/objects.dmi'
+    icon = 'modular_doppler/hearthkin/primitive_genemod/icons/objects.dmi'
     icon_state = "frozenbreath"
     throwforce = 0
     w_class = WEIGHT_CLASS_TINY
 
 /obj/item/frozen_breath/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-    if (!is_species(user, /datum/species/human/felinid/primitive))
+    if (!is_species(user, /datum/species/human/genemod/primitive))
         to_chat(user, span_warning("You have no idea how to use this freezing concoction."))
         return
 
@@ -94,7 +94,7 @@
 
 /obj/item/frozen_breath/examine(mob/user)
     . = ..()
-    if(is_species(user, /datum/species/human/felinid/primitive))
+    if(is_species(user, /datum/species/human/genemod/primitive))
         . += span_info("Using this on a pair of organic lungs transforms them into hardy lungs. This will remove any other special features from the old lungs, if there were any.")
 
 /datum/crafting_recipe/frozen_breath

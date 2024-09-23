@@ -96,5 +96,5 @@
 
 // The area
 
-/area/ruin/unpowered/primitive_catgirl_den
+/area/ruin/unpowered/primitive_genemod_den
 	name = "\improper Icewalker Camp"

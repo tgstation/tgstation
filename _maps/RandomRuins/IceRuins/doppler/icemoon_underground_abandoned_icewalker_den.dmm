@@ -294,7 +294,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/abandoned_hearth)
 "nA" = (
-/obj/machinery/vending/primitive_catgirl_clothing_vendor,
+/obj/machinery/vending/primitive_genemod_clothing_vendor,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/wall_torch/mount_only/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,

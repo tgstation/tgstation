@@ -18,7 +18,7 @@
 	name = "cobolterium bars"
 	desc = "Cobalt-blue metal that might actually just be cobalt."
 	singular_name = "cobolterium bar"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/special_metals_stack.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/special_metals_stack.dmi'
 	icon_state = "precious-metals"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	mats_per_unit = list(/datum/material/cobolterium = SHEET_MATERIAL_AMOUNT)
@@ -47,7 +47,7 @@
 	name = "copporcitite bars"
 	desc = "Copper colored metal that might actually just be copper."
 	singular_name = "copporcitite bar"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/special_metals_stack.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/special_metals_stack.dmi'
 	icon_state = "precious-metals"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	mats_per_unit = list(/datum/material/copporcitite = SHEET_MATERIAL_AMOUNT)
@@ -76,7 +76,7 @@
 	name = "tinumium bars"
 	desc = "Heavily blued, silver colored metal."
 	singular_name = "tinumium bar"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/special_metals_stack.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/special_metals_stack.dmi'
 	icon_state = "precious-metals"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	mats_per_unit = list(/datum/material/tinumium = SHEET_MATERIAL_AMOUNT )
@@ -105,7 +105,7 @@
 	name = "brussite bars"
 	desc = "Brassy-yellow metal that might actually just be brass."
 	singular_name = "brussite bar"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/special_metals_stack.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/special_metals_stack.dmi'
 	icon_state = "precious-metals"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	mats_per_unit = list(/datum/material/brussite = SHEET_MATERIAL_AMOUNT )

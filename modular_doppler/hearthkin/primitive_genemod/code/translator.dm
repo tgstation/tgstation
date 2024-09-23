@@ -6,8 +6,8 @@
 	desc = "A necklace with a old, strange device as its pendant. Symbols \
 		constantly seem to appear on its screen, as noises happen around it, \
 		but its purpose is not immediately apparent."
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/translator.dmi'
-	worn_icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/translator_worn.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/translator.dmi'
+	worn_icon = 'modular_doppler/hearthkin/primitive_genemod/icons/translator_worn.dmi'
 	icon_state = "translator"
 	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_OCLOTHING
 	w_class = WEIGHT_CLASS_SMALL //allows this to fit inside of pockets.

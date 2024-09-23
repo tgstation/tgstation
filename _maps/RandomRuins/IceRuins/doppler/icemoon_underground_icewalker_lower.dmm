@@ -2,7 +2,7 @@
 "ac" = (
 /obj/structure/flora/ash/chilly,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ad" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/cabbage,
@@ -20,7 +20,7 @@
 /obj/item/seeds/onion/red,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ap" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /obj/structure/railing/wooden_fencing{
@@ -30,7 +30,7 @@
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "at" = (
 /obj/structure/rack/wooden,
 /obj/item/ore_sensor{
@@ -52,7 +52,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "au" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/fishing_hook/weighted,
@@ -75,7 +75,7 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "aA" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/food/cheese/firm_cheese{
@@ -92,22 +92,22 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "aB" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
 	dir = 4
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "aJ" = (
 /obj/structure/railing/wooden_fencing,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "aO" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "bc" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -116,7 +116,7 @@
 	dir = 5
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "bu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -131,31 +131,31 @@
 	pixel_y = -4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "bB" = (
 /obj/structure/fluff/minepost,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "bK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "bT" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "cM" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "cQ" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/rack/wooden,
@@ -165,36 +165,36 @@
 	pixel_x = 5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "cU" = (
 /obj/structure/water_source/puddle,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "cV" = (
 /obj/structure/mineral_door/wood/large_gate,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "de" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo/left,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "dj" = (
 /obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ds" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "dD" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/cotton,
@@ -214,13 +214,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "dF" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 4
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "dM" = (
 /obj/item/pillow/random{
 	pixel_y = 4
@@ -229,7 +229,7 @@
 	dir = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "em" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/stack/sheet/leather{
@@ -241,7 +241,7 @@
 /obj/item/stack/sheet/cloth/ten,
 /obj/item/stack/cable_coil/thirty,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "eq" = (
 /obj/structure/table/wood,
 /obj/structure/large_mortar,
@@ -251,18 +251,18 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ev" = (
 /obj/machinery/smartfridge/wooden/produce_bin,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "eS" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "fJ" = (
 /obj/item/pillow/random{
 	pixel_y = 4
@@ -271,25 +271,25 @@
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "fK" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "fV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "fY" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gg" = (
 /obj/structure/rack/wooden,
 /obj/item/canvas/twentythree_twentythree,
@@ -297,13 +297,13 @@
 /obj/item/canvas/thirtysix_twentyfour,
 /obj/item/paint_palette,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gr" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gz" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
@@ -312,13 +312,13 @@
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gK" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gU" = (
 /obj/structure/rack/wooden,
 /obj/item/climbing_hook{
@@ -332,11 +332,11 @@
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "gW" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "hb" = (
 /obj/structure/rack/wooden,
 /obj/effect/turf_decal/siding/wood,
@@ -347,35 +347,35 @@
 	pixel_y = -5
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "hB" = (
 /obj/machinery/cauldron,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "hP" = (
 /obj/structure/reagent_water_basin,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "hR" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "hW" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ie" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
 	},
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "iy" = (
 /obj/structure/rack/wooden,
 /obj/item/stack/sheet/iron/five{
@@ -417,18 +417,18 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "iz" = (
 /obj/structure/railing/wooden_fencing/gate{
 	dir = 4
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "iI" = (
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ja" = (
 /obj/structure/table/wood,
 /obj/structure/wall_torch/spawns_lit/directional/south,
@@ -436,32 +436,32 @@
 	pixel_x = 5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "jf" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "js" = (
 /obj/structure/ore_vein/iron,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "jR" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ke" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kg" = (
 /obj/structure/rack/wooden,
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kh" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
@@ -473,11 +473,11 @@
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kt" = (
 /obj/item/flashlight/lantern,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kx" = (
 /obj/structure/rack/wooden,
 /obj/item/clothing/glasses/blindfold/white{
@@ -490,23 +490,23 @@
 	pixel_y = -6
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kO" = (
 /obj/structure/loom,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "kP" = (
 /obj/structure/chair/sofa/bamboo/left,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "la" = (
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lb" = (
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty/start_closed,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lg" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/flashlight/lantern{
@@ -521,7 +521,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ln" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -530,7 +530,7 @@
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lv" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/coffee{
@@ -548,34 +548,34 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lx" = (
 /turf/closed/mineral/snowmountain/cavern,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lA" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lI" = (
 /obj/structure/mirror/directional/west,
 /obj/structure/rack/wooden,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tailored_dress,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tailored_dress,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "lQ" = (
 /obj/structure/ore_vein/gold,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mc" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ml" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 8
@@ -584,17 +584,17 @@
 	dir = 5
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mq" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mr" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mG" = (
 /obj/structure/table/wood,
 /obj/item/cutting_board,
@@ -604,11 +604,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mH" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mN" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/food/raw_tiziran_sausage{
@@ -620,25 +620,25 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mS" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 4
 	},
 /obj/structure/ore_container/food_trough/raptor_trough,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "mZ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/wood_bowl,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nn" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
@@ -647,17 +647,17 @@
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nG" = (
 /obj/machinery/griddle/stone,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nL" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/garlic,
@@ -672,15 +672,15 @@
 /obj/item/seeds/watermelon,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nQ" = (
 /obj/structure/bonfire/prelit,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "nR" = (
 /obj/machinery/primitive_stove,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oe" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/pen/charcoal,
@@ -695,7 +695,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "of" = (
 /obj/structure/spacevine{
 	name = "thick vines";
@@ -705,7 +705,7 @@
 	dir = 8
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ol" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
@@ -717,11 +717,11 @@
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "om" = (
 /obj/structure/mirror/directional/west,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oy" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -730,28 +730,28 @@
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oB" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/structure/reagent_crafting_bench,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oJ" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oL" = (
 /obj/machinery/smartfridge/wooden/seed_shelf,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oN" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "oQ" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 4
@@ -761,7 +761,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "pd" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/aloe{
@@ -783,41 +783,41 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "pm" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "po" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "pA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "pW" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "qb" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "qh" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "qr" = (
 /obj/structure/rack/wooden,
 /obj/item/flashlight/flare/torch{
@@ -834,11 +834,11 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "qu" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "qN" = (
 /obj/structure/rack/wooden,
 /obj/item/reagent_containers/cup/glass/bottle/small{
@@ -860,55 +860,55 @@
 	pixel_x = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "rd" = (
 /obj/structure/ore_vein/stone,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "rg" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "rL" = (
 /obj/structure/fluff/minepost,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "rY" = (
 /obj/structure/chair/sofa/bamboo{
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "sj" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "sl" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "sq" = (
 /obj/structure/reagent_forge,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "su" = (
 /turf/closed/mineral/snowmountain/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "sz" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "sM" = (
 /obj/item/pillow,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "te" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "tu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -917,7 +917,7 @@
 	dir = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "tz" = (
 /obj/structure/rack/wooden,
 /obj/item/paper_bin/bundlenatural{
@@ -929,33 +929,33 @@
 	pixel_x = -5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "tB" = (
 /obj/structure/ore_container/food_trough/raptor_trough,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "tI" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "uC" = (
 /obj/structure/rack/wooden,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "uG" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "uP" = (
 /obj/structure/hearthkin_rune_stone,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "uT" = (
 /obj/structure/rack/wooden,
 /obj/item/climbing_hook{
@@ -967,14 +967,14 @@
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "uV" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/item/stack/sheet/cloth/ten,
 /obj/structure/rack/wooden,
 /obj/item/food/grown/poppy/geranium,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vd" = (
 /obj/machinery/portable_atmospherics/scrubber/huge{
 	alpha = 0;
@@ -984,7 +984,7 @@
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -993,11 +993,11 @@
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vm" = (
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vq" = (
 /obj/structure/spacevine{
 	name = "thick vines";
@@ -1005,42 +1005,42 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vy" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/primitive_centrifuge,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "vI" = (
 /obj/structure/table/wood,
 /obj/item/food/honey_roll,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ws" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/trophy,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "wB" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /obj/structure/ore_container/food_trough/raptor_trough,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "wF" = (
 /obj/structure/rack/wooden,
 /obj/item/fishing_rod/bone{
@@ -1051,20 +1051,20 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "wN" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "wQ" = (
 /obj/structure/curtain/bounty,
 /obj/structure/window/green_glass_pane,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "wU" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "xc" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1074,11 +1074,11 @@
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "xu" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "xT" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/food/rootdough,
@@ -1088,16 +1088,16 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "xU" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "xX" = (
 /obj/structure/table/wood,
 /obj/item/food/honeybun,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yd" = (
 /obj/structure/rack/wooden,
 /obj/item/storage/box/matches{
@@ -1106,7 +1106,7 @@
 	},
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yf" = (
 /obj/structure/statue/hearthkin/odin,
 /obj/effect/turf_decal/siding/wood{
@@ -1116,7 +1116,7 @@
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yn" = (
 /obj/structure/rack/wooden,
 /obj/item/restraints/legcuffs/bola{
@@ -1144,28 +1144,28 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yp" = (
 /obj/structure/chair/sofa/bamboo/right{
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yx" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yy" = (
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl,
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yE" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yN" = (
 /obj/structure/rack/wooden,
 /obj/item/climbing_hook{
@@ -1177,37 +1177,37 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yR" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "yU" = (
 /obj/structure/window/green_glass_pane,
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "zt" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "zu" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "zy" = (
 /obj/item/pillow/random{
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "zE" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1225,36 +1225,36 @@
 	pixel_x = -3
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "zI" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /obj/structure/ore_vein/gold,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Aj" = (
 /obj/structure/chair/sofa/bamboo/right,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Aw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AA" = (
 /obj/structure/rack/wooden,
 /obj/item/instrument/glockenspiel,
 /obj/item/instrument/guitar,
 /obj/item/instrument/banjo,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AE" = (
 /obj/machinery/smartfridge/wooden/ration_shelf,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AF" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 4
@@ -1263,20 +1263,20 @@
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AI" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AK" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "AR" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle/infinite{
@@ -1285,7 +1285,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Bd" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/corn,
@@ -1303,17 +1303,17 @@
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Be" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Bh" = (
 /obj/structure/railing/wooden_fencing/gate{
 	dir = 1
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Bq" = (
 /obj/structure/rack/wooden,
 /obj/item/pickaxe{
@@ -1336,17 +1336,17 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "BA" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "BF" = (
-/obj/machinery/vending/primitive_catgirl_clothing_vendor,
+/obj/machinery/vending/primitive_genemod_clothing_vendor,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "BG" = (
 /obj/structure/rack/wooden,
 /obj/item/ore_sensor{
@@ -1367,7 +1367,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "BL" = (
 /obj/machinery/portable_atmospherics/scrubber/huge{
 	alpha = 0;
@@ -1375,7 +1375,7 @@
 	name = "air scrubber"
 	},
 /turf/closed/wall/mineral/stone,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "BU" = (
 /obj/structure/rack/wooden,
 /obj/item/reagent_containers/cup/soup_pot{
@@ -1396,7 +1396,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ca" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
@@ -1405,24 +1405,24 @@
 	dir = 4
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Co" = (
 /obj/structure/stairs/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "CD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "CU" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "CX" = (
 /obj/structure/rack/wooden,
 /obj/item/flashlight/flare/torch{
@@ -1439,13 +1439,13 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Df" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Di" = (
 /obj/structure/rack/wooden,
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl{
@@ -1462,52 +1462,52 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Dz" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "DB" = (
 /obj/structure/mineral_door/wood/large_gate,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "DJ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Eh" = (
 /obj/structure/table/wood,
 /obj/item/food/bread/meat,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ej" = (
 /obj/structure/stairs/wood{
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Er" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Es" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "EL" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 4
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "EP" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -1516,7 +1516,7 @@
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ER" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/structure/table/wood,
@@ -1531,34 +1531,34 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "EU" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "EZ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo/right,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Fj" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Fw" = (
 /obj/item/pillow/random{
 	pixel_y = 4
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "FG" = (
 /obj/structure/reagent_crafting_bench,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "FK" = (
 /obj/structure/rack/wooden,
 /obj/item/ore_sensor{
@@ -1579,17 +1579,17 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "FP" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "FW" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "FX" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -1598,13 +1598,13 @@
 	dir = 6
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ga" = (
 /obj/structure/stairs/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Gf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -1613,26 +1613,26 @@
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Gy" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/reagent_anvil,
 /obj/item/forging/hammer/primitive,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "GD" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "GU" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Hd" = (
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Hv" = (
 /obj/structure/rack/wooden,
 /obj/item/dice/d20{
@@ -1641,18 +1641,18 @@
 	},
 /obj/item/chisel/primitive,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "HB" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Is" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/structure/flora/ash/stem_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IE" = (
 /obj/structure/rack/wooden,
 /obj/item/pickaxe{
@@ -1674,7 +1674,7 @@
 /obj/item/pickaxe,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IF" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/wood_bowl{
@@ -1685,31 +1685,31 @@
 	pixel_x = 3
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "II" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IJ" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IQ" = (
 /obj/machinery/smartfridge/wooden/produce_bin,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IR" = (
 /obj/structure/rack/wooden,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
-/obj/item/clothing/suit/jacket/primitive_catgirl_coat,
+/obj/item/clothing/suit/jacket/primitive_genemod_coat,
+/obj/item/clothing/suit/jacket/primitive_genemod_coat,
+/obj/item/clothing/suit/jacket/primitive_genemod_coat,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "IS" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/restraints/handcuffs/cable/sinew,
@@ -1721,7 +1721,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Jj" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/fish/chasm_crab/ice{
@@ -1740,14 +1740,14 @@
 	pixel_y = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Jl" = (
 /obj/structure/spacevine{
 	name = "thick vines";
 	opacity = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Jn" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
@@ -1756,28 +1756,28 @@
 	dir = 8
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Jq" = (
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Jt" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
 	},
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JF" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /obj/structure/rack/wooden,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JI" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JN" = (
 /obj/structure/rack/wooden,
 /obj/item/soap/homemade{
@@ -1801,29 +1801,29 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JO" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JQ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "JT" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /obj/structure/rack/wooden,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
-/obj/item/clothing/under/dress/skirt/primitive_catgirl_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tunic,
+/obj/item/clothing/under/dress/skirt/primitive_genemod_tunic,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Kc" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -1832,21 +1832,21 @@
 	dir = 8
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Kd" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Kn" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Kr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/chair/sofa/bamboo,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ku" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -1860,7 +1860,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Kz" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/wirecutters/primitive,
@@ -1869,7 +1869,7 @@
 /obj/item/crowbar/primitive,
 /obj/item/weldingtool/mini,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "KU" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/greenbean,
@@ -1884,11 +1884,11 @@
 /obj/item/seeds/lemon,
 /obj/item/seeds/lime,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LA" = (
 /obj/structure/flora/ash/tall_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1899,17 +1899,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/shovel,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LG" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LR" = (
 /obj/structure/flora/ash/leaf_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LU" = (
 /obj/structure/rack/wooden,
 /obj/item/plate/blowing_glass{
@@ -1945,14 +1945,14 @@
 	pixel_x = 7
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "LV" = (
 /obj/structure/table/wood,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Md" = (
 /turf/closed/wall/mineral/stone,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Mg" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -1961,12 +1961,12 @@
 	dir = 8
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Mr" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Mw" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -1975,7 +1975,7 @@
 /obj/item/stack/sheet/mineral/coal/ten,
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "MQ" = (
 /obj/structure/rack/wooden,
 /obj/item/flashlight/flare/torch{
@@ -1992,7 +1992,7 @@
 	},
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Nb" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
@@ -2001,13 +2001,13 @@
 	dir = 1
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Nr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Nz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2016,40 +2016,40 @@
 	dir = 6
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "NA" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "NP" = (
 /obj/structure/stairs/wood{
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "NR" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Od" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Of" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Oi" = (
 /obj/structure/flora/ash/seraka,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Oz" = (
 /obj/structure/rack/wooden,
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "OI" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/food/plumphelmetbiscuit{
@@ -2066,17 +2066,17 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "OY" = (
 /obj/structure/chair/sofa/bamboo,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Pk" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 8
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Pz" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl{
@@ -2084,7 +2084,7 @@
 	pixel_x = 3
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "PB" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 4
@@ -2093,24 +2093,24 @@
 	dir = 8
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "PL" = (
 /obj/structure/mineral_door/wood/large_gate,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Qb" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/bowl/ceramic,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Qj" = (
 /obj/machinery/oven/stone,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Qx" = (
 /obj/structure/stairs/wood,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "QF" = (
 /obj/structure/rack/wooden,
 /obj/item/gun/ballistic/bow/longbow,
@@ -2119,24 +2119,24 @@
 	dir = 9
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "QT" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "QU" = (
 /obj/structure/rack/wooden,
 /obj/item/raptor_dex,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ra" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Rk" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -2145,13 +2145,13 @@
 	dir = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Rp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "RJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle/infinite{
@@ -2160,13 +2160,13 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "RW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "RZ" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/seeds/plump{
@@ -2195,16 +2195,16 @@
 	dir = 6
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Sa" = (
 /obj/structure/wall_torch/spawns_lit/directional/east,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Sp" = (
 /obj/machinery/smartfridge/drying/rack,
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Sq" = (
 /obj/item/pillow/random{
 	pixel_y = 4
@@ -2213,46 +2213,46 @@
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "SG" = (
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "SL" = (
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Tx" = (
 /obj/effect/spawner/random/lavaland_mob/raptor,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "TS" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "TW" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "TY" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "TZ" = (
 /obj/structure/wall_torch/spawns_lit/directional/south,
 /obj/structure/hearthkin_rune_stone,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ud" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Uk" = (
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "UA" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/fish/armorfish{
@@ -2274,74 +2274,74 @@
 	pixel_y = 3
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Vc" = (
 /obj/structure/fluff/minepost,
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Vp" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Vx" = (
 /obj/structure/table/wood,
 /obj/structure/wall_torch/spawns_lit/directional/west,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Vy" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "VU" = (
 /obj/structure/millstone,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "VW" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Wa" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Wp" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ww" = (
 /obj/structure/railing/wooden_fencing,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "WP" = (
 /obj/structure/railing/wooden_fencing,
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "WS" = (
 /obj/structure/chair/wood,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "WU" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/grass/fairy/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "WW" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Xe" = (
 /obj/structure/table/wood,
 /obj/structure/wall_torch/spawns_lit/directional/south,
@@ -2349,18 +2349,18 @@
 	pixel_x = -5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Xi" = (
 /obj/structure/railing/wooden_fencing,
 /obj/structure/railing/wooden_fencing{
 	dir = 4
 	},
 /turf/open/misc/hay/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Xu" = (
 /obj/structure/ore_vein/silver,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "XX" = (
 /obj/structure/rack/wooden,
 /obj/item/reagent_containers/cup/rag{
@@ -2371,7 +2371,7 @@
 	pixel_x = 6
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Yk" = (
 /obj/structure/closet/crate/wooden/storage_barrel,
 /obj/item/food/cheese/mozzarella{
@@ -2391,37 +2391,37 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YA" = (
 /obj/item/target/archery{
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YE" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /turf/open/water/hot_spring,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YO" = (
 /obj/structure/wall_torch/spawns_lit/directional/north,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YQ" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YX" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "YZ" = (
 /obj/structure/rack/wooden,
 /obj/item/paper_bin/bundlenatural{
@@ -2437,26 +2437,26 @@
 	pixel_x = -5
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Ze" = (
 /obj/structure/railing/wooden_fencing{
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Zj" = (
 /obj/structure/flora/ash/stem_shroom,
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "Zu" = (
 /turf/open/misc/dirt/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ZB" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ZM" = (
 /obj/structure/rack/wooden,
 /obj/item/gun/ballistic/bow/longbow,
@@ -2465,13 +2465,13 @@
 	dir = 1
 	},
 /turf/open/floor/stone/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 "ZU" = (
 /obj/structure/mineral_door/wood/large_gate{
 	dir = 8
 	},
 /turf/open/floor/wood/icemoon,
-/area/ruin/unpowered/primitive_catgirl_den)
+/area/ruin/unpowered/primitive_genemod_den)
 
 (1,1,1) = {"
 NR

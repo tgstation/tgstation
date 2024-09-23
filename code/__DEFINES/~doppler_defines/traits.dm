@@ -7,8 +7,8 @@
 /// Trait that is applied whenever someone or something is glassblowing
 #define TRAIT_CURRENTLY_GLASSBLOWING "currently_glassblowing"
 
-// felinid traits
-#define TRAIT_FELINE "feline_aspect"
+/// Trait which lets species pick from a list of animal traits, used by genemod + subtypes and anthromorphs
+#define TRAIT_ANIMALISTIC "animalistic"
 
 // Green blood traits
 #define TRAIT_GREEN_BLOOD "green_blood"

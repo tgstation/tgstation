@@ -2,7 +2,7 @@
 	name = "smelling salts"
 	desc = "A small pile of a salt-like substance that smells absolutely repulsive. Rumor has it that the smell is so pungent that even the dead will come back to life to escape it."
 	icon_state = "smelling_salts"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/salts.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/salts.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	item_flags = NOBLUDGEON

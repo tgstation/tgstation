@@ -123,3 +123,10 @@ export const heterochromatic: Feature<string> = {
   name: 'Heterochromatic (Right Eye) color',
   component: FeatureColorInput,
 };
+
+// DOPPLER ADDITION START
+export const feature_animalistic: Feature<string> = {
+  name: 'Animalistic trait',
+  component: FeatureDropdownInput,
+};
+// DOPPLER ADDITION END
