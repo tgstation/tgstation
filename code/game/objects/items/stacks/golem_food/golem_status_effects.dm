@@ -230,12 +230,14 @@
 	if (!.)
 		return FALSE
 	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
-	owner.physiology.damage_resistance += 10 // Doppler Edit - Gives them 5 extra damage resist. Most you can ever get out of this is probably 30 with xenobio.
+	var/mob/living/carbon/human/golem_owner = owner
+	golem_owner.physiology.damage_resistance += 20 // Doppler Edit - Gives them 20 extra damage resist. This basically means they soak 6 damage.
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
-	owner.physiology.damage_resistance -= 10 // Doppler Edit - And God taketh away.
+	var/mob/living/carbon/human/golem_owner = owner
+	golem_owner.physiology.damage_resistance -= 20 // Doppler Edit - And God taketh away.
 	return ..()
 
 /// Makes you reflect energy projectiles
