@@ -13,7 +13,6 @@
 
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_wielded = 10)
 	AddComponent( \
 		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \

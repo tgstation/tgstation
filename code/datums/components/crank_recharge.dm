@@ -57,7 +57,7 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE))
+	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = IGNORE_USER_LOC_CHANGE))
 		is_charging = FALSE
 		return
 	charging_cell.give(charge_amount)
