@@ -110,6 +110,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDEMUTWINGS (1<<13)
 ///hides belts and riggings
 #define HIDEBELT (1<<14)
+///hides antennae
+#define HIDEANTENNAE (1<<15)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
@@ -269,6 +271,8 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/pickaxe,
 	/obj/item/resonator,
 	/obj/item/spear,
+	/obj/item/forging/reagent_weapon, // DOPPLER EDIT ADDITION
+	/obj/item/gun/ballistic/bow, // DOPPLER EDIT ADDITION
 ))
 
 /// String for items placed into the left pocket.

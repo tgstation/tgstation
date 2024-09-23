@@ -100,6 +100,7 @@ jobs:
         run: |
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
+          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/modular_doppler.json # DOPPLER EDIT ADDITION
       - name: Check Define Sanity
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m define_sanity.check
@@ -285,9 +286,12 @@ jobs:
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   completion_gate: # Serves as a non-moving target for branch rulesets
+    if: always() && !cancelled()
     name: Completion Gate
     needs: [ test_windows, compare_screenshots, compile_all_maps, run_linters ]
     runs-on: ubuntu-latest
     steps:
-      - name: Mandatory Empty Step
-        run: exit 0
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}

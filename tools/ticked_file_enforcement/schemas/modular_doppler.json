@@ -1,0 +1,7 @@
+{
+	"file": "tgstation.dme",
+	"scannable_directory": "modular_doppler/",
+	"subdirectories": true,
+	"excluded_files": [],
+	"forbidden_includes": []
+}

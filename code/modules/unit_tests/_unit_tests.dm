@@ -292,6 +292,9 @@
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
+// DOPPLER EDIT START
+#include "~doppler\automapper.dm"
+// DOPPLER EDIT END
 // END_INCLUDE
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

@@ -94,3 +94,17 @@
 /datum/greyscale_config/doppler_undersuit/fancysuit/overalls/worn/digi
 	name = "Worn Digitigrade Doppler Fancy Suit w/ Overalls"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/doppler_uniforms_digi.dmi'
+
+/////////
+//PANTS//
+/////////
+
+/datum/greyscale_config/big_pants
+	name = "'JUNCO' megacargo pants"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/big_pants.json'
+
+/datum/greyscale_config/big_pants/worn
+	name = "'JUNCO' megacargo pants (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/big_pants_worn.json'

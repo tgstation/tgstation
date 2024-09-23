@@ -18,7 +18,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
 	can_adjust = FALSE
 
-/obj/item/clothing/under/moto_leggings
+/obj/item/clothing/under/pants/moto_leggings
 	name = "'Naka' moto leggings"
 	desc = "Lab grown lambskin has been adhered to a spandex underlayer to produce a leather with considerable \
 	four way stretch, allowing for a closer fit in leather pants than ever before. This style features integrated \
@@ -28,3 +28,14 @@
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
 	body_parts_covered = GROIN|LEGS
 	can_adjust = FALSE
+
+/obj/item/clothing/under/pants/big_pants
+	name = "\improper JUNCO megacargo pants"
+	desc = "De riguer for techno classicists, these extreme wide leg pants come back into style every \
+		now and then. This pair has generous onboard storage."
+	icon_state = "big_pants"
+	greyscale_config = /datum/greyscale_config/big_pants
+	greyscale_config_worn = /datum/greyscale_config/big_pants/worn
+	greyscale_colors = "#874f16"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	alternate_worn_layer = LOW_FACEMASK_LAYER

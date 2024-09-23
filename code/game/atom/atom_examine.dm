@@ -24,12 +24,15 @@
 	if(desc)
 		. += "<i>[desc]</i>"
 
-	if(custom_materials)
-		var/list/materials_list = list()
-		for(var/custom_material in custom_materials)
-			var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
-			materials_list += "[current_material.name]"
-		. += "<u>It is made out of [english_list(materials_list)]</u>."
+	var/list/tags_list = examine_tags(user)
+	if (length(tags_list))
+		var/tag_string = list()
+		for (var/atom_tag in tags_list)
+			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
+		// Weird bit but ensures that if the final element has its own "and" we don't add another one
+		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], " and ")) ? ", " : " and ")
+		var/post_descriptor = examine_post_descriptor(user)
+		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][length(post_descriptor) ? " [jointext(post_descriptor, " ")]" : ""]."
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
@@ -54,6 +57,34 @@
 					. += span_danger("It's empty.")
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
+
+/*
+ * A list of "tags" displayed after atom's description in examine.
+ * This should return an assoc list of tags -> tooltips for them. If item if null, then no tooltip is assigned.
+ * For example:
+ * list("small" = "This is a small size class item.", "fireproof" = "This item is impervious to fire.")
+ * will result in
+ * This is a small, fireproof item.
+ * where "item" is pulled from examine_descriptor() proc
+ */
+/atom/proc/examine_tags(mob/user)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
+
+/// What this atom should be called in examine tags
+/atom/proc/examine_descriptor(mob/user)
+	return "object"
+
+/// Returns a list of strings to be displayed after the descriptor
+/atom/proc/examine_post_descriptor(mob/user)
+	. = list()
+	if(!custom_materials)
+		return
+	var/mats_list = list()
+	for(var/custom_material in custom_materials)
+		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		mats_list += span_tooltip("It is made out of [current_material.name].", current_material.name)
+	. += "made of [english_list(mats_list)]"
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)

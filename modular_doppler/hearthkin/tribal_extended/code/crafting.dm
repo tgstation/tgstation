@@ -19,7 +19,7 @@
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
 
-/obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_icon_state()
+/obj/item/reagent_containers/cup/bowl/wood_bowl/update_icon_state()
 	if(!reagents.total_volume)
 		icon_state = "wood_bowl"
 	return ..()

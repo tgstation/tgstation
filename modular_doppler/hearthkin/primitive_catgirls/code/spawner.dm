@@ -286,6 +286,10 @@
 		/datum/crafting_recipe/black_pelt_bed,
 		/datum/crafting_recipe/white_pelt_bed,
 		/datum/crafting_recipe/frozen_breath,
+		/datum/crafting_recipe/black_pelts_rug,
+		/datum/crafting_recipe/white_pelts_rug,
+		/datum/crafting_recipe/bronze_calling_horn,
+		/datum/crafting_recipe/hearthkin_rune_stone,
 	)
 
 /datum/antagonist/primitive_catgirl/Destroy()

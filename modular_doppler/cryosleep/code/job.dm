@@ -1,8 +1,8 @@
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)
 		return
-	JobDebug("Freeing role: [rank]")
-	var/datum/job/job = GetJob(rank)
+	job_debug("Freeing role: [rank]")
+	var/datum/job/job = get_job(rank)
 	if(!job)
 		return FALSE
 	job.current_positions = max(0, job.current_positions - 1)
@@ -11,8 +11,8 @@
 /datum/controller/subsystem/job/proc/OccupyRole(rank)
 	if(!rank)
 		return FALSE
-	JobDebug("Occupying role: [rank]")
-	var/datum/job/job = GetJob(rank)
+	job_debug("Occupying role: [rank]")
+	var/datum/job/job = get_job(rank)
 	if(!job || job.current_positions >= job.total_positions)
 		return FALSE
 	job.current_positions = job.current_positions + 1

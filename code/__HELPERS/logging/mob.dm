@@ -46,6 +46,10 @@
 			colored_message = "(EMOTE) [colored_message]"
 		if(LOG_RADIO_EMOTE)
 			colored_message = "(RADIOEMOTE) [colored_message]"
+		//DOPPLER EDIT ADDITION BEGIN
+		if(LOG_SUBTLE)
+			colored_message = "(EMOTE) (SUBTLE) [colored_message]"
+		//DOPPLER EDIT ADDITION END
 
 	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name_and_tag(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 

@@ -168,12 +168,12 @@
 2022-10-27T05:36:15.8312384Z hint: Using 'master' as the name for the initial branch. This default branch name
 2022-10-27T05:36:15.8313365Z hint: is subject to change. To configure the initial branch name to use in all
 2022-10-27T05:36:15.8313842Z hint: of your new repositories, which will suppress this warning, call:
-2022-10-27T05:36:15.8314167Z hint: 
+2022-10-27T05:36:15.8314167Z hint:
 2022-10-27T05:36:15.8314756Z hint: 	git config --global init.defaultBranch <name>
-2022-10-27T05:36:15.8315053Z hint: 
+2022-10-27T05:36:15.8315053Z hint:
 2022-10-27T05:36:15.8315481Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
 2022-10-27T05:36:15.8316041Z hint: 'development'. The just-created branch can be renamed via this command:
-2022-10-27T05:36:15.8316354Z hint: 
+2022-10-27T05:36:15.8316354Z hint:
 2022-10-27T05:36:15.8316650Z hint: 	git branch -m <name>
 2022-10-27T05:36:15.8337002Z Initialized empty Git repository in /home/runner/work/tgstation/tgstation/.git/
 2022-10-27T05:36:15.8348424Z [command]/usr/bin/git remote add origin https://github.com/tgstation/tgstation
@@ -190,213 +190,213 @@
 2022-10-27T05:36:15.9381545Z ##[endgroup]
 2022-10-27T05:36:15.9383025Z ##[group]Fetching the repository
 2022-10-27T05:36:15.9392584Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +deb5c38b8299183d179ee993b8c40179d42cff9b:refs/remotes/pull/70831/merge
-2022-10-27T05:36:16.3561666Z remote: Enumerating objects: 12549, done.        
-2022-10-27T05:36:16.3568675Z remote: Counting objects:   0% (1/12549)        
-2022-10-27T05:36:16.3571032Z remote: Counting objects:   1% (126/12549)        
-2022-10-27T05:36:16.3576947Z remote: Counting objects:   2% (251/12549)        
-2022-10-27T05:36:16.3590550Z remote: Counting objects:   3% (377/12549)        
-2022-10-27T05:36:16.3591870Z remote: Counting objects:   4% (502/12549)        
-2022-10-27T05:36:16.3629704Z remote: Counting objects:   5% (628/12549)        
-2022-10-27T05:36:16.3630882Z remote: Counting objects:   6% (753/12549)        
-2022-10-27T05:36:16.3633986Z remote: Counting objects:   7% (879/12549)        
-2022-10-27T05:36:16.3662523Z remote: Counting objects:   8% (1004/12549)        
-2022-10-27T05:36:16.3663123Z remote: Counting objects:   9% (1130/12549)        
-2022-10-27T05:36:16.3664088Z remote: Counting objects:  10% (1255/12549)        
-2022-10-27T05:36:16.3664584Z remote: Counting objects:  11% (1381/12549)        
-2022-10-27T05:36:16.3665108Z remote: Counting objects:  12% (1506/12549)        
-2022-10-27T05:36:16.3665639Z remote: Counting objects:  13% (1632/12549)        
-2022-10-27T05:36:16.3666161Z remote: Counting objects:  14% (1757/12549)        
-2022-10-27T05:36:16.3666781Z remote: Counting objects:  15% (1883/12549)        
-2022-10-27T05:36:16.3667203Z remote: Counting objects:  16% (2008/12549)        
-2022-10-27T05:36:16.3667759Z remote: Counting objects:  17% (2134/12549)        
-2022-10-27T05:36:16.3668424Z remote: Counting objects:  18% (2259/12549)        
-2022-10-27T05:36:16.3668772Z remote: Counting objects:  19% (2385/12549)        
-2022-10-27T05:36:16.3686549Z remote: Counting objects:  20% (2510/12549)        
-2022-10-27T05:36:16.3687142Z remote: Counting objects:  21% (2636/12549)        
-2022-10-27T05:36:16.3693091Z remote: Counting objects:  22% (2761/12549)        
-2022-10-27T05:36:16.3695805Z remote: Counting objects:  23% (2887/12549)        
-2022-10-27T05:36:16.3696270Z remote: Counting objects:  24% (3012/12549)        
-2022-10-27T05:36:16.3696611Z remote: Counting objects:  25% (3138/12549)        
-2022-10-27T05:36:16.3696933Z remote: Counting objects:  26% (3263/12549)        
-2022-10-27T05:36:16.3697238Z remote: Counting objects:  27% (3389/12549)        
-2022-10-27T05:36:16.3697557Z remote: Counting objects:  28% (3514/12549)        
-2022-10-27T05:36:16.3700568Z remote: Counting objects:  29% (3640/12549)        
-2022-10-27T05:36:16.3701206Z remote: Counting objects:  30% (3765/12549)        
-2022-10-27T05:36:16.3701530Z remote: Counting objects:  31% (3891/12549)        
-2022-10-27T05:36:16.3702027Z remote: Counting objects:  32% (4016/12549)        
-2022-10-27T05:36:16.3704376Z remote: Counting objects:  33% (4142/12549)        
-2022-10-27T05:36:16.3705536Z remote: Counting objects:  34% (4267/12549)        
-2022-10-27T05:36:16.3706001Z remote: Counting objects:  35% (4393/12549)        
-2022-10-27T05:36:16.3706528Z remote: Counting objects:  36% (4518/12549)        
-2022-10-27T05:36:16.3707049Z remote: Counting objects:  37% (4644/12549)        
-2022-10-27T05:36:16.3707535Z remote: Counting objects:  38% (4769/12549)        
-2022-10-27T05:36:16.3707879Z remote: Counting objects:  39% (4895/12549)        
-2022-10-27T05:36:16.3708856Z remote: Counting objects:  40% (5020/12549)        
-2022-10-27T05:36:16.3714163Z remote: Counting objects:  41% (5146/12549)        
-2022-10-27T05:36:16.3716186Z remote: Counting objects:  42% (5271/12549)        
-2022-10-27T05:36:16.3720394Z remote: Counting objects:  43% (5397/12549)        
-2022-10-27T05:36:16.3725239Z remote: Counting objects:  44% (5522/12549)        
-2022-10-27T05:36:16.3727509Z remote: Counting objects:  45% (5648/12549)        
-2022-10-27T05:36:16.3728407Z remote: Counting objects:  46% (5773/12549)        
-2022-10-27T05:36:16.3733411Z remote: Counting objects:  47% (5899/12549)        
-2022-10-27T05:36:16.3734826Z remote: Counting objects:  48% (6024/12549)        
-2022-10-27T05:36:16.3736029Z remote: Counting objects:  49% (6150/12549)        
-2022-10-27T05:36:16.3736752Z remote: Counting objects:  50% (6275/12549)        
-2022-10-27T05:36:16.3737119Z remote: Counting objects:  51% (6400/12549)        
-2022-10-27T05:36:16.3740552Z remote: Counting objects:  52% (6526/12549)        
-2022-10-27T05:36:16.3741109Z remote: Counting objects:  53% (6651/12549)        
-2022-10-27T05:36:16.3742348Z remote: Counting objects:  54% (6777/12549)        
-2022-10-27T05:36:16.3745824Z remote: Counting objects:  55% (6902/12549)        
-2022-10-27T05:36:16.3746239Z remote: Counting objects:  56% (7028/12549)        
-2022-10-27T05:36:16.3748976Z remote: Counting objects:  57% (7153/12549)        
-2022-10-27T05:36:16.3752389Z remote: Counting objects:  58% (7279/12549)        
-2022-10-27T05:36:16.3753090Z remote: Counting objects:  59% (7404/12549)        
-2022-10-27T05:36:16.3753587Z remote: Counting objects:  60% (7530/12549)        
-2022-10-27T05:36:16.3753969Z remote: Counting objects:  61% (7655/12549)        
-2022-10-27T05:36:16.3755897Z remote: Counting objects:  62% (7781/12549)        
-2022-10-27T05:36:16.3758566Z remote: Counting objects:  63% (7906/12549)        
-2022-10-27T05:36:16.3760370Z remote: Counting objects:  64% (8032/12549)        
-2022-10-27T05:36:16.3763888Z remote: Counting objects:  65% (8157/12549)        
-2022-10-27T05:36:16.3765292Z remote: Counting objects:  66% (8283/12549)        
-2022-10-27T05:36:16.3765656Z remote: Counting objects:  67% (8408/12549)        
-2022-10-27T05:36:16.3767729Z remote: Counting objects:  68% (8534/12549)        
-2022-10-27T05:36:16.3769245Z remote: Counting objects:  69% (8659/12549)        
-2022-10-27T05:36:16.3772503Z remote: Counting objects:  70% (8785/12549)        
-2022-10-27T05:36:16.3773802Z remote: Counting objects:  71% (8910/12549)        
-2022-10-27T05:36:16.3774655Z remote: Counting objects:  72% (9036/12549)        
-2022-10-27T05:36:16.3775188Z remote: Counting objects:  73% (9161/12549)        
-2022-10-27T05:36:16.3778186Z remote: Counting objects:  74% (9287/12549)        
-2022-10-27T05:36:16.3778933Z remote: Counting objects:  75% (9412/12549)        
-2022-10-27T05:36:16.3780943Z remote: Counting objects:  76% (9538/12549)        
-2022-10-27T05:36:16.3781397Z remote: Counting objects:  77% (9663/12549)        
-2022-10-27T05:36:16.3782023Z remote: Counting objects:  78% (9789/12549)        
-2022-10-27T05:36:16.3782511Z remote: Counting objects:  79% (9914/12549)        
-2022-10-27T05:36:16.3784693Z remote: Counting objects:  80% (10040/12549)        
-2022-10-27T05:36:16.3785644Z remote: Counting objects:  81% (10165/12549)        
-2022-10-27T05:36:16.3786373Z remote: Counting objects:  82% (10291/12549)        
-2022-10-27T05:36:16.3787171Z remote: Counting objects:  83% (10416/12549)        
-2022-10-27T05:36:16.3788291Z remote: Counting objects:  84% (10542/12549)        
-2022-10-27T05:36:16.3789701Z remote: Counting objects:  85% (10667/12549)        
-2022-10-27T05:36:16.3791529Z remote: Counting objects:  86% (10793/12549)        
-2022-10-27T05:36:16.3792061Z remote: Counting objects:  87% (10918/12549)        
-2022-10-27T05:36:16.3792440Z remote: Counting objects:  88% (11044/12549)        
-2022-10-27T05:36:16.3792863Z remote: Counting objects:  89% (11169/12549)        
-2022-10-27T05:36:16.3793298Z remote: Counting objects:  90% (11295/12549)        
-2022-10-27T05:36:16.3795291Z remote: Counting objects:  91% (11420/12549)        
-2022-10-27T05:36:16.3796533Z remote: Counting objects:  92% (11546/12549)        
-2022-10-27T05:36:16.3804544Z remote: Counting objects:  93% (11671/12549)        
-2022-10-27T05:36:16.3804980Z remote: Counting objects:  94% (11797/12549)        
-2022-10-27T05:36:16.3809019Z remote: Counting objects:  95% (11922/12549)        
-2022-10-27T05:36:16.3812297Z remote: Counting objects:  96% (12048/12549)        
-2022-10-27T05:36:16.3812832Z remote: Counting objects:  97% (12173/12549)        
-2022-10-27T05:36:16.3813378Z remote: Counting objects:  98% (12299/12549)        
-2022-10-27T05:36:16.3822622Z remote: Counting objects:  99% (12424/12549)        
-2022-10-27T05:36:16.3823331Z remote: Counting objects: 100% (12549/12549)        
-2022-10-27T05:36:16.3823824Z remote: Counting objects: 100% (12549/12549), done.        
-2022-10-27T05:36:16.4028339Z remote: Compressing objects:   0% (1/10965)        
-2022-10-27T05:36:16.4147149Z remote: Compressing objects:   1% (110/10965)        
-2022-10-27T05:36:16.4301715Z remote: Compressing objects:   2% (220/10965)        
-2022-10-27T05:36:16.4468059Z remote: Compressing objects:   3% (329/10965)        
-2022-10-27T05:36:16.4473482Z remote: Compressing objects:   4% (439/10965)        
-2022-10-27T05:36:16.4543661Z remote: Compressing objects:   5% (549/10965)        
-2022-10-27T05:36:16.4673953Z remote: Compressing objects:   6% (658/10965)        
-2022-10-27T05:36:16.4966036Z remote: Compressing objects:   7% (768/10965)        
-2022-10-27T05:36:16.5309645Z remote: Compressing objects:   8% (878/10965)        
-2022-10-27T05:36:16.5681068Z remote: Compressing objects:   9% (987/10965)        
-2022-10-27T05:36:16.6184895Z remote: Compressing objects:  10% (1097/10965)        
-2022-10-27T05:36:17.1107044Z remote: Compressing objects:  11% (1207/10965)        
-2022-10-27T05:36:17.2060689Z remote: Compressing objects:  12% (1316/10965)        
-2022-10-27T05:36:17.3922950Z remote: Compressing objects:  13% (1426/10965)        
-2022-10-27T05:36:17.3936933Z remote: Compressing objects:  13% (1501/10965)        
-2022-10-27T05:36:17.4040840Z remote: Compressing objects:  14% (1536/10965)        
-2022-10-27T05:36:17.4460571Z remote: Compressing objects:  15% (1645/10965)        
-2022-10-27T05:36:17.4619358Z remote: Compressing objects:  16% (1755/10965)        
-2022-10-27T05:36:17.4790041Z remote: Compressing objects:  17% (1865/10965)        
-2022-10-27T05:36:17.4934830Z remote: Compressing objects:  18% (1974/10965)        
-2022-10-27T05:36:17.5257200Z remote: Compressing objects:  19% (2084/10965)        
-2022-10-27T05:36:17.5516516Z remote: Compressing objects:  20% (2193/10965)        
-2022-10-27T05:36:17.5561317Z remote: Compressing objects:  21% (2303/10965)        
-2022-10-27T05:36:17.5795622Z remote: Compressing objects:  22% (2413/10965)        
-2022-10-27T05:36:17.6401406Z remote: Compressing objects:  23% (2522/10965)        
-2022-10-27T05:36:17.6654061Z remote: Compressing objects:  24% (2632/10965)        
-2022-10-27T05:36:17.6828486Z remote: Compressing objects:  25% (2742/10965)        
-2022-10-27T05:36:17.7044480Z remote: Compressing objects:  26% (2851/10965)        
-2022-10-27T05:36:17.7222440Z remote: Compressing objects:  27% (2961/10965)        
-2022-10-27T05:36:17.7713784Z remote: Compressing objects:  28% (3071/10965)        
-2022-10-27T05:36:17.7980639Z remote: Compressing objects:  29% (3180/10965)        
-2022-10-27T05:36:17.8260312Z remote: Compressing objects:  30% (3290/10965)        
-2022-10-27T05:36:17.8653550Z remote: Compressing objects:  31% (3400/10965)        
-2022-10-27T05:36:17.8786759Z remote: Compressing objects:  32% (3509/10965)        
-2022-10-27T05:36:17.9127781Z remote: Compressing objects:  33% (3619/10965)        
-2022-10-27T05:36:17.9521720Z remote: Compressing objects:  34% (3729/10965)        
-2022-10-27T05:36:17.9910080Z remote: Compressing objects:  35% (3838/10965)        
-2022-10-27T05:36:18.0204335Z remote: Compressing objects:  36% (3948/10965)        
-2022-10-27T05:36:18.0597196Z remote: Compressing objects:  37% (4058/10965)        
-2022-10-27T05:36:18.0964696Z remote: Compressing objects:  38% (4167/10965)        
-2022-10-27T05:36:18.1358555Z remote: Compressing objects:  39% (4277/10965)        
-2022-10-27T05:36:18.1549596Z remote: Compressing objects:  40% (4386/10965)        
-2022-10-27T05:36:18.1861724Z remote: Compressing objects:  41% (4496/10965)        
-2022-10-27T05:36:18.2100005Z remote: Compressing objects:  42% (4606/10965)        
-2022-10-27T05:36:18.2479949Z remote: Compressing objects:  43% (4715/10965)        
-2022-10-27T05:36:18.2787209Z remote: Compressing objects:  44% (4825/10965)        
-2022-10-27T05:36:18.3002217Z remote: Compressing objects:  45% (4935/10965)        
-2022-10-27T05:36:18.3304059Z remote: Compressing objects:  46% (5044/10965)        
-2022-10-27T05:36:18.3627827Z remote: Compressing objects:  47% (5154/10965)        
-2022-10-27T05:36:18.3769101Z remote: Compressing objects:  48% (5264/10965)        
-2022-10-27T05:36:18.3833369Z remote: Compressing objects:  49% (5373/10965)        
-2022-10-27T05:36:18.4021233Z remote: Compressing objects:  49% (5403/10965)        
-2022-10-27T05:36:18.4232973Z remote: Compressing objects:  50% (5483/10965)        
-2022-10-27T05:36:18.4496802Z remote: Compressing objects:  51% (5593/10965)        
-2022-10-27T05:36:18.4760000Z remote: Compressing objects:  52% (5702/10965)        
-2022-10-27T05:36:18.5061635Z remote: Compressing objects:  53% (5812/10965)        
-2022-10-27T05:36:18.5273446Z remote: Compressing objects:  54% (5922/10965)        
-2022-10-27T05:36:18.5546118Z remote: Compressing objects:  55% (6031/10965)        
-2022-10-27T05:36:18.5809381Z remote: Compressing objects:  56% (6141/10965)        
-2022-10-27T05:36:18.6147456Z remote: Compressing objects:  57% (6251/10965)        
-2022-10-27T05:36:18.6311320Z remote: Compressing objects:  58% (6360/10965)        
-2022-10-27T05:36:18.6614446Z remote: Compressing objects:  59% (6470/10965)        
-2022-10-27T05:36:18.6930160Z remote: Compressing objects:  60% (6579/10965)        
-2022-10-27T05:36:18.7250175Z remote: Compressing objects:  61% (6689/10965)        
-2022-10-27T05:36:18.7426580Z remote: Compressing objects:  62% (6799/10965)        
-2022-10-27T05:36:18.7654931Z remote: Compressing objects:  63% (6908/10965)        
-2022-10-27T05:36:18.8010761Z remote: Compressing objects:  64% (7018/10965)        
-2022-10-27T05:36:18.8152846Z remote: Compressing objects:  65% (7128/10965)        
-2022-10-27T05:36:18.8473982Z remote: Compressing objects:  66% (7237/10965)        
-2022-10-27T05:36:18.8539428Z remote: Compressing objects:  67% (7347/10965)        
-2022-10-27T05:36:18.8540163Z remote: Compressing objects:  68% (7457/10965)        
-2022-10-27T05:36:18.8621595Z remote: Compressing objects:  69% (7566/10965)        
-2022-10-27T05:36:18.8622122Z remote: Compressing objects:  70% (7676/10965)        
-2022-10-27T05:36:18.8625855Z remote: Compressing objects:  71% (7786/10965)        
-2022-10-27T05:36:18.8626847Z remote: Compressing objects:  72% (7895/10965)        
-2022-10-27T05:36:18.8627930Z remote: Compressing objects:  73% (8005/10965)        
-2022-10-27T05:36:18.8629224Z remote: Compressing objects:  74% (8115/10965)        
-2022-10-27T05:36:18.8630011Z remote: Compressing objects:  75% (8224/10965)        
-2022-10-27T05:36:18.8630611Z remote: Compressing objects:  76% (8334/10965)        
-2022-10-27T05:36:18.8658429Z remote: Compressing objects:  77% (8444/10965)        
-2022-10-27T05:36:18.8659128Z remote: Compressing objects:  78% (8553/10965)        
-2022-10-27T05:36:18.8659555Z remote: Compressing objects:  79% (8663/10965)        
-2022-10-27T05:36:18.8688825Z remote: Compressing objects:  80% (8772/10965)        
-2022-10-27T05:36:18.8779984Z remote: Compressing objects:  81% (8882/10965)        
-2022-10-27T05:36:18.8780591Z remote: Compressing objects:  82% (8992/10965)        
-2022-10-27T05:36:18.8839685Z remote: Compressing objects:  83% (9101/10965)        
-2022-10-27T05:36:18.8906377Z remote: Compressing objects:  84% (9211/10965)        
-2022-10-27T05:36:18.8909267Z remote: Compressing objects:  85% (9321/10965)        
-2022-10-27T05:36:18.8909956Z remote: Compressing objects:  86% (9430/10965)        
-2022-10-27T05:36:18.8910536Z remote: Compressing objects:  87% (9540/10965)        
-2022-10-27T05:36:18.8911145Z remote: Compressing objects:  88% (9650/10965)        
-2022-10-27T05:36:18.8911776Z remote: Compressing objects:  89% (9759/10965)        
-2022-10-27T05:36:18.8951128Z remote: Compressing objects:  90% (9869/10965)        
-2022-10-27T05:36:18.9127733Z remote: Compressing objects:  91% (9979/10965)        
-2022-10-27T05:36:18.9128171Z remote: Compressing objects:  92% (10088/10965)        
-2022-10-27T05:36:18.9128609Z remote: Compressing objects:  93% (10198/10965)        
-2022-10-27T05:36:18.9133927Z remote: Compressing objects:  94% (10308/10965)        
-2022-10-27T05:36:18.9152257Z remote: Compressing objects:  95% (10417/10965)        
-2022-10-27T05:36:18.9166692Z remote: Compressing objects:  96% (10527/10965)        
-2022-10-27T05:36:18.9178013Z remote: Compressing objects:  97% (10637/10965)        
-2022-10-27T05:36:18.9188202Z remote: Compressing objects:  98% (10746/10965)        
-2022-10-27T05:36:18.9202595Z remote: Compressing objects:  99% (10856/10965)        
-2022-10-27T05:36:18.9203422Z remote: Compressing objects: 100% (10965/10965)        
-2022-10-27T05:36:18.9204293Z remote: Compressing objects: 100% (10965/10965), done.        
+2022-10-27T05:36:16.3561666Z remote: Enumerating objects: 12549, done.
+2022-10-27T05:36:16.3568675Z remote: Counting objects:   0% (1/12549)
+2022-10-27T05:36:16.3571032Z remote: Counting objects:   1% (126/12549)
+2022-10-27T05:36:16.3576947Z remote: Counting objects:   2% (251/12549)
+2022-10-27T05:36:16.3590550Z remote: Counting objects:   3% (377/12549)
+2022-10-27T05:36:16.3591870Z remote: Counting objects:   4% (502/12549)
+2022-10-27T05:36:16.3629704Z remote: Counting objects:   5% (628/12549)
+2022-10-27T05:36:16.3630882Z remote: Counting objects:   6% (753/12549)
+2022-10-27T05:36:16.3633986Z remote: Counting objects:   7% (879/12549)
+2022-10-27T05:36:16.3662523Z remote: Counting objects:   8% (1004/12549)
+2022-10-27T05:36:16.3663123Z remote: Counting objects:   9% (1130/12549)
+2022-10-27T05:36:16.3664088Z remote: Counting objects:  10% (1255/12549)
+2022-10-27T05:36:16.3664584Z remote: Counting objects:  11% (1381/12549)
+2022-10-27T05:36:16.3665108Z remote: Counting objects:  12% (1506/12549)
+2022-10-27T05:36:16.3665639Z remote: Counting objects:  13% (1632/12549)
+2022-10-27T05:36:16.3666161Z remote: Counting objects:  14% (1757/12549)
+2022-10-27T05:36:16.3666781Z remote: Counting objects:  15% (1883/12549)
+2022-10-27T05:36:16.3667203Z remote: Counting objects:  16% (2008/12549)
+2022-10-27T05:36:16.3667759Z remote: Counting objects:  17% (2134/12549)
+2022-10-27T05:36:16.3668424Z remote: Counting objects:  18% (2259/12549)
+2022-10-27T05:36:16.3668772Z remote: Counting objects:  19% (2385/12549)
+2022-10-27T05:36:16.3686549Z remote: Counting objects:  20% (2510/12549)
+2022-10-27T05:36:16.3687142Z remote: Counting objects:  21% (2636/12549)
+2022-10-27T05:36:16.3693091Z remote: Counting objects:  22% (2761/12549)
+2022-10-27T05:36:16.3695805Z remote: Counting objects:  23% (2887/12549)
+2022-10-27T05:36:16.3696270Z remote: Counting objects:  24% (3012/12549)
+2022-10-27T05:36:16.3696611Z remote: Counting objects:  25% (3138/12549)
+2022-10-27T05:36:16.3696933Z remote: Counting objects:  26% (3263/12549)
+2022-10-27T05:36:16.3697238Z remote: Counting objects:  27% (3389/12549)
+2022-10-27T05:36:16.3697557Z remote: Counting objects:  28% (3514/12549)
+2022-10-27T05:36:16.3700568Z remote: Counting objects:  29% (3640/12549)
+2022-10-27T05:36:16.3701206Z remote: Counting objects:  30% (3765/12549)
+2022-10-27T05:36:16.3701530Z remote: Counting objects:  31% (3891/12549)
+2022-10-27T05:36:16.3702027Z remote: Counting objects:  32% (4016/12549)
+2022-10-27T05:36:16.3704376Z remote: Counting objects:  33% (4142/12549)
+2022-10-27T05:36:16.3705536Z remote: Counting objects:  34% (4267/12549)
+2022-10-27T05:36:16.3706001Z remote: Counting objects:  35% (4393/12549)
+2022-10-27T05:36:16.3706528Z remote: Counting objects:  36% (4518/12549)
+2022-10-27T05:36:16.3707049Z remote: Counting objects:  37% (4644/12549)
+2022-10-27T05:36:16.3707535Z remote: Counting objects:  38% (4769/12549)
+2022-10-27T05:36:16.3707879Z remote: Counting objects:  39% (4895/12549)
+2022-10-27T05:36:16.3708856Z remote: Counting objects:  40% (5020/12549)
+2022-10-27T05:36:16.3714163Z remote: Counting objects:  41% (5146/12549)
+2022-10-27T05:36:16.3716186Z remote: Counting objects:  42% (5271/12549)
+2022-10-27T05:36:16.3720394Z remote: Counting objects:  43% (5397/12549)
+2022-10-27T05:36:16.3725239Z remote: Counting objects:  44% (5522/12549)
+2022-10-27T05:36:16.3727509Z remote: Counting objects:  45% (5648/12549)
+2022-10-27T05:36:16.3728407Z remote: Counting objects:  46% (5773/12549)
+2022-10-27T05:36:16.3733411Z remote: Counting objects:  47% (5899/12549)
+2022-10-27T05:36:16.3734826Z remote: Counting objects:  48% (6024/12549)
+2022-10-27T05:36:16.3736029Z remote: Counting objects:  49% (6150/12549)
+2022-10-27T05:36:16.3736752Z remote: Counting objects:  50% (6275/12549)
+2022-10-27T05:36:16.3737119Z remote: Counting objects:  51% (6400/12549)
+2022-10-27T05:36:16.3740552Z remote: Counting objects:  52% (6526/12549)
+2022-10-27T05:36:16.3741109Z remote: Counting objects:  53% (6651/12549)
+2022-10-27T05:36:16.3742348Z remote: Counting objects:  54% (6777/12549)
+2022-10-27T05:36:16.3745824Z remote: Counting objects:  55% (6902/12549)
+2022-10-27T05:36:16.3746239Z remote: Counting objects:  56% (7028/12549)
+2022-10-27T05:36:16.3748976Z remote: Counting objects:  57% (7153/12549)
+2022-10-27T05:36:16.3752389Z remote: Counting objects:  58% (7279/12549)
+2022-10-27T05:36:16.3753090Z remote: Counting objects:  59% (7404/12549)
+2022-10-27T05:36:16.3753587Z remote: Counting objects:  60% (7530/12549)
+2022-10-27T05:36:16.3753969Z remote: Counting objects:  61% (7655/12549)
+2022-10-27T05:36:16.3755897Z remote: Counting objects:  62% (7781/12549)
+2022-10-27T05:36:16.3758566Z remote: Counting objects:  63% (7906/12549)
+2022-10-27T05:36:16.3760370Z remote: Counting objects:  64% (8032/12549)
+2022-10-27T05:36:16.3763888Z remote: Counting objects:  65% (8157/12549)
+2022-10-27T05:36:16.3765292Z remote: Counting objects:  66% (8283/12549)
+2022-10-27T05:36:16.3765656Z remote: Counting objects:  67% (8408/12549)
+2022-10-27T05:36:16.3767729Z remote: Counting objects:  68% (8534/12549)
+2022-10-27T05:36:16.3769245Z remote: Counting objects:  69% (8659/12549)
+2022-10-27T05:36:16.3772503Z remote: Counting objects:  70% (8785/12549)
+2022-10-27T05:36:16.3773802Z remote: Counting objects:  71% (8910/12549)
+2022-10-27T05:36:16.3774655Z remote: Counting objects:  72% (9036/12549)
+2022-10-27T05:36:16.3775188Z remote: Counting objects:  73% (9161/12549)
+2022-10-27T05:36:16.3778186Z remote: Counting objects:  74% (9287/12549)
+2022-10-27T05:36:16.3778933Z remote: Counting objects:  75% (9412/12549)
+2022-10-27T05:36:16.3780943Z remote: Counting objects:  76% (9538/12549)
+2022-10-27T05:36:16.3781397Z remote: Counting objects:  77% (9663/12549)
+2022-10-27T05:36:16.3782023Z remote: Counting objects:  78% (9789/12549)
+2022-10-27T05:36:16.3782511Z remote: Counting objects:  79% (9914/12549)
+2022-10-27T05:36:16.3784693Z remote: Counting objects:  80% (10040/12549)
+2022-10-27T05:36:16.3785644Z remote: Counting objects:  81% (10165/12549)
+2022-10-27T05:36:16.3786373Z remote: Counting objects:  82% (10291/12549)
+2022-10-27T05:36:16.3787171Z remote: Counting objects:  83% (10416/12549)
+2022-10-27T05:36:16.3788291Z remote: Counting objects:  84% (10542/12549)
+2022-10-27T05:36:16.3789701Z remote: Counting objects:  85% (10667/12549)
+2022-10-27T05:36:16.3791529Z remote: Counting objects:  86% (10793/12549)
+2022-10-27T05:36:16.3792061Z remote: Counting objects:  87% (10918/12549)
+2022-10-27T05:36:16.3792440Z remote: Counting objects:  88% (11044/12549)
+2022-10-27T05:36:16.3792863Z remote: Counting objects:  89% (11169/12549)
+2022-10-27T05:36:16.3793298Z remote: Counting objects:  90% (11295/12549)
+2022-10-27T05:36:16.3795291Z remote: Counting objects:  91% (11420/12549)
+2022-10-27T05:36:16.3796533Z remote: Counting objects:  92% (11546/12549)
+2022-10-27T05:36:16.3804544Z remote: Counting objects:  93% (11671/12549)
+2022-10-27T05:36:16.3804980Z remote: Counting objects:  94% (11797/12549)
+2022-10-27T05:36:16.3809019Z remote: Counting objects:  95% (11922/12549)
+2022-10-27T05:36:16.3812297Z remote: Counting objects:  96% (12048/12549)
+2022-10-27T05:36:16.3812832Z remote: Counting objects:  97% (12173/12549)
+2022-10-27T05:36:16.3813378Z remote: Counting objects:  98% (12299/12549)
+2022-10-27T05:36:16.3822622Z remote: Counting objects:  99% (12424/12549)
+2022-10-27T05:36:16.3823331Z remote: Counting objects: 100% (12549/12549)
+2022-10-27T05:36:16.3823824Z remote: Counting objects: 100% (12549/12549), done.
+2022-10-27T05:36:16.4028339Z remote: Compressing objects:   0% (1/10965)
+2022-10-27T05:36:16.4147149Z remote: Compressing objects:   1% (110/10965)
+2022-10-27T05:36:16.4301715Z remote: Compressing objects:   2% (220/10965)
+2022-10-27T05:36:16.4468059Z remote: Compressing objects:   3% (329/10965)
+2022-10-27T05:36:16.4473482Z remote: Compressing objects:   4% (439/10965)
+2022-10-27T05:36:16.4543661Z remote: Compressing objects:   5% (549/10965)
+2022-10-27T05:36:16.4673953Z remote: Compressing objects:   6% (658/10965)
+2022-10-27T05:36:16.4966036Z remote: Compressing objects:   7% (768/10965)
+2022-10-27T05:36:16.5309645Z remote: Compressing objects:   8% (878/10965)
+2022-10-27T05:36:16.5681068Z remote: Compressing objects:   9% (987/10965)
+2022-10-27T05:36:16.6184895Z remote: Compressing objects:  10% (1097/10965)
+2022-10-27T05:36:17.1107044Z remote: Compressing objects:  11% (1207/10965)
+2022-10-27T05:36:17.2060689Z remote: Compressing objects:  12% (1316/10965)
+2022-10-27T05:36:17.3922950Z remote: Compressing objects:  13% (1426/10965)
+2022-10-27T05:36:17.3936933Z remote: Compressing objects:  13% (1501/10965)
+2022-10-27T05:36:17.4040840Z remote: Compressing objects:  14% (1536/10965)
+2022-10-27T05:36:17.4460571Z remote: Compressing objects:  15% (1645/10965)
+2022-10-27T05:36:17.4619358Z remote: Compressing objects:  16% (1755/10965)
+2022-10-27T05:36:17.4790041Z remote: Compressing objects:  17% (1865/10965)
+2022-10-27T05:36:17.4934830Z remote: Compressing objects:  18% (1974/10965)
+2022-10-27T05:36:17.5257200Z remote: Compressing objects:  19% (2084/10965)
+2022-10-27T05:36:17.5516516Z remote: Compressing objects:  20% (2193/10965)
+2022-10-27T05:36:17.5561317Z remote: Compressing objects:  21% (2303/10965)
+2022-10-27T05:36:17.5795622Z remote: Compressing objects:  22% (2413/10965)
+2022-10-27T05:36:17.6401406Z remote: Compressing objects:  23% (2522/10965)
+2022-10-27T05:36:17.6654061Z remote: Compressing objects:  24% (2632/10965)
+2022-10-27T05:36:17.6828486Z remote: Compressing objects:  25% (2742/10965)
+2022-10-27T05:36:17.7044480Z remote: Compressing objects:  26% (2851/10965)
+2022-10-27T05:36:17.7222440Z remote: Compressing objects:  27% (2961/10965)
+2022-10-27T05:36:17.7713784Z remote: Compressing objects:  28% (3071/10965)
+2022-10-27T05:36:17.7980639Z remote: Compressing objects:  29% (3180/10965)
+2022-10-27T05:36:17.8260312Z remote: Compressing objects:  30% (3290/10965)
+2022-10-27T05:36:17.8653550Z remote: Compressing objects:  31% (3400/10965)
+2022-10-27T05:36:17.8786759Z remote: Compressing objects:  32% (3509/10965)
+2022-10-27T05:36:17.9127781Z remote: Compressing objects:  33% (3619/10965)
+2022-10-27T05:36:17.9521720Z remote: Compressing objects:  34% (3729/10965)
+2022-10-27T05:36:17.9910080Z remote: Compressing objects:  35% (3838/10965)
+2022-10-27T05:36:18.0204335Z remote: Compressing objects:  36% (3948/10965)
+2022-10-27T05:36:18.0597196Z remote: Compressing objects:  37% (4058/10965)
+2022-10-27T05:36:18.0964696Z remote: Compressing objects:  38% (4167/10965)
+2022-10-27T05:36:18.1358555Z remote: Compressing objects:  39% (4277/10965)
+2022-10-27T05:36:18.1549596Z remote: Compressing objects:  40% (4386/10965)
+2022-10-27T05:36:18.1861724Z remote: Compressing objects:  41% (4496/10965)
+2022-10-27T05:36:18.2100005Z remote: Compressing objects:  42% (4606/10965)
+2022-10-27T05:36:18.2479949Z remote: Compressing objects:  43% (4715/10965)
+2022-10-27T05:36:18.2787209Z remote: Compressing objects:  44% (4825/10965)
+2022-10-27T05:36:18.3002217Z remote: Compressing objects:  45% (4935/10965)
+2022-10-27T05:36:18.3304059Z remote: Compressing objects:  46% (5044/10965)
+2022-10-27T05:36:18.3627827Z remote: Compressing objects:  47% (5154/10965)
+2022-10-27T05:36:18.3769101Z remote: Compressing objects:  48% (5264/10965)
+2022-10-27T05:36:18.3833369Z remote: Compressing objects:  49% (5373/10965)
+2022-10-27T05:36:18.4021233Z remote: Compressing objects:  49% (5403/10965)
+2022-10-27T05:36:18.4232973Z remote: Compressing objects:  50% (5483/10965)
+2022-10-27T05:36:18.4496802Z remote: Compressing objects:  51% (5593/10965)
+2022-10-27T05:36:18.4760000Z remote: Compressing objects:  52% (5702/10965)
+2022-10-27T05:36:18.5061635Z remote: Compressing objects:  53% (5812/10965)
+2022-10-27T05:36:18.5273446Z remote: Compressing objects:  54% (5922/10965)
+2022-10-27T05:36:18.5546118Z remote: Compressing objects:  55% (6031/10965)
+2022-10-27T05:36:18.5809381Z remote: Compressing objects:  56% (6141/10965)
+2022-10-27T05:36:18.6147456Z remote: Compressing objects:  57% (6251/10965)
+2022-10-27T05:36:18.6311320Z remote: Compressing objects:  58% (6360/10965)
+2022-10-27T05:36:18.6614446Z remote: Compressing objects:  59% (6470/10965)
+2022-10-27T05:36:18.6930160Z remote: Compressing objects:  60% (6579/10965)
+2022-10-27T05:36:18.7250175Z remote: Compressing objects:  61% (6689/10965)
+2022-10-27T05:36:18.7426580Z remote: Compressing objects:  62% (6799/10965)
+2022-10-27T05:36:18.7654931Z remote: Compressing objects:  63% (6908/10965)
+2022-10-27T05:36:18.8010761Z remote: Compressing objects:  64% (7018/10965)
+2022-10-27T05:36:18.8152846Z remote: Compressing objects:  65% (7128/10965)
+2022-10-27T05:36:18.8473982Z remote: Compressing objects:  66% (7237/10965)
+2022-10-27T05:36:18.8539428Z remote: Compressing objects:  67% (7347/10965)
+2022-10-27T05:36:18.8540163Z remote: Compressing objects:  68% (7457/10965)
+2022-10-27T05:36:18.8621595Z remote: Compressing objects:  69% (7566/10965)
+2022-10-27T05:36:18.8622122Z remote: Compressing objects:  70% (7676/10965)
+2022-10-27T05:36:18.8625855Z remote: Compressing objects:  71% (7786/10965)
+2022-10-27T05:36:18.8626847Z remote: Compressing objects:  72% (7895/10965)
+2022-10-27T05:36:18.8627930Z remote: Compressing objects:  73% (8005/10965)
+2022-10-27T05:36:18.8629224Z remote: Compressing objects:  74% (8115/10965)
+2022-10-27T05:36:18.8630011Z remote: Compressing objects:  75% (8224/10965)
+2022-10-27T05:36:18.8630611Z remote: Compressing objects:  76% (8334/10965)
+2022-10-27T05:36:18.8658429Z remote: Compressing objects:  77% (8444/10965)
+2022-10-27T05:36:18.8659128Z remote: Compressing objects:  78% (8553/10965)
+2022-10-27T05:36:18.8659555Z remote: Compressing objects:  79% (8663/10965)
+2022-10-27T05:36:18.8688825Z remote: Compressing objects:  80% (8772/10965)
+2022-10-27T05:36:18.8779984Z remote: Compressing objects:  81% (8882/10965)
+2022-10-27T05:36:18.8780591Z remote: Compressing objects:  82% (8992/10965)
+2022-10-27T05:36:18.8839685Z remote: Compressing objects:  83% (9101/10965)
+2022-10-27T05:36:18.8906377Z remote: Compressing objects:  84% (9211/10965)
+2022-10-27T05:36:18.8909267Z remote: Compressing objects:  85% (9321/10965)
+2022-10-27T05:36:18.8909956Z remote: Compressing objects:  86% (9430/10965)
+2022-10-27T05:36:18.8910536Z remote: Compressing objects:  87% (9540/10965)
+2022-10-27T05:36:18.8911145Z remote: Compressing objects:  88% (9650/10965)
+2022-10-27T05:36:18.8911776Z remote: Compressing objects:  89% (9759/10965)
+2022-10-27T05:36:18.8951128Z remote: Compressing objects:  90% (9869/10965)
+2022-10-27T05:36:18.9127733Z remote: Compressing objects:  91% (9979/10965)
+2022-10-27T05:36:18.9128171Z remote: Compressing objects:  92% (10088/10965)
+2022-10-27T05:36:18.9128609Z remote: Compressing objects:  93% (10198/10965)
+2022-10-27T05:36:18.9133927Z remote: Compressing objects:  94% (10308/10965)
+2022-10-27T05:36:18.9152257Z remote: Compressing objects:  95% (10417/10965)
+2022-10-27T05:36:18.9166692Z remote: Compressing objects:  96% (10527/10965)
+2022-10-27T05:36:18.9178013Z remote: Compressing objects:  97% (10637/10965)
+2022-10-27T05:36:18.9188202Z remote: Compressing objects:  98% (10746/10965)
+2022-10-27T05:36:18.9202595Z remote: Compressing objects:  99% (10856/10965)
+2022-10-27T05:36:18.9203422Z remote: Compressing objects: 100% (10965/10965)
+2022-10-27T05:36:18.9204293Z remote: Compressing objects: 100% (10965/10965), done.
 2022-10-27T05:36:18.9643118Z Receiving objects:   0% (1/12549)
 2022-10-27T05:36:19.5343020Z Receiving objects:   1% (126/12549)
 2022-10-27T05:36:19.5547619Z Receiving objects:   2% (251/12549), 1.75 MiB | 3.48 MiB/s
@@ -501,7 +501,7 @@
 2022-10-27T05:36:23.5654171Z Receiving objects:  97% (12173/12549), 126.98 MiB | 28.99 MiB/s
 2022-10-27T05:36:23.5827062Z Receiving objects:  98% (12299/12549), 126.98 MiB | 28.99 MiB/s
 2022-10-27T05:36:23.5872285Z Receiving objects:  99% (12424/12549), 126.98 MiB | 28.99 MiB/s
-2022-10-27T05:36:23.5873322Z remote: Total 12549 (delta 1601), reused 7183 (delta 1450), pack-reused 0        
+2022-10-27T05:36:23.5873322Z remote: Total 12549 (delta 1601), reused 7183 (delta 1450), pack-reused 0
 2022-10-27T05:36:23.5902379Z Receiving objects: 100% (12549/12549), 126.98 MiB | 28.99 MiB/s
 2022-10-27T05:36:23.5903011Z Receiving objects: 100% (12549/12549), 139.13 MiB | 29.83 MiB/s, done.
 2022-10-27T05:36:23.5950353Z Resolving deltas:   0% (0/1601)
@@ -653,22 +653,22 @@
 2022-10-27T05:36:25.7674090Z Updating files: 100% (11578/11578)
 2022-10-27T05:36:25.7675326Z Updating files: 100% (11578/11578), done.
 2022-10-27T05:36:25.7839712Z Note: switching to 'refs/remotes/pull/70831/merge'.
-2022-10-27T05:36:25.7840374Z 
+2022-10-27T05:36:25.7840374Z
 2022-10-27T05:36:25.7841364Z You are in 'detached HEAD' state. You can look around, make experimental
 2022-10-27T05:36:25.7842184Z changes and commit them, and you can discard any commits you make in this
 2022-10-27T05:36:25.7842925Z state without impacting any branches by switching back to a branch.
-2022-10-27T05:36:25.7843345Z 
+2022-10-27T05:36:25.7843345Z
 2022-10-27T05:36:25.7843670Z If you want to create a new branch to retain commits you create, you may
 2022-10-27T05:36:25.7844575Z do so (now or later) by using -c with the switch command. Example:
-2022-10-27T05:36:25.7844969Z 
+2022-10-27T05:36:25.7844969Z
 2022-10-27T05:36:25.7845632Z   git switch -c <new-branch-name>
-2022-10-27T05:36:25.7845974Z 
+2022-10-27T05:36:25.7845974Z
 2022-10-27T05:36:25.7846184Z Or undo this operation with:
-2022-10-27T05:36:25.7846473Z 
+2022-10-27T05:36:25.7846473Z
 2022-10-27T05:36:25.7846644Z   git switch -
-2022-10-27T05:36:25.7846900Z 
+2022-10-27T05:36:25.7846900Z
 2022-10-27T05:36:25.7847288Z Turn off this advice by setting config variable advice.detachedHead to false
-2022-10-27T05:36:25.7847742Z 
+2022-10-27T05:36:25.7847742Z
 2022-10-27T05:36:25.7848217Z HEAD is now at deb5c38 Merge 9618404f9ee7f23400ea062d5dacb13fda53ca75 into 8bb8ca9d67375d0bd58ceacbc6346f9e92fef872
 2022-10-27T05:36:25.7902871Z ##[endgroup]
 2022-10-27T05:36:25.7967741Z [command]/usr/bin/git log -1 --format='%H'
@@ -702,9 +702,9 @@
 2022-10-27T05:36:28.8183412Z [36;1mbash tools/ci/install_rust_g.sh[0m
 2022-10-27T05:36:28.8240260Z shell: /usr/bin/bash -e {0}
 2022-10-27T05:36:28.8240552Z ##[endgroup]
-2022-10-27T05:36:28.9970393Z 
+2022-10-27T05:36:28.9970393Z
 2022-10-27T05:36:28.9971552Z WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-2022-10-27T05:36:28.9972082Z 
+2022-10-27T05:36:28.9972082Z
 2022-10-27T05:36:29.1160704Z Hit:1 http://azure.archive.ubuntu.com/ubuntu focal InRelease
 2022-10-27T05:36:29.1162032Z Get:2 http://azure.archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
 2022-10-27T05:36:29.1173928Z Get:3 http://azure.archive.ubuntu.com/ubuntu focal-backports InRelease [108 kB]
@@ -752,9 +752,9 @@
 2022-10-27T05:36:41.8619438Z Building dependency tree...
 2022-10-27T05:36:41.8635085Z Reading state information...
 2022-10-27T05:36:41.9709754Z 40 packages can be upgraded. Run 'apt list --upgradable' to see them.
-2022-10-27T05:36:41.9833939Z 
+2022-10-27T05:36:41.9833939Z
 2022-10-27T05:36:41.9834743Z WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-2022-10-27T05:36:41.9835161Z 
+2022-10-27T05:36:41.9835161Z
 2022-10-27T05:36:42.0520184Z Reading package lists...
 2022-10-27T05:36:42.3196647Z Building dependency tree...
 2022-10-27T05:36:42.3215128Z Reading state information...
@@ -782,7 +782,7 @@
 2022-10-27T05:36:43.9483382Z Preconfiguring packages ...
 2022-10-27T05:36:44.0566590Z Fetched 4528 kB in 1s (5511 kB/s)
 2022-10-27T05:36:44.0950557Z Selecting previously unselected package gcc-11-base:i386.
-2022-10-27T05:36:44.1257600Z (Reading database ... 
+2022-10-27T05:36:44.1257600Z (Reading database ...
 2022-10-27T05:36:44.1257941Z (Reading database ... 5%
 2022-10-27T05:36:44.1258207Z (Reading database ... 10%
 2022-10-27T05:36:44.1258475Z (Reading database ... 15%
@@ -869,98 +869,98 @@
 2022-10-27T05:36:49.4001691Z Setting up BYOND.
 2022-10-27T05:36:49.4159362Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 2022-10-27T05:36:49.4160632Z                                  Dload  Upload   Total   Spent    Left  Speed
-2022-10-27T05:36:49.4160890Z 
+2022-10-27T05:36:49.4160890Z
 2022-10-27T05:36:49.5018021Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 2022-10-27T05:36:49.5019163Z 100 4021k  100 4021k    0     0  46.1M      0 --:--:-- --:--:-- --:--:-- 46.1M
 2022-10-27T05:36:49.5066653Z Archive:  byond.zip
 2022-10-27T05:36:49.5067255Z    creating: byond/
 2022-10-27T05:36:49.5068302Z    creating: byond/key/
 2022-10-27T05:36:49.5068798Z    creating: byond/web/
-2022-10-27T05:36:49.5070185Z   inflating: byond/web/child.dms     
-2022-10-27T05:36:49.5071730Z   inflating: byond/web/button.dms    
-2022-10-27T05:36:49.5073932Z   inflating: byond/web/input.dms     
-2022-10-27T05:36:49.5074416Z   inflating: byond/web/text.dms      
-2022-10-27T05:36:49.5198750Z   inflating: byond/web/webclient.dart.js  
-2022-10-27T05:36:49.5199410Z   inflating: byond/web/verbmenu.dms  
-2022-10-27T05:36:49.5200216Z   inflating: byond/web/defaultSkin.dms  
-2022-10-27T05:36:49.5201953Z   inflating: byond/web/hotbar.dms    
-2022-10-27T05:36:49.5203581Z   inflating: byond/web/label.dms     
-2022-10-27T05:36:49.5204889Z   inflating: byond/web/alert.dms     
-2022-10-27T05:36:49.5206329Z   inflating: byond/web/message.dms   
-2022-10-27T05:36:49.5207259Z   inflating: byond/web/drag.png      
-2022-10-27T05:36:49.5208742Z   inflating: byond/web/map.dms       
-2022-10-27T05:36:49.5210398Z   inflating: byond/web/splashlogo.png  
-2022-10-27T05:36:49.5210926Z   inflating: byond/web/drop.png      
-2022-10-27T05:36:49.5332544Z   inflating: byond/web/ext.js        
-2022-10-27T05:36:49.5333175Z   inflating: byond/web/file.dms      
-2022-10-27T05:36:49.5334369Z   inflating: byond/web/grid.dms      
-2022-10-27T05:36:49.5336323Z   inflating: byond/web/bar.dms       
-2022-10-27T05:36:49.5339986Z   inflating: byond/web/dpad.dms      
-2022-10-27T05:36:49.5341094Z   inflating: byond/web/output.dms    
-2022-10-27T05:36:49.5343046Z   inflating: byond/web/tab.dms       
-2022-10-27T05:36:49.5345100Z   inflating: byond/web/info.dms      
-2022-10-27T05:36:49.5346744Z   inflating: byond/web/color.dms     
-2022-10-27T05:36:49.5347953Z   inflating: byond/web/gamepad.dms   
-2022-10-27T05:36:49.5349805Z   inflating: byond/web/browser.dms   
-2022-10-27T05:36:49.5350264Z   inflating: byond/web/status.dms    
-2022-10-27T05:36:49.5351241Z   inflating: byond/web/any.dms       
-2022-10-27T05:36:49.5352302Z   inflating: byond/web/pane.dms      
-2022-10-27T05:36:49.5354423Z   inflating: byond/web/pop.dms       
-2022-10-27T05:36:49.5355613Z   inflating: byond/license.txt       
-2022-10-27T05:36:49.5357084Z   inflating: byond/legal.txt         
-2022-10-27T05:36:49.5358519Z   inflating: byond/Makefile          
+2022-10-27T05:36:49.5070185Z   inflating: byond/web/child.dms
+2022-10-27T05:36:49.5071730Z   inflating: byond/web/button.dms
+2022-10-27T05:36:49.5073932Z   inflating: byond/web/input.dms
+2022-10-27T05:36:49.5074416Z   inflating: byond/web/text.dms
+2022-10-27T05:36:49.5198750Z   inflating: byond/web/webclient.dart.js
+2022-10-27T05:36:49.5199410Z   inflating: byond/web/verbmenu.dms
+2022-10-27T05:36:49.5200216Z   inflating: byond/web/defaultSkin.dms
+2022-10-27T05:36:49.5201953Z   inflating: byond/web/hotbar.dms
+2022-10-27T05:36:49.5203581Z   inflating: byond/web/label.dms
+2022-10-27T05:36:49.5204889Z   inflating: byond/web/alert.dms
+2022-10-27T05:36:49.5206329Z   inflating: byond/web/message.dms
+2022-10-27T05:36:49.5207259Z   inflating: byond/web/drag.png
+2022-10-27T05:36:49.5208742Z   inflating: byond/web/map.dms
+2022-10-27T05:36:49.5210398Z   inflating: byond/web/splashlogo.png
+2022-10-27T05:36:49.5210926Z   inflating: byond/web/drop.png
+2022-10-27T05:36:49.5332544Z   inflating: byond/web/ext.js
+2022-10-27T05:36:49.5333175Z   inflating: byond/web/file.dms
+2022-10-27T05:36:49.5334369Z   inflating: byond/web/grid.dms
+2022-10-27T05:36:49.5336323Z   inflating: byond/web/bar.dms
+2022-10-27T05:36:49.5339986Z   inflating: byond/web/dpad.dms
+2022-10-27T05:36:49.5341094Z   inflating: byond/web/output.dms
+2022-10-27T05:36:49.5343046Z   inflating: byond/web/tab.dms
+2022-10-27T05:36:49.5345100Z   inflating: byond/web/info.dms
+2022-10-27T05:36:49.5346744Z   inflating: byond/web/color.dms
+2022-10-27T05:36:49.5347953Z   inflating: byond/web/gamepad.dms
+2022-10-27T05:36:49.5349805Z   inflating: byond/web/browser.dms
+2022-10-27T05:36:49.5350264Z   inflating: byond/web/status.dms
+2022-10-27T05:36:49.5351241Z   inflating: byond/web/any.dms
+2022-10-27T05:36:49.5352302Z   inflating: byond/web/pane.dms
+2022-10-27T05:36:49.5354423Z   inflating: byond/web/pop.dms
+2022-10-27T05:36:49.5355613Z   inflating: byond/license.txt
+2022-10-27T05:36:49.5357084Z   inflating: byond/legal.txt
+2022-10-27T05:36:49.5358519Z   inflating: byond/Makefile
 2022-10-27T05:36:49.5358970Z    creating: byond/man/
 2022-10-27T05:36:49.5359627Z    creating: byond/man/man6/
-2022-10-27T05:36:49.5361148Z   inflating: byond/man/man6/DreamDaemon.6  
-2022-10-27T05:36:49.5361949Z   inflating: byond/man/man6/DreamMaker.6  
+2022-10-27T05:36:49.5361148Z   inflating: byond/man/man6/DreamDaemon.6
+2022-10-27T05:36:49.5361949Z   inflating: byond/man/man6/DreamMaker.6
 2022-10-27T05:36:49.5362715Z    creating: byond/lib/
 2022-10-27T05:36:49.5362992Z    creating: byond/host/
-2022-10-27T05:36:49.5365318Z   inflating: byond/host/readme.html  
-2022-10-27T05:36:49.5366506Z   inflating: byond/host/readme-unix.txt  
+2022-10-27T05:36:49.5365318Z   inflating: byond/host/readme.html
+2022-10-27T05:36:49.5366506Z   inflating: byond/host/readme-unix.txt
 2022-10-27T05:36:49.5366902Z    creating: byond/host/home/
 2022-10-27T05:36:49.5367533Z    creating: byond/host/home/root/
 2022-10-27T05:36:49.5367822Z    creating: byond/host/home/root/byond/
 2022-10-27T05:36:49.5368496Z    creating: byond/host/home/root/byond/tools/
 2022-10-27T05:36:49.5369225Z    creating: byond/host/home/root/byond/tools/root/
-2022-10-27T05:36:49.5374569Z   inflating: byond/host/home/root/byond/tools/root/root.dmb  
+2022-10-27T05:36:49.5374569Z   inflating: byond/host/home/root/byond/tools/root/root.dmb
 2022-10-27T05:36:49.5375251Z    creating: byond/host/shared/
 2022-10-27T05:36:49.5375559Z    creating: byond/host/shared/byond/
 2022-10-27T05:36:49.5376268Z    creating: byond/host/shared/byond/tools/
 2022-10-27T05:36:49.5376595Z    creating: byond/host/shared/byond/tools/ftp/
-2022-10-27T05:36:49.5379616Z   inflating: byond/host/shared/byond/tools/ftp/ftp.dmb  
+2022-10-27T05:36:49.5379616Z   inflating: byond/host/shared/byond/tools/ftp/ftp.dmb
 2022-10-27T05:36:49.5380174Z    creating: byond/host/shared/byond/tools/admin/
-2022-10-27T05:36:49.5386313Z   inflating: byond/host/shared/byond/tools/admin/admin.dmb  
+2022-10-27T05:36:49.5386313Z   inflating: byond/host/shared/byond/tools/admin/admin.dmb
 2022-10-27T05:36:49.5386945Z    creating: byond/host/shared-web/
 2022-10-27T05:36:49.5387681Z    creating: byond/host/shared-web/web/
 2022-10-27T05:36:49.5388584Z    creating: byond/host/shared-web/web/tools/
 2022-10-27T05:36:49.5389008Z    creating: byond/host/shared-web/web/tools/admin/
-2022-10-27T05:36:49.5394728Z   inflating: byond/host/shared-web/web/tools/admin/index.dmb  
-2022-10-27T05:36:49.5403477Z   inflating: byond/host/host.dmb     
-2022-10-27T05:36:49.5403779Z   inflating: byond/host/host.start   
-2022-10-27T05:36:49.5405103Z   inflating: byond/host/hostconf.orig  
-2022-10-27T05:36:49.5406328Z   inflating: byond/host/hostconf.txt  
-2022-10-27T05:36:49.5407507Z   inflating: byond/readme.txt        
+2022-10-27T05:36:49.5394728Z   inflating: byond/host/shared-web/web/tools/admin/index.dmb
+2022-10-27T05:36:49.5403477Z   inflating: byond/host/host.dmb
+2022-10-27T05:36:49.5403779Z   inflating: byond/host/host.start
+2022-10-27T05:36:49.5405103Z   inflating: byond/host/hostconf.orig
+2022-10-27T05:36:49.5406328Z   inflating: byond/host/hostconf.txt
+2022-10-27T05:36:49.5407507Z   inflating: byond/readme.txt
 2022-10-27T05:36:49.5407795Z    creating: byond/bin/
-2022-10-27T05:36:49.5408558Z   inflating: byond/bin/byondexec     
-2022-10-27T05:36:49.5411293Z   inflating: byond/bin/DreamDownload  
-2022-10-27T05:36:49.6175092Z   inflating: byond/bin/libbyond.so   
-2022-10-27T05:36:49.6348503Z   inflating: byond/bin/libext.so     
-2022-10-27T05:36:49.6351968Z   inflating: byond/bin/DreamDaemon   
-2022-10-27T05:36:49.6355363Z   inflating: byond/bin/DreamMaker    
+2022-10-27T05:36:49.5408558Z   inflating: byond/bin/byondexec
+2022-10-27T05:36:49.5411293Z   inflating: byond/bin/DreamDownload
+2022-10-27T05:36:49.6175092Z   inflating: byond/bin/libbyond.so
+2022-10-27T05:36:49.6348503Z   inflating: byond/bin/libext.so
+2022-10-27T05:36:49.6351968Z   inflating: byond/bin/DreamDaemon
+2022-10-27T05:36:49.6355363Z   inflating: byond/bin/DreamMaker
 2022-10-27T05:36:49.6355666Z    creating: byond/cfg/
-2022-10-27T05:36:49.6356545Z   inflating: byond/cfg/release.txt   
+2022-10-27T05:36:49.6356545Z   inflating: byond/cfg/release.txt
 2022-10-27T05:36:49.6621069Z ***************************
 2022-10-27T05:36:49.6621919Z Now run the following command:
-2022-10-27T05:36:49.6629708Z 
+2022-10-27T05:36:49.6629708Z
 2022-10-27T05:36:49.6640241Z source /home/runner/BYOND/byond/bin/byondsetup
-2022-10-27T05:36:49.6652476Z 
+2022-10-27T05:36:49.6652476Z
 2022-10-27T05:36:49.6657262Z If it generates errors, your shell is not compatible with 'sh', so you will
 2022-10-27T05:36:49.6663166Z have to edit byondsetup and make it work with your shell.  If the script works, you should be able to run DreamDaemon.
-2022-10-27T05:36:49.6673259Z 
+2022-10-27T05:36:49.6673259Z
 2022-10-27T05:36:49.6679431Z IMPORTANT: once you have the script working, you must add the above line
 2022-10-27T05:36:49.6685348Z to your startup script.  The name of your startup script depends on the
 2022-10-27T05:36:49.6691552Z shell you use.  Typical ones are .profile or .bash_profile.
-2022-10-27T05:36:49.6701933Z 
+2022-10-27T05:36:49.6701933Z
 2022-10-27T05:36:49.6708492Z Once everything is working, you can find out more about the software
 2022-10-27T05:36:49.6714992Z by doing 'man DreamDaemon'.  A host server has also been included
 2022-10-27T05:36:49.6720470Z so edit host/hostconf.txt and boot up your world server!
@@ -990,7 +990,7 @@
 2022-10-27T05:38:01.2726492Z Welcome BYOND! (5.0 Public Version 514.1588)
 2022-10-27T05:38:23.7107759Z 864 global variables
 2022-10-27T05:38:24.4933392Z World loaded at 05:38:24!
-2022-10-27T05:38:24.5429202Z Running /tg/ revision: 
+2022-10-27T05:38:24.5429202Z Running /tg/ revision:
 2022-10-27T05:38:24.5429682Z No commit information
 2022-10-27T05:38:24.5512784Z Loading config file config.txt...
 2022-10-27T05:38:24.5516700Z Loading config file maps.txt...
@@ -1070,252 +1070,252 @@
 2022-10-27T05:39:58.4912316Z Initializations complete within 92.9 seconds!
 2022-10-27T05:39:58.4984843Z Game start took 0s
 2022-10-27T05:40:09.8744558Z ##[group]/datum/unit_test/log_mapping
-2022-10-27T05:40:09.8745146Z 
+2022-10-27T05:40:09.8745146Z
 2022-10-27T05:40:09.8836529Z [1;32mPASS[0m /datum/unit_test/log_mapping 0s
 2022-10-27T05:40:09.8837396Z ##[endgroup]
 2022-10-27T05:40:09.9419200Z ##[group]/datum/unit_test/ablative_hood_hud
-2022-10-27T05:40:09.9756122Z 
+2022-10-27T05:40:09.9756122Z
 2022-10-27T05:40:09.9757240Z [1;32mPASS[0m /datum/unit_test/ablative_hood_hud 0s
 2022-10-27T05:40:09.9767210Z ##[endgroup]
 2022-10-27T05:40:09.9978386Z ##[group]/datum/unit_test/ablative_hood_hud_with_helmet
-2022-10-27T05:40:10.0279756Z 
+2022-10-27T05:40:10.0279756Z
 2022-10-27T05:40:10.0281576Z [1;32mPASS[0m /datum/unit_test/ablative_hood_hud_with_helmet 0.1s
 2022-10-27T05:40:10.0283498Z ##[endgroup]
 2022-10-27T05:40:10.0512431Z ##[group]/datum/unit_test/achievements
-2022-10-27T05:40:10.0640195Z 
+2022-10-27T05:40:10.0640195Z
 2022-10-27T05:40:10.0641287Z [1;32mPASS[0m /datum/unit_test/achievements 0s
 2022-10-27T05:40:10.0642374Z ##[endgroup]
 2022-10-27T05:40:10.1012868Z ##[group]/datum/unit_test/anchored_mobs
-2022-10-27T05:40:10.1014527Z 
+2022-10-27T05:40:10.1014527Z
 2022-10-27T05:40:10.1015639Z [1;32mPASS[0m /datum/unit_test/anchored_mobs 0s
 2022-10-27T05:40:10.1016975Z ##[endgroup]
 2022-10-27T05:40:10.1197243Z ##[group]/datum/unit_test/anonymous_themes
-2022-10-27T05:40:10.2699684Z 
+2022-10-27T05:40:10.2699684Z
 2022-10-27T05:40:10.2701913Z [1;32mPASS[0m /datum/unit_test/anonymous_themes 0.1s
 2022-10-27T05:40:10.2703812Z ##[endgroup]
 2022-10-27T05:40:10.5198272Z ##[group]/datum/unit_test/autowiki
-2022-10-27T05:40:11.9708692Z 
+2022-10-27T05:40:11.9708692Z
 2022-10-27T05:40:11.9710297Z [1;32mPASS[0m /datum/unit_test/autowiki 1.4s
 2022-10-27T05:40:11.9712149Z ##[endgroup]
 2022-10-27T05:40:13.4185291Z ##[group]/datum/unit_test/autowiki_include_template
-2022-10-27T05:40:13.4186047Z 
+2022-10-27T05:40:13.4186047Z
 2022-10-27T05:40:13.4187111Z [1;32mPASS[0m /datum/unit_test/autowiki_include_template 0s
 2022-10-27T05:40:13.4188008Z ##[endgroup]
 2022-10-27T05:40:13.4380400Z ##[group]/datum/unit_test/barsigns_icon
-2022-10-27T05:40:13.4634689Z 
+2022-10-27T05:40:13.4634689Z
 2022-10-27T05:40:13.4639775Z [1;32mPASS[0m /datum/unit_test/barsigns_icon 0s
 2022-10-27T05:40:13.4640487Z ##[endgroup]
 2022-10-27T05:40:13.4808870Z ##[group]/datum/unit_test/barsigns_name
-2022-10-27T05:40:13.4809440Z 
+2022-10-27T05:40:13.4809440Z
 2022-10-27T05:40:13.4810053Z [1;32mPASS[0m /datum/unit_test/barsigns_name 0s
 2022-10-27T05:40:13.4814000Z ##[endgroup]
 2022-10-27T05:40:13.4979736Z ##[group]/datum/unit_test/bespoke_id
-2022-10-27T05:40:13.4980383Z 
+2022-10-27T05:40:13.4980383Z
 2022-10-27T05:40:13.4980997Z [1;32mPASS[0m /datum/unit_test/bespoke_id 0s
 2022-10-27T05:40:13.5028459Z ##[endgroup]
 2022-10-27T05:40:13.8488485Z ##[group]/datum/unit_test/binary_insert
-2022-10-27T05:40:13.8488743Z 
+2022-10-27T05:40:13.8488743Z
 2022-10-27T05:40:13.8489222Z [1;32mPASS[0m /datum/unit_test/binary_insert 0s
 2022-10-27T05:40:13.8489803Z ##[endgroup]
 2022-10-27T05:40:13.8653347Z ##[group]/datum/unit_test/bloody_footprints
-2022-10-27T05:40:13.9003909Z 
+2022-10-27T05:40:13.9003909Z
 2022-10-27T05:40:13.9004930Z [1;32mPASS[0m /datum/unit_test/bloody_footprints 0s
 2022-10-27T05:40:13.9006088Z ##[endgroup]
 2022-10-27T05:40:13.9232999Z ##[group]/datum/unit_test/breath_sanity
-2022-10-27T05:40:13.9712567Z 
+2022-10-27T05:40:13.9712567Z
 2022-10-27T05:40:13.9713383Z [1;32mPASS[0m /datum/unit_test/breath_sanity 0s
 2022-10-27T05:40:13.9714142Z ##[endgroup]
 2022-10-27T05:40:14.2982711Z ##[group]/datum/unit_test/breath_sanity_plasmamen
-2022-10-27T05:40:14.3520354Z 
+2022-10-27T05:40:14.3520354Z
 2022-10-27T05:40:14.3521354Z [1;32mPASS[0m /datum/unit_test/breath_sanity_plasmamen 0.1s
 2022-10-27T05:40:14.3522294Z ##[endgroup]
 2022-10-27T05:40:14.3742846Z ##[group]/datum/unit_test/breath_sanity_ashwalker
-2022-10-27T05:40:14.4444122Z 
+2022-10-27T05:40:14.4444122Z
 2022-10-27T05:40:14.4444950Z [1;32mPASS[0m /datum/unit_test/breath_sanity_ashwalker 0.1s
 2022-10-27T05:40:14.4445682Z ##[endgroup]
 2022-10-27T05:40:14.7716503Z ##[group]/datum/unit_test/cable_powernets
-2022-10-27T05:40:14.7716741Z 
+2022-10-27T05:40:14.7716741Z
 2022-10-27T05:40:14.7717211Z [1;32mPASS[0m /datum/unit_test/cable_powernets 0s
 2022-10-27T05:40:14.7718214Z ##[endgroup]
 2022-10-27T05:40:14.7883699Z ##[group]/datum/unit_test/card_mismatch
-2022-10-27T05:40:14.7925710Z 
+2022-10-27T05:40:14.7925710Z
 2022-10-27T05:40:14.7926265Z [1;32mPASS[0m /datum/unit_test/card_mismatch 0s
 2022-10-27T05:40:14.7926794Z ##[endgroup]
 2022-10-27T05:40:14.8965612Z ##[group]/datum/unit_test/chain_pull_through_space
-2022-10-27T05:40:14.8993553Z 
+2022-10-27T05:40:14.8993553Z
 2022-10-27T05:40:14.8994184Z [1;32mPASS[0m /datum/unit_test/chain_pull_through_space 0s
 2022-10-27T05:40:14.8994797Z ##[endgroup]
 2022-10-27T05:40:15.0324540Z ##[group]/datum/unit_test/chat_filter_sanity
-2022-10-27T05:40:15.0326737Z 
+2022-10-27T05:40:15.0326737Z
 2022-10-27T05:40:15.0327622Z [1;32mPASS[0m /datum/unit_test/chat_filter_sanity 0s
 2022-10-27T05:40:15.0328606Z ##[endgroup]
 2022-10-27T05:40:15.0495255Z ##[group]/datum/unit_test/circuit_component_category
-2022-10-27T05:40:15.0495800Z 
+2022-10-27T05:40:15.0495800Z
 2022-10-27T05:40:15.0496375Z [1;32mPASS[0m /datum/unit_test/circuit_component_category 0s
 2022-10-27T05:40:15.0497189Z ##[endgroup]
 2022-10-27T05:40:15.0662040Z ##[group]/datum/unit_test/closets
-2022-10-27T05:40:16.7548466Z 
+2022-10-27T05:40:16.7548466Z
 2022-10-27T05:40:16.7550247Z [1;32mPASS[0m /datum/unit_test/closets 1.7s
 2022-10-27T05:40:16.7551113Z ##[endgroup]
 2022-10-27T05:40:19.6808172Z ##[group]/datum/unit_test/harm_punch
-2022-10-27T05:40:19.7377314Z 
+2022-10-27T05:40:19.7377314Z
 2022-10-27T05:40:19.7378123Z [1;32mPASS[0m /datum/unit_test/harm_punch 0.1s
 2022-10-27T05:40:19.7379056Z ##[endgroup]
 2022-10-27T05:40:19.7662222Z ##[group]/datum/unit_test/harm_melee
-2022-10-27T05:40:19.8341843Z 
+2022-10-27T05:40:19.8341843Z
 2022-10-27T05:40:19.8342972Z [1;32mPASS[0m /datum/unit_test/harm_melee 0.1s
 2022-10-27T05:40:19.8343692Z ##[endgroup]
 2022-10-27T05:40:19.9635264Z ##[group]/datum/unit_test/harm_different_damage
-2022-10-27T05:40:20.0266779Z 
+2022-10-27T05:40:20.0266779Z
 2022-10-27T05:40:20.0267726Z [1;32mPASS[0m /datum/unit_test/harm_different_damage 0.1s
 2022-10-27T05:40:20.0268642Z ##[endgroup]
 2022-10-27T05:40:20.0557189Z ##[group]/datum/unit_test/attack_chain
-2022-10-27T05:40:20.1137150Z 
+2022-10-27T05:40:20.1137150Z
 2022-10-27T05:40:20.1138187Z [1;32mPASS[0m /datum/unit_test/attack_chain 0.1s
 2022-10-27T05:40:20.1139596Z ##[endgroup]
 2022-10-27T05:40:20.5189211Z ##[group]/datum/unit_test/disarm
-2022-10-27T05:40:20.5901636Z 
+2022-10-27T05:40:20.5901636Z
 2022-10-27T05:40:20.5902409Z [1;32mPASS[0m /datum/unit_test/disarm 0s
 2022-10-27T05:40:20.5903484Z ##[endgroup]
 2022-10-27T05:40:20.6186577Z ##[group]/datum/unit_test/component_duping
-2022-10-27T05:40:20.6186976Z 
+2022-10-27T05:40:20.6186976Z
 2022-10-27T05:40:20.6187696Z [1;32mPASS[0m /datum/unit_test/component_duping 0s
 2022-10-27T05:40:20.6188587Z ##[endgroup]
 2022-10-27T05:40:20.6351095Z ##[group]/datum/unit_test/confusion_symptom
-2022-10-27T05:40:20.6638729Z 
+2022-10-27T05:40:20.6638729Z
 2022-10-27T05:40:20.6639511Z [1;32mPASS[0m /datum/unit_test/confusion_symptom 0s
 2022-10-27T05:40:20.6640205Z ##[endgroup]
 2022-10-27T05:40:20.9863951Z ##[group]/datum/unit_test/connect_loc_basic
-2022-10-27T05:40:20.9868536Z 
+2022-10-27T05:40:20.9868536Z
 2022-10-27T05:40:20.9869090Z [1;32mPASS[0m /datum/unit_test/connect_loc_basic 0s
 2022-10-27T05:40:20.9869728Z ##[endgroup]
 2022-10-27T05:40:21.0030927Z ##[group]/datum/unit_test/connect_loc_change_turf
-2022-10-27T05:40:21.0038393Z 
+2022-10-27T05:40:21.0038393Z
 2022-10-27T05:40:21.0038866Z [1;32mPASS[0m /datum/unit_test/connect_loc_change_turf 0s
 2022-10-27T05:40:21.0039436Z ##[endgroup]
 2022-10-27T05:40:21.0207944Z ##[group]/datum/unit_test/connect_loc_multiple_on_turf
-2022-10-27T05:40:21.0212290Z 
+2022-10-27T05:40:21.0212290Z
 2022-10-27T05:40:21.0212902Z [1;32mPASS[0m /datum/unit_test/connect_loc_multiple_on_turf 0s
 2022-10-27T05:40:21.0213675Z ##[endgroup]
 2022-10-27T05:40:21.0384862Z ##[group]/datum/unit_test/crayon_naming
-2022-10-27T05:40:21.0442694Z 
+2022-10-27T05:40:21.0442694Z
 2022-10-27T05:40:21.0443459Z [1;32mPASS[0m /datum/unit_test/crayon_naming 0s
 2022-10-27T05:40:21.0444098Z ##[endgroup]
 2022-10-27T05:40:21.0612637Z ##[group]/datum/unit_test/dcs_get_id_from_arguments
-2022-10-27T05:40:21.0613739Z 
+2022-10-27T05:40:21.0613739Z
 2022-10-27T05:40:21.0614288Z [1;32mPASS[0m /datum/unit_test/dcs_get_id_from_arguments 0s
 2022-10-27T05:40:21.0615542Z ##[endgroup]
 2022-10-27T05:40:21.3899788Z ##[group]/datum/unit_test/designs
-2022-10-27T05:40:21.3953573Z 
+2022-10-27T05:40:21.3953573Z
 2022-10-27T05:40:21.3954536Z [1;32mPASS[0m /datum/unit_test/designs 0s
 2022-10-27T05:40:21.3955578Z ##[endgroup]
 2022-10-27T05:40:21.4124000Z ##[group]/datum/unit_test/dummy_spawn_species
-2022-10-27T05:40:21.8463274Z 
+2022-10-27T05:40:21.8463274Z
 2022-10-27T05:40:21.8464399Z [1;32mPASS[0m /datum/unit_test/dummy_spawn_species 0.4s
 2022-10-27T05:40:21.8465523Z ##[endgroup]
 2022-10-27T05:40:22.2717242Z ##[group]/datum/unit_test/dummy_spawn_outfit
 2022-10-27T05:40:22.2939848Z 	Job type /datum/job/ai could not be retrieved from SSjob
-2022-10-27T05:40:22.6546726Z 
+2022-10-27T05:40:22.6546726Z
 2022-10-27T05:40:22.6548196Z [1;32mPASS[0m /datum/unit_test/dummy_spawn_outfit 0.4s
 2022-10-27T05:40:22.6549521Z ##[endgroup]
 2022-10-27T05:40:23.0435828Z ##[group]/datum/unit_test/dynamic_roundstart_ruleset_sanity
-2022-10-27T05:40:23.0436113Z 
+2022-10-27T05:40:23.0436113Z
 2022-10-27T05:40:23.0436663Z [1;32mPASS[0m /datum/unit_test/dynamic_roundstart_ruleset_sanity 0s
 2022-10-27T05:40:23.0437218Z ##[endgroup]
 2022-10-27T05:40:23.0606191Z ##[group]/datum/unit_test/dynamic_unique_antag_flags
-2022-10-27T05:40:23.0606463Z 
+2022-10-27T05:40:23.0606463Z
 2022-10-27T05:40:23.0606957Z [1;32mPASS[0m /datum/unit_test/dynamic_unique_antag_flags 0s
 2022-10-27T05:40:23.0607492Z ##[endgroup]
 2022-10-27T05:40:23.0772590Z ##[group]/datum/unit_test/egg_glands
-2022-10-27T05:40:23.1272833Z 
+2022-10-27T05:40:23.1272833Z
 2022-10-27T05:40:23.1273679Z [1;32mPASS[0m /datum/unit_test/egg_glands 0.1s
 2022-10-27T05:40:23.1274499Z ##[endgroup]
 2022-10-27T05:40:23.1948246Z ##[group]/datum/unit_test/emoting
-2022-10-27T05:40:23.2276434Z 
+2022-10-27T05:40:23.2276434Z
 2022-10-27T05:40:23.2277491Z [1;32mPASS[0m /datum/unit_test/emoting 0.1s
 2022-10-27T05:40:23.2278590Z ##[endgroup]
 2022-10-27T05:40:23.2495055Z ##[group]/datum/unit_test/food_edibility_check
-2022-10-27T05:40:24.5133005Z 
+2022-10-27T05:40:24.5133005Z
 2022-10-27T05:40:24.5133747Z [1;32mPASS[0m /datum/unit_test/food_edibility_check 1.3s
 2022-10-27T05:40:24.5134589Z ##[endgroup]
 2022-10-27T05:40:25.7459424Z ##[group]/datum/unit_test/atmospheric_gas_transfer
-2022-10-27T05:40:25.7464252Z 
+2022-10-27T05:40:25.7464252Z
 2022-10-27T05:40:25.7465453Z [1;32mPASS[0m /datum/unit_test/atmospheric_gas_transfer 0s
 2022-10-27T05:40:25.7466947Z ##[endgroup]
 2022-10-27T05:40:25.7637838Z ##[group]/datum/unit_test/get_turf_pixel
-2022-10-27T05:40:25.7652899Z 
+2022-10-27T05:40:25.7652899Z
 2022-10-27T05:40:25.7653755Z [1;32mPASS[0m /datum/unit_test/get_turf_pixel 0s
 2022-10-27T05:40:25.7654716Z ##[endgroup]
 2022-10-27T05:40:25.7832528Z ##[group]/datum/unit_test/greyscale_item_icon_states
-2022-10-27T05:40:25.7897718Z 
+2022-10-27T05:40:25.7897718Z
 2022-10-27T05:40:25.7898714Z [1;32mPASS[0m /datum/unit_test/greyscale_item_icon_states 0s
 2022-10-27T05:40:25.7901777Z ##[endgroup]
 2022-10-27T05:40:25.8065921Z ##[group]/datum/unit_test/greyscale_color_count
-2022-10-27T05:40:25.8212040Z 
+2022-10-27T05:40:25.8212040Z
 2022-10-27T05:40:25.8213076Z [1;32mPASS[0m /datum/unit_test/greyscale_color_count 0s
 2022-10-27T05:40:25.8213890Z ##[endgroup]
 2022-10-27T05:40:25.9569835Z ##[group]/datum/unit_test/hallucination_icons
-2022-10-27T05:40:26.2007450Z 
+2022-10-27T05:40:26.2007450Z
 2022-10-27T05:40:26.2008257Z [1;32mPASS[0m /datum/unit_test/hallucination_icons 0.3s
 2022-10-27T05:40:26.2008960Z ##[endgroup]
 2022-10-27T05:40:26.4177405Z ##[group]/datum/unit_test/heretic_knowledge
-2022-10-27T05:40:26.4221118Z 
+2022-10-27T05:40:26.4221118Z
 2022-10-27T05:40:26.4222209Z [1;32mPASS[0m /datum/unit_test/heretic_knowledge 0s
 2022-10-27T05:40:26.4225335Z ##[endgroup]
 2022-10-27T05:40:26.4398954Z ##[group]/datum/unit_test/heretic_main_paths
-2022-10-27T05:40:26.4399640Z 
+2022-10-27T05:40:26.4399640Z
 2022-10-27T05:40:26.4402394Z [1;32mPASS[0m /datum/unit_test/heretic_main_paths 0s
 2022-10-27T05:40:26.4403358Z ##[endgroup]
 2022-10-27T05:40:26.4569635Z ##[group]/datum/unit_test/heretic_rituals
-2022-10-27T05:40:26.5341269Z 
+2022-10-27T05:40:26.5341269Z
 2022-10-27T05:40:26.5342957Z [1;32mPASS[0m /datum/unit_test/heretic_rituals 0.1s
 2022-10-27T05:40:26.5344455Z ##[endgroup]
 2022-10-27T05:40:26.6072760Z ##[group]/datum/unit_test/hanukkah_2123
-2022-10-27T05:40:26.6074182Z 
+2022-10-27T05:40:26.6074182Z
 2022-10-27T05:40:26.6075388Z [1;32mPASS[0m /datum/unit_test/hanukkah_2123 0s
 2022-10-27T05:40:26.6076994Z ##[endgroup]
 2022-10-27T05:40:26.6266212Z ##[group]/datum/unit_test/ramadan_2165
-2022-10-27T05:40:26.6266979Z 
+2022-10-27T05:40:26.6266979Z
 2022-10-27T05:40:26.6268854Z [1;32mPASS[0m /datum/unit_test/ramadan_2165 0s
 2022-10-27T05:40:26.6275155Z ##[endgroup]
 2022-10-27T05:40:26.6571207Z ##[group]/datum/unit_test/thanksgiving_2020
-2022-10-27T05:40:26.6572398Z 
+2022-10-27T05:40:26.6572398Z
 2022-10-27T05:40:26.6573397Z [1;32mPASS[0m /datum/unit_test/thanksgiving_2020 0s
 2022-10-27T05:40:26.6574531Z ##[endgroup]
 2022-10-27T05:40:26.6735186Z ##[group]/datum/unit_test/mother_3683
-2022-10-27T05:40:26.6735666Z 
+2022-10-27T05:40:26.6735666Z
 2022-10-27T05:40:26.6736248Z [1;32mPASS[0m /datum/unit_test/mother_3683 0s
 2022-10-27T05:40:26.6739224Z ##[endgroup]
 2022-10-27T05:40:26.8572827Z ##[group]/datum/unit_test/hello_2020
-2022-10-27T05:40:26.8573482Z 
+2022-10-27T05:40:26.8573482Z
 2022-10-27T05:40:26.8574272Z [1;32mPASS[0m /datum/unit_test/hello_2020 0s
 2022-10-27T05:40:26.8577076Z ##[endgroup]
 2022-10-27T05:40:26.8749478Z ##[group]/datum/unit_test/new_year_1983
-2022-10-27T05:40:26.8750152Z 
+2022-10-27T05:40:26.8750152Z
 2022-10-27T05:40:26.8750832Z [1;32mPASS[0m /datum/unit_test/new_year_1983 0s
 2022-10-27T05:40:26.8751724Z ##[endgroup]
 2022-10-27T05:40:26.8919557Z ##[group]/datum/unit_test/moth_week_2020
-2022-10-27T05:40:26.8951500Z 
+2022-10-27T05:40:26.8951500Z
 2022-10-27T05:40:26.8952208Z [1;32mPASS[0m /datum/unit_test/moth_week_2020 0s
 2022-10-27T05:40:26.8952956Z ##[endgroup]
 2022-10-27T05:40:27.3122958Z ##[group]/datum/unit_test/human_through_recycler
-2022-10-27T05:40:27.3539454Z 
+2022-10-27T05:40:27.3539454Z
 2022-10-27T05:40:27.3544496Z [1;32mPASS[0m /datum/unit_test/human_through_recycler 0s
 2022-10-27T05:40:27.3549227Z ##[endgroup]
 2022-10-27T05:40:27.3779548Z ##[group]/datum/unit_test/hydroponics_extractor_storage
-2022-10-27T05:40:27.4123276Z 
+2022-10-27T05:40:27.4123276Z
 2022-10-27T05:40:27.4124500Z [1;32mPASS[0m /datum/unit_test/hydroponics_extractor_storage 0.1s
 2022-10-27T05:40:27.4125704Z ##[endgroup]
 2022-10-27T05:40:27.4385047Z ##[group]/datum/unit_test/hydroponics_harvest
-2022-10-27T05:40:27.5046209Z 
+2022-10-27T05:40:27.5046209Z
 2022-10-27T05:40:27.5047429Z [1;32mPASS[0m /datum/unit_test/hydroponics_harvest 0.1s
 2022-10-27T05:40:27.5048344Z ##[endgroup]
 2022-10-27T05:40:27.5784276Z ##[group]/datum/unit_test/hydroponics_self_mutation
-2022-10-27T05:40:27.6261832Z 
+2022-10-27T05:40:27.6261832Z
 2022-10-27T05:40:27.6263089Z [1;32mPASS[0m /datum/unit_test/hydroponics_self_mutation 0.1s
 2022-10-27T05:40:27.6264003Z ##[endgroup]
 2022-10-27T05:40:27.9431720Z ##[group]/datum/unit_test/hydroponics_validate_genes
-2022-10-27T05:40:27.9933945Z 
+2022-10-27T05:40:27.9933945Z
 2022-10-27T05:40:27.9935126Z [1;32mPASS[0m /datum/unit_test/hydroponics_validate_genes 0s
 2022-10-27T05:40:27.9936883Z ##[endgroup]
 2022-10-27T05:40:28.0105063Z ##[group]/datum/unit_test/defined_inhand_icon_states
@@ -1436,200 +1436,200 @@
 2022-10-27T05:40:29.1051631Z 	/obj/item/bonesetter does not have an inhand_icon_state value - Possible matching sprites for "bonesetter" found in: 'icons/mob/inhands/equipment/medical_lefthand.dmi' & 'icons/mob/inhands/equipment/medical_righthand.dmi'
 2022-10-27T05:40:29.1052751Z 	/obj/item/blood_filter does not have an inhand_icon_state value - Possible matching sprites for "bloodfilter" found in: 'icons/mob/inhands/equipment/medical_lefthand.dmi' & 'icons/mob/inhands/equipment/medical_righthand.dmi'
 2022-10-27T05:40:29.1055555Z 	/obj/item/mecha_ammo/flashbang does not have an inhand_icon_state value - Possible matching sprites for "flashbang" found in: 'icons/mob/inhands/equipment/security_righthand.dmi' & 'icons/mob/inhands/equipment/security_lefthand.dmi'
-2022-10-27T05:40:29.1056050Z 
+2022-10-27T05:40:29.1056050Z
 2022-10-27T05:40:29.1056364Z [1;32mPASS[0m /datum/unit_test/defined_inhand_icon_states 1s
 2022-10-27T05:40:29.1057048Z ##[endgroup]
 2022-10-27T05:40:30.3200151Z ##[group]/datum/unit_test/keybinding_init
-2022-10-27T05:40:30.3200418Z 
+2022-10-27T05:40:30.3200418Z
 2022-10-27T05:40:30.3201050Z [1;32mPASS[0m /datum/unit_test/keybinding_init 0s
 2022-10-27T05:40:30.3201648Z ##[endgroup]
 2022-10-27T05:40:30.3369516Z ##[group]/datum/unit_test/knockoff_component
-2022-10-27T05:40:30.3974289Z 
+2022-10-27T05:40:30.3974289Z
 2022-10-27T05:40:30.3975134Z [1;32mPASS[0m /datum/unit_test/knockoff_component 0s
 2022-10-27T05:40:30.3975848Z ##[endgroup]
 2022-10-27T05:40:30.4758006Z ##[group]/datum/unit_test/limbsanity
-2022-10-27T05:40:30.5511170Z 
+2022-10-27T05:40:30.5511170Z
 2022-10-27T05:40:30.5512056Z [1;32mPASS[0m /datum/unit_test/limbsanity 0.1s
 2022-10-27T05:40:30.5513064Z ##[endgroup]
 2022-10-27T05:40:30.5683011Z ##[group]/datum/unit_test/load_map_security
 2022-10-27T05:40:30.5686279Z map directory not in whitelist: data/load_map_security_temp for map runtimestation
-2022-10-27T05:40:30.5686559Z 
+2022-10-27T05:40:30.5686559Z
 2022-10-27T05:40:30.5687309Z [1;32mPASS[0m /datum/unit_test/load_map_security 0s
 2022-10-27T05:40:30.5688206Z ##[endgroup]
 2022-10-27T05:40:30.5865089Z ##[group]/datum/unit_test/machine_disassembly
-2022-10-27T05:40:30.5895192Z 
+2022-10-27T05:40:30.5895192Z
 2022-10-27T05:40:30.5895755Z [1;32mPASS[0m /datum/unit_test/machine_disassembly 0s
 2022-10-27T05:40:30.5896331Z ##[endgroup]
 2022-10-27T05:40:30.6183397Z ##[group]/datum/unit_test/mecha_damage
-2022-10-27T05:40:30.6691654Z 
+2022-10-27T05:40:30.6691654Z
 2022-10-27T05:40:30.6692724Z [1;32mPASS[0m /datum/unit_test/mecha_damage 0s
 2022-10-27T05:40:30.6693811Z ##[endgroup]
 2022-10-27T05:40:30.7005279Z ##[group]/datum/unit_test/test_human_base
-2022-10-27T05:40:30.7905422Z 
+2022-10-27T05:40:30.7905422Z
 2022-10-27T05:40:30.7906225Z [1;32mPASS[0m /datum/unit_test/test_human_base 0s
 2022-10-27T05:40:30.7906953Z ##[endgroup]
 2022-10-27T05:40:30.8626902Z ##[group]/datum/unit_test/test_human_bone
-2022-10-27T05:40:30.9519120Z 
+2022-10-27T05:40:30.9519120Z
 2022-10-27T05:40:30.9520211Z [1;32mPASS[0m /datum/unit_test/test_human_bone 0.1s
 2022-10-27T05:40:30.9521496Z ##[endgroup]
 2022-10-27T05:40:31.2736006Z ##[group]/datum/unit_test/merge_type
-2022-10-27T05:40:31.2741500Z 
+2022-10-27T05:40:31.2741500Z
 2022-10-27T05:40:31.2744034Z [1;32mPASS[0m /datum/unit_test/merge_type 0s
 2022-10-27T05:40:31.2745007Z ##[endgroup]
 2022-10-27T05:40:31.2940088Z ##[group]/datum/unit_test/metabolization
-2022-10-27T05:40:31.5116749Z 
+2022-10-27T05:40:31.5116749Z
 2022-10-27T05:40:31.5119088Z [1;32mPASS[0m /datum/unit_test/metabolization 0.3s
 2022-10-27T05:40:31.5120552Z ##[endgroup]
 2022-10-27T05:40:31.8707226Z ##[group]/datum/unit_test/on_mob_end_metabolize
-2022-10-27T05:40:31.9025163Z 
+2022-10-27T05:40:31.9025163Z
 2022-10-27T05:40:31.9025867Z [1;32mPASS[0m /datum/unit_test/on_mob_end_metabolize 0.1s
 2022-10-27T05:40:31.9026521Z ##[endgroup]
 2022-10-27T05:40:32.5850525Z ##[group]/datum/unit_test/addictions
-2022-10-27T05:40:32.6747518Z 
+2022-10-27T05:40:32.6747518Z
 2022-10-27T05:40:32.6749097Z [1;32mPASS[0m /datum/unit_test/addictions 0.1s
 2022-10-27T05:40:32.6749790Z ##[endgroup]
 2022-10-27T05:40:32.8122227Z ##[group]/datum/unit_test/actions_moved_on_mind_transfer
-2022-10-27T05:40:32.8435426Z 
+2022-10-27T05:40:32.8435426Z
 2022-10-27T05:40:32.8437029Z [1;32mPASS[0m /datum/unit_test/actions_moved_on_mind_transfer 0s
 2022-10-27T05:40:32.8438267Z ##[endgroup]
 2022-10-27T05:40:32.8685143Z ##[group]/datum/unit_test/mob_faction
-2022-10-27T05:40:37.0355455Z 
+2022-10-27T05:40:37.0355455Z
 2022-10-27T05:40:37.0357124Z [1;32mPASS[0m /datum/unit_test/mob_faction 4.2s
 2022-10-27T05:40:37.0358437Z ##[endgroup]
 2022-10-27T05:40:46.3276946Z ##[group]/datum/unit_test/mob_spawn
-2022-10-27T05:40:46.3478047Z 
+2022-10-27T05:40:46.3478047Z
 2022-10-27T05:40:46.3479094Z [1;32mPASS[0m /datum/unit_test/mob_spawn 0s
 2022-10-27T05:40:46.3480121Z ##[endgroup]
 2022-10-27T05:40:46.5088900Z ##[group]/datum/unit_test/modsuit_checks
-2022-10-27T05:40:46.7422166Z 
+2022-10-27T05:40:46.7422166Z
 2022-10-27T05:40:46.7424741Z [1;32mPASS[0m /datum/unit_test/modsuit_checks 0.2s
 2022-10-27T05:40:46.7426303Z ##[endgroup]
 2022-10-27T05:40:46.9639966Z ##[group]/datum/unit_test/modular_map_loader
-2022-10-27T05:40:46.9645920Z 
+2022-10-27T05:40:46.9645920Z
 2022-10-27T05:40:46.9647042Z [1;32mPASS[0m /datum/unit_test/modular_map_loader 0s
 2022-10-27T05:40:46.9648824Z ##[endgroup]
 2022-10-27T05:40:46.9857078Z ##[group]/datum/unit_test/mouse_bite_cable
-2022-10-27T05:40:46.9906436Z 
+2022-10-27T05:40:46.9906436Z
 2022-10-27T05:40:46.9907445Z [1;32mPASS[0m /datum/unit_test/mouse_bite_cable 0s
 2022-10-27T05:40:46.9908580Z ##[endgroup]
 2022-10-27T05:40:47.0104524Z ##[group]/datum/unit_test/novaflower_burn
-2022-10-27T05:40:47.0691141Z 
+2022-10-27T05:40:47.0691141Z
 2022-10-27T05:40:47.0692760Z [1;32mPASS[0m /datum/unit_test/novaflower_burn 0s
 2022-10-27T05:40:47.0694697Z ##[endgroup]
 2022-10-27T05:40:47.4496213Z ##[group]/datum/unit_test/ntnetwork
-2022-10-27T05:40:47.4517846Z 
+2022-10-27T05:40:47.4517846Z
 2022-10-27T05:40:47.4518703Z [1;32mPASS[0m /datum/unit_test/ntnetwork 0s
 2022-10-27T05:40:47.4519832Z ##[endgroup]
 2022-10-27T05:40:47.4710883Z ##[group]/datum/unit_test/nuke_cinematic
-2022-10-27T05:40:51.6544361Z 
+2022-10-27T05:40:51.6544361Z
 2022-10-27T05:40:51.6546808Z [1;32mPASS[0m /datum/unit_test/nuke_cinematic 4.2s
 2022-10-27T05:40:51.6548322Z ##[endgroup]
 2022-10-27T05:40:51.9750957Z ##[group]/datum/unit_test/objectives_category
-2022-10-27T05:40:51.9754837Z 
+2022-10-27T05:40:51.9754837Z
 2022-10-27T05:40:51.9758911Z [1;32mPASS[0m /datum/unit_test/objectives_category 0s
 2022-10-27T05:40:51.9762185Z ##[endgroup]
 2022-10-27T05:40:51.9966795Z ##[group]/datum/unit_test/operating_table
-2022-10-27T05:40:52.0501605Z 
+2022-10-27T05:40:52.0501605Z
 2022-10-27T05:40:52.0502705Z [1;32mPASS[0m /datum/unit_test/operating_table 0.1s
 2022-10-27T05:40:52.0503789Z ##[endgroup]
 2022-10-27T05:40:52.1317881Z ##[group]/datum/unit_test/outfit_sanity
-2022-10-27T05:41:01.7976872Z 
+2022-10-27T05:41:01.7976872Z
 2022-10-27T05:41:01.7979182Z [1;32mPASS[0m /datum/unit_test/outfit_sanity 9.6s
 2022-10-27T05:41:01.7980122Z ##[endgroup]
 2022-10-27T05:41:11.4243742Z ##[group]/datum/unit_test/paintings
-2022-10-27T05:41:11.4598558Z 
+2022-10-27T05:41:11.4598558Z
 2022-10-27T05:41:11.4599629Z [1;32mPASS[0m /datum/unit_test/paintings 0s
 2022-10-27T05:41:11.4600448Z ##[endgroup]
 2022-10-27T05:41:11.4792755Z ##[group]/datum/unit_test/pills
-2022-10-27T05:41:11.5083505Z 
+2022-10-27T05:41:11.5083505Z
 2022-10-27T05:41:11.5084511Z [1;32mPASS[0m /datum/unit_test/pills 0.1s
 2022-10-27T05:41:11.5085321Z ##[endgroup]
 2022-10-27T05:41:11.5601428Z ##[group]/datum/unit_test/plane_double_transform
-2022-10-27T05:41:11.5919033Z 
+2022-10-27T05:41:11.5919033Z
 2022-10-27T05:41:11.5921018Z [1;32mPASS[0m /datum/unit_test/plane_double_transform 0s
 2022-10-27T05:41:11.5922301Z ##[endgroup]
 2022-10-27T05:41:11.6221465Z ##[group]/datum/unit_test/plane_dupe_detector
-2022-10-27T05:41:11.6222004Z 
+2022-10-27T05:41:11.6222004Z
 2022-10-27T05:41:11.6222655Z [1;32mPASS[0m /datum/unit_test/plane_dupe_detector 0s
 2022-10-27T05:41:11.6223293Z ##[endgroup]
 2022-10-27T05:41:11.6426244Z ##[group]/datum/unit_test/plantgrowth
-2022-10-27T05:41:11.6982938Z 
+2022-10-27T05:41:11.6982938Z
 2022-10-27T05:41:11.6984405Z [1;32mPASS[0m /datum/unit_test/plantgrowth 0s
 2022-10-27T05:41:11.6985721Z ##[endgroup]
 2022-10-27T05:41:11.7325573Z ##[group]/datum/unit_test/preference_species
-2022-10-27T05:41:11.7325819Z 
+2022-10-27T05:41:11.7325819Z
 2022-10-27T05:41:11.7328286Z [1;32mPASS[0m /datum/unit_test/preference_species 0s
 2022-10-27T05:41:11.7329335Z ##[endgroup]
 2022-10-27T05:41:11.7520773Z ##[group]/datum/unit_test/preferences_implement_everything
-2022-10-27T05:41:18.7582701Z 
+2022-10-27T05:41:18.7582701Z
 2022-10-27T05:41:18.7583967Z [1;32mPASS[0m /datum/unit_test/preferences_implement_everything 7s
 2022-10-27T05:41:18.7674142Z ##[endgroup]
 2022-10-27T05:41:25.7837961Z ##[group]/datum/unit_test/preferences_valid_savefile_key
-2022-10-27T05:41:25.7840087Z 
+2022-10-27T05:41:25.7840087Z
 2022-10-27T05:41:25.7841504Z [1;32mPASS[0m /datum/unit_test/preferences_valid_savefile_key 0s
 2022-10-27T05:41:25.7842504Z ##[endgroup]
 2022-10-27T05:41:25.8045081Z ##[group]/datum/unit_test/preferences_valid_main_feature_name
-2022-10-27T05:41:25.8046166Z 
+2022-10-27T05:41:25.8046166Z
 2022-10-27T05:41:25.8047192Z [1;32mPASS[0m /datum/unit_test/preferences_valid_main_feature_name 0s
 2022-10-27T05:41:25.8049437Z ##[endgroup]
 2022-10-27T05:41:25.8233566Z ##[group]/datum/unit_test/projectile_movetypes
-2022-10-27T05:41:25.8234187Z 
+2022-10-27T05:41:25.8234187Z
 2022-10-27T05:41:25.8235057Z [1;32mPASS[0m /datum/unit_test/projectile_movetypes 0s
 2022-10-27T05:41:25.8238602Z ##[endgroup]
 2022-10-27T05:41:25.8422043Z ##[group]/datum/unit_test/gun_go_bang
-2022-10-27T05:41:25.9103045Z 
+2022-10-27T05:41:25.9103045Z
 2022-10-27T05:41:25.9104017Z [1;32mPASS[0m /datum/unit_test/gun_go_bang 0.1s
 2022-10-27T05:41:25.9105102Z ##[endgroup]
 2022-10-27T05:41:25.9957966Z ##[group]/datum/unit_test/quirk_icons
-2022-10-27T05:41:25.9958970Z 
+2022-10-27T05:41:25.9958970Z
 2022-10-27T05:41:25.9960876Z [1;32mPASS[0m /datum/unit_test/quirk_icons 0s
 2022-10-27T05:41:25.9961959Z ##[endgroup]
 2022-10-27T05:41:26.0166772Z ##[group]/datum/unit_test/range_return
-2022-10-27T05:41:26.0167357Z 
+2022-10-27T05:41:26.0167357Z
 2022-10-27T05:41:26.0167980Z [1;32mPASS[0m /datum/unit_test/range_return 0s
 2022-10-27T05:41:26.0222740Z ##[endgroup]
 2022-10-27T05:41:26.0353132Z ##[group]/datum/unit_test/frame_stacking
-2022-10-27T05:41:26.0914496Z 
+2022-10-27T05:41:26.0914496Z
 2022-10-27T05:41:26.0915254Z [1;32mPASS[0m /datum/unit_test/frame_stacking 0s
 2022-10-27T05:41:26.0916011Z ##[endgroup]
 2022-10-27T05:41:26.1694918Z ##[group]/datum/unit_test/reagent_id_typos
-2022-10-27T05:41:26.1727233Z 
+2022-10-27T05:41:26.1727233Z
 2022-10-27T05:41:26.1728009Z [1;32mPASS[0m /datum/unit_test/reagent_id_typos 0s
 2022-10-27T05:41:26.1728685Z ##[endgroup]
 2022-10-27T05:41:26.1920271Z ##[group]/datum/unit_test/reagent_mob_expose
-2022-10-27T05:41:26.2268321Z 
+2022-10-27T05:41:26.2268321Z
 2022-10-27T05:41:26.2269120Z [1;32mPASS[0m /datum/unit_test/reagent_mob_expose 0.1s
 2022-10-27T05:41:26.2269829Z ##[endgroup]
 2022-10-27T05:41:26.2549234Z ##[group]/datum/unit_test/reagent_mob_procs
-2022-10-27T05:41:26.2827770Z 
+2022-10-27T05:41:26.2827770Z
 2022-10-27T05:41:26.2828618Z [1;32mPASS[0m /datum/unit_test/reagent_mob_procs 0s
 2022-10-27T05:41:26.2829318Z ##[endgroup]
 2022-10-27T05:41:26.3078178Z ##[group]/datum/unit_test/reagent_names
-2022-10-27T05:41:27.1646047Z 
+2022-10-27T05:41:27.1646047Z
 2022-10-27T05:41:27.1647510Z [1;32mPASS[0m /datum/unit_test/reagent_names 0.8s
 2022-10-27T05:41:27.1649181Z ##[endgroup]
 2022-10-27T05:41:27.9838180Z ##[group]/datum/unit_test/reagent_recipe_collisions
-2022-10-27T05:41:28.4462173Z 
+2022-10-27T05:41:28.4462173Z
 2022-10-27T05:41:28.4463469Z [1;32mPASS[0m /datum/unit_test/reagent_recipe_collisions 0.5s
 2022-10-27T05:41:28.4464601Z ##[endgroup]
 2022-10-27T05:41:28.8661632Z ##[group]/datum/unit_test/reagent_transfer
-2022-10-27T05:41:28.8670725Z 
+2022-10-27T05:41:28.8670725Z
 2022-10-27T05:41:28.8671943Z [1;32mPASS[0m /datum/unit_test/reagent_transfer 0s
 2022-10-27T05:41:28.8673335Z ##[endgroup]
 2022-10-27T05:41:28.8888500Z ##[group]/datum/unit_test/stop_drop_and_roll
-2022-10-27T05:41:28.9156826Z 
+2022-10-27T05:41:28.9156826Z
 2022-10-27T05:41:28.9160888Z [1;32mPASS[0m /datum/unit_test/stop_drop_and_roll 0.1s
 2022-10-27T05:41:28.9162086Z ##[endgroup]
 2022-10-27T05:41:28.9403341Z ##[group]/datum/unit_test/container_resist
-2022-10-27T05:41:28.9744033Z 
+2022-10-27T05:41:28.9744033Z
 2022-10-27T05:41:28.9746221Z [1;32mPASS[0m /datum/unit_test/container_resist 0s
 2022-10-27T05:41:28.9748317Z ##[endgroup]
 2022-10-27T05:41:29.0027065Z ##[group]/datum/unit_test/get_message_mods
-2022-10-27T05:41:29.0268010Z 
+2022-10-27T05:41:29.0268010Z
 2022-10-27T05:41:29.0269082Z [1;32mPASS[0m /datum/unit_test/get_message_mods 0s
 2022-10-27T05:41:29.0270222Z ##[endgroup]
 2022-10-27T05:41:29.0513097Z ##[group]/datum/unit_test/say_signal
-2022-10-27T05:41:29.0526010Z 
+2022-10-27T05:41:29.0526010Z
 2022-10-27T05:41:29.0526949Z [1;32mPASS[0m /datum/unit_test/say_signal 0s
 2022-10-27T05:41:29.0528292Z ##[endgroup]
 2022-10-27T05:41:29.0718244Z ##[group]/datum/unit_test/screenshot_antag_icons
@@ -1663,12 +1663,12 @@
 2022-10-27T05:41:29.3355078Z 	screenshot_antag_icons_blobinfection was put in data/screenshots_new
 2022-10-27T05:41:29.3368910Z 	screenshot_antag_icons_obsessed was put in data/screenshots_new
 2022-10-27T05:41:29.3372287Z 	screenshot_antag_icons_malfaimidround was put in data/screenshots_new
-2022-10-27T05:41:29.3372581Z 
+2022-10-27T05:41:29.3372581Z
 2022-10-27T05:41:29.3373097Z [1;32mPASS[0m /datum/unit_test/screenshot_antag_icons 0.3s
 2022-10-27T05:41:29.3373772Z ##[endgroup]
 2022-10-27T05:41:29.6066997Z ##[group]/datum/unit_test/screenshot_basic
 2022-10-27T05:41:29.6075525Z 	screenshot_basic_red was put in data/screenshots_new
-2022-10-27T05:41:29.6078638Z 
+2022-10-27T05:41:29.6078638Z
 2022-10-27T05:41:29.6082196Z [1;32mPASS[0m /datum/unit_test/screenshot_basic 0s
 2022-10-27T05:41:29.6085438Z ##[endgroup]
 2022-10-27T05:41:29.6308021Z ##[group]/datum/unit_test/screenshot_humanoids
@@ -1725,112 +1725,112 @@
 2022-10-27T05:42:01.7655604Z 	screenshot_humanoids__datum_species_vampire was put in data/screenshots_new
 2022-10-27T05:42:02.5637759Z 	screenshot_humanoids__datum_species_zombie was put in data/screenshots_new
 2022-10-27T05:42:03.4341531Z 	screenshot_humanoids__datum_species_zombie_infectious was put in data/screenshots_new
-2022-10-27T05:42:03.4342475Z 
+2022-10-27T05:42:03.4342475Z
 2022-10-27T05:42:03.4433344Z [1;32mPASS[0m /datum/unit_test/screenshot_humanoids 33.8s
 2022-10-27T05:42:03.4434057Z ##[endgroup]
 2022-10-27T05:42:38.0137819Z ##[group]/datum/unit_test/screenshot_saturnx
 2022-10-27T05:42:38.2805908Z 	screenshot_saturnx_invisibility was put in data/screenshots_new
-2022-10-27T05:42:38.2806525Z 
+2022-10-27T05:42:38.2806525Z
 2022-10-27T05:42:38.2807422Z [1;32mPASS[0m /datum/unit_test/screenshot_saturnx 0.2s
 2022-10-27T05:42:38.2808381Z ##[endgroup]
 2022-10-27T05:42:38.5125108Z ##[group]/datum/unit_test/security_officer_roundstart_distribution
-2022-10-27T05:42:38.6313313Z 
+2022-10-27T05:42:38.6313313Z
 2022-10-27T05:42:38.6314073Z [1;32mPASS[0m /datum/unit_test/security_officer_roundstart_distribution 0.1s
 2022-10-27T05:42:38.6314848Z ##[endgroup]
 2022-10-27T05:42:38.7844382Z ##[group]/datum/unit_test/security_officer_latejoin_distribution
-2022-10-27T05:42:39.3108839Z 
+2022-10-27T05:42:39.3108839Z
 2022-10-27T05:42:39.3109578Z [1;32mPASS[0m /datum/unit_test/security_officer_latejoin_distribution 0.5s
 2022-10-27T05:42:39.3110392Z ##[endgroup]
 2022-10-27T05:42:39.8689626Z ##[group]/datum/unit_test/security_levels
-2022-10-27T05:42:39.8691007Z 
+2022-10-27T05:42:39.8691007Z
 2022-10-27T05:42:39.8692358Z [1;32mPASS[0m /datum/unit_test/security_levels 0s
 2022-10-27T05:42:39.8694155Z ##[endgroup]
 2022-10-27T05:42:39.8954646Z ##[group]/datum/unit_test/servingtray
-2022-10-27T05:42:39.9246160Z 
+2022-10-27T05:42:39.9246160Z
 2022-10-27T05:42:39.9246828Z [1;32mPASS[0m /datum/unit_test/servingtray 0.1s
 2022-10-27T05:42:39.9247596Z ##[endgroup]
 2022-10-27T05:42:39.9527510Z ##[group]/datum/unit_test/simple_animal_freeze
-2022-10-27T05:42:39.9538858Z 
+2022-10-27T05:42:39.9538858Z
 2022-10-27T05:42:39.9539579Z [1;32mPASS[0m /datum/unit_test/simple_animal_freeze 0s
 2022-10-27T05:42:39.9540575Z ##[endgroup]
 2022-10-27T05:42:39.9737208Z ##[group]/datum/unit_test/siunit
-2022-10-27T05:42:39.9737877Z 
+2022-10-27T05:42:39.9737877Z
 2022-10-27T05:42:39.9739067Z [1;32mPASS[0m /datum/unit_test/siunit 0s
 2022-10-27T05:42:39.9739970Z ##[endgroup]
 2022-10-27T05:42:40.0059889Z ##[group]/datum/unit_test/slips
-2022-10-27T05:42:40.0605319Z 
+2022-10-27T05:42:40.0605319Z
 2022-10-27T05:42:40.0606405Z [1;32mPASS[0m /datum/unit_test/slips 0s
 2022-10-27T05:42:40.0608008Z ##[endgroup]
 2022-10-27T05:42:40.1167017Z ##[group]/datum/unit_test/spawn_humans
-2022-10-27T05:42:45.1906375Z 
+2022-10-27T05:42:45.1906375Z
 2022-10-27T05:42:45.1907903Z [1;32mPASS[0m /datum/unit_test/spawn_humans 5s
 2022-10-27T05:42:45.1910749Z ##[endgroup]
 2022-10-27T05:42:45.2427283Z ##[group]/datum/unit_test/spawn_mobs
-2022-10-27T05:42:45.3357801Z 
+2022-10-27T05:42:45.3357801Z
 2022-10-27T05:42:45.3359033Z [1;32mPASS[0m /datum/unit_test/spawn_mobs 0.1s
 2022-10-27T05:42:45.3361725Z ##[endgroup]
 2022-10-27T05:42:45.5043702Z ##[group]/datum/unit_test/species_change_clothing
-2022-10-27T05:42:45.6048589Z 
+2022-10-27T05:42:45.6048589Z
 2022-10-27T05:42:45.6049694Z [1;32mPASS[0m /datum/unit_test/species_change_clothing 0.1s
 2022-10-27T05:42:45.6051771Z ##[endgroup]
 2022-10-27T05:42:45.6837595Z ##[group]/datum/unit_test/species_change_organs
-2022-10-27T05:42:45.7545977Z 
+2022-10-27T05:42:45.7545977Z
 2022-10-27T05:42:45.7546831Z [1;32mPASS[0m /datum/unit_test/species_change_organs 0.1s
 2022-10-27T05:42:45.7547563Z ##[endgroup]
 2022-10-27T05:42:45.7836582Z ##[group]/datum/unit_test/species_config_sanity
-2022-10-27T05:42:45.7840840Z 
+2022-10-27T05:42:45.7840840Z
 2022-10-27T05:42:45.7842768Z [1;32mPASS[0m /datum/unit_test/species_config_sanity 0s
 2022-10-27T05:42:45.7844337Z ##[endgroup]
 2022-10-27T05:42:45.8022187Z ##[group]/datum/unit_test/species_unique_id
-2022-10-27T05:42:45.8022866Z 
+2022-10-27T05:42:45.8022866Z
 2022-10-27T05:42:45.8075321Z [1;32mPASS[0m /datum/unit_test/species_unique_id 0s
 2022-10-27T05:42:45.8076400Z ##[endgroup]
 2022-10-27T05:42:45.8351362Z ##[group]/datum/unit_test/species_whitelist_check
-2022-10-27T05:42:45.8351724Z 
+2022-10-27T05:42:45.8351724Z
 2022-10-27T05:42:45.8352365Z [1;32mPASS[0m /datum/unit_test/species_whitelist_check 0s
 2022-10-27T05:42:45.8353142Z ##[endgroup]
 2022-10-27T05:42:45.8533484Z ##[group]/datum/unit_test/spell_invocations
-2022-10-27T05:42:45.8533768Z 
+2022-10-27T05:42:45.8533768Z
 2022-10-27T05:42:45.8534255Z [1;32mPASS[0m /datum/unit_test/spell_invocations 0s
 2022-10-27T05:42:45.8534811Z ##[endgroup]
 2022-10-27T05:42:45.8839364Z ##[group]/datum/unit_test/mind_swap_spell
-2022-10-27T05:42:45.9396663Z 
+2022-10-27T05:42:45.9396663Z
 2022-10-27T05:42:45.9397306Z [1;32mPASS[0m /datum/unit_test/mind_swap_spell 0.1s
 2022-10-27T05:42:45.9397999Z ##[endgroup]
 2022-10-27T05:42:45.9707938Z ##[group]/datum/unit_test/spell_names
-2022-10-27T05:42:45.9708233Z 
+2022-10-27T05:42:45.9708233Z
 2022-10-27T05:42:45.9708764Z [1;32mPASS[0m /datum/unit_test/spell_names 0s
 2022-10-27T05:42:45.9709443Z ##[endgroup]
 2022-10-27T05:42:45.9892272Z ##[group]/datum/unit_test/shapeshift_spell_validity
-2022-10-27T05:42:45.9896681Z 
+2022-10-27T05:42:45.9896681Z
 2022-10-27T05:42:45.9897201Z [1;32mPASS[0m /datum/unit_test/shapeshift_spell_validity 0s
 2022-10-27T05:42:45.9897727Z ##[endgroup]
 2022-10-27T05:42:46.0425278Z ##[group]/datum/unit_test/shapeshift_spell
-2022-10-27T05:42:46.3445398Z 
+2022-10-27T05:42:46.3445398Z
 2022-10-27T05:42:46.3446335Z [1;32mPASS[0m /datum/unit_test/shapeshift_spell 0.3s
 2022-10-27T05:42:46.3447239Z ##[endgroup]
 2022-10-27T05:42:46.8200052Z ##[group]/datum/unit_test/shapeshift_holoparasites
-2022-10-27T05:42:46.8537455Z 
+2022-10-27T05:42:46.8537455Z
 2022-10-27T05:42:46.8539870Z [1;32mPASS[0m /datum/unit_test/shapeshift_holoparasites 0s
 2022-10-27T05:42:46.8541451Z ##[endgroup]
 2022-10-27T05:42:46.9292759Z ##[group]/datum/unit_test/spritesheets
-2022-10-27T05:42:50.5944827Z 
+2022-10-27T05:42:50.5944827Z
 2022-10-27T05:42:50.5945740Z [1;32mPASS[0m /datum/unit_test/spritesheets 3.6s
 2022-10-27T05:42:50.5946612Z ##[endgroup]
 2022-10-27T05:42:57.1137055Z ##[group]/datum/unit_test/stack_singular_name
-2022-10-27T05:42:57.1142555Z 
+2022-10-27T05:42:57.1142555Z
 2022-10-27T05:42:57.1145224Z [1;32mPASS[0m /datum/unit_test/stack_singular_name 0s
 2022-10-27T05:42:57.1147574Z ##[endgroup]
 2022-10-27T05:42:57.1358739Z ##[group]/datum/unit_test/stomach
-2022-10-27T05:42:57.1694838Z 
+2022-10-27T05:42:57.1694838Z
 2022-10-27T05:42:57.1695603Z [1;32mPASS[0m /datum/unit_test/stomach 0s
 2022-10-27T05:42:57.1696272Z ##[endgroup]
 2022-10-27T05:42:57.1961163Z ##[group]/datum/unit_test/strip_menu_ui_status
-2022-10-27T05:42:57.2480737Z 
+2022-10-27T05:42:57.2480737Z
 2022-10-27T05:42:57.2481561Z [1;32mPASS[0m /datum/unit_test/strip_menu_ui_status 0.1s
 2022-10-27T05:42:57.2483682Z ##[endgroup]
 2022-10-27T05:42:57.3124509Z ##[group]/datum/unit_test/subsystem_init
-2022-10-27T05:42:57.3124738Z 
+2022-10-27T05:42:57.3124738Z
 2022-10-27T05:42:57.3127230Z [1;32mPASS[0m /datum/unit_test/subsystem_init 0s
 2022-10-27T05:42:57.3128294Z ##[endgroup]
 2022-10-27T05:42:57.3335312Z ##[group]/datum/unit_test/suit_storage_icons
@@ -2091,87 +2091,87 @@
 2022-10-27T05:42:59.4479594Z 	255 - /obj/item/storage/lockbox/medal using invalid icon_state, "medalbox+l"
 2022-10-27T05:42:59.4487494Z 	256 - /obj/item/crowbar/red/caravan using invalid icon_state, "crowbar_caravan"
 2022-10-27T05:42:59.4509453Z 	257 - /obj/item/crowbar/drone using invalid icon_state, "crowbar_cyborg"
-2022-10-27T05:42:59.4528797Z 
+2022-10-27T05:42:59.4528797Z
 2022-10-27T05:42:59.4529293Z [1;32mPASS[0m /datum/unit_test/suit_storage_icons 2.1s
 2022-10-27T05:42:59.4529946Z ##[endgroup]
 2022-10-27T05:43:01.5221964Z ##[group]/datum/unit_test/amputation
-2022-10-27T05:43:01.5815196Z 
+2022-10-27T05:43:01.5815196Z
 2022-10-27T05:43:01.5817573Z [1;32mPASS[0m /datum/unit_test/amputation 0s
 2022-10-27T05:43:01.5819941Z ##[endgroup]
 2022-10-27T05:43:01.6143865Z ##[group]/datum/unit_test/brain_surgery
-2022-10-27T05:43:01.6698394Z 
+2022-10-27T05:43:01.6698394Z
 2022-10-27T05:43:01.6699379Z [1;32mPASS[0m /datum/unit_test/brain_surgery 0s
 2022-10-27T05:43:01.6700065Z ##[endgroup]
 2022-10-27T05:43:01.7064460Z ##[group]/datum/unit_test/head_transplant
-2022-10-27T05:43:01.7910615Z 
+2022-10-27T05:43:01.7910615Z
 2022-10-27T05:43:01.7911507Z [1;32mPASS[0m /datum/unit_test/head_transplant 0s
 2022-10-27T05:43:01.7912215Z ##[endgroup]
 2022-10-27T05:43:01.8771339Z ##[group]/datum/unit_test/multiple_surgeries
-2022-10-27T05:43:01.9564190Z 
+2022-10-27T05:43:01.9564190Z
 2022-10-27T05:43:01.9565672Z [1;32mPASS[0m /datum/unit_test/multiple_surgeries 0.1s
 2022-10-27T05:43:01.9566988Z ##[endgroup]
 2022-10-27T05:43:02.0451694Z ##[group]/datum/unit_test/start_tend_wounds
-2022-10-27T05:43:02.1021559Z 
+2022-10-27T05:43:02.1021559Z
 2022-10-27T05:43:02.1023113Z [1;32mPASS[0m /datum/unit_test/start_tend_wounds 0.1s
 2022-10-27T05:43:02.1027806Z ##[endgroup]
 2022-10-27T05:43:02.1334702Z ##[group]/datum/unit_test/tend_wounds
-2022-10-27T05:43:02.2464864Z 
+2022-10-27T05:43:02.2464864Z
 2022-10-27T05:43:02.2466455Z [1;32mPASS[0m /datum/unit_test/tend_wounds 0.1s
 2022-10-27T05:43:02.2471798Z ##[endgroup]
 2022-10-27T05:43:02.3971842Z ##[group]/datum/unit_test/auto_teleporter_linking
-2022-10-27T05:43:02.4364172Z 
+2022-10-27T05:43:02.4364172Z
 2022-10-27T05:43:02.4365748Z [1;32mPASS[0m /datum/unit_test/auto_teleporter_linking 0.1s
 2022-10-27T05:43:02.4367360Z ##[endgroup]
 2022-10-27T05:43:02.4786335Z ##[group]/datum/unit_test/tgui_create_message
-2022-10-27T05:43:02.4787309Z 
+2022-10-27T05:43:02.4787309Z
 2022-10-27T05:43:02.4792228Z [1;32mPASS[0m /datum/unit_test/tgui_create_message 0s
 2022-10-27T05:43:02.4793589Z ##[endgroup]
 2022-10-27T05:43:02.4990140Z ##[group]/datum/unit_test/timer_sanity
-2022-10-27T05:43:02.4990770Z 
+2022-10-27T05:43:02.4990770Z
 2022-10-27T05:43:02.4993590Z [1;32mPASS[0m /datum/unit_test/timer_sanity 0s
 2022-10-27T05:43:02.4994358Z ##[endgroup]
 2022-10-27T05:43:02.5179295Z ##[group]/datum/unit_test/traitor
-2022-10-27T05:43:04.3257821Z 
+2022-10-27T05:43:04.3257821Z
 2022-10-27T05:43:04.3259494Z [1;32mPASS[0m /datum/unit_test/traitor 1.8s
 2022-10-27T05:43:04.3309007Z ##[endgroup]
 2022-10-27T05:43:08.2246947Z ##[group]/datum/unit_test/verify_config_tags
-2022-10-27T05:43:08.2248054Z 
+2022-10-27T05:43:08.2248054Z
 2022-10-27T05:43:08.2249419Z [1;32mPASS[0m /datum/unit_test/verify_config_tags 0s
 2022-10-27T05:43:08.2250078Z ##[endgroup]
 2022-10-27T05:43:08.2441208Z ##[group]/datum/unit_test/wizard_loadout
-2022-10-27T05:43:08.3578743Z 
+2022-10-27T05:43:08.3578743Z
 2022-10-27T05:43:08.3580409Z [1;32mPASS[0m /datum/unit_test/wizard_loadout 0.1s
 2022-10-27T05:43:08.3585004Z ##[endgroup]
 2022-10-27T05:43:08.5073685Z ##[group]/datum/unit_test/find_reference_sanity
-2022-10-27T05:43:08.5075807Z 
+2022-10-27T05:43:08.5075807Z
 2022-10-27T05:43:08.5076772Z [1;32mPASS[0m /datum/unit_test/find_reference_sanity 0s
 2022-10-27T05:43:08.5077672Z ##[endgroup]
 2022-10-27T05:43:08.5272155Z ##[group]/datum/unit_test/find_reference_baseline
-2022-10-27T05:43:08.5274693Z 
+2022-10-27T05:43:08.5274693Z
 2022-10-27T05:43:08.5275872Z [1;32mPASS[0m /datum/unit_test/find_reference_baseline 0s
 2022-10-27T05:43:08.5276640Z ##[endgroup]
 2022-10-27T05:43:08.5468423Z ##[group]/datum/unit_test/find_reference_exotic
-2022-10-27T05:43:08.5470529Z 
+2022-10-27T05:43:08.5470529Z
 2022-10-27T05:43:08.5474746Z [1;32mPASS[0m /datum/unit_test/find_reference_exotic 0s
 2022-10-27T05:43:08.5475293Z ##[endgroup]
 2022-10-27T05:43:08.5665386Z ##[group]/datum/unit_test/find_reference_esoteric
-2022-10-27T05:43:08.5669399Z 
+2022-10-27T05:43:08.5669399Z
 2022-10-27T05:43:08.5676075Z [1;32mPASS[0m /datum/unit_test/find_reference_esoteric 0s
 2022-10-27T05:43:08.5677072Z ##[endgroup]
 2022-10-27T05:43:08.5866537Z ##[group]/datum/unit_test/find_reference_null_key_entry
-2022-10-27T05:43:08.5868456Z 
+2022-10-27T05:43:08.5868456Z
 2022-10-27T05:43:08.5869492Z [1;32mPASS[0m /datum/unit_test/find_reference_null_key_entry 0s
 2022-10-27T05:43:08.5870146Z ##[endgroup]
 2022-10-27T05:43:08.6166348Z ##[group]/datum/unit_test/find_reference_assoc_investigation
-2022-10-27T05:43:08.6171705Z 
+2022-10-27T05:43:08.6171705Z
 2022-10-27T05:43:08.6172220Z [1;32mPASS[0m /datum/unit_test/find_reference_assoc_investigation 0s
 2022-10-27T05:43:08.6172854Z ##[endgroup]
 2022-10-27T05:43:08.6356029Z ##[group]/datum/unit_test/find_reference_static_investigation
-2022-10-27T05:43:08.8684547Z 
+2022-10-27T05:43:08.8684547Z
 2022-10-27T05:43:08.8685577Z [1;32mPASS[0m /datum/unit_test/find_reference_static_investigation 0.2s
 2022-10-27T05:43:08.8686517Z ##[endgroup]
 2022-10-27T05:43:09.0881655Z ##[group]/datum/unit_test/monkey_business
-2022-10-27T05:43:47.8646118Z 
+2022-10-27T05:43:47.8646118Z
 2022-10-27T05:43:47.8647763Z [1;32mPASS[0m /datum/unit_test/monkey_business 38.8s
 2022-10-27T05:43:47.8739017Z ##[endgroup]
 2022-10-27T05:43:50.1651558Z ##[group]/datum/unit_test/create_and_destroy
@@ -2330,12 +2330,12 @@
 2022-10-27T05:53:02.6649338Z Total size of all the files uploaded is 138917 bytes
 2022-10-27T05:53:02.6650349Z File upload process has finished. Finalizing the artifact upload
 2022-10-27T05:53:02.6917894Z Artifact has been finalized. All files have been successfully uploaded!
-2022-10-27T05:53:02.6918592Z 
+2022-10-27T05:53:02.6918592Z
 2022-10-27T05:53:02.6919221Z The raw size of all the files that were specified for upload is 139272 bytes
 2022-10-27T05:53:02.6920199Z The size of all the files that were uploaded is 138917 bytes. This takes into account any gzip compression used to reduce the upload size, time and storage
-2022-10-27T05:53:02.6920771Z 
-2022-10-27T05:53:02.6922015Z Note: The size of downloaded zips can differ significantly from the reported size. For more information see: https://github.com/actions/upload-artifact#zipped-artifact-downloads 
-2022-10-27T05:53:02.6922715Z 
+2022-10-27T05:53:02.6920771Z
+2022-10-27T05:53:02.6922015Z Note: The size of downloaded zips can differ significantly from the reported size. For more information see: https://github.com/actions/upload-artifact#zipped-artifact-downloads
+2022-10-27T05:53:02.6922715Z
 2022-10-27T05:53:02.6923052Z Artifact test_artifacts_metastation has been successfully uploaded!
 2022-10-27T05:53:02.7064563Z Post job cleanup.
 2022-10-27T05:53:02.8553446Z [command]/usr/bin/git version
@@ -2375,10 +2375,10 @@
 2022-10-27T05:53:02.9886079Z  2022-10-27 05:35:52+00:00 [Note] [Entrypoint]: Temporary server started.
 2022-10-27T05:53:02.9886471Z  '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
 2022-10-27T05:53:02.9888624Z  Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
-2022-10-27T05:53:02.9889273Z  
+2022-10-27T05:53:02.9889273Z
 2022-10-27T05:53:02.9889568Z  2022-10-27 05:35:54+00:00 [Note] [Entrypoint]: Stopping temporary server
 2022-10-27T05:53:02.9889969Z  2022-10-27 05:35:57+00:00 [Note] [Entrypoint]: Temporary server stopped
-2022-10-27T05:53:02.9890280Z  
+2022-10-27T05:53:02.9890280Z
 2022-10-27T05:53:02.9890742Z  2022-10-27 05:35:57+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
 2022-10-27T05:53:02.9891394Z  Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
 2022-10-27T05:53:02.9891960Z  Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
@@ -2386,7 +2386,7 @@
 2022-10-27T05:53:02.9893146Z  2022-10-27T05:35:54.998452Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
 2022-10-27T05:53:02.9893808Z  2022-10-27T05:35:56.253546Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
 2022-10-27T05:53:02.9898747Z  2022-10-27T05:35:57.259394Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
-2022-10-27T05:53:02.9899246Z  
+2022-10-27T05:53:02.9899246Z
 2022-10-27T05:53:02.9899947Z  2022-10-27T05:35:57.260761Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
 2022-10-27T05:53:02.9900440Z  2022-10-27T05:35:57.279827Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
 2022-10-27T05:53:02.9900902Z  2022-10-27T05:35:57.478844Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.

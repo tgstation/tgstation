@@ -841,13 +841,15 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/mutable_appearance/standing // this is the actual resulting MA
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
-	if(female_uniform)
+	/// DOPPLER SHIFT REMOVAL BEGIN - see below; migrating this down to better support hybrids of female critter + digi or other legs
+	/*if(female_uniform)
 		building_icon = wear_female_version(
 			icon_state = t_state,
 			icon = file2use,
 			type = female_uniform,
 			greyscale_colors = greyscale_colors,
-		)
+		)*/
+	/// DOPPLER SHIFT REMOVAL END
 	if(!isinhands && is_digi && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		building_icon = wear_digi_version(
 			base_icon = building_icon || icon(file2use, t_state),
@@ -855,6 +857,15 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_config = digitigrade_greyscale_config_worn || greyscale_config_worn,
 			greyscale_colors = digitigrade_greyscale_colors || greyscale_colors || color,
 		)
+	/// DOPPLER SHIFT ADDITION BEGIN - we migrate this down here & use building_icon to allow for auto-generated digi sprites to still support ladies
+	if(female_uniform)
+		building_icon = wear_female_version(
+			icon_state = t_state,
+			icon = istype(building_icon) ? building_icon : file2use,
+			type = female_uniform,
+			greyscale_colors = greyscale_colors,
+		)
+	/// DOPPLER SHIFT ADDITION END
 	if(building_icon)
 		standing = mutable_appearance(building_icon, layer = -layer2use)
 

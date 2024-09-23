@@ -140,6 +140,11 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	icon_state = "clay_bowl"
 	custom_materials = null
 
+/obj/item/reagent_containers/cup/bowl/ceramic/update_icon_state()
+	if(!reagents.total_volume)
+		icon_state = "clay_bowl"
+	return ..()
+
 /obj/item/ceramic/cup
 	name = "ceramic cup"
 	desc = "A piece of clay with high walls, in the shape of a cup. It can hold 120 units."

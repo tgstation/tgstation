@@ -1,0 +1,16 @@
+{
+	"maid_arm_covers": [
+		{
+			"type": "icon_state",
+			"icon_state": "maid_arm_covers",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "maid_arm_covers_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

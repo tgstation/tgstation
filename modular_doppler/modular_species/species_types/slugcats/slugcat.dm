@@ -15,6 +15,7 @@
 	name = "\improper Slugcat"
 	plural_form = "Slugcats"
 	id = SPECIES_SLUGCAT
+	preview_outfit = /datum/outfit/scug_preview
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TACKLING_TAILED_DEFENDER,
@@ -46,6 +47,29 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/slugcat,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/slugcat,
 	)
+
+/datum/outfit/scug_preview
+	name = "Slugcat (Species Preview)"
+	head = /obj/item/clothing/head/beret/doppler_command/science
+	neck = /obj/item/clothing/neck/doppler_mantle/science
+
+/datum/species/slugcat/prepare_human_for_preview(mob/living/carbon/human/scug_for_preview)
+	scug_for_preview.dna.features["lizard_markings"] = "Slugcat Underbelly"
+	scug_for_preview.dna.features["body_markings_color_1"] = "#ccecff"
+	scug_for_preview.dna.features["mcolor"] = "#FFFFFF"
+	scug_for_preview.dna.features["frills"] = "Slugcat"
+	scug_for_preview.dna.features["frills_color_1"] = "#ccecff"
+	scug_for_preview.dna.features["snout"] = "Slugcat"
+	scug_for_preview.dna.features["snout_color_1"] = "#ffffff"
+	scug_for_preview.dna.features["snout_color_2"] = "#dddddd"
+	scug_for_preview.dna.features["snout_color_3"] = "#9a9b9e"
+	scug_for_preview.dna.features["horns"] = "Slugcat"
+	scug_for_preview.dna.features["horns_color_1"] = "#ffffff"
+	scug_for_preview.dna.features["horns_color_2"] = "#dddddd"
+	scug_for_preview.eye_color_left = "#CCECFF"
+	scug_for_preview.eye_color_right = "#CCECFF"
+	regenerate_organs(scug_for_preview)
+	scug_for_preview.update_body(is_creating = TRUE)
 
 /// SOUNDS BREAKER
 /datum/species/slugcat/get_scream_sound(mob/living/carbon/human/scug)

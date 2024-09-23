@@ -124,6 +124,7 @@
 /area/centcom/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
+	area_flags = parent_type::area_flags | UNLIMITED_FISHING //for possible testing purposes
 
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
