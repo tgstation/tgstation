@@ -375,6 +375,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
+	projectile_speed_multiplier = 0.8
+	fire_delay = 1
 	suppressor_x_offset = 15
 	burst_size = 0
 	actions_types = list()
@@ -426,6 +428,8 @@
 	shots_before_degradation = initial(shots_before_degradation)
 	degradation_stage = initial(degradation_stage)
 	emp_malfunction = FALSE
+	projectile_speed_multiplier = initial(projectile_speed_multiplier)
+	fire_delay = initial(fire_delay)
 	balloon_alert(user, "system reset.")
 
 /obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
@@ -450,8 +454,8 @@
 		return //Only update if we actually increment our degradation stage
 
 	degradation_stage = clamp(degradation_stage + (emp_malfunction ? 2 : 1), 0, degradation_stage_max)
-	projectile_damage_multiplier = clamp(initial(projectile_damage_multiplier) - degradation_stage * 0.1, 0, initial(projectile_damage_multiplier))
-	spread = degradation_stage * 5
+	projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, 0, initial(projectile_speed_multiplier))
+	fire_delay = initial(fire_delay) + (degradation_stage * 0.5)
 	do_sparks(1, TRUE, src)
 
 /// Proc to handle the countdown for our detonation
