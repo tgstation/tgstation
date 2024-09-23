@@ -141,7 +141,7 @@
 	falloff_exponent = 20
 
 /datum/looping_sound/firealarm
-	mid_sounds = list('sound/machines/firealarm/FireAlarm1.ogg' = 1,'sound/machines/firealarm/FireAlarm2.ogg' = 1,'sound/machines/firealarm/FireAlarm3.ogg' = 1,'sound/machines/firealarm/FireAlarm4.ogg' = 1)
+	mid_sounds = list('sound/machines/fire_alarm/FireAlarm1.ogg' = 1,'sound/machines/fire_alarm/FireAlarm2.ogg' = 1,'sound/machines/fire_alarm/FireAlarm3.ogg' = 1,'sound/machines/fire_alarm/FireAlarm4.ogg' = 1)
 	mid_length = 2.4 SECONDS
 	volume = 30
 

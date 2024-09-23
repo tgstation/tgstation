@@ -8,8 +8,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
-	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
+	drop_sound = 'sound/items/handling/cardboard_box/cardboardbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/cardboard_box/cardboardbox_pickup.ogg'
 	/// What material do we get when we fold this box?
 	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// What drawing will we get on the face of the box?

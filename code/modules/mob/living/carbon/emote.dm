@@ -29,10 +29,10 @@
 	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
 		return
 	return pick(
-		'sound/mob/humanoids/human/clap/clap1.ogg',
-		'sound/mob/humanoids/human/clap/clap2.ogg',
-		'sound/mob/humanoids/human/clap/clap3.ogg',
-		'sound/mob/humanoids/human/clap/clap4.ogg',
+		'sound/mobs/humanoids/human/clap/clap1.ogg',
+		'sound/mobs/humanoids/human/clap/clap2.ogg',
+		'sound/mobs/humanoids/human/clap/clap3.ogg',
+		'sound/mobs/humanoids/human/clap/clap4.ogg',
 	)
 
 /datum/emote/living/carbon/crack
@@ -180,7 +180,7 @@
 
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
-		return pick('sound/ambience/earth_rumble/snap/fingersnap1.ogg', 'sound/ambience/earth_rumble/snap/fingersnap2.ogg')
+		return pick('sound/mobs/humanoids/human/snap/fingersnap1.ogg', 'sound/mobs/humanoids/human/snap/fingersnap2.ogg')
 	return null
 
 /datum/emote/living/carbon/shoesteal

@@ -128,8 +128,8 @@
 	var/doorOpen = 'sound/machines/airlock/airlock.ogg'
 	var/doorClose = 'sound/machines/airlock/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/beep/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/airlock/airlock/boltsup.ogg'
-	var/boltDown = 'sound/machines/airlock/airlock/boltsdown.ogg'
+	var/boltUp = 'sound/machines/airlock/boltsup.ogg'
+	var/boltDown = 'sound/machines/airlock/boltsdown.ogg'
 	var/noPower = 'sound/machines/airlock/doorclick.ogg'
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly

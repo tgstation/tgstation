@@ -56,7 +56,7 @@
 		"Warn" = 'sound/machines/warning-buzzer.ogg',
 		"Slow Clap" = 'sound/machines/slowclap.ogg',
 		"Moth Buzz" = 'sound/mobs/humanoids/moth/scream_moth.ogg',
-		"Squeak" = 'sound/mobs/toy_squeak/toysqueak1.ogg',
+		"Squeak" = 'sound/items/toy_squeak/toysqueak1.ogg',
 		"Rip" = 'sound/items/poster/poster_ripped.ogg',
 		"Coinflip" = 'sound/items/coinflip.ogg',
 		"Megaphone" = 'sound/items/megaphone.ogg',

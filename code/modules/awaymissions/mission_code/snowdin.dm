@@ -347,9 +347,9 @@
 	DELAY 10
 	SAY DON'T FUCKING RUSH ME ALRIGHT IT'S BEING CALLED.
 	DELAY 15
-	SOUND sound/mobs/non-humanoid/frog/huuu.ogg
+	SOUND sound/mobs/non-humanoids/frog/huuu.ogg
 	DELAY 5
-	SOUND sound/mobs/non-humanoid/frog/huuu.ogg
+	SOUND sound/mobs/non-humanoids/frog/huuu.ogg
 	DELAY 15
 	SOUND sound/effects/woodhit.ogg
 	DELAY 2

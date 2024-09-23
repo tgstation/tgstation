@@ -38,7 +38,7 @@
 	. = ..()
 	if(ismob(AM) && AM == target)
 		visible_message(span_warning("[src] flails his swords and cuts [AM]!"))
-		playsound(src,'sound/mobs/non-humanoid/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
+		playsound(src,'sound/mobs/non-humanoids/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
 		INVOKE_ASYNC(src, PROC_REF(stun_attack), AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
@@ -77,7 +77,7 @@
 				mode = BOT_START_PATROL // switch to patrol mode
 		if(BOT_HUNT) // hunting for perp
 			update_appearance()
-			playsound(src,'sound/mobs/non-humanoid/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
+			playsound(src,'sound/mobs/non-humanoids/beepsky/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
 				GLOB.move_manager.stop_looping(src)

@@ -105,7 +105,7 @@
 		heat = heat_while_on
 		START_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/lighter/lighter/zippo_on.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/zippo_on.ogg', 100, 1)
 		else
 			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg', 100, 1)
 		if(isliving(loc))
@@ -120,7 +120,7 @@
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
 		if(fancy)
-			playsound(src.loc , 'sound/items/lighter/lighter/zippo_off.ogg', 100, 1)
+			playsound(src.loc , 'sound/items/lighter/zippo_off.ogg', 100, 1)
 		else
 			playsound(src.loc , 'sound/items/lighter/lighter_off.ogg', 100, 1)
 	set_light_on(lit)

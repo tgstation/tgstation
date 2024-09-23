@@ -381,7 +381,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/lockdown
 	unlock_text = span_notice("You upload a sleeper trojan into the door control systems. You can send a signal to set it off at any time.")
-	unlock_sound = 'sound/machines/airlock/airlock/boltsdown.ogg'
+	unlock_sound = 'sound/machines/airlock/boltsdown.ogg'
 
 /datum/action/innate/ai/lockdown
 	name = "Lockdown"
@@ -742,7 +742,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = span_notice("You replace the thermal sensing capabilities of all fire alarms with a manual override, \
 		allowing you to turn them off at will.")
-	unlock_sound = 'sound/machines/firealarm/FireAlarm1.ogg'
+	unlock_sound = 'sound/machines/fire_alarm/FireAlarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"

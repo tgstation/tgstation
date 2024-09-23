@@ -289,7 +289,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/mobs/non-humanoids/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
