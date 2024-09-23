@@ -199,6 +199,7 @@
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
 	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
+	evolution_types = null
 	compatible_types = list(/obj/item/fish/pike)
 	favorite_bait = list(
 		list(
