@@ -62,3 +62,15 @@
 	name = "'dagger' designer mantle (worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/shirt.dmi'
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/dagger_mantle_worn.json'
+
+// Apron
+
+/datum/greyscale_config/apron
+	name = "Apron"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/suit.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/apron.json'
+
+/datum/greyscale_config/apron/worn
+	name = "Apron (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/suit.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/suit/apron_worn.json'
