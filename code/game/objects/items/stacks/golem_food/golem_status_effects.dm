@@ -225,17 +225,22 @@
 	alert_icon_state = "sheet-plasteel"
 	alert_desc = "You are sealed against the cold, low pressure environments, and are armored!" // Doppler Edit - description
 
+/datum/movespeed_modifier/status_effect/golem_plasteel
+	multiplicative_slowdown = 0.5 //Doppler Edit - Tank build?
+
 /datum/status_effect/golem/plasteel/on_apply()
 	. = ..()
 	if (!.)
 		return FALSE
 	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance += 20 // Doppler Edit - Gives them 20 extra damage resist. This basically means they soak 6 damage.
+	golem_owner.physiology.damage_resistance += 20 // Doppler Edit - Gives them 20 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
 	var/mob/living/carbon/human/golem_owner = owner
 	golem_owner.physiology.damage_resistance -= 20 // Doppler Edit - And God taketh away.
 	return ..()
