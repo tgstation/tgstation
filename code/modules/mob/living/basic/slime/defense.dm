@@ -87,7 +87,7 @@
 			has_found = TRUE
 		if(applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 			to_chat(user, span_notice("You feed the slime as many of the extracts from the bag as you can, and it mutates!"))
-			playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			spawn_corecross()
 			has_output = TRUE
 			break
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
 	else
 		to_chat(user, span_notice("You feed the slime some extracts from the bag."))
-		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()

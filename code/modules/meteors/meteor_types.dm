@@ -378,7 +378,7 @@
 	desc = "Just... don't think too hard about where this thing came from."
 	hits = 2
 	heavy = TRUE
-	meteorsound = 'sound/effects/blobattack.ogg'
+	meteorsound = 'sound/effects/blob/blobattack.ogg'
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2

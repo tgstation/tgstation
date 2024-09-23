@@ -250,7 +250,7 @@
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
 	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
 	///Sounds used in the squeak component
-	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	var/list/meat_sounds = list('sound/effects/blob/blobattack.ogg' = 1)
 	///Reagents added to the edible component, ingested when you EAT the MEAT
 	var/list/meat_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,

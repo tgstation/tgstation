@@ -57,14 +57,14 @@
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
 		to_chat(user, span_notice("You close [src]'s door."))
-		playsound(user, 'sound/effects/bin_close.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/bin/bin_close.ogg', 50, TRUE)
 		open = FALSE
 	else
 		if(locked)
 			to_chat(user, span_warning("[src] is locked!"))
 			return
 		to_chat(user, span_notice("You open [src]'s door."))
-		playsound(user, 'sound/effects/bin_open.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/bin/bin_open.ogg', 50, TRUE)
 		open = TRUE
 	update_appearance()
 

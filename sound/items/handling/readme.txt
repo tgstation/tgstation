@@ -1,4 +1,4 @@
-handling in this case is manipulating and item in your hands, that means:
+handling in this case is:
 - picking up an item
 - dropping an item
 - storage item rustle sounds

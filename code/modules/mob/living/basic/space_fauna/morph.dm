@@ -30,7 +30,7 @@
 
 	attack_verb_continuous = "glomps"
 	attack_verb_simple = "glomp"
-	attack_sound = 'sound/effects/blobattack.ogg'
+	attack_sound = 'sound/effects/blob/blobattack.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = list(/obj/item/food/meat/slab = 2)
 

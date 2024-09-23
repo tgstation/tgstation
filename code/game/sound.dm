@@ -267,7 +267,7 @@
 		if(SFX_HONKBOT_E)
 			soundin = pick(list(
 				'sound/effects/pray.ogg',
-				'sound/effects/reee.ogg',
+				'sound/mobs/non-humanoid/frog/reee.ogg',
 				'sound/items/airhorn/AirHorn.ogg',
 				'sound/items/airhorn/AirHorn2.ogg',
 				'sound/items/bikehorn.ogg',

@@ -97,7 +97,7 @@ Slimecrossing Weapons
 	max_charges = 1 //Recharging costs blood.
 	recharge_rate = 1
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
-	fire_sound = 'sound/effects/attackblob.ogg'
+	fire_sound = 'sound/effects/blob/attackblob.ogg'
 
 /obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()

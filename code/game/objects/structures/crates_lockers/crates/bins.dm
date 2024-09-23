@@ -3,8 +3,8 @@
 	name = "trash bin"
 	icon_state = "trashbin"
 	base_icon_state = "trashbin"
-	open_sound = 'sound/effects/bin_open.ogg'
-	close_sound = 'sound/effects/bin_close.ogg'
+	open_sound = 'sound/effects/bin/bin_open.ogg'
+	close_sound = 'sound/effects/bin/bin_close.ogg'
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null

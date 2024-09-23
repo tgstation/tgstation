@@ -54,7 +54,7 @@
 			if(!traitor_data.uplink_handler.contractor_hub)
 				traitor_data.uplink_handler.contractor_hub = new
 				traitor_data.uplink_handler.contractor_hub.create_contracts(traitor_user.owner)
-				user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, FALSE)
+				user.playsound_local(user, 'sound/music/antag/contractstartup.ogg', 100, FALSE)
 				program_open_overlay = "contractor-contractlist"
 			return TRUE
 

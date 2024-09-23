@@ -115,12 +115,12 @@
 	image_icon_state = "arm_blade"
 
 /datum/hallucination/nearby_fake_item/armblade/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
+	hallucinator.playsound_local(get_turf(holder), 'sound/effects/blob/blobattack.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/armblade/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(holder), 'sound/effects/blob/blobattack.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/ttv

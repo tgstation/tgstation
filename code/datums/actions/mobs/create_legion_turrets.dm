@@ -88,7 +88,7 @@
 	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src
 	ouchie.fire(angle)
-	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/bin/bin_close.ogg', 100, TRUE)
 	QDEL_IN(src, 0.5 SECONDS)
 
 /// Used for the legion turret.
