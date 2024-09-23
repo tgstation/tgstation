@@ -170,7 +170,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
 	if(!can_hit_with_hand(target, caster))
-		return FALSE
+		return NONE
 
 	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, target, caster, source)
 
@@ -202,7 +202,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!can_hit_with_hand(target, caster))
-		return FALSE
+		return NONE
 
 	var/secondary_result = cast_on_secondary_hand_hit(source, target, caster)
 	switch(secondary_result)

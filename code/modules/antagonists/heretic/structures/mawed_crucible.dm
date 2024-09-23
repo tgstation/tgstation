@@ -69,7 +69,7 @@
 		bite_the_hand(user)
 		return TRUE
 
-	if(istype(weapon, /obj/item/codex_cicatrix) || istype(weapon, /obj/item/melee/touch_attack/mansus_fist))
+	if(istype(weapon, /obj/item/codex_cicatrix) || /obj/item/melee/touch_attack/mansus_fist)
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 		set_anchored(!anchored)
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
@@ -104,7 +104,7 @@
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 		set_anchored(!anchored)
 		balloon_alert(user, "[anchored ? "":"un"	]anchored")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
