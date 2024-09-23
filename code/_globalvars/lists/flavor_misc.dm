@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(scarySounds, list(
 	'sound/effects/glass/glassbr3.ogg',
 	'sound/items/tools/welder.ogg',
 	'sound/items/tools/welder2.ogg',
-	'sound/machines/airlock.ogg',
+	'sound/machines/airlock/airlock.ogg',
 	'sound/mobs/non-humanoids/hiss/hiss1.ogg',
 	'sound/mobs/non-humanoids/hiss/hiss2.ogg',
 	'sound/mobs/non-humanoids/hiss/hiss3.ogg',

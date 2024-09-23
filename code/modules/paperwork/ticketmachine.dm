@@ -213,7 +213,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	if((user_ref in ticket_holders) && !(obj_flags & EMAGGED))
 		to_chat(user, span_warning("You already have a ticket!"))
 		return
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number++
 	to_chat(user, span_notice("You take a ticket from [src], looks like you're number [ticket_number] in queue..."))
 	var/obj/item/ticket_machine_ticket/theirticket = new (get_turf(src), ticket_number)

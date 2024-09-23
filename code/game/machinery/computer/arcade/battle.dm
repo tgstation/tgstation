@@ -480,7 +480,7 @@
 						player_current_hp = PLAYER_MAX_HP
 						player_current_mp = PLAYER_MAX_MP
 					else
-						playsound(loc, 'sound/machines/defib_zap.ogg', 40)
+						playsound(loc, 'sound/machines/defib/defib_zap.ogg', 40)
 						if(prob(40))
 							//You got robbed, and now have to go to your next fight.
 							player_gold /= 2

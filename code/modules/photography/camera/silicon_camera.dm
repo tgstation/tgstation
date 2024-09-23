@@ -31,7 +31,7 @@
 		// Trying to turn on camera mode while you have another click intercept active, such as malf abilities
 		if(sound)
 			balloon_alert(user, "can't enable camera mode!")
-			playsound(user, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+			playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 
 	if(sound)

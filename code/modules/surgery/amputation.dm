@@ -67,7 +67,7 @@
 	)
 	time = 20 //WAIT I NEED THAT!!
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	preop_sound = 'sound/machines/doorclick.ogg'
+	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/sever_limb/peg
 	name = "detach limb (circular saw)"

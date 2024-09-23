@@ -188,7 +188,7 @@
 	if(lockon_zone == my_turf)
 		return
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
-	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
+	playsound(lockon_zone, 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
 	StartCooldown(cooldown_time)
 	return ..()
 

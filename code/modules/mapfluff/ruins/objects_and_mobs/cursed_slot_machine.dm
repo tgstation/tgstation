@@ -84,7 +84,7 @@
 			user.apply_status_effect(/datum/status_effect/grouped/cursed)
 
 		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		balloon_alert_to_viewers("you lost!")
 		return
 

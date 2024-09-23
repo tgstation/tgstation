@@ -139,10 +139,10 @@
 	if(user)
 		to_chat(user, "Message sent to [robot]: [message]")
 	robot.logevent("Message from [ID] -- \"[message]\"")
-	SEND_SOUND(robot, 'sound/machines/twobeep_high.ogg')
+	SEND_SOUND(robot, 'sound/machines/beep/twobeep_high.ogg')
 	if(robot.connected_ai)
 		to_chat(robot.connected_ai, "<br><br>[span_notice("Message from [ID] to [robot] -- \"[message]\"")]<br>")
-		SEND_SOUND(robot.connected_ai, 'sound/machines/twobeep_high.ogg')
+		SEND_SOUND(robot.connected_ai, 'sound/machines/beep/twobeep_high.ogg')
 	user?.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
 	return TRUE
 

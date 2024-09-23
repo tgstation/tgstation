@@ -298,8 +298,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	speak_emote = list("clatters")
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/opened = FALSE
-	var/open_sound = 'sound/machines/crate_open.ogg'
-	var/close_sound = 'sound/machines/crate_close.ogg'
+	var/open_sound = 'sound/machines/crate/crate_open.ogg'
+	var/close_sound = 'sound/machines/crate/crate_close.ogg'
 	///sound played when the mimic attempts to eat more items than it can
 	var/full_sound = 'sound/items/trayhit2.ogg'
 	var/max_mob_size = MOB_SIZE_HUMAN

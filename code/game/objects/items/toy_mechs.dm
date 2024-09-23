@@ -571,7 +571,7 @@
 	special_attack_cry = "MEGA HORN"
 
 /obj/item/toy/mecha/honk/super_special_attack(obj/item/toy/mecha/victim)
-	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 20, TRUE)
+	playsound(src, 'sound/mobs/non-humanoids/honkbot_evil_laugh.ogg', 20, TRUE)
 	victim.special_attack_cooldown += 3 //Adds cooldown to the other mech and gives a minor self heal
 	combat_health++
 

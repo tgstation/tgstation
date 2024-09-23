@@ -84,7 +84,7 @@
 		return
 
 	if(!transform_dead && victim.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// Activate the cooldown

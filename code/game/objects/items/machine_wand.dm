@@ -61,7 +61,7 @@
 
 /obj/item/machine_remote/ui_interact(mob/user, datum/tgui/ui)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return FALSE
 	if(!controlling_machine_or_bot)
@@ -92,7 +92,7 @@
 
 /obj/item/machine_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return ITEM_INTERACT_BLOCKING
 	if(!ismachinery(interacting_with) && !isbot(interacting_with))

@@ -579,7 +579,7 @@
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
-	mix_sound = 'sound/machines/defib_zap.ogg'
+	mix_sound = 'sound/machines/defib/defib_zap.ogg'
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
@@ -603,7 +603,7 @@
 	if(QDELETED(holder_atom))
 		return
 	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
-	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	playsound(holder_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474

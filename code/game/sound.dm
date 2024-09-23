@@ -236,14 +236,14 @@
 			soundin = pick( 'sound/items/weapons/effects/ric1.ogg', 'sound/items/weapons/effects/ric2.ogg','sound/items/weapons/effects/ric3.ogg','sound/items/weapons/effects/ric4.ogg','sound/items/weapons/effects/ric5.ogg')
 		if(SFX_TERMINAL_TYPE)
 			soundin = pick(list(
-				'sound/machines/terminal_button01.ogg',
-				'sound/machines/terminal_button02.ogg',
-				'sound/machines/terminal_button03.ogg',
-				'sound/machines/terminal_button04.ogg',
-				'sound/machines/terminal_button05.ogg',
-				'sound/machines/terminal_button06.ogg',
-				'sound/machines/terminal_button07.ogg',
-				'sound/machines/terminal_button08.ogg',
+				'sound/machines/terminal/terminal_button01.ogg',
+				'sound/machines/terminal/terminal_button02.ogg',
+				'sound/machines/terminal/terminal_button03.ogg',
+				'sound/machines/terminal/terminal_button04.ogg',
+				'sound/machines/terminal/terminal_button05.ogg',
+				'sound/machines/terminal/terminal_button06.ogg',
+				'sound/machines/terminal/terminal_button07.ogg',
+				'sound/machines/terminal/terminal_button08.ogg',
 			))
 		if(SFX_DESECRATION)
 			soundin = pick('sound/misc/desecration-01.ogg', 'sound/misc/desecration-02.ogg', 'sound/misc/desecration-03.ogg')
@@ -272,7 +272,7 @@
 				'sound/items/airhorn/AirHorn2.ogg',
 				'sound/items/bikehorn.ogg',
 				'sound/items/WEEOO1.ogg',
-				'sound/machines/buzz-sigh.ogg',
+				'sound/machines/buzz/buzz-sigh.ogg',
 				'sound/machines/ping.ogg',
 				'sound/effects/magic/Fireball.ogg',
 				'sound/misc/sadtrombone.ogg',

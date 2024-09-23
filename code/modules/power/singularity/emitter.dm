@@ -553,7 +553,7 @@
 		emitter.fire_beam(user)
 		delay = world.time + 10
 	else if (emitter.charge < 10)
-		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(src,'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/ctf

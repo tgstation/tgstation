@@ -1637,7 +1637,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/boot()
 	say("Game starting!")
-	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 
 	state = STATE_STARTING
 	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
@@ -1716,7 +1716,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
-	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/synth/synth_no.ogg', 50, FALSE)
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)

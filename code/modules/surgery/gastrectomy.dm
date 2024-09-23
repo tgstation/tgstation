@@ -56,7 +56,7 @@
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	success_sound = 'sound/machines/doorclick.ogg'
+	success_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/gastrectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

@@ -154,7 +154,7 @@
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
 	if(istype(giberal_turf) && giberal_turf.stage != GIBTONITE_UNSTRUCK)
-		playsound(bumper, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
 		on_deactivation()
 		return

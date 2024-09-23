@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(ambience)
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
-		'sound/machines/airlock.ogg',
+		'sound/machines/airlock/airlock.ogg',
 		'sound/effects/snap.ogg',
 		'sound/effects/footstep/clownstep1.ogg',
 		'sound/effects/footstep/clownstep2.ogg',

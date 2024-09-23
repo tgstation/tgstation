@@ -53,7 +53,7 @@
 		to_chat(user, span_warning("[src] already has a holotag attached!"))
 		return
 	to_chat(user, span_notice("You affix a holotag to [src]."))
-	playsound(src, 'sound/machines/twobeep.ogg', 100)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
 	gps_tagged = TRUE
 	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)

@@ -5,7 +5,7 @@
 
 
 /datum/looping_sound/reverse_bear_trap_beep
-	mid_sounds = list('sound/machines/beep.ogg' = 1)
+	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 60
 	volume = 10
 
@@ -24,7 +24,7 @@
 	mid_length = 1 SECONDS
 
 /datum/looping_sound/trapped_machine_beep
-	mid_sounds = list('sound/machines/beep.ogg' = 1)
+	mid_sounds = list('sound/machines/beep/beep.ogg' = 1)
 	mid_length = 10 SECONDS
 	mid_length_vary = 5 SECONDS
 	falloff_exponent = 10

@@ -90,7 +90,7 @@
 
 /datum/looping_sound/jackpot
 	mid_length = 11
-	mid_sounds = list('sound/machines/roulettejackpot.ogg' = 1)
+	mid_sounds = list('sound/machines/roulette/roulettejackpot.ogg' = 1)
 	volume = 85
 	vary = TRUE
 
@@ -141,7 +141,7 @@
 	falloff_exponent = 20
 
 /datum/looping_sound/firealarm
-	mid_sounds = list('sound/machines/FireAlarm1.ogg' = 1,'sound/machines/FireAlarm2.ogg' = 1,'sound/machines/FireAlarm3.ogg' = 1,'sound/machines/FireAlarm4.ogg' = 1)
+	mid_sounds = list('sound/machines/firealarm/FireAlarm1.ogg' = 1,'sound/machines/firealarm/FireAlarm2.ogg' = 1,'sound/machines/firealarm/FireAlarm3.ogg' = 1,'sound/machines/firealarm/FireAlarm4.ogg' = 1)
 	mid_length = 2.4 SECONDS
 	volume = 30
 
@@ -157,14 +157,14 @@
 
 /datum/looping_sound/typing
 	mid_sounds = list(
-		'sound/machines/terminal_button01.ogg' = 1,
-		'sound/machines/terminal_button02.ogg' = 1,
-		'sound/machines/terminal_button03.ogg' = 1,
-		'sound/machines/terminal_button04.ogg' = 1,
-		'sound/machines/terminal_button05.ogg' = 1,
-		'sound/machines/terminal_button06.ogg' = 1,
-		'sound/machines/terminal_button07.ogg' = 1,
-		'sound/machines/terminal_button08.ogg' = 1,
+		'sound/machines/terminal/terminal_button01.ogg' = 1,
+		'sound/machines/terminal/terminal_button02.ogg' = 1,
+		'sound/machines/terminal/terminal_button03.ogg' = 1,
+		'sound/machines/terminal/terminal_button04.ogg' = 1,
+		'sound/machines/terminal/terminal_button05.ogg' = 1,
+		'sound/machines/terminal/terminal_button06.ogg' = 1,
+		'sound/machines/terminal/terminal_button07.ogg' = 1,
+		'sound/machines/terminal/terminal_button08.ogg' = 1,
 	)
 	mid_length = 0.3 SECONDS
 

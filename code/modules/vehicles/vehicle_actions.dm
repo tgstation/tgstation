@@ -444,7 +444,7 @@
 	name = "Buzz."
 	desc = "Negative!"
 	button_icon_state = "vim_buzz"
-	sound_path = 'sound/machines/buzz-sigh.ogg'
+	sound_path = 'sound/machines/buzz/buzz-sigh.ogg'
 	sound_message = "buzzes."
 
 /datum/action/vehicle/sealed/noise/buzz/Trigger(trigger_flags)

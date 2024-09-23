@@ -7,7 +7,7 @@
 	stoplag(2.5 SECONDS)
 	play_cinematic_sound(sound('sound/effects/magic/enter_blood.ogg'))
 	stoplag(2.8 SECONDS)
-	play_cinematic_sound(sound('sound/machines/terminal_off.ogg'))
+	play_cinematic_sound(sound('sound/machines/terminal/terminal_off.ogg'))
 	stoplag(2 SECONDS)
 	flick("station_corrupted", screen)
 	play_cinematic_sound(sound('sound/effects/ghost.ogg'))

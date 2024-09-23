@@ -48,7 +48,7 @@
 	if(!our_vault)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
-		playsound(src, 'sound/machines/terminal_success.ogg', 50)
+		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50)
 		return TRUE
 	return FALSE
 
@@ -77,7 +77,7 @@
 /obj/item/dna_probe/proc/scan_dna(atom/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 	if(!our_vault)
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 50)
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		balloon_alert(user, "need database!")
 		return
 	if(istype(target, /obj/machinery/hydroponics))

@@ -85,7 +85,7 @@
 	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
 	user.visible_message(span_suicide("[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!"))
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
-	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
+	playsound(user,'sound/machines/airlock/airlockopen.ogg', 75, TRUE)
 	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
 	for(var/obj/item/user_item in user)
 		if(user_item != src)
@@ -167,7 +167,7 @@
 		new /obj/effect/temp_visual/hierophant/telegraph(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
 		playsound(destination,'sound/effects/magic/wand_teleport.ogg', 200, TRUE)
-		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
+		playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 0.3 SECONDS, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)

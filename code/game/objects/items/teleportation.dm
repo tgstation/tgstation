@@ -365,7 +365,7 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
 			balloon_alert(holder, "teleporter beeps")
-		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/beep/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
 	. = ..()

@@ -503,7 +503,7 @@
 		return
 	if(new_mode != SHOOTING_ASSISTANT_OFF && !mod.get_charge())
 		balloon_alert(mod.wearer, "no charge!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 
 	//Remove the effects of the previously selected mode

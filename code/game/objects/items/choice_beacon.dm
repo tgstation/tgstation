@@ -30,7 +30,7 @@
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 /// Opens a menu and allows the mob to pick an option from the list
@@ -176,7 +176,7 @@
 	if(user.mind?.holy_role)
 		return ..()
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 // Overrides generate options so that we can show a neat radial instead

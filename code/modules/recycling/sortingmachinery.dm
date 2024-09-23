@@ -111,7 +111,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[dest_tagger.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = dest_tagger.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
 	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
@@ -280,7 +280,7 @@
 		to_chat(user, span_notice("*HELL*"))//lizard nerf
 	else
 		to_chat(user, span_notice("*HEAVEN*"))
-	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
 /** Standard TGUI actions */

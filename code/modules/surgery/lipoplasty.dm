@@ -55,7 +55,7 @@
 		/obj/item/shard = 35,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	success_sound = 'sound/machines/doorclick.ogg'
+	success_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to cut away [target]'s excess fat."), span_notice("You begin to cut away [target]'s excess fat..."))

@@ -49,7 +49,7 @@
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()

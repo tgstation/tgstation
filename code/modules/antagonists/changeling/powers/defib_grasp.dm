@@ -42,8 +42,8 @@
 
 	// Mimics some real defib stuff (wish this was more generalized)
 	playsound(defib, SFX_BODYFALL, 50, TRUE)
-	playsound(defib, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
-	playsound(defib, 'sound/machines/defib_success.ogg', 50, FALSE) // I guess
+	playsound(defib, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
+	playsound(defib, 'sound/machines/defib/defib_success.ogg', 50, FALSE) // I guess
 	defib.shock_pulling(30, changeling)
 
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.

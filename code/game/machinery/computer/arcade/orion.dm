@@ -535,7 +535,7 @@
 			time_for_next_level = 3 SECONDS
 		if(2)
 			say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+			playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 			time_for_next_level = 0.36 SECONDS
 		if(3 to INFINITY)
 			visible_message(span_userdanger("[src] explodes!"))

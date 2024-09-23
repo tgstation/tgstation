@@ -217,7 +217,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				return
 			if(!reply_message)
 				has_mail_send_error = TRUE
-				playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 
 			send_message(recipient, reply_message, REQ_NORMAL_MESSAGE_PRIORITY, REPLY_REQUEST)
@@ -273,9 +273,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	if(!silent)
 		if(has_mail_send_error)
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		else
-			playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 50, TRUE)
 
 	message_stamped_by = ""
 	message_verified_by = ""
@@ -350,7 +350,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/alert = new_message.get_alert()
 
 	if(!silent)
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		say(alert)
 
 	if(new_message.radio_freq)

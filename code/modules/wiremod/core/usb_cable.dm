@@ -53,7 +53,7 @@
 			CRASH("Producers of COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT must set attached_circuit")
 		balloon_alert(user, "connected to circuit\nconnect to a port")
 
-		playsound(src, 'sound/machines/pda_button1.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 20, TRUE)
 
 		if (last_attached_circuit != attached_circuit)
 			if (!isnull(last_attached_circuit))

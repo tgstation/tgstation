@@ -230,7 +230,7 @@
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
-		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
 		fan_overclocked = FALSE
 
 	if(fan_overclocked)

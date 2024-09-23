@@ -134,7 +134,7 @@
 	accept_hand = TRUE
 	time = 10
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	preop_sound = 'sound/machines/doorclick.ogg'
+	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

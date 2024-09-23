@@ -303,11 +303,11 @@
 		if(HYPERTORUS_MELTING)
 			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(HYPERTORUS_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_WARNING)
-			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
+			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 /**
  * Getter for the machine integrity

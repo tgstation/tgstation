@@ -443,7 +443,7 @@
 
 /obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
-	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
 
 /// Attaches an assembly holder to the tank to create a bomb.
