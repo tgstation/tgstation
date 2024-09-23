@@ -83,7 +83,7 @@
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 30
+	damage = 25
 	stamina = 20
 	weak_against_armour = FALSE
 
