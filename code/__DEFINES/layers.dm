@@ -13,30 +13,30 @@
 #define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -19
+#define GRAVITY_PULSE_PLANE -12
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
-#define TRANSPARENT_FLOOR_PLANE -13
+#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
-#define FLOOR_PLANE -12
-#define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
-#define WALL_PLANE -11
-#define GAME_PLANE -10
-#define ABOVE_GAME_PLANE -9
+#define TRANSPARENT_FLOOR_PLANE -10
 
+#define FLOOR_PLANE -6
+
+#define WALL_PLANE -5
+#define GAME_PLANE -4
+#define ABOVE_GAME_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
+
 #define WEATHER_PLANE 1
 #define AREA_PLANE 2
-
-#define MASSIVE_OBJ_PLANE 6
-#define GHOST_PLANE 7
-#define POINT_PLANE 8
+#define MASSIVE_OBJ_PLANE 3
+#define GHOST_PLANE 4
+#define POINT_PLANE 5
 
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
