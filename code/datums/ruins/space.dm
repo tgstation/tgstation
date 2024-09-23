@@ -513,3 +513,18 @@
 	suffix = "hauntedtradingpost.dmm"
 	name = "Space-Ruin Donk Co. Interstellar Trading Post 6016"
 	description = "A small station for trading ships to dock at. It's been abandoned for some time, but its security systems have kept looters away. Rumored to be haunted."
+
+/datum/map_template/ruin/space/commsbuoy
+	id = "commsbuoy"
+	suffix = "commsbuoy_lowtech.dmm"
+	name = "Kosmokomm Communications Buoy"
+	description = "One of the SSC's many Comms Buoys, acting as a broadcaster, receiver and relay for interstellar communications. Due to the \
+	shoddy tech available, it does not enable local communications."
+
+/datum/map_template/ruin/space/commsbuoy_pirate
+	id = "commsbuoy_pirate"
+	suffix = "commsbuoy_pirate.dmm"
+	name = "Pirated Communications Buoy"
+	description = "A Comms Buoy satellite, acting as a broadcaster, receiver and relay for interstellar communications. Due to the shoddy tech \
+	available, it does not enable local communications. This one has been hijacked by local criminal elements."
+
