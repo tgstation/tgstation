@@ -77,6 +77,7 @@
 // Item for deploying wind turbines
 /obj/item/flatpacked_machine/wind_turbine
 	name = "flat-packed miniature wind turbine"
+	desc = /obj/machinery/power/colony_wind_turbine::desc
 	icon = 'modular_doppler/colony_fabricator/icons/wind_turbine.dmi'
 	icon_state = "turbine_packed"
 	type_to_deploy = /obj/machinery/power/colony_wind_turbine

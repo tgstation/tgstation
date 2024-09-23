@@ -18,6 +18,7 @@
 
 /obj/item/flatpacked_machine/shutter_kit
 	name = "prefab shutters parts kit"
+	desc = /obj/machinery/door/poddoor/shutters/colony_fabricator/preopen::desc
 	icon = 'modular_doppler/colony_fabricator/icons/doors/packed.dmi'
 	icon_state = "shutters_parts"
 	type_to_deploy = /obj/machinery/door/poddoor/shutters/colony_fabricator/preopen
@@ -44,6 +45,7 @@
 
 /obj/item/flatpacked_machine/airlock_kit
 	name = "prefab airlock parts kit"
+	desc = /obj/machinery/door/airlock/colony_prefab::desc
 	icon = 'modular_doppler/colony_fabricator/icons/doors/packed.dmi'
 	icon_state = "airlock_parts"
 	type_to_deploy = /obj/machinery/door/airlock/colony_prefab

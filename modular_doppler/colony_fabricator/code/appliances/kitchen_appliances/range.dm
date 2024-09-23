@@ -26,6 +26,7 @@
 
 /obj/item/flatpacked_machine/frontier_range
 	name = "frontier range parts kit"
+	desc = /obj/machinery/oven/range_frontier::desc
 	icon = 'modular_doppler/colony_fabricator/icons/kitchen_stuff/range.dmi'
 	icon_state = "range_packed"
 	w_class = WEIGHT_CLASS_NORMAL
