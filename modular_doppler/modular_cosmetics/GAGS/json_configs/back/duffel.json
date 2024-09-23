@@ -1,0 +1,40 @@
+{
+	"duffel": [
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_clasps",
+			"blend_mode": "overlay"
+		}
+	],
+	"duffel_industrial": [
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_industrial_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_industrial_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "duffel_industrial_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}
