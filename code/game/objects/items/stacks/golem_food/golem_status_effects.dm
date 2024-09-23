@@ -235,14 +235,14 @@
 	owner.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance += 20 // Doppler Edit - Gives them 20 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
+	golem_owner.physiology.damage_resistance += 15 // Doppler Edit - Gives them 15 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
 	return TRUE
 
 /datum/status_effect/golem/plasteel/on_remove()
 	owner.remove_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD), TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE) //Doppler Edit Addition
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance -= 20 // Doppler Edit - And God taketh away.
+	golem_owner.physiology.damage_resistance -= 15 // Doppler Edit - And God taketh away.
 	return ..()
 
 /// Makes you reflect energy projectiles
