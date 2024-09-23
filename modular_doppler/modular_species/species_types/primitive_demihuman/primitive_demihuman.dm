@@ -4,11 +4,11 @@
 /datum/language_holder/primitive_felinid
 	understood_languages = list(
 		/datum/language/primitive_catgirl = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM)
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
 		/datum/language/primitive_catgirl = list(LANGUAGE_ATOM),
-		/datum/language/uncommon = list(LANGUAGE_ATOM)
+		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/primitive_catgirl
 
