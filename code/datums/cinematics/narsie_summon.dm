@@ -20,7 +20,7 @@
 /datum/cinematic/cult_fail/play_cinematic()
 	screen.icon_state = "station_intact"
 	stoplag(2 SECONDS)
-	play_cinematic_sound(sound('sound/instrumental/antag/bloodcult/narsie_rises.ogg'))
+	play_cinematic_sound(sound('sound/music/antag/bloodcult/narsie_rises.ogg'))
 	stoplag(6 SECONDS)
 	play_cinematic_sound(sound('sound/effects/explosion/explosion_distant.ogg'))
 	stoplag(1 SECONDS)

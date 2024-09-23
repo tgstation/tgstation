@@ -7,7 +7,7 @@
 	preview_outfit = /datum/outfit/cultist
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
-	stinger_sound = 'sound/instrumental/antag/bloodcult/bloodcult_gain.ogg'
+	stinger_sound = 'sound/music/antag/bloodcult/bloodcult_gain.ogg'
 
 	///The vote ability Cultists have to elect someone to be the leader.
 	var/datum/action/innate/cult/mastervote/vote_ability

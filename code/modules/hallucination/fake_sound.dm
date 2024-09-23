@@ -167,21 +167,21 @@
 	sound_vary = FALSE
 	no_source = TRUE
 	sound_type = list(
-		'sound/instrumental/antag/bloodcult/bloodcult_gain.ogg',
-		'sound/instrumental/antag/clockcultalr.ogg',
-		'sound/instrumental/antag/heretic/heretic_gain.ogg',
-		'sound/instrumental/antag/ling_alert.ogg',
-		'sound/instrumental/antag/malf.ogg',
-		'sound/instrumental/antag/ops.ogg',
-		'sound/instrumental/antag/spy.ogg',
-		'sound/instrumental/antag/traitor/tatoralert.ogg',
+		'sound/music/antag/bloodcult/bloodcult_gain.ogg',
+		'sound/music/antag/clockcultalr.ogg',
+		'sound/music/antag/heretic/heretic_gain.ogg',
+		'sound/music/antag/ling_alert.ogg',
+		'sound/music/antag/malf.ogg',
+		'sound/music/antag/ops.ogg',
+		'sound/music/antag/spy.ogg',
+		'sound/music/antag/traitor/tatoralert.ogg',
 	)
 
 /datum/hallucination/fake_sound/weird/chimp_event
 	volume = 90
 	sound_vary = FALSE
 	no_source = TRUE
-	sound_type = 'sound/instrumental/antag/monkey.ogg'
+	sound_type = 'sound/music/antag/monkey.ogg'
 
 /datum/hallucination/fake_sound/weird/colossus
 	sound_type = 'sound/effects/magic/clockwork/invoke_general.ogg'
@@ -201,7 +201,7 @@
 
 /datum/hallucination/fake_sound/weird/game_over
 	sound_vary = FALSE
-	sound_type = 'sound/misc/compiler-failure.ogg'
+	sound_type = 'sound/machines/compiler/compiler-failure.ogg'
 
 /datum/hallucination/fake_sound/weird/hallelujah
 	sound_vary = FALSE

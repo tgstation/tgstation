@@ -246,7 +246,7 @@
 				'sound/machines/terminal/terminal_button08.ogg',
 			))
 		if(SFX_DESECRATION)
-			soundin = pick('sound/misc/desecration-01.ogg', 'sound/misc/desecration-02.ogg', 'sound/misc/desecration-03.ogg')
+			soundin = pick('sound/effects/desecration/desecration-01.ogg', 'sound/effects/desecration/desecration-02.ogg', 'sound/effects/desecration/desecration-03.ogg')
 		if(SFX_IM_HERE)
 			soundin = pick('sound/effects/hallucinations/im_here1.ogg', 'sound/effects/hallucinations/im_here2.ogg')
 		if(SFX_CAN_OPEN)

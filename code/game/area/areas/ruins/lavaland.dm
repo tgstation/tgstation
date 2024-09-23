@@ -8,7 +8,7 @@
 
 /area/ruin/powered/clownplanet
 	name = "\improper Clown Biodome"
-	ambientsounds = list('sound/instrumental/music/lobby_music/clown.ogg')
+	ambientsounds = list('sound/music/lobby_music/clown.ogg')
 
 /area/ruin/unpowered/gaia
 	name = "\improper Patch of Eden"

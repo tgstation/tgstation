@@ -151,7 +151,7 @@
 	falloff_exponent = 5
 
 /datum/looping_sound/boiling
-	mid_sounds = list('sound/effects/bubbles2.ogg' = 1)
+	mid_sounds = list('sound/effects/bubbles/bubbles2.ogg' = 1)
 	mid_length = 7 SECONDS
 	volume = 25
 

@@ -70,7 +70,7 @@
 		target.animal_dna += stored_dna_animal
 		stored_dna_animal.Cut()
 	target.check_goal()
-	playsound(target, 'sound/misc/compiler-stage1.ogg', 50)
+	playsound(target, 'sound/machines/compiler/compiler-stage1.ogg', 50)
 	to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
 	return uploaded
 
@@ -94,7 +94,7 @@
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
-		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 		return TRUE
 	else if(ishuman(target))
@@ -109,7 +109,7 @@
 			to_chat(user, span_alert("No compatible DNA detected."))
 			return .
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
-		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 		balloon_alert(user, "data added")
 		return TRUE
 
@@ -131,7 +131,7 @@
 		to_chat(user, span_alert("No compatible DNA detected."))
 		return .
 	stored_dna_animal[living_target.type] = TRUE
-	playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+	playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 	balloon_alert(user, "data added")
 	return TRUE
 
@@ -162,7 +162,7 @@
 /obj/item/dna_probe/carp_scanner/scan_dna(atom/target, mob/user)
 	if(istype(target, /mob/living/basic/carp))
 		carp_dna_loaded = TRUE
-		playsound(src, 'sound/misc/compiler-stage2.ogg', 50)
+		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50)
 		balloon_alert(user, "dna scanned")
 	else
 		return ..()

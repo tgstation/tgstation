@@ -1005,7 +1005,7 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
 			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
-		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 
 /**
  * Cartons

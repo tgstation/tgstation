@@ -117,7 +117,7 @@
 				to_chat(owner, span_danger("Something flexes under your skin."))
 			if(SPT_PROB(2, seconds_per_tick))
 				if (prob(40))
-					SEND_SOUND(owner, sound('sound/misc/ghost_whisper.ogg'))
+					SEND_SOUND(owner, sound('sound/music/antag/bloodcult/ghost_whisper.ogg'))
 				else
 					SEND_SOUND(owner, sound(pick(spooky_sounds)))
 			if(SPT_PROB(3, seconds_per_tick))

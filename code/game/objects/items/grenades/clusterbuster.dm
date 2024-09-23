@@ -207,7 +207,7 @@
 	icon_state = "slimebang"
 	base_state = "slimebang"
 	payload_spawner = /obj/effect/payload_spawner/random_slime
-	prime_sound = 'sound/effects/bubbles.ogg'
+	prime_sound = 'sound/effects/bubbles/bubbles.ogg'
 
 /obj/item/grenade/clusterbuster/slime/volatile
 	payload_spawner = /obj/effect/payload_spawner/random_slime/volatile

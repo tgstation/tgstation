@@ -134,7 +134,7 @@
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/items/weapons/smash.ogg', 50, TRUE)
-			playsound(L, 'sound/misc/desecration-01.ogg', 50, TRUE)
+			playsound(L, 'sound/effects/desecration/desecration-01.ogg', 50, TRUE)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -189,7 +189,7 @@
 	var/victims = 0
 	meal.visible_message(span_warning("[src] swings open and devours [meal]!"), "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/misc/desecration-02.ogg', 75, TRUE)
+	playsound(meal, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS

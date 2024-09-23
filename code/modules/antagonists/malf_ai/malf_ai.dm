@@ -21,7 +21,7 @@
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
 	///malf on_gain sound effect. Set here so Infected AI can override
-	var/malf_sound = 'sound/instrumental/antag/malf.ogg'
+	var/malf_sound = 'sound/music/antag/malf.ogg'
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)
 	. = ..()

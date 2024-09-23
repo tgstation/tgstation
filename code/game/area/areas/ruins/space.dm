@@ -592,7 +592,7 @@
 // The planet of the clowns
 /area/ruin/space/has_grav/powered/clownplanet
 	name = "\improper Clown Planet"
-	ambientsounds = list('sound/instrumental/music/lobby_music/clown.ogg')
+	ambientsounds = list('sound/music/lobby_music/clown.ogg')
 
 //DERELICT SULACO
 /area/ruin/space/has_grav/derelictsulaco

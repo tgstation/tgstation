@@ -224,7 +224,7 @@
 /datum/chemical_reaction/drink/moscow_mule
 	results = list(/datum/reagent/consumable/ethanol/moscow_mule = 10)
 	required_reagents = list(/datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ice = 1)
-	mix_sound = 'sound/effects/bubbles2.ogg'
+	mix_sound = 'sound/effects/bubbles/bubbles2.ogg'
 
 /datum/chemical_reaction/drink/painkiller
 	results = list(/datum/reagent/consumable/ethanol/painkiller = 10)
@@ -481,7 +481,7 @@
 	results = list(/datum/reagent/consumable/ethanol/wizz_fizz = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 1, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/ethanol/champagne = 1)
 	mix_message = "The beverage starts to froth with an almost mystical zeal!"
-	mix_sound = 'sound/effects/bubbles2.ogg'
+	mix_sound = 'sound/effects/bubbles/bubbles2.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/bug_spray

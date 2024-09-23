@@ -42,23 +42,23 @@
 	var/static/list/ascension_bodies = list(
 		list(
 			"text" = "Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!",
-			"sound" = 'sound/instrumental/antag/heretic/ascend_blade.ogg',
+			"sound" = 'sound/music/antag/heretic/ascend_blade.ogg',
 		),
 		list(
 			"text" = "Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!",
-			"sound" = 'sound/instrumental/antag/heretic/ascend_blade.ogg',
+			"sound" = 'sound/music/antag/heretic/ascend_blade.ogg',
 		),
 		list(
 			"text" = "Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!",
-			"sound" = 'sound/instrumental/antag/heretic/ascend_flesh.ogg',
+			"sound" = 'sound/music/antag/heretic/ascend_flesh.ogg',
 		),
 		list(
 			"text" = "Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!",
-			"sound" = 'sound/instrumental/antag/heretic/ascend_rust.ogg',
+			"sound" = 'sound/music/antag/heretic/ascend_rust.ogg',
 		),
 		list(
 			"text" = "The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!",
-			"sound" = 'sound/instrumental/antag/heretic/ascend_void.ogg',
+			"sound" = 'sound/music/antag/heretic/ascend_void.ogg',
 		)
 	)
 
@@ -95,7 +95,7 @@
 	priority_announce(
 		text = "Figments from an eldritch god are being summoned by [totally_real_cult_leader.real_name] into [fake_summon_area] from an unknown dimension. Disrupt the ritual at all costs!",
 		title = "[command_name()] Higher Dimensional Affairs",
-		sound = 'sound/instrumental/antag/bloodcult/bloodcult_scribe.ogg',
+		sound = 'sound/music/antag/bloodcult/bloodcult_scribe.ogg',
 		has_important_message = TRUE,
 		players = list(hallucinator),
 	)

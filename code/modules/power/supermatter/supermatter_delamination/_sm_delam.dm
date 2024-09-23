@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			playsound(sm, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(SUPERMATTER_EMERGENCY)
 			playsound(sm, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_DANGER)

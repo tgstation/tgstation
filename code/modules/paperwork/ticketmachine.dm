@@ -87,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	if(LAZYLEN(tickets))
 		current_ticket = tickets[1]
 		current_number++ //Increment the one we're serving.
-		playsound(src, 'sound/misc/announce_dig.ogg', 50, FALSE)
+		playsound(src, 'sound/announcer/announcement/announce_dig.ogg', 50, FALSE)
 		say("Now serving [current_ticket]!")
 		if(!(obj_flags & EMAGGED))
 			current_ticket.audible_message(span_notice("\the [current_ticket] vibrates!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
