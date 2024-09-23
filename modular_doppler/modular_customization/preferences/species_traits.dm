@@ -40,7 +40,7 @@
 /datum/preference/choiced/animalistic_trait/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == NO_VARIATION)
 		return
-	ADD_TRAIT(target, value, TRAIT_ANIMALISTIC)
+	ADD_TRAIT(target, value, SPECIES_TRAIT)
 
 /datum/preference/choiced/animalistic_trait/create_default_value()
 	return NO_VARIATION

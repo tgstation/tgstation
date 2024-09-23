@@ -33,10 +33,6 @@
 	apply_animal_trait(target, find_animal_trait(target))
 	return ..()
 
-/datum/species/anthromorph/on_species_loss(mob/living/carbon/human/target, datum/species/new_species, pref_load)
-	. = ..()
-	REMOVE_TRAITS_IN(target, TRAIT_ANIMALISTIC)
-
 /datum/outfit/anthro_preview
 	name = "Anthromorph (Species Preview)"
 	uniform = /obj/item/clothing/under/rank/security/officer/skirt

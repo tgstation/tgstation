@@ -107,7 +107,14 @@
 	join_and_leave_log_cache = null
 
 
-// This stuff is put on equip because it turns out /special sometimes just don't get called because Nova
+//	Add the animalistic trait if they have it selected
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/special(mob/living/spawned_mob, mob/mob_possessor)
+	var/animalistic_trait = mob_possessor.client?.prefs.read_preference(/datum/preference/choiced/animalistic_trait)
+	if(animalistic_trait && animalistic_trait != NO_VARIATION)
+		ADD_TRAIT(spawned_mob, animalistic_trait, SPECIES_TRAIT)
+	..()
+
+
 /obj/effect/mob_spawn/ghost_role/human/primitive_genemod/equip(mob/living/carbon/human/spawned_human)
 	. = ..()
 

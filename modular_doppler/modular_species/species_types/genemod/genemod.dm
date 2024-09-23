@@ -26,10 +26,6 @@
 	apply_animal_trait(target, find_animal_trait(target))
 	return ..()
 
-/datum/species/human/genemod/on_species_loss(mob/living/carbon/human/target, datum/species/new_species, pref_load)
-	. = ..()
-	REMOVE_TRAITS_IN(target, TRAIT_ANIMALISTIC)
-
 /datum/species/human/genemod/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	// remember to make a puppygirl
 	human_for_preview.set_haircolor("#3a2d22", update = FALSE)

@@ -7,7 +7,7 @@
 	var/animal_trait = NO_VARIATION
 	// Lets find the chosen trait, exciting!
 	for(var/trait as anything in GLOB.genemod_variations)
-		if(HAS_TRAIT_FROM(target, trait, TRAIT_ANIMALISTIC))
+		if(HAS_TRAIT(target, trait))
 			animal_trait = trait
 			break
 	return animal_trait
@@ -17,7 +17,14 @@
 /datum/species/proc/apply_animal_trait(mob/living/carbon/human/target, animal_trait)
 	if(!ishuman(target) || animal_trait == NO_VARIATION || !animal_trait)
 		return
+	// Organs (or just tongues)
 	/// Find and set our new informed tongue!
 	var/obj/item/organ/tongue = text2path("/obj/item/organ/internal/tongue/[animal_trait]")
 	if(tongue) // text2path nulls if it can't find a matching subtype, so don't worry adding an organ for every single trait value
 		mutanttongue = tongue.type
+	//	Adding traits from here on
+	switch(animal_trait)
+		if(CAT)
+			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
+			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
+
