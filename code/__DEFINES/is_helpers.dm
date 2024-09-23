@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
-#define islizard(A) (is_species(A, /datum/species/lizard))
+#define islizard(A) (is_species(A, /datum/species/lizard) || HAS_TRAIT(A, LIZARD))	// DOPPLER EDIT, old code:	#define islizard(A) (is_species(A, /datum/species/lizard))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
-#define ismonkey(A) (is_species(A, /datum/species/monkey))
+#define ismonkey(A) (is_species(A, /datum/species/monkey) || HAS_TRAIT(A, MONKEY))	// DOPPLER EDIT, old code:	#define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
 

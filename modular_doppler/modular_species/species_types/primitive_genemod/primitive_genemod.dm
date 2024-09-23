@@ -69,6 +69,8 @@
 	human_for_preview.set_haircolor("#E9EFF5", update = FALSE)
 	human_for_preview.set_hairstyle("Fluffy long", update = TRUE)
 	human_for_preview.skin_tone = "albino"
+	human_for_preview.eye_color_left = "#96dbe7"
+	human_for_preview.eye_color_right = "#96dbe7"
 	regenerate_organs(human_for_preview)
 	human_for_preview.update_body(is_creating = TRUE)
 
