@@ -61,3 +61,11 @@
 /datum/loadout_item/head/colonial_cap
 	name = "Colonial Cap"
 	item_path = /obj/item/clothing/head/hats/colonial
+
+/datum/loadout_item/head/wrussian
+	name = "Black Papakha"
+	item_path = /obj/item/clothing/head/costume/papakha
+
+/datum/loadout_item/head/wrussianw
+	name = "White Papakha"
+	item_path = /obj/item/clothing/head/costume/papakha/white
