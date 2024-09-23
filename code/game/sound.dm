@@ -518,9 +518,9 @@
 			)
 		if(SFX_CAT_MEOW)
 			soundin = pick_weight(list(
-				'sound/creatures/cat/cat_meow1.ogg' = 25,
-				'sound/creatures/cat/cat_meow2.ogg' = 25,
-				'sound/creatures/cat/cat_meow3.ogg' = 25,
+				'sound/creatures/cat/cat_meow1.ogg' = 33,
+				'sound/creatures/cat/cat_meow2.ogg' = 33,
+				'sound/creatures/cat/cat_meow3.ogg' = 33,
 				'sound/creatures/cat/oranges_meow1.ogg' = 1,
 			))
 		if(SFX_CAT_PURR)
