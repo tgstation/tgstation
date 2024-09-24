@@ -211,19 +211,15 @@ There are several things that need to be remembered:
 
 		gloves_overlay.pixel_y += feature_y_offset
 
-		if(!has_left_hand(check_disabled = FALSE))
+		// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
+		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+		// (unless admins mess with this then its their fault)
+		if(num_hands < default_num_hands)
+			var/left_hand_missing = !has_left_hand(check_disabled = FALSE)
 			var/atom/movable/alpha_filter_target = new(null)
 			alpha_filter_target.icon = 'icons/effects/effects.dmi'
-			alpha_filter_target.icon_state = "missingl"
-			alpha_filter_target.render_target = "*MissGloveL[REF(src)]"
-			gloves_overlay.add_overlay(alpha_filter_target)
-			qdel(alpha_filter_target)
-			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
-		else if(!has_right_hand(check_disabled = FALSE))
-			var/atom/movable/alpha_filter_target = new(null)
-			alpha_filter_target.icon = 'icons/effects/effects.dmi'
-			alpha_filter_target.icon_state = "missingr"
-			alpha_filter_target.render_target = "*MissGloveR[REF(src)]"
+			alpha_filter_target.icon_state = "missing[left_hand_missing ? "l" : "r"]"
+			alpha_filter_target.render_target = "*MissGlove[left_hand_missing ? "L" : "R"][REF(src)]"
 			gloves_overlay.add_overlay(alpha_filter_target)
 			qdel(alpha_filter_target)
 			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
