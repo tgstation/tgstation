@@ -27,7 +27,7 @@
 	)
 
 	///Multiplier for the speed we give them. Positive numbers make it move slower, negative numbers make it move faster.
-	var/snail_speed_mod = 6
+	var/snail_speed_mod = 0.5 // Doppler Edit Change - Now they actually get a speedup, roughly equivalent to human crawl speed.
 
 /datum/species/snail/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = COLOR_BEIGE
