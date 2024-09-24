@@ -728,3 +728,14 @@
   - sound: pruned higher frequencies from the resonant shriek ability sound, making
       it lighter on the ears
   - sound: lavaland magma ambience has been changed
+2024-09-24:
+  Absolucy:
+  - bugfix: Fixed the Living Heart ritual deleting your old heart when replacing it
+      instead of having it dramatically burst out of your chest like it should.
+  - qol: The Living Heart ritual will now work if you don't have one at all for some
+      reason, in the same way that'd you use an organic heart in the ritual to replace
+      a cybernetic heart.
+  - qol: The Living Heart ritual, when putting a new heart into your chest, will now
+      heal the heart enough to be just under the "severe damage" threshold, if needed.
+  theselfish:
+  - bugfix: The Beer Sixpack no longer magically turns into bottles.
