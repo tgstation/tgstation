@@ -47,7 +47,7 @@
 	. = ..()
 	active = !active
 	if(active)
-		on_activating(user)
+		on_activating()
 	else
 		on_deactivating()
 
@@ -74,7 +74,7 @@
 		on_deactivating()
 
 /// When activating the camera
-/obj/item/broadcast_camera/proc/on_activating(mob/user)
+/obj/item/broadcast_camera/proc/on_activating()
 	if(!iscarbon(loc))
 		return
 	active = TRUE
@@ -92,7 +92,7 @@
 	// INTERNAL RADIO
 	internal_radio = new(src)
 	/// Sets the state of the microphone
-	set_microphone_state(user)
+	set_microphone_state()
 
 	set_light_on(TRUE)
 	playsound(source = src, soundin = 'sound/machines/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
@@ -122,11 +122,11 @@
 
 	///If the radio exists as an object, set its state accordingly
 	if(active)
-		set_microphone_state(user)
+		set_microphone_state()
 
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/broadcast_camera/proc/set_microphone_state(mob/user)
+/obj/item/broadcast_camera/proc/set_microphone_state()
 	if(!active_microphone)
 		internal_radio.set_broadcasting(FALSE)
 	else
