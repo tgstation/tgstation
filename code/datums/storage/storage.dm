@@ -1047,17 +1047,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= real_location.contents
-	if (isnull(storage_interfaces[to_hide]))
-		var/observer_string = ""
-		if (LAZYLEN(to_hide.observers))
-			observer_string = "while they had [length(to_hide.observers)] observers "
-			var/viewing_us = 0
-			for (var/mob/potential_bad_evil_guy in to_hide.observers)
-				if (potential_bad_evil_guy in is_using)
-					viewing_us += 1
-			if (viewing_us)
-				observer_string += "[viewing_us] of whom had this storage open "
-		WARNING("[parent] had a null storage interface for [to_hide] ([isobserver(to_hide) ? "observer" : "player"]) during closing [observer_string]- this is a TM issue, yell at smartkar")
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 
@@ -1090,17 +1079,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	for (var/mob/ui_user as anything in storage_interfaces)
 		if (isnull(storage_interfaces[ui_user]))
-			var/observer_string = ""
-			if (LAZYLEN(ui_user.observers))
-				observer_string = "while they had [length(ui_user.observers)] observers "
-				var/viewing_us = 0
-				for (var/mob/potential_bad_evil_guy in ui_user.observers)
-					if (potential_bad_evil_guy in is_using)
-						viewing_us += 1
-				if (viewing_us)
-					observer_string += "[viewing_us] of whom had this storage open "
-			WARNING("[parent] had a null storage interface for [ui_user] ([isobserver(ui_user) ? "observer" : "player"]) during orient_storage [observer_string]- this is a TM issue, yell at smartkar")
-			storage_interfaces -= ui_user
 			continue
 		storage_interfaces[ui_user].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
 
