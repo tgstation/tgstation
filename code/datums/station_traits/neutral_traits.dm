@@ -550,7 +550,7 @@
 	name = "Bring Your Pet To Work Day"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = FALSE
-	weight = 100
+	weight = 2
 	sign_up_button = TRUE
 
 /datum/station_trait/pet_day/New()
