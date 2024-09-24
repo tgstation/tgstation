@@ -18,6 +18,12 @@
 	merge_type = /obj/item/stack/wrapping_paper
 	singular_name = "wrapping paper"
 
+/obj/item/stack/wrapping_paper/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
+	if (istype(interacting_with, /mob/living))
+		balloon_alert(user, "[user] baps [interacting_with] on the head with the wrapping paper roll")
+		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		return ..()
+
 /obj/item/stack/wrapping_paper/Initialize(mapload)
 	. = ..()
 	if(!greyscale_colors)
@@ -155,7 +161,6 @@
 		else
 			balloon_alert(user, "not enough paper!")
 			return ITEM_INTERACT_BLOCKING
-
 	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
@@ -203,3 +208,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+
+/obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	if (istype(target_mob, /mob/living))
+		balloon_alert(user, "[user] baps [target_mob] on the head with the cardboard roll")
+
