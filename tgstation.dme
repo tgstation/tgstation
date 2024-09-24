@@ -6803,6 +6803,7 @@
 #include "modular_doppler\modular_species\species_types\hemophage\corrupted_stomach.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\corrupted_tongue.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\hemophage_actions.dm"
+#include "modular_doppler\modular_species\species_types\hemophage\hemophage_hud.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\hemophage_moods.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\hemophage_organs.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\hemophage_species.dm"

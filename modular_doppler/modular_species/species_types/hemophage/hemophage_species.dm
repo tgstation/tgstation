@@ -34,10 +34,21 @@
 	return ..()
 
 /datum/species/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load)
-	. = ..()
-	to_chat(new_hemophage, HEMOPHAGE_SPAWN_TEXT)
-	new_hemophage.update_body()
+    . = ..()
+    to_chat(new_hemophage, HEMOPHAGE_SPAWN_TEXT)
+    new_hemophage.update_body()
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+		hemophageblooddisplay = new /atom/movable/screen/hemophage/blood(null, hud_used)
+		hud_used.infodisplay += hemophageblooddisplay
 
+/datum/species/hemophage/on_species_loss(mob/living/carbon/human/old_hemophage, datum/species/new_species, pref_load)
+	. = ..()
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+		hemophageblooddisplay = new /atom/movable/screen/hemophage_blood(null, hud_used)
+		hud_used.infodisplay -= hemophageblooddisplay
+		QDEL_NULL(hemophageblooddisplay)
 
 /datum/species/hemophage/get_species_description()
 	return "Oftentimes feared or pushed out of society for the predatory nature of their condition, \
