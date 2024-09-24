@@ -89,6 +89,13 @@
 /obj/item/storage/medkit/advanced/empty
 	empty = TRUE
 
+/obj/item/storage/medkit/ancient
+	icon = 'modular_doppler/modular_items/icons/bettermed.dmi'
+	lefthand_file = 'modular_doppler/modular_items/icons/bettermed_lh.dmi'
+	righthand_file = 'modular_doppler/modular_items/icons/bettermed_rh.dmi'
+	icon_state = "medkit_old"
+	inhand_icon_state = "oldkit"
+
 /obj/item/storage/medkit/buffs
 	name = "support medkit"
 	desc = "An empty medkit for creative chemists to fill with concoctions."
