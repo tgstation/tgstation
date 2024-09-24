@@ -423,7 +423,6 @@
 #include "code\__DEFINES\~doppler_defines\preferences.dm"
 #include "code\__DEFINES\~doppler_defines\reagent_forging_tools.dm"
 #include "code\__DEFINES\~doppler_defines\reskin_defines.dm"
-#include "code\__DEFINES\~doppler_defines\role_preferences.dm"
 #include "code\__DEFINES\~doppler_defines\say.dm"
 #include "code\__DEFINES\~doppler_defines\signals.dm"
 #include "code\__DEFINES\~doppler_defines\sound.dm"
