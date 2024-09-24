@@ -142,6 +142,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
 ///Z level traits for Secret Away Missions
 #define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
+/// DOPPLER SHIFT ADDITION: ZTraits for custom mining levels
+#define ZTRAITS_CUSTOM_MINING list(ZTRAIT_LINKAGE = CROSSLINKED)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
