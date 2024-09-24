@@ -105,7 +105,11 @@
 
 	volume = 60
 	possible_transfer_amounts = list(5,10,15,20,30,60)
+	amount_per_transfer_from_this = 5
 	desc = "A beaker. It can hold up to 60 units."
+
+/obj/item/reagent_containers/cup/beaker/oldstation
+	amount_per_transfer_from_this = 5
 
 /obj/item/reagent_containers/cup/beaker/jar
 	fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
