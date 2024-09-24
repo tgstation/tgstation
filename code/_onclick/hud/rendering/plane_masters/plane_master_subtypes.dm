@@ -247,6 +247,7 @@
 	name = "Weather"
 	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
 	plane = WEATHER_PLANE
+	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
 	. = ..()
@@ -300,6 +301,7 @@
 	name = "Weather Glow"
 	documentation = "Holds the glowing parts of the main tiling 32x32 sprites of weather."
 	plane = WEATHER_GLOW_PLANE
+	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/weather_glow/set_home(datum/plane_master_group/home)
 	. = ..()

@@ -1,6 +1,9 @@
-/// Component that manages a list of plane masters that are dependent on weather
-/// Force hides/shows them depending on the weather activity of their z stack
-/// Applied to the plane master group that owns them
+/**
+ * Component that manages a list of plane masters that are dependent on weather
+ * Force hides/shows them depending on the weather activity of their z stack
+ * Transparency is achieved by manipulating the alpha of the planes that are visible
+ * Applied to the plane master group that owns them
+ */
 /datum/component/hide_weather_planes
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/datum/weather/active_weather = list()
@@ -45,8 +48,7 @@
 
 /datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/new_hud)
 	SIGNAL_HANDLER
-	if(new_hud)
-		attach_hud(new_hud)
+	attach_hud(new_hud)
 
 /datum/component/hide_weather_planes/proc/attach_hud(datum/hud/new_hud)
 	RegisterSignal(new_hud, COMSIG_HUD_Z_CHANGED, PROC_REF(z_changed))
@@ -58,27 +60,34 @@
 	SIGNAL_HANDLER
 	plane_masters -= source
 
+/**
+ * Unhides the relevant planes for the weather to be visible and manipulated.
+ * Also updates the alpha of the planes so enabled planes are either fully opaque or fully transparent
+ */
 /datum/component/hide_weather_planes/proc/display_planes()
 	var/datum/plane_master_group/home = parent
 	var/mob/our_lad = home.our_hud?.mymob
 	var/our_offset = GET_TURF_PLANE_OFFSET(our_lad)
 	for(var/atom/movable/screen/plane_master/weather_concious as anything in plane_masters)
-		//We need to make sure that planes above us are hidden, but below us are visible
-		if(!weather_concious.alpha_enabled && weather_concious.offset >= our_offset)
-			weather_concious.enable_alpha()
+		//If the plane is hidden, unhide it
+		if(weather_concious.force_hidden)
+			weather_concious.unhide_plane(our_lad)
 
+		//Now we update the alpha of the plane based on our offset. Weather above us (lower offset) are transparent, weather at or below us (higher offset) are opaque.
+		if(weather_concious.offset >= our_offset)
+			weather_concious.enable_alpha()
+		else
+			weather_concious.disable_alpha()
+
+///Hides the planes from the mob when no weather is occuring
 /datum/component/hide_weather_planes/proc/hide_planes()
+	var/datum/plane_master_group/home = parent
+	var/mob/our_lad = home.our_hud?.mymob
 	for(var/atom/movable/screen/plane_master/weather_concious as anything in plane_masters)
-		weather_concious.disable_alpha()
+		weather_concious.hide_plane(our_lad)
 
 /datum/component/hide_weather_planes/proc/z_changed(datum/source, new_z)
 	SIGNAL_HANDLER
-	/**
-	 * We hide all impacted planes on z change first because weather planes on lower offsets will show through the game world
-	 * so we can't count on them just not being visible like turfs above you. This is a result of attaching weather effects to areas,
-	 * which aren't beholden to z-levels and planes like atoms we're used to
-	 */
-	hide_planes()
 	active_weather = list()
 	if(!SSmapping.initialized)
 		return
@@ -90,6 +99,8 @@
 
 	if(length(active_weather))
 		display_planes()
+	else
+		hide_planes()
 
 /datum/component/hide_weather_planes/proc/weather_started(datum/source, datum/weather/starting)
 	SIGNAL_HANDLER
