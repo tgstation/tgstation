@@ -209,7 +209,7 @@
 	moving = FALSE
 	starting_turf = null
 	say(message)
-	playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
+	playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
 	STOP_PROCESSING(SSfastprocess, src)
 
 /**
@@ -221,7 +221,7 @@
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
-	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 	START_PROCESSING(SSfastprocess, src)
 
 /**
@@ -285,7 +285,7 @@
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
 		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST, attacking_item = attached_item)
-	playsound(src, 'sound/weapons/smash.ogg', 15, TRUE)
+	playsound(src, 'sound/items/weapons/smash.ogg', 15, TRUE)
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
 /**
@@ -390,9 +390,9 @@
 			return FALSE
 	total_hits++
 	lap_hits++
-	playsound(src,'sound/weapons/smash.ogg',50,FALSE)
+	playsound(src,'sound/items/weapons/smash.ogg',50,FALSE)
 	if (lap_hits % HITS_TO_KILL == 0)
-		playsound(src,'sound/machines/twobeep.ogg',25,FALSE)
+		playsound(src,'sound/machines/beep/twobeep.ogg',25,FALSE)
 	return TRUE
 
 /obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

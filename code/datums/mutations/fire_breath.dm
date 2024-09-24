@@ -29,7 +29,7 @@
 	name = "Fire Breath"
 	desc = "You breathe a cone of fire directly in front of you."
 	button_icon_state = "fireball0"
-	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
+	sound = 'sound/effects/magic/demon_dies.ogg' //horrifying lizard noises
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 40 SECONDS

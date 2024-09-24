@@ -32,8 +32,8 @@
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
-	var/acti_sound = 'sound/items/welderactivate.ogg'
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
+	var/acti_sound = 'sound/items/tools/welderactivate.ogg'
+	var/deac_sound = 'sound/items/tools/welderdeactivate.ogg'
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
