@@ -10,32 +10,31 @@
 		{
 			"Up": true,
 			"Mining": true,
-			"Linkage": null,
-			"Gravity": true,
+			"No Parallax": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/lava/plasma/ice_moon",
-			"No Parallax": true
+			"Bombcap Multiplier": 2,
+			"Gravity": true,
+			"Linkage": null
 		},
 		{
 			"Up": true,
 			"Down": true,
 			"Mining": true,
-			"Linkage": null,
-			"Gravity": true,
+			"No Parallax": true,
 			"Ice Ruins": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
-			"No Parallax": true
 		},
 		{
 			"Down": true,
 			"Mining": true,
-			"Linkage": null,
-			"Gravity": true,
-			"Ice Ruins": true,
+			"No Parallax": true,
 			"Weather_Snowstorm": true,
+			"Ice Ruins": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
-			"No Parallax": true
+			"Gravity": true,
+			"Linkage": null
 		}
 	],
 	"blacklist_file": "iceruinblacklist.txt"

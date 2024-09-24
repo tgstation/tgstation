@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(mapping)
 	world.log << "Config loaded for map [config.map_name]"
 	if (!isnull(config.minetype) && config.minetype != "none" && config.minetype != "lavaland")
 		world.log << "Minetype requested: [config.minetype]"
-		config_mining = load_map_config(filename = config.minetype, directory = MAP_DIRECTORY_MAPS, error_if_missing = TRUE)
+		config_mining = load_map_config(filename = "mining_configs/[config.minetype]", directory = MAP_DIRECTORY_MAPS, error_if_missing = TRUE)
 	/// DOPPLER SHIFT ADDITION END
 #endif
 

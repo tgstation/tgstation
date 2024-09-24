@@ -1,0 +1,22 @@
+{
+	"version": 1,
+	"map_name": "Lavaland",
+	"map_path": "map_files/Mining",
+	"map_file": "Lavaland.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"planetary": 1,
+	"traits": [
+		{
+			"Mining": true,
+			"No Parallax": true,
+			"Weather_Ashstorm": true,
+			"Lava Ruins": true,
+			"Baseturf": "/turf/open/lava/smooth/lava_land_surface",
+			"Bombcap Multiplier": 2,
+			"Gravity": true,
+			"Linkage": null
+		}
+	],
+	"blacklist_file": "lavaruinblacklist.txt"
+}
