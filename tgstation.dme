@@ -6761,6 +6761,7 @@
 #include "modular_doppler\modular_hydroponics\code\honeysuckle.dm"
 #include "modular_doppler\modular_hydroponics\code\tea_coffee.dm"
 #include "modular_doppler\modular_items\invisible_gear.dm"
+#include "modular_doppler\modular_mapping\code\areas\mining.dm"
 #include "modular_doppler\modular_mapping\code\areas\ruins.dm"
 #include "modular_doppler\modular_mapping\code\areas\station.dm"
 #include "modular_doppler\modular_mapping\code\ruins\icemoon.dm"
