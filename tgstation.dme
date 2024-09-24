@@ -6756,7 +6756,7 @@
 #include "modular_doppler\modular_customization\tri_color\tri_color_prefs_bespoke.dm"
 #include "modular_doppler\modular_customization\tri_color\wings.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\chemistry_reagents.dm"
-#include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\alcohol reagents.dm"
+#include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\alcohol_reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drink_reagents.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks.dm"
 #include "modular_doppler\modular_food_drinks_and_chems\food_and_drinks\drinks_recipes.dm"
