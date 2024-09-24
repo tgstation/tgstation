@@ -40,6 +40,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
+		/datum/pet_command/perform_trick_sequence,
 		/datum/pet_command/point_targeting/attack/dog,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
