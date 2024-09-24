@@ -483,9 +483,6 @@
 	dir = 8
 	},
 /obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/engine/cult,

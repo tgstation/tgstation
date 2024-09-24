@@ -57,7 +57,7 @@
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake
 	name = "energy cake"
 	desc = "You put the energy sword on your cake. Brilliant."
-	icon_state = "hardhat0_energycake"
+	icon_state = "hardhat1_energycake"
 	inhand_icon_state = "hardhat0_energycake"
 	hat_type = "energycake"
 	hitsound = 'sound/weapons/tap.ogg'
@@ -67,6 +67,13 @@
 	force_on = 18 //same as epen (but much more obvious)
 	light_range = 3 //ditto
 	heat = 0
+
+/obj/item/clothing/head/utility/hardhat/cakehat/energycake/Initialize(mapload)
+	. = ..()
+	//the compiled icon state is how it appears when it's on.
+	//That's how we want it to show on orbies (little virtual PDA pets).
+	//However we should reset their appearance on runtime.
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
 	playsound(src, 'sound/weapons/saberon.ogg', 5, TRUE)

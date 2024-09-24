@@ -823,21 +823,24 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			balloon_alert(user, "unlock first!")
 			return
 
-		if(isnull(id_card))
+		if(isnull(id_card) && secure)
 			balloon_alert(user, "not yours to rename!")
 			return
 
 		var/name_set = FALSE
 		var/desc_set = FALSE
 
-		var/str = tgui_input_text(user, "Personal Locker Name", "Locker Name")
-		if(!isnull(str))
-			name = str
+
+		var/input_name = tgui_input_text(user, "Locker Name", "Locker Name", max_length = MAX_NAME_LEN)
+
+		if(!isnull(input_name))
+			name = input_name
 			name_set = TRUE
 
-		str = tgui_input_text(user, "Personal Locker Description", "Locker Description")
-		if(!isnull(str))
-			desc = str
+		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
+
+		if(!isnull(input_desc))
+			desc = input_desc
 			desc_set = TRUE
 
 		var/bit_flag = NONE
@@ -888,7 +891,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [weapon]", LOG_GAME)
 			update_appearance()
 
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
 		var/item_is_id = weapon.GetID()
 		if(!item_is_id)
 			return FALSE
@@ -914,8 +917,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/mouse_drop_receive(atom/movable/O, mob/living/user, params)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
-		return
-	if(!istype(user) || user.incapacitated || user.body_position == LYING_DOWN)
 		return
 	if(user == O) //try to climb onto it
 		return ..()

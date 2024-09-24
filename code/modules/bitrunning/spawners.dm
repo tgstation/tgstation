@@ -1,5 +1,5 @@
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain
-	outfit = /datum/outfit/pirate
+	outfit = /datum/outfit/virtual_pirate
 	prompt_name = "a virtual domain debug entity"
 	flavour_text = "You probably shouldn't be seeing this, contact a coder!"
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
@@ -31,6 +31,16 @@
 	prompt_name = "a virtual skeleton pirate"
 	you_are_text = "You are a virtual pirate. Yarrr!"
 	flavour_text = " There's a LANDLUBBER after yer booty. Stop them!"
+
+/datum/outfit/virtual_pirate
+	name = "Virtual Pirate"
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
+	uniform = /obj/item/clothing/under/costume/pirate
+	suit = /obj/item/clothing/suit/costume/pirate/armored
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
+	shoes = /obj/item/clothing/shoes/pirate/armored
 
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate/special(mob/living/spawned_mob, mob/mob_possessor)

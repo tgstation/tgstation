@@ -87,11 +87,6 @@
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
-// Z-level floor change
-	using = new /atom/movable/screen/floor_menu(null, src)
-	using.screen_loc = ui_borg_floor_menu
-	static_inventory += using
-
 //Radio
 	using = new /atom/movable/screen/robot/radio(null, src)
 	using.screen_loc = ui_borg_radio
@@ -148,6 +143,11 @@
 	action_intent.icon = ui_style
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
+
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = ui_style
+	floor_change.screen_loc = ui_borg_floor_changer
+	static_inventory += floor_change
 
 //Health
 	healths = new /atom/movable/screen/healths/robot(null, src)
