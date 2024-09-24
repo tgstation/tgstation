@@ -135,6 +135,20 @@
 	stamina = 30
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
+/obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return BULLET_ACT_HIT
+	var/mob/living/victim = target
+	var/mob/firing_mob = firer
+	if(IS_HERETIC_OR_MONSTER(victim) || !IS_HERETIC(firing_mob))
+		return BULLET_ACT_HIT
+
+	if(!victim.has_status_effect(/datum/status_effect/eldritch))
+		SEND_SIGNAL(firer, COMSIG_LIONHUNTER_ON_HIT, victim)
+
+	return BULLET_ACT_HIT
+
 // Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/strilka310/lionhunter
 	name = "stripper clip (.310 hunter)"
