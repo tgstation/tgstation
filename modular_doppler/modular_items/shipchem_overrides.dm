@@ -163,6 +163,12 @@
 /obj/item/reagent_containers/cup/bottle/morphine
 	icon = 'modular_doppler/modular_items/icons/shipchems.dmi'
 
+/obj/item/reagent_containers/cup/bottle/chloralhydrate
+	icon_state = "bottle"
+
+/obj/item/reagent_containers/cup/bottle/brainrot
+	icon_state = "bottle"
+
 /obj/item/reagent_containers/cup/bottle/syrup_bottle
 	fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
