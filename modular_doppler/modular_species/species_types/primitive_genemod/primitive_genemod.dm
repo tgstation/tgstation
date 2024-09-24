@@ -1,48 +1,46 @@
-/mob/living/carbon/human/species/felinid/primitive
-	race = /datum/species/human/felinid/primitive
+/mob/living/carbon/human/species/genemod/primitive
+	race = /datum/species/human/genemod/primitive
 
-/datum/language_holder/primitive_felinid
+/datum/language_holder/primitive_genemod
 	understood_languages = list(
-		/datum/language/primitive_catgirl = list(LANGUAGE_ATOM),
+		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
-		/datum/language/primitive_catgirl = list(LANGUAGE_ATOM),
+		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
 	)
-	selected_language = /datum/language/primitive_catgirl
+	selected_language = /datum/language/primitive_genemod
 
-/datum/species/human/felinid/primitive
-	name = "Primitive Demihuman"
-	id = SPECIES_FELINE_PRIMITIVE
-	preview_outfit = /datum/outfit/demihuman_preview
+/datum/species/human/genemod/primitive
+	name = "Primitive Gene-Mod"
+	id = SPECIES_GENEMOD_PRIMITIVE
+	preview_outfit = /datum/outfit/genemod_primitive_preview
 
 	mutantlungs = /obj/item/organ/internal/lungs/icebox_adapted
 	mutanteyes = /obj/item/organ/internal/eyes/low_light_adapted
-	mutanttongue = /obj/item/organ/internal/tongue/cat/primitive
 
-	species_language_holder = /datum/language_holder/primitive_felinid
-	// language_prefs_whitelist = list(/datum/language/primitive_catgirl) //this needs a dedicated module for language
-	// always_customizable = TRUE  //this needs a dedicated module for species customization
+	species_language_holder = /datum/language_holder/primitive_genemod
+	// language_prefs_whitelist = list(/datum/language/primitive_genemod) //this needs a dedicated module for language
 
 	bodytemp_normal = 270 // If a normal human gets hugged by one it's gonna feel cold
 	bodytemp_heat_damage_limit = 283 // To them normal station atmos would be sweltering
 	bodytemp_cold_damage_limit = 213 // Man up bro it's not even that cold out here
 
 	inherent_traits = list(
-		TRAIT_CATLIKE_GRACE,
+		TRAIT_ANIMALISTIC,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_USES_SKINTONES,
 	)
 
-/datum/outfit/demihuman_preview
-	name = "Demihuman (Species Preview)"
-	uniform = /obj/item/clothing/under/dress/skirt/primitive_catgirl_body_wraps
-	neck = /obj/item/clothing/neck/scarf/primitive_catgirl_scarf
+/datum/outfit/genemod_primitive_preview
+	name = "Primitive Gene-Mod (Species Preview)"
+	uniform = /obj/item/clothing/under/dress/skirt/primitive_genemod_body_wraps
+	neck = /obj/item/clothing/neck/scarf/primitive_genemod_scarf
 	back = /obj/item/forging/reagent_weapon/axe/fake_copper
 
-/datum/species/human/felinid/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
+/datum/species/human/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = new_primitive
 	if(!istype(hearthkin))
@@ -55,14 +53,14 @@
 	mutation.mutadone_proof = TRUE
 	mutation.instability = 0
 
-/datum/species/human/felinid/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
+/datum/species/human/genemod/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = former_primitive
 	if(!istype(hearthkin))
 		return
 	hearthkin.dna.remove_mutation(/datum/mutation/human/olfaction)
 
-/datum/species/human/felinid/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+/datum/species/human/genemod/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.dna.ear_type = CAT
 	human_for_preview.dna.features["ears"] = "Coeurl"
 	human_for_preview.dna.features["ears_color_1"] = "#e9eff5"
@@ -71,10 +69,12 @@
 	human_for_preview.set_haircolor("#E9EFF5", update = FALSE)
 	human_for_preview.set_hairstyle("Fluffy long", update = TRUE)
 	human_for_preview.skin_tone = "albino"
+	human_for_preview.eye_color_left = "#96dbe7"
+	human_for_preview.eye_color_right = "#96dbe7"
 	regenerate_organs(human_for_preview)
 	human_for_preview.update_body(is_creating = TRUE)
 
-/datum/species/human/felinid/primitive/get_species_description()
+/datum/species/human/genemod/primitive/get_species_description()
 	return list(
 		"Genetically modified humanoids believed to be descendants of a now centuries old colony \
 			ship from the pre-bluespace travel era. Still having at least some human traits, they \
@@ -82,7 +82,7 @@
 			the icemoon's many fauna."
 	)
 
-/datum/species/human/felinid/primitive/get_species_lore()
+/datum/species/human/genemod/primitive/get_species_lore()
 	return list(
 		"The Hearthkin are a culture of disparate Scandinavian groups all sharing a common origin \
 			as descendents from demihuman genemodders aboard the good ship Stjarndrakkr, or Star Dragon; \

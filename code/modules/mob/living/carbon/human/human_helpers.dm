@@ -282,17 +282,17 @@
  */
 /mob/living/carbon/human/proc/get_mob_height()
 	if(HAS_TRAIT(src, TRAIT_DWARF))
-		if(ismonkey(src))
+		if(ismonkey(src) && !HAS_TRAIT(src, MONKEY))	// DOPPLER EDIT, old code: if(ismonkey(src))
 			return MONKEY_HEIGHT_DWARF
 		else
 			return HUMAN_HEIGHT_DWARF
 	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
-		if(ismonkey(src))
+		if(ismonkey(src) && !HAS_TRAIT(src, MONKEY))	// DOPPLER EDIT, old code: if(ismonkey(src))
 			return MONKEY_HEIGHT_TALL
 		else
 			return HUMAN_HEIGHT_TALLEST
 
-	else if(ismonkey(src))
+	else if(ismonkey(src) && !HAS_TRAIT(src, MONKEY))	// DOPPLER EDIT, old code: else if(ismonkey(src))
 		return MONKEY_HEIGHT_MEDIUM
 
 	return mob_height

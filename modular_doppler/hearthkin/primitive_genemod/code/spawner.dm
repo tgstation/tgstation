@@ -1,11 +1,11 @@
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod
 	name = "hole in the ground"
 	desc = "A clearly hand dug hole in the ground that appears to lead into a small cave of some kind? It's pretty dark in there."
 	prompt_name = "icemoon dweller"
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "hole"
-	mob_species = /datum/species/human/felinid/primitive
-	outfit = /datum/outfit/primitive_catgirl
+	mob_species = /datum/species/human/genemod/primitive
+	outfit = /datum/outfit/primitive_genemod
 	density = FALSE
 	you_are_text = "You are an icemoon dweller."
 	flavour_text = "For as long as you can remember, the icemoon has been your home. \
@@ -13,14 +13,14 @@
 		Currently, you and your kin live in uneasy tension with your nearby human-and-otherwise \
 		neighbors. Keep your village and your Kin safe, but bringing death on their heads from \
 		being reckless with the outsiders will not have the Gods be so kind."
-	spawner_job_path = /datum/job/primitive_catgirl
+	spawner_job_path = /datum/job/primitive_genemod
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	allow_loadout = FALSE
 
 	/// The team the spawner will assign players to and use to keep track of people that have already used the spawner
-	var/datum/team/primitive_catgirls/team
+	var/datum/team/primitive_genemods/team
 
-	restricted_species = list(/datum/species/human/felinid/primitive)
+	restricted_species = list(/datum/species/human/genemod/primitive)
 	infinite_use = TRUE
 	deletes_on_zero_uses_left = FALSE
 
@@ -32,28 +32,28 @@
 	var/join_and_leave_log_cache = null
 	/// The minimum time someone needs to be SSD before they can be put back in. Shares config "cryo_min_ssd_time" with cryopod
 	var/ssd_time = 15 MINUTES
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/Initialize(mapload)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/Initialize(mapload)
 	. = ..()
-	team = new /datum/team/primitive_catgirls()
+	team = new /datum/team/primitive_genemods()
 	ssd_time = CONFIG_GET(number/cryo_min_ssd_time)
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/Destroy()
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/Destroy()
 	team = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/examine(mob/user)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/examine(mob/user)
 	. = ..()
 
-	if(isprimitivedemihuman(user) || isobserver(user))
+	if(isprimitive(user) || isobserver(user))
 		. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 	return .
 
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/examine_more(mob/user)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/examine_more(mob/user)
 	. = ..()
 
-	if(!isprimitivedemihuman(user) && !isobserver(user))
+	if(!isprimitive(user) && !isobserver(user))
 		return
 
 	. += get_joined_and_left_log()
@@ -63,7 +63,7 @@
  * Returns the `join_and_leave_log_cache` string if it already exists, otherwise
  * generates and returns it.
  */
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/proc/get_joined_and_left_log()
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/proc/get_joined_and_left_log()
 	if(join_and_leave_log_cache)
 		return join_and_leave_log_cache
 
@@ -91,7 +91,7 @@
 	return join_and_leave_log_cache
 
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/allow_spawn(mob/user, silent = FALSE)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/allow_spawn(mob/user, silent = FALSE)
 	if(!(user.key in team.players_spawned)) // One spawn per person
 		return TRUE
 	if(!silent)
@@ -99,7 +99,7 @@
 	return FALSE
 
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/create(mob/mob_possessor, newname)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/create(mob/mob_possessor, newname)
 	. = ..()
 
 	// We remove their name from there if they come back.
@@ -107,19 +107,26 @@
 	join_and_leave_log_cache = null
 
 
-// This stuff is put on equip because it turns out /special sometimes just don't get called because Nova
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/equip(mob/living/carbon/human/spawned_human)
+//	Add the animalistic trait if they have it selected
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/special(mob/living/spawned_mob, mob/mob_possessor)
+	var/animalistic_trait = mob_possessor.client?.prefs.read_preference(/datum/preference/choiced/animalistic_trait)
+	if(animalistic_trait && animalistic_trait != NO_VARIATION)
+		ADD_TRAIT(spawned_mob, animalistic_trait, SPECIES_TRAIT)
+	..()
+
+
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/equip(mob/living/carbon/human/spawned_human)
 	. = ..()
 
-	spawned_human.mind.add_antag_datum(/datum/antagonist/primitive_catgirl, team)
+	spawned_human.mind.add_antag_datum(/datum/antagonist/primitive_genemod, team)
 
 	team.players_spawned += (spawned_human.key)
 
 
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/mouse_drop_receive(mob/living/carbon/human/target, mob/user, params)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/mouse_drop_receive(mob/living/carbon/human/target, mob/user, params)
 	if(!istype(target))
 		return
-	if(!isprimitivedemihuman(target) || target.buckled)
+	if(!isprimitive(target) || target.buckled)
 		return
 
 	if(target.stat == DEAD)
@@ -168,7 +175,7 @@
 		return
 
 	// Just in case something happened in-between, to make sure it doesn't do unexpected behaviors.
-	if(!isprimitivedemihuman(target) || !can_interact(user) || !target.Adjacent(user)  || target.buckled || target.stat == DEAD)
+	if(!isprimitive(target) || !can_interact(user) || !target.Adjacent(user)  || target.buckled || target.stat == DEAD)
 		return
 
 	if(target == user)
@@ -187,7 +194,7 @@
  * stripping them of all their items, and finishes by adding back a use to the
  * spawner.
  */
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/proc/put_back_in(mob/living/carbon/human/target)
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/proc/put_back_in(mob/living/carbon/human/target)
 	if(!istype(target))
 		return
 
@@ -225,7 +232,7 @@
  * Simple helper to generate the item drop blacklist based on the spawner's
  * outfit, only taking the used slots into account.
  */
-/obj/effect/mob_spawn/ghost_role/human/primitive_catgirl/proc/generate_item_drop_blacklist()
+/obj/effect/mob_spawn/ghost_role/human/primitive_genemod/proc/generate_item_drop_blacklist()
 	PROTECTED_PROC(TRUE)
 
 	var/list/blacklist = list()
@@ -240,17 +247,17 @@
 	return blacklist
 
 
-/datum/job/primitive_catgirl
+/datum/job/primitive_genemod
 	title = "Icemoon Dweller"
 
 // Antag and team datums
 
-/datum/team/primitive_catgirls
+/datum/team/primitive_genemods
 	name = "Icewalkers"
 	member_name = "Icewalker"
 	show_roundend_report = FALSE
 
-/datum/team/primitive_catgirls/roundend_report()
+/datum/team/primitive_genemods/roundend_report()
 	var/list/report = list()
 
 	report += span_header("An Ice Walker Tribe inhabited the wastes...</span><br>")
@@ -264,7 +271,7 @@
 
 // Antagonist datum
 
-/datum/antagonist/primitive_catgirl
+/datum/antagonist/primitive_genemod
 	name = "\improper Icewalker"
 	job_rank = ROLE_LAVALAND // If you're ashwalker banned you should also not be playing this, other way around as well
 	show_in_antagpanel = FALSE
@@ -275,7 +282,7 @@
 	show_in_roundend = FALSE
 
 	/// Tracks the antag datum's 'team' for showing in the ghost orbit menu
-	var/datum/team/primitive_catgirls/feline_team
+	var/datum/team/primitive_genemods/feline_team
 
 	antag_recipes = list(
 		/datum/crafting_recipe/boneaxe,
@@ -292,16 +299,16 @@
 		/datum/crafting_recipe/hearthkin_rune_stone,
 	)
 
-/datum/antagonist/primitive_catgirl/Destroy()
+/datum/antagonist/primitive_genemod/Destroy()
 	feline_team = null
 	return ..()
 
-/datum/antagonist/primitive_catgirl/create_team(datum/team/team)
+/datum/antagonist/primitive_genemod/create_team(datum/team/team)
 	if(team)
 		feline_team = team
 		objectives |= feline_team.objectives
 	else
 		feline_team = new
 
-/datum/antagonist/primitive_catgirl/get_team()
+/datum/antagonist/primitive_genemod/get_team()
 	return feline_team

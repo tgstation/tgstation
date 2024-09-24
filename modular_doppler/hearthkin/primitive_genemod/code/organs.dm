@@ -6,7 +6,7 @@
 	name = "hardy lungs"
 	desc = "Lungs adapted to frozen environments that would be otherwise inhospitable to most races. Feels cold."
 	icon_state = "hardylungs"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/organs.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/organs.dmi'
 
 /obj/item/organ/internal/lungs/icebox_adapted/Initialize(mapload)
 	. = ..()
@@ -61,11 +61,5 @@
 
 /obj/item/organ/internal/eyes/low_light_adapted
 	color_cutoffs = list(30, 15, 15)
-
-
-// Tongue
-/obj/item/organ/internal/tongue/cat/primitive
-	liked_foodtypes = SEAFOOD | MEAT | GORE
-
 
 #undef GAS_TOLERANCE

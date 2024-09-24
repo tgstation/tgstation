@@ -7,6 +7,7 @@
 	id = SPECIES_ANTHROMORPH
 	preview_outfit = /datum/outfit/anthro_preview
 	inherent_traits = list(
+		TRAIT_ANIMALISTIC,
 		TRAIT_MUTANT_COLORS,
 	)
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "Anthromorph Pattern")
@@ -27,6 +28,10 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/anthromorph,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
 	)
+
+/datum/species/anthromorph/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load)
+	apply_animal_trait(target, find_animal_trait(target))
+	return ..()
 
 /datum/outfit/anthro_preview
 	name = "Anthromorph (Species Preview)"

@@ -1,4 +1,4 @@
-/datum/language/primitive_catgirl
+/datum/language/primitive_genemod
 	name = "Ættmál"
 	desc = "A liturgical language passed through three centuries of Hearthkin culture, the only tongue which their literature is allowed to be spoken in; \
 				especially relating to their pagan practices. While Galactic Uncommon is used as a trade language with outsiders, Ættmál remains sacred and mostly unknown \
@@ -13,6 +13,6 @@
 		"bar", "dar", "akur", "jer", "bær", "múl", "fjörð", "jah", "dah", "dim", "din", "dir", "dur", "nya", "miau", "mjau", "ný", "kt", "hø",
 	)
 	icon_state = "omgkittyhiii"
-	icon = 'modular_doppler/hearthkin/primitive_catgirls/icons/language_icon.dmi'
+	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/language_icon.dmi'
 	default_priority = 94
 	// secret = TRUE     //this needs a dedicated module for language

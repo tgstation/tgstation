@@ -1,13 +1,13 @@
-## Title: Primitive Catgirls
+## Title: Primitive Genemods
 
-MODULE ID: PRIMITIVE_CATGIRLS
+MODULE ID: PRIMITIVE_GENEMOD
 
 ### Description:
 
 Main module of the Hearthkin. It adds species, unique language, special organs and map items as well as unique objects and clothing.
 Special metals, as well as the pet commands functionality have been added too.
 
-The species ID `primitive_felinid` was added in the configuration file `config\doppler\config_doppler.txt` as a round start species
+The species ID `primitive_genemod` was added in the configuration file `config\doppler\config_doppler.txt` as a round start species
 
 ### TG Proc Changes:
 
