@@ -157,10 +157,6 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
-"lf" = (
-/obj/effect/decal/cleanable/greenglow/radioactive,
-/turf/open/floor/plating,
-/area/ruin/space/nt_commsbuoy)
 "lu" = (
 /obj/machinery/porta_turret/syndicate/energy,
 /turf/open/floor/mineral/titanium/yellow,
@@ -461,6 +457,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"Mc" = (
+/obj/effect/decal/cleanable/greenglow/radioactive,
+/turf/open/floor/plating,
 /area/ruin/space/nt_commsbuoy)
 "Mp" = (
 /obj/structure/fluff/fake_camera{
@@ -878,7 +878,7 @@ LI
 et
 Br
 bj
-lf
+Mc
 YN
 bj
 fJ
@@ -1113,13 +1113,13 @@ fJ
 fJ
 fJ
 fJ
-bj
+Yr
 bj
 bj
 bj
 zt
 bj
-bj
+Yr
 fJ
 fJ
 AA
