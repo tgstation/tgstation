@@ -40,14 +40,15 @@
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	has_gravity = FALSE
 	ambientsounds = list(
-		'sound/ambience/ambisin2.ogg',
-		'sound/ambience/signal.ogg',
-		'sound/ambience/signal.ogg',
-		'sound/ambience/ambigen9.ogg',
-		'sound/ambience/ambitech.ogg',
-		'sound/ambience/ambitech2.ogg',
-		'sound/ambience/ambitech3.ogg',
-		'sound/ambience/ambimystery.ogg',) //same ambience as tcommsat
+		'sound/ambience/engineering/ambisin2.ogg',
+		'sound/ambience/misc/signal.ogg',
+		'sound/ambience/misc/signal.ogg',
+		'sound/ambience/general/ambigen9.ogg',
+		'sound/ambience/engineering/ambitech.ogg',
+		'sound/ambience/engineering/ambitech2.ogg',
+		'sound/ambience/engineering/ambitech3.ogg',
+		'sound/ambience/misc/ambimystery.ogg',
+		) //same ambience as tcommsat
 
 /obj/item/paper/fluff/ruins/nt_commsbuoy
 	color = COLOR_BLUE_GRAY
@@ -223,19 +224,19 @@
 		<i>From: wilson_peters@NTFIDspinward.nt</i> <br>\
 		<i>Relay Target: PORT_ELLIS</i> <br>\
 		<br>\
-		Hey. I miss you. Hope we can holo-call again soon.<br>\
-		Work's been busy. Wish you could be here for it, but I know you were adamant on getting your citizenship. I hope Gateway's been nice to you.<br>\
-		I was working on that project folder you left me, the plasma stuff. Really see why you asked to change divisions...<br>\
+		Hey. I miss you. Hope we can holo-call again soon. <br>\
+		Work's been busy. Wish you could be here for it, but I know you were adamant on getting your citizenship. I hope Gateway's been nice to you. <br>\
+		I was working on that project folder you left me, the plasma stuff. Really see why you asked to change divisions... <br>\
 		<br>\
-		Regardless of the heavy topic of the research, I've made some astounding breakthroughs. A majority of this is still your notes just progressing,\
+		Regardless of the heavy topic of the research, I've made some astounding breakthroughs. A majority of this is still your notes just progressing, \
 		long-term ingestion of plasma - specifically Pudicitite - in humanoid species. I really had hoped these projections weren't so accurate. \
-		Guess it just shows your dazzling intellect... as dark as this is.<br>\
+		Guess it just shows your dazzling intellect... as dark as this is. <br>\
 		<br>\
-		That doomed assistant you had on observation finally expired. The constant medium-level exposure, even treated with a myriad of medications,\
+		That doomed assistant you had on observation finally expired. The constant medium-level exposure, even treated with a myriad of medications, \
 		left the Amygdala extremely malformed like we were seeing prior. Additionally, it entirely and irrepairably destroyed every neural pathway in \
-		the Hypothalamus, leaving the subject on a direct path to literally burning out.<br>\
+		the Hypothalamus, leaving the subject on a direct path to literally burning out. <br>\
 		The damage to their bodily temperature regulation wasn't the focus, nor did I get much opportunity to make it one. Security had to kill them \
-		pre-emptively; their Amygdala is engorged and stained with purple and white streaks (almost as vibrant as your scales). Whatever this damage\
+		pre-emptively; their Amygdala is engorged and stained with purple and white streaks (almost as vibrant as your scales). Whatever this damage \
 		truly is seems to have contributed to overstimulation and amplified emotional responses to the testing. <br>\
 		<br>\
 		It's... a perfect storm. The loss of control of emotional responses in tandem with the exaggurated environmental stimuli. I've already pushed \
