@@ -490,3 +490,9 @@
 	description = "I DIDN'T MEAN TO HURT THEM!"
 	mood_change = -20
 	timeout = 10 MINUTES
+
+//Gained when you're hit over the head with wrapping paper or cardboard roll
+/datum/mood_event/bapped
+	description = "Ow.. my head, I feel a bit foolish now!"
+	mood_change = -1
+	timeout = 3 MINUTES

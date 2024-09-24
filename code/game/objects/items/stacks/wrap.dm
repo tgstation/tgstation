@@ -20,8 +20,10 @@
 
 /obj/item/stack/wrapping_paper/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if (istype(interacting_with, /mob/living))
-		balloon_alert(user, "[user] baps [interacting_with] on the head with the wrapping paper roll")
+		var/mob/living/target_mob = interacting_with
+		balloon_alert(user, "[user] baps [target_mob] on the head with the wrapping paper roll")
 		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 		return ..()
 
 /obj/item/stack/wrapping_paper/Initialize(mapload)
@@ -213,4 +215,5 @@
 	. = ..()
 	if (istype(target_mob, /mob/living))
 		balloon_alert(user, "[user] baps [target_mob] on the head with the cardboard roll")
+		target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
