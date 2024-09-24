@@ -33,7 +33,7 @@
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/e_gun/hos,
 	))
-	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
 	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/holster/energy

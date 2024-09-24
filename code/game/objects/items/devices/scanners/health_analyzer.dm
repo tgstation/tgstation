@@ -560,7 +560,7 @@
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
-			playsound(simple_scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
+			playsound(simple_scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
 
 
 /obj/item/healthanalyzer/simple
@@ -598,7 +598,7 @@
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/proc/violence(mob/user)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 	if(isliving(user))
 		var/mob/living/L = user
 		to_chat(L, span_warning("[src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
@@ -623,7 +623,7 @@
 	)
 
 	if(!iscarbon(interacting_with))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		to_chat(user, span_notice("[src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [interacting_with]."))
 		show_emotion(AI_EMOTION_SAD)
 		return ITEM_INTERACT_BLOCKING
@@ -715,7 +715,7 @@
 	else
 		to_chat(user, span_notice(render.Join("")))
 		scanner.emotion = AID_EMOTION_WARN
-		playsound(scanner, 'sound/machines/twobeep.ogg', 50, FALSE)
+		playsound(scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND

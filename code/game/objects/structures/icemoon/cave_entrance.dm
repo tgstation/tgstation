@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  *
  */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
-	playsound(loc,'sound/effects/explosionfar.ogg', 200, TRUE)
+	playsound(loc,'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
 	visible_message(span_boldannounce("[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!"))
 
 /**

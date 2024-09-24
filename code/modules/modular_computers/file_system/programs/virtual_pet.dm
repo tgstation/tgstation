@@ -54,22 +54,47 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/static/list/hat_selections = list(
 		/obj/item/clothing/head/hats/tophat = 1,
 		/obj/item/clothing/head/fedora = 1,
+		/obj/item/clothing/head/soft/fishing_hat = 1,
+		/obj/item/cigarette/dart = 1,
 		/obj/item/clothing/head/hats/bowler = 2,
 		/obj/item/clothing/head/hats/warden/police = 2,
+		/obj/item/clothing/head/wizard/tape = 2,
+		/obj/item/clothing/head/utility/hardhat/cakehat/energycake = 2,
+		/obj/item/clothing/head/cowboy/bounty = 2,
 		/obj/item/clothing/head/hats/warden/red = 3,
 		/obj/item/clothing/head/hats/caphat = 3,
+		/obj/item/clothing/head/costume/crown/fancy = 3,
+	)
+	///hat options that are locked behind achievements
+	var/static/list/cheevo_hats = list(
+		/obj/item/clothing/head/soft/fishing_hat = /datum/award/achievement/skill/legendary_fisher,
+		/obj/item/cigarette/dart = /datum/award/achievement/misc/cigarettes,
+		/obj/item/clothing/head/wizard/tape = /datum/award/achievement/misc/grand_ritual_finale,
+		/obj/item/clothing/head/utility/hardhat/cakehat/energycake = /datum/award/achievement/misc/cayenne_disk,
+		/obj/item/clothing/head/cowboy/bounty = /datum/award/achievement/misc/hot_damn,
+		/obj/item/clothing/head/costume/crown/fancy = /datum/award/achievement/misc/debt_extinguished,
+	)
+	///A list of hats that override the hat offsets and transform variable
+	var/static/list/special_hat_placement = list(
+		/obj/item/cigarette/dart = list(
+			"west" = list(2,-1),
+			"east" = list(-2,-1),
+			"north" = list(0,0),
+			"south" = list(0, -3),
+			"transform" = list(1, 1),
+		),
 	)
 	///hologram hat we have selected for our pet
 	var/list/selected_hat = list()
-	///area we have picked as dropoff location for petfeed
-	var/area/selected_area
 	///manage hat offsets for when we turn directions
 	var/static/list/hat_offsets = list(
 		"west" = list(0,1),
 		"east" = list(0,1),
 		"north" = list(1,1),
-		"south" = list(0,1),
+		"south" = list(1,1),
 	)
+	///area we have picked as dropoff location for petfeed
+	var/area/selected_area
 	///possible colors our pet can have
 	var/static/list/possible_colors= list(
 		"white" = null, //default color state
@@ -171,12 +196,11 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/proc/set_hat_offsets(new_dir)
 	var/direction_text = dir2text(new_dir)
-	var/list/offsets_list = hat_offsets[direction_text]
-	if(isnull(offsets_list))
-		return
+	var/hat_type = selected_hat["type"]
+	var/list/offsets_list = special_hat_placement[hat_type]?[direction_text] || hat_offsets[direction_text]
 	var/mutable_appearance/hat_appearance = selected_hat["appearance"]
-	hat_appearance.pixel_x = offsets_list[1]
-	hat_appearance.pixel_y = offsets_list[2]
+	hat_appearance.pixel_w = offsets_list[1]
+	hat_appearance.pixel_z = offsets_list[2] + selected_hat["worn_offset"]
 	pet.update_appearance(UPDATE_OVERLAYS)
 
 ///give our pet his hologram hat
@@ -195,10 +219,15 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	if(length(selected_hat))
 		var/mutable_appearance/our_selected_hat = selected_hat["appearance"]
 		var/mutable_appearance/hat_preview = mutable_appearance(our_selected_hat.icon, our_selected_hat.icon_state)
-		hat_preview.pixel_y = -9
+		hat_preview.pixel_y = -9 + selected_hat["worn_offset"]
+		var/list/spec_hat = special_hat_placement[selected_hat["type"]]?["south"]
+		if(spec_hat)
+			hat_preview.pixel_w += spec_hat[1]
+			hat_preview.pixel_z += spec_hat[2]
+		hat_preview.appearance_flags = RESET_COLOR
 		pet_preview.add_overlay(hat_preview)
 
-	profile_picture = getFlatIcon(pet_preview)
+	profile_picture = getFlatIcon(pet_preview, no_anim = TRUE)
 	COOLDOWN_START(src, alter_appearance_cooldown, 10 SECONDS)
 
 
@@ -281,7 +310,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	level++
 	grant_level_abilities()
 	pet.ai_controller?.set_blackboard_key(BB_VIRTUAL_PET_LEVEL, level)
-	playsound(computer.loc, 'sound/items/orbie_level_up.ogg', 50)
+	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_level_up.ogg', 50)
 	to_next_level += (level**2) + 500
 	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_LEVEL_UP, level) //its a signal so different path types of virtual pets can handle leveling up differently
 	announce_global_updates(message = "has reached level [level]!")
@@ -312,7 +341,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		GLOB.global_pet_updates.Cut(1,2)
 
 	GLOB.global_pet_updates += list(message_to_announce)
-	playsound(computer.loc, 'sound/items/orbie_notification_sound.ogg', 50)
+	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_notification_sound.ogg', 50)
 
 /datum/computer_file/program/virtual_pet/proc/remove_pet(datum/source)
 	SIGNAL_HANDLER
@@ -344,12 +373,13 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/ui_data(mob/user)
 	var/list/data = list()
+	var/obj/item/hat_type = selected_hat?["type"]
 	data["currently_summoned"] = (pet.loc != computer)
 	data["selected_area"] = (selected_area ? selected_area.name : "No location set")
 	data["pet_state"] = get_pet_state()
 	data["hunger"] = hunger
 	data["maximum_hunger"] = max_hunger
-	data["pet_hat"] = (length(selected_hat) ? selected_hat["name"] : "none")
+	data["pet_hat"] = (hat_type ? initial(hat_type.name) : "none")
 	data["can_reroll"] = COOLDOWN_FINISHED(src, area_reroll)
 	data["can_summon"] = COOLDOWN_FINISHED(src, summon_cooldown)
 	data["can_alter_appearance"] = COOLDOWN_FINISHED(src, alter_appearance_cooldown)
@@ -415,9 +445,14 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	for(var/type_index as anything in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
+			var/obj/item/hat_name = initial(hat.name)
+			if(length(SSachievements.achievements)) // The Achievements subsystem is active.
+				var/datum/award/required_cheevo = cheevo_hats[hat]
+				if(required_cheevo && !user.client.get_award_status(required_cheevo))
+					hat_name = "LOCKED"
 			data["hat_selections"] += list(list(
 				"hat_id" = type_index,
-				"hat_name" = initial(hat.name),
+				"hat_name" = hat_name,
 			))
 
 	data["possible_colors"] = list()
@@ -461,12 +496,22 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(isnull(chosen_type))
 				selected_hat.Cut()
 
-			else if((chosen_type in hat_selections))
-				selected_hat["name"] = initial(chosen_type.name)
-				var/mutable_appearance/selected_hat_appearance = mutable_appearance(icon = initial(chosen_type.worn_icon), icon_state = initial(chosen_type.icon_state), layer = ABOVE_ALL_MOB_LAYER)
-				selected_hat_appearance.transform = selected_hat_appearance.transform.Scale(0.8, 1)
-				selected_hat["appearance"] = selected_hat_appearance
-				set_hat_offsets(pet.dir)
+			else if(hat_selections[chosen_type])
+				var/datum/award/required_cheevo = cheevo_hats[chosen_type]
+				if(length(SSachievements.achievements) && required_cheevo && !ui.user.client.get_award_status(required_cheevo))
+					to_chat(ui.user, span_info("This customization requires the \"[span_bold(initial(required_cheevo.name))]\ achievement to be unlocked."))
+				else
+					selected_hat["type"] = chosen_type
+					var/state_to_use = initial(chosen_type.worn_icon_state) || initial(chosen_type.icon_state)
+					var/mutable_appearance/selected_hat_appearance = mutable_appearance(initial(chosen_type.worn_icon), state_to_use, appearance_flags = RESET_COLOR)
+					selected_hat["worn_offset"] = initial(chosen_type.worn_y_offset)
+					var/list/scale_list = special_hat_placement[chosen_type]?["scale"]
+					if(scale_list)
+						selected_hat_appearance.transform = selected_hat_appearance.transform.Scale(scale_list[1], scale_list[2])
+					else
+						selected_hat_appearance.transform = selected_hat_appearance.transform.Scale(0.8, 1)
+					selected_hat["appearance"] = selected_hat_appearance
+					set_hat_offsets(pet.dir)
 
 			var/chosen_color = params["chosen_color"]
 			if(isnull(chosen_color))
@@ -515,7 +560,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(!isnull(trick_name))
 				pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, trick_name)
 			pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, trick_sequence)
-			playsound(computer.loc, 'sound/items/orbie_trick_learned.ogg', 50)
+			playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_trick_learned.ogg', 50)
 
 	return TRUE
 
@@ -553,7 +598,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	pet.befriend(our_user) //befriend whoever set us out
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
 	pet.forceMove(final_turf)
-	playsound(computer.loc, 'sound/items/orbie_send_out.ogg', 20)
+	playsound(computer.loc, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
 	new /obj/effect/temp_visual/guardian/phase(pet.loc)
 
 #undef PET_MAX_LEVEL

@@ -128,7 +128,7 @@
 	description = "It smells fishy."
 
 /obj/structure/aquarium/traits
-	allow_breeding = TRUE
+	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/crossbreeder/crossbreeder
 	var/obj/item/fish/testdummy/cloner/cloner
 	var/obj/item/fish/testdummy/sterile/sterile
@@ -155,7 +155,7 @@
 	fish_traits = list(/datum/fish_trait/no_mating)
 
 /obj/structure/aquarium/evolution
-	allow_breeding = TRUE
+	reproduction_and_growth = TRUE
 	var/obj/item/fish/testdummy/evolve/evolve
 	var/obj/item/fish/testdummy/evolve_two/evolve_two
 
@@ -182,13 +182,21 @@
 	new_fish_type = /obj/item/fish/clownfish
 	new_traits = list(/datum/fish_trait/dummy/two)
 	removed_traits = list(/datum/fish_trait/dummy)
+	show_on_wiki = FALSE
 
+///This is used by both fish_evolution and fish_growth unit tests.
 /datum/fish_evolution/dummy/two
 	new_fish_type = /obj/item/fish/goldfish
 
 /datum/fish_evolution/dummy/two/New()
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
+
+///During the fish_growth unit test, we spawn a fish outside of the aquarium and check that this actually stops it from growing
+/datum/fish_evolution/dummy/two/growth_checks(obj/item/fish/source, seconds_per_tick, growth)
+	. = ..()
+	if(!isaquarium(source.loc))
+		return COMPONENT_DONT_GROW
 
 ///A test that checks that fishing portals can be linked and function as expected
 /datum/unit_test/fish_portal_gen_linking
@@ -312,29 +320,49 @@
 	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
 	return ..()
 
-///Check that you can actually raise a chasm crab without errors.
-/datum/unit_test/raise_a_chasm_crab
+///Check that the fish growth component works.
+/datum/unit_test/fish_growth
 
-/datum/unit_test/raise_a_chasm_crab/Run()
+/datum/unit_test/fish_growth/Run()
 	var/obj/structure/aquarium/crab/aquarium = allocate(/obj/structure/aquarium/crab)
-	SEND_SIGNAL(aquarium.crabbie, COMSIG_FISH_LIFE, 1) //give the fish growth component a small push.
+	var/list/growth_comps = aquarium.crabbie.GetComponents(/datum/component/fish_growth) //Can't use GetComponent() without s because the comp is dupe-selective
+	var/datum/component/fish_growth/crab_growth = growth_comps[1]
+
+	crab_growth.on_fish_life(aquarium.crabbie, seconds_per_tick = 1) //give the fish growth component a small push.
+
 	var/mob/living/basic/mining/lobstrosity/juvenile/lobster = locate() in aquarium.loc
+	TEST_ASSERT(lobster, "The lobstrosity didn't spawn at all. chasm crab maturation: [crab_growth.maturation]%.")
 	TEST_ASSERT_EQUAL(lobster.loc, get_turf(aquarium), "The lobstrosity didn't spawn on the aquarium's turf")
 	TEST_ASSERT(QDELETED(aquarium.crabbie), "The test aquarium's chasm crab didn't delete itself.")
+	TEST_ASSERT_EQUAL(lobster.name, "Crabbie", "The lobstrosity didn't inherit the aquarium chasm crab's custom name")
 	allocated |= lobster //make sure it's allocated and thus properly deleted when the test is over
+
 	//While ideally impossible to have all traits because of incompatible ones, I want to be sure they don't error out.
 	for(var/trait_type in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		trait.apply_to_mob(lobster)
 
+	var/obj/item/fish/testdummy/dummy = allocate(/obj/item/fish/testdummy)
+	var/datum/component/fish_growth/dummy_growth = dummy.AddComponent(/datum/component/fish_growth, /datum/fish_evolution/dummy/two, 1 SECONDS, use_drop_loc = FALSE)
+	dummy.last_feeding = world.time
+	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
+	TEST_ASSERT(!QDELETED(dummy), "The fish has grown when it shouldn't have")
+	dummy.forceMove(aquarium)
+	dummy_growth.on_fish_life(dummy, seconds_per_tick = 1)
+	var/obj/item/fish/dummy_boogaloo = locate(/datum/fish_evolution/dummy/two::new_fish_type) in aquarium
+	TEST_ASSERT(dummy_boogaloo, "The new fish type cannot be found inside the aquarium")
+
 /obj/structure/aquarium/crab
-	allow_breeding = TRUE //needed for growing up
+	reproduction_and_growth = TRUE //needed for growing up
 	///Our test subject
 	var/obj/item/fish/chasm_crab/instant_growth/crabbie
 
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
 	crabbie = new(src)
+	crabbie.name = "Crabbie"
+	crabbie.last_feeding = world.time
+	crabbie.AddComponent(/datum/component/fish_growth, crabbie.lob_type, 1 SECONDS)
 
 /obj/structure/aquarium/crab/Exited(atom/movable/gone)
 	. = ..()
@@ -342,7 +370,6 @@
 		crabbie = null
 
 /obj/item/fish/chasm_crab/instant_growth
-	growth_rate = 100
 	fish_traits = list() //We don't want to end up applying traits twice on the resulting lobstrosity
 
 /datum/unit_test/fish_sources
@@ -452,6 +479,13 @@
 /obj/item/fish/testdummy/food
 	average_weight = FISH_WEIGHT_BITE_DIVISOR * 2 //One bite, it's death; the other, it's gone.
 
+///Check that nothing wrong happens when randomizing size and weight of a fish
+/datum/unit_test/fish_randomize_size_weight
+
+/datum/unit_test/fish_randomize_size_weight/Run()
+	var/obj/item/storage/box/fish_debug/box = allocate(/obj/item/storage/box/fish_debug)
+	for(var/obj/item/fish/fish as anything in box)
+		fish.randomize_size_and_weight()
+
 #undef FISH_REAGENT_AMOUNT
 #undef TRAIT_FISH_TESTING
-

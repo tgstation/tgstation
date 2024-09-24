@@ -162,7 +162,7 @@
 		on_invocation_complete(user)
 		return
 	flick("[icon_state]_flash", src)
-	playsound(src,'sound/magic/staff_animation.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_animation.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 
 /// Add special effects for casting a spell, basically you glow and hover in the air.
@@ -181,7 +181,7 @@
 /// Called when you actually finish the damn thing
 /obj/effect/grand_rune/proc/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
-	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_change.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(summon_round_event), user) // Running the event sleeps
 	trigger_side_effects()
 	tear_reality()

@@ -26,7 +26,7 @@
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
 
 /obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt
