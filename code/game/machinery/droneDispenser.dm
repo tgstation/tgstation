@@ -36,7 +36,7 @@
 	// ceasing production. Set to 0 for infinite.
 	var/maximum_idle = 3
 
-	var/work_sound = 'sound/items/rped.ogg'
+	var/work_sound = 'sound/items/tools/rped.ogg'
 	var/create_sound = 'sound/items/deconstruct.ogg'
 	var/recharge_sound = 'sound/machines/ping.ogg'
 
