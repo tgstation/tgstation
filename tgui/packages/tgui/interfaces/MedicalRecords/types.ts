@@ -13,6 +13,8 @@ export type MedicalRecordData = {
 
 export type MedicalRecord = {
   age: number;
+  // DOPPLER EDIT: chronological age
+  age_chronological: number;
   blood_type: string;
   crew_ref: string;
   dna: string;
@@ -27,6 +29,10 @@ export type MedicalRecord = {
   rank: string;
   species: string;
   trim: string;
+  // DOPPLER EDIT BEGIN - records & flavor text
+  past_general_records: string;
+  past_medical_records: string;
+  // DOPPLER EDIT END
 };
 
 export type MedicalNote = {
