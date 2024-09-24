@@ -57,10 +57,6 @@
 /turf/open/water/hot_spring/proc/hotspring_mood(mob/living/swimmer)
 	swimmer.add_mood_event("hotspring", /datum/mood_event/hotspring/nerfed)
 
-/datum/mood_event/hotspring/nerfed
-	description = span_nicegreen("The water was enjoyably warm!\n")
-	mood_change = 2
-
 // Steam particles for pairing with the hotsprings above
 
 /particles/hotspring_steam

@@ -704,7 +704,10 @@
 #define BLOODSHOT_DISGUST 25
 
 /datum/reagent/consumable/ethanol/bloodshot/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	else if(exposed_mob.blood_volume < exposed_mob.blood_volume_normal)
+	if(ishemophage(exposed_mob))
+		quality = RACE_DRINK
+
+	else if(exposed_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 		quality = DRINK_GOOD
 
 	if(!quality) // Basically, you don't have a reason to want to have this in your system, it doesn't taste good to you!
@@ -716,7 +719,7 @@
 
 /datum/reagent/consumable/ethanol/bloodshot/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(drinker.blood_volume < drinker.blood_volume_normal)
+	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 		drinker.blood_volume = max(drinker.blood_volume, min(drinker.blood_volume + (3 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL)) //Bloodshot quickly restores blood loss.
 
 /datum/reagent/consumable/ethanol/hippie_hooch

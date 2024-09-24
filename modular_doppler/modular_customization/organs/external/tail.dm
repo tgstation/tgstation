@@ -91,12 +91,6 @@
 	var/mob/living/carbon/human/empath = entered
 	empath.add_mood_event("dog_wag", /datum/mood_event/dog_wag)
 
-// The mood buff itself
-/datum/mood_event/dog_wag
-	description = "That wagging tail's excitement is infectious!"
-	mood_change = 1
-	timeout = 30 SECONDS
-
 /// Fox tail
 //
 /obj/item/organ/external/tail/fox
