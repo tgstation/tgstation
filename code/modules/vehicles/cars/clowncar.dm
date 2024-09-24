@@ -127,7 +127,7 @@
 						"[WOUND_PICK_HIGHEST_SEVERITY]"
 					)))
 					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
-					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
+					carbon_occupant.playsound_local(src, 'sound/items/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
@@ -168,7 +168,7 @@
 	target_pancake.visible_message(span_warning("[src] runs over [target_pancake], flattening [target_pancake.p_them()] like a pancake!"))
 	target_pancake.AddElement(/datum/element/squish, 5 SECONDS)
 	target_pancake.Paralyze(2 SECONDS)
-	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
+	playsound(target_pancake, 'sound/effects/cartoon_sfx/cartoon_splat.ogg', 75)
 	log_combat(src, crossed, "ran over")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user, obj/item/card/emag/emag_card)

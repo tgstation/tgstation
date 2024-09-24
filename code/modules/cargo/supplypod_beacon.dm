@@ -27,17 +27,17 @@
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE
-			playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+			playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 		if (SP_READY)
 			ready = TRUE
 		if (SP_LAUNCH)
 			launched = TRUE
-			playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+			playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
 			addtimer(CALLBACK(src, PROC_REF(endLaunch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
-			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
+			playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
 	update_appearance()

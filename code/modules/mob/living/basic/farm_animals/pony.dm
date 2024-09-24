@@ -15,7 +15,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -46,7 +46,7 @@
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
 	can_buckle = TRUE
 	buckle_lying = 0
-	playsound(src, 'sound/creatures/pony/snort.ogg', 50)
+	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)
@@ -85,9 +85,9 @@
 	manual_emote("whinnies ANGRILY!")
 
 	playsound(src, pick(list(
-		'sound/creatures/pony/whinny01.ogg',
-		'sound/creatures/pony/whinny02.ogg',
-		'sound/creatures/pony/whinny03.ogg'
+		'sound/mobs/non-humanoids/pony/whinny01.ogg',
+		'sound/mobs/non-humanoids/pony/whinny02.ogg',
+		'sound/mobs/non-humanoids/pony/whinny03.ogg'
 	)), 50)
 
 /mob/living/basic/pony/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)

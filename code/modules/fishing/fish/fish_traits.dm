@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		fish.damtype = BURN
 		fish.attack_verb_continuous = list("shocks", "zaps")
 		fish.attack_verb_simple = list("shock", "zap")
-		fish.hitsound = 'sound/effects/sparks4.ogg'
+		fish.hitsound = 'sound/effects/sparks/sparks4.ogg'
 
 /datum/fish_trait/electrogenesis/apply_to_mob(mob/living/basic/mob)
 	. = ..()

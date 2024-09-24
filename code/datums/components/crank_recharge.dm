@@ -16,7 +16,7 @@
 	var/is_charging = FALSE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
+/datum/component/crank_recharge/Initialize(charging_cell, spin_to_win = FALSE, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/items/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE

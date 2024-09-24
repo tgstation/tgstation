@@ -193,8 +193,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
-	return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+		return pick('sound/mobs/humanoids/human/gasp/gasp_female1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female2.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female3.ogg')
+	return pick('sound/mobs/humanoids/human/gasp/gasp_male1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_male2.ogg')
 
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
@@ -743,4 +743,4 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	return 'sound/voice/human/whistle1.ogg'
+	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
