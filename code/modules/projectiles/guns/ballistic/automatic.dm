@@ -389,6 +389,8 @@
 	var/degradation_stage_max = 5
 	/// The probability of degradation increasing per shot.
 	var/degradation_probability = 25
+	/// The maximum speed malus for projectile flight speed. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
+	var/maximum_speed_malus = 1.3
 
 	/// Whether or not our gun is suffering an EMP related malfunction.
 	var/emp_malfunction = FALSE
@@ -454,7 +456,7 @@
 		return //Only update if we actually increment our degradation stage
 
 	degradation_stage = clamp(degradation_stage + (emp_malfunction ? 2 : 1), 0, degradation_stage_max)
-	projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, 0, initial(projectile_speed_multiplier))
+	projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, initial(projectile_speed_multiplier), maximum_speed_malus)
 	fire_delay = initial(fire_delay) + (degradation_stage * 0.5)
 	do_sparks(1, TRUE, src)
 

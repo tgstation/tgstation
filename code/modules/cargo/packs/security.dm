@@ -259,7 +259,7 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/ammo_box/c38/empty = 5,
 					/obj/item/ammo_box/magazine/m38/empty = 5)
-	crate_name = "battle rifle crate"
+	crate_name = "magazine and speedlloader crate"
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
