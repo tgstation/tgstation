@@ -134,14 +134,14 @@
 	var/eye_icon = my_head?.eyes_icon || 'icons/mob/human/human_face.dmi'
 	/// DOPPLER SHIFT ADDITION END
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -BODY_LAYER) /// DOPPLER SHIFT EDIT: using eye_icon instead of human_face.dmi
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -BODY_LAYER) /// DOPPLER SHIFT EDIT: using eye_icon instead of human_face.dmi
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -eyes_layer) /// DOPPLER SHIFT EDIT: using eye_icon instead of human_face.dmi, eyes_layer instead of BODY_LAYER
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -eyes_layer) /// DOPPLER SHIFT EDIT: using eye_icon instead of human_face.dmi, eyes_layer instead of BODY_LAYER
 	var/list/overlays = list(eye_left, eye_right)
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -BODY_LAYER, alpha = eye_left.alpha)
-		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -BODY_LAYER, alpha = eye_right.alpha)
+		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -eyes_layer, alpha = eye_left.alpha) //DOPPLER SHIFT EDIT : using eyes_layer instead of BODY_LAYER
+		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -eyes_layer, alpha = eye_right.alpha) //DOPPLER SHIFT EDIT : using eyes_layer instead of BODY_LAYER
 	//var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD) /// DOPPLER SHIFT REMOVAL
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
@@ -719,6 +719,7 @@
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
+	eyes_layer = ABOVE_BODY_FRONT_HEAD_LAYER // DOPPLER EDIT - Roundstart Snails
 
 /obj/item/organ/internal/eyes/jelly
 	name = "jelly eyes"

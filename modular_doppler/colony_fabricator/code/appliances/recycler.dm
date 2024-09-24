@@ -70,6 +70,7 @@
 
 /obj/item/flatpacked_machine/recycler
 	name = "recycler parts kit"
+	desc = /obj/machinery/colony_recycler::desc
 	icon = 'modular_doppler/colony_fabricator/icons/parts_kits.dmi'
 	icon_state = "recycler"
 	type_to_deploy = /obj/machinery/colony_recycler

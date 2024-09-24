@@ -60,6 +60,7 @@
 
 /obj/item/flatpacked_machine/station_battery
 	name = "flat-packed stationary battery"
+	desc = /obj/machinery/power/smes/battery_pack::desc
 	icon_state = "battery_small_packed"
 	type_to_deploy = /obj/machinery/power/smes/battery_pack
 	custom_materials = list(
@@ -92,6 +93,7 @@
 
 /obj/item/flatpacked_machine/large_station_battery
 	name = "flat-packed large stationary battery"
+	desc = /obj/machinery/power/smes/battery_pack/large::desc
 	icon_state = "battery_large_packed"
 	type_to_deploy = /obj/machinery/power/smes/battery_pack/large
 	custom_materials = list(

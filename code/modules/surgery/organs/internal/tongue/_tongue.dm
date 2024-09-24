@@ -562,7 +562,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	modifies_speech = TRUE
 	voice_filter = "atempo=0.5" // makes them talk really slow
+	liked_foodtypes = VEGETABLES | FRUIT | GROSS | RAW //DOPPLER EDIT - Roundstart Snails - Food Prefs
+	disliked_foodtypes = DAIRY | ORANGES | SUGAR //DOPPLER EDIT: Roundstart Snails - As it turns out, you can't give a snail processed sugar or citrus.
 
+/* DOPPLER EDIT START - Roundstart Snails: Less annoying speech.
 /obj/item/organ/internal/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -572,6 +575,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		else
 			new_message += message[i]
 	speech_args[SPEECH_MESSAGE] = new_message
+*/ // DOPPLER EDIT END
 
 /obj/item/organ/internal/tongue/ethereal
 	name = "electric discharger"

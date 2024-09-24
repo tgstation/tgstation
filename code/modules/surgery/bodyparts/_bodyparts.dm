@@ -370,7 +370,11 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
+		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH) || HAS_TRAIT(victim, TRAIT_GOLEM_LIMBATTACHMENT)) // DOPPLER EDIT CHANGE - ORIGINAL: if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
+			// DOPPLER EDIT ADDITION START - golems lol
+			if(HAS_TRAIT(victim, TRAIT_GOLEM_LIMBATTACHMENT) && !(bodytype & BODYTYPE_GOLEM)) //if we're trying to attach something that isn't a fuggin rock, end out
+				return
+			// DOPPLER EDIT ADDITION END
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!try_attach_limb(victim))

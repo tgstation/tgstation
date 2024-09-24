@@ -1,0 +1,40 @@
+{
+	"satchel": [
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_clasps",
+			"blend_mode": "overlay"
+		}
+	],
+	"satchel_industrial": [
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_industrial_main",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_industrial_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "satchel_industrial_clasps",
+			"blend_mode": "overlay"
+		}
+	]
+}

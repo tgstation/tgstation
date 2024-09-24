@@ -352,25 +352,29 @@
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(ispath(back, /obj/item/storage/backpack))
-		switch(H.backpack)
-			if(GBACKPACK)
-				back = /obj/item/storage/backpack //Grey backpack
-			if(GSATCHEL)
-				back = /obj/item/storage/backpack/satchel //Grey satchel
-			if(GDUFFELBAG)
-				back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-			if(LSATCHEL)
-				back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-			if(GMESSENGER)
-				back = /obj/item/storage/backpack/messenger //Grey messenger bag
-			if(DSATCHEL)
-				back = satchel //Department satchel
-			if(DDUFFELBAG)
-				back = duffelbag //Department duffel bag
-			if(DMESSENGER)
-				back = messenger //Department messenger bag
-			else
-				back = backpack //Department backpack
+		/// DOPPLER SHIFT EDIT BEGIN
+		var/obj/back_as_obj = back
+		if("[back_as_obj.type]" == "[initial(src.back)]")
+			switch(H.backpack)
+				if(GBACKPACK)
+					back = /obj/item/storage/backpack //Grey backpack
+				if(GSATCHEL)
+					back = /obj/item/storage/backpack/satchel //Grey satchel
+				if(GDUFFELBAG)
+					back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
+				if(LSATCHEL)
+					back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
+				if(GMESSENGER)
+					back = /obj/item/storage/backpack/messenger //Grey messenger bag
+				if(DSATCHEL)
+					back = satchel //Department satchel
+				if(DDUFFELBAG)
+					back = duffelbag //Department duffel bag
+				if(DMESSENGER)
+					back = messenger //Department messenger bag
+				else
+					back = backpack //Department backpack
+		/// DOPPLER SHIFT EDIT END
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder

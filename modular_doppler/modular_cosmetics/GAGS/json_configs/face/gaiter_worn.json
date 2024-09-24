@@ -1,0 +1,18 @@
+{
+	"gaiter": [
+		{
+			"type": "icon_state",
+			"icon_state": "gaiter",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"gaiter_up": [
+		{
+			"type": "icon_state",
+			"icon_state": "gaiter_up",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

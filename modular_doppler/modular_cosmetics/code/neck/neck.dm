@@ -80,3 +80,14 @@
 	greyscale_config_worn = /datum/greyscale_config/maid_neck_cover/worn
 	greyscale_colors = "#7b9ab5#edf9ff"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/neck/mantle/recolorable
+	name = "mantle"
+	desc = "A simple drape over the shoulders."
+	icon = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/neck.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/neck.dmi'
+	icon_state = "mantle"
+	greyscale_colors = "#ffffff"
+	greyscale_config = /datum/greyscale_config/mantle
+	greyscale_config_worn = /datum/greyscale_config/mantle/worn
+	flags_1 = IS_PLAYER_COLORABLE_1

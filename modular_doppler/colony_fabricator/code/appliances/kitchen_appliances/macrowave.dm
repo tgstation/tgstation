@@ -30,6 +30,7 @@
 
 /obj/item/flatpacked_machine/macrowave
 	name = "microwave oven parts kit"
+	desc = /obj/machinery/microwave/frontier_printed::desc
 	icon = 'modular_doppler/colony_fabricator/icons/kitchen_stuff/microwave.dmi'
 	icon_state = "packed_microwave"
 	w_class = WEIGHT_CLASS_NORMAL

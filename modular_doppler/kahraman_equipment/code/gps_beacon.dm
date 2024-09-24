@@ -14,6 +14,7 @@
 
 /obj/item/flatpacked_machine/gps_beacon
 	name = "packed GPS beacon"
+	desc = /obj/item/gps/computer/beacon::desc
 	icon = 'modular_doppler/kahraman_equipment/icons/gps_beacon.dmi'
 	icon_state = "beacon_folded"
 	w_class = WEIGHT_CLASS_SMALL
