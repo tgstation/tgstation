@@ -26,7 +26,7 @@
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN //golem ERT
 
-	var/golem_speed_mod = 1
+	var/golem_speed_mod = 0.8
 
 /datum/species/golem/on_species_gain(mob/living/carbon/new_golem, datum/species/old_species, pref_load)
 	. = ..()

@@ -227,7 +227,7 @@
 
 //	 DOPPLER ADDITION START
 /datum/movespeed_modifier/status_effect/golem_plasteel
-	multiplicative_slowdown = 0.5 // Tank build?
+	multiplicative_slowdown = 0.7 // Tank build?
 // 	DOPPLER ADDITION END
 
 /datum/status_effect/golem/plasteel/on_apply()
@@ -238,7 +238,7 @@
 	// DOPPLER ADDITION START
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE)
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance += 15 // Gives them 15 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
+	golem_owner.physiology.damage_resistance += 20 // Gives them 20 extra damage resist. This basically means they soak 6 damage. In exchange, some more slowdown.
 	// DOPPLER ADDITION END
 	return TRUE
 
@@ -247,7 +247,7 @@
 	// DOPPLER ADDITION START
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/golem_plasteel, update=TRUE)
 	var/mob/living/carbon/human/golem_owner = owner
-	golem_owner.physiology.damage_resistance -= 15 // And God taketh away.
+	golem_owner.physiology.damage_resistance -= 20 // And God taketh away.
 	// DOPPLER ADDITION END
 	return ..()
 
