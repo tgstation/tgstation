@@ -25,7 +25,7 @@
 /obj/item/bodypart/leg/left/snail
 	icon_greyscale = BODYPART_ICON_SNAIL
 	bodyshape = BODYSHAPE_HUMANOID
-	unarmed_damage_low = 1.
+	unarmed_damage_low = 1
 	unarmed_damage_high = 5
 
 /obj/item/bodypart/leg/right/snail

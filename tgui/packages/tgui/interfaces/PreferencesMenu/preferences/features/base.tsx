@@ -17,6 +17,7 @@ import {
   NumberInput,
   Slider,
   Stack,
+  TextArea /* DOPPLER EDIT ADDITION */,
 } from '../../../../components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
@@ -311,6 +312,25 @@ export const FeatureShortTextInput = (
       value={props.value}
       maxLength={props.serverData.maximum_length}
       updateOnPropsChange
+      onChange={(_, value) => props.handleSetValue(value)}
+    />
+  );
+};
+
+// DOPPLER EDIT START: DOPPLER FEATURES BELOW
+
+export const FeatureTextInput = (
+  props: FeatureValueProps<string, string, FeatureShortTextData>,
+) => {
+  if (!props.serverData) {
+    return <Box>Loading...</Box>;
+  }
+
+  return (
+    <TextArea
+      height="100px"
+      value={props.value}
+      maxLength={props.serverData.maximum_length}
       onChange={(_, value) => props.handleSetValue(value)}
     />
   );
