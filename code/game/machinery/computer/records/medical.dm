@@ -66,6 +66,11 @@
 			rank = target.rank,
 			species = target.species,
 			trim = target.trim,
+			// DOPPLER EDIT BEGIN - records & flavor text
+			past_medical_records = target.past_medical_records,
+			past_general_records = target.past_general_records,
+			age_chronological = target.age_chronological,
+			// DOPPLER EDIT END
 		))
 
 	data["records"] = records

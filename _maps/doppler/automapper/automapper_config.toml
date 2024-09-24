@@ -9,7 +9,33 @@
 # Traits - Station (for station relatied edits), CentCom (for edits on the CC map), Mining (for edits on Lavaland)
 # More can be found in code\__DEFINES\maps.dm
 
+# METASTATION MAP TEMPLATES
+# Metastation Cryo
+[templates.metastation_cryo]
+map_files = ["metastation_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/metastation/"
+required_map = "MetaStation.dmm"
+coordinates = [133, 182, 1]
+trait_name = "Station"
+
+# DELTASTATION MAP EDITS
+# Deltastation Cryo
+[templates.deltastation_cryo]
+map_files = ["deltastation_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/deltastation/"
+required_map = "DeltaStation2.dmm"
+coordinates = [216, 93, 1]
+trait_name = "Station"
+
 # ICEBOX MAP EDITS
+# Icebox Cryo
+[templates.icebox_cryo]
+map_files = ["icebox_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/icebox/"
+required_map = "IceBoxStation.dmm"
+coordinates = [117, 142, 3]
+trait_name = "Station"
+
 # Icecats Camp Lower Level
 [templates.icebox_icecats_lower]
 map_files = ["icemoon_underground_icewalker_lower.dmm"]
@@ -24,4 +50,40 @@ map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
 coordinates = [170, 16, 2]
+trait_name = "Station"
+
+# TRAMSTATION MAP EDITS
+# Tramstation Cryo
+[templates.tramstation_cryo]
+map_files = ["tramstation_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/tramstation/"
+required_map = "tramstation.dmm"
+coordinates = [68, 102, 2]
+trait_name = "Station"
+
+# BIRDSHOT MAP EDITS
+# Birdshot Cryo
+[templates.birdshot_cryo]
+map_files = ["birdshot_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/birdshot/"
+required_map = "birdshot.dmm"
+coordinates = [142, 84, 1]
+trait_name = "Station"
+
+# NORTHSTAR MAP EDITS
+# Northstar Cryo
+[templates.northstar_cryo]
+map_files = ["northstar_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/northstar/"
+required_map = "north_star.dmm"
+coordinates = [130, 114, 3]
+trait_name = "Station"
+
+# WAWASTATION MAP EDITS
+# Wawastation Cryo
+[templates.wawastation_cryo]
+map_files = ["wawastation_cryo.dmm"]
+directory = "_maps/doppler/automapper/templates/wawastation/"
+required_map = "wawastation.dmm"
+coordinates = [83, 92, 1]
 trait_name = "Station"

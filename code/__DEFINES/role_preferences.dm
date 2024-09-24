@@ -38,6 +38,9 @@
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 #define ROLE_VOIDWALKER "Voidwalker"
+// DOPPLER EDIT ADDITION START
+#define ROLE_SPACE_SAPPER "Space Sapper"
+// DOPPLER EDIT ADDITION END
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"

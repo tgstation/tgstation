@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		if(readied_player.new_character)
 			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
-			inject(readied_player.new_character)
+			inject(readied_player.new_character, readied_player.client)	// DOPPLER EDIT, old code:	inject(readied_player.new_character)
 		CHECK_TICK
 
 /// Gets the current manifest.
@@ -98,7 +98,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 
 
 /// Injects a record into the manifest.
-/datum/manifest/proc/inject(mob/living/carbon/human/person)
+/datum/manifest/proc/inject(mob/living/carbon/human/person, client/person_client) // DOPPLER EDIT: records & flavor text
 	set waitfor = FALSE
 	if(!(person.mind?.assigned_role.job_flags & JOB_CREW_MANIFEST))
 		return
@@ -131,6 +131,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		// Locked specifics
 		locked_dna = record_dna,
 		mind_ref = person.mind,
+		age_chronological = person_client?.prefs.read_preference(/datum/preference/numeric/chronological_age),	// DOPPLER EDIT ADDITION
 	)
 
 	new /datum/record/crew(
@@ -152,6 +153,13 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, from_scan = TRUE),
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
+		// DOPPLER EDIT BEGIN - records & flavor text
+		past_general_records = person_client?.prefs.read_preference(/datum/preference/text/past_general_records),
+		past_medical_records = person_client?.prefs.read_preference(/datum/preference/text/past_medical_records),
+		past_security_records = person_client?.prefs.read_preference(/datum/preference/text/past_security_records),
+		exploitable_records = person_client?.prefs.read_preference(/datum/preference/text/exploitable_records),
+		age_chronological = person_client?.prefs.read_preference(/datum/preference/numeric/chronological_age),
+		// DOPPLER EDIT END
 	)
 
 /// Edits the rank and trim of the found record.

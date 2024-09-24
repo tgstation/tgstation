@@ -52,6 +52,7 @@
 #define CAT_TUBES "tubes"
 #define CAT_PILLS "pills"
 #define CAT_PATCHES "patches"
+#define CAT_HYPOS "hypos" /// DOPPLER SHIFT ADDITION
 #define DEFAULT_PATCH_STYLE "bandaid_blank"
 //used by chem master
 #define CONDIMASTER_STYLE_AUTO "auto"

@@ -25,6 +25,7 @@
 
 /obj/item/flatpacked_machine/water_synth
 	name = "water synthesizer parts kit"
+	desc = /obj/machinery/plumbing/synthesizer/water_synth::desc
 	icon = 'modular_doppler/colony_fabricator/icons/chemistry_machines.dmi'
 	icon_state = "water_synth_parts"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -68,6 +69,7 @@
 
 /obj/item/flatpacked_machine/hydro_synth
 	name = "hydroponics chemical synthesizer parts kit"
+	desc = /obj/machinery/plumbing/synthesizer/colony_hydroponics::desc
 	icon = 'modular_doppler/colony_fabricator/icons/chemistry_machines.dmi'
 	icon_state = "hydro_synth_parts"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -134,6 +136,7 @@
 
 /obj/item/flatpacked_machine/sustenance_machine
 	name = "sustenance dispenser parts kit"
+	desc = /obj/machinery/chem_dispenser/frontier_appliance::desc
 	icon = 'modular_doppler/colony_fabricator/icons/chemistry_machines.dmi'
 	icon_state = "dispenser_parts"
 	w_class = WEIGHT_CLASS_NORMAL

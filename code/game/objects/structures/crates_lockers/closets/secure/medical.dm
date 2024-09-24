@@ -99,7 +99,7 @@
 	. = ..()
 
 	// Traitor steal objective
-	new /obj/item/reagent_containers/hypospray/cmo(src)
+	//new /obj/item/reagent_containers/hypospray/cmo(src) /// DOPPLER SHIFT REMOVAL
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control locker"

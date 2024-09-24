@@ -257,7 +257,7 @@
 		/obj/item/healthanalyzer,
 		/obj/item/hemostat,
 		/obj/item/holosign_creator/medical,
-//		/obj/item/hypospray,
+		/obj/item/hypospray,
 		/obj/item/implant,
 		/obj/item/implantcase,
 		/obj/item/implanter,
@@ -268,7 +268,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
-//		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/cup/hypovial,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
@@ -283,6 +283,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/storage/box/bandages,
 		/obj/item/bodybag,
+		/obj/item/storage/hypospraykit,
 	))
 
 // Big surgical kit that can be worn like a bag, holds 14 normal items (more than what a backpack can do!) but works like a duffelbag
@@ -354,7 +355,7 @@
 		/obj/item/healthanalyzer,
 		/obj/item/hemostat,
 		/obj/item/holosign_creator/medical,
-//		/obj/item/hypospray,
+		/obj/item/hypospray,
 		/obj/item/implant,
 		/obj/item/implantcase,
 		/obj/item/implanter,
@@ -367,7 +368,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
-//		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/cup/hypovial,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
@@ -390,6 +391,7 @@
 		/obj/item/emergency_bed,
 		/obj/item/storage/box/bandages,
 		/obj/item/bodybag,
+		/obj/item/storage/hypospraykit,
 	))
 
 // Midrange bag for paramedics, hypospray and more flexible item wise than surgical, but restricted to small items only
@@ -429,10 +431,10 @@
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/gauze/sterilized = 1,
 		/obj/item/storage/pill_bottle/painkiller = 1,
-//		/obj/item/hypospray/mkii/piercing/atropine = 1,
-//		/obj/item/reagent_containers/cup/vial/small/libital = 1,
-//		/obj/item/reagent_containers/cup/vial/small/lenturi = 1,
-//		/obj/item/reagent_containers/cup/vial/small/seiver = 1,
+		/obj/item/hypospray/mkii/piercing/atropine = 1,
+		/obj/item/reagent_containers/cup/hypovial/small/libital = 1,
+		/obj/item/reagent_containers/cup/hypovial/small/lenturi = 1,
+		/obj/item/reagent_containers/cup/hypovial/small/seiver = 1,
 		/obj/item/healthanalyzer = 1,
 	)
 	generate_items_inside(items_inside,src)
@@ -461,7 +463,7 @@
 		/obj/item/healthanalyzer,
 		/obj/item/hemostat,
 		/obj/item/holosign_creator/medical,
-//		/obj/item/hypospray,
+		/obj/item/hypospray,
 		/obj/item/implant,
 		/obj/item/implantcase,
 		/obj/item/implanter,
@@ -472,7 +474,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
-//		/obj/item/reagent_containers/cup/vial,
+		/obj/item/reagent_containers/cup/hypovial,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
@@ -490,4 +492,5 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/storage/box/bandages,
 		/obj/item/bodybag,
+		/obj/item/storage/hypospraykit,
 	))

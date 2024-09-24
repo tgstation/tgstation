@@ -218,6 +218,7 @@
 
 /obj/item/flatpacked_machine/arc_furnace
 	name = "flat-packed arc furnace"
+	desc = /obj/machinery/arc_furnace::desc
 	icon_state = "arc_furnace_folded"
 	type_to_deploy = /obj/machinery/arc_furnace
 	custom_materials = list(

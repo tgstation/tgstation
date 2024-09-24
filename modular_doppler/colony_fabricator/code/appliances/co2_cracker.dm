@@ -110,6 +110,7 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 
 /obj/item/flatpacked_machine/co2_cracker
 	name = "CO2 cracker parts kit"
+	desc = /obj/machinery/electrolyzer/co2_cracker::desc
 	icon = 'modular_doppler/colony_fabricator/icons/parts_kits.dmi'
 	icon_state = "co2_cracker"
 	type_to_deploy = /obj/machinery/electrolyzer/co2_cracker

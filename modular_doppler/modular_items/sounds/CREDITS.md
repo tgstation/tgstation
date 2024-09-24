@@ -1,0 +1,14 @@
+# Shipchems Sound Credits
+- lid_open1.ogg
+  - CliffracerX: clipping, mixdown
+  - https://freesound.org/people/221098HariPotter/sounds/655564/
+  - https://freesound.org/people/NikaSound/sounds/707925/
+- lid_open2.ogg
+  - CliffracerX: clipping, mixdown
+  - https://freesound.org/people/InMotionAudio/sounds/726896/
+  - https://freesound.org/people/NikaSound/sounds/707925/
+- lid_close1.ogg
+  - https://freesound.org/people/SpaceJoe/sounds/509500/
+- lid_close2.ogg
+  - https://freesound.org/people/SpaceJoe/sounds/509505/
+- To cover all of the above: CC4.0-BY-SA-NC (Attribution, Share-Alike, Non-Commercial)

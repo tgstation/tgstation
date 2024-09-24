@@ -51,6 +51,7 @@
 
 /obj/item/flatpacked_machine/fuel_generator
 	name = "flat-packed S.O.F.I.E.-type portable generator"
+	desc = /obj/machinery/power/port_gen/pacman/solid_fuel::desc
 	icon_state = "fuel_generator_packed"
 	type_to_deploy = /obj/machinery/power/port_gen/pacman/solid_fuel
 	custom_materials = list(
