@@ -4593,9 +4593,6 @@
 	},
 /turf/open/floor/carpet/neon/simple/red/nodots,
 /area/mine/cafeteria)
-"HX" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "HZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -140319,7 +140316,7 @@ IN
 IN
 IN
 IN
-HX
+IN
 NL
 NL
 NL
