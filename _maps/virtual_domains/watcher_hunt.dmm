@@ -42,7 +42,7 @@
 /area/virtual_domain/fullbright)
 "o" = (
 /obj/machinery/digital_clock/score_card,
-/turf/open/floor/iron,
+/turf/closed/wall/r_wall,
 /area/virtual_domain/fullbright)
 "p" = (
 /obj/machinery/conveyor/auto/fast/inverted{
@@ -401,8 +401,8 @@ J
 h
 H
 h
-f
 o
+h
 h
 f
 a

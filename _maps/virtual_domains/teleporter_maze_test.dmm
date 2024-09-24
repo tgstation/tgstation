@@ -128,8 +128,8 @@
 /turf/open/floor/circuit,
 /area/virtual_domain/fullbright)
 "N" = (
-/obj/structure/closet/crate/secure/bitrunning/encrypted,
 /obj/effect/turf_decal/arrows,
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security,
 /turf/open/floor/iron/textured,
 /area/virtual_domain/fullbright)
 "Q" = (
