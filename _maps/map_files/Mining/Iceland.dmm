@@ -6972,16 +6972,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/laborcamp)
-"UL" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "lavaland_mining_mid"
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/mine/eva/lower)
 "UN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -114972,7 +114962,7 @@ yV
 yV
 yV
 yV
-UL
+Qs
 jO
 yV
 yV

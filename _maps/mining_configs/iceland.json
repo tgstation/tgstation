@@ -25,6 +25,8 @@
 			"Ice Ruins": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
+			"Gravity": true,
+			"Linkage": null
 		},
 		{
 			"Down": true,
