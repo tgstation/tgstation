@@ -7,6 +7,7 @@
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/janitor
 	test_only = TRUE
+	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/janitor_work/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
@@ -14,6 +15,7 @@
 
 	for(var/obj/item/gun/ballistic/ballistic_gun in created_atoms)
 		ballistic_gun.magazine.empty_magazine()
+		ballistic_gun.update_icon()
 
 	for(var/obj/item/gun/energy/energy_gun in created_atoms)
 		energy_gun.cell.charge = 0
@@ -61,6 +63,7 @@
 	map_name = "customer_push_test"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/waiter
+	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/customer_push_test/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
@@ -85,6 +88,7 @@
 	map_name = "teleporter_maze_test"
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/scientist
+	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/teleporter_maze_test/setup_domain(list/created_atoms)
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
@@ -121,6 +125,7 @@
 	if(!our_controller)
 		CRASH("No score card!!!")
 	our_controller.target_score = target_score
+	our_controller.round_length = round_time
 	for(var/obj/bitrunning/watcher_hunt_spawner/node in created_atoms)
 		our_controller.found_spawners.Add(node)
 		node.my_score = our_controller
@@ -188,6 +193,7 @@
 	var/list/phone_message = list(
 		"ay yo the pizza here",
 	)
+	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/outfit/job/prisoner/night_guard
 	name = "Night Guard"
@@ -238,7 +244,7 @@
 		"Uh, now concerning your safety. ",
 		"The only real risk to you as a night watchman here, if any, is the fact that these cyborgs, uh, if they happen to see you after hours probably won't recognize you as an employee.",
 		"They'll pr-They'll most likely see you as a potential Syndicate operative.",
-		"Now, since Nanotrasen and the Syndicate are officially at war, they'll probably try to, uh, robust you. ",
+		"Now, since Nanotrasen and the Syndicate are officially at war, they'll probably try to, uh, robust you.",
 		"Heh.",
 		"Yeah, they don't tell you these things when you sign up.",
 		"But hey, first night should be a breeze.",

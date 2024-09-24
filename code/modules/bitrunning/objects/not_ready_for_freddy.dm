@@ -545,7 +545,7 @@
 			markiplier.hud_used.show_hud(HUD_STYLE_STANDARD)
 	playsound(src, 'sound/misc/announce.ogg', 100, FALSE)
 	our_phone.say("Congratulations on making it through the night! Here's your nightly bonus.")
-	new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
+	new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_turf(src))
 
 /obj/bitrunning/animatronic_controller/proc/you_failed(obj/bitrunning/animatronic/killer_robot)
 	deltimer(movement_process_timer)

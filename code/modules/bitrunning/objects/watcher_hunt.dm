@@ -271,6 +271,7 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_low/no_replace
 	replace_destroyed_targets = FALSE
+	spawn_delay = 1.5 SECONDS
 
 /obj/bitrunning/watcher_hunt_spawner/station_medium
 	spawn_order = list(
@@ -286,6 +287,7 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_medium/no_replace
 	replace_destroyed_targets = FALSE
+	spawn_delay = 1.5 SECONDS
 
 /obj/bitrunning/watcher_hunt_spawner/station_high
 	spawn_order = list(
@@ -302,6 +304,7 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_high/no_replace
 	replace_destroyed_targets = FALSE
+	spawn_delay = 1.5 SECONDS
 
 /obj/bitrunning/watcher_hunt_spawner/station_max
 	spawn_order = list(
@@ -379,7 +382,7 @@
 		finished = TRUE
 		say("Target quota reached! Thank you for being a reformed employee!")
 		say("Deposit this box to return to reality!")
-		new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_step(src, SOUTH))
+		new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_step(src, SOUTH))
 
 /obj/machinery/digital_clock/score_card/update_time()
 	var/current_score_text = "[current_score]"

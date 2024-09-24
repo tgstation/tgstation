@@ -102,7 +102,7 @@
 				sisyphus.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/shoving_customer)
 				sisyphus = null
 
-			new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
+			new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_turf(src))
 			qdel(possible_cross)
 			return
 		if(istype(possible_cross, /obj/bitrunning/customer_speech))

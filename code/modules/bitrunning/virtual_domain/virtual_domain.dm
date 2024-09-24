@@ -58,6 +58,8 @@
 	var/secondary_loot_generated
 	/// Has this domain been beaten with high enough score to spawn a tech disk?
 	var/disk_reward_spawned = FALSE
+	/// What cache path should we spawn?
+	var/cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted
 
 	/**
 	 * Modularity

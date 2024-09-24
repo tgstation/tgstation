@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	playsound(src, 'sound/machines/ping.ogg', 100, FALSE)
 	say("No messes detected! Thank you for being a reformed employee!")
 	say("Deposit this box to return to reality!")
-	new /obj/structure/closet/crate/secure/bitrunning/encrypted(get_turf(src))
+	new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_turf(src))
 
 /obj/effect/bitrunner_exit_portal
 	name = "exit portal"
