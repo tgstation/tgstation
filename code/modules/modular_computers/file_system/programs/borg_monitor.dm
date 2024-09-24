@@ -122,7 +122,7 @@
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
 		to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
 		return FALSE
-	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
+	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message", max_length = MAX_MESSAGE_LEN)
 	if(!message)
 		return FALSE
 	send_message(message, robot, user)
@@ -139,10 +139,10 @@
 	if(user)
 		to_chat(user, "Message sent to [robot]: [message]")
 	robot.logevent("Message from [ID] -- \"[message]\"")
-	SEND_SOUND(robot, 'sound/machines/twobeep_high.ogg')
+	SEND_SOUND(robot, 'sound/machines/beep/twobeep_high.ogg')
 	if(robot.connected_ai)
 		to_chat(robot.connected_ai, "<br><br>[span_notice("Message from [ID] to [robot] -- \"[message]\"")]<br>")
-		SEND_SOUND(robot.connected_ai, 'sound/machines/twobeep_high.ogg')
+		SEND_SOUND(robot.connected_ai, 'sound/machines/beep/twobeep_high.ogg')
 	user?.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
 	return TRUE
 

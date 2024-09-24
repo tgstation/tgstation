@@ -161,7 +161,7 @@
 		RegisterSignal(grabbed_atom, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
-	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
+	playsound(grabbed_atom, 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg', 75, TRUE)
 	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
@@ -223,7 +223,7 @@
 		clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch(atom/movable/launched_object)
-	playsound(launched_object, 'sound/magic/repulse.ogg', 100, TRUE)
+	playsound(launched_object, 'sound/effects/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, launched_object), get_turf(src), 10)
 	launched_object.throw_at(target_turf, range = grab_range, speed = launched_object.density ? 3 : 4, thrower = mod.wearer, spin = isitem(launched_object))

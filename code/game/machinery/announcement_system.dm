@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(machine_stat & BROKEN)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
 		if("ArrivalText")

@@ -240,21 +240,7 @@
 	icon_state = "durathread-fake"
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
-	allowed = list(
-		/obj/item/cultivator,
-		/obj/item/geneshears,
-		/obj/item/graft,
-		/obj/item/hatchet,
-		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/secateurs,
-		/obj/item/seeds,
-		/obj/item/storage/bag/plants,
-	)
+	allowed = /obj/item/clothing/suit/apron::allowed
 	fishing_modifier = -4
 
 /datum/armor/robe_durathread
@@ -306,7 +292,7 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
 	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
 	M.faction += list("[REF(usr)]")
 	robe_charge = FALSE

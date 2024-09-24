@@ -17,8 +17,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	max_integrity = 40
-	pickup_sound = 'sound/items/grenade_pick_up.ogg'
-	drop_sound = 'sound/items/grenade_drop.ogg'
+	pickup_sound = 'sound/items/handling/grenade/grenade_pick_up.ogg'
+	drop_sound = 'sound/items/handling/grenade/grenade_drop.ogg'
 	sound_vary = TRUE
 	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
 	var/dud_flags = NONE
@@ -155,7 +155,7 @@
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	playsound(src, 'sound/items/weapons/armbomb.ogg', volume, TRUE)
 	if(istype(user))
 		user.add_mob_memory(/datum/memory/bomb_planted, antagonist = src)
 	active = TRUE

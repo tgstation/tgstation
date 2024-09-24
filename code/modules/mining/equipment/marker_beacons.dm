@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
 		visible_message(span_danger("[src] is disintegrated by [I]!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		qdel(src)
 		return
 	return ..()

@@ -17,7 +17,7 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/tatoralert.ogg'
+	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 
 	///The flag of uplink that this traitor is supposed to have.
 	var/uplink_flag_given = UPLINK_TRAITORS
@@ -366,7 +366,7 @@
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
 

@@ -29,8 +29,6 @@
 	var/anger = 0
 	///The lobstrosity type this matures into
 	var/lob_type = /mob/living/basic/mining/lobstrosity/juvenile/lava
-	///at which rate the crab gains maturation
-	var/growth_rate = 100 / (10 MINUTES) * 10
 
 /obj/item/fish/chasm_crab/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
@@ -57,39 +55,39 @@
 		if(FISH_SIZE_BULKY_MAX to INFINITY)
 			multiplier += 0.8
 
-	if(weight <= 800)
-		multiplier -= 0.1 * round((1000 - weight) / 200)
-	else if(weight >= 1500)
-		multiplier += min(0.1 * round((weight - 1000) / 500), 2)
 
-	AddComponent(/datum/component/fish_growth, lob_type, initial(growth_rate) * multiplier)
+	if(weight <= (average_weight - 200))
+		multiplier -= 0.1 * round((average_weight - weight) / 200)
+	else if(weight >= (average_weight + 500))
+		multiplier += min(0.1 * round((weight - average_weight) / 500), 2)
+	AddComponent(/datum/component/fish_growth, lob_type, 10 MINUTES * multiplier)
 
 /obj/item/fish/chasm_crab/pet_fish(mob/living/user)
 	. = ..()
 	if(.)
 		anger -= min(anger, 6.5)
 
-/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick)
+/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
-	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	var/hunger = get_hunger()
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
-		anger += growth_rate * 2 * seconds_per_tick
+		anger += growth * 2
 		return COMPONENT_DONT_GROW
 
 	if(hunger >= 0.4) //I'm hungry and angry
-		anger += growth_rate * 0.6 * seconds_per_tick
+		anger += growth * 0.6
 
 	if(!isaquarium(loc))
 		return
 
 	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
-		anger += growth_rate * 0.25 * seconds_per_tick
+		anger += growth * 0.25
 	var/fish_count = length(aquarium.get_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
-		anger += growth_rate * 0.3 * seconds_per_tick
+		anger += growth * 0.3
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
@@ -174,7 +172,7 @@
 		throw_text = "starts cooking in your hands, it may explode soon!",\
 		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
 		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
-		sound_on_success = 'sound/weapons/parry.ogg',\
+		sound_on_success = 'sound/items/weapons/parry.ogg',\
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
 
@@ -188,7 +186,7 @@
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	active_arm?.dismember()
 	to_chat(user, span_warning("[src] explodes!"))
-	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
 	user.flash_act(1, 1)
 	qdel(src)
 
@@ -201,7 +199,7 @@
 	maximum_bonus = 30
 
 /obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
-	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
 	user.flash_act(1, 1)
 	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
 	qdel(src)
