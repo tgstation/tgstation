@@ -219,20 +219,24 @@
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 	isGlass = FALSE
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
-	var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
+	/// DOPPLER SHIFT REMOVAL BEGIN - everything has caps now
+	/*var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
 	var/cap_icon_state = "bottle_cap_small"
 	var/cap_on = TRUE
 	var/cap_lost = FALSE
-	var/mutable_appearance/cap_overlay
+	var/mutable_appearance/cap_overlay*/
+	/// DOPPLER SHIFT REMOVAL END
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
 
-/obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
 	. = ..()
 	if(cap_on)
 		spillable = FALSE
 		update_appearance()
+
 
 /obj/item/reagent_containers/cup/glass/waterbottle/update_overlays()
 	. = ..()
@@ -302,7 +306,8 @@
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
 			return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return ..()*/
+/// DOPPLER SHIFT REMOVAL END
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
