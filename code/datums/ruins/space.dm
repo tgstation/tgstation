@@ -528,3 +528,10 @@
 	description = "A Comms Buoy satellite that has been hijacked by local criminal elements, acting as a broadcaster, receiver and relay for \
 	evil interstellar communications. Due to the shoddy tech available, it does not enable local communications."
 
+/datum/map_template/ruin/space/commsbuoy_nt
+	id = "commsbuoy_nt"
+	suffix = "commsbuoy_nt.dmm"
+	name = "Nanotrasen Model-7 Communications Buoy"
+	description = "One of Nanotrasen's highly advanced Communication Buoys. Besides acting as a broadcaster, receiver and relay for interstellar \
+	communications, the satellite also includes a Local-Network array and two multi-function satellite dishes, providing the local sector with \
+	connectivity - as long as you have your Employee ID handy. Though, this one has been reported to have some recent malfunctions."

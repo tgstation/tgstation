@@ -21,6 +21,7 @@
 #_maps/RandomRuins/SpaceRuins/clericden.dmm
 #_maps/RandomRuins/SpaceRuins/clownplanet.dmm
 #_maps/RandomRuins/SpaceRuins/commsbuoy_lowtech.dmm
+#_maps/RandomRuins/SpaceRuins/commsbuoy_nt.dmm
 #_maps/RandomRuins/SpaceRuins/commsbuoy_pirate.dmm
 #_maps/RandomRuins/SpaceRuins/crashedclownship.dmm
 #_maps/RandomRuins/SpaceRuins/crashedship.dmm
