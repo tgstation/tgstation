@@ -525,6 +525,6 @@
 	id = "commsbuoy_pirate"
 	suffix = "commsbuoy_pirate.dmm"
 	name = "Pirated Communications Buoy"
-	description = "A Comms Buoy satellite, acting as a broadcaster, receiver and relay for interstellar communications. Due to the shoddy tech \
-	available, it does not enable local communications. This one has been hijacked by local criminal elements."
+	description = "A Comms Buoy satellite that has been hijacked by local criminal elements, acting as a broadcaster, receiver and relay for \
+	evil interstellar communications. Due to the shoddy tech available, it does not enable local communications."
 
