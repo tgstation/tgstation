@@ -38,7 +38,7 @@
 	RegisterSignal(tumorful, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 
-/obj/item/organ/internal/heart/hemophage/Remove(mob/living/carbon/tumorless, special = FALSE)
+/obj/item/organ/internal/heart/hemophage/Remove(mob/living/carbon/tumorless, special = FALSE, movement_flags)
 	. = ..()
 
 	SEND_SIGNAL(tumorless, COMSIG_PULSATING_TUMOR_REMOVED, tumorless)
