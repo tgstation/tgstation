@@ -39,12 +39,21 @@
 /datum/component/hide_weather_planes/InheritComponent(datum/component/new_comp, i_am_original, atom/movable/screen/plane_master/care_about)
 	if(!i_am_original)
 		return
+	var/datum/plane_master_group/home = parent
+	var/mob/our_lad = home.our_hud?.mymob
+	var/our_offset = GET_TURF_PLANE_OFFSET(our_lad)
 	plane_masters += care_about
 	RegisterSignal(care_about, COMSIG_QDELETING, PROC_REF(plane_master_deleted))
 	if(length(active_weather))
-		care_about.enable_alpha()
+		//If there's weather to care about we unhide our new plane and adjust its alpha
+		care_about.unhide_plane(our_lad)
+
+		if(care_about.offset >= our_offset)
+			care_about.enable_alpha()
+		else
+			care_about.disable_alpha()
 	else
-		care_about.disable_alpha()
+		care_about.hide_plane(our_lad)
 
 /datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/new_hud)
 	SIGNAL_HANDLER
