@@ -29,6 +29,7 @@
 	desc = "A magazine for a battle rifle BR-38 battle rifle."
 	icon_state = "38mag"
 	ammo_type = /obj/item/ammo_casing/c38
+	caliber = CALIBER_38
 	max_ammo = 10
 	ammo_band_icon = "+38mag_ammo_band"
 	ammo_band_color = null
