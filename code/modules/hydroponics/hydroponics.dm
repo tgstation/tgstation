@@ -532,6 +532,7 @@
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+	age = 1
 	update_appearance()
 	if(isnull(myseed))
 		particles = null
