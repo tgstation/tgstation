@@ -16,7 +16,7 @@
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(

@@ -2,7 +2,7 @@
 /obj/item/wormhole_jaunter
 	name = "wormhole jaunter"
 	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -107,7 +107,7 @@
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
+		playsound(M,'sound/items/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)

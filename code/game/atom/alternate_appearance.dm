@@ -35,19 +35,50 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	GLOB.active_alternate_appearances += src
 
 	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			show_to(mob)
+		apply_to_new_mob(mob)
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	GLOB.active_alternate_appearances -= src
 	return ..()
 
-/datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
-	if(mobShouldSee(M))
-		show_to(M)
+/// Wrapper for applying this alt hud to the passed mob (if they should see it)
+/datum/atom_hud/alternate_appearance/proc/apply_to_new_mob(mob/applying_to)
+	if(mobShouldSee(applying_to))
+		if(!hud_users_all_z_levels[applying_to])
+			show_to(applying_to)
+		return TRUE
+	return FALSE
 
+/// Checks if the passed mob should be seeing this hud
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
+
+/datum/atom_hud/alternate_appearance/show_to(mob/new_viewer)
+	. = ..()
+	if(!new_viewer)
+		return
+	track_mob(new_viewer)
+
+/// Registers some signals to track the mob's state to determine if they should be seeing the hud still
+/datum/atom_hud/alternate_appearance/proc/track_mob(mob/new_viewer)
+	return
+
+/datum/atom_hud/alternate_appearance/hide_from(mob/former_viewer, absolute)
+	. = ..()
+	if(!former_viewer || hud_atoms_all_z_levels[former_viewer] >= 1)
+		return
+	untrack_mob(former_viewer)
+
+/// Unregisters the signals that were tracking the mob's state
+/datum/atom_hud/alternate_appearance/proc/untrack_mob(mob/former_viewer)
+	return
+
+/datum/atom_hud/alternate_appearance/proc/check_hud(mob/source)
+	SIGNAL_HANDLER
+	// Attempt to re-apply the hud entirely
+	if(!apply_to_new_mob(source))
+		// If that failed, probably shouldn't be seeing it at all, so nuke it
+		hide_from(source, absolute = TRUE)
 
 /datum/atom_hud/alternate_appearance/add_atom_to_hud(atom/A, image/I)
 	. = ..()
@@ -99,6 +130,22 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)
 
+/datum/atom_hud/alternate_appearance/basic/track_mob(mob/new_viewer)
+	RegisterSignals(new_viewer, list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+	), PROC_REF(check_hud), override = TRUE)
+
+/datum/atom_hud/alternate_appearance/basic/untrack_mob(mob/former_viewer)
+	UnregisterSignal(former_viewer, list(
+		COMSIG_MOB_ANTAGONIST_REMOVED,
+		COMSIG_MOB_GHOSTIZED,
+		COMSIG_MOB_MIND_TRANSFERRED_INTO,
+		COMSIG_MOB_MIND_TRANSFERRED_OUT_OF,
+	))
+
 /datum/atom_hud/alternate_appearance/basic/add_atom_to_hud(atom/A)
 	LAZYINITLIST(A.hud_list)
 	A.hud_list[appearance_key] = image
@@ -136,16 +183,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/noncult
 
 /datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!IS_CULTIST(M))
-		return TRUE
-	return FALSE
+	return !IS_CULTIST(M)
 
-/datum/atom_hud/alternate_appearance/basic/cult
-
-/datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(IS_CULTIST(M))
-		return TRUE
-	return FALSE
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult
+	antag_datum_type = /datum/antagonist/cult
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware
 
@@ -171,3 +212,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	return ..()
 
 /datum/atom_hud/alternate_appearance/basic/food_demands
+
+/datum/atom_hud/alternate_appearance/basic/heretic
+
+/datum/atom_hud/alternate_appearance/basic/heretic/mobShouldSee(mob/M)
+	if(IS_HERETIC(M))
+		return TRUE
+	return FALSE

@@ -48,6 +48,12 @@
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
 	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BOT_SUMMON_TARGET), PROC_REF(clear_summon))
+	RegisterSignal(new_pawn, COMSIG_MOB_AI_MOVEMENT_STARTED, PROC_REF(on_movement_start))
+
+/datum/ai_controller/basic_controller/bot/proc/on_movement_start(mob/living/basic/bot/source, atom/target)
+	SIGNAL_HANDLER
+	if(current_movement_target == blackboard[BB_BEACON_TARGET])
+		source.update_bot_mode(new_mode = BOT_PATROL)
 
 /datum/ai_controller/basic_controller/bot/proc/clear_summon()
 	SIGNAL_HANDLER
@@ -55,7 +61,15 @@
 	var/mob/living/basic/bot/bot_pawn = pawn
 	bot_pawn.bot_reset()
 
-/datum/ai_controller/basic_controller/bot/able_to_run()
+/datum/ai_controller/basic_controller/bot/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_BOT_MODE_FLAGS_SET, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/basic_controller/bot/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_BOT_MODE_FLAGS_SET))
+	return ..()
+
+/datum/ai_controller/basic_controller/bot/get_able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
 		return FALSE
@@ -67,7 +81,7 @@
 
 /datum/ai_controller/basic_controller/bot/proc/reset_bot()
 	SIGNAL_HANDLER
-
+	CancelActions()
 	if(!length(reset_keys))
 		return
 	for(var/key in reset_keys)
@@ -122,7 +136,6 @@
 		return
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
-		bot_pawn.update_bot_mode(new_mode = BOT_PATROL)
 		controller.queue_behavior(travel_behavior, BB_BEACON_TARGET)
 		return
 
@@ -187,8 +200,6 @@
 /datum/ai_planning_subtree/respond_to_summon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_BOT_SUMMON_TARGET))
 		return
-	controller.clear_blackboard_key(BB_PREVIOUS_BEACON_TARGET)
-	controller.clear_blackboard_key(BB_BEACON_TARGET)
 	controller.queue_behavior(/datum/ai_behavior/travel_towards/bot_summon, BB_BOT_SUMMON_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 

@@ -72,6 +72,7 @@
 	encrypted_crate.abstract_move(selected_crate.loc)
 	selected_crate.abstract_move(original_location)
 
+
 /// A location for mobs to spawn.
 /obj/effect/landmark/bitrunning/mob_segment
 	name = "Bitrunning modular mob segment"

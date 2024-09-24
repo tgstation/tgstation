@@ -7,7 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
-	stinger_sound = 'sound/ambience/antag/ayylien.ogg'
+	stinger_sound = 'sound/music/antag/ayylien.ogg'
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -70,7 +70,7 @@
 	return team
 
 /datum/antagonist/abductor/on_gain()
-	owner.set_assigned_role(SSjob.GetJobType(role_job))
+	owner.set_assigned_role(SSjob.get_job_type(role_job))
 	owner.special_role = ROLE_ABDUCTOR
 	objectives += team.objectives
 	finalize_abductor()

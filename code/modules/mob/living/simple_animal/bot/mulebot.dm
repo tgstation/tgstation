@@ -33,7 +33,6 @@
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
 	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
-	shadow_type = SHADOW_LARGE
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -336,7 +335,7 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
+			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, max_length = MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
 				name = "\improper MULEbot [new_id]"
@@ -361,10 +360,10 @@
 	switch(type)
 		if(SIGH)
 			audible_message(span_hear("[src] makes a sighing buzz."))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		if(ANNOYED)
 			audible_message(span_hear("[src] makes an annoyed buzzing sound."))
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 		if(DELIGHT)
 			audible_message(span_hear("[src] makes a delighted ping!"))
 			playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
@@ -713,7 +712,7 @@
 
 // player on mulebot attempted to move
 /mob/living/simple_animal/bot/mulebot/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	if(load == user)
 		unload(0)
@@ -807,7 +806,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/mouse_drop_receive(atom/movable/AM, mob/user, params)
 	var/mob/living/L = user
 
-	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
+	if(user.incapacitated || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
 	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!

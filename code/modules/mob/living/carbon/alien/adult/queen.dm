@@ -11,7 +11,6 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
-	shadow_type = SHADOW_LARGE
 
 	var/alt_inhands_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 
@@ -169,10 +168,9 @@
 		span_noticealien("The queen has granted you a promotion to Praetorian!"),
 	)
 
-	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(to_promote.loc)
-	to_promote.mind.transfer_to(new_prae)
-
-	qdel(to_promote)
+	var/mob/living/carbon/alien/lucky_winner = to_promote
+	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(lucky_winner.loc)
+	lucky_winner.alien_evolve(new_prae)
 	qdel(src)
 	return TRUE
 

@@ -1,7 +1,7 @@
 /obj/structure/lattice
 	name = "lattice"
 	desc = "A lightweight support lattice. These hold our station together."
-	icon = 'icons/obj/structures/smooth/lattice.dmi'
+	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
 	base_icon_state = "lattice"
 	density = FALSE
@@ -67,8 +67,8 @@
 	return FALSE
 
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
-		var/design_structure = rcd_data[RCD_DESIGN_PATH]
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
+		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
@@ -89,7 +89,7 @@
 /obj/structure/lattice/catwalk
 	name = "catwalk"
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
-	icon = 'icons/obj/structures/smooth/catwalk.dmi'
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 2
@@ -138,7 +138,7 @@
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
 	desc = "A specialized support beam for building across lava. Watch your step."
-	icon = 'icons/obj/structures/smooth/catwalk.dmi'
+	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk-0"
 	base_icon_state = "catwalk"
 	number_of_mats = 1
@@ -162,7 +162,7 @@
 		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
 		return
 	to_chat(user, span_notice("You construct new plating with [src] as support."))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
 	var/turf/turf_we_place_on = get_turf(src)
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

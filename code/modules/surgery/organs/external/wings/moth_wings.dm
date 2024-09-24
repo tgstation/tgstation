@@ -26,7 +26,7 @@
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
 
 /obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt
@@ -35,13 +35,23 @@
 /obj/item/organ/external/wings/moth/proc/update_float_move()
 	SIGNAL_HANDLER
 
-	if(!isspaceturf(owner.loc) && !burnt)
+	if(can_fly())
 		var/datum/gas_mixture/current = owner.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			ADD_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
 			return
 
 	REMOVE_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
+
+///Checks if our wings are usable
+/obj/item/organ/external/wings/moth/proc/can_fly()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
+			return FALSE //Can't fly with hidden wings
+	if(isspaceturf(owner.loc) || burnt)
+		return FALSE //No flight in space/burnt wings
+	return TRUE
 
 ///check if our wings can burn off ;_;
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)

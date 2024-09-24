@@ -343,10 +343,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 				temp_pod.adminNamed = FALSE
 				temp_pod.setStyle(temp_pod.style) //This resets the name of the pod based on its current style (see supplypod/setStyle() proc)
 				return
-			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", temp_pod.style::name, MAX_NAME_LEN) //Gather input for name and desc
+			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", temp_pod.style::name, max_length = MAX_NAME_LEN)
 			if (isnull(nameInput))
 				return
-			var/descInput = tgui_input_text(usr, "Enter a custom desc", "Custom description", temp_pod.style::desc)
+			var/descInput = tgui_input_text(usr, "Enter a custom desc", "Custom description", temp_pod.style::desc, max_length = MAX_DESC_LEN)
 			if (isnull(descInput))
 				return
 			temp_pod.name = nameInput
@@ -875,6 +875,7 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_state = "selector"
 	image_layer = FLY_LAYER
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	alpha = 150
 
 /obj/effect/client_image_holder/dropoff_location // Shows where revese pods lands
@@ -883,6 +884,7 @@ GLOBAL_DATUM_INIT(podlauncher, /datum/centcom_podlauncher, new)
 	image_state = "dropoff_indicator"
 	image_layer = FLY_LAYER
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	alpha = 0
 
 #undef LAUNCH_ALL

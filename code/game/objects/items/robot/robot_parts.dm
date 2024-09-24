@@ -121,14 +121,11 @@
 
 	if(chest)
 		chest.forceMove(drop_to)
-		new /obj/item/stack/cable_coil(drop_to, 1)
-		chest.wired = FALSE
-		chest.cell?.forceMove(drop_to)
+		chest.drop_organs()
 
 	if(head)
-		head.flash1?.forceMove(drop_to)
-		head.flash2?.forceMove(drop_to)
 		head.forceMove(drop_to)
+		head.drop_organs()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -322,7 +319,7 @@
 			// This canonizes that MMI'd cyborgs have memories of their previous life
 			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
 			brainmob.mind.transfer_to(O)
-			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+			playsound(O.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)
 				to_chat(O, span_userdanger("You have been robotized!"))

@@ -43,7 +43,7 @@
 	return FALSE
 
 /obj/machinery/netpod/open_machine(drop = TRUE, density_to_set = FALSE)
-	playsound(src, 'sound/machines/tramopen.ogg', 60, TRUE, frequency = 65000)
+	playsound(src, 'sound/machines/tram/tramopen.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_opening", src)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_NETPOD_OPENED)
 	update_use_power(IDLE_POWER_USE)
@@ -55,7 +55,7 @@
 	if(!state_open || panel_open || !is_operational || !iscarbon(user))
 		return
 
-	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
+	playsound(src, 'sound/machines/tram/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	..()
 
@@ -78,7 +78,7 @@
 		span_notice("You start to pry open [src]."),
 		span_notice("You hear loud prying on metal.")
 	)
-	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_CROWBAR_ALERT, pryer)
 
@@ -93,7 +93,7 @@
 /// Closes the machine without shoving in an occupant
 /obj/machinery/netpod/proc/shut_pod()
 	state_open = FALSE
-	playsound(src, 'sound/machines/tramclose.ogg', 60, TRUE, frequency = 65000)
+	playsound(src, 'sound/machines/tram/tramclose.ogg', 60, TRUE, frequency = 65000)
 	flick("[base_icon_state]_closing", src)
 	set_density(TRUE)
 

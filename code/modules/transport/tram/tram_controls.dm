@@ -35,13 +35,11 @@
 	dir = SOUTH
 	pixel_x = -8
 	pixel_y = 32
-	pixel_z = 0
 
 /obj/machinery/computer/tram_controls/split/directional/south
 	dir = NORTH
 	pixel_x = 8
 	pixel_y = -32
-	pixel_z = 0
 
 /obj/machinery/computer/tram_controls/split/directional/east
 	dir = WEST

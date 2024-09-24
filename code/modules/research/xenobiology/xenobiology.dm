@@ -81,7 +81,7 @@
 	target_slime.applied_crossbreed_amount++
 	qdel(src)
 	to_chat(user, span_notice("You feed the slime [src], [target_slime.applied_crossbreed_amount == 1 ? "starting to mutate its core." : "further mutating its core."]"))
-	playsound(target_slime, 'sound/effects/attackblob.ogg', 50, TRUE)
+	playsound(target_slime, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 	if(target_slime.applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		target_slime.spawn_corecross()
@@ -508,7 +508,7 @@
 			to_chat(user, span_warning("You feel your body vibrating..."))
 			if(do_after(user, 2.5 SECONDS, target = user))
 				to_chat(user, span_warning("You teleport!"))
-				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+				do_teleport(user, get_turf(user), 6, asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -524,7 +524,7 @@
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 					to_chat(user, span_notice("You snap back to your anchor point!"))
-					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+					do_teleport(user, T,  asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
 
@@ -700,7 +700,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
-	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
@@ -910,6 +910,8 @@
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
 		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+			if(interacting_with.atom_storage)
+				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("The [apply_to] can't be made any faster!"))
 			return ITEM_INTERACT_BLOCKING
 		apply_to.slowdown = 0
@@ -919,15 +921,6 @@
 	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/item/slimepotion/speed/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	if(!isitem(storage_holder))
-		return TRUE
-	if(istype(storage_holder, /obj/item/mod/control))
-		var/obj/item/mod/control/mod = storage_holder
-		return mod.slowdown_inactive <= 0
-	var/obj/item/storage_item = storage_holder
-	return storage_item.slowdown <= 0
 
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"

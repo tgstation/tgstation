@@ -20,7 +20,7 @@
 	/// Sound used upon closing.
 	var/door_close = 'sound/machines/blastdoor.ogg'
 	/// Sound used upon denying.
-	var/door_deny = 'sound/machines/buzz-sigh.ogg'
+	var/door_deny = 'sound/machines/buzz/buzz-sigh.ogg'
 
 /obj/machinery/door/password/voice
 	voice_activated = TRUE
@@ -67,36 +67,31 @@
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
 	//Deny animation would be nice to have.
-	if(animation && animation != DOOR_DENY_ANIMATION)
-		icon_state = animation
-	else
-		icon_state = density ? "closed" : "open_top"
-
-/obj/machinery/door/password/update_overlays()
-	. = ..()
-	if(density)
-		return
-	// If we're open we layer the bit below us "above" any mobs so they can walk through
-	. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-	. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "closing"
+		else
+			icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/password/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 0.9 SECONDS
+			return 1.1 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 0.8 SECONDS
+			return 1.1 SECONDS
 
 /obj/machinery/door/password/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.6 SECONDS
+			return 0.5 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 0.9 SECONDS
+			return 1.1 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.3 SECONDS
+			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 0.8 SECONDS
+			return 1.1 SECONDS
 
 /obj/machinery/door/password/animation_effects(animation)
 	switch(animation)
@@ -108,7 +103,7 @@
 			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = tgui_input_text(user, "Enter the password", "Password")
+	var/guess = tgui_input_text(user, "Enter the password", "Password", max_length = MAX_MESSAGE_LEN)
 	if(guess == password)
 		return TRUE
 	return FALSE

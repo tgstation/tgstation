@@ -10,10 +10,9 @@
  */
 
 /mob/living/basic/node_drone
-	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node_active"
@@ -37,7 +36,6 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "clangs"
 	response_harm_simple = "clang against"
-	shadow_offset_y = 6
 
 	ai_controller = /datum/ai_controller/basic_controller/node_drone
 
@@ -128,7 +126,7 @@
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2 SECONDS)
 	if(funny_ending)
-		playsound(src, 'sound/effects/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
+		playsound(src, 'sound/effects/explosion/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
 		visible_message(span_notice("...or maybe not."))
 	qdel(src)
 

@@ -257,7 +257,7 @@
 /datum/holiday/april_fools/celebrate()
 	. = ..()
 	SSjob.set_overflow_role(/datum/job/clown)
-	SSticker.login_music = 'sound/ambience/clown.ogg'
+	SSticker.login_music = 'sound/music/lobby_music/clown.ogg'
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.client)
@@ -694,6 +694,10 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/monkey/celebrate()
+	. = ..()
+	SSstation.setup_trait(/datum/station_trait/job/pun_pun)
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
@@ -849,11 +853,15 @@
 	)
 
 /datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		Monitor.icon_state_on = "entertainment_xmas"
+
 	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
 // EASTER (this having its own spot should be understandable)
+
 /datum/holiday/easter
 	name = EASTER
 	holiday_hat = /obj/item/clothing/head/costume/rabbitears

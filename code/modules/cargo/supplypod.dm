@@ -40,7 +40,7 @@
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/list/reverse_dropoff_coords //Turf that the reverse pod will drop off its newly-acquired cargo to
 	var/fallingSoundLength = 11
-	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
+	var/fallingSound = 'sound/items/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
 	var/openingSound //Admin sound to play when the pod opens
 	var/leavingSound //Admin sound to play when the pod leaves
@@ -546,6 +546,7 @@
 	glow_effect.icon_state = "pod_glow_" + style::glow_color
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 	RegisterSignal(glow_effect, COMSIG_QDELETING, PROC_REF(remove_glow))
 
 /obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -591,6 +592,7 @@
 	icon_state = "pod_glow_green"
 	desc = ""
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 255
 
@@ -693,7 +695,7 @@
 			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
 	if (pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
-		pod.fallingSound = 'sound/weapons/mortar_whistle.ogg'
+		pod.fallingSound = 'sound/items/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1
@@ -725,10 +727,12 @@
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
 	if (ispath(pod.style, /datum/pod_style/invisible) || ispath(pod.style, /datum/pod_style/seethrough))
 		return
-	for (var/i in 1 to length(smoke_effects))
+	var/turf/our_turf = get_turf(drop_location())
+	for ( var/i in 1 to length(smoke_effects))
 		var/obj/effect/supplypod_smoke/smoke_part = new (drop_location())
 		if (i == 1)
 			smoke_part.layer = FLY_LAYER
+			SET_PLANE(smoke_part, ABOVE_GAME_PLANE, our_turf)
 			smoke_part.icon_state = "smoke_start"
 		smoke_part.transform = matrix().Turn(rotation)
 		smoke_effects[i] = smoke_part

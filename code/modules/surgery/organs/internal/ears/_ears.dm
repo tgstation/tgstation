@@ -42,7 +42,7 @@
 	adjustEarDamage(0, -0.5 * seconds_per_tick)
 	if((damage > low_threshold) && SPT_PROB(damage / 60, seconds_per_tick))
 		adjustEarDamage(0, 4)
-		SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
+		SEND_SOUND(owner, sound('sound/items/weapons/flash_ring.ogg'))
 
 /obj/item/organ/internal/ears/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	. = ..()
@@ -64,7 +64,7 @@
  * * ddeaf: Handles temporary deafness, 1 ddeaf = 2 seconds of deafness, by default (with no multiplier)
  */
 /obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg = 0, ddeaf = 0)
-	if(owner.status_flags & GODMODE)
+	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		update_temp_deafness()
 		return
 
@@ -85,7 +85,7 @@
 	if(isnull(owner))
 		return
 
-	if(owner.status_flags & GODMODE)
+	if(HAS_TRAIT(owner, TRAIT_GODMODE))
 		deaf = 0
 
 	if(deaf > 0)

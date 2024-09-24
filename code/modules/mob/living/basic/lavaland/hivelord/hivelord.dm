@@ -17,7 +17,7 @@
 	attack_verb_continuous = "weakly tackles"
 	attack_verb_simple = "weakly tackles"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"
 	obj_damage = 0
 	pass_flags = PASSTABLE
@@ -94,12 +94,11 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/simple_hostile
-	shadow_type = SHADOW_SMALL
 
 /mob/living/basic/hivelord_brood/Initialize(mapload)
 	. = ..()

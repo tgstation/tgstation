@@ -7,7 +7,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -402,7 +402,7 @@
 		silicon_hud.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
-	if(incapacitated())
+	if(incapacitated)
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)

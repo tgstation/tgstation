@@ -344,6 +344,7 @@
 	taste_description = "spiked butterscotch"
 	ph = 6.5
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/rum/aged
 	name = "Aged Rum"
@@ -629,14 +630,14 @@
 		if(src == holder.get_master_reagent())
 			var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = holder.my_atom
 			drink.tool_behaviour = TOOL_SCREWDRIVER
-			drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+			drink.usesound = list('sound/items/tools/screwdriver.ogg', 'sound/items/tools/screwdriver2.ogg')
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
 	if(reagents.get_master_reagent() == src)
 		drink.tool_behaviour = TOOL_SCREWDRIVER
-		drink.usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+		drink.usesound = list('sound/items/tools/screwdriver.ogg', 'sound/items/tools/screwdriver2.ogg')
 	else
 		drink.tool_behaviour = initial(drink.tool_behaviour)
 		drink.usesound = initial(drink.usesound)
@@ -880,7 +881,7 @@
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	playsound(drinker, 'sound/effects/explosion_distant.ogg', 100, FALSE)
+	playsound(drinker, 'sound/effects/explosion/explosion_distant.ogg', 100, FALSE)
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -1258,7 +1259,7 @@
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(2.5, seconds_per_tick))
-		playsound(get_turf(drinker), 'sound/effects/explosionfar.ogg', 100, TRUE)
+		playsound(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg', 100, TRUE)
 
 /datum/reagent/consumable/ethanol/hiveminderaser
 	name = "Hivemind Eraser"
@@ -2658,7 +2659,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.003 * STANDARD_CELL_CHARGE)
+		stomach.adjust_charge(reac_volume * 0.003 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2678,7 +2679,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.002 * STANDARD_CELL_CHARGE)
+		stomach.adjust_charge(reac_volume * 0.002 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2705,7 +2706,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.005 * STANDARD_CELL_CHARGE)
+		stomach.adjust_charge(reac_volume * 0.005 * ETHEREAL_CHARGE_NORMAL)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer

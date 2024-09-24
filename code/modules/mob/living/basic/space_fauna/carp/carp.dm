@@ -27,7 +27,7 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -43,7 +43,6 @@
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
-	death_offset_y = -10
 
 	/// If true we will run away from attackers even at full health
 	var/cowardly = FALSE

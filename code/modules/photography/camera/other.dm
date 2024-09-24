@@ -25,7 +25,13 @@
 	see_ghosts = CAMERA_SEE_GHOSTS_ORBIT
 
 /obj/item/camera/detective
-	name = "Detective's camera"
-	desc = "A polaroid camera with extra capacity for crime investigations."
+	name = "detective's camera"
+	desc = "A silent polaroid camera with extra capacity for crime investigations."
+	flash_enabled = FALSE
+	silent = TRUE
 	pictures_max = 30
 	pictures_left = 30
+
+/obj/item/camera/detective/after_picture(mob/user, datum/picture/picture)
+	. = ..()
+	user.playsound_local(get_turf(src), pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 35, TRUE)

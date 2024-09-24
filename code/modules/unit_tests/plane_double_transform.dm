@@ -11,19 +11,6 @@
 	our_group.show_hud()
 	// End hack
 
-	/// DO NOT FUCKING REPLICATE THIS
-	/// We give weather a pass cause doing it "properly" involves adding like 3 different new render plates
-	/// And I can't justify that cost for such a rare effect
-	/// I am sorry
-	var/list/weather_planes = typecacheof(list(
-		/atom/movable/screen/plane_master/weather_mask,
-		/atom/movable/screen/plane_master/weather,
-		/atom/movable/screen/plane_master/weather_frill,
-		/atom/movable/screen/plane_master/weather_glow,
-		/atom/movable/screen/plane_master/weather_frill_glow,
-		/atom/movable/screen/plane_master/rendering_plate/wall_weather_mask,
-	))
-
 	// Generates a list of render target -> PM for future use
 	var/list/render_target_to_plane = list()
 	for(var/plane_key as anything in our_group.plane_masters)
@@ -35,7 +22,7 @@
 	for(var/plane_key as anything in our_group.plane_masters)
 		var/atom/movable/screen/plane_master/plane = our_group.plane_masters[plane_key]
 
-		if(!plane.multiz_scaled || is_type_in_typecache(plane, weather_planes))
+		if(!plane.multiz_scaled)
 			continue
 
 		// Walk the relay targets

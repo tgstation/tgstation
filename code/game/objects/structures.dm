@@ -1,6 +1,6 @@
 /// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
-	icon = 'icons/obj/structures/tall.dmi'
+	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -57,6 +57,9 @@
 		if(0 to 25)
 			if(!broken)
 				return  span_warning("It's falling apart!")
+
+/obj/structure/examine_descriptor(mob/user)
+	return "structure"
 
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)

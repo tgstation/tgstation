@@ -49,7 +49,7 @@
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)
@@ -149,7 +149,7 @@
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(pushed_over)
 		to_chat(user, span_warning("Right [src] first!"))

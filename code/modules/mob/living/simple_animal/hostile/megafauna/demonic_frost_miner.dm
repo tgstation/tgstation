@@ -17,7 +17,7 @@ Difficulty: Extremely Hard
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
@@ -44,7 +44,6 @@ Difficulty: Extremely Hard
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	summon_line = "I'M WIDE AWAKE! AND YOU'RE WIIIIIIIDE OPEN!"
-	shadow_type = SHADOW_MEDIUM
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
@@ -82,7 +81,7 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
 	frost_orbs = null
@@ -144,7 +143,7 @@ Difficulty: Extremely Hard
 	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
 	spin(100, 10)
 	SLEEP_CHECK_DEATH(60, src)
-	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100, TRUE)
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
@@ -239,7 +238,7 @@ Difficulty: Extremely Hard
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
 	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)

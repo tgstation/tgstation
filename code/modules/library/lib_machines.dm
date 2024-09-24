@@ -753,7 +753,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 				return
 			cache = held_book.book_data.return_copy()
 			flick("bigscanner1", src)
-			playsound(src, 'sound/machines/scanner.ogg', vol = 50, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanner.ogg', vol = 50, vary = TRUE)
 			return TRUE
 		if("clear")
 			cache = null
@@ -767,7 +767,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  * Book binder
  */
 /obj/machinery/bookbinder
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "book binder"
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "binder"

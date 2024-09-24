@@ -12,13 +12,15 @@
 /obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/light/very_dim/directional/east,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
+"bP" = (
+/obj/structure/sign/poster/official/report_crimes,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
 "bR" = (
-/obj/machinery/chem_dispenser/drinks/beer{
-	pixel_y = 8
-	},
+/obj/machinery/chem_dispenser/drinks/beer,
 /obj/structure/table/wood,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
@@ -41,13 +43,19 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "cp" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Arcade"
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/mob/living/basic/bear/snow,
 /turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"cY" = (
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "dl" = (
 /obj/structure/sign/poster/contraband/blood_geometer/directional/south,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "dz" = (
@@ -64,18 +72,9 @@
 /obj/structure/table/glass,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"ey" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/camera/directional/west{
-	c_tag = "East Hallway 2"
-	},
-/obj/bitrunning/animatronic_movement_node/standard/door{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
+"ex" = (
+/obj/structure/sign/poster/contraband/bountyhunters/directional/south,
+/turf/template_noop,
 /area/virtual_domain)
 "eE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -122,17 +121,8 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "gl" = (
-/obj/structure/closet/crate/trashcart/filled,
-/obj/structure/sign/poster/contraband/blasto_detergent/directional/north,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"gD" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/directional/east{
-	c_tag = "West Hallway 1"
-	},
-/turf/open/floor/iron/kitchen,
+/obj/structure/sign/poster/contraband/blasto_detergent,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "gL" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -141,21 +131,20 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/machinery/light/very_dim/directional/east,
+/obj/machinery/light/built/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "hq" = (
-/obj/bitrunning/animatronic_phone{
-	pixel_x = -5;
-	pixel_y = 4
+/obj/structure/table/reinforced,
+/obj/item/flashlight/seclite{
+	pixel_y = 9
 	},
-/obj/structure/table,
-/obj/machinery/digital_clock/bitrunner{
-	pixel_y = 28;
-	pixel_x = 5
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite{
+	pixel_y = 6
 	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "hI" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/closed/indestructible/reinforced,
@@ -173,22 +162,11 @@
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"hT" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/janitor/hallway1,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"hW" = (
-/obj/bitrunning/animatronic/janitor,
-/obj/bitrunning/animatronic_movement_node/janitor/stage,
-/turf/open/floor/wood,
-/area/virtual_domain)
 "jE" = (
-/turf/closed/indestructible/fakedoor{
-	dir = 4
-	},
-/area/virtual_domain)
+/obj/structure/sign/poster/abductor/ayy_over_tizira,
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
 "jZ" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -209,8 +187,8 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "kL" = (
+/obj/machinery/light/built/directional/west,
 /obj/item/light/tube/broken,
-/obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "lc" = (
@@ -219,9 +197,7 @@
 /area/virtual_domain)
 "lL" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin/illegal{
-	pixel_y = 7
-	},
+/obj/item/kitchen/rollingpin/illegal,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "lP" = (
@@ -253,14 +229,6 @@
 /obj/item/food/pizza,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"mS" = (
-/obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/standard/tables{
-	dir = 4
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
 "mX" = (
 /obj/machinery/computer/arcade/amputation{
 	dir = 1
@@ -275,7 +243,7 @@
 "nF" = (
 /obj/effect/spawner/structure/window/reinforced/indestructible,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "nP" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -287,6 +255,14 @@
 /area/virtual_domain)
 "nX" = (
 /obj/structure/chair/sofa/corp/left,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"ob" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "of" = (
@@ -315,30 +291,30 @@
 "pX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/security/stage3,
+/obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "ql" = (
-/obj/item/pizzabox{
-	pixel_y = 14;
-	icon_state = "pizzabox_messy"
+/obj/structure/table/reinforced,
+/obj/item/toy/plush/nukeplushie{
+	pixel_x = 5;
+	pixel_y = 6
 	},
-/obj/structure/table,
-/obj/item/food/pizzaslice/meat{
-	pixel_x = -4;
-	pixel_y = 14
-	},
-/obj/machinery/digital_clock/bitrunner_power{
-	pixel_y = 28
+/obj/item/phone{
+	base_pixel_w = 4;
+	pixel_x = -6
 	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "qK" = (
 /turf/closed/indestructible/fakedoor,
 /area/virtual_domain)
 "rc" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "re" = (
 /obj/structure/chair/comfy/black{
@@ -363,14 +339,11 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "rD" = (
-/obj/machinery/door/poddoor/bitrunner_right{
-	dir = 4
-	},
-/obj/effect/oneway{
-	dir = 8
+/obj/machinery/door/poddoor{
+	id = "door2"
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "rY" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -393,10 +366,10 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "sl" = (
-/obj/structure/table/wood,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain/protected_space/fullbright)
 "sR" = (
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
@@ -407,11 +380,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/chempuff,
-/obj/machinery/light/small/dim/bitrunner_left{
-	dir = 8;
-	pixel_x = 11;
-	pixel_y = 7
-	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "to" = (
@@ -429,31 +397,19 @@
 /obj/item/trash/can,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"tY" = (
-/obj/bitrunning/animatronic_movement_node/engineering/bathroom2{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+"tN" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "tZ" = (
 /obj/structure/table/wood/poker,
-/obj/item/trash/ready_donk{
-	pixel_y = 2
-	},
+/obj/item/trash/ready_donk,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "ud" = (
 /obj/effect/decal/cleanable/confetti,
-/obj/bitrunning/door_button/right{
-	pixel_x = 9;
-	pixel_y = -15
-	},
-/obj/bitrunning/light_button/right{
-	pixel_x = 9;
-	pixel_y = -14
-	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "ur" = (
 /obj/structure/chair/sofa/corp{
 	dir = 1
@@ -464,22 +420,24 @@
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
+"ve" = (
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
 "vk" = (
 /obj/structure/railing,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "vm" = (
-/obj/machinery/light/very_dim/directional/east,
-/turf/open/floor/iron/kitchen,
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/wood,
 /area/virtual_domain)
 "vs" = (
 /obj/structure/closet/secure_closet/freezer/cream_pie,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "vw" = (
-/obj/effect/turf_decal/loading_area,
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/turf/open/indestructible/bitrunning_transport,
+/mob/living/basic/bear/butter,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "vy" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -491,8 +449,18 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"vF" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/button/door/directional/west{
+	id = "door2"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain)
 "vG" = (
-/obj/bitrunning/animatronic_movement_node/engineering/kitchen,
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "vR" = (
@@ -509,12 +477,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/insectguts,
-/obj/machinery/camera/directional/west{
-	c_tag = "Party Room"
-	},
-/obj/bitrunning/animatronic_movement_node/janitor/tables1{
-	dir = 1
-	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "wM" = (
@@ -537,10 +499,11 @@
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"xN" = (
-/obj/bitrunning/animatronic/standard,
-/obj/bitrunning/animatronic_movement_node/standard/stage,
-/turf/open/floor/wood,
+"xv" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/sign/poster/official/moth_hardhat/directional/west,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "xY" = (
 /obj/effect/decal/cleanable/insectguts,
@@ -556,9 +519,6 @@
 "yB" = (
 /obj/structure/railing,
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/machinery/camera/directional/east{
-	c_tag = "Stage"
-	},
 /turf/open/floor/wood,
 /area/virtual_domain)
 "zU" = (
@@ -576,9 +536,7 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Ak" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Storage"
-	},
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "AF" = (
@@ -592,23 +550,9 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"AQ" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/chair/greyscale{
-	dir = 8
-	},
-/obj/bitrunning/animatronic_movement_node/janitor/tables2,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
 "Bc" = (
-/obj/bitrunning/animatronic_controller,
-/obj/structure/chair/office{
-	dir = 1
-	},
-/obj/effect/landmark/bitrunning/bitrunner_spawn,
-/turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/turf/template_noop,
+/area/virtual_domain/safehouse)
 "Bf" = (
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron/kitchen,
@@ -618,15 +562,14 @@
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"BL" = (
-/obj/bitrunning/animatronic_movement_node/engineering/bathroom1,
-/turf/open/floor/iron/kitchen,
+"Bo" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "BU" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/landmark/bitrunning/bitrunner_spawn,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "Ce" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -642,39 +585,22 @@
 "Ct" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/light/very_dim/directional/east,
+/obj/machinery/light/built/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Dx" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/confetti,
-/obj/bitrunning/door_button/left{
-	pixel_x = -9;
-	pixel_y = -16
-	},
-/obj/bitrunning/light_button/left{
-	pixel_x = -9;
-	pixel_y = -15
-	},
-/obj/bitrunning/animatronic_movement_node/security/kills_you,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "Dz" = (
-/obj/machinery/light/very_dim/directional/south,
-/turf/open/floor/wood,
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "DV" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/very_dim/directional/west,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"Eh" = (
-/obj/bitrunning/animatronic_movement_node/janitor/arcade1{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
 "EO" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -692,8 +618,8 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "Fc" = (
-/turf/closed/wall/r_wall,
-/area/virtual_domain)
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
 "Fy" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/machinery/light/built/directional/west,
@@ -706,16 +632,12 @@
 /area/virtual_domain)
 "Gb" = (
 /obj/item/trash/peanuts,
-/obj/bitrunning/animatronic_movement_node/janitor/arcade1{
-	dir = 8
-	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Gn" = (
 /obj/machinery/light/built/directional/east,
-/obj/machinery/camera/directional/east{
-	c_tag = "Kitchen"
-	},
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "GD" = (
@@ -732,74 +654,53 @@
 /obj/structure/closet/gmcloset,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Ho" = (
 /obj/effect/decal/cleanable/fuel_pool/hivis,
+/mob/living/basic/bear/fightpit,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "HE" = (
-/obj/bitrunning/animatronic_movement_node/engineering/kills_you{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/laser{
+	pixel_x = -4
+	},
+/obj/item/gun/energy/laser{
+	pixel_y = 2
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/machinery/button/door/directional/east{
+	id = "door2"
 	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "HG" = (
 /obj/structure/curtain/cloth/fancy/mechanical,
 /turf/open/floor/wood,
 /area/virtual_domain)
 "If" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/small/dim/bitrunner_right{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 6
-	},
-/obj/bitrunning/animatronic_movement_node/engineering/window{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"Il" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/engineering/hallway1,
-/turf/open/floor/iron/kitchen,
+/mob/living/basic/bear/russian,
+/turf/open/floor/wood,
 /area/virtual_domain)
 "Io" = (
-/obj/machinery/light/very_dim/directional/north,
-/turf/open/floor/wood,
-/area/virtual_domain)
-"IV" = (
-/obj/bitrunning/animatronic/security,
-/obj/bitrunning/animatronic_movement_node/security/stage1{
-	dir = 4
-	},
-/obj/machinery/light/very_dim/directional/west,
-/turf/open/floor/wood,
-/area/virtual_domain)
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
 "IX" = (
 /obj/machinery/computer/arcade/amputation,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "IY" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck/syndicate{
-	pixel_y = 7
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"Je" = (
-/obj/effect/decal/cleanable/confetti,
-/obj/effect/landmark/bitrunning/bitrunner_spawn,
-/turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
-"Jg" = (
-/obj/machinery/camera/directional/south_east{
-	c_tag = "Bathrooms"
-	},
+/obj/item/toy/cards/deck/syndicate,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Jh" = (
@@ -819,25 +720,25 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "JF" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/camera/directional/south_west{
-	c_tag = "East Hallway 1"
+/obj/modular_map_root/safehouse{
+	key = "wood"
 	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"JO" = (
-/obj/bitrunning/animatronic_movement_node/standard/kills_you{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"JW" = (
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
 "Ke" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /obj/item/trash/pistachios,
 /turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"KJ" = (
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "Ln" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -846,9 +747,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/confetti,
-/obj/bitrunning/animatronic_movement_node/engineering/tables1{
-	dir = 8
-	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "LP" = (
@@ -860,8 +758,8 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/camera/directional/south_east{
-	c_tag = "West Hallway 2"
+/obj/machinery/button/door/directional/east{
+	id = "door1"
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
@@ -877,13 +775,13 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"Mf" = (
-/obj/structure/sign/poster/official/no_erp/directional/north,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
 "Mm" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron/kitchen,
+/area/virtual_domain)
+"Mq" = (
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/west,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "ML" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -904,16 +802,11 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Ne" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Security Cove"
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"Nf" = (
-/obj/bitrunning/animatronic_movement_node/security/stage2{
-	dir = 4
-	},
-/turf/open/floor/wood,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Nz" = (
+/obj/structure/sign/poster/official/pda_ad/directional/north,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "NA" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -922,32 +815,28 @@
 /area/virtual_domain)
 "NE" = (
 /obj/structure/sign/poster/abductor/ayy_cops/directional/north,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "Od" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
+"Ox" = (
+/obj/structure/sign/poster/official/the_owl,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
 "OB" = (
 /turf/open/floor/wood,
 /area/virtual_domain)
 "OD" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/very_dim/directional/east,
+/mob/living/basic/bear/russian,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "OM" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/iron/kitchen/small,
-/area/virtual_domain)
-"OY" = (
-/obj/bitrunning/animatronic_movement_node/standard/bathroom{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Pm" = (
 /obj/structure/chair/sofa/corp/right,
@@ -958,26 +847,17 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/wood,
 /area/virtual_domain)
-"PV" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/janitor/door{
-	dir = 4
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
 "Qg" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/toy/balloon/heart,
-/obj/machinery/light/very_dim/directional/west,
+/obj/machinery/light/built/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "RB" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/built/directional/west,
 /obj/effect/decal/cleanable/glass/plastitanium,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
@@ -986,25 +866,24 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Sr" = (
-/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "SE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/built/directional/east,
 /obj/effect/decal/cleanable/glass/plastitanium,
-/obj/machinery/light/very_dim/directional/east,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "SW" = (
-/obj/machinery/door/poddoor/bitrunner_left{
-	dir = 4
-	},
-/obj/effect/oneway{
-	dir = 4
+/obj/machinery/door/poddoor{
+	id = "door1"
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "Ti" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/soda{
@@ -1013,16 +892,13 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"Tq" = (
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/chair/greyscale{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/confetti,
-/obj/bitrunning/animatronic_movement_node/engineering/tables2,
-/turf/open/floor/iron/kitchen,
+"Tp" = (
+/obj/structure/sign/poster/official/soft_cap_pop_art,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
+"Tq" = (
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
 "TG" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -1039,7 +915,10 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "TW" = (
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/mob/living/basic/bear/snow,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Uj" = (
 /obj/structure/curtain/bounty/start_closed,
@@ -1052,17 +931,13 @@
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
-"US" = (
-/obj/bitrunning/animatronic/engineering,
-/obj/bitrunning/animatronic_movement_node/engineering/stage,
-/turf/open/floor/wood,
+"UW" = (
+/obj/structure/sign/poster/official/no_erp/directional/north,
+/turf/closed/indestructible/reinforced,
 /area/virtual_domain)
 "Vd" = (
-/obj/effect/landmark/bitrunning/cache_goal_turf,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/light/very_dim/directional/south,
-/turf/open/indestructible/bitrunning_transport,
-/area/virtual_domain)
+/turf/open/floor/iron/cafeteria,
+/area/virtual_domain/protected_space/fullbright)
 "Ve" = (
 /obj/structure/table,
 /obj/item/kitchen/tongs,
@@ -1072,50 +947,22 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/machinery/light/very_dim/directional/west,
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"VJ" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/engineering/hallway2{
-	dir = 8
-	},
+/obj/machinery/light/built/directional/west,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "VS" = (
-/obj/machinery/computer/security/bitrunner{
-	pixel_x = -12;
-	pixel_y = 8
-	},
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = 9;
-	pixel_y = 14
-	},
-/obj/item/food/donut/plain{
-	pixel_x = 15;
-	pixel_y = 3
-	},
-/obj/machinery/light/very_dim/directional/north,
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
-"VU" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/janitor/hallway2{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "VW" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
+"Wj" = (
+/obj/structure/sign/poster/contraband/free_key/directional,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain/protected_space/fullbright)
 "Wy" = (
 /obj/effect/decal/cleanable/molten_object/large,
 /turf/open/floor/iron/kitchen,
@@ -1143,25 +990,13 @@
 /area/virtual_domain)
 "Ye" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/cup/soda_cans/grey_bull{
-	pixel_y = 8
-	},
+/obj/item/reagent_containers/cup/soda_cans/grey_bull,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"Yx" = (
-/obj/bitrunning/animatronic_movement_node/standard/kitchen,
-/turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "Yy" = (
 /obj/machinery/computer/arcade/amputation{
 	dir = 1
 	},
-/turf/open/floor/iron/kitchen,
-/area/virtual_domain)
-"YF" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/bitrunning/animatronic_movement_node/standard/hallway,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "YK" = (
@@ -1173,21 +1008,18 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "YT" = (
-/obj/bitrunning/animatronic_movement_node/janitor/kills_you{
-	dir = 1
+/obj/machinery/button/door/directional/west{
+	id = "door1"
 	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/virtual_domain/protected_space/fullbright)
 "Zf" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen/small,
 /area/virtual_domain)
 "Zj" = (
-/obj/machinery/light/small/dim/directional/west,
-/obj/bitrunning/animatronic_movement_node/janitor/storage{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen,
+/mob/living/basic/bear/fightpit,
+/turf/open/floor/wood,
 /area/virtual_domain)
 "Zp" = (
 /obj/structure/chair/comfy/black{
@@ -1330,7 +1162,7 @@ Cm
 Uj
 MO
 OB
-IV
+OB
 OB
 OB
 Uj
@@ -1379,7 +1211,7 @@ OB
 OB
 OB
 OB
-OB
+Zj
 Uj
 Cm
 Cm
@@ -1422,11 +1254,11 @@ Cm
 Cm
 Cm
 Uj
+vm
 OB
 OB
 OB
-OB
-OB
+vm
 Uj
 Cm
 Cm
@@ -1458,23 +1290,23 @@ Cm
 Cm
 Cm
 Cm
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Io
-Nf
-Dz
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+Ox
+ve
+ve
+ve
+ve
+ve
+OB
+OB
+OB
+ve
+ve
 Cm
 Cm
 Cm
@@ -1505,9 +1337,9 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 sk
-cp
+Ux
 Ux
 kL
 Ux
@@ -1521,7 +1353,7 @@ EP
 ZL
 ZL
 wM
-Fc
+ve
 Cm
 Cm
 Cm
@@ -1552,7 +1384,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 GK
 Gb
 Ux
@@ -1566,17 +1398,17 @@ Ux
 Ux
 UR
 UR
-Ne
 Ux
-Fc
+Ux
+ve
 Cm
 Cm
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -1599,12 +1431,12 @@ Cm
 Cm
 Cm
 Cm
-Fc
 gl
+GK
 Ux
 Ux
 Bj
-Eh
+Ux
 Ux
 Yy
 Bf
@@ -1615,15 +1447,15 @@ Zp
 rc
 re
 Ux
-Fc
+ve
 Cm
 Cm
-Fc
+ve
 Ux
-Zj
-Ak
 Ux
-Fc
+Ux
+Ux
+ve
 Cm
 Cm
 Cm
@@ -1646,7 +1478,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 GK
 Ux
 Ux
@@ -1662,15 +1494,15 @@ Ke
 re
 re
 Ux
-Fc
+Tp
 Cm
 Cm
-Fc
-Mf
+ve
+Ux
+vw
 Ux
 Ux
-Ux
-Fc
+ve
 Cm
 Cm
 Cm
@@ -1693,7 +1525,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 sk
 Ux
 Ux
@@ -1709,15 +1541,15 @@ re
 re
 re
 Ux
-Fc
+ve
 Cm
 Cm
-Fc
+ve
 Ux
 Ux
 Ux
 Ux
-Fc
+ve
 Cm
 Cm
 Cm
@@ -1740,38 +1572,38 @@ Uj
 Uj
 Uj
 Uj
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
 Ux
 Ux
 Ux
 Wy
-Fc
-Fc
+ve
+ve
 NE
 Ux
 Ux
 Ux
 Ux
 Ho
-Fc
-Fc
-Fc
-Fc
-Fc
-Ux
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+UW
+UW
+cY
+UW
+ve
+ve
 Cm
 Cm
 Cm
@@ -1797,17 +1629,17 @@ ML
 EO
 WG
 Qg
-Fc
+ve
 Ux
 xY
 Ux
 Ux
 NA
-hT
+NA
 NA
 NA
 RB
-DV
+NA
 NA
 zU
 NA
@@ -1816,17 +1648,17 @@ NA
 yz
 yz
 yz
-VU
+yz
 nP
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
 "}
 (14,1,1) = {"
 Cm
@@ -1844,41 +1676,41 @@ to
 hR
 tC
 MS
-Fc
+ve
 Ux
 XG
 XG
 Ux
 NA
 pX
-OD
 NA
 NA
 NA
 NA
 NA
 NA
-gD
+NA
+NA
 td
-PV
+yz
 LU
 yz
-yz
+ob
 bL
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ne
+Bc
+Bc
+Bc
+Bc
+Bc
+JF
+Ne
 "}
 (15,1,1) = {"
 Cm
 Uj
-Io
+OB
 OB
 OB
 HG
@@ -1897,36 +1729,36 @@ Od
 tZ
 Ux
 TR
+ve
+ve
+ve
+ve
+ve
+ve
+ve
 Fc
 Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-nF
+sl
 SW
 Fc
+Wj
 Fc
-Fc
-Fc
-Fc
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+ve
+ve
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
 "}
 (16,1,1) = {"
 Cm
 Uj
-Io
-hW
+OB
+OB
 OB
 HG
 vk
@@ -1936,7 +1768,7 @@ Ln
 ZZ
 to
 ZZ
-AQ
+Yd
 eW
 Ux
 hK
@@ -1947,33 +1779,33 @@ NA
 vz
 tI
 VW
-Fc
+ve
 sg
 sg
 sg
 Fc
 hq
-Je
+ud
 Dx
 YT
-vw
+Vd
 Fc
-Ux
-Ux
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+Tq
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
 "}
 (17,1,1) = {"
 Cm
 Uj
-Io
-US
+OB
+OB
 OB
 HG
 vk
@@ -1997,30 +1829,30 @@ lP
 qK
 sg
 sg
-sg
-Fc
+ex
+jE
 VS
-Bc
-TW
-JO
 Vd
-Fc
-Ux
-Sr
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+Vd
+Vd
+Vd
+DV
+Tq
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
 "}
 (18,1,1) = {"
 Cm
 Uj
-Io
-xN
+OB
+OB
 pK
 PK
 yB
@@ -2030,7 +1862,7 @@ EO
 Ag
 to
 Ag
-Tq
+EO
 eW
 Ux
 Ux
@@ -2041,32 +1873,32 @@ NA
 vz
 LP
 lc
-Fc
+ve
 sg
 sg
 sg
-Fc
+JW
 ql
 BU
 ud
 HE
-vw
+Vd
 Fc
-Ux
-Ux
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+Io
+Tq
+Tq
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
 "}
 (19,1,1) = {"
 Cm
 Uj
-Io
+OB
 OB
 pK
 xa
@@ -2075,7 +1907,7 @@ JD
 ZU
 xk
 tC
-mS
+ML
 si
 ma
 ZU
@@ -2085,38 +1917,38 @@ fd
 IY
 Ux
 NA
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+ve
 Fc
 Fc
 nF
 rD
 Fc
+bP
 Fc
-Fc
-Fc
-Fc
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+ve
+ve
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+Ne
 "}
 (20,1,1) = {"
 Cm
 Uj
 OB
 OB
-OB
-Fc
+If
+ve
 ML
 rY
 ML
@@ -2125,45 +1957,45 @@ Jh
 to
 ma
 fz
-ML
-Fc
+TW
+ve
 Ux
 XG
 XG
 Ux
 NA
 NA
-DV
-YF
 NA
 NA
 NA
 NA
 NA
-JF
-If
+xv
+NA
+NA
+NA
 yz
+vF
 yz
-ey
 yz
 Hi
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ne
+Bc
+Bc
+Bc
+Bc
+Bc
+tN
+Ne
 "}
 (21,1,1) = {"
 Cm
 Uj
 OB
 OB
-OB
-Fc
+vm
+ve
 lS
 gL
 ms
@@ -2173,17 +2005,17 @@ eW
 Yd
 Ce
 Ct
-Fc
+ve
 Ux
 Ux
 Ux
 Ux
-NA
+cp
 NA
 NA
 NA
 SE
-Il
+NA
 NA
 vy
 NA
@@ -2192,17 +2024,17 @@ NA
 yz
 yz
 yz
-VJ
+yz
 eE
-Fc
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
-Cm
+ve
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
+Ne
 "}
 (22,1,1) = {"
 Cm
@@ -2210,38 +2042,38 @@ Uj
 Uj
 Uj
 Uj
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
 GD
 Ux
 Ux
 Ux
-Fc
-Fc
-Fc
+ve
+ve
+ve
 Ux
 Ux
 Ux
 Ux
 Ux
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-jE
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+qK
+ve
+ve
+Nz
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -2257,7 +2089,8 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
+OD
 Ux
 Ux
 Ux
@@ -2272,8 +2105,7 @@ Ux
 Ux
 Ux
 Ux
-Ux
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2304,7 +2136,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 kf
 kf
 kf
@@ -2320,13 +2152,13 @@ Pm
 Ye
 km
 Ux
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -2351,8 +2183,8 @@ Cm
 Cm
 Cm
 Cm
-Fc
-sl
+ve
+dz
 dz
 dz
 dz
@@ -2367,13 +2199,13 @@ Sp
 dV
 ur
 Ux
-aV
+Bo
 aV
 uZ
-aV
+KJ
 Ve
 lL
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2398,7 +2230,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+Mq
 bR
 Ux
 Ux
@@ -2409,18 +2241,18 @@ Mm
 Ux
 Ux
 Ux
-Ux
+Dz
 nX
 Ti
 sR
 Ux
-aV
+Bo
 aV
 aV
 FA
-vG
+aV
 OM
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2445,7 +2277,7 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 lc
 Ux
 fo
@@ -2461,13 +2293,13 @@ fU
 pr
 Ux
 Ux
-Fc
-Fc
-Fc
-aV
+ve
+ve
+ve
+vG
 aV
 Zf
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2492,29 +2324,29 @@ Cm
 Cm
 Cm
 Cm
-Fc
-Fc
-jE
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+qK
+ve
+ve
+ve
+ve
+ve
+ve
 Ux
-Ux
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+Sr
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
-Fc
-Yx
+ve
+vG
 aV
 fy
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2547,21 +2379,21 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
 Ux
-Ux
-Fc
+Sr
+ve
 Cm
 Cm
 Cm
 Cm
 Cm
 Cm
-Fc
+ve
 vs
 Gn
 bu
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2586,29 +2418,29 @@ Cm
 Cm
 Cm
 Cm
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
 Ux
 Ux
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
+ve
 Cm
-Fc
-Fc
-Fc
-Fc
-Fc
+ve
+ve
+ve
+ve
+ve
 Cm
 Cm
 Cm
@@ -2633,23 +2465,23 @@ Cm
 Cm
 Cm
 Cm
-Fc
+ve
+Ux
+Ux
+Ux
+Ux
+Ux
+Dz
 Ux
 Ux
 Ux
 Ux
 Ux
 Ux
-BL
 Ux
 Ux
 Ux
-Ux
-Ux
-tY
-Ux
-Ux
-Fc
+ve
 Cm
 Cm
 Cm
@@ -2680,23 +2512,23 @@ Cm
 Cm
 Cm
 Cm
-Fc
-Jg
-Ux
-Ux
-OY
-Ux
-Ux
-Ux
-vm
-Ux
-Ux
-vm
+ve
+Ak
 Ux
 Ux
 Ux
 Ux
-Fc
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+Ux
+ve
 Cm
 Cm
 Cm
@@ -2727,23 +2559,23 @@ Cm
 Cm
 Cm
 Cm
-Fc
-Fc
-Fc
-jE
-jE
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-Fc
-jE
-jE
-Fc
-Fc
+ve
+ve
+ve
+qK
+qK
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+ve
+qK
+qK
+ve
+ve
 Cm
 Cm
 Cm

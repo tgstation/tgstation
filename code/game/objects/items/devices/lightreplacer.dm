@@ -223,7 +223,7 @@
 	if(istype(target, /obj/machinery/light))
 		if(replace_light(target, user) && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	// if we are attacking a floodlight frame finish it
@@ -233,7 +233,7 @@
 			new /obj/machinery/power/floodlight(frame.loc)
 			if(bluespace_toggle)
 				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+				playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
 			qdel(frame)
 		return TRUE
@@ -246,7 +246,7 @@
 				light_replaced = TRUE
 		if(light_replaced && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom.ogg', 40, 1)
+			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
 		return TRUE
 
 	return FALSE
@@ -324,6 +324,12 @@
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/lightreplacer/cyborg/advanced
+	name = "high capacity light replacer"
+	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_high"
+	max_uses = 50
 
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"

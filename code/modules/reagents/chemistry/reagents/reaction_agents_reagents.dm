@@ -41,7 +41,7 @@
 
 	//give feedback & remove from holder because it's not transferred
 	target.my_atom.audible_message(span_warning(message))
-	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+	playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, amount)
 
 /datum/reagent/reaction_agent/basic_buffer
@@ -68,7 +68,7 @@
 
 	//give feedback & remove from holder because it's not transferred
 	target.my_atom.audible_message(span_warning(message))
-	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+	playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, amount)
 
 //purity testor/reaction agent prefactors
@@ -100,7 +100,7 @@
 			is_inverse = TRUE
 	if(is_inverse)
 		target.my_atom.audible_message(span_warning("The beaker bubbles violently as the reagent is added!"))
-		playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+		playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
 	else
 		target.my_atom.audible_message(span_warning("The added reagent doesn't seem to do much."))
 	holder.remove_reagent(type, amount)

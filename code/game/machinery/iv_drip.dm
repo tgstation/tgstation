@@ -15,7 +15,6 @@
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "\improper IV drip"
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers."
 	icon = 'icons/obj/medical/iv_drip.dmi'
@@ -257,7 +256,7 @@
 		// If the human is losing too much blood, beep.
 		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container
 		attached_mob.transfer_blood_to(target, amount)
 		update_appearance(UPDATE_ICON)
@@ -323,7 +322,7 @@
 		return
 	if(!usr.can_perform_action(src))
 		return
-	if(usr.incapacitated())
+	if(usr.incapacitated)
 		return
 	if(reagent_container)
 		if(attached)
@@ -341,7 +340,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if(!usr.can_perform_action(src) || usr.incapacitated())
+	if(!usr.can_perform_action(src) || usr.incapacitated)
 		return
 	if(inject_only)
 		mode = IV_INJECTING

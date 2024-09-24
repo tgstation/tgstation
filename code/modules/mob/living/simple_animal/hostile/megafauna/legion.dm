@@ -32,7 +32,7 @@
 	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -106,7 +106,6 @@
 	pixel_y = 0
 	maxHealth = 200
 	size = LEGION_SMALL
-	shadow_type = SHADOW_MEDIUM
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)

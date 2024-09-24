@@ -118,7 +118,7 @@
 	eyeobj.eye_user = null
 	user.remote_control = null
 	current_user = null
-	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/on_set_is_operational(old_value)
 	if(!is_operational)
@@ -234,7 +234,7 @@
 			if(eye_user.client)
 				eye_user.client.images -= user_image
 				user_image = image(icon,loc,icon_state, FLY_LAYER)
-				SET_PLANE(user_image, GAME_PLANE, destination)
+				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image
 
 /mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
@@ -296,7 +296,7 @@
 				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
-	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
 	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", T)
 	if(isnull(camera))
 		return
@@ -305,12 +305,12 @@
 	var/obj/machinery/camera/final = T[camera]
 	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 	if(final)
-		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+		playsound(origin, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
 		owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 		owner.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
-		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(origin, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 
 /datum/action/innate/camera_multiz_up
 	name = "Move up a floor"

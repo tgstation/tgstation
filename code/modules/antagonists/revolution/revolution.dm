@@ -6,7 +6,7 @@
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
-	stinger_sound = 'sound/ambience/antag/revolutionary_tide.ogg'
+	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
 	var/datum/team/revolution/rev_team
 
 	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
@@ -431,7 +431,7 @@
 			var/list/datum/mind/promotable = list()
 			var/list/datum/mind/monkey_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
-				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
+				if(khrushchev.current && !khrushchev.current.incapacitated && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
 					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
 						if(!ismonkey(khrushchev.current))
 							promotable += khrushchev

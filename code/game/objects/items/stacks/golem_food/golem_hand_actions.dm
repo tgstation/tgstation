@@ -7,7 +7,7 @@
 /obj/item/gibtonite_hand
 	name = "stabilised gibtonite fist"
 	desc = "You had better launch this at something before it comes out the other end of your body."
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "Gibtonite ore"
 	lefthand_file = 'icons/mob/inhands/golem_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/golem_righthand.dmi'
@@ -35,7 +35,7 @@
 		qdel(src)
 		return ITEM_INTERACT_BLOCKING
 
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
 	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [interacting_with] with a thrown and primed")

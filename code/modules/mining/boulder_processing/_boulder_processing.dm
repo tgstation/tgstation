@@ -81,14 +81,14 @@
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Can process upto <b>[boulders_processing_count] boulders</b> at a time.")
+	. += span_notice("Can process up to <b>[boulders_processing_count] boulders</b> at a time.")
 
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
 	else
 		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
@@ -262,7 +262,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool
@@ -304,7 +304,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "anchor it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(panel_open)
 		balloon_alert(user, "close panel!")

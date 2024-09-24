@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
@@ -99,8 +99,8 @@
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/magic/cosmic_energy.ogg',
-		asoundout = 'sound/magic/cosmic_energy.ogg',
+		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
 	)
 	for(var/mob/living/person_on_rune in get_turf(src))
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))

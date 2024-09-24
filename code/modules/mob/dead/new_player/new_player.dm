@@ -127,7 +127,7 @@
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
-	var/datum/job/job = SSjob.GetJob(rank)
+	var/datum/job/job = SSjob.get_job(rank)
 	if(!(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
@@ -172,9 +172,9 @@
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 
-	var/datum/job/job = SSjob.GetJob(rank)
+	var/datum/job/job = SSjob.get_job(rank)
 
-	if(!SSjob.AssignRole(src, job, TRUE))
+	if(!SSjob.assign_role(src, job, TRUE))
 		tgui_alert(usr, "There was an unexpected error putting you into your requested job. If you cannot join with any job, you should contact an admin.")
 		return FALSE
 
@@ -187,18 +187,18 @@
 		CRASH("Failed to create a character for latejoin.")
 	transfer_character()
 
-	SSjob.EquipRank(character, job, character.client)
+	SSjob.equip_rank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
 	var/is_captain = IS_NOT_CAPTAIN
-	var/captain_sound = 'sound/misc/notice2.ogg'
+	var/captain_sound = 'sound/announcer/notice/notice2.ogg'
 	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
 	if(is_captain_job(job))
 		is_captain = IS_FULL_CAPTAIN
-		captain_sound = 'sound/misc/announce.ogg'
+		captain_sound = 'sound/announcer/announcement/announce.ogg'
 	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
 	else if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(character.ckey, list(JOB_CAPTAIN)))
 		is_captain = IS_ACTING_CAPTAIN

@@ -1,7 +1,7 @@
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/blob
 	name = "blob"
-	icon = 'icons/mob/nonhuman-player/blob_tall.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = TRUE
@@ -175,6 +175,7 @@
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		balloon_alert(controller, "failed to expand!")
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
@@ -281,11 +282,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
+				playsound(src.loc, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)

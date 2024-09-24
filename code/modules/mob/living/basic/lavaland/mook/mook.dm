@@ -15,16 +15,15 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	attack_sound = 'sound/weapons/rapierhit.ogg'
+	attack_sound = 'sound/items/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	death_sound = 'sound/voice/mook_death.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
 	pixel_x = -16
 	base_pixel_x = -16
 	pixel_y = -16
 	base_pixel_y = -16
-	shadow_offset_y = 10
 
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
@@ -244,8 +243,8 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	gender = MALE
-	attack_sound = 'sound/weapons/stringsmash.ogg'
-	death_sound = 'sound/voice/mook_death.ogg'
+	attack_sound = 'sound/items/weapons/stringsmash.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/bard
 	///our guitar
 	var/obj/item/instrument/guitar/held_guitar

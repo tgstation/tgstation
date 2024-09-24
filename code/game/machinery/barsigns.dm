@@ -30,7 +30,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
+	find_and_hang_on_wall()
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -42,9 +42,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	chosen_sign = sign
 	update_appearance()
-
-/obj/machinery/barsign/wall_mount_common_plane(direction)
-	return TRUE
 
 /obj/machinery/barsign/update_icon_state()
 	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
@@ -105,9 +102,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/barsign/attack_ai(mob/user)
 	return attack_hand(user)
@@ -543,6 +540,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
+	pixel_shift = 32
 
 /obj/item/wallframe/barsign/Initialize(mapload)
 	. = ..()

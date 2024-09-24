@@ -99,7 +99,7 @@
 		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -117,7 +117,6 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
-	set_turf_click_type(TURF_CLICK_FLAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
@@ -125,7 +124,6 @@
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
-	set_turf_click_type(TURF_CLICK_CUBE_KEEP_PARAMS)
 	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
@@ -184,13 +182,13 @@
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
 	do_attack_animation(target, no_effect = 1)
-	var/sound/throwsound = 'sound/weapons/throw.ogg'
+	var/sound/throwsound = 'sound/items/weapons/throw.ogg'
 	var/power_throw_text = "."
 	if(power_throw > 0) //If we have anything that boosts our throw power like hulk, we use the rougher heavier variant.
-		throwsound = 'sound/weapons/throwhard.ogg'
+		throwsound = 'sound/items/weapons/throwhard.ogg'
 		power_throw_text = " really hard!"
 	if(power_throw < 0) //if we have anything that weakens our throw power like dward, we use a slower variant.
-		throwsound = 'sound/weapons/throwsoft.ogg'
+		throwsound = 'sound/items/weapons/throwsoft.ogg'
 		power_throw_text = " flimsily."
 	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
 	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
@@ -552,7 +550,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/total_burn = 0
 	var/total_brute = 0
@@ -837,7 +835,7 @@
 
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))

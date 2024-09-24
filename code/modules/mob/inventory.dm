@@ -160,10 +160,6 @@
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
-	I.pixel_x = I.base_pixel_x
-	I.pixel_y = I.base_pixel_y
-	I.pixel_w = I.base_pixel_w
-	I.pixel_z = I.base_pixel_z
 	I.forceMove(src)
 	held_items[hand_index] = I
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
@@ -172,6 +168,8 @@
 	if(!I.on_equipped(src, ITEM_SLOT_HANDS))
 		return FALSE
 	update_held_items()
+	I.pixel_x = I.base_pixel_x
+	I.pixel_y = I.base_pixel_y
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
 		return FALSE
@@ -588,19 +586,19 @@
 		hud_used.build_hand_slots()
 
 //GetAllContents that is reasonable and not stupid
-/mob/living/proc/get_all_gear()
-	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES | INCLUDE_HELD)
+/mob/living/proc/get_all_gear(accessories = TRUE, recursive = TRUE)
+	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD | (accessories ? INCLUDE_ACCESSORIES : NONE))
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
 	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
-		if(A.atom_storage)
+		if(A.atom_storage && recursive)
 			processing_list += A.atom_storage.return_inv()
 	return processing_list
 
 /// Returns a list of things that the provided mob has, including any storage-capable implants.
-/mob/living/proc/gather_belongings()
-	var/list/belongings = get_all_gear()
+/mob/living/proc/gather_belongings(accessories = TRUE, recursive = TRUE)
+	var/list/belongings = get_all_gear(accessories, recursive)
 	for (var/obj/item/implant/storage/internal_bag in implants)
 		belongings += internal_bag.contents
 	return belongings

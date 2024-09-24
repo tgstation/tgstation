@@ -140,6 +140,11 @@
 	#define SPEECH_SAYMODE 10
 	#define SPEECH_MODS 11
 
+///from /datum/component/speechmod/handle_speech(): ()
+#define COMSIG_TRY_MODIFY_SPEECH "try_modify_speech"
+	///Return value if we prevent speech from being modified
+	#define PREVENT_MODIFY_SPEECH 1
+
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
@@ -170,8 +175,8 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///From /datum/component/creamed/Initialize()
-#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /datum/component/face_decal/splat/Initialize()
+#define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
@@ -247,3 +252,6 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// from /mob/update_incapacitated(): (old_incap, new_incap)
+#define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"

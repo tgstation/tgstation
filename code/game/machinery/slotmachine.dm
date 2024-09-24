@@ -15,7 +15,6 @@
 #define COIN 2
 
 /obj/machinery/computer/slot_machine
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/machines/computer.dmi'
@@ -336,14 +335,14 @@
 
 	else
 		balloon_alert(user, "no luck!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		did_player_win = FALSE
 
 	if(did_player_win)
 		add_filter("jackpot_rays", 3, ray_filter)
 		animate(get_filter("jackpot_rays"), offset = 10, time = 3 SECONDS, loop = -1)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
-		playsound(src, 'sound/machines/roulettejackpot.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/roulette/roulettejackpot.ogg', 50, TRUE)
 
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)

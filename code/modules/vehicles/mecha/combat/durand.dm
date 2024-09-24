@@ -236,13 +236,13 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	if(chassis.defense_mode)
 		SetInvisibility(INVISIBILITY_NONE, id=type)
 		flick("shield_raise", src)
-		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
+		playsound(src, 'sound/vehicles/mecha/mech_shield_raise.ogg', 50, FALSE)
 		icon_state = "shield"
 		resetdir(chassis, dir, dir) // to set the plane for the shield properly when it's turned on
 		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, PROC_REF(resetdir))
 	else
 		flick("shield_drop", src)
-		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
+		playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
 		icon_state = "shield_null"
 		addtimer(CALLBACK(src, PROC_REF(make_invisible)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 		UnregisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE)
@@ -283,7 +283,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()
-	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
 
 /obj/durand_shield/bullet_act()
 	play_attack_sound()

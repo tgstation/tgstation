@@ -5,15 +5,15 @@
 "cp" = (
 /obj/structure/table/abductor,
 /obj/item/food/soylentgreen{
-	pixel_x = -1;
-	pixel_y = 12
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "cr" = (
 /obj/item/flashlight/lantern{
 	pixel_x = 4;
-	pixel_y = 8;
+	pixel_y = -8;
 	light_on = 1
 	},
 /obj/item/flashlight/lantern{
@@ -45,7 +45,7 @@
 /obj/structure/table/abductor,
 /obj/item/poster/random_abductor{
 	pixel_x = 9;
-	pixel_y = 10
+	pixel_y = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -93,11 +93,11 @@
 /obj/structure/table/abductor,
 /obj/item/clothing/head/helmet/abductor{
 	pixel_x = -5;
-	pixel_y = 17
+	pixel_y = 7
 	},
 /obj/item/abductor/silencer{
 	pixel_x = 6;
-	pixel_y = 6
+	pixel_y = -4
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -120,7 +120,7 @@
 /obj/structure/table/abductor,
 /obj/item/food/soylentgreen{
 	pixel_x = 4;
-	pixel_y = 12
+	pixel_y = -1
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -151,12 +151,10 @@
 /area/virtual_domain/safehouse)
 "sv" = (
 /obj/structure/table/abductor,
-/obj/item/crowbar/abductor{
-	pixel_y = 6
-	},
+/obj/item/crowbar/abductor,
 /obj/item/stock_parts/power_store/cell/infinite/abductor{
 	pixel_x = 5;
-	pixel_y = 2
+	pixel_y = -3
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -171,11 +169,11 @@
 /obj/structure/table/abductor,
 /obj/item/wrench/abductor{
 	pixel_x = 2;
-	pixel_y = 16
+	pixel_y = 7
 	},
 /obj/item/wirecutters/abductor{
 	pixel_x = -3;
-	pixel_y = 10
+	pixel_y = 4
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -275,11 +273,11 @@
 /obj/item/melee/baton/abductor{
 	desc = "Even aliens can see the use of a good old-fashioned beating stick.";
 	pixel_x = 6;
-	pixel_y = 3
+	pixel_y = -5
 	},
 /obj/item/gun/energy/shrink_ray{
 	pixel_x = -5;
-	pixel_y = 12
+	pixel_y = 7
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -318,16 +316,14 @@
 /area/virtual_domain)
 "Rg" = (
 /obj/structure/table/abductor,
-/obj/item/ammo_box/magazine/smgm45{
-	pixel_y = 8
-	},
+/obj/item/ammo_box/magazine/smgm45,
 /obj/item/ammo_box/magazine/smgm45{
 	pixel_x = 9;
-	pixel_y = 13
+	pixel_y = 3
 	},
 /obj/item/gun/ballistic/automatic/c20r/unrestricted{
 	pixel_x = -5;
-	pixel_y = -1
+	pixel_y = -5
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -346,6 +342,10 @@
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "Uf" = (
+/obj/item/flashlight/seclite{
+	pixel_x = 9;
+	pixel_y = -11
+	},
 /obj/item/clothing/suit/armor/vest/alt{
 	pixel_x = 10;
 	pixel_y = 8
@@ -358,17 +358,13 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/flashlight/seclite{
-	pixel_x = 9
-	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Us" = (
 /obj/structure/table/abductor,
 /obj/item/abductor/mind_device{
 	desc = "Just holding this makes your head ache.";
-	pixel_x = 3;
-	pixel_y = 12
+	pixel_x = 3
 	},
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
@@ -382,9 +378,7 @@
 /area/virtual_domain)
 "VE" = (
 /obj/structure/table/abductor,
-/obj/item/storage/box/alienhandcuffs{
-	pixel_y = 8
-	},
+/obj/item/storage/box/alienhandcuffs,
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "VY" = (
@@ -399,19 +393,17 @@
 /obj/structure/table/abductor,
 /obj/item/dualsaber/green{
 	pixel_x = -5;
-	pixel_y = 12
+	pixel_y = 2
 	},
 /obj/item/gun/ballistic/automatic/c20r/unrestricted{
 	pixel_x = 8;
-	pixel_y = 2
+	pixel_y = -6
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Wk" = (
 /obj/structure/table/abductor,
-/obj/item/weldingtool/abductor{
-	pixel_y = 8
-	},
+/obj/item/weldingtool/abductor,
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "WS" = (

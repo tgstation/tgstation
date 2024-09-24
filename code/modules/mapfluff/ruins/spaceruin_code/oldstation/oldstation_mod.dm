@@ -1,5 +1,4 @@
 /obj/machinery/mod_installer
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
 	icon = 'icons/obj/machines/mod_installer.dmi'
@@ -36,7 +35,7 @@
 	update_appearance()
 
 /obj/machinery/mod_installer/proc/play_install_sound()
-	playsound(src, 'sound/items/rped.ogg', 30, FALSE)
+	playsound(src, 'sound/items/tools/rped.ogg', 30, FALSE)
 
 /obj/machinery/mod_installer/update_icon_state()
 	icon_state = busy ? busy_icon_state : "[base_icon_state][state_open ? "_open" : null]"
