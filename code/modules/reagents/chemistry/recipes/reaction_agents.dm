@@ -64,7 +64,7 @@
 	results = list(/datum/reagent/prefactor_b = 5)
 	required_reagents = list(/datum/reagent/prefactor_a = 5)
 	mix_message = "The solution's viscosity decreases."
-	mix_sound = 'sound/chemistry/bluespace.ogg' //Maybe use this elsewhere instead
+	mix_sound = 'sound/effects/chemistry/bluespace.ogg' //Maybe use this elsewhere instead
 	required_temp = 50
 	optimal_temp = 500
 	overheat_temp = 500

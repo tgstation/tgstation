@@ -38,9 +38,9 @@
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
 	time = 42
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	success_sound = 'sound/items/handling/surgery/organ1.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	surgery_effects_mood = TRUE
 
 /datum/surgery_step/lobectomy/mechanic
@@ -51,8 +51,8 @@
 		/obj/item/melee/energy/sword = 65,
 		/obj/item/knife = 45,
 		/obj/item/shard = 35)
-	preop_sound = 'sound/items/ratchet.ogg'
-	success_sound = 'sound/machines/doorclick.ogg'
+	preop_sound = 'sound/items/tools/ratchet.ogg'
+	success_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_step/lobectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

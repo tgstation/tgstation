@@ -226,9 +226,9 @@
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = holder.my_atom.drop_location()
 	if(created_volume < 5)
-		playsound(location,'sound/effects/sparks1.ogg', 100, TRUE)
+		playsound(location,'sound/effects/sparks/sparks1.ogg', 100, TRUE)
 	else
-		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
+		playsound(location,'sound/mobs/non-humanoids/bee/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
 		for(var/R in holder.reagent_list)
 			if(required_reagents[R])
@@ -498,7 +498,7 @@
 	if(!cryostylane)
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
 	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
@@ -508,7 +508,7 @@
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
 	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
 	new /obj/structure/statue/snow/snowman(local_turf)
@@ -579,7 +579,7 @@
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
-	mix_sound = 'sound/machines/defib_zap.ogg'
+	mix_sound = 'sound/machines/defib/defib_zap.ogg'
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
@@ -603,7 +603,7 @@
 	if(QDELETED(holder_atom))
 		return
 	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
-	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	playsound(holder_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474

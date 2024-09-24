@@ -129,8 +129,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts", "pierces")
 	attack_verb_simple = list("slash", "cut", "pierce")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	demolition_mod = 0.75
 	attack_speed = 1 SECONDS
 	block_chance = 50

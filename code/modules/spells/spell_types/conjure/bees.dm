@@ -4,7 +4,7 @@
 		instantly summoning a swarm of bees to your location. \
 		These bees are NOT friendly to anyone."
 	button_icon_state = "bee"
-	sound = 'sound/voice/moth/scream_moth.ogg'
+	sound = 'sound/mobs/humanoids/moth/scream_moth.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 1 MINUTES

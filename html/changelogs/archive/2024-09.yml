@@ -683,3 +683,59 @@
       the mailing room:'
   - rscadd: The drone bay spot in maintenance has been cleared out by a gang of rowdy
       assistants, and turned into a drug den.
+2024-09-23:
+  Bisar:
+  - balance: Changelings are now able to respec multiple times if they have absorbed
+      multiple humanoids, instead of it being toggled on if it was off during their
+      most recent absorb.
+  - balance: Last Resort is now an innate ability for changelings.
+  - code_imp: Added a little counter and a tgui function for displaying how many absorbs
+      lings have in their belly to spend for readaptions!
+  EnterTheJake:
+  - balance: Void Conduit has less range and no longer ignores Line of Sight.
+  Ghommie:
+  - rscadd: You can now fish new, tasty treats by the station deep fryers.
+  - rscadd: You can now grow fish inside an aquarium by feeding them regularly (at
+      50% hunger for maximum growth).
+  - rscadd: Added the evolution for pikes to armored pikes.
+  - rscadd: Added more customizable options to PDA virtual pets, which can be unlocked
+      by completing achievements.
+  - rscadd: Added a fat dart that can be rarely found in hacked cigarette vending
+      machines.
+  - image: added icon states for linkable fishing spots in the fish portal gen radial
+      menu.
+  - balance: The fishing skill now positively affects fishing rod cast range and reeling
+      objects outside of the minigame. Reeling objects also provides a pitiable amount
+      of fishing experience.
+  - balance: High fishing skill now reduces experience gained from low difficulty
+      fishing spots.
+  - sound: Removed noise from reeling sounds.
+  Likteer:
+  - rscdel: Intentional screaming has been unmuted. Now has a 5s cooldown instead.
+  Sealed101:
+  - spellcheck: fixed examine and balloon alert text for boulder refining machinery
+  SmArtKar:
+  - bugfix: Emergency shuttle console no longer reopens its UI on its own
+  - bugfix: Mapped in express supply consoles now work instead of displaying an empty
+      UI.
+  - bugfix: Emagged express supply consoles now display updated prices.
+  - refactor: Rewrote a large chunk of express supply console code
+  - balance: Express supply consoles now drop their upgrade disk upon being deconstructed,
+      and emagged consoles now will try to send at least one package to the station
+      if cargo budget doesn't have enough funds for all 5.
+  - bugfix: Fixed infective components not cleaning up disease datums after themselves
+  grungussuss:
+  - sound: pruned higher frequencies from the resonant shriek ability sound, making
+      it lighter on the ears
+  - sound: lavaland magma ambience has been changed
+2024-09-24:
+  Absolucy:
+  - bugfix: Fixed the Living Heart ritual deleting your old heart when replacing it
+      instead of having it dramatically burst out of your chest like it should.
+  - qol: The Living Heart ritual will now work if you don't have one at all for some
+      reason, in the same way that'd you use an organic heart in the ritual to replace
+      a cybernetic heart.
+  - qol: The Living Heart ritual, when putting a new heart into your chest, will now
+      heal the heart enough to be just under the "severe damage" threshold, if needed.
+  theselfish:
+  - bugfix: The Beer Sixpack no longer magically turns into bottles.

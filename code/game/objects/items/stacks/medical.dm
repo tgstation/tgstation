@@ -436,7 +436,7 @@
 		is_open = TRUE
 		balloon_alert(user, "opened")
 		update_appearance()
-		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 		return
 	return ..()
 

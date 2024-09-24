@@ -33,7 +33,7 @@
 	///List of tiles that we added an overlay to, so we can clear them when the conduit is deleted
 	var/list/overlayed_turfs = list()
 	///How many tiles far our effect is
-	var/effect_range = 12
+	var/effect_range = 8
 	///id of the deletion timer
 	var/timerid
 	///Audio loop for the rift being alive
@@ -44,7 +44,12 @@
 	soundloop = new(src, start_immediately = TRUE)
 	timerid = QDEL_IN_STOPPABLE(src, 1 MINUTES)
 	START_PROCESSING(SSobj, src)
-	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, src))
+	build_view_turfs()
+
+/obj/structure/void_conduit/proc/build_view_turfs()
+	for(var/turf/affected_turf as anything in overlayed_turfs)
+		affected_turf.cut_overlay(void_overlay)
+	for(var/turf/affected_turf as anything in view(effect_range, src))
 		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
@@ -61,12 +66,13 @@
 	return ..()
 
 /obj/structure/void_conduit/process(seconds_per_tick)
+	build_view_turfs()
 	do_conduit_pulse()
 
 ///Sends out a pulse
 /obj/structure/void_conduit/proc/do_conduit_pulse()
 	var/list/turfs_to_affect = list()
-	for(var/turf/affected_turf as anything in RANGE_TURFS(effect_range, loc))
+	for(var/turf/affected_turf as anything in view(effect_range, loc))
 		var/distance = get_dist(loc, affected_turf)
 		if(!turfs_to_affect["[distance]"])
 			turfs_to_affect["[distance]"] = list()
@@ -102,7 +108,7 @@
 				affected_structure.take_damage(rand(10, 20))
 
 /datum/looping_sound/void_conduit
-	mid_sounds = 'sound/ambience/ambiatm1.ogg'
+	mid_sounds = 'sound/ambience/misc/ambiatm1.ogg'
 	mid_length = 1 SECONDS
 	extra_range = 10
 	volume = 40

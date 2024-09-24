@@ -208,7 +208,7 @@
 
 		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
+		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, "restock process complete")
 	charger.sendmats = FALSE
@@ -303,7 +303,7 @@
 	cyborg.logevent("Chassis model has been set to [name].")
 	sleep(0.1 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		playsound(cyborg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
 	cyborg.ai_lockdown = FALSE

@@ -304,6 +304,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		send_alert("stopped fishing")
 		complete(FALSE)
 
+///The multiplier of the fishing experience malus if the user's level is substantially above the difficulty.
+#define EXPERIENCE_MALUS_MULT 0.08
+
 /datum/fishing_challenge/proc/complete(win = FALSE)
 	if(completed)
 		return
@@ -311,19 +314,22 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	completed = TRUE
 	if(phase == MINIGAME_PHASE)
 		remove_minigame_hud()
-	if(!QDELETED(user))
-		if(start_time)
-			var/seconds_spent = (world.time - start_time) * 0.1
-			if(!(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
-				user.mind?.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
-				if(user.mind?.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
-					user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
+	if(!QDELETED(user) && user.mind && start_time && !(special_effects & FISHING_MINIGAME_RULE_NO_EXP))
+		var/seconds_spent = (world.time - start_time) * 0.1
+		var/extra_exp_malus = user.mind.get_skill_level(/datum/skill/fishing) - difficulty * 0.1
+		if(extra_exp_malus > 0)
+			experience_multiplier /= (1 + extra_exp_malus * EXPERIENCE_MALUS_MULT)
+		user.mind.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
+		if(user.mind.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
+			user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(location, 'sound/effects/bigsplash.ogg', 100)
 	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, win)
 	if(!QDELETED(src))
 		qdel(src)
+
+#undef EXPERIENCE_MALUS_MULT
 
 /datum/fishing_challenge/proc/start_baiting_phase(penalty = FALSE)
 	reward_path = null //In case we missed the biting phase, set the path back to null
