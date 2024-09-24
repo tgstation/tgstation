@@ -389,7 +389,7 @@
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
-	targetitem = /obj/item/reagent_containers/hypospray/cmo
+	targetitem = /obj/item/hypospray/mkii/deluxe/cmo
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
@@ -397,8 +397,13 @@
 	steal_hint = "The Chief Medical Officer's personal medical injector. \
 		Usually found amongst their medical supplies on their person, in their belt, or otherwise in their locker."
 
-/obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)*/
+/// DOPPLER SHIFT REMOVAL END, REPLACEMENT BEGIN
+/obj/item/hypospray/mkii/deluxe/cmo/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/hypospray/mkii/deluxe/cmo)
+/// DOPPLER SHIFT EDIT END
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
