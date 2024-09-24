@@ -11,21 +11,21 @@
 	icon_state = "wrap_paper"
 	inhand_icon_state = "wrap_paper"
 	greyscale_config = /datum/greyscale_config/wrap_paper
-	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
 	singular_name = "wrapping paper"
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 5
 
-/obj/item/stack/wrapping_paper/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
-	if (istype(interacting_with, /mob/living))
-		var/mob/living/target_mob = interacting_with
-		balloon_alert(user, "you bap them on the head")
-		visible_message("[user] baps [target_mob] on the head with the [src]")
-		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
-		target_mob.add_mood_event("roll", /datum/mood_event/bapped)
-		return ..()
+/obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	balloon_alert(user, "you bap them on the head")
+	visible_message("[user] baps [target_mob] on the head with the [src]")
+	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
 /obj/item/stack/wrapping_paper/Initialize(mapload)
 	. = ..()
@@ -214,8 +214,7 @@
 
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	if (istype(target_mob, /mob/living))
-		balloon_alert(user, "you bap them on the head")
-		visible_message("[user] baps [target_mob] on the head with the [src]")
-		target_mob.add_mood_event("roll", /datum/mood_event/bapped)
+	balloon_alert(user, "you bap them on the head")
+	visible_message("[user] baps [target_mob] on the head with the [src]")
+	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
