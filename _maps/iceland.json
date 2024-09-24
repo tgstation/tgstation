@@ -17,6 +17,17 @@
 			"No Parallax": true
 		},
 		{
+			"Up": true,
+			"Down": true,
+			"Mining": true,
+			"Linkage": null,
+			"Gravity": true,
+			"Ice Ruins": true,
+			"Ice Ruins Underground": true,
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
+			"No Parallax": true
+		},
+		{
 			"Down": true,
 			"Mining": true,
 			"Linkage": null,

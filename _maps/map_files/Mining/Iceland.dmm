@@ -4,7 +4,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "ab" = (
 /obj/effect/decal/cleanable/dirt,
@@ -428,7 +428,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "cV" = (
 /obj/structure/cable,
@@ -481,7 +481,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "dr" = (
 /obj/machinery/door/airlock{
@@ -530,14 +530,14 @@
 "dB" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "dG" = (
 /obj/structure/railing/corner{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "dJ" = (
 /obj/structure/lattice/catwalk,
@@ -696,7 +696,7 @@
 /area/mine/laborcamp/security/maintenance)
 "fb" = (
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "fe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -904,17 +904,6 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/stock_parts/cell/high{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/stock_parts/cell/high{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/stock_parts/cell/high{
-	pixel_x = 3
-	},
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "gs" = (
@@ -938,7 +927,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "gB" = (
 /obj/structure/lattice/catwalk,
@@ -1409,7 +1398,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "jw" = (
 /obj/structure/disposalpipe/segment{
@@ -2086,7 +2075,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "oA" = (
 /turf/closed/wall,
@@ -2160,7 +2149,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "pr" = (
 /obj/structure/bed,
@@ -3217,7 +3206,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "wU" = (
 /obj/structure/lattice/catwalk,
@@ -3379,7 +3368,7 @@
 	},
 /area/mine/storage/public)
 "xX" = (
-/obj/structure/gulag_vent,
+/obj/structure/gulag_vent/ice,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "yc" = (
@@ -3454,7 +3443,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "yu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3515,7 +3504,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "yV" = (
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/unexplored/rivers/deep)
 "yX" = (
 /obj/effect/spawner/structure/window,
@@ -3533,11 +3522,6 @@
 /area/mine/maintenance/public/south)
 "zd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/crap{
-	desc = "A legendary infinite-capacity power cell. This one looks like a poor quality AA battery with a coat of flaking gold paint.";
-	icon_state = "icell";
-	name = "infinite-capacity power cell"
-	},
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
@@ -4011,7 +3995,7 @@
 	},
 /obj/structure/railing,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "Dd" = (
 /obj/structure/disposalpipe/segment{
@@ -4126,7 +4110,7 @@
 	dir = 2;
 	dwidth = 3;
 	height = 10;
-	name = "lavaland mine";
+	name = "iceland mine";
 	shuttle_id = "mining_away";
 	width = 7
 	},
@@ -4255,7 +4239,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "EX" = (
 /obj/structure/disposalpipe/segment{
@@ -4689,7 +4673,7 @@
 	},
 /obj/structure/ore_box,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "IJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4834,7 +4818,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "JA" = (
 /obj/machinery/computer/shuttle/mining/common,
@@ -5554,7 +5538,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "NL" = (
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "NM" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -5642,10 +5626,6 @@
 "Ok" = (
 /obj/structure/table,
 /obj/machinery/cell_charger{
-	pixel_y = 3
-	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -5936,7 +5916,8 @@
 /area/mine/mechbay)
 "Qq" = (
 /obj/structure/ore_vent/starter_resources{
-	icon_state = "ore_vent_active"
+	icon_state = "ore_vent_ice_active";
+	icon_state_tapped = "ore_vent_ice_active"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -6101,7 +6082,7 @@
 "RB" = (
 /obj/structure/railing,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "RD" = (
 /turf/closed/wall,
@@ -6171,13 +6152,6 @@
 	dir = 8
 	},
 /area/mine/laborcamp)
-"Sc" = (
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 3;
-	pixel_y = -10
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "Sd" = (
 /obj/structure/fence/end{
 	dir = 8
@@ -6452,13 +6426,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
-"TX" = (
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "Ub" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/west,
@@ -6696,7 +6663,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "VF" = (
 /obj/structure/table,
@@ -6725,7 +6692,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/lattice/catwalk/mining,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "VO" = (
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -6811,7 +6778,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "WB" = (
 /obj/machinery/disposal/bin,
@@ -6974,7 +6941,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "Xy" = (
 /obj/structure/chair/stool/directional/south,
@@ -7149,7 +7116,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/openspace,
+/turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "Yr" = (
 /obj/structure/table,
@@ -155876,7 +155843,7 @@ da
 qV
 Te
 pU
-TX
+pU
 pU
 NL
 pU
@@ -156132,7 +156099,7 @@ Ge
 Ot
 qw
 Te
-Sc
+pU
 pu
 jf
 NL
