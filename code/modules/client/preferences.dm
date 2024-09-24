@@ -568,12 +568,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/url_membership_lookup()
 	var/uri = "https://www.byond.com/members/[html_encode(parent.ckey)]?format=text"
 	var/outfile = "tmp/[parent.ckey].txt"
-	var/output
 	switch(world.system_type)
 		if(MS_WINDOWS)
-			output = world.shelleo("powershell Invoke-WebRequest -Uri '[uri]' -OutFile '[outfile]'")
+			world.shelleo("powershell Invoke-WebRequest -Uri '[uri]' -OutFile '[outfile]'")
 		if(UNIX)
-			output = world.shelleo("curl -o '[outfile]' '[uri]'")
+			world.shelleo("curl -o '[outfile]' '[uri]'")
 	if(!fexists(outfile))
 		CRASH("No file downloaded from url membership lookup.")
 	var/savefile/data = new
