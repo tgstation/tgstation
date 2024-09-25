@@ -612,12 +612,12 @@
 
 /atom/movable/screen/alert/status_effect/shower_regen
 	name = "Washing"
-	desc = "Good wash fills me with energy!"
+	desc = "A good wash fills me with energy!"
 	icon_state = "shower_regen"
 
 /atom/movable/screen/alert/status_effect/shower_regen/catgirl
 	name = "Washing"
-	desc = "Waaater... Fuck This WATER!!!"
+	desc = "Waaater... Fuck this WATER!!"
 	icon_state = "shower_regen_catgirl"
 
 /datum/status_effect/shower_regen

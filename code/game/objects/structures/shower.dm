@@ -250,8 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(locate_new_shower && isturf(exiter.loc))
 		return
 	var/mob/living/take_his_status_effect = exiter
-	if(take_his_status_effect.has_status_effect(/datum/status_effect/shower_regen))
-		take_his_status_effect.remove_status_effect(/datum/status_effect/shower_regen)
+	take_his_status_effect.remove_status_effect(/datum/status_effect/shower_regen)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
@@ -261,8 +260,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	var/mob/living/living_target = target
 	check_heat(living_target)
 	living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
-	if(living_target.has_status_effect(/datum/status_effect/shower_regen))
-		return
 	living_target.apply_status_effect(/datum/status_effect/shower_regen)
 
 /**
