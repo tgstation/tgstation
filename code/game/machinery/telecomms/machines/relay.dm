@@ -86,18 +86,22 @@
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
+	temperature_ignore_atmos = TRUE
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
+	temperature_ignore_atmos = TRUE
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
 	toggled = FALSE
 	autolinkers = list("r_relay")
+	temperature_ignore_atmos = TRUE
 
 // Generic preset relay
 /obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
 	autolinkers = list("autorelay")
+	temperature_ignore_atmos = TRUE
