@@ -146,11 +146,13 @@
 	var/tox_loss = target.getToxLoss()
 	var/fire_loss = target.getFireLoss()
 	var/brute_loss = target.getBruteLoss()
-	var/mob_status = (target.stat == DEAD ? span_alert("<b>Deceased</b>") : "<b>[round(target.health/target.maxHealth,0.01)*100]% healthy</b>")
+	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health/target.maxHealth,0.01)*100]% healthy</b>")
 
-	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)
-		mob_status = span_alert("<b>Deceased</b>")
-		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
+	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
+		// if we don't appear to actually be in a "dead state", add fake oxyloss
+		if(oxy_loss + tox_loss + fire_loss + brute_loss < 200)
+			oxy_loss += 200 - (oxy_loss + tox_loss + fire_loss + brute_loss)
+			oxy_loss = clamp(oxy_loss, 0, 200)
 
 	render_list += "[span_info("Analyzing results for [target]:")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
