@@ -57,6 +57,12 @@
 		toggle_dormant_tumor_vulnerabilities(tumorless_human)
 		tumorless_human.remove_movespeed_modifier(/datum/movespeed_modifier/hemophage_dormant_state)
 
+	if(tumorless_human.hud_used)
+		var/datum/hud/hud_used = tumorless_human.hud_used
+
+		hud_used.infodisplay -= blood_tracker
+		QDEL_NULL(blood_tracker)
+
 /obj/item/organ/internal/heart/hemophage/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
