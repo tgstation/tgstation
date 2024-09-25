@@ -2,6 +2,13 @@
 "aK" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/stack/spacecash/c10{
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/item/stack/spacecash/c20{
+	pixel_y = 6
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -50,10 +57,6 @@
 "ck" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
-/mob/living/basic/lizard{
-	name = "Zarpo";
-	desc = "This little guy is a survivor, that's for sure."
-	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -220,11 +223,26 @@
 "iT" = (
 /obj/structure/rack,
 /obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
+/obj/item/food/cornchips/random{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/food/cornchips/random{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/food/cornchips/random{
+	pixel_y = -7;
+	pixel_x = -5
+	},
+/obj/item/food/cornchips/random{
+	pixel_y = -7;
+	pixel_x = 3
+	},
+/obj/item/food/cornchips/random{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/structure/sign/poster/contraband/eat/directional/north,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -338,6 +356,27 @@
 "nX" = (
 /obj/structure/sign/poster/contraband/tipper_cream_soda/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/bbqsauce{
+	pixel_y = 17;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/condiment/hotsauce{
+	pixel_y = 15;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/condiment/coldsauce{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/donksauce{
+	pixel_x = 1;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/condiment/mayonnaise{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -370,9 +409,19 @@
 /area/ruin/thelizardsgas_lavaland)
 "qk" = (
 /obj/structure/cable,
-/obj/effect/spawner/random/structure/closet_maintenance,
 /obj/structure/sign/poster/fluff/lizards_gas_power/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/pickaxe,
+/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+/obj/item/ammo_casing/junk/hunter,
+/obj/item/ammo_casing/junk/hunter,
+/obj/item/ammo_casing/junk/hunter,
+/obj/item/storage/box/coffeepack/robusta,
+/obj/item/storage/box/coffeepack/robusta,
 /turf/open/floor/iron/smooth{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -427,14 +476,14 @@
 /area/lavaland/surface/outdoors)
 "sY" = (
 /obj/structure/table/reinforced,
-/obj/item/food/sandwich/blt{
-	pixel_y = 6;
-	pixel_x = -2
-	},
-/obj/item/food/little_shiro_sandwich{
-	pixel_y = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer2,
+/obj/item/food/donut/choco{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/food/donut/berry{
+	pixel_x = 5
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -465,32 +514,16 @@
 /area/ruin/thelizardsgas_lavaland)
 "uV" = (
 /obj/structure/table/reinforced,
-/obj/item/food/honeybar{
-	pixel_y = 5;
-	pixel_x = -1
-	},
-/obj/item/food/honeybar{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/food/honeybar{
-	pixel_y = 8;
-	pixel_x = -1
-	},
-/obj/item/food/honeybar{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/food/granola_bar{
-	pixel_y = 9;
-	pixel_x = -1
-	},
-/obj/item/food/granola_bar{
-	pixel_y = 6;
-	pixel_x = 2
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/item/food/burger/rootguffin{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/food/burger/rootguffin{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -590,6 +623,9 @@
 	pixel_y = -1
 	},
 /obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/soymilk,
+/obj/item/reagent_containers/condiment/soymilk,
 /turf/open/floor/iron/freezer{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -730,6 +766,15 @@
 "El" = (
 /obj/structure/sign/poster/official/pda_ad/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/structure/table/reinforced,
+/obj/item/food/rootbread_peanut_butter_banana{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/food/rootbread_peanut_butter_jelly{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -926,6 +971,9 @@
 /area/ruin/thelizardsgas_lavaland)
 "Km" = (
 /obj/structure/table/reinforced,
+/obj/machinery/coffeemaker/impressa{
+	pixel_x = 2
+	},
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -973,9 +1021,11 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "NY" = (
-/obj/structure/closet/crate/preopen,
-/obj/effect/spawner/random/trash/deluxe_garbage,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden/layer4,
+/obj/effect/mob_spawn/ghost_role/human/lavaland_gasstation{
+	dir = 4;
+	mob_type = /mob/living/carbon/human/species/lizard
+	},
 /turf/open/floor/iron/smooth{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
@@ -1010,6 +1060,10 @@
 /obj/structure/bed/dogbed{
 	name = "Zarpo's bed";
 	desc = "A comfy-looking lizard bed. Looks a lot like a dog bed."
+	},
+/mob/living/basic/lizard{
+	name = "Zarpo";
+	desc = "This little guy is a survivor, that's for sure."
 	},
 /turf/open/floor/iron/smooth{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
