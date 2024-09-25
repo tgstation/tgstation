@@ -128,6 +128,7 @@
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0
 
+
 /obj/item/organ/internal/ears/cat
 	name = "cat ears"
 	icon = 'icons/obj/clothing/head/costume.dmi'
@@ -144,12 +145,12 @@
 
 /// Bodypart overlay for the horrible cat ears
 /datum/bodypart_overlay/mutant/cat_ears
-	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT
+	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	color_source = ORGAN_COLOR_HAIR
 	feature_key = "ears"
 
-	/// We dont color the inner part, which is the front layer
-	var/colorless_layer = EXTERNAL_FRONT
+	/// Layer upon which we add the inner ears overlay
+	var/inner_layer = EXTERNAL_FRONT
 
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
 	return SSaccessories.ears_list
@@ -159,10 +160,21 @@
 		return FALSE
 	return TRUE
 
-/datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, draw_layer, obj/item/bodypart/limb)
-	if(draw_layer != bitflag_to_layer(colorless_layer))
-		return ..()
-	return overlay
+/datum/bodypart_overlay/mutant/cat_ears/get_image(image_layer, obj/item/bodypart/limb)
+	var/mutable_appearance/base_ears = ..()
+
+	// Only add inner ears on the inner layer
+	if(image_layer != bitflag_to_layer(inner_layer))
+		return base_ears
+
+	// Construct image of inner ears, apply to base ears as an overlay
+	feature_key += "inner"
+	var/mutable_appearance/inner_ears = ..()
+	inner_ears.appearance_flags = RESET_COLOR
+	feature_key = initial(feature_key)
+
+	base_ears.overlays += inner_ears
+	return base_ears
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
