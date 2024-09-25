@@ -3,7 +3,7 @@
 /obj/item/food/vendor_snacks
 	name = "\improper God's Strongest Snacks"
 	desc = "You best hope you aren't a sinner. (You should never see this item please report it)"
-	icon = 'modular_doppler/vending_machines/icons/imported_quick_foods.dmi'
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
 	icon_state = "foodpack_generic"
 	trash_type = /obj/item/trash/vendor_trash
 	bite_consumption = 10
@@ -17,7 +17,7 @@
 /obj/item/trash/vendor_trash
 	name = "\improper God's Weakest Snacks"
 	desc = "The leftovers of what was likely a great snack in a past time."
-	icon = 'modular_doppler/vending_machines/icons/imported_quick_foods.dmi'
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
 	icon_state = "foodpack_generic_trash"
 	custom_materials = list(
 		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
@@ -86,7 +86,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/tea
 	name = "bottle of tea"
 	desc = "A bottle of tea brought to you in a convenient plastic bottle."
-	icon = 'modular_doppler/vending_machines/icons/imported_quick_foods.dmi'
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
 	icon_state = "tea_bottle"
 	list_reagents = list(/datum/reagent/consumable/tea = 40)
 	cap_icon_state = "bottle_cap_tea"
