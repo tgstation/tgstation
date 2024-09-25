@@ -2,7 +2,7 @@
 #define UI_BLOOD_DISPLAY "WEST:6,CENTER-1:0"
 
 ///Maptext define for Hemophage HUDs
-#define FORMAT_HEMOPHAGE_HUD_TEXT(valuecolor, value) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[round(value,1)]</font></div>")
+#define FORMAT_HEMOPHAGE_HUD_TEXT(valuecolor, value) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[trunc(value)]</font></div>")
 
 /atom/movable/screen/hemophage
 	icon = 'modular_doppler/modular_species/species_types/hemophage/icons/hemophage_hud.dmi'
