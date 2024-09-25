@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aJ" = (
 /obj/machinery/door/airlock/titanium{
-	name = "comm buoy airlock"
+	name = "Comms Buoy Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/mineral/titanium,
@@ -21,16 +21,19 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/nt_commsbuoy)
 "dX" = (
-/obj/machinery/computer/terminal/nt_commsbuoy{
-	pixel_y = 10
-	},
+/obj/machinery/computer/terminal/nt_commsbuoy,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/nt_commsbuoy)
 "et" = (
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
 "ew" = (
-/obj/machinery/telecomms/hub,
+/obj/structure/fluff{
+	name = "telecommunication hub";
+	desc = "A mighty piece of hardware used to send/receive massive amounts of data.";
+	icon = 'icons/obj/machines/telecomms.dmi';
+	icon_state = "hub"
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/nt_commsbuoy)
 "eX" = (
@@ -121,9 +124,7 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
 "it" = (
-/obj/machinery/computer/terminal/nt_commsbuoy/blackbox{
-	pixel_y = 10
-	},
+/obj/machinery/computer/terminal/nt_commsbuoy/blackbox,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
 "iv" = (
@@ -136,7 +137,7 @@
 /obj/item/stock_parts/subspace/amplifier,
 /obj/structure/closet/crate/centcom,
 /obj/item/storage/box/lights/bulbs,
-/obj/effect/spawner/random/engineering/tool_advanced,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating,
 /area/ruin/space/nt_commsbuoy)
 "jy" = (
@@ -195,8 +196,7 @@
 /area/ruin/space/nt_commsbuoy)
 "nn" = (
 /obj/structure/frame/computer{
-	dir = 1;
-	pixel_y = -3
+	dir = 1
 	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
@@ -274,7 +274,9 @@
 /turf/template_noop,
 /area/space/nearstation)
 "vr" = (
-/obj/machinery/door/airlock/external/ruin,
+/obj/machinery/door/airlock/external/ruin{
+	name = "Comms Buoy External Airlock"
+	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ruin/space/nt_commsbuoy)
@@ -299,10 +301,10 @@
 /area/space/nearstation)
 "zt" = (
 /obj/effect/decal/cleanable/blood,
-/obj/machinery/door/airlock/titanium{
-	name = "comm buoy airlock"
-	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/titanium{
+	name = "Comms Buoy Airlock"
+	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
 "zA" = (
@@ -337,8 +339,7 @@
 /area/space/nearstation)
 "AD" = (
 /obj/machinery/computer/terminal/nt_commsbuoy/relay{
-	dir = 1;
-	pixel_y = -3
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/nt_commsbuoy)
@@ -471,10 +472,10 @@
 /area/ruin/space/nt_commsbuoy)
 "Qb" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/titanium{
-	name = "comm buoy airlock"
-	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/titanium{
+	name = "Comms Buoy Airlock"
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/nt_commsbuoy)
 "Qd" = (
