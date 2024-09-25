@@ -343,7 +343,7 @@
 		render_list += "<span class='info ml-1'>[body_temperature_message]</span><br>"
 
 	// Time of death
-	if(target.station_timestamp_timeofdeath && (target.stat == DEAD || ((HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !advanced)))
+	if(target.station_timestamp_timeofdeath && !target.appears_alive())
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		var/tdelta = round(world.time - target.timeofdeath)
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(tdelta)] ago.</b></span><br>"
