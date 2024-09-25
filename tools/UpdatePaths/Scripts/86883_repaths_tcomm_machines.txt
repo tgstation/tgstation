@@ -1,0 +1,5 @@
+#comment Repaths some fluff telecomms stuff used in ruins
+
+/obj/machinery/telecomms/hub : /obj/machinery/telecomms/hub/fluff{@OLD}
+/obj/machinery/telecomms/server : /obj/machinery/telecomms/server/adminbus{@OLD}
+
