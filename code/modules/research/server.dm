@@ -300,6 +300,10 @@
 	hdd_wires = 0
 	deconstruction_state = HDD_OVERLOADED
 
+/obj/machinery/rnd/server/off_station
+	req_access = null
+	temperature_ignore_atmos = TRUE
+
 #undef HDD_CUT_LOOSE
 #undef HDD_OVERLOADED
 #undef HDD_PANEL_CLOSED
