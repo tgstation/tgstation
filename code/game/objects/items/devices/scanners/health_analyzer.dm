@@ -96,9 +96,7 @@
 	var/readability_check = user.can_read(src) && !user.is_blind()
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
-			if(readability_check)
-				healthscan(user, M, mode, advanced)
-			last_scan_text = healthscan(user, M, mode, advanced, tochat = FALSE)
+			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
 		if (SCANMODE_WOUND)
 			if(readability_check)
 				woundscan(user, M, src)
@@ -328,8 +326,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				var/cyberimp_name = tochat ? capitalize(cyberimp.examine_title(user)) : capitalize(cyberimp.name)
-				LAZYADD(cyberimps, cyberimp_name)
+				LAZYADD(cyberimps, cyberimp.examine_title(user))
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -409,10 +406,10 @@
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"
 
+	. = jointext(render_list, "")
 	if(tochat)
-		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
-	else
-		return(jointext(render_list, ""))
+		to_chat(user, examine_block(.), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+	return .
 
 /obj/item/healthanalyzer/click_ctrl_shift(mob/user)
 	. = ..()
