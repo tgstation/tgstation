@@ -98,7 +98,7 @@ export const BigManipulator = (props) => {
             )}
             <Table>
               {settings_list.map((setting) => (
-                <Table.Row key={setting.priority_width} className="candystripe">
+                <Table.Row key={setting.name} className="candystripe">
                   <Table.Cell width={3}>
                     {setting.name} {` [priority: ${setting.priority_width}]`}
                     {setting.priority_width >= 2 && (
