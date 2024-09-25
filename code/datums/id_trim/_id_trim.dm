@@ -29,6 +29,12 @@
 	///If set, IDs with this trim will give wearers arrows of different colors when pointing
 	var/pointer_color
 
+/datum/id_trim/proc/find_job()
+	for (var/datum/job/job as anything in SSjob.all_occupations)
+		if (job.title == assignment)
+			return job
+	return null
+
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
 /obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()

@@ -65,7 +65,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	visible_message(span_warning("[src] flickers and disappears!"))
-	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
+	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
 	return ..()
 
 /obj/machinery/vending/runic_vendor/proc/runic_explosion()
