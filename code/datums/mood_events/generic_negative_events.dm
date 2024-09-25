@@ -498,6 +498,6 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/bapped/add_effects()
-    // Felinids apparently hate being hit over the head with cardboard
+	// Felinids apparently hate being hit over the head with cardboard
 	if(isfelinid(owner))
 		mood_change = -2
