@@ -169,7 +169,7 @@
 			credits += point_reward
 			return "Experiment successful! [point_reward] new data-points collected."
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			return "Experiment failed! No replacement organ detected."
 	else
 		say("Brain activity nonexistent - disposing sample...")

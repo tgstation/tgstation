@@ -279,6 +279,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
 
+#define isapc(A) (istype(A, /obj/machinery/power/apc))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Storage UI should no longer (not so much) randomly disappear, hooray!"

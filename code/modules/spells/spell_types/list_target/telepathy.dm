@@ -22,7 +22,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	message = tgui_input_text(owner, "What do you wish to whisper to [cast_on]?", "[src]")
+	message = tgui_input_text(owner, "What do you wish to whisper to [cast_on]?", "[src]", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 

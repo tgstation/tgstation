@@ -26,11 +26,20 @@
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
 	name = "Unknown"
-	description = "shouldn't exist and you should adminhelp immediately."
+	description = ""
 	color = COLOR_WHITE
 	taste_description = "bad code and slime"
 	chemical_flags = NONE
 	penetrates_skin = NONE
+
+
+/datum/reagent/blob/New()
+	..()
+
+	if(name == "Unknown")
+		description = "shouldn't exist and you should adminhelp immediately."
+	else if(description == "")
+		description = "[name] is the reagent created by that type of blob."
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
 /datum/reagent/blob/proc/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

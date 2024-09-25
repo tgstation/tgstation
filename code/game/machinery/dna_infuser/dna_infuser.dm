@@ -67,7 +67,7 @@
 		return
 	if(occupant && infusing_from)
 		if(!occupant.can_infuse(user))
-			playsound(src, 'sound/machines/scanbuzz.ogg', 35, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 35, vary = TRUE)
 			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
