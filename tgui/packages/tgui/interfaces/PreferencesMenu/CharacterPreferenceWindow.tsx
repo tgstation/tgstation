@@ -8,6 +8,7 @@ import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { LoadoutPage } from './loadout/index';
+import { LorePage } from './LorePage'; /* DOPPLER EDIT ADDITION */
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
@@ -20,6 +21,7 @@ enum Page {
   Species,
   Quirks,
   Loadout,
+  Lore /* DOPPLER EDIT ADDITION */,
 }
 
 const CharacterProfiles = (props: {
@@ -81,6 +83,11 @@ export const CharacterPreferenceWindow = (props) => {
     case Page.Loadout:
       pageContents = <LoadoutPage />;
       break;
+    /* DOPPLER ADDITION START */
+    case Page.Lore:
+      pageContents = <LorePage />;
+      break;
+    /* DOPPLER ADDITION END */
 
     default:
       exhaustiveCheck(currentPage);
@@ -119,7 +126,21 @@ export const CharacterPreferenceWindow = (props) => {
                   Character
                 </PageButton>
               </Stack.Item>
-
+              {
+                // DOPPLER EDIT: fancy flavour text & character report stuff
+              }
+              <Stack.Item grow>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.Lore}
+                  setPage={setCurrentPage}
+                >
+                  Lore
+                </PageButton>
+                {
+                  // DOPPLER EDIT END
+                }
+              </Stack.Item>
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}

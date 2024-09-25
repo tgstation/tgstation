@@ -108,6 +108,13 @@
 	physical_status = PHYSICAL_ACTIVE,
 	mental_status = MENTAL_STABLE,
 	quirk_notes,
+	// DOPPLER EDIT START - records & flavor text
+	past_general_records = "",
+	past_medical_records = "",
+	past_security_records = "",
+	exploitable_records = "",
+	age_chronological = 18,
+	// DOPPER EDIT END
 )
 	. = ..()
 	src.lock_ref = lock_ref
@@ -118,7 +125,13 @@
 	src.physical_status = physical_status
 	src.mental_status = mental_status
 	src.quirk_notes = quirk_notes
-
+	// DOPPLER EDIT START
+	src.past_general_records = past_general_records
+	src.past_medical_records = past_medical_records
+	src.past_security_records = past_security_records
+	src.exploitable_records = exploitable_records
+	src.age_chronological = age_chronological
+	// DOPPLER EDIT END
 	GLOB.manifest.general += src
 
 /datum/record/crew/Destroy()
@@ -152,10 +165,12 @@
 	/// Locked specific
 	datum/dna/locked_dna,
 	datum/mind/mind_ref,
+	age_chronological = 18,	// DOPPLER EDIT ADDITION
 )
 	. = ..()
 	src.locked_dna = locked_dna
 	src.mind_ref = WEAKREF(mind_ref)
+	src.age_chronological = age_chronological	// DOPPLER EDIT ADDITION
 	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
@@ -249,12 +264,17 @@
 	var/obj/item/paper/printed_paper = new
 	var/final_paper_text = "<center><b>SR-[print_count]: [header]</b></center><br>"
 
-	final_paper_text += "Name: [name]<br>Gender: [gender]<br>Age: [age]<br>"
+	final_paper_text += "Name: [name]<br>Gender: [gender]<br>Age: [age]<br> Chronological Age: [age_chronological]<br>" // DOPPLER EDIT: chronological age
 	if(alias != name)
 		final_paper_text += "Alias: [alias]<br>"
 
 	final_paper_text += "Species: [species]<br>Fingerprint: [fingerprint]<br>Wanted Status: [wanted_status]<br><br>"
 
+	// DOPPLER EDIT - records & flavour text
+	if(past_general_records != "")
+		final_paper_text += "<br><B>General Records:</B>"
+		final_paper_text += "<br>[past_general_records]<br>"
+	// DOPPLER EDIT END
 	final_paper_text += "<center><B>Security Data</B></center><br><br>"
 
 	final_paper_text += "Crimes:<br>"

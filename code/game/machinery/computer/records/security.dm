@@ -130,6 +130,11 @@
 			species = target.species,
 			trim = target.trim,
 			wanted_status = target.wanted_status,
+			// DOPPLER EDIT BEGIN - records & flavor text
+			past_general_records = target.past_general_records,
+			past_security_records = target.past_security_records,
+			age_chronological = target.age_chronological,
+			// DOPPLER EDIT END
 		))
 
 	data["records"] = records

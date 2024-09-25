@@ -1,8 +1,6 @@
-// Hearthkin, from the Ice Moon
-#define SPECIES_FELINE_PRIMITIVE "primitive_felinid"
-// Slugcats, from Talon III.
+#define SPECIES_GENEMOD "genemod"
+#define SPECIES_GENEMOD_PRIMITIVE "primitive_genemod"
 #define SPECIES_SLUGCAT "slugcat"
-
 #define SPECIES_ANTHROMORPH "anthromorph"
 #define SPECIES_AQUATIC "aquatic"
 #define SPECIES_INSECTOID "insectoid"

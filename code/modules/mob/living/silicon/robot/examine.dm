@@ -1,7 +1,21 @@
+/// DOPPLER ADDITION START, Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
+#define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
+// DOPPLER ADDITION END
+
 /mob/living/silicon/robot/examine(mob/user)
 	. = list()
 	if(desc)
 		. += "[desc]"
+
+	// DOPPLER EDIT BEGIN: flavor text
+	var/short_desc = READ_PREFS(src, text/silicon_short_desc)
+	if (short_desc)
+		. += "[short_desc] [get_extended_description_href("\[👁️\]")]"
+	ADD_NEWLINE_IF_NECESSARY(.)
+	var/custom_model_name = READ_PREFS(src, text/silicon_model_name)
+	if (custom_model_name)
+		. += "It is [prefix_a_or_an(custom_model_name)] <em>[get_species_description_href(custom_model_name)]</em> model construct."
+	// DOPPLER EDIT END
 
 	var/model_name = model ? "\improper [model.name]" : "\improper Default"
 	. += "It is currently <b>\a [model_name]-type</b> cyborg."
@@ -48,3 +62,5 @@
 			. += span_deadsay("It looks like its system is corrupted and requires a reset.")
 
 	. += ..()
+
+#undef ADD_NEWLINE_IF_NECESSARY

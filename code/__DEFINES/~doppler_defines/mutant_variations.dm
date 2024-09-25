@@ -31,3 +31,18 @@ GLOBAL_LIST_INIT(mutant_variations, list(
 	MOUSE,
 	SYNTHETIC,
 ))
+
+///	This list gets read by the animalistic preference for genemod and anthros
+GLOBAL_LIST_INIT(genemod_variations, list(
+	NO_VARIATION,
+	BIRD,
+	BUNNY,
+	CAT,
+	DEER,
+	DOG,
+	FISH,
+	FOX,
+	LIZARD,
+	MONKEY,
+	MOUSE,
+))
