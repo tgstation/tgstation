@@ -64,6 +64,6 @@
 	name = "Rainbow Gloves"
 	item_path = /obj/item/clothing/gloves/color/rainbow
 
-/datum/loadout_item/gloves/frontier
-	name = "Frontier Gloves"
-	item_path = /obj/item/clothing/gloves/frontier_colonist
+/datum/loadout_item/gloves/latex
+	name = "Latex Gloves"
+	item_path = /obj/item/clothing/gloves/latex
