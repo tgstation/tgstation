@@ -89,5 +89,3 @@ GLOBAL_VAR_INIT(message_delay, FALSE)
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
 
-/obj/machinery/telecomms/broadcaster/preset_left/birdstation
-	name = "Broadcaster"
