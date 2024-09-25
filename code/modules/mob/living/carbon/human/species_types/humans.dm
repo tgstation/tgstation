@@ -124,7 +124,7 @@
 				to humans. As a human, silicons are required to both protect and obey you.",
 		))
 
-	if(CONFIG_GET(flag/enforce_human_authority))
+	if(CONFIG_GET(number/human_authority) > 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bullhorn",

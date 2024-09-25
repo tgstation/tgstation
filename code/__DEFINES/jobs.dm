@@ -12,6 +12,11 @@
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
 
+// Human authority settings
+#define JOB_AUTHORITY_NON_HUMANS_ALLOWED 0
+#define JOB_AUTHORITY_HUMANS_PREFERRED 1
+#define JOB_AUTHORITY_HUMANS_ONLY 2
+
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
 #define DEFAULT_BIBLE "Default Bible Name"

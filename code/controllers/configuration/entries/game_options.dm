@@ -107,9 +107,10 @@
 
 /datum/config_entry/flag/protect_assistant_from_antagonist //If assistants can be traitor/cult/other
 
-/datum/config_entry/flag/enforce_human_authority //If non-human species are barred from joining as a head of staff
-
-/datum/config_entry/flag/enforce_human_authority_on_everyone //If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+/datum/config_entry/number/human_authority //Controls how to enforce human authority
+	default = 0
+	min_val = 0
+	max_val = 3
 
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
