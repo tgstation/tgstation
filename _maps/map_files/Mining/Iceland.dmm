@@ -6515,10 +6515,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production/middle)
-"Qw" = (
-/turf/open/space/basic,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "Qx" = (
 /obj/structure/stairs/south,
 /obj/structure/railing{
@@ -185366,7 +185362,7 @@ aK
 aK
 aK
 aK
-Qw
+aK
 aK
 aK
 aK
@@ -188967,7 +188963,7 @@ fP
 fP
 aK
 aK
-Qw
+aK
 aK
 aK
 aK
