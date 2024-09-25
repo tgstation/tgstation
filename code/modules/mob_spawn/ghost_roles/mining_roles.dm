@@ -361,4 +361,3 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	head = /obj/item/clothing/head/soft/red
 	l_pocket = /obj/item/modular_computer/pda
-	
