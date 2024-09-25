@@ -127,7 +127,7 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## Set to 1 for "human whitelist", all heads-of-staff jobs will be able to be played by non-humans, unless that job incorporates the "human only" setting.
 ## Set to 2 for "non-human whitelist", non-humans will not be able to play as heads of staff, unless that job incorporates the "allow non-humans" setting.
 ## Set to 3 for "human authority", non-humans cannot be heads of staff, only humans can. the "allow non-humans" setting will be ignored.
-HUMAN_AUTHORITY 0
+HUMAN_AUTHORITY 2
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
