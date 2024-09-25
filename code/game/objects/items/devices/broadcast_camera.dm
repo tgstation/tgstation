@@ -58,10 +58,7 @@
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
 	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
-	if (active_microphone)
-		. += span_notice("The microphone is <b>On</b>")
-	else
-		. += span_notice("The microphone is <b>Off</b>")
+	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()
@@ -124,7 +121,4 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/broadcast_camera/proc/set_microphone_state()
-	if(!active_microphone)
-		internal_radio.set_broadcasting(FALSE)
-	else
-		internal_radio.set_broadcasting(TRUE)
+	internal_radio.set_broadcasting(active_microphone)
