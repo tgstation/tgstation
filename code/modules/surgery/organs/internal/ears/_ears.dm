@@ -149,6 +149,7 @@
 	color_source = ORGAN_COLOR_HAIR
 	feature_key = "ears"
 
+	/// Layer upon which we add the inner ears overlay
 	var/inner_layer = EXTERNAL_FRONT
 
 /datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
