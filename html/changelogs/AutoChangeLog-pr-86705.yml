@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Fixes augs not being able to heal with cables if they're naked or going commando."
