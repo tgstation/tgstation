@@ -56,7 +56,7 @@
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
 	var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
 	for(var/obj/machinery/rnd/server/research_server as anything in science_web.techweb_servers)
-		if(research_server.machine_stat & (NOPOWER|BROKEN|EMPED))
+		if(research_server.machine_stat & (NOPOWER|BROKEN|EMPED|BAD_TEMP))
 			continue
 		research_server.emp_act(EMP_LIGHT)
 		new /obj/effect/temp_visual/emp(get_turf(research_server))

@@ -36,6 +36,9 @@
 		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
+	use_energy(idle_power_usage)
+	generate_heat(heating_energy_generated)
+
 #undef COMPRESSION_AMOUNT_COMPRESSING
 #undef COMPRESSION_AMOUNT_DECOMPRESSING
 

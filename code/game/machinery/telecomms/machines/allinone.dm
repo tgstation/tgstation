@@ -9,6 +9,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
+	temperature_ignore_atmos = TRUE
 	/// If this mainframe can process all syndicate chatter regardless of z level
 	var/syndicate = FALSE
 

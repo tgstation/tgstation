@@ -36,6 +36,8 @@
 #define T20C 293.15
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
+/// -193.15°C - Temperature used for telecommunications, RD server room, and xenobiology slime killrooms
+#define TCOMMS_ROOM_TEMP 80
 
 /**
  *I feel the need to document what happens here. Basically this is used

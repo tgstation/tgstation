@@ -10,6 +10,8 @@
 #define HDD_OVERLOADED 4
 
 #define SERVER_NOMINAL_TEXT "Nominal"
+/// The amount of heat energy the RD server generates while active
+#define HEAT_GENERATED_RD_SERVER (500 JOULES)
 
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
@@ -24,6 +26,10 @@
 	var/working = TRUE
 	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
+	temperature_ignore_atmos = FALSE
+	temperature_tolerance_min = TCOMMS_ROOM_TEMP - 30
+	temperature_tolerance_max = TCOMMS_ROOM_TEMP + 30
+	heating_energy_generated = HEAT_GENERATED_RD_SERVER
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
@@ -38,18 +44,22 @@
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 
+	if(!temperature_ignore_atmos)
+		SSair.start_processing_machine(src)
+
 /obj/machinery/rnd/server/Destroy()
 	if(stored_research)
 		stored_research.techweb_servers -= src
 	if(CONFIG_GET(flag/no_default_techweb_link))
 		QDEL_NULL(stored_research)
+	SSair.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-off"
 	else
-		// "working" will cover EMP'd, disabled, or just broken
+		// "working" will cover EMP'd, disabled, temperature, or just broken
 		icon_state = "[base_icon_state]-[working ? "on" : "halt"]"
 	return ..()
 
@@ -63,13 +73,38 @@
 
 /// Checks if we should be working or not, and updates accordingly.
 /obj/machinery/rnd/server/proc/refresh_working()
-	if(machine_stat & (NOPOWER|EMPED) || research_disabled)
+	if(machine_stat & (BROKEN|NOPOWER|EMPED|BAD_TEMP) || research_disabled)
 		working = FALSE
+
+		// optimization to stop processing atmos due to non-temp related issues
+		if(!(machine_stat & BAD_TEMP))
+			SSair.stop_processing_machine(src)
 	else
 		working = TRUE
 
+	if(!temperature_ignore_atmos)
+		SSair.start_processing_machine(src)
+
 	update_current_power_usage()
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/rnd/server/process_atmos()
+	var/turf/local_turf = loc
+	if(!istype(local_turf)) // double check if this is even neccessary
+		set_machine_stat(machine_stat | BAD_TEMP)
+		refresh_working()
+		return
+
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	// the machine is either overheating or freezing
+	if(enviroment.temperature < temperature_tolerance_min || enviroment.temperature > temperature_tolerance_max)
+		set_machine_stat(machine_stat | BAD_TEMP)
+		refresh_working()
+		return
+
+	set_machine_stat(machine_stat & ~BAD_TEMP)
+	generate_heat(heating_energy_generated)
 
 /obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
@@ -94,8 +129,12 @@
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
 		return "O&F@I*$ - R3*&O$T R@U!R%D"
+	else if(machine_stat & BROKEN)
+		return "Offline - Server Damaged"
 	else if(machine_stat & NOPOWER)
 		return "Offline - Server Unpowered"
+	else if(machine_stat & BAD_TEMP)
+		return "Offline - Server Outside Temperature Tolerance Range ([temperature_tolerance_min]k - [temperature_tolerance_max]k)"
 	else if(research_disabled)
 		return "Offline - Server Control Disabled"
 	else if(!working)
@@ -267,3 +306,4 @@
 #undef HDD_PANEL_OPEN
 #undef HDD_PRIED
 #undef SERVER_NOMINAL_TEXT
+#undef HEAT_GENERATED_RD_SERVER

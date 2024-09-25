@@ -1,6 +1,8 @@
 /// A list of all of the `/obj/machinery/telecomms` (and subtypes) machines
 /// that exist in the world currently.
 GLOBAL_LIST_EMPTY(telecomms_list)
+/// The amount of heat energy telecomms equipment generates when used
+#define HEAT_GENERATED_TCOMMS (5 KILO JOULES)
 
 /**
  * The basic telecomms machinery type, implementing all of the logic that's
@@ -9,6 +11,11 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
+	temperature_ignore_atmos = FALSE
+	temperature_tolerance_min = TCOMMS_ROOM_TEMP - 30
+	temperature_tolerance_max = TCOMMS_ROOM_TEMP + 30
+	heating_energy_generated = HEAT_GENERATED_TCOMMS
+
 	/// list of machines this machine is linked to
 	var/list/links = list()
 	/**
@@ -102,6 +109,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
 	GLOB.telecomms_list += src
+
+	if(!temperature_ignore_atmos)
+		SSair.start_processing_machine(src)
+
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -147,7 +158,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 	var/old_on = on
 	if(toggled)
-		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		if(machine_stat & (BROKEN|NOPOWER|EMPED|BAD_TEMP)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
 		else
 			on = TRUE
@@ -161,6 +172,25 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	if(traffic > 0)
 		traffic -= netspeed * seconds_per_tick
+
+/obj/machinery/telecomms/process_atmos()
+	var/turf/local_turf = loc
+	if(!istype(local_turf)) // double check if this is even neccessary
+		set_machine_stat(machine_stat | BAD_TEMP)
+		update_power()
+		return
+
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	// the machine is either overheating or freezing
+	if(enviroment.temperature < temperature_tolerance_min || enviroment.temperature > temperature_tolerance_max)
+		set_machine_stat(machine_stat | BAD_TEMP)
+		update_power()
+		return
+
+	set_machine_stat(machine_stat & ~BAD_TEMP)
+	update_power()
+
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()

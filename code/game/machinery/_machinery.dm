@@ -37,6 +37,7 @@
  *        NOPOWER -- No power is being supplied to machine.
  *        MAINT -- machine is currently under going maintenance.
  *        EMPED -- temporary broken by EMP pulse
+ * 		  BAD_TEMP -- temperature is too hot or cold for machine to operate
  *
  *Class Procs:
  *  Initialize()
@@ -138,6 +139,15 @@
 
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
+	/// Do we want to skip atmos related systems on this machine?
+	var/temperature_ignore_atmos = TRUE
+	/// The minimum temperature the machine can operate in before freezing
+	var/temperature_tolerance_min = TCMB
+	/// The maximum temperature the machine can operate in before overheating
+	var/temperature_tolerance_max = INFINITY
+	/// The heat the machine outputs while active
+	var/heating_energy_generated = (0 JOULES)
+
 	/// world.time of last use by [/mob/living]
 	var/last_used_time = 0
 	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
@@ -301,6 +311,28 @@
 	set waitfor = FALSE
 	return PROCESS_KILL
 
+/**
+ * Generates heat on the turf that the machine is located on
+ * Args:
+ * - amount: The amount of heat to create
+ */
+/obj/machinery/proc/generate_heat(amount)
+	if(temperature_ignore_atmos) // skips all atmos related mechanics for machines
+		return TRUE
+
+	if(amount <= 0) //just in case
+		return FALSE
+
+	var/turf/local_turf = loc
+	if(!istype(local_turf)) // double check if this is even neccessar
+		return FALSE
+
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+	enviroment.temperature += amount / enviroment.heat_capacity()
+	air_update_turf(FALSE, FALSE)
+
+	return amount
+
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
 /obj/machinery/proc/set_machine_stat(new_value)
 	if(new_value == machine_stat)
@@ -313,11 +345,11 @@
 ///Called when the value of `machine_stat` changes, so we can react to it.
 /obj/machinery/proc/on_set_machine_stat(old_value)
 	//From off to on.
-	if((old_value & (NOPOWER|BROKEN|MAINT)) && !(machine_stat & (NOPOWER|BROKEN|MAINT)))
+	if((old_value & (NOPOWER|BROKEN|MAINT|BAD_TEMP)) && !(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP)))
 		set_is_operational(TRUE)
 		return
 	//From on to off.
-	if(machine_stat & (NOPOWER|BROKEN|MAINT))
+	if(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP))
 		set_is_operational(FALSE)
 
 
@@ -1137,6 +1169,8 @@
 	. = ..()
 	if(machine_stat & BROKEN)
 		. += span_notice("It looks broken and non-functional.")
+	if(machine_stat & BAD_TEMP)
+		. += span_notice("It has a warning light on that indicates a temperature limit of [temperature_tolerance_min]K to [temperature_tolerance_max]K.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)

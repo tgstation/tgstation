@@ -48,6 +48,7 @@
 			break
 
 	use_energy(idle_power_usage)
+	generate_heat(heating_energy_generated)
 
 // Preset Buses
 

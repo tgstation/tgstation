@@ -32,10 +32,11 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 	use_energy(idle_power_usage)
+	generate_heat(heating_energy_generated)
 
 /obj/machinery/telecomms/hub/update_power()
 	var/old_on = on
-	if (toggled && (machine_stat & (BROKEN|NOPOWER|EMPED)))
+	if (toggled && (machine_stat & (BROKEN|NOPOWER|EMPED|BAD_TEMP)))
 		on = FALSE
 		soundloop.stop()
 	else
