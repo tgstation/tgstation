@@ -134,6 +134,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/command/gateway)
+"abL" = (
+/obj/structure/cable/layer3,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "abX" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Library"
@@ -5868,6 +5874,9 @@
 	},
 /obj/machinery/light/small/dim/directional/north,
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cdI" = (
@@ -8873,6 +8882,10 @@
 /obj/item/dice/d2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"djs" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/station/tcommsat/server)
 "djU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes{
@@ -10731,6 +10744,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/starboard)
 "dPf" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "dPg" = (
@@ -11235,6 +11249,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"dXA" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "dXH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18848,6 +18868,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "gHS" = (
@@ -22963,6 +22984,9 @@
 /area/station/maintenance/department/science)
 "ieI" = (
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 1
+	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "ieJ" = (
@@ -28337,6 +28361,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "kbD" = (
@@ -35461,6 +35486,12 @@
 	dir = 1
 	},
 /area/station/medical/pharmacy)
+"mAc" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "mAd" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -35628,6 +35659,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
+"mCL" = (
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "mCN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -35698,6 +35736,7 @@
 	pixel_x = 8;
 	pixel_y = -29
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mDT" = (
@@ -36207,6 +36246,12 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"mNb" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/station/tcommsat/server)
 "mNl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
@@ -38469,6 +38514,7 @@
 /area/station/commons/toilet/restrooms)
 "nDC" = (
 /obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "nDE" = (
@@ -41163,6 +41209,7 @@
 "oHd" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "oHf" = (
@@ -41907,6 +41954,12 @@
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"oUx" = (
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "oUP" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored,
@@ -42305,6 +42358,10 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
+"paH" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "paS" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -44950,6 +45007,11 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance)
+"pVJ" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/station/tcommsat/server)
 "pWa" = (
 /obj/machinery/light/directional/west,
 /obj/structure/table,
@@ -46383,6 +46445,12 @@
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
+"qws" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "qwu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -47653,6 +47721,9 @@
 /area/station/engineering/main)
 "qWH" = (
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "qWM" = (
@@ -50057,6 +50128,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/ordnance/testlab)
+"rIP" = (
+/obj/structure/cable/layer3,
+/obj/item/wrench,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "rJb" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -51435,6 +51511,7 @@
 /area/station/maintenance/department/cargo)
 "sfT" = (
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sfY" = (
@@ -60023,6 +60100,12 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/closed/wall,
 /area/station/hallway/primary/central)
+"vfb" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "vfq" = (
 /obj/structure/railing{
 	dir = 9
@@ -62036,6 +62119,7 @@
 	cycle_id = "antesat"
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "vRA" = (
@@ -62659,6 +62743,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"wdq" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "wds" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Ore Refinery"
@@ -64327,6 +64417,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
+"wGP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/station/tcommsat/server)
 "wGZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 8
@@ -65885,6 +65979,7 @@
 "xkc" = (
 /obj/structure/cable/layer3,
 /mob/living/simple_animal/bot/secbot/pingsky,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "xkI" = (
@@ -68037,6 +68132,9 @@
 "xZL" = (
 /obj/machinery/camera/autoname/directional/east{
 	network = list("ss13","tcomms")
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
 	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
@@ -103311,7 +103409,7 @@ jWj
 lNE
 gRq
 gRq
-gRq
+abL
 eAW
 eAW
 dPY
@@ -105107,13 +105205,13 @@ vxX
 wZz
 wZz
 dxA
-dPf
+vfb
 dPf
 ieI
 nDC
+paH
 dPf
-dPf
-dPf
+dXA
 uCS
 wZz
 wZz
@@ -105364,13 +105462,13 @@ vxX
 wZz
 wZz
 tOs
-jTg
-jTg
-jTg
-cHP
+mCL
+rIP
+oUx
+wGP
+wdq
 hwP
-hwP
-hwP
+mAc
 wmd
 wZz
 wZz
@@ -105621,13 +105719,13 @@ vxX
 wZz
 wZz
 rdK
-jTg
+mCL
 dLi
 wZz
 hVW
 wZz
 pvG
-hwP
+mAc
 iYC
 wZz
 wZz
@@ -105884,7 +105982,7 @@ wZz
 wZz
 wZz
 wql
-cHP
+mNb
 taK
 wZz
 wZz
@@ -106135,13 +106233,13 @@ vxX
 wZz
 wZz
 fOM
-jTg
+mCL
 ajU
 wZz
 cSa
 wZz
 odg
-hwP
+mAc
 tOp
 wZz
 wZz
@@ -106392,13 +106490,13 @@ vxX
 wZz
 wZz
 toT
-jTg
+mCL
 jTg
 oZp
 qRK
 hwP
 hwP
-hwP
+mAc
 emn
 wZz
 wZz
@@ -106649,11 +106747,11 @@ vxX
 wZz
 wZz
 biC
+qws
 dPf
-dPf
-cHP
-nDC
-cHP
+djs
+pVJ
+djs
 dPf
 xZL
 jPg

@@ -2909,6 +2909,16 @@
 	},
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor1/port/fore)
+"aLQ" = (
+/obj/effect/turf_decal/trimline/white/line,
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "aLU" = (
 /obj/machinery/disposal/bin,
 /obj/structure/railing{
@@ -17314,10 +17324,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor2/fore)
 "evB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/atmospherics/components/binary/pump/on,
 /turf/open/floor/iron/smooth_large,
 /area/station/tcommsat/server)
 "evI" = (
@@ -32003,8 +32011,10 @@
 /area/station/security/eva)
 "iqt" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/tcommsat/server)
 "iqu" = (
@@ -37270,6 +37280,7 @@
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "jIG" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /turf/open/floor/iron/smooth,
 /area/station/tcommsat/computer)
 "jIJ" = (
@@ -53661,6 +53672,7 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Telecommunications"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/smooth_half,
 /area/station/tcommsat/computer)
 "nMK" = (
@@ -53864,6 +53876,14 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/service/chapel)
+"nPU" = (
+/obj/effect/turf_decal/trimline/white/line,
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "nPZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/pink/visible/layer2{
 	dir = 1
@@ -56910,6 +56930,7 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Telecommunications"
 	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/floor/iron/smooth_half,
 /area/station/tcommsat/server)
 "oFH" = (
@@ -131447,7 +131468,7 @@ jIG
 nMI
 evB
 oFF
-snO
+nPU
 pNb
 cXP
 wKg
@@ -131704,7 +131725,7 @@ mVC
 qyB
 iqt
 ibu
-snO
+aLQ
 wKg
 wKg
 wKg
