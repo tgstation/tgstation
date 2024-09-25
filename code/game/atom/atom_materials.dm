@@ -7,7 +7,7 @@
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 
-/// Sets the custom materials for an item.
+/// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier)
 	remove_material_effects()
 
@@ -24,10 +24,23 @@
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
 
-#define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
-#define MATERIAL_LIST_MULTIPLIER "multiplier"
-#define GET_MATERIAL_MODIFIER(modifier, multiplier) ((modifier) + (((modifier) - 1) * (multiplier) * ((multiplier) < 1 ? 1 : -1)))
+///proc responsible for applying material effects when setting materials.
+/atom/proc/apply_material_effects(list/materials)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!materials || !(material_flags & MATERIAL_EFFECTS))
+		return
+	var/list/material_effects = list()
+	var/index = 1
+	for(var/current_material in materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
+		material_effects[custom_material] = list(
+			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(materials[current_material] * material_modifier),
+			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(custom_material, materials, index),
+		)
+		index++
+	finalize_material_effects(material_effects)
 
+/// Proc responsible for removing material effects when setting materials.
 /atom/proc/remove_material_effects()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	//Only runs if custom materials existed at first and affected src.
@@ -44,24 +57,17 @@
 		index++
 	finalize_remove_material_effects(material_effects)
 
-/atom/proc/apply_material_effects(list/materials)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	if(!materials || !(material_flags & MATERIAL_EFFECTS))
-		return
-	var/list/material_effects = list()
-	var/index = 1
-	for(var/current_material in materials)
-		var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-		material_effects[custom_material] = list(
-			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(materials[current_material] * material_modifier),
-			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(custom_material, materials, index),
-		)
-		index++
-	finalize_material_effects(material_effects)
-
+/**
+ * A proc that can be used to selectively control the statistics and affects from a material without affecting the others
+ * For example, we can have items made of two different materials, with the primary contributing a good 1.2 multiplier
+ * and the second a meager 0.3.
+ * The GET_MATERIAL_MODIFIER macro will handles some modifiers where the minimum should be 1 if above 1 and the maximum
+ * 1 if below 1, so you shouldn't worry about returning values between 0 and 1. Be ware about returning negative values tho.
+ */
 /atom/proc/get_material_multiplier(datum/material/custom_material, list/materials, index)
 	return 1
 
+///Called by apply_material_effects(). It ACTUALLY handles applying effects common to all atoms (depending on material flags)
 /atom/proc/finalize_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
 	var/total_alpha = 0
@@ -117,6 +123,10 @@
 		var/prefixes = get_material_prefixes(materials)
 		name = "[prefixes] [name]"
 
+/**
+ * A proc used by both finalize_material_effects() and finalize_remove_material_effects() to get the colors
+ * that will later be applied to or removed from the atom
+ */
 /atom/proc/gather_material_color(datum/material/material, list/colors, multiplier)
 	if(!color) //the material has no color. Nevermind
 		return
@@ -130,6 +140,7 @@
 	//in case we have more mats of the same color, we sum the assoc value for later use in color blending
 	colors[color_to_add] += multiplier
 
+/// Manages mixing, adding or removing the material colors from the atom in absence of the MATERIAL_GREYSCALE flag.
 /atom/proc/mix_material_colors(list/colors, remove = FALSE)
 	var/color_len = length(colors)
 	if(!color_len)
@@ -152,6 +163,7 @@
 	else
 		add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
 
+///Returns the material this atom should be composed by the most when setting materials, from a list argument.
 /atom/proc/get_main_material(list/materials)
 	RETURN_TYPE(/datum/material)
 	var/datum/material/main_material //the material with the highest amount (after calculations)
@@ -166,18 +178,21 @@
 			max_value = value
 	return main_material
 
+///Returns the prefixes to attach to the atom when setting materials, from a list argument.
 /atom/proc/get_material_prefixes(list/materials)
 	var/list/mat_names = list()
 	for(var/datum/material/material as anything in materials)
 		mat_names |= material.name
 	return mat_names.Join("-")
 
+///Returns a string like "plasma, paper and glass" from a list of materials
 /atom/proc/get_material_english_list(list/materials)
 	var/list/mat_names = list()
 	for(var/datum/material/material as anything in materials)
 		mat_names |= material.name
 	return english_list(mat_names)
 
+///Searches for a subtype of config_type that is to be used in its place for specific materials (like shimmering gold for cleric maces)
 /atom/proc/get_material_greyscale_config(mat_type, config_type)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!config_type)
@@ -187,14 +202,17 @@
 			continue
 		return path
 
+///Apply material effects of a single material.
 /atom/proc/apply_single_mat_effect(datum/material/custom_material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	return
 
+///A proc for material effects that only the main material (which the atom's primarly composed of) should apply.
 /atom/proc/apply_main_material_effects(datum/material/main_material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	main_material.on_main_applied(src, amount, multipier)
 
+///Called by remove_material_effects(). It ACTUALLY handles removing effects common to all atoms (depending on material flags)
 /atom/proc/finalize_remove_material_effects(list/materials)
 	var/list/colors = list()
 	var/datum/material/main_material = get_main_material()
@@ -232,20 +250,24 @@
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		name = initial(name)
 
+///Remove material effects of a single material.
 /atom/proc/remove_single_mat_effect(datum/material/custom_material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	return
 
+///A proc to remove the material effects previously applied by the (ex-)main material
 /atom/proc/remove_main_material_effects(datum/material/main_material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	main_material.on_main_removed(src, amount, multipier)
 
+///Remove the old effects, change the material_modifier variable, and then reapply all the effects.
 /atom/proc/change_material_modifier(new_value)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	remove_material_effects()
 	material_modifier = new_value
 	apply_material_effects(custom_materials)
 
+///For enabling and disabling material effects from an item (mainly VV)
 /atom/proc/toggle_material_flags(new_flags)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(material_flags & MATERIAL_EFFECTS && !(new_flags & MATERIAL_EFFECTS))
