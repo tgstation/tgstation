@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "The greeting message imaginary friends get upon becoming one actually includes the owner's name, instead of displaying nothing where it should've been."

@@ -1,5 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - refactor: "the sound folder in the source code has been reorganized, please report any oddities with sounds playing or not playing"
-  - server: "lobby music has been repathed to sound/music/lobby_music"
