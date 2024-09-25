@@ -356,7 +356,7 @@
 /datum/outfit/lavaland_gasstation
 	name = "Lizard's Gas Station Worker"
 	uniform = /obj/item/clothing/under/color/red
-	shoes = /obj/item/clothing/shoes/black
+	shoes = /obj/item/clothing/shoes/sneakers/black
 	ears = /obj/item/instrument/piano_synth/headphones
 	gloves = /obj/item/clothing/gloves/fingerless
 	head = /obj/item/clothing/head/soft/red
