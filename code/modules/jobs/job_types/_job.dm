@@ -534,13 +534,24 @@
 
 	var/require_human = FALSE
 
+	// If the job in question is a head of staff,
+	// check the config to see if we should force the player onto a human character or not
 	if(job.job_flags & JOB_HEAD_OF_STAFF)
 		switch(human_authority_setting)
-			if(1)
+
+			// If non-humans are the norm and jobs must be forced to be only for humans
+			// then we only force the player to be a human if the job exclusively allows humans
+			if(HUMAN_AUTHORITY_HUMAN_WHITELIST)
 				require_human = job.human_authority == JOB_AUTHORITY_HUMANS_ONLY
-			if(2)
+
+			// If humans are the norm and jobs must be allowed to be played by non-humans
+			// then we only force the player to be a human if the job doesn't allow for non-humans to play it
+			if(HUMAN_AUTHORITY_NON_HUMAN_WHITELIST)
 				require_human = job.human_authority != JOB_AUTHORITY_NON_HUMANS_ALLOWED
-			if(3)
+
+			// If humans are the norm and there is no chance that a non-human can be a head of staff
+			// always return true, since there is no chance that a non-human can be a head of staff.
+			if(HUMAN_AUTHORITY_ENFORCED)
 				require_human = TRUE
 
 	src.job = job.title
