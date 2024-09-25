@@ -2,107 +2,107 @@
 "aJ" = (
 /obj/item/wallframe/painting/eldritch/beauty,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "aN" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bb" = (
 /obj/structure/flora/coconuts,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bj" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/bonfire/prelit,
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bn" = (
 /turf/closed/wall/mineral/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bv" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bI" = (
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bO" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "bU" = (
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cb" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cr" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cs" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cH" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cR" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "cT" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "dv" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "dI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "dS" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "eB" = (
 /obj/effect/spawner/random/decoration/glowstick/on,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "eG" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "eL" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "eU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "fc" = (
 /obj/effect/rune/wall,
 /obj/effect/turf_decal/weather/dirt{
@@ -112,47 +112,47 @@
 	dir = 1
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "fl" = (
 /obj/structure/fake_stairs/wood,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ft" = (
 /obj/effect/turf_decal/siding/wood/end,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "fO" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "fW" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "gi" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "gx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/flora/coconuts,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "gz" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "gJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -161,61 +161,61 @@
 	dir = 4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "hg" = (
 /obj/effect/visible_heretic_influence,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "hr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "hw" = (
 /obj/structure/flora/bush/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "hV" = (
 /turf/open/chasm/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "hY" = (
 /mob/living/carbon/human/species/monkey,
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ih" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /obj/structure/flora/bush/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ij" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "iq" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "iJ" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "iO" = (
 /obj/structure/flora/bush/jungle/b/style_random,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jb" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood{
@@ -225,71 +225,71 @@
 	dir = 6
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jv" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jC" = (
 /obj/item/food/grown/banana,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jI" = (
 /obj/effect/rune/wall,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jL" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "jP" = (
 /obj/effect/decal/cleanable/blood/innards,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "kc" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ku" = (
 /obj/structure/flora/tree/jungle/style_random,
 /obj/item/food/grown/banana/bunch,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lr" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/bonfire/prelit,
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lx" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lK" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lR" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "lX" = (
 /obj/effect/rune/blood_boil,
 /obj/effect/turf_decal/weather/dirt,
@@ -297,23 +297,23 @@
 	dir = 1
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "mr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "mD" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "nO" = (
 /obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ou" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -322,46 +322,46 @@
 	dir = 8
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ox" = (
 /obj/effect/cosmic_rune,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "oB" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "oC" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "oF" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/rubble,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "oO" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "pr" = (
 /obj/structure/flora/bush/jungle/a/style_random,
 /obj/effect/decal/cleanable/ants/fire,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "px" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "pz" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wallframe/painting/eldritch/vines,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "pF" = (
 /obj/effect/rune/blood_boil,
 /obj/effect/decal/cleanable/blood/tracks,
@@ -372,25 +372,25 @@
 	dir = 4
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qa" = (
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qg" = (
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qh" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qk" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/flashlight/flare/culttorch,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qp" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -398,67 +398,67 @@
 /obj/structure/flora/tree/jungle/small/style_random,
 /obj/structure/flora/coconuts,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "qL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "rc" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze/flat,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "rh" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "rm" = (
 /obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "rD" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "rH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sa" = (
 /obj/structure/flora/rock/style_random,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/rubble,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sd" = (
 /obj/structure/table/bronze,
 /obj/item/toy/clockwork_watch,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sC" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sE" = (
 /obj/effect/visible_heretic_influence,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sF" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "sJ" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
@@ -467,17 +467,17 @@
 	dir = 4
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "tl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/r_wall/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "tm" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "tE" = (
 /obj/effect/rune/malformed{
 	icon_state = "hierophant";
@@ -485,19 +485,19 @@
 	},
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/floor/bronze/filled,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "uT" = (
 /obj/structure/table/bronze,
 /obj/item/clockwork_alloy,
 /obj/item/stack/sheet/bronze/thirty,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "vI" = (
 /obj/structure/flora/tree/jungle/small/style_random,
 /obj/structure/flora/coconuts,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "vR" = (
 /obj/structure/rack/skeletal,
 /obj/item/clothing/head/helmet/chaplain/cage{
@@ -506,74 +506,74 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "wf" = (
 /obj/structure/rack/skeletal,
 /obj/item/clothing/head/helmet/chaplain{
 	pixel_y = 9
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "wv" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "wH" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "wP" = (
 /obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "wR" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "xc" = (
 /obj/structure/flora/grass/jungle/a/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "xx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/flare/culttorch,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "xC" = (
 /obj/effect/rune/wall,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ye" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "yv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "yY" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/spawner/random/decoration/glowstick/on,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "zo" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "zX" = (
 /obj/structure/girder/bronze,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze/flat,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ab" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/weather/dirt{
@@ -582,31 +582,31 @@
 /obj/effect/turf_decal/weather/dirt,
 /obj/item/flashlight/flare/culttorch,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "An" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ar" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Av" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "AE" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "AN" = (
 /obj/structure/sacrificealtar,
 /obj/item/knife/bloodletter{
@@ -614,33 +614,33 @@
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood. Honestly pretty disappointing as far as Mcguffins go."
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "AO" = (
 /obj/effect/decal/cleanable/ants,
 /turf/closed/wall/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ba" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Bd" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Be" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Bi" = (
 /obj/item/food/grown/banana,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Bl" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Bp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -649,14 +649,14 @@
 	dir = 6
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "CB" = (
 /obj/structure/destructible/eldritch_crucible,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/heretic_rune/big,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "CE" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
@@ -665,18 +665,15 @@
 	dir = 8
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
-"CI" = (
-/turf/closed/indestructible/rock,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "CR" = (
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Dn" = (
 /obj/structure/girder/cult,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Do" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -685,14 +682,14 @@
 	dir = 9
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ds" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Du" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/weather/dirt{
@@ -700,7 +697,7 @@
 	},
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "DA" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
@@ -709,49 +706,49 @@
 	dir = 6
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "EF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Fj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Fn" = (
 /obj/item/food/grown/banana/bunch,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "FK" = (
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "FO" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "FQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ants,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "FS" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ga" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "GD" = (
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "GE" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -762,35 +759,35 @@
 	dir = 6
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "GO" = (
 /obj/item/food/grown/banana,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "GS" = (
 /obj/structure/girder/bronze,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze/flat,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "HN" = (
 /obj/structure/flora/rock/pile/jungle/large/style_random,
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "HS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze/filled,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "HV" = (
 /obj/effect/rune/empower,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ic" = (
 /obj/effect/decal/cleanable/ants,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ig" = (
 /turf/closed/indestructible/rock,
 /area/deathmatch)
@@ -798,87 +795,87 @@
 /obj/structure/flora/bush/jungle/b/style_random,
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Io" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze/filled,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "IG" = (
 /obj/structure/flora/bush/jungle/b/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "IM" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Jf" = (
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "JF" = (
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "JL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Kg" = (
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Kl" = (
 /obj/effect/spawner/structure/window/bronze,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "KL" = (
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "KT" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/chasm/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Lf" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "LC" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "LU" = (
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "My" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/holymelon,
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "MM" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/chasm/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Nf" = (
 /obj/structure/girder/cult,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "NQ" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "NX" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
@@ -887,101 +884,101 @@
 	dir = 1
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Or" = (
 /obj/structure/flora/tree/jungle/style_random,
 /obj/structure/flora/coconuts,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ov" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Pi" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Px" = (
 /obj/structure/flora/tree/jungle/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "PH" = (
 /obj/effect/visible_heretic_influence,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "PI" = (
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "PU" = (
 /obj/structure/flora/bush/jungle/c/style_random,
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Qf" = (
 /turf/closed/wall/r_wall,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "QF" = (
 /obj/effect/visible_heretic_influence,
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "QO" = (
 /obj/effect/forcefield/cult,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "QQ" = (
 /turf/closed/wall/r_wall/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Rj" = (
 /obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Rm" = (
 /obj/effect/forcefield/cult/permanent,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "RE" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "RL" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "RW" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Sf" = (
 /obj/effect/rune/wall,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Sh" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Sp" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /obj/structure/fluff/clockwork/fallen_armor,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Sw" = (
 /turf/open/misc/dirt/jungle/wasteland,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "SC" = (
 /turf/closed/wall/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "SE" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "SW" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -992,47 +989,47 @@
 	dir = 4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ti" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "To" = (
 /obj/structure/flora/bush/jungle/c/style_random,
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "TE" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/misc/asteroid/moon,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "TN" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "TX" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/decal/cleanable/ants/fire,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "UI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "UM" = (
 /obj/structure/flora/bush/jungle/b/style_random,
 /obj/effect/turf_decal/siding/wood,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "UQ" = (
 /obj/structure/rack/skeletal,
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat{
@@ -1040,28 +1037,28 @@
 	pixel_x = -1
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "UX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/vomit,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "UY" = (
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Vm" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Vv" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/water/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "VF" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1074,11 +1071,11 @@
 	},
 /obj/structure/flora/bush/jungle/b/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "VP" = (
 /obj/effect/spawner/random/decoration/glowstick/on,
 /turf/open/indestructible/plating,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "VY" = (
 /obj/structure/table/bronze,
 /obj/item/clothing/shoes/bronze,
@@ -1087,84 +1084,84 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/bronze/flat,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "VZ" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Wm" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/bronze,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Wp" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/dirt/jungle/dark,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Xa" = (
 /obj/structure/rack/skeletal,
 /obj/item/clothing/head/helmet/chaplain/ancient{
 	pixel_y = 6
 	},
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "XL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wallframe/painting/eldritch/weeping,
 /turf/open/floor/plating/heretic_rust,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "XT" = (
 /turf/closed/wall/mineral/cult/artificer,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Yn" = (
 /obj/effect/decal/cleanable/ants,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Ys" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Yv" = (
 /obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Yx" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "YA" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "YI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "YN" = (
 /obj/structure/girder/cult,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "YY" = (
 /obj/structure/girder/cult,
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Zj" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/siding/wood,
@@ -1172,11 +1169,11 @@
 	dir = 4
 	},
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "Zw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/tile,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ZJ" = (
 /obj/structure/destructible/cult/pants_altar,
 /obj/effect/rune/apocalypse{
@@ -1184,7 +1181,7 @@
 	},
 /obj/item/knife/ritual,
 /turf/open/floor/cult,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ZR" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -1194,11 +1191,11 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/misc/grass/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 "ZY" = (
 /obj/structure/bonfire/prelit,
 /turf/open/misc/dirt/jungle,
-/area/deathmatch/teleport)
+/area/deathmatch)
 
 (1,1,1) = {"
 Ig
@@ -1234,44 +1231,44 @@ Ig
 (2,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 SC
 SC
 SC
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (3,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 sa
 UY
 UY
@@ -1279,28 +1276,28 @@ TE
 QQ
 QQ
 QQ
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (4,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
 bI
 qa
 Px
@@ -1311,26 +1308,26 @@ UY
 UY
 bU
 QQ
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (5,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
 ij
 dS
 GO
@@ -1343,24 +1340,24 @@ Sw
 Sw
 Sw
 Px
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (6,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
+Ig
+Ig
+Ig
 jL
 jv
 CR
@@ -1375,22 +1372,22 @@ QQ
 QF
 Sw
 LU
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (7,1,1) = {"
 Ig
 Ig
-CI
-CI
+Ig
+Ig
 jL
 ij
 qa
@@ -1409,19 +1406,19 @@ Sw
 IG
 ij
 jL
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (8,1,1) = {"
 Ig
 Ig
-CI
-CI
+Ig
+Ig
 bI
 nO
 HN
@@ -1440,18 +1437,18 @@ oC
 LU
 LU
 dS
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (9,1,1) = {"
 Ig
 Ig
-CI
+Ig
 ij
 qa
 qa
@@ -1472,17 +1469,17 @@ tm
 qa
 vI
 pr
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (10,1,1) = {"
 Ig
 Ig
-CI
+Ig
 aN
 qa
 qa
@@ -1504,16 +1501,16 @@ FK
 FK
 FK
 ZY
-CI
-CI
-CI
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (11,1,1) = {"
 Ig
 Ig
-CI
+Ig
 GD
 qa
 LU
@@ -1536,8 +1533,8 @@ TN
 qh
 FK
 wR
-CI
-CI
+Ig
+Ig
 Ig
 Ig
 "}
@@ -1568,7 +1565,7 @@ NQ
 TN
 CE
 DA
-CI
+Ig
 Ig
 Ig
 "}
@@ -1599,7 +1596,7 @@ wR
 SE
 FK
 sC
-CI
+Ig
 Ig
 Ig
 "}
@@ -1630,7 +1627,7 @@ FK
 FK
 FK
 Du
-CI
+Ig
 Ig
 Ig
 "}
@@ -1692,7 +1689,7 @@ GO
 hY
 qa
 ij
-CI
+Ig
 Ig
 Ig
 "}
@@ -1723,7 +1720,7 @@ qa
 rm
 jv
 nO
-CI
+Ig
 Ig
 Ig
 "}
@@ -1754,7 +1751,7 @@ jv
 qa
 qa
 ku
-CI
+Ig
 Ig
 Ig
 "}
@@ -1785,14 +1782,14 @@ qa
 VZ
 iq
 Yx
-CI
+Ig
 Ig
 Ig
 "}
 (20,1,1) = {"
 Ig
 Ig
-CI
+Ig
 oF
 Nf
 Wp
@@ -1815,15 +1812,15 @@ fl
 VZ
 Zj
 bj
-CI
-CI
+Ig
+Ig
 Ig
 Ig
 "}
 (21,1,1) = {"
 Ig
 Ig
-CI
+Ig
 Rj
 XT
 YY
@@ -1847,7 +1844,7 @@ Zj
 wH
 FO
 KT
-CI
+Ig
 Ig
 Ig
 "}
@@ -1878,7 +1875,7 @@ wH
 FO
 KT
 hV
-CI
+Ig
 Ig
 Ig
 "}
@@ -1909,14 +1906,14 @@ FO
 KT
 hV
 hV
-CI
+Ig
 Ig
 Ig
 "}
 (24,1,1) = {"
 Ig
 Ig
-CI
+Ig
 Wp
 Nf
 UI
@@ -1939,8 +1936,8 @@ wv
 KT
 hV
 hV
-CI
-CI
+Ig
+Ig
 Ig
 Ig
 "}
@@ -1969,16 +1966,16 @@ UM
 lr
 MM
 hV
-CI
-CI
-CI
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (26,1,1) = {"
 Ig
 Ig
-CI
+Ig
 XT
 xx
 KL
@@ -1996,21 +1993,21 @@ Av
 bO
 rc
 bn
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (27,1,1) = {"
 Ig
 Ig
-CI
-CI
+Ig
+Ig
 Dn
 cb
 Wp
@@ -2022,7 +2019,7 @@ qa
 qa
 jL
 bI
-CI
+Ig
 Lf
 px
 fW
@@ -2030,30 +2027,30 @@ dv
 Sp
 zX
 bn
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (28,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
+Ig
+Ig
+Ig
 iO
 jL
 ij
 zo
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 An
 HS
 Fj
@@ -2061,30 +2058,30 @@ Fj
 rh
 sd
 Kl
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}
 (29,1,1) = {"
 Ig
 Ig
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
+Ig
 bn
 GS
 Wm
@@ -2092,10 +2089,10 @@ tE
 Io
 uT
 Kl
-CI
-CI
-CI
-CI
+Ig
+Ig
+Ig
+Ig
 Ig
 Ig
 "}

@@ -10,7 +10,7 @@
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	cooldown_time = 25 SECONDS
 
 	invocation = "RE'L'TY PH'S'E."
 	invocation_type = INVOCATION_WHISPER
@@ -57,6 +57,7 @@
 		if(living_mob.can_block_magic(antimagic_flags))
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
+		living_mob.apply_status_effect(/datum/status_effect/void_chill, 1)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'

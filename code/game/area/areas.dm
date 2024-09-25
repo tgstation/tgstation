@@ -128,7 +128,7 @@
  * A list of teleport locations
  *
  * Adding a wizard area teleport list because motherfucking lag -- Urist
- * I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game
+ * I am far too lazy to make it a proper list of areas so I'll just make it run the usual teleport routine at the start of the game
  */
 GLOBAL_LIST_EMPTY(teleportlocs)
 
@@ -168,9 +168,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /*
- * Initalize this area
+ * Initialize this area
  *
- * intializes the dynamic area lighting and also registers the area with the z level via
+ * initializes the dynamic area lighting and also registers the area with the z level via
  * reg_in_areas_in_z
  *
  * returns INITIALIZE_HINT_LATELOAD
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Update the icon state of the area
  *
- * Im not sure what the heck this does, somethign to do with weather being able to set icon
+ * I'm not sure what the heck this does, something to do with weather being able to set icon
  * states on areas?? where the heck would that even display?
  */
 /area/update_icon_state()
@@ -439,7 +439,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
  * Returns int 1 or 0 if the area has power for the given channel
  *
- * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * evaluates a mixture of variables mappers can set, requires_power, always_unpowered and then
  * per channel power_equip, power_light, power_environ
  */
 /area/proc/powered(chan) // return true if the area has power to given channel

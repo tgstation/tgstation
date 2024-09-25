@@ -270,7 +270,7 @@
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!uses_integrity)
-		CRASH("attacked_by() was called on an object that doesnt use integrity!")
+		CRASH("attacked_by() was called on an object that doesn't use integrity!")
 
 	if(!attacking_item.force)
 		return

@@ -160,6 +160,7 @@
 	close_sound = 'sound/machines/trapdoor/trapdoor_shut.ogg'
 	set_dir_on_move = TRUE
 	can_buckle = TRUE
+	can_weld_shut = FALSE
 
 	/// Whether we're on a set of rails or just on the ground
 	var/on_rails = FALSE
@@ -521,7 +522,7 @@
 /obj/structure/minecart_rail
 	name = "cart rail"
 	desc = "Carries carts along the track."
-	icon = 'icons/obj/structures/track.dmi'
+	icon = 'icons/obj/track.dmi'
 	icon_state = "track"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE

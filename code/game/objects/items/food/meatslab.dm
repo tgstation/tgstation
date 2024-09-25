@@ -150,7 +150,7 @@
 	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
-	return //skeletons dont have cutlets
+	return //skeletons don't have cutlets
 
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = "meat (rotten)"

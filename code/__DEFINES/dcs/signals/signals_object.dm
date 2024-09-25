@@ -153,12 +153,12 @@
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ACTION_HANDLED (1<<0)
 
 /// Sent from obj/item/item_action_slot_check(): (mob/user, datum/action, slot)
 #define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
@@ -415,10 +415,6 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
-
-/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
-#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
-	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
 
 // /obj/vehicle/sealed/car/vim signals
 

@@ -694,6 +694,14 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/monkey/celebrate()
+	. = ..()
+	SSstation.setup_trait(/datum/station_trait/job/pun_pun)
+	//SSevents should initialize before SSatoms but who knows if it'll ever change.
+	if(GLOB.the_one_and_only_punpun)
+		new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
+		qdel(GLOB.the_one_and_only_punpun)
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
@@ -849,11 +857,15 @@
 	)
 
 /datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
+		Monitor.icon_state_on = "entertainment_xmas"
+
 	for(var/mob/living/basic/pet/dog/corgi/ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 
 
 // EASTER (this having its own spot should be understandable)
+
 /datum/holiday/easter
 	name = EASTER
 	holiday_hat = /obj/item/clothing/head/costume/rabbitears

@@ -84,7 +84,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			var/datum/job/sec_job = SSjob.get_job_type(/datum/job/security_officer)
 			sec_job.total_positions = -1
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
@@ -419,7 +419,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				var/list/storm_appearances = list()
 				for(var/offset in 0 to SSmapping.max_plane_offset)
 					var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-					SET_PLANE_W_SCALAR(storm, GAME_PLANE, offset)
+					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
 					storm.color = prefs["color"]["value"]
 					storm_appearances += storm
 
@@ -526,7 +526,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.update_mutant_bodyparts()
+					H.update_body_parts()
 					if(animetype == "Yes")
 						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/schoolgirl))
 						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
