@@ -296,10 +296,8 @@
 	pixel_y = 1;
 	anchored = 1
 	},
-/obj/machinery/telecomms/server{
-	pixel_z = 12;
-	name = "tgsv3";
-	desc = "It's, uh... pending an upgrade."
+/obj/machinery/telecomms/server/adminbus{
+	pixel_z = 12
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
