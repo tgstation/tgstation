@@ -5,12 +5,12 @@
 
 	if(!length(avatar_connection_refs))
 		balloon_alert_to_viewers("powering down domain...")
-		playsound(src, 'sound/machines/terminal_off.ogg', 40, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 40, vary = TRUE)
 		reset()
 		return
 
 	balloon_alert_to_viewers("notifying clients...")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 100, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 100, vary = TRUE)
 	user.visible_message(
 		span_danger("[user] begins depowering the server!"),
 		span_notice("You start disconnecting clients..."),
@@ -43,7 +43,7 @@
 		return FALSE
 
 	is_ready = FALSE
-	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 30, 2)
 
 	/// If any one of these fail, it reverts the entire process
 	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
@@ -60,7 +60,7 @@
 	if(prob(spawn_chance))
 		setup_glitch()
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, vary = TRUE)
 	balloon_alert_to_viewers("domain loaded.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost

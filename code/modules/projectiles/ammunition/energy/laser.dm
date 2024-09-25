@@ -17,13 +17,13 @@
 	projectile_type = /obj/projectile/beam/laser/carbine
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
 	select_name = "kill"
-	fire_sound = 'sound/weapons/laser2.ogg'
+	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/ammo_casing/energy/lasergun/carbine/cybersun
 	projectile_type = /obj/projectile/beam/laser/carbine/cybersun
 	e_cost = LASER_SHOTS(54, STANDARD_CELL_CHARGE)
 	select_name = "rapid fire"
-	fire_sound = 'sound/weapons/laser2.ogg'
+	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/ammo_casing/energy/lasergun/carbine/practice
 	projectile_type = /obj/projectile/beam/laser/carbine/practice
@@ -92,13 +92,13 @@
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/projectile/beam/pulse
 	e_cost = LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
 	select_name = "DESTROY"
-	fire_sound = 'sound/weapons/pulse.ogg'
+	fire_sound = 'sound/items/weapons/pulse.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/laser/bluetag
@@ -120,12 +120,12 @@
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/projectile/beam/xray
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/laser3.ogg'
+	fire_sound = 'sound/items/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'sound/items/weapons/laser.ogg'
 
 /obj/item/ammo_casing/energy/laser/minigun
 	select_name = "kill"
@@ -136,7 +136,7 @@
 	projectile_type = /obj/projectile/bullet/c10mm //henk
 	select_name = "bullet"
 	e_cost = LASER_SHOTS(8, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/weapons/thermalpistol.ogg'
+	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 
 /obj/item/ammo_casing/energy/nanite/inferno
 	projectile_type = /obj/projectile/energy/inferno
@@ -156,7 +156,7 @@
 	base_icon_state = "s-casing-live"
 	slot_flags = null
 	projectile_type = /obj/projectile/beam
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'sound/items/weapons/laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/laser/Initialize(mapload)

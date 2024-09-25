@@ -172,7 +172,7 @@
 		throw_text = "starts cooking in your hands, it may explode soon!",\
 		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
 		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
-		sound_on_success = 'sound/weapons/parry.ogg',\
+		sound_on_success = 'sound/items/weapons/parry.ogg',\
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
 
@@ -186,7 +186,7 @@
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	active_arm?.dismember()
 	to_chat(user, span_warning("[src] explodes!"))
-	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
 	user.flash_act(1, 1)
 	qdel(src)
 
@@ -199,7 +199,7 @@
 	maximum_bonus = 30
 
 /obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
-	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
 	user.flash_act(1, 1)
 	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
 	qdel(src)
