@@ -606,3 +606,4 @@ UPLOAD_LIMIT 524288
 
 ## Restricts admin client uploads to the server, defined in bytes, default is 5MB
 UPLOAD_LIMIT_ADMIN 5242880
+
