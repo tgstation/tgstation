@@ -74,6 +74,9 @@
 
 		. += burnt_appearance
 
+/turf/open/examine_descriptor(mob/user)
+	return "floor"
+
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
 	if(direction != DOWN)
@@ -432,7 +435,7 @@
 		if(used_rods.use(1))
 			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/catwalk(src)
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
@@ -440,7 +443,7 @@
 
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		new /obj/structure/lattice(src)
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
@@ -456,7 +459,7 @@
 		balloon_alert(user, "need a floor tile to build!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
@@ -480,7 +483,7 @@
 		balloon_alert(user, "no tile!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
 
 /// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
@@ -493,5 +496,5 @@
 		balloon_alert(user, "not enough titanium!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new /obj/structure/girder/tram(src)

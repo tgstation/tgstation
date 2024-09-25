@@ -142,12 +142,6 @@
 			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
-	if(!silent)
-		if(istype(custom_sound)) //This is where the camera actually finishes its exposure.
-			playsound(loc, custom_sound, 75, TRUE, -3)
-		else
-			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
-
 	if(wipe_atoms)
 		QDEL_LIST(atoms)
 	else

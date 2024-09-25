@@ -181,7 +181,7 @@
 			return
 		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
 
-	playsound(source = src, soundin = 'sound/effects/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	has_sensor = HAS_SENSORS
 	update_wearer_status()
 
@@ -229,10 +229,33 @@
 
 	else
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		playsound(source = src, soundin = 'sound/effects/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		playsound(source = src, soundin = 'sound/effects/sparks/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		visible_message(span_warning("The [src]'s medical sensors flash and change rapidly!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 	update_wearer_status()
+
+/**
+ * Called by medical scanners a simple summary of the status
+ *
+ * Arguments:
+ * * silent: If TRUE, will return blank if everything is fine
+ */
+/obj/item/clothing/under/proc/get_sensor_text(silent = TRUE)
+	if(has_sensor == BROKEN_SENSORS)
+		return "<font color='#ffcc33'>Non-Functional: Repair with cable coil</font>"
+
+	if(silent)
+		return ""
+
+	switch(has_sensor)
+		if(NO_SENSORS)
+			return "Not Present"
+
+		if(LOCKED_SENSORS)
+			return "Functional, Locked"
+
+		if(HAS_SENSORS)
+			return "Functional"
 
 // End suit sensor handling
 

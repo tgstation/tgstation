@@ -3,7 +3,7 @@
 	name = "holographic goldfish"
 	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
 	icon_state = /obj/item/fish/goldfish::icon_state
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~(FISH_FLAG_SHOW_IN_CATALOG|FISH_FLAG_EXPERIMENT_SCANNABLE)
 	random_case_rarity = FISH_RARITY_NOPE
 	dedicated_in_aquarium_icon_state = /obj/item/fish/goldfish::dedicated_in_aquarium_icon_state
 	aquarium_vc_color = /obj/item/fish/goldfish::aquarium_vc_color
@@ -13,11 +13,9 @@
 	average_size = /obj/item/fish/goldfish::average_size
 	average_weight = /obj/item/fish/goldfish::average_weight
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
-	grind_results = null
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
-	experisci_scannable = FALSE
 	beauty = /obj/item/fish/goldfish::beauty
 
 /obj/item/fish/holo/Initialize(mapload, apply_qualities = TRUE)
@@ -27,6 +25,9 @@
 		addtimer(CALLBACK(src, PROC_REF(set_status), FISH_DEAD), 1 MINUTES)
 		return
 	holo_area.linked.add_to_spawned(src)
+
+/obj/item/fish/holo/make_edible(weight_val)
+	return
 
 /obj/item/fish/holo/set_status(new_status, silent = FALSE)
 	. = ..()
