@@ -238,7 +238,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 			As a gesture of gratitude, we will be providing our premium broadcast to your entertainment monitors at no cost so that you can watch the excitement. \n\
 			Bystanders are advised not to intervene... but if you do, make it look good for the camera!",
 		title = "Rumble Royale Beginning",
-		sound = 'sound/machines/alarm.ogg',
+		sound = 'sound/announcer/alarm/nuke_alarm.ogg',
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
