@@ -16,7 +16,7 @@
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = SFX_DEFAULT_FISH_SLAP
-	drop_sound = 'sound/creatures/fish/fish_drop1.ogg'
+	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME
@@ -1288,14 +1288,14 @@
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage((force * 0.2) + w_class * 2, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
-		playsound(src,'sound/weapons/bite.ogg', 45, TRUE, -1)
+		playsound(src,'sound/items/weapons/bite.ogg', 45, TRUE, -1)
 	else
 		if(in_aquarium)
 			to_chat(user, span_notice("[src] dances around!"))
 		else
 			to_chat(user, span_notice("You pet [src] as you hold it."))
 		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+		playsound(src, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
 	return TRUE
 

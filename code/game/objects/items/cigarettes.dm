@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	inhand_icon_state = "cigon"
 	name = "lit [initial(name)]"
 	desc = "A [initial(name)]. This one is lit."
@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
-	playsound(src.loc, 'sound/items/cig_light.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -355,7 +355,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
@@ -396,7 +396,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
-	playsound(src.loc, 'sound/items/cig_snuff.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))

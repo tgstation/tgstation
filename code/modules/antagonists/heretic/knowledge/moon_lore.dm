@@ -208,7 +208,7 @@
 		text = "[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
 				The truth shall finally devour the lie! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_moon.ogg',
+		sound = 'sound/music/antag/heretic/ascend_moon.ogg',
 		color_override = "pink",
 	)
 

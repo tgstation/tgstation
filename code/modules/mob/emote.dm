@@ -159,7 +159,7 @@
 	animate(transform = original_transform, time = 0.1 SECONDS)
 
 /datum/emote/jump/get_sound(mob/user)
-	return 'sound/weapons/thudswoosh.ogg'
+	return 'sound/items/weapons/thudswoosh.ogg'
 
 // Avoids playing sounds if we're a ghost
 /datum/emote/jump/should_play_sound(mob/user, intentional)

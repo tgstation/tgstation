@@ -105,8 +105,8 @@
 	resistance_flags = NONE
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	material_drop = /obj/item/stack/sheet/plasteel

@@ -1,6 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "Changelings are now able to respec multiple times if they have absorbed multiple humanoids, instead of it being toggled on if it was off during their most recent absorb."
-  - balance: "Last Resort is now an innate ability for changelings."
-  - code_imp: "Added a little counter and a tgui function for displaying how many absorbs lings have in their belly to spend for readaptions!"

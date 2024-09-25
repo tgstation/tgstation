@@ -406,7 +406,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
-		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		var/sound_to_play = 'sound/items/weapons/thudswoosh.ogg'
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)
@@ -2830,7 +2830,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	ADD_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	var/icon/selected_overlay = pick(blocking_overlay)
 	add_overlay(selected_overlay)
-	playsound(src, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
+	playsound(src, 'sound/items/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
 	update_transform(1.25)
 	addtimer(CALLBACK(src, PROC_REF(end_block_effects), selected_overlay), 0.6 SECONDS)
 

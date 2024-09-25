@@ -305,7 +305,7 @@
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
-	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 100, TRUE)
 
 //
 // literally just buttons
@@ -363,7 +363,7 @@
 	used = single_use
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
@@ -386,7 +386,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 		return
 	used = TRUE
 	update_icon_state()
-	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
@@ -419,11 +419,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
 	if(!correct)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 45, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 45, TRUE)
 		return
 	used = single_use
 	update_icon_state()
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)

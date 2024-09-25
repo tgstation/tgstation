@@ -20,7 +20,7 @@
 	/// Sound used upon closing.
 	var/door_close = 'sound/machines/blastdoor.ogg'
 	/// Sound used upon denying.
-	var/door_deny = 'sound/machines/buzz-sigh.ogg'
+	var/door_deny = 'sound/machines/buzz/buzz-sigh.ogg'
 
 /obj/machinery/door/password/voice
 	voice_activated = TRUE

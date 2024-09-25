@@ -31,7 +31,7 @@
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	unique_name = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
