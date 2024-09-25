@@ -25,7 +25,7 @@
 	icon_state = "sat_dish"
 
 /obj/item/keycard/nt_commsbuoy
-	name = "Nanotrasen comm buoy keycard"
+	name = "Nanotrasen comms buoy keycard"
 	desc = "A keycard with the NT logo prominently displayed. The last user broke off the end; the card can still swipe, but this won't insert \
 	into any chip readers now. On the back, mostly obscured by dried blood, the text \"SPINWARD\" is printed, followed by an illegible ID string."
 	color = "#4c80b1"
@@ -87,7 +87,7 @@
 	list precisely, as additional damage may occur while the dish is misaligned. <br>
 	1. Assess the outside of the Comms Buoy for any damage or indication of impact to the dish. If any is found, refer to the Replacement Parts subsection\
 	on page 43. <br>
-	2. Before entering the Comms Buoy, collect the Nanotrasen Comm Buoy keycard provided in the front of this manual. This keycard is vital to \
+	2. Before entering the Comms Buoy, collect the Nanotrasen Comms Buoy keycard provided in the front of this manual. This keycard is vital to \
 	the repair process, operational efficiency of the Buoy, and in disabling the automated defensive system. <br>
 	3. Display this card prominently on your persons. This can be done with an official Nanotrasen neck lanyard or Nanotrasen clip-on retractible laynard, \
 	worn on your collar, attached to a breast pocket, or on your waist. <br>
@@ -97,7 +97,7 @@
 	<b>Failiure to follow this step may risk injury or even death.</b> <br>
 	6. Proceed to the terminal corresponding to the misaligned disk - the Primary Dish controller (pages 8/9) can be located in the room past the Local-Network Array (pages 12/13), \
 	while the one closest to the airlock will control the Secondary Dish (page 10). <br>
-	7. Insert the Nanotrasen Comm Buoy keycard into the slot along the bottom right of the terminal (refer to diagram RD-2).
+	7. Insert the Nanotrasen Comms Buoy keycard into the slot along the bottom right of the terminal (refer to diagram RD-2).
 	<hr>
 	(The back of the page is covered in blood. A shame, now you can't see the diagram...)
 	"}
