@@ -4,7 +4,7 @@
 		/obj/item/radio/headset/headset_med = 3,
 		/obj/item/clothing/gloves/latex/nitrile = 2,
 		/obj/item/clothing/suit/toggle/labcoat/hospitalgown = 5,
-	//	/obj/item/storage/belt/medbandolier = 2,
+		/obj/item/storage/belt/med_bandolier = 2,
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/med = 2,
 	)
 
@@ -91,8 +91,8 @@
 
 /obj/machinery/vending/wardrobe/chem_wardrobe
 	products_doppler = list(
-//		/obj/item/clothing/under/rank/medical/chemist/doppler/formal = 2,
-//		/obj/item/clothing/under/rank/medical/chemist/doppler/formal/skirt = 2,
+		/obj/item/clothing/under/rank/medical/chemist/pharmacologist = 2,
+		/obj/item/clothing/under/rank/medical/chemist/pharmacologist/skirt = 2,
 		/obj/item/clothing/head/beret/medical/chemist = 2,
 	)
 

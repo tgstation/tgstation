@@ -16,17 +16,6 @@
 				/obj/item/clothing/under/rank/civilian/clown/jesteralt = 1,
 			),
 		),
-/*		list(
-			"name" = "Fancy",
-			"icon" = "user-tie",
-			"products" = list(
-				/obj/item/clothing/head/beret/badge = 5,
-				/obj/item/clothing/mask/masquerade = 25,
-				/obj/item/clothing/mask/masquerade/two_colors = 25,
-				/obj/item/clothing/mask/masquerade/feathered = 25,
-				/obj/item/clothing/mask/masquerade/two_colors/feathered = 25,
-			),
-		),	*/
 		list(
 			"name" = "Service",
 			"icon" = "kitchen-set",
@@ -42,12 +31,8 @@
 				/obj/item/clothing/under/costume/maid = 1,
 				/obj/item/clothing/gloves/maid = 1,
 				/obj/item/clothing/neck/maid = 1,
-				/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
 				/obj/item/clothing/accessory/maidapron = 1,
-	//			/obj/item/clothing/gloves/maid_arm_covers = 1,
 				/obj/item/clothing/neck/maid_neck_cover = 1,
-	//			/obj/item/clothing/under/maid_costume = 1,
-	//			/obj/item/clothing/head/maid_headband = 1,
 			),
 		),
 		list(
@@ -62,20 +47,4 @@
 				/obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls = 5,
 			),
 		),
-
-/*		list(
-			"name" = "Other",
-			"icon" = "star",
-			"products" = list(
-
-			),
-		),	*/
 	)
-
-/*	contraband_doppler = list(
-
-	)	*/
-
-/*	premium_doppler = list(
-
-	)	*/

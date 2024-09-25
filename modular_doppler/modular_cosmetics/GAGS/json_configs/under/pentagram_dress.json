@@ -1,0 +1,10 @@
+{
+	"dress_pentagram": [
+		{
+			"type": "icon_state",
+			"icon_state": "penta_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

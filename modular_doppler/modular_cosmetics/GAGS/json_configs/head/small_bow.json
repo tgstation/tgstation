@@ -1,0 +1,18 @@
+{
+	"small_bow": [
+		{
+			"type": "icon_state",
+			"icon_state": "small_bow",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"small_bow_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "small_bow_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
