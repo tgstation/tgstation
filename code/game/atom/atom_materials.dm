@@ -8,22 +8,251 @@
 	var/material_modifier = 1
 
 /// Sets the custom materials for an item.
-/atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials && material_flags & MATERIAL_EFFECTS) //Only runs if custom materials existed at first and affected src.
-		for(var/current_material in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_removed(src, OPTIMAL_COST(custom_materials[current_material] * material_modifier), material_flags) //Remove the current materials
+/atom/proc/set_custom_materials(list/materials, multiplier)
+	remove_material_effects()
 
 	if(!length(materials))
 		custom_materials = null
 		return
 
-	if(material_flags & MATERIAL_EFFECTS)
+	if(multiplier != 1)
+		materials = materials.Copy() //avoid editing the list that was originally used as argument if it's ever going to be used again.
 		for(var/current_material in materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
-			custom_material.on_applied(src, OPTIMAL_COST(materials[current_material] * multiplier * material_modifier), material_flags)
+			materials[current_material] *= multiplier
 
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+	apply_material_effects()
+
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
+
+#define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
+#define MATERIAL_LIST_MULTIPLIER "multiplier"
+#define GET_MATERIAL_MODIFIER(modifier, multiplier) ((modifier) + (((modifier) - 1) * (multiplier) * ((multiplier) < 1 ? 1 : -1)))
+
+/atom/proc/remove_material_effects()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	//Only runs if custom materials existed at first and affected src.
+	if(!custom_materials || !(material_flags & MATERIAL_EFFECTS))
+		return
+	var/list/material_effects = list()
+	var/index = 1
+	for(var/current_material in custom_materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
+		material_effects[custom_material] = list(
+			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(custom_materials[current_material] * material_modifier),
+			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(custom_material, custom_materials, index),
+		)
+		index++
+	finalize_remove_material_effects(material_effects)
+
+/atom/proc/apply_material_effects(list/materials)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!materials || !(material_flags & MATERIAL_EFFECTS))
+		return
+	var/list/material_effects = list()
+	var/index = 1
+	for(var/current_material in materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(current_material)
+		material_effects[custom_material] = list(
+			MATERIAL_LIST_OPTIMAL_AMOUNT = OPTIMAL_COST(materials[current_material] * material_modifier),
+			MATERIAL_LIST_MULTIPLIER = get_material_multiplier(custom_material, materials, index),
+		)
+		index++
+	finalize_material_effects(material_effects)
+
+/atom/proc/get_material_multiplier(datum/material/custom_material, list/materials, index)
+	return 1
+
+/atom/proc/finalize_material_effects(list/materials)
+	SHOULD_CALL_PARENT(TRUE)
+	var/total_alpha = 0
+	var/list/colors = list()
+	var/mat_length = length(materials)
+	var/datum/material/main_material = get_main_material()
+	var/main_mat_amount
+	var/main_mat_mult
+	for(var/datum/material/custom_material as anything in materials)
+		var/list/deets = materials[custom_material]
+		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
+		var/multiplier = deets[MATERIAL_LIST_MULTIPLIER]
+		if(custom_material == main_material)
+			main_mat_amount = mat_amount
+			main_mat_mult = multiplier
+
+		apply_single_mat_effect(custom_material, mat_amount, multiplier)
+		custom_material.on_applied(src, mat_amount, multiplier)
+
+		//Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
+		if(material_flags & (MATERIAL_COLOR|MATERIAL_GREYSCALE))
+			gather_material_color(custom_material, colors, multiplier)
+			var/added_alpha = custom_material.alpha * (custom_material.alpha / 255)
+			total_alpha += GET_MATERIAL_MODIFIER(added_alpha, multiplier)
+			if(custom_material.texture_layer_icon_state && material_flags & MATERIAL_COLOR)
+				ADD_KEEP_TOGETHER(src, MATERIAL_SOURCE(custom_material))
+				add_filter("material_texture_[custom_material.name]", 1, layering_filter(icon = custom_material.cached_texture_filter_icon, blend_mode = BLEND_INSET_OVERLAY))
+
+		if(custom_material.beauty_modifier)
+			AddElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
+
+	apply_main_material_effects(main_material, main_mat_amount, main_mat_mult)
+
+	if(material_flags & (MATERIAL_COLOR|MATERIAL_GREYSCALE))
+		var/init_alpha = initial(alpha)
+		var/alpha_value = (total_alpha / length(materials)) * (init_alpha / 255)
+
+		if(alpha_value < init_alpha * 0.9)
+			opacity = FALSE
+
+		if(material_flags & MATERIAL_GREYSCALE)
+			var/config_path = get_material_greyscale_config(main_material.type, greyscale_config)
+			if(mat_length == 1)
+				set_greyscale(greyscale_colors, config_path)
+			else
+				set_greyscale(colors, config_path)
+		else if(length(colors))
+			mix_material_colors(colors)
+
+			alpha = alpha_value
+
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		var/prefixes = get_material_prefixes(materials)
+		name = "[prefixes] [name]"
+
+/atom/proc/gather_material_color(datum/material/material, list/colors, multiplier)
+	if(!color) //the material has no color. Nevermind
+		return
+	var/color_to_add = material.color
+	if(material_flags & MATERIAL_GREYSCALE && material.alpha != 255)
+		if(istext(color_to_add))
+			color_to_add += num2hex(material.alpha, 2) //adds the alpha channel to the RGB string, making it RGBA
+		else
+			color_to_add = color_to_full_rgba_matrix(color_to_add)
+			color_to_add[20] *= (material.alpha / 255) // multiply the constant alpha entry of the color adjustment matrix
+	//in case we have more mats of the same color, we sum the assoc value for later use in color blending
+	colors[color_to_add] += multiplier
+
+/atom/proc/mix_material_colors(list/colors, remove = FALSE)
+	var/color_len = length(colors)
+	if(!color_len)
+		return
+	var/mixcolor = colors[1]
+	if(color_len > 1) //Yeah, we lose something from converting color matrices to rbg, but it's easier.
+		mixcolor = color_matrix2color_hex(mixcolor)
+	var/amount_divisor = colors[mixcolor]
+	for(var/i in 2 to length(colors))
+		var/color_to_add = colors[i]
+		if(islist(color_to_add))
+			color_to_add = color_matrix2color_hex(color_to_add)
+		var/mix_amount = colors[color_to_add]
+		amount_divisor += mix_amount
+		mixcolor = BlendRGB(mixcolor, color_to_add, mix_amount/amount_divisor)
+	if(!mixcolor)
+		return
+	if(remove)
+		remove_atom_colour(FIXED_COLOUR_PRIORITY, mixcolor)
+	else
+		add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
+
+/atom/proc/get_main_material(list/materials)
+	RETURN_TYPE(/datum/material)
+	var/datum/material/main_material //the material with the highest amount (after calculations)
+	var/max_value = 0
+	for(var/datum/material/material as anything in materials)
+		var/list/deets = materials[material]
+		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
+		var/multipier = deets[MATERIAL_LIST_MULTIPLIER]
+		var/value = mat_amount*multipier
+		if(value > max_value)
+			main_material = material
+			max_value = value
+	return main_material
+
+/atom/proc/get_material_prefixes(list/materials)
+	var/list/mat_names = list()
+	for(var/datum/material/material as anything in materials)
+		mat_names |= material.name
+	return mat_names.Join("-")
+
+/atom/proc/get_material_english_list(list/materials)
+	var/list/mat_names = list()
+	for(var/datum/material/material as anything in materials)
+		mat_names |= material.name
+	return english_list(mat_names)
+
+/atom/proc/get_material_greyscale_config(mat_type, config_type)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!config_type)
+		return
+	for(var/datum/greyscale_config/path as anything in subtypesof(config_type))
+		if(mat_type != initial(path.material_skin))
+			continue
+		return path
+
+/atom/proc/apply_single_mat_effect(datum/material/custom_material, amount, multipier)
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
+/atom/proc/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	SHOULD_CALL_PARENT(TRUE)
+	main_material.on_main_applied(src, amount, multipier)
+
+/atom/proc/finalize_remove_material_effects(list/materials)
+	var/list/colors = list()
+	var/datum/material/main_material = get_main_material()
+	var/main_mat_amount
+	var/main_mat_mult
+	for(var/datum/material/custom_material as anything in materials)
+		var/list/deets = materials[custom_material]
+		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
+		var/multiplier = deets[MATERIAL_LIST_MULTIPLIER]
+		if(custom_material == main_material)
+			main_mat_amount = mat_amount
+			main_mat_mult = multiplier
+
+		remove_single_mat_effect(custom_material, mat_amount, multiplier)
+		custom_material.on_removed(src, mat_amount, multiplier)
+		gather_material_color(custom_material, colors, multiplier)
+		if(custom_material.texture_layer_icon_state)
+			remove_filter("material_texture_[custom_material.name]")
+			REMOVE_KEEP_TOGETHER(src, MATERIAL_SOURCE(custom_material))
+
+		if(custom_material.beauty_modifier)
+			RemoveElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
+
+	remove_main_material_effects(main_material, main_mat_amount, main_mat_mult)
+
+	if(material_flags & (MATERIAL_GREYSCALE|MATERIAL_COLOR))
+		//Prevent changing things with pre-set colors, to keep colored toolboxes their looks for example
+		if(material_flags & MATERIAL_COLOR)
+			mix_material_colors(colors, remove = TRUE)
+		else
+			set_greyscale(initial(greyscale_colors), initial(greyscale_config))
+		alpha = initial(alpha)
+		opacity = initial(opacity)
+
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		name = initial(name)
+
+/atom/proc/remove_single_mat_effect(datum/material/custom_material, amount, multipier)
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
+/atom/proc/remove_main_material_effects(datum/material/main_material, amount, multipier)
+	SHOULD_CALL_PARENT(TRUE)
+	main_material.on_main_removed(src, amount, multipier)
+
+/atom/proc/change_material_modifier(new_value)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	remove_material_effects()
+	material_modifier = new_value
+	apply_material_effects(custom_materials)
+
+/atom/proc/toggle_material_flags(new_flags)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(material_flags & MATERIAL_EFFECTS && !(new_flags & MATERIAL_EFFECTS))
+		remove_material_effects()
+	else if(!(material_flags & MATERIAL_EFFECTS) && new_flags & MATERIAL_EFFECTS)
+		apply_material_effects()
+	material_flags = new_flags
 
 /**
  * Returns the material composition of the atom.

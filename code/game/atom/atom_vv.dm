@@ -270,6 +270,9 @@
 		if(NAMEOF(src, base_pixel_y))
 			set_base_pixel_y(var_value)
 			. = TRUE
+		if(NAMEOF(src, material_flags))
+			toggle_material_flags(var_value)
+			. = TRUE
 
 	light_flags = old_light_flags
 	if(!isnull(.))

@@ -37,21 +37,7 @@
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
-
-/datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
-	. = ..()
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
-
-/datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, amount, material_flags)
-	. = ..()
-
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown -= MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
+	added_slowdown = 0.05
 
 /** Plastitanium
  *
@@ -153,21 +139,14 @@
 	value_per_unit = 0.4
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
+	added_slowdown = 0.1
 
-/datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
+/datum/material/alloy/alien/on_applied(atom/target, mat_amount, multiplier)
 	. = ..()
+	if(isobj(target))
+		target.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
 
-	target_item.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT
-
-/datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
+/datum/material/alloy/alien/on_removed(atom/target, mat_amount, multiplier)
 	. = ..()
-
-	target_item.RemoveElement(/datum/element/obj_regen, _rate=0.02)
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown -= MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT
+	if(isobj(target))
+		target.RemoveElement(/datum/element/obj_regen, _rate=0.02)
