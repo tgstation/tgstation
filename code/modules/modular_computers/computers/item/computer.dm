@@ -196,7 +196,7 @@
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
@@ -288,7 +288,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -322,7 +322,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -549,7 +549,7 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
@@ -559,13 +559,13 @@
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE)
 	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()

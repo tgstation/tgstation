@@ -174,8 +174,8 @@
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack
-	var/sound/unarmed_attack_sound = 'sound/weapons/punch1.ogg'
-	var/sound/unarmed_miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/sound/unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
+	var/sound/unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
 	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
@@ -396,7 +396,7 @@
 		if(!contents.len)
 			to_chat(user, span_warning("There is nothing left inside [src]!"))
 			return
-		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
 		if(do_after(user, 5.4 SECONDS, target = src))
@@ -457,11 +457,12 @@
  * required_bodytype - A bodytype flag requirement to get this damage (ex: BODYTYPE_ORGANIC)
  * wound_bonus - Additional bonus chance to get a wound.
  * bare_wound_bonus - Additional bonus chance to get a wound if the bodypart is naked.
+ * wound_clothing - If this should damage clothing.
  * sharpness - Flag on whether the attack is edged or pointy
  * attack_direction - The direction the bodypart is attacked from, used to send blood flying in the opposite direction.
  * damage_source - The source of damage, typically a weapon.
  */
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, blocked = 0, updating_health = TRUE, forced = FALSE, required_bodytype = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, damage_source, wound_clothing = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/hit_percent = forced ? 1 : (100-blocked)/100
@@ -469,7 +470,7 @@
 		return FALSE
 	if (!forced)
 		if(!isnull(owner))
-			if (owner.status_flags & GODMODE)
+			if (HAS_TRAIT(owner, TRAIT_GODMODE))
 				return FALSE
 			if (SEND_SIGNAL(owner, COMSIG_CARBON_LIMB_DAMAGED, src, brute, burn) & COMPONENT_PREVENT_LIMB_DAMAGE)
 				return FALSE
@@ -535,7 +536,7 @@
 			return
 		// now we have our wounding_type and are ready to carry on with wounds and dealing the actual damage
 		if(wounding_dmg >= WOUND_MINIMUM_DAMAGE && wound_bonus != CANT_WOUND)
-			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source)
+			check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, attack_direction, damage_source = damage_source, wound_clothing = wound_clothing)
 
 	for(var/datum/wound/iter_wound as anything in wounds)
 		iter_wound.receive_damage(wounding_type, wounding_dmg, wound_bonus, damage_source)

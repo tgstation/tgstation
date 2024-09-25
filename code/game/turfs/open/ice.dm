@@ -53,6 +53,7 @@
 		return NONE
 	balloon_alert(user, "dug hole")
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	add_overlay(mutable_appearance('icons/turf/overlays.dmi', "ice_hole"))
 	can_make_hole = FALSE
 	RemoveElement(/datum/element/contextual_screentip_tools, tool_screentips)

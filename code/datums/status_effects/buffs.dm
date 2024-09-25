@@ -426,7 +426,7 @@
 /datum/status_effect/mayhem/on_apply()
 	. = ..()
 	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
+	SEND_SOUND(owner, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
 	owner.cause_hallucination( \
 		/datum/hallucination/delusion/preset/demon, \
 		"[id] status effect", \
@@ -572,7 +572,7 @@
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
-	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
+	owner.playsound_local(get_turf(owner), 'sound/effects/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()

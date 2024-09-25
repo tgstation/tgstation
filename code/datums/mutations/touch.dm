@@ -28,7 +28,7 @@
 	name = "Shock Touch"
 	desc = "Channel electricity to your hand to shock people with."
 	button_icon_state = "zap"
-	sound = 'sound/weapons/zapbang.ogg'
+	sound = 'sound/items/weapons/zapbang.ogg'
 	cooldown_time = 12 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -117,7 +117,7 @@
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	cooldown_time = 12 SECONDS
 	school = SCHOOL_RESTORATION
 	invocation_type = INVOCATION_NONE

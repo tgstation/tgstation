@@ -2371,12 +2371,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/library)
 "aJm" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/east{
@@ -38494,6 +38488,7 @@
 	pixel_y = 32;
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
 	interior_airlock = "virology_airlock_control";
 	name = "Virology Access Controller";
 	req_access = list("virology")
@@ -40898,10 +40893,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
 "lOV" = (
-/obj/machinery/disposal/bin{
-	desc = "A pneumatic waste disposal unit. This one leads to the morgue.";
-	name = "corpse disposal"
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -257791,7 +257783,7 @@ qMm
 hUD
 pyJ
 lPh
-aJj
+hUD
 hUD
 ebb
 cYE
