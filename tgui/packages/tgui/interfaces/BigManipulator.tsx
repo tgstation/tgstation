@@ -69,15 +69,15 @@ export const BigManipulator = (props) => {
               tooltip="click on this button with item in hands to add filter on this item."
               onClick={() => act('add_filter')}
             />
-            {manipulate_mode !== 'Use' ? undefined : (
+            {manipulate_mode === 'Use' && (
               <Button
-                content={'Drop Use'}
+                content="Drop Use"
                 tooltip="drop item after use. othewise manipulator will use this item after cooldown."
                 selected={drop_after_use}
                 onClick={() => act('drop_use_change')}
               />
             )}
-            {manipulate_mode !== 'Throw' ? undefined : (
+            {manipulate_mode === 'Throw' && (
               <Button
                 content={`Throw range: ${throw_range}`}
                 tooltip="distance an object will travel when thrown"
@@ -86,9 +86,9 @@ export const BigManipulator = (props) => {
             )}
           </Stack.Item>
         </Section>
-        {settings_list.length < 2 ? undefined : (
+        {settings_list.length >= 2 && (
           <Section fill scrollable>
-            {settings_list.length < 2 ? undefined : (
+            {settings_list.length >= 2 && (
               <Button
                 content={'Only 1 priority'}
                 selected={highest_priority}
@@ -101,7 +101,7 @@ export const BigManipulator = (props) => {
                 <Table.Row key={setting.priority_width} className="candystripe">
                   <Table.Cell width={3}>
                     {setting.name} {` [priority: ${setting.priority_width}]`}
-                    {setting.priority_width < 2 ? undefined : (
+                    {setting.priority_width >= 2 && (
                       <Button
                         icon="arrow-up"
                         align="right"
