@@ -32,7 +32,6 @@
 			"name" = "Under",
 			"icon" = "shirt",
 			"products" = list(
-
 			),
 		),	*/
 

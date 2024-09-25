@@ -11,7 +11,7 @@
 			"name" = "Hair",
 			"icon" = "scissors",
 			"products" = list(
-	//			/obj/item/hairbrush = 3,
+				/obj/item/hairbrush = 3,
 				/obj/item/clothing/head/hair_tie = 3,
 				/obj/item/clothing/head/hair_tie/scrunchie = 3,
 				/obj/item/clothing/head/hair_tie/plastic_beads = 3,
