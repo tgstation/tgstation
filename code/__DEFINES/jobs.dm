@@ -14,8 +14,7 @@
 
 // Human authority settings
 #define JOB_AUTHORITY_NON_HUMANS_ALLOWED 0
-#define JOB_AUTHORITY_HUMANS_PREFERRED 1
-#define JOB_AUTHORITY_HUMANS_ONLY 2
+#define JOB_AUTHORITY_HUMANS_ONLY 1
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
