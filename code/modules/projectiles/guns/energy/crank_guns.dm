@@ -20,6 +20,7 @@
 		cooldown_time = 2 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
 
 /obj/item/gun/energy/laser/musket/update_icon_state()
@@ -53,6 +54,7 @@
 		cooldown_time = 2 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
+		charge_move = IGNORE_USER_LOC_CHANGE, \
 	)
 
 /obj/item/gun/energy/disabler/smoothbore/add_seclight_point()
