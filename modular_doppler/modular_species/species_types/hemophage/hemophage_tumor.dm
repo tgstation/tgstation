@@ -26,7 +26,8 @@
 	var/is_dormant = PULSATING_TUMOR_ACTIVE
 	/// What is the current rate (per second) at which the tumor is consuming blood?
 	var/bloodloss_rate = NORMAL_BLOOD_DRAIN
-
+	/// hud element to display our blood level
+	var/atom/movable/screen/hemophage/blood/blood_tracker
 
 /obj/item/organ/internal/heart/hemophage/Insert(mob/living/carbon/tumorful, special, movement_flags)
 	. = ..()
@@ -36,7 +37,6 @@
 	SEND_SIGNAL(tumorful, COMSIG_PULSATING_TUMOR_ADDED, tumorful)
 	tumorful.AddElement(/datum/element/tumor_corruption)
 	RegisterSignal(tumorful, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-
 
 /obj/item/organ/internal/heart/hemophage/Remove(mob/living/carbon/tumorless, special = FALSE, movement_flags)
 	. = ..()
@@ -57,7 +57,6 @@
 		toggle_dormant_tumor_vulnerabilities(tumorless_human)
 		tumorless_human.remove_movespeed_modifier(/datum/movespeed_modifier/hemophage_dormant_state)
 
-
 /obj/item/organ/internal/heart/hemophage/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
@@ -66,6 +65,16 @@
 	// once.
 	// It's intended that you can't print a tumor, because why would you?
 	operated = FALSE
+
+	if(blood_tracker)
+		blood_tracker.update_blood_hud(owner.blood_volume)
+	// create the hud
+	else if(owner.hud_used)
+		var/datum/hud/hud_used = owner.hud_used
+		blood_tracker = new /atom/movable/screen/hemophage/blood(null, hud_used)
+		hud_used.infodisplay += blood_tracker
+
+		owner.hud_used.show_hud(owner.hud_used.hud_version)
 
 	if(can_heal_owner_damage())
 		owner.apply_status_effect(/datum/status_effect/blood_regen_active)
