@@ -117,13 +117,19 @@
 	deprecated_by = /datum/config_entry/number/human_authority
 
 /datum/config_entry/flag/enforce_human_authority/DeprecationUpdate(value)
-	return 2
+	if(value)
+		return 0
+	else
+		return 2
 
 /datum/config_entry/flag/enforce_human_authority_on_everyone
 	deprecated_by = /datum/config_entry/number/human_authority
 
 /datum/config_entry/flag/enforce_human_authority_on_everyone/DeprecationUpdate(value)
-	return 3
+	if(value)
+		return 0
+	else
+		return 3
 /////////////////////////////////////////////////
 
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
