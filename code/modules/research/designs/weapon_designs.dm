@@ -30,7 +30,7 @@
 /datum/design/c38_hotshot
 	name = "Speed Loader (.38 Hot Shot) (Very Lethal)"
 	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
-	id = "c38_"
+	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
