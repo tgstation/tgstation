@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/energy/gravity
 	e_cost = 0 // Not possible to use the macro
-	fire_sound = 'sound/weapons/wave.ogg'
+	fire_sound = 'sound/items/weapons/wave.ogg'
 	select_name = "gravity"
 	delay = 50
 	var/obj/item/gun/energy/gravity_gun/gun

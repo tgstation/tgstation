@@ -260,7 +260,7 @@
 	inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
@@ -781,7 +781,7 @@
 	name = "champagne cork"
 	icon = 'icons/obj/drinks/drink_effects.dmi'
 	icon_state = "champagne_cork"
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	damage = 10
 	sharpness = NONE
 	impact_effect_type = null
@@ -1005,7 +1005,7 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
 			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
-		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 
 /**
  * Cartons

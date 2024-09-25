@@ -203,7 +203,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
+	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 
@@ -301,7 +301,7 @@
 	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
-	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
 	threat = 5
@@ -342,7 +342,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
@@ -368,7 +368,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
 	empulse(src, 3, 8)
 
 //Meaty Ore
@@ -378,7 +378,7 @@
 	desc = "Just... don't think too hard about where this thing came from."
 	hits = 2
 	heavy = TRUE
-	meteorsound = 'sound/effects/blobattack.ogg'
+	meteorsound = 'sound/effects/blob/blobattack.ogg'
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
@@ -464,6 +464,6 @@
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+	meteorsound = pick('sound/effects/hallucinations/im_here1.ogg','sound/effects/hallucinations/im_here2.ogg')
 
 #undef DEFAULT_METEOR_LIFETIME

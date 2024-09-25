@@ -53,7 +53,7 @@
 		to_chat(user, span_warning("[src] already has a holotag attached!"))
 		return
 	to_chat(user, span_notice("You affix a holotag to [src]."))
-	playsound(src, 'sound/machines/twobeep.ogg', 100)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
 	gps_tagged = TRUE
 	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
@@ -221,7 +221,7 @@
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
-			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 			living_mob.adjustBruteLoss(60 * seconds_per_tick)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
@@ -299,5 +299,5 @@
 	proteon.add_filter("sentient_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2, "alpha" = 40))
 
 /obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
-	playsound('sound/hallucinations/veryfar_noise.ogg', 125)
+	playsound('sound/effects/hallucinations/veryfar_noise.ogg', 125)
 	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned reaching a feverous pitch before slowly fading away into nothing."))

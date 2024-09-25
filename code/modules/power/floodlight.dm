@@ -308,7 +308,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
@@ -318,7 +318,7 @@
 	qdel(src)
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 
 #undef FLOODLIGHT_OFF
 #undef FLOODLIGHT_LOW
