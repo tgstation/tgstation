@@ -133,7 +133,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/space/nearstation)
 "P" = (
-/obj/structure/fluff/commsbuoy_reciever,
+/obj/structure/fluff/commsbuoy_receiver,
 /turf/open/floor/plating/reinforced/airless,
 /area/space/nearstation)
 "Q" = (

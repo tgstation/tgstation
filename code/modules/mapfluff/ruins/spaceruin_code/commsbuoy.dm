@@ -1,5 +1,5 @@
-/obj/structure/fluff/commsbuoy_reciever
-	name = "interstellar reciever"
+/obj/structure/fluff/commsbuoy_receiver
+	name = "interstellar receiver"
 	desc = "A dish-shaped component of the Comms Buoy used to detect and record interstellar signals."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "broadcast receiver"

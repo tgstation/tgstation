@@ -263,7 +263,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/nt_commsbuoy)
 "uG" = (
-/obj/structure/fluff/commsbuoy_reciever,
+/obj/structure/fluff/commsbuoy_receiver,
 /turf/open/floor/plating/reinforced/airless,
 /area/space/nearstation)
 "uH" = (
