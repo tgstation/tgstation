@@ -80,6 +80,12 @@
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = "#658e94"
 
+/obj/item/ammo_box/c38/phasic
+	name = "speed loader (.38 PHasic)"
+	desc = "Designed to quickly reload revolvers. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
+	ammo_type = /obj/item/ammo_casing/c38/phasic
+	ammo_band_color = "#47d66d"
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"

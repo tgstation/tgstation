@@ -72,3 +72,9 @@
 	desc = "A magazine for a battle rifle BR-38 battle rifle. Iceblox bullets contain a cryogenic payload."
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = "#658e94"
+
+/obj/item/ammo_box/magazine/m38/phasic
+	name = "\improper battle rifle magazine (.38 Phasic)"
+	desc = "A magazine for a battle rifle BR-38 battle rifle. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
+	ammo_type = /obj/item/ammo_casing/c38/phasic
+	ammo_band_color = "#47d66d"

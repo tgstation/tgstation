@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 
 /datum/design/c38/sec
-	id = "sec_38"
+	id = "c38_sec"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
@@ -12,48 +12,170 @@
 	autolathe_exportable = FALSE //Redundant, there's already an autolathe version.
 
 /datum/design/c38_trac
-	name = ".38 TRAC Casing (Nonlethal)"
-	desc = "TRAC bullets embed a tracking implant within the target's body and are nonlethal. The implant's signal is incompatible with teleporters."
+	name = "Speed Loader (.38 TRAC) (Less Lethal)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
 	id = "c38_trac"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/ammo_casing/c38/trac
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/silver =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/ammo_box/c38/trac
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_hotshot
-	name = ".38 Hot Shot Casing (Very Lethal)"
-	desc = "Hot Shot bullets contain an incendiary payload."
+	name = "Speed Loader (.38 Hot Shot) (Very Lethal)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
 	id = "c38_hotshot"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/ammo_casing/c38/hotshot
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	build_path = /obj/item/ammo_box/c38/hotshot
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_iceblox
-	name = ".38 Iceblox Casing (Lethal/Very Lethal (Lizardpeople))"
-	desc = "Iceblox bullets contain a cryogenic payload."
+	name = "Speed Loader (.38 Iceblox) (Lethal/Very Lethal (Lizardpeople))"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
 	id = "c38_iceblox"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/ammo_casing/c38/iceblox
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5,
+	)
+	build_path = /obj/item/ammo_box/c38/iceblox
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/c38_rubber
-	name = ".38 Rubber Casing (Less Lethal)"
-	desc = "Rubber bullets are bouncy and less-than-lethal."
+	name = "Speed Loader (.38 Rubber) (Less Lethal)"
+	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
 	id = "c38_rubber"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5)
-	build_path = /obj/item/ammo_casing/c38/match/bouncy
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
+	build_path = /obj/item/ammo_box/c38/match/bouncy
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_phasic
+	name = "Speedloader (.38 Phasic) (Lethal)"
+	desc = "Designed to quickly reload revolvers. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
+	id = "c38_phasic"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/bluespace =SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/phasic
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_mag
+	name = "Magazine (.38) (Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Less powerful by design, guns chambered in .38 caliber rounds are still quite popular for use by police forces, \
+		private security firms and organizations unable to access energy-based nonlethal weaponry. The lower (relative) penetrative power is useful for preventing potential hull damage \
+		aboard space stations and shuttles."
+	id = "c38_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_trac_mag
+	name = "Magazine (.38 TRAC) (Less Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. TRAC bullets embed a tracking implant within the target's body. The implant's signal is incompatible with teleporters."
+	id = "c38_trac_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/silver =SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/trac
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_hotshot_mag
+	name = "Magazine (.38 Hot Shot) (Very Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Hot Shot bullets contain an incendiary payload."
+	id = "c38_hotshot_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, ,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/hotshot
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_iceblox_mag
+	name = "Magazine (.38 Iceblox) (Lethal/Very Lethal (Lizardpeople))"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Iceblox bullets contain a cryogenic payload."
+	id = "c38_iceblox_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/iceblox
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_rubber_mag
+	name = "Magazine (.38 Rubber) (Less Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. Rubber bullets are bouncy and less-than-lethal."
+	id = "c38_rubber_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/match/bouncy
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c38_phasic_mag
+	name = "Magazine (.38 Phasic) (Lethal)"
+	desc = "Designed to tactically reload a NT BR-38 Battle Rifle. These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material."
+	id = "c38_phasic_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/bluespace =SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/ammo_box/magazine/m38/phasic
 	category = list(
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
 	)

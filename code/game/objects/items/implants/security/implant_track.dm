@@ -61,7 +61,6 @@
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
-	implant_flags = NONE
 	///How long before this implant self-deletes?
 	var/lifespan = 2 MINUTES
 	///The id of the timer that's qdeleting us

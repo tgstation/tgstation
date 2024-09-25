@@ -355,12 +355,8 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle
 	name = "\improper NT BR-38 battle rifle"
-	desc = "Nanotrasen's prototype security weapon, only found exclusively in the hands of their private security teams. \
-		The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity. This allows even less powerful \
-		cartridges to put out significant amounts of stopping power. However, in a sour twist of irony for Nanotrasen's historical issues \
-		with ballistics-based security weapons, the BR-38 has one significant flaw. It is possible for the weapon to suffer from unintended \
-		discombulations due to closed heat distribution systems when exposed to EMP interference. R&D are working on this issue before the weapon \
-		sees commercial sales. That, and trying to work out why the weapon's onboard computation systems suffer from so many calculation errors."
+	desc = "Nanotrasen's prototype security weapon, found exclusively in the hands of their private security teams. Chambered in .38 pistol rounds. \
+		Ignore that this makes it technically a carbine. Nanotrasen doesn't want to compete with itself against the laser carbine."
 	icon_state = "battle_rifle"
 	inhand_icon_state = "battle_rifle"
 	worn_icon = 'icons/mob/clothing/back.dmi'
@@ -398,11 +394,25 @@
 	var/explosion_timer
 
 /obj/item/gun/ballistic/automatic/battle_rifle/trac
-	accepted_magazine_type = /obj/item/ammo_box/magazine/m38/trac
+	spawn_magazine_type = /obj/item/ammo_box/magazine/m38/trac
 
 /obj/item/gun/ballistic/automatic/battle_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<b><i>Looking down at the [name], you recall something you read in a promotional pamphlet... </i></b>")
+
+	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity.\
+		This allows even less powerful cartridges to put out significant amounts of stopping power.")
+
+	. += span_notice("<b><i>However, you also remember some of the rumors...  </i></b>")
+
+	. += span_notice("In a sour twist of irony for Nanotrasen's historical issues with ballistics-based security weapons, the BR-38 has one significant flaw. \
+		It is possible for the weapon to suffer from unintended discombulations due to closed heat distribution systems when exposed to EMP interference. \
+		R&D are working on this issue before the weapon sees commercial sales. That, and trying to work out why the weapon's onboard computation systems suffer \
+		from so many calculation errors.")
 
 /obj/item/gun/ballistic/automatic/battle_rifle/examine(mob/user)
 	. = ..()

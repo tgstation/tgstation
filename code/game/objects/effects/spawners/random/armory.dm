@@ -63,6 +63,7 @@
 	name = "battle rifle TRAC mag spawner"
 	icon_state = "battle_rifle_mag"
 	loot = list(/obj/item/ammo_box/magazine/m38/trac)
+	spawn_loot_count = 2
 
 /obj/effect/spawner/random/armory/dragnet
 	name = "DRAGnet spawner"

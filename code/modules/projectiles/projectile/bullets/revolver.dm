@@ -94,16 +94,15 @@
 /obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/carbon/criminal_scum = target
-	if(!istype(criminal_scum))
+	if(!iscarbon(criminal_scum))
 		return
+	for(var/obj/item/implant/present_implants in criminal_scum.implants) //checks if the target already contains a tracking implant
+		if(istype(present_implants, /obj/item/implant/tracking/c38))
+			criminal_scum.apply_damage(stamina * 0.4, STAMINA) //Just a bit of extra stamina damage if they're already implanted.
+			return
 	var/obj/item/implant/tracking/c38/imp
-	for(var/obj/item/implant/tracking/c38/TI in criminal_scum.implants) //checks if the target already contains a tracking implant
-		imp = TI
-		criminal_scum.apply_damage(damage * 0.4, STAMINA) //Just a bit of extra stamina damage if they're already implanted.
-		return
-	if(!imp)
-		imp = new /obj/item/implant/tracking/c38(criminal_scum)
-		imp.implant(criminal_scum)
+	imp = new /obj/item/implant/tracking/c38(criminal_scum)
+	imp.implant(criminal_scum)
 
 /obj/projectile/bullet/c38/hotshot //similar to incendiary bullets, but do not leave a flaming trail
 	name = ".38 Hot Shot bullet"
@@ -128,6 +127,14 @@
 	if(isliving(target))
 		var/mob/living/criminal_scum = target
 		criminal_scum.adjust_bodytemperature(((100-blocked)/100)*(temperature - criminal_scum.bodytemperature))
+
+/obj/projectile/bullet/c38/phasic
+	name = ".38 phasic bullet"
+	icon_state = "gaussphase"
+	damage = 20
+	ricochets_max = 0
+	armour_penetration = 100
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // .357 (Syndie Revolver)
 
