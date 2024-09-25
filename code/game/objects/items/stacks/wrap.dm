@@ -23,7 +23,6 @@
 
 /obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	balloon_alert(user, "you bap them on the head")
 	visible_message("[user] baps [target_mob] on the head with the [src]")
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
@@ -214,7 +213,6 @@
 
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	balloon_alert(user, "you bap them on the head")
 	visible_message("[user] baps [target_mob] on the head with the [src]")
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
