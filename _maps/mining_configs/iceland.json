@@ -1,0 +1,43 @@
+{
+	"version": 1,
+	"map_name": "Iceland",
+	"map_path": "map_files/Mining",
+	"map_file": "Iceland.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"planetary": 1,
+	"traits": [
+		{
+			"Up": true,
+			"Mining": true,
+			"No Parallax": true,
+			"Ice Ruins Underground": true,
+			"Baseturf": "/turf/open/lava/plasma/ice_moon",
+			"Bombcap Multiplier": 2,
+			"Gravity": true,
+			"Linkage": null
+		},
+		{
+			"Up": true,
+			"Down": true,
+			"Mining": true,
+			"No Parallax": true,
+			"Ice Ruins": true,
+			"Ice Ruins Underground": true,
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
+			"Gravity": true,
+			"Linkage": null
+		},
+		{
+			"Down": true,
+			"Mining": true,
+			"No Parallax": true,
+			"Weather_Snowstorm": true,
+			"Ice Ruins": true,
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
+			"Gravity": true,
+			"Linkage": null
+		}
+	],
+	"blacklist_file": "iceruinblacklist.txt"
+}

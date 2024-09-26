@@ -6780,6 +6780,7 @@
 #include "modular_doppler\modular_items\hyposprays\code\hypospray_kits.dm"
 #include "modular_doppler\modular_items\hyposprays\code\hyposprays_II.dm"
 #include "modular_doppler\modular_items\hyposprays\code\hypovials.dm"
+#include "modular_doppler\modular_mapping\code\areas\mining.dm"
 #include "modular_doppler\modular_mapping\code\areas\ruins.dm"
 #include "modular_doppler\modular_mapping\code\areas\station.dm"
 #include "modular_doppler\modular_mapping\code\ruins\icemoon.dm"
