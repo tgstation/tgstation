@@ -13,6 +13,7 @@
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
 
 // Human authority settings
+// If you want to add another setting, make sure to also add it to the if chain in /datum/job_config_type/human_authority/validate_value()
 #define JOB_AUTHORITY_HUMANS_ONLY 0
 #define JOB_AUTHORITY_NON_HUMANS_ALLOWED 1
 
@@ -29,6 +30,7 @@
 #define JOB_CONFIG_REQUIRED_CHARACTER_AGE "Required Character Age"
 #define JOB_CONFIG_SPAWN_POSITIONS "Spawn Positions"
 #define JOB_CONFIG_TOTAL_POSITIONS "Total Positions"
+#define JOB_CONFIG_HUMAN_AUTHORITY "Human Authority Whitelist Setting"
 
 /**
  * =======================
