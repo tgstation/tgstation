@@ -32,8 +32,8 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
-	var/insert_sound = 'sound/effects/tank_insert_clunky.ogg'
-	var/remove_sound = 'sound/effects/tank_remove_thunk.ogg'
+	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
 	var/sound_vol = 50
 
 /datum/armor/machinery_portable_atmospherics

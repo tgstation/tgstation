@@ -262,7 +262,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool

@@ -3,7 +3,7 @@
 	icon_state = "e_netting"
 	damage = 10
 	damage_type = STAMINA
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
 
 /obj/projectile/energy/net/Initialize(mapload)
@@ -118,7 +118,7 @@
 /obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 4
 
 /obj/projectile/energy/trap/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -136,7 +136,7 @@
 /obj/projectile/energy/trap/cyborg
 	name = "Energy Bola"
 	icon_state = "e_snare"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
 
 /obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0, pierce_hit)
