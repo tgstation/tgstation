@@ -1083,8 +1083,9 @@
 	for(var/datum/mutation/human/mutation as anything in dna.mutations)
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
+		mutation.class = MUT_OTHER
 
-	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
+	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
