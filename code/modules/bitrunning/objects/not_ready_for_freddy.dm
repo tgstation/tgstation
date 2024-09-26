@@ -2,7 +2,7 @@
 #define BITRUNNING_DOORBLOCK_LEFT "left_door"
 #define DISPLAY_PIXEL_ALPHA 96
 /datum/looping_sound/phone_ring
-	mid_sounds = list('sound/weapons/ring.ogg' = 1)
+	mid_sounds = list('sound/items/weapons/ring.ogg' = 1)
 	mid_length = 2 SECONDS
 	volume = 100
 	ignore_walls = FALSE // we dont want to ring to other bitrunners
@@ -181,35 +181,35 @@
 		return // lol no power
 	var/return_overlays = list()
 
-	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+0")
-	var/mutable_appearance/minute_one_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
+	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+0")
+	var/mutable_appearance/minute_one_e = emissive_appearance('icons/obj/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
 	minute_one_overlay.pixel_w = 0
 	minute_one_e.pixel_w = 0
 	return_overlays += minute_one_overlay
 	return_overlays += minute_one_e
 
-	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+0")
-	var/mutable_appearance/minute_tenth_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
+	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+0")
+	var/mutable_appearance/minute_tenth_e = emissive_appearance('icons/obj/digital_clock.dmi', "+0", src, alpha = DISPLAY_PIXEL_ALPHA)
 	minute_tenth_overlay.pixel_w = -4
 	minute_tenth_e.pixel_w = -4
 	return_overlays += minute_tenth_overlay
 	return_overlays += minute_tenth_e
 
-	var/mutable_appearance/separator = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+separator")
-	var/mutable_appearance/separator_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+separator", src, alpha = DISPLAY_PIXEL_ALPHA)
+	var/mutable_appearance/separator = mutable_appearance('icons/obj/digital_clock.dmi', "+separator")
+	var/mutable_appearance/separator_e = emissive_appearance('icons/obj/digital_clock.dmi', "+separator", src, alpha = DISPLAY_PIXEL_ALPHA)
 	return_overlays += separator
 	return_overlays += separator_e
 
 	var/hours_render = my_controller.minutes_passed == 0 ? 2 : my_controller.minutes_passed
-	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[hours_render]")
-	var/mutable_appearance/hour_one_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+[hours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
+	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[hours_render]")
+	var/mutable_appearance/hour_one_e = emissive_appearance('icons/obj/digital_clock.dmi', "+[hours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
 	hour_one_overlay.pixel_w = -10
 	hour_one_e.pixel_w = -10
 	return_overlays += hour_one_overlay
 	return_overlays += hour_one_e
 	var/subhours_render = my_controller.minutes_passed == 0 ? 1 : 0
-	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/machines/digital_clock.dmi', "+[subhours_render]")
-	var/mutable_appearance/hour_tenth_e = emissive_appearance('icons/obj/machines/digital_clock.dmi', "+[subhours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
+	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[subhours_render]")
+	var/mutable_appearance/hour_tenth_e = emissive_appearance('icons/obj/digital_clock.dmi', "+[subhours_render]", src, alpha = DISPLAY_PIXEL_ALPHA)
 	hour_tenth_overlay.pixel_w = -14
 	hour_tenth_e.pixel_w = -14
 	return_overlays += hour_tenth_overlay
@@ -543,7 +543,7 @@
 	for(var/mob/markiplier in range(3, get_turf(src)))
 		if(markiplier.hud_used && markiplier.client)
 			markiplier.hud_used.show_hud(HUD_STYLE_STANDARD)
-	playsound(src, 'sound/misc/announce.ogg', 100, FALSE)
+	playsound(src, 'sound/announcer/announcement/announce.ogg', 100, FALSE)
 	our_phone.say("Congratulations on making it through the night! Here's your nightly bonus.")
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_turf(src))
 
@@ -565,7 +565,7 @@
 			SET_PLANE(jumpscare, ABOVE_HUD_PLANE, markiplier)
 			markiplier.client.images += jumpscare
 			jumpscare.Shake(5, 5, 2 SECONDS)
-			markiplier.playsound_local(get_turf(src), 'sound/effects/explosion1.ogg', 100, FALSE)
+			markiplier.playsound_local(get_turf(src), 'sound/effects/explosion/explosion1.ogg', 100, FALSE)
 			addtimer(CALLBACK(src, PROC_REF(delete_jumpscare), markiplier, jumpscare), 2 SECONDS, TIMER_DELETE_ME | TIMER_CLIENT_TIME)
 		INVOKE_ASYNC(markiplier, TYPE_PROC_REF(/mob, emote), "scream")
 	our_phone.started_night = FALSE
@@ -667,7 +667,7 @@
 	return TRUE
 
 /obj/bitrunning/animatronic/standard/on_move()
-	playsound(our_controller, 'sound/voice/insane_low_laugh.ogg', 100, vary = TRUE)
+	playsound(our_controller, 'sound/misc/insane_low_laugh.ogg', 100, vary = TRUE)
 
 /obj/bitrunning/animatronic/janitor
 	name = "Janitor Cyborg"
@@ -706,7 +706,7 @@
 		our_controller.power_left = 0
 		our_controller.power_outage()
 	our_controller.my_power.update_icon()
-	playsound(our_controller.left_door, 'sound/items/gas_tank_drop.ogg', 125, FALSE)
+	playsound(our_controller.left_door, 'sound/items/handling/gas_tank/gas_tank_drop.ogg', 125, FALSE)
 
 /obj/bitrunning/animatronic_movement_node
 	name = "Animatronic Pathfinding Node"

@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 			say("Scanning [scanner.area_name]...")
 			var/scanner_results = scanner.scan_area()
 			if(!isnull(scanner_results))
-				playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 				say(scanner_results)
 				scanning = FALSE
 				return

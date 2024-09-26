@@ -8,6 +8,11 @@
 	desc = "Office of bitrunners, houses their equipment."
 	icon_state = "bit_den"
 
+/area/station/security/torment_nexus
+	name = "Torment Nexus"
+	desc = "Holding room for the Torment Nexus equipment."
+	icon_state = "bit_den"
+
 /// VDOM
 
 /area/virtual_domain

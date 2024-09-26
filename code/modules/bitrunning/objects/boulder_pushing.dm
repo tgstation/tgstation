@@ -9,7 +9,7 @@
 	flags_1 = INDESTRUCTIBLE
 	var/mob/living/carbon/human/sisyphus
 	var/arrived = FALSE
-	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
+	var/speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk.ogg'
 	var/list/mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
 	var/list/push_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
 
@@ -168,7 +168,7 @@
 	var/starting_dir = EAST
 	var/current_dir = EAST
 	var/speed = 3
-	var/speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
+	var/speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_french.ogg'
 	var/list/bumped_lines = list(
 		"Out of the way!",
 		"Order for table seven!",

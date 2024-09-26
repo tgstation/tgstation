@@ -152,7 +152,7 @@
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5,
 		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5,
 	)
-	drop_sounds = list('sound/machines/roulettejackpot.ogg')
+	drop_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 
 /obj/bitrunning/target/tier4
 	score = 2000
@@ -165,7 +165,7 @@
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 10,
 	)
-	drop_sounds = list('sound/machines/roulettejackpot.ogg')
+	drop_sounds = list('sound/machines/roulette/roulettejackpot.ogg')
 
 /obj/bitrunning/target/tier3/lavaland
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
@@ -222,7 +222,7 @@
 /obj/bitrunning/target/bad
 	score = -250
 	drop_sounds = list(
-		'sound/machines/synth_no.ogg'
+		'sound/machines/synth/synth_no.ogg'
 	)
 
 /obj/bitrunning/target/bad/ian
@@ -364,7 +364,7 @@
 
 /obj/machinery/digital_clock/score_card/proc/time_out_round()
 	deltimer(round_timer)
-	playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 	for(var/obj/bitrunning/watcher_hunt_spawner/spawner in found_spawners)
 		deltimer(spawner.spawn_timer)
 		for(var/obj/target in spawner.current_targets)
