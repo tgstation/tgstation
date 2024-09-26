@@ -117,7 +117,7 @@
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
-	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.set_heartattack(FALSE)
 	owner.revive()
 	owner.emote("gasp")
@@ -170,7 +170,7 @@
 		/datum/component/jetpack, \
 		FALSE, \
 		1.5 NEWTONS, \
-		1 NEWTONS, \
+		1.2 NEWTONS, \
 		COMSIG_THRUSTER_ACTIVATED, \
 		COMSIG_THRUSTER_DEACTIVATED, \
 		THRUSTER_ACTIVATION_FAILED, \

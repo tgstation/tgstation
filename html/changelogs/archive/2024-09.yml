@@ -526,3 +526,259 @@
   - bugfix: borgs can perform organ manipulation surgery again
   deathrobotpunch:
   - rscadd: Added new fishing category to games vendor
+2024-09-19:
+  Bisar:
+  - bugfix: Xenomorph restrictions on items they can pick up have had their determining
+      logic made more _robust_.
+  - code_imp: The itempicky component (restricts what can be picked up via a whitelist)
+      can now, optionally, have a callback fed to it to determine cases of bypassing
+      that whitelist.
+  DaCoolBoss:
+  - spellcheck: Fixed typos in lead's description.
+  - spellcheck: Mice now love the taste of insulated electrical cables, not uninsulated
+      ones.
+  Ghommie:
+  - rscadd: You can now link fishing portal generators to other fishing spots with
+      a multitool. The number of fishing spots that can be linked at once and whether
+      the link can be activated from different z levels depends on the tier of the
+      stock parts it's built with.
+  - rscadd: You can pet fish while holding them. Be wary of petting aggressive fish.
+  Goat:
+  - bugfix: lockers and crates with no access requirements can now be renamed by anyone
+  Jewelry-x:
+  - bugfix: fixed a bug that allows autogrow to be turned on with no power.
+  - qol: made blob antag panel easier to read and more organized
+  - spellcheck: fixed a few typos in the blob panel
+  Kocma-san:
+  - bugfix: fixed disposal pipes on metastation, deltastation and icebox
+  SmArtKar:
+  - bugfix: Vore victims no longer get digested instantly when you evolve
+  - bugfix: Collars can no longer be used to null a pet's name
+  - bugfix: Snow bears are no longer impervious to all sources of damage
+  - bugfix: Cameras, living floors and ghost of poly no longer can be pushed around
+2024-09-20:
+  EnterTheJake:
+  - balance: Security Flashbangs can no longer be primed for instant detonation.
+  Goat:
+  - balance: burn damage equal or under to ten will now damage your jumpsuit (does
+      not apply to internal temp damage)
+  - bugfix: radiation burns no longer damage your jumpsuit.
+  - code_imp: added a new var to applying damage to set if it should apply damage
+      to clothes.
+  Jewelry-x:
+  - bugfix: Lobby crew manifest has colour again
+  - qol: made it clearer that the expansion in space failed for blob instead of wildly
+      flailing at space.
+  LT3:
+  - bugfix: Fixed missing examine text for the yellow medical HUD border regarding
+      suit sensors
+  SmArtKar:
+  - spellcheck: Fixed broken text display in atmos devices in which you can insert
+      a tank
+  - admin: Atmos logging no longer lies about everyone swapping tanks in devices even
+      if they only inserted/removed one
+  SmArtKar, Kapu:
+  - bugfix: Agent ID cards no longer display broken text when you put non-letter symbols
+      as your name
+  SyncIt21:
+  - bugfix: apc breaker properly shuts off all power
+  Vect0r2:
+  - rscadd: Added the remote power AI disk
+  - code_imp: made it possible to easily add new AI upgrade disks
+  WebcomicArtist:
+  - rscadd: 'Added pipe-organ gun: a buildable object akin to trash cannon that takes
+      pipegun rounds, and shoots up to 8 off at once.'
+  - rscadd: Added The Canister Gatling, a rapid fire but non-destructive cannon for
+      skeleton pirates. Also Canister shot ammo.
+  - sound: Added sounds for the above guns.
+  - image: Added sprites for the guns as well.
+  - code_imp: Added a whole "mounted_gun" class that is basically cannons but you
+      aren't forced to use cannonballs as ammo and load them with gunpowder.
+  carlarctg:
+  - bugfix: Added a null check to mood, because it caused runtimes. Nonhumans have
+      mood, but they never initialize it, yet surgery mood assumes it is.
+  - bugfix: Removed unnecessary ishuman check in the organizer, allowing it to work
+      on xenomorphs and other theoretical carbons.
+  thegrb93:
+  - bugfix: Downstream species not getting internals they need when joining ERT
+2024-09-21:
+  00-Steven:
+  - bugfix: Changing a bank account's job to or from Curator actually changes whether
+      they get a cut from painting patronage.
+  - admin: VVediting a bank account's account_job actually updates what job the account
+      is associated with. Currently only matters for Curators.
+  - admin: VVediting a bank account's add_to_accounts actually removes it from or
+      adds it to the job to account associations. Currently only matters for Curators.
+  Bisar:
+  - balance: Meteor shielding is now purchasable at cargo even if it isn't the current
+      station goal.
+  DaCoolBoss:
+  - qol: '[Birdshot] Kitchen''s privacy shutters no longer cover parts of the cafeteria
+      table when open.'
+  - bugfix: '[Birdshot] Kitchen''s corridor windoor is now rotated correctly.'
+  Deadgebert:
+  - balance: Syndicate Rebar Bolt damage reduced to 45 from 55.
+  - balance: Hydrogen Bolt damage reduced to 35 from 55.
+  - balance: Syndicate Quiver reload is now interrupted by movement.
+  - balance: Syndicate Quiver reload increased to 1.2 seconds from 0.8 seconds.
+  - balance: Crossbow TC cost increased to 12 from 10.
+  - balance: Quiver size increased to normal from small.
+  FlufflesTheDog:
+  - bugfix: Icebox's virology airlock cycles properly again
+  Hardly3D:
+  - image: Resprited Short Bangs 2 & Double Buns
+  Iajret:
+  - bugfix: Mining mods can be charged with plasma once again
+  LT3:
+  - spellcheck: Fruit crate description now correctly warns that it contains lemons
+  Melbert:
+  - balance: Laser pointers have a 50% chance to fail when used on people wearing
+      eyepatches
+  - qol: Deceased and asleep humanoids will now close their eyes
+  MelokGleb:
+  - bugfix: doors in museum now work correctly
+  Rhials:
+  - bugfix: You can no longer backdoor security records using the Metastation Central
+      bitrunner domain.
+  SmArtKar:
+  - bugfix: Fixed wallmounts not being mountable by using a screwdriver on them
+  - bugfix: Fixed robotic revival surgery showing up for simplemobs
+  Xackii:
+  - bugfix: Gateway museum keycard now spawns in toilet properly.
+  carlarctg:
+  - bugfix: Legions borne from mimes can no longer talk
+  - spellcheck: Removes caps from many improper items
+  - qol: Adds shorthand alt-click for removing tanks from TTVs and adds context for
+      it
+  san7890:
+  - bugfix: A lot of instances where you could fill in 1024-character names (normal
+      limit is 42) have been patched out, along with too-long plaque names, too-long
+      descriptions, and more.
+2024-09-22:
+  Ben10Omintrix:
+  - bugfix: botkeeper now displays bot's correct states!
+  Goat:
+  - bugfix: Virtual pirates were yelled at by the virtual syndicate and no longer
+      have virtual syndicate headsets.
+  GregariousJB:
+  - rscadd: 'Added three programs to cyborg PDAs: SiliConnect, AtmoZphere, and Crew
+      Manifest'
+  Kocma-san:
+  - bugfix: '"Visible to Network" in the fax interface is now displayed correctly'
+  LT3:
+  - bugfix: Fixed incomplete floodlights calling all light tubes broken
+  Likteer:
+  - bugfix: Plasmamen envirohelmets no longer erroneously apply a slowdown.
+  Rhials:
+  - bugfix: The Meta Central Virtual Domain now uses the proper ghost role spawner,
+      meaning you can't eavesdrop on syndie comms using their headset.
+  SyncIt21:
+  - bugfix: moving or rotating a mech will cancel its hydraulic clamp action
+  carlarctg:
+  - qol: Durathread vests now fit botany items as well as armor items
+  - code_imp: Botany suits now all inherit the same list
+  - rscadd: MetaStation's Drone Bay has been moved to be basically inside the normal
+      cargo bay.
+  - rscadd: 'To make room for it, the security cargo post was moved to the east of
+      the mailing room:'
+  - rscadd: The drone bay spot in maintenance has been cleared out by a gang of rowdy
+      assistants, and turned into a drug den.
+2024-09-23:
+  Bisar:
+  - balance: Changelings are now able to respec multiple times if they have absorbed
+      multiple humanoids, instead of it being toggled on if it was off during their
+      most recent absorb.
+  - balance: Last Resort is now an innate ability for changelings.
+  - code_imp: Added a little counter and a tgui function for displaying how many absorbs
+      lings have in their belly to spend for readaptions!
+  EnterTheJake:
+  - balance: Void Conduit has less range and no longer ignores Line of Sight.
+  Ghommie:
+  - rscadd: You can now fish new, tasty treats by the station deep fryers.
+  - rscadd: You can now grow fish inside an aquarium by feeding them regularly (at
+      50% hunger for maximum growth).
+  - rscadd: Added the evolution for pikes to armored pikes.
+  - rscadd: Added more customizable options to PDA virtual pets, which can be unlocked
+      by completing achievements.
+  - rscadd: Added a fat dart that can be rarely found in hacked cigarette vending
+      machines.
+  - image: added icon states for linkable fishing spots in the fish portal gen radial
+      menu.
+  - balance: The fishing skill now positively affects fishing rod cast range and reeling
+      objects outside of the minigame. Reeling objects also provides a pitiable amount
+      of fishing experience.
+  - balance: High fishing skill now reduces experience gained from low difficulty
+      fishing spots.
+  - sound: Removed noise from reeling sounds.
+  Likteer:
+  - rscdel: Intentional screaming has been unmuted. Now has a 5s cooldown instead.
+  Sealed101:
+  - spellcheck: fixed examine and balloon alert text for boulder refining machinery
+  SmArtKar:
+  - bugfix: Emergency shuttle console no longer reopens its UI on its own
+  - bugfix: Mapped in express supply consoles now work instead of displaying an empty
+      UI.
+  - bugfix: Emagged express supply consoles now display updated prices.
+  - refactor: Rewrote a large chunk of express supply console code
+  - balance: Express supply consoles now drop their upgrade disk upon being deconstructed,
+      and emagged consoles now will try to send at least one package to the station
+      if cargo budget doesn't have enough funds for all 5.
+  - bugfix: Fixed infective components not cleaning up disease datums after themselves
+  grungussuss:
+  - sound: pruned higher frequencies from the resonant shriek ability sound, making
+      it lighter on the ears
+  - sound: lavaland magma ambience has been changed
+2024-09-24:
+  Absolucy:
+  - bugfix: Fixed the Living Heart ritual deleting your old heart when replacing it
+      instead of having it dramatically burst out of your chest like it should.
+  - qol: The Living Heart ritual will now work if you don't have one at all for some
+      reason, in the same way that'd you use an organic heart in the ritual to replace
+      a cybernetic heart.
+  - qol: The Living Heart ritual, when putting a new heart into your chest, will now
+      heal the heart enough to be just under the "severe damage" threshold, if needed.
+  theselfish:
+  - bugfix: The Beer Sixpack no longer magically turns into bottles.
+2024-09-25:
+  00-Steven:
+  - bugfix: The greeting message imaginary friends get upon becoming one actually
+      includes the owner's name, instead of displaying nothing where it should've
+      been.
+  Jewelry-x:
+  - bugfix: fixed link for the rules button
+  Sealed101:
+  - bugfix: gelatinous cubes now puke out their consume victim when said victim dies,
+      not when it accumulates 200 brute damage (not all mobs can get damaged to that
+      point)
+  - qol: gelatinous cube's Consume action can now be used to eject the currently consumed
+      mob
+  - bugfix: "fixed gelatinous cube's consume attempt not showing the victim's name\
+      \ properly (You start attempting to devour \_!)"
+  SmArtKar:
+  - bugfix: Storage UI should no longer (not so much) randomly disappear, hooray!
+  grungussuss:
+  - refactor: the sound folder in the source code has been reorganized, please report
+      any oddities with sounds playing or not playing
+  - server: lobby music has been repathed to sound/music/lobby_music
+  imedial:
+  - bugfix: fixes soapbox being given to non-mobs
+2024-09-26:
+  00-Steven:
+  - bugfix: Fixed cat ears not layering properly.
+  - bugfix: Husked bodies show their blood with the right colours in photographs.
+  Bisar:
+  - bugfix: Fixes augs not being able to heal with cables if they're naked or going
+      commando.
+  Jewelry-x:
+  - rscadd: Added ability to turn broadcast microphone on or off
+  Melbert:
+  - qol: Health Analyzer output has been reworked to be less "it takes up my entire
+      chat box", report any oddities or missing information
+  Skilets:
+  - image: Resprited the experimentor.
+  SmArtKar:
+  - bugfix: Kilo whiteship no longer has varedited turrets in it
+  TheBoondock:
+  - bugfix: fixed lava proofed clothing from xenobio potion being damaged from fire
+  grungussus:
+  - sound: audible emotes share the same cooldown

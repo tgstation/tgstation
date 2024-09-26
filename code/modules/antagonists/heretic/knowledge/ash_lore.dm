@@ -230,7 +230,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_ash.ogg',
+		sound = 'sound/music/antag/heretic/ascend_ash.ogg',
 		color_override = "pink",
 	)
 

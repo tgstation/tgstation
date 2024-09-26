@@ -11,7 +11,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	var/works_from_distance = FALSE
-	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
+	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/tools/rped.ogg'
 	var/alt_sound = null
 
 /obj/item/storage/part_replacer/Initialize(mapload)
@@ -70,8 +70,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	inhand_icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
 	works_from_distance = TRUE
-	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
-	alt_sound = 'sound/items/pshoom_2.ogg'
+	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom/pshoom.ogg'
+	alt_sound = 'sound/items/pshoom/pshoom_2.ogg'
 
 /obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()

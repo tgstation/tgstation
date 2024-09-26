@@ -37,8 +37,6 @@
 	var/inertia_move_multiplier = 1
 	///Object "weight", higher weight reduces acceleration applied to the object
 	var/inertia_force_weight = 1
-	///Max inertia accell applied to object
-	var/inertia_force_cap = INERTIA_FORCE_CAP
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff
@@ -1262,7 +1260,7 @@
 	if(!isturf(loc))
 		return TRUE
 
-	if(!continuous_move && locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return TRUE
 
 	return FALSE
@@ -1276,8 +1274,8 @@
 		return FALSE
 
 	if (!isnull(drift_handler))
-		drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap)
-		return TRUE
+		if (drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap))
+			return TRUE
 
 	new /datum/drift_handler(src, inertia_angle, instant, start_delay, drift_force)
 	// Something went wrong and it failed to create itself, most likely we have a higher priority loop already

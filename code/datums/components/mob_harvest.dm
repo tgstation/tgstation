@@ -25,7 +25,7 @@
 	///how long it takes to harvest from the mob
 	var/item_harvest_time = 5 SECONDS
 	///typepath of harvest sound
-	var/item_harvest_sound = 'sound/items/welder2.ogg'
+	var/item_harvest_sound = 'sound/items/tools/welder2.ogg'
 
 //harvest_type, produced_item_typepath and speedup_type are typepaths, not reference
 /datum/component/mob_harvest/Initialize(harvest_tool, fed_item, produced_item_typepath, produced_item_desc, max_ready, item_generation_wait, item_reduction_time, item_harvest_time, item_harvest_sound)
