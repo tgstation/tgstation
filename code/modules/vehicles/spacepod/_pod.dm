@@ -9,7 +9,7 @@
 
 // this is the iron variant
 /obj/vehicle/sealed/space_pod
-	name = "space pod"
+	name = "\proper space pod"
 	desc = "A small, highly modular space exploration vessel. These were developed by Nanotrasen for private personnel (and eventually sold with marked up prices) to evaluate local space fauna and structures, and potentially other uses, like repair."
 	layer = ABOVE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -48,7 +48,7 @@
 	/// our battery
 	var/obj/item/stock_parts/power_store/battery/cell
 
-	/// mob = list(action)
+	/// actions given to passengers controlling equipment, mob = list(action)
 	var/list/list/equipment_actions = list()
 
 
@@ -66,8 +66,9 @@
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
 	ADD_TRAIT(src, TRAIT_CONSIDERED_ANCHORED_FOR_SPACEMOVEBACKUP, INNATE_TRAIT)
 
+///This proc generates a name for the pod if it is spawned via mapping in
 /obj/vehicle/sealed/space_pod/proc/generate_name()
-	name = "[pick("pod", "vessel")] [istype(get_area(src), /area/station) ? "NT-" : ""][rand(0,9)][rand(0,9)][rand(0,9)]"
+	name = "\proper [pick("pod", "vessel")] [istype(get_area(src), /area/station) ? "NT-" : ""][rand(0,9)][rand(0,9)][rand(0,9)]"
 
 /// This proc is responsible for outfitting the pod when spawned (admin or otherwise)
 /obj/vehicle/sealed/space_pod/proc/spawn_equip()
