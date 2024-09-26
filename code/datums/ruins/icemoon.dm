@@ -73,6 +73,12 @@
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
 
+/datum/map_template/ruin/icemoon/lavaland // DOPPLER EDIT TO NOT BE UNDERGROUND
+	name = "Ice-Ruin Lavaland Incursion"
+	id = "lavalandsite"
+	description = "I guess we never really left you huh?"
+	suffix = "icemoon_underground_lavaland.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -121,12 +127,6 @@
 	id = "hermitshack"
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "icemoon_underground_hermit.dmm"
-
-/datum/map_template/ruin/icemoon/underground/lavaland
-	name = "Ice-Ruin Lavaland Incursion"
-	id = "lavalandsite"
-	description = "I guess we never really left you huh?"
-	suffix = "icemoon_underground_lavaland.dmm"
 
 /datum/map_template/ruin/icemoon/underground/puzzle
 	name = "Ice-Ruin Ancient Puzzle"
