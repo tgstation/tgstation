@@ -56,6 +56,10 @@
 
 	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
 	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_tcomms_room to adjust alarm threshold for extreme cold temperatures.
+	var/tlv_tcomms_room = FALSE
+	/// Used for air alarm helper called tlv_rd_server_room to adjust alarm threshold for extreme cold temperatures.
+	var/tlv_rd_server_room = FALSE
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
@@ -672,6 +676,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 /obj/machinery/airalarm/proc/set_tlv_cold_room()
 	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
 	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
+
+///Used for air alarm telecomms tlv helper, which only sets room temperature thresholds and ignores everything else
+/obj/machinery/airalarm/proc/set_tlv_tcomms_room()
+	tlv_collection["temperature"] = new /datum/tlv/tcomms_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
+///Used for air alarm rd server tlv helper, which only sets room temperature thresholds and ignores everything else
+/obj/machinery/airalarm/proc/set_tlv_rd_server_room()
+	tlv_collection["temperature"] = new /datum/tlv/rd_server_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
 
 ///Used for air alarm no tlv helper, which removes alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
