@@ -15,7 +15,7 @@
 	icon_state = "blue_pyjamas"
 
 /obj/item/clothing/under/misc/patriotsuit
-	name = "Patriotic Suit"
+	name = "patriotic suit"
 	desc = "Motorcycle not included."
 	icon_state = "ek"
 	inhand_icon_state = null

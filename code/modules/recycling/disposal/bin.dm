@@ -685,6 +685,6 @@
 
 	update_appearance()
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 #undef SEND_PRESSURE

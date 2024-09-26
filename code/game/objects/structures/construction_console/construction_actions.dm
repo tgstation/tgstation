@@ -120,7 +120,7 @@
 	button_icon_state = "build_turret"
 	structure_name = "turrets"
 	structure_path = /obj/machinery/porta_turret/aux_base
-	place_sound = 'sound/items/drill_use.ogg'
+	place_sound = 'sound/items/tools/drill_use.ogg'
 
 /datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	var/obj/machinery/computer/auxiliary_base/turret_controller = locate() in get_area(placed_structure)

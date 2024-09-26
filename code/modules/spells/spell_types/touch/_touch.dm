@@ -20,7 +20,7 @@
  */
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	invocation = "High Five!"
 	invocation_type = INVOCATION_SHOUT
 
