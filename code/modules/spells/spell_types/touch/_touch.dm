@@ -221,7 +221,7 @@
 		return NONE
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
-	spell_feedback(caster)
+	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
 	caster.do_attack_animation(victim)
 	caster.changeNext_move(CLICK_CD_MELEE)
 	victim.add_fingerprint(caster)
@@ -242,7 +242,7 @@
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
-			spell_feedback(caster)
+			INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
 			caster.do_attack_animation(victim)
 			caster.changeNext_move(CLICK_CD_MELEE)
 			victim.add_fingerprint(caster)
