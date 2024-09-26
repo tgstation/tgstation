@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "thrown items now respect the vary variable when making drop sounds."
+  - sound: "lead pipe now only makes an obnoxious drop sound when thrown., reduced its sound by 10db"
