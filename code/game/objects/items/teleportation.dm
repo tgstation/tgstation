@@ -429,10 +429,7 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-		var/blood_ejection = FALSE
-		if(!HAS_TRAIT(user, TRAIT_NOBLOOD))
-			blood_ejection = make_bloods(current_location, destination, user)
-		if(blood_ejection)
+		if(make_bloods(current_location, destination, user))
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
@@ -471,10 +468,7 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		var/blood_ejection = FALSE
-		if(!HAS_TRAIT(user, TRAIT_NOBLOOD))
-			blood_ejection = make_bloods(destination, emergency_destination, user)
-		if(blood_ejection)
+		if(make_bloods(destination, emergency_destination, user))
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
@@ -513,10 +507,12 @@
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_NOBLOOD))
+		return FALSE
 	user.add_splatter_floor(old_location)
 	user.add_splatter_floor(new_location)
 	if(!iscarbon(user))
-		return
+		return FALSE
 	var/mob/living/carbon/carbon_user = user
 
 	// always lose a bit
@@ -525,7 +521,8 @@
 	// average evens out to 10 per teleport, but the randomness spices things up
 	if(prob(25) && bleed_amount)
 		playsound(src, 'sound/effects/wounds/pierce1.ogg', 40, vary = TRUE)
-		to_chat(user, span_warning("Blood visibly spurts out of your skin as [src] fails to teleport your body coherently!"))
+		visible_message(span_warning("Blood visibly spurts out of [user] as [src] fails to teleport [user.p_their()] body properly!"), \
+			span_boldwarning("Blood visibly spurts out of you as [src] fails to teleport your body properly!"))
 		carbon_user.bleed(bleed_amount * 0.75)
 		carbon_user.spray_blood(pick(GLOB.alldirs), rand(1, 3))
 		return TRUE
