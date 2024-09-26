@@ -175,7 +175,7 @@
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 	newtonian_force = 1
-  
+
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
 	if(loc && istype(loc, /obj/item/gun/energy/recharge/kinetic_accelerator))
