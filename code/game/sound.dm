@@ -518,8 +518,8 @@
 			)
 		if(SFX_LIQUID_POUR)
 			soundin = pick(
-				'sound/effects/liquid_pour1.ogg',
-				'sound/effects/liquid_pour2.ogg',
-				'sound/effects/liquid_pour3.ogg',
+				'sound/effects/liquid_pour/liquid_pour1.ogg',
+				'sound/effects/liquid_pour/liquid_pour2.ogg',
+				'sound/effects/liquid_pour/liquid_pour3.ogg',
 			)
 	return soundin
