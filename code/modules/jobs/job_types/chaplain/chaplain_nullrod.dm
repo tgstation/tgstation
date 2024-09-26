@@ -105,9 +105,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp claymore which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
@@ -128,7 +128,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	hitsound = 'sound/hallucinations/growl1.ogg'
+	hitsound = 'sound/effects/hallucinations/growl1.ogg'
 	menu_description = "A sharp blade which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt."
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -140,7 +140,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //slower than a real saw
 	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks. Can be used as a slower saw tool. Can be worn on the belt."
@@ -185,8 +185,8 @@
 	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/blade1.ogg'
-	block_sound = 'sound/weapons/block_blade.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
 	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/saber/red
@@ -221,7 +221,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "zandatsu's")
 	attack_verb_simple = list("chop", "slice", "cut", "zandatsu")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/vibro/Initialize(mapload)
@@ -241,7 +241,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/vibro/talking
@@ -255,7 +255,7 @@
 	worn_icon_state = "talking_sword"
 	attack_verb_continuous = list("chops", "slices", "cuts")
 	attack_verb_simple= list("chop", "slice", "cut")
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
 
 /obj/item/nullrod/vibro/talking/Initialize(mapload)
@@ -272,7 +272,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
@@ -293,7 +293,7 @@
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
 	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
@@ -317,7 +317,7 @@
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
@@ -348,7 +348,7 @@
 	force = 4.13
 	throwforce = 1
 	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
@@ -394,7 +394,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 2 //slower than a real saw
 	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
@@ -445,7 +445,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	menu_description = "A hammer dealing a little less damage due to its user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
 /obj/item/nullrod/pride_hammer/Initialize(mapload)
@@ -474,7 +474,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes")
 	attack_verb_simple = list("whip", "lash")
-	hitsound = 'sound/weapons/chainhit.ogg'
+	hitsound = 'sound/items/weapons/chainhit.ogg'
 	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
 
 // Atheist's Fedora - Wear it on your head. No melee damage, massive throw force.
@@ -552,7 +552,7 @@
 	force = 15
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
-	hitsound = 'sound/weapons/bite.ogg'
+	hitsound = 'sound/items/weapons/bite.ogg'
 	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/carp/Initialize(mapload)
@@ -566,7 +566,7 @@
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 14
 	block_chance = 40
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	hitsound = SFX_SWING_HIT
@@ -606,7 +606,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	slot_flags = null
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -646,7 +646,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
 	attack_verb_simple = list("poke", "impale", "pierce", "jab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	menu_description = "A sharp pitchfork. Can be worn on the back."
 
@@ -683,7 +683,7 @@
 	armour_penetration = 35
 	attack_verb_continuous = list("pulses", "mends", "cuts")
 	attack_verb_simple = list("pulse", "mend", "cut")
-	hitsound = 'sound/effects/sparks4.ogg'
+	hitsound = 'sound/effects/sparks/sparks4.ogg'
 	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
 // Ancient Spear - Slight armor penetration, based on the Brass Spear from the Clockcult game mode.
@@ -702,7 +702,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
 
 // Unholy version of above, since the gamemode is dead in the water
@@ -725,7 +725,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 // Nullblade - For when you really want to feel like rolling dice during combat
 
@@ -743,9 +743,9 @@
 	wound_bonus = 10
 	bare_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_POINTY
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "punctures", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "puncture", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A blade that deals variable, low amounts of damage, but does easily inflict wounds. \
@@ -896,4 +896,4 @@
 	// We got a sneak attack!
 	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
-	playsound(living_target, 'sound/weapons/guillotine.ogg', 50, TRUE)
+	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 50, TRUE)

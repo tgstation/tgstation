@@ -12,7 +12,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/ceremonial_blade_righthand
 	greyscale_colors = COLOR_WHITE
 
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)  //Defaults to an Iron blade.
 	force = 2 //20
 	throwforce = 1 //10
@@ -21,7 +21,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 3 //30
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE //doesn't affect stats of the weapon as to avoid gamering your opponent with a dope weapon

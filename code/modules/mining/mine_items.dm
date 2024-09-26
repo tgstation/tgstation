@@ -321,7 +321,7 @@
 		return
 	update_rail_state(FALSE)
 	Move(new_destination)
-	var/sound/thud_sound = sound('sound/weapons/thudswoosh.ogg')
+	var/sound/thud_sound = sound('sound/items/weapons/thudswoosh.ogg')
 	thud_sound.pitch = 0.5
 	playsound(src, thud_sound, 50, TRUE)
 

@@ -137,7 +137,7 @@
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
-	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
-	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(caster, sound('sound/effects/magic/mandswap.ogg'))
+	SEND_SOUND(to_swap, sound('sound/effects/magic/mandswap.ogg'))
 
 	return TRUE
