@@ -14,3 +14,4 @@
 
 /datum/job_config_type/human_authority/validate_entry(datum/job/occupation)
 	return occupation.job_flags & JOB_HEAD_OF_STAFF
+
