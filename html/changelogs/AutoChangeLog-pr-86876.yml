@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "fixed hydroponics tray not updating new crop sprite properly"
