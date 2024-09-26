@@ -1,11 +1,11 @@
 // import Example from './Parts/Example';
-import WarpDrive from './Parts/WarpDrive';
-import PINPart from './Parts/PINPart';
-import DNAPart from './Parts/DNAPart';
 import CargoHold from './Parts/CargoHold';
-import OreHold from './Parts/OreHold';
+import DNAPart from './Parts/DNAPart';
 import GenericLines from './Parts/GenericLines';
 import Gun from './Parts/Gun';
+import OreHold from './Parts/OreHold';
+import PINPart from './Parts/PINPart';
+import WarpDrive from './Parts/WarpDrive';
 
 export const TAGNAME2TAG = {
   // TODO: add a bit of docs.
