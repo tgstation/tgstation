@@ -65,6 +65,7 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
 	ADD_TRAIT(src, TRAIT_CONSIDERED_ANCHORED_FOR_SPACEMOVEBACKUP, INNATE_TRAIT)
+	AddElement(/datum/element/hostile_machine)
 
 ///This proc generates a name for the pod if it is spawned via mapping in
 /obj/vehicle/sealed/space_pod/proc/generate_name()
