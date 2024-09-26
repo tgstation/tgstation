@@ -5,7 +5,7 @@
 	var/list/properly_honked = list()
 	var/list/severely_honked = list()
 
-	playsound(origin_turf, 'sound/items/airhorn.ogg', 100, TRUE)
+	playsound(origin_turf, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 
 	for(var/mob/living/carbon/victim as anything in hearers(max(light_range, medium_range, heavy_range), origin_turf))
 		if(!victim.can_hear())

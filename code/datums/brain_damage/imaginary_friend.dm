@@ -92,7 +92,8 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	greet()
+	if(owner)
+		greet()
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
@@ -119,6 +120,7 @@
 	if(!owner.imaginary_group)
 		owner.imaginary_group = list(owner)
 	owner.imaginary_group += src
+	greet()
 
 /// Copies appearance from passed player prefs, or randomises them if none are provided
 /mob/camera/imaginary_friend/proc/setup_appearance(datum/preferences/appearance_from_prefs = null)

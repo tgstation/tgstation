@@ -26,7 +26,7 @@
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	beauty = FISH_BEAUTY_GOOD
 	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
 	fish_traits = list(/datum/fish_trait/recessive)
@@ -61,7 +61,7 @@
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case. It looks kinda different today..."
 	compatible_types = list(/obj/item/fish/goldfish, /obj/item/fish/goldfish/three_eyes)
 	beauty = FISH_BEAUTY_GREAT
-	show_in_catalog = FALSE
+	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
 
@@ -175,7 +175,7 @@
 
 /obj/item/fish/tadpole/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, 100 / rand(2.5, 3 MINUTES) * 10)
+	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2.5, 3 MINUTES))
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
@@ -189,13 +189,13 @@
 	else
 		deltimer(del_timerid)
 
-/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick)
+/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth)
 	SIGNAL_HANDLER
-	var/hunger = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	var/hunger = get_hunger()
 	if(hunger >= 0.7) //too hungry to grow
 		return COMPONENT_DONT_GROW
 	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.allow_breeding) //the aquarium has breeding disabled
+	if(istype(aquarium) && !aquarium.reproduction_and_growth) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
