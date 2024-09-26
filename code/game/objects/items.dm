@@ -83,8 +83,10 @@
 	var/equip_sound
 	///Sound uses when picking the item up (into your hands)
 	var/pickup_sound
-	///Sound uses when dropping the item, or when its thrown.
+	///Sound uses when dropping the item, or when its thrown if a thrown sound isn't specified.
 	var/drop_sound
+	///Sound used on impact when the item is thrown.
+	var/throw_drop_sound
 	///Do the drop and pickup sounds vary?
 	var/sound_vary = FALSE
 	///Whether or not we use stealthy audio levels for this item's attack sounds
@@ -852,7 +854,10 @@
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+		if(throw_drop_sound)
+			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+			return
+		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
