@@ -183,7 +183,7 @@
 			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
 			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
 			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
+			playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
 	//charge(?) and go

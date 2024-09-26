@@ -191,7 +191,7 @@
 		possible_obstacle.atom_destruction("magic")
 
 	if (evaporated_obstacles)
-		playsound(target_turf, 'sound/magic/blind.ogg', 100, TRUE)
+		playsound(target_turf, 'sound/effects/magic/blind.ogg', 100, TRUE)
 
 	target_turf.balloon_alert(owner, "rune created")
 	var/obj/effect/grand_rune/new_rune = new next_rune_typepath(target_turf, times_completed)

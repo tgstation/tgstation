@@ -121,7 +121,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 	if(contraband_scan(interacting_with, user))
-		playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
 	else

@@ -87,11 +87,10 @@
 		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/get_status_text(advanced)
-	if((!(organ_flags & ORGAN_FAILING)) && inflamation_stage)
-		return "<font color='#ff9933'>Inflamed</font>"
-	else
-		return ..()
+/obj/item/organ/internal/appendix/get_status_text(advanced, add_tooltips)
+	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
+		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
+	return ..()
 
 #undef APPENDICITIS_PROB
 #undef INFLAMATION_ADVANCEMENT_PROB

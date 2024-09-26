@@ -92,7 +92,7 @@
 	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
 	balloon_alert(exorcist, "exorcising...")
-	playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 40, TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
 	playsound(src, 'sound/effects/pray_chaplain.ogg', 60, TRUE)

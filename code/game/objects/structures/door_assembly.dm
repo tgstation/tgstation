@@ -83,7 +83,7 @@
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/living/user, params)
 	if(IS_WRITING_UTENSIL(W) && !user.combat_mode)
-		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, MAX_NAME_LEN)
+		var/t = tgui_input_text(user, "Enter the name for the door", "Airlock Renaming", created_name, max_length = MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)
@@ -219,7 +219,7 @@
 				if(!noglass)
 					if(!glass)
 						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+							playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 												span_notice("You start to install [G.name] into the airlock assembly..."))
 							if(do_after(user, 4 SECONDS, target = src))
@@ -242,7 +242,7 @@
 								to_chat(user, span_warning("You cannot add [G] to [src]!"))
 								return
 							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
+								playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
 									span_notice("You start to install [G.name] into the airlock assembly..."))
 								if(do_after(user, 4 SECONDS, target = src))

@@ -264,9 +264,9 @@
 /obj/item/clothing/accessory/press_badge/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!journalist_name)
-		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", MAX_NAME_LEN)
+		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", max_length = MAX_NAME_LEN)
 	if(!press_name)
-		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", MAX_CHARTER_LEN)
+		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", max_length = MAX_CHARTER_LEN)
 
 /obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -275,12 +275,12 @@
 
 	var/mob/living/interacting_living = interacting_with
 	if(user.combat_mode)
-		playsound(interacting_living, 'sound/weapons/throw.ogg', 30)
+		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
 		examine(interacting_living)
 		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
 		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
 	else
-		playsound(interacting_living, 'sound/weapons/throwsoft.ogg', 20)
+		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
 		examine(interacting_living)
 		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
 		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

@@ -18,7 +18,7 @@
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	stinger_sound = 'sound/music/antag/creepalert.ogg'
 	/// How many objectives should be generated
 	var/objectives_to_generate = 3
 	/// Brain trauma that causes the obsession

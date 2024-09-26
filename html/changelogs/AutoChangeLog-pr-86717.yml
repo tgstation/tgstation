@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "lockers and crates with no access requirements can now be renamed by anyone"
