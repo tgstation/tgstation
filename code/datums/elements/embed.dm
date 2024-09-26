@@ -117,6 +117,8 @@
 
 	if(!try_force_embed(payload, limb))
 		payload.failedEmbed()
+	else
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 	Detach(source)
 
 /**

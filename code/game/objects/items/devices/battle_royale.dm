@@ -268,7 +268,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		priority_announce(
 			text = message,
 			title = "Rumble Royale Casualty Report",
-			sound = 'sound/misc/notice1.ogg',
+			sound = 'sound/announcer/notice/notice1.ogg',
 			has_important_message = TRUE,
 			sender_override = "Rumble Royale Pirate Broadcast Station",
 			color_override = "red",
@@ -302,7 +302,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 	priority_announce(
 		text = message,
 		title = "Rumble Royale Winner",
-		sound = 'sound/misc/notice1.ogg',
+		sound = 'sound/announcer/notice/notice1.ogg',
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
@@ -317,7 +317,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 	priority_announce(
 		text = "We're halfway done folks! And bad news to anyone who hasn't made it to the [chosen_area]... you're out!",
 		title = "Rumble Royale Update",
-		sound = 'sound/misc/notice1.ogg',
+		sound = 'sound/announcer/notice/notice1.ogg',
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
@@ -335,7 +335,7 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 			We're sorry to announce that this edition of Royal Rumble has no winner. \n\
 			Better luck next time!",
 		title = "Rumble Royale Concluded",
-		sound = 'sound/misc/notice1.ogg',
+		sound = 'sound/announcer/notice/notice1.ogg',
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",

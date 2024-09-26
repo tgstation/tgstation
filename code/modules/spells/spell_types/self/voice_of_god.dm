@@ -3,7 +3,7 @@
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "voice_of_god"
-	sound = 'sound/magic/clockwork/invoke_general.ogg'
+	sound = 'sound/effects/magic/clockwork/invoke_general.ogg'
 
 	cooldown_time = 120 SECONDS // Varies depending on command
 	invocation = "" // Handled by the VOICE OF GOD itself

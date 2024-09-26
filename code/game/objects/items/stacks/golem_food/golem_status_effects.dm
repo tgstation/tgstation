@@ -215,7 +215,7 @@
 /// Shoot a beam at the target atom
 /datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
 	owner.Beam(target, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	playsound(owner, 'sound/magic/lightningshock.ogg', vol = 50, vary = TRUE)
+	playsound(owner, 'sound/effects/magic/lightningshock.ogg', vol = 50, vary = TRUE)
 
 /// Makes you spaceproof
 /datum/status_effect/golem/plasteel
@@ -298,8 +298,8 @@
 	arm.unarmed_attack_verbs = list("slash")
 	arm.grappled_attack_verb = "lacerate"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
-	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
-	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	arm.unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
+	arm.unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 

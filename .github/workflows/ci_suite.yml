@@ -76,7 +76,7 @@ jobs:
           path: tools/icon_cutter/cache
           key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
       - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.9
+        uses: robinraju/release-downloader@v1.11
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"

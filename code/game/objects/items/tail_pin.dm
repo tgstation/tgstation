@@ -8,7 +8,7 @@
 	throwforce = 0
 	throw_speed = 1
 	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pokes", "jabs", "pins the tail on")
 	attack_verb_simple = list("poke", "jab")
 	sharpness = SHARP_POINTY
