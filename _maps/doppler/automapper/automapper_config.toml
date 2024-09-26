@@ -58,7 +58,7 @@ trait_name = "Station"
 map_files = ["icemoon_underground_icewalker_lower.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "Iceland.dmm"
-coordinates = [170, 16, 1]
+coordinates = [121, 203, 1]
 trait_name = "Mining"
 
 # Icecats Camp Upper Level: ICELAND ADDITION
@@ -66,7 +66,7 @@ trait_name = "Mining"
 map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "Iceland.dmm"
-coordinates = [170, 16, 2]
+coordinates = [121, 203, 2]
 trait_name = "Mining"
 
 # TRAMSTATION MAP EDITS
