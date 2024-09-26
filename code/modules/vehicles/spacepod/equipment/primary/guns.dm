@@ -43,6 +43,7 @@
 	pod.log_message("[key_name(user)] fired [src], with [projectile_path ? projectile_path : casing_path]", LOG_ATTACK)
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy
+	interface_id = "Gun"
 	/// how much power used to fire
 	var/power_used_to_fire = 1
 
@@ -51,6 +52,15 @@
 	if(!.)
 		return
 	return pod.use_power(power_used_to_fire)
+
+/obj/item/pod_equipment/primary/projectile_weapon/energy/ui_data(mob/user)
+	var/obj/item/stock_parts/power_store/battery/cell = pod?.get_cell()
+	return list(
+		"ammo" = isnull(cell) ? "0" : cell.charge,
+		"maxAmmo" = isnull(cell) ? "0" : cell.maxcharge,
+		"ammoPerShot" = power_used_to_fire,
+		"mode" = "Normal", // maybe soon there will be guns with alternate firing modes
+	)
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife
 	name = "wildlife dissuasion laser gun"

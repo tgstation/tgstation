@@ -4,6 +4,8 @@ import PINPart from './Parts/PINPart';
 import DNAPart from './Parts/DNAPart';
 import CargoHold from './Parts/CargoHold';
 import OreHold from './Parts/OreHold';
+import GenericLines from './Parts/GenericLines';
+import Gun from './Parts/Gun';
 
 export const TAGNAME2TAG = {
   // TODO: add a bit of docs.
@@ -12,4 +14,6 @@ export const TAGNAME2TAG = {
   DNAPart: DNAPart,
   CargoHold: CargoHold,
   OreHold: OreHold,
+  GenericLines: GenericLines,
+  Gun: Gun,
 };

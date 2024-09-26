@@ -1,5 +1,6 @@
 /obj/item/pod_equipment/thrusters
 	slot = POD_SLOT_THRUSTERS
+	interface_id = "GenericLines"
 	/// max drift speed we can get via moving intentionally
 	var/max_speed = 0
 	/// Force per process run to bring us to a halt
@@ -21,6 +22,14 @@
 	. = ..()
 	pod.max_speed -= max_speed
 	pod.stabilizer_force -= stabilizer_force
+
+/obj/item/pod_equipment/thrusters/ui_data(mob/user)
+	return list(
+		"lines" = list(
+			"Maximum speed" = "[max_speed]N",
+			"Stabilization force" = "[stabilizer_force]N",
+		)
+	)
 
 /obj/item/pod_equipment/thrusters/default
 	name = "pod ion thruster array"

@@ -18,6 +18,7 @@
 	desc = "A rig for pods that drills rocks infront of it."
 	cooldown_time = 1 SECONDS
 	icon_state = "drill"
+	interface_id = "GenericLines"
 	/// damage vs objects
 	var/damage_obj = 10
 	/// damage vs mobs
@@ -34,6 +35,14 @@
 /obj/item/pod_equipment/primary/drill/on_detach(mob/user)
 	. = ..()
 	UnregisterSignal(pod, COMSIG_MOVABLE_BUMP)
+
+/obj/item/pod_equipment/primary/drill/ui_data(mob/user)
+	return list(
+		"lines" = list(
+			"Power used to drill" = power_used,
+			"Force remaining after impact" = "[force_mult]x of impact speed"
+		)
+	)
 
 /obj/item/pod_equipment/primary/drill/proc/on_bump(datum/source, atom/bumped)
 	SIGNAL_HANDLER
@@ -99,19 +108,51 @@
 
 /obj/item/pod_equipment/primary/metalfoam
 	name = "pod metal foam dispenser"
-	desc = "Puts metal foam infront of your pod."
+	desc = "Puts metal foam infront of your pod. Comes with a tool to also clear foam, or maybe beat up the local fish, not capable of exerting enough force to damage anything else."
+	interface_id = "GenericLines"
 	cooldown_time = 1 SECONDS
+	/// power used
+	var/power_usage = STANDARD_BATTERY_CHARGE / 50
+
+/obj/item/pod_equipment/primary/metalfoam/ui_data(mob/user)
+	return list(
+		"lines" = list(
+			"Power used:" = power_usage,
+		)
+	)
 
 /obj/item/pod_equipment/primary/metalfoam/action(mob/user)
-	. = ..()
 	var/turf/target_turf = get_step(pod, pod.dir)
-	if(target_turf.is_blocked_turf_ignore_climbable())
-		var/obj/structure/foamedmetal/foam = locate() in target_turf
-		if(!isnull(foam))
+	if(isclosedturf(target_turf))
+		return FALSE
+	for(var/atom/movable/potential_target as anything in target_turf.contents)
+		if(!potential_target.density)
+			continue
+
+		if(istype(potential_target, /obj/structure/foamedmetal))
+			if(!pod.use_power(power_usage))
+				return FALSE
 			playsound(pod.loc, 'sound/items/weapons/drill.ogg', 35 , TRUE)
-			pod.visible_message(span_warning("[pod] clears [foam]."))
-			foam.take_damage(foam.max_integrity, BRUTE)
-		return
+			potential_target.visible_message(span_warning("[pod] clears [potential_target]."))
+			potential_target.take_damage(300, BRUTE)
+
+		else if(isliving(potential_target))
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				return FALSE
+			if(!pod.use_power(power_usage))
+				return FALSE
+			var/mob/living/target = potential_target
+			playsound(pod.loc, 'sound/items/weapons/drill.ogg', 50 , TRUE)
+			potential_target.visible_message(span_danger("[pod] hits [potential_target] with a clearing apparatus!"))
+			target.apply_damage(8, BRUTE)
+
+		return TRUE
+
+	if(!pod.use_power(power_usage))
+		return FALSE
+
 	var/datum/effect_system/fluid_spread/foam/foam = new /datum/effect_system/fluid_spread/foam/metal()
 	foam.set_up(range = 1, amount = 1, holder = src, location = target_turf)
 	foam.start()
+
+	return TRUE

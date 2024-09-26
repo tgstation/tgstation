@@ -4,8 +4,8 @@
 
 // TODO:
 // sprites
+// make passive movement slower than active movement (2/3rds? 3/4ths?)
 // fix drill bump (not possible without tinkering with drift_handler)
-// ALSO DO NOT FORGET TO REMOVE THIS HUGE ASS COMMENT before finishing
 
 // this is the iron variant
 /obj/vehicle/sealed/space_pod

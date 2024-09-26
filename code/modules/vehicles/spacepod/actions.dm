@@ -1,6 +1,8 @@
 /datum/action/vehicle/sealed/kick_out
 	name = "Kick Out"
 	desc = "Kick someone out of this vehicle."
+	button_icon = 'icons/mob/actions/actions_pod.dmi'
+	button_icon_state = "kickout"
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
 
@@ -31,7 +33,8 @@
 /datum/action/cooldown/pod_comms_ping
 	name = "Ping Comms"
 	desc = "Use your comms array to make all listening devices aware of your presence. Use this to enter or exit hangar bays you have access to."
-	button_icon = 'icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'icons/mob/actions/actions_pod.dmi'
+	button_icon_state = "commsping"
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
 	cooldown_time = 6 SECONDS
