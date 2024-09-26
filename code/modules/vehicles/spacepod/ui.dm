@@ -71,7 +71,7 @@
 		if ("toggle-headlights")
 			set_light_on(!light_on)
 			update_appearance()
-			playsound(loc, light_on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
+			playsound(loc, light_on ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 			return TRUE
 		if ("change-name")
 			if(is_ic_filtered_for_pdas(params["newName"]))

@@ -60,11 +60,11 @@
 	var/turf/target_turf = get_step(pod, pod.dir)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/mineral_turf = target_turf
-		playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+		playsound(pod.loc, 'sound/items/weapons/drill.ogg', 50 , TRUE)
 		mineral_turf.gets_drilled()
 		return TRUE
 	if(isclosedturf(target_turf))
-		playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+		playsound(pod.loc, 'sound/items/weapons/drill.ogg', 50 , TRUE)
 		return FALSE
 	for(var/atom/movable/potential_target as anything in target_turf.contents)
 		if(!potential_target.density)
@@ -73,13 +73,13 @@
 			var/mob/living/target = potential_target
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
 				return FALSE
-			playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+			playsound(pod.loc, 'sound/items/weapons/drill.ogg', 50 , TRUE)
 			potential_target.visible_message(span_danger("[potential_target] is drilled by the [pod]!"))
 			target.apply_damage(damage_mob, BRUTE)
 			if(iscarbon(target) && prob(35)) // no
 				target.Knockdown(1 SECONDS)
 		else
-			playsound(pod.loc, 'sound/weapons/drill.ogg', 50 , TRUE)
+			playsound(pod.loc, 'sound/items/weapons/drill.ogg', 50 , TRUE)
 			potential_target.visible_message(span_danger("[potential_target] is drilled by the [pod]!"))
 			potential_target.take_damage(damage_obj, BRUTE, attack_dir = REVERSE_DIR(pod.dir))
 		return TRUE
@@ -108,7 +108,7 @@
 	if(target_turf.is_blocked_turf_ignore_climbable())
 		var/obj/structure/foamedmetal/foam = locate() in target_turf
 		if(!isnull(foam))
-			playsound(pod.loc, 'sound/weapons/drill.ogg', 35 , TRUE)
+			playsound(pod.loc, 'sound/items/weapons/drill.ogg', 35 , TRUE)
 			pod.visible_message(span_warning("[pod] clears [foam]."))
 			foam.take_damage(foam.max_integrity, BRUTE)
 		return

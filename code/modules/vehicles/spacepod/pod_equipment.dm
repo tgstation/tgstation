@@ -20,7 +20,7 @@
 			return ITEM_INTERACT_FAILURE
 		cabin_air_tank = equipment
 		to_chat(user, span_notice("You slot [equipment] into [src]."))
-		playsound(src, 'sound/effects/tank_insert_clunky.ogg', 50)
+		playsound(src, 'sound/effects/compressed_air/tank_insert_clunky.ogg', 50)
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
@@ -77,7 +77,7 @@
 		if(!user?.put_in_hands(picked))
 			picked.forceMove(drop_location())
 		cabin_air_tank = null
-		playsound(src, 'sound/effects/tank_remove_thunk.ogg', 50)
+		playsound(src, 'sound/effects/compressed_air/tank_remove_thunk.ogg', 50)
 		return ITEM_INTERACT_SUCCESS
 	else if (istype(picked, /obj/item/stock_parts/power_store))
 		if(!user?.put_in_hands(picked))

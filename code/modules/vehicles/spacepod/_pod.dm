@@ -23,7 +23,6 @@
 	light_power = 1.5
 	max_occupants = 2
 	max_integrity = 350
-	inertia_force_cap = INERTIA_FORCE_CAP * 4 // lol, lmao
 	/// Max count of a certain slot. If it is not defined here, it is assumed to be one (1). Use slot_max(slot) to access.
 	var/list/slot_max = list(
 		POD_SLOT_MISC = 3,
