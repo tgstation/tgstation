@@ -117,7 +117,7 @@
 /obj/item/pod_equipment/primary/metalfoam/ui_data(mob/user)
 	return list(
 		"lines" = list(
-			"Power used:" = power_usage,
+			"Power used" = power_usage,
 		)
 	)
 
