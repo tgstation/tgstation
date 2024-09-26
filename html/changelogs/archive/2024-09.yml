@@ -739,3 +739,46 @@
       heal the heart enough to be just under the "severe damage" threshold, if needed.
   theselfish:
   - bugfix: The Beer Sixpack no longer magically turns into bottles.
+2024-09-25:
+  00-Steven:
+  - bugfix: The greeting message imaginary friends get upon becoming one actually
+      includes the owner's name, instead of displaying nothing where it should've
+      been.
+  Jewelry-x:
+  - bugfix: fixed link for the rules button
+  Sealed101:
+  - bugfix: gelatinous cubes now puke out their consume victim when said victim dies,
+      not when it accumulates 200 brute damage (not all mobs can get damaged to that
+      point)
+  - qol: gelatinous cube's Consume action can now be used to eject the currently consumed
+      mob
+  - bugfix: "fixed gelatinous cube's consume attempt not showing the victim's name\
+      \ properly (You start attempting to devour \_!)"
+  SmArtKar:
+  - bugfix: Storage UI should no longer (not so much) randomly disappear, hooray!
+  grungussuss:
+  - refactor: the sound folder in the source code has been reorganized, please report
+      any oddities with sounds playing or not playing
+  - server: lobby music has been repathed to sound/music/lobby_music
+  imedial:
+  - bugfix: fixes soapbox being given to non-mobs
+2024-09-26:
+  00-Steven:
+  - bugfix: Fixed cat ears not layering properly.
+  - bugfix: Husked bodies show their blood with the right colours in photographs.
+  Bisar:
+  - bugfix: Fixes augs not being able to heal with cables if they're naked or going
+      commando.
+  Jewelry-x:
+  - rscadd: Added ability to turn broadcast microphone on or off
+  Melbert:
+  - qol: Health Analyzer output has been reworked to be less "it takes up my entire
+      chat box", report any oddities or missing information
+  Skilets:
+  - image: Resprited the experimentor.
+  SmArtKar:
+  - bugfix: Kilo whiteship no longer has varedited turrets in it
+  TheBoondock:
+  - bugfix: fixed lava proofed clothing from xenobio potion being damaged from fire
+  grungussus:
+  - sound: audible emotes share the same cooldown

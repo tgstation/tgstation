@@ -904,6 +904,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/beam/weak/penetrator
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 
+/obj/machinery/porta_turret/centcom_shuttle/weak/mining
+	name = "Old Mining Turret"
+	lethal_projectile = /obj/projectile/kinetic/miner
+	lethal_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
+	stun_projectile = /obj/projectile/kinetic/miner
+	stun_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////
