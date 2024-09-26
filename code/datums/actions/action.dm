@@ -114,7 +114,8 @@
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_PHASED)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
-
+	if(check_flags & AB_CHECK_OPEN_TURF)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(owner_has_control)
 		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
@@ -199,6 +200,10 @@
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
+		return FALSE
+	if((check_flags & AB_CHECK_OPEN_TURF) && !isopenturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "not enough space!")
 		return FALSE
 	return TRUE
 
