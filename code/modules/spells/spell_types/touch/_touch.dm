@@ -20,7 +20,7 @@
  */
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	invocation = "High Five!"
 	invocation_type = INVOCATION_SHOUT
 
@@ -172,30 +172,12 @@
 	if(!can_hit_with_hand(target, caster))
 		return NONE
 
-	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, target, caster, source)
-
-	var/mob/mob_victim = target
-	if(istype(mob_victim) && mob_victim.can_block_magic(antimagic_flags))
-		on_antimagic_triggered(source, target, caster)
-
-	else if(!cast_on_hand_hit(source, target, caster))
-		return FALSE
-
-	log_combat(caster, target, "cast the touch spell [name] on", source)
-	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
-	caster.do_attack_animation(target)
-	caster.changeNext_move(CLICK_CD_MELEE)
-	target.add_fingerprint(caster)
-	remove_hand(caster)
-	return ITEM_INTERACT_SUCCESS
+	return do_hand_hit(source, target, caster)
 
 /**
  * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
  *
- * Calls do_secondary_hand_hit() from the caster onto the target.
- * It's worth noting that target will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
-
- * Does NOT check for antimagic on its own. Implement your own checks if you want the r-click to abide by it.
+ * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
 /datum/action/cooldown/spell/touch/proc/on_hand_hit_secondary(datum/source, mob/living/caster, atom/target, click_parameters)
 	SIGNAL_HANDLER
@@ -204,26 +186,7 @@
 	if(!can_hit_with_hand(target, caster))
 		return NONE
 
-	var/secondary_result = cast_on_secondary_hand_hit(source, target, caster)
-	switch(secondary_result)
-		// Continue will remove the hand here and stop
-		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-			log_combat(caster, target, "cast the touch spell [name] on", source, "(secondary / alt cast)")
-			INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
-			caster.do_attack_animation(target)
-			caster.changeNext_move(CLICK_CD_MELEE)
-			target.add_fingerprint(caster)
-			remove_hand(caster)
-
-		// Call normal will call the normal cast proc
-		if(SECONDARY_ATTACK_CALL_NORMAL)
-			on_hand_hit(source, target, caster)
-
-		// Cancel chain will do nothing,
-		if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-			return
-
-	return ITEM_INTERACT_SUCCESS
+	return do_secondary_hand_hit(source, target, caster)
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/living/caster)
@@ -238,6 +201,61 @@
 		return FALSE
 
 	return TRUE
+
+/**
+ * Calls cast_on_hand_hit() from the caster onto the victim.
+ * It's worth noting that victim will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
+ *
+ * Implements checks for antimagic.
+ */
+/datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	SHOULD_NOT_OVERRIDE(TRUE) // Don't put effects here, put them in cast_on_hand_hit
+
+	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, victim, caster, hand)
+
+	var/mob/mob_victim = victim
+	if(istype(mob_victim) && mob_victim.can_block_magic(antimagic_flags))
+		on_antimagic_triggered(hand, victim, caster)
+
+	else if(!cast_on_hand_hit(hand, victim, caster))
+		return NONE
+
+	log_combat(caster, victim, "cast the touch spell [name] on", hand)
+	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
+	caster.do_attack_animation(victim)
+	caster.changeNext_move(CLICK_CD_MELEE)
+	victim.add_fingerprint(caster)
+	remove_hand(caster)
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Calls do_secondary_hand_hit() from the caster onto the victim.
+ * It's worth noting that victim will be guaranteed to be whatever checks are implemented in is_valid_target by this point.
+
+ * Does NOT check for antimagic on its own. Implement your own checks if you want the r-click to abide by it.
+ */
+/datum/action/cooldown/spell/touch/proc/do_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	SHOULD_NOT_OVERRIDE(TRUE) // Don't put effects here, put them in cast_on_secondary_hand_hit
+
+	var/secondary_result = cast_on_secondary_hand_hit(hand, victim, caster)
+	switch(secondary_result)
+		// Continue will remove the hand here and stop
+		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
+			INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
+			caster.do_attack_animation(victim)
+			caster.changeNext_move(CLICK_CD_MELEE)
+			victim.add_fingerprint(caster)
+			remove_hand(caster)
+			return ITEM_INTERACT_SUCCESS
+
+		// Call normal will call the normal cast proc
+		if(SECONDARY_ATTACK_CALL_NORMAL)
+			do_hand_hit(hand, victim, caster)
+
+		// Cancel chain will do nothing,
+		if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+			return NONE
 
 /**
  * The actual process of casting the spell on the victim from the caster.
@@ -293,7 +311,7 @@
 	if(!can_hit_with_hand(taker, offerer))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(on_hand_hit), source, taker, offerer)
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, taker, offerer)
 	return COMPONENT_OFFER_INTERRUPT
 
 /**
