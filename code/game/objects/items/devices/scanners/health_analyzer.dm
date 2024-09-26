@@ -86,7 +86,7 @@
 		return
 
 	if(ispodperson(M) && !advanced)
-		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
+		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
 	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
