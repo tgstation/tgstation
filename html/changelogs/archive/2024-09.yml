@@ -762,3 +762,23 @@
   - server: lobby music has been repathed to sound/music/lobby_music
   imedial:
   - bugfix: fixes soapbox being given to non-mobs
+2024-09-26:
+  00-Steven:
+  - bugfix: Fixed cat ears not layering properly.
+  - bugfix: Husked bodies show their blood with the right colours in photographs.
+  Bisar:
+  - bugfix: Fixes augs not being able to heal with cables if they're naked or going
+      commando.
+  Jewelry-x:
+  - rscadd: Added ability to turn broadcast microphone on or off
+  Melbert:
+  - qol: Health Analyzer output has been reworked to be less "it takes up my entire
+      chat box", report any oddities or missing information
+  Skilets:
+  - image: Resprited the experimentor.
+  SmArtKar:
+  - bugfix: Kilo whiteship no longer has varedited turrets in it
+  TheBoondock:
+  - bugfix: fixed lava proofed clothing from xenobio potion being damaged from fire
+  grungussus:
+  - sound: audible emotes share the same cooldown

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Health Analyzer output has been reworked to be less \"it takes up my entire chat box\", report any oddities or missing information"
