@@ -42997,10 +42997,12 @@
 /area/station/service/bar/backroom)
 "ocK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/sign/warning/secure_area{
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "tcomms"
+	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "odr" = (
@@ -47286,6 +47288,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/sign/warning/secure_area/directional/north{
+	desc = "A warning sign which reads 'SERVER ROOM'.";
+	name = "SERVER ROOM"
+	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pIx" = (
@@ -51379,10 +51385,10 @@
 	c_tag = "Secure - Telecomms Server Room East"
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "rcI" = (
@@ -71440,6 +71446,13 @@
 /obj/item/stack/package_wrap,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
+"yhl" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/machinery/air_sensor/tcomms_chamber,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "yhN" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/trimline/tram/filled/line{
@@ -98609,7 +98622,7 @@ ffN
 vBh
 uGX
 drH
-ney
+yhl
 tms
 etf
 vNH

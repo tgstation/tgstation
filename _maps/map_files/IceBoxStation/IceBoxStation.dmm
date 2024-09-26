@@ -33432,9 +33432,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "jIP" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark/telecomms,
-/area/station/science/server)
+/obj/machinery/air_sensor/tcomms_chamber,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "jIX" = (
 /obj/effect/turf_decal/siding/brown/corner{
 	dir = 4
@@ -42508,14 +42508,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "moL" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	name = "server vent";
-	dir = 4
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/station/science/server)
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "moX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -49384,6 +49379,11 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "tcomms"
+	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "omH" = (
@@ -55574,13 +55574,13 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pXt" = (
+/obj/machinery/rnd/server/master,
+/obj/structure/sign/warning/cold_temp/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Research Division Server Room";
 	network = list("ss13","rd")
 	},
-/obj/structure/sign/warning/cold_temp/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "pXv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57369,6 +57369,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "qyH" = (
@@ -58446,9 +58447,14 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "qOH" = (
-/obj/effect/landmark/blobstart,
+/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent";
+	dir = 4
+	},
+/obj/machinery/air_sensor/rd_server_chamber,
+/obj/effect/landmark/blobstart,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "qOP" = (
@@ -67366,9 +67372,11 @@
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "tsr" = (
-/obj/machinery/rnd/server/master,
-/turf/open/floor/circuit/telecomms/server,
-/area/station/science/server)
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/station/tcommsat/server)
 "tsu" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/cigarette,
@@ -81946,8 +81954,12 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "xIF" = (
-/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "server"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "xIO" = (
@@ -240205,7 +240217,7 @@ krU
 qjq
 cEM
 eKn
-csT
+jIP
 eKn
 eTi
 rfR
@@ -240466,7 +240478,7 @@ fxR
 jll
 djT
 djT
-djT
+tsr
 mNY
 kCn
 mNY
@@ -241746,9 +241758,9 @@ mNY
 kiR
 rHQ
 wFX
-rBV
-kJV
 cOa
+kJV
+rBV
 omG
 tvW
 scx
@@ -256887,9 +256899,9 @@ eMn
 sou
 mZH
 sZF
-kAC
-hil
 sKf
+sKf
+moL
 sKf
 wUA
 wUA
@@ -257143,9 +257155,9 @@ npD
 npD
 hTu
 npD
-npD
-npD
-npD
+sZF
+kAC
+hil
 npD
 npD
 npD
@@ -257400,9 +257412,9 @@ mtI
 dAh
 mYp
 owC
-tsr
-moL
-mGu
+owC
+owC
+owC
 wHc
 aEA
 dng
@@ -257659,7 +257671,7 @@ keZ
 owC
 pXt
 qOH
-jIP
+mGu
 wHc
 sgL
 pTU

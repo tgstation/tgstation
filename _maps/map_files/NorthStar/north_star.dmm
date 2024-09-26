@@ -12683,6 +12683,10 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/floor2/starboard/aft)
+"div" = (
+/obj/machinery/air_sensor/tcomms_chamber,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "diA" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
@@ -17326,6 +17330,10 @@
 "evB" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/components/binary/pump/on,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "tcomms"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/tcommsat/server)
 "evI" = (
@@ -21249,6 +21257,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/library)
+"fBm" = (
+/obj/machinery/air_sensor/rd_server_chamber,
+/turf/open/floor/circuit/telecomms,
+/area/station/science/server)
 "fBt" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 4
@@ -23945,6 +23957,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/lobby)
+"gkV" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "gkX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/airalarm/directional/west,
@@ -49677,7 +49701,7 @@
 "mNh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/tcommsat/server)
+/area/station/tcommsat/computer)
 "mNi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance,
@@ -89264,6 +89288,10 @@
 /obj/machinery/computer/rdservercontrol{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "server"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/server)
 "wUU" = (
@@ -89385,6 +89413,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/station/maintenance/floor3/starboard/aft)
+"wWr" = (
+/turf/open/floor/circuit/telecomms,
+/area/station/science/server)
 "wWw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -129928,7 +129959,7 @@ kzE
 xqs
 pCb
 ess
-ess
+gkV
 cWO
 ess
 tFK
@@ -131213,7 +131244,7 @@ qkL
 qkL
 snO
 wKg
-wKg
+div
 wKg
 vKp
 wfW
@@ -250175,8 +250206,8 @@ xDC
 uaK
 hPk
 dke
-ycg
-uHe
+wWr
+fBm
 vVo
 ccH
 rip
