@@ -89,3 +89,13 @@
 #define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Min allowed pressure for canisters to release air per tick
 #define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE * 0.1)
+
+/// The minimum temperature telecomms equipment can operate in
+#define TCOMMS_EQUIPMENT_TEMP_MIN (TCOMMS_ROOM_TEMP - 30)
+/// The maximum temperature telecomms equipment can operate in
+#define TCOMMS_EQUIPMENT_TEMP_MAX (TCOMMS_ROOM_TEMP + 30)
+
+/// The minimum temperature RD servers can operate in
+#define RD_SERVER_TEMP_MIN (TCOMMS_ROOM_TEMP - 30)
+/// The maximum temperature RD servers can operate in
+#define RD_SERVER_TEMP_MAX (TCOMMS_ROOM_TEMP + 30)

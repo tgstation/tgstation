@@ -12,8 +12,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
 	temperature_ignore_atmos = FALSE
-	temperature_tolerance_min = TCOMMS_ROOM_TEMP - 30
-	temperature_tolerance_max = TCOMMS_ROOM_TEMP + 30
+	temperature_tolerance_min = TCOMMS_EQUIPMENT_TEMP_MIN
+	temperature_tolerance_max = TCOMMS_EQUIPMENT_TEMP_MAX
 	heating_energy_generated = HEAT_GENERATED_TCOMMS
 
 	/// list of machines this machine is linked to

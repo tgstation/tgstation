@@ -27,8 +27,8 @@
 	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
 	temperature_ignore_atmos = FALSE
-	temperature_tolerance_min = TCOMMS_ROOM_TEMP - 30
-	temperature_tolerance_max = TCOMMS_ROOM_TEMP + 30
+	temperature_tolerance_min = RD_SERVER_TEMP_MIN
+	temperature_tolerance_max = RD_SERVER_TEMP_MAX
 	heating_energy_generated = HEAT_GENERATED_RD_SERVER
 
 /obj/machinery/rnd/server/Initialize(mapload)
