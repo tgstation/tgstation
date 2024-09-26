@@ -125,11 +125,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms += src
 	find_and_hang_on_wall()
 	register_context()
-
+	check_enviroment()
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/airalarm/LateInitialize()
-	update_appearance()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
