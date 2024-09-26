@@ -42,7 +42,7 @@ export default function PodDisplay(_props: any): JSX.Element {
                 onChange={(_e: any, value: string) =>
                   act('change-name', { newName: value })
                 }
-               />
+              />
             ) : (
               name
             )

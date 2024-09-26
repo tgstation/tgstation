@@ -1,10 +1,5 @@
 import { useBackend } from '../../../backend';
-import {
-  Button,
-  LabeledList,
-  NoticeBox,
-  Section,
-} from '../../../components';
+import { Button, LabeledList, NoticeBox, Section } from '../../../components';
 
 type Ore = {
   name: string;

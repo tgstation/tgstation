@@ -17,9 +17,8 @@ export default function Gun(props: { partData: Data }): JSX.Element {
     <LabeledList>
       <LabeledList.Item label={'Firing Mode'}>{ourData.mode}</LabeledList.Item>
       <LabeledList.Item>
-        <ProgressBar
-          value={ourData.ammo / ourData.maxAmmo}
-        >{`${ourData.ammo} of ${ourData.maxAmmo}`}
+        <ProgressBar value={ourData.ammo / ourData.maxAmmo}>
+          {`${ourData.ammo} of ${ourData.maxAmmo}`}
         </ProgressBar>
       </LabeledList.Item>
       <LabeledList.Item label={'Shots remaining'}>
