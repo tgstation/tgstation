@@ -69,12 +69,6 @@
 		bite_the_hand(user)
 		return TRUE
 
-	if(istype(weapon, /obj/item/codex_cicatrix) || /obj/item/melee/touch_attack/mansus_fist)
-		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
-		set_anchored(!anchored)
-		balloon_alert(user, "[anchored ? "":"un"]anchored")
-		return TRUE
-
 	if(isbodypart(weapon))
 
 		var/obj/item/bodypart/consumed = weapon
