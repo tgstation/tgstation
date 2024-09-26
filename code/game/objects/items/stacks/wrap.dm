@@ -213,6 +213,9 @@
 
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	visible_message("[user] baps [target_mob] on the head with the [src]")
+	user.visible_message(
+		span_warning("[user] baps [target_mob] on the head with [src]!"),
+		span_warning("You bap [target_mob] on the head with [src]!"),
+	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
