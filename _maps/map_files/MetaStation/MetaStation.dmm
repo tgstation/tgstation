@@ -11447,7 +11447,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "edF" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
@@ -36967,7 +36967,7 @@
 /area/station/command/heads_quarters/ce)
 "naO" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "nbd" = (
@@ -57297,7 +57297,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "ucS" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "ude" = (
