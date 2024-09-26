@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixed two broken spans, primarily used in traitor panel and some basic bot stuff."
+  - admin: "Traitor panel text is no longer bright red when an antag is selected, and remove button is no longer blocked."
