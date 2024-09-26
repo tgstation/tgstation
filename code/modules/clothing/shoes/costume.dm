@@ -44,7 +44,8 @@
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/effects/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 4)
 
 /obj/item/clothing/shoes/cookflops
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
@@ -128,6 +129,7 @@
 
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6) //deploy tactical duckling lure
 
 /obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
 	. = ..()

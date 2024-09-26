@@ -538,6 +538,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	access_card.set_access(initial_access)
+	update_bot_mode(new_mode = src::mode)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()
@@ -558,8 +559,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!! //OBJECTION!!
-			set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
+			set_patrol_off()
 		if("patrolon")
 			set_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 		if("summon")
@@ -567,6 +567,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("ejectpai")
 			eject_pai_remote(user)
 
+/mob/living/basic/bot/proc/set_patrol_off()
+	bot_reset()
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 
 /mob/living/basic/bot/proc/bot_control_message(command, user)
 	if(command == "summon")

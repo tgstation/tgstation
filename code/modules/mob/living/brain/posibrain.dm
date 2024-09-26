@@ -76,7 +76,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
 /obj/item/mmi/posibrain/click_alt(mob/living/user)
-	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
+	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed))
 		return CLICK_ACTION_BLOCKING
 	if(!user.can_perform_action(src))

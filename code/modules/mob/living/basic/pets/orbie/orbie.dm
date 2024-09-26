@@ -51,6 +51,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
+
 	RegisterSignal(src, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
 	RegisterSignal(src, COMSIG_VIRTUAL_PET_LEVEL_UP, PROC_REF(on_level_up))
 	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))

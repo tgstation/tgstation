@@ -243,8 +243,16 @@
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	var/obj/machinery/announcement_system/announcer
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.arrival_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	announcer = pick(available_machines)
+	announcer.announce(AUTO_ANNOUNCE_ARRIVAL, character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)

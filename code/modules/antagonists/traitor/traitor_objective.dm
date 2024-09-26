@@ -216,10 +216,10 @@
 /datum/traitor_objective/proc/finish_objective(mob/user)
 	switch(objective_state)
 		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_failed.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
-			user.playsound_local(get_turf(user), 'sound/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+			user.playsound_local(get_turf(user), 'sound/music/antag/traitor/objective_success.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 			completion_payout()
 			return TRUE
 	return FALSE

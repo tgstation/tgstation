@@ -142,7 +142,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -237,6 +237,10 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
+
+/obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()

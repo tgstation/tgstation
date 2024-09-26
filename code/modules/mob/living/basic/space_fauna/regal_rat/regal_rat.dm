@@ -27,7 +27,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 
 	// Slightly brown red, for the eyes
 	lighting_cutoff_red = 22
