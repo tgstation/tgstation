@@ -20,6 +20,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+	hitsound = 'sound/effects/bonk.ogg'
+
+/obj/item/stack/wrapping_paper/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
 /obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
@@ -213,6 +218,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+	hitsound = 'sound/effects/bonk.ogg'
+
+/obj/item/c_tube/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
