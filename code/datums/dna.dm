@@ -151,10 +151,15 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	return force_give(new mutation_type (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(datum/mutation/human/mutation_type, mutadone)
-	if((mutation_type.mutadone_proof && mutadone))
+
+	var/datum/mutation/human/actual_mutation = get_mutation(mutation_type)
+
+	// Check that it exists first before trying to remove it with mutadone
+	if((actual_mutation && (actual_mutation.mutadone_proof && mutadone)))
 		return FALSE
+
 	SEND_SIGNAL(holder, COMSIG_CARBON_LOSE_MUTATION, mutation_type)
-	return force_lose(get_mutation(mutation_type))
+	return force_lose(actual_mutation || mutation_type)
 
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
