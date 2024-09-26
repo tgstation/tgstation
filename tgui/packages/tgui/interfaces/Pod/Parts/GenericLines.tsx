@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../../../backend';
 import { LabeledList } from '../../../components';
 type Data = {

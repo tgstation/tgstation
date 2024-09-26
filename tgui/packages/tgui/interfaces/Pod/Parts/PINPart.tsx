@@ -1,6 +1,7 @@
 import { classes } from 'common/react';
+
 import { useBackend } from '../../../backend';
-import { Button, Box, Stack } from '../../../components';
+import { Box, Button, Stack } from '../../../components';
 type Data = {
   entered_pin: string;
   lockstate: string;
@@ -38,7 +39,7 @@ export default function PINPart(props: { partData: Data }): JSX.Element {
                     className={classes([
                       'NuclearBomb__Button',
                       'NuclearBomb__Button--keypad',
-                      key != '1' && 'NuclearBomb__Button--' + key,
+                      key !== '1' && 'NuclearBomb__Button--' + key,
                     ])}
                     onClick={() =>
                       act('keypad', { partRef: ourData.ref, digit: key })

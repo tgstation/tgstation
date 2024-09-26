@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
+
 import { useBackend } from '../../backend';
 import { Box, Divider, Dropdown, NoticeBox, Section } from '../../components';
-import { Part, PodData } from './types';
 import { TAGNAME2TAG } from './constants';
+import { Part, PodData } from './types';
 
 export default function PartsDisplay(_props: any): JSX.Element {
   const { data } = useBackend<PodData>();
@@ -34,7 +35,7 @@ export default function PartsDisplay(_props: any): JSX.Element {
         />
       }
     >
-      {part && parts.some((found) => found == part) ? (
+      {part && parts.some((found) => found === part) ? (
         <>
           <Box className="PartDescription">{part.desc}</Box>
           {!!PartTag && (

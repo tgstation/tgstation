@@ -1,5 +1,5 @@
 import { useBackend } from '../../../backend';
-import { Box, Stack, Button, Icon } from '../../../components';
+import { Box, Button, Icon, Stack } from '../../../components';
 type Data = {
   dnaSet: string;
   ref: string;

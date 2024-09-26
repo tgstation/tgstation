@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../../../backend';
-import { Button, Box, Stack, Dropdown } from '../../../components';
+import { Box, Button, Dropdown, Stack } from '../../../components';
 import { DropdownEntry } from '../../../components/Dropdown';
 
 type Data = {
@@ -17,8 +18,7 @@ export default function WarpDrive(props: { partData: Data }): JSX.Element {
   }>();
   const ourData = props.partData as Data;
   return (
-    <>
-      <Stack>
+    <Stack>
         <Stack.Item width="60%">
           <Stack vertical>
             <Stack.Item>
@@ -32,7 +32,7 @@ export default function WarpDrive(props: { partData: Data }): JSX.Element {
                     target: value,
                   })
                 }
-              ></Dropdown>
+               />
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
@@ -63,7 +63,6 @@ export default function WarpDrive(props: { partData: Data }): JSX.Element {
             </Box>
           </Button>
         </Stack.Item>
-      </Stack>
-    </>
+    </Stack>
   );
 }

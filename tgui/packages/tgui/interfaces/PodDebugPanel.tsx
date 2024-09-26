@@ -1,11 +1,11 @@
 import {
   Button,
-  LabeledList,
-  NoticeBox,
-  Section,
-  ProgressBar,
   Divider,
   Icon,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 

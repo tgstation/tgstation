@@ -1,4 +1,6 @@
 import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import {
   Button,
   Input,
@@ -7,7 +9,6 @@ import {
   Section,
   Stack,
 } from '../../components';
-import { useBackend } from '../../backend';
 import { PodData } from './types';
 
 export default function PodDisplay(_props: any): JSX.Element {
@@ -41,7 +42,7 @@ export default function PodDisplay(_props: any): JSX.Element {
                 onChange={(_e: any, value: string) =>
                   act('change-name', { newName: value })
                 }
-              ></Input>
+               />
             ) : (
               name
             )

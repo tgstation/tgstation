@@ -1,5 +1,5 @@
 import { useBackend } from '../../../backend';
-import { Box, Section, NoticeBox, Button } from '../../../components';
+import { Box, Button, NoticeBox, Section } from '../../../components';
 type Data = {
   storedName: string;
   ref: string;
