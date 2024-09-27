@@ -44,13 +44,6 @@
 	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
 	set_blackboard_key(BB_RAPTOR_EAT_COOLDOWN, world.time + NEXT_EAT_COOLDOWN)
 
-/datum/targeting_strategy/basic/raptor
-
-//dont attack anyone that shares our factions.
-/datum/targeting_strategy/basic/raptor/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	. = ..()
-	return .
-
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
