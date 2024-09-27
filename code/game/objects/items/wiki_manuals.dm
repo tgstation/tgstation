@@ -12,7 +12,7 @@
 		user.balloon_alert(user, "this book is empty!")
 		return
 	credit_book_to_reader(user)
-	if(tgui_alert(user, "This will open the wiki page of the book you are reading in your browser. Are you sure?",, list("Yes","No"))!="Yes")
+	if(tgui_alert(user, "This book's page will open in your browser. Are you sure?", "Open The Wiki", list("Yes", "No")) != "Yes")
 		return
 	usr << link("[wiki_url]/[page_link]")
 
