@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
-
+	//ahem what
 	var/unlock_content = 0
 
 	var/list/ignoring = list()
