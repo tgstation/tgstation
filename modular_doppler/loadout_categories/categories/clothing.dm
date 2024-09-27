@@ -267,10 +267,6 @@
 	name = "Frontier Medical Jacket"
 	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical
 
-/datum/loadout_item/suit/frontier_flak
-	name = "Frontier Flak Jacket"
-	item_path = /obj/item/clothing/suit/frontier_colonist_flak
-
 /*
 *	MISC
 */

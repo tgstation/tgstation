@@ -64,6 +64,14 @@
 	name = "Frontier Gas Mask"
 	item_path = /obj/item/clothing/mask/gas/atmos/frontier_colonist
 
-/datum/loadout_item/mask/frontier
+/datum/loadout_item/mask/bandana
+	name = "Bandana"
+	item_path = /obj/item/clothing/mask/bandana
+
+/datum/loadout_item/mask/bandana_skull
+	name = "Bandana (Skull)"
+	item_path = /obj/item/clothing/mask/bandana/skull
+
+/datum/loadout_item/mask/neck_gaiter
 	name = "Neck Gaiter"
 	item_path = /obj/item/clothing/mask/neck_gaiter

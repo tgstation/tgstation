@@ -69,3 +69,31 @@
 /datum/loadout_item/head/wrussianw
 	name = "White Papakha"
 	item_path = /obj/item/clothing/head/costume/papakha/white
+
+/datum/loadout_item/head/hair_tie
+	name = "Hairtie"
+	item_path = /obj/item/clothing/head/hair_tie
+
+/datum/loadout_item/head/hair_tie_scrunchie
+	name = "Hairtie (Scrunchie)"
+	item_path = /obj/item/clothing/head/hair_tie/scrunchie
+
+/datum/loadout_item/head/hair_tie_plastic
+	name = "Hairtie (Plastic)"
+	item_path = /obj/item/clothing/head/hair_tie/plastic_beads
+
+/datum/loadout_item/head/bow_large
+	name = "Bow (Large)"
+	item_path = /obj/item/clothing/head/bow
+
+/datum/loadout_item/head/bow_small
+	name = "Bow (Small)"
+	item_path = /obj/item/clothing/head/bow/small
+
+/datum/loadout_item/head/bow_back
+	name = "Bow (Back)"
+	item_path = /obj/item/clothing/head/bow/back
+
+/datum/loadout_item/head/bow_sweet
+	name = "Bow (Sweet)"
+	item_path = /obj/item/clothing/head/bow/sweet
