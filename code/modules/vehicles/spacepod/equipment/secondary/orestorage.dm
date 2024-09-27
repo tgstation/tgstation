@@ -1,6 +1,8 @@
 /obj/item/pod_equipment/orestorage
 	name = "pod ore scoop"
 	desc = "Picks up and stores ore this pod moves over. Handy!"
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "icons/obj/storage/storage.dmi" //placeholder
 	slot = POD_SLOT_SECONDARY
 	interface_id = "OreHold"
 

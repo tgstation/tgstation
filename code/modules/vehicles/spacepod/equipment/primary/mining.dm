@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/primary/projectile_weapon/energy/plasma_cutter
 	name = "plasma cutter apparatus"
 	desc = "An apparatus for pods that fires plasma cutter beams."
+	icon_state = "plasmacutter"
 	casing_path = /obj/item/ammo_casing/energy/plasma
 	fire_sound = /obj/item/ammo_casing/energy/plasma::fire_sound
 	cooldown_time = 2 SECONDS
@@ -8,6 +9,7 @@
 
 /obj/item/pod_equipment/primary/projectile_weapon/energy/kinetic_accelerator
 	name = "pod proto-kinetic accelerator"
+	icon_state = "pka"
 	projectile_path = /obj/item/ammo_casing/energy/kinetic::projectile_type
 	fire_sound = /obj/item/ammo_casing/energy/kinetic::fire_sound
 	cooldown_time = 1.75 SECONDS
@@ -109,8 +111,9 @@
 /obj/item/pod_equipment/primary/metalfoam
 	name = "pod metal foam dispenser"
 	desc = "Puts metal foam infront of your pod. Comes with a tool to also clear foam, or maybe beat up the local fish, not capable of exerting enough force to damage anything else."
+	icon_state = "foamthing"
 	interface_id = "GenericLines"
-	cooldown_time = 1 SECONDS
+	cooldown_time = 3 SECONDS
 	/// power used
 	var/power_usage = STANDARD_BATTERY_CHARGE / 50
 

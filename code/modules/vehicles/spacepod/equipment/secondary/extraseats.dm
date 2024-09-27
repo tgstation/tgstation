@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/extra_seats
 	name = "pod extra seats kit"
 	desc = "Installs two extra seats in a pod, seats folded using highly advanced folding technology, usually reserved for folding clothing for NT Representatives."
+	icon_state = "extraseats"
 	slot = POD_SLOT_SECONDARY
 	/// how many more seats do we grant
 	var/occupant_count = 2
