@@ -6535,6 +6535,7 @@
 #include "modular_doppler\emotes\code\added_emotes\animal_sounds.dm"
 #include "modular_doppler\emotes\code\added_emotes\human_things.dm"
 #include "modular_doppler\emotes\code\added_emotes\robot_sounds.dm"
+#include "modular_doppler\emotes\code\overlay_emotes\overlay_emotes.dm"
 #include "modular_doppler\enterprise_resource_planning\code\breasts.dm"
 #include "modular_doppler\enterprise_resource_planning\code\erp_prefs.dm"
 #include "modular_doppler\examinemore\code\examine_more.dm"
