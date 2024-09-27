@@ -6,7 +6,7 @@
 ## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.
 ## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.
 ## Also there is a required character age in years. It prevents player from joining as this job, if their character's age as is lower than required. Setting it to 0 means it is turned off for this job.
-## Lastly there's Human Authority Whitelist Setting. If set to 0, you'll set it to "Human Only". If set to 1, it'll be set to "Allow Non-Humans". Check the "Human Authority" setting on the game_options to know which you should choose. Know that this entry only appears on jobs that are marked as heads of staff.
+## Lastly there's Human Authority Whitelist Setting. You can set it to either "HUMANS_ONLY" or "NON_HUMANS_ALLOWED". Check the "Human Authority" setting on the game_options file to know which you should choose. Note that this entry only appears on jobs that are marked as heads of staff.
 
 ## As time goes on, more config options may be added to this file.
 ## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.
@@ -62,7 +62,7 @@
 "# Total Positions" = 3
 
 [CAPTAIN]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 180
 "# Required Account Age" = 14
 "# Required Character Age" = 0
@@ -91,7 +91,7 @@
 "# Total Positions" = 2
 
 [CHIEF_ENGINEER]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
 "# Required Character Age" = 0
@@ -99,7 +99,7 @@
 "# Total Positions" = 1
 
 [CHIEF_MEDICAL_OFFICER]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
 "# Required Character Age" = 0
@@ -156,7 +156,7 @@
 "# Total Positions" = 2
 
 [HEAD_OF_PERSONNEL]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 180
 "# Required Account Age" = 10
 "# Required Character Age" = 0
@@ -164,7 +164,7 @@
 "# Total Positions" = 1
 
 [HEAD_OF_SECURITY]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 300
 "# Required Account Age" = 14
 "# Required Character Age" = 0
@@ -221,7 +221,7 @@
 "# Total Positions" = 1
 
 [QUARTERMASTER]
-"# Human Authority Whitelist Setting" = 1
+"# Human Authority Whitelist Setting" = "NON_HUMANS_ALLOWED"
 "# Playtime Requirements" = 0
 "# Required Account Age" = 7
 "# Required Character Age" = 0
@@ -229,7 +229,7 @@
 "# Total Positions" = 1
 
 [RESEARCH_DIRECTOR]
-"# Human Authority Whitelist Setting" = 0
+"# Human Authority Whitelist Setting" = "HUMANS_ONLY"
 "# Playtime Requirements" = 180
 "# Required Account Age" = 7
 "# Required Character Age" = 0

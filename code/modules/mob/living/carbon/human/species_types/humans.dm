@@ -124,7 +124,7 @@
 				to humans. As a human, silicons are required to both protect and obey you.",
 		))
 
-	var/human_authority_setting = CONFIG_GET(number/human_authority)
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
 
 	if(human_authority_setting == HUMAN_AUTHORITY_NON_HUMAN_WHITELIST || human_authority_setting == HUMAN_AUTHORITY_ENFORCED)
 		to_add += list(list(

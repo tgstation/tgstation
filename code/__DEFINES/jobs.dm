@@ -14,8 +14,8 @@
 
 // Human authority settings
 // If you want to add another setting, make sure to also add it to the if chain in /datum/job_config_type/human_authority/validate_value()
-#define JOB_AUTHORITY_HUMANS_ONLY 0
-#define JOB_AUTHORITY_NON_HUMANS_ALLOWED 1
+#define JOB_AUTHORITY_HUMANS_ONLY "HUMANS_ONLY"
+#define JOB_AUTHORITY_NON_HUMANS_ALLOWED "NON_HUMANS_ALLOWED"
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"

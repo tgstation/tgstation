@@ -530,8 +530,7 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 
-	var/human_authority_setting = CONFIG_GET(number/human_authority)
-
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
 	var/require_human = FALSE
 
 	// If the job in question is a head of staff,

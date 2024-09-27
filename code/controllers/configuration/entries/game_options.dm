@@ -107,20 +107,18 @@
 
 /datum/config_entry/flag/protect_assistant_from_antagonist //If assistants can be traitor/cult/other
 
-/datum/config_entry/number/human_authority //Controls how to enforce human authority
-	default = 0
-	min_val = 0
-	max_val = 3
+/datum/config_entry/string/human_authority //Controls how to enforce human authority
+	default = "HUMAN_WHITELIST"
 
 /////////////////////////////////////////////////Outdated human authority settings
 /datum/config_entry/flag/enforce_human_authority
-	deprecated_by = /datum/config_entry/number/human_authority
+	deprecated_by = /datum/config_entry/string/human_authority
 
 /datum/config_entry/flag/enforce_human_authority/DeprecationUpdate(value)
 	return value ? HUMAN_AUTHORITY_NON_HUMAN_WHITELIST : HUMAN_AUTHORITY_DISABLED
 
 /datum/config_entry/flag/enforce_human_authority_on_everyone
-	deprecated_by = /datum/config_entry/number/human_authority
+	deprecated_by = /datum/config_entry/string/human_authority
 
 /datum/config_entry/flag/enforce_human_authority_on_everyone/DeprecationUpdate(value)
 	return value ? HUMAN_AUTHORITY_ENFORCED : HUMAN_AUTHORITY_DISABLED
