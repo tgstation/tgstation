@@ -131,13 +131,7 @@
 /** Updates the custom materials list of this stack.
  */
 /obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
-
-/**
- * Override to make things like metalgen accurately set custom materials
- */
-/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
-	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
+	set_mats_per_unit(mats_per_unit, amount)
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)

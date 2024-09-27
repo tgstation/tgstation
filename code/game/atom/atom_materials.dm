@@ -8,8 +8,8 @@
 	var/material_modifier = 1
 
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
-/atom/proc/set_custom_materials(list/materials, multiplier = 1, initial = FALSE)
-	if(!initial && length(custom_materials))
+/atom/proc/set_custom_materials(list/materials, multiplier = 1)
+	if(length(custom_materials))
 		remove_material_effects()
 
 	if(!length(materials))
