@@ -1,5 +1,12 @@
 #define MOB_OVERLAY_FILE 'modular_doppler/emotes/icons/mob_overlay.dmi'
 
+/// Overwrite
+/datum/emote/living/sing_tune/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	var/mutable_appearance/overlay = mutable_appearance(MOB_OVERLAY_FILE, "sing", ABOVE_MOB_LAYER)
+	user.flick_overlay_static(overlay, 50)
+
+/// Additions
 /datum/emote/living/sweatdrop
 	key = "sweatdrop"
 	key_third_person = "sweatdrops"
