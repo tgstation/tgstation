@@ -213,7 +213,6 @@
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
-	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/power_store/cell = null

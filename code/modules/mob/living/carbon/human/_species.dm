@@ -633,7 +633,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
-			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT))
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -660,7 +662,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_ICLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
-			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT))
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
