@@ -406,7 +406,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_START_PULL, AM, state, force)
 
 	if(!supress_message)
-		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		var/sound_to_play = 'sound/items/weapons/thudswoosh.ogg'
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
 			if(H.dna.species.grab_sound)
@@ -525,7 +525,7 @@
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
+	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
 /mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
@@ -1789,13 +1789,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(mob/living/carbon/C)
 	if(C.key) //save us from monkey hordes
-		C.visible_message("<span class='warning'>[pick( \
+		C.visible_message(span_warning(pick( \
 						"[C] dives out of [src]'s way!", \
 						"[C] stumbles over [src]!", \
 						"[C] jumps out of [src]'s path!", \
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
-						"[C] leaps out of [src]'s way!")]</span>")
+						"[C] leaps out of [src]'s way!")))
 	C.Paralyze(40)
 
 /mob/living/can_be_pulled()
@@ -2830,7 +2830,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	ADD_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	var/icon/selected_overlay = pick(blocking_overlay)
 	add_overlay(selected_overlay)
-	playsound(src, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
+	playsound(src, 'sound/items/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
 	update_transform(1.25)
 	addtimer(CALLBACK(src, PROC_REF(end_block_effects), selected_overlay), 0.6 SECONDS)
 

@@ -271,4 +271,4 @@
 	if(damage)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage(damage, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
-		playsound(src,'sound/weapons/bite.ogg', damage * 2, TRUE)
+		playsound(src,'sound/items/weapons/bite.ogg', damage * 2, TRUE)

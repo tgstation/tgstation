@@ -19,7 +19,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	vision_range = 2 // don't aggro unless you basically antagonize it, though they will kill you worse than a goliath will
 	aggro_vision_range = 9

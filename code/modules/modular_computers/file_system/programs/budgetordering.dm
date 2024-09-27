@@ -245,12 +245,12 @@
 					return
 
 			if(pack.goody && !self_paid)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
 			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 				return
 

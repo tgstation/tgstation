@@ -108,7 +108,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		power_change()
 		return
 
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	flick("[base_icon_state]_flash", src)
 	flash_lighting_fx()
 

@@ -16,8 +16,8 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
-	drop_sound = 'sound/items/handling/rcd_drop.ogg'
-	pickup_sound = 'sound/items/handling/rcd_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
 
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
@@ -426,9 +426,8 @@
 	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
-	audible_message("<span class='danger'><b>[src] begins to vibrate and \
-		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
-		vibrating violently!</b></span>")
+	audible_message(span_danger("<b>[src] begins to vibrate and buzz loudly!</b>"), \
+	span_danger("<b>[src] begins vibrating violently!</b>"))
 	// 5 seconds to get rid of it
 	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
 

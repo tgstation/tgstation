@@ -1,4 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - bugfix: "\"Visible to Network\" in the fax interface is now displayed correctly"

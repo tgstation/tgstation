@@ -22,7 +22,7 @@
 	/// Verb shown to attacker when attacking
 	var/attack_verb_simple = "punch"
 	/// Sound played when we attack
-	var/attack_sound = 'sound/weapons/punch1.ogg'
+	var/attack_sound = 'sound/items/weapons/punch1.ogg'
 	/// Visible effect when we attack
 	var/attack_vis_effect = ATTACK_EFFECT_PUNCH
 	/// An associative list of type of guardian to some kind of descriptive text to show on appearance.

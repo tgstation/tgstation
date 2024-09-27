@@ -121,7 +121,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 	if(contraband_scan(interacting_with, user))
-		playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
 	else
@@ -195,10 +195,10 @@
 */
 /obj/item/inspector/proc/print_report(mob/user)
 	if(!cell)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?"))
 		return
 	if(cell.charge == 0)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	if(!cell.use(energy_per_print))
 		if(cell.use(ENERGY_TO_SPEAK))
@@ -389,7 +389,7 @@
 		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
-			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+			to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	paper_charges--
 	return ..()

@@ -10,7 +10,7 @@
 	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	fire_sound = 'sound/weapons/batonextend.ogg'
+	fire_sound = 'sound/items/weapons/batonextend.ogg'
 	pinless = TRUE
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
@@ -36,7 +36,7 @@
 
 	playsound(get_turf(src), fire_sound, 50, TRUE, -1)
 	user.visible_message(span_suicide("[user] is using the [src] on their [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(get_turf(src), 'sound/weapons/bladeslice.ogg', 70)
+	playsound(get_turf(src), 'sound/items/weapons/bladeslice.ogg', 70)
 	removable.dismember(silent = FALSE)
 	return BRUTELOSS
 

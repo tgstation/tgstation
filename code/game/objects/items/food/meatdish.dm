@@ -752,12 +752,21 @@
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_1
+	var/meat_source = "\"chicken\""
 
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
-	desc = "A \"chicken\" nugget vaguely shaped like a [shape]."
+	desc = "A [meat_source] nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
+
+///subtype harvested from fish caught from, you guess it, the deepfryer
+/obj/item/food/nugget/fish
+	name = "fish nugget"
+	tastes = list("fried fish" = 1)
+	foodtypes = MEAT|SEAFOOD|FRIED
+	venue_value = FOOD_PRICE_NORMAL
+	meat_source = "fish"
 
 /obj/item/food/pigblanket
 	name = "pig in a blanket"
