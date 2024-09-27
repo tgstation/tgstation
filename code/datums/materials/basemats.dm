@@ -221,7 +221,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(ismovable(source))
-		source.AddElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
+		source.AddElement(/datum/element/firestacker, 1 * multiplier)
 	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
 
 /datum/material/plasma/on_removed(atom/source, mat_amount, multiplier)
