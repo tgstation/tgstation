@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/engine
 	interface_id = "GenericLines"
 	slot = POD_SLOT_ENGINE
+	icon_state = "engine"
 	/// force we add everytime the vehicle attempts to move in a direction to said direction
 	var/force_per_move = 0
 

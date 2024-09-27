@@ -65,6 +65,7 @@
 /obj/item/pod_equipment/primary/projectile_weapon/energy/wildlife
 	name = "wildlife dissuasion laser gun"
 	desc = "A laser gun for pods, tuned to specifically hurt those of not human physiology. Due to that, cannot pass windows."
+	icon_state = "wildlifegun"
 	projectile_path = /obj/projectile/beam/wildlife_dissuasion
 	fire_sound = 'sound/items/weapons/laser.ogg'
 	fire_force = 0 //brrrrrrrr

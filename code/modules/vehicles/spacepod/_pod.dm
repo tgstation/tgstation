@@ -3,7 +3,7 @@
 //
 
 // TODO:
-// sprites
+// sprites + sprites for tiers of stuff but i cant really afford to do those
 // make passive movement slower than active movement (2/3rds? 3/4ths?)
 // fix drill bump (not possible without tinkering with drift_handler)
 
