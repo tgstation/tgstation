@@ -99,7 +99,7 @@
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
 		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
 	else
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
