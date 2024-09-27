@@ -65,7 +65,7 @@
 		if(opened)
 			. += span_notice("The cell can be removed with an empty hand.")
 	else
-		. += span_warning("Its missing a power cell.")
+		. += span_warning("It's missing a power cell.")
 
 	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "closed" : "opened"].")
 
