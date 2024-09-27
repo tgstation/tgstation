@@ -2,8 +2,7 @@
 	name = "NT comms array"
 	desc = "Standard suite of communication equipment for crew pods."
 	slot = POD_SLOT_COMMS
-	icon = 'icons/obj/devices/assemblies.dmi' //placeholder
-	icon_state = "timer-radio1"
+	icon_state = "comms"
 	// im not sure whether this is a good idea
 	/// access of this comms array
 	var/list/accesses = list(ACCESS_EXTERNAL_AIRLOCKS) //external airlocks == station hangar

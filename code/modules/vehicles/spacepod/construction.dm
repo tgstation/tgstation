@@ -25,8 +25,8 @@
 /obj/item/pod_runner
 	name = "pod frame runner"
 	desc = "A metal runner with pod frame parts. Use a wirecutter to snip them free. For your own sake, do this in the hangar bay and not robotics."
-	/// the path we build incase someone decides to add big pods
-	var/build_path = /obj/structure/pod_construction
+	icon = 'icons/mob/rideables/spacepod/equipment.dmi'
+	icon_state = "runner"
 
 /obj/item/pod_runner/wirecutter_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -38,7 +38,7 @@
 	if(!do_after(user, 5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	tool.play_tool_sound(src)
-	new build_path(our_turf)
+	new /obj/structure/pod_construction(our_turf)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -54,7 +54,7 @@
 	AddComponent(/datum/component/construction/pod)
 
 // MAYBE:: window?
-/datum/component/construction/pod // its convenient to inherit ok
+/datum/component/construction/pod
 	steps = list(
 		list(
 			"key" = TOOL_WRENCH,
