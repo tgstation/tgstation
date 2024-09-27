@@ -37,7 +37,7 @@
  *        NOPOWER -- No power is being supplied to machine.
  *        MAINT -- machine is currently under going maintenance.
  *        EMPED -- temporary broken by EMP pulse
- * 		  BAD_TEMP -- temperature is too hot or cold for machine to operate
+ *        BAD_TEMP -- temperature is too hot or cold for machine to operate
  *
  *Class Procs:
  *  Initialize()
