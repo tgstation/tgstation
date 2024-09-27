@@ -102,11 +102,11 @@
 
 	if(istype(tool, /obj/item/stock_parts/power_store))
 		if(!QDELETED(powerdevice))
-			to_chat(user, span_warning("cell already installed!"))
+			balloon_alert(user, "cell already installed!")
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in hand!"))
+			balloon_alert(user, "stuck in hand!")
 			return ITEM_INTERACT_FAILURE
 
 		powerdevice = tool
