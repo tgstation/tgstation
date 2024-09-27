@@ -45,7 +45,6 @@
 
 	if(islist(soundin))
 		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
-		return
 
 	var/turf/turf_source = get_turf(source)
 
