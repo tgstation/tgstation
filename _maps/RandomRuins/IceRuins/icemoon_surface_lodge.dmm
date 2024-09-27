@@ -2513,7 +2513,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/huntinglodge)
 "NL" = (
