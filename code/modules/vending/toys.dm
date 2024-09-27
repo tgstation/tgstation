@@ -31,8 +31,8 @@
 		/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 4,
 	)
 	refill_canister = /obj/item/vending_refill/donksoft
-	default_price = PAYCHECK_CREW * 1.8
-	extra_price = PAYCHECK_COMMAND * 1.8
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 
 /obj/item/vending_refill/donksoft

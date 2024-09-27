@@ -33,8 +33,8 @@
 	armor_type = /datum/armor/vending_toyliberationstation
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
-	default_price = PAYCHECK_CREW * 1.8
-	extra_price = PAYCHECK_COMMAND * 1.8
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	light_mask = "donksoft-light-mask"
 
