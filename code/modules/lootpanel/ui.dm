@@ -29,18 +29,17 @@
 		qdel(index) // Item has moved
 		return TRUE
 
-	var/modifiers = ""
-	if(params["ctrl"])
-		modifiers += "ctrl=1;"
-	if(params["middle"])
-		modifiers += "middle=1;"
-	if(params["shift"])
-		modifiers += "shift=1;"
-	if(params["alt"])
-		modifiers += "alt=1;"
-	if(params["right"])
-		modifiers += "right=1;"
-
+	var/static/list/interesting_params = list(
+		CTRL_CLICK,
+		MIDDLE_CLICK,
+		SHIFT_CLICK,
+		ALT_CLICK,
+		RIGHT_CLICK,
+	)
+	var/list/modifiers = list()
+	for(var/param in interesting_params)
+		if(params[param])
+			modifiers[param] = TRUE
 
 	user.ClickOn(thing, modifiers)
 

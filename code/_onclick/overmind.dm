@@ -1,10 +1,9 @@
 // Blob Overmind Controls
 
 
-/mob/camera/blob/ClickOn(atom/A, params) //Expand blob
-	var/list/modifiers = params2list(params)
+/mob/camera/blob/ClickOn(atom/A, list/modifiers) //Expand blob
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		MiddleClickOn(A, list2params(modifiers))
 		return
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)

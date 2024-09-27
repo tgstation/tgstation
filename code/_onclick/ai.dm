@@ -15,12 +15,11 @@
 	else
 		A.move_camera_by_click()
 
-/mob/living/silicon/ai/ClickOn(atom/A, params)
+/mob/living/silicon/ai/ClickOn(atom/A, list/modifiers)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
-	var/list/modifiers = params2list(params)
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
@@ -28,6 +27,7 @@
 	if(!can_interact_with(A))
 		return
 
+	var/params = list2params(modifiers)
 	if(multicam_on)
 		var/turf/T = get_turf(A)
 		if(T)

@@ -24,12 +24,12 @@
 	else
 		return
 
-/mob/living/carbon/alien/adult/hunter/ClickOn(atom/A, params)
+/mob/living/carbon/alien/adult/hunter/ClickOn(atom/A, list/modifiers)
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)
-	else
-		..()
+		return
+	return ..()
 
 #define MAX_ALIEN_LEAP_DIST 7
 

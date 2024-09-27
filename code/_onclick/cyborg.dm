@@ -6,18 +6,18 @@
 	adjacency code.
 */
 
-/mob/living/silicon/robot/ClickOn(atom/A, params)
+/mob/living/silicon/robot/ClickOn(atom/A, list/modifiers)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
+	var/params = list2params(modifiers)
 	if(check_click_intercept(params,A))
 		return
 
 	if(stat || (lockcharge) || IsParalyzed() || IsStun())
 		return
 
-	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)

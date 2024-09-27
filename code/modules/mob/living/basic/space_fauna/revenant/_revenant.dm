@@ -202,8 +202,7 @@
 	var/rendered = span_deadsay("<b>UNDEAD: [src]</b> says, \"[message]\"")
 	relay_to_list_and_observers(rendered, GLOB.revenant_relay_mobs, src)
 
-/mob/living/basic/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
-	var/list/modifiers = params2list(params)
+/mob/living/basic/revenant/ClickOn(atom/A, list/modifiers) //revenants can't interact with the world directly, so we gotta do some wacky override stuff
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
 		return
