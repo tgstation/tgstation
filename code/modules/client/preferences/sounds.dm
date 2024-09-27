@@ -1,8 +1,15 @@
-/// Controls hearing ambience
-/datum/preference/toggle/sound_ambience
+/// Controls ambience volume
+/datum/preference/numeric/sound_ambience
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 100
+
+/// default value is max/2 because we want to allow players to increase the volume of the sound, higher than the default.
+/datum/preference/numeric/sound_ambience/create_default_value()
+	return maximum/2
 
 /datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
 	client.update_ambience_pref(value)
@@ -55,8 +62,9 @@
 	minimum = 0
 	maximum = 100
 
+/// default value is max/2 because we want to allow players to increase the volume of the sound, higher than the default.
 /datum/preference/numeric/sound_tts_volume/create_default_value()
-	return maximum
+	return maximum/2
 
 /datum/preference/choiced/sound_achievement
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
