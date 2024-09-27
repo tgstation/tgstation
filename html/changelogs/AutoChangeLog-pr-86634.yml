@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Mapped in express supply consoles now work instead of displaying an empty UI."
-  - bugfix: "Emagged express supply consoles now display updated prices."
-  - refactor: "Rewrote a large chunk of express supply console code"
-  - balance: "Express supply consoles now drop their upgrade disk upon being deconstructed, and emagged consoles now will try to send at least one package to the station if cargo budget doesn't have enough funds for all 5."

@@ -68,7 +68,7 @@
 
 		if(!amount)
 			say("Not enough material. Aborting.")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE)
 			return TRUE
 		qdel(exportable)
 
@@ -77,7 +77,7 @@
 		new_block.export_mat = material_to_export
 		new_block.quantity = amount
 		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
-		playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 		return TRUE
 	return ..()
 
@@ -274,14 +274,14 @@
 				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
 				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
 					say("There aren't enough sheets on the market! Please wait for more sheets to be traded before adding more.")
-					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
+					playsound(usr, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Check if the order exceeded the purchase limit
 				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
 				if(prior_stacks >= MAX_STACK_LIMIT)
 					say("There are already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
-					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
+					playsound(usr, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Prevents you from ordering more than the available budget

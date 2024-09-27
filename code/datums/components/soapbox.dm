@@ -14,15 +14,17 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(parent_moved))
 
 ///Applies loud speech to our movable when entering the turf our parent is on
-/datum/component/soapbox/proc/on_loc_entered(datum/source, atom/movable/soapbox_arrive)
+/datum/component/soapbox/proc/on_loc_entered(datum/source, mob/living/soapbox_arrive)
 	SIGNAL_HANDLER
+	if(!isliving(soapbox_arrive))
+		return
 	if(QDELETED(soapbox_arrive))
 		return
 	RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
 	soapboxers += soapbox_arrive
 
 ///Takes away loud speech from our movable when it leaves the turf our parent is on
-/datum/component/soapbox/proc/on_loc_exited(datum/source, atom/movable/soapbox_leave)
+/datum/component/soapbox/proc/on_loc_exited(datum/source, mob/living/soapbox_leave)
 	SIGNAL_HANDLER
 	if(soapbox_leave in soapboxers)
 		UnregisterSignal(soapbox_leave, COMSIG_MOB_SAY)

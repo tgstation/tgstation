@@ -125,11 +125,11 @@
 		var/datum/fish_source/stored = linked_fishing_spots[other_spot]
 		if(stored == source)
 			spot.balloon_alert(user, "already linked!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(spot, TRAIT_UNLINKABLE_FISHING_SPOT))
 		spot.balloon_alert(user, "unlinkable fishing spot!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		return ITEM_INTERACT_BLOCKING
 	LAZYSET(linked_fishing_spots, spot, source)
 	RegisterSignal(spot, SIGNAL_REMOVETRAIT(TRAIT_FISHING_SPOT), PROC_REF(unlink_fishing_spot))
