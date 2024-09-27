@@ -5,9 +5,9 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 	minimum = 0
-	maximum = 100
+	maximum = 200
 
-/// default value is max/2 because we want to allow players to increase the volume of the sound, higher than the default.
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_ambience/create_default_value()
 	return maximum/2
 
@@ -60,9 +60,9 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 	minimum = 0
-	maximum = 100
+	maximum = 200
 
-/// default value is max/2 because we want to allow players to increase the volume of the sound, higher than the default.
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_tts_volume/create_default_value()
 	return maximum/2
 
@@ -93,10 +93,17 @@
 		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
 
 /// Controls hearing lobby music
-/datum/preference/toggle/sound_lobby
+/datum/preference/numeric/sound_lobby
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_lobby"
 	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 200
+
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_lobby/create_default_value()
+	return maximum/2
 
 /datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
 	if (value && isnewplayer(client.mob))
@@ -110,11 +117,18 @@
 	savefile_key = "sound_midi"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// Controls hearing ship ambience
-/datum/preference/toggle/sound_ship_ambience
+/// Controls ship ambience volume
+/datum/preference/numeric/sound_ship_ambience
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 200
+
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_ship_ambience/create_default_value()
+	return maximum/2
 
 /datum/preference/toggle/sound_ship_ambience/apply_to_client_updated(client/client, value)
 	client.mob.refresh_looping_ambience()
@@ -125,8 +139,15 @@
 	savefile_key = "sound_elevator"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/// Controls hearing radio noise
-/datum/preference/toggle/radio_noise
+/// Controls radio noise volume
+/datum/preference/numeric/sound_radio_noise
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 200
+
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/radio_noise/create_default_value()
+	return maximum/2

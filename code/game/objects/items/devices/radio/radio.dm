@@ -351,7 +351,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 			SEND_SOUND(talking_living, 'sound/items/radio/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
@@ -429,16 +429,16 @@
 		return
 
 	var/mob/living/holder = loc
-	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/sound_ambience))
+	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 		return
-
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_receive.ogg')
+		SEND_SOUND(holder, sound('sound/items/radio/radio_receive.ogg', vol = volume_modifier))
 	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
 		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_important.ogg')
+		SEND_SOUND(holder, sound('sound/items/radio/radio_receive.ogg', vol = volume_modifier))
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
