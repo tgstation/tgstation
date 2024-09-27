@@ -41,12 +41,13 @@
 	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
+	SIGNAL_HANDLER
 	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
 	set_blackboard_key(BB_RAPTOR_EAT_COOLDOWN, world.time + NEXT_EAT_COOLDOWN)
 
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/raptor),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/raptor/baby_raptor),
 	)
