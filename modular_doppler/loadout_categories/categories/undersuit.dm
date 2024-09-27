@@ -147,3 +147,19 @@
 /datum/loadout_item/undersuit/dress/sailor
 	name = "Heretical Dress"
 	item_path = /obj/item/clothing/under/dress/sailor
+
+/datum/loadout_item/undersuit/dress/tutu
+	name = "Pink Tutu"
+	item_path = /obj/item/clothing/under/dress/doppler/pinktutu
+
+/datum/loadout_item/undersuit/dress/flower
+	name = "Flower Dress"
+	item_path = /obj/item/clothing/under/dress/doppler/flower
+
+/datum/loadout_item/undersuit/dress/penta
+	name = "Pentagram Dress"
+	item_path = /obj/item/clothing/under/dress/doppler/pentagram
+
+/datum/loadout_item/undersuit/dress/strapless
+	name = "Strapless Dress"
+	item_path = /obj/item/clothing/under/dress/doppler/strapless

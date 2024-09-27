@@ -1,0 +1,10 @@
+{
+	"large_bow": [
+		{
+			"type": "icon_state",
+			"icon_state": "large_bow",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -108,3 +108,25 @@
 	name = "'JUNCO' megacargo pants (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
 	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/big_pants_worn.json'
+
+///////////
+//DRESSES//
+///////////
+
+/datum/greyscale_config/strapless_dress
+	name = "Strapless Dress"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/strapless_dress.json'
+
+/datum/greyscale_config/strapless_dress/worn
+	name = "Strapless Dress (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
+
+/datum/greyscale_config/pentagram_dress
+	name = "Pentagram Strapped Dress"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/pentagram_dress.json'
+
+/datum/greyscale_config/pentagram_dress/worn
+	name = "Pentagram Strapped Dress (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'

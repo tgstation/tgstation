@@ -22,7 +22,7 @@
 		new vendor_refill(target_crate)
 
 /obj/machinery/vending/imported
-	icon = 'modular_doppler/vending_machines/icons/imported_vendors.dmi'
+	icon = 'modular_doppler/modular_vending/icons/imported_vendors.dmi'
 	icon_state = null
 	panel_type = "panel15"
 	default_price = PAYCHECK_CREW * 0.5
