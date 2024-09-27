@@ -387,7 +387,7 @@
 	name = "fishing tip"
 	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
 
-/obj/item/paper/paperslip/fortune/Initialize(mapload)
+/obj/item/paper/paperslip/fishing_tip/Initialize(mapload)
 	default_raw_text = pick(GLOB.fishing_tips)
 	return ..()
 

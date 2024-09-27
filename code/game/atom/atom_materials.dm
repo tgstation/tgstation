@@ -106,7 +106,7 @@
 			var/config_path = get_material_greyscale_config(main_material.type, greyscale_config)
 			//Make sure that we've no less than the expected amount
 			//expected_colors is zero for paths, the value is assigned when reading the json files.
-			var/datum/greyscale_config/config = SSgreyscale.configurations["[config_path]"]
+			var/datum/greyscale_config/config = SSgreyscale.configurations["[config_path || greyscale_config]"]
 			var/colors_len = length(colors)
 			if(config.expected_colors > colors_len)
 				var/list/filled_colors = colors.Copy()
