@@ -311,17 +311,28 @@
 	var/mob/living/carbon/human/human_mob = mymob
 	if(istype(human_mob))
 		blocked_slots |= human_mob.dna?.species?.no_equip_flags
-		if(!human_mob.w_uniform && !HAS_TRAIT(human_mob, TRAIT_NO_JUMPSUIT))
-			blocked_slots |= ITEM_SLOT_POCKETS|ITEM_SLOT_ID|ITEM_SLOT_BELT
-		if(!human_mob.wear_suit)
+		if(isnull(human_mob.w_uniform) && !HAS_TRAIT(human_mob, TRAIT_NO_JUMPSUIT))
+			blocked_slots |= ITEM_SLOT_ID|ITEM_SLOT_BELT
+			var/obj/item/bodypart/left_leg = human_mob.get_bodypart(BODY_ZONE_L_LEG)
+			if(isnull(left_leg) || IS_ORGANIC_LIMB(left_leg))
+				blocked_slots |= ITEM_SLOT_LPOCKET
+			var/obj/item/bodypart/right_leg = human_mob.get_bodypart(BODY_ZONE_R_LEG)
+			if(isnull(right_leg) || IS_ORGANIC_LIMB(right_leg))
+				blocked_slots |= ITEM_SLOT_RPOCKET
+		if(isnull(human_mob.wear_suit))
 			blocked_slots |= ITEM_SLOT_SUITSTORE
-		if(human_mob.num_hands < 2)
+		if(human_mob.num_hands < 2) // update this when you can wear gloves on one hand
 			blocked_slots |= ITEM_SLOT_GLOVES
-		if(human_mob.num_legs < 2)
+		if(human_mob.num_legs < 2) // update this when you can wear shoes on one foot
 			blocked_slots |= ITEM_SLOT_FEET
 		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
 		if(isnull(head))
 			blocked_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_MASK
+		var/obj/item/organ/internal/eyes/eyes = human_mob.get_organ_slot(ORGAN_SLOT_EYES)
+		if(eyes?.no_glasses)
+			blocked_slots |= ITEM_SLOT_EYES
+		if(human_mob.bodyshape & BODYSHAPE_DIGITIGRADE)
+			blocked_slots |= ITEM_SLOT_FEET
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(!inv.slot_id)
