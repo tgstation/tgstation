@@ -31,7 +31,6 @@
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
 #define ATMOS_GAS_MONITOR_ENGINE "engine"
-#define ATMOS_GAS_MONITOR_SERVER "server"
 #define ATMOS_GAS_MONITOR_TCOMMS "tcomms"
 
 ///maps an air sensor's chamber id to its input valve[ i.e. outlet_injector] id

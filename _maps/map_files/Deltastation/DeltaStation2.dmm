@@ -2434,6 +2434,7 @@
 	name = "server vent";
 	dir = 4
 	},
+/obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/science/server)
 "aEh" = (
@@ -68376,9 +68377,9 @@
 /turf/open/floor/plating,
 /area/station/science/ordnance/office)
 "reK" = (
-/obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/air_sensor/rd_server_chamber,
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "reM" = (
@@ -86305,11 +86306,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"vzw" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/secure_area/directional/north,
-/turf/open/space,
-/area/space/nearstation)
 "vzA" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/white,
@@ -96252,11 +96248,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "server"
-	},
-/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "yan" = (
@@ -125016,7 +125007,7 @@ vCq
 aEe
 dso
 jDd
-vzw
+aad
 lIv
 nly
 oRs

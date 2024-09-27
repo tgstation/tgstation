@@ -21257,10 +21257,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/library)
-"fBm" = (
-/obj/machinery/air_sensor/rd_server_chamber,
-/turf/open/floor/circuit/telecomms,
-/area/station/science/server)
 "fBt" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 4
@@ -69197,6 +69193,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/server)
 "rQf" = (
@@ -89275,7 +89272,6 @@
 	},
 /area/station/hallway/floor1/aft)
 "wUS" = (
-/obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
@@ -89287,10 +89283,6 @@
 	},
 /obj/machinery/computer/rdservercontrol{
 	dir = 4
-	},
-/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "server"
 	},
 /turf/open/floor/iron/white,
 /area/station/science/server)
@@ -89414,6 +89406,8 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/floor3/starboard/aft)
 "wWr" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/circuit/telecomms,
 /area/station/science/server)
 "wWw" = (
@@ -93698,10 +93692,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
-"ycg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/circuit/telecomms,
-/area/station/science/server)
 "ych" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
@@ -249694,7 +249684,7 @@ pdh
 pdh
 pdh
 pdh
-pdh
+ccH
 ccH
 wRJ
 wRJ
@@ -249949,10 +249939,10 @@ gUX
 rQd
 wUS
 fLu
-ycg
 uHe
 vDg
 ccH
+rip
 sCH
 wRJ
 igy
@@ -250207,9 +250197,9 @@ uaK
 hPk
 dke
 wWr
-fBm
 vVo
 ccH
+rip
 rip
 wRJ
 igy

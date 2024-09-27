@@ -58453,8 +58453,9 @@
 	name = "server vent";
 	dir = 4
 	},
-/obj/machinery/air_sensor/rd_server_chamber,
 /obj/effect/landmark/blobstart,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "qOP" = (
@@ -81955,11 +81956,6 @@
 /area/station/ai_monitored/command/storage/eva)
 "xIF" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
-/obj/machinery/airalarm/directional/south,
-/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "server"
-	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "xIO" = (

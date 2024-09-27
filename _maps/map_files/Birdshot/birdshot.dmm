@@ -572,7 +572,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "aoa" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "aoj" = (
 /obj/structure/railing{
@@ -1328,6 +1328,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/book/manual/wiki/tcomms,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server/upper)
 "aAL" = (
@@ -1548,12 +1549,11 @@
 "aEJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "aEP" = (
@@ -1864,10 +1864,9 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "aKx" = (
-/obj/machinery/holopad,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "aKJ" = (
 /obj/structure/cable,
@@ -2918,13 +2917,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "bgQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "bho" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -3140,7 +3136,7 @@
 "bmr" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/broadcaster/preset_right,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "bmz" = (
 /obj/structure/cable,
@@ -4200,7 +4196,7 @@
 /area/station/commons/dorms)
 "bFw" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "bFO" = (
 /obj/effect/spawner/random/trash,
@@ -5085,11 +5081,10 @@
 "bZt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "bZy" = (
@@ -5353,7 +5348,7 @@
 /area/station/science/xenobiology)
 "cdn" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "cdz" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -5563,7 +5558,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "chU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6873,7 +6868,6 @@
 /area/station/engineering/atmos/storage)
 "cHe" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
 	name = "Telecommunications Server Room"
@@ -7071,13 +7065,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
 "cKL" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "cKV" = (
 /obj/machinery/light/floor,
@@ -11259,13 +11250,11 @@
 /area/station/command/heads_quarters/rd)
 "ems" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "emB" = (
 /obj/machinery/door/airlock/maintenance{
@@ -11390,7 +11379,7 @@
 /obj/machinery/telecomms/bus/preset_four,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/east,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "epm" = (
 /obj/machinery/light/no_nightlight/directional/east,
@@ -14178,7 +14167,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "fsW" = (
 /obj/effect/turf_decal/siding/wood{
@@ -14828,6 +14817,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "comms-entrance-south"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/computer)
 "fDQ" = (
@@ -16767,12 +16758,10 @@
 /area/station/engineering/main)
 "gjL" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "gjS" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
@@ -17406,12 +17395,10 @@
 /area/station/engineering/atmos/project)
 "gxq" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/power/apc/auto_name/directional/west,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "gxr" = (
 /obj/machinery/door/airlock/mining{
@@ -17786,7 +17773,6 @@
 /area/station/hallway/primary/central/aft)
 "gCo" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
 	name = "Telecommunications Server Room"
@@ -19070,10 +19056,8 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/greater)
 "gZh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "gZi" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -19619,8 +19603,6 @@
 /area/station/maintenance/port/fore)
 "hfI" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
@@ -20283,8 +20265,6 @@
 /area/station/maintenance/department/engine/atmos)
 "hrz" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
 	name = "Telecommunications Server Room"
@@ -20552,13 +20532,10 @@
 /turf/open/floor/iron,
 /area/station/security/tram)
 "hvX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "hwh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -21665,11 +21642,9 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/solars/port/aft)
 "hQd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
-	dir = 10
-	},
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server/upper)
 "hQs" = (
@@ -22499,7 +22474,7 @@
 "ief" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/message_server/preset,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "ieY" = (
 /obj/structure/disposalpipe/segment,
@@ -24386,7 +24361,6 @@
 /area/station/engineering/break_room)
 "iIN" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -25239,7 +25213,7 @@
 /obj/structure/cable,
 /obj/machinery/telecomms/hub/preset,
 /obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "iVI" = (
 /obj/structure/disposalpipe/segment{
@@ -25457,8 +25431,9 @@
 "iXM" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/camera/autoname/directional/east,
-/obj/machinery/air_sensor/rd_server_chamber,
-/turf/open/floor/iron/dark,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "iXW" = (
 /obj/structure/table/wood,
@@ -26615,9 +26590,7 @@
 /turf/open/floor/iron,
 /area/station/security/tram)
 "jrU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/dark/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit,
 /area/station/tcommsat/computer)
 "jrX" = (
@@ -27568,7 +27541,7 @@
 /area/station/security/tram)
 "jHx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server/upper)
 "jHB" = (
@@ -27892,7 +27865,7 @@
 "jMa" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "jMb" = (
 /obj/effect/turf_decal/bot_white,
@@ -28608,8 +28581,6 @@
 /area/station/maintenance/port/aft)
 "jXr" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
 	name = "Telecommunications Server Room"
@@ -29913,7 +29884,7 @@
 /area/station/science/cubicle)
 "ksg" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "ksm" = (
 /obj/structure/table/wood,
@@ -31969,9 +31940,11 @@
 "ldx" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "ldF" = (
@@ -32629,15 +32602,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"llH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/server)
 "llN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32853,10 +32817,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
-	dir = 9
-	},
 /obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "lon" = (
@@ -34981,13 +34943,6 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/commons/fitness/locker_room)
-"lWq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/server)
 "lWz" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -35871,12 +35826,11 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/supply)
 "mkZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/machinery/light/floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "mle" = (
@@ -36051,12 +36005,10 @@
 /area/station/hallway/secondary/command)
 "mny" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "mnC" = (
 /obj/structure/table,
@@ -36420,7 +36372,7 @@
 "mvo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "mvv" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
@@ -36941,7 +36893,7 @@
 "mFG" = (
 /obj/machinery/telecomms/processor/preset_four,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "mFL" = (
 /obj/structure/table,
@@ -37079,9 +37031,10 @@
 "mHZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "mIg" = (
@@ -37718,7 +37671,7 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "mTN" = (
 /obj/structure/chair/stool/directional/south,
@@ -37814,7 +37767,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "mUQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37899,13 +37852,6 @@
 "mWB" = (
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"mWE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/server)
 "mWF" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -39766,7 +39712,7 @@
 /area/station/tcommsat/computer)
 "nFs" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "nFv" = (
 /obj/machinery/light/no_nightlight/directional/west,
@@ -39982,13 +39928,12 @@
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/command/nuke_storage)
 "nIx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "nIA" = (
@@ -40090,10 +40035,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
-	dir = 10
-	},
 /obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/server/upper)
 "nKz" = (
@@ -42190,7 +42133,7 @@
 "oyW" = (
 /obj/machinery/telecomms/bus/preset_two,
 /obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "oyZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -42800,7 +42743,7 @@
 "oJP" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/broadcaster/preset_left,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "oJR" = (
 /obj/structure/disposalpipe/segment,
@@ -43549,10 +43492,8 @@
 /area/station/maintenance/aft)
 "oWC" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "oXa" = (
 /obj/structure/cable,
@@ -45462,7 +45403,7 @@
 /area/station/commons/storage/tools)
 "pGJ" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "pGK" = (
 /obj/structure/window/spawner/directional/east,
@@ -45947,13 +45888,11 @@
 /area/station/engineering/storage/tcomms)
 "pNK" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "pNO" = (
 /obj/effect/turf_decal/siding{
@@ -47414,9 +47353,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "qlz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit,
 /area/station/tcommsat/computer)
 "qlP" = (
@@ -48305,9 +48242,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "qDd" = (
@@ -48329,11 +48264,11 @@
 "qDi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/holopad,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "qDx" = (
@@ -49672,11 +49607,6 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "server"
-	},
 /turf/open/floor/iron/white/small,
 /area/station/science/server)
 "qZe" = (
@@ -50602,7 +50532,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "rqp" = (
 /obj/structure/disposalpipe/segment{
@@ -52626,7 +52556,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "rYs" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -52810,7 +52740,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "sbN" = (
 /obj/machinery/rnd/server,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "sbU" = (
 /obj/structure/disposalpipe/segment{
@@ -52930,12 +52860,6 @@
 /obj/effect/turf_decal/siding/white/corner,
 /turf/open/floor/iron/dark/small,
 /area/station/science/xenobiology)
-"sel" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/server)
 "seq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plating,
@@ -53463,7 +53387,7 @@
 /area/station/hallway/secondary/dock)
 "sop" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -53703,16 +53627,14 @@
 /area/station/hallway/secondary/recreation)
 "srE" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
 	name = "Telecommunications Server Room"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "comms-entrance-south"
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/tcommsat/computer)
 "srH" = (
@@ -55353,7 +55275,7 @@
 /area/station/engineering/supermatter/room)
 "sTK" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "sTR" = (
 /obj/structure/cable,
@@ -55560,7 +55482,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "sXw" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "sXz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -56595,6 +56517,8 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "top" = (
@@ -56875,12 +56799,10 @@
 /area/station/science/xenobiology)
 "tsA" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "tsB" = (
@@ -57432,6 +57354,8 @@
 /area/station/medical/chemistry)
 "tAT" = (
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "tBk" = (
@@ -57966,7 +57890,7 @@
 "tMs" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "tMS" = (
 /obj/structure/cable,
@@ -58336,7 +58260,7 @@
 "tSq" = (
 /obj/structure/cable,
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "tSu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58995,7 +58919,7 @@
 /area/station/hallway/primary/aft)
 "udv" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "udw" = (
 /obj/item/stack/cable_coil{
@@ -59490,8 +59414,6 @@
 /area/station/maintenance/starboard/central)
 "ujZ" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -59617,7 +59539,7 @@
 /obj/structure/cable,
 /obj/machinery/ntnet_relay,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "ulO" = (
 /turf/open/floor/plating,
@@ -61946,7 +61868,7 @@
 /area/station/medical/psychology)
 "vbQ" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "vbR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -62431,15 +62353,6 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"viV" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/floor/iron/dark/small,
-/area/station/tcommsat/server)
 "viW" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -63009,11 +62922,10 @@
 /area/station/maintenance/hallway/abandoned_command)
 "vqU" = (
 /obj/machinery/rnd/server/master,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "vqX" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
 /obj/machinery/door/airlock/command/glass{
@@ -63439,11 +63351,8 @@
 "vwx" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "vwE" = (
 /obj/effect/turf_decal/siding/wood{
@@ -63550,13 +63459,11 @@
 /area/station/maintenance/department/electrical)
 "vyi" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "vym" = (
@@ -65086,7 +64993,7 @@
 /obj/structure/cable,
 /obj/machinery/telecomms/processor/preset_one,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "vWa" = (
 /obj/effect/turf_decal/siding/white{
@@ -65609,7 +65516,6 @@
 	dir = 4
 	},
 /obj/machinery/camera/autoname/directional/west,
-/obj/machinery/airalarm/directional/west,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server/upper)
 "wdY" = (
@@ -65798,7 +65704,7 @@
 "whu" = (
 /obj/structure/cable,
 /obj/machinery/blackbox_recorder,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/telecomms/server,
 /area/station/tcommsat/server)
 "whA" = (
 /obj/structure/cable,
@@ -66166,7 +66072,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/computer)
 "woE" = (
@@ -70830,15 +70736,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/small,
 /area/station/medical/cryo)
-"xFd" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/obj/machinery/door/airlock/command/glass{
-	name = "Telecommunications Server Room"
-	},
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/station/tcommsat/computer)
 "xFe" = (
 /turf/closed/wall,
 /area/station/security/lockers)
@@ -119019,7 +118916,7 @@ blb
 blb
 wos
 jMa
-mWE
+rYp
 gZh
 oJP
 eXo
@@ -120040,10 +119937,10 @@ nRr
 vTg
 rqm
 vwx
-sel
+cKL
 aKx
 rYp
-viV
+vwx
 chQ
 pJu
 nFp
@@ -120561,7 +120458,7 @@ wos
 wos
 hGr
 hAp
-xFd
+pJu
 cHe
 hAp
 hGr
@@ -120818,7 +120715,7 @@ blb
 blb
 wos
 tMs
-lWq
+bgQ
 gZh
 bmr
 eXo
@@ -121075,7 +120972,7 @@ ifa
 blb
 wos
 aoa
-llH
+rYp
 cKL
 mTM
 eXo

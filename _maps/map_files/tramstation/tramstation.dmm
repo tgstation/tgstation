@@ -61060,6 +61060,8 @@
 	name = "server vent";
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "uwb" = (
@@ -65423,6 +65425,8 @@
 	name = "server vent";
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
 "vSb" = (

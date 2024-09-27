@@ -25622,7 +25622,8 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
 	},
-/obj/machinery/air_sensor/rd_server_chamber,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/science/server)
 "jdZ" = (
@@ -51208,11 +51209,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
-	},
-/obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room,
-/obj/effect/mapping_helpers/airalarm/link{
-	chamber_id = "server"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
