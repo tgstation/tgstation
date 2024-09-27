@@ -8,8 +8,8 @@
 			"wags their tail against",
 			"playfully leans against"
 		),
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/raptor/baby_raptor),
 		BB_MAX_CHILDREN = 5,
