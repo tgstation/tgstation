@@ -28,6 +28,8 @@
 	* so any other case the elements will be changed but not recorded.
 	*/
 	var/list/stored_decals = list()
+	/// Delay before trapdoor shuts close. 0 means no auto close.
+	var/autoclose_delay = 5 SECONDS
 
 /datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, var/list/carried_decals = null)
 	if(!isopenturf(parent))
@@ -43,6 +45,8 @@
 
 	if(IS_OPEN(parent))
 		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
+		if(autoclose_delay)
+			addtimer(CALLBACK(src, PROC_REF(try_closing)), autoclose_delay)
 	else
 		tile_trapdoor_setup(trapdoor_turf_path, assembly)
 
