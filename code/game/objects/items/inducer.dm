@@ -67,7 +67,7 @@
 	else
 		. += span_warning("It's missing a power cell.")
 
-	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "closed" : "opened"].")
+	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "shut" : "open"].")
 
 /obj/item/inducer/update_overlays()
 	. = ..()
