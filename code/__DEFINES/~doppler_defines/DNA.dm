@@ -4,5 +4,3 @@
 
 #define REAGENT_ORGANIC 1
 #define REAGENT_SYNTHETIC 2
-
-#define SPECIES_HEMOPHAGE "hemophage"
