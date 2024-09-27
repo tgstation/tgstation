@@ -1,4 +1,0 @@
-author: "ZeWaka"
-delete-after: True
-changes:
-  - bugfix: "TGUI windows now flash less when opening new windows."

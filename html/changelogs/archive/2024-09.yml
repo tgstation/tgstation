@@ -782,3 +782,50 @@
   - bugfix: fixed lava proofed clothing from xenobio potion being damaged from fire
   grungussus:
   - sound: audible emotes share the same cooldown
+2024-09-27:
+  00-Steven:
+  - bugfix: Fixed two broken spans, primarily used in traitor panel and some basic
+      bot stuff.
+  - admin: Traitor panel text is no longer bright red when an antag is selected, and
+      remove button is no longer blocked.
+  EnterTheJake:
+  - bugfix: Mansus Grasp can now properly interact with non living things.
+  - code_imp: proc/on_hand_hit and secondary have better return values.
+  Ghommie:
+  - bugfix: The Pun Pun job trait doesn't leave behind a fake (or is it?) Pun Pun.
+  - bugfix: Fixed water overlays showing on toilets facing directions other than SOUTH
+      (down).
+  Iamgoofball:
+  - bugfix: Removes particles from Slimed and Slime Food status effects to fix fps
+      lag in xenobio
+  Jewelry-x:
+  - bugfix: fixed hydroponics tray not updating new crop sprite properly
+  SmArtKar:
+  - rscadd: You can now craft tether anchors, which can be secured with a wrench and
+      attached to with right click. They won't let you drift into space and you can
+      adjust tether length/cut it via lmb/rmb/ctrl click on the wire.
+  - rscadd: MOD tethers now remotely place and connect to tether anchors instead of
+      throwing you at where they landed.
+  - balance: MOD tethers can now be used in gravity
+  - balance: Jetpacks are now inertia-based.
+  - balance: Guns can accelerate you significantly in zero-g.
+  - balance: All jetpacks now give you equal speed buff, however advanced MOD ion
+      jets and captain's jetpack have higher acceleration/deceleration values.
+  - refactor: Refactored zero-g movement to be inertia-based and utilize angles instead
+      of directions.
+  Tattle:
+  - balance: insulated gloves no longer have the chunky fingers trait
+  ZeWaka:
+  - bugfix: TGUI windows now flash less when opening new windows.
+  carlarctg:
+  - qol: you can now use the toy codex cicatrix as base for the codex ritual
+  grungussuss:
+  - sound: improved click.ogg
+  - bugfix: thrown items now respect the vary variable when making drop sounds.
+  - sound: lead pipe now only makes an obnoxious drop sound when thrown., reduced
+      its sound by 10db
+  mc-oofert:
+  - bugfix: fixed password paper in museum
+  oranges:
+  - rscadd: Cardboard rolls and Wrapping paper can now be used to hit people on the
+      head with
