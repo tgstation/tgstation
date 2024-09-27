@@ -108,7 +108,7 @@
 
 /obj/vehicle/sealed/space_pod/proc/unequip_item(obj/item/pod_equipment/equipment, mob/living/user)
 	. = TRUE
-	if(!user?.put_in_hands(equipment))
+	if(!QDELETED(equipment) && !user?.put_in_hands(equipment))
 		equipment.forceMove(drop_location())
 
 	equipped[equipment.slot] -= list(equipment)
