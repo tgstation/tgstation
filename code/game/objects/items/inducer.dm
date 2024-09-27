@@ -213,4 +213,4 @@
 	inhand_icon_state = "inducer-syndi"
 	desc = "A tool for inductively charging internal power cells. This one has a suspicious colour scheme, and seems to be rigged to transfer charge at a much faster rate."
 	power_transfer_multiplier = 2 // 2x the base speed
-	powerdevice = /obj/item/stock_parts/power_store/cell/super
+	powerdevice = /obj/item/stock_parts/power_store/battery/super
