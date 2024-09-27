@@ -87,7 +87,7 @@
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
-	assembly.linked = FALSE
+	assembly.linked--
 	assembly.stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
@@ -117,11 +117,11 @@
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
 	SIGNAL_HANDLER
-	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE || assembly.linked)
+	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE)
 		return
 	. = LINKED_UP
 	src.assembly = assembly
-	assembly.linked = TRUE
+	assembly.linked++
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
@@ -145,8 +145,8 @@
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
-			assembly.linked = FALSE
-			assembly.stored_decals.Cut()
+			assembly.linked--
+			assembly.stored_decals.Cut() // TODO(antropod)
 			assembly = null
 		return
 	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
@@ -226,7 +226,7 @@
 
 /obj/item/assembly/trapdoor/pulsed(mob/pulser)
 	. = ..()
-	if(linked)
+	if(linked > 0)
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		if(loc && pulser)
@@ -273,7 +273,7 @@
 	if(!internals.linked)
 		. += span_warning("[src] is not linked to a trapdoor.")
 		return
-	. += span_notice("[src] is linked to a trapdoor.")
+	. += span_notice("[src] is linked to [internals.linked] trapdoor(s).")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		. += span_warning("It is on a short cooldown.")
 
@@ -310,7 +310,7 @@
 		internals.pulsed(user)
 		// The pulse linked successfully
 		if(internals.linked)
-			user.balloon_alert(user, "linked")
+			user.balloon_alert(user, "linked [internals.linked] trapdoors")
 		// The pulse failed to link
 		else
 			user.balloon_alert(user, "link failed!")
