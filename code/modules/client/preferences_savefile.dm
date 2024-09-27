@@ -110,10 +110,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			new_typepath = /obj/item/clothing/accessory/pride,
 			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
 		)
-	if (current_version < 46)
-
-
-
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
