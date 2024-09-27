@@ -306,7 +306,6 @@
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
-	// NON-MODULE CHANGE
 	var/blocked_slots = NONE
 
 	var/mob/living/carbon/human/human_mob = mymob
