@@ -19,13 +19,24 @@
 	var/conspicuous
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
+	/**
+	* list of lists that are arguments for readding decals when the linked trapdoor comes back. pain.
+	*
+	* we are storing this data FOR the trapdoor component we are linked to. kinda like a multitool.
+	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
+	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
+	* so any other case the elements will be changed but not recorded.
+	*/
+	var/list/stored_decals = list()
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, var/list/carried_decals = null)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.conspicuous = conspicuous
 	src.assembly = assembly
+	if(carried_decals)
+		stored_decals = carried_decals.Copy()
 
 	if(!trapdoor_overlay)
 		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
@@ -45,7 +56,7 @@
 ///initializing as a closed trapdoor, we need to take data from the tile we're on to give it to the open state to store
 /datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path)
 	src.trapdoor_turf_path = parent.type
-	if(assembly && assembly.stored_decals.len)
+	if(stored_decals.len)
 		reapply_all_decals()
 	if(conspicuous)
 		var/turf/parent_turf = parent
@@ -88,7 +99,7 @@
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
 	assembly.linked--
-	assembly.stored_decals = list()
+	stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
@@ -98,7 +109,7 @@
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
 	///so it adds the list to the list, not appending it to the end. thank you byond, very cool.
-	assembly.stored_decals += list(list(description, cleanable, directional, pic))
+	stored_decals += list(list(description, cleanable, directional, pic))
 
 /**
  * ## reapply_all_decals
@@ -106,9 +117,9 @@
  * changing turfs does not bring over decals, so we must perform a little bit of element reapplication.
  */
 /datum/component/trapdoor/proc/reapply_all_decals()
-	for(var/list/element_data as anything in assembly.stored_decals)
+	for(var/list/element_data as anything in stored_decals)
 		apply_decal(element_data[1], element_data[2], element_data[3], element_data[4])
-	assembly.stored_decals = list()
+	stored_decals = list()
 
 /// small proc that takes passed arguments and drops it into a new element
 /datum/component/trapdoor/proc/apply_decal(description, cleanable, directional, pic)
@@ -146,7 +157,7 @@
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
 			assembly.linked--
-			assembly.stored_decals.Cut() // TODO(antropod)
+			stored_decals.Cut()
 			assembly = null
 		return
 	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
@@ -158,7 +169,7 @@
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
 /datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous, stored_decals)
 
 /**
  * ## on_examine
@@ -213,16 +224,6 @@
 	var/search_cooldown_time = 10 SECONDS
 	///if true, a trapdoor in the world has a reference to this assembly and is listening for when it is pulsed.
 	var/linked = FALSE
-	/**
-	* list of lists that are arguments for readding decals when the linked trapdoor comes back. pain.
-	*
-	* we are storing this data FOR the trapdoor component we are linked to. kinda like a multitool.
-	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
-	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
-	* so any other case the elements will be changed but not recorded.
-	*/
-	var/list/stored_decals = list()
-
 
 /obj/item/assembly/trapdoor/pulsed(mob/pulser)
 	. = ..()
