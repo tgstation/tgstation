@@ -13,12 +13,20 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
 	var/id
 
-	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
-	///Deprecated, use greyscale_color instead.
+	/**
+	 * Base color of the material, for items that don't have greyscale configs nor are made of multiple materials. Item isn't changed in color if this is null.
+	 * This can be a RGB or color matrix, but it cannot be RGBA as alpha is automatically filled in.
+	 */
 	var/color
-	///Determines the color palette of the material. Formatted the same as atom/var/greyscale_colors
-	var/greyscale_colors
-	///Base alpha of the material, is used for greyscale icons.
+	/**
+	 * If the color is a color matrix and either the item uses greyscale configs or is made of multiple colored materials. This will be used instead because
+	 * neither greyscale configs nor BlendRGB() support color matrices.
+	 * Also this has to be RRGGBB, six characters, no alpha channel as it's automatically filled in.
+	 *
+	 * Basically, set this if the color is a color matrix (list)
+	 */
+	var/greyscale_color
+	/// Base alpha of the material
 	var/alpha = 255
 	///Starlight color of the material
 	///This is the color of light it'll emit if its turf is transparent and over space. Defaults to COLOR_STARLIGHT if not set

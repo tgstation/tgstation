@@ -3,8 +3,13 @@
 	name = "iron"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
 	color = "#B6BEC2"
-	greyscale_colors = "#B6BEC2"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
@@ -24,9 +29,14 @@
 	name = "glass"
 	desc = "Glass forged by melting sand."
 	color = "#6292AF"
-	greyscale_colors = "#6292AF"
 	alpha = 150
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
 	ore_type = /obj/item/stack/ore/glass/basalt
@@ -66,8 +76,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "silver"
 	desc = "Silver"
 	color = "#B5BCBB"
-	greyscale_colors = "#B5BCBB"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
@@ -87,9 +102,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "gold"
 	desc = "Gold"
 	color = "#E6BB45"
-	greyscale_colors = "#E6BB45"
 	strength_modifier = 1.2
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	ore_type = /obj/item/stack/ore/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
@@ -110,8 +130,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "diamond"
 	desc = "Highly pressurized carbon"
 	color = "#C9D8F2"
-	greyscale_colors = "#C9D8F2"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	ore_type = /obj/item/stack/ore/diamond
 	alpha = 132
@@ -133,8 +158,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "uranium"
 	desc = "Uranium"
 	color = "#2C992C"
-	greyscale_colors = "#2C992C"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	ore_type = /obj/item/stack/ore/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
@@ -173,8 +203,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = "#BA3692"
-	greyscale_colors = "#BA3692"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	ore_type = /obj/item/stack/ore/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
@@ -205,10 +240,15 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties"
 	color = "#2E50B7"
-	greyscale_colors = "#2E50B7"
 	alpha = 200
 	starlight_color = COLOR_BLUE
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
 	ore_type = /obj/item/stack/ore/bluespace_crystal
@@ -229,8 +269,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bananium"
 	desc = "Material with hilarious properties"
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow //It's literally perfect I can't change it
-	greyscale_colors = "#FFF269"
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	greyscale_color = "#FFF269"
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	ore_type = /obj/item/stack/ore/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
@@ -259,9 +305,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "titanium"
 	desc = "Titanium"
 	color = "#EFEFEF"
-	greyscale_colors = "#EFEFEF"
 	strength_modifier = 1.3
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
@@ -281,9 +332,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "runite"
 	desc = "Runite"
 	color = "#526F77"
-	greyscale_colors = "#526F77"
 	strength_modifier = 1.3
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/runite
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
@@ -300,11 +355,16 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "plastic"
 	desc = "Plastic"
 	color = "#BFB9AC"
-	greyscale_colors = "#BFB9AC"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
 	ore_type = /obj/item/stack/ore/slag //No plastic or coal ore, so we use slag.
-	categories = list(MAT_CATEGORY_SILO = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_SILO = TRUE,
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = -0.01
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
@@ -319,9 +379,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 ///Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
 	name = "biomass"
-	desc = "Organic matter"
+	desc = "Organic matter."
 	color = "#735b4d"
-	greyscale_colors = "#735b4d"
 	strength_modifier = 0.8
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 
@@ -329,10 +388,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "wood"
 	desc = "Flexible, durable, but flamable. Hard to come across in space."
 	color = "#855932"
-	greyscale_colors = "#855932"
 	strength_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/mineral/wood
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	value_per_unit = 20 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.1
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
@@ -362,9 +425,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "adamantine"
 	desc = "A powerful material made out of magic, I mean science!"
 	color = "#2B7A74"
-	greyscale_colors = "#2B7A74"
 	strength_modifier = 1.5
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.4
@@ -381,8 +448,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "mythril"
 	desc = "How this even exists is byond me"
 	color = "#f2d5d7"
-	greyscale_colors = "#f2d5d7"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 1.2
@@ -412,10 +483,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "hot ice"
 	desc = "A weird kind of ice, feels warm to the touch"
 	color = "#88cdf1"
-	greyscale_colors = "#88cdf196"
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.2
@@ -438,10 +513,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "Metal Hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
 	color = "#62708A"
-	greyscale_colors = "#62708A"
 	alpha = 150
 	starlight_color = COLOR_MODERATE_BLUE
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	value_per_unit = 700 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.35
@@ -457,8 +536,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "sand"
 	desc = "You know, it's amazing just how structurally sound sand can be."
 	color = "#EDC9AF"
-	greyscale_colors = "#EDC9AF"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/sandblock
 	value_per_unit = 2 / SHEET_MATERIAL_AMOUNT
 	strength_modifier = 0.5
@@ -477,8 +559,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "sandstone"
 	desc = "Bialtaakid 'ant taerif ma hdha."
 	color = "#ECD5A8"
-	greyscale_colors = "#ECD5A8"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
@@ -490,8 +576,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "snow"
 	desc = "There's no business like snow business."
 	color = COLOR_WHITE
-	greyscale_colors = COLOR_WHITE
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0.25, ACID = 1.5)
@@ -507,8 +596,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "runed metal"
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#504742"
-	greyscale_colors = "#504742"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
@@ -524,8 +617,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bronze"
 	desc = "Clock Cult? Never heard of it."
 	color = "#876223"
-	greyscale_colors = "#876223"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
@@ -535,8 +632,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "paper"
 	desc = "Ten thousand folds of pure starchy power."
 	color = "#E5DCD5"
-	greyscale_colors = "#E5DCD5"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/paperframes
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, ACID = 1.5)
@@ -561,8 +662,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "cardboard"
 	desc = "They say cardboard is used by hobos to make incredible things."
 	color = "#5F625C"
-	greyscale_colors = "#5F625C"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/cardboard
 	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
@@ -585,8 +690,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bone"
 	desc = "Man, building with this will make you the coolest caveman on the block."
 	color = "#e3dac9"
-	greyscale_colors = "#e3dac9"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/bone
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
@@ -596,8 +705,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bamboo"
 	desc = "If it's good enough for pandas, it's good enough for you."
 	color = "#87a852"
-	greyscale_colors = "#87a852"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
@@ -609,8 +722,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "zaukerite"
 	desc = "A light absorbing crystal"
 	color = COLOR_ALMOST_BLACK
-	greyscale_colors = COLOR_ALMOST_BLACK
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID = TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+		)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
