@@ -11,11 +11,10 @@
 	if(!wiki_url)
 		user.balloon_alert(user, "this book is empty!")
 		return
-	else
-		credit_book_to_reader(user)
-		if(tgui_alert(user, "This will open the wiki page of the book you are reading in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		usr << link("[wiki_url]/[page_link]")
+	credit_book_to_reader(user)
+	if(tgui_alert(user, "This will open the wiki page of the book you are reading in your browser. Are you sure?",, list("Yes","No"))!="Yes")
+		return
+	usr << link("[wiki_url]/[page_link]")
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"
