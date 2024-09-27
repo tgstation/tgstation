@@ -9,7 +9,7 @@
 
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1, initial = FALSE)
-	if(!initial)
+	if(!initial && length(custom_materials))
 		remove_material_effects()
 
 	if(!length(materials))
@@ -70,14 +70,15 @@
 	var/total_alpha = 0
 	var/list/colors = list()
 	var/mat_length = length(materials)
-	var/datum/material/main_material = get_main_material()
+	var/datum/material/main_material //the material with the highest amount (after calculations)
 	var/main_mat_amount
 	var/main_mat_mult
 	for(var/datum/material/custom_material as anything in materials)
 		var/list/deets = materials[custom_material]
 		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
 		var/multiplier = deets[MATERIAL_LIST_MULTIPLIER]
-		if(custom_material == main_material)
+		if(mat_amount > main_mat_amount)
+			main_material = custom_material
 			main_mat_amount = mat_amount
 			main_mat_mult = multiplier
 
@@ -161,21 +162,6 @@
 	else
 		add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
 
-///Returns the material this atom should be composed by the most when setting materials, from a list argument.
-/atom/proc/get_main_material(list/materials)
-	RETURN_TYPE(/datum/material)
-	var/datum/material/main_material //the material with the highest amount (after calculations)
-	var/max_value = 0
-	for(var/datum/material/material as anything in materials)
-		var/list/deets = materials[material]
-		var/mat_amount = deets[MATERIAL_LIST_OPTIMAL_AMOUNT]
-		var/multipier = deets[MATERIAL_LIST_MULTIPLIER]
-		var/value = mat_amount*multipier
-		if(value > max_value)
-			main_material = material
-			max_value = value
-	return main_material
-
 ///Returns the prefixes to attach to the atom when setting materials, from a list argument.
 /atom/proc/get_material_prefixes(list/materials)
 	var/list/mat_names = list()
@@ -217,7 +203,7 @@
 ///Called by remove_material_effects(). It ACTUALLY handles removing effects common to all atoms (depending on material flags)
 /atom/proc/finalize_remove_material_effects(list/materials)
 	var/list/colors = list()
-	var/datum/material/main_material = get_main_material()
+	var/datum/material/main_material = get_master_material()
 	var/mat_length = length(materials)
 	var/main_mat_amount
 	var/main_mat_mult
