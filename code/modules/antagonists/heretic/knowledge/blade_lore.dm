@@ -98,7 +98,7 @@
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
-	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
+	playsound(get_turf(target), 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 /// The cooldown duration between trigers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
@@ -147,7 +147,7 @@
 	if(!riposte_ready)
 		return
 
-	if(source.incapacitated(IGNORE_GRAB))
+	if(INCAPACITATED_IGNORING(source, INCAPABLE_GRAB))
 		return
 
 	var/mob/living/attacker = hitby.loc
@@ -184,7 +184,7 @@
 	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
 
 /datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
+	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
 	source.balloon_alert(source, "riposte used")
 	source.visible_message(
 		span_warning("[source] leans into [attack_text] and delivers a sudden riposte back at [target]!"),
@@ -423,7 +423,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_blade.ogg',
+		sound = 'sound/music/antag/heretic/ascend_blade.ogg',
 		color_override = "pink",
 	)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)

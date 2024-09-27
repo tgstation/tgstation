@@ -139,7 +139,7 @@
 				return TRUE
 
 			authenticated = TRUE
-			success_message = "YOU SUCCESFULLY LOGGED IN!"
+			success_message = "YOU SUCCESSFULLY LOGGED IN!"
 
 			return TRUE
 		if("link_server")
@@ -180,10 +180,10 @@
 			notice_message = "NOTICE: Logs cleared."
 			return TRUE
 		if("set_key")
-			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
+			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16)
 			if(dkey && dkey != "")
 				if(linkedServer.decryptkey == dkey)
-					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key")
+					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16)
 					if(length(newkey) <= 3)
 						notice_message = "NOTICE: Decryption key too short!"
 					else if(newkey && newkey != "")
@@ -210,8 +210,8 @@
 					break
 			return TRUE
 		if("send_fake_message")
-			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender")
-			var/job = tgui_input_text(usr, "What is the sender's job?", "Job")
+			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender", max_length = MAX_NAME_LEN)
+			var/job = tgui_input_text(usr, "What is the sender's job?", "Job", max_length = 60)
 
 			var/recipient
 			var/list/tablet_to_messenger = list()
@@ -229,7 +229,7 @@
 			else
 				recipient = null
 
-			var/message = tgui_input_text(usr, "Please enter your message", "Message")
+			var/message = tgui_input_text(usr, "Please enter your message", "Message", max_length = MAX_MESSAGE_LEN)
 			if(isnull(sender) || sender == "")
 				sender = "UNKNOWN"
 

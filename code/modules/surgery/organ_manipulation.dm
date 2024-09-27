@@ -85,6 +85,8 @@
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
+	if(tool)
+		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
 	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
@@ -135,8 +137,8 @@
 	implements = list(
 		/obj/item/organ = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
-	preop_sound = 'sound/surgery/organ2.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = 'sound/items/handling/surgery/organ2.ogg'
+	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
@@ -163,8 +165,8 @@
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
-		preop_sound = 'sound/surgery/hemostat1.ogg'
-		success_sound = 'sound/surgery/organ2.ogg'
+		preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+		success_sound = 'sound/items/handling/surgery/organ2.ogg'
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
@@ -211,13 +213,24 @@
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
-			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+
+			if(user && target && user.Adjacent(target))
+				//tool check
+				var/obj/item/held_tool = user.get_active_held_item()
+				if(held_tool)
+					held_tool = held_tool.get_proxy_attacker_for(target, user)
+				if(held_tool != tool)
+					return SURGERY_STEP_FAIL
+
+				//organ check
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
+
+				//start operation
 				display_results(
 					user,
 					target,

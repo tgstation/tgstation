@@ -583,8 +583,8 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed
 		return
 	var/datum/map_template/ruin/template = landmark.ruin_template
 	user.mob.forceMove(get_turf(landmark))
-	to_chat(user, span_name("[template.name]"), confidential = TRUE)
-	to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+	to_chat(user, span_name(template.name), confidential = TRUE)
+	to_chat(user, span_italics(template.description), confidential = TRUE)
 
 ADMIN_VERB_VISIBILITY(place_ruin, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a specific ruin.", ADMIN_CATEGORY_MAPPING)
@@ -625,7 +625,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 		log_admin("[key_name(user)] randomly spawned ruin [ruinname] at [COORD(landmark)].")
 		user.mob.forceMove(get_turf(landmark))
 		to_chat(user, span_name("[template.name]"), confidential = TRUE)
-		to_chat(user, "<span class='italics'>[template.description]</span>", confidential = TRUE)
+		to_chat(user, span_italics("[template.description]"), confidential = TRUE)
 	else
 		to_chat(user, span_warning("Failed to place [template.name]."), confidential = TRUE)
 

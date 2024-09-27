@@ -1,13 +1,3 @@
-
-{
-cig_light.ogg
-cig_snuff.ogg
-lighter_on.ogg
-lighter_off.ogg
-zippo_onn.ogg
-zippo_off.ogg
-} - Taken from https://github.com/BeeStation/BeeStation-Hornet/pull/29
-
 pen_click.ogg from https://freesound.org/people/LexzachGames/sounds/431492/ , license: CC0
 
 night_vision_on.ogg by Syna-Max -- https://freesound.org/s/60345/ -- License: Attribution NonCommercial 4.0
@@ -31,8 +21,6 @@ handcuffs_drop.ogg - handcuffs.ogg by kimuracarter -- https://freesound.org/s/52
 handcuffs_pick_up.ogg - handcuffs.ogg by kimuracarter -- https://freesound.org/s/528749/ -- License: Attribution 3.0
 plastic_shield_drop.ogg - made by sadboysuss -- License: CC-by-SA
 plastic_shield_pick_up.ogg - made by sadboysuss -- License: CC-by-SA
-stun_baton_drop.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
-stun_baton_pick_up.ogg - Fn P90 Submachine Gun 5.7Mm. Mechan; Empty Mag Inserted Into And Pulled Out Slow And Various 02 by PNMCarrieRailfan -- https://freesound.org/s/682041/ -- License: Attribution NonCommercial 4.0
 pepper_spray_drop.ogg - Spray Paint Shake Slow Five.wav by cbakos -- https://freesound.org/s/200376/ -- License: Creative Commons 0
 pepper_spray_pick_up.ogg - Spray Paint Shake Slow Five.wav by cbakos -- https://freesound.org/s/200376/ -- License: Creative Commons 0
 grenade_drop.ogg - made by sadboysuss -- License: CC-by-SA
@@ -64,6 +52,12 @@ toolbox_open.ogg - made by sadboysuss
 toolbox_rustle.ogg - made by sadboysuss
 medkit_rustle.ogg - made by sadboysuss
 } - license: CC-by-SA
+
+{
+glove_pick_up.ogg - made by sadboysuss
+glove_drop.ogg - made by sadboysuss
+} - license: CC-by-SA
+glove_equip.ogg - LETHRCreak_Leather Belt Short Creak 01_PF_365 DAYS OF SOUND by itmightgetloud -- https://freesound.org/s/751281/ -- License: Creative Commons 0
 
 lead_pipe_hit.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0
 lead_pipe_drop.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0

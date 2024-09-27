@@ -66,6 +66,7 @@
 		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal
@@ -119,7 +120,7 @@
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=1))
+			if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
@@ -128,7 +129,7 @@
 				deconstruct()
 			return
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
 		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)
@@ -164,9 +165,11 @@
 	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
 
 /// Mouse drop another mob or self
-/obj/machinery/disposal/mouse_drop_receive(mob/living/target, mob/living/user, params)
-	if(istype(target))
+/obj/machinery/disposal/mouse_drop_receive(atom/target, mob/living/user, params)
+	if(isliving(target))
 		stuff_mob_in(target, user)
+	if(istype(target, /obj/structure/closet/body_bag) && (user.mobility_flags & (MOBILITY_PICKUP|MOBILITY_STAND) == (MOBILITY_PICKUP|MOBILITY_STAND)))
+		stuff_bodybag_in(target, user)
 
 /// Handles stuffing a grabbed mob into the disposal
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
@@ -175,33 +178,65 @@
 		if (iscyborg(user))
 			var/mob/living/silicon/robot/borg = user
 			if (!borg.model || !borg.model.canDispose)
-				return
+				return FALSE
 		else
-			return
+			return FALSE
 	if(!isturf(user.loc)) //No magically doing it from inside closets
-		return
+		return FALSE
 	if(target.buckled || target.has_buckled_mobs())
-		return
+		return FALSE
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		to_chat(user, span_warning("[target] doesn't fit inside [src]!"))
-		return
+		return FALSE
 	add_fingerprint(user)
 	if(user == target)
 		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
-	if(do_after(user, 2 SECONDS, target))
-		if (!loc)
-			return
-		target.forceMove(src)
-		if(user == target)
-			user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
-			. = TRUE
-		else
-			target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
-			log_combat(user, target, "stuffed", addition="into [src]")
-			. = TRUE
-		update_appearance()
+	if(!do_after(user, 2 SECONDS, target) || QDELETED(src))
+		return FALSE
+	target.forceMove(src)
+	if(user == target)
+		user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
+	else
+		target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
+		log_combat(user, target, "stuffed", addition="into [src]")
+	update_appearance()
+	return TRUE
+
+/obj/machinery/disposal/proc/stuff_bodybag_in(obj/structure/closet/body_bag/bag, mob/living/user)
+	if(!length(bag.contents))
+		bag.undeploy_bodybag(src)
+		qdel(bag)
+		user.visible_message(
+			span_warning("[user] stuffs the empty [bag.name] into [src]."),
+			span_notice("You stuff the empty [bag.name] into [src].")
+		)
+		return TRUE
+
+	user.visible_message(
+		span_warning("[user] starts putting [bag] into [src]."),
+		span_notice("You start putting [bag] into [src]...")
+	)
+
+	if(!do_after(user, 4 SECONDS, bag) || QDELETED(src))
+		return FALSE
+
+	user.visible_message(
+		span_warning("[user] places [bag] in [src]."),
+		span_notice("You place [bag] in [src].")
+	)
+
+	if(!length(bag.contents))
+		bag.undeploy_bodybag(src)
+		qdel(bag)
+	else
+		bag.add_fingerprint(user)
+		bag.forceMove(src)
+
+	add_fingerprint(user)
+	update_appearance()
+	return TRUE
 
 /obj/machinery/disposal/relaymove(mob/living/user, direction)
 	attempt_escape(user)
@@ -650,6 +685,6 @@
 
 	update_appearance()
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 #undef SEND_PRESSURE

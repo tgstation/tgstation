@@ -7,7 +7,7 @@
 
 /// Checks if we can take a picture at this moment. Returns TRUE if we can, FALSE if we can't.
 /obj/item/camera/siliconcam/proc/can_take_picture(mob/living/silicon/clicker)
-	if(clicker.stat != CONSCIOUS || clicker.incapacitated())
+	if(clicker.stat != CONSCIOUS || clicker.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -31,11 +31,11 @@
 		// Trying to turn on camera mode while you have another click intercept active, such as malf abilities
 		if(sound)
 			balloon_alert(user, "can't enable camera mode!")
-			playsound(user, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+			playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 
 	if(sound)
-		playsound(user, 'sound/items/wirecutter.ogg', 50, TRUE)
+		playsound(user, 'sound/items/tools/wirecutter.ogg', 50, TRUE)
 		balloon_alert(user, "camera mode [user.click_intercept == src ? "activated" : "deactivated"]")
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
@@ -80,7 +80,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	balloon_alert(user, "image recorded")
-	user.playsound_local(get_turf(user), pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 50, TRUE, -3)
+	user.playsound_local(get_turf(user), pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 50, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -102,7 +102,7 @@
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
 		balloon_alert(user, "image recorded and saved locally")
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
+	playsound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
 	if(istype(user) && user.connected_ai)

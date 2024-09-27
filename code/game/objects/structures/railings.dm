@@ -4,7 +4,7 @@
 	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	flags_1 = ON_BORDER_1
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
@@ -167,6 +167,7 @@
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()
@@ -179,7 +180,6 @@
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
 	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
-	plane = (direction & NORTH) ? GAME_PLANE : initial(plane)
 
 
 /obj/structure/railing/corner/end/wooden_fence

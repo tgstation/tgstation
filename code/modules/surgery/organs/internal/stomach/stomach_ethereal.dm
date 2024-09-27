@@ -10,7 +10,7 @@
 
 /obj/item/organ/internal/stomach/ethereal/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/power_store/cell/ethereal(null)
+	cell = new /obj/item/stock_parts/power_store/cell/ethereal(src)
 
 /obj/item/organ/internal/stomach/ethereal/Destroy()
 	QDEL_NULL(cell)
@@ -105,7 +105,7 @@
 				//fixed_mut_color is also ethereal color (for some reason)
 				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
 
-		playsound(carbon, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
 		// Only a small amount of the energy gets discharged as the zap. The rest dissipates as heat. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
 		var/discharged_energy = -adjust_charge(ETHEREAL_CHARGE_FULL - cell.charge()) * min(7500 / STANDARD_CELL_CHARGE, 1)

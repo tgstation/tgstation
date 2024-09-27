@@ -3,7 +3,7 @@
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
 	button_icon_state = "teleport"
-	sound = 'sound/magic/teleport_diss.ogg'
+	sound = 'sound/effects/magic/teleport_diss.ogg'
 
 	school = SCHOOL_TRANSLOCATION
 	cooldown_time = 1 MINUTES
@@ -16,7 +16,7 @@
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 
-	post_teleport_sound = 'sound/magic/teleport_app.ogg'
+	post_teleport_sound = 'sound/effects/magic/teleport_app.ogg'
 
 // Santa's teleport, themed as such
 /datum/action/cooldown/spell/teleport/area_teleport/wizard/santa
@@ -48,5 +48,5 @@
 		return
 
 	var/mob/living/carbon/caster = cast_on
-	if(caster.incapacitated() || !caster.is_holding(target))
+	if(caster.incapacitated || !caster.is_holding(target))
 		return . | SPELL_CANCEL_CAST
