@@ -1,5 +1,5 @@
 /mob/living/carbon/human/species/genemod/primitive
-	race = /datum/species/human/genemod/primitive
+	race = /datum/species/genemod/primitive
 
 /datum/language_holder/primitive_genemod
 	understood_languages = list(
@@ -12,8 +12,8 @@
 	)
 	selected_language = /datum/language/primitive_genemod
 
-/datum/species/human/genemod/primitive
-	name = "Primitive Gene-Mod"
+/datum/species/genemod/primitive
+	name = "Hearthkin"
 	id = SPECIES_GENEMOD_PRIMITIVE
 	preview_outfit = /datum/outfit/genemod_primitive_preview
 
@@ -31,7 +31,7 @@
 		TRAIT_ANIMALISTIC,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_RESISTCOLD,
-		TRAIT_USES_SKINTONES,
+		TRAIT_MUTANT_COLORS,
 	)
 
 /datum/outfit/genemod_primitive_preview
@@ -40,7 +40,7 @@
 	neck = /obj/item/clothing/neck/scarf/primitive_genemod_scarf
 	back = /obj/item/forging/reagent_weapon/axe/fake_copper
 
-/datum/species/human/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
+/datum/species/genemod/primitive/on_species_gain(mob/living/carbon/new_primitive, datum/species/old_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = new_primitive
 	if(!istype(hearthkin))
@@ -53,14 +53,14 @@
 	mutation.mutadone_proof = TRUE
 	mutation.instability = 0
 
-/datum/species/human/genemod/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
+/datum/species/genemod/primitive/on_species_loss(mob/living/carbon/former_primitive, datum/species/new_species, pref_load)
 	. = ..()
 	var/mob/living/carbon/human/hearthkin = former_primitive
 	if(!istype(hearthkin))
 		return
 	hearthkin.dna.remove_mutation(/datum/mutation/human/olfaction)
 
-/datum/species/human/genemod/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+/datum/species/genemod/primitive/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.dna.ear_type = CAT
 	human_for_preview.dna.features["ears"] = "Coeurl"
 	human_for_preview.dna.features["ears_color_1"] = "#e9eff5"
@@ -68,13 +68,13 @@
 	human_for_preview.dna.features["ears_color_3"] = "#222222"
 	human_for_preview.set_haircolor("#E9EFF5", update = FALSE)
 	human_for_preview.set_hairstyle("Fluffy long", update = TRUE)
-	human_for_preview.skin_tone = "albino"
+	human_for_preview.dna.features["mcolor"] = skintone2hex("albino")
 	human_for_preview.eye_color_left = "#96dbe7"
 	human_for_preview.eye_color_right = "#96dbe7"
 	regenerate_organs(human_for_preview)
 	human_for_preview.update_body(is_creating = TRUE)
 
-/datum/species/human/genemod/primitive/get_species_description()
+/datum/species/genemod/primitive/get_species_description()
 	return list(
 		"Genetically modified humanoids believed to be descendants of a now centuries old colony \
 			ship from the pre-bluespace travel era. Still having at least some human traits, they \
@@ -82,7 +82,7 @@
 			the icemoon's many fauna."
 	)
 
-/datum/species/human/genemod/primitive/get_species_lore()
+/datum/species/genemod/primitive/get_species_lore()
 	return list(
 		"The Hearthkin are a culture of disparate Scandinavian groups all sharing a common origin \
 			as descendents from demihuman genemodders aboard the good ship Stjarndrakkr, or Star Dragon; \

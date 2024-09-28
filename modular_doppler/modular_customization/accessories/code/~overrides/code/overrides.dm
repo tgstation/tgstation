@@ -17,8 +17,11 @@
 
 /datum/dna/initialize_dna(newblood_type, create_mutation_blocks = TRUE, randomize_features = TRUE)
 	. = ..()
-	/// Weirdness Check Zone: kill incorrect tails
+	/// Weirdness Check Zone
 	if(randomize_features)
+		if(istype(species, /datum/species/genemod))
+			var/skin_tone = pick(GLOB.skin_tones)
+			features["mcolor"] = skintone2hex(skin_tone) //spoof
 		if(species.id != /datum/species/human/felinid::id)
 			features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			features["ears"] = /datum/sprite_accessory/ears/none::name

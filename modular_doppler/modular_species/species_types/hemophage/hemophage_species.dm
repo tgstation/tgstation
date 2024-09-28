@@ -2,19 +2,18 @@
 #define HEMOPHAGE_SPAWN_TEXT "You are an [span_danger("Hemophage")]. You will slowly but constantly lose blood if outside of a closet-like object. If inside a closet-like object, or in pure darkness, you will slowly heal, at the cost of blood. You may gain more blood by grabbing a live victim and using your drain ability."
 
 
-/datum/species/hemophage
+/datum/species/genemod/hemophage
 	name = "Hemophage"
 	id = SPECIES_HEMOPHAGE
+	preview_outfit = /datum/outfit/hemophage_preview
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_NOHUNGER,
 		TRAIT_NOBREATH,
 		TRAIT_OXYIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_LITERATE,
 		TRAIT_DRINKS_BLOOD,
-		TRAIT_USES_SKINTONES,
+		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_HUMANOID | MOB_ORGANIC
 	exotic_bloodtype = "U"
@@ -27,24 +26,24 @@
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-/datum/species/hemophage/check_roundstart_eligible()
+/datum/species/genemod/hemophage/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 
 	return ..()
 
-/datum/species/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load)
+/datum/species/genemod/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load)
 	. = ..()
 	to_chat(new_hemophage, HEMOPHAGE_SPAWN_TEXT)
 	new_hemophage.update_body()
 
-/datum/species/hemophage/get_species_description()
+/datum/species/genemod/hemophage/get_species_description()
 	return "Oftentimes feared or pushed out of society for the predatory nature of their condition, \
 		Hemophages are typically mixed around various Frontier populations, keeping their true nature hidden while \
 		reaping both the benefits and easy access to prey, enjoying unpursued existences on the Frontier."
 
 
-/datum/species/hemophage/get_species_lore()
+/datum/species/genemod/hemophage/get_species_lore()
 	return list(
 		"Though known by many other names, 'Hemophages' are those that have found themselves the host of a bloodthirsty infection. 'Natural' hemophages have their infection first overtake their body through the bloodstream, though methods vary; \
 		Hemophages thought to be a dense cluster of tightly related but distinct strains and variants. It will first take root in the chest, making alterations to the cells making up the host's organs to rapidly expand and take them over. \
@@ -95,14 +94,25 @@
 	)
 
 
-/datum/species/hemophage/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.skin_tone = "albino"
-	human.hair_color = "#1d1d1d"
-	human.hairstyle = "Pompadour (Big)"
+/datum/outfit/hemophage_preview
+	name = "Hemophage (Species Preview)"
+	uniform = /obj/item/clothing/under/suit/black_really/skirt
+
+/datum/species/genemod/hemophage/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.dna.features["mcolor"] = skintone2hex("albino")
+	human.dna.features["horns"] = "Lifted"
+	human.dna.features["horns_color_1"] = "#52435e"
+	human.dna.ear_type = HUMANOID
+	human.dna.features["ears"] = "Elf (wide)"
+	human.dna.features["ears_color_1"] = "#F7D1C3"
+	human.hair_color = "#f1cc9c"
+	human.lip_style = "lipstick"
+	human.lip_color = COLOR_BLACK
+	human.hairstyle = "Long Gloomy Bangs"
 	regenerate_organs(human, src, visual_only = TRUE)
 	human.update_body(TRUE)
 
-/datum/species/hemophage/create_pref_unique_perks()
+/datum/species/genemod/hemophage/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -145,7 +155,7 @@
 	return to_add
 
 
-/datum/species/hemophage/create_pref_blood_perks()
+/datum/species/genemod/hemophage/create_pref_blood_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -161,12 +171,12 @@
 
 	return to_add
 
-/datum/species/hemophage/get_cry_sound(mob/living/carbon/human/hemophage)
+/datum/species/genemod/hemophage/get_cry_sound(mob/living/carbon/human/hemophage)
 	var/datum/species/human/human_species = GLOB.species_prototypes[/datum/species/human]
 	return human_species.get_cry_sound(hemophage)
 
 // We don't need to mention that they're undead, as the perks that come from it are otherwise already explicited, and they might no longer be actually undead from a gameplay perspective, eventually.
-/datum/species/hemophage/create_pref_biotypes_perks()
+/datum/species/genemod/hemophage/create_pref_biotypes_perks()
 	return
 
 
