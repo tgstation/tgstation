@@ -5,11 +5,9 @@ type Data = {
   ref: string;
 };
 
-export default function DNAPart(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function DNAPart(props: { ourData: Data }): JSX.Element {
+  const { act } = useBackend();
+  const { ourData } = props;
   return (
     <Stack vertical>
       <Stack.Item>

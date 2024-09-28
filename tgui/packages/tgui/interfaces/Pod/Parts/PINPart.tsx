@@ -14,11 +14,9 @@ const KEYPAD = [
   ['3', '6', '9', 'E'],
 ] as const;
 
-export default function PINPart(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function PINPart(props: { ourData: Data }): JSX.Element {
+  const { act } = useBackend();
+  const { ourData } = props;
   return (
     <Box>
       <Stack>

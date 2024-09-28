@@ -5,10 +5,8 @@ type Data = {
   ref: string;
 };
 // PLEASE supply partRef in act
-export default function Example(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function Example(props: { ourData: Data }): JSX.Element {
+  const { act } = useBackend();
+  const { ourData } = props;
   return <Box>{ourData.funnydata}</Box>;
 }

@@ -4,11 +4,8 @@ type Data = {
   lines: string[];
   ref: string;
 };
-export default function GenericLines(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function GenericLines(props: { ourData: Data }): JSX.Element {
+  const { ourData } = props;
   return (
     <LabeledList>
       {Object.keys(ourData.lines).map((value, index) => (

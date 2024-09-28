@@ -8,11 +8,8 @@ type Data = {
   mode: string;
   ref: string;
 };
-export default function Gun(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function Gun(props: { ourData: Data }): JSX.Element {
+  const { ourData } = props;
   return (
     <LabeledList>
       <LabeledList.Item label={'Firing Mode'}>{ourData.mode}</LabeledList.Item>

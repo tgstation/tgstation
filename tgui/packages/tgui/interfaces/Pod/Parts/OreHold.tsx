@@ -10,11 +10,9 @@ type Data = {
   ref: string;
 };
 
-export default function CargoHold(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function CargoHold(props: { ourData: Data }): JSX.Element {
+  const { act } = useBackend();
+  const { ourData } = props;
   return (
     <Section
       title="Loaded"

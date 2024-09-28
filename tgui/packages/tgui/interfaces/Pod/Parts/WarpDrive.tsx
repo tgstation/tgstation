@@ -12,11 +12,9 @@ type Data = {
   ref: string;
 };
 
-export default function WarpDrive(props: { partData: Data }): JSX.Element {
-  const { act } = useBackend<{
-    ourData: Data;
-  }>();
-  const ourData = props.partData as Data;
+export default function WarpDrive(props: { ourData: Data }): JSX.Element {
+  const { act } = useBackend();
+  const { ourData } = props;
   return (
     <Stack>
       <Stack.Item width="60%">

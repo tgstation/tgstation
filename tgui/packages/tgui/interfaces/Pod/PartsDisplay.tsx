@@ -41,7 +41,7 @@ export default function PartsDisplay(_props: any): JSX.Element {
           {!!PartTag && (
             <>
               <Divider />
-              <PartTag partData={data.partUIData[partRef as string]} />
+              <PartTag ourData={data.partUIData[partRef as string]} />
             </>
           )}
         </>
