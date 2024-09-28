@@ -59,14 +59,14 @@
 	if(src.stat == DEAD)
 		return
 	else
-		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+		playsound(loc, 'sound/mobs/humanoids/moth/scream_moth.ogg', 50, TRUE)
 
 /mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
 	if(src.stat == DEAD)
 		return
 	else
-		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
+		playsound(loc, 'sound/mobs/humanoids/moth/scream_moth.ogg', 50, TRUE)
 
 /mob/living/basic/mothroach/bar
 	name = "mothroach bartender"

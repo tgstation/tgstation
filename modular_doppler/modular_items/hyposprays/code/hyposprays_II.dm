@@ -174,7 +174,7 @@
 		to_chat(user, span_notice("You remove [vial] from [src]."))
 		vial = null
 		update_icon()
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
+		playsound(loc, 'sound/items/weapons/empty.ogg', 50, 1)
 	else
 		to_chat(user, span_notice("This hypo isn't loaded!"))
 		return
@@ -193,7 +193,7 @@
 			vial.forceMove(quickswap_loc)
 	vial = new_vial
 	user.visible_message(span_notice("[user] has loaded a vial into [src]."), span_notice("You have loaded [vial] into [src]."))
-	playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
+	playsound(loc, 'sound/items/weapons/gun/pistol/drop_small.ogg', 35, 1)
 	update_appearance()
 
 /obj/item/hypospray/mkii/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

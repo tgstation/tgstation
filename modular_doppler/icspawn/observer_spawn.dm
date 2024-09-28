@@ -65,7 +65,7 @@
 		QDEL_IN(user, 1)
 
 		if (teleport_option == "Bluespace")
-			playsound(spawned_player, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			playsound(spawned_player, 'sound/effects/magic/disable_tech.ogg', 100, 1)
 
 		if(user.mind && isliving(spawned_player))
 			user.mind.transfer_to(spawned_player, 1) // second argument to force key move to new mob

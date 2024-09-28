@@ -52,7 +52,7 @@
 	unlock_contents = list()
 	qdel(item)
 	to_chat(user, span_notice("You twist the key into both locks at once, opening the crate."))
-	playsound(src, 'sound/machines/boltsup.ogg', 50, vary = FALSE)
+	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, vary = FALSE)
 	togglelock(user)
 
 /obj/structure/closet/crate/secure/syndicrate/togglelock(mob/living/user, silent)

@@ -57,7 +57,7 @@
 
 	if(COOLDOWN_FINISHED(src, shell_effect_cd))
 		source.visible_message(span_warning("[source]'s shell weathers the blow, absorbing most of the shock!"))
-		playsound(source, 'sound/weapons/parry.ogg', 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(source, 'sound/effects/parry.ogg', 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, shell_effect_cd, 3 SECONDS) // Cooldown resets EVERY time we get hit
 

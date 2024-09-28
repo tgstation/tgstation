@@ -23,9 +23,9 @@
 
 // Turret protected
 /area/station/ai_monitored/turret_protected
-	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
+	ambientsounds = list('sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
 	///Some sounds (like the space jam) are terrible when on loop. We use this variable to add it to other AI areas, but override it to keep it from the AI's core.
-	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
+	var/ai_will_not_hear_this = list('sound/ambience/misc/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
 /area/station/ai_monitored/turret_protected/Initialize(mapload)

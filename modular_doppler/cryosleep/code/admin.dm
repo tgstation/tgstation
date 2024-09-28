@@ -1,7 +1,7 @@
 /// Send player in not-quiet cryopod. If with_paper = TRUE, place a paper with notification under player.
 /mob/proc/send_to_cryo(with_paper = FALSE)
 	//effect
-	playsound(loc, 'sound/magic/Repulse.ogg', 100, 1)
+	playsound(loc, 'sound/effects/magic/repulse.ogg', 100, 1)
 	var/datum/effect_system/spark_spread/quantum/sparks = new
 	sparks.set_up(10, 1, loc)
 	sparks.attach(loc)

@@ -125,11 +125,11 @@
 		var/datum/fish_source/stored = linked_fishing_spots[other_spot]
 		if(stored == source)
 			spot.balloon_alert(user, "already linked!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(spot, TRAIT_UNLINKABLE_FISHING_SPOT))
 		spot.balloon_alert(user, "unlinkable fishing spot!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		return ITEM_INTERACT_BLOCKING
 	LAZYSET(linked_fishing_spots, spot, source)
 	RegisterSignal(spot, SIGNAL_REMOVETRAIT(TRAIT_FISHING_SPOT), PROC_REF(unlink_fishing_spot))
@@ -284,7 +284,11 @@
 	var/list/choices = list()
 	for(var/radial_name in available_fish_sources)
 		var/datum/fish_source/source = available_fish_sources[radial_name]
-		choices[radial_name] = image(icon = 'icons/hud/radial_fishing.dmi', icon_state = source.radial_state)
+		var/mutable_appearance/radial_icon = mutable_appearance('icons/hud/radial_fishing.dmi', source.radial_state)
+		if(!istype(source, /datum/fish_source/portal))
+			//a little star on the top-left to distinguishs them from standard portals.
+			radial_icon.add_overlay('icons/hud/radial_fishing.dmi', "linked_source")
+		choices[radial_name] = radial_icon
 
 	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
 	if(!choice || !can_interact(user))

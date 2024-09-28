@@ -102,14 +102,14 @@
 	proj.firer = user
 	proj.fired_from = user
 	proj.fire((dir2angle(user.dir) + rand(-projectile_aim_radius, projectile_aim_radius)))
-	playsound(src, 'sound/weapons/effects/batreflect.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/effects/batreflect.ogg', 25, TRUE)
 	//get rid of what we just launched to let projectile_drop spawn a new one
 	qdel(src)
 
 /obj/projectile/bullet/hair_tie
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/hair_ties.dmi'
 	icon_state = "hairtie"
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	damage = 0 //its just about the knockdown
 	sharpness = NONE
 	shrapnel_type = NONE //no embedding pls

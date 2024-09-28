@@ -173,7 +173,8 @@
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
-	fire_sound = 'sound/weapons/kinetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
+	newtonian_force = 1
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -315,7 +316,7 @@
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, span_notice("You install the modkit."))
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
 			KA.modkits |= src
 		else
 			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))

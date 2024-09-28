@@ -26,7 +26,7 @@
 	inhand_icon_state = "sword"
 	worn_icon_state = "sword_back"
 	belt_icon_state = "sword_belt"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throwforce = 10
 	block_chance = 25
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
@@ -47,7 +47,7 @@
 	inhand_icon_state = "katana"
 	worn_icon_state = "katana_back"
 	belt_icon_state = "katana_belt"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throwforce = 10
 	block_chance = 20
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
@@ -66,7 +66,7 @@
 	inhand_icon_state = "dagger"
 	worn_icon_state = "dagger_back"
 	belt_icon_state = "dagger_belt"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throw_speed = 4
 	embed_type = /datum/embed_data/forged_dagger
 	throwforce = 15
@@ -118,7 +118,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FIRE_PROOF
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
 	wound_bonus = -15
@@ -317,9 +317,9 @@
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, TRUE)
+			playsound(src, pick('sound/items/weapons/effects/ric1.ogg', 'sound/items/weapons/effects/ric2.ogg', 'sound/items/weapons/effects/ric3.ogg', 'sound/items/weapons/effects/ric4.ogg', 'sound/items/weapons/effects/ric5.ogg'), 100, TRUE)
 		else
-			playsound(src, 'sound/weapons/parry.ogg', 75, TRUE)
+			playsound(src, 'sound/items/weapons/parry.ogg', 75, TRUE)
 			owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		var/owner_turf = get_turf(owner)
 		new block_effect(owner_turf, COLOR_YELLOW)

@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(stone_recipes, list ( \
 /obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, params)
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
-	playsound(src, 'sound/effects/picaxe1.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 	balloon_alert_to_viewers("cutting...")
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert_to_viewers("stopped cutting")

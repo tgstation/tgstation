@@ -223,7 +223,7 @@
 		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
-					SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+					SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
 					var/message = span_narsie("A vile heretic has ") + \
 					span_cult_large(span_hypnophrase("sacrificed")) + \
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
@@ -249,7 +249,7 @@
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
 	to_chat(user, span_hierophant("Your patrons are rapturous!"))
-	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
+	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = sacrifice.unequip_everything()
@@ -281,7 +281,7 @@
 		return
 	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
-	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
+	playsound(loc, 'sound/effects/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
@@ -389,7 +389,7 @@
 	curse_organs(sac_target)
 
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
-	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/effects/magic/repulse.ogg', asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
 		return
 
@@ -403,7 +403,7 @@
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
-	playsound(sac_target, 'sound/ambience/antag/heretic/heretic_sacrifice.ogg', 50, FALSE) // play theme
+	playsound(sac_target, 'sound/music/antag/heretic/heretic_sacrifice.ogg', 50, FALSE) // play theme
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
@@ -525,7 +525,7 @@
 		safe_turf = get_turf(backup_loc)
 		stack_trace("[type] - return_target was unable to find a safe turf for [sac_target] to return to. Defaulting to observer start turf.")
 
-	if(!do_teleport(sac_target, safe_turf, asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(!do_teleport(sac_target, safe_turf, asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		safe_turf = get_turf(backup_loc)
 		sac_target.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [sac_target] to the observer start turf. Forcemoving.")

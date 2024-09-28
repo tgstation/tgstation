@@ -123,9 +123,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
-	update_appearance()
 	find_and_hang_on_wall()
 	register_context()
+	check_enviroment()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -568,34 +568,34 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		for(var/gas_path in GLOB.meta_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
-		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low pressure and temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! Low pressure and high temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High pressure and temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! High pressure and low temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE)
+		if(pressure <= tlv_collection["pressure"].hazard_min)
 			warning_message = "Danger! Low pressure detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE)
+		if(pressure >= tlv_collection["pressure"].hazard_max)
 			warning_message = "Danger! High pressure detected."
 			return
-		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low temperature detected."
 			return
-		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High temperature detected."
 			return
 		else
@@ -676,6 +676,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
 
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()

@@ -84,7 +84,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your arm!"))
 		if(affecting?.receive_damage(30))
 			bite_victim.update_damage_overlays()
-			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
+			playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
 			return
 	to_chat(user, span_warning("You find nothing of value..."))
 
@@ -122,8 +122,8 @@ at the cost of risking a vicious bite.**/
 	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
-	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
-	break_sound = 'sound/magic/demon_dies.ogg'
+	break_message = span_warning("The structure shatters, leaving only a demonic screech!")
+	break_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
 	use_cooldown_duration = 1 MINUTES
@@ -188,7 +188,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGEONE
 	update_icon()
 	visible_message(span_warning("[src] starts creating something..."))
-	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
+	playsound(src, 'sound/effects/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby nauseous.

@@ -50,7 +50,7 @@
 	if(ismoth(user))
 		return 'modular_doppler/emotes/sound/mothchitter.ogg'
 	else
-		return 'sound/creatures/chitter.ogg'
+		return 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /datum/emote/living/flutter
 	key = "flutter"
@@ -59,7 +59,7 @@
 	emote_type = EMOTE_AUDIBLE
 	cant_muffle = TRUE
 	vary = TRUE
-	sound = 'sound/voice/moth/moth_flutter.ogg'
+	sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
 
 // Mouse squeak but an emote
 
@@ -69,7 +69,7 @@
 	message = "squeaks!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
-	sound = 'sound/creatures/mousesqueek.ogg'
+	sound = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 
 // Barking, like a dog
 
@@ -285,7 +285,7 @@
 	message = "gnashes."
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
-	sound = 'sound/weapons/bite.ogg'
+	sound = 'sound/items/weapons/bite.ogg'
 
 /datum/emote/living/thump
 	key = "thump"
@@ -294,4 +294,4 @@
 	emote_type = EMOTE_AUDIBLE
 	cant_muffle = TRUE
 	vary = TRUE
-	sound = 'sound/effects/glassbash.ogg'
+	sound = 'sound/effects/glass/glassbash.ogg'

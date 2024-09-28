@@ -57,7 +57,7 @@
 		return
 	if(active_apc)
 		disconnect_apc()
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 	apc.connect_remote_access(user)
 	user.log_message("remotely accessed [apc] from [src].", LOG_GAME)
 	log_activity("[auth_id] remotely accessed APC in [get_area_name(apc.area, TRUE)]")
@@ -134,18 +134,18 @@
 					authenticated = TRUE
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] logged in to the terminal")
-					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 				else
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+					playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
 					say("ID rejected, access denied!")
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")
 		if("log-out")
 			log_activity("[auth_id] logged out of the terminal")
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
 			authenticated = FALSE
 			auth_id = "\[NULL\]"
 		if("toggle-logs")

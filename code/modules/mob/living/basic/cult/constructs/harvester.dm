@@ -11,7 +11,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "butchers"
 	attack_verb_simple = "butcher"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/datum/action/cooldown/spell/aoe/area_conversion,

@@ -161,7 +161,7 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 
 	if(inserted_cell)
 		to_chat(user, span_notice("You remove [inserted_cell] from [equipment]!"))
-		playsound(equipment, 'sound/weapons/magout.ogg', 40, TRUE)
+		playsound(equipment, 'sound/items/weapons/magout.ogg', 40, TRUE)
 		inserted_cell.forceMove(get_turf(equipment))
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living, put_in_hands), inserted_cell)
 		inserted_cell = null
@@ -188,7 +188,7 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 		return
 
 	to_chat(user, span_notice("You insert [inserting_item] into [equipment]!"))
-	playsound(equipment, 'sound/weapons/magin.ogg', 40, TRUE)
+	playsound(equipment, 'sound/items/weapons/magin.ogg', 40, TRUE)
 	inserted_cell = inserting_item
 	inserting_item.forceMove(parent)
 	handle_cell_overlays(FALSE)
