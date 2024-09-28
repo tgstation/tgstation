@@ -12569,7 +12569,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "evO" = (
 /obj/effect/turf_decal/delivery,
@@ -22967,7 +22967,7 @@
 	c_tag = "Research Server Room";
 	network = list("ss13","rd")
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "ien" = (
 /obj/machinery/door/airlock/external/glass,
@@ -36835,7 +36835,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "mZr" = (
 /obj/structure/table/wood,
@@ -41538,7 +41538,7 @@
 /area/station/maintenance/department/medical/central)
 "oND" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "oNM" = (
 /obj/machinery/door/window/brigdoor/right/directional/east{
@@ -49904,7 +49904,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "rEJ" = (
 /obj/item/reagent_containers/spray/plantbgone{
@@ -60385,7 +60385,7 @@
 	},
 /obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
 /obj/machinery/airalarm/directional/east,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "vjT" = (
 /obj/effect/landmark/start/librarian,
@@ -106002,7 +106002,7 @@ wZz
 wZz
 wZz
 wql
-mNb
+mAc
 taK
 wZz
 wZz
