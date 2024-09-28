@@ -84,8 +84,9 @@
 	return ..()
 
 /obj/vehicle/sealed/car/may_move(mob/living/user)
-	if((!key_type || istype(inserted_key, key_type)))
+	if(key_type && !istype(inserted_key, key_type))
 		return FALSE
+	return TRUE
 
 /obj/vehicle/sealed/car/vehicle_move(direction)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))

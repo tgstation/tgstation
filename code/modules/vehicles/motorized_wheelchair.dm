@@ -91,6 +91,7 @@
 	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
 		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
 		return FALSE
+	return TRUE
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)

@@ -64,7 +64,7 @@
 		return
 	. = vehicle_move(direction)
 	if (!.)
-		return
+		return .
 	SEND_SIGNAL(user, COMSIG_MOB_DROVE_MECH, src)
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
