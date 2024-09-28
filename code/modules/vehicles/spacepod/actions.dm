@@ -11,9 +11,7 @@
 	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
 		return
 	var/list/occupants = vehicle_entered_target.occupants.Copy()
-	for(var/occupant in occupants)
-		if(occupant == owner)
-			occupants -= occupant
+	occupants -= occupant
 
 	if(!length(occupants))
 		vehicle_entered_target.balloon_alert(owner, "nobody else!")
