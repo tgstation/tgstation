@@ -11,7 +11,7 @@ ADMIN_VERB(pod_debug_panel, R_ADMIN, "Show Pod Equipment Panel", ADMIN_VERB_NO_D
 		qdel(src)
 		CRASH("that is not a pod stop that")
 	pod = target
-	RegisterSignal(pod, COMSIG_QDELETING, pod_destroyed)
+	RegisterSignal(pod, COMSIG_QDELETING, PROC_REF(pod_destroyed))
 
 /datum/podpanel/proc/pod_destroyed(datum/source)
 	SIGNAL_HANDLER
