@@ -167,19 +167,53 @@ All ShuttleMove procs go here
 
 /obj/machinery/door/airlock/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
+
+	if (cycle_pump)
+		INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, undock))
+
 	for(var/obj/machinery/door/airlock/other_airlock in range(2, src))  // includes src, extended because some escape pods have 1 plating turf exposed to space
 		other_airlock.shuttledocked = FALSE
 		other_airlock.air_tight = TRUE
+		if (other_airlock.cycle_pump)
+			INVOKE_ASYNC(other_airlock.cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, undock))
+			continue
 		INVOKE_ASYNC(other_airlock, TYPE_PROC_REF(/obj/machinery/door/, close), FALSE, TRUE) // force crush
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/current_area = get_area(src)
+	var/turf/local_turf
+	var/tile_air_pressure
 	for(var/obj/machinery/door/airlock/other_airlock in orange(2, src))  // does not include src, extended because some escape pods have 1 plating turf exposed to space
 		if(get_area(other_airlock) != current_area)  // does not include double-wide airlocks unless actually docked
 			// Cycle linking is only disabled if we are actually adjacent to another airlock
 			shuttledocked = TRUE
 			other_airlock.shuttledocked = TRUE
+			if (other_airlock.cycle_pump)
+				local_turf = get_step(src, REVERSE_DIR(other_airlock.cycle_pump.dir))
+				tile_air_pressure = 0
+				if (local_turf)
+					tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+				INVOKE_ASYNC(other_airlock.cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+			// Save external airlocks turf in case our own docking purpouses
+			local_turf = get_turf(other_airlock)
+
+	if (cycle_pump)
+		tile_air_pressure = 0
+		if (local_turf)
+			local_turf = get_step(local_turf, REVERSE_DIR(cycle_pump.dir))
+			if (local_turf)
+				tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+			INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+		else
+			// In case, somebody decides to build an airlock on evac shuttle, we count CentComms blastdoors as valid docking airlock
+			local_turf = get_step(src, REVERSE_DIR(cycle_pump.dir))
+			if (local_turf)
+				for(var/obj/machinery/door/poddoor/shuttledock/centcom_airlock in local_turf)
+					tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+					break
+
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
