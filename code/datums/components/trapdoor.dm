@@ -122,7 +122,7 @@
 		source.balloon_alert(user, "can't link trapdoor when its open")
 		return
 	src.assembly = remote.internals
-	assembly.linked++
+	++assembly.linked
 	source.balloon_alert(user, "trapdoor linked")
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
@@ -134,7 +134,8 @@
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
-	assembly.linked--
+	--assembly.linked
+	if (assembly.linked < 0) assembly.linked = 0
 	stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
@@ -168,7 +169,7 @@
 		return
 	. = LINKED_UP
 	src.assembly = assembly
-	assembly.linked++
+	++assembly.linked
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
@@ -192,7 +193,8 @@
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
-			assembly.linked--
+			--assembly.linked
+			if (assembly.linked < 0) assembly.linked = 0
 			stored_decals.Cut()
 			assembly = null
 		return
