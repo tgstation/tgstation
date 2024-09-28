@@ -11,8 +11,3 @@
 	. = ..()
 	//no free mats for assistants sorry, get the engineers to link it
 	materials.disconnect_from(materials.silo)
-
-/obj/machinery/rnd/production/podlathe/on_deconstruction(disassembled)
-	log_game("Pod part fabricator [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
-
-	return ..()

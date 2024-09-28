@@ -785,7 +785,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Mech integrity is low."
 	icon_state = "low_mech_integrity"
 
-// pod
+// The alert for a space pod being damaged
 
 /atom/movable/screen/alert/pod_damage
 	name = "Pod Damaged"

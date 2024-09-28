@@ -3,15 +3,23 @@ ADMIN_VERB(pod_debug_panel, R_ADMIN, "Show Pod Equipment Panel", ADMIN_VERB_NO_D
 	podpanel.ui_interact(user.mob)
 
 /datum/podpanel
+	/// the space pod this panel belongs to
 	var/obj/vehicle/sealed/space_pod/pod
-	var/user
 
-/datum/podpanel/New(to_user, obj/vehicle/sealed/space_pod/target)
+/datum/podpanel/New(obj/vehicle/sealed/space_pod/target)
 	if(!istype(target))
 		qdel(src)
 		CRASH("that is not a pod stop that")
-	user = CLIENT_FROM_VAR(to_user)
-	src.pod = target
+	pod = target
+	RegisterSignal(pod, COMSIG_QDELETING, pod_destroyed)
+
+/datum/podpanel/proc/pod_destroyed(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/podpanel/Destroy(force)
+	pod = null
+	return ..()
 
 /datum/podpanel/ui_state(mob/user)
 	return GLOB.admin_state

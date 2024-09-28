@@ -1706,7 +1706,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 2,
 		/obj/item/stack/cable_coil = 2,
-		/obj/item/stack/sheet/glass = 2)
+		/obj/item/stack/sheet/glass = 2,
+	)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/portagrav

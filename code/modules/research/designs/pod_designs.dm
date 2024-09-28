@@ -4,7 +4,7 @@
 	id = "pod_board"
 	build_path = /obj/item/circuitboard/pod
 	category = list(
-		RND_CATEGORY_SPACE_POD
+		RND_CATEGORY_SPACE_POD,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -18,16 +18,13 @@
 	)
 	construction_time = 15 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_CHASSIS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_CHASSIS,
 	)
-
-// equipment
 
 /datum/design/pod_equipment
 	id = DESIGN_ID_IGNORE
 	build_type = PODLATHE|MECHFAB
-	construction_time = 5
-
+	construction_time = 5 SECONDS
 
 /datum/design/pod_equipment/warpdrive
 	name = "Bluespace Warp drive"
@@ -40,7 +37,7 @@
 	)
 	construction_time = 7 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC,
 	)
 
 /datum/design/pod_equipment/thrusters
@@ -54,7 +51,7 @@
 	)
 	construction_time = 7 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_THRUSTERS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_THRUSTERS,
 	)
 
 /datum/design/pod_equipment/thrusters/tier2
@@ -98,7 +95,7 @@
 	)
 	construction_time = 7 SECONDS
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_ENGINE
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_ENGINE,
 	)
 
 /datum/design/pod_equipment/engine/tier3
@@ -133,7 +130,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS,
 	)
 
 /datum/design/pod_equipment/sensors/meson
@@ -146,7 +143,7 @@
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*1,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS,
 	)
 
 /datum/design/pod_equipment/sensors/nv
@@ -160,7 +157,7 @@
 		/datum/material/uranium=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SENSORS,
 	)
 
 /datum/design/pod_equipment/comms
@@ -172,7 +169,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_COMMS
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_COMMS,
 	)
 
 /datum/design/pod_equipment/cargo_hold
@@ -184,7 +181,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*5,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY,
 	)
 
 /datum/design/pod_equipment/extraseats
@@ -196,7 +193,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY,
 	)
 
 /datum/design/pod_equipment/pinlock
@@ -208,7 +205,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*0.5,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY,
 	)
 
 /datum/design/pod_equipment/dnalock
@@ -221,7 +218,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*0.5,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY,
 	)
 
 /datum/design/pod_equipment/orehold
@@ -233,7 +230,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*3,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_SECONDARY,
 	)
 
 /datum/design/pod_equipment/lgtplating
@@ -244,7 +241,7 @@
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC,
 	)
 
 /datum/design/pod_equipment/podefficiency
@@ -257,7 +254,7 @@
 		/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_MISC,
 	)
 
 /datum/design/pod_equipment/plasma_cutter
@@ -270,7 +267,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*1,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
 
 /datum/design/pod_equipment/foamtool
@@ -282,7 +279,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
 
 
@@ -295,7 +292,7 @@
 		/datum/material/glass=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
 
 /datum/design/pod_equipment/impactdrill
@@ -308,7 +305,7 @@
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
 
 /datum/design/pod_equipment/improvedimpactdrill
@@ -321,7 +318,7 @@
 		/datum/material/diamond=SHEET_MATERIAL_AMOUNT*3,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
 
 /datum/design/pod_equipment/wildlifegun
@@ -334,5 +331,5 @@
 		/datum/material/plasma=SHEET_MATERIAL_AMOUNT*2,
 	)
 	category = list(
-		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY
+		RND_CATEGORY_MECHFAB_SPACEPOD + RND_SUBCATEGORY_MECHFAB_POD_PRIMARY,
 	)
