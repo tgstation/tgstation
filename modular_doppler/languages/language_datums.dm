@@ -1,8 +1,9 @@
 /obj/item/organ/internal/tongue/get_possible_languages()
-	var/list/langs = ..()
-	langs += /datum/language/yangyu
-	langs += /datum/language/movespeak
-	return langs
+    var/list/langs = ..()
+    langs += /datum/language/yangyu
+    langs += /datum/language/movespeak
+    langs += /datum/language/primitive_genemod
+    return langs
 
 
 
