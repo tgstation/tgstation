@@ -236,7 +236,7 @@
 /obj/item/book/manual/podconstruction
 	name = "Nanotrasen-brand pods and you"
 	icon_state ="book4"
-	starting_author = "Jeb. Garry"
+	starting_author = "John Spespod"
 	starting_title =  "Nanotrasen-brand pods and you"
 	starting_content = {"<html>
 			<body>
