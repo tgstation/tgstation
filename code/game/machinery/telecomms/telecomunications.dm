@@ -215,3 +215,5 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 /// Handles the machine stopping being affected by an EMP.
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)
+
+#undef HEAT_GENERATED_TCOMMS
