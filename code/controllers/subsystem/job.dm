@@ -443,7 +443,7 @@ SUBSYSTEM_DEF(job)
 	// From assign_all_overflow_positions()
 	// 4. Anyone with the overflow role enabled has been given the overflow role.
 
-	// Shuffle the joinable occupation list and filter out ineligible occupations due to above job assignments.
+	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
 	var/list/available_occupations = joinable_occupations.Copy()
 	for(var/datum/job/job in available_occupations)
 		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
@@ -457,6 +457,12 @@ SUBSYSTEM_DEF(job)
 		job_debug("JOBS: Filling in head roles, Level: [job_priority_level_to_string(level)]")
 		// Fill the head jobs first each level
 		fill_all_head_positions_at_priority(level)
+
+		// Clean up the available occupations list after assigning head positions.
+		for(var/datum/job/job in available_occupations)
+			if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+				job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
+				available_occupations -= job
 
 		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
