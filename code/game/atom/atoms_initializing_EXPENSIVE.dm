@@ -143,8 +143,7 @@
 	// atom_integrity is checked against max_integrity and can BREAK the atom.
 	// The integrity to max_integrity ratio is still preserved.
 	if(custom_materials)
-		apply_material_effects(custom_materials)
-		custom_materials = SSmaterials.FindOrCreateMaterialCombo(custom_materials)
+		initialize_materials(custom_materials)
 
 	if(ispath(ai_controller))
 		ai_controller = new ai_controller(src)

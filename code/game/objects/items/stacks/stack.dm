@@ -77,18 +77,19 @@
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
-		new type(loc, max_amount, FALSE)
+		new type(loc, max_amount, FALSE, mat_override, mat_amt)
 	if(!merge_type)
 		merge_type = type
 
-	if(LAZYLEN(mat_override))
-		set_mats_per_unit(mat_override, mat_amt)
-	else if(LAZYLEN(mats_per_unit))
-		set_mats_per_unit(mats_per_unit, 1)
-	else if(LAZYLEN(custom_materials))
-		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
-
 	. = ..()
+
+	var/materials_mult = amount
+	if(LAZYLEN(mat_override))
+		materials_mult *= mat_amt
+		mats_per_unit = mat_override
+	if(LAZYLEN(mats_per_unit))
+		initialize_materials(mats_per_unit, materials_mult)
+
 	if(merge)
 		for(var/obj/item/stack/item_stack in loc)
 			if(item_stack == src)
@@ -118,20 +119,14 @@
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
 		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
 
-/** Sets the amount of materials per unit for this stack.
- *
- * Arguments:
- * - [mats][/list]: The value to set the mats per unit to.
- * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
- */
-/obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
-	update_custom_materials()
-
-/** Updates the custom materials list of this stack.
- */
+///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
-	set_mats_per_unit(mats_per_unit, amount)
+	if(length(mats_per_unit))
+		set_custom_materials(mats_per_unit, amount)
+
+/obj/item/stack/apply_material_effects(list/materials)
+	. = ..()
+	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)
@@ -431,7 +426,7 @@
 	if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.set_mats_per_unit(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			crafted_stack.set_custom_materials(mats_per_unit, (recipe.req_amount / recipe.res_amount) * crafted_stack.amount)
 		else
 			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
@@ -534,8 +529,7 @@
 	amount -= used
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return TRUE
-	if(length(mats_per_unit))
-		update_custom_materials()
+	update_custom_materials()
 	update_appearance()
 	update_weight()
 	return TRUE
@@ -582,8 +576,7 @@
 		source.add_charge(_amount * cost)
 	else
 		amount += _amount
-	if(length(mats_per_unit))
-		update_custom_materials()
+	update_custom_materials()
 	update_appearance()
 	update_weight()
 

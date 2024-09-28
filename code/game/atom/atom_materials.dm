@@ -9,6 +9,7 @@
 
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(length(custom_materials))
 		remove_material_effects()
 
@@ -16,18 +17,25 @@
 		custom_materials = null
 		return
 
+	initialize_materials(materials, multiplier)
+
+/**
+ * The second part of set_custom_materials(), which handles applying the new materials
+ * It is a separate proc because Initialize calls may make use of this since they should've no prior materials to remove.
+ */
+/atom/proc/initialize_materials(list/materials, multiplier = 1)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(multiplier != 1)
 		materials = materials.Copy() //avoid editing the list that was originally used as argument if it's ever going to be used again.
 		for(var/current_material in materials)
 			materials[current_material] *= multiplier
 
 	apply_material_effects(materials)
-
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
 
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!materials || !(material_flags & MATERIAL_EFFECTS))
 		return
 	var/list/material_effects = get_material_effects_list(materials)
@@ -35,7 +43,7 @@
 
 /// Proc responsible for removing material effects when setting materials.
 /atom/proc/remove_material_effects()
-	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	//Only runs if custom materials existed at first and affected src.
 	if(!custom_materials || !(material_flags & MATERIAL_EFFECTS))
 		return
@@ -43,6 +51,7 @@
 	finalize_remove_material_effects(material_effects)
 
 /atom/proc/get_material_effects_list(list/materials)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/material_effects = list()
 	var/index = 1
 	for(var/current_material in materials)
@@ -126,6 +135,7 @@
  * that will later be applied to or removed from the atom
  */
 /atom/proc/gather_material_color(datum/material/material, list/colors, amount, multicolor = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!color) //the material has no color. Nevermind
 		return
 	var/color_to_add = material.color
@@ -145,6 +155,7 @@
 
 /// Manages mixing, adding or removing the material colors from the atom in absence of the MATERIAL_GREYSCALE flag.
 /atom/proc/mix_material_colors(list/colors, remove = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/color_len = length(colors)
 	if(!color_len)
 		return
@@ -173,7 +184,7 @@
 /atom/proc/get_material_english_list(list/materials)
 	var/list/mat_names = list()
 	for(var/datum/material/material as anything in materials)
-		mat_names |= material.name
+		mat_names += material.name
 	return english_list(mat_names)
 
 ///Searches for a subtype of config_type that is to be used in its place for specific materials (like shimmering gold for cleric maces)
