@@ -31,7 +31,7 @@
 		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
 	use_energy(idle_power_usage)
-	generate_heat(heating_energy_generated)
+	atmos_machine_use_counter++
 
 /**
  * Checks whether the signal can be received by this receiver or not, based on

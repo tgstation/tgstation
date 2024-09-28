@@ -33,7 +33,7 @@
 			signal.levels |= SSmapping.get_connected_levels(relay_turf)
 
 	use_energy(idle_power_usage)
-	generate_heat(heating_energy_generated)
+	atmos_machine_use_counter++
 
 /**
  * Checks to see if the relay can send/receive the signal, by checking if it's

@@ -59,6 +59,9 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 	/// Is it a hidden machine?
 	var/hide = FALSE
 
+	/// A counter that increases each time machine used. Processed during the atmos tick to generate heat and then reset to zero
+	var/atmos_machine_use_counter = 0
+
 	/// Looping sounds for any servers
 	var/datum/looping_sound/server/soundloop
 
@@ -200,6 +203,10 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 		return
 
 	set_machine_stat(machine_stat & ~BAD_TEMP)
+
+	generate_heat(atmos_machine_use_counter * heating_energy_generated)
+	atmos_machine_use_counter = 0
+
 	update_power()
 
 

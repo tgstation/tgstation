@@ -148,7 +148,7 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 	use_energy(idle_power_usage)
-	generate_heat(heating_energy_generated)
+	atmos_machine_use_counter++
 
 /obj/machinery/telecomms/message_server/update_overlays()
 	. = ..()
