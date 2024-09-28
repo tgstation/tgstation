@@ -98,7 +98,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_applied(atom/source, mat_amount, multiplier)
 	return
 
-///This proc is called when the material becomes the one the object is conmposed by the most
+///This proc is called when the material becomes the one the object is composed of the most
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
 	return
 
