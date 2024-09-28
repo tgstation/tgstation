@@ -1,5 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Mansus Grasp can now properly interact with non living things."
-  - code_imp: "proc/on_hand_hit and secondary have better return values."

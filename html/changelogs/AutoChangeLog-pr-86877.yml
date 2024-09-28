@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "The Pun Pun job trait doesn't leave behind a fake (or is it?) Pun Pun."
