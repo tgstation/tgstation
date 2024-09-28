@@ -44,13 +44,7 @@
 /obj/item/pod_equipment/sensors/create_occupant_actions(mob/occupant, flag = NONE)
 	if(!(flag & VEHICLE_CONTROL_DRIVE))
 		return FALSE
-
-	var/datum/action/vehicle/sealed/spacepod_equipment/equipment_action = new(src)
-	equipment_action.callback_on_click = CALLBACK(src, PROC_REF(on_use))
-	equipment_action.name = name
-	equipment_action.button_icon = /obj/item/gps::icon
-	equipment_action.button_icon_state = /obj/item/gps/engineering::icon_state
-	return equipment_action
+	return new /datum/action/vehicle/sealed/spacepod_equipment/sensor_gps(src, src)
 
 /obj/item/pod_equipment/sensors/process()
 	if(!gps?.tracking)
@@ -58,12 +52,6 @@
 	if(!length(pod.occupants))
 		return
 	if(pod.use_power(STANDARD_BATTERY_CHARGE / 100000))
-		return
-	SStgui.close_uis(gps)
-
-/obj/item/pod_equipment/sensors/proc/on_use(mob/user)
-	if(pod.use_power(10)) // a noble 10 probably just used to check if the UI is opened
-		gps.ui_interact(user)
 		return
 	SStgui.close_uis(gps)
 

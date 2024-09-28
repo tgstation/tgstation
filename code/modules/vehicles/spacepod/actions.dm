@@ -11,7 +11,7 @@
 	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
 		return
 	var/list/occupants = vehicle_entered_target.occupants.Copy()
-	occupants -= occupant
+	occupants -= owner
 
 	if(!length(occupants))
 		vehicle_entered_target.balloon_alert(owner, "nobody else!")
@@ -42,11 +42,18 @@
 	/// the comms array we emit from
 	var/obj/item/pod_equipment/comms/comms
 
-/datum/action/cooldown/pod_comms_ping/Activate(atom/target)
+/datum/action/cooldown/pod_comms_ping/New(Target, original, obj/item/pod_equipment/comms_array)
 	. = ..()
-	if(QDELETED(pod) || QDELETED(comms))
+	if(isnull(comms_array))
 		qdel(src)
 		return
+	comms = comms_array
+	pod = comms.pod
+	RegisterSignal(comms, COMSIG_QDELETING, PROC_REF(anything_deleted))
+	RegisterSignal(pod, COMSIG_QDELETING, PROC_REF(anything_deleted))
+
+/datum/action/cooldown/pod_comms_ping/Activate(atom/target)
+	. = ..()
 	pod.balloon_alert_to_viewers("pinging comms!")
 	playsound(pod.loc, 'sound/effects/ping_hit.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	for(var/obj/machinery/pod_comms_receiver/receiver in range(world.view, pod.loc))
@@ -57,13 +64,47 @@
 		return
 	receiver.receive(pod, comms.accesses)
 
-/// generic equipment action, for the really simple actions
+/datum/action/cooldown/pod_comms_ping/Destroy()
+	pod = null
+	comms = null
+	return ..()
+
+/datum/action/cooldown/pod_comms_ping/proc/anything_deleted(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
 /datum/action/vehicle/sealed/spacepod_equipment
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
-	var/datum/callback/callback_on_click
+	var/obj/item/pod_equipment/equipment
 
-/datum/action/vehicle/sealed/spacepod_equipment/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/spacepod_equipment/New(Target, equipment)
 	. = ..()
-	callback_on_click.Invoke(owner)
+	if(isnull(equipment))
+		qdel(src)
+		return
+	src.equipment = equipment
+	RegisterSignal(equipment, COMSIG_QDELETING, PROC_REF(anything_deleted))
+
+/datum/action/vehicle/sealed/spacepod_equipment/Destroy()
+	equipment = null
+	return ..()
+
+/datum/action/vehicle/sealed/spacepod_equipment/proc/anything_deleted(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/action/vehicle/sealed/spacepod_equipment/sensor_gps
+	background_icon_state = "bg_tech"
+	overlay_icon_state = "bg_tech_border"
+
+/datum/action/vehicle/sealed/spacepod_equipment/sensor_gps/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/pod_equipment/sensors/sensors = equipment
+	if(sensors.pod.use_power(10)) // a noble 10 probably just used to check if the UI is opened
+		sensors.gps.ui_interact(owner)
+		return
+	SStgui.close_uis(sensors.gps)
 
