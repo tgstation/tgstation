@@ -206,7 +206,7 @@ All ShuttleMove procs go here
 				tile_air_pressure = max(0, local_turf.return_air().return_pressure())
 			INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
 		else
-			// In case, somebody decides to build an airlock on evac shuttle, we count CentComms blastdoors as valid docking airlock
+			// In case, somebody decides to build an airlock on evac shuttle, we count CentComs blastdoors as valid docking airlock
 			local_turf = get_step(src, REVERSE_DIR(cycle_pump.dir))
 			if (local_turf)
 				for(var/obj/machinery/door/poddoor/shuttledock/centcom_airlock in local_turf)
