@@ -142,12 +142,19 @@
 /obj/item/fishing_rod/proc/reel(mob/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
+
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	if(!do_after(user, 0.8 SECONDS, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
+	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
+	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
+
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
 		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
 		return
+
+	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
+	user.mind?.adjust_experience(/datum/skill/fishing, time * 0.13)
+
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	if(isitem(currently_hooked))
 		var/obj/item/item = currently_hooked
@@ -195,6 +202,15 @@
 	fishing_line = null
 	currently_hooked = null
 
+/obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
+	. = cast_range
+	if(!user && !isliving(loc))
+		return
+	user = loc
+	if(!user.is_holding(src) || !user.mind)
+		return
+	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
+
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
 	QDEL_NULL(fishing_line)
@@ -215,7 +231,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!CheckToolReach(src, source.target, cast_range))
+	if(!CheckToolReach(src, source.target, get_cast_range()))
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
@@ -260,7 +276,7 @@
 		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
-	cast_projectile.range = cast_range
+	cast_projectile.range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
@@ -555,7 +571,7 @@
 	inhand_icon_state = active ? "rod" : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	update_appearance()
 	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE

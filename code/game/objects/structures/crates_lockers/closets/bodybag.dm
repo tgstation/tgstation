@@ -5,8 +5,8 @@
 	icon_state = "bodybag"
 	density = FALSE
 	mob_storage_capacity = 2
-	open_sound = 'sound/items/zip.ogg'
-	close_sound = 'sound/items/zip.ogg'
+	open_sound = 'sound/items/zip/zip.ogg'
+	close_sound = 'sound/items/zip/zip.ogg'
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0
@@ -380,7 +380,7 @@
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight
 	name = "hardlight prisoner bodybag"
@@ -392,4 +392,4 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+		playsound(src, 'sound/items/weapons/egloves.ogg', 80, TRUE)

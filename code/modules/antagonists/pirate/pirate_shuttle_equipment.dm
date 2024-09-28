@@ -438,7 +438,7 @@
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
-	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)

@@ -127,9 +127,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
-	update_appearance()
 	find_and_hang_on_wall()
 	register_context()
+	check_enviroment()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -573,34 +573,34 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		for(var/gas_path in GLOB.meta_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
-		if(pressure <= tlv_collection["pressure"]["hazard_min"] && temp <= tlv_collection["temperature"]["hazard_min"])
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low pressure and temperature detected."
 			return
-		if(pressure <= tlv_collection["pressure"]["hazard_min"] && temp >= tlv_collection["temperature"]["hazard_max"])
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! Low pressure and high temperature detected."
 			return
-		if(pressure >= tlv_collection["pressure"]["hazard_max"] && temp >= tlv_collection["temperature"]["hazard_max"])
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High pressure and temperature detected."
 			return
-		if(pressure >= tlv_collection["pressure"]["hazard_max"] && temp <= tlv_collection["temperature"]["hazard_min"])
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! High pressure and low temperature detected."
 			return
-		if(pressure <= tlv_collection["pressure"]["hazard_min"])
+		if(pressure <= tlv_collection["pressure"].hazard_min)
 			warning_message = "Danger! Low pressure detected."
 			return
-		if(pressure >= tlv_collection["pressure"]["hazard_max"])
+		if(pressure >= tlv_collection["pressure"].hazard_max)
 			warning_message = "Danger! High pressure detected."
 			return
-		if(temp <= tlv_collection["temperature"]["hazard_min"])
+		if(temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low temperature detected."
 			return
-		if(temp >= tlv_collection["temperature"]["hazard_max"])
+		if(temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High temperature detected."
 			return
 		else

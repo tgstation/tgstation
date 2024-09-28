@@ -245,7 +245,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_void.ogg',
+		sound = 'sound/music/antag/heretic/ascend_void.ogg',
 		color_override = "pink",
 	)
 	user.add_traits(list(TRAIT_RESISTLOWPRESSURE, TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAGIC_TRAIT)
@@ -341,7 +341,7 @@
 		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
-	playsound(ascended_heretic, pick('sound/magic/VoidDeflect01.ogg', 'sound/magic/VoidDeflect02.ogg', 'sound/magic/VoidDeflect03.ogg'), 75, TRUE)
+	playsound(ascended_heretic, pick('sound/effects/magic/VoidDeflect01.ogg', 'sound/effects/magic/VoidDeflect02.ogg', 'sound/effects/magic/VoidDeflect03.ogg'), 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
 	if(prob(75))
 		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))
