@@ -75,6 +75,7 @@
 	else
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_link))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -84,6 +85,7 @@
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
+	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -95,6 +97,36 @@
 	source.balloon_alert(user, "unlinking trapdoor")
 	INVOKE_ASYNC(src, PROC_REF(async_try_unlink), source, user, tool)
 	return
+
+/datum/component/trapdoor/proc/try_link(turf/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	if(!istype(tool, /obj/item/trapdoor_remote))
+		return
+	var/obj/item/trapdoor_remote/remote = tool
+	if(!remote.internals)
+		source.balloon_alert(user, "missing internals")
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't link trapdoor when its open")
+		return
+	if(assembly)
+		source.balloon_alert(user, "already linked")
+		return
+	source.balloon_alert(user, "linking trapdoor")
+	INVOKE_ASYNC(src, PROC_REF(async_try_link), source, user, tool)
+
+/datum/component/trapdoor/proc/async_try_link(turf/source, mob/user, obj/item/trapdoor_remote/remote)
+	if(!do_after(user, 2 SECONDS, target=source))
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't link trapdoor when its open")
+		return
+	src.assembly = remote.internals
+	assembly.linked++
+	source.balloon_alert(user, "trapdoor linked")
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
+	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
 
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
 	if(!do_after(user, 5 SECONDS, target=source))
@@ -279,6 +311,7 @@
 		. += span_warning("[src] is not linked to a trapdoor.")
 		return
 	. += span_notice("[src] is linked to [internals.linked] trapdoor(s).")
+	. += span_notice("It can be linked to a trapdoor")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		. += span_warning("It is on a short cooldown.")
 
