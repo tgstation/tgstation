@@ -268,12 +268,10 @@
 	pass_flags = PASSTABLE
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
-	/// damage vs targets that are not human
-	var/damage_vs_not_human = 20
 
 /obj/projectile/beam/wildlife_dissuasion/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(!ishuman(target))
-		damage = damage_vs_not_human
+		damage = 20
 	else if(isobj(target))
 		damage = 0
 	return ..()

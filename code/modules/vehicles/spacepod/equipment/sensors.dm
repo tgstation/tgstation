@@ -27,12 +27,14 @@
 		for(var/occupant in pod.occupants)
 			occupant_removed(occupant)
 
+/// Adds sight traits to a new occupant, runs ONLY if traits_given is a list
 /obj/item/pod_equipment/sensors/proc/occupant_added(datum/source, mob/living/carbon/occupant, flags)
 	SIGNAL_HANDLER
 	if(istype(occupant))
 		occupant.add_traits(traits_given, REF(src))
 		occupant.update_sight()
 
+/// Removes sight traits from a former occupant, runs ONLY if traits_given is a list
 /obj/item/pod_equipment/sensors/proc/occupant_removed(datum/source, mob/living/carbon/occupant, flags)
 	SIGNAL_HANDLER
 	if(istype(occupant))
@@ -69,7 +71,7 @@
 	name = "construction sensor suite"
 	desc = "A pod sensor suite with built-in GPS and meson vision."
 	icon_state = "sensorsmeson"
-	traits_given = list(TRAIT_MESON_VISION)
+	traits_given = list(TRAIT_MESON_VISION, TRAIT_MADNESS_IMMUNE)
 
 /obj/item/pod_equipment/sensors/nightvision
 	name = "NV sensor suite"
