@@ -1160,6 +1160,8 @@
 	use_static = TRUE
 
 
+// DOPPLER EDIT REMOVAL BEGIN - Underwear and bra split
+/*
 //FEMALE UNDERWEAR
 /datum/sprite_accessory/underwear/female_bikini
 	name = "Bikini"
@@ -1261,6 +1263,8 @@
 	icon_state = "female_kinky"
 	gender = FEMALE
 	use_static = TRUE
+*/
+// DOPPLER EDIT END
 
 ////////////////////////////
 // Undershirt Definitions //
@@ -1457,6 +1461,8 @@
 	icon_state = "whiteshortsleeve"
 	gender = NEUTER
 
+// DOPPLER EDIT REMOVAL BEGIN - Underwear and bra split
+/*
 /datum/sprite_accessory/undershirt/sports_bra
 	name = "Sports Bra"
 	icon_state = "sports_bra"
@@ -1466,6 +1472,8 @@
 	name = "Sports Bra (Alt)"
 	icon_state = "sports_bra_alt"
 	gender = NEUTER
+*/
+// DOPPLER EDIT END
 
 /datum/sprite_accessory/undershirt/blueshirtsport
 	name = "Sports Shirt (Blue)"

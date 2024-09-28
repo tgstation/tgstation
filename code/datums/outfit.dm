@@ -227,6 +227,11 @@
 	if(socks)
 		user.socks = initial(socks.name)
 
+	// DOPPLER EDIT ADDITION START - Underwear and bra split
+	if(bra)
+		user.bra = initial(bra.name)
+	// DOPPLER EDIT END
+
 	if(accessory)
 		var/obj/item/clothing/under/U = user.w_uniform
 		if(U)

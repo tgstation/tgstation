@@ -541,6 +541,12 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
+	// DOPPLER EDIT ADDITION START - Underwear and Bra split
+	new_profile.bra = target.bra
+	new_profile.undershirt_color = target.undershirt_color
+	new_profile.socks_color = target.socks_color
+	new_profile.bra_color = target.bra_color
+	// DOPPLER EDIT ADDITION END
 
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
