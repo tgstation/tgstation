@@ -93,7 +93,7 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
-	// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
+	/// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
 	var/extended_message_range = TRUE
 
 /mob/camera/imaginary_friend/Login()
