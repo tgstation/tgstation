@@ -1796,7 +1796,7 @@
 	var/list/special_identifier = identifier
 	switch(special_identifier[FISH_BAIT_TYPE])
 		if(FISH_BAIT_FOODTYPE)
-			var/datum/component/edible/edible = GetComponent(/datum/component/edible)
+			var/datum/component/edible/edible = bait.GetComponent(/datum/component/edible)
 			return edible?.foodtypes & special_identifier[FISH_BAIT_VALUE]
 		if(FISH_BAIT_REAGENT)
 			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
