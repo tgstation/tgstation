@@ -126,7 +126,8 @@
 
 /obj/item/stack/apply_material_effects(list/materials)
 	. = ..()
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
+	if(amount)
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)
