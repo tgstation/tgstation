@@ -158,6 +158,6 @@
 	)
 	poor_target.Paralyze(5 SECONDS)
 	poor_target.emote("scream")
-	playsound(poor_target, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
+	playsound(poor_target, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 	add_memory_in_range(poor_target, 7, /datum/memory/witness_vendor_crush, protagonist = poor_target, antognist = src)
 	return TRUE

@@ -10266,6 +10266,7 @@
 /obj/item/food/popsicle/creamsicle_orange,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/medical/coldroom)
 "dLq" = (

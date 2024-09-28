@@ -20,7 +20,7 @@
 /// Attempts to fill out the order list with items of the user's choosing, will stop in its tracks if it fails
 /obj/item/paper/paperslip/ration_ticket/proc/try_to_make_ration_order_list(obj/machinery/computer/cargo/object_we_attack, mob/living/user)
 	forceMove(object_we_attack)
-	playsound(object_we_attack, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(object_we_attack, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	// List of meat options we get
 	var/list/radial_meat_options = list(
@@ -34,7 +34,7 @@
 	if(!meats_choice)
 		object_we_attack.balloon_alert(user, "no selection made")
 		forceMove(drop_location(object_we_attack))
-		playsound(object_we_attack, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(object_we_attack, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		return
 
 	switch(meats_choice)
@@ -60,7 +60,7 @@
 		// Reset the list if we fail
 		items_we_deliver = list()
 		forceMove(drop_location(object_we_attack))
-		playsound(object_we_attack, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(object_we_attack, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		return
 
 	switch(produce_choice)
@@ -88,7 +88,7 @@
 		// Reset the list if we fail
 		items_we_deliver = list()
 		forceMove(drop_location(object_we_attack))
-		playsound(object_we_attack, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		playsound(object_we_attack, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		return
 
 	switch(flour_choice)
@@ -162,7 +162,7 @@
 /// Attempts to fill out the order list with items of the user's choosing, will stop in its tracks if it fails
 /obj/item/paper/paperslip/ration_ticket/luxury/try_to_make_ration_order_list(obj/machinery/computer/cargo/object_we_attack, mob/living/user)
 	forceMove(object_we_attack)
-	playsound(object_we_attack, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(object_we_attack, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	// List of meat options we get
 	var/list/radial_alcohol_options = list(

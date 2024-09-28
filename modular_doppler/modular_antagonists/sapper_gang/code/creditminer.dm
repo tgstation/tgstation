@@ -62,7 +62,7 @@
 
 /obj/item/powersink/creditminer/proc/print()
 	if(cash_out > 0)
-		playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+		playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 		balloon_alert_to_viewers("printed [trunc(cash_out)] credits")
 		new /obj/item/holochip(drop_location(), trunc(cash_out)) //get the loot
 		cash_out = 0

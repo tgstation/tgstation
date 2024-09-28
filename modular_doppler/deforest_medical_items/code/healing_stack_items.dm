@@ -30,7 +30,7 @@
 		/datum/wound/muscle,
 	)
 	/// The sound we play upon successfully treating the wound
-	var/treatment_sound = 'sound/items/duct_tape_rip.ogg'
+	var/treatment_sound = 'sound/items/duct_tape/duct_tape_rip.ogg'
 
 // This is only relevant for the types of wounds defined, we can't work if there are none
 /obj/item/stack/medical/wound_recovery/try_heal(mob/living/patient, mob/user, silent, looping)

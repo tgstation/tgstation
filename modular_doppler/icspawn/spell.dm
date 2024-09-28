@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/return_back
 	name = "Return"
 	desc = "Activates your return beacon."
-	sound = 'sound/magic/Repulse.ogg'
+	sound = 'sound/effects/magic/repulse.ogg'
 	button_icon_state = "lightning"
 	spell_requirements = NONE
 	invocation = "Return on!"

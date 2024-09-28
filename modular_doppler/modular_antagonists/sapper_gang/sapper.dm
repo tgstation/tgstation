@@ -101,7 +101,7 @@
 /datum/team/sapper/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Sapper Gang were:</span>"
+	parts += span_header("Sapper Gang were:")
 	parts += printplayerlist(members)
 	var/datum/objective/sapper/sapper_objective = locate() in objectives
 	parts += "Total cash out: [sapper_objective.get_loot_value()] credits"

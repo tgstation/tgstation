@@ -134,7 +134,7 @@
 		return ..()
 
 	to_chat(owner, span_warning("Your [name] crumbles into loose stone!"))
-	playsound(owner, 'sound/effects/rock_break.ogg', 60, TRUE)
+	playsound(owner, 'sound/effects/rock/rock_break.ogg', 60, TRUE)
 	new /obj/item/stack/stone(drop_location(), 4)
 	. = ..()
 	drop_organs(src, TRUE)
@@ -146,7 +146,7 @@
 		return ..()
 
 	to_chat(owner, span_warning("Your [name] crumbles into loose stone!"))
-	playsound(owner, 'sound/effects/rock_break.ogg', 60, TRUE)
+	playsound(owner, 'sound/effects/rock/rock_break.ogg', 60, TRUE)
 	new /obj/item/stack/stone(drop_location(), 4)
 	. = ..()
 	drop_organs(src, TRUE)
@@ -158,7 +158,7 @@
 		return ..()
 
 	to_chat(owner, span_warning("Your [name] crumbles into loose stone!"))
-	playsound(owner, 'sound/effects/rock_break.ogg', 60, TRUE)
+	playsound(owner, 'sound/effects/rock/rock_break.ogg', 60, TRUE)
 	new /obj/item/stack/stone(drop_location(), 4)
 	. = ..()
 	drop_organs(src, TRUE)
@@ -170,7 +170,7 @@
 		return ..()
 
 	to_chat(owner, span_warning("Your [name] crumbles into loose stone!"))
-	playsound(owner, 'sound/effects/rock_break.ogg', 60, TRUE)
+	playsound(owner, 'sound/effects/rock/rock_break.ogg', 60, TRUE)
 	new /obj/item/stack/stone(drop_location(), 4)
 	. = ..()
 	drop_organs(src, TRUE)

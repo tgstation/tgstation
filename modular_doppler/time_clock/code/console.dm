@@ -74,7 +74,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/time_clock, 28)
 			eject_inserted_id(user)
 			return FALSE
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 	return TRUE
 
 /obj/machinery/time_clock/click_alt(mob/user)
@@ -94,7 +94,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/time_clock, 28)
 	inserted_id = FALSE
 	update_appearance()
 	update_static_data_for_all_viewers()
-	playsound(src, 'sound/machines/terminal_eject.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 50, FALSE)
 
 	return TRUE
 
