@@ -1,7 +1,7 @@
 /obj/machinery/vending/deforest_medvend
 	name = "\improper DeForest Med-Vend"
 	desc = "A vending machine providing a selection of medical supplies."
-	icon = 'modular_doppler/deforest_medical_items/icons/vendor.dmi'
+	icon = 'modular_doppler/modular_vending/icons/de_forest_vendors.dmi'
 	icon_state = "medvend"
 	panel_type = "panel15"
 	light_mask = "medvend-light-mask"

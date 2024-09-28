@@ -22,7 +22,6 @@
 			"Down": true,
 			"Mining": true,
 			"No Parallax": true,
-			"Ice Ruins": true,
 			"Ice Ruins Underground": true,
 			"Baseturf": "/turf/open/openspace/icemoon/keep_below",
 			"Gravity": true,

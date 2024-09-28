@@ -218,6 +218,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
+		flick_overlay_static(mutable_appearance('modular_doppler/emotes/icons/mob_overlay.dmi', "sing", ABOVE_MOB_LAYER), 50)	// DOPPLER STATION ADDITION - sing overlay
 
 	if(message_mods[WHISPER_MODE]) // whisper away
 		spans |= SPAN_ITALICS
