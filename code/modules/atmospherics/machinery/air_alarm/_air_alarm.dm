@@ -574,28 +574,28 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
-		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low pressure and temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(pressure <= tlv_collection["pressure"].hazard_min && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! Low pressure and high temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High pressure and temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(pressure >= tlv_collection["pressure"].hazard_max && temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! High pressure and low temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE)
+		if(pressure <= tlv_collection["pressure"].hazard_min)
 			warning_message = "Danger! Low pressure detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE)
+		if(pressure >= tlv_collection["pressure"].hazard_max)
 			warning_message = "Danger! High pressure detected."
 			return
-		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(temp <= tlv_collection["temperature"].hazard_min)
 			warning_message = "Danger! Low temperature detected."
 			return
-		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(temp >= tlv_collection["temperature"].hazard_max)
 			warning_message = "Danger! High temperature detected."
 			return
 		else
