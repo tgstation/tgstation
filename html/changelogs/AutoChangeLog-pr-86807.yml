@@ -1,0 +1,6 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Altered the blood loss on teleportation. Instead of silently always losing ten blood, you now lose ~15 25% of the time, fitting in with the teleporter's random design. In practice this usually evens out, but the immediate side-effects when it does happen will be much more noticeable. The rest of the time you'll still lose 5."
+  - qol: "Improved the visible effects when using the teleporter. On teleporting, it causes a tiny blood red wave at the destination, which is slightly larger and more vibrant red if you lose blood. Telefragging someone now throws them a random turf away alongside the stun."
+  - bugfix: "Fixed NOBLOOD check missing from non-emergency teleport bloodloss."
