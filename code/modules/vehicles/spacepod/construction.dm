@@ -46,8 +46,9 @@
 	name = "in-progress pod"
 	density = TRUE
 	anchored = TRUE
-	base_icon_state = ""
-	icon_state = ""
+	icon = 'icons/mob/rideables/spacepod/construction.dmi'
+	base_icon_state = "pod"
+	icon_state = "pod1"
 
 /obj/structure/pod_construction/Initialize(mapload)
 	. = ..()
@@ -145,22 +146,28 @@
 /datum/component/construction/pod/update_parent(step_index)
 	. = ..()
 	var/atom/parent_atom = parent
-	parent_atom.icon_state = "[parent_atom.base_icon_state][index - 1]"
+	parent_atom.icon_state = "[parent_atom.base_icon_state][index]"
 
 /datum/component/construction/pod/custom_action(obj/item/item, mob/living/user, diff)
 	if(index != 10) //3rd last step
 		return ..()
-	var/obj/item/stack/sheet/as_sheet = item
 	var/static/list/datum/pod_construct/constructs
 	if(isnull(constructs))
 		constructs = list()
 		for(var/datum/pod_construct/construct as anything in subtypesof(/datum/pod_construct))
 			constructs[initial(construct.build_needed_item)] = new construct
 
-	var/datum/pod_construct/construct = constructs[item.type]
+	var/datum/pod_construct/construct
+	for(var/type in constructs) // sheets may spawn premapped as subtypes like /fifty which is not ideal
+		if(!istype(item, type))
+			continue
+		construct = constructs[type]
+		break
+
 	if(isnull(construct))
 		return ..()
 
+	var/obj/item/stack/sheet/as_sheet = item
 	if(istype(as_sheet) && !as_sheet.use(25))
 		var/atom/parent_atom = parent
 		parent_atom.balloon_alert(user, "not enough!")
