@@ -86,11 +86,11 @@
 	cell = new /obj/item/stock_parts/power_store/battery(src)
 
 /obj/vehicle/sealed/space_pod/Destroy()
-	. = ..()
 	QDEL_NULL(trail)
 	QDEL_NULL(cabin_air_tank)
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
-	equipped = null // equipment gets deleted already because its in our contents
+	QDEL_NULL(equipped)
+	return ..()
 
 /obj/vehicle/sealed/space_pod/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/kick_out)
