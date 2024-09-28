@@ -32,7 +32,7 @@
 		var/turf/victim_turf = get_turf(victim)
 		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
-		victim.playsound_local(victim_turf, 'sound/magic/charge.ogg')
+		victim.playsound_local(victim_turf, 'sound/effects/magic/charge.ogg')
 		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
 			var/message = ""
 			var/location = victim.loc
@@ -140,7 +140,7 @@
 		priority_announce(
 			text = "Fatal error occurred in emergency shuttle uplink during transit. Unable to reestablish connection.",
 			title = "Shuttle Failure",
-			sound =  'sound/misc/announce_dig.ogg',
+			sound =  'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -163,7 +163,7 @@
 			var/mob/living/living_player = player
 			to_chat(player, span_boldannounce("Everything around you is resonating with a powerful energy. This can't be good."))
 			living_player.add_mood_event("cascade", /datum/mood_event/cascade)
-		SEND_SOUND(player, 'sound/magic/charge.ogg')
+		SEND_SOUND(player, 'sound/effects/magic/charge.ogg')
 
 /datum/sm_delam/proc/effect_emergency_state()
 	if(SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)

@@ -1,6 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Echolocation no longer breaks when witnessing a hologram"
-  - bugfix: "Echolocation no longer breaks when witnessing a fulton extraction"
-  - bugfix: "Humanoid NPCs are no longer invisible to echolocation users"

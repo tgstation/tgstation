@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Lighters now use and require welding fuel to work, but can be used as a welding tool for tasks that don't require much heat."

@@ -440,7 +440,7 @@
 	head = /obj/item/clothing/head/wizard/black
 	spells_to_add = list(
 		/datum/action/cooldown/spell/touch/scream_for_me,
-		/datum/action/cooldown/spell/teleport/radius_turf/blink,
+		/datum/action/cooldown/spell/conjure/link_worlds,
 	)
 
 /datum/outfit/deathmatch_loadout/wizard/larp

@@ -53,6 +53,10 @@
 	else
 		long_jump_chance *= master.difficulty
 
+/datum/fish_movement/proc/reset_difficulty_values()
+	short_jump_chance = initial(short_jump_chance)
+	long_jump_chance = initial(long_jump_chance)
+
 ///The main proc, called by minigame every SSfishing tick while it's in the 'active' phase.
 /datum/fish_movement/proc/move_fish(seconds_per_tick)
 	times_fired++
@@ -189,6 +193,12 @@
 	//Adjust the fleeing velocity, up to five times the initial value.
 	plunging_speed += round(plunging_speed * master.difficulty * 0.03)
 	fish_idle_velocity += plunging_speed //so it can be safely subtracted if the fish starts at the bottom.
+
+/datum/fish_movement/plunger/reset_difficulty_values()
+	. = ..()
+	if(is_plunging)
+		fish_idle_velocity -= plunging_speed
+	plunging_speed = initial(plunging_speed)
 
 /datum/fish_movement/plunger/move_fish(seconds_per_tick)
 	var/fish_area = FISHING_MINIGAME_AREA - master.fish_height
