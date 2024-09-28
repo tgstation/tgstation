@@ -1,4 +1,3 @@
-import { useBackend } from '../../../backend';
 import { LabeledList } from '../../../components';
 type Data = {
   lines: string[];

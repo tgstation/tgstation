@@ -1,6 +1,5 @@
 import { LabeledList, ProgressBar } from 'tgui-core/components';
 
-import { useBackend } from '../../../backend';
 type Data = {
   ammo: number;
   maxAmmo: number;
