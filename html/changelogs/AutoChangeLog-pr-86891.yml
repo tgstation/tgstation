@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "fix wiki manuals by making them open wiki page on browser"
