@@ -80,6 +80,9 @@
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/circuit/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
 
@@ -107,6 +110,9 @@
 /turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/circuit/green/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
 
@@ -130,6 +136,9 @@
 
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/floor/circuit/red/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/pod
 	name = "pod floor"

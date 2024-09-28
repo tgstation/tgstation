@@ -2,7 +2,18 @@
 /// that exist in the world currently.
 GLOBAL_LIST_EMPTY(telecomms_list)
 /// The amount of heat energy telecomms equipment generates when used
-#define HEAT_GENERATED_TCOMMS (5 KILO JOULES)
+#define HEAT_GENERATED_TCOMMS (5 KILO JOULES) // this supports about ~10 TCOMM messages a minute before it overheats
+
+/**
+MATH TIME
+- Average pop at ~50 players emit rougly 10-20 TCOMM messages a minute, 30 at peak volume (from eyeballing logs)
+- Radio spam from air alarms will emit a message about once every ~10 seconds (with intercom on)
+- We also want to account for people trying to spam using multiple radios
+
+So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
+**/
+
+
 
 /**
  * The basic telecomms machinery type, implementing all of the logic that's

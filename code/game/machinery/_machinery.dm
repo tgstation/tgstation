@@ -331,6 +331,8 @@
 	enviroment.temperature += amount / enviroment.heat_capacity()
 	air_update_turf(FALSE, FALSE)
 
+	do_sparks(1, TRUE, src)
+
 	return amount
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.

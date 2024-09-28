@@ -105,6 +105,9 @@
 /turf/open/floor/catwalk_floor/iron_dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/catwalk_floor/iron_dark/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/catwalk_floor/titanium/Airless
 	initial_gas_mix = AIRLESS_ATMOS
 
