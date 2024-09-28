@@ -30,6 +30,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           clean: true
           single-commit: true
           folder: dmdoc
