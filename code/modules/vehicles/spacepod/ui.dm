@@ -63,9 +63,7 @@
 	var/id = params["partRef"]
 	var/datum/targ = locate(id)
 	if(!isnull(targ))
-		var/result = targ.ui_act(action, params, ui, state)
-		if(result)
-			return result
+		return targ.ui_act(action, params, ui, state)
 
 	switch (action)
 		if ("toggle-headlights")
@@ -74,7 +72,8 @@
 			playsound(loc, light_on ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 			return TRUE
 		if ("change-name")
-			if(is_ic_filtered_for_pdas(params["newName"]))
+			var/stripped = strip_html(params["newName"], limit = MAX_NAME_LEN)
+			if(is_ic_filtered_for_pdas(stripped))
 				return
-			name = strip_html(params["newName"], limit = MAX_NAME_LEN)
+			name = stripped
 

@@ -5,7 +5,7 @@
 	density = TRUE
 	max_integrity = 500
 
-// leaving this as empty incase someone wants to like to make traps or something idk
+/// Proc called by a space pods comms array when activated in range, pod is the pod, access is an access list of the comms array
 /obj/machinery/pod_comms_receiver/proc/receive(pod, list/access)
 	return
 

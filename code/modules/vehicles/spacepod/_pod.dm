@@ -133,16 +133,15 @@
 		return ..()
 	rider.balloon_alert_to_viewers("kicking driver out!")
 	if(!do_after(rider, 5 SECONDS, src))
-		return
+		return FALSE
 	for(var/mob/living/driver as anything in return_drivers())
 		driver.Knockdown(1 SECONDS)
 		mob_exit(driver, randomstep = TRUE)
 
 /obj/vehicle/sealed/space_pod/mob_try_exit(mob/removing, mob/user, silent = FALSE, randomstep = FALSE)
-	if(user != removing)
+	if(user != removing || !HAS_TRAIT(removing, TRAIT_RESTRAINED))
 		return ..()
-	if(!HAS_TRAIT(removing, TRAIT_RESTRAINED)) // you need hands to use the door handle buddy
-		return ..()
+	return //Dont do anything
 
 /obj/vehicle/sealed/space_pod/container_resist_act(mob/living/user)
 	. = ..()
@@ -167,21 +166,19 @@
 
 /obj/vehicle/sealed/space_pod/welder_act(mob/living/user, obj/item/welder)
 	if(user.combat_mode || DOING_INTERACTION(user, src))
-		return
-	. = NONE
+		return NONE
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "no damage!")
-		return
+		return NONE
 	if(!welder.tool_start_check(user, amount=1))
-		return
+		return NONE
 	user.balloon_alert_to_viewers("repairing pod!")
 	audible_message(span_hear("You hear welding."))
 	while(atom_integrity < max_integrity) //19-20 seconds to repair an iron pod from almost 0 to full
-		if(welder.use_tool(src, user, 1 SECONDS, volume=50))
-			atom_integrity += min(/obj/vehicle/sealed/space_pod::max_integrity / 20, (max_integrity - atom_integrity))
-			audible_message(span_hear("You hear welding."))
-		else
+		if(!welder.use_tool(src, user, 1 SECONDS, volume=50))
 			break
+		atom_integrity += min(/obj/vehicle/sealed/space_pod::max_integrity / 20, (max_integrity - atom_integrity))
+		audible_message(span_hear("You hear welding."))
 
 /obj/vehicle/sealed/space_pod/vv_get_dropdown()
 	. = ..()

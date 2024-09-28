@@ -33,7 +33,7 @@
 		Bump(target)
 
 /obj/vehicle/sealed/space_pod/vehicle_move(direction)
-	. = ..()
+	. = FALSE
 	if(!max_speed || !force_per_move || !COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return
 	var/power_used = (STANDARD_BATTERY_CHARGE / 2000) * (force_per_move / (1 SECONDS))
@@ -50,6 +50,7 @@
 	COOLDOWN_START(src, cooldown_vehicle_move, 1 DECISECONDS)
 	trail.generate_effect()
 	after_move(direction)
+	return TRUE
 
 /obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER

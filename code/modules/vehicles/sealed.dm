@@ -76,6 +76,7 @@
 /obj/vehicle/sealed/proc/enter_checks(mob/M)
 	return occupant_amount() < max_occupants
 
+/// Puts the mob inside us while producing a visible message (if not silent). flags is occupancy flags, if not passed then it will be assigned automatically
 /obj/vehicle/sealed/proc/mob_enter(mob/M, silent = FALSE, flags)
 	if(!istype(M))
 		return FALSE

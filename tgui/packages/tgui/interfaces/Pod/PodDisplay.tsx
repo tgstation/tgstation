@@ -27,7 +27,7 @@ export default function PodDisplay(_props: any): JSX.Element {
     occupantmax,
   } = data;
 
-  const [editing, setEditing] = useState<boolean>(false);
+  const [editing, setEditing] = useState(false);
 
   return (
     <Stack fill vertical>

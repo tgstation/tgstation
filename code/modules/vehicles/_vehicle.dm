@@ -130,20 +130,20 @@
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/proc/remove_occupant(mob/M)
+/obj/vehicle/proc/remove_occupant(mob/removed)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!istype(M))
+	if(!istype(removed))
 		return FALSE
-	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_REMOVED, M, (M in occupants) ? occupants[M] : null)
-	remove_control_flags(M, ALL)
-	remove_passenger_actions(M)
-	LAZYREMOVE(occupants, M)
-//	LAZYREMOVE(contents, M)
-	cleanup_actions_for_mob(M)
-	after_remove_occupant(M)
+	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_REMOVED, removed, occupants[removed])
+	remove_control_flags(removed, ALL)
+	remove_passenger_actions(removed)
+	LAZYREMOVE(occupants, removed)
+//	LAZYREMOVE(contents, removed)
+	cleanup_actions_for_mob(removed)
+	after_remove_occupant(removed)
 	return TRUE
 
-/obj/vehicle/proc/after_remove_occupant(mob/M)
+/obj/vehicle/proc/after_remove_occupant(mob/removed)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
 	if(is_driver(user) && may_move(user) && user.moving_diagonally != FIRST_DIAG_STEP)
