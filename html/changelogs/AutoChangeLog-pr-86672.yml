@@ -1,5 +1,0 @@
-author: "DaCoolBoss"
-delete-after: True
-changes:
-  - qol: "[Birdshot] Kitchen's privacy shutters no longer cover parts of the cafeteria table when open."
-  - bugfix: "[Birdshot] Kitchen's corridor windoor is now rotated correctly."

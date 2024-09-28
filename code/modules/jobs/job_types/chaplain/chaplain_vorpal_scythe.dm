@@ -25,7 +25,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
-	playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
+	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
@@ -152,7 +152,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")
 
 	if(do_after(user,  15 SECONDS * death_knell_speed_mod, target = potential_reaping))
-		playsound(get_turf(potential_reaping), 'sound/weapons/bladeslice.ogg', 250, TRUE)
+		playsound(get_turf(potential_reaping), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 		reaped_head.dismember()
 		user.visible_message(span_danger("[user] swings [src] down, slicing [potential_reaping]'s [head_name] clean off! You think [src] may have grown stronger!"), span_notice("As you perform the death knell on [potential_reaping], [src] gains power! For a time..."))
 		if(potential_empowerment == SCYTHE_SATED) //We don't want actual player heads to go wandering off, but it'll be funny if a bunch of monkeyhuman heads started floating around

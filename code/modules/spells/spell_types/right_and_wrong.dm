@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	var/obj/item/gun/spawned_gun = new gun_type(get_turf(to_equip))
 	if (istype(spawned_gun)) // The list may contain some non-gun type guns which do not have this proc
 		spawned_gun.unlock()
-	playsound(get_turf(to_equip), 'sound/magic/summon_guns.ogg', 50, TRUE)
+	playsound(get_turf(to_equip), 'sound/effects/magic/summon_guns.ogg', 50, TRUE)
 
 	var/in_hand = to_equip.put_in_hands(spawned_gun) // not always successful
 
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	var/magic_type = prob(SPECIALIST_MAGIC_PROB) ? pick(GLOB.summoned_special_magic) : pick(GLOB.summoned_magic)
 
 	var/obj/item/spawned_magic = new magic_type(get_turf(to_equip))
-	playsound(get_turf(to_equip), 'sound/magic/summon_magic.ogg', 50, TRUE)
+	playsound(get_turf(to_equip), 'sound/effects/magic/summon_magic.ogg', 50, TRUE)
 
 	var/in_hand = to_equip.put_in_hands(spawned_magic)
 

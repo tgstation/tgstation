@@ -164,7 +164,7 @@
 	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
 		user.balloon_alert(user, "already zoomed!")
 		return
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, isgun(parent))
 	tracker.assign_to_mob(user, range_modifier)
 	tracker_owner_ckey = user.ckey
@@ -210,7 +210,7 @@
 	))
 	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
+	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	user.clear_fullscreen("scope")
 
 	// if the client has ended up in another mob, find that mob so we can fix their cursor

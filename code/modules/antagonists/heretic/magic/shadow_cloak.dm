@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
-	sound = 'sound/effects/curse2.ogg'
+	sound = 'sound/effects/curse/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 6 SECONDS
@@ -36,12 +36,12 @@
 /datum/action/cooldown/spell/shadow_cloak/before_cast(mob/living/cast_on)
 	. = ..()
 	sound = pick(
-		'sound/effects/curse1.ogg',
-		'sound/effects/curse2.ogg',
-		'sound/effects/curse3.ogg',
-		'sound/effects/curse4.ogg',
-		'sound/effects/curse5.ogg',
-		'sound/effects/curse6.ogg',
+		'sound/effects/curse/curse1.ogg',
+		'sound/effects/curse/curse2.ogg',
+		'sound/effects/curse/curse3.ogg',
+		'sound/effects/curse/curse4.ogg',
+		'sound/effects/curse/curse5.ogg',
+		'sound/effects/curse/curse6.ogg',
 	)
 	// We handle the CD on our own
 	return . | SPELL_NO_IMMEDIATE_COOLDOWN
@@ -66,7 +66,7 @@
 	StartCooldown(uncloak_timer / 3)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
-	playsound(cast_on, 'sound/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
+	playsound(cast_on, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
 	cast_on.visible_message(
 		span_warning("[cast_on] disappears into the shadows!"),
 		span_notice("You disappear into the shadows, becoming unidentifiable."),
@@ -83,7 +83,7 @@
 	active_cloak = null
 
 	UnregisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-	playsound(cast_on, 'sound/effects/curseattack.ogg', 50)
+	playsound(cast_on, 'sound/effects/curse/curseattack.ogg', 50)
 	if(show_message)
 		cast_on.visible_message(
 			span_warning("[cast_on] appears from the shadows!"),

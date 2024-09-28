@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - spellcheck: "Fruit crate description now correctly warns that it contains lemons"

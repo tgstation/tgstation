@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "A lot of instances where you could fill in 1024-character names (normal limit is 42) have been patched out, along with too-long plaque names, too-long descriptions, and more."

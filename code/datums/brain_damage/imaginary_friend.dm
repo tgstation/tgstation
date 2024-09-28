@@ -1,3 +1,8 @@
+
+#define IMAGINARY_FRIEND_RANGE 9
+#define IMAGINARY_FRIEND_SPEECH_RANGE IMAGINARY_FRIEND_RANGE
+#define IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE 999
+
 /datum/brain_trauma/special/imaginary_friend
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
@@ -88,11 +93,15 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
+	/// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
+	var/extended_message_range = TRUE
+
 /mob/camera/imaginary_friend/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	greet()
+	if(owner)
+		greet()
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
@@ -119,6 +128,7 @@
 	if(!owner.imaginary_group)
 		owner.imaginary_group = list(owner)
 	owner.imaginary_group += src
+	greet()
 
 /// Copies appearance from passed player prefs, or randomises them if none are provided
 /mob/camera/imaginary_friend/proc/setup_appearance(datum/preferences/appearance_from_prefs = null)
@@ -212,7 +222,7 @@
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/send_speech(message, range = 7, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
+/mob/camera/imaginary_friend/send_speech(message, range = IMAGINARY_FRIEND_SPEECH_RANGE, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
 	message = get_message_mods(message, message_mods)
 	message = capitalize(message)
 
@@ -231,6 +241,9 @@
 		var/randomnote = pick("♩", "♪", "♫")
 		message = "[randomnote] [capitalize(message)] [randomnote]"
 		spans |= SPAN_SINGING
+
+	if(extended_message_range)
+		range = IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE
 
 	var/eavesdrop_range = 0
 
@@ -528,3 +541,7 @@
 	real_name = "[owner.real_name]?"
 	name = real_name
 	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+
+#undef IMAGINARY_FRIEND_RANGE
+#undef IMAGINARY_FRIEND_SPEECH_RANGE
+#undef IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE

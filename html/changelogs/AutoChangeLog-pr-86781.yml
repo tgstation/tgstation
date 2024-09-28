@@ -1,9 +1,0 @@
-author: "Deadgebert"
-delete-after: True
-changes:
-  - balance: "Syndicate Rebar Bolt damage reduced to 45 from 55."
-  - balance: "Hydrogen Bolt damage reduced to 35 from 55."
-  - balance: "Syndicate Quiver reload is now interrupted by movement."
-  - balance: "Syndicate Quiver reload increased to 1.2 seconds from 0.8 seconds."
-  - balance: "Crossbow TC cost increased to 12 from 10."
-  - balance: "Quiver size increased to normal from small."

@@ -37,7 +37,7 @@
 	src.weak_infection_chance = weak_infection_chance
 
 /datum/component/infective/Destroy()
-	QDEL_NULL(diseases)
+	QDEL_LIST(diseases)
 	return ..()
 
 /datum/component/infective/RegisterWithParent()

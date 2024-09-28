@@ -16,7 +16,7 @@
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
 	hitsound = SFX_DEFAULT_FISH_SLAP
-	drop_sound = 'sound/creatures/fish/fish_drop1.ogg'
+	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME
@@ -52,7 +52,7 @@
 	var/datum/reagent/food = /datum/reagent/consumable/nutriment
 	/// How often the fish needs to be fed
 	var/feeding_frequency = 5 MINUTES
-	/// Time of last feedeing
+	/// Time of last the fish was fed
 	var/last_feeding
 
 	/// Fish status
@@ -81,6 +81,8 @@
 	var/breeding_timeout = 2 MINUTES
 	/// If set, the fish can also breed with these fishes types
 	var/list/compatible_types
+	/// If set, when procreating these are the types of fish that will be generate instead of 'type'
+	var/list/spawn_types
 	/// A list of possible evolutions. If set, offsprings may be of a different, new fish type if conditions are met.
 	var/list/evolution_types
 
@@ -114,11 +116,15 @@
 	var/size
 	/// Average size for this fish type in centimeters. Will be used as gaussian distribution with 20% deviation for fishing, bought fish are always standard size
 	var/average_size = 50
+	/// The maximum size this fish can reach, calculated the first time update_size_and_weight() is called.
+	var/maximum_size
 
 	/// Weight in grams. Null until update_size_and_weight is called. Grind results scale with it. Don't think too hard how a trout could fit in a blender.
 	var/weight
 	/// Average weight for this fish type in grams
 	var/average_weight = 1000
+	/// The maximum weight this fish can reach, calculated the first time update_size_and_weight() is called.
+	var/maximum_weight
 
 	///The general deviation from the average weight and size this fish has in the wild
 	var/weight_size_deviation = 0.2
@@ -152,6 +158,7 @@
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
+	base_icon_state = icon_state
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
 	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
@@ -253,20 +260,21 @@
 	//Remove the blood from the reagents holder and reward the player with some extra nutriment added to the fish.
 	var/datum/reagent/consumable/nutriment/protein/protein = reagents.has_reagent(/datum/reagent/consumable/nutriment/protein, check_subtypes = TRUE)
 	var/datum/reagent/blood/blood = reagents.has_reagent(/datum/reagent/blood)
-	var/old_blood_volume = blood?.volume
+	var/old_blood_volume = blood ? blood.volume : 0 //we can't use the ?. operator since the above proc doesn't return null but 0
 	reagents.del_reagent(/datum/reagent/blood)
 
 	///Make space for the additional nutriment
-	var/volume_mult = 1
-	if(bites_amount)
-		var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
-		var/bites_left = initial_bites_left - bites_amount
-		volume_mult = initial_bites_left / bites_left
-	adjust_reagents_capacity((protein?.volume - old_blood_volume) * volume_mult)
-
-	///Add the extra nutriment
-	if(protein)
-		reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
+	if(blood || protein)
+		var/volume_mult = 1
+		var/protein_volume = protein ? protein.volume : 0
+		if(bites_amount)
+			var/initial_bites_left = weight / FISH_WEIGHT_BITE_DIVISOR
+			var/bites_left = initial_bites_left - bites_amount
+			volume_mult = initial_bites_left / bites_left
+		adjust_reagents_capacity((protein_volume - old_blood_volume) * volume_mult)
+		///Add the extra nutriment
+		if(protein)
+			reagents.multiply_single_reagent(/datum/reagent/consumable/nutriment/protein, 2)
 
 	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
 	edible.foodtypes &= ~(RAW|GORE)
@@ -279,7 +287,8 @@
 ///Just kill the fish, again, and perhaps remove the infective comp.
 /obj/item/fish/proc/on_fish_cooked_again(datum/source, cooking_time)
 	SIGNAL_HANDLER
-	adjust_health(0)
+	if(!HAS_TRAIT(src, TRAIT_FISH_SURVIVE_COOKING))
+		adjust_health(0)
 	if(cooking_time >= FISH_SAFE_COOKING_DURATION)
 		well_cooked()
 
@@ -389,7 +398,7 @@
 	if(status == FISH_DEAD && icon_state_dead)
 		icon_state = icon_state_dead
 	else
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
@@ -412,7 +421,7 @@
 			. += span_deadsay("It's [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 		else
 			var/list/warnings = list()
-			if(is_hungry())
+			if(is_starving())
 				warnings += "starving"
 			if(!HAS_TRAIT(src, TRAIT_FISH_STASIS) && !proper_environment())
 				warnings += "drowning"
@@ -445,7 +454,8 @@
 		remove_fillet_type()
 		if(size > FISH_SIZE_TWO_HANDS_REQUIRED)
 			qdel(GetComponent(/datum/component/two_handed))
-
+	else
+		maximum_size = min(new_size * 2, average_size * MAX_FISH_DEVIATION_COEFF)
 	size = new_size
 
 	var/init_icon_state = initial(inhand_icon_state)
@@ -481,7 +491,7 @@
 
 	add_fillet_type()
 
-	var/make_edible = TRUE
+	var/make_edible = !weight
 	if(weight)
 		for(var/reagent_type in grind_results)
 			grind_results[reagent_type] /= max(FLOOR(weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR, 0.1), 0.1)
@@ -500,7 +510,8 @@
 			else
 				reagents.multiply_reagents(new_weight_ratio)
 				adjust_reagents_capacity(volume_diff)
-		make_edible = FALSE
+	else
+		maximum_weight = min(new_weight * 2, new_weight * MAX_FISH_DEVIATION_COEFF)
 
 	weight = new_weight
 
@@ -537,6 +548,14 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, amount, time, screentip_verb = "Cut")
 	return amount //checked by a unit test
 
+/**
+ * Weight, unlike size, is a bit more exponential, but the world isn't perfect, so isn't my code.
+ * Anyway, this returns a gross estimate of the "rank" of "category" for our fish weight, based on how
+ * weight generaly scales up (250, 500, 1000, 2000, 4000 etc...)
+ */
+/obj/item/fish/proc/get_weight_rank()
+	return max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
 	if(force >= 15 && hitsound == SFX_ALT_FISH_SLAP)
@@ -556,7 +575,7 @@
 	bare_wound_bonus = initial(bare_wound_bonus)
 	toolspeed = initial(toolspeed)
 
-	var/weight_rank = max(round(1 + log(2, weight/FISH_WEIGHT_FORCE_DIVISOR), 1), 1)
+	var/weight_rank = get_weight_rank()
 
 	throw_range -= weight_rank
 	get_force_rank()
@@ -568,7 +587,6 @@
 	throwforce = force
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
-
 
 	if(material_flags & MATERIAL_EFFECTS) //struck by metal gen or something.
 		for(var/current_material in custom_materials)
@@ -620,7 +638,7 @@
 	fish_traits = fixed_traits?.Copy() || list()
 
 	var/list/same_traits = x_traits & y_traits
-	var/list/all_traits = (x_traits|y_traits)-removed_traits
+	var/list/all_traits = (y_traits ? (x_traits|y_traits) : x_traits) - removed_traits
 
 	/// a list of incompatible traits that'll be filled as it goes on. Don't let any such trait pass onto the fish.
 	var/list/incompatible_traits = list()
@@ -649,6 +667,9 @@
 		if(trait_type in incompatible_traits)
 			continue
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(isnull(trait))
+			stack_trace("Couldn't find trait [trait_type || "null"] in the global fish traits list")
+			continue
 		if(!isnull(trait.fish_whitelist) && !(type in trait.fish_whitelist))
 			continue
 		if(length(fish_traits & trait.incompatible_traits))
@@ -684,6 +705,15 @@
 	if(status != FISH_DEAD)
 		START_PROCESSING(SSobj, src)
 
+///Returns the 0-1 value for hunger
+/obj/item/fish/proc/get_hunger()
+	. = CLAMP01((world.time - last_feeding) / feeding_frequency)
+	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER))
+		return min(., 0.2)
+
+/obj/item/fish/proc/is_starving()
+	return get_hunger() >= 1
+
 ///Feed the fishes with the contents of the fish feed
 /obj/item/fish/proc/feed(datum/reagents/fed_reagents)
 	if(status != FISH_ALIVE)
@@ -691,7 +721,7 @@
 	var/fed_reagent_type
 	if(fed_reagents.remove_reagent(food, 0.1))
 		fed_reagent_type = food
-		last_feeding = world.time
+		sate_hunger()
 	else
 		var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
 		if(!wrong_reagent)
@@ -699,6 +729,48 @@
 		fed_reagent_type = wrong_reagent.type
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
+
+/**
+ * Base multiplier of the difference between current size and weight and their maximum value
+ * Used to calculate how much fish grow each time they're fed, alongside with the current hunger,
+ * and the current size and weight, meaning bigger fish naturally tend to grow way more slowly
+ * Growth peaks at 45% hunger but very rapidly wanes past that.
+ */
+#define FISH_GROWTH_MULT 0.38
+#define FISH_GROWTH_PEAK 0.45
+#define FISH_SIZE_WEIGHT_GROWTH_MALUS 0.5
+
+///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
+/obj/item/fish/proc/sate_hunger()
+	if(isaquarium(loc))
+		var/obj/structure/aquarium/aquarium = loc
+		if(!aquarium.reproduction_and_growth)
+			return
+	var/hunger = get_hunger()
+	if(hunger < 0.05) //don't bother growing for very small amounts.
+		return
+	last_feeding = world.time
+	var/new_size = size
+	var/new_weight = weight
+	var/hunger_mult
+	if(hunger < FISH_GROWTH_PEAK)
+		hunger_mult = hunger * (1/FISH_GROWTH_PEAK)
+	else
+		hunger_mult = 1 - (hunger - FISH_GROWTH_PEAK) * 4
+		if(hunger_mult <= 0)
+			return
+	if(size < maximum_size)
+		new_size += CEILING((maximum_size - size) * FISH_GROWTH_MULT / (w_class * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
+		new_size = min(new_size, maximum_size)
+	if(weight < maximum_weight)
+		new_weight += CEILING((maximum_weight - weight) * FISH_GROWTH_MULT / (get_weight_rank() * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
+		new_weight = min(new_weight, maximum_weight)
+	if(new_size != size || new_weight != weight)
+		update_size_and_weight(new_size, new_weight)
+
+#undef FISH_SIZE_WEIGHT_GROWTH_MALUS
+#undef FISH_GROWTH_MULT
+#undef FISH_GROWTH_PEAK
 
 /obj/item/fish/proc/check_flopping()
 	if(QDELETED(src)) //we don't care anymore
@@ -908,7 +980,7 @@
 	animate(visual, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
 
 /// Checks if our current environment lets us live.
-/obj/item/fish/proc/proper_environment()
+/obj/item/fish/proc/proper_environment(temp_range_min = required_temperature_min, temp_range_max = required_temperature_max)
 	var/obj/structure/aquarium/aquarium = loc
 	if(istype(aquarium))
 		if(!compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
@@ -932,14 +1004,11 @@
 		return FALSE
 	return TRUE
 
-/obj/item/fish/proc/is_hungry()
-	return !HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER) && world.time - last_feeding >= feeding_frequency
-
 /obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
-	if(is_hungry())
+	if(is_starving())
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
@@ -976,7 +1045,7 @@
 		return FALSE
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return aquarium.reproduction_and_growth && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	var/obj/structure/aquarium/aquarium = loc
@@ -1034,25 +1103,28 @@
 			if(evolution.check_conditions(second_fish, src, aquarium))
 				possible_evolutions += evolution
 
+	var/list/types = spawn_types || list(type)
 	if(length(possible_evolutions))
 		chosen_evolution = pick(possible_evolutions)
 		chosen_type = chosen_evolution.new_fish_type
 	else if(second_fish)
+		var/list/second_fish_types = second_fish.spawn_types || list(second_fish.type)
 		var/recessive = HAS_TRAIT(src, TRAIT_FISH_RECESSIVE)
 		var/recessive_partner = HAS_TRAIT(second_fish, TRAIT_FISH_RECESSIVE)
 		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
 			if(recessive_partner && !recessive)
 				return FALSE
-			chosen_type = second_fish.type
+			chosen_type = pick(second_fish_types)
 		else
 			if(recessive && !recessive_partner)
-				chosen_type = second_fish.type
+				chosen_type = pick(second_fish_types)
 			else if(recessive_partner && !recessive)
-				chosen_type = type
+				chosen_type = pick(types)
 			else
-				chosen_type = pick(second_fish.type, type)
+				var/list/picks = second_fish_types + types
+				chosen_type = pick(picks)
 	else
-		chosen_type = type
+		chosen_type = pick(types)
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 
@@ -1061,13 +1133,16 @@
 	//Try to pass down compatible traits based on inheritability
 	new_fish.inherit_traits(fish_traits, partner?.fish_traits, evolution?.new_traits, evolution?.removed_traits)
 
+	//We combine two methods for determining the size and weight of the offspring for less extreme results.
 	if(partner)
+		var/ratio_size = new_fish.average_size * (((size / average_size) + (partner.size / partner.average_size)) / 2)
 		var/mean_size = (size + partner.size)/2
+		var/ratio_weight = new_fish.average_size * (((weight / average_weight) + (partner.weight / partner.average_weight)) / 2)
 		var/mean_weight = (weight + partner.weight)/2
-		new_fish.randomize_size_and_weight(mean_size, mean_weight, 0.3, TRUE)
+		new_fish.randomize_size_and_weight((mean_size + ratio_size) * 0.5, (mean_weight + ratio_weight) * 0.5, 0.3)
 		partner.breeding_wait = world.time + breeding_timeout
 	else //Make a close of this fish.
-		new_fish.update_size_and_weight(size, weight, TRUE)
+		new_fish.update_size_and_weight(size, weight)
 
 	breeding_wait = world.time + breeding_timeout
 
@@ -1137,7 +1212,7 @@
 		flop_animation()
 
 /obj/item/fish/proc/try_electrogenesis()
-	if(status == FISH_DEAD || is_hungry())
+	if(status == FISH_DEAD || is_starving())
 		return
 	COOLDOWN_START(src, electrogenesis_cooldown, ELECTROGENESIS_DURATION + ELECTROGENESIS_VARIANCE)
 	var/fish_zap_range = 1
@@ -1161,7 +1236,7 @@
 	var/happiness_value = 0
 	if(fish_flags & FISH_FLAG_PETTED)
 		happiness_value++
-	if(HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER) || min((world.time - last_feeding) / feeding_frequency, 1) < 0.5)
+	if(get_hunger() < 0.5)
 		happiness_value++
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
@@ -1213,14 +1288,14 @@
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage((force * 0.2) + w_class * 2, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
-		playsound(src,'sound/weapons/bite.ogg', 45, TRUE, -1)
+		playsound(src,'sound/items/weapons/bite.ogg', 45, TRUE, -1)
 	else
 		if(in_aquarium)
 			to_chat(user, span_notice("[src] dances around!"))
 		else
 			to_chat(user, span_notice("You pet [src] as you hold it."))
 		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+		playsound(src, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
 	return TRUE
 

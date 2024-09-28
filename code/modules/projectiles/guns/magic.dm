@@ -6,7 +6,7 @@
 	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/items/weapons/emitter.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
