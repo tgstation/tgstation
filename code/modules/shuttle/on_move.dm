@@ -210,8 +210,9 @@ All ShuttleMove procs go here
 			local_turf = get_step(src, REVERSE_DIR(cycle_pump.dir))
 			if (local_turf)
 				for(var/obj/machinery/door/poddoor/shuttledock/centcom_airlock in local_turf)
-					tile_air_pressure = max(0, local_turf.return_air().return_pressure())
-					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), tile_air_pressure)
+					// For some reason on docking moment those tiles are vacuum, and pump denies safe_dock attempt
+					// To fix this we're lying, that external pressure is nominal
+					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
 					break
 
 

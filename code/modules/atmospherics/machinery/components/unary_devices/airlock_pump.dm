@@ -274,7 +274,7 @@
 				return
 			var/tile_air_pressure = max(0, external_tile.return_air().return_pressure())
 			var/pressure_delta = docked_side_pressure - tile_air_pressure
-			if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error) : (pressure_delta*-1 > allowed_pressure_error))
+			if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error*10) : (pressure_delta*-1 > allowed_pressure_error*10))
 				// Disabled to avoid airlocks close-open spam
 				airlock.run_animation(DOOR_DENY_ANIMATION)
 				return
@@ -429,7 +429,7 @@
 				// Do not open airlocks leading in space
 				// If docked entity now has pressure lower or higher then was declared on docking
 				// We will keep airlocks closed until redocking or fixing atmos
-				if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error) : (pressure_delta*-1 > allowed_pressure_error))
+				if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error*10) : (pressure_delta*-1 > allowed_pressure_error*10))
 					continue
 
 			airlock.unbolt()
@@ -443,6 +443,7 @@
 		say("Docking complete.")
 		return TRUE
 	return FALSE
+
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/undock()
 	if (docked_side_pressure == null)
