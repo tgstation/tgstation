@@ -1,6 +1,6 @@
 /datum/sprite_accessory/socks
 	//All underwear goes in the same file for the sake of digi variants
-	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/underwear.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/socks.dmi'
 	use_static = TRUE
 
 /datum/sprite_accessory/socks/socks_norm

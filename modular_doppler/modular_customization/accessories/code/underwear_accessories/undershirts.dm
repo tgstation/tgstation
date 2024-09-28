@@ -1,6 +1,6 @@
 //Modular Undershirts
 /datum/sprite_accessory/undershirt
-	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/underwear.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/undershirt.dmi'
 	use_static = TRUE
 	///Whether this underwear includes a bottom (For Leotards and the likes)
 	var/hides_groin = FALSE

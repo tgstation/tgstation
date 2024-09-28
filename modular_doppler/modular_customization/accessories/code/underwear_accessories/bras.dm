@@ -1,6 +1,6 @@
 //Modular separation of Bras as a separate underwear option that displays below undershirts
 /datum/sprite_accessory/bra
-	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/underwear.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/underwear/bra.dmi'
 	use_static = FALSE
 	gender = FEMALE
 
