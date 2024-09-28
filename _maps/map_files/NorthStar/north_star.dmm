@@ -17273,6 +17273,11 @@
 /obj/item/shovel/spade,
 /turf/open/floor/grass,
 /area/station/service/library/garden)
+"euI" = (
+/obj/structure/window/plasma/spawner/directional/south,
+/obj/machinery/rnd/server/master,
+/turf/open/floor/circuit/icemoon,
+/area/station/science/server)
 "euS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -22049,7 +22054,9 @@
 "fLu" = (
 /obj/structure/window/plasma/spawner/directional/east,
 /obj/structure/window/plasma/spawner/directional/south,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/science/server)
 "fLv" = (
@@ -79919,10 +79926,8 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/aft)
 "uHe" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1
-	},
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "uHf" = (
 /obj/structure/mirror/directional/north,
@@ -83773,9 +83778,10 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard/fore)
 "vDg" = (
-/obj/structure/window/plasma/spawner/directional/south,
-/obj/machinery/rnd/server,
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "vDo" = (
 /turf/open/floor/plating/foam,
@@ -85059,9 +85065,12 @@
 	},
 /area/station/commons/storage/primary)
 "vVo" = (
-/obj/structure/window/plasma/spawner/directional/south,
-/obj/machinery/rnd/server/master,
-/turf/open/floor/circuit/telecomms,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "vVu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -89406,9 +89415,9 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/floor3/starboard/aft)
 "wWr" = (
-/obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/circuit/telecomms,
+/obj/structure/window/plasma/spawner/directional/south,
+/obj/machinery/rnd/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "wWw" = (
 /obj/structure/cable,
@@ -249684,7 +249693,7 @@ pdh
 pdh
 pdh
 pdh
-ccH
+pdh
 ccH
 wRJ
 wRJ
@@ -249941,8 +249950,8 @@ wUS
 fLu
 uHe
 vDg
+wWr
 ccH
-rip
 sCH
 wRJ
 igy
@@ -250196,10 +250205,10 @@ xDC
 uaK
 hPk
 dke
-wWr
+uHe
 vVo
+euI
 ccH
-rip
 rip
 wRJ
 igy

@@ -34338,7 +34338,6 @@
 	name = "Server Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "jUb" = (
@@ -38754,6 +38753,11 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
+"liR" = (
+/obj/machinery/rnd/server,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
+/area/station/science/server)
 "liS" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/dirt,
@@ -42508,9 +42512,12 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "moL" = (
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/station/maintenance/aft/greater)
+/obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
+/area/station/science/server)
 "moX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -43745,8 +43752,8 @@
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "mGu" = (
-/obj/machinery/rnd/server,
-/turf/open/floor/circuit/telecomms/server,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
 /area/station/science/server)
 "mGH" = (
 /obj/structure/railing{
@@ -55574,13 +55581,13 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pXt" = (
-/obj/machinery/rnd/server/master,
-/obj/structure/sign/warning/cold_temp/directional/north,
+/obj/structure/lattice/catwalk,
 /obj/machinery/camera/directional/north{
 	c_tag = "Research Division Server Room";
 	network = list("ss13","rd")
 	},
-/turf/open/floor/circuit/telecomms/server,
+/obj/structure/sign/warning/cold_temp/directional/north,
+/turf/open/openspace/icemoon,
 /area/station/science/server)
 "pXv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58447,16 +58454,9 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "qOH" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	name = "server vent";
-	dir = 4
-	},
 /obj/effect/landmark/blobstart,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/iron/dark/telecomms,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
 /area/station/science/server)
 "qOP" = (
 /obj/structure/cable,
@@ -69491,7 +69491,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "tYt" = (
@@ -80560,6 +80559,11 @@
 /obj/item/stack/sheet/leather,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
+"xpI" = (
+/obj/machinery/rnd/server/master,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
+/area/station/science/server)
 "xpJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -81955,7 +81959,6 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "xIF" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "xIO" = (
@@ -256895,9 +256898,9 @@ eMn
 sou
 mZH
 sZF
+kAC
+hil
 sKf
-sKf
-moL
 sKf
 wUA
 wUA
@@ -257152,8 +257155,8 @@ npD
 hTu
 npD
 sZF
-kAC
-hil
+npD
+npD
 npD
 npD
 npD
@@ -257408,9 +257411,9 @@ mtI
 dAh
 mYp
 owC
-owC
-owC
-owC
+xpI
+moL
+liR
 wHc
 aEA
 dng

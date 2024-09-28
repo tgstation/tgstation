@@ -2435,7 +2435,7 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/west,
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/turf/open/floor/circuit/green/icemoon,
 /area/station/science/server)
 "aEh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8395,7 +8395,7 @@
 "bYV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "bYW" = (
 /obj/structure/cable,
@@ -13836,7 +13836,7 @@
 /area/station/service/library)
 "dso" = (
 /obj/machinery/rnd/server,
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/turf/open/floor/circuit/green/icemoon,
 /area/station/science/server)
 "dsy" = (
 /obj/structure/cable,
@@ -21176,7 +21176,7 @@
 /area/station/maintenance/fore)
 "fkm" = (
 /obj/machinery/rnd/server/master,
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/turf/open/floor/circuit/green/icemoon,
 /area/station/science/server)
 "fkt" = (
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -41754,7 +41754,7 @@
 	name = "server vent";
 	dir = 8
 	},
-/turf/open/floor/circuit/green/telecomms/mainframe,
+/turf/open/floor/circuit/green/icemoon,
 /area/station/science/server)
 "koB" = (
 /obj/structure/disposalpipe/segment{
@@ -68380,7 +68380,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "reM" = (
 /obj/effect/turf_decal/stripes/line,
@@ -96245,8 +96245,8 @@
 "yam" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)

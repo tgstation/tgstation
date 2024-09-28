@@ -353,6 +353,7 @@
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
@@ -361,6 +362,15 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()
 	target_temperature = COLD_ROOM_TEMP
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server
+	name = "RD server temperature control unit"
+	icon_state = "thermo_base_1"
+	greyscale_colors = COLOR_CYAN
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server/Initialize(mapload)
+	. = ..()
+	target_temperature = ICEBOX_MIN_TEMPERATURE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 

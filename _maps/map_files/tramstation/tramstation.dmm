@@ -11027,7 +11027,7 @@
 /area/station/science/xenobiology)
 "cJR" = (
 /obj/machinery/rnd/server,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "cJS" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -47249,7 +47249,7 @@
 /turf/open/floor/grass,
 /area/station/science/lower)
 "pHX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server{
 	dir = 1
 	},
 /turf/open/floor/circuit/green,
@@ -60500,7 +60500,7 @@
 /area/station/command/heads_quarters/hop)
 "umu" = (
 /obj/machinery/rnd/server/master,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "umx" = (
 /obj/effect/turf_decal/stripes/line{
@@ -61061,7 +61061,7 @@
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "uwb" = (
 /obj/machinery/duct,
@@ -65426,7 +65426,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "vSb" = (
 /obj/structure/window/reinforced/spawner/directional/south,

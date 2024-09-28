@@ -10153,10 +10153,15 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "dIY" = (
-/obj/structure/cable,
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/rdservercontrol,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "dJk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -10571,8 +10576,8 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/chair/office/light{
-	dir = 1
+/obj/machinery/computer/rdservercontrol{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
@@ -11818,6 +11823,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/east,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/rd_server{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "ejP" = (
@@ -19130,7 +19138,7 @@
 /area/station/engineering/atmospherics_engine)
 "gSH" = (
 /obj/machinery/rnd/server/master,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "gSW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25620,12 +25628,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	name = "server vent"
-	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "jdZ" = (
 /obj/docking_port/stationary/random{
@@ -34778,9 +34783,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "msD" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent";
+	dir = 4
+	},
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "msJ" = (
 /obj/structure/table/reinforced,
@@ -36184,7 +36191,7 @@
 /area/station/security/execution/education)
 "mRs" = (
 /obj/machinery/rnd/server,
-/turf/open/floor/circuit/telecomms/server,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "mRv" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
@@ -51206,12 +51213,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "sbK" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent";
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "sbM" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -58210,9 +58216,10 @@
 /turf/closed/wall/r_wall,
 /area/station/security/prison/visit)
 "uzc" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "uzi" = (
@@ -104277,8 +104284,8 @@ wXF
 wXF
 wXF
 gSH
+msD
 wCq
-dIY
 dQA
 ewh
 elJ
@@ -104534,8 +104541,8 @@ pSz
 fVc
 wXF
 jdX
+dIY
 tbp
-msD
 uzc
 oUu
 saf
@@ -104791,8 +104798,8 @@ kmN
 kmN
 wXF
 mRs
-wCq
 sbK
+wCq
 ejL
 aPX
 elJ
