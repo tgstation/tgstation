@@ -209,6 +209,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
+		if(connected_sensor)
+			balloon_alert(user, "sensor already connected!")
+			return ITEM_INTERACT_BLOCKING
+
 		connect_sensor(multi_tool.buffer)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
@@ -709,17 +713,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
 	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
-	if(isnull(sensor))
+	if(!sensor)
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
 	connect_sensor(sensor)
 
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
-	if(!isnull(connected_sensor))
-		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 	connected_sensor = sensor
 	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
+
+	// Transfer signal from air alarm to sensor
+	UnregisterSignal(src, COMSIG_TURF_EXPOSE)
+	RegisterSignal(connected_sensor, COMSIG_TURF_EXPOSE, PROC_REF(check_danger))
+
 	my_area = get_area(connected_sensor)
 
 	check_enviroment()
@@ -730,6 +737,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
 	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+
+	// Transfer signal from sensor to air alarm
+	UnregisterSignal(connected_sensor, COMSIG_TURF_EXPOSE)
+	RegisterSignal(src, COMSIG_TURF_EXPOSE, PROC_REF(check_danger))
+
 	connected_sensor = null
 	my_area = get_area(src)
 
