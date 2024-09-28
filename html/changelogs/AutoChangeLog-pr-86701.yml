@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes:
-  - bugfix: "Removes particles from Slimed and Slime Food status effects to fix fps lag in xenobio"

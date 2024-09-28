@@ -299,7 +299,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target, caller))
+	caller.newtonian_move(get_angle(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.

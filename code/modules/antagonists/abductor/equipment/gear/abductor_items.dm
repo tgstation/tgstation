@@ -226,7 +226,7 @@
 			return
 
 		living_target.balloon_alert(living_target, "you hear a voice")
-		to_chat(living_target, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
+		to_chat(living_target, span_hear("You hear a voice in your head saying: [span_abductor(message)]"))
 		to_chat(user, span_notice("You send the message to your target."))
 		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
@@ -235,7 +235,7 @@
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
 	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
-	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
+	fail_message = span_abductor("Firing error, please contact Command.")
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
