@@ -137,3 +137,23 @@
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
+
+/obj/item/bodybag/lost_crew
+	name = "long-term body bag"
+	desc = "A folded bag designed for the long-term storage and transportation of cadavers."
+	unfoldedbag_path = /obj/structure/closet/body_bag/lost_crew
+	icon_state = "bodybag_lost_folded"
+	/// How many humans can we ever stasiserize? Really only made for one but go wild
+	var/stasis_uses = 1
+
+/obj/item/bodybag/lost_crew/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+
+	if(iscarbon(arrived) && stasis_uses > 0)
+		ADD_TRAIT(body, TRAIT_STASIS, type)
+		stasis_uses--
+
+/obj/item/bodybag/lost_crew/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	REMOVE_TRAIT(gone, TRAIT_STASIS, type)

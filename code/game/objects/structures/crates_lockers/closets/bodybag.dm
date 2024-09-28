@@ -393,3 +393,24 @@
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
 		playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
+
+/obj/structure/closet/body_bag/lost_crew
+	name = "long-term body bag"
+	desc = "A plastic bag designed for the long-term storage and transportation of cadavers."
+
+	icon_state = "bodybag_lost"
+
+	/// How many humans can we ever stasiserize? Really only made for one but go wild
+	var/stasis_uses = 1
+
+/obj/structure/closet/body_bag/lost_crew/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+
+	if(iscarbon(arrived) && stasis_uses > 0)
+		ADD_TRAIT(body, TRAIT_STASIS, type)
+		stasis_uses--
+
+/obj/structure/closet/body_bag/lost_crew/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	REMOVE_TRAIT(gone, TRAIT_STASIS, type)
