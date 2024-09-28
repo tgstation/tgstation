@@ -136,7 +136,7 @@
  */
 /atom/proc/gather_material_color(datum/material/material, list/colors, amount, multicolor = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!color) //the material has no color. Nevermind
+	if(!material.color) //the material has no color. Nevermind
 		return
 	var/color_to_add = material.color
 	var/istext = istext(color_to_add)
@@ -229,7 +229,7 @@
 		remove_single_mat_effect(custom_material, mat_amount, multiplier)
 		custom_material.on_removed(src, mat_amount, multiplier)
 		if(material_flags & MATERIAL_COLOR)
-			gather_material_color(custom_material, colors, multiplier, multicolor = mat_length > 1)
+			gather_material_color(custom_material, colors, mat_amount, multicolor = mat_length > 1)
 		if(custom_material.beauty_modifier)
 			RemoveElement(/datum/element/beauty, custom_material.beauty_modifier * mat_amount)
 
