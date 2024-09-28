@@ -532,7 +532,7 @@
 ///Cleric maces are made of two custom materials: one is handle, and the other is the mace itself.
 /obj/item/melee/cleric_mace/get_material_multiplier(datum/material/custom_material, list/materials, index)
 	if(length(materials) < 1)
-		return 1.25
+		return 1.2
 	if(index == 1)
 		return 1
 	else

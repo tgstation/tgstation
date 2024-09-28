@@ -140,8 +140,9 @@
 		return
 	var/color_to_add = material.color
 	var/istext = istext(color_to_add)
-	if(istext && multicolor && material.alpha != 255)
-		color_to_add += num2hex(material.alpha, 2)
+	if(istext)
+		if(material.alpha != 255)
+			color_to_add += num2hex(material.alpha, 2)
 	else
 		if(multicolor || material_flags & MATERIAL_GREYSCALE)
 			color_to_add = material.greyscale_color || color_matrix2color_hex(material.color)
@@ -149,7 +150,7 @@
 				color_to_add += num2hex(material.alpha, 2)
 		else
 			color_to_add = color_to_full_rgba_matrix(color_to_add)
-			color_to_add[20] *= (material.alpha / 255) // multiply the constant alpha of the colo matrix
+			color_to_add[20] *= (material.alpha / 255) // multiply the constant alpha of the color matrix
 
 	colors[color_to_add] += amount
 
