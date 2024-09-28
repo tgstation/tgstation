@@ -215,11 +215,10 @@ There are several things that need to be remembered:
 		// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
 		// (unless admins mess with this then its their fault)
 		if(num_hands < default_num_hands)
-			var/left_hand_missing = !has_left_hand(check_disabled = FALSE)
 			var/atom/movable/alpha_filter_target = new(null)
 			alpha_filter_target.icon = 'icons/effects/effects.dmi'
-			alpha_filter_target.icon_state = "missing[left_hand_missing ? "l" : "r"]"
-			alpha_filter_target.render_target = "*MissGlove[left_hand_missing ? "L" : "R"][REF(src)]"
+			alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
+			alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
 			gloves_overlay.add_overlay(alpha_filter_target)
 			qdel(alpha_filter_target)
 			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
