@@ -490,7 +490,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// DOPPLER EDIT ADDITION START - Underwear, Bra, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		if(species_human.underwear)
+		if(species_human.underwear && !(species_human.underwear_visibility & UNDERWEAR_HIDE_UNDIES))
 			var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			var/female_sprite_flags = FEMALE_UNIFORM_FULL // the default gender shaping
@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					underwear_overlay.color = species_human.underwear_color
 				standing += underwear_overlay
 
-		if(species_human.bra)
+		if(species_human.bra && !(species_human.underwear_visibility & UNDERWEAR_HIDE_BRA))
 			var/datum/sprite_accessory/bra/bra = SSaccessories.bra_list[species_human.bra]
 
 			if(bra)
@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					bra_overlay.color = species_human.bra_color
 				standing += bra_overlay
 
-		if(species_human.undershirt)
+		if(species_human.undershirt && !(species_human.underwear_visibility & UNDERWEAR_HIDE_SHIRT))
 			var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/undershirt_overlay
@@ -530,7 +530,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					undershirt_overlay.color = species_human.undershirt_color
 				standing += undershirt_overlay
 
-		if(species_human.socks)
+		if(species_human.socks && !(species_human.underwear_visibility & UNDERWEAR_HIDE_SOCKS))
 			// if(!("taur" in mutant_bodyparts) || mutant_bodyparts["taur"][MUTANT_INDEX_NAME] == SPRITE_ACCESSORY_NONE)
 			var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[species_human.socks]
 			if(socks)

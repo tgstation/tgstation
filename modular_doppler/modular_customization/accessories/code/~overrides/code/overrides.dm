@@ -37,6 +37,8 @@
 	var/bra = "Nude"
 	/// Color of the bra.
 	var/bra_color = "#FFFFFF"
+	/// Flags for showing/hiding underwear, toggleabley by a verb
+	var/underwear_visibility = NONE
 
 ///copies over clothing preferences like underwear to another human
 /mob/living/carbon/human/copy_clothing_prefs(mob/living/carbon/human/destination)
