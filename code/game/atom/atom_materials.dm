@@ -106,7 +106,7 @@
 
 	if(material_flags & (MATERIAL_COLOR|MATERIAL_GREYSCALE))
 		var/init_alpha = initial(alpha)
-		var/alpha_value = (total_alpha / length(materials)) * (init_alpha / 255)
+		var/alpha_value = (total_alpha / length(materials)) * init_alpha
 
 		if(alpha_value < init_alpha * 0.9)
 			opacity = FALSE
