@@ -63,7 +63,7 @@
 			cast_on.balloon_alert_to_viewers("magically tied!")
 		else
 			cast_on.balloon_alert(owner, "magically tied!")
-		playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+		playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 		return TRUE
 
 	var/shoe_to_cast = /obj/item/clothing/shoes/sneakers/random
@@ -86,7 +86,7 @@
 			return FALSE
 
 		if(invocation_type != INVOCATION_NONE)
-			playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+			playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 	switch(shoes_to_tie.tied)
 		if(SHOES_TIED)
@@ -96,7 +96,7 @@
 					cast_on.balloon_alert(owner, "laced!")
 					shoes_to_tie.can_be_tied = TRUE
 					if(invocation_type != INVOCATION_NONE)
-						playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
+						playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 					return TRUE
 				else
 					to_chat(owner, span_warning("[cast_on] is wearing laceless shoes!"))

@@ -34,7 +34,7 @@
 		if(objective == src)
 			continue
 		objective.fail_objective()
-	user.playsound_local(get_turf(user), 'sound/traitor/final_objective.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+	user.playsound_local(get_turf(user), 'sound/music/antag/traitor/final_objective.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	handler.final_objective = name
 
 /datum/traitor_objective/ultimate/uplink_ui_data(mob/user)
