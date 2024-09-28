@@ -7,13 +7,13 @@
 	layer = ABOVE_MOB_LAYER
 	///List of sounds that can be played when punched.
 	var/static/list/hit_sounds = list(
-		'sound/weapons/genhit1.ogg',
-		'sound/weapons/genhit2.ogg',
-		'sound/weapons/genhit3.ogg',
-		'sound/weapons/punch1.ogg',
-		'sound/weapons/punch2.ogg',
-		'sound/weapons/punch3.ogg',
-		'sound/weapons/punch4.ogg',
+		'sound/items/weapons/genhit1.ogg',
+		'sound/items/weapons/genhit2.ogg',
+		'sound/items/weapons/genhit3.ogg',
+		'sound/items/weapons/punch1.ogg',
+		'sound/items/weapons/punch2.ogg',
+		'sound/items/weapons/punch3.ogg',
+		'sound/items/weapons/punch4.ogg',
 	)
 
 /obj/structure/punching_bag/Initialize(mapload)

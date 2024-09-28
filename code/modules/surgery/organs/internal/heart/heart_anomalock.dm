@@ -59,7 +59,7 @@
 	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
-	playsound(target_mob, 'sound/weapons/slice.ogg', 100, TRUE)
+	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)

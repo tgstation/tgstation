@@ -47,4 +47,4 @@
 	new spawned_boulder(get_turf(living_user))
 	living_user.visible_message(span_notice("[living_user] hauls a boulder out of [src]."))
 	living_user.apply_damage(stamina_damage_to_inflict, STAMINA)
-	playsound(src, 'sound/weapons/genhit.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', vol = 50, vary = TRUE)

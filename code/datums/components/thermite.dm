@@ -116,7 +116,7 @@
  */
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/parent_turf = parent
-	playsound(parent_turf, 'sound/items/welder.ogg', 100, TRUE)
+	playsound(parent_turf, 'sound/items/tools/welder.ogg', 100, TRUE)
 	fakefire = new(parent_turf)
 	burn_callback = CALLBACK(src, PROC_REF(burn_parent), user)
 	burn_timer = addtimer(burn_callback, min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)

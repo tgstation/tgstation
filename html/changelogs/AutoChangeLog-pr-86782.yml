@@ -1,4 +1,0 @@
-author: "Likteer"
-delete-after: True
-changes:
-  - rscdel: "Intentional screaming has been unmuted. Now has a 5s cooldown instead."

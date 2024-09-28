@@ -104,7 +104,7 @@
 /datum/team/pirate/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Space Pirates were:</span>"
+	parts += span_header("Space Pirates were:")
 
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)
