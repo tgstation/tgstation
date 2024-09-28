@@ -6801,6 +6801,7 @@
 #include "modular_doppler\modular_medical\wounds\muscle.dm"
 #include "modular_doppler\modular_medical\wounds\wound_effects.dm"
 #include "modular_doppler\modular_mob_spawn\code\mob_spawn.dm"
+#include "modular_doppler\modular_mobs\code\raptor_doppler_override.dm"
 #include "modular_doppler\modular_mood\code\mood_events\brushed.dm"
 #include "modular_doppler\modular_quirks\excitable\quirk.dm"
 #include "modular_doppler\modular_quirks\overwrites\musician.dm"
