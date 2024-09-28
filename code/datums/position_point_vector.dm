@@ -116,14 +116,14 @@
 	return new /datum/position(src)
 
 /datum/point/proc/return_px()
-	return MODULUS(x, ICON_SIZE_X) - 16 - 1
+	return MODULUS(x, ICON_SIZE_X) - (ICON_SIZE_X/2) - 1
 
 /datum/point/proc/return_py()
-	return MODULUS(y, ICON_SIZE_Y) - 16 - 1
+	return MODULUS(y, ICON_SIZE_Y) - (ICON_SIZE_Y/2) - 1
 
 /datum/point/vector
 	/// Pixels per iteration
-	var/speed = 32
+	var/speed = ICON_SIZE_ALL
 	var/iteration = 0
 	var/angle = 0
 	/// Calculated x movement amounts to prevent having to do trig every step.
