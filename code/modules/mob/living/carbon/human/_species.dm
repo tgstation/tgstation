@@ -488,34 +488,61 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				eye_organ.refresh(call_update = FALSE)
 				standing += eye_organ.generate_body_overlay(species_human)
 
-	//Underwear, Undershirts & Socks
+	// DOPPLER EDIT ADDITION START - Underwear, Bra, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		if(species_human.underwear)
+		if(species_human.underwear && !(species_human.underwear_visibility & UNDERWEAR_HIDE_UNDIES))
 			var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
+			var/female_sprite_flags = FEMALE_UNIFORM_FULL // the default gender shaping
 			if(underwear)
+				var/icon_state = underwear.icon_state
+				if(underwear.has_digitigrade && (species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
+					icon_state += "_d"
+					female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY // for digi gender shaping
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-					underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
+					underwear_overlay = mutable_appearance(wear_female_version(icon_state, underwear.icon, female_sprite_flags), layer = -UNDERWEAR_UNDERSHIRT)
 				else
-					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+					underwear_overlay = mutable_appearance(underwear.icon, icon_state, -UNDERWEAR_UNDERSHIRT)
 				if(!underwear.use_static)
 					underwear_overlay.color = species_human.underwear_color
 				standing += underwear_overlay
 
-		if(species_human.undershirt)
+		if(species_human.bra && !(species_human.underwear_visibility & UNDERWEAR_HIDE_BRA))
+			var/datum/sprite_accessory/bra/bra = SSaccessories.bra_list[species_human.bra]
+
+			if(bra)
+				var/mutable_appearance/bra_overlay
+				var/icon_state = bra.icon_state
+				bra_overlay = mutable_appearance(bra.icon, icon_state, -BRA_SOCKS_LAYER)
+				if(!bra.use_static)
+					bra_overlay.color = species_human.bra_color
+				standing += bra_overlay
+
+		if(species_human.undershirt && !(species_human.underwear_visibility & UNDERWEAR_HIDE_SHIRT))
 			var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[species_human.undershirt]
 			if(undershirt)
-				var/mutable_appearance/working_shirt
+				var/mutable_appearance/undershirt_overlay
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-					working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
+					undershirt_overlay = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -UNDERWEAR_UNDERSHIRT)
 				else
-					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
-				standing += working_shirt
+					undershirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -UNDERWEAR_UNDERSHIRT)
+				if(!undershirt.use_static)
+					undershirt_overlay.color = species_human.undershirt_color
+				standing += undershirt_overlay
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
+		if(species_human.socks && !(species_human.underwear_visibility & UNDERWEAR_HIDE_SOCKS))
+			// if(!("taur" in mutant_bodyparts) || mutant_bodyparts["taur"][MUTANT_INDEX_NAME] == SPRITE_ACCESSORY_NONE)
 			var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[species_human.socks]
 			if(socks)
-				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				var/mutable_appearance/socks_overlay
+				var/icon_state = socks.icon_state
+				if((species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
+					icon_state += "_d"
+				socks_overlay = mutable_appearance(socks.icon, icon_state, -BRA_SOCKS_LAYER)
+				if(!socks.use_static)
+					socks_overlay.color = species_human.socks_color
+				standing += socks_overlay
+	// DOPPLER EDIT ADDITION END
 
 	if(standing.len)
 		species_human.overlays_standing[BODY_LAYER] = standing
@@ -544,6 +571,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.undershirt = random_undershirt(human_mob.gender)
 	human_mob.underwear = random_underwear(human_mob.gender)
 	human_mob.socks = random_socks(human_mob.gender)
+	human_mob.bra = random_bra(human_mob.gender) //DOPPLER EDIT ADDITION - Underwear and Bra split
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
 /datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
