@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Debug chem synthesizer now has temperature control for adding reagents"

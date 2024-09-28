@@ -829,3 +829,21 @@
   oranges:
   - rscadd: Cardboard rolls and Wrapping paper can now be used to hit people on the
       head with
+2024-09-28:
+  Cheshify:
+  - balance: laser muskets have been rebalanced
+  - balance: crank weapons can be charged while moving
+  Goat:
+  - bugfix: Removes a random bookcase that was in the holdout bunker holodeck simulation
+  Melbert:
+  - rscdel: Advanced Health Analyzers can no longer be used to determine if a body
+      is faking death (like a changeling)
+  Rhials:
+  - bugfix: Replaces the unusable blink spell on the Necromancer deathmatch kit with
+      a nether portal summon.
+  Soupfgc:
+  - spellcheck: Fixed closet typos
+  SyncIt21:
+  - bugfix: Debug chem synthesizer now has temperature control for adding reagents
+  grungussuss:
+  - sound: the volume of the nuclear fission explosive have been reduced

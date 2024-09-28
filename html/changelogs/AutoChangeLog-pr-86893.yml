@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Advanced Health Analyzers can no longer be used to determine if a body is faking death (like a changeling)"
