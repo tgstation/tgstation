@@ -516,4 +516,10 @@
 				'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
 				'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
 			)
+		if(SFX_LIQUID_POUR)
+			soundin = pick(
+				'sound/effects/liquid_pour/liquid_pour1.ogg',
+				'sound/effects/liquid_pour/liquid_pour2.ogg',
+				'sound/effects/liquid_pour/liquid_pour3.ogg',
+			)
 	return soundin
