@@ -18708,6 +18708,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
+"foA" = (
+/obj/machinery/rnd/server/master,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
+/area/station/science/server)
 "foI" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -38753,11 +38758,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit/departure_lounge)
-"liR" = (
-/obj/machinery/rnd/server,
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
-/area/station/science/server)
 "liS" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/dirt,
@@ -42512,9 +42512,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "moL" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/airalarm/directional/west,
-/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
+/obj/machinery/rnd/server,
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/icemoon,
 /area/station/science/server)
@@ -57376,7 +57374,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "qyH" = (
@@ -60720,6 +60717,13 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"rwb" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace/icemoon,
+/area/station/science/server)
 "rwe" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
@@ -80559,11 +80563,6 @@
 /obj/item/stack/sheet/leather,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
-"xpI" = (
-/obj/machinery/rnd/server/master,
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon,
-/area/station/science/server)
 "xpJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -81959,6 +81958,7 @@
 	},
 /area/station/ai_monitored/command/storage/eva)
 "xIF" = (
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "xIO" = (
@@ -257154,7 +257154,7 @@ npD
 npD
 hTu
 npD
-sZF
+npD
 npD
 npD
 npD
@@ -257411,9 +257411,9 @@ mtI
 dAh
 mYp
 owC
-xpI
+foA
+rwb
 moL
-liR
 wHc
 aEA
 dng
