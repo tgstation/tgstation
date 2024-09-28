@@ -6,10 +6,18 @@
 	background_icon_state = "bg_tech"
 	overlay_icon_state = "bg_tech_border"
 
+/datum/action/vehicle/sealed/kick_out/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
+		if (feedback)
+			owner.balloon_alert(owner, "restrained!")
+		return FALSE
+	return TRUE
+
 /datum/action/vehicle/sealed/kick_out/Trigger(trigger_flags)
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
-		return
 	var/list/occupants = vehicle_entered_target.occupants.Copy()
 	occupants -= owner
 

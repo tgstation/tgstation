@@ -52,9 +52,10 @@
 	after_move(direction)
 	return TRUE
 
-/obj/vehicle/sealed/space_pod/proc/onSetDir(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
+/obj/vehicle/sealed/space_pod/setDir(new_dir)
+	var/old_dir = dir
 	transform = transform.Turn(dir2angle(new_dir) - dir2angle(old_dir))
+	return ..()
 
 /obj/vehicle/sealed/space_pod/atom_destruction(damage_flag)
 	explosion(loc, heavy_impact_range = 2) //doesnt damage occupants, whether this is a good thing is debatable

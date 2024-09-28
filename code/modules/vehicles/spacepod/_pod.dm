@@ -63,7 +63,6 @@
 	trail.start()
 	START_PROCESSING(SSnewtonian_movement, src)
 	update_appearance()
-	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(onSetDir))
 	ADD_TRAIT(src, TRAIT_ANCHORED_SPACEMOVE_BACKUP, INNATE_TRAIT)
 	AddElement(/datum/element/hostile_machine)
 
