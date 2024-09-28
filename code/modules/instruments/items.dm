@@ -27,7 +27,7 @@
 	if(!ismob(music_player))
 		return STOP_PLAYING
 	var/mob/user = music_player
-	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
+	if(user.incapacitated || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
 /obj/item/instrument/suicide_act(mob/living/user)
@@ -59,7 +59,7 @@
 	inhand_icon_state = "banjo"
 	attack_verb_continuous = list("scruggs-styles", "hum-diggitys", "shin-digs", "clawhammers")
 	attack_verb_simple = list("scruggs-style", "hum-diggity", "shin-dig", "clawhammer")
-	hitsound = 'sound/weapons/banjoslap.ogg'
+	hitsound = 'sound/items/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
 
 /obj/item/instrument/guitar
@@ -69,7 +69,7 @@
 	inhand_icon_state = "guitar"
 	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
 
 /obj/item/instrument/eguitar
@@ -80,7 +80,7 @@
 	force = 12
 	attack_verb_continuous = list("plays metal on", "shreds", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "shred", "crash", "smash")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = 'sound/items/weapons/stringsmash.ogg'
 	allowed_instrument_ids = "eguitar"
 
 /obj/item/instrument/glockenspiel
@@ -243,6 +243,6 @@
 	attack_verb_simple = list("flutter", "flap")
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
-	hitsound = 'sound/voice/moth/scream_moth.ogg'
+	hitsound = 'sound/mobs/humanoids/moth/scream_moth.ogg'
 	custom_price = PAYCHECK_COMMAND * 2.37
 	custom_premium_price = PAYCHECK_COMMAND * 2.37

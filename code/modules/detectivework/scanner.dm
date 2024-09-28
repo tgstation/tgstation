@@ -74,10 +74,9 @@
 	// Clear the logs
 	log = list()
 
-/obj/item/detective_scanner/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
-	return !user.combat_mode
-
 /obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE // lets us put our scanner away without trying to scan the bag
 	safe_scan(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 

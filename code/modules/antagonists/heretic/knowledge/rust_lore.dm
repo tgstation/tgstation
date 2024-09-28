@@ -198,7 +198,7 @@
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.increase_rust_strength(TRUE)
 
 /datum/heretic_knowledge/ultimate/rust_final
@@ -255,7 +255,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_rust.ogg',
+		sound = 'sound/music/antag/heretic/ascend_rust.ogg',
 		color_override = "pink",
 	)
 	trigger(loc)

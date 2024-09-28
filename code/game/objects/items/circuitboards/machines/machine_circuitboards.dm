@@ -631,6 +631,7 @@
 		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
 		/obj/machinery/vending/cola = "Robust Softdrinks",
 		/obj/machinery/vending/custom = "Custom Vendor",
+		/obj/machinery/vending/cytopro = "CytoPro",
 		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
 		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/engineering = "Robco Tool Maker",
@@ -921,6 +922,9 @@
 		/datum/stock_part/servo = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
+
+/obj/item/circuitboard/machine/sleeper/syndie
+	build_path = /obj/machinery/sleeper/syndie
 
 /obj/item/circuitboard/machine/sleeper/fullupgrade
 	build_path = /obj/machinery/sleeper/syndie/fullupgrade
@@ -1286,6 +1290,15 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/hydroponics/fullupgrade
+	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 1,
+		/obj/item/stack/sheet/glass = 1
+	)
+
 /obj/item/circuitboard/machine/microwave
 	name = "Microwave"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
@@ -1371,6 +1384,10 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/fishing_portal_generator/emagged
+	name = "Emagged Fishing Portal Generator"
+	build_path = /obj/machinery/fishing_portal_generator
 
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
@@ -1681,3 +1698,20 @@
 	req_components = list(
 		/obj/item/pipe/trinary/flippable/filter = 1,
 	)
+
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/big_manipulator
+	name = "Big Manipulator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/big_manipulator
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		)

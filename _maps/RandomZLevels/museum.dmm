@@ -1235,7 +1235,7 @@
 	},
 /obj/item/reagent_containers/cup/glass/coffee,
 /obj/item/paper/fluff/scrambled_pass{
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -2720,7 +2720,7 @@
 "wi" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "museum_secret"
+	id = "museum_right_wing"
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
@@ -3128,7 +3128,7 @@
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
 "zC" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "zE" = (
@@ -3958,7 +3958,7 @@
 /area/awaymission/museum)
 "FO" = (
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
@@ -4152,7 +4152,7 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "museum_secret"
+	id = "museum_right_wing"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -4221,7 +4221,7 @@
 /area/awaymission/museum)
 "Id" = (
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/closed/indestructible/wood,
 /area/awaymission/museum)
@@ -5246,7 +5246,7 @@
 /obj/structure/fluff/fake_camera,
 /obj/effect/decal/puzzle_dots{
 	pixel_y = -32;
-	id = "museum_r_wing_puzzle"
+	id = "museum_right_wing"
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -5332,10 +5332,10 @@
 	},
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
-	id = "museum_secret"
+	id = "museum_right_wing"
 	},
 /obj/machinery/puzzle/password/pin/directional/south{
-	id = "museum_r_wing_puzzle";
+	id = "museum_right_wing";
 	late_initialize_pop = 1
 	},
 /turf/open/floor/iron/dark,
@@ -5349,7 +5349,7 @@
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/crayon/puzzle/pin{
 	pixel_x = -32;
-	puzzle_id = "museum_r_wing_puzzle"
+	puzzle_id = "museum_right_wing"
 	},
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
@@ -34926,7 +34926,7 @@ FK
 FK
 FK
 FK
-FO
+FK
 FK
 FK
 FK
@@ -37490,7 +37490,7 @@ GQ
 FK
 FK
 vb
-FK
+FO
 FK
 FK
 PP

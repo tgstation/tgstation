@@ -17,7 +17,7 @@
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	var/charges = 1
 	var/spawn_type = /obj/tear_in_reality
 	var/spawn_amt = 1
@@ -171,7 +171,7 @@
 	throwforce = 15
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/items/welder2.ogg'
+	hitsound = 'sound/items/tools/welder2.ogg'
 
 	var/mob/current_owner
 
@@ -335,7 +335,7 @@
 	whistler = user
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
-	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
+	playsound(current_turf,'sound/effects/magic/warpwhistle.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
@@ -431,10 +431,10 @@
 		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
 	)
 
-/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/runic_vendor_scepter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(scepter_is_busy_recharging)
 		user.balloon_alert(user, "busy!")
 		return ITEM_INTERACT_BLOCKING
@@ -472,7 +472,7 @@
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
-		playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+		playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
 		user.visible_message(span_warning("[user] summons a runic vendor!"))
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--

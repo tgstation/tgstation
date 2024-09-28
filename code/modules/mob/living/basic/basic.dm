@@ -266,7 +266,7 @@
 		REMOVE_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
 
 /mob/living/basic/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	return relaydrive(user, direction)
 

@@ -115,16 +115,14 @@
 
 // [Hazards & Traps]
 //cyborg holobarriers that die when the boss dies, how exciting
+#define SELFDESTRUCT_QUEUE "hauntedtradingpost_sd" //make sure it matches the AI cores ID
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield
 	desc = "A fragile holographic energy field projected by an AI core. It keeps unwanted humanoids at safe distance."
 
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield/Initialize(mapload)
 	. = ..()
-	GLOB.selfdestructs_when_boss_dies += src
-
-/obj/structure/holosign/barrier/cyborg/cybersun_ai_shield/Destroy()
-	GLOB.selfdestructs_when_boss_dies -= src
-	return ..()
+	if(mapload) //shouldnt queue when we arent even part of a ruin, probably admin shitspawned
+		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
 //smes that produces power, until the boss dies then it self destructs and you gotta make your own power
 /obj/machinery/power/smes/magical/cybersun
@@ -136,12 +134,7 @@
 /obj/machinery/power/smes/magical/cybersun/Initialize(mapload)
 	. = ..()
 	if(donk_ai_slave)
-		GLOB.selfdestructs_when_boss_dies += src
-
-/obj/machinery/power/smes/magical/cybersun/Destroy()
-	if(donk_ai_slave)
-		GLOB.selfdestructs_when_boss_dies -= src
-	return ..()
+		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
 //this is a trigger for traps involving doors and shutters
 //doors get closed and bolted, shutters get cycled open/closed
@@ -165,18 +158,30 @@
 	var/suicide_pact = FALSE
 	//id of the suicide pact this tripwire is in
 	var/suicide_pact_id
-GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 /obj/machinery/button/door/invisible_tripwire/Initialize(mapload)
 	. = ..()
-	if(donk_ai_slave == TRUE)
-		GLOB.selfdestructs_when_boss_dies += src
-	if(suicide_pact == TRUE && suicide_pact_id != null)
-		GLOB.tripwire_suicide_pact += src
+	if(donk_ai_slave)
+		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
+	if(suicide_pact && suicide_pact_id != null)
+		SSqueuelinks.add_to_queue(src, suicide_pact_id)
+		. = INITIALIZE_HINT_LATELOAD
 	var/static/list/loc_connections = list(
 	COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/button/door/invisible_tripwire/post_machine_initialize()
+	. = ..()
+	if(!suicide_pact || isnull(SSqueuelinks.queues[suicide_pact_id]))
+		return // we got beat to it
+	SSqueuelinks.pop_link(suicide_pact_id)
+
+/obj/machinery/button/door/invisible_tripwire/MatchedLinks(id, list/partners)
+	if(id != suicide_pact_id)
+		return
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, TYPE_PROC_REF(/datum, selfdelete))
 
 /obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/source, atom/movable/victim)
 	SIGNAL_HANDLER
@@ -194,19 +199,9 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), victim)
 	if(multiuse && uses_remaining != 1)
 		return
-	if(suicide_pact&& suicide_pact_id)
-		for (var/obj/machinery/button/door/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
-			if(src.suicide_pact_id == pact_member.suicide_pact_id)
-				qdel(pact_member)
-	qdel(src)
-
-
-/obj/machinery/button/door/invisible_tripwire/Destroy()
-	if(donk_ai_slave)
-		GLOB.selfdestructs_when_boss_dies -= src
 	if(suicide_pact && suicide_pact_id)
-		GLOB.tripwire_suicide_pact -= src
-	return ..()
+		SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+	qdel(src)
 
 //door button that destroys itself when it is pressed
 /obj/machinery/button/door/selfdestructs
@@ -271,13 +266,8 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	proximity_monitor?.set_range(trigger_range)
 	my_turf = get_turf(src)
 	host_machine = locate(/obj/machinery) in loc
-	if(donk_ai_slave == TRUE)
-		GLOB.selfdestructs_when_boss_dies += src
-
-/obj/effect/overloader_trap/Destroy()
-	if(donk_ai_slave == TRUE)
-		GLOB.selfdestructs_when_boss_dies -= src
-	return ..()
+	if(donk_ai_slave)
+		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
 /obj/effect/overloader_trap/proc/check_faction(mob/target)
 	for(var/faction1 in faction)
@@ -337,8 +327,8 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	base_icon_state = "donk"
 	stun_projectile = /obj/projectile/bullet/foam_dart/riot
 	lethal_projectile = /obj/projectile/bullet/c9mm/blunttip
-	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
+	stun_projectile_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	desc = "A ballistic machine gun auto-turret with Donk Co. branding. It uses 9mm rounds."
 	armor_type = /datum/armor/donk_turret
 	scan_range = 6
@@ -363,9 +353,9 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	icon_state = "red_lethal"
 	base_icon_state = "red"
 	stun_projectile = /obj/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
 	lethal_projectile = /obj/projectile/beam/laser/cybersun
-	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+	lethal_projectile_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	desc = "An energy gun auto-turret with Cybersun branding. It fires high-energy plasma beams that do a lot of damage, but it can be fairly slow."
 	armor_type = /datum/armor/syndicate_shuttle
 	scan_range = 6
@@ -381,3 +371,4 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	damage = 30
 	wound_bonus = -50
 
+#undef SELFDESTRUCT_QUEUE

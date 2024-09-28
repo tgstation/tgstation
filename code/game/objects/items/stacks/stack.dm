@@ -177,7 +177,7 @@
 	/**
 	 * use available_amount of sheets/pieces, return TRUE only if all sheets/pieces of this stack were used
 	 * we don't delete this stack when it reaches 0 because we expect the all in one grinder, etc to delete
-	 * this stack if grinding was successfull
+	 * this stack if grinding was successful
 	 */
 	use(available_amount, check = FALSE)
 	return available_amount == current_amount
@@ -302,7 +302,7 @@
 	data["recipes"] = recursively_build_recipes(recipes)
 	return data
 
-/obj/item/stack/ui_act(action, params)
+/obj/item/stack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -369,7 +369,7 @@
 /obj/item/stack/proc/radial_check(mob/builder)
 	if(QDELETED(builder) || QDELETED(src))
 		return FALSE
-	if(builder.incapacitated())
+	if(builder.incapacitated)
 		return FALSE
 	if(!builder.is_holding(src))
 		return FALSE
@@ -546,7 +546,7 @@
 	update_weight()
 	return TRUE
 
-/obj/item/stack/tool_use_check(mob/living/user, amount)
+/obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)
 	if(get_amount() < amount)
 		// general balloon alert that says they don't have enough
 		user.balloon_alert(user, "not enough material!")

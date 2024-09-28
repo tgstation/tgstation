@@ -25,10 +25,35 @@
 /obj/item/transfer_valve/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
+	register_context()
 
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
+
+/obj/item/transfer_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(tank_one || tank_two)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove [tank_one || tank_two]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item) && is_type_in_list(held_item, list(/obj/item/tank, /obj/item/assembly)))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
+/obj/item/transfer_valve/click_alt(mob/user)
+	if(tank_one)
+		split_gases()
+		valve_open = FALSE
+		tank_one.forceMove(drop_location())
+	else if(tank_two)
+		split_gases()
+		valve_open = FALSE
+		tank_two.forceMove(drop_location())
+
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -291,7 +316,7 @@
 	data["valve"] = valve_open
 	return data
 
-/obj/item/transfer_valve/ui_act(action, params)
+/obj/item/transfer_valve/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

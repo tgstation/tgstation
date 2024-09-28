@@ -34,7 +34,7 @@
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
 
-	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	///This only works on pipes, because they have 1000 subtypes which need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
 	///The image of the pipe/device used for ventcrawling
@@ -112,7 +112,7 @@
 		turf_loc.add_blueprints_preround(src)
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+		setup_hiding()
 
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
@@ -133,9 +133,18 @@
 	return ..()
 
 /**
- * Handler for `COMSIG_OBJ_HIDE`, connects only if `hide` is set to `TRUE`. Calls `update_cap_visuals` on pipe and its connected nodes
+ * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
+ * This lets subtypes implement their own hiding logic without needing to worry about conflicts with the parent hiding logic.
  */
-/obj/machinery/atmospherics/proc/on_hide(datum/source, underfloor_accessibility)
+/obj/machinery/atmospherics/proc/setup_hiding()
+	// Register pipe cap updating when hidden/unhidden
+	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+
+/**
+ * Signal handler. Updates both our pipe cap visuals and those of adjacent nodes.
+ * We update adjacent nodes as their pipe caps are based partially on our state, so they need updating as well.
+ */
+/obj/machinery/atmospherics/proc/on_hide(datum/source)
 	SHOULD_CALL_PARENT(TRUE)
 	SIGNAL_HANDLER
 
@@ -322,7 +331,7 @@
 	if(isnull(given_layer))
 		given_layer = piping_layer
 
-	// you cant place the machine on the same location as the target cause it blocks
+	// you can't place the machine on the same location as the target cause it blocks
 	if(target.loc == loc)
 		return FALSE
 
@@ -469,7 +478,7 @@
  * Called by wrench_act() before deconstruct()
  * Arguments:
  * * mob_user - the mob doing the act
- * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the enviroment pressure and the pipe internal pressure
+ * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the environment pressure and the pipe internal pressure
  */
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
@@ -560,7 +569,7 @@
 
 // Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!direction) //cant go this way.
+	if(!direction) //can't go this way.
 		return
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
@@ -651,7 +660,8 @@
 		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
 			continue
 
-		if(isplatingturf(get_turf(node)))
+		var/turf/node_turf = get_turf(node)
+		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
 			continue
 
 		var/connected_dir = get_dir(src, node)

@@ -72,9 +72,11 @@
 	cooldown_time = 3 SECONDS
 
 /obj/item/mod/module/stealth/ninja/on_activation()
+	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 /obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 ///Camera Vision - Prevents flashes, blocks tracking.
@@ -323,7 +325,7 @@
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.preparePixelProjectile(target, mod.wearer)
 	net.firer = mod.wearer
-	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -341,8 +343,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
 	range = 9
-	hitsound = 'sound/items/fultext_deploy.ogg'
-	hitsound_wall = 'sound/items/fultext_deploy.ogg'
+	hitsound = 'sound/items/fulton/fultext_deploy.ogg'
+	hitsound_wall = 'sound/items/fulton/fultext_deploy.ogg'
 	/// Reference to the beam following the projectile.
 	var/line
 	/// Reference to the energy net module.

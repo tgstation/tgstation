@@ -9,14 +9,15 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	contents_pressure_protection = 0.8
 	can_install_electronics = FALSE
 	elevation = 21
 	elevation_open = 0
+	can_weld_shut = FALSE
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 

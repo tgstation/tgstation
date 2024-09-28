@@ -17,7 +17,7 @@
 	var/tk_throw_range = 10
 	var/mob/pulledby = null
 	/// What language holder type to init as
-	var/initial_language_holder = /datum/language_holder
+	var/initial_language_holder = /datum/language_holder/atom_basic
 	/// Holds all languages this mob can speak and understand
 	VAR_PRIVATE/datum/language_holder/language_holder
 	/// The list of factions this atom belongs to
@@ -33,8 +33,10 @@
 	var/speech_span
 	///Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
-	///Delay in deciseconds between inertia based movement
-	var/inertia_move_delay = 5
+	///Multiplier for inertia based movement in space
+	var/inertia_move_multiplier = 1
+	///Object "weight", higher weight reduces acceleration applied to the object
+	var/inertia_force_weight = 1
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff
@@ -66,7 +68,7 @@
 	/**
 	  * In case you have multiple types, you automatically use the most useful one.
 	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
+	  * I recommend you use the movetype_handler system and not modify this directly, especially for living mobs.
 	  */
 	var/movement_type = GROUND
 
@@ -107,6 +109,9 @@
 	/// The pitch adjustment that this movable uses when speaking.
 	var/pitch = 0
 
+	/// Datum that keeps all data related to zero-g drifting and handles related code/comsigs
+	var/datum/drift_handler/drift_handler
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
 
@@ -130,7 +135,7 @@
 
 /mutable_appearance/emissive_blocker/New()
 	. = ..()
-	// Need to do this here because it's overriden by the parent call
+	// Need to do this here because it's overridden by the parent call
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
@@ -142,7 +147,7 @@
 #endif
 
 #if EMISSIVE_BLOCK_GENERIC != 0
-	#error EMISSIVE_BLOCK_GENERIC is expected to be 0 to faciliate a weird optimization hack where we rely on it being the most common.
+	#error EMISSIVE_BLOCK_GENERIC is expected to be 0 to facilitate a weird optimization hack where we rely on it being the most common.
 	#error Read the comment in code/game/atoms_movable.dm for details.
 #endif
 
@@ -198,6 +203,7 @@
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
+	QDEL_NULL(drift_handler)
 
 	unbuckle_all_mobs(force = TRUE)
 
@@ -632,7 +638,7 @@
 	if(!newloc || newloc == loc)
 		return
 
-	// A mid-movement... movement... occured, resolve that first.
+	// A mid-movement... movement... occurred, resolve that first.
 	RESOLVE_ACTIVE_MOVEMENT
 
 	if(!direction)
@@ -768,7 +774,7 @@
 				if(!. && set_dir_on_move && update_dir)
 					setDir(first_step_dir)
 				else if(!inertia_moving)
-					newtonian_move(direct)
+					newtonian_move(dir2angle(direct))
 				if(client_mobs_in_contents)
 					update_parallax_contents()
 			moving_diagonally = 0
@@ -799,7 +805,7 @@
 			if (pulledby)
 				if (pulledby.currently_z_moving)
 					check_pulling(z_allowed = TRUE)
-				//dont call check_pulling() here at all if there is a pulledby that is not currently z moving
+				//don't call check_pulling() here at all if there is a pulledby that is not currently z moving
 				//because it breaks stair conga lines, for some fucking reason.
 				//it's fine because the pull will be checked when this whole proc is called by the mob doing the pulling anyways
 			else
@@ -842,8 +848,8 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving && momentum_change)
-		newtonian_move(movement_dir)
+	if (!moving_diagonally && !inertia_moving && momentum_change && movement_dir)
+		newtonian_move(dir2angle(movement_dir))
 	// If we ain't moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
 	// Waste of cpu time, and it fucks the animate
@@ -1086,7 +1092,7 @@
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_ACTIVE_STORAGE, src)
 
-///Sets the anchored var and returns if it was sucessfully changed or not.
+///Sets the anchored var and returns if it was successfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)
 	SHOULD_CALL_PARENT(TRUE)
 	if(anchored == anchorvalue)
@@ -1262,15 +1268,19 @@
 
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
-/atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
-	if(!isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
+/// Drift force determines how much acceleration should be applied. Controlled cap, if set, will ensure that if the object was moving slower than the cap before, it cannot accelerate past the cap from this move.
+/atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1 NEWTONS, controlled_cap = null)
+	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
-		return TRUE
+	if (!isnull(drift_handler))
+		if (drift_handler.newtonian_impulse(inertia_angle, start_delay, drift_force, controlled_cap))
+			return TRUE
 
-	AddComponent(/datum/component/drift, direction, instant, start_delay)
-
+	new /datum/drift_handler(src, inertia_angle, instant, start_delay, drift_force)
+	// Something went wrong and it failed to create itself, most likely we have a higher priority loop already
+	if (QDELETED(drift_handler))
+		return FALSE
 	return TRUE
 
 /atom/movable/set_explosion_block(explosion_block)
@@ -1283,16 +1293,22 @@
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
-	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
-	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
-		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
-
-	if(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))
+	var/impact_flags = pre_impact(hit_atom, throwingdatum)
+	if(impact_flags & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
-	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
-		return
-	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	if(impact_flags & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
+		hitpush = FALSE
+	var/caught = hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum, caught)
+	return caught
+
+///Called before we attempt to call hitby and send the COMSIG_MOVABLE_IMPACT signal
+/atom/movable/proc/pre_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/impact_flags = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
+	var/target_flags = SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum)
+	if(target_flags & COMSIG_HIT_PREVENTED)
+		impact_flags |= COMPONENT_MOVABLE_IMPACT_NEVERMIND
+	return impact_flags
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(src, TRAIT_NO_THROW_HITPUSH))
@@ -1445,6 +1461,7 @@
 	return
 
 /atom/movable/proc/get_spacemove_backup()
+	var/atom/secondary_backup
 	for(var/checked_range in orange(1, get_turf(src)))
 		if(isarea(checked_range))
 			continue
@@ -1452,12 +1469,18 @@
 			var/turf/turf = checked_range
 			if(!turf.density)
 				continue
-			return turf
+			if (get_dir(src, turf) in GLOB.cardinals)
+				return turf
+			secondary_backup = turf
+			continue
 		var/atom/movable/checked_atom = checked_range
 		if(checked_atom.density || !checked_atom.CanPass(src, get_dir(src, checked_atom)))
 			if(checked_atom.last_pushoff == world.time)
 				continue
-			return checked_atom
+			if (get_dir(src, checked_atom) in GLOB.cardinals)
+				return checked_atom
+			secondary_backup = checked_atom
+	return secondary_backup
 
 ///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist_act(mob/living/user, obj/container)

@@ -46,7 +46,7 @@
 
 	return data
 
-/obj/machinery/computer/aifixer/ui_act(action, params)
+/obj/machinery/computer/aifixer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -58,7 +58,7 @@
 		if("PRG_beginReconstruction")
 			if(occupier?.health < 100)
 				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
 				occupier.notify_revival("Your core files are being restored!", source = src)
 				. = TRUE

@@ -4,6 +4,16 @@
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
+/datum/emote/living/taunt
+	key = "taunt"
+	key_third_person = "taunts"
+	message = "taunts!"
+	cooldown = 1.6 SECONDS //note when changing this- this is used by the matrix taunt to block projectiles.
+
+/datum/emote/living/taunt/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	user.spin(TAUNT_EMOTE_DURATION, 0.1 SECONDS)
+
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
@@ -183,8 +193,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
-	return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+		return pick('sound/mobs/humanoids/human/gasp/gasp_female1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female2.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female3.ogg')
+	return pick('sound/mobs/humanoids/human/gasp/gasp_male1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_male2.ogg')
 
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
@@ -225,20 +235,6 @@
 	key_third_person = "grimaces"
 	message = "grimaces."
 
-/datum/emote/living/jump
-	key = "jump"
-	key_third_person = "jumps"
-	message = "jumps!"
-	hands_use_check = TRUE
-
-/datum/emote/living/jump/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	animate(user, pixel_y = user.pixel_y + 4, time = 0.1 SECONDS)
-	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
-
-/datum/emote/living/jump/get_sound(mob/living/user)
-	return 'sound/weapons/thudswoosh.ogg'
-
 /datum/emote/living/kiss
 	key = "kiss"
 	key_third_person = "kisses"
@@ -247,6 +243,9 @@
 /datum/emote/living/kiss/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
 	var/kiss_type = /obj/item/hand_item/kisser
+
+	if(HAS_TRAIT(user, TRAIT_SYNDIE_KISS))
+		kiss_type = /obj/item/hand_item/kisser/syndie
 
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
 		kiss_type = /obj/item/hand_item/kisser/death
@@ -744,4 +743,4 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	return 'sound/voice/human/whistle1.ogg'
+	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'

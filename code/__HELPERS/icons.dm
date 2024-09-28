@@ -272,7 +272,7 @@ world
 	Blend(mask_icon, ICON_ADD)
 
 /// Converts an rgb color into a list storing hsva
-/// Exists because it's useful to have a guarenteed alpha value
+/// Exists because it's useful to have a guaranteed alpha value
 /proc/rgb2hsv(rgb)
 	var/list/hsv = rgb2num(rgb, COLORSPACE_HSV)
 	if(length(hsv) < 4)
@@ -402,7 +402,7 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to process.len) { \
@@ -466,24 +466,23 @@ world
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
+	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
-
-	// Expand our canvas to fit if we're too big
-	if(render_icon)
-		var/icon/active_icon = icon(curicon)
-		if(active_icon.Width() != 32 || active_icon.Height() != 32)
-			flat.Scale(active_icon.Width(), active_icon.Height())
 
 	var/curblend = appearance.blend_mode || defblend
 
@@ -514,6 +513,20 @@ world
 		var/addY1 = 0
 		var/addY2 = 0
 
+		if(appearance.color)
+			if(islist(appearance.color))
+				flat.MapColors(arglist(appearance.color))
+			else
+				flat.Blend(appearance.color, ICON_MULTIPLY)
+
+		if(parentcolor && !(appearance.appearance_flags & RESET_COLOR))
+			if(islist(parentcolor))
+				flat.MapColors(arglist(parentcolor))
+			else
+				flat.Blend(parentcolor, ICON_MULTIPLY)
+
+		var/next_parentcolor = appearance.color || parentcolor
+
 		for(var/image/layer_image as anything in layers)
 			if(layer_image.alpha == 0)
 				continue
@@ -521,8 +534,14 @@ world
 			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
+				if(appearance.color)
+					if(islist(appearance.color))
+						add.MapColors(arglist(appearance.color))
+					else
+						add.Blend(appearance.color, ICON_MULTIPLY)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, next_parentcolor)
+
 			if(!add)
 				continue
 
@@ -554,11 +573,6 @@ world
 			// Blend the overlay into the flattened icon
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
 
-		if(appearance.color)
-			if(islist(appearance.color))
-				flat.MapColors(arglist(appearance.color))
-			else
-				flat.Blend(appearance.color, ICON_MULTIPLY)
 
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
@@ -815,11 +829,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
-/// used so that certain asset files dont have to be hashed twice
+/// used so that certain asset files don't have to be hashed twice
 /proc/generate_and_hash_rsc_file(file, dmi_file_path)
 	var/rsc_ref = fcopy_rsc(file)
 	var/hash
-	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesnt have the bug described in http://www.byond.com/forum/post/2611357
+	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesn't have the bug described in http://www.byond.com/forum/post/2611357
 	if(dmi_file_path)
 		hash = md5(rsc_ref)
 	else //otherwise, we need to do the expensive fcopy() workaround
@@ -845,7 +859,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			fdel(savefile_path)
 		return new /savefile(savefile_path)
 	catch(var/exception/error)
-		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
+		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldn't have
 		if(from_failure) // this *is* the retry, something fucked up
 			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
 		return get_dummy_savefile(from_failure = TRUE)
@@ -890,18 +904,18 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/atom/atom_icon = icon
 		icon = atom_icon.icon
 		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
-		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
+		//if they're unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
 
 	if(isicon(icon) && isfile(icon))
-		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
-		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
+		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and aren't really /icon objects,
+		///but they pass both isicon() and isfile() checks. they're the easiest case since stringifying them gives us the path we want
 		var/icon_ref = text_ref(icon)
 		var/locate_icon_string = "[locate(icon_ref)]"
 
 		icon_path = locate_icon_string
 
 	else if(isicon(icon) && "[icon]" == "/icon")
-		// icon objects generated from icon() at runtime are icons, but they ARENT files themselves, they represent icon files.
+		// icon objects generated from icon() at runtime are icons, but they AREN'T files themselves, they represent icon files.
 		// if the files they represent are compile time dmi files in the rsc, then
 		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
 		var/rsc_ref = fcopy_rsc(icon)
@@ -960,7 +974,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!length(targets))
 		return
 
-	//check if the given object is associated with a dmi file in the icons folder. if it is then we dont need to do a lot of work
+	//check if the given object is associated with a dmi file in the icons folder. if it is then we don't need to do a lot of work
 	//for asset generation to get around byond limitations
 	var/icon_path = get_icon_dmi_path(thing)
 
@@ -1004,7 +1018,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/list/name_and_ref = generate_and_hash_rsc_file(icon2collapse, icon_path)//pretend that tuples exist
 
-	var/rsc_ref = name_and_ref[1] //weird object thats not even readable to the debugger, represents a reference to the icons rsc entry
+	var/rsc_ref = name_and_ref[1] //weird object that's not even readable to the debugger, represents a reference to the icons rsc entry
 	var/file_hash = name_and_ref[2]
 	key = "[name_and_ref[3]].png"
 
@@ -1239,6 +1253,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
+	alert_overlay.pixel_z = 0
+	alert_overlay.pixel_w = 0
 
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)

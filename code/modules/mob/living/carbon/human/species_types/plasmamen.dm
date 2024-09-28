@@ -27,7 +27,7 @@
 	heatmod = 1.5
 	payday_modifier = 1.0
 	breathid = GAS_PLASMA
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
@@ -132,9 +132,9 @@
 
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
-		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
 	)
 
 /datum/species/plasmaman/get_physical_attributes()

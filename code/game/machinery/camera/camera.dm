@@ -133,8 +133,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	find_and_hang_on_wall(directional = TRUE, \
 		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
 
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
-
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
@@ -235,11 +233,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			M.reset_perspective(null)
 			to_chat(M, span_warning("The screen bursts into static!"))
 
-/obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/camera/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	//lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Y
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration * 2)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -368,7 +366,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		else
 			visible_message(span_danger("\The [src] [change_msg]!"))
 
-		playsound(src, 'sound/items/wirecutter.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
 	update_appearance() //update Initialize() if you remove this.
 
 	// now disconnect anyone using the camera

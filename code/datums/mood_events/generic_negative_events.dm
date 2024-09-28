@@ -33,6 +33,11 @@
 	mood_change = -2
 	timeout = 3 MINUTES
 
+/datum/mood_event/inked
+	description = "I've been splashed with squid ink. Tastes like salt."
+	mood_change = -3
+	timeout = 3 MINUTES
+
 /datum/mood_event/slipped
 	description = "I slipped. I should be more careful next time..."
 	mood_change = -2
@@ -485,3 +490,14 @@
 	description = "I DIDN'T MEAN TO HURT THEM!"
 	mood_change = -20
 	timeout = 10 MINUTES
+
+//Gained when you're hit over the head with wrapping paper or cardboard roll
+/datum/mood_event/bapped
+	description = "Ow.. my head, I feel a bit foolish now!"
+	mood_change = -1
+	timeout = 3 MINUTES
+
+/datum/mood_event/bapped/add_effects()
+	// Felinids apparently hate being hit over the head with cardboard
+	if(isfelinid(owner))
+		mood_change = -2

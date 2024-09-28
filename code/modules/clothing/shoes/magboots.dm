@@ -20,18 +20,30 @@
 	var/slowdown_active = 2
 	/// A list of traits we apply when we get activated
 	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
+	/// How much do these boots affect fishing when active
+	var/magpulse_fishing_modifier = 8
+	/// How much do these boots affect fishing when not active
+	var/fishing_modifier = 4
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
 /// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
 /obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)
 	SIGNAL_HANDLER
 
-	slowdown_active = 0
 	// Don't need to touch the actual slowdown here, since the speed potion does it for us
+	slowdown_active = 0
+
+	if(magpulse && magpulse_fishing_modifier)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		if(fishing_modifier)
+			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+	magpulse_fishing_modifier = fishing_modifier
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -47,7 +59,15 @@
 	if(magpulse)
 		attach_clothing_traits(active_traits)
 		slowdown += slowdown_active
+		if(magpulse_fishing_modifier)
+			AddComponent(/datum/component/adjust_fishing_difficulty, magpulse_fishing_modifier)
+		else if(magpulse_fishing_modifier != fishing_modifier)
+			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
 	else
+		if(fishing_modifier)
+			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		else if(magpulse_fishing_modifier != fishing_modifier)
+			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
 		detach_clothing_traits(active_traits)
 		slowdown = max(initial(slowdown), slowdown - slowdown_active) // Just in case, for speed pot shenanigans
 
@@ -71,9 +91,13 @@
 	base_icon_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN // ZERO active slowdown
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	magpulse_fishing_modifier = 3
+	fishing_modifier = 0
 
 /obj/item/clothing/shoes/magboots/syndie
 	name = "blood-red magboots"
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
 	icon_state = "syndiemag0"
 	base_icon_state = "syndiemag"
+	magpulse_fishing_modifier = 6
+	fishing_modifier = 3

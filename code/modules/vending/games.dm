@@ -45,6 +45,19 @@
 				/obj/item/stack/pipe_cleaner_coil/random = 10,
 			),
 		),
+		list(		
+			"name" = "Fishing",
+			"icon" = "fish",
+			"products" = list(
+				/obj/item/storage/toolbox/fishing = 2,
+				/obj/item/storage/box/fishing_hooks = 2,
+				/obj/item/storage/box/fishing_lines = 2,
+				/obj/item/storage/box/fishing_lures = 2,
+				/obj/item/book/manual/fish_catalog = 5,
+				/obj/item/fish_analyzer = 2,
+				/obj/item/fishing_rod/telescopic = 1,
+			),
+		),
 		list(
 			"name" = "Skillchips",
 			"icon" = "floppy-disk",
@@ -58,6 +71,7 @@
 				/obj/item/skillchip/sabrage = 2,
 				/obj/item/skillchip/useless_adapter = 5,
 				/obj/item/skillchip/wine_taster = 2,
+				/obj/item/skillchip/big_pointer = 2,
 			),
 		),
 		list(
@@ -66,7 +80,7 @@
 			"products" = list(
 				/obj/item/camera = 3,
 				/obj/item/camera_film = 5,
-				/obj/item/cardpack/resin = 20, //Both card packs have had their count raised to 20 from 10 until card persistance is implimented.
+				/obj/item/cardpack/resin = 20, //Both card packs have had their count raised to 20 from 10 until card persistence is implemented.
 				/obj/item/cardpack/series_one = 20,
 				/obj/item/dyespray = 3,
 				/obj/item/hourglass = 2,
