@@ -4,10 +4,6 @@
 
 /datum/reagent/consumable/ethanol/whiskey
 	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC //let's not force the detective to change his alcohol brand
-
-
-/datum/reagent/consumable/ethanol/bloody_mary
-	chemical_flags_nova = REAGENT_BLOOD_REGENERATING
 */
 
 /*SYNTHETIC DRINKS
@@ -127,6 +123,9 @@
 */
 // Other Booze
 
+/datum/reagent/consumable/ethanol/bloody_mary
+	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING
+
 /datum/reagent/consumable/ethanol/hot_toddy
 	name = "Hot Toddy"
 	description = "An old fashioned cocktail made of honey, rum, and tea."
@@ -168,7 +167,7 @@
 	boozepwr = 66
 	quality = DRINK_FANTASTIC
 	taste_description = "overpowering sweetness with a touch of sourness, followed by iron and the sensation of a warm summer breeze"
-//	chemical_flags_skyrat = REAGENT_BLOOD_REGENERATING //component drink is demon's blood, thus this drink is made with blood so hemophages can comfortably drink it
+	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING //component drink is demon's blood, thus this drink is made with blood so hemophages can comfortably drink it
 
 /datum/glass_style/drinking_glass/sins_delight
 	required_drink_type = /datum/reagent/consumable/ethanol/sins_delight
@@ -353,7 +352,6 @@
 	desc = "You'd think something so balanced would actually taste nice... you'd be dead wrong."
 
 
-/* MORE RACE SPECIFIC STUFF WE DON'T HAVE SUPPORT FOR YET
 // RACE SPECIFIC DRINKS
 
 /datum/reagent/consumable/ethanol/coldscales
@@ -376,7 +374,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-
+/*
 /datum/reagent/consumable/ethanol/oil_drum
 	name = "Oil Drum"
 	color = "#000000" //(0, 0, 0)
@@ -397,14 +395,14 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-
+*/
 /datum/reagent/consumable/ethanol/nord_king
 	name = "Nord King"
 	color = "#EB1010" //(235, 16, 16)
 	description = "Strong mead mixed with more honey and ethanol. Beloved by its human patrons."
 	boozepwr = 50 //strong!
 	taste_description = "honey and red wine"
-	chemical_flags_skyrat = REAGENT_BLOOD_REGENERATING
+	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING
 
 /datum/glass_style/drinking_glass/nord_king
 	required_drink_type = /datum/reagent/consumable/ethanol/nord_king
@@ -414,7 +412,7 @@
 	desc = "A dripping keg of red mead."
 
 /datum/reagent/consumable/ethanol/nord_king/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(ishumanbasic(exposed_mob) || isdwarf(exposed_mob))
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_GOOD
@@ -427,7 +425,7 @@
 	boozepwr = 10 //weak
 	taste_description = "iron with grapejuice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	chemical_flags_skyrat = REAGENT_BLOOD_REGENERATING
+	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING
 
 /datum/glass_style/drinking_glass/velvet_kiss
 	required_drink_type = /datum/reagent/consumable/ethanol/velvet_kiss
@@ -447,7 +445,7 @@
 	. = ..()
 	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 		drinker.blood_volume = min(drinker.blood_volume + (1 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL) //Same as Bloody Mary, as it is roughly the same difficulty to make.  Gives hemophages a bit more choices to supplant their blood levels.
-
+/*
 /datum/reagent/consumable/ethanol/abduction_fruit
 	name = "Abduction Fruit"
 	color = "#DEFACD" //(222, 250, 205)
@@ -468,7 +466,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-
+*/
 /datum/reagent/consumable/ethanol/bug_zapper
 	name = "Bug Zapper"
 	color = "#F5882A" //(222, 250, 205)
@@ -484,7 +482,7 @@
 	desc = "An odd mix of copper, lemon juice and power meant for non-human consumption."
 
 /datum/reagent/consumable/ethanol/bug_zapper/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isinsect(exposed_mob) || isflyperson(exposed_mob) || ismoth(exposed_mob))
+	if(isinsectoid(exposed_mob) || isflyperson(exposed_mob) || ismoth(exposed_mob))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_GOOD
@@ -531,7 +529,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-
+/*
 /datum/reagent/consumable/ethanol/jell_wyrm
 	name = "Jell Wyrm"
 	color = "#FF6200" //(255, 98, 0)
@@ -562,7 +560,7 @@
 	return ..()
 
 #undef JELLWYRM_DISGUST
-
+*/
 /datum/reagent/consumable/ethanol/laval_spit //Yes Laval
 	name = "Laval Spit"
 	color = "#DE3009" //(222, 48, 9)
@@ -583,7 +581,6 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-*/
 
 /datum/reagent/consumable/ethanol/frisky_kitty
 	name = "Frisky Kitty"
@@ -599,61 +596,12 @@
 	name = "cup of frisky kitty"
 	desc = "Warm milk and some catnip."
 
-/*/datum/reagent/consumable/ethanol/frisky_kitty/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+/datum/reagent/consumable/ethanol/frisky_kitty/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	if(isfelinid(exposed_mob))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_GOOD
-	return ..()*/
-
-/*
-/datum/reagent/consumable/ethanol/bloodshot_base
-	name = "Bloodshot Base"
-	description = "The bootleg blend of nutrients and alcohol that goes into making Bloodshots. Doesn't taste too great on its own, for Hemophages at least."
-	color = "#c29ca1"
-	boozepwr = 25 // Still more concentrated than in Bloodshot.
-	taste_description = "nutritious mix with an alcoholic kick to it"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-
-/datum/reagent/consumable/ethanol/bloodshot
-	name = "Bloodshot"
-	description = "The history of the 'Bloodshot' is based in a mix of flavor-neutral chems devised to help deliver nutrients to a Hemophage's tumorous organs. Due to the expense of the real thing and the clinical nature of it, this liquor has been designed as a 'improvised' alternative; though, still tasting like a hangover cure. It smells like iron, giving a clue to the key ingredient."
-	color = "#a30000"
-	boozepwr = 20 // The only booze in it is Bloody Mary
-	taste_description = "blood filled to the brim with nutrients of all kinds"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	chemical_flags_skyrat = REAGENT_BLOOD_REGENERATING
-
-
-/datum/glass_style/drinking_glass/bloodshot
-	required_drink_type = /datum/reagent/consumable/ethanol/bloodshot
-	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
-	icon_state = "bloodshot"
-	name = "glass of bloodshot"
-	desc = "The history of the 'Bloodshot' is based in a mix of flavor-neutral chems devised to help deliver nutrients to a Hemophage's tumorous organs. Due to the expense of the real thing and the clinical nature of it, this liquor has been designed as a 'improvised' alternative; though, still tasting like a hangover cure. It smells like iron, giving a clue to the key ingredient."
-
-
-#define BLOODSHOT_DISGUST 25
-
-/datum/reagent/consumable/ethanol/bloodshot/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(ishemophage(exposed_mob))
-		quality = RACE_DRINK
-
-	else if(exposed_mob.blood_volume < exposed_mob.blood_volume_normal)
-		quality = DRINK_GOOD
-
-	if(!quality) // Basically, you don't have a reason to want to have this in your system, it doesn't taste good to you!
-		exposed_mob.adjust_disgust(BLOODSHOT_DISGUST)
-
 	return ..()
-
-#undef BLOODSHOT_DISGUST
-
-/datum/reagent/consumable/ethanol/bloodshot/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	. = ..()
-	if(drinker.blood_volume < drinker.blood_volume_normal)
-		drinker.blood_volume = max(drinker.blood_volume, min(drinker.blood_volume + (3 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL)) //Bloodshot quickly restores blood loss.
 
 /datum/reagent/consumable/ethanol/blizzard_brew
 	name = "Blizzard Brew"
@@ -674,7 +622,7 @@
 	desc = "An ancient recipe. Served best chilled as much as dwarvenly possible."
 
 /datum/reagent/consumable/ethanol/blizzard_brew/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isdwarf(exposed_mob))
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_NICE
@@ -711,7 +659,7 @@
 	desc = "Famously known to set beards aflame. Ingest at your own risk!"
 
 /datum/reagent/consumable/ethanol/molten_mead/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isdwarf(exposed_mob))
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_VERYGOOD
@@ -721,7 +669,54 @@
 	drinker.adjust_fire_stacks(2)
 	drinker.ignite_mob()
 	..()
-*/
+
+/datum/reagent/consumable/ethanol/bloodshot_base
+	name = "Bloodshot Base"
+	description = "The bootleg blend of nutrients and alcohol that goes into making Bloodshots. Doesn't taste too great on its own, for Hemophages at least."
+	color = "#c29ca1"
+	boozepwr = 25 // Still more concentrated than in Bloodshot.
+	taste_description = "nutritious mix with an alcoholic kick to it"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+
+/datum/reagent/consumable/ethanol/bloodshot
+	name = "Bloodshot"
+	description = "The history of the 'Bloodshot' is based in a mix of flavor-neutral chems devised to help deliver nutrients to a Hemophage's tumorous organs. Due to the expense of the real thing and the clinical nature of it, this liquor has been designed as a 'improvised' alternative; though, still tasting like a hangover cure. It smells like iron, giving a clue to the key ingredient."
+	color = "#a30000"
+	boozepwr = 20 // The only booze in it is Bloody Mary
+	taste_description = "blood filled to the brim with nutrients of all kinds"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING
+
+
+/datum/glass_style/drinking_glass/bloodshot
+	required_drink_type = /datum/reagent/consumable/ethanol/bloodshot
+	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/drinks.dmi'
+	icon_state = "bloodshot"
+	name = "glass of bloodshot"
+	desc = "The history of the 'Bloodshot' is based in a mix of flavor-neutral chems devised to help deliver nutrients to a Hemophage's tumorous organs. Due to the expense of the real thing and the clinical nature of it, this liquor has been designed as a 'improvised' alternative; though, still tasting like a hangover cure. It smells like iron, giving a clue to the key ingredient."
+
+#define BLOODSHOT_DISGUST 25
+
+/datum/reagent/consumable/ethanol/bloodshot/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	if(ishemophage(exposed_mob))
+		quality = RACE_DRINK
+
+	else if(exposed_mob.blood_volume < BLOOD_VOLUME_NORMAL)
+		quality = DRINK_GOOD
+
+	if(!quality) // Basically, you don't have a reason to want to have this in your system, it doesn't taste good to you!
+		exposed_mob.adjust_disgust(BLOODSHOT_DISGUST)
+
+	return ..()
+
+#undef BLOODSHOT_DISGUST
+
+/datum/reagent/consumable/ethanol/bloodshot/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
+		drinker.blood_volume = max(drinker.blood_volume, min(drinker.blood_volume + (3 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL)) //Bloodshot quickly restores blood loss.
+
 /datum/reagent/consumable/ethanol/hippie_hooch
 	name = "Hippie Hooch"
 	description = "Peace and love! Under request of the HR department, this drink is sure to sober you up quickly."
@@ -742,12 +737,12 @@
 	name = "glass of Hippie Hooch"
 	desc = "Peace and love! Under request of the HR department, this drink is sure to sober you up quickly."
 
-/*/datum/reagent/consumable/ethanol/hippie_hooch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isdwarf(exposed_mob))
+/datum/reagent/consumable/ethanol/hippie_hooch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_FANTASTIC
-	return ..()*/
+	return ..()
 
 /datum/reagent/consumable/ethanol/hippie_hooch/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	for(var/effect in status_effects_to_clear)
@@ -772,12 +767,12 @@
 	name = "glass of Research Rum"
 	desc = "Cooked up by dwarven scientists, this glowing pink brew is sure to supercharge your thinking. How? Science!"
 
-/*/datum/reagent/consumable/ethanol/research_rum/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isdwarf(exposed_mob))
+/datum/reagent/consumable/ethanol/research_rum/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_GOOD
-	return ..()*/
+	return ..()
 
 /datum/reagent/consumable/ethanol/research_rum/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -798,12 +793,12 @@
 	name = "glass of Golden Grog"
 	desc = "A drink concocted by a dwarven Quartermaster who had too much time and money on his hands. Commonly ordered by influencers looking to flaunt their wealth."
 
-/*/datum/reagent/consumable/ethanol/golden_grog/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isdwarf(exposed_mob))
+/datum/reagent/consumable/ethanol/golden_grog/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	if(HAS_TRAIT(exposed_mob, TRAIT_SETTLER))
 		quality = RACE_DRINK
 	else
 		quality = DRINK_FANTASTIC
-	return ..()*/
+	return ..()
 
 // RACIAL DRINKS END
 

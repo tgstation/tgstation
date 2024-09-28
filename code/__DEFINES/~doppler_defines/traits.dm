@@ -15,3 +15,6 @@
 
 // Trait that lets golems put stone limbs back on
 #define TRAIT_GOLEM_LIMBATTACHMENT "golem_limbattachment"
+
+/// Trait that was granted by a reagent.
+#define REAGENT_TRAIT "reagent"

@@ -23,6 +23,7 @@ import { Food } from './PreferencesMenu/data';
 const TYPE_ICONS = {
   'Can Make': 'utensils',
   [Food.Alcohol]: 'wine-glass',
+  [Food.Bloody]: 'tint', // DOPPLER EDIT ADDITION - Hemophage Food
   [Food.Breakfast]: 'sun',
   [Food.Bugs]: 'bug',
   [Food.Cloth]: 'tshirt',
@@ -76,6 +77,7 @@ const CATEGORY_ICONS_COOKING = {
   Cakes: 'cake-candles',
   'Egg-Based Food': 'egg',
   Frozen: 'ice-cream',
+  'Hemophage Food': 'tint', // DOPPLER EDIT ADDITION - Hemophage Food
   'Lizard Food': 'dragon',
   Meats: 'bacon',
   'Mexican Food': 'pepper-hot',

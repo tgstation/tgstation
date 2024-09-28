@@ -4,3 +4,5 @@
 #define TRAIT_DETECTIVE "detective_ability"
 /// Trait for the excitable quirk, woof!
 #define TRAIT_EXCITABLE "wagwag"
+/// Trait for hemophages particularly!
+#define TRAIT_OXYIMMUNE	"oxyimmune" // Immune to oxygen damage, ideally give this to all non-breathing species or bad stuff will happen

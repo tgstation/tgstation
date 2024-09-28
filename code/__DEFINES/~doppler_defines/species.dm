@@ -4,3 +4,4 @@
 #define SPECIES_ANTHROMORPH "anthromorph"
 #define SPECIES_AQUATIC "aquatic"
 #define SPECIES_INSECTOID "insectoid"
+#define SPECIES_HEMOPHAGE "hemophage"

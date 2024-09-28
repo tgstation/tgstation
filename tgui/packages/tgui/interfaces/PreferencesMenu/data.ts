@@ -26,6 +26,7 @@ export enum Food {
   Sugar = 'SUGAR',
   Toxic = 'TOXIC',
   Vegetables = 'VEGETABLES',
+  Bloody = 'BLOODY', // DOPPLER EDIT ADDITION - Hemophage Food
 }
 
 export enum JobPriority {
