@@ -156,7 +156,7 @@
 ///Determines the speed at which the carp grows based on how big it's
 /obj/item/fish/baby_carp/update_size_and_weight(new_size = average_size, new_weight = average_weight)
 	. = ..()
-	var/growth_rate = 100 / (6 MINUTES) * 10
+	var/growth_rate = 4.5 MINUTES
 	growth_rate *= clamp(size/average_size, 0.5, 2)
 	growth_rate *= clamp(weight/average_weight, 0.5, 2)
 
