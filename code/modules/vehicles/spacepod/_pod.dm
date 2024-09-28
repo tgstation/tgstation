@@ -88,7 +88,7 @@
 	QDEL_NULL(trail)
 	QDEL_NULL(cabin_air_tank)
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
-	QDEL_NULL(equipped)
+	equipped = null // Equipment gets destroyed with contents and parts have handling for this
 	return ..()
 
 /obj/vehicle/sealed/space_pod/generate_actions()
