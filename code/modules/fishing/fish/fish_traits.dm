@@ -336,7 +336,11 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Mateless"
 	catalog_description = "This fish cannot reproduce with other fishes."
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
-	spontaneous_manifest_types = list(/obj/item/fish/fryish = 100)
+	spontaneous_manifest_types = list(
+		/obj/item/fish/fryish = 100,
+		/obj/item/fish/fryish/fritterish = 0,
+		/obj/item/fish/fryish/nessie = 0
+	)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -640,7 +644,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/stunted
 	name = "Stunted Growth"
 	catalog_description = "This chrab's development is stunted, and will not properly reach adulthood."
-	spontaneous_manifest_types = list(/obj/item/fish/chasm_crab = 12, /obj/item/fish/chasm_crab/ice = 12)
+	spontaneous_manifest_types = list(/obj/item/fish/chasm_crab = 12)
 	fish_whitelist = list(/obj/item/fish/chasm_crab, /obj/item/fish/chasm_crab/ice)
 	diff_traits_inheritability = 40
 

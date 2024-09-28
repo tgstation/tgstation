@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		return
 	if(phase == WAIT_PHASE)
 		if(world.time < last_baiting_click + 0.25 SECONDS)
-			return //Don't punish players if they accidentally double clicked.
+			return COMSIG_MOB_CANCEL_CLICKON //Don't punish players if they accidentally double clicked.
 		if(float.spin_frequency)
 			if(!float.spin_ready)
 				send_alert("too early!")
