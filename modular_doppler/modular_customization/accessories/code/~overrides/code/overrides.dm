@@ -27,3 +27,22 @@
 		if(species.id != /datum/species/human/felinid::id)
 			features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 	update_dna_identity()
+
+/mob/living/carbon/human
+	/// Color of the undershirt
+	var/undershirt_color = "#FFFFFF"
+	/// Color of the socks
+	var/socks_color = "#FFFFFF"
+	/// The selected bra.
+	var/bra = "Nude"
+	/// Color of the bra.
+	var/bra_color = "#FFFFFF"
+
+///copies over clothing preferences like underwear to another human
+/mob/living/carbon/human/copy_clothing_prefs(mob/living/carbon/human/destination)
+	. = ..()
+
+	destination.undershirt_color = undershirt_color
+	destination.socks_color = socks_color
+	destination.bra = bra
+	destination.bra_color = bra_color

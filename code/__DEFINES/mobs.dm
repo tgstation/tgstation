@@ -713,6 +713,10 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// DOPPLER SHIFT ADDITION BEGIN
 /// Just below clothing layer
 #define UNDER_UNIFORM_LAYER 27.5
+/// Bra and socks
+#define BRA_SOCKS_LAYER 27.02
+/// Underwear and undershirt
+#define UNDERWEAR_UNDERSHIRT 27.01
 /// DOPPLER SHIFT ADDITION END
 /// Jumpsuit clothing layer
 #define UNIFORM_LAYER 27

@@ -42,10 +42,14 @@
 	feature_key = "breasts"
 
 /datum/bodypart_overlay/mutant/breasts/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.undershirt != "Nude")
+	if(human.undershirt != "Nude" || human.bra != "Nude")
 		return FALSE
 	if((human.w_uniform && human.w_uniform.body_parts_covered & CHEST) || (human.wear_suit && human.wear_suit.body_parts_covered & CHEST))
 		return FALSE
+	if(human.underwear != "Nude")
+		var/datum/sprite_accessory/underwear/worn_underwear = SSaccessories.underwear_list[human.underwear]
+		if(worn_underwear.hides_breasts)
+			return FALSE
 	return TRUE
 
 /datum/bodypart_overlay/mutant/breasts/get_global_feature_list()
