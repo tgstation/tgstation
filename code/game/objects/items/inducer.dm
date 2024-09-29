@@ -144,15 +144,14 @@
 		balloon_alert(user, "no charge!")
 		return ITEM_INTERACT_FAILURE
 
-	if(istype(interacting_with, /obj/item/gun/energy) || istype(interacting_with, /obj/item/clothing/suit/space))
-		to_chat(user, span_alert("Error: unable to interface with device."))
+	var/obj/item/stock_parts/power_store/target_cell = interacting_with.get_cell(src, user)
+
+	if(QDELETED(target_cell))
 		return ITEM_INTERACT_FAILURE
 
-	var/obj/item/stock_parts/power_store/target_cell = interacting_with.get_cell()
-	if(QDELETED(target_cell) || !target_cell.used_charge())
-		to_chat(user, span_alert("Error: target has no cell or is fully charged."))
+	if(!target_cell.used_charge())
+		balloon_alert(user, "fully charged!")
 		return ITEM_INTERACT_FAILURE
-
 
 	//begin recharging
 	recharging = TRUE
