@@ -67,7 +67,7 @@
 /datum/component/adjust_fishing_difficulty/proc/add_examine_line(mob/user, list/examine_text, method)
 	var/percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) ? "[abs(modifier)]% " : ""
 	var/text = "[method] will make fishing [percent][modifier < 0 ? "easier" : "harder"]."
-	if(modifier > 0)
+	if(modifier < 0)
 		examine_text += span_nicegreen(text)
 	else
 		examine_text += span_danger(text)
