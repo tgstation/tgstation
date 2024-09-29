@@ -45,13 +45,14 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 		return
 
-	if(istype(held_item, /obj/item/stock_parts/power_store) && QDELETED(powerdevice))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert cell"
-		return CONTEXTUAL_SCREENTIP_SET
+	if(opened)
+		if(istype(held_item, /obj/item/stock_parts/power_store) && QDELETED(powerdevice))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert cell"
+			return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
-		context[SCREENTIP_CONTEXT_LMB] = "Charge cell"
-		return CONTEXTUAL_SCREENTIP_SET
+		if(istype(held_item, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
+			context[SCREENTIP_CONTEXT_LMB] = "Charge cell"
+			return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[opened ? "Close" : "Open"] Panel"
@@ -64,6 +65,7 @@
 		. += span_notice("Its display shows: [display_energy(powerdevice.charge)].")
 		if(opened)
 			. += span_notice("The cell can be removed with an empty hand.")
+			. += span_notice("Plasma sheets can be used to recharge the cell.")
 	else
 		. += span_warning("It's missing a power cell.")
 
