@@ -67532,10 +67532,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/recharge_floor,
 /area/station/security/mechbay)
-"xJy" = (
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/turf/closed/wall,
-/area/station/security/checkpoint/supply)
 "xJA" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall,
@@ -90001,7 +89997,7 @@ fhB
 hxd
 rtG
 oor
-xJy
+oor
 wme
 oor
 xbu
