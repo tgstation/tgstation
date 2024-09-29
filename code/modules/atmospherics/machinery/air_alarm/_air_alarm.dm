@@ -99,13 +99,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	tlv_collection = list()
 	tlv_collection["pressure"] = new /datum/tlv/pressure
 	tlv_collection["temperature"] = new /datum/tlv/temperature
-	var/list/meta_info = GLOB.meta_gas_info // shorthand
-	for(var/gas_path in meta_info)
+
+	var/list/cached_gas_info = GLOB.meta_gas_info
+	for(var/datum/gas/gas_path as anything in cached_gas_info)
 		if(ispath(gas_path, /datum/gas/oxygen))
 			tlv_collection[gas_path] = new /datum/tlv/oxygen
 		else if(ispath(gas_path, /datum/gas/carbon_dioxide))
 			tlv_collection[gas_path] = new /datum/tlv/carbon_dioxide
-		else if(meta_info[gas_path][META_GAS_DANGER])
+		else if(cached_gas_info[gas_path][META_GAS_DANGER])
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
@@ -568,7 +569,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in GLOB.meta_gas_info)
+		var/list/cached_gas_info = GLOB.meta_gas_info
+		for(var/datum/gas/gas_path as anything in cached_gas_info)
 			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
