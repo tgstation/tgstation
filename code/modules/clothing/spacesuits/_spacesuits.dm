@@ -94,6 +94,7 @@
 		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
 	if(isnull(cell))
 		return
 	toggle_spacesuit(toggler = null, manual_toggle = FALSE) //turn on the thermal regulator by default.
