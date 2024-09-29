@@ -55,7 +55,7 @@
 	syllables = list(
 		"wa", "wawa", "awa", "a"
 	)
-	icon = 'modular_doppler/languages/language.dmi'
+	icon = 'modular_doppler/languages/icons/language.dmi'
 	icon_state = "movespeak"
 	default_priority = 93
 
