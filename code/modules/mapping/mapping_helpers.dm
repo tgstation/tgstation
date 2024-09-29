@@ -326,9 +326,6 @@
 	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
 		CRASH("Tried to combine incompatible air alarm access helpers!")
 
-	if(target.air_sensor_chamber_id)
-		target.setup_chamber_link()
-
 	target.update_appearance()
 	qdel(src)
 
@@ -431,6 +428,7 @@
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
 		alarm.allow_link_change = allow_link_change
+		alarm.setup_chamber_link()
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
 		return INITIALIZE_HINT_QDEL
