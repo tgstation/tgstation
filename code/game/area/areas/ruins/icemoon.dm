@@ -54,6 +54,15 @@
 /area/ruin/pizzeria/kitchen
 	name = "\improper Moffuchi's Kitchen"
 
+	
+/area/ruin/syndibiodome
+	name = "\improper Syndicate Biodome"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_DANGER
+	mood_bonus = -10
+	mood_message = "What the fuck."
+
+
 /area/ruin/planetengi
 	name = "\improper Engineering Outpost"
 
