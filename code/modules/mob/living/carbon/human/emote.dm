@@ -221,6 +221,7 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	vary = TRUE
 
 // not all species make sound when "snoring"
 /datum/emote/living/carbon/human/snore/get_sound(mob/living/carbon/human/user)
