@@ -436,15 +436,6 @@
 		return
 	return user.dna.species.get_sniff_sound(user)
 
-
-/datum/emote/living/snore
-	key = "snore"
-	key_third_person = "snores"
-	message = "snores."
-	message_mime = "sleeps soundly."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	stat_allowed = UNCONSCIOUS
-
 /datum/emote/living/stare
 	key = "stare"
 	key_third_person = "stares"
