@@ -129,7 +129,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
-turf/closed/indestructible/syndicate
+/turf/closed/indestructible/syndicate
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
@@ -137,7 +137,7 @@ turf/closed/indestructible/syndicate
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
 
-turf/closed/indestructible/syndicate/nodiagonal
+/turf/closed/indestructible/syndicate/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
