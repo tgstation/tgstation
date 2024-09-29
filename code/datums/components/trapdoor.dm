@@ -28,15 +28,18 @@
 	* so any other case the elements will be changed but not recorded.
 	*/
 	var/list/stored_decals = list()
-	/// Delay before trapdoor shuts close. 0 means no auto close.
+	/// Trapdoor shuts close automatically
+	var/autoclose = TRUE
+	/// Delay before trapdoor shuts close
 	var/autoclose_delay = 5 SECONDS
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, list/carried_decals = null)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, list/carried_decals = null, autoclose = TRUE)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.conspicuous = conspicuous
 	src.assembly = assembly
+	src.autoclose = autoclose
 	if(carried_decals)
 		stored_decals = carried_decals.Copy()
 
@@ -45,7 +48,7 @@
 
 	if(IS_OPEN(parent))
 		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
-		if(autoclose_delay)
+		if(autoclose)
 			addtimer(CALLBACK(src, PROC_REF(try_closing)), autoclose_delay)
 	else
 		tile_trapdoor_setup(trapdoor_turf_path, assembly)
@@ -177,6 +180,8 @@
 ///signal called by our assembly being pulsed
 /datum/component/trapdoor/proc/toggle_trapdoor(datum/source)
 	SIGNAL_HANDLER
+	if(assembly)
+		autoclose = assembly.autoclose
 	if(!IS_OPEN(parent))
 		try_opening()
 	else
@@ -207,7 +212,7 @@
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
 /datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous, stored_decals)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous, stored_decals, autoclose)
 
 /**
  * ## on_examine
@@ -262,6 +267,8 @@
 	var/search_cooldown_time = 10 SECONDS
 	///if true, a trapdoor in the world has a reference to this assembly and is listening for when it is pulsed.
 	var/linked = FALSE
+	/// Linked trapdoors will automatically close
+	var/autoclose = TRUE
 
 /obj/item/assembly/trapdoor/pulsed(mob/pulser)
 	. = ..()
@@ -313,7 +320,8 @@
 		. += span_warning("[src] is not linked to a trapdoor.")
 		return
 	. += span_notice("[src] is linked to [internals.linked] trapdoor(s).")
-	. += span_notice("It can be linked to a trapdoor")
+	. += span_notice("It can be linked to additional trapdoor(s) by using it on a trapdoor.")
+	. += span_notice("Autoclose is [internals.autoclose ? "enabled" : "disabled"], ctrl-click to toggle.")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		. += span_warning("It is on a short cooldown.")
 
@@ -367,6 +375,18 @@
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)
 	internals.pulsed(user)
 	return TRUE
+
+/obj/item/trapdoor_remote/item_ctrl_click(mob/user)
+	if (loc != user)
+		// You have to hold it in your hand to ctrl-click
+		return CLICK_ACTION_BLOCKING
+	if(!internals)
+		user.balloon_alert(user, "no device!")
+		return CLICK_ACTION_BLOCKING
+
+	internals.autoclose = !internals.autoclose
+	user.balloon_alert(user, "autoclose [internals.autoclose ? "enabled" : "disabled"]")
+	return CLICK_ACTION_SUCCESS
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE
 
