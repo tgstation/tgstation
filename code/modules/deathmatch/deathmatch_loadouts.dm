@@ -569,7 +569,6 @@
 	backpack_contents = list(/obj/item/ammo_box/magazine/m9mm = 5)
 	implants = list(/obj/item/implant/explosive, /obj/item/implant/weapons_auth)
 	var/jobname = "Syndicate Agent"
-	trim =
 
 /datum/outfit/deathmatch_loadout/syndicate/post_equip(mob/living/carbon/human/player, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -592,16 +591,8 @@
 	l_hand = null
 	l_pocket = /obj/item/pen/edagger
 	backpack_contents = list(/obj/item/inducer_cell = 2,)
-	dogtags.update_label()
-	dogtags.update_icon()
 
-/datum/outfit/deathmatch_loadout/syndicate/post_equip(mob/living/carbon/human/player, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/obj/item/card/id/dogtags = player.wear_id
-	dogtags.update_label()
-	dogtags.update_icon()
-	return ..()
+
 
 /datum/outfit/deathmatch_loadout/syndicate/donk
 	name = "Deathmatch: Donk Co. Employee"
