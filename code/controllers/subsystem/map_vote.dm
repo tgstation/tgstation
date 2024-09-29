@@ -89,6 +89,35 @@ SUBSYSTEM_DEF(map_vote)
 		write_cache()
 		update_tally_printout()
 
+/// Returns a list of all map options that are invalid for the current population.
+/datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()
+	var/list/valid_maps = list()
+
+	// Fill in our default choices with all of the maps in our map config, if they are votable and not blocked.
+	var/list/maps = shuffle(global.config.maplist)
+	for(var/map in maps)
+		var/datum/map_config/possible_config = config.maplist[map]
+		if(!possible_config.votable || (possible_config.map_name in SSpersistence.blocked_maps))
+			continue
+		valid_maps += possible_config.map_name
+
+	var/filter_threshold = 0
+	if(SSticker.HasRoundStarted())
+		filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	else
+		filter_threshold = length(GLOB.clients)
+
+	var/list/invalid_choices = list()
+	for(var/map in valid_maps)
+		var/datum/map_config/possible_config = config.maplist[map]
+		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
+			valid_maps -= map
+
+		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
+			valid_maps -= map
+
+	return valid_maps
+
 /datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
 	var/connected_players = length(GLOB.player_list)
 	var/list/valid_maps = list()
@@ -96,9 +125,9 @@ SUBSYSTEM_DEF(map_vote)
 		var/datum/map_config/map = config.maplist[map_id]
 		if(!map.votable)
 			continue
-		if(connected_players < map.config_min_users)
+		if(map.config_min_users > 0 && (connected_players < map.config_min_users))
 			continue
-		if(connected_players > map.config_max_users)
+		if(map.config_max_users > 0 && (connected_players > map.config_max_users))
 			continue
 		valid_maps[map_id] = map_vote_cache[map_id]
 	return valid_maps
