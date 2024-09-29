@@ -129,8 +129,10 @@
 
 //SLEEPING
 
-/mob/living/carbon/human/proc/do_snore(our_mob = /mob/living/carbon/human/our_mob)
-	our_mob.emote("snore")
+/mob/living/carbon/human/proc/do_snore(/mob/our_mob)
+	if(our_mob.has_status_effect(/datum/status_effect/incapacitating/sleeping/))
+		our_mob.emote("snore")
+		addtimer(CALLBACK(src, PROC_REF(do_snore)), 3 SECONDS)
 
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
@@ -148,7 +150,7 @@
 		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_insomniac))
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(on_owner_sleepy))
-
+	addtimer(CALLBACK(src, PROC_REF(do_snore)), 3 SECONDS)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
