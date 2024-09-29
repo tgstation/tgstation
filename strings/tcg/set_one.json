@@ -83,7 +83,7 @@
 			"faction": "Engineering",
 			"summoncost": "2",
 			"cardtype": "Creature",
-			"cardsubtype": "Atmosian Engineering",
+			"cardsubtype": "Atmospherics Engineering",
 			"rarity": "common",
 			"summon_icon_state": "Atmospheric Technician"
 		},
@@ -485,7 +485,7 @@
 			"faction": "Engineering",
 			"summoncost": "1",
 			"cardtype": "Equipment",
-			"cardsubtype": "ERT Atmosian",
+			"cardsubtype": "ERT Atmospherics",
 			"rarity": "uncommon"
 		},
 		{
@@ -527,7 +527,7 @@
 			"faction": "Cargo",
 			"summoncost": "1",
 			"cardtype": "Creature",
-			"cardsubtype": "Atmosian",
+			"cardsubtype": "Atmospherics",
 			"rarity": "legendary",
 			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
 			"summon_icon_state": "explorer"
@@ -882,7 +882,7 @@
 			"faction": "Engineering",
 			"summoncost": "3",
 			"cardtype": "Creature",
-			"cardsubtype": "Atmosian",
+			"cardsubtype": "Atmospherics",
 			"rarity": "common",
 			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
 			"summon_icon_state": "plasmaman"
@@ -1175,7 +1175,7 @@
 			"faction": "Engineering",
 			"summoncost": "2",
 			"cardtype": "Creature",
-			"cardsubtype": "Atmosian Maintenance",
+			"cardsubtype": "Atmospherics Maintenance",
 			"rarity": "common",
 			"summon_icon_state": "Station Engineer"
 		},
@@ -1313,7 +1313,7 @@
 			"faction": "Engineering",
 			"summoncost": "1",
 			"cardtype": "Battlefield",
-			"cardsubtype": "Atmosian",
+			"cardsubtype": "Atmospherics",
 			"series": "coreset2020",
 			"rarity": "rare"
 		},
@@ -1562,7 +1562,7 @@
 			"faction": "Syndicate",
 			"summoncost": "5",
 			"cardtype": "Instant",
-			"cardsubtype": "Atmosian Syndicate",
+			"cardsubtype": "Atmospherics Syndicate",
 			"series": "coreset2020",
 			"rarity": "rare"
 		},
