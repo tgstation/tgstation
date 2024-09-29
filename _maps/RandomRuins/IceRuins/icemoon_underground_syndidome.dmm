@@ -73,7 +73,8 @@
 /area/ruin/syndibiodome)
 "bt" = (
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "bu" = (
 /obj/effect/turf_decal/siding/wood,
@@ -488,10 +489,7 @@
 /area/icemoon/surface/outdoors/noteleport)
 "he" = (
 /mob/living/basic/gorilla/genetics,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "hf" = (
 /obj/structure/flora/rock/pile,
@@ -698,6 +696,7 @@
 	pixel_x = 0;
 	pixel_y = 6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "jd" = (
@@ -709,11 +708,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"jg" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/curtain/bounty/start_closed,
-/turf/closed/indestructible/grille,
-/area/icemoon/surface/outdoors/noteleport)
 "jp" = (
 /obj/structure/flora/bush/jungle/a/style_2,
 /turf/open/floor/grass,
@@ -755,11 +749,7 @@
 "jT" = (
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/small/dim/directional/east,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "jV" = (
 /obj/effect/turf_decal/siding/wood{
@@ -883,9 +873,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "la" = (
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 1
-	},
 /obj/structure/table/wood,
 /obj/item/paper/carbon{
 	pixel_x = -5;
@@ -895,7 +882,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "lh" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1257,6 +1244,7 @@
 /mob/living/carbon/human/species/monkey/angry,
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/digital_clock/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "rX" = (
@@ -1391,6 +1379,7 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 10
 	},
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "ui" = (
@@ -1456,6 +1445,7 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "uL" = (
@@ -1635,6 +1625,7 @@
 /obj/structure/fluff/fake_camera{
 	dir = 10
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "wL" = (
@@ -1874,7 +1865,8 @@
 	},
 /obj/structure/curtain/bounty/start_closed,
 /obj/effect/decal/cleanable/glass/plastitanium,
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "yL" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -2094,10 +2086,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
+"By" = (
+/obj/item/kirbyplants/organic/plant22,
+/turf/open/floor/iron/dark,
+/area/ruin/syndibiodome)
 "BJ" = (
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /obj/structure/curtain/bounty/start_closed,
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "BY" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
@@ -2126,7 +2123,6 @@
 	id = "biodomearmor";
 	name = "Security Post Lockdown Shutters"
 	},
-/obj/structure/curtain/bounty/start_closed,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "CK" = (
@@ -2207,7 +2203,8 @@
 	name = "Surgery Lockdown Shutters"
 	},
 /obj/structure/curtain/bounty/start_closed,
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Dr" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners{
@@ -2229,10 +2226,7 @@
 "DL" = (
 /obj/structure/dresser,
 /obj/machinery/digital_clock/directional/east,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 5
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "DS" = (
 /obj/effect/turf_decal/trimline/neutral/line,
@@ -2251,10 +2245,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "Es" = (
-/obj/machinery/light/small/dim/directional/south,
-/obj/effect/turf_decal/siding/wideplating/dark,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "Ex" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -2406,7 +2397,8 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Gm" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -2757,10 +2749,7 @@
 	pixel_x = 1;
 	pixel_y = 6
 	},
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 9
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "KX" = (
 /obj/structure/chair/office/tactical{
@@ -2775,10 +2764,7 @@
 "Lc" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/pdapainter/research,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 6
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "Le" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2899,7 +2885,8 @@
 /obj/structure/railing/corner/end{
 	dir = 8
 	},
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Mo" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -2963,11 +2950,9 @@
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
-"MG" = (
-/turf/closed/indestructible/syndicate/nodiagonal,
-/area/icemoon/surface/outdoors/noteleport)
 "MH" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/grass,
@@ -3091,6 +3076,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark/end{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Oi" = (
@@ -3099,6 +3085,7 @@
 	},
 /obj/effect/gibspawner/generic,
 /obj/machinery/digital_clock/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Ol" = (
@@ -3140,11 +3127,8 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "OK" = (
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 10
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "OL" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -3224,6 +3208,7 @@
 	pixel_x = 0;
 	pixel_y = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "PB" = (
@@ -3295,6 +3280,7 @@
 /obj/machinery/light/warm/directional/north,
 /obj/item/bodypart/head/monkey,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Ro" = (
@@ -3339,6 +3325,7 @@
 /obj/item/bodypart/leg/left/monkey,
 /obj/item/bodypart/leg/right/monkey,
 /obj/item/scalpel/advanced,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "RK" = (
@@ -3362,6 +3349,7 @@
 "RX" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /mob/living/basic/gorilla/genetics,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Se" = (
@@ -3597,10 +3585,10 @@
 "TM" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "TQ" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -3790,10 +3778,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"Vy" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/turf/open/floor/plating,
-/area/ruin/syndibiodome)
 "VG" = (
 /obj/machinery/light/warm/directional/east,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -3851,6 +3835,25 @@
 /obj/structure/fluff/tram_rail/electric/anchor,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
+"WA" = (
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id = "biosurglockdown";
+	name = "Surgery Lockdown Shutters"
+	},
+/obj/structure/curtain/bounty/start_closed,
+/turf/open/floor/plating,
+/area/ruin/syndibiodome)
+"WB" = (
+/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	id = "biodomearmor";
+	name = "Security Post Lockdown Shutters"
+	},
+/obj/structure/curtain/bounty/start_closed,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/syndibiodome)
 "WC" = (
 /obj/machinery/door/poddoor/shutters{
 	name = "Lockdown Shutters"
@@ -3961,7 +3964,8 @@
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Yz" = (
 /obj/structure/flora/bush/flowers_pp/style_3,
@@ -4039,6 +4043,7 @@
 /obj/effect/decal/cleanable/blood/trails{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Zd" = (
@@ -4098,7 +4103,8 @@
 "ZW" = (
 /obj/structure/curtain/bounty,
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/turf/closed/indestructible/grille,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 
 (1,1,1) = {"
@@ -4551,7 +4557,7 @@ pj
 UF
 fT
 Ly
-pj
+WB
 ys
 Aw
 ys
@@ -4598,7 +4604,7 @@ CG
 hZ
 hm
 LB
-pj
+WB
 ys
 tL
 JU
@@ -4645,7 +4651,7 @@ pj
 YS
 qB
 fc
-pj
+WB
 ys
 ys
 tL
@@ -5477,7 +5483,7 @@ Ut
 zM
 wx
 RH
-Do
+WA
 UF
 bt
 Sr
@@ -5524,16 +5530,16 @@ Ut
 zM
 Ra
 RX
-Do
+WA
 sN
 Va
 kO
 XC
-Eq
+By
 zM
 zM
 zM
-Vy
+bt
 zM
 ag
 vF
@@ -5571,7 +5577,7 @@ Ut
 zM
 Pw
 Oi
-Do
+WA
 Uu
 bt
 XC
@@ -5628,11 +5634,11 @@ LA
 zM
 aC
 ws
-Vy
+bt
 kH
 vK
 hA
-Vy
+bt
 yU
 Zd
 zM
@@ -5675,11 +5681,11 @@ Ut
 zM
 tb
 sM
-Vy
+bt
 hF
 cx
 kQ
-Vy
+bt
 FH
 Fn
 zM
@@ -5726,7 +5732,7 @@ zM
 Tu
 XE
 Mt
-Vy
+bt
 iX
 OD
 zM
@@ -5891,7 +5897,7 @@ mZ
 mZ
 ys
 ys
-jg
+BJ
 ze
 hM
 OR
@@ -5938,7 +5944,7 @@ mZ
 mZ
 ys
 ys
-jg
+BJ
 FL
 Gp
 jv
@@ -5985,7 +5991,7 @@ mZ
 mZ
 Gr
 ck
-MG
+zM
 zM
 zM
 tq
