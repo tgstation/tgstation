@@ -14,3 +14,12 @@
 		tgui_alert(mob_possessor, text)
 		return FALSE
 	return ..()
+
+/// Original proc in code/modules/mob_spawn/mob_spawn.dm ~line 39.
+/obj/effect/mob_spawn/create(mob/mob_possessor, newname, is_pref_loaded)
+	var/mob/living/spawned_mob = new mob_type(get_turf(src)) //living mobs only
+	name_mob(spawned_mob, newname)
+	special(spawned_mob, mob_possessor)
+	if(!is_pref_loaded)
+		equip(spawned_mob)
+	return spawned_mob

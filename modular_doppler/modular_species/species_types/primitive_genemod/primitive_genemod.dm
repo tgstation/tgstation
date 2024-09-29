@@ -21,7 +21,7 @@
 	mutanteyes = /obj/item/organ/internal/eyes/low_light_adapted
 
 	species_language_holder = /datum/language_holder/primitive_genemod
-	// language_prefs_whitelist = list(/datum/language/primitive_genemod) //this needs a dedicated module for language
+	language_prefs_whitelist = list(/datum/language/primitive_genemod)
 
 	bodytemp_normal = 270 // If a normal human gets hugged by one it's gonna feel cold
 	bodytemp_heat_damage_limit = 283 // To them normal station atmos would be sweltering

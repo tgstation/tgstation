@@ -89,6 +89,14 @@ export type Quirk = {
   customization_options?: string[];
 };
 
+// DOPPLER EDIT START
+export type Language = {
+  description: string;
+  name: string;
+  icon: string;
+};
+// DOPPLER EDIT END
+
 export type QuirkInfo = {
   max_positive_quirks: number;
   quirk_info: Record<string, Quirk>;
@@ -170,6 +178,11 @@ export type PreferencesMenuData = {
   >;
   job_preferences: Record<string, JobPriority>;
 
+  // DOPPLER EDIT
+  selected_languages: Language[];
+  unselected_languages: Language[];
+  total_language_points: number;
+  // DOPPLER EDIT END
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
