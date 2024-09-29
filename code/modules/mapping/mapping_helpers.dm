@@ -423,7 +423,9 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/mapping_helpers/airalarm/link/LateInitialize(mapload)
 	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
@@ -431,7 +433,7 @@
 		alarm.setup_chamber_link()
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
-		return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 //apc helpers
 /obj/effect/mapping_helpers/apc
