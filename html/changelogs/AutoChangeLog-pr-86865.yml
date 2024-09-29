@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - qol: "Imaginary friend smite ghost poll actually lets you jump to the target and shows their name."
-  - admin: "Imaginary friend smite now works with build mode."
-  - admin: "The imaginary friend smite configuration menus have been changed slightly."

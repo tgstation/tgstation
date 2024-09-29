@@ -847,3 +847,65 @@
   - bugfix: Debug chem synthesizer now has temperature control for adding reagents
   grungussuss:
   - sound: the volume of the nuclear fission explosive have been reduced
+2024-09-29:
+  00-Steven:
+  - bugfix: Fixed trims which did have an associated job but whose assignment didn't
+      match a job title causing null jobs to be assigned to accounts. This fixes departmental
+      security officers not being able to purchase things from the security vendors.
+  - qol: Imaginary friend smite ghost poll actually lets you jump to the target and
+      shows their name.
+  - admin: Imaginary friend smite now works with build mode.
+  - admin: The imaginary friend smite configuration menus have been changed slightly.
+  - bugfix: Imaginary friends can now hear their host wherever they are.
+  - balance: The pAI digital messenger software now includes the NTNRC client.
+  - rscadd: You can now see people whispering, even if you cannot hear what they're
+      saying, unless you are blind (obviously). The speaker wearing something that
+      covers their mouth, being invisible, or being inside of something counteracts
+      this.
+  ArcaneMusic:
+  - bugfix: Artifact boulders should keep their alien icon even after a first round
+      of processing.
+  - bugfix: Boulders are less likely to exist with zero materials after processing.
+  - bugfix: Boulders should be slightly less laggy on conveyor belts.
+  - bugfix: Grammar of refinery/smeltery examine is corrected.
+  Ben10Omintrix:
+  - bugfix: fixes raptors retaliating against each other and their owners
+  FlufflesTheDog:
+  - bugfix: The automated announcement system once more announces new arrivals to
+      the station.
+  Jewelry-x:
+  - bugfix: fix wiki manuals by making them open wiki page on browser
+  Sealed101:
+  - bugfix: A joint effort of Gorlex Marauders and MI13 tech support teams has finally
+      managed to center the Syndicate Infiltrator shuttle's preview on the navigation
+      console. Nuclear Ops teams sector-wide, rejoice!
+  SmArtKar:
+  - bugfix: Added missing venue prices for certain foods and reagents
+  - bugfix: Mindswap can no longer be used inside of pipes
+  - bugfix: Players no longer can randomly get semi-permanently offset from being
+      shoved
+  SyncIt21:
+  - bugfix: Fixes ethereal APC drain/charge attack
+  carlarctg:
+  - rscadd: Altered the blood loss on teleportation. Instead of silently always losing
+      ten blood, you now lose ~15 25% of the time, fitting in with the teleporter's
+      random design. In practice this usually evens out, but the immediate side-effects
+      when it does happen will be much more noticeable. The rest of the time you'll
+      still lose 5.
+  - qol: Improved the visible effects when using the teleporter. On teleporting, it
+      causes a tiny blood red wave at the destination, which is slightly larger and
+      more vibrant red if you lose blood. Telefragging someone now throws them a random
+      turf away alongside the stun.
+  - bugfix: Fixed NOBLOOD check missing from non-emergency teleport bloodloss.
+  timothymtorres:
+  - bugfix: Fix air alarms warning message to use pressure & temp settings
+  - bugfix: Fix air alarm helper to ignore gas when appropriate
+  - bugfix: Fix air alarms being stuck and not updating their icons.
+  - bugfix: Fix Meta's medical freezer air alarm to not trigger on cold temps. Fix
+      missing atmos alarm in Wawa kitchen coldroom.
+  - code_imp: Add missing signal to reagent dispenser RMB interactions.
+  - sound: Fix missing pour sounds from reagent dispensers
+  - bugfix: Fix air alarm not checking missing gases
+  vinylspiders:
+  - bugfix: fixes pulsing tumor failing to spawn the elite if no ghosts respond to
+      the poll and leaving you in a bugged state, and possibly other related issues
