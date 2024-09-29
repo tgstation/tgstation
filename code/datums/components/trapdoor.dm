@@ -318,9 +318,11 @@
 	. += span_notice("The internals can be removed with a screwdriver.")
 	if(!internals.linked)
 		. += span_warning("[src] is not linked to a trapdoor.")
+		. += span_notice("[src] will link to nearby trapdoors when used.")
 		return
 	. += span_notice("[src] is linked to [internals.linked] trapdoor(s).")
 	. += span_notice("It can be linked to additional trapdoor(s) by using it on a trapdoor.")
+	. += span_notice("Trapdoor can be unlinked with multitool.")
 	. += span_notice("Autoclose is [internals.autoclose ? "enabled" : "disabled"], ctrl-click to toggle.")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		. += span_warning("It is on a short cooldown.")
