@@ -1342,11 +1342,6 @@
 	},
 /turf/open/floor/stone,
 /area/icemoon/surface/outdoors/noteleport)
-"ub" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/curtain/bounty/start_closed,
-/turf/open/space/basic,
-/area/ruin/syndibiodome)
 "ui" = (
 /obj/effect/decal/cleanable/blood/trails{
 	dir = 5
@@ -5487,7 +5482,7 @@ mZ
 (35,1,1) = {"
 mZ
 ys
-ub
+lh
 KS
 he
 OK
@@ -5534,7 +5529,7 @@ mZ
 (36,1,1) = {"
 mZ
 ys
-ub
+lh
 la
 TM
 Es
@@ -5581,7 +5576,7 @@ mZ
 (37,1,1) = {"
 mZ
 ys
-ub
+lh
 DL
 jT
 Lc
