@@ -31727,7 +31727,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/quantum_server/prisoner/solo1,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "lhT" = (
@@ -33336,7 +33335,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/netpod/prisoner/solo_1,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "lPS" = (
@@ -54557,7 +54555,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/prison/directional/north,
-/obj/machinery/computer/quantum_console/prisoner_solo1,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "tlh" = (
@@ -59335,7 +59332,6 @@
 /area/station/security/checkpoint/engineering)
 "uRT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/byteforge,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "uSh" = (
