@@ -71,4 +71,5 @@ GLOBAL_LIST_INIT(station_gas_chambers, list(
 	ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop",
 	ATMOS_GAS_MONITOR_WASTE = "Waste Loop",
 	ATMOS_GAS_MONITOR_ENGINE = "Supermatter Engine Chamber",
+	ATMOS_GAS_MONITOR_TCOMMS = "Telecomms Server Room",
 ))
