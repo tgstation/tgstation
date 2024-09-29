@@ -82,6 +82,8 @@
 	outlet_id = null
 	if(connected_airalarm)
 		connected_airalarm.disconnect_sensor()
+		// if air alarm and sensor were linked at roundstart we allow them to link to new devices
+		connected_airalarm.allow_link_change = TRUE
 		connected_airalarm = null
 
 ///right click with multi tool to disconnect everything
