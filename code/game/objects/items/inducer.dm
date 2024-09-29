@@ -99,8 +99,12 @@
 
 /obj/item/inducer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(!opened || user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
+	if(user.combat_mode || !istype(tool) || tool.flags_1 & HOLOGRAM_1 || tool.item_flags & ABSTRACT)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!opened)
+		balloon_alert(user, "open first!")
+		return ITEM_INTERACT_FAILURE
 
 	if(istype(tool, /obj/item/stock_parts/power_store))
 		if(!QDELETED(powerdevice))
@@ -125,12 +129,16 @@
 
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/inducer/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
+/obj/item/inducer/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
 	if(user.combat_mode || !istype(interacting_with) || interacting_with.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	//basic checks
+	if(opened)
+		balloon_alert(user, "close first!")
+		return ITEM_INTERACT_FAILURE
+
 	if(recharging || (!isturf(interacting_with) && user.loc == interacting_with))
 		return ITEM_INTERACT_FAILURE
 
