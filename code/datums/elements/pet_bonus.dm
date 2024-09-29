@@ -11,7 +11,7 @@
 	///make the pet emit a sound when pet
 	var/emote_sound
 	///make the pet emote something when pet
-	var/emote
+	var/emote_type
 	///optional cute message to send when you pet your pet!
 	var/emote_message
 	///actual moodlet given, defaults to the pet animal one
@@ -41,6 +41,7 @@
 	if(emote_message && prob(33))
 		if(emote_message)
 			pet.manual_emote(emote_message)
-		playsound(pet, emote_sound, 120, TRUE, TRUE, FALSE)
-		INVOKE_ASYNC(pet, TYPE_PROC_REF(/mob, emote), emote)
+		playsound(pet, emote_sound, 50, TRUE, TRUE, FALSE)
+		to_chat(world, "test")
+		INVOKE_ASYNC(pet, TYPE_PROC_REF(/mob, emote_type), emote_type)
 	petter.add_mood_event("petting_bonus", moodlet, pet)
