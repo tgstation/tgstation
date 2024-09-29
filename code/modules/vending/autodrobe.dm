@@ -195,13 +195,14 @@ GLOBAL_LIST_INIT(autodrobe_contraband_items, list(
 	/obj/item/clothing/head/costume/powdered_wig = 1,
 	/obj/item/clothing/head/costume/tv_head = 1,
 	/obj/item/clothing/mask/muzzle = 2,
-	/obj/item/clothing/shoes/ducky_shoes = 1,
 	/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
 	/obj/item/clothing/shoes/clown_shoes/moffers = 1,
+	/obj/item/clothing/shoes/ducky_shoes = 1,
 	/obj/item/clothing/suit/costume/judgerobe = 1,
 	/obj/item/clothing/head/costume/lobsterhat = 1,
 	/obj/item/clothing/under/costume/lobster = 1,
 	/obj/item/gun/magic/wand/nothing = 2,
+	/obj/item/skillchip/musical = 3,
 	/obj/item/storage/box/tape_wizard = 1,
 ))
 
@@ -223,7 +224,6 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	icon_state = "theater"
 	icon_deny = "theater-deny"
 	panel_type = "panel16"
-	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
 
@@ -235,7 +235,7 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	default_price = PAYCHECK_CREW * 0.8 //Default of 40.
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
-	light_mask="theater-light-mask"
+	light_mask = "theater-light-mask"
 
 /obj/machinery/vending/autodrobe/Initialize(mapload)
 	product_categories = list(
@@ -280,9 +280,6 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 
 	. = ..()
 
-/obj/machinery/vending/autodrobe/all_access
-	desc = "A vending machine for costumes. This model appears to have no access restrictions."
-	req_access = null
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"

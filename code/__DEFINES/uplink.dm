@@ -36,7 +36,7 @@
 
 /// Typepath used for uplink items which don't actually produce an item (essentially just a placeholder)
 /// Future todo: Make this not necessary / make uplink items support item-less items natively
-#define ABSTRACT_UPLINK_ITEM /obj/effect/gibspawner/generic
+#define ABSTRACT_UPLINK_ITEM /obj/item/loot_table_maker
 
 /// Lower threshold for which an uplink items's TC cost is considered "low" for spy bounties picking rewards
 #define SPY_LOWER_COST_THRESHOLD 5
