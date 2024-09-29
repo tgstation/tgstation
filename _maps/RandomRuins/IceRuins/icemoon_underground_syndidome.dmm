@@ -71,11 +71,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"bt" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/ruin/syndibiodome)
 "bu" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
@@ -1103,12 +1098,11 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "pj" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters/window/indestructible{
 	id = "biodomearmor";
 	name = "Security Post Lockdown Shutters"
 	},
-/obj/structure/curtain/bounty/start_closed,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "pA" = (
@@ -1576,6 +1570,7 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/table/reinforced,
 /obj/item/knife/butcher,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/glass/reinforced,
 /area/ruin/syndibiodome)
 "wf" = (
@@ -1859,13 +1854,11 @@
 "yH" = (
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/glass/plastitanium,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "biosurglockdown";
 	name = "Surgery Lockdown Shutters"
 	},
-/obj/structure/curtain/bounty/start_closed,
-/obj/effect/decal/cleanable/glass/plastitanium,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "yL" = (
@@ -2090,12 +2083,6 @@
 /obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"BJ" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/curtain/bounty/start_closed,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/ruin/syndibiodome)
 "BY" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2197,13 +2184,11 @@
 /turf/open/floor/stone,
 /area/icemoon/surface/outdoors/noteleport)
 "Do" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters/indestructible{
 	id = "biosurglockdown";
 	name = "Surgery Lockdown Shutters"
 	},
-/obj/structure/curtain/bounty/start_closed,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Dr" = (
@@ -2236,10 +2221,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/ruin/syndibiodome)
-"Ec" = (
-/obj/effect/turf_decal/siding/wideplating/dark,
-/turf/closed/indestructible/syndicate,
 /area/ruin/syndibiodome)
 "Eq" = (
 /turf/open/floor/iron/dark,
@@ -2285,6 +2266,14 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/small,
+/area/ruin/syndibiodome)
+"EX" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	id = "biodomearmor";
+	name = "Security Post Lockdown Shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "EY" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -2393,11 +2382,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "Ga" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Gm" = (
@@ -2880,12 +2868,11 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "Ml" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /obj/structure/railing/corner/end{
 	dir = 8
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Mo" = (
@@ -3027,6 +3014,7 @@
 /area/ruin/syndibiodome)
 "No" = (
 /obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/glass/reinforced,
 /area/ruin/syndibiodome)
 "Ns" = (
@@ -3835,23 +3823,8 @@
 /obj/structure/fluff/tram_rail/electric/anchor,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
-"WA" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/machinery/door/poddoor/shutters/indestructible{
-	id = "biosurglockdown";
-	name = "Surgery Lockdown Shutters"
-	},
-/obj/structure/curtain/bounty/start_closed,
-/turf/open/floor/plating,
-/area/ruin/syndibiodome)
 "WB" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/machinery/door/poddoor/shutters/window/indestructible{
-	id = "biodomearmor";
-	name = "Security Post Lockdown Shutters"
-	},
-/obj/structure/curtain/bounty/start_closed,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "WC" = (
@@ -3876,6 +3849,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "WJ" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/glass/reinforced,
 /area/ruin/syndibiodome)
 "WR" = (
@@ -3960,11 +3934,10 @@
 /turf/open/floor/grass,
 /area/ruin/syndibiodome)
 "Yj" = (
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 "Yz" = (
@@ -4102,8 +4075,7 @@
 /area/ruin/syndibiodome)
 "ZW" = (
 /obj/structure/curtain/bounty,
-/obj/structure/window/reinforced/plasma/plastitanium/indestructible,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndibiodome)
 
@@ -4647,7 +4619,7 @@ ZM
 WH
 Fe
 Ct
-pj
+EX
 YS
 qB
 fc
@@ -4737,7 +4709,7 @@ zM
 xf
 oH
 zM
-Ec
+qN
 WH
 Fe
 qN
@@ -4926,12 +4898,12 @@ YN
 Sr
 Sr
 nn
-bt
+WB
 qN
 VT
 Pq
 qN
-bt
+WB
 ip
 Sr
 Sr
@@ -4973,13 +4945,13 @@ wf
 Eq
 nn
 Ga
-bt
+WB
 hK
 UL
 bv
 Fg
-bt
-bt
+WB
+WB
 ip
 Sr
 vg
@@ -5015,19 +4987,19 @@ tx
 JC
 lH
 hQ
-bt
+WB
 FE
 zF
 Ml
-bt
+WB
 SS
 jp
 Hs
 Yz
 Yz
 Bl
-bt
-bt
+WB
+WB
 my
 Sr
 zM
@@ -5053,7 +5025,7 @@ mZ
 ys
 ys
 ys
-BJ
+WB
 SE
 Yd
 No
@@ -5100,7 +5072,7 @@ mZ
 ys
 ys
 ck
-BJ
+WB
 nO
 SA
 WJ
@@ -5109,7 +5081,7 @@ Mp
 Hy
 Vt
 OO
-bt
+WB
 Ty
 vc
 Mb
@@ -5121,7 +5093,7 @@ NH
 xd
 zc
 yN
-bt
+WB
 xn
 jA
 QC
@@ -5147,7 +5119,7 @@ mZ
 ys
 ys
 ys
-BJ
+WB
 EO
 sJ
 No
@@ -5203,7 +5175,7 @@ td
 Ii
 LJ
 el
-bt
+WB
 YV
 TC
 Rv
@@ -5301,15 +5273,15 @@ qN
 FP
 hj
 Yj
-bt
+WB
 LH
 hr
 CS
 eL
 qV
 cN
-bt
-bt
+WB
+WB
 GD
 ej
 zM
@@ -5349,13 +5321,13 @@ kw
 Eq
 CV
 Yj
-bt
+WB
 yj
 fO
 sj
 dk
-bt
-bt
+WB
+WB
 wf
 xi
 sA
@@ -5396,12 +5368,12 @@ xi
 Sr
 Eq
 CV
-bt
+WB
 qN
 ox
 gu
 qN
-bt
+WB
 wf
 kO
 Sr
@@ -5483,9 +5455,9 @@ Ut
 zM
 wx
 RH
-WA
+Do
 UF
-bt
+WB
 Sr
 xi
 Sr
@@ -5530,7 +5502,7 @@ Ut
 zM
 Ra
 RX
-WA
+Do
 sN
 Va
 kO
@@ -5539,7 +5511,7 @@ By
 zM
 zM
 zM
-bt
+WB
 zM
 ag
 vF
@@ -5577,9 +5549,9 @@ Ut
 zM
 Pw
 Oi
-WA
+Do
 Uu
-bt
+WB
 XC
 Vv
 zM
@@ -5634,11 +5606,11 @@ LA
 zM
 aC
 ws
-bt
+WB
 kH
 vK
 hA
-bt
+WB
 yU
 Zd
 zM
@@ -5681,11 +5653,11 @@ Ut
 zM
 tb
 sM
-bt
+WB
 hF
 cx
 kQ
-bt
+WB
 FH
 Fn
 zM
@@ -5708,7 +5680,7 @@ mZ
 (35,1,1) = {"
 mZ
 ys
-BJ
+WB
 KS
 he
 OK
@@ -5728,11 +5700,11 @@ Ut
 zM
 Vj
 Uh
-zM
+WB
 Tu
 XE
 Mt
-bt
+WB
 iX
 OD
 zM
@@ -5755,7 +5727,7 @@ mZ
 (36,1,1) = {"
 mZ
 ys
-BJ
+WB
 la
 TM
 Es
@@ -5802,7 +5774,7 @@ mZ
 (37,1,1) = {"
 mZ
 ys
-BJ
+WB
 DL
 jT
 Lc
@@ -5897,7 +5869,7 @@ mZ
 mZ
 ys
 ys
-BJ
+WB
 ze
 hM
 OR
@@ -5944,7 +5916,7 @@ mZ
 mZ
 ys
 ys
-BJ
+WB
 FL
 Gp
 jv
@@ -6184,9 +6156,9 @@ mZ
 ys
 ys
 zM
-BJ
-BJ
-BJ
+WB
+WB
+WB
 zM
 ys
 mZ
