@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix Meta's medical freezer air alarm to not trigger on cold temps. Fix missing atmos alarm in Wawa kitchen coldroom."
