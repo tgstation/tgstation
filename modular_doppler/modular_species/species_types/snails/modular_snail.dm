@@ -5,6 +5,12 @@
 	mutantheart = /obj/item/organ/internal/heart/snail //This gives them the shell buff where they take less damage from behind, and their heart's more durable.
 	exotic_blood = null
 
+	digitigrade_customization = DIGITIGRADE_OPTIONAL
+	digi_leg_overrides = list(
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/anthromorph,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
+	)
+
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)
 	. = ..()
 	new_snailperson.update_icons()
