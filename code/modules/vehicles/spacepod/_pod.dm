@@ -89,7 +89,8 @@
 	QDEL_NULL(cabin_air_tank)
 	QDEL_LIST_ASSOC_VAL(equipment_actions)
 	for(var/slot in equipped)
-		QDEL_LIST(equipped[slot])
+		var/list/stuff_that_is_equipped = equipped[slot]
+		QDEL_LIST(stuff_that_is_equipped)
 	return ..()
 
 /obj/vehicle/sealed/space_pod/generate_actions()
@@ -266,12 +267,22 @@
 	target.merge(removed)
 
 /obj/vehicle/sealed/space_pod/remove_air(amount)
-	return !isnull(cabin_air_tank) ? cabin_air.remove(amount) : ..()
+	if(!isnull(cabin_air_tank))
+		return cabin_air.remove(amount)
+	return ..()
+
 /obj/vehicle/sealed/space_pod/return_air()
-	return !isnull(cabin_air_tank) ? cabin_air : ..()
+	if(!isnull(cabin_air_tank))
+		return cabin_air
+	return ..()
+
 /obj/vehicle/sealed/space_pod/return_analyzable_air()
-	return !isnull(cabin_air_tank) ? cabin_air : null // no internal air
+	if(!isnull(cabin_air_tank))
+		return cabin_air //theoretically we could also make it check cabin air OR the inserted tank
+	return null
+
 /obj/vehicle/sealed/space_pod/return_temperature()
 	var/datum/gas_mixture/air = return_air()
-	return air?.return_temperature()
-
+	if(isnull(air))
+		return
+	return air.return_temperature()

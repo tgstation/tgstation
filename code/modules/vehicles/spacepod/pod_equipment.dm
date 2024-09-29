@@ -87,9 +87,10 @@
 	return NONE
 
 /obj/vehicle/sealed/space_pod/proc/equip_item(obj/item/pod_equipment/equipment, mob/living/user)
-	if(!isnull(user) && !user.transferItemToLoc(equipment, src))
-		return FALSE
-	else
+	if(!isnull(user)) // if we have a user, try to see if they can actually put it in
+		if(!user.transferItemToLoc(equipment, src))
+			return FALSE
+	else // if we dont just forcemove it
 		equipment.forceMove(src)
 
 	equipped[equipment.slot] += list(equipment) // makes the list if it doesnt exist fun fun

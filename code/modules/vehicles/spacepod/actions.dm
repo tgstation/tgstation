@@ -103,8 +103,9 @@
 	qdel(src)
 
 /datum/action/vehicle/sealed/spacepod_equipment/sensor_gps
-	background_icon_state = "bg_tech"
-	overlay_icon_state = "bg_tech_border"
+	name = "Sensor Suite GPS"
+	button_icon = /obj/item/gps::icon
+	button_icon_state = /obj/item/gps/engineering::icon_state
 
 /datum/action/vehicle/sealed/spacepod_equipment/sensor_gps/Trigger(trigger_flags)
 	. = ..()

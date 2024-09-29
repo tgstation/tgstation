@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/cargo_hold
 	name = "cargo hold"
 	desc = "Advanced spatial management tech in the form of a trunk. Wow."
+	icon_state = "trunk"
 	interface_id = "CargoHold"
 	slot = POD_SLOT_SECONDARY
 	/// what items can we hold inside

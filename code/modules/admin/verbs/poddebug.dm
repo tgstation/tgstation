@@ -54,7 +54,7 @@ ADMIN_VERB(pod_debug_panel, R_ADMIN, "Show Pod Equipment Panel", ADMIN_VERB_NO_D
 		return
 	. = TRUE
 	switch(action)
-		if("rename") //idk this is for VV does this already
+		if("rename") //idk what this is for VV does this already
 			var/wanted_name = tgui_input_text(usr, "Name", "Name", pod.name)
 			if(!wanted_name)
 				return
@@ -65,27 +65,29 @@ ADMIN_VERB(pod_debug_panel, R_ADMIN, "Show Pod Equipment Panel", ADMIN_VERB_NO_D
 			var/new_charge = tgui_input_number(usr, "Charge", "Charge", pod.cell.charge, pod.cell.maxcharge)
 			pod.cell.charge = new_charge
 		if("remove_cell")
+			if(isnull(pod.cell))
+				return
 			QDEL_NULL(pod.cell)
 			pod.update_appearance()
 		if("change_cell")
 			var/wanted_type = tgui_input_list(usr, "What cell", "What cell", subtypesof(/obj/item/stock_parts/power_store/battery))
-			if(!wanted_type)
+			if(!istype(wanted_type, /obj/item/stock_parts/power_store/battery))
 				return
 			QDEL_NULL(pod.cell)
 			pod.cell = new wanted_type(pod)
 			pod.update_appearance()
 		if("add_part")
-			var/wanted_type = tgui_input_list(usr, "What part", "What part (Warning, no checks)", subtypesof(/obj/item/pod_equipment))
-			if(!wanted_type)
+			var/wanted_type = tgui_input_list(usr, "What part", "What part (Warning, no attachment checks)", subtypesof(/obj/item/pod_equipment))
+			if(!istype(wanted_type, /obj/item/pod_equipment))
 				return
 			pod.equip_item(new wanted_type)
 		if("delete_part")
 			var/part = locate(params["partRef"])
-			if(isnull(part))
+			if(!istype(part, /obj/item/pod_equipment))
 				return
 			qdel(part)
 		if("detach_part")
 			var/part = locate(params["partRef"])
-			if(isnull(part))
+			if(!istype(part, /obj/item/pod_equipment))
 				return
 			pod.unequip_item(part)

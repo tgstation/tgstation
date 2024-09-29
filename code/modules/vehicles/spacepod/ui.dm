@@ -46,7 +46,7 @@
 		.["parts"] += list(info)
 
 /obj/vehicle/sealed/space_pod/ui_status(mob/living/user, datum/ui_state/state)
-	if(!(user in occupants) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
+	if(!(occupants[user] & VEHICLE_CONTROL_DRIVE))
 		return UI_CLOSE
 	return user.stat < HARD_CRIT ? UI_INTERACTIVE : UI_UPDATE
 
