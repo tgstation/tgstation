@@ -147,10 +147,6 @@
 /datum/loadout_item/head/geranium
 	name = "Geranium"
 	item_path = /obj/item/food/grown/poppy/geranium
-
-/datum/loadout_item/head/fraxinella
-	name = "Fraxinella"
-	item_path = /obj/item/food/grown/poppy/geranium/fraxinella
 	
 /datum/loadout_item/head/harebell
 	name = "Harebell"
