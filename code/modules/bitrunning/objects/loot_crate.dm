@@ -92,6 +92,8 @@
 /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 	name = "decrypted cache"
 	desc = "Compiled from the virtual domain. The reward of a successful Torment Nexus rehabilitation."
+	icon_state = "weaponcrate"
+	base_icon_state = "weaponcrate"
 	locked = TRUE // this has guns in it, make sure it's locked
 	req_access = list(ACCESS_ARMORY)
 
