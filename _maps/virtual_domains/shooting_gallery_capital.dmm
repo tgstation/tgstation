@@ -10,6 +10,9 @@
 "bl" = (
 /obj/structure/plasticflaps/opaque,
 /obj/bitrunning/watcher_hunt_teleporter,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/virtual_domain/fullbright)
 "bq" = (
@@ -260,6 +263,14 @@
 	},
 /turf/open/floor/fakespace,
 /area/virtual_domain/fullbright)
+"rp" = (
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
 "rw" = (
 /obj/effect/landmark/bitrunning/bitrunner_spawn,
 /turf/open/floor/iron/tgmcemblem/center{
@@ -415,6 +426,9 @@
 "zZ" = (
 /obj/structure/plasticflaps/opaque,
 /obj/bitrunning/watcher_hunt_spawner/station_high,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/virtual_domain/fullbright)
 "AW" = (
@@ -474,6 +488,9 @@
 "Ep" = (
 /obj/structure/plasticflaps/opaque,
 /obj/bitrunning/watcher_hunt_spawner/station_max,
+/obj/machinery/conveyor/auto/fast{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/small,
 /area/virtual_domain/fullbright)
 "EF" = (
@@ -568,7 +585,7 @@
 /obj/machinery/conveyor/auto/slow/inverted{
 	alpha = 0
 	},
-/obj/bitrunning/watcher_hunt_spawner/meteor,
+/obj/bitrunning/watcher_hunt_spawner/station_medium,
 /turf/open/floor/fakespace,
 /area/virtual_domain/fullbright)
 "IC" = (
@@ -1210,7 +1227,7 @@ bl
 YL
 Ep
 YL
-bl
+rp
 YL
 YL
 DJ
