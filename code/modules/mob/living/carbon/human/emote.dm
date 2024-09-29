@@ -223,7 +223,7 @@
 	stat_allowed = UNCONSCIOUS
 	vary = TRUE
 
-// not all species make sound when "snoring"
+// eventually we want to give species their own "snoring" sounds
 /datum/emote/living/carbon/human/snore/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return

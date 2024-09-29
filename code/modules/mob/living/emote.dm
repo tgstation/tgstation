@@ -423,6 +423,15 @@
 	key_third_person = "smugs"
 	message = "grins smugly."
 
+/datum/emote/living/carbon/human/snore
+	key = "snore"
+	key_third_person = "snores"
+	message = "snores."
+	message_mime = "sleeps soundly."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+	mob_type_blacklist_typecache = list(/mob/living/carbon/human)
+
 /datum/emote/living/sniff
 	key = "sniff"
 	key_third_person = "sniffs"
