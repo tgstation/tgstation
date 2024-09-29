@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixed trims which did have an associated job but whose assignment didn't match a job title causing null jobs to be assigned to accounts. This fixes departmental security officers not being able to purchase things from the security vendors."

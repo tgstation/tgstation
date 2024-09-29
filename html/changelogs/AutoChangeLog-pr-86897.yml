@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Players no longer can randomly get semi-permanently offset from being shoved"
