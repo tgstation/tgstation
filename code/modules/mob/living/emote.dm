@@ -423,6 +423,14 @@
 	key_third_person = "smugs"
 	message = "grins smugly."
 
+/datum/emote/living/sniff
+	key = "sniff"
+	key_third_person = "sniffs"
+	message = "sniffs."
+	message_mime = "sniffs silently."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+
 /datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
@@ -431,14 +439,6 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human)
-
-/datum/emote/living/sniff
-	key = "sniff"
-	key_third_person = "sniffs"
-	message = "sniffs."
-	message_mime = "sniffs silently."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	vary = TRUE
 
 /datum/emote/living/sniff/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
