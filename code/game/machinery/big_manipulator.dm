@@ -290,6 +290,7 @@
 		return
 	if((where_we_drop == drop_turf) || !isitem(target))
 		target.forceMove(drop_turf)
+		target.dir = get_dir(get_turf(target), get_turf(src))
 	else
 		target.forceMove(where_we_drop)
 	finish_manipulation()
@@ -311,6 +312,7 @@
 		return
 	if(!isitem(target))
 		target.forceMove(drop_turf) /// We use only items
+		target.dir = get_dir(get_turf(target), get_turf(src))
 		finish_manipulation()
 		return
 	var/obj/item/im_item = target
@@ -324,14 +326,26 @@
 		im_item.melee_attack_chain(living_manipulator_lmfao, type_to_use)
 	src.do_attack_animation(drop_turf)
 	manipulator_hand.do_attack_animation(drop_turf)
-	im_item.forceMove(src)
-	qdel(living_manipulator_lmfao)
+	if(LAZYLEN(living_manipulator_lmfao.do_afters))
+		RegisterSignal(living_manipulator_lmfao, COMSIG_DO_AFTER_ENDED, PROC_REF(manipulator_finish_do_after))
+	else
+		im_item.forceMove(src)
+		qdel(living_manipulator_lmfao)
 	check_end_of_use(im_item, item_was_used = TRUE)
+
+/// Wait whan manipulator finish do_after and kill em.
+/obj/machinery/big_manipulator/proc/manipulator_finish_do_after(mob/living/carbon/human/abstract_manipulator)
+	SIGNAL_HANDLER
+
+	var/obj/item/my_item = abstract_manipulator.get_active_held_item()
+	my_item.forceMove(src)
+	qdel(abstract_manipulator)
 
 /// Check what we gonna do next with our item. Drop it or use again.
 /obj/machinery/big_manipulator/proc/check_end_of_use(obj/item/my_item, item_was_used)
 	if(drop_item_after_use && item_was_used)
 		my_item.forceMove(drop_turf)
+		my_item.dir = get_dir(get_turf(my_item), get_turf(src))
 		finish_manipulation()
 		return
 	addtimer(CALLBACK(src, PROC_REF(use_thing), my_item), working_speed)
@@ -341,6 +355,7 @@
 /obj/machinery/big_manipulator/proc/throw_thing(atom/movable/target)
 	if(!(isitem(target) || isliving(target)))
 		target.forceMove(drop_turf)
+		target.dir = get_dir(get_turf(target), get_turf(src))
 		finish_manipulation()  /// We throw only items and living mobs
 		return
 	var/obj/item/im_item = target
@@ -387,6 +402,7 @@
 /obj/machinery/big_manipulator/proc/create_abstract_living()
 	var/mob/living/carbon/human/abstract_living = new /mob/living/carbon/human(get_turf(src))
 	abstract_living.icon_state = "blank"
+	abstract_living.alpha = 0
 	abstract_living.name = src.name
 	return abstract_living
 
