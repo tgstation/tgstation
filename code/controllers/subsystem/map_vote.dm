@@ -107,7 +107,6 @@ SUBSYSTEM_DEF(map_vote)
 	else
 		filter_threshold = length(GLOB.clients)
 
-	var/list/invalid_choices = list()
 	for(var/map in valid_maps)
 		var/datum/map_config/possible_config = config.maplist[map]
 		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
