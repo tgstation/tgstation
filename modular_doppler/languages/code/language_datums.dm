@@ -1,6 +1,6 @@
 /obj/item/organ/internal/tongue/get_possible_languages()
     var/list/langs = ..()
-    langs += /datum/language/yangyu
+    langs += /datum/language/konjin
     langs += /datum/language/movespeak
     langs += /datum/language/primitive_genemod
     return langs
@@ -8,9 +8,9 @@
 
 
 /// ACTUAL LANGUAGES BEGIN HERE
-/datum/language/yangyu
-	name = "Yangyu"
-	desc = "Also popularly known as \"Konjin\", this language group formally regarded as Orbital Sino-Tibetan is a result of a genetic relationship between Chinese, Tibetan, Burmese, and other Human languages of similar characteristics that was first proposed in the early 19th century and is extremely popular even in the space age. Originating from Asia, this group of tongues is the second most spoken by Human and Human-derived populations since the birth of Sol Common - and was a primary contender to be the Sol Federation's official language. Many loanwords, idioms, and cultural relics of Japanese, Ryukyuan, Korean, and other societies have managed to persist within it, especially in the daily lives of speakers coming from Martian cities."
+/datum/language/konjin
+	name = "Konjin"
+	desc = "This language group formally regarded as Orbital Sino-Tibetan is a result of a genetic relationship between Chinese, Tibetan, Burmese, and other Human languages of similar characteristics that was first proposed in the early 19th century and is extremely popular even in the space age. Originating from Asia, this group of tongues is the second most spoken by Human and Human-derived populations since the birth of Sol Common - and was a primary contender to be the Sol Federation's official language. Many loanwords, idioms, and cultural relics of Japanese, Ryukyuan, Korean, and other societies have managed to persist within it, especially in the daily lives of speakers coming from Martian cities."
 	key = "Y"
 	flags = TONGUELESS_SPEECH
 	space_chance = 70
