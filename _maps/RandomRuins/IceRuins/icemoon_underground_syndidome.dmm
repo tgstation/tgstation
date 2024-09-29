@@ -1451,7 +1451,6 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "vs" = (
-/mob/living/carbon/human/species/monkey/angry,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
 	},
@@ -2023,11 +2022,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark/herringbone,
-/area/ruin/syndibiodome)
-"Cq" = (
-/mob/living/carbon/human/species/monkey/angry,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/small,
 /area/ruin/syndibiodome)
 "Ct" = (
 /obj/item/kirbyplants/organic/plant22,
@@ -4433,7 +4427,7 @@ Eq
 Fe
 Ct
 pj
-Cq
+YS
 YS
 fc
 pj
