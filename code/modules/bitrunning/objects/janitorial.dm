@@ -109,7 +109,6 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 				say(scanner_results)
 				scanning = FALSE
 				return
-			playsound(src, 'sound/machines/ping.ogg', 100, FALSE)
 	scanning = FALSE
 	deposited = TRUE
 	playsound(src, 'sound/machines/ping.ogg', 100, FALSE)

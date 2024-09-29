@@ -1,0 +1,1513 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"ak" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/bitrunning/customer_waiter/west,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"aA" = (
+/obj/bitrunning/customer_waiter/west,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"aC" = (
+/obj/item/stack/ore/glass/basalt{
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"aD" = (
+/obj/item/stack/ore/glass/basalt{
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/bitrunning/customer_waiter/west,
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"aU" = (
+/obj/item/stack/ore/glass/basalt,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"aY" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand,
+/obj/structure/fluff/minepost,
+/obj/structure/stone_tile/center{
+	pixel_x = 0;
+	pixel_y = -14
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"bj" = (
+/obj/effect/fishing_float,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"bw" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"bQ" = (
+/obj/item/stack/ore/glass/basalt{
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"cv" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cz" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cI" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cJ" = (
+/obj/bitrunning/boulder_checkpoint,
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"cM" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cZ" = (
+/obj/structure/flora/ash/cacti,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"da" = (
+/obj/item/stack/ore/glass/basalt{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"dr" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"dv" = (
+/obj/structure/flora/ash/cacti,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"dR" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"eR" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/bitrunning/customer_waiter/east,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"fh" = (
+/obj/structure/flora/ash/cacti,
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"fV" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"gh" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"gw" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"gE" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"gQ" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"hd" = (
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"hD" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"hH" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"hQ" = (
+/obj/item/stack/ore/glass/basalt{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"ij" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/vehicle/ridden/lavaboat{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"in" = (
+/obj/item/food/grown/star_cactus{
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"iw" = (
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = 5;
+	pixel_y = 26
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -9;
+	pixel_y = 18
+	},
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/coconuts,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"iF" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"jk" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"jo" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"jN" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/bitrunning/customer_waiter/east/slow,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"jP" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"kh" = (
+/turf/open/floor/holofloor/beach/coast,
+/area/virtual_domain/fullbright)
+"kx" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ky" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"kH" = (
+/obj/bitrunning/boulder_checkpoint,
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lg" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/binoculars,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ln" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/tram_rail,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"lr" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lv" = (
+/obj/structure/flora/tree/palm,
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"lW" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/spawner/random/trash,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"md" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"mr" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/item/storage/briefcase{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/trash/can{
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"mD" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"mW" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/tram_rail,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"nb" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"np" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"nu" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/structure/fluff/minepost,
+/obj/structure/stone_tile/center{
+	pixel_x = 0;
+	pixel_y = -14
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"nZ" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"oq" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"oS" = (
+/obj/item/clothing/head/cowboy/red,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"pE" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"qx" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"rt" = (
+/obj/item/stack/ore/glass/basalt,
+/obj/structure/stone_tile/block/cracked{
+	dir = 9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rD" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"sn" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"sq" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"sH" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"tq" = (
+/obj/item/food/grown/star_cactus{
+	pixel_x = 12;
+	pixel_y = -16
+	},
+/obj/structure/flora/bush/pale/style_4,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"tz" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"tE" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"tP" = (
+/obj/bitrunning/customer_waiter/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uq" = (
+/obj/item/food/grown/star_cactus{
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uv" = (
+/obj/item/food/grown/star_cactus,
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uR" = (
+/obj/structure/fermenting_barrel{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"vt" = (
+/obj/item/clothing/head/cowboy{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"vI" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"xc" = (
+/obj/structure/flora/ash/cacti,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"xn" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"xu" = (
+/turf/open/lava/smooth,
+/area/virtual_domain/fullbright)
+"xw" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/vehicle/ridden/lavaboat,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"xA" = (
+/obj/item/stack/ore/glass/basalt,
+/obj/structure/stone_tile/block/cracked{
+	dir = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"yH" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/tram_rail,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"zs" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"zJ" = (
+/obj/structure/fermenting_barrel{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"zU" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Bk" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Cx" = (
+/obj/item/food/grown/star_cactus{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"CA" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"CC" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"CI" = (
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Do" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Eg" = (
+/obj/item/food/grown/star_cactus{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"EU" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/structure/fluff/minepost,
+/obj/structure/stone_tile/center{
+	pixel_x = 0;
+	pixel_y = -14
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"EV" = (
+/obj/effect/decal/cleanable/ash,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Fg" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Fh" = (
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"FQ" = (
+/obj/structure/marker_beacon/burgundy{
+	pixel_x = 0;
+	pixel_y = 12
+	},
+/turf/open/floor/holofloor/beach/coast,
+/area/virtual_domain/fullbright)
+"FZ" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 8
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Gd" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/structure/sign/poster/contraband/fun_police/directional/west,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ge" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/structure/marker_beacon/bronze,
+/obj/bitrunning/customer_waiter/east/slow,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"GH" = (
+/obj/effect/decal/cleanable/ash,
+/obj/machinery/exoscanner,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Ho" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Hz" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"HW" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"It" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"JG" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"JZ" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/hungry_customer,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Kd" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Kn" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Kv" = (
+/obj/machinery/exoscanner,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Kw" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/tram_rail,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"KK" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Lf" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Lu" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/tram_rail,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"LJ" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"LP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/marker_beacon/bronze,
+/obj/bitrunning/customer_waiter/west/slow,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Mq" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"MA" = (
+/obj/effect/decal/remains/human,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Nl" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ns" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Nt" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"NE" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"NZ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Og" = (
+/obj/structure/flora/ash/cacti,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Oq" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"ON" = (
+/obj/structure/statue/bone/rib,
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Pc" = (
+/turf/closed/indestructible/sandstone,
+/area/virtual_domain/fullbright)
+"Pw" = (
+/obj/effect/decal/remains/human,
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"PY" = (
+/obj/structure/flora/ash/cacti,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Qb" = (
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = 7;
+	pixel_y = 21
+	},
+/obj/bitrunning/customer_destination,
+/obj/structure/chair/stool/directional/north{
+	pixel_x = 8;
+	pixel_y = 0
+	},
+/obj/structure/flora/grass/jungle/b/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"QW" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/structure/sign/poster/contraband/fun_police/directional/east,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Rs" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/structure/fluff/minepost,
+/obj/structure/stone_tile/center{
+	pixel_x = 0;
+	pixel_y = -14
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"SU" = (
+/obj/structure/water_source/puddle,
+/obj/structure/flora/bush/large/style_random,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"TE" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/vehicle/ridden/lavaboat{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"TH" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/spawner/random/trash,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ul" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"Uz" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"UK" = (
+/obj/item/stack/ore/glass/basalt,
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"UR" = (
+/obj/bitrunning/boulder_checkpoint,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"VM" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Wc" = (
+/obj/bitrunning/boulder_checkpoint,
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Wo" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"WR" = (
+/obj/bitrunning/boulder_checkpoint,
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"XP" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Yh" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Zr" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"ZB" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/fullbright)
+"ZI" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/bitrunning/customer_speech,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+XP
+"}
+(2,1,1) = {"
+JG
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+JG
+"}
+(3,1,1) = {"
+JG
+Pc
+lv
+tq
+kH
+Kn
+fh
+tP
+tz
+Wo
+vt
+dR
+Wo
+ON
+Mq
+Fh
+Ho
+Kw
+VM
+Gd
+ZB
+Rs
+hD
+Wc
+FQ
+bj
+Pc
+JG
+"}
+(4,1,1) = {"
+JG
+Pc
+cZ
+NE
+UR
+NE
+ky
+in
+aU
+qx
+LJ
+uv
+Wo
+Nt
+FZ
+Wo
+sn
+ln
+It
+lW
+Ns
+jN
+Ul
+Wc
+kh
+CI
+Pc
+JG
+"}
+(5,1,1) = {"
+JG
+Pc
+Lf
+Fg
+WR
+bw
+jk
+UK
+bQ
+xu
+xu
+EV
+rt
+dv
+af
+Wo
+Uz
+Kd
+Nl
+LP
+gw
+iF
+cM
+Wc
+FQ
+TE
+Pc
+JG
+"}
+(6,1,1) = {"
+JG
+Pc
+uR
+Qb
+UR
+zU
+xu
+GH
+xu
+xu
+xu
+xu
+CC
+xu
+aD
+gQ
+Do
+nu
+Oq
+yH
+zs
+ZI
+JZ
+Wc
+kh
+ij
+Pc
+JG
+"}
+(7,1,1) = {"
+JG
+Pc
+zJ
+iw
+xc
+lr
+hQ
+xu
+xu
+Kv
+xu
+xu
+xu
+Kn
+lg
+CA
+Yh
+sH
+TH
+mW
+pE
+aY
+mr
+Wc
+kh
+xw
+Pc
+JG
+"}
+(8,1,1) = {"
+JG
+Pc
+hH
+NE
+cJ
+tE
+xu
+xn
+MA
+Kn
+Og
+da
+xu
+xu
+eR
+cI
+jP
+fV
+pE
+Ge
+Hz
+md
+Ul
+Wc
+FQ
+ij
+Pc
+JG
+"}
+(9,1,1) = {"
+JG
+Pc
+SU
+NE
+uq
+Pw
+NZ
+cv
+Cx
+sq
+Zr
+xA
+Bk
+aC
+cz
+CA
+nb
+ak
+CA
+gE
+np
+Lu
+vI
+hd
+kh
+CI
+Pc
+JG
+"}
+(10,1,1) = {"
+JG
+Pc
+jo
+HW
+hd
+mD
+kx
+PY
+oS
+aA
+KK
+nZ
+Eg
+oq
+rD
+gh
+jP
+EU
+dr
+QW
+cM
+ln
+It
+Wc
+FQ
+bj
+Pc
+JG
+"}
+(11,1,1) = {"
+JG
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+Pc
+JG
+"}
+(12,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}

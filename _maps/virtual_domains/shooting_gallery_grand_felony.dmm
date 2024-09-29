@@ -1,0 +1,776 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"ao" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 10
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"aH" = (
+/obj/structure/alien/weeds,
+/obj/item/bodypart/chest/larva,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"cJ" = (
+/obj/machinery/digital_clock/score_card,
+/turf/closed/wall/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"dB" = (
+/obj/structure/alien/weeds,
+/obj/structure/rack,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/obj/machinery/light/red/dim/directional/west,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"ej" = (
+/obj/structure/alien/weeds,
+/obj/structure/flora/lunar_plant,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 10
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"er" = (
+/obj/structure/alien/weeds,
+/obj/item/flashlight/flare{
+	icon_state = "flare-on";
+	light_on = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"eW" = (
+/obj/structure/alien/weeds/node,
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"eZ" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"fn" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"ia" = (
+/obj/item/pickaxe{
+	pixel_x = 0;
+	pixel_y = -5
+	},
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"iY" = (
+/obj/structure/alien/weeds,
+/obj/structure/flora/lunar_plant,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"jp" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/egg/burst,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"jy" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"jF" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"jJ" = (
+/obj/structure/alien/weeds,
+/obj/structure/flora/lunar_plant,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"kc" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = -19;
+	pixel_y = -5
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"kB" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"mc" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 10
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"mW" = (
+/obj/item/bodypart/chest/larva,
+/obj/effect/decal/cleanable/rubble,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"qP" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 10;
+	pixel_x = -13;
+	pixel_y = -8
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"rO" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"rX" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 10
+	},
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"sk" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"sL" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/medical/bandage,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"sX" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4
+	},
+/obj/item/clothing/mask/facehugger/toy,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"tn" = (
+/obj/structure/fluff/minepost,
+/obj/structure/sign/warning/explosives/directional/north,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"tE" = (
+/obj/structure/alien/weeds,
+/obj/structure/stone_tile/surrounding/burnt,
+/obj/item/banner/command/mundane{
+	pixel_x = 0;
+	pixel_y = 12
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"tK" = (
+/obj/structure/alien/weeds/node,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"tR" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 6
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"uB" = (
+/obj/structure/alien/weeds/node,
+/obj/item/flashlight/flare{
+	icon_state = "flare-on";
+	light_on = 1
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"uG" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/spent{
+	dir = 9
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"vh" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"wi" = (
+/obj/structure/alien/weeds/node,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"wU" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/effect/decal/cleanable/plasma,
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"xL" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"yb" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"yc" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = -13;
+	pixel_y = 9
+	},
+/obj/machinery/power/floodlight,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"yX" = (
+/obj/structure/flora/rock/style_random{
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"zM" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno/larva,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Ag" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"BC" = (
+/obj/structure/flora/rock/pile,
+/obj/item/shovel,
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"CJ" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"CT" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Dm" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/obj/structure/alien/egg/burst,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/obj/bitrunning/watcher_hunt_spawner,
+/obj/structure/plasticflaps/opaque,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Dr" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Ed" = (
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"FT" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 5
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"GG" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/moon/dug,
+/area/virtual_domain/fullbright)
+"GX" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Hs" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"HH" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"HQ" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -19;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"IL" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno/larva,
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Jd" = (
+/obj/structure/alien/weeds,
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"JE" = (
+/obj/structure/alien/weeds,
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"JZ" = (
+/obj/structure/alien/weeds/node,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Kl" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"KK" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 12;
+	pixel_y = 0
+	},
+/obj/structure/chair/stool/directional/east{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/machinery/light/red/dim/directional/west,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"LE" = (
+/obj/structure/alien/weeds,
+/obj/item/ammo_casing/spent{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/emptysandbag,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"MU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"OY" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 5
+	},
+/obj/item/clothing/mask/facehugger/toy,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Pd" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/medical/gauze/improvised,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"QN" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"QO" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Ri" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"RI" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Tu" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"TA" = (
+/obj/item/ammo_casing/spent{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/ammo_casing/spent{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/ammo_casing/spent{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/ammo_casing/spent,
+/obj/structure/alien/weeds,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Ub" = (
+/obj/structure/alien/weeds,
+/obj/structure/flora/lunar_plant,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4
+	},
+/obj/machinery/light/red/dim/directional/south,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"VK" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Wk" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"WX" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light/red/dim/directional/north,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Yd" = (
+/obj/structure/alien/weeds/node,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 5
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"Zo" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 9
+	},
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+"ZN" = (
+/obj/structure/alien/weeds,
+/turf/closed/indestructible/resin,
+/area/virtual_domain/fullbright)
+"ZX" = (
+/obj/structure/alien/weeds,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/structure/plasticflaps/opaque,
+/turf/open/misc/asteroid/moon,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+"}
+(2,1,1) = {"
+Ri
+sk
+sk
+sk
+sk
+JE
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+Ri
+Ri
+"}
+(3,1,1) = {"
+Ri
+sk
+sk
+yX
+cJ
+VK
+dB
+Jd
+eW
+yc
+Ed
+yb
+ZN
+ZN
+ZN
+"}
+(4,1,1) = {"
+Ri
+sk
+sk
+VK
+KK
+BC
+eZ
+Jd
+rX
+Pd
+jJ
+ZN
+OY
+Dm
+ZN
+"}
+(5,1,1) = {"
+Ri
+sk
+vh
+ia
+eZ
+wi
+Jd
+Jd
+JZ
+HQ
+MU
+ZN
+xL
+ZN
+ZN
+"}
+(6,1,1) = {"
+Ri
+sk
+tn
+CJ
+GG
+tE
+Jd
+CT
+sL
+Ed
+mW
+QN
+sX
+ZN
+Ri
+"}
+(7,1,1) = {"
+Ri
+ZN
+WX
+Wk
+Hs
+Jd
+Jd
+LE
+Ag
+jF
+wi
+ZN
+Ub
+ZN
+Ri
+"}
+(8,1,1) = {"
+Ri
+ZN
+Jd
+Jd
+Jd
+ac
+IL
+GX
+Dr
+TA
+Ed
+ZN
+sX
+ZN
+Ri
+"}
+(9,1,1) = {"
+Ri
+ZN
+uG
+wU
+TA
+Ed
+RI
+JZ
+Ed
+jJ
+QN
+er
+rO
+ZN
+Ri
+"}
+(10,1,1) = {"
+Ri
+ZN
+kB
+fn
+aH
+kc
+Ag
+Ed
+Kl
+ZN
+ZN
+jp
+xL
+ZN
+Ri
+"}
+(11,1,1) = {"
+Ri
+ZN
+qP
+zM
+wi
+QN
+ZN
+ZN
+uB
+yb
+Ed
+FT
+ej
+ZN
+Ri
+"}
+(12,1,1) = {"
+ZN
+ZN
+Kl
+ZN
+ZN
+er
+Yd
+jy
+Zo
+Ag
+FT
+mc
+Tu
+ZN
+Ri
+"}
+(13,1,1) = {"
+ZN
+ZX
+HH
+tK
+iY
+HH
+ao
+yb
+tR
+HH
+ej
+ZN
+ZN
+ZN
+Ri
+"}
+(14,1,1) = {"
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+ZN
+Ri
+Ri
+Ri
+"}
+(15,1,1) = {"
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+Ri
+QO
+"}

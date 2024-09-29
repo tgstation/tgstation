@@ -10,6 +10,7 @@
 	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/janitor_work/setup_domain(list/created_atoms)
+	custom_spawns = list()
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 
@@ -35,6 +36,17 @@
 	skillchips = null
 	backpack_contents = null
 
+
+/datum/lazy_template/virtual_domain/janitor_work/mischief
+	name = "Janitorial Work: Mischief"
+	desc = "An admiral had a small incident in his office. Tidy the office."
+	help_text = "Just start mopping."
+	key = "janitor_work_mischief"
+	map_name = "janitor_work_mischief"
+	reward_points = BITRUNNER_REWARD_MIN
+	difficulty = BITRUNNER_DIFFICULTY_NONE
+	test_only = FALSE
+
 /datum/lazy_template/virtual_domain/janitor_work/misdemeanor
 	name = "Janitorial Work: Misdemeanor"
 	desc = "A fight went down in Medical. Sanitize the operating theatre."
@@ -55,19 +67,81 @@
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	test_only = FALSE
 
+/datum/lazy_template/virtual_domain/janitor_work/capital
+	name = "Janitorial Work: Capital"
+	desc = "A massacre occured at the yearly Nanotrasen Shareholders' feast. Clean up the evidence."
+	help_text = "Reflect on your crimes. Be thankful you are not dead."
+	key = "janitor_work_capital"
+	map_name = "janitor_work_capital"
+	reward_points = BITRUNNER_REWARD_EXTREME
+	difficulty = BITRUNNER_DIFFICULTY_OVERKILL
+	test_only = FALSE
+
 /datum/lazy_template/virtual_domain/customer_push_test
 	name = "Tourist Assistance: Test"
 	desc = "Crewmember being rude to our guests? Teach them how to help their fellow tourist."
 	help_text = "Test domain for Tourist Assistance."
 	key = "customer_push_test"
 	map_name = "customer_push_test"
+	test_only = TRUE
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/waiter
 	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/customer_push_test/setup_domain(list/created_atoms)
+	custom_spawns = list()
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
+
+/datum/lazy_template/virtual_domain/customer_push_test/mischief
+	name = "Tourist Assistance: Mischief"
+	desc = "A valued member of the Nanotrasen Shuttlelines Robust Class needs some help getting to his five-star meal. Escort him to it."
+	help_text = "Remember, he'll be leaving a review of your service. Don't disappoint him."
+	key = "customer_push_mischief"
+	map_name = "customer_push_mischief"
+	reward_points = BITRUNNER_REWARD_MIN
+	difficulty = BITRUNNER_DIFFICULTY_NONE
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/customer_push_test/misdemeanor
+	name = "Tourist Assistance: Misdemeanor"
+	desc = "A valued member of the Nanotrasen Shuttlelines Robust Class has arrived at his hotel and needs to get through this hallway to his five-star dinner. Escort him to it."
+	help_text = "Remember, he'll be leaving a review of your service. Don't disappoint him."
+	key = "customer_push_misdemeanor"
+	map_name = "customer_push_misdemeanor"
+	reward_points = BITRUNNER_REWARD_LOW
+	difficulty = BITRUNNER_DIFFICULTY_LOW
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/customer_push_test/felony
+	name = "Tourist Assistance: Felony"
+	desc = "A valued member of the Nanotrasen Shuttlelines Robust Class wants a tour of the Supermatter Engine. Escort him to it."
+	help_text = "Remember, he'll be leaving a review of your service. Don't disappoint him."
+	key = "customer_push_felony"
+	map_name = "customer_push_felony"
+	reward_points = BITRUNNER_REWARD_MEDIUM
+	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/customer_push_test/grand_felony
+	name = "Tourist Assistance: Grand Felony"
+	desc = "A valued member of the Nanotrasen Shuttlelines Robust Class needs help reaching his beach reservation. Escort him to it."
+	help_text = "Remember, he'll be leaving a review of your service. Don't disappoint him."
+	key = "customer_push_grand_felony"
+	map_name = "customer_push_grand_felony"
+	reward_points = BITRUNNER_REWARD_HIGH
+	difficulty = BITRUNNER_DIFFICULTY_HIGH
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/customer_push_test/capital
+	name = "Tourist Assistance: Capital"
+	desc = "A valued member of the Nanotrasen Shuttlelines Robust Class needs help getting to his favorite hot dog stand across the highway. Escort him to it."
+	help_text = "You will regret your words and deeds."
+	key = "customer_push_capital"
+	map_name = "customer_push_capital"
+	reward_points = BITRUNNER_REWARD_EXTREME
+	difficulty = BITRUNNER_DIFFICULTY_OVERKILL
+	test_only = FALSE
 
 /datum/outfit/job/prisoner/waiter
 	name = "Waiter (Prisoner)"
@@ -86,13 +160,65 @@
 	help_text = "Test domain for Teleporter Maze."
 	key = "teleporter_maze_test"
 	map_name = "teleporter_maze_test"
+	test_only = TRUE
 	bitrunning_network = BITRUNNER_DOMAIN_SECURITY
 	forced_outfit = /datum/outfit/job/prisoner/scientist
 	cache_to_spawn = /obj/structure/closet/crate/secure/bitrunning/decrypted/security
 
 /datum/lazy_template/virtual_domain/teleporter_maze_test/setup_domain(list/created_atoms)
+	custom_spawns = list()
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/mischief
+	name = "Teleporter Maze Mapping: Mischief"
+	desc = "An eazy maze for first time criminals."
+	help_text = "Use the spray cans to track your progress."
+	key = "teleporter_maze_mischief"
+	map_name = "teleporter_maze_mischief"
+	reward_points = BITRUNNER_REWARD_MIN
+	difficulty = BITRUNNER_DIFFICULTY_NONE
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/misdemeanor
+	name = "Teleporter Maze Mapping: Misdemeanor"
+	desc = "A slightly difficult maze for repeat offenders."
+	help_text = "Use the spray cans to track your progress."
+	key = "teleporter_maze_misdemeanor"
+	map_name = "teleporter_maze_misdemeanor"
+	reward_points = BITRUNNER_REWARD_LOW
+	difficulty = BITRUNNER_DIFFICULTY_LOW
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/felony
+	name = "Teleporter Maze Mapping: Felony"
+	desc = "A difficult maze for hardened criminals."
+	help_text = "Use the spray cans to track your progress."
+	key = "teleporter_maze_felony"
+	map_name = "teleporter_maze_felony"
+	reward_points = BITRUNNER_REWARD_MEDIUM
+	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/grand_felony
+	name = "Teleporter Maze Mapping: Grand Felony"
+	desc = "A very difficult maze for dangerous criminals."
+	help_text = "Use the spray cans to track your progress."
+	key = "teleporter_maze_grand_felony"
+	map_name = "teleporter_maze_grand_felony"
+	reward_points = BITRUNNER_REWARD_HIGH
+	difficulty = BITRUNNER_DIFFICULTY_HIGH
+	test_only = FALSE
+
+/datum/lazy_template/virtual_domain/teleporter_maze_test/capital
+	name = "Teleporter Maze Mapping: Capital"
+	desc = "Daedalus would be proud of the labyrinthine nature of this maze."
+	help_text = "Use the spray cans to track your progress, but you will never escape."
+	key = "teleporter_maze_capital"
+	map_name = "teleporter_maze_capital"
+	reward_points = BITRUNNER_REWARD_EXTREME
+	difficulty = BITRUNNER_DIFFICULTY_OVERKILL
+	test_only = FALSE
 
 /datum/outfit/job/prisoner/scientist
 	name = "Scientist (Prisoner)"
@@ -110,7 +236,7 @@
 	name = "Firearms and Target Identification Testing: Test"
 	desc = "Crewmember having issues identifying friend or foe? Put them in here. Generates materials!"
 	help_text = "Test domain for Firearms and Target Identification."
-	key = "watcher_hunt_base"
+	key = "shooting_gallery_base"
 	map_name = "watcher_hunt"
 	test_only = TRUE
 	var/target_score = 5000
@@ -119,6 +245,7 @@
 	forced_outfit = /datum/outfit/job/prisoner
 
 /datum/lazy_template/virtual_domain/watcher_hunt_base/setup_domain(list/created_atoms)
+	custom_spawns = list()
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 	var/obj/machinery/digital_clock/score_card/our_controller = locate(/obj/machinery/digital_clock/score_card) in created_atoms
@@ -133,7 +260,8 @@
 /datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_mischief
 	name = "Target Identification Testing: Mischief"
 	help_text = "Lead your shots!"
-	key = "watcher_hunt_mischief"
+	key = "shooting_gallery_mischief"
+	map_name = "shooting_gallery_mischief"
 	difficulty = BITRUNNER_DIFFICULTY_NONE
 	test_only = FALSE
 	reward_points = BITRUNNER_REWARD_MIN
@@ -142,7 +270,8 @@
 /datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_misdemeanor
 	name = "Target Identification Testing: Misdemeanor"
 	help_text = "Lead your shots!"
-	key = "watcher_hunt_misdemeanor"
+	key = "shooting_gallery_misdemeanor"
+	map_name = "shooting_gallery_misdemeanor"
 	difficulty = BITRUNNER_DIFFICULTY_LOW
 	test_only = FALSE
 	reward_points = BITRUNNER_REWARD_LOW
@@ -151,7 +280,8 @@
 /datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_felony
 	name = "Target Identification Testing: Mischief"
 	help_text = "Lead your shots!"
-	key = "watcher_hunt_felony"
+	key = "shooting_gallery_felony"
+	map_name = "shooting_gallery_felony"
 	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
 	test_only = FALSE
 	reward_points = BITRUNNER_REWARD_MEDIUM
@@ -160,7 +290,8 @@
 /datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_grand_felony
 	name = "Target Identification Testing: Mischief"
 	help_text = "Lead your shots!"
-	key = "watcher_hunt_grand_felony"
+	key = "shooting_gallery_grand_felony"
+	map_name = "shooting_gallery_grand_felony"
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	test_only = FALSE
 	reward_points = BITRUNNER_REWARD_HIGH
@@ -169,7 +300,8 @@
 /datum/lazy_template/virtual_domain/watcher_hunt_base/watcher_hunt_capital
 	name = "Target Identification Testing: Capital"
 	help_text = "Lead your shots!"
-	key = "watcher_hunt_capital"
+	key = "shooting_gallery_capital"
+	map_name = "shooting_gallery_capital"
 	difficulty = BITRUNNER_DIFFICULTY_OVERKILL
 	test_only = FALSE
 	reward_points = BITRUNNER_REWARD_EXTREME
@@ -373,6 +505,7 @@
 	)
 
 /datum/lazy_template/virtual_domain/pizza_guarding_base/setup_domain(list/created_atoms)
+	custom_spawns = list()
 	for(var/obj/effect/landmark/bitrunning/bitrunner_spawn/spawner in created_atoms)
 		custom_spawns += spawner
 	var/obj/bitrunning/animatronic_controller/our_controller = locate(/obj/bitrunning/animatronic_controller) in created_atoms

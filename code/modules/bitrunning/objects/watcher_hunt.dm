@@ -120,6 +120,16 @@
 		/obj/bitrunning/target/tier3/lavaland
 	)
 
+/obj/bitrunning/watcher_hunt_spawner/meteor
+	spawn_order = list(
+		/obj/bitrunning/target/barrel/meteor
+	)
+	replace_destroyed_targets = TRUE
+
+/obj/bitrunning/watcher_hunt_spawner/meteor/spawn_target()
+	spawn_delay = rand(1, 5) SECONDS
+	. = ..()
+
 /obj/bitrunning/watcher_hunt_spawner/test/replace
 	replace_destroyed_targets = TRUE
 
@@ -180,7 +190,7 @@
 	icon_state = "ash_whelp"
 
 /obj/bitrunning/target/barrel
-	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "barrel"
 	base_icon_state = "barrel"
 	score = 0
@@ -190,6 +200,15 @@
 		'sound/misc/bitrunner/wood_plank_break3.ogg',
 		'sound/misc/bitrunner/wood_plank_break4.ogg',
 	)
+
+/obj/bitrunning/target/barrel/meteor
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small1"
+	base_icon_state = "small1"
+
+/obj/bitrunning/target/barrel/meteor/Initialize(mapload)
+	. = ..()
+	icon_state = pick(list("small1", "large1"))
 
 /obj/bitrunning/target/barrel/assistant // conditioning to disrespect assistants
 	use_human_appearance = TRUE
@@ -256,15 +275,15 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_low
 	spawn_order = list(
-		/obj/bitrunning/target/barrel,
 		/obj/bitrunning/target/tier1/revolutionary,
-		/obj/bitrunning/target/barrel,
 		/obj/bitrunning/target/tier1/revolutionary,
-		/obj/bitrunning/target/barrel,
+		/obj/bitrunning/target/tier1/revolutionary,
 		/obj/bitrunning/target/tier1/revolutionary,
 		/obj/bitrunning/target/bad/security_officer,
 		/obj/bitrunning/target/tier1/revolutionary,
-		/obj/bitrunning/target/bad/security_officer,
+		/obj/bitrunning/target/tier1/revolutionary,
+		/obj/bitrunning/target/tier1/revolutionary,
+		/obj/bitrunning/target/tier1/revolutionary,
 	)
 	replace_destroyed_targets = TRUE
 	spawn_delay = 2 SECONDS
@@ -275,12 +294,14 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_medium
 	spawn_order = list(
-		/obj/bitrunning/target/barrel,
+		/obj/bitrunning/target/tier2/cultist,
 		/obj/bitrunning/target/bad/security_officer,
 		/obj/bitrunning/target/tier2/cultist,
 		/obj/bitrunning/target/tier2/cultist,
 		/obj/bitrunning/target/tier2/cultist,
-		/obj/bitrunning/target/barrel,
+		/obj/bitrunning/target/tier2/cultist,
+		/obj/bitrunning/target/bad/security_officer,
+		/obj/bitrunning/target/tier2/cultist,
 	)
 	replace_destroyed_targets = TRUE
 	spawn_delay = 2 SECONDS
@@ -291,13 +312,14 @@
 
 /obj/bitrunning/watcher_hunt_spawner/station_high
 	spawn_order = list(
-		/obj/bitrunning/target/bad/security_officer,
-		/obj/bitrunning/target/bad/hos,
-		/obj/bitrunning/target/bad/captain,
 		/obj/bitrunning/target/tier3/wizard,
-		/obj/bitrunning/target/barrel,
+		/obj/bitrunning/target/bad/security_officer,
+		/obj/bitrunning/target/tier3/wizard,
+		/obj/bitrunning/target/tier3/wizard,
+		/obj/bitrunning/target/tier3/wizard,
 		/obj/bitrunning/target/bad/ian,
-		/obj/bitrunning/target/barrel,
+		/obj/bitrunning/target/tier3/wizard,
+		/obj/bitrunning/target/tier3/wizard,
 	)
 	replace_destroyed_targets = TRUE
 	spawn_delay = 2 SECONDS
