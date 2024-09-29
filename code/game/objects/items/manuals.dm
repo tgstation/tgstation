@@ -254,6 +254,7 @@
 			The pod may not enter structures and go over tiles not suited for it, due to gravity interference with the engine, and other factors. A pod may move over: space (duh), reinforced flooring, asteroids, and plating (in no gravity). If you get your pod stuck inside stuff it shouldnt ordinarily be capable of moving through, <strong>Thats on you.</strong>
 			<span>The pod comes with its control panel, accessible to<strong> the driver.</strong> It allows control of certain equipment, and access to other info.</span>
 			<span> Also, do not ram your pod at high speeds into anything. Its harmful for whatever you hit and also your pod, <s>and pods have been proven to detonate if destroyed by force</s>.</span>
+			<span> Additionally, pods will slow down to 2/3rds of the thrusters maximum acceleration for safety reasons. </span>
 			<h4>Brakes</h4>
 			You may use the <strong>SHIFT</strong> stick to brake. How good is it depends on thrusters.
 

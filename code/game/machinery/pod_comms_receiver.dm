@@ -1,3 +1,4 @@
+// Receives comms bursts from pods to call receive()
 /obj/machinery/pod_comms_receiver
 	name = "pod comms receiver"
 	icon = 'icons/obj/structures.dmi'

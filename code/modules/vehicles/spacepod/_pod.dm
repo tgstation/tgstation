@@ -51,6 +51,9 @@
 	/// actions given to passengers controlling equipment, mob = list(action)
 	var/list/list/equipment_actions = list()
 
+	/// Cooldown started in vehicle_move to see in process() if we have recently moved.
+	COOLDOWN_DECLARE(passive_movement_cooldown)
+
 
 /obj/vehicle/sealed/space_pod/Initialize(mapload, dont_equip)
 	. = ..()

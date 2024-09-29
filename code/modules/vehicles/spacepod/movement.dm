@@ -1,26 +1,29 @@
-// brakes, or autostabilize if not driven
+// brakes, or slow us down if we are not currently actually accelerating
 /obj/vehicle/sealed/space_pod/process()
 	process_huds()
 	if(isnull(drift_handler))
 		return
 
 	var/list/drivers = return_drivers()
+	var/braking = FALSE
 
 	if(drivers)
-		var/braking = FALSE
 		for(var/mob/driver as anything in drivers)
 			if(driver.client?.keys_held["Shift"])
 				braking = TRUE
 				break
 
-		if (!braking)
-			return
+	if(drivers && braking)
+		drift_handler.stabilize_drift(target_force = 0, stabilization_force = stabilizer_force)
+		return // braking takes priority over slowing down
 
-	//braking without drivers is half as strong incase you put like a bomb in your trunk or something and jumped out
-	drift_handler.stabilize_drift(target_force = 0, stabilization_force = !length(drivers) ? stabilizer_force / 2 : stabilizer_force)
+	var/desired_speed = max_speed / 3 * 2
+	if(drift_handler.drift_force <= desired_speed || !COOLDOWN_FINISHED(src, passive_movement_cooldown)) //below 2/3rds or not actively accelerating
+		return
+	drift_handler.stabilize_drift(target_force = desired_speed, stabilization_force = 2 NEWTONS)
 
 /obj/vehicle/sealed/space_pod/has_gravity(turf/gravity_turf)
-	return FALSE //this proc only exists so movement is better
+	return FALSE // we need 0g to use space newtonian movement even onstation
 
 /obj/vehicle/sealed/space_pod/Move(turf/newloc, direct, glide_size_override)
 	if(!isturf(newloc) || newloc.density || ispodpassable(newloc) || (!newloc.has_gravity() && ispodpassable_nograv(newloc)))
@@ -41,6 +44,7 @@
 		power_used *= equip.movement_power_usage_mult
 	if(!use_power(power_used))
 		return
+	COOLDOWN_START(src, passive_movement_cooldown, 5 DECISECONDS)
 	if(direction == UP || direction == DOWN)
 		return try_step_multiz(direction)
 	setDir(direction)
