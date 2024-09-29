@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(map_vote)
 /datum/controller/subsystem/map_vote/proc/send_map_vote_notice(...)
 	var/static/last_message_at
 	if(last_message_at == world.time)
-		message_admins("Call to [__PROC__] twice in one game tick. Yell at someone to condense messages.")
+		message_admins("Call to send_map_vote_notice twice in one game tick. Yell at someone to condense messages.")
 	last_message_at = world.time
 
 	var/list/messages = args.Copy()
