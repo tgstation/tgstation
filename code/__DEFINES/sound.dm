@@ -185,3 +185,5 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_ALT_FISH_SLAP "alt_fish_slap"
 #define SFX_FISH_PICKUP "fish_pickup"
 #define SFX_LIQUID_POUR "liquid_pour"
+#define SFX_SNORE_FEMALE "snore_female"
+#define SFX_SNORE_MALE "snore_male"
