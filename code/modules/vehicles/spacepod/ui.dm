@@ -17,7 +17,7 @@
 		"power" = isnull(cell) ? 0 : cell.charge,
 		"maxPower" = isnull(cell) ? 0 : cell.maxcharge,
 		"health" = get_integrity_percentage(),
-		"acceleration" = !isnull(drift_handler) ? drift_handler.drift_force : 0,
+		"acceleration" = !isnull(drift_handler) ? round(drift_handler.drift_force, 0.1) : 0,
 		"maxAcceleration" = max_speed,
 		"forcePerMove" = force_per_move,
 		"headlightsEnabled" = light_on,

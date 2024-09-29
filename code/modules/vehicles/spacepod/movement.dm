@@ -20,7 +20,7 @@
 	var/desired_speed = max_speed / 3 * 2
 	if(drift_handler.drift_force <= desired_speed || !COOLDOWN_FINISHED(src, passive_movement_cooldown)) //below 2/3rds or not actively accelerating
 		return
-	drift_handler.stabilize_drift(target_force = desired_speed, stabilization_force = 2 NEWTONS)
+	drift_handler.stabilize_drift(target_force = desired_speed, stabilization_force = 0.5 NEWTONS)
 
 /obj/vehicle/sealed/space_pod/has_gravity(turf/gravity_turf)
 	return FALSE // we need 0g to use space newtonian movement even onstation
