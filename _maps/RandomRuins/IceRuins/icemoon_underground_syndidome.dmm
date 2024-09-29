@@ -422,6 +422,7 @@
 /area/ruin/syndibiodome)
 "fI" = (
 /obj/structure/marker_beacon/purple,
+/obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "fM" = (
