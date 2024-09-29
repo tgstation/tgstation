@@ -37,7 +37,7 @@
 
 	new /obj/effect/temp_visual/heart(pet.loc)
 	SEND_SIGNAL(pet, COMSIG_ANIMAL_PET, petter, modifiers)
-	if(emote_message && prob(33)))
+	if(emote_message && prob(33))
 		pet.manual_emote(emote_message)
 	if(emote_name)
 		INVOKE_ASYNC(pet, TYPE_PROC_REF(/mob, emote), emote_name)
