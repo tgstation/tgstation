@@ -367,7 +367,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/desired_width = 0
 	if(zoom_value)
-		desired_width = round(view_size[1] * zoom_value * world.icon_size)
+		desired_width = round(view_size[1] * zoom_value * ICON_SIZE_X)
 	else
 
 		// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
