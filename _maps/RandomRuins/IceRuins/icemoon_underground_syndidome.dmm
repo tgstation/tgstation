@@ -1345,7 +1345,7 @@
 "ub" = (
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible,
 /obj/structure/curtain/bounty/start_closed,
-/turf/closed/indestructible/opsglass,
+/turf/open/space/basic,
 /area/ruin/syndibiodome)
 "ui" = (
 /obj/effect/decal/cleanable/blood/trails{
