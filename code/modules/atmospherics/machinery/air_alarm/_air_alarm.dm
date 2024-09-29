@@ -137,6 +137,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
+	if(connected_sensor)
+		disconnect_sensor()
+
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
@@ -201,14 +204,16 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
-		if(connected_sensor)
+		if(connected_sensor || sensor.connected_airalarm)
 			balloon_alert(user, "sensor already connected!")
 			return ITEM_INTERACT_BLOCKING
 
-		connect_sensor(multi_tool.buffer)
+		connect_sensor(sensor)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
 
@@ -690,16 +695,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	if(!sensor)
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
+	if(connected_sensor)
+		log_mapping("[src] at [AREACOORD(src)] tried to connect to more than one sensor!")
+		return
 	connect_sensor(sensor)
 
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
+	sensor.connected_airalarm = src
 	connected_sensor = sensor
+
 	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
 
 	// Transfer signal from air alarm to sensor
-	UnregisterSignal(src, COMSIG_TURF_EXPOSE)
-	RegisterSignal(connected_sensor, COMSIG_TURF_EXPOSE, PROC_REF(check_danger))
+	UnregisterSignal(loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
 
 	my_area = get_area(connected_sensor)
 
@@ -713,9 +723,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 
 	// Transfer signal from sensor to air alarm
-	UnregisterSignal(connected_sensor, COMSIG_TURF_EXPOSE)
-	RegisterSignal(src, COMSIG_TURF_EXPOSE, PROC_REF(check_danger))
+	UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
 
+	connected_sensor.connected_airalarm = null
 	connected_sensor = null
 	my_area = get_area(src)
 
