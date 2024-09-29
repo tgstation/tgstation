@@ -56,5 +56,5 @@
 		"wa", "wawa", "awa", "a"
 	)
 	icon = 'modular_doppler/languages/language.dmi'
-	icon_state = "movepeak"
+	icon_state = "movespeak"
 	default_priority = 93
