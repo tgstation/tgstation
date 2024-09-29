@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -240,7 +240,7 @@
 		var/movementdirection = REVERSE_DIR(direction)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 0.1 SECONDS)
 	else
-		user.newtonian_move(REVERSE_DIR(direction))
+		user.newtonian_move(dir2angle(REVERSE_DIR(direction)))
 
 	//Get all the turfs that can be shot at
 	var/turf/T = get_turf(interacting_with)

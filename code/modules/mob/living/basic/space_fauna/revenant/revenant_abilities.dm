@@ -135,7 +135,7 @@
 			human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES)
 
 		do_sparks(4, FALSE, human_mob)
-		playsound(human_mob, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		playsound(human_mob, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /datum/action/cooldown/spell/aoe/revenant/defile
