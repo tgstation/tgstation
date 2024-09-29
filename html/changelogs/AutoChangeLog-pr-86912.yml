@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes pulsing tumor failing to spawn the elite if no ghosts respond to the poll and leaving you in a bugged state, and possibly other related issues"

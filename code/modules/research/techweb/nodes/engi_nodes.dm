@@ -148,6 +148,13 @@
 		"light_tube",
 		"crossing_signal",
 		"guideway_sensor",
+		"manuunloader",
+		"manusmelter",
+		"manucrusher",
+		"manucrafter",
+		"manulathe",
+		"manusorter",
+		"manurouter",
 	)
 
 /datum/techweb_node/energy_manipulation
