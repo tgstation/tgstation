@@ -53,7 +53,7 @@
 
 		return TRUE
 
-	if(istype(the_target, /obj/vehicle/sealed)) //Targeting vs mechas+pods
+	if(issealedvehicle(the_target)) //Targeting vs sealed vehicles
 		var/obj/vehicle/sealed/M = the_target
 		for(var/occupant in M.occupants)
 			if(can_attack(living_mob, occupant)) //Can we attack any of the occupants?
