@@ -423,7 +423,7 @@
 	key_third_person = "smugs"
 	message = "grins smugly."
 
-/datum/emote/living/carbon/human/snore
+/datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
 	message = "snores."
