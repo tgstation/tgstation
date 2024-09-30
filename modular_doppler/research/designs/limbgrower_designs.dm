@@ -227,15 +227,6 @@
 		RND_CATEGORY_INITIAL,
 	)
 
-/datum/design/tail/synthetic
-	name = "Synthetic Tail"
-	id = "synthetictail"
-	build_path = /obj/item/organ/external/tail/synthetic
-	category = list(
-		RND_CATEGORY_LIMBS_OTHER,
-		RND_CATEGORY_INITIAL,
-	)
-
 /datum/design/tail/humanoid
 	name = "Humanoid Tail"
 	id = "humanoidtail"
