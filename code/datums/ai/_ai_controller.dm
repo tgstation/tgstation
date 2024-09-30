@@ -83,6 +83,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
 	our_cells = null
+	GLOB.unplanned_controllers[ai_status] -= src
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -314,10 +315,6 @@ multiple modular subtrees with behaviors
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
 
-	if(!length(current_behaviors) && idle_behavior)
-		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
-		return
-
 	if(current_movement_target)
 		if(!isatom(current_movement_target))
 			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
@@ -327,7 +324,6 @@ multiple modular subtrees with behaviors
 		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
 			CancelActions()
 			return
-
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
@@ -391,17 +387,24 @@ multiple modular subtrees with behaviors
 	//remove old status, if we've got one
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+		GLOB.unplanned_controllers[ai_status] -= src
 	stop_previous_processing()
 	ai_status = new_ai_status
 	GLOB.ai_controllers_by_status[new_ai_status] += src
+	if(ai_status == AI_STATUS_OFF)
+		CancelActions()
+		return
+	start_ai_processing()
+
+/datum/ai_controller/proc/start_ai_processing()
+	if(!length(current_behaviors))
+		GLOB.unplanned_controllers[ai_status] += src
+		return
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_IDLE)
 			START_PROCESSING(SSidle_ai_behaviors, src)
-			CancelActions()
-		if(AI_STATUS_OFF)
-			CancelActions()
 
 /datum/ai_controller/proc/stop_previous_processing()
 	switch(ai_status)
@@ -433,6 +436,7 @@ multiple modular subtrees with behaviors
 	if(!behavior.setup(arglist(arguments)))
 		return
 
+	var/should_exit_unplanned = !length(current_behaviors)
 	planned_behaviors[behavior] = TRUE
 	current_behaviors[behavior] = TRUE
 
@@ -445,6 +449,9 @@ multiple modular subtrees with behaviors
 	if(!(behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //this one blocks planning!
 		able_to_plan = FALSE
 
+	if(should_exit_unplanned)
+		exit_unplanned_mode()
+
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/check_able_to_plan()
@@ -456,6 +463,18 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
 	current_behaviors -= behavior
 	able_to_plan = check_able_to_plan()
+	if(!length(current_behaviors))
+		enter_unplanned_mode()
+
+/datum/ai_controller/proc/exit_unplanned_mode()
+	if(idle_behavior)
+		GLOB.unplanned_controllers[ai_status] -= src
+	start_ai_processing()
+
+/datum/ai_controller/proc/enter_unplanned_mode()
+	if(idle_behavior)
+		GLOB.unplanned_controllers[ai_status] += src
+	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)
