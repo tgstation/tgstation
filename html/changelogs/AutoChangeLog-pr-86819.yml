@@ -1,4 +1,0 @@
-author: "tonty"
-delete-after: True
-changes:
-  - code_imp: "made some code relating to the world's icon size more readable"

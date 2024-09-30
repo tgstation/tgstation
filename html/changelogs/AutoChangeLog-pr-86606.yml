@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - balance: "- Uncomplicated the Ragnarok arena. The center area's river has been muddied over, the bonfires have been made dense, the ants on the ground everywhere have been removed. The Warrior and Scribe have had their loadouts simplified."
-  - qol: "- The Rat'var Apostate's beakers are now named so people other than me can get the joke."
-  - bugfix: "- Unbreakable lattices are now actually unbreakable and can't be snipped into nothingness."
-  - bugfix: "- Added true invis walls to the edges of Lattice Battles. Moved spare rods to the pockets."
-  - bugfix: "- Species Warfare: Added no_smoothing to the funny, so it's actually hidden now."

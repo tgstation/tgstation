@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Light Eater now displays a quick attack animation when quenching un-attackable objects (like lamps, flashlights)"
-  - bugfix: "Light Eater animation for attacking light fixtures has been restored"

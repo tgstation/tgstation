@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed a series of small issues with bait preferences, fish growth, a small nit with the hunger bar in the fish analyzer UI, and fishing challenges aborting if double-clicking during the waiting phase."
-  - balance: "Fishing lures are a smidge easier to use. Fryish now takes less time to grow up."

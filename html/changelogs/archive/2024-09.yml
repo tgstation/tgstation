@@ -909,3 +909,45 @@
   vinylspiders:
   - bugfix: fixes pulsing tumor failing to spawn the elite if no ghosts respond to
       the poll and leaving you in a bugged state, and possibly other related issues
+2024-09-30:
+  00-Steven:
+  - bugfix: The trait that allows you to see the type of thing that's biting when
+      fishing actually shows it instead of just saying "fish!!!" for everything.
+  Ben10Omintrix:
+  - bugfix: hygeinebots are better at chasing unclean people
+  Ghommie:
+  - bugfix: Fixes fishing tips (from fishing toolboxes) being empty.
+  - bugfix: Fixed a series of small issues with bait preferences, fish growth, a small
+      nit with the hunger bar in the fish analyzer UI, and fishing challenges aborting
+      if double-clicking during the waiting phase.
+  - balance: Fishing lures are a smidge easier to use. Fryish now takes less time
+      to grow up.
+  Hardly:
+  - image: Resprited face scarf to be more GAGS friendly
+  Melbert:
+  - qol: Light Eater now displays a quick attack animation when quenching un-attackable
+      objects (like lamps, flashlights)
+  - bugfix: Light Eater animation for attacking light fixtures has been restored
+  SmArtKar:
+  - admin: Fixed VV DNA infusion tool
+  ZephyrTFA:
+  - refactor: Map Votes are now carried over between rounds. When a map vote is actually
+      a contest, the winning map will have its votes reset.
+  carlarctg:
+  - balance: '- Uncomplicated the Ragnarok arena. The center area''s river has been
+      muddied over, the bonfires have been made dense, the ants on the ground everywhere
+      have been removed. The Warrior and Scribe have had their loadouts simplified.'
+  - qol: '- The Rat''var Apostate''s beakers are now named so people other than me
+      can get the joke.'
+  - bugfix: '- Unbreakable lattices are now actually unbreakable and can''t be snipped
+      into nothingness.'
+  - bugfix: '- Added true invis walls to the edges of Lattice Battles. Moved spare
+      rods to the pockets.'
+  - bugfix: '- Species Warfare: Added no_smoothing to the funny, so it''s actually
+      hidden now.'
+  krookodilehunter:
+  - rscadd: Added more flowers to loadouts
+  mc-oofert:
+  - rscadd: added the manufacturing smelter,router,sorter,crafter,lathe,crusher,unloader
+  tonty:
+  - code_imp: made some code relating to the world's icon size more readable

@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "The trait that allows you to see the type of thing that's biting when fishing actually shows it instead of just saying \"fish!!!\" for everything."

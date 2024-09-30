@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - refactor: "Map Votes are now carried over between rounds. When a map vote is actually a contest, the winning map will have its votes reset."
