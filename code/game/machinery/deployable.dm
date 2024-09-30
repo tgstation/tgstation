@@ -135,9 +135,9 @@
 /obj/structure/barricade/sandbags/atom_deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/effect/decal/cleanable/dirt(Tsec)
-	if(prob(25))
+	if(prob(15))
 		new /obj/item/stack/sheet/mineral/emptysandbags(Tsec, 1)
-	else if(prob(30))
+	else if(prob(20))
 		new /obj/item/stack/sheet/cloth(Tsec, 1)
 
 /obj/structure/barricade/security
