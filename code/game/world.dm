@@ -399,10 +399,10 @@ GLOBAL_VAR(tracy_log)
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)
 			new_status += "<br><b>RESTARTING</b>"
-	if(SSmapping.config)
-		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
-	if(SSmapping.next_map_config)
-		new_status += "[SSmapping.config ? " | " : "<br>"]Next: <b>[SSmapping.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.next_map_config.map_name]</b>"
+	if(SSmapping.current_map)
+		new_status += "<br>Map: <b>[SSmapping.current_map.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.current_map.map_name]</b>"
+	if(SSmap_vote.next_map_config)
+		new_status += "[SSmapping.current_map ? " | " : "<br>"]Next: <b>[SSmap_vote.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmap_vote.next_map_config.map_name]</b>"
 
 	status = new_status
 

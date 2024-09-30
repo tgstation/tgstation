@@ -43,6 +43,9 @@
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
+	if(islist(soundin))
+		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
+
 	var/turf/turf_source = get_turf(source)
 
 	if (!turf_source || !soundin || !vol)
@@ -515,5 +518,11 @@
 			soundin = pick(
 				'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
 				'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
+			)
+		if(SFX_LIQUID_POUR)
+			soundin = pick(
+				'sound/effects/liquid_pour/liquid_pour1.ogg',
+				'sound/effects/liquid_pour/liquid_pour2.ogg',
+				'sound/effects/liquid_pour/liquid_pour3.ogg',
 			)
 	return soundin

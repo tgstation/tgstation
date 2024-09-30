@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Replaces the unusable blink spell on the Necromancer deathmatch kit with a nether portal summon."
