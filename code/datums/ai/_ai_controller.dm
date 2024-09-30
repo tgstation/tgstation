@@ -83,8 +83,6 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
 	our_cells = null
-	if(ai_status)
-		GLOB.unplanned_controllers[ai_status] -= src
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -286,6 +284,7 @@ multiple modular subtrees with behaviors
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+		GLOB.unplanned_controllers[ai_status] -= src
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
