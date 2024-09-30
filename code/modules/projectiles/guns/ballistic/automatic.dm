@@ -445,20 +445,19 @@
 	balloon_alert(user, "system reset.")
 
 /obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
-	if(!chambered)
-		return ..()
+	. = ..()
+	if(!chambered || chambered && !chambered.loaded_projectile)
+		return
 
 	if(shots_before_degradation)
 		shots_before_degradation --
-		return ..()
+		return
 
 	else if (emp_malfunction && degradation_stage == degradation_stage_max && !explosion_timer)
 		perform_emp_extreme_malfunction(user)
 
 	else
 		attempt_degradation(FALSE)
-
-	return ..()
 
 /// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)
