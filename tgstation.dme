@@ -711,6 +711,7 @@
 #include "code\controllers\subsystem\transport.dm"
 #include "code\controllers\subsystem\tts.dm"
 #include "code\controllers\subsystem\tutorials.dm"
+#include "code\controllers\subsystem\unplanned_ai_idle_controllers.dm"
 #include "code\controllers\subsystem\unplanned_controllers.dm"
 #include "code\controllers\subsystem\verb_manager.dm"
 #include "code\controllers\subsystem\vis_overlays.dm"
