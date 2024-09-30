@@ -23,10 +23,10 @@
 	user.changeNext_move(next_delay)
 
 	if(!tk_firing(user, fired_from))
-		user.newtonian_move(get_dir(target, user))
+		user.newtonian_move(get_angle(target, user), drift_force = newtonian_force)
 	else if(ismovable(fired_from))
 		var/atom/movable/firer = fired_from
-		if(!firer.newtonian_move(get_dir(target, fired_from), instant = TRUE))
+		if(!firer.newtonian_move(get_angle(target, fired_from), instant = TRUE, drift_force = newtonian_force))
 			var/throwtarget = get_step(fired_from, get_dir(target, fired_from))
 			firer.safe_throw_at(throwtarget, 1, 2)
 	update_appearance()

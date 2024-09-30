@@ -114,8 +114,8 @@
 		var/icon/teammate = render_preview_outfit(preview_outfit_behind)
 		teammate.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
 
-		final_icon.Blend(teammate, ICON_UNDERLAY, -world.icon_size / 4, 0)
-		final_icon.Blend(teammate, ICON_UNDERLAY, world.icon_size / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
+		final_icon.Blend(teammate, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	if (!isnull(nuke_icon_state))
 		var/icon/nuke = icon('icons/obj/machines/nuke.dmi', nuke_icon_state)

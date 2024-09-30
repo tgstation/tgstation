@@ -125,7 +125,7 @@
 			count++
 
 	if(members.len)
-		parts += "<span class='header'>The cultists were:</span>"
+		parts += span_header("The cultists were:")
 		if(length(true_cultists))
 			parts += printplayerlist(true_cultists)
 		else
