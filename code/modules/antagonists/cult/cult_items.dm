@@ -120,19 +120,23 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "hauntedblade"
 	inhand_icon_state = "hauntedblade"
 	worn_icon_state = "hauntedblade"
-	force = 35
-	throwforce = 35
+	force = 30
+	throwforce = 25
 	block_chance = 55
 	wound_bonus = -25
 	bare_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_HERETIC_GREEN
-	light_range = 4
+	light_range = 3
 	/// holder for the actual action when created.
-	var/datum/action/cooldown/spell/path_wielder_action
+	var/list/datum/action/cooldown/spell/path_sword_actions
+	/// holder for the actual action when created.
+	var/list/datum/action/cooldown/spell/path_wielder_actions
 	var/mob/living/trapped_entity
 	/// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
 	var/heretic_path
+	/// If the blade is bound, it cannot utilize its abilities, but neither can its wielder. They must unbind it to use it to its full potential.
+	var/bound = TRUE
 	/// Nested static list used to index abilities and names.
 	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
 		// Ash
@@ -190,6 +194,106 @@ Striking a noncultist, however, will tear their flesh."}
 			SWORD_PREFIX = "stillborn", // lol loser
 		) ,
 	)
+	actions_types = list(/datum/action/item_action/haunted_blade)
+
+/datum/action/item_action/haunted_blade
+	name = "Unseal Spirit" // img is of a chained shade
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "shade_sealed"
+
+/datum/action/item_action/haunted_blade/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
+	var/obj/item/melee/cultblade/haunted/blade = target
+	if(istype(blade))
+		button_icon_state = "shade_[blade.bound ? "sealed" : "unsealed"]"
+		name = "[blade.bound ? "Unseal" : "Seal"] Spirit"
+
+	return ..()
+
+/obj/item/melee/cultblade/haunted/ui_action_click(mob/living/user, actiontype)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return // gtfo
+	// if(IS_NORMIE())
+	var/list/binding_implements = list(/obj/item/book/bible)
+	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
+	var/list/chant_text = list("You start reading [bound ? "backwards" : "aloud"] the passage in [passage]...", "[user] starts reading [bound ? "backwards" : "aloud"] the passage in [passage]...")
+	var/delay_time = 12 SECONDS
+	if(user.mind?.holy_role)
+		binding_implements = null
+		chant_text = list("You begin chanting the holy hymns of [GLOB.deity][bound ? "backwards" : ""]...", "[user] begins chanting while holding [src] aloft...")
+		delay_time = 6 SECONDS
+	if(IS_CULTIST_OR_CULTIST_MOB(user))
+		binding_implements = list(/obj/item/melee/cultblade/dagger, /obj/item/melee/sickly_blade/cursed)
+		chant_text = list("You begin slicing open your palm on top of [src]...", "[user] begins slicing open [user.p_their()] palm on top of [src]...")
+		delay_time = 8 SECONDS
+	if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
+		// todo make the former a subtype of latter
+		binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
+		chant_text = list("You channel the Mansus through your focus, [bound ? "un" : ""]binding the spirit within...", "[user] holds up their eldritch focus on top of [src] and begins concentrating...")
+		delay_time = 6 SECONDS
+	if(IS_WIZARD(user))
+		binding_implements = null
+		chant_text = list("You begin quickly and nimbly casting the [bound ? "unseal" : "seal"]ing runes.", "[user] begins drawing magical runes on [src]...")
+		delay_time = 3 SECONDS
+
+	var/fail_text = "a " + type_english_list(binding_implements)
+	for(var/obj/thingy as anything in user.held_items)
+		if(binding_implements && is_type_in_list(thingy, binding_implements))
+			fail_text = null
+
+	if(fail_text)
+		to_chat(user, span_cult_bold("You need to be holding [fail_text] to [bound ? "unseal" : "seal"] the spirit within!"))
+		return
+
+	visible_message(span_cult_bold(chant_text[1]), span_cult_bold(chant_text[2]))
+	if(!do_after(user, delay_time, target = src))
+		return
+
+	if(bound)
+		unbind_blade(user)
+	else
+		rebind_blade(user)
+
+/obj/item/melee/cultblade/haunted/proc/unbind_blade(mob/user)
+	visible_message(span_danger("[user] has unbound [src]!"))
+	bound = FALSE
+	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
+		sword_spell.Grant(trapped_entity)
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell.Grant(user)
+	// grant buffs
+	force += 5 // turns into a 3-tap
+	armour_penetration += 10
+	throwforce += 10
+	block_chance += 16.66
+	wound_bonus += 25
+	bare_wound_bonus += 10
+	free_use = TRUE
+	light_range += 3
+	trapped_entity.update_mob_action_buttons()
+
+	playsound(src ,'sound/misc/insane_low_laugh.ogg', 200, TRUE) //quiet
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
+	visible_message(span_danger("[user] has bound [src]!"))
+	bound = TRUE
+	//undo buffs
+	force -= 5
+	armour_penetration -= 10
+	throwforce -= 10
+	block_chance -= 16.66
+	wound_bonus -= 25
+	bare_wound_bonus -= 10
+	free_use = FALSE // it's a cult blade and you sealed away the other power.
+	light_range -= 3
+	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
+		sword_spell.Remove(trapped_entity)
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell.Remove(user)
+	trapped_entity.update_mob_action_buttons()
+
+	playsound(src ,'sound/effects/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
+	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()
@@ -198,6 +302,8 @@ Striking a noncultist, however, will tear their flesh."}
 	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
 	if(do_bind && !mapload)
 		bind_soul(soul_to_bind, awakener)
+	binding_filters_update()
+	addtimer(CALLBACK(src, PROC_REF(start_glow_loop)), rand(0.1 SECONDS, 1.9 SECONDS))
 
 /obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
 
@@ -238,7 +344,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/datum/antagonist/soultrapped_heretic/bozo = new()
 	bozo.objectives |= copied_objectives
 	trapped_entity.mind.add_antag_datum(bozo)
-	to_chat(trapped_entity, span_userdanger("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may help the Cult, your current wielder, or even pester everyone with what few abilities you kept."))
 
 	// Assigning the spells to give to the wielder and spirit.
 	// Let them cast the given spell.
@@ -252,28 +357,65 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "[path_spells[SWORD_PREFIX]] [name]"
 
 
-	// Granting the path spells. The sword spirit gains it outright, while it's just instanced for wielders to be added on pickup.
+	// Creating the path spells.
+	// The sword is created bound - so we do not grant it the spells just yet, but we still create and store them.
 
 	if(sword_spells)
 		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
-			sword_spell = new sword_spell(trapped_entity)
-			sword_spell?.Grant(trapped_entity)
-			sword_spell?.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
-
+			var/datum/action/cooldown/spell/instanced_spell = new sword_spell(trapped_entity)
+			LAZYADD(path_sword_actions, instanced_spell)
+			instanced_spell.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
 
 	if(wielder_spells)
 		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
-			path_wielder_action = new wielder_spell(src)
-			wielder_spell?.overlay_icon_state = "bg_cult_border"
+			var/datum/action/cooldown/spell/instanced_spell = new wielder_spell(trapped_entity)
+			LAZYADD(path_wielder_actions, new wielder_spell(src))
+			instanced_spell.overlay_icon_state = "bg_cult_border"
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot & ITEM_SLOT_HANDS)
-		path_wielder_action?.Grant(user)
+	if((!(slot & ITEM_SLOT_HANDS)) || bound)
+		return
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell?.Grant(user)
+	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/dropped(mob/user, silent)
 	. = ..()
-	path_wielder_action?.Remove(user)
+	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
+		wielder_spell?.Remove(user)
+	binding_filters_update()
+
+/obj/item/melee/cultblade/haunted/proc/binding_filters_update(mob/user)
+
+	// on bound
+	if(bound)
+		glow_size = 1.5
+		add_filter("bind_glow", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
+		remove_filter("unbound_ray")
+		update_filters()
+	// on unbound
+	else
+		add_filter(name = "unbound_ray", priority = 1, params = list(
+			type = "rays",
+			size = 20,
+			color = COLOR_VOID_PURPLE,
+			density = 16
+		))
+		// This is re-animated on drop and pickup to reset the loop - otherwise the animation breaks
+		var/ray_filter = get_filter("unbound_ray")
+		animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
+		animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
+
+	update_filters()
+
+/obj/item/melee/cultblade/haunted/proc/start_glow_loop()
+	var/filter = get_filter("bind_glow")
+	if (!filter)
+		return
+
+	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+	animate(alpha = 40, time = 2.5 SECONDS)
 
 #undef WIELDER_SPELLS
 #undef SWORD_SPELLS
