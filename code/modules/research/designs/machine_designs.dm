@@ -1262,7 +1262,7 @@
 	name = /obj/machinery/power/manufacturing/lathe::name
 	desc = "The circuit board for this machine."
 	id = "manulathe"
-	build_path = /obj/machinery/power/manufacturing/lathe
+	build_path = /obj/item/circuitboard/machine/manulathe
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1272,7 +1272,7 @@
 	name = /obj/machinery/power/manufacturing/crafter::name
 	desc = "The circuit board for this machine."
 	id = "manucrafter"
-	build_path = /obj/machinery/power/manufacturing/crafter
+	build_path = /obj/item/circuitboard/machine/manucrafter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1282,7 +1282,7 @@
 	name = /obj/machinery/power/manufacturing/crusher::name
 	desc = "The circuit board for this machine."
 	id = "manucrusher"
-	build_path = /obj/machinery/power/manufacturing/crusher
+	build_path = /obj/item/circuitboard/machine/manucrusher
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1292,7 +1292,7 @@
 	name = /obj/machinery/power/manufacturing/router::name
 	desc = "The circuit board for this machine."
 	id = "manurouter"
-	build_path = /obj/machinery/power/manufacturing/router
+	build_path = /obj/item/circuitboard/machine/manurouter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1302,7 +1302,7 @@
 	name = /obj/machinery/power/manufacturing/sorter::name
 	desc = "The circuit board for this machine."
 	id = "manusorter"
-	build_path = /obj/machinery/power/manufacturing/sorter
+	build_path = /obj/item/circuitboard/machine/manusorter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1312,7 +1312,7 @@
 	name = /obj/machinery/power/manufacturing/unloader::name
 	desc = "The circuit board for this machine."
 	id = "manuunloader"
-	build_path = /obj/machinery/power/manufacturing/unloader
+	build_path = /obj/item/circuitboard/machine/manuunloader
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -1322,7 +1322,7 @@
 	name = /obj/machinery/power/manufacturing/smelter::name
 	desc = "The circuit board for this machine."
 	id = "manusmelter"
-	build_path = /obj/machinery/power/manufacturing/smelter
+	build_path = /obj/item/circuitboard/machine/manusmelter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
