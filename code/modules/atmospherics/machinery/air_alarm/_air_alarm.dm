@@ -139,7 +139,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(my_area)
 		my_area = null
 	if(connected_sensor)
-		disconnect_sensor()
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+		UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+		connected_sensor.connected_airalarm = null
+		connected_sensor = null
 
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
