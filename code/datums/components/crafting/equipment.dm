@@ -216,12 +216,12 @@
 	)
 	category = CAT_EQUIPMENT
 
-/datum/crafting_recipe/sandbag
-	name = "Filled Sandbag"
+/datum/crafting_recipe/sandbags
+	name = "Filled Sandbags"
 	result = /obj/item/stack/sheet/mineral/sandbags
 	reqs = list(
 		/obj/item/stack/ore/glass = 1,
-		/obj/item/stack/sheet/mineral/emptysandbag = 1,
+		/obj/item/stack/sheet/mineral/emptysandbags = 1,
 	)
 	category = CAT_EQUIPMENT
 

@@ -55,8 +55,12 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
-	icon_state = "sandbags"
+	desc = "A stack of filled sandbags, ready to be piled up defensively."
+	icon_state = "sandbag-pile"
 	singular_name = "sandbag"
+	inhand_icon_state = "sandbag-pile"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	layer = LOW_ITEM_LAYER
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/sandbags
@@ -69,18 +73,21 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += GLOB.sandbag_recipes
 
-/obj/item/stack/sheet/mineral/emptysandbag
+/obj/item/stack/sheet/mineral/emptysandbags
 	name = "empty sandbags"
 	singular_name = "empty sandbag"
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/stack_objects.dmi'
-	icon_state = "sandbag"
+	icon_state = "sandbag-stack"
+	inhand_icon_state = "sandbag-stack"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stack/sheet/mineral/emptysandbag/fifty
+/obj/item/stack/sheet/mineral/emptysandbags/fifty
 	amount = 50
 
-/obj/item/stack/sheet/mineral/emptysandbag/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/mineral/emptysandbags/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
@@ -98,20 +105,6 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 			to_chat(user, span_warning("You need at least one piece of sand to fill an empty sandbag!"))
 		return
 	return ..()
-
-
-//000
-//obj/structure/bookcase/atom_deconstruct(disassembled = TRUE)
-//	var/atom/Tsec = drop_location()
-///	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
-//	for(var/obj/item/I in contents)
-//		if(!isbook(I)) //Wake me up inside
-//			continue
-//		I.forceMove(Tsec)
-///
-//prob(50) empty sandbag
-
-
 
 /*
  * Diamond

@@ -115,7 +115,7 @@
 
 /obj/structure/barricade/sandbags
 	name = "sandbags"
-	desc = "Bags of sand. Self explanatory."
+	desc = "Bags of sand. Rated #1 cover for gunfire since 1914."
 	icon = 'icons/obj/smooth_structures/sandbags.dmi'
 	icon_state = "sandbags-0"
 	base_icon_state = "sandbags"
@@ -131,6 +131,14 @@
 	. = ..()
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
+
+/obj/structure/barricade/sandbags/atom_deconstruct(disassembled = TRUE)
+	var/atom/Tsec = drop_location()
+	new /obj/effect/decal/cleanable/dirt(Tsec)
+	if(prob(25))
+		new /obj/item/stack/sheet/mineral/emptysandbags(Tsec, 1)
+	else if(prob(30))
+		new /obj/item/stack/sheet/cloth(Tsec, 1)
 
 /obj/structure/barricade/security
 	name = "security barrier"

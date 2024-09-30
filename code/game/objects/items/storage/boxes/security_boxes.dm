@@ -226,7 +226,7 @@
 
 /obj/item/storage/box/emptysandbags/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/stack/sheet/mineral/emptysandbag/fifty(src)
+		new /obj/item/stack/sheet/mineral/emptysandbags/fifty(src)
 
 /obj/item/storage/box/holy_grenades
 	name = "box of holy hand grenades"
