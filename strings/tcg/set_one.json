@@ -796,7 +796,7 @@
 			"id": "miningborg",
 			"name": "Cyborg (Mining Shell)",
 			"desc": "Fitted with a drill and tracks, the Mining Shell is designed to hold up to the rigors of mining, be that on the hellish surface of Indecipheres, or in the silent vacuum of the asteroid belt.",
-			"rules": "{$Asimov} At the start of your turn: Tap: Gain 2 mana.",
+			"rules": "{$Asimov} At the start of your turn: Tap: Gain 2 plasma.",
 			"icon_state": "borg_miner",
 			"power": "3",
 			"resolve": "2",
