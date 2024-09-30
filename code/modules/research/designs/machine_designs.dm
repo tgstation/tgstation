@@ -1259,7 +1259,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/manulathe
-	name = /obj/machinery/power/manufacturing/lathe::name
+	name = "Manufacturing Lathe Board"
 	desc = "The circuit board for this machine."
 	id = "manulathe"
 	build_path = /obj/item/circuitboard/machine/manulathe
@@ -1269,7 +1269,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manucrafter
-	name = /obj/machinery/power/manufacturing/crafter::name
+	name = "Manufacturing Assembling Machine Board"
 	desc = "The circuit board for this machine."
 	id = "manucrafter"
 	build_path = /obj/item/circuitboard/machine/manucrafter
@@ -1279,7 +1279,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manucrusher
-	name = /obj/machinery/power/manufacturing/crusher::name
+	name = "Manufacturing Crusher Board"
 	desc = "The circuit board for this machine."
 	id = "manucrusher"
 	build_path = /obj/item/circuitboard/machine/manucrusher
@@ -1289,7 +1289,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manurouter
-	name = /obj/machinery/power/manufacturing/router::name
+	name = "Manufacturing Router Board"
 	desc = "The circuit board for this machine."
 	id = "manurouter"
 	build_path = /obj/item/circuitboard/machine/manurouter
@@ -1299,7 +1299,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manusorter
-	name = /obj/machinery/power/manufacturing/sorter::name
+	name = "Conveyor Sort-Router Board"
 	desc = "The circuit board for this machine."
 	id = "manusorter"
 	build_path = /obj/item/circuitboard/machine/manusorter
@@ -1309,7 +1309,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manuunloader
-	name = /obj/machinery/power/manufacturing/unloader::name
+	name = "Manufacturing Crate Unloader Board"
 	desc = "The circuit board for this machine."
 	id = "manuunloader"
 	build_path = /obj/item/circuitboard/machine/manuunloader
@@ -1319,7 +1319,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/manusmelter
-	name = /obj/machinery/power/manufacturing/smelter::name
+	name = "Manufacturing Smelter Board"
 	desc = "The circuit board for this machine."
 	id = "manusmelter"
 	build_path = /obj/item/circuitboard/machine/manusmelter
