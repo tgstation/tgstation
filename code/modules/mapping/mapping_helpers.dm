@@ -415,6 +415,7 @@
 /obj/effect/mapping_helpers/airalarm/link
 	name = "airalarm link helper"
 	icon_state = "airalarm_link_helper"
+	late = TRUE
 	var/chamber_id = ""
 	var/allow_link_change = FALSE
 
@@ -423,7 +424,6 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/airalarm/link/LateInitialize(mapload)
 	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
