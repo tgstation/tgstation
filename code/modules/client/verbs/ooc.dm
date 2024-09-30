@@ -456,3 +456,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "Server"
+	to_chat(mob, SSmap_vote.tally_printout)
