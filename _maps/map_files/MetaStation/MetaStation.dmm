@@ -48493,7 +48493,7 @@
 /area/station/medical/virology)
 "rgH" = (
 /obj/docking_port/stationary/laborcamp_home{
-	dir = 8
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space)
@@ -95711,7 +95711,7 @@ aaa
 aaa
 aaa
 aaa
-rgH
+aaa
 aaa
 aaa
 aaa
@@ -96225,7 +96225,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+rgH
 aaa
 aaa
 aaa
