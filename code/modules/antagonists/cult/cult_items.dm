@@ -260,14 +260,9 @@ Striking a noncultist, however, will tear their flesh."}
 		sword_spell.Grant(trapped_entity)
 	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
 		wielder_spell.Grant(user)
-	// grant buffs
-	force += 5 // turns into a 3-tap
-	armour_penetration += 10
-	throwforce += 10
-	block_chance += 16.66
-	wound_bonus += 25
-	bare_wound_bonus += 10
 	free_use = TRUE
+	force += 5
+	armour_penetration += 10
 	light_range += 3
 	trapped_entity.update_mob_action_buttons()
 
@@ -277,13 +272,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
 	visible_message(span_danger("[user] has bound [src]!"))
 	bound = TRUE
-	//undo buffs
 	force -= 5
 	armour_penetration -= 10
-	throwforce -= 10
-	block_chance -= 16.66
-	wound_bonus -= 25
-	bare_wound_bonus -= 10
 	free_use = FALSE // it's a cult blade and you sealed away the other power.
 	light_range -= 3
 	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
@@ -390,7 +380,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// on bound
 	if(bound)
-		glow_size = 1.5
 		add_filter("bind_glow", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
 		remove_filter("unbound_ray")
 		update_filters()
