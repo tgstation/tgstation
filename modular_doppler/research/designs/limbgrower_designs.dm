@@ -47,7 +47,7 @@
 
 /datum/design/ears/cat
 	name = "Cat Ears, Variety"
-	id = "catears"
+	id = "catearsvariety"
 	build_path = /obj/item/organ/internal/ears/cat
 	category = list(
 		SPECIES_HUMAN,
@@ -154,20 +154,13 @@
 	)
 
 /datum/design/tail
-	name = "Monkey Tails, Variety"
-	id = "monkeytail"
-	build_path = /obj/item/organ/external/tail/monkey
-	category = list(
-		SPECIES_HUMAN,
-		RND_CATEGORY_INITIAL,
-	)
-
-/datum/design/tail/mouse
 	name = "Mouse Tail"
 	id = "mousetail"
+	build_type = LIMBGROWER
 	build_path = /obj/item/organ/external/tail/mouse
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -176,7 +169,7 @@
 	id = "dogtail"
 	build_path = /obj/item/organ/external/tail/dog
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -185,7 +178,7 @@
 	id = "foxtail"
 	build_path = /obj/item/organ/external/tail/fox
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -194,7 +187,7 @@
 	id = "bunnytail"
 	build_path = /obj/item/organ/external/tail/bunny
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -203,7 +196,7 @@
 	id = "birdtail"
 	build_path = /obj/item/organ/external/tail/bird
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -212,7 +205,7 @@
 	id = "bugtail"
 	build_path = /obj/item/organ/external/tail/bug
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -221,7 +214,7 @@
 	id = "deertail"
 	build_path = /obj/item/organ/external/tail/deer
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -230,7 +223,7 @@
 	id = "fishtail"
 	build_path = /obj/item/organ/external/tail/fish
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -239,7 +232,7 @@
 	id = "synthetictail"
 	build_path = /obj/item/organ/external/tail/synthetic
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
 
@@ -248,6 +241,6 @@
 	id = "humanoidtail"
 	build_path = /obj/item/organ/external/tail/humanoid
 	category = list(
-		SPECIES_HUMAN,
+		RND_CATEGORY_LIMBS_OTHER,
 		RND_CATEGORY_INITIAL,
 	)
