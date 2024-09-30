@@ -76,6 +76,9 @@
 
 	return TRUE
 
+/datum/id_trim/job/find_job()
+	return job
+
 /datum/id_trim/job/assistant
 	assignment = JOB_ASSISTANT
 	trim_state = "trim_assistant"

@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
-	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	playsound(victim, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
 		sword.balloon_alert(user, "exorcising...")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+		playsound(src,'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 4 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			new /obj/item/nullrod/nullblade(get_turf(sword))
@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate
-	name = "Syndicate Tome"
+	name = "syndicate tome"
 	desc = "A very ominous tome resembling a bible."
 	icon_state ="ebook"
 	item_flags = NO_BLOOD_ON_ITEM
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	throw_range = 7
 	throwforce = 18
 	force = 18
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
 	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curses", "smites")

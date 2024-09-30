@@ -8,8 +8,8 @@
 			"wags their tail against",
 			"playfully leans against"
 		),
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/raptor/baby_raptor),
 		BB_MAX_CHILDREN = 5,
@@ -23,7 +23,7 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/heal_raptors,
 		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
@@ -41,19 +41,13 @@
 	RegisterSignal(new_pawn, COMSIG_MOB_ATE, PROC_REF(post_eat))
 
 /datum/ai_controller/basic_controller/raptor/proc/post_eat()
+	SIGNAL_HANDLER
 	clear_blackboard_key(BB_RAPTOR_TROUGH_TARGET)
 	set_blackboard_key(BB_RAPTOR_EAT_COOLDOWN, world.time + NEXT_EAT_COOLDOWN)
 
-/datum/targeting_strategy/basic/raptor
-
-//dont attack anyone that shares our factions.
-/datum/targeting_strategy/basic/raptor/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
-	. = ..()
-	return .
-
 /datum/ai_controller/basic_controller/baby_raptor
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/raptor),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/raptor/baby_raptor),
 	)

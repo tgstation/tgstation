@@ -250,7 +250,7 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 		if(!custom_icon_state)
 			return
 
-		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name")
+		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name", max_length = MAX_NAME_LEN)
 
 		delusion_args += list(
 			custom_icon_file = custom_icon_file,

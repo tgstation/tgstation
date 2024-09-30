@@ -83,8 +83,10 @@
 	var/equip_sound
 	///Sound uses when picking the item up (into your hands)
 	var/pickup_sound
-	///Sound uses when dropping the item, or when its thrown.
+	///Sound uses when dropping the item, or when its thrown if a thrown sound isn't specified.
 	var/drop_sound
+	///Sound used on impact when the item is thrown.
+	var/throw_drop_sound
 	///Do the drop and pickup sounds vary?
 	var/sound_vary = FALSE
 	///Whether or not we use stealthy audio levels for this item's attack sounds
@@ -266,7 +268,7 @@
 
 	if(!hitsound)
 		if(damtype == BURN)
-			hitsound = 'sound/items/welder.ogg'
+			hitsound = 'sound/items/tools/welder.ogg'
 		if(damtype == BRUTE)
 			hitsound = SFX_SWING_HIT
 
@@ -633,7 +635,7 @@
 /obj/item/attack_alien(mob/user, list/modifiers)
 	var/mob/living/carbon/alien/ayy = user
 
-	if(!user.can_hold_items(src))
+	if(!ayy.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
 			ayy.dropItemToGround(src)
 		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
@@ -852,7 +854,10 @@
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
-		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
+		if(throw_drop_sound)
+			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+			return
+		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
@@ -861,9 +866,9 @@
 		else if(hitsound)
 			playsound(hit_atom, hitsound, volume, TRUE, -1)
 		else
-			playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
 	else
-		playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1796,8 +1801,8 @@
 	var/list/special_identifier = identifier
 	switch(special_identifier[FISH_BAIT_TYPE])
 		if(FISH_BAIT_FOODTYPE)
-			var/obj/item/food/food_bait = bait
-			return istype(food_bait) && food_bait.foodtypes & special_identifier[FISH_BAIT_VALUE]
+			var/datum/component/edible/edible = bait.GetComponent(/datum/component/edible)
+			return edible?.foodtypes & special_identifier[FISH_BAIT_VALUE]
 		if(FISH_BAIT_REAGENT)
 			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
 		else

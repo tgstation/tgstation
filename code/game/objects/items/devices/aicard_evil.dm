@@ -102,13 +102,13 @@
 	else
 		AI = locate() in A
 	if(!AI || AI.interaction_range == INFINITY)
-		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
+		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
 		return ..()
 	AI.interaction_range += 2
 	if(AI.interaction_range > 7)
 		AI.interaction_range = INFINITY
-	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
 	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
 	qdel(src)

@@ -204,7 +204,7 @@
 		target.equip_to_slot_if_possible(new_patch, ITEM_SLOT_EYES, disable_warning = TRUE)
 
 	to_chat(user, span_notice("You successfully extract [target]'s eyeballs."))
-	playsound(target, 'sound/surgery/retractor2.ogg', 100, TRUE)
+	playsound(target, 'sound/items/handling/surgery/retractor2.ogg', 100, TRUE)
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))

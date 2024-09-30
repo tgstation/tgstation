@@ -2371,12 +2371,6 @@
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"aJj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/service/library)
 "aJm" = (
 /obj/structure/cable,
 /obj/machinery/door/window/left/directional/east{
@@ -38494,6 +38488,7 @@
 	pixel_y = 32;
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
+	idSelf = "virology_airlock_control";
 	interior_airlock = "virology_airlock_control";
 	name = "Virology Access Controller";
 	req_access = list("virology")
@@ -257788,7 +257783,7 @@ qMm
 hUD
 pyJ
 lPh
-aJj
+hUD
 hUD
 ebb
 cYE
