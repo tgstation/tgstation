@@ -59,7 +59,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent/air alarm or reset its ports")
+	. += span_notice("Use a multitool to link it to an injector, vent, or air alarm, or reset its ports.")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
