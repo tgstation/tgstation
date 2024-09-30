@@ -9071,6 +9071,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "dmK" = (
@@ -20058,13 +20059,11 @@
 /turf/open/floor/plating,
 /area/station/medical/morgue)
 "hjH" = (
-/obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/effect/turf_decal/stripes/line{
+/obj/docking_port/stationary/laborcamp_home{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/station/security/execution/transfer)
+/turf/open/space/basic,
+/area/space)
 "hjS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37786,6 +37785,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "nsT" = (
@@ -42959,7 +42959,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "pkT" = (
@@ -48492,11 +48491,12 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "rgH" = (
-/obj/docking_port/stationary/laborcamp_home{
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating,
+/area/station/security/execution/transfer)
 "rgS" = (
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 1
@@ -59036,7 +59036,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "uNd" = (
@@ -95192,12 +95191,12 @@ aaa
 sIe
 gkn
 ehZ
-gkn
-hjH
-gkn
-mqQ
 jTZ
 jXM
+gkn
+mqQ
+gkn
+rgH
 ehZ
 jLw
 aaa
@@ -95707,7 +95706,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+hjH
 aaa
 aaa
 aaa
@@ -96225,7 +96224,7 @@ aaa
 aaa
 aaa
 aaa
-rgH
+aaa
 aaa
 aaa
 aaa
