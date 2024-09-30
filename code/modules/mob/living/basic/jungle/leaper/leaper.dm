@@ -23,7 +23,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = NONE
 	lighting_cutoff_red = 5
@@ -33,8 +33,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/leaper
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
-	shadow_type = SHADOW_LARGE
-
 	///appearance when we dead
 	var/mutable_appearance/dead_overlay
 	///appearance when we are alive

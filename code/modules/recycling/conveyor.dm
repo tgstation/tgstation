@@ -34,15 +34,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/flipped = FALSE
 	/// Are we currently conveying items?
 	var/conveying = FALSE
-	//Direction -> if we have a conveyor belt in that direction
+	///Direction -> if we have a conveyor belt in that direction
 	var/list/neighbors
+	/// are we operating in wire power mode
+	var/wire_mode = FALSE
+	/// weakref to attached cable if wire mode
+	var/datum/weakref/attached_wire_ref
 
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_TURF_IGNORE_SLOWDOWN)))
 	register_context()
-
 	if(new_dir)
 		setDir(new_dir)
 	if(new_id)
@@ -58,6 +61,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
+	if(wire_mode)
+		update_cable()
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
@@ -66,6 +72,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. += "\nLeft-click with a <b>wrench</b> to rotate."
 	. += "Left-click with a <b>screwdriver</b> to invert its direction."
 	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
+	. += "Left-click with a <b>multitool</b> to toggle whether this conveyor receives power via cable. Toggling connects and disconnects."
 	. += "Using another <b>conveyor belt assembly</b> on this will place a <b>new conveyor belt<b> in the direction this one is pointing."
 
 /obj/machinery/conveyor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -79,6 +86,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
 		context[SCREENTIP_CONTEXT_RMB] = "Flip conveyor belt"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL)
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle conveyor belt wire mode"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/conveyor/centcom_auto
@@ -118,6 +128,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/Destroy()
 	set_operating(FALSE)
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
+	attached_wire_ref = null
 	return ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
@@ -295,7 +306,16 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		inverted = !inverted
 		update_move_direction()
 		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
-
+	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
+		attacking_item.play_tool_sound(src)
+		wire_mode = !wire_mode
+		update_cable()
+		power_change()
+		if(wire_mode)
+			START_PROCESSING(SSmachines, src)
+		else
+			STOP_PROCESSING(SSmachines, src)
+		to_chat(user, span_notice("You set [src]'s wire mode [wire_mode ? "on" : "off"]."))
 	else if(istype(attacking_item, /obj/item/stack/conveyor))
 		// We should place a new conveyor belt machine on the output turf the conveyor is pointing to.
 		var/turf/target_turf = get_step(get_turf(src), forwards)
@@ -309,7 +329,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		belt_item.use(1)
 		new /obj/machinery/conveyor(target_turf, forwards, id)
 
-	else if(!user.combat_mode)
+	else if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		user.transferItemToLoc(attacking_item, drop_location())
 	else
 		return ..()
@@ -334,9 +354,50 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	user.Move_Pulled(src)
 
+/obj/machinery/conveyor/powered(chan = power_channel, ignore_use_power = FALSE)
+	if(!wire_mode)
+		return ..()
+	var/datum/powernet/powernet = get_powernet()
+	if(!isnull(powernet))
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail) >= active_power_usage
+	return ..()
+
 /obj/machinery/conveyor/power_change()
 	. = ..()
 	update()
+
+/obj/machinery/conveyor/process()
+	if(!wire_mode)
+		return PROCESS_KILL
+	if(isnull(attached_wire_ref))
+		update_cable()
+		return
+	var/datum/powernet/powernet = get_powernet()
+	if(isnull(powernet))
+		return
+	if(powered())
+		powernet.load += active_power_usage
+	else
+		power_change()
+
+
+/obj/machinery/conveyor/proc/update_cable()
+	if(!wire_mode)
+		attached_wire_ref = null
+		return
+	var/turf/our_turf = get_turf(src)
+	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in our_turf)
+	if(attached_wire_ref)
+		return power_change()
+
+/obj/machinery/conveyor/proc/get_powernet()
+	if(!wire_mode)
+		return
+	var/obj/structure/cable/cable = attached_wire_ref.resolve()
+	if(isnull(cable))
+		attached_wire_ref = null
+		return
+	return cable.powernet
 
 // Conveyor switch
 /obj/machinery/conveyor_switch
@@ -434,6 +495,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
 /obj/machinery/conveyor_switch/proc/update_position(direction)
 	if(position == CONVEYOR_OFF)
+		playsound(src, 'sound/machines/lever/lever_start.ogg', 40, TRUE)
+
 		if(oneway)   //is it a oneway switch
 			position = oneway
 		else
@@ -442,6 +505,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			else
 				position = CONVEYOR_BACKWARDS
 	else
+		playsound(src, 'sound/machines/lever/lever_stop.ogg', 40, TRUE)
 		position = CONVEYOR_OFF
 
 /obj/machinery/conveyor_switch/proc/on_user_activation(mob/user, direction)
@@ -603,7 +667,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/use(used, transfer, check)
 	. = ..()
-	playsound(src, 'sound/weapons/genhit.ogg', 30, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 30, TRUE)
 
 /obj/item/stack/conveyor/thirty
 	amount = 30

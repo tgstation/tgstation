@@ -153,12 +153,12 @@
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ACTION_HANDLED (1<<0)
 
 /// Sent from obj/item/item_action_slot_check(): (mob/user, datum/action, slot)
 #define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
-	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	/// Return to prevent the default behavior (attack_selfing) from occurring.
 	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
@@ -194,6 +194,8 @@
 #define COMSIG_TOOL_IN_USE "tool_in_use"
 ///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 #define COMSIG_TOOL_START_USE "tool_start_use"
+/// From /obj/item/multitool/remove_buffer(): (buffer)
+#define COMSIG_MULTITOOL_REMOVE_BUFFER "multitool_remove_buffer"
 ///from [/obj/item/proc/disableEmbedding]:
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"
 ///from [/obj/effect/mine/proc/triggermine]:
@@ -415,10 +417,8 @@
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED "projectile_on_spawn_embedded"
-
-/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
-#define COMSIG_HIT_BY_SABOTEUR "hit_by_saboteur"
-	#define COMSIG_SABOTEUR_SUCCESS (1<<0)
+///sent to the projectile when successfully embedding into something
+#define COMSIG_PROJECTILE_ON_EMBEDDED "projectile_on_embedded"
 
 // /obj/vehicle/sealed/car/vim signals
 

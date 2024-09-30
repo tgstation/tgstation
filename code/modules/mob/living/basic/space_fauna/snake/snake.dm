@@ -1,6 +1,5 @@
 
 /mob/living/basic/snake
-	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "snake"
 	desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
 	icon_state = "snake"
@@ -14,13 +13,12 @@
 	melee_damage_upper = 6
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	shadow_offset_y = 5
 	//how many units of venom are injected in target per attack
 	var/venom_dose = 4
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	response_help_continuous = "pets"

@@ -25,8 +25,7 @@
 	if(ismob(the_target)) //Target is in godmode, ignore it.
 		if(living_mob.loc == the_target)
 			return FALSE // We've either been eaten or are shapeshifted, let's assume the latter because we're still alive
-		var/mob/M = the_target
-		if(M.status_flags & GODMODE)
+		if(HAS_TRAIT(the_target, TRAIT_GODMODE))
 			return FALSE
 
 	if (vision_range && get_dist(living_mob, the_target) > vision_range)
@@ -87,6 +86,21 @@
 	if(isitem(the_target))
 		// trust fall exercise
 		return TRUE
+
+/datum/targeting_strategy/basic/require_traits
+
+/datum/targeting_strategy/basic/require_traits/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/list/required_traits = living_mob.ai_controller.blackboard[BB_TARGET_ONLY_WITH_TRAITS]
+	if (!length(required_traits))
+		return TRUE
+
+	for (var/trait as anything in required_traits)
+		if (HAS_TRAIT(the_target, trait))
+			return TRUE
+	return FALSE
 
 /// Subtype which searches for mobs of a size relative to ours
 /datum/targeting_strategy/basic/of_size

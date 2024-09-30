@@ -28,7 +28,7 @@
 	name = "Shock Touch"
 	desc = "Channel electricity to your hand to shock people with."
 	button_icon_state = "zap"
-	sound = 'sound/weapons/zapbang.ogg'
+	sound = 'sound/items/weapons/zapbang.ogg'
 	cooldown_time = 12 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -51,7 +51,7 @@
 /datum/action/cooldown/spell/touch/shock/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.electrocute_act(15, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesnt stun. never let this stun
+		if(carbon_victim.electrocute_act(15, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesn't stun. never let this stun
 			carbon_victim.dropItemToGround(carbon_victim.get_active_held_item())
 			carbon_victim.dropItemToGround(carbon_victim.get_inactive_held_item())
 			carbon_victim.adjust_confusion(15 SECONDS)
@@ -117,7 +117,7 @@
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	cooldown_time = 12 SECONDS
 	school = SCHOOL_RESTORATION
 	invocation_type = INVOCATION_NONE
@@ -156,7 +156,7 @@
 	heal_multiplier = initial(heal_multiplier) * power_coefficient
 	pain_multiplier = initial(pain_multiplier) * synchronizer_coefficient
 
-	// Message to show on a succesful heal if the healer has a special pacifism interaction with the mutation.
+	// Message to show on a successful heal if the healer has a special pacifism interaction with the mutation.
 	var/peaceful_message = null
 
 	// Heal more, hurt a bit more.
@@ -340,7 +340,7 @@
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"
-	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference. if you get it youre cool
+	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference. if you get it you're cool
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "greyscale"
 	color = COLOR_VERY_PALE_LIME_GREEN

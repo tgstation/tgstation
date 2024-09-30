@@ -221,7 +221,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing Toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -236,6 +236,12 @@
 	desc = "Set of various fishing lines."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/storage/box/fishing_lines)
+
+/datum/supply_pack/goody/fishing_lure_set
+	name = "Fishing Lures Set"
+	desc = "A set of bite-resistant fishing lures to fish all (most) sort of fish. Beat randomness to a curb today!"
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/storage/box/fishing_lures)
 
 /datum/supply_pack/goody/fishing_hook_rescue
 	name = "Rescue Fishing Hook Single-Pack"
@@ -252,7 +258,7 @@
 /datum/supply_pack/goody/fish_feed
 	name = "Can of Fish Food Single-Pack"
 	desc = "For keeping your little friends fed and alive."
-	cost = PAYCHECK_CREW * 1
+	cost = PAYCHECK_CREW
 	contains = list(/obj/item/fish_feed)
 
 /datum/supply_pack/goody/naturalbait

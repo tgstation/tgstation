@@ -90,8 +90,6 @@
 	if(isnull(.))
 		return
 	recalculate_directional_opacity()
-	// Need this for split vis stuff
-	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /atom/proc/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj)
 	if(!duration)
@@ -203,8 +201,8 @@
 	var/list/hand_back
 	if(!(get_offset.light_flags & LIGHT_IGNORE_OFFSET))
 		hand_back = get_visual_offset(get_offset)
-		hand_back[1] = -hand_back[1] / world.icon_size
-		hand_back[2] = -hand_back[2] / world.icon_size
+		hand_back[1] = -hand_back[1] / ICON_SIZE_X
+		hand_back[2] = -hand_back[2] / ICON_SIZE_Y
 	else
 		hand_back = list(0, 0)
 

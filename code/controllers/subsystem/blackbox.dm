@@ -152,6 +152,8 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "centcom")
 		if(FREQ_AI_PRIVATE)
 			record_feedback("tally", "radio_usage", 1, "ai private")
+		if(FREQ_ENTERTAINMENT)
+			record_feedback("tally", "radio_usage", 1, "entertainment")
 		if(FREQ_CTF_RED)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
 		if(FREQ_CTF_BLUE)
@@ -355,7 +357,7 @@ Versioning
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
 		"suicide" = did_they_suicide,
-		"map" = SSmapping.config.map_name,
+		"map" = SSmapping.current_map.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,

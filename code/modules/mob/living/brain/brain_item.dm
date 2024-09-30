@@ -8,7 +8,7 @@
 	layer = ABOVE_MOB_LAYER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL | ORGAN_PROMINENT
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -257,6 +257,26 @@
 			return span_info("You can feel the small spark of life still left in this one.")
 	else
 		return span_info("This one is completely devoid of life.")
+
+/obj/item/organ/internal/brain/get_status_appendix(advanced, add_tooltips)
+	var/list/trauma_text
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		var/trauma_desc = ""
+		switch(trauma.resilience)
+			if(TRAUMA_RESILIENCE_BASIC)
+				trauma_desc = conditional_tooltip("Mild ", "Repair via brain surgery or medication such as [/datum/reagent/medicine/neurine::name].", add_tooltips)
+			if(TRAUMA_RESILIENCE_SURGERY)
+				trauma_desc = conditional_tooltip("Severe ", "Repair via brain surgery.", add_tooltips)
+			if(TRAUMA_RESILIENCE_LOBOTOMY)
+				trauma_desc = conditional_tooltip("Deep-rooted ", "Repair via Lobotomy.", add_tooltips)
+			if(TRAUMA_RESILIENCE_WOUND)
+				trauma_desc = conditional_tooltip("Fracture-derived ", "Repair via treatment of wounds afflicting the head.", add_tooltips)
+			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+				trauma_desc = conditional_tooltip("Permanent ", "Irreparable under normal circumstances.", add_tooltips)
+		trauma_desc += capitalize(trauma.scan_desc)
+		LAZYADD(trauma_text, trauma_desc)
+	if(LAZYLEN(trauma_text))
+		return "Mental trauma: [english_list(trauma_text, and_text = ", and ")]."
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

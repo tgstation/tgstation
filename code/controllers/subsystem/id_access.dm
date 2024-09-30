@@ -291,7 +291,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_VIROLOGY]"] = "Virology"
 	desc_by_access["[ACCESS_PSYCHOLOGY]"] = "Psychology"
 	desc_by_access["[ACCESS_CMO]"] = "CMO Office"
-	desc_by_access["[ACCESS_QM]"] = "Quartermaster"
+	desc_by_access["[ACCESS_QM]"] = "QM Office"
 	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
 	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
@@ -408,6 +408,12 @@ SUBSYSTEM_DEF(id_access)
 
 	if(trim.assignment)
 		id_card.assignment = trim.assignment
+
+	var/datum/job/trim_job = trim.find_job()
+	if (!isnull(id_card.registered_account))
+		var/datum/job/old_job = id_card.registered_account.account_job
+		id_card.registered_account.account_job = trim_job
+		id_card.registered_account.update_account_job_lists(trim_job, old_job)
 
 	id_card.update_label()
 	id_card.update_icon()

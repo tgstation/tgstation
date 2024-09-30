@@ -58,7 +58,7 @@
 		pulse()
 		audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 		for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-			hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+			hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
 	update_appearance()
@@ -110,7 +110,7 @@
 	data["loop"] = loop
 	return data
 
-/obj/item/assembly/timer/ui_act(action, params)
+/obj/item/assembly/timer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

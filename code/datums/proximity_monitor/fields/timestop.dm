@@ -6,6 +6,7 @@
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "time"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_x = -64
 	pixel_y = -64
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -44,13 +45,13 @@
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
 	if(!hidden)
-		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+		playsound(src, 'sound/effects/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	if(!hidden)
-		playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
+		playsound(src, 'sound/effects/magic/timeparadox2.ogg', 75, TRUE, -1)
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)

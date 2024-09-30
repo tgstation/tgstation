@@ -145,6 +145,7 @@
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -164,6 +165,7 @@
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_e"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	duration = 50
 
@@ -242,8 +244,8 @@
 	duration = 5
 
 /obj/effect/temp_visual/fire
-	icon = 'icons/effects/atmos/fire.dmi'
-	icon_state = "heavy"
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
 	duration = 10
@@ -327,6 +329,7 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/explosion
@@ -438,7 +441,7 @@
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
 		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (I.Height()/ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -492,6 +495,7 @@
 	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -559,7 +563,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)

@@ -51,6 +51,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/consoles
 	id = TECHWEB_NODE_CONSOLES
@@ -78,6 +79,7 @@
 		"bounty_pad",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/gaming
 	id = TECHWEB_NODE_GAMING
@@ -145,6 +147,7 @@
 		"roastingstick",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_SERVICE)
 
 // Fishing root node
 /datum/techweb_node/fishing_equip
@@ -165,6 +168,8 @@
 	prereq_ids = list(TECHWEB_NODE_FISHING_EQUIP)
 	design_ids = list(
 		"fishing_rod_tech",
+		"fishing_gloves",
+		"mod_fishing",
 		"stabilized_hook",
 		"auto_reel",
 		"fish_analyzer",

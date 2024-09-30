@@ -122,10 +122,10 @@
 /datum/beam/proc/Draw()
 	if(SEND_SIGNAL(src, COMSIG_BEAM_BEFORE_DRAW) & BEAM_CANCEL_DRAW)
 		return
-	var/origin_px = isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x
-	var/origin_py = isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y
-	var/target_px = isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x
-	var/target_py = isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y
+	var/origin_px = (isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x) + origin.pixel_w
+	var/origin_py = (isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y) + origin.pixel_z
+	var/target_px = (isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x) + target.pixel_w
+	var/target_py = (isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y) + target.pixel_z
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x , target.y, target_px, target_py)
 	///var/Angle = round(get_angle(origin,target))
 	var/matrix/rot_matrix = matrix()
@@ -211,6 +211,9 @@
 
 /obj/effect/ebeam/singularity_act()
 	return
+
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return TRUE
 
 /// A beam subtype used for advanced beams, to react to atoms entering the beam
 /obj/effect/ebeam/reacting

@@ -59,6 +59,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		new /datum/pipe_info/disposal("Sort Junction", /obj/structure/disposalpipe/sorting/mail, PIPE_TRIN_M),
 		new /datum/pipe_info/disposal("Rotator", /obj/structure/disposalpipe/rotator, PIPE_ONEDIR_FLIPPABLE),
 		new /datum/pipe_info/disposal("Trunk", /obj/structure/disposalpipe/trunk),
+		new /datum/pipe_info/disposal("Down Turn", /obj/structure/disposalpipe/trunk/multiz/down),
+		new /datum/pipe_info/disposal("Up Turn", /obj/structure/disposalpipe/trunk/multiz),
 		new /datum/pipe_info/disposal("Bin", /obj/machinery/disposal/bin, PIPE_ONEDIR),
 		new /datum/pipe_info/disposal("Outlet", /obj/structure/disposaloutlet),
 		new /datum/pipe_info/disposal("Chute", /obj/machinery/disposal/delivery_chute),
@@ -183,8 +185,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass=SHEET_MATERIAL_AMOUNT*18.75)
 	armor_type = /datum/armor/item_pipe_dispenser
 	resistance_flags = FIRE_PROOF
-	drop_sound = 'sound/items/handling/rpd_drop.ogg'
-	pickup_sound = 'sound/items/handling/rpd_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/rpd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rpd_pickup.ogg'
 	sound_vary = TRUE
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -361,11 +363,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	data["init_directions"] = init_directions
 	return data
 
-/obj/item/pipe_dispenser/ui_act(action, params)
+/obj/item/pipe_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 	if(.)
 		return
+
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/playeffect = TRUE
 	switch(action)
@@ -686,7 +689,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(multi_layer)
 		balloon_alert(source_mob, "turn off multi layer!")
 		return
-	if(source_mob.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(source_mob, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(source_mob.get_active_held_item() != src)
 		return

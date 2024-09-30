@@ -13,8 +13,6 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
-
 /datum/armor/structure_plaque
 	melee = 50
 	fire = 50
@@ -22,7 +20,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall(wall_layer = FLAT_ON_WALL_LAYER)
 	register_context()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -91,7 +88,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
@@ -106,7 +103,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 		user.visible_message(span_notice("[user] engraves [src]."), \
 			span_notice("You engrave [src]."))
-		icon_state = "goldenplaque"
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
@@ -165,7 +161,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
+		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
@@ -197,6 +193,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/plaque)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
+	if(dir & NORTH)
+		placed_plaque.pixel_y = 32
+	else if(dir & SOUTH)
+		placed_plaque.pixel_y = -32
+	if(dir & EAST)
+		placed_plaque.pixel_x = 32
+	else if(dir & WEST)
+		placed_plaque.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach [src] to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)

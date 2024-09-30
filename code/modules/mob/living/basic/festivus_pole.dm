@@ -2,7 +2,6 @@
 #define FESTIVUS_RECHARGE_VALUE (0.075 * STANDARD_CELL_CHARGE)
 
 /mob/living/basic/festivus
-	SET_BASE_VISUAL_PIXEL(0, 0) // It's an object mimic
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
 	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
@@ -31,7 +30,7 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_HOSTILE)

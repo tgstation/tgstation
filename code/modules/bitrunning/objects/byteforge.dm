@@ -1,5 +1,4 @@
 /obj/machinery/byteforge
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "byteforge"
 
 	circuit = /obj/item/circuitboard/machine/byteforge
@@ -27,7 +26,7 @@
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
-	playsound(src, 'sound/magic/blink.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, 1, loc)

@@ -52,6 +52,10 @@
 	greyscale_colors = "#313c6e"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/suit/apron/overalls/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
 	name = "captain's parade jacket"
@@ -190,6 +194,11 @@
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
+	name = "press hazard vest"
+	desc = "A blue high-visibility vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "hazard_press"
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -343,6 +352,10 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 	)
+
+/obj/item/clothing/suit/apron/surgical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) // FISH DOCTOR?!
 
 //Curator
 /obj/item/clothing/suit/jacket/curator

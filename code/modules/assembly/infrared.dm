@@ -164,7 +164,7 @@
 		message = span_infoplain("[icon2html(src, hearers(holder || src))] *beep* *beep* *beep*"),
 		hearing_distance = hearing_range,
 	)
-	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE, extrarange = hearing_range - SOUND_RANGE + 1, falloff_distance = hearing_range)
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE, extrarange = hearing_range - SOUND_RANGE + 1, falloff_distance = hearing_range)
 	COOLDOWN_START(src, next_activate, 3 SECONDS)
 
 /obj/item/assembly/infra/activate()
@@ -255,15 +255,15 @@
 	var/x_move = 0
 	var/y_move = 0
 	if(movement_dir & NORTH)
-		y_move = -32
+		y_move = -ICON_SIZE_Y
 	else if(movement_dir & SOUTH)
-		y_move = 32
+		y_move = ICON_SIZE_Y
 	if(movement_dir & WEST)
-		x_move = 32
+		x_move = ICON_SIZE_X
 	else if(movement_dir & EAST)
-		x_move = -32
+		x_move = -ICON_SIZE_X
 
-	var/fake_glide_time = round(world.icon_size / glide_size * world.tick_lag, world.tick_lag)
+	var/fake_glide_time = round(ICON_SIZE_ALL / glide_size * world.tick_lag, world.tick_lag)
 	for(var/obj/effect/ebeam/beam as anything in active_beam?.elements)
 		var/matrix/base_transform = matrix(beam.transform)
 		beam.transform = beam.transform.Translate(x_move, y_move)
@@ -291,7 +291,7 @@
 	data["visible"] = visible
 	return data
 
-/obj/item/assembly/infra/ui_act(action, params)
+/obj/item/assembly/infra/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

@@ -19,7 +19,7 @@
 /// We'll use another define to convert uses of the proc over. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
-///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 

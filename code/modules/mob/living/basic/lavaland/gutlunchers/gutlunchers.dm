@@ -4,7 +4,6 @@
 #define MAX_POSSIBLE_HEALTH 100
 
 /mob/living/basic/mining/gutlunch
-	SET_BASE_VISUAL_PIXEL(0, 6) // Weird offset on the icon file
 	name = "gutlunch"
 	desc = "A scavenger that eats raw ores, often found alongside ash walkers. Produces a thick, nutritious milk."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
@@ -27,7 +26,6 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	death_message = "is pulped into bugmash."
 	greyscale_config = /datum/greyscale_config/gutlunch
-	shadow_offset_y = 6
 	///possible colors we can have
 	var/list/possible_colors = list(COLOR_WHITE)
 	///can we breed?
@@ -141,12 +139,12 @@
 	can_breed = FALSE
 	gender = NEUTER
 	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
+	current_size = 0.6
 	///list of stats we inherited
 	var/datum/gutlunch_inherited_stats/inherited_stats
 
 /mob/living/basic/mining/gutlunch/grub/Initialize(mapload)
 	. = ..()
-	transform = transform.Scale(0.6, 0.6)
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 3 MINUTES,\

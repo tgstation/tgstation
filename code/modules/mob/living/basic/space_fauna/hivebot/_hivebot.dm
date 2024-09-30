@@ -16,7 +16,7 @@
 
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	verb_say = "states"
 	verb_ask = "queries"

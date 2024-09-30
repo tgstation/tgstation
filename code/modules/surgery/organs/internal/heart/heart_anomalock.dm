@@ -4,7 +4,7 @@
 #define DOAFTER_IMPLANTING_HEART "implanting"
 
 /obj/item/organ/internal/heart/cybernetic/anomalock
-	name = "Voltaic Combat Cyberheart"
+	name = "voltaic combat cyberheart"
 	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
 	bleed_prevention = TRUE
@@ -59,7 +59,7 @@
 	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
-	playsound(target_mob, 'sound/weapons/slice.ogg', 100, TRUE)
+	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)

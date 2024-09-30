@@ -1,7 +1,7 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	icon = 'icons/obj/structures/cabinet.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
@@ -21,7 +21,7 @@
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /datum/armor/structure_fireaxecabinet
 	melee = 50
@@ -95,9 +95,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 			if(broken)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	if(open)
@@ -111,7 +111,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 	if(!broken)
 		update_appearance()
 		broken = TRUE
-		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
@@ -209,14 +209,15 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "Home to a window's greatest nightmare. Apply to wall to use."
-	icon = 'icons/obj/structures/cabinet.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
+	pixel_shift = 32
 
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
@@ -225,7 +226,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty)
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
 /obj/structure/fireaxecabinet/mechremoval/atom_deconstruct(disassembled = TRUE)
 	if(held_item && loc)
@@ -235,7 +236,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

@@ -20,7 +20,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("double bed", /obj/structure/bed/double, 4, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	null, \
-	new/datum/stack_recipe("window frame", /obj/structure/window_frame, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS), \
 	new/datum/stack_recipe_list("office chairs", list( \
 		new/datum/stack_recipe("dark office chair", /obj/structure/chair/office, 5, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 		new/datum/stack_recipe("light office chair", /obj/structure/chair/office/light, 5, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
@@ -386,8 +385,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
 	stairs_type = /obj/structure/stairs/wood
-	pickup_sound = 'sound/items/wood_pick_up.ogg'
-	drop_sound = 'sound/items/wood_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/wood_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/wood_drop.ogg'
 
 /datum/armor/mineral_wood
 	fire = 50
@@ -685,8 +684,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/cardboard
-	pickup_sound = 'sound/items/cardboard_pick_up.ogg'
-	drop_sound = 'sound/items/cardboard_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/cardboard_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/cardboard_drop.ogg'
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -864,8 +863,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
-	pickup_sound = 'sound/items/plastic_pick_up.ogg'
-	drop_sound = 'sound/items/plastic_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/plastic_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/plastic_drop.ogg'
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
@@ -917,7 +916,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	material_modifier = 1 //None of that wussy stuff
 	drop_sound = null
 	pickup_sound = null
-	walltype = /turf/closed/wall/mineral/meat
 
 /obj/item/stack/sheet/meat/fifty
 	amount = 50
@@ -937,7 +935,6 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	material_modifier = 1
 	drop_sound = null
 	pickup_sound = null
-	walltype = /turf/closed/wall/mineral/pizza
 
 /obj/item/stack/sheet/pizza/fifty
 	amount = 50

@@ -148,10 +148,10 @@
 			if(L)
 				qdel(L)
 			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/weapons/Genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+		playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if(prob(I.force * 20 - 25))
@@ -166,7 +166,7 @@
 		return list("delay" = 0, "cost" = 1)
 
 /turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF && rcd_data[RCD_DESIGN_PATH] == /turf/open/floor/plating/rcd)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
 		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE

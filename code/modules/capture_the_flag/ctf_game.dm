@@ -275,7 +275,7 @@
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
@@ -442,7 +442,7 @@
 /obj/effect/ctf/dead_barricade
 	name = "dead barrier"
 	desc = "It provided cover in fire fights. And now it's gone."
-	icon = 'icons/obj/structures/tall.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "barrier0"
 	var/game_id = CTF_GHOST_CTF_GAME_ID
 	var/datum/ctf_controller/ctf_game

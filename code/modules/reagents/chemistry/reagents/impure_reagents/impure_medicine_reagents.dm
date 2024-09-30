@@ -69,7 +69,7 @@
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	to_chat(affected_mob, span_hierophant("You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!"))
-	playsound(affected_mob.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
+	playsound(affected_mob.loc, 'sound/effects/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 
 //Sends hands after you for your hubris
 /*
@@ -230,7 +230,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Just the removed itching mechanism - omage to its origins.
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated()))
+	if(prob(resetting_probability) && !(HAS_TRAIT(affected_mob, TRAIT_RESTRAINED) || affected_mob.incapacitated))
 		. = TRUE
 		if(spammer < world.time)
 			to_chat(affected_mob,span_warning("You can't help but itch yourself."))
@@ -539,7 +539,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
-	affected_mob.playsound_local(affected_mob, 'sound/health/fastbeat.ogg', 65)
+	affected_mob.playsound_local(affected_mob, 'sound/effects/health/fastbeat.ogg', 65)
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

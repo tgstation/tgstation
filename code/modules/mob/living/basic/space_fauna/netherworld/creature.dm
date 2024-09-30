@@ -13,7 +13,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
@@ -55,7 +55,7 @@
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
 		for(var/mob/living/mob_target in oview(src, 7)) // They probably cannot see us if we cannot see them... can they?
-			if(mob_target.client && !mob_target.is_blind() && !mob_target.has_unlimited_silicon_privilege)
+			if(mob_target.client && !mob_target.is_blind() && !HAS_TRAIT(mob_target, TRAIT_UNOBSERVANT))
 				return mob_target
 		for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(src, 7))
 			for(var/mob/mechamob_target as anything in mecha_mob_target.occupants)

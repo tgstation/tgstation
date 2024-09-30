@@ -676,13 +676,12 @@
 	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
-	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_boldnotice("[name] completed!"))
-	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
@@ -723,7 +722,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(!can_be_invoked(heretic_datum))
 		return FALSE
 
@@ -744,7 +743,7 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
 	// Show the cool red gradiant in our UI

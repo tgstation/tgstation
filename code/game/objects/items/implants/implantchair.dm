@@ -55,7 +55,7 @@
 
 	return data
 
-/obj/machinery/implantchair/ui_act(action, params)
+/obj/machinery/implantchair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -84,7 +84,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)

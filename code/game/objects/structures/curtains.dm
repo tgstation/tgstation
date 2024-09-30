@@ -4,7 +4,7 @@
 /obj/structure/curtain
 	name = "curtain"
 	desc = "Contains less than 1% mercury."
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "bathroom-open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
@@ -81,11 +81,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+				playsound(src.loc, 'sound/items/weapons/slash.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 80, TRUE)
 
 /obj/structure/curtain/bounty
 	icon_type = "bounty"

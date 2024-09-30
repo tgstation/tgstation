@@ -118,7 +118,6 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
-	AddComponent(/datum/component/examine_balloon, pixel_y_offset = 40, pixel_y_offset_arrow = 12)
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -249,7 +248,7 @@
 
 	flick("poster_being_set", placed_poster)
 	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
-	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), src)))
@@ -267,7 +266,7 @@
 
 /obj/structure/sign/poster/proc/tear_poster(mob/user)
 	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	playsound(src.loc, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	spring_trap(user)
 
 	var/obj/structure/sign/poster/ripped/torn_poster = new(loc)
@@ -296,6 +295,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 		/obj/structure/sign/poster/abductor,
 	)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
 
 #undef PLACE_SPEED

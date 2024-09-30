@@ -33,7 +33,7 @@
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(!user.incapacitated())
+	if(!user.incapacitated)
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type][soft_suffix]_flipped"
@@ -175,6 +175,7 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 #define PROPHAT_MOOD "prophat"
 

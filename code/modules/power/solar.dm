@@ -61,7 +61,7 @@
 /obj/machinery/power/solar/proc/add_panel_overlay(icon_state, z_offset)
 	var/obj/effect/overlay/solar_panel/overlay = new(src)
 	overlay.icon_state = icon_state
-	SET_PLANE_EXPLICIT(overlay, GAME_PLANE, src)
+	SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_z = z_offset
 	vis_contents += overlay
 	return overlay
@@ -108,15 +108,15 @@
 			if(machine_stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/machinery/power/solar/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		unset_control()
 		// Make sure user can see it's broken
 		var/new_angle = rand(160, 200)
@@ -170,7 +170,7 @@
 
 	// actually flip to other direction?
 	if(abs(angle - azimuth_current) > 180)
-		mid_azimuth = (mid_azimuth + 180) % 360
+		mid_azimuth = reverse_angle(mid_azimuth)
 
 	// Split into 2 parts so it doesn't distort on large changes
 	animate(part,
@@ -367,7 +367,6 @@
 //
 
 /obj/machinery/power/solar_control
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
 	icon = 'icons/obj/machines/computer.dmi'
@@ -487,7 +486,7 @@
 	data["history"] = history
 	return data
 
-/obj/machinery/power/solar_control/ui_act(action, params)
+/obj/machinery/power/solar_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -560,14 +559,14 @@
 			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+				playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/power/solar_control/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen

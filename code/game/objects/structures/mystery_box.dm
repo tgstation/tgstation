@@ -121,8 +121,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	max_integrity = 99999
 	damage_deflection = 100
 
-	var/crate_open_sound = 'sound/machines/crate_open.ogg'
-	var/crate_close_sound = 'sound/machines/crate_close.ogg'
+	var/crate_open_sound = 'sound/machines/crate/crate_open.ogg'
+	var/crate_close_sound = 'sound/machines/crate/crate_close.ogg'
 	var/open_sound = 'sound/effects/mysterybox/mbox_full.ogg'
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
 	/// The box's current state, and whether it can be interacted with in different ways
@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
 	var/current_sound_channel
 	/// How many time can it still be used?
-	var/uses_left
+	var/uses_left = INFINITY
 	/// A list of weakrefs to mind datums of people that opened it and how many times.
 	var/list/datum/weakref/minds_that_opened_us
 
@@ -281,6 +281,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	max_integrity = 100
 	damage_deflection = 30
 	grant_extra_mag = FALSE
+	anchored = FALSE
 
 /obj/structure/mystery_box/handle_deconstruct(disassembled)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)

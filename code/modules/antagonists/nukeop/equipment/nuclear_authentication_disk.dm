@@ -26,7 +26,7 @@
 
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bed_tuckable, mapload, 6, 6, 0)
+	AddElement(/datum/element/bed_tuckable, mapload, 6, -6, 0)
 	AddComponent(/datum/component/stationloving, !fake)
 
 	if(!fake)
@@ -102,7 +102,7 @@
 
 /obj/item/disk/nuclear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
+	playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? COLOR_VIBRANT_LIME : COLOR_RED, ADMIN_COLOUR_PRIORITY), i)
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)

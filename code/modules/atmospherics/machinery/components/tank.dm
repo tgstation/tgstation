@@ -272,7 +272,6 @@
 	var/list/new_underlays = list()
 	for(var/obj/effect/overlay/gas/gas as anything in air_contents.return_visuals(get_turf(src)))
 		var/image/new_underlay = image(gas.icon, icon_state = gas.icon_state, layer = FLOAT_LAYER)
-		new_underlay.pixel_z = -12 // Weird offset artifacting? might be my fault idk
 		new_underlay.filters = alpha_mask_filter(icon = icon(icon, icon_state = "window-bg"))
 		new_underlays += new_underlay
 
@@ -305,7 +304,7 @@
 	. = TRUE
 	if(atom_integrity >= max_integrity)
 		return
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	to_chat(user, span_notice("You begin to repair the cracks in the gas tank..."))
 	var/repair_amount = max_integrity / 10
@@ -563,7 +562,7 @@
 	if(!anchored)
 		to_chat(user, span_notice("You need to <b>wrench</b> [src] to the floor before finishing."))
 		return
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	to_chat(user, span_notice("You begin sealing the outer plating with the welder..."))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 60))

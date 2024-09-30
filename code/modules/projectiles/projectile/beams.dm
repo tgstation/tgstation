@@ -4,8 +4,8 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
 	damage_type = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
+	hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	armor_flag = LASER
 	eyeblur = 4 SECONDS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
@@ -50,13 +50,11 @@
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
+	icon_state = "hellfire"
 	wound_bonus = 0
 	damage = 30
 	speed = 0.6 // higher power = faster, that's how light works right
-
-/obj/projectile/beam/laser/hellfire/Initialize(mapload)
-	. = ..()
-	transform *= 2
+	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -78,15 +76,15 @@
 	name = "low-power laser"
 	icon_state = "laser_musket"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	damage = 25
-	stamina = 40
+	damage = 28
+	stamina = 35
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	damage = 30
-	stamina = 45
+	damage = 25
+	stamina = 20
 	weak_against_armour = FALSE
 
 /obj/projectile/beam/weak
@@ -137,7 +135,7 @@
 	damage = 30
 	damage_type = STAMINA
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/sear_disabler.ogg'
+	hitsound = 'sound/items/weapons/sear_disabler.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler

@@ -1,5 +1,4 @@
 /obj/structure/frame/computer
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "computer frame"
 	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"

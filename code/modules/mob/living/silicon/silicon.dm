@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -8,7 +7,7 @@
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	death_sound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -75,6 +74,9 @@
 		TRAIT_NOFIRE_SPREAD,
 		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
 		TRAIT_FENCE_CLIMBER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_UNOBSERVANT,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
@@ -400,7 +402,7 @@
 		silicon_hud.show_to(src)
 
 /mob/living/silicon/proc/toggle_sensors()
-	if(incapacitated())
+	if(incapacitated)
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)

@@ -121,7 +121,7 @@
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 
@@ -263,39 +263,40 @@
  * If the node drone is dead, the ore vent is not tapped and the wave defense can be reattempted.
  *
  * Also gives xp and mining points to all nearby miners in equal measure.
+ * Arguments:
+ * - force: Set to true if you want to just skip all checks and make the vent start producing boulders.
  */
-/obj/structure/ore_vent/proc/handle_wave_conclusion()
+/obj/structure/ore_vent/proc/handle_wave_conclusion(force = FALSE)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
 
-	if(!QDELETED(node))
-		if(get_turf(node) != get_turf(src))
-			visible_message(span_danger("The [node] detaches from the [src], and the vent closes back up!"))
-			icon_state = initial(icon_state)
-			update_appearance(UPDATE_ICON_STATE)
-			UnregisterSignal(node, COMSIG_MOVABLE_MOVED)
-			node.pre_escape(success = FALSE)
-			node = null
-			return //Start over!
-
-		tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
-		SSore_generation.processed_vents += src
-		log_game("Ore vent [key_name_and_tag(src)] was tapped")
-		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
-		balloon_alert_to_viewers("vent tapped!")
-		icon_state = icon_state_tapped
-		update_appearance(UPDATE_ICON_STATE)
-		qdel(GetComponent(/datum/component/gps))
-		UnregisterSignal(node, COMSIG_QDELETING)
-	else
+	if(QDELETED(node) && !force)
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
 		icon_state = initial(icon_state)
 		update_appearance(UPDATE_ICON_STATE)
 		node = null
 		return //Bad end, try again.
+	else if(!QDELETED(node) && get_turf(node) != get_turf(src) && !force)
+		visible_message(span_danger("The [node] detaches from the [src], and the vent closes back up!"))
+		icon_state = initial(icon_state)
+		update_appearance(UPDATE_ICON_STATE)
+		UnregisterSignal(node, COMSIG_MOVABLE_MOVED)
+		node.pre_escape(success = FALSE)
+		node = null
+		return //Start over!
+
+	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
+	SSore_generation.processed_vents += src
+	log_game("Ore vent [key_name_and_tag(src)] was tapped")
+	SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
+	balloon_alert_to_viewers("vent tapped!")
+	icon_state = icon_state_tapped
+	update_appearance(UPDATE_ICON_STATE)
+	qdel(GetComponent(/datum/component/gps))
+	UnregisterSignal(node, COMSIG_QDELETING)
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
@@ -307,7 +308,7 @@
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
-	node.pre_escape() //Visually show the drone is done and flies away.
+	node?.pre_escape() //Visually show the drone is done and flies away.
 	node = null
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
 
@@ -426,7 +427,7 @@
 
 /**
  * When the ore vent cannot spawn a mob due to being blocked from all sides, we cause some MILD, MILD explosions.
- * Explosion matches a gibtonite light explosion, as a way to clear neartby solid structures, with a high likelyhood of breaking the NODE drone.
+ * Explosion matches a gibtonite light explosion, as a way to clear nearby solid structures, with a high likelihood of breaking the NODE drone.
  */
 /obj/structure/ore_vent/proc/anti_cheese()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 0, flash_range = 0, adminlog = FALSE)

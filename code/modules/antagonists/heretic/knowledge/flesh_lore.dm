@@ -67,7 +67,7 @@
 	cost = 1
 	route = PATH_FLESH
 	depth = 3
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -142,7 +142,7 @@
 	limit = 2
 	cost = 1
 	route = PATH_FLESH
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
 	depth = 4
@@ -269,7 +269,7 @@
 		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
 	route = PATH_FLESH
-	research_tree_icon_path = 'icons/ui/antags/heretic/knowledge.dmi'
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
 	var/wound_type = /datum/wound/slash/flesh/severe
@@ -329,7 +329,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
+		sound = 'sound/music/antag/heretic/ascend_flesh.ogg',
 		color_override = "pink",
 	)
 
@@ -337,7 +337,7 @@
 	worm_spell.Grant(user)
 
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)
 	grasp_ghoul.limit *= 3
 	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)

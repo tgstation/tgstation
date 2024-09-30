@@ -41,9 +41,9 @@
 		TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
-	preop_sound = 'sound/surgery/scalpel1.ogg'
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ1.ogg'
 	surgery_effects_mood = TRUE
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5

@@ -1,7 +1,6 @@
 #define MAX_CONTAINER_PRINT_AMOUNT 50
 
 /obj/machinery/chem_master
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -475,11 +474,13 @@
 				item_name_default = "[master_reagent.name] [item_name_default]"
 			if(!(initial(selected_container.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 				item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
-			var/item_name = tgui_input_text(usr,
+			var/item_name = tgui_input_text(
+				usr,
 				"Container name",
 				"Name",
 				item_name_default,
-				MAX_NAME_LEN)
+				max_length = MAX_NAME_LEN,
+			)
 			if(!item_name)
 				return FALSE
 

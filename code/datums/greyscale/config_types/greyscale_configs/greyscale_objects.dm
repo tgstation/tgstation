@@ -1,23 +1,12 @@
-/**
- * Airlock configurations.
- * Airlocks with no decorations are under /airlocks
- * Airlocks with see-through windows are under .../window
- * Airlocks with decorative color bands are under .../custom
- */
+/datum/greyscale_config/material_airlock
+	name = "Material Airlock"
+	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
+	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
-/datum/greyscale_config/airlocks
-	name = "Solid Airlock"
-	icon_file = 'icons/obj/doors/airlocks/greyscale_template.dmi'
-	json_config = 'code/datums/greyscale/json_configs/airlock_plain.json'
-
-/datum/greyscale_config/airlocks/window
-	name = "Airlock with Window"
-	json_config = 'code/datums/greyscale/json_configs/airlock_window.json'
-
-/datum/greyscale_config/airlocks/custom
-	name = "Airlock with Decorations"
-	json_config = 'code/datums/greyscale/json_configs/airlock_custom.json'
-
+/datum/greyscale_config/big_manipulator
+	name = "Big Manipulator"
+	icon_file = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
+	json_config = 'code/datums/greyscale/json_configs/big_manipulator.json'
 
 //
 // BENCHES
@@ -25,27 +14,27 @@
 
 /datum/greyscale_config/bench_solo
 	name = "Bench Solo"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_solo.json'
 
 /datum/greyscale_config/bench_middle
 	name = "Bench Middle"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_middle.json'
 
 /datum/greyscale_config/bench_left
 	name = "Bench Left"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_left.json'
 
 /datum/greyscale_config/bench_right
 	name = "Bench Right"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
 
 /datum/greyscale_config/bench_corner
 	name = "Bench Corner"
-	icon_file = 'icons/obj/structures/chairs_wide.dmi'
+	icon_file = 'icons/obj/chairs_wide.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
 
 //
