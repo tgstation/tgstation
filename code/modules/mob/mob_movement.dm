@@ -543,16 +543,13 @@
 		return remote_control.relaymove(src, UP)
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
-
-	if(!above_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
+	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+		return
 	balloon_alert(src, "moving up...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
@@ -568,16 +565,13 @@
 		return remote_control.relaymove(src, DOWN)
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = GET_TURF_BELOW(current_turf)
-
-	if(!below_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
+	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+		return
 	balloon_alert(src, "moving down...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
