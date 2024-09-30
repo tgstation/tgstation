@@ -152,3 +152,102 @@
 		SPECIES_HUMAN,
 		RND_CATEGORY_INITIAL,
 	)
+
+/datum/design/tail
+	name = "Monkey Tails, Variety"
+	id = "monkeytail"
+	build_path = /obj/item/organ/external/tail/monkey
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/mouse
+	name = "Mouse Tail"
+	id = "mousetail"
+	build_path = /obj/item/organ/external/tail/mouse
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/dog
+	name = "Dog Tail"
+	id = "dogtail"
+	build_path = /obj/item/organ/external/tail/dog
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/fox
+	name = "Fox Tail"
+	id = "foxtail"
+	build_path = /obj/item/organ/external/tail/fox
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/bunny
+	name = "Bunny Tail"
+	id = "bunnytail"
+	build_path = /obj/item/organ/external/tail/bunny
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/bird
+	name = "Bird Tail"
+	id = "birdtail"
+	build_path = /obj/item/organ/external/tail/bird
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/bug
+	name = "Bug Tail"
+	id = "bugtail"
+	build_path = /obj/item/organ/external/tail/bug
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/deer
+	name = "Deer Tail"
+	id = "deertail"
+	build_path = /obj/item/organ/external/tail/deer
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/fish
+	name = "Fish Tail"
+	id = "fishtail"
+	build_path = /obj/item/organ/external/tail/fish
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/synthetic
+	name = "Synthetic Tail"
+	id = "synthetictail"
+	build_path = /obj/item/organ/external/tail/synthetic
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
+
+/datum/design/tail/humanoid
+	name = "Humanoid Tail"
+	id = "humanoidtail"
+	build_path = /obj/item/organ/external/tail/humanoid
+	category = list(
+		SPECIES_HUMAN,
+		RND_CATEGORY_INITIAL,
+	)
