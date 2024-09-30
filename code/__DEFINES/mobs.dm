@@ -45,7 +45,7 @@
 #define VENTCRAWLER_ALWAYS 2
 
 // Flags for the mob_flags var on /mob
-/// Has contextual screentips when HOVERING OVER OTHER objects
+/// May override the names used in screentips of OTHER OBJECTS hovered over.
 #define MOB_HAS_SCREENTIPS_NAME_OVERRIDE (1 << 0)
 
 //Mob bio-types flags
