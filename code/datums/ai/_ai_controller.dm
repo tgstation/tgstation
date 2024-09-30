@@ -399,7 +399,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/start_ai_processing()
 	if(!length(current_behaviors))
-		GLOB.unplanned_controllers[ai_status] += src
+		GLOB.unplanned_controllers[ai_status] |= src
 		return
 	switch(ai_status)
 		if(AI_STATUS_ON)
@@ -474,7 +474,7 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/enter_unplanned_mode()
 	if(idle_behavior)
-		GLOB.unplanned_controllers[ai_status] += src
+		GLOB.unplanned_controllers[ai_status] |= src
 	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
