@@ -111,8 +111,13 @@
 	var/atom/atom_target = parent
 	// Something broke us out, snap the tether
 	if (get_dist(atom_target, tether_target) > cur_dist + 1 || !isturf(atom_target.loc) || !isturf(tether_target.loc) || atom_target.z != tether_target.z)
-		atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
-		qdel(src)
+		snap()
+
+/datum/component/tether/proc/snap()
+	var/atom/atom_target = parent
+	atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
+	playsound(atom_target, 'sound/effects/snap.ogg', 50, TRUE)
+	qdel(src)
 
 /datum/component/tether/proc/on_delete()
 	SIGNAL_HANDLER
@@ -132,7 +137,7 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")
-		if (!do_after(user, 5 SECONDS, user))
+		if (!do_after(user, 1 SECONDS, user))
 			return
 
 		qdel(src)

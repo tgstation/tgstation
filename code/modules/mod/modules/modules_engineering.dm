@@ -104,6 +104,18 @@
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
+/obj/item/mod/module/tether/get_configuration()
+	. = ..()
+	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "pin", TRUE)
+
+/obj/item/mod/module/tether/configure_edit(key, value)
+	if (key != "cut_tethers" || !ismob(usr))
+		return
+
+	var/mob/owner = usr
+	for(var/datum/component/tether/component in owner.GetComponents(/datum/component/tether))
+		component.snap()
+
 /obj/projectile/tether
 	name = "tether"
 	icon_state = "tether_projectile"
@@ -194,6 +206,7 @@
 /obj/item/tether_anchor/examine(mob/user)
 	. = ..()
 	. += span_info("It can be secured by using a wrench on it. Use right-click to tether yourself to [src].")
+	. += span_info("LMB shortens the tether while RMB lengthens it. Ctrl-click to cut the tether.")
 
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
