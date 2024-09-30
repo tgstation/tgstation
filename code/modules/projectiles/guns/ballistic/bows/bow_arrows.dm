@@ -138,7 +138,7 @@
 	desc = "If this is about to kill you, you should feel genuine shame."
 	damage = 5
 	stamina = 50
-	weak_against_armour = TRUE
+	weakness_against_armour = TRUE
 	icon_state = "plastic_arrow_projectile"
 
 /// special pyre sect arrow

@@ -79,13 +79,13 @@
 	damage = 28
 	stamina = 35
 	light_color = COLOR_STRONG_VIOLET
-	weak_against_armour = TRUE
+	weakness_against_armour = TRUE
 
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
 	damage = 25
 	stamina = 20
-	weak_against_armour = FALSE
+	weakness_against_armour = FALSE
 
 /obj/projectile/beam/weak
 	damage = 15
@@ -147,11 +147,11 @@
 
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
-	weak_against_armour = TRUE
+	weakness_against_armour = TRUE
 
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
-	weak_against_armour = FALSE
+	weakness_against_armour = FALSE
 	damage = 35 //slight increase in damage just for the hell of it
 
 /obj/projectile/beam/pulse

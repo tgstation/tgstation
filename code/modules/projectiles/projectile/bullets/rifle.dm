@@ -27,7 +27,7 @@
 
 /obj/projectile/bullet/strilka310/surplus
 	name = ".310 Strilka surplus bullet"
-	weak_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
+	weakness_against_armour = TRUE //this is specifically more important for fighting carbons than fighting noncarbons. Against a simple mob, this is still a full force bullet
 	armour_penetration = 0
 
 /obj/projectile/bullet/strilka310/enchanted
