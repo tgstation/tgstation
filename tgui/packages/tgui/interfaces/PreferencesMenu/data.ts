@@ -131,6 +131,9 @@ export type PreferencesMenuData = {
   character_preview_view: string;
   character_profiles: (string | null)[];
 
+  preview_options: string[]; // NOVA EDIT ADDITION
+  preview_selection: string; // NOVA EDIT ADDITION
+
   character_preferences: {
     clothing: Record<string, string>;
     features: Record<string, string>;
