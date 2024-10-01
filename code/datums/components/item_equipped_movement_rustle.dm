@@ -21,7 +21,6 @@
 	var/sound_falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
 
 /datum/component/item_equipped_movement_rustle/Initialize(custom_sounds, move_delay_override, volume_override, extrarange, falloff_exponent, falloff_distance)
-	SIGNAL_HANDLER
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -78,6 +77,4 @@
 		move_counter = 0
 
 /datum/component/item_equipped_movement_rustle/proc/play_rustle_sound()
-	SIGNAL_HANDLER
-
 	playsound(parent, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
