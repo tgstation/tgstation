@@ -276,7 +276,7 @@
 	hunger = new /atom/movable/screen/hunger(null, src)
 	infodisplay += hunger
 
-	healthdoll = new /atom/movable/screen/healthdoll(null, src)
+	healthdoll = new /atom/movable/screen/healthdoll/human(null, src)
 	infodisplay += healthdoll
 
 	stamina = new /atom/movable/screen/stamina(null, src)
