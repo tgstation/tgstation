@@ -52,12 +52,29 @@
 	///icon state of our cult icon
 	var/cult_icon_state = "cat_cult"
 
+/datum/emote/living/basic/pet/cat/meow
+	key = "meow"
+	key_third_person = "meows"
+	message = "meows!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_CAT_MEOW
+
+/datum/emote/living/basic/pet/cat/purr
+	key = "purr"
+	key_third_person = "purrs"
+	message = "purrs."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_CAT_PURR
+
+
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "purrs!")
+	AddElement(/datum/element/pet_bonus, null, /datum/mood_event/pet_animal, "purr")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
