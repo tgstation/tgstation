@@ -297,7 +297,7 @@
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
-	AddComponent(/datum/component/armor_rustle)
+	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 /datum/armor/armor_riot
 	melee = 50

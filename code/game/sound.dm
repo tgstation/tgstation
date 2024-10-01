@@ -228,7 +228,10 @@
 		if(SFX_CLOWN_STEP)
 			soundin = pick('sound/effects/footstep/clownstep1.ogg','sound/effects/footstep/clownstep2.ogg')
 		if(SFX_SUIT_STEP)
-			soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
+			soundin = pick(
+			'sound/items/handling/armor_rustle/riot_armor/suitstep1.ogg',
+			'sound/items/handling/armor_rustle/riot_armor/suitstep2.ogg',
+			)
 		if(SFX_SWING_HIT)
 			soundin = pick('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg')
 		if(SFX_HISS)
