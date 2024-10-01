@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Bitrunning fishing spots no longer deplete limited loot from outside the virtual reality."
-  - bugfix: "The treasure chest from the beach is no longer anchored to the floor."

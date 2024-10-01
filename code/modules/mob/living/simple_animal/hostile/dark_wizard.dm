@@ -6,7 +6,7 @@
 	icon_living = "dark_wizard"
 	move_to_delay = 10
 	projectiletype = /obj/projectile/temp/earth_bolt
-	projectilesound = 'sound/magic/ethereal_enter.ogg'
+	projectilesound = 'sound/effects/magic/ethereal_enter.ogg'
 	ranged = TRUE
 	ranged_message = "earth bolts"
 	ranged_cooldown_time = 20
@@ -19,7 +19,7 @@
 	attack_verb_continuous = "staves"
 	combat_mode = TRUE
 	speak_emote = list("chants")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
 	turns_per_move = 5
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID

@@ -287,7 +287,7 @@
 		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 		sticking_to.balloon_alert(user, "label renamed")
 	else
-		playsound(sticking_to, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		playsound(sticking_to, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 		sticking_to.balloon_alert(user, "label removed")
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS

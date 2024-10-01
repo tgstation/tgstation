@@ -61,7 +61,7 @@ export const Fax = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
           <LabeledList.Item label="Visible to Network">
-            {data.visible ? true : false}
+            {data.visible ? 'true' : 'false'}
           </LabeledList.Item>
         </Section>
         <Section

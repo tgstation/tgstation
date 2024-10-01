@@ -176,9 +176,9 @@
 
 /datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(
-		'sound/voice/ethereal/ethereal_scream_1.ogg',
-		'sound/voice/ethereal/ethereal_scream_2.ogg',
-		'sound/voice/ethereal/ethereal_scream_3.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_1.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_2.ogg',
+		'sound/mobs/humanoids/ethereal/ethereal_scream_3.ogg',
 	)
 
 /datum/species/ethereal/get_physical_attributes()
@@ -267,9 +267,9 @@
 
 /datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
 	return pick(
-		'sound/voice/ethereal/lustrous_scream_1.ogg',
-		'sound/voice/ethereal/lustrous_scream_2.ogg',
-		'sound/voice/ethereal/lustrous_scream_3.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_1.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_2.ogg',
+		'sound/mobs/humanoids/ethereal/lustrous_scream_3.ogg',
 	)
 
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
