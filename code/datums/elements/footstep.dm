@@ -81,13 +81,17 @@
 	var/steps = steps_for_living[source]
 
 	if(steps >= 8)
+		// 0, 2, 4, 6 -> reset to 0, repeat
+		// right foot = 0, 4, left foot = 2, 6
 		steps_for_living[source] = 0
 		steps = 0
 
 	if(steps % 2)
+		// skipping every other step, anyways. gets noisy otherwise
 		return
 
-	if(steps != 0 && !source.has_gravity()) // don't need to step as often when you hop around
+	if(steps % 6 != 0 && !source.has_gravity())
+		// don't need to step as often when you hop around
 		return
 
 	var/list/footstep_data = list(
@@ -136,37 +140,40 @@
 		return
 
 	var/footstep_type = null
+	var/list/footstep_sounds
 	var/stepcount = steps_for_living[source]
 	var/obj/item/bodypart/leg/left_leg = source.get_bodypart(BODY_ZONE_L_LEG)
 	var/obj/item/bodypart/leg/right_leg = source.get_bodypart(BODY_ZONE_R_LEG)
+	// any leg covering sounds defaults to shoe sounds
 	if((source.wear_suit?.body_parts_covered|source.w_uniform?.body_parts_covered|source.shoes?.body_parts_covered) & FEET)
 		footstep_type = FOOTSTEP_MOB_SHOE
-	// 0, 2, 4, 6 -> reset to 0, repeat
-	// right = 0, 4, left = 2, 6
+	// now pick whether to draw from left foot or right foot sounds
 	else if(stepcount == 2 || stepcount == 6)
+		footstep_sounds = left_leg?.special_footstep_sounds || right_leg?.special_footstep_sounds
 		footstep_type = left_leg?.footstep_type || right_leg?.footstep_type
 	else
+		footstep_sounds = right_leg?.special_footstep_sounds || left_leg?.special_footstep_sounds
 		footstep_type = right_leg?.footstep_type || left_leg?.footstep_type
 
-	var/list/footstep_sounds
-	switch(footstep_type)
-		if(FOOTSTEP_MOB_CLAW)
-			footstep_sounds = GLOB.clawfootstep[prepared_steps[footstep_type]]
-		if(FOOTSTEP_MOB_BAREFOOT)
-			footstep_sounds = GLOB.barefootstep[prepared_steps[footstep_type]]
-		if(FOOTSTEP_MOB_HEAVY)
-			footstep_sounds = GLOB.heavyfootstep[prepared_steps[footstep_type]]
-		if(FOOTSTEP_MOB_SHOE)
-			footstep_sounds = GLOB.footstep[prepared_steps[footstep_type]]
-		if(null)
-			return
-		else
-			// Got an unsupported type, somehow
-			CRASH("Invalid footstep type for human footstep: \[[footstep_type]\]")
-
+	// allow for snowflake effects to take priority
 	if(!length(footstep_sounds))
-		// probably shouldn't happen, but i won't put a stack trace here for now,
-		// since i don't know what people may do to those lists
+		switch(footstep_type)
+			if(FOOTSTEP_MOB_CLAW)
+				footstep_sounds = GLOB.clawfootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_BAREFOOT)
+				footstep_sounds = GLOB.barefootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_HEAVY)
+				footstep_sounds = GLOB.heavyfootstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_SHOE)
+				footstep_sounds = GLOB.footstep[prepared_steps[footstep_type]]
+			if(null)
+				return
+			else
+				// Got an unsupported type, somehow
+				CRASH("Invalid footstep type for human footstep: \[[footstep_type]\]")
+
+	// no snowflake, and no (found) footstep sounds, nothing to do
+	if(!length(footstep_sounds))
 		return
 
 	var/volume_multiplier = 1

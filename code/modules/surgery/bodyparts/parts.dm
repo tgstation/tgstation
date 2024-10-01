@@ -403,6 +403,8 @@
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
 	/// What does our footsteps (barefoot) sound like? Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
 	var/footstep_type = FOOTSTEP_MOB_BAREFOOT
+	/// You can set this to a list of sounds to pick from when a footstep is played rather than use the footstep types
+	var/list/special_footstep_sounds
 
 /obj/item/bodypart/leg/Initialize(mapload)
 	. = ..()
