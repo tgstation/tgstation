@@ -87,24 +87,24 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 /obj/item/stack/sheet/mineral/emptysandbags/fifty
 	amount = 50
 
-/obj/item/stack/sheet/mineral/emptysandbags/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/mineral/emptysandbags/attackby(obj/item/to_fill, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/G = W
-		if (G.get_amount() >= 1 && get_amount() >= 1)
-			to_chat(user, span_notice("You fill the sandbag."))
-			var/obj/item/stack/sheet/mineral/sandbags/I = new (get_turf(user))
-			if(!QDELETED(I))
-				I.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			G.use(1)
-			use(1)
-			if(QDELETED(src) && replace && !QDELETED(I))
-				user.put_in_hands(I)
-		else
-			to_chat(user, span_warning("You need at least one piece of sand to fill an empty sandbag!"))
-		return
-	return ..()
+	if(!istype(to_fill, /obj/item/stack/ore/glass))
+		return ..()
+	var/obj/item/stack/ore/glass/sand_fill = to_fill
+	if (!sand_fill.get_amount() >= 1 && get_amount() >= 1)
+		to_chat(user, span_warning("You need at least one piece of sand to fill an empty sandbag!"))
+		return ..()
+	to_chat(user, span_notice("You fill the sandbag."))
+	var/obj/item/stack/sheet/mineral/sandbags/new_bag = new (get_turf(user))
+	if(!QDELETED(new_bag))
+		new_bag.add_fingerprint(user)
+	var/replace = user.get_inactive_held_item() == src
+	sand_fill.use(1)
+	use(1)
+	if(QDELETED(src) && replace && !QDELETED(new_bag))
+		user.put_in_hands(new_bag)
+	return
 
 /*
  * Diamond
