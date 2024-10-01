@@ -26,6 +26,12 @@
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
+	digitigrade_customization = DIGITIGRADE_OPTIONAL
+	digi_leg_overrides = list(
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/anthromorph,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
+	)
+
 /datum/species/genemod/hemophage/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
