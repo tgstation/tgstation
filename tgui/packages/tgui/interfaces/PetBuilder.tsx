@@ -1,14 +1,15 @@
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Dropdown,
-  Image,
-  Icon,
   Flex,
-  LabeledList,
+  Icon,
+  Image,
   Input,
-  Box,
+  LabeledList,
   Section,
   Stack,
 } from '../components';
@@ -58,7 +59,7 @@ const FilterPetList = (pet_specie: string, pet_options: PetOptions[]) => {
   return pet_options.filter((pet) => pet.pet_specie === pet_specie);
 };
 
-export const PetBuilder = (props: { act: any; data: Data }) => {
+export const PetBuilder = (props) => {
   const { act, data } = useBackend<Data>();
   const {
     pet_name,
@@ -124,90 +125,88 @@ export const PetBuilder = (props: { act: any; data: Data }) => {
   return (
     <Window title="Create Your Pet!" width={665} height={325}>
       <Window.Content>
-        <Stack fill vertical>
-          <Flex width="50%">
-            <Flex.Item>
-              <Stack vertical>
-                <Stack.Item>
-                  <PetSelector
-                    selectedSpecie={selectedSpecie}
-                    selectedPet={selectedPet}
-                    pet_types={pet_types}
-                    ScrollPetSpecies={ScrollPetSpecies}
-                    ScrollPetOptions={ScrollPetOptions}
-                  />
-                </Stack.Item>
-                <Stack.Item mt={1.5}>
-                  <Section
-                    textAlign="center"
+        <Flex width="50%">
+          <Flex.Item>
+            <Stack vertical>
+              <Stack.Item>
+                <PetSelector
+                  selectedSpecie={selectedSpecie}
+                  selectedPet={selectedPet}
+                  pet_types={pet_types}
+                  ScrollPetSpecies={ScrollPetSpecies}
+                  ScrollPetOptions={ScrollPetOptions}
+                />
+              </Stack.Item>
+              <Stack.Item mt={1.5}>
+                <Section
+                  textAlign="center"
+                  style={{
+                    borderRadius: '1em',
+                  }}
+                >
+                  <Button
+                    color="green"
+                    onClick={() =>
+                      act('finalize_pet', {
+                        selected_path: selectedPet?.pet_path,
+                        selected_trick_name: TrickName,
+                        selected_trick_moves: sequences,
+                        selected_pet_name: selectedName,
+                        selected_gender: selectedGender,
+                        selected_specie: selectedSpecie,
+                        selected_carrier: selectedCarrier?.carrier_color,
+                      })
+                    }
                     style={{
+                      fontSize: '27px',
                       borderRadius: '1em',
                     }}
                   >
-                    <Button
-                      color="green"
-                      onClick={() =>
-                        act('finalize_pet', {
-                          selected_path: selectedPet?.pet_path,
-                          selected_trick_name: TrickName,
-                          selected_trick_moves: sequences,
-                          selected_pet_name: selectedName,
-                          selected_gender: selectedGender,
-                          selected_specie: selectedSpecie,
-                          selected_carrier: selectedCarrier?.carrier_color,
-                        })
-                      }
-                      style={{
-                        fontSize: '27px',
-                        borderRadius: '1em',
-                      }}
-                    >
-                      <Flex>
-                        <Flex.Item>
-                          <Icon name="paw" />
-                        </Flex.Item>
-                        <Flex.Item ml={1}>Finalize Pet!</Flex.Item>
-                        <Flex.Item>
-                          <Icon ml={1} name="paw" />
-                        </Flex.Item>
-                      </Flex>
-                    </Button>
-                  </Section>
-                </Stack.Item>
-              </Stack>
-            </Flex.Item>
-            <Flex.Item ml={1}>
-              <Section width="350px">
-                <PetDetails
-                  selectedName={selectedName}
-                  setSelectedName={setSelectedName}
-                  selectedGender={selectedGender}
-                  setSelectedGender={setSelectedGender}
-                />
-                <Flex>
-                  <Flex.Item width="70px">
-                    <CarrierSelector
-                      selectedCarrier={selectedCarrier}
-                      carrier_options={carrier_options}
-                      setSelectedCarrier={setSelectedCarrier}
-                    />
-                  </Flex.Item>
-                  <Flex.Item ml={5} grow>
-                    <TrickSequence
-                      ml={5}
-                      TrickName={TrickName}
-                      pet_possible_emotes={pet_possible_emotes}
-                      setTrickName={setTrickName}
-                      sequences={sequences}
-                      UpdateSequence={UpdateSequence}
-                      carrier_options={carrier_options}
-                    />
-                  </Flex.Item>
-                </Flex>
-              </Section>
-            </Flex.Item>
-          </Flex>
-        </Stack>
+                    <Flex>
+                      <Flex.Item>
+                        <Icon name="paw" />
+                      </Flex.Item>
+                      <Flex.Item ml={1}>Finalize Pet!</Flex.Item>
+                      <Flex.Item>
+                        <Icon ml={1} name="paw" />
+                      </Flex.Item>
+                    </Flex>
+                  </Button>
+                </Section>
+              </Stack.Item>
+            </Stack>
+          </Flex.Item>
+          <Flex.Item ml={1}>
+            <Section width="350px">
+              <PetDetails
+                selectedName={selectedName}
+                setSelectedName={setSelectedName}
+                selectedGender={selectedGender}
+                setSelectedGender={setSelectedGender}
+              />
+              <Flex>
+                <Flex.Item width="70px">
+                  <CarrierSelector
+                    selectedCarrier={selectedCarrier}
+                    carrier_options={carrier_options}
+                    setSelectedCarrier={setSelectedCarrier}
+                  />
+                </Flex.Item>
+                <Flex.Item ml={5} grow>
+                  <TrickSequence
+                    ml={5}
+                    TrickName={TrickName}
+                    pet_possible_emotes={pet_possible_emotes}
+                    setTrickName={setTrickName}
+                    sequences={sequences}
+                    UpdateSequence={UpdateSequence}
+                    carrier_options={carrier_options}
+                  />
+                </Flex.Item>
+              </Flex>
+            </Section>
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );
