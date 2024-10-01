@@ -579,13 +579,13 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     />
                   </Stack.Item>
 
-                  <Stack.Item grow>
+                  <Stack.Item grow maxHeight="300px">
                     <CharacterPreview
                       height="100%"
                       id={data.character_preview_view}
                     />
                   </Stack.Item>
-
+                  {/* DOPPLER ADDITION START */}
                   <Stack.Item position="relative">
                     <Dropdown
                       width="100%"
@@ -598,7 +598,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                       }
                     />
                   </Stack.Item>
-
+                  {/* DOPPLER ADDITION END */}
                   <Stack.Item position="relative">
                     <NameInput
                       name={data.character_preferences.names[data.name_to_use]}

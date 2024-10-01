@@ -272,6 +272,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			return TRUE
 		/// DOPPLER SHIFT ADDITION BEGIN
+		if("update_preview")
+			preview_pref = params["updated_preview"]
+			character_preview_view.update_body()
+			return TRUE
+
 		if ("set_tricolor_preference")
 			var/requested_preference_key = params["preference"]
 			var/index_key = params["value"]
