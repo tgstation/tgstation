@@ -2768,11 +2768,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	set name = "Look Up"
 	set category = "IC"
 
-	//Get z levels available in map
-	var/total_map_z_levels = length(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	//In order, check if user is lower than the max z level of the map,
 	//check if user is at the station's lowest level or above
-	if(total_map_z_levels < src.z || src.z < 2)
+	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z || src.z < 2)
 		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
 		return
 
@@ -2787,11 +2785,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	set name = "Look Down"
 	set category = "IC"
 
-	//Get z levels available in map
-	var/total_map_z_levels = length(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	// In order, check if user is at the max z level of the map or lower,
 	// check if user is above the station's lowest z level
-	if(total_map_z_levels < src.z - 1 || src.z < 3)
+	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z - 1 || src.z < 3)
 		to_chat(src, span_warning("There's nothing interesting below. Better keep your eyes ahead."))
 		return
 
