@@ -41723,13 +41723,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
 /area/space/nearstation)
-"oOX" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/tank_holder/extinguisher{
-	pixel_x = -9
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "oOY" = (
 /obj/structure/rack,
 /obj/item/fuel_pellet,
@@ -88207,7 +88200,7 @@ sFi
 cHG
 snZ
 xgx
-oOX
+dfk
 uyf
 edN
 uya
