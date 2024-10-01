@@ -200,5 +200,9 @@
 	base_icon_state = "biopod"
 	icon_state = "biopod_open"
 	inhand_icon_state = "biopod"
+	greyscale_config = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
+	greyscale_colors = null
 
 #undef pet_carrier_full
