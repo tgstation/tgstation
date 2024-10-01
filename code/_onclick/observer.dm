@@ -10,11 +10,11 @@
 	else if(A.loc)
 		abstract_move(get_turf(A))
 
-/mob/dead/observer/ClickOn(atom/A, list/modifiers)
-	var/params = list2params(modifiers)
+/mob/dead/observer/ClickOn(atom/A, params)
 	if(check_click_intercept(params,A))
 		return
 
+	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)

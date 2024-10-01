@@ -41,7 +41,7 @@
 	if(flags_1 & INITIALIZED_1)
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
-		usr.ClickOn(src, params2list(params))
+		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
 	if(flags_1 & INITIALIZED_1)
@@ -63,15 +63,15 @@
  * * [obj/item/proc/afterattack] (atom,user,adjacent,params) - used both ranged and adjacent
  * * [mob/proc/RangedAttack] (atom,modifiers) - used only ranged, only used for tk and laser eyes but could be changed
  */
-/mob/proc/ClickOn( atom/A, list/modifiers)
+/mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
-	var/params = list2params(modifiers)
-
 	if(check_click_intercept(params,A) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
+
+	var/list/modifiers = params2list(params)
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
