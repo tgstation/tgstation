@@ -522,7 +522,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			holocall.Disconnect(src)//can't answer calls while calling
 		else
-			playsound(src, 'sound/machines/beep/twobeep.ogg', 100) //bring, bring!
+			PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').volume(100).play() //bring, bring!
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)

@@ -116,7 +116,7 @@
  */
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/parent_turf = parent
-	playsound(parent_turf, 'sound/items/tools/welder.ogg', 100, TRUE)
+	PLAYSOUND(parent_turf, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
 	fakefire = new(parent_turf)
 	burn_callback = CALLBACK(src, PROC_REF(burn_parent), user)
 	burn_timer = addtimer(burn_callback, min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
@@ -187,7 +187,7 @@
 	affecting.receive_damage(burn = 5)
 	to_chat(user, span_userdanger("The ignited thermite on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(source, SFX_SEAR, 50, TRUE)
+	PLAYSOUND(get_sfx(source), SFX_SEAR).volume(50).vary_frequency(TRUE).play()
 	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

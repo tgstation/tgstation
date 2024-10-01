@@ -13,7 +13,7 @@
 	cooldown_time = 1 SECONDS
 
 /obj/item/mod/module/bikehorn/on_use()
-	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
+	PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(100).vary_frequency(FALSE).play()
 	drain_power(use_energy_cost)
 
 ///Advanced Balloon Blower - Blows a long balloon.
@@ -54,7 +54,7 @@
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
 	if(microwave_target.microwave_act(microwaver = mod.wearer) & COMPONENT_MICROWAVE_SUCCESS)
-		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
+		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(50).vary_frequency(FALSE).play()
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
 	var/datum/effect_system/spark_spread/spark_effect_two = new()

@@ -307,7 +307,7 @@
 		if(HYPERTORUS_DANGER)
 			playsound(src, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_WARNING)
-			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 75)
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_alert.ogg').volume(75).play()
 
 /**
  * Getter for the machine integrity

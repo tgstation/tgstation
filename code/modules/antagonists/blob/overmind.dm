@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			continue
 
 		if(!(ROLE_BLOB in live_guy.faction))
-			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
+			PLAYSOUND(live_guy, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()

@@ -328,7 +328,7 @@
 					null, span_hear("You hear a ripping sound."), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_danger("You pull on [src]'s tail... and it rips off!"))
 		to_chat(src, span_userdanger("[helper] pulls on your tail... and it rips off!"))
-		playsound(loc, 'sound/effects/cloth_rip.ogg', 75, TRUE)
+		PLAYSOUND(loc, 'sound/effects/cloth_rip.ogg').volume(75).vary_frequency(TRUE).play()
 		dropItemToGround(faketail)
 		helper.put_in_hands(faketail)
 		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
@@ -392,7 +392,7 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	// Shake animation
 	if (incapacitated)

@@ -887,9 +887,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		playsound(loc, 'sound/machines/closet/closet_open.ogg', 35, TRUE, -3)
+		PLAYSOUND(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	else
-		playsound(loc, 'sound/machines/closet/closet_close.ogg', 50, TRUE, -3)
+		PLAYSOUND(loc, 'sound/machines/closet/closet_close.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	cover_open = !cover_open
 	update_appearance()
 
@@ -919,7 +919,7 @@
 		tool.play_tool_sound(src)
 		if(!tool.use_tool(src, user, 6 SECONDS))
 			return
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 		balloon_alert(user, "unsecured")
 		deconstruct(TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1041,7 +1041,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	cover_locked = FALSE
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 

@@ -54,7 +54,7 @@
 /obj/item/airlock_painter/proc/use_paint(mob/user)
 	if(can_use(user))
 		ink.charges--
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
+		PLAYSOUND(src.loc, 'sound/effects/spray2.ogg').volume(50).vary_frequency(TRUE).play()
 		return TRUE
 	else
 		return FALSE
@@ -103,7 +103,7 @@
 		// TODO maybe add some colorful vomit?
 
 		user.visible_message(span_suicide("[user] vomits out [user.p_their()] [L]!"))
-		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
+		PLAYSOUND(user.loc, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
 
 		L.forceMove(T)
 
@@ -143,7 +143,7 @@
 			return
 		to_chat(user, span_notice("You install [W] into [src]."))
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 	else
 		return ..()
 
@@ -151,7 +151,7 @@
 	if(!ink)
 		return CLICK_ACTION_BLOCKING
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 	ink.forceMove(user.drop_location())
 	user.put_in_hands(ink)
 	to_chat(user, span_notice("You remove [ink] from [src]."))

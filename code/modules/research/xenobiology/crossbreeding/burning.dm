@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
-	playsound(src, 'sound/effects/magic/fireball.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/fireball.ogg').volume(50).vary_frequency(TRUE).play()
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -83,7 +83,7 @@ Burning extracts:
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
-		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
+		PLAYSOUND(W, 'sound/effects/break_stone.ogg').volume(50).vary_frequency(TRUE).play()
 	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
 	..()
 
@@ -93,7 +93,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an electrical field!"))
-	playsound(get_turf(src), 'sound/items/weapons/zapbang.ogg', 50, TRUE)
+	PLAYSOUND(get_turf(src), 'sound/items/weapons/zapbang.ogg').volume(50).vary_frequency(TRUE).play()
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M
@@ -263,7 +263,7 @@ Burning extracts:
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
+	PLAYSOUND(T, 'sound/effects/explosion/explosion2.ogg').volume(200).vary_frequency(TRUE).play()
 	for(var/mob/living/target in range(2, T))
 		new /obj/effect/temp_visual/explosion(get_turf(target))
 		SSexplosions.med_mov_atom += target

@@ -111,7 +111,7 @@
 			if(!checkResource(DECONSTRUCT_COST, user))
 				return ITEM_INTERACT_BLOCKING
 			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = 15)
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 			if(!do_after(user, REMOVE_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING
@@ -130,8 +130,8 @@
 			if(!checkResource(cost, user))
 				return ITEM_INTERACT_BLOCKING
 			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
-			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-			playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+			PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/light_flicker.ogg').volume(50).vary_frequency(FALSE).play()
 			if(!do_after(user, BUILD_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING

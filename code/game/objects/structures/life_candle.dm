@@ -94,4 +94,4 @@
 
 	if(ishuman(body) && istype(outfit))
 		outfit.equip(body)
-	playsound(T, respawn_sound, 50, TRUE)
+	PLAYSOUND(get_sfx(T), respawn_sound).volume(50).vary_frequency(TRUE).play()

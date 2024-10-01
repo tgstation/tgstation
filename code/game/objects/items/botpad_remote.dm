@@ -16,12 +16,12 @@
 	return ..()
 
 /obj/item/botpad_remote/attack_self(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	PLAYSOUND(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).vary_frequency(FALSE).play()
 	try_launch(user)
 	return
 
 /obj/item/botpad_remote/attack_self_secondary(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	PLAYSOUND(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).vary_frequency(FALSE).play()
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return

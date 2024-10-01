@@ -131,7 +131,7 @@
 		turn_on()
 
 	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
-	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
+	PLAYSOUND(real_parent, 'sound/machines/click.ogg').volume(30).vary_frequency(TRUE).play()
 	playsound(real_parent, on ? 'sound/items/tools/welderactivate.ogg' : 'sound/items/tools/welderdeactivate.ogg', 15, TRUE)
 
 /datum/component/stove/proc/on_attackby(obj/machinery/source, obj/item/attacking_item, mob/user, params)

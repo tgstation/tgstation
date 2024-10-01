@@ -12,7 +12,7 @@
 	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
 	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
-	playsound(get_turf(user), 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
+	PLAYSOUND(get_turf(user), 'sound/effects/magic/lightningbolt.ogg').volume(50).vary_frequency(TRUE).play()
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_target = user
 		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)

@@ -164,7 +164,7 @@ Difficulty: Hard
 		return
 	var/list/all_turfs = RANGE_TURFS(range, origin)
 	for(var/sound_range = 0 to range)
-		playsound(origin,'sound/effects/bamf.ogg', 600, TRUE, 10)
+		PLAYSOUND(origin, 'sound/effects/bamf.ogg').volume(600).vary_frequency(TRUE).range(10 + SOUND_RANGE).play()
 		for(var/turf/stomp_turf in all_turfs)
 			if(get_dist(origin, stomp_turf) > sound_range)
 				continue

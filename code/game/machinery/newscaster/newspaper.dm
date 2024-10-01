@@ -170,7 +170,7 @@
 		else
 			return TRUE
 	SStgui.update_uis(src)
-	playsound(src, SFX_PAGE_TURN, 50, TRUE)
+	PLAYSOUND(get_sfx(src), SFX_PAGE_TURN).volume(50).vary_frequency(TRUE).play()
 	return TRUE
 
 /obj/item/newspaper/ui_static_data(mob/user)

@@ -90,7 +90,7 @@
 		if(user.temporarilyRemoveItemFromInventory(tool))
 			user.visible_message(span_notice("[user] hooks up [tool] to [src]."), \
 			span_notice("You add [tool] to [src]."))
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 			tool.forceMove(src)
 			cell = tool
 			add_fingerprint(user)
@@ -110,7 +110,7 @@
 					new /obj/item/stack/sheet/iron(drop_location(), sheets_refunded)
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
-					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
+					PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(75).vary_frequency(TRUE).play()
 					qdel(src)
 				return
 

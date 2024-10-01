@@ -10,7 +10,7 @@
 /obj/docking_port/mobile/assault_pod/initiate_docking(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/explosion/explosion1.ogg',50,TRUE)
+		PLAYSOUND(get_turf(src.loc), 'sound/effects/explosion/explosion1.ogg').volume(50).vary_frequency(TRUE).play()
 
 
 

@@ -827,7 +827,7 @@
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
 		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
-			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
+			PLAYSOUND(src, 'sound/effects/bang.ogg').volume(25).vary_frequency(TRUE).play()
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message(span_danger("[user] headbutts the airlock."), \
 									span_userdanger("You headbutt the airlock!"))
@@ -1051,7 +1051,7 @@
 			to_chat(user, span_warning("[src] has already been sealed!"))
 			return
 		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
-		playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
+		PLAYSOUND(src, 'sound/items/tools/jaws_pry.ogg').volume(30).vary_frequency(TRUE).play()
 		if(!do_after(user, airlockseal.seal_time, target = src))
 			return
 		if(!density)
@@ -1063,7 +1063,7 @@
 		if(!user.transferItemToLoc(airlockseal, src))
 			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
 			return
-		playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
+		PLAYSOUND(src, 'sound/machines/airlock/airlockforced.ogg').volume(30).vary_frequency(TRUE).play()
 		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
 		seal = airlockseal
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
@@ -1137,12 +1137,12 @@
 		to_chat(user, span_warning("You don't have the dexterity to remove the seal!"))
 		return TRUE
 	user.visible_message(span_notice("[user] begins removing the seal from [src]."), span_notice("You begin removing [src]'s pneumatic seal."))
-	playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
+	PLAYSOUND(src, 'sound/machines/airlock/airlockforced.ogg').volume(30).vary_frequency(TRUE).play()
 	if(!do_after(user, airlockseal.unseal_time, target = src))
 		return TRUE
 	if(!seal)
 		return TRUE
-	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
+	PLAYSOUND(src, 'sound/items/tools/jaws_pry.ogg').volume(30).vary_frequency(TRUE).play()
 	airlockseal.forceMove(get_turf(user))
 	user.visible_message(span_notice("[user] finishes removing the seal from [src]."), span_notice("You finish removing [src]'s pneumatic seal."))
 	seal = null
@@ -1202,7 +1202,7 @@
 
 			if(!prying_so_hard)
 				var/time_to_open = 50
-				playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+				PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary_frequency(TRUE).play() //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
 				if(I.use_tool(src, user, time_to_open, volume = 100))
 					if(check_electrified && shock(user, 100))
@@ -1292,18 +1292,18 @@
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
 			use_energy(50 JOULES)
-			playsound(src, doorOpen, 30, TRUE)
+			PLAYSOUND(get_sfx(src), doorOpen).volume(30).vary_frequency(TRUE).play()
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
 			if(obj_flags & EMAGGED)
 				return FALSE
 			use_energy(50 JOULES)
-			playsound(src, doorOpen, 30, TRUE)
+			PLAYSOUND(get_sfx(src), doorOpen).volume(30).vary_frequency(TRUE).play()
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // No power usage, special sound, get it open.
-			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
+			PLAYSOUND(src, 'sound/machines/airlock/airlockforced.ogg').volume(30).vary_frequency(TRUE).play()
 			return TRUE
 
 		else
@@ -1377,11 +1377,11 @@
 			if(obj_flags & EMAGGED)
 				return FALSE
 			use_energy(50 JOULES)
-			playsound(src, doorClose, 30, TRUE)
+			PLAYSOUND(get_sfx(src), doorClose).volume(30).vary_frequency(TRUE).play()
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)
-			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
+			PLAYSOUND(src, 'sound/machines/airlock/airlockforced.ogg').volume(30).vary_frequency(TRUE).play()
 			return TRUE
 
 		else
@@ -1474,7 +1474,7 @@
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
+		PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary_frequency(TRUE).play()
 
 
 	if(do_after(user, time_to_open, src))

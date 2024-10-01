@@ -127,7 +127,7 @@
 	if(user)
 		to_chat(user, span_notice("Locked In."))
 		new droptype( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, TRUE)
+		PLAYSOUND(src, 'sound/effects/pop.ogg').vlume(100).vary_frequency(TRUE).range(SOUND_RANGE + TRUE).play()
 		qdel(src)
 	return
 

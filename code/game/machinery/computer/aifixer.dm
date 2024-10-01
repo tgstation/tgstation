@@ -58,7 +58,7 @@
 		if("PRG_beginReconstruction")
 			if(occupier?.health < 100)
 				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
-				playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
+				PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(25).vary_frequency(FALSE).play()
 				restoring = TRUE
 				occupier.notify_revival("Your core files are being restored!", source = src)
 				. = TRUE

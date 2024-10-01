@@ -27,7 +27,7 @@
 	if(istype(attacking_item, /obj/item/research_notes) && stored_research)
 		var/obj/item/research_notes/research_notes = attacking_item
 		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_notes.value))
-		playsound(src, 'sound/machines/copier.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/copier.ogg').volume(50).vary_frequency(TRUE).play()
 		qdel(research_notes)
 		return
 	return ..()

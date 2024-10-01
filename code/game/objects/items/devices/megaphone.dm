@@ -34,7 +34,7 @@
 	if(spamcheck > world.time)
 		to_chat(user, span_warning("\The [src] needs to recharge!"))
 	else
-		playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
+		PLAYSOUND(loc, 'sound/items/megaphone.ogg').vlume(100).vary_frequency(FALSE).range(SOUND_RANGE + TRUE).play()
 		speech_args[SPEECH_SPANS] |= voicespan
 
 /obj/item/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)

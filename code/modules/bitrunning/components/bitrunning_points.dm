@@ -28,7 +28,7 @@
 
 /// Spawns the crate with some effects
 /datum/component/bitrunning_points/proc/reveal()
-	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/effects/magic/blink.ogg').volume(50).vary_frequency(TRUE).play()
 
 	var/turf/tile = parent
 	var/obj/structure/closet/crate/secure/bitrunning/encrypted/crate = new()

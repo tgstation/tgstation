@@ -66,7 +66,7 @@
 			else
 				sortTypes |= O.currTag
 				to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
-			playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
+			PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').volume(100).vary_frequency(TRUE).play()
 	else
 		return ..()
 

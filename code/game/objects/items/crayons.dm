@@ -836,7 +836,7 @@
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced = "spraycan suicide")
 	if(pre_noise || post_noise)
-		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		PLAYSOUND(src, 'sound/effects/spray.ogg').volume(5).vary_frequency(TRUE).range(5 + SOUND_RANGE).play()
 	if(can_change_colour)
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()

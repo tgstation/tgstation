@@ -42,7 +42,7 @@
 			and [emag_card.p_they()] become stuck together!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, 'sound/effects/bang.ogg').vlume(33).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
 	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
 	vis_contents += emag_card
@@ -114,7 +114,7 @@
 		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
 		exploding = TRUE
 	else
-		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(TRUE).play()
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
 /obj/item/card/emagfake/proc/blow_up()
@@ -125,7 +125,7 @@
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	playsound(src, SFX_SPARKS, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)

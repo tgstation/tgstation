@@ -647,7 +647,7 @@
 		say(pick(cry_alone_messages))
 	else
 		say(pick(cry_still_messages))
-	playsound(src, 'sound/items/intents/Help.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/items/intents/Help.ogg').volume(50).vary_frequency(FALSE).play()
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
@@ -701,7 +701,7 @@
 		going_hard = FALSE
 		update_icon(UPDATE_OVERLAYS)
 	icon_state = "goat_splat"
-	playsound(src, SFX_DESECRATION, 50, TRUE)
+	PLAYSOUND(get_sfx(src), SFX_DESECRATION).volume(50).vary_frequency(TRUE).play()
 	visible_message(span_danger("[src] gets absolutely flattened!"))
 	splat = TRUE
 
@@ -737,7 +737,7 @@
 		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
 		divine = TRUE
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	playsound(src, 'sound/effects/hallucinations/wail.ogg', 50, TRUE, -1)
+	PLAYSOUND(src, 'sound/effects/hallucinations/wail.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	var/list/available_spots = get_adjacent_open_turfs(loc)
 	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
 		var/turf/open/random_open_spot = pick(available_spots)

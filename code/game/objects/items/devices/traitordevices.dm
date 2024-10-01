@@ -51,7 +51,7 @@ effective or pretty fucking useless.
 		else
 			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
+	PLAYSOUND(src.loc, 'sound/misc/interference.ogg').volume(50).vary_frequency(TRUE).play()
 	to_chat(user, span_notice("You trigger [src]."))
 	times_used += 1
 	if(times_used >= max_uses)
@@ -380,7 +380,7 @@ effective or pretty fucking useless.
 		COMBAT_MESSAGE_RANGE,
 	)
 
-	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
+	PLAYSOUND(src, 'sound/items/tools/drill_use.ogg').volume(80).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src

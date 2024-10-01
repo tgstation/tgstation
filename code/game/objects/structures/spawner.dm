@@ -53,7 +53,7 @@
 		to_chat(user, span_warning("[src] already has a holotag attached!"))
 		return
 	to_chat(user, span_notice("You affix a holotag to [src]."))
-	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
+	PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').volume(100).play()
 	gps_tagged = TRUE
 	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
@@ -221,7 +221,7 @@
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
-			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+			PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
 			living_mob.adjustBruteLoss(60 * seconds_per_tick)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
@@ -290,7 +290,7 @@
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
 	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!"))
-	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+	PLAYSOUND(proteon, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary_frequency(TRUE).play()
 	proteon.balloon_alert_to_viewers("awoken!")
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
 

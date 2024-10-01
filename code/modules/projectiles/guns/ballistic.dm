@@ -284,7 +284,7 @@
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	PLAYSOUND(user, 'sound/items/weapons/empty.ogg').volume(100).vary_frequency(TRUE).play()
 	update_appearance()
 	update_item_action_buttons()
 
@@ -631,7 +631,7 @@
 			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
-		playsound(src, dry_fire_sound, 30, TRUE)
+		PLAYSOUND(get_sfx(src), dry_fire_sound).volume(30).vary_frequency(TRUE).play()
 		return OXYLOSS
 
 #undef BRAINS_BLOWN_THROW_SPEED

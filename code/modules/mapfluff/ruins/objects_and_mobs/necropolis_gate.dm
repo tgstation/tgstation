@@ -164,7 +164,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
 		user.visible_message(span_warning("[user] knocks on [src]..."), span_boldannounce("You tentatively knock on [src]..."))
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, TRUE)
+		PLAYSOUND(user.loc, 'sound/effects/shieldbash.ogg').volume(100).vary_frequency(TRUE).play()
 		sleep(5 SECONDS)
 	return ..()
 

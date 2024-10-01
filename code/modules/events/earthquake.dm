@@ -147,10 +147,10 @@
 				rock_to_clear.gets_drilled(give_exp = FALSE)
 		for(var/turf/turf_to_quake in edges)
 			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
-		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
+		PLAYSOUND(epicenter, 'sound/misc/metal_creak.ogg').volume(125).vary_frequency(TRUE).play()
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/ambience/earth_rumble/earth_rumble.ogg', 125)
+	PLAYSOUND(epicenter, 'sound/ambience/earth_rumble/earth_rumble.ogg').volume(125).play()
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue

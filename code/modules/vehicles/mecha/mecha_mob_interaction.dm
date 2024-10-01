@@ -47,7 +47,7 @@
 	add_fingerprint(newoccupant)
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
 	setDir(SOUTH)
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/machines/windowdoor.ogg').volume(50).vary_frequency(TRUE).play()
 	set_mouse_pointer()
 	if(!internal_damage)
 		SEND_SOUND(newoccupant, sound('sound/vehicles/mecha/nominal.ogg',volume=50))

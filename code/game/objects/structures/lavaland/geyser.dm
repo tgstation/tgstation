@@ -165,7 +165,7 @@
 		icon_state = layer_mode_sprite
 		to_chat(user, span_notice("You set the plunger to 'Layer Mode'."))
 
-	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(10).vary_frequency(TRUE).play()
 
 /obj/item/plunger/click_alt(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

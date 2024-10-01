@@ -647,11 +647,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(mode == TURRET_STUN)
 		use_energy(reqpower)
 		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, TRUE)
+		PLAYSOUND(get_sfx(loc), stun_projectile_sound).volume(75).vary_frequency(TRUE).play()
 	else
 		use_energy(reqpower * 2)
 		A = new lethal_projectile(T)
-		playsound(loc, lethal_projectile_sound, 75, TRUE)
+		PLAYSOUND(get_sfx(loc), lethal_projectile_sound).volume(75).vary_frequency(TRUE).play()
 
 
 	//Shooting Code:

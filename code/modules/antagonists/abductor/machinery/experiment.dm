@@ -164,12 +164,12 @@
 		if(point_reward > 0)
 			open_machine()
 			send_back(occupant)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+			PLAYSOUND(src.loc, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play()
 			points += point_reward
 			credits += point_reward
 			return "Experiment successful! [point_reward] new data-points collected."
 		else
-			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+			PLAYSOUND(src.loc, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
 			return "Experiment failed! No replacement organ detected."
 	else
 		say("Brain activity nonexistent - disposing sample...")

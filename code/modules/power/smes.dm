@@ -129,7 +129,7 @@
 
 		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
 		balloon_alert(user, "adding cables...")
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 
 		if(!do_after(user, 2 SECONDS, target = src))
 			return

@@ -33,7 +33,7 @@
 	var/aggressive = FALSE
 	for(var/mob/living/living_mob in pickup_zone)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 			say("Cannot scan with humans inside.")
 			return
 		aggressive = TRUE
@@ -50,7 +50,7 @@
 	flick("tube_down", src)
 	scanning = TRUE
 	update_icon()
-	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
+	PLAYSOUND(src, 'sound/machines/destructive_scanner/TubeDown.ogg').volume(100).play()
 	use_energy(idle_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(start_scanning), aggressive), 1.2 SECONDS)
 
@@ -59,7 +59,7 @@
 	if(aggressive)
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
-		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
+		PLAYSOUND(src, 'sound/machines/destructive_scanner/ScanSafe.ogg').volume(100).play()
 	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(finish_scanning), aggressive), 6 SECONDS)
 
@@ -69,7 +69,7 @@
 	flick("tube_up", src)
 	scanning = FALSE
 	update_icon()
-	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg', 100)
+	PLAYSOUND(src, 'sound/machines/destructive_scanner/TubeUp.ogg').volume(100).play()
 	addtimer(CALLBACK(src, PROC_REF(open), aggressive), 1.2 SECONDS)
 
 ///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
@@ -94,7 +94,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 

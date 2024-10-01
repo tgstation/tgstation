@@ -187,7 +187,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	playsound(target, 'sound/items/weapons/gun/revolver/shot.ogg', 100)
+	PLAYSOUND(target, 'sound/items/weapons/gun/revolver/shot.ogg').volume(100).play()
 	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus

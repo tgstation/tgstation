@@ -51,7 +51,7 @@
 	if(force_proj_busy)
 		to_chat(user, span_notice("[src] is busy creating a forcefield."))
 		return ITEM_INTERACT_BLOCKING
-	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+	PLAYSOUND(loc, 'sound/machines/click.ogg').volume(20).vary_frequency(TRUE).play()
 	if(creation_time)
 		force_proj_busy = TRUE
 		if(!do_after(user, creation_time, target = interacting_with))
@@ -59,7 +59,7 @@
 			return ITEM_INTERACT_BLOCKING
 		force_proj_busy = FALSE
 
-	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
+	PLAYSOUND(src, 'sound/items/weapons/resonator_fire.ogg').volume(50).vary_frequency(TRUE).play()
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
@@ -124,14 +124,14 @@
 
 /obj/structure/projected_forcefield/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
-	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
+	PLAYSOUND(src, 'sound/items/weapons/resonator_blast.ogg').volume(25).vary_frequency(TRUE).play()
 	if(generator)
 		generator.current_fields -= src
 		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+	PLAYSOUND(loc, 'sound/items/weapons/egloves.ogg').volume(80).vary_frequency(TRUE).play()
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

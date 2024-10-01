@@ -49,7 +49,7 @@
 /obj/item/boxcutter/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	playsound(src, 'sound/items/boxcutter_activate.ogg', 50)
+	PLAYSOUND(src, 'sound/items/boxcutter_activate.ogg').volume(50).play()
 	tool_behaviour = (active ? TOOL_KNIFE : NONE)
 	if(active)
 		AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)

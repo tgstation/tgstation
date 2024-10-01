@@ -27,7 +27,7 @@
 /obj/machinery/computer/exodrone_control_console/proc/on_exodrone_status_changed()
 	SIGNAL_HANDLER
 	//Notify we need human action and switch screeb icon to alert.
-	playsound(src,'sound/machines/ping.ogg',30,FALSE)
+	PLAYSOUND(src, 'sound/machines/ping.ogg').volume(30).vary_frequency(FALSE).play()
 	update_icon()
 
 /obj/machinery/computer/exodrone_control_console/proc/drone_destroyed()

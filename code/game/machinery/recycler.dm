@@ -94,7 +94,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safeties disabled")
 	return FALSE
 
@@ -225,13 +225,13 @@
 	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
 	safety_mode = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/ping.ogg').volume(50).vary_frequency(FALSE).play()
 	safety_mode = FALSE
 	update_appearance()
 
@@ -239,9 +239,9 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/items/tools/welder.ogg').volume(50).vary_frequency(TRUE).play()
 	else
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
 
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)

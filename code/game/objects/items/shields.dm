@@ -74,7 +74,7 @@
 	if(!COOLDOWN_FINISHED(src, baton_bash))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
-	playsound(src, shield_bash_sound, 50, TRUE)
+	PLAYSOUND(get_sfx(src), shield_bash_sound).volume(50).vary_frequency(TRUE).play()
 	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
 	return ITEM_INTERACT_SUCCESS
 
@@ -264,7 +264,7 @@
 			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 				qdel(embedded_flash)
 				flash.forceMove(src)
 				return
@@ -420,7 +420,7 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(50).vary_frequency(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)

@@ -67,7 +67,7 @@
 		tool.play_tool_sound(src)
 		if(tool.use_tool(src, user, 5 SECONDS))
 			balloon_alert_to_viewers("repaired")
-			playsound(user, 'sound/items/tools/change_drill.ogg', 50, vary = TRUE)
+			PLAYSOUND(user, 'sound/items/tools/change_drill.ogg').volume(50).vary_frequency(TRUE).play()
 			broken_ringer = FALSE
 			times_rang = 0
 			return ITEM_INTERACT_SUCCESS
@@ -80,7 +80,7 @@
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 5 SECONDS))
 		balloon_alert(user, "disassembled")
-		playsound(user, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		PLAYSOUND(user, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 		if(!broken_ringer) // Drop 2 if it's not broken.
 			new/obj/item/stack/sheet/iron(drop_location())
 		new/obj/item/stack/sheet/iron(drop_location())

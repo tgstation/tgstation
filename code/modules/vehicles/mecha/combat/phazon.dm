@@ -57,7 +57,7 @@
 			chassis.balloon_alert(owner,"your punches will now deal toxin damage")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
-	playsound(chassis, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+	PLAYSOUND(chassis, 'sound/vehicles/mecha/mechmove01.ogg').volume(50).vary_frequency(TRUE).play()
 	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing

@@ -140,8 +140,8 @@
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)
-	playsound(src, 'sound/effects/magic/wand_teleport.ogg', 50)
-	playsound(destination, 'sound/effects/magic/wand_teleport.ogg', 50)
+	PLAYSOUND(src, 'sound/effects/magic/wand_teleport.ogg').volume(50).play()
+	PLAYSOUND(destination, 'sound/effects/magic/wand_teleport.ogg').volume(50).play()
 
 /// Doesn't actually do anything, just a visual marker
 /obj/effect/temp_visual/lesser_carp_rift/exit

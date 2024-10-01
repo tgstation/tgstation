@@ -58,7 +58,7 @@
 
 	// if we did indeed suck up something, play a funny noise
 	if (sucked)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		PLAYSOUND(parent, get_sfx(SFX_RUSTLE)).volume(50).vary_frequency(TRUE).range(-5 + SOUND_RANGE).play()
 
 /**
  * Handler for when a new trash bag is attached

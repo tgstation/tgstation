@@ -69,7 +69,7 @@
 	. = ..() //What could go wrong
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound, 40, TRUE)
+		PLAYSOUND(src.loc, meteorsound).volume(40).vary_frequency(TRUE).play()
 		get_hit()
 
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
@@ -342,7 +342,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
+	PLAYSOUND(src, 'sound/items/airhorn/AirHorn.ogg').volume(100).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
@@ -368,7 +368,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
+	PLAYSOUND(src, 'sound/items/weapons/zapbang.ogg').volume(100).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	empulse(src, 3, 8)
 
 //Meaty Ore

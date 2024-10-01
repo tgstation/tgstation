@@ -1125,7 +1125,7 @@
 	return TRUE
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/effects/space_wind.ogg').volume(50).vary_frequency(TRUE).play()
 	if(buckled || mob_negates_gravity())
 		return
 

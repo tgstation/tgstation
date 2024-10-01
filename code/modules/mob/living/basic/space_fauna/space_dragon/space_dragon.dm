@@ -176,7 +176,7 @@
 	adjust_health(-food.maxHealth * 0.25)
 	if (QDELETED(food) || food.loc == src)
 		return FALSE
-	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 60, TRUE)
+	PLAYSOUND(src, 'sound/effects/magic/demon_attack1.ogg').volume(60).vary_frequency(TRUE).play()
 	visible_message(span_boldwarning("[src] swallows [food] whole!"))
 	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
 	food.forceMove(src)

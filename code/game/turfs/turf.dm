@@ -633,7 +633,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
-		playsound(src, SFX_BODYFALL, 50, TRUE)
+		PLAYSOUND(get_sfx(src), SFX_BODYFALL).volume(50).vary_frequency(TRUE).play()
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)

@@ -86,13 +86,13 @@
 /// Called by carbons after they connect the tank to their breathing apparatus.
 /obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
 	breathing_mob = carbon_target
-	playsound(loc, 'sound/items/internals/internals_on.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(loc, 'sound/items/internals/internals_on.ogg').vlume(15).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	RegisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 /// Called by carbons after they disconnect the tank from their breathing apparatus.
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
-	playsound(loc, 'sound/items/internals/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(loc, 'sound/items/internals/internals_off.ogg').vlume(15).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	UnregisterSignal(carbon_target, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
 /obj/item/tank/proc/get_status_tab_item(mob/living/source, list/items)
@@ -183,13 +183,13 @@
 	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
-		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
+		PLAYSOUND(location, 'sound/effects/spray.ogg').volume(10).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	return ..()
 
 /obj/item/tank/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	PLAYSOUND(loc, 'sound/effects/spray.ogg').volume(10).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
 		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
@@ -377,7 +377,7 @@
 	if(atom_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
 	visible_message(span_warning("[src] springs a leak!"))
-	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	PLAYSOUND(src, 'sound/effects/spray.ogg').volume(10).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 
 /// Handles rupturing and fragmenting
 /obj/item/tank/atom_destruction(damage_flag)

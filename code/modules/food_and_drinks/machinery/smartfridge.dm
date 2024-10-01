@@ -253,12 +253,12 @@
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
+			PLAYSOUND(src.loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary_frequency(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
-	playsound(src, SFX_SHATTER, 50, TRUE)
+	PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(50).vary_frequency(TRUE).play()
 	return ..()
 
 /obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, params)

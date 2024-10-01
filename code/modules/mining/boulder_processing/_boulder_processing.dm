@@ -261,7 +261,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary_frequency(FALSE).play()
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool
@@ -420,6 +420,6 @@
 	specific_boulder.processed_by = src //so we don't take in the boulder again after we just ejected it
 	specific_boulder.forceMove(drop_location())
 	specific_boulder.processed_by = null //now since move is done we can safely clear the reference
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+	PLAYSOUND(loc, 'sound/machines/ping.ogg').volume(50).vary_frequency(FALSE).play()
 
 	return TRUE

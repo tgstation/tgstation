@@ -148,4 +148,4 @@ SUBSYSTEM_DEF(market)
 
 	for(var/obj/machinery/ltsrbt/pad as anything in telepads)
 		pad.say("[market_name] restocked!")
-		playsound(src, 'sound/effects/cashregister.ogg', 40, FALSE)
+		PLAYSOUND(src, 'sound/effects/cashregister.ogg').volume(40).vary_frequency(FALSE).play()

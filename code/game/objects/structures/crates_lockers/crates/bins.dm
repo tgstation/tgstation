@@ -46,12 +46,12 @@
 		return ..()
 
 /obj/structure/closet/crate/bin/proc/do_animate()
-	playsound(loc, open_sound, 15, TRUE, -3)
+	PLAYSOUND(loc, open_sound).volume(15).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	flick(base_icon_state + "_animate", src)
 	addtimer(CALLBACK(src, PROC_REF(do_close)), 1.1 SECONDS)
 
 /obj/structure/closet/crate/bin/proc/do_close()
-	playsound(loc, close_sound, 15, TRUE, -3)
+	PLAYSOUND(loc, close_sound).volume(15).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	update_appearance()
 
 ///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.

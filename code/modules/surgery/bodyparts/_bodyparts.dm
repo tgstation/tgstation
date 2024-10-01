@@ -396,7 +396,7 @@
 		if(!contents.len)
 			to_chat(user, span_warning("There is nothing left inside [src]!"))
 			return
-		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
+		PLAYSOUND(loc, 'sound/items/weapons/slice.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
 		if(do_after(user, 5.4 SECONDS, target = src))
@@ -419,7 +419,7 @@
 
 	var/atom/drop_loc = drop_location()
 	if(IS_ORGANIC_LIMB(src))
-		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
+		PLAYSOUND(drop_loc, 'sound/misc/splort.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	QDEL_NULL(current_gauze)
 

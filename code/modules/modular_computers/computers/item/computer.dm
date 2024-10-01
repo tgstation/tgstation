@@ -288,7 +288,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').volume(50).vary_frequency(FALSE).play()
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -322,7 +322,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').volume(50).vary_frequency(FALSE).play()
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -476,7 +476,7 @@
 		return
 	user.put_in_hands(inserted_disk)
 	inserted_disk = null
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = FALSE // Robots and AIs get different activation messages.
@@ -552,7 +552,7 @@
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(src, sound, 50, TRUE)
+	PLAYSOUND(get_sfx(src), sound).volume(50).vary_frequency(TRUE).play()
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
@@ -561,11 +561,11 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE)
 	else
-		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').volume(50).vary_frequency(TRUE).play()
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').volume(15).vary_frequency(TRUE).play()
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -727,7 +727,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+		PLAYSOUND(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary_frequency(TRUE).range(SOUND_RANGE + FALSE).play()
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
@@ -921,7 +921,7 @@
 		user.put_in_hands(inserted_disk)
 		balloon_alert(user, "disks swapped")
 	inserted_disk = disk
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)

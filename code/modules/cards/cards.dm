@@ -50,7 +50,7 @@
 		card.transform = Matrix
 		card.update_appearance()
 
-	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/items/cards/cardshuffle.ogg').volume(50).vary_frequency(TRUE).play()
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
@@ -125,7 +125,7 @@
 	cards -= card
 
 	update_appearance()
-	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/items/cards/cardflip.ogg').volume(50).vary_frequency(TRUE).play()
 	return card
 
 /// Returns the cards in this deck.

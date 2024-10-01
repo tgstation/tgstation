@@ -201,7 +201,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
-	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
+	PLAYSOUND(chassis, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)

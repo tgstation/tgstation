@@ -74,17 +74,17 @@
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
-		playsound(computer.loc, 'sound/machines/arcade/steal.ogg', 50, TRUE)
+		PLAYSOUND(computer.loc, 'sound/machines/arcade/steal.ogg').volume(50).vary_frequency(TRUE).play()
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
 	else if(boss_mp > 5 && boss_hp <12)
 		heads_up = "[boss_name] heals for [bossheal] health!"
-		playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
+		PLAYSOUND(computer.loc, 'sound/machines/arcade/heal.ogg').volume(50).vary_frequency(TRUE).play()
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
 	else
 		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
-		playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
+		PLAYSOUND(computer.loc, 'sound/machines/arcade/hit.ogg').volume(50).vary_frequency(TRUE).play()
 		player_hp -= boss_attackamt
 
 	pause_state = FALSE
@@ -122,7 +122,7 @@
 				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
-			playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
+			PLAYSOUND(computer.loc, 'sound/machines/arcade/hit.ogg').volume(50).vary_frequency(TRUE).play()
 			boss_hp -= attackamt
 			sleep(1 SECONDS)
 			game_check()
@@ -139,7 +139,7 @@
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
-			playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
+			PLAYSOUND(computer.loc, 'sound/machines/arcade/heal.ogg').volume(50).vary_frequency(TRUE).play()
 			player_hp += healamt
 			player_mp -= healcost
 			sleep(1 SECONDS)
@@ -152,7 +152,7 @@
 				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
-			playsound(computer.loc, 'sound/machines/arcade/mana.ogg', 50, TRUE)
+			PLAYSOUND(computer.loc, 'sound/machines/arcade/mana.ogg').volume(50).vary_frequency(TRUE).play()
 			player_mp += rechargeamt
 			sleep(1 SECONDS)
 			game_check()

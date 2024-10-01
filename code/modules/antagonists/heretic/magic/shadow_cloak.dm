@@ -83,7 +83,7 @@
 	active_cloak = null
 
 	UnregisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-	playsound(cast_on, 'sound/effects/curse/curseattack.ogg', 50)
+	PLAYSOUND(cast_on, 'sound/effects/curse/curseattack.ogg').volume(50).play()
 	if(show_message)
 		cast_on.visible_message(
 			span_warning("[cast_on] appears from the shadows!"),

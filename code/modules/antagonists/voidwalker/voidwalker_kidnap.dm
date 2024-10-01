@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	var/mob/living/driver = locate(/mob/living) in contents
 	if(driver)
 		driver.heal_ordered_damage(heal_per_food, list(BRUTE, BURN, OXY))
-		playsound(src, 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+		PLAYSOUND(src, 'sound/misc/server-ready.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 /obj/effect/wisp_mobile/Exited(atom/movable/gone, direction)
 	. = ..()

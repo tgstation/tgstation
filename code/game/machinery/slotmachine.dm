@@ -152,7 +152,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "machine rigged")
 	return TRUE
 
@@ -275,7 +275,7 @@
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
 	for(var/list/reel in reels)
 		if(!value)
-			playsound(src, 'sound/machines/ding_short.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			PLAYSOUND(src, 'sound/machines/ding_short.ogg').vlume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 		reels[reel] = value
 		if(delay)
 			sleep(delay)
@@ -335,14 +335,14 @@
 
 	else
 		balloon_alert(user, "no luck!")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).play()
 		did_player_win = FALSE
 
 	if(did_player_win)
 		add_filter("jackpot_rays", 3, ray_filter)
 		animate(get_filter("jackpot_rays"), offset = 10, time = 3 SECONDS, loop = -1)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
-		playsound(src, 'sound/machines/roulette/roulettejackpot.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/roulette/roulettejackpot.ogg').volume(50).vary_frequency(TRUE).play()
 
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)

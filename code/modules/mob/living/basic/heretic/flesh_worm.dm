@@ -98,7 +98,7 @@
 	if(!istype(target, /obj/item/bodypart/arm))
 		return ..()
 	visible_message(span_warning("[src] devours [target]!"))
-	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
 	qdel(target)
 	on_arm_eaten()
 

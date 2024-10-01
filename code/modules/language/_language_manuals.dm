@@ -31,7 +31,7 @@
 		attack_self(user)
 		return
 
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	PLAYSOUND(loc, get_sfx(SFX_PUNCH)).volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	if(M.stat == DEAD)
 		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."), span_userdanger("[user] smacks your lifeless corpse with [src]."), span_hear("You hear smacking."))

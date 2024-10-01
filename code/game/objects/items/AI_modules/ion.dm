@@ -39,5 +39,5 @@ CONTAINS:
 /obj/item/ai_module/toy_ai/attack_self(mob/user)
 	laws[1] = generate_ion_law()
 	to_chat(user, span_notice("You press the button on [src]."))
-	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+	PLAYSOUND(user, 'sound/machines/click.ogg').volume(20).vary_frequency(TRUE).play()
 	src.loc.visible_message(span_warning("[icon2html(src, viewers(loc))] [laws[1]]"))

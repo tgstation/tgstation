@@ -343,7 +343,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
+		PLAYSOUND(changer, 'sound/items/tools/ratchet.ogg').volume(10).vary_frequency(TRUE).play() //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)

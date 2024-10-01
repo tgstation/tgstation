@@ -108,11 +108,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/items/weapons/smash.ogg', 50, TRUE)
+				PLAYSOUND(src, 'sound/items/weapons/smash.ogg').volume(50).vary_frequency(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()

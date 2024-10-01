@@ -88,7 +88,7 @@
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
 	update_appearance()
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/machines/windowdoor.ogg').volume(50).vary_frequency(TRUE).play()
 	if(atom_integrity == max_integrity)
 		SEND_SOUND(newoccupant, sound('sound/vehicles/mecha/nominal.ogg',volume=50))
 

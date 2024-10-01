@@ -277,7 +277,7 @@
 	flushAnimation()
 	sleep(1 SECONDS)
 	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
+		PLAYSOUND(src, 'sound/machines/disposalflush.ogg').vlume(50).vary_frequency(FALSE).range(SOUND_RANGE + FALSE).play()
 		last_sound = world.time
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
@@ -305,7 +305,7 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
-	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
+	PLAYSOUND(src, 'sound/machines/hiss.ogg').vlume(50).vary_frequency(FALSE).range(SOUND_RANGE + FALSE).play()
 
 	pipe_eject(H)
 
@@ -389,7 +389,7 @@
 		new_tagger.moveToNullspace()
 		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
 		balloon_alert(user, "tagger returned")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 		mounted_tagger = new_tagger
 		update_appearance()
 		return
@@ -407,7 +407,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
 	balloon_alert(user, "tagger pulled")
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(60).vary_frequency(TRUE).play()
 	mounted_tagger = null
 	update_appearance(UPDATE_OVERLAYS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -194,7 +194,7 @@
 				source = src,
 				header = "Power Sunk",
 			)
-		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
+		PLAYSOUND(src, 'sound/effects/screech.ogg').vlume(100).vary_frequency(TRUE).range(SOUND_RANGE + TRUE).play()
 
 	if(internal_heat >= max_heat)
 		STOP_PROCESSING(SSobj, src)

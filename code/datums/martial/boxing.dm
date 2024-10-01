@@ -136,7 +136,7 @@
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/armor_block = defender.run_armor_check(affecting, MELEE, armour_penetration = base_unarmed_effectiveness)
 
-	playsound(defender, attack_sound, 25, TRUE, -1)
+	PLAYSOUND(defender, attack_sound).volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	defender.visible_message(
 		span_danger("[attacker] [current_atk_verbed] [defender]!"),
@@ -177,7 +177,7 @@
 
 	experience_earned *= 2 //Double our experience gain on a crit hit
 
-	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
+	PLAYSOUND(defender, 'sound/effects/coin2.ogg').volume(40).vary_frequency(TRUE).play()
 	new /obj/effect/temp_visual/crit(get_turf(defender))
 	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
 

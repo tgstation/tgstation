@@ -460,7 +460,7 @@
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
 		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
-		playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').volume(50).vary_frequency(TRUE).play()
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
@@ -499,7 +499,7 @@
 
 /obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
+	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/hatchet/wooden

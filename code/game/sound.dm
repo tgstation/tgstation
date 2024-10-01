@@ -24,119 +24,159 @@
 	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
 
 /**
- * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
- *
- * Arguments:
- * * source - Origin of sound.
- * * soundin - Either a file, or a string that can be used to get an SFX.
- * * vol - The volume of the sound, excluding falloff and pressure affection.
- * * vary - bool that determines if the sound changes pitch every time it plays.
- * * extrarange - modifier for sound range. This gets added on top of SOUND_RANGE.
- * * falloff_exponent - Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
- * * frequency - playback speed of audio.
- * * channel - The channel the sound is played at.
- * * pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space).
- * * ignore_walls - Whether or not the sound can pass through walls.
- * * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * Datum used to manage playing audio from a target atom.
  */
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE)
-	if(isarea(source))
-		CRASH("playsound(): source is an area")
+/datum/playsound
+	VAR_PRIVATE
+		/// The source of the sound.
+		var/atom/source
+		/// The base sound file.
+		var/sound/sound
+		/// The channel the sound is being played on.
+		var/channel
 
-	if(islist(soundin))
-		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
+		/// The volume the sound will be played at.
+		var/volume = 50
+		/// The range of the sound.
+		var/range = SOUND_RANGE
 
-	var/turf/turf_source = get_turf(source)
+		/// Does the sound allow reverb (simulates the sound bouncing off of walls)
+		var/use_reverb = TRUE
+		/// The frequency the sound is played at.
+		var/frequency = null
+		/// If TRUE the pitch of the sound is shifted for each listener.
+		var/vary_frequency = FALSE
 
-	if (!turf_source || !soundin || !vol)
-		return
+		/// The exponent used to calculate distance falloff. Should be above 1.
+		var/falloff_exponent = SOUND_FALLOFF_EXPONENT
+		/// The distance at which falloff begins to take effect.
+		var/falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
 
-	//allocate a channel if necessary now so its the same for everyone
-	channel = channel || SSsounds.random_available_channel()
+		/// Is the sound affected by atmospheric conditions?
+		var/atmospherics_affected = TRUE
+		/// Does the sound play through walls.
+		var/ignore_walls = FALSE
 
-	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
-	var/maxdistance = SOUND_RANGE + extrarange
-	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
+		/// Can this sound play through Z levels?
+		var/z_traversal_allowed = TRUE
+		/// What is the penalty modifier for crossing a Z level?
+		var/z_traversal_modifier = 0.75
 
-	. = list()//output everything that successfully heard the sound
+		/// Does the sound follow the source atom as it moves?
+		var/spatial_aware = FALSE
+		/// Our tracker if we are spatial aware.
+		var/datum/spatial_sound_tracker/spatial_tracker
 
-	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
-	var/turf/below_turf = GET_TURF_BELOW(turf_source)
+// yes I am lazy
+#define WITH_X(var) /datum/playsound/proc/##var(##var) {\
+	RETURN_TYPE(/datum/playsound); \
+	src.##var = ##var; \
+	return src; \
+}
 
-	if(ignore_walls)
+WITH_X(channel)
+WITH_X(volume)
+WITH_X(range)
+WITH_X(use_reverb)
+WITH_X(frequency)
+WITH_X(vary_frequency)
+WITH_X(falloff_exponent)
+WITH_X(falloff_distance)
+WITH_X(atmospherics_affected)
+WITH_X(ignore_walls)
+WITH_X(z_traversal_allowed)
+WITH_X(z_traversal_modifier)
+WITH_X(spatial_aware)
 
-		if(above_turf && istransparentturf(above_turf))
-			listeners += SSmobs.clients_by_zlevel[above_turf.z]
+#undef WITH_X
 
-		if(below_turf && istransparentturf(turf_source))
-			listeners += SSmobs.clients_by_zlevel[below_turf.z]
+/datum/playsound/proc/get_listeners()
+	RETURN_TYPE(/list/mob)
+	ASSERT(isnull(source) || (istype(source) && !isarea(source)), "invalid type of source atom passed to [type]")
 
-	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(maxdistance, turf_source)
+	if(isnull(source))
+		return GLOB.player_list - GLOB.new_player_list
 
-		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(maxdistance, above_turf)
+	var/turf/source_location = get_turf(source)
 
-		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(maxdistance, below_turf)
+	// grab the initial candidates
+	var/list/mob/candidates = ignore_walls ? get_hearers_in_range(range, source_location) : get_hearers_in_view(range, source_location)
 
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= maxdistance)
-			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
-			. += listening_mob
+	if(z_traversal_allowed)
+		// now go through and move up and down z levels. going across a z level incurrs a 25% reduction in range for
+		var/effective_range = round(range * z_traversal_modifier)
+		var/turf/source_above = GET_TURF_ABOVE(source_location)
+		while(!isnull(source_above) && effective_range > 2)
+			if(!ignore_walls && !istransparentturf(source_above))
+				break
+			candidates += ignore_walls ? get_hearers_in_range(effective_range, source_above) : get_hearers_in_view(effective_range, source_above)
+			source_above = GET_TURF_ABOVE(source_above)
+			effective_range = round(effective_range * z_traversal_modifier)
 
-/**
- * Plays a sound with a specific point of origin for src mob
- * Affected by pressure, distance, terrain and environment (see arguments)
- *
- * Arguments:
- * * turf_source - The turf our sound originates from, if this is not a turf, the sound is played with no spatial audio
- * * soundin - Either a file, or a string that can be used to get an SFX.
- * * vol - The volume of the sound, excluding falloff and pressure affection.
- * * vary - bool that determines if the sound changes pitch every time it plays.
- * * frequency - playback speed of audio.
- * * falloff_exponent - Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
- * * channel - Optional: The channel the sound is played at.
- * * pressure_affected - bool Whether or not difference in pressure affects the sound (E.g. if you can hear in space).
- * * sound_to_use - Optional: Will default to soundin when absent
- * * max_distance - number, determines the maximum distance of our sound
- * * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
- * * distance_multiplier - Default 1, multiplies the maximum distance of our sound
- * * use_reverb - bool default TRUE, determines if our sound has reverb
- */
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent = SOUND_FALLOFF_EXPONENT, channel = 0, pressure_affected = TRUE, sound/sound_to_use, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE)
-	if(!client || !can_hear())
-		return
+		effective_range = round(range * z_traversal_modifier)
+		var/turf/source_below = GET_TURF_BELOW(source_location)
+		while(!isnull(source_below) && effective_range > 2)
+			if(!ignore_walls && !istransparentturf(source_below))
+				break
+			candidates += ignore_walls ? get_hearers_in_range(effective_range, source_below) : get_hearers_in_view(effective_range, source_below)
+			source_below = GET_TURF_BELOW(source_below)
+			effective_range = round(effective_range * z_traversal_modifier)
 
-	if(!sound_to_use)
-		sound_to_use = sound(get_sfx(soundin))
+	return candidates
 
-	sound_to_use.wait = 0 //No queue
-	sound_to_use.channel = channel || SSsounds.random_available_channel()
-	sound_to_use.volume = vol
+/datum/playsound/proc/play()
+	ASSERT(istype(source) || !isarea(source), "invalid type of source atom passed to [type]")
+	if(!channel)
+		channel = SSsounds.random_available_channel()
 
-	if(vary)
-		if(frequency)
-			sound_to_use.frequency = frequency
+	if(!istype(sound))
+		if(isnull(sound))
+			CRASH("null sound passed to [type]")
+
+		if(isfile(sound))
+			sound = sound(sound)
+		else if(istext(sound))
+			sound = get_sfx(sound)
 		else
-			sound_to_use.frequency = get_rand_frequency()
+			CRASH("bad sound type ([("type" in sound?.vars) ? sound.vars["type" : "NON DATUM"]]) passed to [type] ")
 
-	if(isturf(turf_source))
-		var/turf/turf_loc = get_turf(src)
+	var/list/mob/initial_listeners = get_listeners()
+	var/source = get_turf(src.source)
+	for(var/mob/listening_mob as anything in initial_listeners)
+		var/sound/local_sound = calculate_mob_local_sound(listening_mob)
+		SEND_SOUND(listening_mob, local_sound)
 
-		//sound volume falloff with distance
-		var/distance = get_dist(turf_loc, turf_source) * distance_multiplier
+/datum/playsound/proc/calculate_mob_local_sound(mob/mob)
+	if(!mob.client || !mob.can_hear())
+		return
+	var/sound/local_sound = sound(sound)
+	local_sound.wait = 0
+	local_sound.channel = channel
+	if(vary_frequency)
+		local_sound.frequency = get_rand_frequency()
+	else
+		local_sound.frequency = frequency
 
-		if(max_distance) //If theres no max_distance we're not a 3D sound, so no falloff.
-			sound_to_use.volume -= (max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * sound_to_use.volume
-			//https://www.desmos.com/calculator/sqdfl8ipgf
+	if(!isnull(source))
+		var/effective_distance
+		var/x = mob.x
+		var/y = mob.y
+		var/z = mob.z
+		if(z == source.z)
+			effective_distance = get_dist_euclidean(src, source)
+		else // not the same z level, use the penalty modifier
+			effective_distance = get_dist_euclidean(src, locate(source.x, source.y, z))
+			effective_distance *= ((z_traversal_modifier / 1) ** abs(z - source.z))
+		// https://www.desmos.com/calculator/sqdfl8ipgf
+		local_sound.volume = volume - ((max(effective_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(range, effective_distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
 
-		if(pressure_affected)
-			//Atmosphere affects sound
+		if(atmospherics_affected)
+			// this ignores the fact that you can have multiple different gas mixtures inbetween the source and the mob
+			// if you want to implement that be my guest
+
 			var/pressure_factor = 1
-			var/datum/gas_mixture/hearer_env = turf_loc.return_air()
-			var/datum/gas_mixture/source_env = turf_source.return_air()
+			var/datum/gas_mixture/hearer_env = get_turf(src).return_air()
+			var/datum/gas_mixture/source_env = get_turf(source).return_air()
 
 			if(hearer_env && source_env)
 				var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
@@ -144,47 +184,29 @@
 					pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
 			else //space
 				pressure_factor = 0
-
-			if(distance <= 1)
+			if(effective_distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
+			local_sound.volume *= pressure_factor
 
-			sound_to_use.volume *= pressure_factor
-			//End Atmosphere affecting sound
+		var/turf/turf_source = get_turf(source)
+		local_sound.x = turf_source.x - x
+		local_sound.z = turf_source.y - y
+		local_sound.y = (turf_source.z - z) * 5
+		local_sound.falloff = effective_distance || 1
 
-		if(sound_to_use.volume <= 0)
-			return //No sound
+	if(local_sound.volume <= 0)
+		return
 
-		var/dx = turf_source.x - turf_loc.x // Hearing from the right/left
-		sound_to_use.x = dx * distance_multiplier
-		var/dz = turf_source.y - turf_loc.y // Hearing from infront/behind
-		sound_to_use.z = dz * distance_multiplier
-		var/dy = (turf_source.z - turf_loc.z) * 5 * distance_multiplier // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
-		sound_to_use.y = dy
+	if(mob.sound_environment_override != SOUND_ENVIRONMENT_NONE)
+		local_sound.environment = mob.sound_environment_override
+	else
+		local_sound.environment = get_area(src).environment
 
-		sound_to_use.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
+	if(use_reverb && local_sound.environment != SOUND_ENVIRONMENT_NONE)
+		local_sound.echo[3] = 0
+		local_sound.echo[4] = 0
 
-		// Sounds can't have their own environment. A sound's environment will be:
-		// 1. the mob's
-		// 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
-		if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
-			sound_to_use.environment = sound_environment_override
-		else
-			var/area/A = get_area(src)
-			sound_to_use.environment = A.sound_environment
-
-		if(use_reverb && sound_to_use.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
-			sound_to_use.echo[3] = 0 //Room setting, 0 means normal reverb
-			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
-
-	SEND_SOUND(src, sound_to_use)
-
-/proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
-	if(!S)
-		S = sound(get_sfx(soundin))
-	for(var/m in GLOB.player_list)
-		if(ismob(m) && !isnewplayer(m))
-			var/mob/M = m
-			M.playsound_local(M, null, volume, vary, frequency, null, channel, pressure_affected, S)
+	return local_sound
 
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))

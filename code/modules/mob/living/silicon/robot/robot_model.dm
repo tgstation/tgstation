@@ -208,7 +208,7 @@
 
 		storage_datum.energy += charger.materials.use_materials(list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock), action = "resupplied", name = "units")
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
-		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
+		PLAYSOUND(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg').volume(50).vary_frequency(FALSE).play()
 		return
 	charger.balloon_alert(robot, "restock process complete")
 	charger.sendmats = FALSE

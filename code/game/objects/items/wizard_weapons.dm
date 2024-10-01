@@ -66,7 +66,7 @@
 	if(isliving(target))
 		var/mob/living/smacked = target
 		smacked.take_bodypart_damage(20, 0)
-	playsound(user, 'sound/items/weapons/marauder.ogg', 50, TRUE)
+	PLAYSOUND(user, 'sound/items/weapons/marauder.ogg').volume(50).vary_frequency(TRUE).play()
 	vortex(get_turf(target), user)
 	addtimer(VARSET_CALLBACK(src, charged, TRUE), 10 SECONDS)
 

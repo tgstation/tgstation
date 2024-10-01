@@ -41,7 +41,7 @@
 		if(!geyser) //we didnt find one, abort
 			geyserless = TRUE
 			visible_message(span_warning("The [name] makes a sad beep!"))
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).play()
 			return
 
 	pump(seconds_per_tick)

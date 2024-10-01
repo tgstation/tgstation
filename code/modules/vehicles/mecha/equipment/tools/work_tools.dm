@@ -63,7 +63,7 @@
 
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		PLAYSOUND(chassis, clampsound).volume(50).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
 		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
@@ -75,7 +75,7 @@
 		if(workmech.cargo_hold.contents.len >= workmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		PLAYSOUND(chassis, clampsound).volume(50).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
@@ -176,7 +176,7 @@
 		reagents.trans_to(water, required_amount / 8)
 		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
-	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+	PLAYSOUND(chassis, 'sound/effects/extinguish.ogg').volume(75).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 
 
 /**
@@ -198,7 +198,7 @@
 		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
-	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
+	PLAYSOUND(chassis, 'sound/effects/refill.ogg').volume(50).vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
 	return list(
@@ -370,7 +370,7 @@
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
+	PLAYSOUND(get_turf(newmech), 'sound/items/tools/ratchet.ogg').volume(50).vary_frequency(TRUE).play()
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
 	name = "Paddy Conversion Kit"

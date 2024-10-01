@@ -41,7 +41,7 @@
 			return
 		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
 		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 		stored = attacking_item
 		update_appearance()
 		return

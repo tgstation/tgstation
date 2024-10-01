@@ -68,7 +68,7 @@
 /obj/item/circuit_component/wiremod_gun/proc/handle_shot(atom/source, mob/firer, atom/target, angle)
 	SIGNAL_HANDLER
 
-	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
+	PLAYSOUND(get_sfx(source), SFX_TERMINAL_TYPE).volume(25).vary_frequency(FALSE).play()
 	shooter.set_output(firer)
 	shot.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)

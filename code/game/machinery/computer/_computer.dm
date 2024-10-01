@@ -73,18 +73,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+				PLAYSOUND(src.loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(70).vary_frequency(TRUE).play()
 			else
-				playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
+				PLAYSOUND(src.loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary_frequency(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
 
 /obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
 		return
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		PLAYSOUND(loc, 'sound/effects/glass/glassbr3.ogg').volume(100).vary_frequency(TRUE).play()
 		set_light(0)
 
 /obj/machinery/computer/proc/imprint_gps(gps_tag) // Currently used by the upload computers and communications console
@@ -122,7 +122,7 @@
 
 	if((machine_stat & BROKEN) || !disassembled)
 		var/atom/drop_loc = drop_location()
-		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+		PLAYSOUND(src, 'sound/effects/hit_on_shattered_glass.ogg').volume(70).vary_frequency(TRUE).play()
 		new /obj/item/shard(drop_loc)
 		new /obj/item/shard(drop_loc)
 		new_frame.state = FRAME_COMPUTER_STATE_WIRED
@@ -139,7 +139,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(!issilicon(ui.user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+		PLAYSOUND(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary_frequency(TRUE).range(SOUND_RANGE + FALSE).play()
 
 /obj/machinery/computer/ui_close(mob/user)
 	SHOULD_CALL_PARENT(TRUE)

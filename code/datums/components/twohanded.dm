@@ -241,7 +241,7 @@
 
 	// Play sound if one is set
 	if(wieldsound)
-		playsound(parent_item.loc, wieldsound, 50, TRUE)
+		PLAYSOUND(parent_item.loc, wieldsound).volume(50).vary_frequency(TRUE).play()
 
 	// Let's reserve the other hand
 	offhand_item = new(user)
@@ -311,7 +311,7 @@
 
 	// Play sound if set
 	if(unwieldsound)
-		playsound(parent_item.loc, unwieldsound, 50, TRUE)
+		PLAYSOUND(parent_item.loc, unwieldsound).volume(50).vary_frequency(TRUE).play()
 
 	// Remove the object in the offhand
 	if(offhand_item)
@@ -327,7 +327,7 @@
 	SIGNAL_HANDLER
 	if(wielded && attacksound)
 		var/obj/item/parent_item = parent
-		playsound(parent_item.loc, attacksound, 50, TRUE)
+		PLAYSOUND(parent_item.loc, attacksound).volume(50).vary_frequency(TRUE).play()
 
 /**
  * on_update_icon triggers on call to update parent items icon

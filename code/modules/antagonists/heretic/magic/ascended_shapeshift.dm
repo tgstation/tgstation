@@ -20,7 +20,7 @@
 	if(!.)
 		return
 	//buff our forms so this ascension ability isnt shit
-	playsound(caster, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	PLAYSOUND(caster, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
 	var/mob/living/monster = .
 	monster.AddComponent(/datum/component/seethrough_mob)
 	monster.maxHealth *= 1.5

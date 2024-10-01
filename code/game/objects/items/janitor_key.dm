@@ -68,7 +68,7 @@
 	SIGNAL_HANDLER
 	department_access = region_access[1]
 	say("Access granted to [department_access] area.")
-	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+	PLAYSOUND(src, 'sound/machines/ding.ogg').volume(25).vary_frequency(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(clear_access)), ACCESS_TIMER_LIMIT, TIMER_UNIQUE|TIMER_OVERRIDE)
 	log_game("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]")
 	investigate_log("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]", INVESTIGATE_ACCESSCHANGES)
@@ -82,6 +82,6 @@
 	investigate_log("Access to the [department_access] department on [src] has expired.]", INVESTIGATE_ACCESSCHANGES)
 	department_access = null
 	say("Access revoked, time ran out.")
-	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE)
+	PLAYSOUND(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary_frequency(TRUE).play()
 
 #undef ACCESS_TIMER_LIMIT

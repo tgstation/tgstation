@@ -123,10 +123,10 @@
 	S.forceMove(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
 	if(I.use_tool(src, user, 50))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
 	return TRUE
@@ -134,7 +134,7 @@
 /obj/machinery/power/tracker/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		PLAYSOUND(loc, 'sound/effects/glass/glassbr3.ogg').volume(100).vary_frequency(TRUE).play()
 		unset_control()
 
 /obj/machinery/power/tracker/on_deconstruction(disassembled)
@@ -144,7 +144,7 @@
 			S.forceMove(loc)
 			S.give_glass(machine_stat & BROKEN)
 	else
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(70).vary_frequency(TRUE).play()
 		new /obj/item/shard(src.loc)
 		new /obj/item/shard(src.loc)
 

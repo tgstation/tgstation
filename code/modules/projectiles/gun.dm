@@ -267,7 +267,7 @@
 			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
 			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
 		)
-		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+		PLAYSOUND(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).vary_frequency(FALSE).play()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

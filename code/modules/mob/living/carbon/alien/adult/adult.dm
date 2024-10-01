@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
-	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
+	PLAYSOUND(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg').vlume(40).vary_frequency(TRUE).range(SOUND_RANGE + TRUE).play()  //Alien roars when starting to break free
 	..(I, cuff_break = INSTANT_CUFFBREAK)
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.visible_message(span_danger("[src] is attempting to devour [lucky_winner]!"), \
 			span_userdanger("[src] is attempting to devour you!"))
 
-	playsound(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg', 100)
+	PLAYSOUND(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg').volume(100).play()
 	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))

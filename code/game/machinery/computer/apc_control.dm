@@ -34,7 +34,7 @@
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
 		balloon_alert(user, "access controller shorted")
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
@@ -57,7 +57,7 @@
 		return
 	if(active_apc)
 		disconnect_apc()
-	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(50).vary_frequency(FALSE).play()
 	apc.connect_remote_access(user)
 	user.log_message("remotely accessed [apc] from [src].", LOG_GAME)
 	log_activity("[auth_id] remotely accessed APC in [get_area_name(apc.area, TRUE)]")
@@ -134,18 +134,18 @@
 					authenticated = TRUE
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] logged in to the terminal")
-					playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
+					PLAYSOUND(src, 'sound/machines/terminal/terminal_on.ogg').volume(50).vary_frequency(FALSE).play()
 				else
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
-					playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
+					PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(50).vary_frequency(FALSE).play()
 					say("ID rejected, access denied!")
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")
 		if("log-out")
 			log_activity("[auth_id] logged out of the terminal")
-			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').volume(50).vary_frequency(FALSE).play()
 			authenticated = FALSE
 			auth_id = "\[NULL\]"
 		if("toggle-logs")
@@ -156,7 +156,7 @@
 			addtimer(CALLBACK(src, PROC_REF(restore_comp)), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+			PLAYSOUND(get_sfx(src), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
 			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			connect_apc(APC, usr)
 		if("check-logs")

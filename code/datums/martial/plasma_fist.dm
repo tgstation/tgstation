@@ -55,7 +55,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
+	PLAYSOUND(defender, 'sound/items/weapons/punch1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
 	attacker.say("HYAH!", forced="plasma fist")
@@ -66,7 +66,7 @@
 	var/hasclient = !!defender.client
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
+	PLAYSOUND(defender, 'sound/items/weapons/punch1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	attacker.say("PLASMA FIST!", forced="plasma fist")
 	defender.visible_message(
 		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
@@ -125,7 +125,7 @@
 	user.apply_damage(rand(50, 70), BRUTE, wound_bonus = CANT_WOUND)
 
 	addtimer(CALLBACK(src, PROC_REF(Apotheosis_end), user), 6 SECONDS)
-	playsound(boomspot, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
+	PLAYSOUND(boomspot, 'sound/items/weapons/punch1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 	return TRUE

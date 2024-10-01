@@ -827,9 +827,9 @@
 
 	if(borgo.mind)
 		borgo.mind.grab_ghost()
-		playsound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
+		PLAYSOUND(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg').volume(75).vary_frequency(TRUE).play()
 	else
-		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
+		PLAYSOUND(loc, 'sound/machines/ping.ogg').volume(75).vary_frequency(TRUE).play()
 
 	borgo.revive()
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")

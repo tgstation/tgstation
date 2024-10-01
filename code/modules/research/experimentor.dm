@@ -316,7 +316,7 @@
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			PLAYSOUND(src, 'sound/effects/smoke.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -328,7 +328,7 @@
 			tmp_holder.add_reagent(chosenchem , 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			PLAYSOUND(src, 'sound/effects/smoke.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -347,7 +347,7 @@
 		visible_message(span_notice("[src] raises [exp_on]'s temperature."))
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_warning("[src]'s emergency coolant system gives off a small ding!"))
-			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+			PLAYSOUND(src, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play()
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
 			chosenchem = pick(/datum/reagent/toxin/plasma,/datum/reagent/consumable/capsaicin,/datum/reagent/consumable/ethanol)
 			C.reagents.remove_all(25)
@@ -392,7 +392,7 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_warning("[src]'s emergency coolant system gives off a small ding!"))
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
-			playsound(src, 'sound/machines/ding.ogg', 50, TRUE) //Ding! Your death coffee is ready!
+			PLAYSOUND(src, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play() //Ding! Your death coffee is ready!
 			chosenchem = pick(/datum/reagent/uranium,/datum/reagent/consumable/frostoil,/datum/reagent/medicine/ephedrine)
 			C.reagents.remove_all(25)
 			C.reagents.add_reagent(chosenchem , 50)
@@ -407,7 +407,7 @@
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			PLAYSOUND(src, 'sound/effects/smoke.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -434,14 +434,14 @@
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes way too many levels too high, crushing right through space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
+			PLAYSOUND(src, 'sound/effects/supermatter.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes one level too high, crushing right into space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
+			PLAYSOUND(src, 'sound/effects/supermatter.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
@@ -459,7 +459,7 @@
 
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message(span_notice("[src] scans the [exp_on], revealing its true nature!"))
-		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
+		PLAYSOUND(src, 'sound/effects/supermatter.ogg').volume(50).vary_frequency(3).range(-1 + SOUND_RANGE).play()
 		var/obj/item/relic/loaded_artifact = loaded_item
 		loaded_artifact.reveal()
 		investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
@@ -519,7 +519,7 @@
 	explosion(src, devastation_range = 1, heavy_impact_range = 5, light_impact_range = 10, flash_range = 5, adminlog = TRUE)
 
 /obj/machinery/rnd/experimentor/proc/honk()
-	playsound(src, 'sound/items/bikehorn.ogg', 500)
+	PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(500).play()
 	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()

@@ -31,7 +31,7 @@
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
-	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
+	PLAYSOUND(get_turf(user), 'sound/machines/click.ogg').volume(10).vary_frequency(TRUE).play()
 	register_machine(multitool.buffer)
 	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE

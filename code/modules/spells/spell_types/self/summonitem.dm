@@ -168,7 +168,7 @@
 		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
 
 	SEND_SIGNAL(item_to_retrieve, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
-	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
+	PLAYSOUND(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg').volume(50).vary_frequency(TRUE).play()
 
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"

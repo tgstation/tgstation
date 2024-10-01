@@ -386,14 +386,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
-		playsound(sacrificial, 'sound/effects/magic/teleport_diss.ogg', 100, TRUE)
+		PLAYSOUND(sacrificial, 'sound/effects/magic/teleport_diss.ogg').volume(100).vary_frequency(TRUE).play()
 		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.dust(TRUE, FALSE, TRUE)
 	else if (sacrificial)
 		var/obj/item/soulstone/stone = new(loc)
 		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 			stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
-		playsound(sacrificial, 'sound/effects/magic/disintegrate.ogg', 100, TRUE)
+		PLAYSOUND(sacrificial, 'sound/effects/magic/disintegrate.ogg').volume(100).vary_frequency(TRUE).play()
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(DROP_ALL_REMAINS)
 
@@ -544,8 +544,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		playsound(src, SFX_PORTAL_ENTER, 50, TRUE)
-		playsound(target, SFX_PORTAL_ENTER, 50, TRUE)
+		PLAYSOUND(get_sfx(src), SFX_PORTAL_ENTER).volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(target), SFX_PORTAL_ENTER).volume(50).vary_frequency(TRUE).play()
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
@@ -568,7 +568,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, SFX_PORTAL_CREATED, 100, TRUE, 14)
+	PLAYSOUND(T, get_sfx(SFX_PORTAL_CREATED)).volume(100).vary_frequency(TRUE).range(14 + SOUND_RANGE).play()
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -889,8 +889,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	playsound(src, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
-	playsound(old_turf, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	PLAYSOUND(old_turf, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -1021,7 +1021,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
-		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/effects/magic/exit_blood.ogg').volume(50).vary_frequency(TRUE).play()
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cult_italic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
@@ -1136,7 +1136,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
 
-	playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE)
+	PLAYSOUND(T, 'sound/effects/magic/enter_blood.ogg').volume(100).vary_frequency(TRUE).play()
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
 
 	for(var/mob/living/target in range(src, 3))

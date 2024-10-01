@@ -366,7 +366,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		else
 			visible_message(span_danger("\The [src] [change_msg]!"))
 
-		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
+		PLAYSOUND(src, 'sound/items/tools/wirecutter.ogg').volume(100).vary_frequency(TRUE).play()
 	update_appearance() //update Initialize() if you remove this.
 
 	// now disconnect anyone using the camera

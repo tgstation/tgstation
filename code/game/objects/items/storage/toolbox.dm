@@ -478,10 +478,10 @@
 	if(is_simian(user))
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		to_chat(user, span_notice("You place your paw on the paw scanner, and hear a soft click as [src] unlocks!"))
-		playsound(src, 'sound/items/click.ogg', 25, TRUE)
+		PLAYSOUND(src, 'sound/items/click.ogg').volume(25).vary_frequency(TRUE).play()
 		return TRUE
 	to_chat(user, span_warning("You put your hand on the hand scanner, and it rejects it with an angry chimpanzee screech!"))
-	playsound(src, SFX_SCREECH, 75, TRUE)
+	PLAYSOUND(get_sfx(src), SFX_SCREECH).volume(75).vary_frequency(TRUE).play()
 	return FALSE
 
 /obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()

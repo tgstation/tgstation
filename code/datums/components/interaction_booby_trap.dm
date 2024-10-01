@@ -76,7 +76,7 @@
 		return
 	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), source), 0.5 SECONDS)
 	source.balloon_alert_to_viewers("beep")
-	playsound(parent, triggered_sound, 50, FALSE)
+	PLAYSOUND(get_sfx(parent), triggered_sound).volume(50).vary_frequency(FALSE).play()
 	return
 
 /// Blow up the parent atom and delete ourselves

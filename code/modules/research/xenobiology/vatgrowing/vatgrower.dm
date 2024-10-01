@@ -54,7 +54,7 @@
 	if(biological_sample.handle_growth(src))
 		if(!prob(10))
 			return
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		PLAYSOUND(loc, 'sound/effects/slosh.ogg').volume(25).vary_frequency(TRUE).play()
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 	use_energy(active_power_usage * seconds_per_tick)
 
@@ -80,7 +80,7 @@
 
 /obj/machinery/vatgrower/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(30).vary_frequency(TRUE).play()
 	if(obj_flags & EMAGGED)
 		return
 	resampler_active = !resampler_active
@@ -116,7 +116,7 @@
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
 	balloon_alert(user, "added sample")
-	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').volume(50).vary_frequency(TRUE).play()
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
 	return ITEM_INTERACT_SUCCESS
@@ -168,7 +168,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "resampling circuit overloaded")
 	flick("growing_vat_emagged", src)
 	return TRUE

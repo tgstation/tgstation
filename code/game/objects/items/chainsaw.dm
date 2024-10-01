@@ -47,13 +47,13 @@
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+		PLAYSOUND(src, 'sound/items/weapons/chainsawhit.ogg').volume(100).vary_frequency(TRUE).play()
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		PLAYSOUND(src, 'sound/items/weapons/genhit1.ogg').volume(100).vary_frequency(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)

@@ -117,7 +117,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		PLAYSOUND(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary_frequency(TRUE).play()
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
@@ -133,7 +133,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		PLAYSOUND(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary_frequency(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -159,7 +159,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		PLAYSOUND(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary_frequency(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -185,7 +185,7 @@
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		PLAYSOUND(loc, 'sound/effects/extinguish.ogg').volume(75).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 		extinguisher.reagents.remove_all(1)
 		return TRUE
 
@@ -407,7 +407,7 @@
 		else
 			reagents.trans_to(O, 5, transferred_by = user)
 			user.balloon_alert(user, "doused [O]")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+			PLAYSOUND(loc, 'sound/effects/slosh.ogg').volume(25).vary_frequency(TRUE).play()
 		return
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))

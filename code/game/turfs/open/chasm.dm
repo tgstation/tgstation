@@ -65,7 +65,7 @@
 			to_chat(user, span_warning("You need one rod to build a lattice."))
 			return
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
 		// Create a lattice, without reverting to our baseturf
 		new /obj/structure/lattice(src)
 		return

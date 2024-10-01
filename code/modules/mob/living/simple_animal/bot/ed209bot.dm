@@ -82,7 +82,7 @@
 		return
 
 	var/obj/projectile/fired_bullet = new projectile(loc)
-	playsound(src, shoot_sound, 50, TRUE)
+	PLAYSOUND(get_sfx(src), shoot_sound).volume(50).vary_frequency(TRUE).play()
 	fired_bullet.preparePixelProjectile(target, src)
 	fired_bullet.fire()
 

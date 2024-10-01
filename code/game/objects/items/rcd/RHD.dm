@@ -118,7 +118,7 @@
 	upgrade |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 	qdel(design_disk)
 	update_static_data_for_all_viewers()
 	return TRUE
@@ -139,7 +139,7 @@
 		if(ammo.ammoamt <= 0)
 			qdel(ammo)
 		matter += load
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 		loaded = TRUE
 	else if(isstack(item))
 		loaded = loadwithsheets(item, user)
@@ -156,16 +156,16 @@
 		var/amount_to_use = min(the_stack.amount, maxsheets)
 		the_stack.use(amount_to_use)
 		matter += the_stack.matter_amount * amount_to_use
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
 		return TRUE
 	balloon_alert(user, "storage full!")
 	return FALSE
 
 /obj/item/construction/proc/activate()
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
+	PLAYSOUND(loc, 'sound/effects/pop.ogg').volume(50).vary_frequency(FALSE).play()
 	if(prob(20))
 		spark_system.start()
 

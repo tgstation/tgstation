@@ -52,9 +52,9 @@
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+			PLAYSOUND(loc, 'sound/items/weapons/egloves.ogg').volume(80).vary_frequency(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+			PLAYSOUND(loc, 'sound/items/weapons/egloves.ogg').volume(80).vary_frequency(TRUE).play()
 
 /obj/structure/holosign/proc/create_vis_overlay()
 	var/turf/our_turf = get_turf(src)
@@ -135,11 +135,11 @@
 	if(!opened)
 		density = FALSE
 		opened = TRUE
-		playsound(src, 'sound/machines/door/door_open.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/door/door_open.ogg').volume(50).vary_frequency(TRUE).play()
 	else
 		density = TRUE
 		opened = FALSE
-		playsound(src, 'sound/machines/door/door_close.ogg', 50, TRUE)
+		PLAYSOUND(src, 'sound/machines/door/door_close.ogg').volume(50).vary_frequency(TRUE).play()
 
 	update_icon_state()
 	COOLDOWN_START(src, cooldown_open, 1 SECONDS)

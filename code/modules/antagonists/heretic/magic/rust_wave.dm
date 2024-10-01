@@ -98,7 +98,7 @@
 
 /obj/projectile/magic/aoe/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	playsound(src, 'sound/items/tools/welder.ogg', 75, TRUE)
+	PLAYSOUND(src, 'sound/items/tools/welder.ogg').volume(75).vary_frequency(TRUE).play()
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)

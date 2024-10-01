@@ -44,7 +44,7 @@
 		return CLICK_ACTION_BLOCKING
 	stasis_enabled = !stasis_enabled
 	stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(60).vary_frequency(TRUE).play()
 	user.visible_message(span_notice("\The [src] [stasis_enabled ? "powers on" : "shuts down"]."), \
 				span_notice("You [stasis_enabled ? "power on" : "shut down"] \the [src]."), \
 				span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))

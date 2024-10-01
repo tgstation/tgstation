@@ -30,7 +30,7 @@
 	. = ..()
 	QDEL_IN(src, 60 SECONDS)
 	AddElement(/datum/element/simple_flying)
-	playsound(src, 'sound/effects/curse/curse1.ogg', 100, TRUE, -1)
+	PLAYSOUND(src, 'sound/effects/curse/curse1.ogg').volume(100).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
 	new /obj/effect/temp_visual/dir_setting/curse/blob(loc, dir)

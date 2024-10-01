@@ -357,7 +357,7 @@ Moving interrupts
 		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
 			var/time_delay = !(remaining_time % SCULPT_SOUND_INCREMENT)
 			if(time_delay)
-				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+				PLAYSOUND(src, 'sound/effects/break_stone.ogg').volume(50).vary_frequency(TRUE).play()
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)

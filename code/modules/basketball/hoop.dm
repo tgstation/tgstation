@@ -38,7 +38,7 @@
 
 /obj/structure/hoop/proc/score(obj/item/toy/basketball/ball, mob/living/baller, points)
 	// we still play buzzer sound regardless of the object
-	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
+	PLAYSOUND(src, 'sound/machines/scanner/scanbuzz.ogg').volume(100).vary_frequency(FALSE).play()
 
 	if(!istype(ball))
 		return
@@ -130,13 +130,13 @@
 	loser.forceMove(loc)
 	loser.Paralyze(100)
 	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
-	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
+	PLAYSOUND(src, 'sound/machines/scanner/scanbuzz.ogg').volume(100).vary_frequency(FALSE).play()
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)
 	user.balloon_alert_to_viewers("resetting score...")
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').volume(50).vary_frequency(TRUE).play()
 	if(do_after(user, 5 SECONDS, target = src))
 		total_score = 0
 		update_appearance()

@@ -182,7 +182,7 @@
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), null, null, TRUE, TRUE), 2.5 SECONDS)
 	user.SpinAnimation(3, 10)
-	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
+	PLAYSOUND(user, 'sound/machines/juicer.ogg').volume(20).vary_frequency(TRUE).play()
 	return MANUAL_SUICIDE
 
 /obj/item/surgicaldrill/cyborg
@@ -372,7 +372,7 @@
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
 		return NONE
 	balloon_alert(user, "copying designs...")
-	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_processing.ogg').volume(25).vary_frequency(TRUE).play()
 	if(do_after(user, 1 SECONDS, target = design_holder))
 		if(istype(design_holder, /obj/item/disk/surgery))
 			var/obj/item/disk/surgery/surgery_disk = design_holder
@@ -380,7 +380,7 @@
 		else
 			var/obj/machinery/computer/operating/surgery_computer = design_holder
 			loaded_surgeries |= surgery_computer.advanced_surgeries
-		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 25, TRUE)
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').volume(25).vary_frequency(TRUE).play()
 		downloaded = TRUE
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
@@ -556,14 +556,14 @@
 	var/amputation_speed_mod = 1
 
 	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
-	playsound(get_turf(patient), 'sound/items/tools/ratchet.ogg', 20, TRUE)
+	PLAYSOUND(get_turf(patient), 'sound/items/tools/ratchet.ogg').volume(20).vary_frequency(TRUE).play()
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
 	if(patient.stat != DEAD && patient.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
 	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
-		playsound(get_turf(patient), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
+		PLAYSOUND(get_turf(patient), 'sound/items/weapons/bladeslice.ogg').volume(250).vary_frequency(TRUE).play()
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)
 			tail_snip_candidate.forceMove(get_turf(patient))

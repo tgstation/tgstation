@@ -31,7 +31,7 @@
 		return NONE
 
 	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
-	playsound(source, 'sound/items/weapons/blade1.ogg', 50, TRUE)
+	PLAYSOUND(source, 'sound/items/weapons/blade1.ogg').volume(50).vary_frequency(TRUE).play()
 	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
@@ -54,12 +54,12 @@
 		return
 	if(prob(block_chance))
 		visible_message(span_warning("[src] deflects [user]'s attack with his energy swords!"))
-		playsound(src, 'sound/items/weapons/blade1.ogg', 50, TRUE, -1)
+		PLAYSOUND(src, 'sound/items/weapons/blade1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		return TRUE
 
 /mob/living/simple_animal/bot/secbot/grievous/stun_attack(mob/living/carbon/C) //Criminals don't deserve to live
 	weapon.attack(C, src)
-	playsound(src, 'sound/items/weapons/blade1.ogg', 50, TRUE, -1)
+	PLAYSOUND(src, 'sound/items/weapons/blade1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	if(C.stat == DEAD)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 0.2 SECONDS)
 		back_to_idle()

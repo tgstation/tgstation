@@ -167,7 +167,7 @@
 			desc = get_cyborg_stun_description(target, user)
 		else
 			desc = get_unga_dunga_cyborg_stun_description(target, user)
-			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
+			PLAYSOUND(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary_frequency(TRUE).play() //bonk
 			. = BATON_ATTACK_DONE
 	else
 		desc = get_stun_description(target, user)
@@ -177,7 +177,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(human_target, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+		PLAYSOUND(human_target, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
 		return TRUE
 	return FALSE
 
@@ -275,7 +275,7 @@
 			if(on_stun_sound)
 				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
-			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
+			PLAYSOUND(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary_frequency(TRUE).play()
 	else
 		//straight up always force say for clumsy humans
 		if(ishuman(user))
@@ -355,7 +355,7 @@
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
-		playsound(src, on_sound, 50, TRUE)
+		PLAYSOUND(get_sfx(src), on_sound).volume(50).vary_frequency(TRUE).play()
 		add_fingerprint(user)
 	else
 		attack_self(user)
@@ -387,7 +387,7 @@
 	else
 		drop_sound = unfolded_drop_sound
 		pickup_sound = unfolded_pickup_sound
-	playsound(src, on_sound, 50, TRUE)
+	PLAYSOUND(get_sfx(src), on_sound).volume(50).vary_frequency(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton
@@ -507,7 +507,7 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	playsound(source_turf, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
+	PLAYSOUND(source_turf, 'sound/items/tools/drill_use.ogg').volume(80).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
@@ -595,7 +595,7 @@
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	update_appearance()
 	toggle_light()
 	do_sparks(1, TRUE, src)
@@ -606,7 +606,7 @@
 	active = FALSE
 	set_light_on(FALSE)
 	update_appearance()
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 
@@ -709,7 +709,7 @@
 	active = !active
 	toggle_light()
 	do_sparks(1, TRUE, src)
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

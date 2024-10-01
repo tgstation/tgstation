@@ -868,7 +868,7 @@
 		else
 			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
 	else
-		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
+		PLAYSOUND(hit_atom, 'sound/items/weapons/throwtap.ogg').volume(1).vary_frequency(volume).range(-1 + SOUND_RANGE).play()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1373,12 +1373,12 @@
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(victim, SFX_SHATTER, 25, TRUE)
+				PLAYSOUND(get_sfx(victim), SFX_SHATTER).volume(25).vary_frequency(TRUE).play()
 				qdel(src)
 				if(QDELETED(source_item))
 					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(victim, SFX_SHATTER, 15, TRUE)
+				PLAYSOUND(get_sfx(victim), SFX_SHATTER).volume(15).vary_frequency(TRUE).play()
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)

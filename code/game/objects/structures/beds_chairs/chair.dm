@@ -472,7 +472,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/bronze/process()
 	setDir(turn(dir,-90))
-	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/effects/servostep.ogg').volume(50).vary_frequency(FALSE).play()
 	turns++
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)

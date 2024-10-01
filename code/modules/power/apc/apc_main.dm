@@ -420,9 +420,9 @@
 	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
 	if(locked)
-		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_on.ogg').volume(25).vary_frequency(FALSE).play()
 		locked = FALSE
-	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_alert.ogg').volume(50).vary_frequency(FALSE).play()
 	update_appearance()
 
 /obj/machinery/power/apc/proc/disconnect_remote_access()
@@ -432,8 +432,8 @@
 	locked = TRUE
 	say("Remote access canceled. Interface locked.")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
-	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
-	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').volume(25).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_alert.ogg').volume(50).vary_frequency(FALSE).play()
 	update_appearance()
 	remote_control_user = null
 

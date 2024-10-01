@@ -115,17 +115,17 @@
 		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
 		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
 		balloon_alert_to_viewers("scanning...")
-		playsound(src, 'sound/effects/genetics.ogg', 40, FALSE)
+		PLAYSOUND(src, 'sound/effects/genetics.ogg').volume(40).vary_frequency(FALSE).play()
 		COOLDOWN_START(src, scanning_person, 4 SECONDS)
 		if(!do_after(user, 4 SECONDS, interacting_with))
 			return ITEM_INTERACT_BLOCKING
 
 	if(contraband_scan(interacting_with, user))
-		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
+		PLAYSOUND(src, 'sound/machines/uplink/uplinkerror.ogg').volume(40).play()
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
 	else
-		playsound(src, 'sound/machines/ping.ogg', 20)
+		PLAYSOUND(src, 'sound/machines/ping.ogg').volume(20).play()
 		balloon_alert(user, "clear")
 		return ITEM_INTERACT_SUCCESS
 
@@ -208,11 +208,11 @@
 	create_slip()
 	switch(print_sound_mode)
 		if(INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+			PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').volume(50).vary_frequency(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+			PLAYSOUND(src, 'sound/items/biddledeep.ogg').volume(50).vary_frequency(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_HONK)
-			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+			PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
 			playsound(src, pick(list('sound/items/robofafafoggy.ogg', 'sound/items/robofafafoggy2.ogg')), 50, FALSE)
 
@@ -373,7 +373,7 @@
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/effects/angryboat.ogg', 150, FALSE)
+	PLAYSOUND(src, 'sound/effects/angryboat.ogg').volume(150).vary_frequency(FALSE).play()
 
 /obj/item/inspector/clown/bananium/create_slip()
 	if(time_mode == INSPECTOR_TIME_MODE_HONK)

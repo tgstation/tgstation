@@ -277,7 +277,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	PLAYSOUND(src, 'sound/items/weapons/gun/l6/l6_door.ogg').volume(60).vary_frequency(TRUE).play()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
