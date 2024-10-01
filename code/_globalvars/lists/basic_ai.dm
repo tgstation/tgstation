@@ -15,6 +15,5 @@ GLOBAL_LIST_EMPTY(ai_controllers_by_zlevel)
 GLOBAL_LIST_INIT(unplanned_controllers, list(
 	AI_STATUS_ON = list(),
 	AI_STATUS_IDLE = list(),
-	AI_STATUS_OFF = list(),
 ))
 

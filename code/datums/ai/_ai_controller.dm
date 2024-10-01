@@ -83,8 +83,6 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force)
 	UnpossessPawn(FALSE)
 	our_cells = null
-	if(ai_status)
-		GLOB.unplanned_controllers[ai_status] -= src
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -286,7 +284,7 @@ multiple modular subtrees with behaviors
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
-		GLOB.unplanned_controllers[ai_status] -= src
+	remove_from_unplanned_controllers()
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -389,14 +387,15 @@ multiple modular subtrees with behaviors
 	//remove old status, if we've got one
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
-		GLOB.unplanned_controllers[ai_status] -= src
+	remove_from_unplanned_controllers()
 	stop_previous_processing()
 	ai_status = new_ai_status
 	GLOB.ai_controllers_by_status[new_ai_status] += src
-	if(!length(current_behaviors))
-		GLOB.unplanned_controllers[ai_status][src] = TRUE
 	if(ai_status == AI_STATUS_OFF)
 		CancelActions()
+		return
+	if(!length(current_behaviors))
+		add_to_unplanned_controllers()
 		return
 	start_ai_processing()
 
@@ -418,6 +417,16 @@ multiple modular subtrees with behaviors
 	paused_until = world.time + time
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
+
+/datum/ai_controller/proc/add_to_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF || isnull(idle_behavior))
+		return
+	GLOB.unplanned_controllers[ai_status][src] = TRUE
+
+/datum/ai_controller/proc/remove_from_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF)
+		return
+	GLOB.unplanned_controllers[ai_status] -= src
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
 	behavior_cooldowns[behavior] = new_cooldown
@@ -468,12 +477,11 @@ multiple modular subtrees with behaviors
 		enter_unplanned_mode()
 
 /datum/ai_controller/proc/exit_unplanned_mode()
-	GLOB.unplanned_controllers[ai_status] -= src
+	remove_from_unplanned_controllers()
 	start_ai_processing()
 
 /datum/ai_controller/proc/enter_unplanned_mode()
-	if(idle_behavior)
-		GLOB.unplanned_controllers[ai_status][src] = TRUE
+	add_to_unplanned_controllers()
 	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
