@@ -150,7 +150,7 @@
 /obj/structure/toilet/click_alt(mob/living/user)
 	if(flushing)
 		return CLICK_ACTION_BLOCKING
-	set_cover_open(!cover_open)
+	cover_open = !cover_open
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
@@ -165,10 +165,6 @@
 		flick_overlay_view(mutable_appearance(icon, "[base_icon_state]-water-flick"), 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_flushing)), 4 SECONDS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/structure/toilet/proc/set_cover_open(state)
-	cover_open = state
-	update_appearance(UPDATE_ICON)
 
 /obj/structure/toilet/update_icon_state()
 	icon_state = "[base_icon_state][cover_open][cistern_open]"
