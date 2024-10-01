@@ -119,7 +119,7 @@
 ///subtree to control bot speech
 /datum/ai_planning_subtree/repairbot_speech
 
-/datum/ai_planning_subtree/replace_floors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+/datum/ai_planning_subtree/repairbot_speech/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	if(controller.blackboard[BB_REPAIRBOT_SPEECH_COOLDOWN] > world.time)
 		return
 	var/static/list/keys_to_look = list(
@@ -132,7 +132,7 @@
 		BB_DECONSTRUCT_TARGET,
 	)
 	for(var/key in keys_to_look)
-		if(controller.blackboard_key_exists(keys_to_look))
+		if(controller.blackboard_key_exists(key))
 			controller.queue_behavior(/datum/ai_behavior/repairbot_speech, key)
 			return
 

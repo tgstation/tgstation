@@ -200,9 +200,22 @@
 	if(pulling)
 		setGrabState(GRAB_AGGRESSIVE) //automatically aggro grab everything!
 
-
+/mob/living/basic/bot/repairbot/Destroy()
+	. = ..()
+	QDEL_NULL(our_iron)
+	QDEL_NULL(our_glass)
+	QDEL_NULL(our_tiles)
+	QDEL_NULL(our_welder)
+	QDEL_NULL(our_screwdriver)
+	QDEL_NULL(our_crowbar)
+	QDEL_NULL(our_rods)
+	QDEL_NULL(deconstruction_device)
 
 /mob/living/basic/bot/repairbot/Exited(atom/movable/gone, direction)
+	if(gone == our_crowbar)
+		our_crowbar = null
+	if(gone == our_screwdriver)
+		our_screwdriver = null
 	if(gone == our_welder)
 		our_welder = null
 	if(gone == our_tiles)
