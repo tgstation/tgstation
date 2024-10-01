@@ -1,0 +1,5 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - qol: "you only need to wait 1 second if you can move into that z level instead of most cases"
+  - code_imp: "mob/verb/up() and mob/verb/down() cleanup"
