@@ -453,7 +453,6 @@ SUBSYSTEM_DEF(job)
 
 	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
 	var/list/available_occupations = joinable_occupations.Copy()
-
 	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
 
 	for(var/datum/job/job in available_occupations)
@@ -461,6 +460,7 @@ SUBSYSTEM_DEF(job)
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
 			available_occupations -= job
+			continue
 
 		// Command jobs are handled via fill_all_head_positions_at_priority(...)
 		// Remove these jobs from the list of available occupations to prevent multiple players being assigned to the same
