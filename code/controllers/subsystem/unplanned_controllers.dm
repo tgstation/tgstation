@@ -1,7 +1,7 @@
 /// The subsystem used to tick [/datum/ai_controllers] instances. Handling the re-checking of plans.
 SUBSYSTEM_DEF(unplanned_controllers)
 	name = "Unplanned AI Controllers"
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
+	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	priority = FIRE_PRIORITY_UNPLANNED_NPC
 	init_order = INIT_ORDER_AI_CONTROLLERS
 	wait = 0.25 SECONDS
