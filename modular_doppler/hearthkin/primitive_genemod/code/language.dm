@@ -15,4 +15,4 @@
 	icon_state = "omgkittyhiii"
 	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/language_icon.dmi'
 	default_priority = 94
-	// secret = TRUE     //this needs a dedicated module for language
+	secret = TRUE

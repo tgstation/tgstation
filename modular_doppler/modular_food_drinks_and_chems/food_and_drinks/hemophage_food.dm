@@ -79,7 +79,7 @@
 
 /obj/item/food/hemophage/blood_curd
 	name = "blood curd"
-	desc = "Also known as 'blood tofu' or 'blood pudding,' this Yangyu delicacy looks to be made of congealed and cooked blood. It's soft and smooth, slightly chewy, and rich in riboflavin."
+	desc = "Also known as 'blood tofu' or 'blood pudding,' this Konjin delicacy looks to be made of congealed and cooked blood. It's soft and smooth, slightly chewy, and rich in riboflavin."
 	icon_state = "blood_curd"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,

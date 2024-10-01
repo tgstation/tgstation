@@ -11,6 +11,9 @@ import { Window } from '../../layouts';
 import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
+// DOPPLER EDIT
+import { LanguagesPage } from './LanguagesMenu';
+// DOPPLER EDIT
 import { LoadoutPage } from './loadout/index';
 import { LorePage } from './LorePage'; /* DOPPLER EDIT ADDITION */
 import { MainPage } from './MainPage';
@@ -22,6 +25,9 @@ enum Page {
   Antags,
   Main,
   Jobs,
+  // DOPPLER EDIT
+  Languages,
+  // DOPPLER EDIT END
   Species,
   Quirks,
   Loadout,
@@ -73,6 +79,11 @@ export const CharacterPreferenceWindow = (props) => {
     case Page.Jobs:
       pageContents = <JobsPage />;
       break;
+    // DOPPLER EDIT
+    case Page.Languages:
+      pageContents = <LanguagesPage />;
+      break;
+    // DOPPLER EDIT END
     case Page.Main:
       pageContents = (
         <MainPage openSpecies={() => setCurrentPage(Page.Species)} />
@@ -177,7 +188,21 @@ export const CharacterPreferenceWindow = (props) => {
                   Occupations
                 </PageButton>
               </Stack.Item>
-
+              {
+                // DOPPLER EDIT
+              }
+              <Stack.Item grow>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.Languages}
+                  setPage={setCurrentPage}
+                >
+                  Languages
+                </PageButton>
+              </Stack.Item>
+              {
+                // DOPPLER EDIT END
+              }
               <Stack.Item grow>
                 <PageButton
                   currentPage={currentPage}

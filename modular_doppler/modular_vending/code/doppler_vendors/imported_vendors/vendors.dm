@@ -113,10 +113,10 @@
 
 /datum/language_holder/yangyu_vendor
 	understood_languages = list(
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
+		/datum/language/konjin = list(LANGUAGE_ATOM),
 		)
 	spoken_languages = list(
-		/datum/language/yangyu = list(LANGUAGE_ATOM),
+		/datum/language/konjin = list(LANGUAGE_ATOM),
 		)
 
 /obj/machinery/vending/imported/yangyu/examine_more(mob/user)
