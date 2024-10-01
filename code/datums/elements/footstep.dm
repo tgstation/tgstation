@@ -109,7 +109,7 @@
 /datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || source.moving_diagonally == SECOND_DIAG_STEP)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/list/prepared_steps = prepare_step(source)
@@ -128,7 +128,7 @@
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change || source.moving_diagonally == SECOND_DIAG_STEP)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
 
 	var/list/prepared_steps = prepare_step(source)
@@ -148,9 +148,6 @@
 	else
 		footstep_type = right_leg?.footstep_type || left_leg?.footstep_type
 
-	if(isnull(footstep_type))
-		return
-
 	var/list/footstep_sounds
 	switch(footstep_type)
 		if(FOOTSTEP_MOB_CLAW)
@@ -161,8 +158,15 @@
 			footstep_sounds = GLOB.heavyfootstep[prepared_steps[footstep_type]]
 		if(FOOTSTEP_MOB_SHOE)
 			footstep_sounds = GLOB.footstep[prepared_steps[footstep_type]]
+		if(null)
+			return
+		else
+			// Got an unsupported type, somehow
+			CRASH("Invalid footstep type for human footstep: \[[footstep_type]\]")
 
 	if(!length(footstep_sounds))
+		// probably shouldn't happen, but i won't put a stack trace here for now,
+		// since i don't know what people may do to those lists
 		return
 
 	var/volume_multiplier = 1
@@ -195,7 +199,7 @@
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || source.moving_diagonally == SECOND_DIAG_STEP)
+	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/turf/open/source_loc = get_turf(source)
