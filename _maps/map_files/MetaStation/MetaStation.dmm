@@ -285,10 +285,6 @@
 "agd" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/closet/secure_closet/security/cargo,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/newscaster/directional/east,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "agi" = (
@@ -471,6 +467,8 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "aja" = (
@@ -19483,6 +19481,7 @@
 /obj/structure/chair/office/light,
 /obj/effect/landmark/start/depsec/supply,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "gZu" = (
@@ -24760,7 +24759,9 @@
 	pixel_x = 9
 	},
 /obj/machinery/recharger,
-/obj/machinery/digital_clock/directional/east,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/machinery/requests_console/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "iQd" = (
@@ -30339,9 +30340,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/west,
-/obj/machinery/requests_console/directional/west,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/supplies,
 /obj/item/dest_tagger{
 	pixel_x = -9;
 	pixel_y = 12
@@ -30352,6 +30350,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "kJx" = (
@@ -41724,6 +41723,13 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space,
 /area/space/nearstation)
+"oOX" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/tank_holder/extinguisher{
+	pixel_x = -9
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "oOY" = (
 /obj/structure/rack,
 /obj/item/fuel_pellet,
@@ -42827,9 +42833,10 @@
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/light/small/directional/north,
 /obj/structure/disposalpipe/segment,
+/obj/structure/tank_holder/extinguisher,
+/obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pke" = (
@@ -67526,6 +67533,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/tank_holder/extinguisher{
+	pixel_x = -9
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "xJv" = (
@@ -88196,7 +88207,7 @@ sFi
 cHG
 snZ
 xgx
-dfk
+oOX
 uyf
 edN
 uya
@@ -90260,7 +90271,7 @@ kJk
 xJj
 gZq
 aiy
-afW
+oor
 mnP
 tEr
 iOc
