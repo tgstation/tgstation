@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Items that adjust fishing difficulty no longer have misleading examine tips."
