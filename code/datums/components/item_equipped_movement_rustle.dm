@@ -9,8 +9,8 @@
 	///how many moves to take before playing the sound, defaults to 4.
 	var/move_delay = 4
 
-	///volume at which the sound plays, defaults to 50.
-	var/volume = 50
+	///volume at which the sound plays, defaults to 20.
+	var/volume = 20
 	///does the sound vary? defaults to true.
 	var/sound_vary = TRUE
 	///extra-range for this component's sound, defaults to -1.
@@ -22,12 +22,11 @@
 
 /datum/component/item_equipped_movement_rustle/Initialize(custom_sounds, move_delay_override, volume_override, extrarange, falloff_exponent, falloff_distance)
 	SIGNAL_HANDLER
-	if(!isclothing(parent))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ITEM_POST_EQUIPPED, PROC_REF(on_equip))
-	RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequip))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_unequip))
 
 	if(custom_sounds)
 		rustle_sounds = custom_sounds
@@ -45,6 +44,9 @@
 		sound_falloff_distance = falloff_distance
 
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
+	var/obj/item/our_item = parent
+	if(!(slot & our_item.slot_flags))
+		return
 	SIGNAL_HANDLER
 	holder = equipper
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
@@ -58,11 +60,7 @@
 	holder = equipper
 	move_counter = 0
 	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
-
-/datum/component/item_equipped_movement_rustle/proc/on_drop(datum/source, mob/user)
-	SIGNAL_HANDLER
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(user, COMSIG_QDELETING)
+	UnregisterSignal(holder, COMSIG_QDELETING)
 	holder = null
 
 ///just gets rid of the reference to holder in the case that they're qdeleted.
