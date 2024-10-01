@@ -6771,6 +6771,8 @@
 #include "modular_doppler\modular_customization\preferences\fluff.dm"
 #include "modular_doppler\modular_customization\preferences\frills.dm"
 #include "modular_doppler\modular_customization\preferences\horns.dm"
+#include "modular_doppler\modular_customization\preferences\preferences.dm"
+#include "modular_doppler\modular_customization\preferences\preferences_setup.dm"
 #include "modular_doppler\modular_customization\preferences\snout.dm"
 #include "modular_doppler\modular_customization\preferences\species_traits.dm"
 #include "modular_doppler\modular_customization\preferences\tail.dm"
