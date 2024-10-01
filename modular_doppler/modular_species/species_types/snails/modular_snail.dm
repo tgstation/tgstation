@@ -3,12 +3,13 @@
 /datum/species/snail
 	mutantliver = /obj/item/organ/internal/liver/snail //This is just a better liver to deal with toxins, it's a thematic thing.
 	mutantheart = /obj/item/organ/internal/heart/snail //This gives them the shell buff where they take less damage from behind, and their heart's more durable.
-	exotic_blood = null
+	exotic_blood = /datum/reagent/blood/green
+	exotic_bloodtype = "I*"
 
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 	digi_leg_overrides = list(
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/anthromorph,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/insectoid,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/insectoid,
 	)
 
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)
