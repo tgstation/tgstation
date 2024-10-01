@@ -133,7 +133,7 @@
 		/obj/item/multitool/drone,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
-		/obj/item/analyzer,
+		/obj/item/analyzer/drone,
 		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants
