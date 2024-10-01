@@ -5935,7 +5935,7 @@
 "ceB" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/table/glass,
-/obj/machinery/light/cold/dim/directional/south,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ceD" = (
@@ -47344,6 +47344,7 @@
 	dir = 9
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "qQq" = (
