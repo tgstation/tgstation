@@ -244,7 +244,7 @@
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	if(iscarbon(L))
-		if(L.stat == CONSCIOUS)
+		if(L.stat == CONSCIOUS && !HAS_TRAIT(L, TRAIT_MUTE))
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
 		add_mob_blood(L)
 
