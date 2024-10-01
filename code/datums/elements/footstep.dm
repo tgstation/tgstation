@@ -74,7 +74,7 @@
 			playsound(turf, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1, vary = sound_vary)
 		return
 
-	if(iscarbon(source) &&& source.move_intent == MOVE_INTENT_WALK)
+	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
 		return // stealth
 
 	steps_for_living[source] += 1
