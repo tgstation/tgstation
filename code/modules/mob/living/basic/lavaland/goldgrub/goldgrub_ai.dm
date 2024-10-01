@@ -59,7 +59,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/atom/movable/phased = living_pawn.loc
 
-	var/list/turfs_list = RANGE_TURFS(5, phased)
+	var/list/turfs_list = RANGE_TURFS(BURROW_RANGE, phased)
 	var/current_max_distance = 0
 	var/turf/selected_turf
 
@@ -72,7 +72,7 @@
 			current_max_distance = distance_to_target
 			selected_turf = possible_turf
 
-		if(distance_to_target >= BURROW_RANGE)
+		if(distance_to_target == BURROW_RANGE)
 			break
 
 	if(isnull(selected_turf))
