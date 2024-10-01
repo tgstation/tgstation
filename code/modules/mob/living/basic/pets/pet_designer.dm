@@ -1,20 +1,33 @@
 #define PET_OPTION_DOG "Dog"
 #define PET_OPTION_CAT "Cat"
 #define PET_OPTION_FOX "Fox"
+#define PET_OPTION_VERMIN "Vermin"
+#define PET_OPTION_BIRD "Bird"
 
 GLOBAL_LIST_INIT(pet_options, list(
 	PET_OPTION_DOG = list(
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/dog/bullterrier,
+		/mob/living/basic/pet/dog/corgi/puppy,
+		/mob/living/basic/pet/dog/corgi/exoticcorgi,
 	),
 	PET_OPTION_CAT = list(
 		/mob/living/basic/pet/cat/tabby,
 		/mob/living/basic/pet/cat,
+		/mob/living/basic/pet/cat/kitten,
 	),
 	PET_OPTION_FOX = list(
 		/mob/living/basic/pet/fox,
-	)
+	),
+	PET_OPTION_VERMIN = list(
+		/mob/living/basic/mothroach,
+		/mob/living/basic/spider/maintenance,
+		/mob/living/basic/mouse,
+	),
+	PET_OPTION_BIRD = list(
+		/mob/living/basic/parrot,
+	),
 ))
 
 /datum/pet_customization
@@ -44,30 +57,31 @@ GLOBAL_LIST_INIT(pet_options, list(
 		/datum/emote/jump,
 		/datum/emote/spin,
 	)
-
-/datum/pet_customization/New(client/player_client)
-	. = ..()
-	if(isnull(custom_pet_carriers))
-		custom_pet_carriers = setup_pet_carriers()
-	pet_carrier = custom_pet_carriers[1]
-	GLOB.customized_pets[REF(player_client)] = src
-
-/datum/pet_customization/proc/setup_pet_carriers()
-	var/list/custom_paths = list(
+	///list of carrier colors we can pick from
+	var/static/list/possible_colors = list(
 		"Blue" = COLOR_BLUE,
 		"Red" = COLOR_RED,
 		"Yellow" = COLOR_YELLOW,
 		"Green" = COLOR_GREEN,
 	)
+
+/datum/pet_customization/New(client/player_client)
+	. = ..()
+	if(isnull(custom_pet_carriers))
+		custom_pet_carriers = setup_pet_carriers()
+	pet_carrier = possible_colors[1]
+	GLOB.customized_pets[REF(player_client)] = src
+
+/datum/pet_customization/proc/setup_pet_carriers()
 	var/list/list_to_return = list()
 
 	var/obj/item/pet_carrier/demo_carrier = new()
 	demo_carrier.open = FALSE
 	demo_carrier.update_appearance()
 
-	for(var/pet_carrier in custom_paths)
-		demo_carrier.set_greyscale(custom_paths[pet_carrier])
-		list_to_return[pet_carrier] = icon2base64(getFlatIcon(demo_carrier))
+	for(var/color in possible_colors)
+		demo_carrier.set_greyscale(possible_colors[color])
+		list_to_return[color] = icon2base64(getFlatIcon(demo_carrier))
 	qdel(demo_carrier)
 	return list_to_return
 
@@ -79,7 +93,7 @@ GLOBAL_LIST_INIT(pet_options, list(
 
 /datum/pet_customization/ui_data(mob/user)
 	var/list/data = list()
-	data["pet_name"] = custom_name || selected_path::name
+	data["pet_name"] = custom_name
 	data["pet_path"] = selected_path
 	data["pet_gender"] = pet_gender
 	data["pet_trick_name"] = pet_trick_name
@@ -125,8 +139,11 @@ GLOBAL_LIST_INIT(pet_options, list(
 		if("finalize_pet")
 
 			var/pet_type = text2path(params["selected_path"])
-			if(ispath(pet_type, /mob/living/basic/pet))
-				selected_path = pet_type
+			for(var/pet_category in GLOB.pet_options)
+				var/list/pet_list = GLOB.pet_options[pet_category]
+				if(pet_list.Find(pet_type))
+					selected_path = pet_type
+					break
 
 			var/trick_name = params["selected_trick_name"]
 			if(sanitize_name(trick_name))
@@ -150,7 +167,7 @@ GLOBAL_LIST_INIT(pet_options, list(
 
 			var/selected_color = params["selected_carrier"]
 			if(!isnull(selected_color))
-				pet_carrier = selected_color
+				pet_carrier = possible_colors[selected_color]
 
 			var/selected_specie = params["selected_specie"]
 			if(!isnull(selected_specie))
@@ -160,9 +177,12 @@ GLOBAL_LIST_INIT(pet_options, list(
 	return TRUE
 
 /datum/pet_customization/proc/create_pet(mob/living/spawned, client/player_client)
-	var/obj/item/pet_carrier/carrier = new()
-	carrier.set_greyscale(pet_carrier)
-	var/mob/living/our_pet = new selected_path()
+	var/obj/item/pet_carrier/carrier = new(get_turf(spawned))
+	carrier.open = FALSE
+	carrier.update_appearance()
+	var/final_color = pet_carrier || COLOR_BLUE
+	carrier.set_greyscale(final_color)
+	var/mob/living/our_pet = new selected_path(get_turf(spawned)) //spawning these in nullspace leads to runtimes
 	our_pet.gender = pet_gender
 
 	if(custom_name)
@@ -172,7 +192,14 @@ GLOBAL_LIST_INIT(pet_options, list(
 		our_pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, pet_trick_name)
 	if(pet_trick_moves)
 		our_pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, pet_trick_moves)
+	our_pet.befriend(spawned)
 	carrier.add_occupant(our_pet)
-	spawned.put_in_hands(carrier)
+	spawned.put_in_hands(carrier, forced = TRUE)
 	GLOB.customized_pets -= REF(player_client)
 	qdel(src)
+
+#undef PET_OPTION_DOG
+#undef PET_OPTION_CAT
+#undef PET_OPTION_FOX
+#undef PET_OPTION_VERMIN
+#undef PET_OPTION_BIRD

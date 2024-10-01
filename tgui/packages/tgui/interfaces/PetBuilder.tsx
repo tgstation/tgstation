@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 import { useBackend } from '../backend';
 import {
@@ -10,15 +9,13 @@ import {
   LabeledList,
   Input,
   Box,
-  ProgressBar,
   Section,
   Stack,
-  DmIcon,
 } from '../components';
 import { Window } from '../layouts';
-
+import { IconDisplay } from './LootPanel/IconDisplay';
 type Data = {
-  pet_name: string;
+  pet_name: string | null;
   pet_specie: string;
   pet_path: string;
   pet_gender: string;
@@ -96,7 +93,7 @@ export const PetBuilder = (props: { act: any; data: Data }) => {
   const [filteredPetList, setFilteredPetList] = useState(
     () => FilterPetList(selectedSpecie, pet_options) || [],
   );
-  const [selectedName, setSelectedName] = useState('');
+  const [selectedName, setSelectedName] = useState(pet_name);
   const [selectedGender, setSelectedGender] = useState(pet_gender);
 
   const ScrollPetSpecies = (direction: string) => {
@@ -261,11 +258,18 @@ const PetSelector = ({
               />
             </Flex.Item>
             <Flex.Item grow textAlign="center">
-              <DmIcon
-                icon={selectedPet.pet_icon}
-                icon_state={selectedPet.pet_icon_state}
-                height="128px"
-                width="128px"
+              <IconDisplay
+                item={{
+                  icon: selectedPet.pet_icon,
+                  icon_state: selectedPet.pet_icon_state,
+                  name: selectedPet.pet_name,
+                  path: selectedPet.pet_path,
+                  ref: selectedPet.pet_ref,
+                }}
+                size={{
+                  height: 11,
+                  width: 11,
+                }}
               />
             </Flex.Item>
             <Flex.Item>
