@@ -2040,7 +2040,7 @@
 #include "code\game\machinery\digital_clock.dm"
 #include "code\game\machinery\dish_drive.dm"
 #include "code\game\machinery\dna_scanner.dm"
-#include "code\game\machinery\droneDispenser.dm"
+#include "code\game\machinery\drone_dispenser.dm"
 #include "code\game\machinery\ecto_sniffer.dm"
 #include "code\game\machinery\fat_sucker.dm"
 #include "code\game\machinery\firealarm.dm"
