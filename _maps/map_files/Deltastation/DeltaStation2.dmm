@@ -16542,9 +16542,6 @@
 /area/station/medical/abandoned)
 "ebQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -35021,9 +35018,6 @@
 "iJf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "iJj" = (
@@ -40440,6 +40434,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/official/enlist/directional/south,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "jZj" = (
@@ -42593,9 +42588,6 @@
 /area/station/commons/fitness/recreation)
 "kBT" = (
 /obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "kCa" = (
@@ -44701,9 +44693,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "lfm" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/duct,
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
@@ -49645,14 +49634,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
-"mtd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/station/maintenance/department/security)
 "mtf" = (
 /obj/structure/rack,
 /obj/item/book/manual/wiki/engineering_hacking{
@@ -94159,7 +94140,6 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "xzH" = (
-/obj/structure/sign/poster/official/enlist/directional/south,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -146479,7 +146459,7 @@ pNz
 uFa
 dth
 svd
-mtd
+kBT
 ijP
 rYA
 lSw

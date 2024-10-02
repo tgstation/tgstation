@@ -46,6 +46,7 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	base_icon_state = "scanner"
 	icon_state = "scanner"
+	flags_1 = INDESTRUCTIBLE
 	/// What's the name of this area?
 	var/area_name = "Debug, change me"
 	/// What's our unique identifier? Used to prevent two of the same domain being loaded breaking things.
@@ -83,6 +84,7 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	base_icon_state = "plunger"
 	icon_state = "plunger"
+	flags_1 = INDESTRUCTIBLE
 	/// What's our unique identifier? Used to prevent two of the same domain being loaded breaking things.
 	var/unique_id = "we rollin' deep"
 	///Have we deposited a box already?
@@ -122,6 +124,8 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	icon = 'icons/obj/machines/bitrunning.dmi'
 	base_icon_state = "exit_portal"
 	icon_state = "exit_portal"
+	flags_1 = INDESTRUCTIBLE
+
 
 /obj/effect/bitrunner_exit_portal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
