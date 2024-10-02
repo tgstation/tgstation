@@ -31,6 +31,7 @@
 		/obj/item/organ/external/tail/lizard = "Ramatan",
 	)
 	payday_modifier = 1.0
+	mutanttongue = /obj/item/organ/internal/tongue/ramatan
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	death_sound = 'modular_doppler/modular_species/species_types/ramatae/sounds/scugdeath.ogg'
 	species_language_holder = /datum/language_holder/ramatan
@@ -49,7 +50,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/ramatan,
 	)
 
-/datum/species/snail/create_pref_unique_perks()
+/datum/species/ramatan/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -70,7 +71,10 @@
 			SPECIES_PERK_ICON = "fa-fish",
 			SPECIES_PERK_NAME = "Survivalist",
 			SPECIES_PERK_DESC = "Ramatae are naturally adept at living off the land; catching fish and taming beasts better than others."
+		),
 	)
+
+	return to_add
 
 /datum/outfit/scug_preview
 	name = "Ramatan (Species Preview)"

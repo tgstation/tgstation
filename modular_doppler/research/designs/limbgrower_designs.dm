@@ -18,6 +18,15 @@
 	category += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
 
+/datum/design/tongue/ramatan
+	name = "Ramatan Tongue"
+	id = "ramatantongue"
+	build_path = /obj/item/organ/internal/tongue/ramatan
+	category = list(
+		SPECIES_RAMATAN,
+		RND_CATEGORY_INITIAL,
+	)
+
 /datum/design/tongue/snail
 	name = "Snail Tongue"
 	id = "snailtongue"
