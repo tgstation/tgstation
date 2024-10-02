@@ -1,3 +1,4 @@
+#define BURROW_RANGE 5
 /datum/ai_controller/basic_controller/goldgrub
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -11,6 +12,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/burrow_through_ground,
 		/datum/ai_planning_subtree/dig_away_from_danger,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores,
@@ -38,6 +40,46 @@
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
+
+/datum/ai_planning_subtree/burrow_through_ground
+
+/datum/ai_planning_subtree/burrow_through_ground/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(is_jaunting(controller.pawn) && controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/burrow_through_ground, BB_BASIC_MOB_CURRENT_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_behavior/burrow_through_ground
+	action_cooldown = 10 SECONDS
+
+/datum/ai_behavior/burrow_through_ground/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	var/atom/target = controller.blackboard[target_key]
+	if(!is_jaunting(controller.pawn) || QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	var/mob/living/living_pawn = controller.pawn
+	var/atom/movable/phased = living_pawn.loc
+
+	var/list/turfs_list = RANGE_TURFS(BURROW_RANGE, phased)
+	var/current_max_distance = 0
+	var/turf/selected_turf
+
+	for(var/turf/possible_turf as anything in turfs_list)
+		if(!ismineralturf(possible_turf) && !isasteroidturf(possible_turf))
+			continue
+
+		var/distance_to_target = get_dist(possible_turf, target)
+		if(distance_to_target > current_max_distance)
+			current_max_distance = distance_to_target
+			selected_turf = possible_turf
+
+		if(distance_to_target == BURROW_RANGE)
+			break
+
+	if(isnull(selected_turf))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	phased.forceMove(selected_turf)
+	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_ores
@@ -179,3 +221,5 @@
 	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_SPIT_ABILITY)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+#undef BURROW_RANGE
