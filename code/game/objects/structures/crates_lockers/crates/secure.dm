@@ -237,16 +237,16 @@
 /obj/structure/closet/crate/secure/syndicate/self
 	name = "\improper S.E.L.F. crate"
 	desc = "A secure crate locked from the inside with a scanning panel above it and holographic display of lock's status. Sentient Engine Liberation Front engineers are quite the show-offs."
-	icon_state = "selfcrate"
-	base_icon_state = "selfcrate"
+	icon_state = "selfcrate_secure"
+	base_icon_state = "selfcrate_secure"
 
-/obj/structure/closet/crate/secure/syndicate/m13
+/obj/structure/closet/crate/secure/syndicate/mi13
 	name = "mysterious secure crate"
 	desc = "A secure crate. Lacks any obvious logos or even codes for where it arrived from, but looks like taken straight from a spy movie."
 	icon_state = "mithirteencrate"
 	base_icon_state = "mithirteencrate"
-	open_sound_volume = 20
-	close_sound_volume = 35
+	open_sound_volume = 15
+	close_sound_volume = 20
 
 /obj/structure/closet/crate/secure/syndicate/arc
 	name = "\improper Animal Rights Consortium crate"
