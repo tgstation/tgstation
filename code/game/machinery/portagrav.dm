@@ -229,7 +229,7 @@
 	. = ..()
 	if(.)
 		return
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	switch(action)
 		if("adjust_grav")
 			var/adjustment = text2num(params["adjustment"])

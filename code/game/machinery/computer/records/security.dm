@@ -204,13 +204,13 @@
 	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/max = CONFIG_GET(number/maxfine)
 	if(params["fine"] > max)
 		to_chat(usr, span_warning("The maximum fine is [max] credits."))
-		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 75, TRUE)
 		return FALSE
 
 	var/input_details
@@ -321,7 +321,7 @@
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/records/security/proc/print_finish(obj/item/printable)
 	printing = FALSE
-	playsound(src, 'sound/machines/terminal_eject.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 100, TRUE)
 	printable.forceMove(loc)
 
 	return TRUE
@@ -330,7 +330,7 @@
 /obj/machinery/computer/records/security/proc/print_record(mob/user, datum/record/crew/target, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
-		playsound(src, 'sound/machines/terminal_error.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
 	printing = TRUE

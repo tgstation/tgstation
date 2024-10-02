@@ -221,13 +221,13 @@
 /mob/living/basic/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/hud_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = hud_icon.Height() - world.icon_size
+	holder.pixel_y = hud_icon.Height() - ICON_SIZE_Y
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated)

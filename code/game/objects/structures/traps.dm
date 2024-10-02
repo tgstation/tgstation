@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	alpha = 30 //initially quite hidden when not "recharging"
-	var/flare_message = "<span class='warning'>the trap flares brightly!</span>"
+	var/flare_message = span_warning("the trap flares brightly!")
 	var/last_trigger = 0
 	var/time_between_triggers = 1 MINUTES
 	var/charges = INFINITY
@@ -20,7 +20,7 @@
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
-	flare_message = "<span class='warning'>[src] flares brightly!</span>"
+	flare_message = span_warning("[src] flares brightly!")
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -113,7 +113,7 @@
 /obj/structure/trap/stun/hunter/Initialize(mapload)
 	. = ..()
 	time_between_triggers = 1 SECONDS
-	flare_message = "<span class='warning'>[src] snaps shut!</span>"
+	flare_message = span_warning("[src] snaps shut!")
 
 /obj/structure/trap/stun/hunter/Destroy()
 	if(!QDELETED(stored_item))

@@ -31,7 +31,7 @@
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
 	faction = list(FACTION_PLANTS)
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/seedling
 	///the state of combat we are in
@@ -338,7 +338,7 @@
 		living_target.ignite_mob()
 		living_target.adjustFireLoss(30)
 
-	playsound(target_turf, 'sound/magic/lightningbolt.ogg', 50, TRUE)
+	playsound(target_turf, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
 	if(!is_seedling)
 		return
 	var/mob/living/basic/seedling/seed_firer = firer

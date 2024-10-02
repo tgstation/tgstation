@@ -28,6 +28,8 @@
 #define ORGAN_VIRGIN (1<<10)
 /// ALWAYS show this when scanned by advanced scanners, even if it is totally healthy
 #define ORGAN_PROMINENT (1<<11)
+/// An organ that is ostensibly dangerous when inside a body
+#define ORGAN_HAZARDOUS (1<<12)
 
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)

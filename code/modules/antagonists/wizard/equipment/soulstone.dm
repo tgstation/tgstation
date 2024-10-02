@@ -92,7 +92,7 @@
 	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
 	balloon_alert(exorcist, "exorcising...")
-	playsound(src, 'sound/hallucinations/veryfar_noise.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 40, TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
 	playsound(src, 'sound/effects/pray_chaplain.ogg', 60, TRUE)
@@ -238,7 +238,7 @@
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message("<span class='notice'>[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!", \
+	user.visible_message(span_notice("[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!"), \
 		span_notice("You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!"), ignored_mobs = occupant)
 	to_chat(occupant, span_userdanger("[user] holds you up briefly, then forces you into [target_toolbox]!"))
 	to_chat(occupant, span_deadsay("<b>Your eternal soul has been sacrificed to restore the soul of a toolbox. Them's the breaks!</b>"))
@@ -261,11 +261,11 @@
 	icon = 'icons/mob/shells.dmi'
 	icon_state = "construct_cult"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
-	var/extra_desc = {"<span class='cult'>A construct shell, used to house bound souls from a soulstone.\n
-		Placing a soulstone with a soul into this shell allows you to produce your choice of the following:\n
-		An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.\n
-		A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.\n
-		A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>"}
+	var/extra_desc = span_cult("A construct shell, used to house bound souls from a soulstone.\n\
+		Placing a soulstone with a soul into this shell allows you to produce your choice of the following:\n\
+		An <b>Artificer</b>, which can produce <b>more shells and soulstones</b>, as well as fortifications.\n\
+		A <b>Wraith</b>, which does high damage and can jaunt through walls, though it is quite fragile.\n\
+		A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.")
 
 /obj/structure/constructshell/examine(mob/user)
 	. = ..()
