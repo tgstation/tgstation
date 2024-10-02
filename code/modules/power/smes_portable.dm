@@ -49,7 +49,7 @@
 				. += "bp-o"
 			else
 				. += "bp-d"
-	connected_smes?.update_overlays()
+	connected_smes?.update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/smes/connector/crowbar_act(mob/living/user, obj/item/tool)
 	if(!connector_free(user))
@@ -129,8 +129,7 @@
 
 /obj/machinery/power/smesbank/interact(mob/user)
 	. = ..()
-	if(connected_port)
-		connected_port.interact(user)
+	connected_port?.interact(user)
 
 /obj/machinery/power/smesbank/examine(user)
 	. = ..()
@@ -192,6 +191,7 @@
 		disconnect_port()
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
+
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
 	if(!possible_connector)
 		to_chat(user, span_notice("There's no power connector to connect to."))
@@ -241,7 +241,7 @@
 
 /obj/machinery/power/smesbank/Destroy()
 	disconnect_port()
-	. = ..()
+	return ..()
 
 /// Adjusts the charge of the portable SMES. See SMES code.
 /obj/machinery/power/smesbank/proc/adjust_charge(charge_adjust)
