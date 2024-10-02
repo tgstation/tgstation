@@ -53,7 +53,7 @@
 	var/cult_icon_state = "cat_cult"
 
 /datum/emote/cat
-	mob_type_allowed_typecache = mob/living/basic/pet/cat
+	mob_type_allowed_typecache = /mob/living/basic/pet/cat
 	mob_type_blacklist_typecache = list()
 
 /datum/emote/cat/meow
