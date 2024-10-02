@@ -12,7 +12,7 @@
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null)
 	. = ..()
-	if(isturf(loc) && loc.density)
+	if(isclosedturf(loc) && loc.density)
 		// allows for wall graffiti to be seen
 		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 		layer = GAME_CLEAN_LAYER

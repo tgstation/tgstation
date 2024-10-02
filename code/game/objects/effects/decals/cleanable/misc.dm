@@ -452,7 +452,6 @@
 	name = "pool of fuel"
 	desc = "A pool of flammable fuel. Its probably wise to clean this off before something ignites it..."
 	icon_state = "fuel_pool"
-	layer = LOW_OBJ_LAYER
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -568,7 +567,7 @@
 	mergeable_decal = FALSE
 	beauty = -10
 	plane = GAME_PLANE
-	layer = LOW_OBJ_LAYER
+	layer = BELOW_OBJ_LAYER
 
 /obj/effect/decal/cleanable/rubble/Initialize(mapload)
 	. = ..()
