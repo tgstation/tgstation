@@ -44,7 +44,7 @@
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
-			PLAYSOUND(user, 'sound/items/weapons/genhit2.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(user, 'sound/items/weapons/genhit2.ogg').vary_frequency(TRUE).play()
 		return BRUTELOSS
 
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE)

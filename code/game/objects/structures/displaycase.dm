@@ -107,7 +107,7 @@
 	alarm_manager.send_alarm(ALARM_BURGLAR)
 	addtimer(CALLBACK(alarm_manager, TYPE_PROC_REF(/datum/alarm_handler, clear_alarm), ALARM_BURGLAR), 1 MINUTES)
 
-	PLAYSOUND(src, 'sound/effects/alert.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/alert.ogg').vary_frequency(TRUE).play()
 
 /obj/structure/displaycase/update_overlays()
 	. = ..()
@@ -264,7 +264,7 @@
 	balloon_alert(user, "disassembling...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 		if(electronics)
 			electronics.forceMove(drop_location())
@@ -576,7 +576,7 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 				return
 			toggle_lock()
 		if("Register")
@@ -585,13 +585,13 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 				return
 			payments_acc = potential_acc.registered_account
 			PLAYSOUND(src, 'sound/machines/click.ogg').volume(20).vary_frequency(TRUE).play()
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
-				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 				return
 
 			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)

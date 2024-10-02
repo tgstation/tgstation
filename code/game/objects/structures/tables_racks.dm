@@ -221,7 +221,7 @@
 		return NONE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		frame = null
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -697,7 +697,7 @@
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
-	PLAYSOUND(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg').vary_frequency(TRUE).play()
 
 /obj/structure/table/reinforced/rglass
 	name = "reinforced glass table"
@@ -913,7 +913,7 @@
 			if(damage_amount)
 				PLAYSOUND(loc, 'sound/items/dodgeball.ogg').volume(80).vary_frequency(TRUE).play()
 			else
-				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).play()
 		if(BURN)
 			PLAYSOUND(loc, 'sound/items/tools/welder.ogg').volume(40).vary_frequency(TRUE).play()
 

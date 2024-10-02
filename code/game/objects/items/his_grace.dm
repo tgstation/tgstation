@@ -133,8 +133,8 @@
 		if(!L.stat)
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			PLAYSOUND(L, 'sound/items/weapons/smash.ogg').volume(50).vary_frequency(TRUE).play()
-			PLAYSOUND(L, 'sound/effects/desecration/desecration-01.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(L, 'sound/items/weapons/smash.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(L, 'sound/effects/desecration/desecration-01.ogg').vary_frequency(TRUE).play()
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else

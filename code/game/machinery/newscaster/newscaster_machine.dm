@@ -511,7 +511,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 	if(!tool.use_tool(src, user, 60, volume=50))
 		return
-	PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 	if((machine_stat & BROKEN))
 		to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
 		new /obj/item/stack/sheet/iron(loc, 5)

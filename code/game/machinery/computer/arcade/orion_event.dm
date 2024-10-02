@@ -113,7 +113,7 @@
 	..()
 
 /datum/orion_event/electronic_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
-	PLAYSOUND(game, 'sound/effects/empulse.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(game, 'sound/effects/empulse.ogg').vary_frequency(TRUE).play()
 	game.visible_message(span_danger("[game] malfunctions, randomizing in-game stats!"))
 	var/oldfood = game.food
 	var/oldfuel = game.fuel
@@ -129,7 +129,7 @@
 		game.audible_message(span_danger("[game] lets out a somehow ominous chime."))
 	game.food = oldfood
 	game.fuel = oldfuel
-	PLAYSOUND(game, 'sound/machines/chime.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(game, 'sound/machines/chime.ogg').vary_frequency(TRUE).play()
 
 #define BUTTON_RESTORE_HULL "Restore Hull"
 
@@ -159,7 +159,7 @@
 /datum/orion_event/hull_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(10+gamer_skill))
 		game.say("Something slams into the floor around [game] - luckily, it didn't get through!")
-		PLAYSOUND(game, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(game, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 		return
 	PLAYSOUND(game, 'sound/effects/bang.ogg').volume(100).vary_frequency(TRUE).play()
 	for(var/turf/open/floor/smashed in orange(1, game))

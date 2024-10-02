@@ -180,7 +180,7 @@
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 6 SECONDS)
-		PLAYSOUND(src, 'sound/machines/defib/defib_zap.ogg').volume(50).play()
+		PLAYSOUND(src, 'sound/machines/defib/defib_zap.ogg').play()
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
 /mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
@@ -354,7 +354,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5

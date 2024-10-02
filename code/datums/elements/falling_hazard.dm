@@ -52,7 +52,7 @@
 		if(crushes_people)
 			poor_target.Knockdown(0.25 SECONDS * fall_damage) // For a piano, that would be 15 seconds
 
-		PLAYSOUND(poor_target, 'sound/items/weapons/parry.ogg').volume(50).vary_frequency(TRUE).play() // You PARRIED the falling object with your EPIC hardhat
+		PLAYSOUND(poor_target, 'sound/items/weapons/parry.ogg').vary_frequency(TRUE).play() // You PARRIED the falling object with your EPIC hardhat
 		return
 
 	var/obj/item/bodypart/target_head = poor_target.get_bodypart(BODY_ZONE_HEAD)

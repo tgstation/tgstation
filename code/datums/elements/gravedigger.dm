@@ -39,7 +39,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.balloon_alert(user, "digging grave...")
-	PLAYSOUND(interacting_with, 'sound/effects/shovel_dig.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(interacting_with, 'sound/effects/shovel_dig.ogg').vary_frequency(TRUE).play()
 	INVOKE_ASYNC(src, PROC_REF(perform_digging), user, interacting_with, source)
 	return ITEM_INTERACT_BLOCKING
 

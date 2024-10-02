@@ -423,7 +423,7 @@
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
-	PLAYSOUND(src, 'sound/misc/sadtrombone.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/misc/sadtrombone.ogg').play()
 	..()
 
 /obj/item/bombcore/large
@@ -501,7 +501,7 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
-		PLAYSOUND(loc, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/tools/screwdriver2.ogg').vary_frequency(TRUE).play()
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)

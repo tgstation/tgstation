@@ -64,7 +64,7 @@
 		burst() // too much air, pop it!
 		return
 
-	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').vary_frequency(TRUE).play()
 
 	balloon_alert(user, "you blow up the balloon!") // because it's a balloon obviously
 

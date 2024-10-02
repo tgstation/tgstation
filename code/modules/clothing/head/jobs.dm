@@ -90,7 +90,7 @@
 	sleep(2 SECONDS)
 	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
 	user.say("BOOORK!", forced = "chef hat suicide")
-	PLAYSOUND(user, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/machines/ding.ogg').vary_frequency(TRUE).play()
 	return FIRELOSS
 
 //Captain

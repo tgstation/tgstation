@@ -264,7 +264,7 @@
 			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
-				PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 				qdel(embedded_flash)
 				flash.forceMove(src)
 				return
@@ -420,7 +420,7 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').vary_frequency(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)

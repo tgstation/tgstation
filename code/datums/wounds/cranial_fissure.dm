@@ -96,7 +96,7 @@
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
 
-	PLAYSOUND(victim, 'sound/items/handling/surgery/organ2.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(victim, 'sound/items/handling/surgery/organ2.ogg').vary_frequency(TRUE).play()
 	victim.balloon_alert(user, "pulling out eyes...")
 	user.visible_message(
 		span_boldwarning("[user] reaches inside [victim]'s skull..."),

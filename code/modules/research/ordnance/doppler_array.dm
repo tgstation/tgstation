@@ -211,7 +211,7 @@
 		user.put_in_hands(inserted_disk)
 	else
 		inserted_disk.forceMove(drop_location())
-	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 	return TRUE
 
 /// We rely on exited to clear references.

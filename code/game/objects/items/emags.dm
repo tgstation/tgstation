@@ -114,7 +114,7 @@
 		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
 		exploding = TRUE
 	else
-		PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/bikehorn.ogg').vary_frequency(TRUE).play()
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
 /obj/item/card/emagfake/proc/blow_up()

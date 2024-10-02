@@ -532,7 +532,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(do_rustle)
-		PLAYSOUND(parent, rustle_sound).volume(50).vary_frequency(rustle_vary).range(-5 + SOUND_RANGE).play()
+		PLAYSOUND(parent, rustle_sound).vary_frequency(rustle_vary).range(-5 + SOUND_RANGE).play()
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))

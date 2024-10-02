@@ -26,7 +26,7 @@
 			if(damage_amount)
 				PLAYSOUND(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary_frequency(TRUE).play()
 			else
-				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).play()
 		if(BURN)
 			if(damage_amount)
 				PLAYSOUND(loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()

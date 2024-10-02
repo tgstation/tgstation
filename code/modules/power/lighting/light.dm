@@ -447,7 +447,7 @@
 		if(BRUTE)
 			switch(status)
 				if(LIGHT_EMPTY)
-					PLAYSOUND(loc, 'sound/items/weapons/smash.ogg').volume(50).vary_frequency(TRUE).play()
+					PLAYSOUND(loc, 'sound/items/weapons/smash.ogg').vary_frequency(TRUE).play()
 				if(LIGHT_BROKEN)
 					PLAYSOUND(loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(90).vary_frequency(TRUE).play()
 				else

@@ -55,7 +55,7 @@
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
 	..()
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').play()
 	if(occupant)
 		if(!iscarbon(occupant))
 			occupant.forceMove(drop_location())
@@ -67,7 +67,7 @@
 
 /obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
 	make_meat()
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').play()
 	if(processing)
 		stop()
 	..()

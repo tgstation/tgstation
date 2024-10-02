@@ -63,7 +63,7 @@
 
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
-		PLAYSOUND(chassis, clampsound).volume(50).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
+		PLAYSOUND(chassis, clampsound).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
 		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
@@ -75,7 +75,7 @@
 		if(workmech.cargo_hold.contents.len >= workmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
-		PLAYSOUND(chassis, clampsound).volume(50).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
+		PLAYSOUND(chassis, clampsound).vary_frequency(FALSE).range(-6 + SOUND_RANGE).play()
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
@@ -119,7 +119,7 @@
 			affected.dismember(damtype)
 			torn_off = TRUE
 		if(torn_off)
-			playsound(src, get_dismember_sound(), 80, TRUE)
+			PLAYSOUND(src, get_dismember_sound()).volume(80).vary(TRUE).play()
 			carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
@@ -198,7 +198,7 @@
 		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
-	PLAYSOUND(chassis, 'sound/effects/refill.ogg').volume(50).vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
+	PLAYSOUND(chassis, 'sound/effects/refill.ogg').vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
 	return list(

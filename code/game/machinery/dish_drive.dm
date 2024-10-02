@@ -75,7 +75,7 @@
 	LAZYREMOVE(dish_drive_contents, dish)
 	user.put_in_hands(dish)
 	balloon_alert(user, "[dish] taken")
-	PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').vary_frequency(TRUE).play()
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
@@ -89,7 +89,7 @@
 			return
 		LAZYADD(dish_drive_contents, dish)
 		balloon_alert(user, "[dish] placed in drive")
-		PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').vary_frequency(TRUE).play()
 		flick("synthesizer_beam", src)
 		return
 	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), dish))
@@ -129,7 +129,7 @@
 				LAZYADD(dish_drive_contents, dish)
 				visible_message(span_notice("[src] beams up [dish]!"))
 				dish.forceMove(src)
-				PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').vary_frequency(TRUE).play()
 				flick("synthesizer_beam", src)
 			else
 				step_towards(dish, src)
@@ -153,7 +153,7 @@
 	if(!bin)
 		if(manual)
 			visible_message(span_warning("[src] buzzes. There are no disposal bins in range!"))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 		return
 	var/disposed = 0
 	for(var/obj/item/dish in dish_drive_contents)
@@ -166,8 +166,8 @@
 			disposed++
 	if (disposed)
 		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))
-		PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').volume(50).vary_frequency(TRUE).play()
-		PLAYSOUND(bin, 'sound/items/pshoom/pshoom.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/pshoom/pshoom.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(bin, 'sound/items/pshoom/pshoom.ogg').vary_frequency(TRUE).play()
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
 		bin.update_appearance()
 		flick("synthesizer_beam", src)

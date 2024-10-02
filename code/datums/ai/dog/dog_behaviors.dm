@@ -44,7 +44,7 @@
 	if(!SPT_PROB(20, seconds_per_tick))
 		return
 	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	PLAYSOUND(target, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(target, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
 
 /// Let them know we mean business
@@ -54,4 +54,4 @@
 	living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [target]!")
 	if(!SPT_PROB(40, seconds_per_tick))
 		return
-	playsound(living_pawn, pick('sound/mobs/non-humanoids/dog/growl1.ogg', 'sound/mobs/non-humanoids/dog/growl2.ogg'), 50, TRUE, -1)
+	PLAYSOUND(living_pawn, pick('sound/mobs/non-humanoids/dog/growl1.ogg', 'sound/mobs/non-humanoids/dog/growl2.ogg')).vary(TRUE).play()

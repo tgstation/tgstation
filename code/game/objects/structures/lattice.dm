@@ -162,7 +162,7 @@
 		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
 		return
 	to_chat(user, span_notice("You construct new plating with [src] as support."))
-	PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).play()
 
 	var/turf/turf_we_place_on = get_turf(src)
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

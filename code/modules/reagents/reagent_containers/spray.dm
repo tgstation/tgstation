@@ -67,7 +67,7 @@
 	else
 		spray(target, user)
 
-	PLAYSOUND(src, spray_sound).volume(50).vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
+	PLAYSOUND(src, spray_sound).vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
 	user.changeNext_move(CLICK_CD_RANGE * 2)
 	user.newtonian_move(get_angle(target, user))
 	return TRUE

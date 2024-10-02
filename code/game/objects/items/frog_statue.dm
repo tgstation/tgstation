@@ -57,7 +57,7 @@
 		if(possible_turf.is_blocked_turf() || isopenspaceturf(possible_turf))
 			continue
 		possible_turfs += possible_turf
-	PLAYSOUND(src, 'sound/items/frog_statue_release.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/frog_statue_release.ogg').vary_frequency(TRUE).play()
 	var/turf/final_turf = length(possible_turfs) ? pick(possible_turfs) : get_turf(src)
 	user.Beam(final_turf, icon_state = "lichbeam", time = RECALL_DURATION)
 	contained_frog.forceMove(final_turf)
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	contained_frog = null
-	PLAYSOUND(src, 'sound/effects/magic/demon_dies.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/demon_dies.ogg').vary_frequency(TRUE).play()
 	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

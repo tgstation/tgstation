@@ -1,3 +1,6 @@
+// TODO!!
+/mob/playsound_local(vol, max_distance, channel, pressure_affected, sound_to_use, vary, use_reverb, distance_multiplier, falloff_exponent, falloff_distance, frequency)
+	return
 
 ///Default override for echo
 /sound
@@ -70,6 +73,9 @@
 // yes I am lazy
 #define WITH_X(var) /datum/playsound/proc/##var(##var) {\
 	RETURN_TYPE(/datum/playsound); \
+	if(src.##var == ##var) { \
+		stack_trace("setting [nameof(##var)] to [##var] when it is already set to that."); \
+	}; \
 	src.##var = ##var; \
 	return src; \
 }
@@ -138,7 +144,7 @@ WITH_X(spatial_aware)
 		else if(istext(sound))
 			sound = get_sfx(sound)
 		else
-			CRASH("bad sound type ([("type" in sound?.vars) ? sound.vars["type" : "NON DATUM"]]) passed to [type] ")
+			CRASH("bad sound type ([("type" in sound?.vars) ? sound.vars["type"] : "NON DATUM"]) passed to [type] ")
 
 	var/list/mob/initial_listeners = get_listeners()
 	var/source = get_turf(src.source)

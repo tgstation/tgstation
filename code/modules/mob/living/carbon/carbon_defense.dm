@@ -392,7 +392,7 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	// Shake animation
 	if (incapacitated)

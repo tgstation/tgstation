@@ -31,7 +31,7 @@
 		for(var/turf/nearby_turf as anything in get_adjacent_open_turfs(our_turf))
 			if(prob(10 * current_mass))
 				new /obj/effect/decal/cleanable/greenglow(nearby_turf)
-		PLAYSOUND(our_turf, 'sound/effects/bubbles/bubbles2.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(our_turf, 'sound/effects/bubbles/bubbles2.ogg').vary_frequency(TRUE).play()
 
 	return ..()
 
@@ -238,7 +238,7 @@
 	if(!iscarbon(user))
 		return
 
-	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').vary_frequency(TRUE).play()
 
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))

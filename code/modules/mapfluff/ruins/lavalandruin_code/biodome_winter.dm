@@ -35,7 +35,7 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, throw_range+2, throw_speed, null, TRUE), 0.1 SECONDS)
 
 /obj/item/freeze_cube/proc/freeze_hit_atom(atom/movable/hit_atom)
-	PLAYSOUND(src, 'sound/effects/glass/glassbr3.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/glass/glassbr3.ogg').vary_frequency(TRUE).play()
 	COOLDOWN_START(src, freeze_cooldown, cooldown_time)
 	if(isobj(hit_atom))
 		var/obj/hit_object = hit_atom

@@ -82,7 +82,7 @@
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
 
-	PLAYSOUND(src, 'sound/effects/supermatter.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/supermatter.ogg').vary_frequency(TRUE).play()
 	qdel(hitting_projectile)
 	return COMPONENT_BULLET_BLOCKED
 

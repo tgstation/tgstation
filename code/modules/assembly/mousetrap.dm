@@ -116,7 +116,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/victim = target
 		if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-			PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 			pulse()
 			return FALSE
 		switch(type)
@@ -143,7 +143,7 @@
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	pulse()
 
 /**

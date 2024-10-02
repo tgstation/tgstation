@@ -122,13 +122,13 @@
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
 	if(flora_flags & FLORA_HERBAL)
-		PLAYSOUND(src, SFX_CRUNCHY_BUSH_WHACK).volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, SFX_CRUNCHY_BUSH_WHACK).vary_frequency(FALSE).play()
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_WOODEN)
-		PLAYSOUND(src, SFX_TREE_CHOP).volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, SFX_TREE_CHOP).vary_frequency(FALSE).play()
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_STONE)
-		PLAYSOUND(src, SFX_ROCK_TAP).volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, SFX_ROCK_TAP).vary_frequency(FALSE).play()
 		use_default_sound = FALSE
 	if(use_default_sound)
 		return ..()

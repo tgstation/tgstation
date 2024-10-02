@@ -23,7 +23,7 @@
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
-		PLAYSOUND(src, 'sound/machines/arcade/win.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/arcade/win.ogg').vary_frequency(TRUE).play()
 		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
 		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return

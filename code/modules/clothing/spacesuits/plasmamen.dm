@@ -108,7 +108,7 @@
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		set_light_on(FALSE)
 		helmet_on = FALSE
-	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(50).vary_frequency(TRUE).play() //Visors don't just come from nothing
+	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').vary_frequency(TRUE).play() //Visors don't just come from nothing
 	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/update_icon_state()

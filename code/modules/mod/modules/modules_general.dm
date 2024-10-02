@@ -948,10 +948,10 @@
 /obj/item/mod/module/recycler/proc/dispense(atom/target)
 	if(container.retrieve_all(target))
 		balloon_alert(mod.wearer, "material dispensed")
-		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary_frequency(TRUE).play()
 		return
 	balloon_alert(mod.wearer, "not enough material")
-	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 
 /obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets, atom/context)
 	SIGNAL_HANDLER
@@ -980,12 +980,12 @@
 /obj/item/mod/module/recycler/donk/dispense(atom/target)
 	if(!container.use_amount_mat(required_amount, /datum/material/iron))
 		balloon_alert(mod.wearer, "not enough material")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(TRUE).play()
 		return
 	var/obj/item/ammo_box/product = new ammobox_type(target)
 	attempt_insert_storage(product)
 	balloon_alert(mod.wearer, "ammo box dispensed.")
-	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary_frequency(TRUE).play()
 
 /obj/item/mod/module/fishing_glove
 	name = "MOD fishing glove module"
@@ -1024,7 +1024,7 @@
 		user.balloon_alert(user, "it's stuck!")
 	equipped = tool
 	balloon_alert(user, "rod inserted")
-	PLAYSOUND(src, 'sound/items/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/click.ogg').vary_frequency(TRUE).play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/module/fishing_glove/attack_hand_secondary(mob/user, list/modifiers)
@@ -1035,7 +1035,7 @@
 		return
 	user.put_in_hands(equipped)
 	balloon_alert(user, "rod removed")
-	PLAYSOUND(src, 'sound/items/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/click.ogg').vary_frequency(TRUE).play()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/module/fishing_glove/Exited(atom/movable/gone)

@@ -46,7 +46,7 @@
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)

@@ -31,7 +31,7 @@
 	. = ..()
 	if(prob(1))
 		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
-		PLAYSOUND(src, 'sound/effects/smoke.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/smoke.ogg').vary_frequency(TRUE).play()
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",

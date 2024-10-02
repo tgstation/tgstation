@@ -189,7 +189,7 @@
 	to_chat(user, span_notice("You start unsecuring the button frame..."))
 	if(tool.use_tool(src, user, 40, volume=50))
 		to_chat(user, span_notice("You unsecure the button frame."))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS

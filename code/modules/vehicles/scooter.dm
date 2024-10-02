@@ -145,7 +145,7 @@
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
-	PLAYSOUND(src, 'sound/vehicles/skateboard_roll.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/vehicles/skateboard_roll.ogg').vary_frequency(TRUE).play()
 	var/turf/location = get_turf(src)
 
 	if(location)

@@ -424,7 +424,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(loc, 'sound/items/weapons/bladeslice.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/bladeslice.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
@@ -444,7 +444,7 @@
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
 	update_appearance()
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 
 /obj/item/restraints/legcuffs/beartrap/proc/trap_stepped_on(datum/source, atom/movable/entering, ...)
 	SIGNAL_HANDLER
@@ -581,7 +581,7 @@
 	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	snared_mob.Knockdown(knockdown)
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 
 /**
  * A traitor variant of the bola.

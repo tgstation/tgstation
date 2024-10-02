@@ -36,7 +36,7 @@
 
 /obj/item/toy/plush/carpplushie/dehy_carp/suicide_act(mob/living/carbon/human/user)
 	user.visible_message(span_suicide("[user] starts eating [src]. It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	if(!istype(user))
 		return BRUTELOSS
 	user.Paralyze(3 SECONDS)

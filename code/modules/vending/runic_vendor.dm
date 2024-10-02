@@ -80,7 +80,7 @@
 			hit_things += mob_to_be_pulsed_back
 			var/atom/target = get_edge_target_turf(mob_to_be_pulsed_back, get_dir(src, get_step_away(mob_to_be_pulsed_back, src)))
 			to_chat(mob_to_be_pulsed_back, span_userdanger("The field repels you with tremendous force!"))
-			PLAYSOUND(src, 'sound/effects/gravhit.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/gravhit.ogg').vary_frequency(TRUE).play()
 			mob_to_be_pulsed_back.throw_at(target, 4, 4)
 
 /obj/machinery/vending/runic_vendor/screwdriver_act(mob/living/user, obj/item/I)

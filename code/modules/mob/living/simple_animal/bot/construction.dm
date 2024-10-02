@@ -325,7 +325,7 @@
 				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
 				var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
 				new_honkbot.name = created_name
-				PLAYSOUND(new_honkbot, 'sound/machines/ping.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+				PLAYSOUND(new_honkbot, 'sound/machines/ping.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 				qdel(attacking_item)
 				qdel(src)
 

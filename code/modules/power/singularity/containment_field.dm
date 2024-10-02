@@ -163,6 +163,6 @@
 	var/atom/target = get_edge_target_turf(considered_atom, get_dir(src, get_step_away(considered_atom, src)))
 	if(isliving(considered_atom))
 		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
-	PLAYSOUND(src, 'sound/effects/gravhit.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/gravhit.ogg').vary_frequency(TRUE).play()
 	considered_atom.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)

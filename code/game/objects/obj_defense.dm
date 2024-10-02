@@ -52,7 +52,7 @@
 	if(density)
 		PLAYSOUND(src, 'sound/effects/meteorimpact.ogg').volume(100).vary_frequency(TRUE).play()
 	else
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
 	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("You smash [src][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE

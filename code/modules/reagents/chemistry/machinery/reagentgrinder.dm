@@ -429,7 +429,7 @@
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
 	operating = TRUE
 	if(!juicing)
-		PLAYSOUND(src, 'sound/machines/blender.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/blender.ogg').vary_frequency(TRUE).play()
 	else
 		PLAYSOUND(src, 'sound/machines/juicer.ogg').volume(20).vary_frequency(TRUE).play()
 

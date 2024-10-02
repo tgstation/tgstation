@@ -332,7 +332,7 @@
 		return NONE
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
-	PLAYSOUND(src, 'sound/effects/spray2.ogg').volume(50).vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/effects/spray2.ogg').vary_frequency(TRUE).range(-6 + SOUND_RANGE).play()
 	target.acid_act(75, 10)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

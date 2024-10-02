@@ -70,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		user.balloon_alert(user, "deconstructing cabinet...")
 		used_item.play_tool_sound(src)
 		if(used_item.use_tool(src, user, 60))
-			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 			user.balloon_alert(user, "cabinet deconstructed")
 			deconstruct(TRUE)
 		return

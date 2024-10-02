@@ -28,7 +28,7 @@
 		user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
 		myhead.dismember()
 		myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
-		PLAYSOUND(user, "desecration-01.ogg").volume(50).vary(TRUE).range(SOUND_RANGE - 1).play()
+		PLAYSOUND(user, "desecration-01.ogg").vary(TRUE).range(SOUND_RANGE - 1).play()
 		return BRUTELOSS
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS

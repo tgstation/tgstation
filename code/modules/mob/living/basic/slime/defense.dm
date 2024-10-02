@@ -19,7 +19,7 @@
 		return
 
 	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
-	PLAYSOUND(loc, 'sound/items/weapons/shove.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/shove.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 	defender_slime.discipline_slime()
 
@@ -87,7 +87,7 @@
 			has_found = TRUE
 		if(applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 			to_chat(user, span_notice("You feed the slime as many of the extracts from the bag as you can, and it mutates!"))
-			PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').vary_frequency(TRUE).play()
 			spawn_corecross()
 			has_output = TRUE
 			break
@@ -99,7 +99,7 @@
 		to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
 	else
 		to_chat(user, span_notice("You feed the slime some extracts from the bag."))
-		PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').vary_frequency(TRUE).play()
 
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()

@@ -11,7 +11,7 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	var/obj/item/instrument/violin/fidis = new /obj/item/instrument/violin/festival(get_turf(religious_tool))
 	fidis.visible_message(span_notice("[fidis] appears!"))
-	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').vary_frequency(TRUE).play()
 
 /datum/religion_rites/portable_song_tuning
 	name = "Portable Song Tuning"
@@ -39,7 +39,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	empower_target.visible_message(span_notice("[empower_target] glows for a moment."))
-	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').vary_frequency(TRUE).play()
 	var/list/allowed_rites_from_bible = subtypesof(/datum/religion_rites/song_tuner)
 	empower_target.AddComponent( \
 		/datum/component/religious_tool, \

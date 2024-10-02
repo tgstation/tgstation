@@ -191,7 +191,7 @@
 
 					user.put_in_hands(inserted_disk)
 					inserted_disk = null
-					PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+					PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 					return TRUE
 
 				if("intelliCard")
@@ -200,12 +200,12 @@
 						return
 
 					if(airestore_app.try_eject(user))
-						PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+						PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 						return TRUE
 
 				if("ID")
 					if(RemoveID(user))
-						PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+						PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 						return TRUE
 
 		if("PC_Imprint_ID")

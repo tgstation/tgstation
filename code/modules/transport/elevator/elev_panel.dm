@@ -126,7 +126,7 @@
 		return
 
 	balloon_alert(user, "resetting panel...")
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary_frequency(TRUE).play()
 	if(!do_after(user, 6 SECONDS, src))
 		balloon_alert(user, "interrupted!")
 		return TRUE
@@ -158,7 +158,7 @@
 
 	// Be vague about whether something was accomplished or not
 	balloon_alert(user, "panel reset")
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary_frequency(TRUE).play()
 
 	return TRUE
 

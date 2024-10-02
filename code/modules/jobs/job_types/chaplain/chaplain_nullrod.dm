@@ -903,4 +903,4 @@
 	// We got a sneak attack!
 	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
-	PLAYSOUND(living_target, 'sound/items/weapons/guillotine.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(living_target, 'sound/items/weapons/guillotine.ogg').vary_frequency(TRUE).play()

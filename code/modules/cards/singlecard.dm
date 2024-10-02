@@ -103,7 +103,7 @@
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
-	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').vary_frequency(TRUE).play()
 	return BRUTELOSS
 
 /**

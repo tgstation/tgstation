@@ -132,7 +132,7 @@
 	if(!can_launch(user, where))
 		return
 	flick("mechpad-launch", connected_mechpad)
-	PLAYSOUND(connected_mechpad, 'sound/machines/beep/triple_beep.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(connected_mechpad, 'sound/machines/beep/triple_beep.ogg').vary_frequency(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(start_launch), user, where), 1 SECONDS)
 
 /obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)

@@ -258,7 +258,7 @@
 	. = ..()
 	var/roll_them_bones = rand(1,38)
 	if(roll_them_bones == 1 && isliving(target))
-		PLAYSOUND(target, 'sound/machines/synth/synth_yes.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(target, 'sound/machines/synth/synth_yes.ogg').vary_frequency(TRUE).play()
 		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 		new /obj/effect/temp_visual/crit(get_turf(target))
 

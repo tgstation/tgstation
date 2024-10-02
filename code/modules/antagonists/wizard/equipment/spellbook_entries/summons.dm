@@ -78,7 +78,7 @@
 	if(!message || QDELETED(user) || QDELETED(book) || !can_buy(user, book))
 		return FALSE
 	curse_of_madness(user, message)
-	PLAYSOUND(user, 'sound/effects/magic/mandswap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/effects/magic/mandswap.ogg').vary_frequency(TRUE).play()
 	return ..()
 
 /// A wizard ritual that allows the wizard to teach a specific spellbook enty to everyone on the station.

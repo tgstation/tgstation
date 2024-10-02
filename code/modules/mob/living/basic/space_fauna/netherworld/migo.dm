@@ -90,7 +90,7 @@
 	faction = list(FACTION_NEUTRAL)
 
 /mob/living/basic/migo/hatsune/make_migo_sound()
-	PLAYSOUND(src, 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg').vary_frequency(TRUE).play()
 
 /mob/living/basic/migo/hatsune/Initialize(mapload)
 	. = ..()

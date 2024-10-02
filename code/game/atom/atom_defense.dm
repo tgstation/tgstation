@@ -108,9 +108,9 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				PLAYSOUND(src, 'sound/items/weapons/smash.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/items/weapons/smash.ogg').vary_frequency(TRUE).play()
 			else
-				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).play()
 		if(BURN)
 			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
 

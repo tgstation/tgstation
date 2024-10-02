@@ -69,7 +69,7 @@
 	. = ..()
 	if(.)
 		return
-	PLAYSOUND(loc, 'sound/effects/curtain.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/effects/curtain.ogg').vary_frequency(TRUE).play()
 	toggle()
 
 /obj/structure/curtain/atom_deconstruct(disassembled = TRUE)
@@ -83,7 +83,7 @@
 			if(damage_amount)
 				PLAYSOUND(src.loc, 'sound/items/weapons/slash.ogg').volume(80).vary_frequency(TRUE).play()
 			else
-				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).play()
 		if(BURN)
 			PLAYSOUND(loc, 'sound/items/tools/welder.ogg').volume(80).vary_frequency(TRUE).play()
 

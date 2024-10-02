@@ -230,7 +230,7 @@
 
 /obj/structure/toilet/crowbar_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("You start to [cistern_open ? "replace the lid on" : "lift the lid off"] the cistern..."))
-	PLAYSOUND(loc, 'sound/effects/stonedoor_openclose.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/effects/stonedoor_openclose.ogg').vary_frequency(TRUE).play()
 	if(tool.use_tool(src, user, 30))
 		user.visible_message(
 			span_notice("[user] [cistern_open ? "replaces the lid on" : "lifts the lid off"] the cistern!"),

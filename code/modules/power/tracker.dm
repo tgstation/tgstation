@@ -123,10 +123,10 @@
 	S.forceMove(src)
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
-	PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
 	if(I.use_tool(src, user, 50))
-		PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
 	return TRUE

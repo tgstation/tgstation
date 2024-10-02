@@ -200,7 +200,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_select.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_select.ogg').vary_frequency(TRUE).play()
 
 	if(istype(target, /obj/item/delivery))
 		var/obj/item/delivery/parcel = target

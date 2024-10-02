@@ -135,7 +135,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
-	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').vary_frequency(TRUE).play()
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)
 	return TRUE

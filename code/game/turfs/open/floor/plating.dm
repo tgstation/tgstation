@@ -148,7 +148,7 @@
 			if(L)
 				qdel(L)
 			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			PLAYSOUND(src, 'sound/items/weapons/Genhit.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/weapons/Genhit.ogg').vary_frequency(TRUE).play()
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else
 		PLAYSOUND(src, 'sound/items/weapons/tap.ogg').volume(100).vary_frequency(TRUE).play() //The attack sound is muffled by the foam itself

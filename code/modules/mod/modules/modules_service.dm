@@ -54,7 +54,7 @@
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
 	if(microwave_target.microwave_act(microwaver = mod.wearer) & COMPONENT_MICROWAVE_SUCCESS)
-		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary_frequency(FALSE).play()
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
 	var/datum/effect_system/spark_spread/spark_effect_two = new()

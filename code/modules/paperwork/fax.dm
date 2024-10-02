@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return FALSE
 	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		PLAYSOUND(src, 'sound/mobs/non-humanoids/dog/growl2.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/mobs/non-humanoids/dog/growl2.ogg').vary_frequency(FALSE).play()
 		balloon_alert(user, "migrated to syndienet 2.0")
 		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 		return TRUE
@@ -296,7 +296,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 				return
 			loaded.forceMove(drop_location())
 			loaded_item_ref = null
-			PLAYSOUND(src, 'sound/machines/eject.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/eject.ogg').vary_frequency(FALSE).play()
 			update_appearance()
 			return TRUE
 
@@ -321,7 +321,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			fax_paper.loc = null
 
 			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
-			PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').vary_frequency(FALSE).play()
 
 			history_add("Send", params["name"])
 
@@ -374,7 +374,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
-		PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').vary_frequency(FALSE).play()
 		return TRUE
 	return FALSE
 
@@ -387,7 +387,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * sender_name - The sender's name, which will be displayed in the message and recorded in the history of operations.
  */
 /obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
-	PLAYSOUND(src, 'sound/machines/printer.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/printer.ogg').vary_frequency(FALSE).play()
 	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)

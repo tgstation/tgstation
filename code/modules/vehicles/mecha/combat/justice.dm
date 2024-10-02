@@ -140,13 +140,13 @@
 	if(alpha == 255)
 		return
 	animate(src, alpha = 255, time = 0.5 SECONDS)
-	playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	PLAYSOUND(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).vary(FALSE).play()
 
 /obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if(LAZYLEN(occupants))
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
-			playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+			PLAYSOUND(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).vary(FALSE).play()
 			return
 	return ..()
 
@@ -208,7 +208,7 @@
 ///Called when invisibility activated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	PLAYSOUND(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 	check_charge_attack()
 	animate(chassis, alpha = 0, time = 0.5 SECONDS)
 	button_icon_state = "mech_stealth_on"
@@ -223,7 +223,7 @@
 ///Called when invisibility deactivated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_off()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	PLAYSOUND(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 	invisibility_timer = null
 	charge = FALSE
 	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)

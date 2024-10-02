@@ -299,7 +299,7 @@ at the cost of risking a vicious bite.**/
 		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		deconstruct()
 		return TRUE
 

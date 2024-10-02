@@ -56,7 +56,7 @@
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(item, ITEM_SLOT_SUITSTORE, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
-	PLAYSOUND(src, 'sound/items/modsuit/magnetic_harness.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/modsuit/magnetic_harness.ogg').vary_frequency(TRUE).play()
 	balloon_alert(mod.wearer, "[item] reattached")
 	drain_power(use_energy_cost)
 

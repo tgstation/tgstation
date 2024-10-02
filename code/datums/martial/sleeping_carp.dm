@@ -68,7 +68,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 7, 4, attacker)
 	defender.apply_damage(15, attacker.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
@@ -78,7 +78,7 @@
 ///Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them. Knocks objects out of their hands if they're already on the ground.
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
-	PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	if(defender.body_position == STANDING_UP)
 		defender.Knockdown(4 SECONDS)
 		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \

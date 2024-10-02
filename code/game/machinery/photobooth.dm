@@ -80,11 +80,11 @@
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return
-	PLAYSOUND(src, 'sound/effects/curtain.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary_frequency(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/open_machine(drop = TRUE, density_to_set = FALSE)
-	PLAYSOUND(src, 'sound/effects/curtain.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary_frequency(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/update_icon_state()

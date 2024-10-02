@@ -153,7 +153,7 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_eyes(obj/item/organ/internal/eyes/eyes)
 	if(eyes)
 		owner.visible_message(span_warning("[owner]'s [eyes.name] fall out of their sockets!"), span_userdanger("Your [eyes.name] fall out of their sockets!"))
-		PLAYSOUND(owner, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(owner, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 		eyes.Remove(owner)
 		eyes.forceMove(owner.drop_location())
 	else
@@ -183,7 +183,7 @@
 	owner.visible_message(span_warning("With a loud snap, [owner]'s [parse_zone(body_zone)] rapidly grows back from [owner.p_their()] body!"),
 	span_userdanger("With a loud snap, your [parse_zone(body_zone)] rapidly grows back from your body!"),
 	span_warning("Your hear a loud snap."))
-	PLAYSOUND(owner, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(owner, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
 	owner.regenerate_limb(body_zone)
 
 /obj/item/organ/internal/heart/gland/heal/proc/replace_blood()
@@ -212,14 +212,14 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
 	if(!IS_ORGANIC_LIMB(chest))
 		owner.visible_message(span_warning("[owner]'s [chest.name] rapidly expels its mechanical components, replacing them with flesh!"), span_userdanger("Your [chest.name] rapidly expels its mechanical components, replacing them with flesh!"))
-		PLAYSOUND(owner, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(owner, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg').vary_frequency(TRUE).play()
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
 			var/obj/effect/decal/cleanable/robot_debris/debris = new(get_turf(owner))
 			debris.streak(dirs)
 	else
 		owner.visible_message(span_warning("[owner]'s [chest.name] sheds off its damaged flesh, rapidly replacing it!"), span_warning("Your [chest.name] sheds off its damaged flesh, rapidly replacing it!"))
-		PLAYSOUND(owner, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(owner, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
 			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))

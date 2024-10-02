@@ -91,7 +91,7 @@
 
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	return ..()
 
 /obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/bubbled)
@@ -100,7 +100,7 @@
 		return
 	var/mob/living/bubbled_mob = bubbled
 
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	bubbled_mob.Paralyze(5 SECONDS)
 	if(iscarbon(bubbled_mob))
 		bubbled_mob.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
@@ -179,7 +179,7 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/blood_drop_falling/proc/create_blood_structure()
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	new /obj/structure/leaper_bubble(get_turf(src))
 
 /obj/effect/temp_visual/shadow_telegraph

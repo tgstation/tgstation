@@ -51,7 +51,7 @@ effective or pretty fucking useless.
 		else
 			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
 
-	PLAYSOUND(src.loc, 'sound/misc/interference.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/misc/interference.ogg').vary_frequency(TRUE).play()
 	to_chat(user, span_notice("You trigger [src]."))
 	times_used += 1
 	if(times_used >= max_uses)

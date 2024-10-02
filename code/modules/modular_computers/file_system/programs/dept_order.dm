@@ -222,7 +222,7 @@
 			break
 
 	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-		PLAYSOUND(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(computer, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		computer.physical.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
 		return
 

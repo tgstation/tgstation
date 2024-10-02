@@ -47,5 +47,5 @@
 		span_notice("You [action_text] [source]."),
 	)
 
-	PLAYSOUND(source, 'sound/effects/shovel_dig.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(source, 'sound/effects/shovel_dig.ogg').vary_frequency(TRUE).play()
 	source.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

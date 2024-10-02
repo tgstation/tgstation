@@ -32,10 +32,10 @@
 /obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
 	if(rip_open)
-		PLAYSOUND(loc, 'sound/items/poster/poster_ripped.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/poster/poster_ripped.ogg').vary_frequency(TRUE).play()
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
-		PLAYSOUND(loc, 'sound/items/box_cut.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/box_cut.ogg').vary_frequency(TRUE).play()
 		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)

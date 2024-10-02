@@ -104,7 +104,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You slam [defender] into the ground!"))
-	PLAYSOUND(attacker, 'sound/items/weapons/slam.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(attacker, 'sound/items/weapons/slam.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	defender.apply_damage(10, BRUTE)
 	defender.Paralyze(12 SECONDS)
 	log_combat(attacker, defender, "slammed (CQC)")
@@ -125,7 +125,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
-		PLAYSOUND(attacker, 'sound/items/weapons/genhit1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(attacker, 'sound/items/weapons/genhit1.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
 		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, helmet_protection)
@@ -141,7 +141,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You kick [defender] back!"))
-		PLAYSOUND(attacker, 'sound/items/weapons/cqchit1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(attacker, 'sound/items/weapons/cqchit1.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
@@ -163,7 +163,7 @@
 	)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
 	defender.adjustStaminaLoss(60)
-	PLAYSOUND(attacker, 'sound/items/weapons/cqchit1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(attacker, 'sound/items/weapons/cqchit1.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
@@ -201,7 +201,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
-	PLAYSOUND(defender, 'sound/items/weapons/cqchit2.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(defender, 'sound/items/weapons/cqchit2.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 		attacker.put_in_hands(held_item)
@@ -272,7 +272,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You leg sweep [defender]!"))
-		PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(attacker, 'sound/effects/hit_kick.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		attacker.do_attack_animation(defender)
 		defender.apply_damage(10, BRUTE)
 		defender.Knockdown(5 SECONDS)
@@ -344,7 +344,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
-		PLAYSOUND(defender, 'sound/items/weapons/cqchit1.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(defender, 'sound/items/weapons/cqchit1.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		defender.set_jitter_if_lower(4 SECONDS)
 		defender.apply_damage(5, attacker.get_attack_type())
 		log_combat(attacker, defender, "disarmed (CQC)", addition = disarmed_item ? "(disarmed of [disarmed_item])" : null)

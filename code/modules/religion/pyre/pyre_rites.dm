@@ -110,7 +110,7 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
-	PLAYSOUND(altar_turf, 'sound/effects/magic/fireball.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(altar_turf, 'sound/effects/magic/fireball.ogg').vary_frequency(TRUE).play()
 	return TRUE
 
 /datum/religion_rites/blazing_star
@@ -145,7 +145,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	enchanting.visible_message(span_notice("[enchant_target] is blessed by holy fire!"))
-	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').vary_frequency(TRUE).play()
 	new /obj/item/ammo_casing/arrow/holy/blazing(tool_turf)
 	qdel(enchanting)
 	return TRUE

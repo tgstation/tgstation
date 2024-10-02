@@ -474,7 +474,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30, 50), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
-			PLAYSOUND(owner, 'sound/items/weapons/sear.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(owner, 'sound/items/weapons/sear.ogg').vary_frequency(TRUE).play()
 
 /datum/mutation/human/spastic
 	name = "Spastic"

@@ -514,7 +514,7 @@
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
 	if(user)
 		balloon_alert(user, active ? "extended" : "retracted")
-	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').vary_frequency(TRUE).play()
 
 	if(!active)
 		tool_behaviour = initial(tool_behaviour)
@@ -568,6 +568,6 @@
 
 /obj/effect/temp_visual/security_holosign/Initialize(mapload, creator)
 	. = ..()
-	PLAYSOUND(loc, 'sound/machines/chime.ogg').volume(50).vary_frequency(FALSE).play() //make some noise!
+	PLAYSOUND(loc, 'sound/machines/chime.ogg').vary_frequency(FALSE).play() //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))

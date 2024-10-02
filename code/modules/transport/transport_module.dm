@@ -400,7 +400,7 @@
 				if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
 					continue
 				if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
-					PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+					PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 					visible_message(span_danger("[src] smashes through [victim_machine]!"))
 					qdel(victim_machine)
 
@@ -419,11 +419,11 @@
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
-				PLAYSOUND(src, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 				var/damage = 0
 				switch(extra_ouch)
 					if(TRUE)
-						PLAYSOUND(src, 'sound/effects/grillehit.ogg').volume(50).vary_frequency(TRUE).play()
+						PLAYSOUND(src, 'sound/effects/grillehit.ogg').vary_frequency(TRUE).play()
 						var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
 						if(head)
 							log_combat(src, victim_living, "beheaded")

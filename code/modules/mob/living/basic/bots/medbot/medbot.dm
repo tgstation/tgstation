@@ -284,7 +284,7 @@
 /mob/living/basic/bot/medbot/proc/after_tip_over(mob/user)
 	medical_mode_flags |= MEDBOT_TIPPED_MODE
 	tipper = WEAKREF(user)
-	PLAYSOUND(src, 'sound/machines/warning-buzzer.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/warning-buzzer.ogg').play()
 	if(prob(10))
 		speak("PSYCH ALERT: Crewmember [user.name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 

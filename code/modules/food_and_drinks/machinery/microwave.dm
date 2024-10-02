@@ -489,7 +489,7 @@
 
 	vampire_charging_enabled = !vampire_charging_enabled
 	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
-	PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').vary_frequency(FALSE).play()
 	if(HAS_SILICON_ACCESS(user))
 		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 	return CLICK_ACTION_SUCCESS
@@ -588,11 +588,11 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		return
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		balloon_alert(cooker, "no power draw!")
 		return
 
@@ -628,7 +628,7 @@
 /obj/machinery/microwave/proc/wzhzhzh()
 	if(cell_powered && !isnull(cell))
 		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 			return
 
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
@@ -663,7 +663,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	wzhzhzh()
-	PLAYSOUND(loc, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 	dirty_anim_playing = TRUE
 	update_appearance()
 	cook_loop(type = MICROWAVE_MUCK, cycles = 4)
@@ -808,13 +808,13 @@
 /obj/machinery/microwave/proc/vampire(mob/cooker)
 	var/obj/item/modular_computer/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		after_finish_loop()
 		return
 
 	vampire_cell = vampire_pda.internal_cell
 	if(isnull(vampire_cell))
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		after_finish_loop()
 		return
 
@@ -825,7 +825,7 @@
 /obj/machinery/microwave/proc/charge(mob/cooker)
 	if(!vampire_charging_capable)
 		balloon_alert(cooker, "needs upgrade!")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		return
 
 	if(operating || broken > 0 || panel_open || dirty >= MAX_MICROWAVE_DIRTINESS)
@@ -833,14 +833,14 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		return
 
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
 		if(!istype(potential_item, /obj/item/modular_computer))
 			balloon_alert(cooker, "pda only!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 			eject()
 			return
 
@@ -898,7 +898,7 @@
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
 
-	// playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+	// PLAYSOUND(src, 'sound/machines/chime.ogg').volume(50).vary(FALSE).play()
 	after_finish_loop()
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".

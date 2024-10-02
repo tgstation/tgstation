@@ -70,7 +70,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').vary_frequency(TRUE).play()
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -103,7 +103,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').vary_frequency(TRUE).play()
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)

@@ -472,7 +472,7 @@
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
-		PLAYSOUND(src, 'sound/items/weapons/resonator_fire.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/resonator_fire.ogg').vary_frequency(TRUE).play()
 		user.visible_message(span_warning("[user] summons a runic vendor!"))
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--

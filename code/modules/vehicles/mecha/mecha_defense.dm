@@ -34,7 +34,7 @@
 	gear.take_damage(damage_to_deal)
 	if(gear.get_integrity() <= 1)
 		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
-		playsound(src, gear.destroy_sound, 50)
+		PLAYSOUND(src, gear.destroy_sound).play()
 
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	var/damage_taken = ..()
@@ -84,7 +84,7 @@
 		var/play_soundeffect = 1
 		if(user.environment_smash)
 			play_soundeffect = 0
-			PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
@@ -268,7 +268,7 @@
 			cell = weapon
 			balloon_alert(user, "installed power cell")
 			diag_hud_set_mechcell()
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
 			log_message("Power cell installed", LOG_MECHA)
 		else
 			balloon_alert(user, "already installed!")
@@ -280,7 +280,7 @@
 				return
 			scanmod = weapon
 			balloon_alert(user, "installed scanning module")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -293,7 +293,7 @@
 				return
 			capacitor = weapon
 			balloon_alert(user, "installed capacitor")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -306,7 +306,7 @@
 				return
 			servo = weapon
 			balloon_alert(user, "installed servo")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -480,7 +480,7 @@
 				gun.projectiles = gun.projectiles + ammo_needed
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-			playsound(get_turf(user),A.load_audio,50,TRUE)
+			PLAYSOUND(user, A.load_audio).vary(TRUE).play()
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
 			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
@@ -499,7 +499,7 @@
 			gun.projectiles = gun.projectiles + A.rounds
 		else
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
-		playsound(get_turf(user),A.load_audio,50,TRUE)
+		PLAYSOUND(user, A.load_audio).vary(TRUE).play()
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
 		if(A.qdel_on_empty)
 			qdel(A)

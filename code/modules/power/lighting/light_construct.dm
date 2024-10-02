@@ -90,7 +90,7 @@
 		if(user.temporarilyRemoveItemFromInventory(tool))
 			user.visible_message(span_notice("[user] hooks up [tool] to [src]."), \
 			span_notice("You add [tool] to [src]."))
-			PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 			tool.forceMove(src)
 			cell = tool
 			add_fingerprint(user)

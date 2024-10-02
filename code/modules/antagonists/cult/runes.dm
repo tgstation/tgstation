@@ -1021,7 +1021,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
-		PLAYSOUND(src, 'sound/effects/magic/exit_blood.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/magic/exit_blood.ogg').vary_frequency(TRUE).play()
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cult_italic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)

@@ -152,7 +152,7 @@
 	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /obj/item/mod/module/tanner/on_use()
-	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary_frequency(TRUE).play()
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
@@ -179,7 +179,7 @@
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(oxygen_damage)
-	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').vary_frequency(TRUE).play()
 	var/obj/item/balloon = new balloon_path(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_energy_cost)
@@ -270,7 +270,7 @@
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
-	PLAYSOUND(src, 'sound/effects/curse/curseattack.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/effects/curse/curseattack.ogg').play()
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
@@ -286,7 +286,7 @@
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		PLAYSOUND(src, 'sound/effects/curse/curseattack.ogg').volume(50).play()
+		PLAYSOUND(src, 'sound/effects/curse/curseattack.ogg').play()
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
@@ -309,7 +309,7 @@
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
 	else if(!(step_count % 2))
-		PLAYSOUND(current_turf, 'sound/items/modsuit/atrocinator_step.ogg').volume(50).play()
+		PLAYSOUND(current_turf, 'sound/items/modsuit/atrocinator_step.ogg').play()
 	step_count++
 
 #define FLY_TIME (5 SECONDS)

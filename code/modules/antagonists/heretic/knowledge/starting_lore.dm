@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// Make it the living heart
 	our_new_heart.AddComponent(/datum/component/living_heart)
 	to_chat(user, span_warning("You feel your [our_new_heart.name] begin pulse faster and faster as it awakens!"))
-	PLAYSOUND(user, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
 	return TRUE
 
 /// Checks if the passed heart is a valid heart to become a living heart

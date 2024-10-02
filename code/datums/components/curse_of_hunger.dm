@@ -87,7 +87,7 @@
 	UnregisterSignal(cursed_item, COMSIG_ITEM_DROPPED)
 
 	var/turf/vomit_turf = get_turf(cursed_item)
-	PLAYSOUND(vomit_turf, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(vomit_turf, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
 
 	uncursed.dropItemToGround(cursed_item, force = TRUE)

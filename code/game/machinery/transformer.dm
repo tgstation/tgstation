@@ -84,7 +84,7 @@
 		return
 
 	if(!transform_dead && victim.stat == DEAD)
-		PLAYSOUND(src.loc, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src.loc, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		return
 
 	// Activate the cooldown
@@ -92,7 +92,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_appearance()
 
-	PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').vary_frequency(TRUE).play()
 	victim.emote("scream") // It is painful
 	victim.adjustBruteLoss(max(0, 80 - victim.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
@@ -113,7 +113,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_new_robot), new_borg), 5 SECONDS)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/new_borg)
-	PLAYSOUND(src.loc, 'sound/machines/ping.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src.loc, 'sound/machines/ping.ogg').vary_frequency(FALSE).play()
 	sleep(3 SECONDS)
 	if(new_borg)
 		new_borg.SetLockdown(FALSE)

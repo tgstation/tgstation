@@ -258,7 +258,7 @@
 	if(uses <= 0)
 		return FALSE
 
-	PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	src.add_fingerprint(user)
 	add_uses(-1)
 
@@ -274,7 +274,7 @@
 		bulb_shards = 0
 		add_uses(1)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. [status_string()]"))
-		PLAYSOUND(src.loc, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src.loc, 'sound/machines/ding.ogg').vary_frequency(TRUE).play()
 		return TRUE
 	return FALSE
 

@@ -221,7 +221,7 @@
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
-			PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
 			living_mob.adjustBruteLoss(60 * seconds_per_tick)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)

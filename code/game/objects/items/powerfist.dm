@@ -117,7 +117,7 @@
 	if(!gas_used)
 		to_chat(user, span_warning("\The [src]'s tank is empty!"))
 		target.apply_damage((force / 5), BRUTE)
-		PLAYSOUND(loc, 'sound/items/weapons/punch1.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/punch1.ogg').vary_frequency(TRUE).play()
 		target.visible_message(span_danger("[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!"), \
 			span_userdanger("[user]'s punches you!"))
 		return
@@ -125,7 +125,7 @@
 	if(!molar_cmp_equals(gas_used.total_moles(), gas_per_fist * fist_pressure_setting))
 		our_turf.assume_air(gas_used)
 		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
-		PLAYSOUND(loc, 'sound/items/weapons/punch4.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/punch4.ogg').vary_frequency(TRUE).play()
 		target.apply_damage((force / 2), BRUTE)
 		target.visible_message(span_danger("[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
 			span_userdanger("[user]'s punch strikes with force!"))
@@ -135,8 +135,8 @@
 		span_userdanger("You cry out in pain as [user]'s punch flings you backwards!"))
 	new /obj/effect/temp_visual/kinetic_blast(target.loc)
 	target.apply_damage(force * fist_pressure_setting, BRUTE, wound_bonus = CANT_WOUND)
-	PLAYSOUND(src, 'sound/items/weapons/resonator_blast.ogg').volume(50).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/items/weapons/genhit2.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/resonator_blast.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/genhit2.ogg').vary_frequency(TRUE).play()
 
 	if(!QDELETED(target))
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))

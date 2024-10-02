@@ -136,7 +136,7 @@
 
 /obj/structure/hoop/click_ctrl(mob/user)
 	user.balloon_alert_to_viewers("resetting score...")
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary_frequency(TRUE).play()
 	if(do_after(user, 5 SECONDS, target = src))
 		total_score = 0
 		update_appearance()

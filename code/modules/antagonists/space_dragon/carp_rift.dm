@@ -141,7 +141,7 @@
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	PLAYSOUND(src, 'sound/effects/magic/lightningshock.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/lightningshock.ogg').vary_frequency(TRUE).play()
 
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -153,7 +153,7 @@
 
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 		audible_message(span_danger("You hear a CLANG!"))
 
 	if(special_target && clong == special_target)

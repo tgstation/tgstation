@@ -277,7 +277,7 @@
 	if(!target.rcd_act(user, src, rcd_results))
 		qdel(rcd_effect)
 		return FALSE
-	PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	rcd_effect.end_animation()
 	return TRUE
 

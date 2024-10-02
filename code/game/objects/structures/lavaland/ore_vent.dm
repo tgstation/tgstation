@@ -121,7 +121,7 @@
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
-			PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).play()
 	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 

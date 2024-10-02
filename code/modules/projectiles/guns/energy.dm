@@ -284,7 +284,7 @@
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
-			PLAYSOUND(loc, fire_sound).volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, fire_sound).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()

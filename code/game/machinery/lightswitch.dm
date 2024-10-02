@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!tool.use_tool(src, user, 40, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] unscrews [src]!"), span_notice("You detach [src] from the wall."))
-	PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 

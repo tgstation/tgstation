@@ -338,7 +338,7 @@
 		living_target.ignite_mob()
 		living_target.adjustFireLoss(30)
 
-	PLAYSOUND(target_turf, 'sound/effects/magic/lightningbolt.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(target_turf, 'sound/effects/magic/lightningbolt.ogg').vary_frequency(TRUE).play()
 	if(!is_seedling)
 		return
 	var/mob/living/basic/seedling/seed_firer = firer

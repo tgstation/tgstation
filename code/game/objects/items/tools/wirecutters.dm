@@ -61,7 +61,7 @@
 
 /obj/item/wirecutters/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(loc, usesound).volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, usesound).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/wirecutters/abductor

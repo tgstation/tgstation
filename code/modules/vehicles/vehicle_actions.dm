@@ -240,7 +240,7 @@
 	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
 		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
 		return
-	playsound(vehicle_entered_target, hornsound, 75)
+	PLAYSOUND(vehicle_entered_target, hornsound).volume(75).play()
 
 /datum/action/vehicle/sealed/headlights
 	name = "Toggle Headlights"
@@ -252,7 +252,8 @@
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
 	vehicle_entered_target.update_appearance()
-	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
+	PLAYSOUND(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg') \
+		.volume(40).vary(TRUE).play()
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -359,7 +360,7 @@
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
-	PLAYSOUND(vehicle, 'sound/vehicles/skateboard_ollie.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(vehicle, 'sound/vehicles/skateboard_ollie.ogg').vary_frequency(TRUE).play()
 	passtable_on(rider, VEHICLE_TRAIT)
 	passtable_on(vehicle, VEHICLE_TRAIT)
 	rider.Move(landing_turf, vehicle_target.dir)
@@ -399,7 +400,7 @@
 		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
 		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
 	)
-	PLAYSOUND(board, 'sound/vehicles/skateboard_ollie.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(board, 'sound/vehicles/skateboard_ollie.ogg').vary_frequency(TRUE).play()
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)

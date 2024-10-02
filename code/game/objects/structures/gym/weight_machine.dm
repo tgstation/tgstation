@@ -111,7 +111,7 @@
 		// with enough dedication, even clowns can overcome their handicaps
 		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/athletics) * 5)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(clumsy_chance))
-			PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 			to_chat(user, span_warning("Your hand slips, causing the [name] to smash you!"))
 			user.take_bodypart_damage(rand(2, 5))
 			end_workout()
@@ -119,7 +119,7 @@
 
 		// awlways a chance for a person not to fail horribly when drunk
 		if(user.get_drunk_amount() > SAFE_DRUNK_LEVEL && prob(min(user.get_drunk_amount(), 99)))
-			PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 			to_chat(user, span_warning(drunk_message))
 			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
 			end_workout()

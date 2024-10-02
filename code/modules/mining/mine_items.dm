@@ -243,7 +243,7 @@
 			span_danger("[src] smashes into [smacked], breaking into pieces!"),
 			span_userdanger("You are smacked by [src] as it breaks into pieces!"),
 		)
-		PLAYSOUND(src, 'sound/effects/break_stone.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/break_stone.ogg').vary_frequency(TRUE).play()
 		momentum = 0
 
 	else
@@ -251,7 +251,7 @@
 			span_danger("[src] smashes into [smacked]!"),
 			span_userdanger("You are smacked by [src]!"),
 		)
-	PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 	take_damage(max_integrity * 0.05)
 	momentum = floor(momentum / momentum_mod)
 	if(smacked.body_position == LYING_DOWN)

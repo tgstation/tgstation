@@ -360,16 +360,16 @@
 	switch(type)
 		if(SIGH)
 			audible_message(span_hear("[src] makes a sighing buzz."))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 		if(ANNOYED)
 			audible_message(span_hear("[src] makes an annoyed buzzing sound."))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').vary_frequency(FALSE).play()
 		if(DELIGHT)
 			audible_message(span_hear("[src] makes a delighted ping!"))
-			PLAYSOUND(src, 'sound/machines/ping.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/ping.ogg').vary_frequency(FALSE).play()
 		if(CHIME)
 			audible_message(span_hear("[src] makes a chiming sound!"))
-			PLAYSOUND(src, 'sound/machines/chime.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/chime.ogg').vary_frequency(FALSE).play()
 	flick("[base_icon]1", src)
 
 
@@ -689,7 +689,7 @@
 		span_userdanger("[src] drives over you!"),
 	)
 
-	PLAYSOUND(src, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 
 	var/damage = rand(5, 15)
 	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, MELEE))

@@ -367,7 +367,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	blank_paper.visible_message(span_notice("words magically form on [blank_paper]!"))
-	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(tool_turf, 'sound/effects/pray.ogg').vary_frequency(TRUE).play()
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	if(sect.existing_contract)
 		sect.existing_contract.visible_message(span_warning("[src] fizzles into nothing!"))

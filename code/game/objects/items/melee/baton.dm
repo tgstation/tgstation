@@ -177,7 +177,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		PLAYSOUND(human_target, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(human_target, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).play()
 		return TRUE
 	return FALSE
 

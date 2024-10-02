@@ -76,7 +76,7 @@
 	. = ..()
 	if(!allowed(user))
 		to_chat(user, span_alert("Error - Unauthorized User."))
-		PLAYSOUND(src, 'sound/machines/compiler/compiler-failure.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/compiler/compiler-failure.ogg').vary_frequency(TRUE).play()
 		return
 
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)

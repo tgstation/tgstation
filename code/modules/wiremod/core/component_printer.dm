@@ -469,7 +469,7 @@
 	scanned_designs += list(data)
 
 	balloon_alert(user, "module has been saved.")
-	PLAYSOUND(src, 'sound/machines/ping.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/ping.ogg').play()
 
 	update_static_data_for_all_viewers()
 

@@ -62,7 +62,7 @@
 	var/turf/closed/wall/wall_turf = target
 
 	if (istype(wall_turf, /turf/closed/wall/r_wall) && strength_flag != ENVIRONMENT_SMASH_RWALLS)
-		PLAYSOUND(wall_turf, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(wall_turf, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 		wall_turf.balloon_alert(puncher, "too tough!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 

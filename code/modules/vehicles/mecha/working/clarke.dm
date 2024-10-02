@@ -105,7 +105,7 @@
 		if(isnull(cached_ore_box))
 			return FALSE
 		cached_ore_box.dump_box_contents()
-		PLAYSOUND(chassis, 'sound/items/weapons/tap.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(chassis, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).play()
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
 

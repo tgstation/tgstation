@@ -216,7 +216,7 @@
 
 /turf/open/floor/mineral/bananium/proc/honk()
 	if(sound_cooldown < world.time)
-		PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/bikehorn.ogg').vary_frequency(TRUE).play()
 		sound_cooldown = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()

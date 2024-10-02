@@ -40,7 +40,7 @@ Industrial extracts:
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
-		PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/blob/attackblob.ogg').vary_frequency(TRUE).play()
 		plasmaabsorbed -= plasmarequired
 		for(var/i in 1 to itemamount)
 			do_after_spawn(new itempath(get_turf(src)))

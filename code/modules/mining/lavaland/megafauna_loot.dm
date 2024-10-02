@@ -557,7 +557,7 @@
 	projectile.firer = src
 	projectile.fire(null, attacked_atom)
 	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))
-	PLAYSOUND(src, 'sound/effects/magic/fireball.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/fireball.ogg').vary_frequency(TRUE).play()
 
 /obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
 	if(isliving(attacked_atom) && use_blood(10))
@@ -576,7 +576,7 @@
 	SpinAnimation(5)
 	addtimer(CALLBACK(src, PROC_REF(reset_spin)), 1 SECONDS)
 	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
-	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').vary_frequency(TRUE).play()
 	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
 
 /obj/item/soulscythe/proc/charge_target(atom/attacked_atom)
@@ -592,7 +592,7 @@
 		return
 	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	PLAYSOUND(src, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).play()
 	SpinAnimation(1)
 	throwforce *= 2
 	throw_at(attacked_atom, 10, 3, soul, FALSE)

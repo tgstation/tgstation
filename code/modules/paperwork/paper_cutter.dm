@@ -90,7 +90,7 @@
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
 	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(loc, 'sound/items/gavel.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/gavel.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/papercutter/update_overlays()
@@ -163,7 +163,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	PLAYSOUND(src.loc, 'sound/items/weapons/slash.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/items/weapons/slash.ogg').vary_frequency(TRUE).play()
 	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)

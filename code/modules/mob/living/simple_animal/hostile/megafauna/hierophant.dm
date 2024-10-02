@@ -718,7 +718,7 @@ Difficulty: Hard
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
-		PLAYSOUND(L, 'sound/items/weapons/sear.ogg').volume(50).vary_frequency(TRUE).range(-4 + SOUND_RANGE).play()
+		PLAYSOUND(L, 'sound/items/weapons/sear.ogg').vary_frequency(TRUE).range(-4 + SOUND_RANGE).play()
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
@@ -742,7 +742,7 @@ Difficulty: Hard
 			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
 			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
-			PLAYSOUND(M, 'sound/items/weapons/sear.ogg').volume(50).vary_frequency(TRUE).range(-4 + SOUND_RANGE).play()
+			PLAYSOUND(M, 'sound/items/weapons/sear.ogg').vary_frequency(TRUE).range(-4 + SOUND_RANGE).play()
 			M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/temp_visual/hierophant/blast/visual

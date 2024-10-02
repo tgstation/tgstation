@@ -125,9 +125,9 @@
 	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
 		if(isidcard(W))
-			PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/card_slide.ogg').vary_frequency(TRUE).play()
 		else
-			PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').vary_frequency(TRUE).play()
 
 		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, span_notice("The machine appears to be disabled."))
@@ -182,7 +182,7 @@
 			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
 			flick("flick_up", src)
 			PLAYSOUND(src, 'sound/machines/piston/piston_raise.ogg').volume(70).play()
-			PLAYSOUND(src, 'sound/machines/chime.ogg').volume(50).play()
+			PLAYSOUND(src, 'sound/machines/chime.ogg').play()
 
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
@@ -222,7 +222,7 @@
 
 	var/rolled_number = rand(0, 36)
 
-	PLAYSOUND(src, 'sound/machines/roulette/roulettewheel.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/roulette/roulettewheel.ogg').play()
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
@@ -249,7 +249,7 @@
 
 	if(!is_winner)
 		say("You lost! Better luck next time")
-		PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').volume(50).play()
+		PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').play()
 		return FALSE
 
 	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
@@ -257,7 +257,7 @@
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
 	say("You have won [potential_payout] credits! Congratulations!")
-	PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').play()
 
 	dispense_prize(potential_payout)
 

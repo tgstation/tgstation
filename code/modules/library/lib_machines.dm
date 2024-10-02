@@ -628,7 +628,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		say("Printer currently unavailable, please wait a moment.")
 		return FALSE
 	COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-	PLAYSOUND(src, 'sound/machines/printer.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/printer.ogg').play()
 	addtimer(call_after, 4.1 SECONDS)
 	return TRUE
 
@@ -822,7 +822,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
-	PLAYSOUND(src, 'sound/machines/printer.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/printer.ogg').play()
 	flick("binder1", src)
 	addtimer(CALLBACK(src, PROC_REF(bind_book), draw_from), 4.1 SECONDS)
 

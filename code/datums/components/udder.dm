@@ -114,7 +114,7 @@
 		if(user)
 			user.balloon_alert(user, "already full!")
 		return
-	PLAYSOUND(udder_mob.loc, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(udder_mob.loc, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	udder_mob.visible_message(span_notice("[udder_mob] gobbles up [food]!"), span_notice("You gobble up [food]!"))
 	var/atom/movable/final_food = food
 	if(isstack(food)) //if stack, only consume 1

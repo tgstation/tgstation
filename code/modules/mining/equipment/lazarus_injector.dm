@@ -49,7 +49,7 @@
 	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
-	PLAYSOUND(src, 'sound/effects/refill.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/refill.ogg').vary_frequency(TRUE).play()
 	icon_state = "lazarus_empty"
 
 /obj/item/lazarus_injector/emp_act(severity)

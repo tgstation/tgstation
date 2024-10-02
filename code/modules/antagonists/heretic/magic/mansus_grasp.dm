@@ -56,7 +56,7 @@
 		carbon_hit.color = COLOR_CULT_RED
 		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = EASE_IN)
 		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
-		PLAYSOUND(carbon_hit, 'sound/effects/magic/curse.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(carbon_hit, 'sound/effects/magic/curse.ogg').vary_frequency(TRUE).play()
 
 		to_chat(caster, span_warning("An unholy force intervenes as you grasp [carbon_hit], absorbing most of the effects!"))
 		to_chat(carbon_hit, span_warning("As [caster] grasps you with eldritch forces, your blood magic absorbs most of the effects!"))

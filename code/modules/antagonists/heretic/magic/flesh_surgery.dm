@@ -181,7 +181,7 @@
 		)
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
-	PLAYSOUND(victim, 'sound/items/weapons/slice.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(victim, 'sound/items/weapons/slice.ogg').vary_frequency(TRUE).play()
 	carbon_victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
 	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, PROC_REF(extraction_checks), picked_organ, hand, victim, caster)))
 		carbon_victim.balloon_alert(caster, "interrupted!")
@@ -205,7 +205,7 @@
 	picked_organ.Remove(carbon_victim)
 	carbon_victim.balloon_alert(caster, "[chosen_organ] removed")
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
-	PLAYSOUND(victim, 'sound/effects/dismember.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(victim, 'sound/effects/dismember.ogg').vary_frequency(TRUE).play()
 	if(carbon_victim.stat == CONSCIOUS)
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")

@@ -657,7 +657,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bom
 	var/turf/our_wall = get_turf_pixel(src)
 	our_wall.balloon_alert_to_viewers("it was a ruse!")
 	roll_and_drop(loc)
-	PLAYSOUND(loc, 'sound/items/handling/paper_drop.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/items/handling/paper_drop.ogg').vary_frequency(TRUE).play()
 
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable, 32)

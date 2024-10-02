@@ -13,7 +13,7 @@
 		visible_message(span_notice("[user] [response_help_continuous] [src]."), \
 						span_notice("[user] [response_help_continuous] you."), null, null, user)
 		to_chat(user, span_notice("You [response_help_simple] [src]."))
-		PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	else
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to hurt [src]!"))
@@ -61,7 +61,7 @@
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)

@@ -219,7 +219,7 @@
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
-	PLAYSOUND(interacting_with, 'sound/effects/splash.ogg').volume(50).play()
+	PLAYSOUND(interacting_with, 'sound/effects/splash.ogg').play()
 	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

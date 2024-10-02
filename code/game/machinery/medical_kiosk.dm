@@ -141,7 +141,7 @@
 			patient_ref = target_ref
 			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
 			W.selected_target = null
-		PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 		scanner_wand = O
 		return
 	return ..()

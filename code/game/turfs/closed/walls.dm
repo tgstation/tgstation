@@ -203,7 +203,7 @@
 		dismantle_wall(1)
 
 	else
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
 		add_dent(WALL_DENT_HIT)
 		user.visible_message(span_danger("[user] smashes \the [src]!"), \
 					span_danger("You smash \the [src]!"), \

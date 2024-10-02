@@ -94,10 +94,10 @@
 		atom_integrity = max_integrity
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
-	PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
 	if(I.use_tool(src, user, 50))
-		PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
 	return TRUE
@@ -333,7 +333,7 @@
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
 			glass_type = W.type
-			PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)

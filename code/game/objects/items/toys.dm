@@ -199,7 +199,7 @@
 		return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
-	PLAYSOUND(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary_frequency(TRUE).play()
 	if(monkey_pop) // Monkeys make money from popping bloons
 		new /obj/item/coin/iron(get_turf(src))
 	qdel(src)
@@ -398,7 +398,7 @@
 
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
-	PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(TRUE).play()
 	if (current_mode <= modes.len)
 		balloon_alert(user, "set to [current_mode]")
 	else
@@ -429,7 +429,7 @@
 		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
 		return SHAME
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(user, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	user.adjust_nutrition(50) // mmmm delicious
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3 SECONDS))
 	return MANUAL_SUICIDE
@@ -810,7 +810,7 @@
 	new ash_type(loc)
 	visible_message(span_warning("[src] explodes!"),
 		span_hear("You hear a snap!"))
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	qdel(src)
 
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
@@ -1032,7 +1032,7 @@
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message(span_warning("[user] presses the big red button."), span_notice("You press the button, it plays a loud noise!"), span_hear("The button clicks loudly."))
-		PLAYSOUND(src, 'sound/effects/explosion/explosionfar.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/effects/explosion/explosionfar.ogg').vary_frequency(FALSE).play()
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
@@ -1104,7 +1104,7 @@
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message(span_warning("[user] rotates a cogwheel on [src]."), span_notice("You rotate a cogwheel on [src], it plays a loud noise!"), span_hear("You hear cogwheels turning."))
-		PLAYSOUND(src, 'sound/effects/magic/clockwork/ark_activation.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/effects/magic/clockwork/ark_activation.ogg').vary_frequency(FALSE).play()
 	else
 		to_chat(user, span_alert("The cogwheels are already turning!"))
 
@@ -1637,7 +1637,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/boot()
 	say("Game starting!")
-	PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').vary_frequency(FALSE).play()
 
 	state = STATE_STARTING
 	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
@@ -1716,7 +1716,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
-	PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').vary_frequency(FALSE).play()
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)

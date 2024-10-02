@@ -77,7 +77,7 @@
 		alerted_mob.do_alert_animation()
 
 	alerted.Cut()
-	PLAYSOUND(loc, 'sound/machines/chime.ogg').volume(50).vary_frequency(FALSE).range(-5 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/machines/chime.ogg').vary_frequency(FALSE).range(-5 + SOUND_RANGE).play()
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()

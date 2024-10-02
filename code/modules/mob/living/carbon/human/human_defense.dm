@@ -236,7 +236,7 @@
 			w_uniform.add_fingerprint(user)
 		var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
 		if(!damage)
-			PLAYSOUND(loc, 'sound/items/weapons/slashmiss.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/slashmiss.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 			visible_message(span_danger("[user] lunges at [src]!"), \
 							span_userdanger("[user] lunges at you!"), span_hear("You hear a swoosh!"), null, user)
 			to_chat(user, span_danger("You lunge at [src]!"))

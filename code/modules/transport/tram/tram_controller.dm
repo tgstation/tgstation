@@ -889,7 +889,7 @@
 	if(!cover_open)
 		PLAYSOUND(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	else
-		PLAYSOUND(loc, 'sound/machines/closet/closet_close.ogg').volume(50).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/machines/closet/closet_close.ogg').vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
 	cover_open = !cover_open
 	update_appearance()
 
@@ -919,7 +919,7 @@
 		tool.play_tool_sound(src)
 		if(!tool.use_tool(src, user, 6 SECONDS))
 			return
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		balloon_alert(user, "unsecured")
 		deconstruct(TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

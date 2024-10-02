@@ -288,7 +288,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary_frequency(FALSE).play()
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -322,7 +322,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary_frequency(FALSE).play()
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -476,7 +476,7 @@
 		return
 	user.put_in_hands(inserted_disk)
 	inserted_disk = null
-	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = FALSE // Robots and AIs get different activation messages.
@@ -561,7 +561,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE)
 	else
-		PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/beep/twobeep_high.ogg').vary_frequency(TRUE).play()
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
@@ -921,7 +921,7 @@
 		user.put_in_hands(inserted_disk)
 		balloon_alert(user, "disks swapped")
 	inserted_disk = disk
-	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(50).play()
+	PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)

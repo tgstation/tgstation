@@ -509,7 +509,7 @@
 			if(CYCLE_OPEN)
 				elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 				if(!played_ding)
-					PLAYSOUND(elevator_door, 'sound/machines/ping.ogg').volume(50).vary_frequency(TRUE).play()
+					PLAYSOUND(elevator_door, 'sound/machines/ping.ogg').vary_frequency(TRUE).play()
 					played_ding = TRUE
 				addtimer(CALLBACK(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open)), 0.7 SECONDS)
 			if(CYCLE_CLOSED)

@@ -59,7 +59,7 @@
 			return ITEM_INTERACT_BLOCKING
 		force_proj_busy = FALSE
 
-	PLAYSOUND(src, 'sound/items/weapons/resonator_fire.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/resonator_fire.ogg').vary_frequency(TRUE).play()
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F

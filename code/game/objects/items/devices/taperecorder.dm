@@ -92,7 +92,7 @@
 			return
 		mytape = I
 		balloon_alert(user, "inserted [mytape]")
-		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_close.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_close.ogg').vary_frequency(FALSE).play()
 		update_appearance()
 
 
@@ -103,7 +103,7 @@
 	if(playing)
 		balloon_alert(user, "stop the tape first!")
 		return
-	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_open.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_open.ogg').vary_frequency(FALSE).play()
 	balloon_alert(user, "ejected [mytape]")
 	stop()
 	user.put_in_hands(mytape)
@@ -182,7 +182,7 @@
 		balloon_alert(usr, "already playing!")
 		return
 
-	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_play.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_play.ogg').vary_frequency(FALSE).play()
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
@@ -204,7 +204,7 @@
 		stop()
 	else
 		balloon_alert(usr, "tape full!")
-		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').vary_frequency(FALSE).play()
 
 
 /obj/item/taperecorder/verb/stop()
@@ -216,11 +216,11 @@
 		return
 
 	if(recording)
-		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').vary_frequency(FALSE).play()
 		balloon_alert(usr, "stopped recording")
 		recording = FALSE
 	else if(playing)
-		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_stop.ogg').vary_frequency(FALSE).play()
 		balloon_alert(usr, "stopped playing")
 		playing = FALSE
 	time_warned = FALSE
@@ -251,7 +251,7 @@
 	update_appearance()
 	update_sound()
 	balloon_alert(usr, "started playing")
-	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_play.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_play.ogg').vary_frequency(FALSE).play()
 	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used <= max, sleep(playsleepseconds))
@@ -357,7 +357,7 @@
 	transcript_paper.update_appearance()
 
 	balloon_alert(usr, "transcript printed\n[page_count] page\s")
-	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_print.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_print.ogg').vary_frequency(FALSE).play()
 
 	// Can't put the entire stack into their hands if there's multple pages, but hey we can at least put one page in.
 	usr.put_in_hands(transcript_paper)

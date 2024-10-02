@@ -19,8 +19,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').volume(50).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/effects/magic/fireball.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/fireball.ogg').vary_frequency(TRUE).play()
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -83,7 +83,7 @@ Burning extracts:
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
-		PLAYSOUND(W, 'sound/effects/break_stone.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(W, 'sound/effects/break_stone.ogg').vary_frequency(TRUE).play()
 	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
 	..()
 

@@ -61,7 +61,7 @@
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you don't die instantly

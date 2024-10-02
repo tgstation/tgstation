@@ -190,7 +190,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, span_notice("Resetting circuitry..."))
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary_frequency(TRUE).play()
 	if(do_after(user, 2 SECONDS, target = src))
 		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
 		locked = !locked

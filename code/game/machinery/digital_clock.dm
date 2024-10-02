@@ -24,7 +24,7 @@
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
@@ -52,7 +52,7 @@
 	balloon_alert(user, "resetting...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		balloon_alert(user, "reset")
 		obj_flags &= ~EMAGGED
 		return TRUE

@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
-		PLAYSOUND(src, 'sound/effects/can/can_shake.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/can/can_shake.ogg').vary_frequency(TRUE).play()
 		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
 		fizziness += SODA_FIZZINESS_SHAKE
 		return

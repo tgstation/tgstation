@@ -29,7 +29,7 @@
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').vary_frequency(TRUE).play()
 	moveToNullspace()
 	suicider = user.mind
 	suicide_mob = REF(user)

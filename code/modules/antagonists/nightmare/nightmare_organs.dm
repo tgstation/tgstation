@@ -85,7 +85,7 @@
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
 		span_danger("[src] feels unnaturally cold in your hands. You raise [src] to your mouth and devour it!")
 	)
-	PLAYSOUND(user, 'sound/effects/magic/demon_consume.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
 
 	user.visible_message(
 		span_warning("Blood erupts from [user]'s arm as it reforms into a weapon!"),
@@ -131,7 +131,7 @@
 		to_chat(owner, span_userdanger("You feel the shadows invade your skin, leaping into the center of your chest! You're alive!"))
 		SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 	owner.visible_message(span_warning("[owner] staggers to [owner.p_their()] feet!"))
-	PLAYSOUND(owner, 'sound/effects/hallucinations/far_noise.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(owner, 'sound/effects/hallucinations/far_noise.ogg').vary_frequency(TRUE).play()
 	respawn_progress = 0
 
 /obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)

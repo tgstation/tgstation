@@ -77,7 +77,7 @@
 		new_block.export_mat = material_to_export
 		new_block.quantity = amount
 		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
-		PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').vary_frequency(FALSE).play()
 		return TRUE
 	return ..()
 

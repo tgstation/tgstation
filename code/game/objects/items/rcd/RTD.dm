@@ -290,7 +290,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	PLAYSOUND(loc, 'sound/effects/light_flicker.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(loc, 'sound/effects/light_flicker.ogg').vary_frequency(FALSE).play()
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -359,7 +359,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	PLAYSOUND(loc, 'sound/effects/light_flicker.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(loc, 'sound/effects/light_flicker.ogg').vary_frequency(FALSE).play()
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)

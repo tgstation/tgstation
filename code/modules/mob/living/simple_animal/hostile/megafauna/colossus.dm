@@ -306,7 +306,7 @@
 	active = TRUE
 	set_anchored(TRUE)
 	balloon_alert_to_viewers("charging...")
-	PLAYSOUND(src, 'sound/effects/magic/disable_tech.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/disable_tech.ogg').vary_frequency(TRUE).play()
 	sleep(use_time)
 	icon_state = initial(icon_state)
 	active = FALSE

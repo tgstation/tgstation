@@ -45,7 +45,7 @@
 		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
 		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
 		if(!stealthy)
-			PLAYSOUND(affected_mob, 'sound/items/hypospray.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(affected_mob, 'sound/items/hypospray.ogg').vary_frequency(TRUE).play()
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 

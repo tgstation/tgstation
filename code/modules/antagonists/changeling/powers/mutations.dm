@@ -142,7 +142,7 @@
 
 		if(blood_on_castoff)
 			H.add_splatter_floor()
-			PLAYSOUND(H.loc, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play() //So real sounds
+			PLAYSOUND(H.loc, 'sound/effects/splat.ogg').vary_frequency(TRUE).play() //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1

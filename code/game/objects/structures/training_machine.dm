@@ -209,7 +209,7 @@
 	moving = FALSE
 	starting_turf = null
 	say(message)
-	PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').vary_frequency(FALSE).play()
 	STOP_PROCESSING(SSfastprocess, src)
 
 /**
@@ -221,7 +221,7 @@
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
-	PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').vary_frequency(FALSE).play()
 	START_PROCESSING(SSfastprocess, src)
 
 /**
@@ -321,7 +321,7 @@
 	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
 	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	add_overlay("evil_trainer")
 	return TRUE
 
@@ -390,7 +390,7 @@
 			return FALSE
 	total_hits++
 	lap_hits++
-	PLAYSOUND(src, 'sound/items/weapons/smash.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/weapons/smash.ogg').vary_frequency(FALSE).play()
 	if (lap_hits % HITS_TO_KILL == 0)
 		PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').volume(25).vary_frequency(FALSE).play()
 	return TRUE

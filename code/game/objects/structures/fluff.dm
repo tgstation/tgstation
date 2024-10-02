@@ -20,7 +20,7 @@
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 50))
 			user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
-			PLAYSOUND(user, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(user, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 			new/obj/item/stack/sheet/iron(drop_location())
 			qdel(src)
 		return
@@ -133,7 +133,7 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user, list/modifiers)
-	PLAYSOUND(src, 'sound/items/carhorn.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/carhorn.ogg').vary_frequency(TRUE).play()
 	. = ..()
 
 /obj/structure/fluff/paper

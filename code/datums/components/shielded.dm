@@ -101,9 +101,9 @@
 	var/obj/item/item_parent = parent
 	COOLDOWN_START(src, charge_add_cd, charge_increment_delay)
 	adjust_charge(charge_recovery) // set the number of charges to current + recovery per increment, clamped from zero to max_charges
-	PLAYSOUND(item_parent, 'sound/effects/magic/charge.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(item_parent, 'sound/effects/magic/charge.ogg').vary_frequency(TRUE).play()
 	if(current_charges == max_charges)
-		PLAYSOUND(item_parent, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(item_parent, 'sound/machines/ding.ogg').vary_frequency(TRUE).play()
 
 /datum/component/shielded/proc/adjust_charge(change)
 	current_charges = clamp(current_charges + change, 0, max_charges)

@@ -283,7 +283,7 @@
 	y_clicked = (-(ROUND_UP((y_clicked - 4) / 8) - 4) - 1) * 3
 	light_clicked = x_clicked + y_clicked
 	switch_light(light_clicked)
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 
 /obj/structure/light_puzzle/proc/switch_light(light)
 	var/list/updating_lights = list()

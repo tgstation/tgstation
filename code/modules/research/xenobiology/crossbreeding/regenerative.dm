@@ -220,7 +220,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
 	var/newcoin = get_random_coin()
 	var/obj/item/coin/C = new newcoin(target.loc)
-	PLAYSOUND(C, 'sound/items/coinflip.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(C, 'sound/items/coinflip.ogg').vary_frequency(TRUE).play()
 	target.put_in_hand(C)
 
 /obj/item/slimecross/regenerative/oil

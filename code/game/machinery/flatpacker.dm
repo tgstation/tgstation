@@ -268,7 +268,7 @@
 			if(!materials.has_materials(needed_mats, creation_efficiency))
 				say("Not enough materials to begin production.")
 				return
-			PLAYSOUND(src, 'sound/items/tools/rped.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/tools/rped.ogg').vary_frequency(TRUE).play()
 
 			busy = TRUE
 			flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "flatpacker_bar"), flatpack_time)

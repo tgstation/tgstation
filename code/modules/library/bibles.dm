@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
-	PLAYSOUND(victim, 'sound/effects/magic/magic_block_holy.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(victim, 'sound/effects/magic/magic_block_holy.ogg').vary_frequency(TRUE).play()
 	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	user.mind.holy_role = HOLY_ROLE_PRIEST
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
-	PLAYSOUND(src.loc, 'sound/effects/snap.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/effects/snap.ogg').vary_frequency(TRUE).play()
 	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 	user.apply_damage(5, BRUTE, active_hand_zone, attacking_item = src)
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))

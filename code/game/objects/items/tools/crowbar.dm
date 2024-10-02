@@ -35,7 +35,7 @@
 
 /obj/item/crowbar/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/crowbar/red
@@ -152,7 +152,7 @@
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
 	if(user)
 		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
-	PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').vary_frequency(TRUE).play()
 	if(tool_behaviour == TOOL_CROWBAR)
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else
@@ -174,10 +174,10 @@
 /obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
-		PLAYSOUND(loc, 'sound/items/tools/jaws_pry.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/tools/jaws_pry.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 	else
 		user.visible_message(span_suicide("[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!"))
-		PLAYSOUND(loc, 'sound/items/tools/jaws_cut.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/tools/jaws_cut.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		if(iscarbon(user))
 			var/mob/living/carbon/suicide_victim = user
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)

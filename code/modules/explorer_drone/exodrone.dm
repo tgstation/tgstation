@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
  * Plays an effect on the pad, with a sound effect to boot.
  */
 /obj/machinery/exodrone_launcher/proc/launch_effect()
-	PLAYSOUND(src, 'sound/effects/podwoosh.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/effects/podwoosh.ogg').vary_frequency(FALSE).play()
 	do_smoke(1, holder = src, location = get_turf(src))
 
 /obj/machinery/exodrone_launcher/Exited(atom/movable/gone, direction)

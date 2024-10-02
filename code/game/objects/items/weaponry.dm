@@ -332,7 +332,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_held_items()
 
 	name = new_name
-	PLAYSOUND(user, 'sound/items/tools/screwdriver2.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/items/tools/screwdriver2.ogg').vary_frequency(TRUE).play()
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -675,7 +675,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').vary_frequency(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -963,7 +963,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return TRUE
 
 /obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
-	PLAYSOUND(target, 'sound/effects/magic/tail_swing.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(target, 'sound/effects/magic/tail_swing.ogg').vary_frequency(TRUE).play()
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
 	target.mouse_opacity = initial(target.mouse_opacity)
 	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
@@ -1211,7 +1211,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_x = x_slashed
 	previous_y = y_slashed
 	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(100).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/items/weapons/zapbang.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/zapbang.ogg').vary_frequency(TRUE).play()
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)

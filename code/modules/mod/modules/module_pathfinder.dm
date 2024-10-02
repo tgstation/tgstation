@@ -84,7 +84,7 @@
 	mod.quick_deploy(user)
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
-	PLAYSOUND(mod, 'sound/machines/ping.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(mod, 'sound/machines/ping.ogg').vary_frequency(TRUE).play()
 	drain_power(use_energy_cost)
 
 /obj/item/implant/mod

@@ -141,7 +141,7 @@
 	force_replace = TRUE
 
 /obj/item/firing_pin/clown/pin_auth(mob/living/user)
-	PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/bikehorn.ogg').vary_frequency(TRUE).play()
 	return FALSE
 
 // Ultra-honk pin, clown's deadly joke item.
@@ -150,7 +150,7 @@
 	name = "ultra hilarious firing pin"
 
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
-	PLAYSOUND(src.loc, 'sound/items/bikehorn.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/items/bikehorn.ogg').vary_frequency(TRUE).play()
 	if(QDELETED(user))  //how the hell...?
 		stack_trace("/obj/item/firing_pin/clown/ultra/pin_auth called with a [isnull(user) ? "null" : "invalid"] user.")
 		return TRUE

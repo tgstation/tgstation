@@ -127,7 +127,7 @@
 			process_speed = override_speed_multiplier
 		else
 			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
-		PLAYSOUND(src, 'sound/effects/rock/rocktap1.ogg').volume(50).play()
+		PLAYSOUND(src, 'sound/effects/rock/rocktap1.ogg').play()
 		if(!continued)
 			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
@@ -142,7 +142,7 @@
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
-		PLAYSOUND(src, 'sound/effects/rock/rock_break.ogg').volume(50).play()
+		PLAYSOUND(src, 'sound/effects/rock/rock_break.ogg').play()
 		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return

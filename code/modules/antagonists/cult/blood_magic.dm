@@ -673,7 +673,7 @@
 
 	if(istype(target,/obj/machinery/door/airlock))
 		channeling = TRUE
-		PLAYSOUND(T, 'sound/machines/airlock/airlockforced.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(T, 'sound/machines/airlock/airlockforced.ogg').vary_frequency(TRUE).play()
 		do_sparks(5, TRUE, target)
 		if(!do_after(user, 5 SECONDS, target = user) && !QDELETED(target))
 			channeling = FALSE
@@ -900,7 +900,7 @@
 		return
 	user.Beam(our_turf,icon_state="drainbeam", time = 15)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-	PLAYSOUND(our_turf, 'sound/effects/magic/enter_blood.ogg').volume(50).play()
+	PLAYSOUND(our_turf, 'sound/effects/magic/enter_blood.ogg').play()
 	to_chat(user, span_cult_italic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
 	uses += max(1, round(blood_to_gain))
 

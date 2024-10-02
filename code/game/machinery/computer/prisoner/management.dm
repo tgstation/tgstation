@@ -52,20 +52,20 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 		CRASH("[usr] potentially spoofed ui action [action] on prisoner console without the console being logged in.")
 
 	if(isliving(usr))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary_frequency(FALSE).play()
 
 	switch(action)
 		if("login")
 			if(allowed(usr))
 				authenticated = TRUE
-				PLAYSOUND(src, 'sound/machines/terminal/terminal_on.ogg').volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(src, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
 			else
-				PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').vary_frequency(FALSE).play()
 			return TRUE
 
 		if("logout")
 			authenticated = FALSE
-			PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').vary_frequency(FALSE).play()
 			return TRUE
 
 		if("insert_id")

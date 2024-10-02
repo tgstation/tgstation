@@ -134,7 +134,7 @@
 
 	if(!QDELING(src))
 		COOLDOWN_START(src, jukebox_song_cd, 10 SECONDS)
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_off.ogg').vary_frequency(TRUE).play()
 		update_use_power(IDLE_POWER_USE)
 		update_appearance(UPDATE_ICON_STATE)
 	return TRUE

@@ -15,7 +15,7 @@
 				ignored_mobs = user,
 			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -72,7 +72,7 @@
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').volume(50).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
 
 
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)

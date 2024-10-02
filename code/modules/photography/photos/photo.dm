@@ -66,9 +66,9 @@
 /obj/item/photo/suicide_act(mob/living/carbon/human/user)
 	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
 	if (!ishuman(user) || user.physique == MALE)
-		PLAYSOUND(user, 'sound/mobs/humanoids/human/laugh/manlaugh1.ogg').volume(50).vary_frequency(TRUE).play()//EVERY TIME I DO IT MAKES ME LAUGH
+		PLAYSOUND(user, 'sound/mobs/humanoids/human/laugh/manlaugh1.ogg').vary_frequency(TRUE).play()//EVERY TIME I DO IT MAKES ME LAUGH
 	else
-		PLAYSOUND(user, 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(user, 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg').vary_frequency(TRUE).play()
 	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)

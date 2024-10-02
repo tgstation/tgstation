@@ -107,7 +107,7 @@
 	if(!hacking_cable.hacking_machine)
 		balloon_alert(src, "nothing connected")
 		return FALSE
-	PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').vary_frequency(TRUE).play()
 	balloon_alert(src, "overriding...")
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.hacking_machine, timed_action_flags = NONE,	progress = TRUE))

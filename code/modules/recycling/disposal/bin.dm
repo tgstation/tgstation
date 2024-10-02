@@ -389,7 +389,7 @@
 		new_tagger.moveToNullspace()
 		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
 		balloon_alert(user, "tagger returned")
-		PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 		mounted_tagger = new_tagger
 		update_appearance()
 		return

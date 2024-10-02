@@ -72,7 +72,7 @@
 	if(.)
 		return
 	if(isliving(usr))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary_frequency(FALSE).play()
 	if(!allowed(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return

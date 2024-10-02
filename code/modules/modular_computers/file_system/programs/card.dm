@@ -95,16 +95,16 @@
 		// Log in.
 		if("PRG_authenticate")
 			if(!computer || !inserted_auth_card)
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary_frequency(FALSE).play()
 				return TRUE
 			if(authenticate(user, inserted_auth_card))
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
 				return TRUE
 		// Log out.
 		if("PRG_logout")
 			authenticated_card = null
 			authenticated_user = null
-			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').vary_frequency(FALSE).play()
 			return TRUE
 		// Print a report.
 		if("PRG_print")
@@ -129,7 +129,7 @@
 				to_chat(usr, span_notice("Printer is out of paper."))
 				return TRUE
 			else
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
 				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
 		if("PRG_eject_id")
@@ -153,7 +153,7 @@
 			inserted_auth_card.assignment = is_centcom ? "Fired" : "Demoted"
 			SSid_access.remove_trim_from_card(inserted_auth_card)
 
-			PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary_frequency(FALSE).play()
 			return TRUE
 		// Change ID card assigned name.
 		if("PRG_edit")

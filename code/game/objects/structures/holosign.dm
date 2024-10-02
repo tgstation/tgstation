@@ -135,11 +135,11 @@
 	if(!opened)
 		density = FALSE
 		opened = TRUE
-		PLAYSOUND(src, 'sound/machines/door/door_open.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/door/door_open.ogg').vary_frequency(TRUE).play()
 	else
 		density = TRUE
 		opened = FALSE
-		PLAYSOUND(src, 'sound/machines/door/door_close.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/door/door_close.ogg').vary_frequency(TRUE).play()
 
 	update_icon_state()
 	COOLDOWN_START(src, cooldown_open, 1 SECONDS)

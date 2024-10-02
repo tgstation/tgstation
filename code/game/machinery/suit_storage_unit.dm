@@ -506,7 +506,7 @@
 		locked = FALSE
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
-			PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').vary_frequency(TRUE).play()
 			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
 			smoke.set_up(0, holder = src, location = src)
 			smoke.start()

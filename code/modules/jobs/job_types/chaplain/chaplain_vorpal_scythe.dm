@@ -25,7 +25,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
-	PLAYSOUND(owner, 'sound/effects/magic/demon_attack1.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(owner, 'sound/effects/magic/demon_attack1.ogg').vary_frequency(TRUE).play()
 	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 

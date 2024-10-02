@@ -509,7 +509,7 @@
 	var/makeicon = newstruct.icon_state
 	var/theme = newstruct.theme
 	flick("make_[makeicon][theme]", newstruct)
-	PLAYSOUND(newstruct, 'sound/effects/constructform.ogg').volume(50).play()
+	PLAYSOUND(newstruct, 'sound/effects/constructform.ogg').play()
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
 		newstruct.construct_master = stoner

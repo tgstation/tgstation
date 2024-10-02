@@ -31,8 +31,11 @@
 
 /// This is the proc that actually does the throwing. Charge only adds a timer for this.
 /datum/action/cooldown/mob_cooldown/chase_target/proc/throw_thyself()
-	PLAYSOUND(owner, 'sound/items/weapons/sonic_jackhammer.ogg').volume(50).vary_frequency(TRUE).play()
-	owner.throw_at(target, 7, 1.1, owner, FALSE, FALSE, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/effects/meteorimpact.ogg', 50 * size, TRUE, 2), INFINITY)
+	PLAYSOUND(owner, 'sound/items/weapons/sonic_jackhammer.ogg').vary_frequency(TRUE).play()
+	owner.throw_at(target, 7, 1.1, owner, FALSE, FALSE, CALLBACK(src, PROC_REF(throw_impact_sound)), INFINITY)
+
+/datum/action/cooldown/mob_cooldown/chase_target/proc/throw_impact_sound()
+	PLAYSOUND(owner, 'sound/effects/meteorimpact.ogg').volume(50 * size).vary(TRUE).play()
 
 /// Resets the charge buffs.
 /datum/action/cooldown/mob_cooldown/chase_target/proc/reset_charge()

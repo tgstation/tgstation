@@ -137,7 +137,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return FALSE
 
 	COOLDOWN_START(src, open_close_cd, 0.25 SECONDS)
-	PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 	PLAYSOUND(src, 'sound/effects/roll.ogg').volume(5).vary_frequency(TRUE).play()
 	var/turf/dump_turf = get_step(src, dir)
 	connected?.setDir(dir)
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 	COOLDOWN_START(src, open_close_cd, 0.5 SECONDS)
 	PLAYSOUND(src, 'sound/effects/roll.ogg').volume(5).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 	var/turf/close_loc = connected.loc
 	for(var/atom/movable/entering in close_loc)
 		if(entering.anchored && entering != connected)
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_morgue_status()
 	update_appearance(UPDATE_ICON_STATE)
 	if(morgue_state == MORGUE_HAS_REVIVABLE && beeper && COOLDOWN_FINISHED(src, next_beep))
-		PLAYSOUND(src, 'sound/items/weapons/gun/general/empty_alarm.ogg').volume(50).vary_frequency(FALSE).play() //Revive them you blind fucks
+		PLAYSOUND(src, 'sound/items/weapons/gun/general/empty_alarm.ogg').vary_frequency(FALSE).play() //Revive them you blind fucks
 		COOLDOWN_START(src, next_beep, beep_cooldown)
 
 	if(!connected || connected.loc != src)
@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!QDELETED(src))
 			locked = FALSE
 			update_appearance()
-			PLAYSOUND(src.loc, 'sound/machines/ding.ogg').volume(50).vary_frequency(TRUE).play() //you horrible people
+			PLAYSOUND(src.loc, 'sound/machines/ding.ogg').vary_frequency(TRUE).play() //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
 	name = "creamatorium"

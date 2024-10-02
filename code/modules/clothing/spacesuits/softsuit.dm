@@ -95,5 +95,5 @@
 		name = "torn [src]."
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE
-		PLAYSOUND(loc, 'sound/items/weapons/slashmiss.ogg').volume(50).vary_frequency(TRUE).play()
-		PLAYSOUND(loc, 'sound/effects/refill.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/slashmiss.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/effects/refill.ogg').vary_frequency(TRUE).play()

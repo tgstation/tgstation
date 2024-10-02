@@ -48,8 +48,8 @@
 
 	var/away_dir = get_dir(above, target)
 	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
-	PLAYSOUND(target, 'sound/effects/pickaxe/picaxe1.ogg').volume(50).play() //plays twice so people above and below can hear
-	PLAYSOUND(user_turf, 'sound/effects/pickaxe/picaxe1.ogg').volume(50).play()
+	PLAYSOUND(target, 'sound/effects/pickaxe/picaxe1.ogg').play() //plays twice so people above and below can hear
+	PLAYSOUND(user_turf, 'sound/effects/pickaxe/picaxe1.ogg').play()
 	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
 
 	// Our climbers athletics ability

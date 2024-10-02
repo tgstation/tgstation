@@ -44,7 +44,7 @@
 	if(!circuits)
 		to_chat(R, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
 		return
-	PLAYSOUND(R, 'sound/items/tools/rped.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(R, 'sound/items/tools/rped.ogg').vary_frequency(TRUE).play()
 	recharging = TRUE
 	circuits--
 	maptext = MAPTEXT(circuits)
@@ -64,7 +64,7 @@
 		span_notice("User breaks down [interacting_with] with [src]."),
 		span_notice("You recycle [interacting_with] into [src]. It now has material for <b>[circuits]</b> circuits.")
 	)
-	PLAYSOUND(user, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 	qdel(interacting_with)
 	return ITEM_INTERACT_SUCCESS
 

@@ -215,7 +215,7 @@
 	if(!useResource(cost, user))
 		return FALSE
 	activate()
-	PLAYSOUND(loc, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
 	if(ispath(blueprint, /obj/machinery/duct))
 		var/is_omni = current_color == DUCT_COLOR_OMNI
 		new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
@@ -261,7 +261,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(do_after(user, 2 SECONDS, target = interacting_with))
 				machine_target.deconstruct() //Let's not substract matter
-				PLAYSOUND(src, 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play() //this is just such a great sound effect
+				PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play() //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
 	if(!isopenturf(interacting_with))

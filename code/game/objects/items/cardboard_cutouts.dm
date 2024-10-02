@@ -49,7 +49,7 @@
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
-	PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).play()
 	push_over()
 
 /obj/item/cardboard_cutout/equipped(mob/living/user, slot)

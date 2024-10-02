@@ -100,7 +100,7 @@
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))
-	PLAYSOUND(user, 'sound/effects/blob/blobattack.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/effects/blob/blobattack.ogg').vary_frequency(TRUE).play()
 	var/obj/item/food/meat/slab/meatwheat/meaties = new(null)
 	meaties.reagents.set_all_reagents_purity(seed.get_reagent_purity())
 	qdel(src)

@@ -29,7 +29,7 @@
 	STOP_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	PLAYSOUND(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg').vary_frequency(TRUE).play()
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt

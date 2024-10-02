@@ -9,7 +9,7 @@
 		if (buildstage == AIR_ALARM_BUILD_NO_WIRES)
 			to_chat(user, span_notice("You remove the air alarm electronics."))
 			new /obj/item/electronics/airalarm(drop_location())
-			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 			buildstage = AIR_ALARM_BUILD_NO_CIRCUIT
 			update_appearance()
 	return TRUE

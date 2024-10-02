@@ -225,13 +225,13 @@
 	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
-	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
 	safety_mode = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	PLAYSOUND(src, 'sound/machines/ping.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/ping.ogg').vary_frequency(FALSE).play()
 	safety_mode = FALSE
 	update_appearance()
 
@@ -239,9 +239,9 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		PLAYSOUND(src, 'sound/items/tools/welder.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary_frequency(TRUE).play()
 	else
-		PLAYSOUND(src, 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
 
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)

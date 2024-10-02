@@ -244,7 +244,7 @@
 	abstract = FALSE
 
 /datum/grand_side_effect/smoke/trigger(potency, turf/ritual_location, mob/invoker)
-	PLAYSOUND(src, 'sound/effects/magic/smoke.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/smoke.ogg').vary_frequency(TRUE).play()
 	var/range = LERP(2, 4, potency/GRAND_RITUAL_FINALE_COUNT)
 	var/datum/effect_system/fluid_spread/smoke/colourful/smoke = new
 	smoke.set_up(range, holder = ritual_location, location = ritual_location)

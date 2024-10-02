@@ -86,7 +86,7 @@
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
-		PLAYSOUND(src, 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
 		knock_down()
 
 /**

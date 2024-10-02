@@ -142,7 +142,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').vary_frequency(TRUE).play()
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()

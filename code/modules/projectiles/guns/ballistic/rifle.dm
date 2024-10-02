@@ -455,7 +455,7 @@
 	if(suppressed)
 		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		PLAYSOUND(src, 'sound/machines/eject.ogg').volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/eject.ogg').vary_frequency(TRUE).play()
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \

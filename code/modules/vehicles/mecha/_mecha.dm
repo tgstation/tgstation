@@ -821,7 +821,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	PLAYSOUND(src, 'sound/machines/airlock/airlock.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/airlock/airlock.ogg').vary_frequency(TRUE).play()
 
 /// Special light eater handling
 /obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
