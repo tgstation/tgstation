@@ -527,7 +527,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
-/obj/item/clothing/suit/armor/riot/init_rustle_component
+/obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
 	return
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
