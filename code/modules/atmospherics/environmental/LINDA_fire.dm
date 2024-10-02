@@ -145,7 +145,7 @@
 			var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
 			if(!our_hot_group)
 				enemy_spot.our_hot_group.add_to_group(src)
-			else if(our_hot_group != enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+			else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
 				our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
 	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
 		our_hot_group = new
