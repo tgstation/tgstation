@@ -14,6 +14,9 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
+/obj/item/fish/clownfish/get_fish_taste()
+	return list("raw fish" = 2, "something funny" = 1)
+
 /obj/item/fish/clownfish/lube
 	name = "lubefish"
 	desc = "A clownfish exposed to cherry-flavored lube for far too long. First discovered the days following a cargo incident around the seas of Europa, when thousands of thousands of thousands..."
@@ -126,8 +129,8 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts", "pierces")
 	attack_verb_simple = list("slash", "cut", "pierce")
-	block_sound = 'sound/weapons/parry.ogg'
-	hitsound = 'sound/weapons/rapierhit.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/rapierhit.ogg'
 	demolition_mod = 0.75
 	attack_speed = 1 SECONDS
 	block_chance = 50
@@ -227,9 +230,15 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/camouflage, /datum/fish_trait/wary)
 
+/obj/item/fish/squid/get_fish_taste()
+	return list("raw mollusk" = 2)
+
+/obj/item/fish/squid/get_fish_taste_cooked()
+	return list("cooked mollusk" = 2, "tenderness" = 0.5)
+
 /obj/item/fish/monkfish
 	name = "monkfish"
-	desc = "A member of the Lophiid family of anglerfish. It goes by several different names, however none of them will make it look any prettier, nor any less delicious."
+	desc = "A member of the Lophiid family of anglerfish. It goes by several different names, however none of them will make it look any prettier, nor be any less delicious."
 	icon_state = "monkfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_height = 7

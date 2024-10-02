@@ -247,8 +247,7 @@
 	return TRUE
 
 /proc/CheckToolReach(atom/movable/here, atom/movable/there, reach)
-	. = FALSE
-	if(QDELETED(here) || QDELETED(there))
+	if(!here || !there)
 		return
 	switch(reach)
 		if(0)
@@ -259,18 +258,14 @@
 			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
 			dummy.SetInvisibility(INVISIBILITY_ABSTRACT)
-			var/list/steps = get_steps_to(dummy, there)
-			if(isnull(steps) || length(steps) > reach) // If the path is further than the reach, no way we can reach it anyways.
-				qdel(dummy)
-				return FALSE
-			for(var/direction in steps)
-				var/turf/next_step = get_step(dummy, direction)
+			for(var/i in 1 to reach) //Limit it to that many tries
+				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.CanReach(there))
 					qdel(dummy)
 					return TRUE
-				if(!dummy.Move(next_step)) // We're blocked, nope.
+				if(!dummy.Move(T)) //we're blocked!
 					qdel(dummy)
-					return FALSE
+					return
 			qdel(dummy)
 
 /// Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
@@ -405,15 +400,15 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose.
+#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / ICON_SIZE_ALL)
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32) //Not using world.icon_size on purpose. //Ok well I trust you
 
 /atom/movable/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/hud/screen_gen.dmi', "catcher")
 	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
 	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
-	var/px = view_size_x * world.icon_size
-	var/py = view_size_y * world.icon_size
+	var/px = view_size_x * ICON_SIZE_X
+	var/py = view_size_y * ICON_SIZE_Y
 	var/sx = min(MAX_SAFE_BYOND_ICON_SCALE_PX, px)
 	var/sy = min(MAX_SAFE_BYOND_ICON_SCALE_PX, py)
 	newicon.Scale(sx, sy)

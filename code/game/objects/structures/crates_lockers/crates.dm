@@ -5,14 +5,13 @@
 	icon_state = "crate"
 	base_icon_state = "crate"
 	req_access = null
-	can_weld_shut = FALSE
 	horizontal = TRUE
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
 	delivery_icon = "deliverycrate"
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
@@ -95,6 +94,9 @@
 		else if(secure)
 			. += "securecrateg"
 
+	if(welded)
+		. += icon_welded
+
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
 		lid.pixel_x = lid_x
@@ -119,7 +121,7 @@
 		if(elevation_open)
 			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
 	if(!QDELETED(manifest))
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
@@ -146,7 +148,7 @@
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
 	if(ishuman(user))
@@ -167,13 +169,14 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
 	paint_jobs = null
 	elevation_open = 0
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
@@ -190,6 +193,7 @@
 	base_icon_state = "laundry"
 	elevation = 14
 	elevation_open = 14
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
@@ -224,7 +228,7 @@
 
 /obj/structure/closet/crate/deforest
 	name = "deforest medical crate"
-	desc = "A DeFortest brand crate of medical supplies."
+	desc = "A DeForest brand crate of medical supplies."
 	icon_state = "deforest"
 	base_icon_state = "deforest"
 

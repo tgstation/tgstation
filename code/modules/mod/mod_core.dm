@@ -97,7 +97,6 @@
 		install_cell(cell)
 	RegisterSignal(mod, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-	RegisterSignal(mod, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(on_mod_storage_insert))
 	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
@@ -109,7 +108,6 @@
 	UnregisterSignal(mod, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT,
 		COMSIG_ATOM_ITEM_INTERACTION,
 		COMSIG_MOD_WEARER_SET,
 	))
@@ -212,16 +210,8 @@
 	cell_to_move.forceMove(drop_location())
 	user.put_in_hands(cell_to_move)
 
-/obj/item/mod/core/standard/proc/on_mod_storage_insert(datum/source, obj/item/thing, mob/living/user)
-	SIGNAL_HANDLER
-
-	return replace_cell(thing, user) ? BLOCK_STORAGE_INSERT : NONE
-
 /obj/item/mod/core/standard/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
-
-	if(mod.atom_storage) // handled by the storage signal
-		return NONE
 
 	return item_interaction(user, thing)
 
@@ -233,11 +223,11 @@
 		return FALSE
 	if(!mod.open)
 		mod.balloon_alert(user, "open the cover first!")
-		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(cell)
 		mod.balloon_alert(user, "cell already installed!")
-		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	install_cell(attacking_item)
 	mod.balloon_alert(user, "cell installed")
@@ -323,11 +313,10 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(on_mod_storage_insert))
 	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, list(COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, COMSIG_ATOM_ITEM_INTERACTION))
+	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
 	return ..()
 
 /obj/item/mod/core/plasma/charge_source()
@@ -366,18 +355,10 @@
 
 	return "empty"
 
-/obj/item/mod/core/plasma/proc/on_mod_storage_insert(datum/source, obj/item/thing, mob/living/user)
-	SIGNAL_HANDLER
-
-	return charge_plasma(thing, user) ? BLOCK_STORAGE_INSERT : NONE
-
 /obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	if(mod.atom_storage) // handled by the storage signal
-		return NONE
-
-	return item_interaction(thing, user)
+	return item_interaction(user, thing)
 
 /obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return charge_plasma(tool, user) ? ITEM_INTERACT_SUCCESS : NONE

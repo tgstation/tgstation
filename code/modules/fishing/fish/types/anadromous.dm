@@ -11,6 +11,11 @@
 	fillet_type = /obj/item/food/fishmeat/salmon
 	beauty = FISH_BEAUTY_GOOD
 
+/obj/item/fish/sockeye_salmon/get_base_edible_reagents_to_add()
+	var/return_list = ..()
+	return_list[/datum/reagent/consumable/nutriment/fat] = 1
+	return return_list
+
 /obj/item/fish/arctic_char
 	name = "arctic char"
 	desc = "A cold-water anadromous fish widespread around the Northern Hemisphere of Earth, yet it has somehow found a way here."
@@ -48,6 +53,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+27
 	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	evolution_types = list(/datum/fish_evolution/armored_pike)
 	compatible_types = list(/obj/item/fish/pike/armored)
 	favorite_bait = list(
 		list(

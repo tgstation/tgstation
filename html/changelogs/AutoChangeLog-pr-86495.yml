@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "certain text input fields in the character setup menu will now update properly when swapping character slots"
