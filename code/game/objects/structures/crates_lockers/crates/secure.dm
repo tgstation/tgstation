@@ -219,6 +219,8 @@
 /obj/structure/closet/crate/secure/syndicate
 	name = "\improper Syndicate crate"
 	desc = "A secure crate with the Syndicate's branding on it."
+	icon_state = "syndicrate"
+	base_icon_state = "syndicrate"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/structure/closet/crate/secure/syndicate/interdyne
