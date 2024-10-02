@@ -2,3 +2,20 @@
   DaCoolBoss:
   - balance: Donksoft vendors now stock slightly more items, slightly less of each
       item, and has increased prices across the board.
+2024-10-02:
+  EEASAS:
+  - bugfix: fixes multiple issues in metastation cargo
+  Ghommie:
+  - bugfix: Items that adjust fishing difficulty no longer have misleading examine
+      tips.
+  Hardly:
+  - image: Resprited kitsune masks
+  - image: Kitsune masks are now adjustable. Use it in-hand!
+  Jewelry-x:
+  - qol: you only need to wait 1 second if you can move into that z level instead
+      of most cases
+  - code_imp: mob/verb/up() and mob/verb/down() cleanup
+  grungus:
+  - rscadd: cat mobs can *meow and *purr
+  - sound: sound for meow and purr emotes
+  - code_imp: added support for passing emotes into the pet_bonus element

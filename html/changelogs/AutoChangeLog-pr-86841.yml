@@ -1,6 +1,0 @@
-author: "grungus"
-delete-after: True
-changes:
-  - rscadd: "cat mobs can *meow and *purr"
-  - sound: "sound for meow and purr emotes"
-  - code_imp: "added support for passing emotes into the pet_bonus element"

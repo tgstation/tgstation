@@ -1,4 +1,0 @@
-author: "EEASAS"
-delete-after: True
-changes:
-  - bugfix: "fixes multiple issues in metastation cargo"
