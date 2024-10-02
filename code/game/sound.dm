@@ -2,6 +2,18 @@
 /mob/playsound_local(vol, max_distance, channel, pressure_affected, sound_to_use, vary, use_reverb, distance_multiplier, falloff_exponent, falloff_distance, frequency)
 	return
 
+// TODO!!
+/datum/playsound/proc/register_to_spatial_grid()
+	return
+
+// TODO!!
+/datum/playsound/proc/react_to_potential_listener_entering_spatial_grid()
+	return
+
+// TODO!!
+/datum/playsound/proc/update_spatial_grid_from_source_movement()
+	return
+
 ///Default override for echo
 /sound
 	echo = list(
@@ -67,8 +79,17 @@
 
 		/// Does the sound follow the source atom as it moves?
 		var/spatial_aware = FALSE
-		/// Our tracker if we are spatial aware.
-		var/datum/spatial_sound_tracker/spatial_tracker
+		var/list/datum/sound_spatial_cache/spatial_tracking_by_mob_tag
+
+/// Stores the data used to last calculate a local sound.
+/// We trade memory use for runtime optimization.
+/datum/sound_spatial_cache
+	/// We take advantage of the fact that all mobs have a tag.
+	var/mob_tag
+	/// The last position of the mob.
+	var/list/mob_coords
+	/// The last position of the source.
+	var/list/source_coords
 
 // yes I am lazy
 #define WITH_X(var) /datum/playsound/proc/##var(##var) {\
@@ -146,11 +167,122 @@ WITH_X(spatial_aware)
 		else
 			CRASH("bad sound type ([("type" in sound?.vars) ? sound.vars["type"] : "NON DATUM"]) passed to [type] ")
 
+	if(spatial_aware)
+		spatial_tracking_by_mob_tag = list()
+
 	var/list/mob/initial_listeners = get_listeners()
 	var/source = get_turf(src.source)
+
+	var/list/mob/listeners = list()
 	for(var/mob/listening_mob as anything in initial_listeners)
 		var/sound/local_sound = calculate_mob_local_sound(listening_mob)
+		if(!local_sound)
+			continue
 		SEND_SOUND(listening_mob, local_sound)
+		listeners += listening_mob
+		if(spatial_aware)
+			RegisterSignal(listening_mob, COMSIG_MOVABLE_MOVED, PROC_REF(update_listener_from_movement))
+
+	if(spatial_aware)
+		RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(update_listeners_from_source_movement))
+		register_to_spatial_grid()
+
+	return listeners
+
+/**
+ * Triggers an update for a listener from movement. The listener themselves or the source. Probably the listener.
+ */
+/datum/playsound/proc/update_listener_from_movement(mob/listener)
+	SIGNAL_HANDLER
+	var/sound/update = update_local_mob_sound(listener)
+	if(!update)
+		return
+	SEND_SOUND(listener, update)
+
+/**
+ * Triggers an update for all listeners because the source object moved.
+ */
+/datum/playsound/proc/update_listeners_from_source_movement()
+	SIGNAL_HANDLER
+	for(var/mob_tag as anything in spatial_tracking_by_mob_tag)
+		var/mob/listener = locate(mob_tag)
+		update_listener_from_movement(listener)
+	update_spatial_grid_from_source_movement()
+
+/datum/playsound/proc/remove_spatial_listener(mob/listenernt)
+	spatial_tracking_by_mob_tag -= listenernt.tag
+	SEND_SOUND(listenernt, sound(null, channel = channel))
+
+/// Updates a mob's local sound. Position, Falloff, blah blah blah.
+/// Does NOT resend the entire sound we just tell the client to update it via flags.
+/datum/playsound/proc/update_local_mob_sound(mob/mob, sound/update_target = null)
+	if(!spatial_aware)
+		CRASH("Attempted to call [__PROC__] despite not being a spatial aware sound.")
+
+	var/needs_update = FALSE
+	var/datum/sound_spatial_cache/cache = spatial_tracking_by_mob_tag[mob.tag]
+	if(spatial_aware && !cache)
+		cache = spatial_tracking_by_mob_tag[mob.tag] = new /datum/sound_spatial_cache
+
+	var/list/last_mob_coords = cache.mob_coords
+	var/list/last_src_coords = cache.source_coords
+
+	var/mob_x = mob.x
+	var/mob_y = mob.y
+	var/mob_z = mob.z
+	var/source_x = source.x
+	var/source_y = source.y
+	var/source_z = source.z
+
+	if( \
+		last_mob_coords[1] == mob_x && last_mob_coords[2] == mob_y && last_mob_coords[3] == mob_z && \
+		last_src_coords[1] == source_x && last_src_coords[2] == source_y && last_src_coords[3] == source_z \
+	)
+		CRASH("Trying to update a mob who doesn't need to be updated. How?")
+	cache.mob_coords = list(mob_x, mob_y, mob_z)
+	cache.source_coords = list(source_x, source_y, source_z)
+
+	var/sound/sound_update = update_target || sound(channel = channel)
+	if(!update_target)
+		sound_update.status = SOUND_UPDATE
+
+	var/effective_distance
+	if(mob_z == source_z)
+		effective_distance = get_dist_euclidean(src, source)
+	else // not the same z level, use the penalty modifier
+		effective_distance = get_dist_euclidean(src, locate(source_x, source_y, mob_z))
+		effective_distance *= ((z_traversal_modifier / 1) ** abs(mob_z - source_z))
+	// https://www.desmos.com/calculator/sqdfl8ipgf
+	sound_update.volume = volume - ((max(effective_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(range, effective_distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
+
+	if(atmospherics_affected)
+		// this ignores the fact that you can have multiple different gas mixtures inbetween the source and the mob
+		// if you want to implement that be my guest
+
+		var/pressure_factor = 1
+		var/datum/gas_mixture/hearer_env = get_turf(src).return_air()
+		var/datum/gas_mixture/source_env = get_turf(source).return_air()
+
+		if(hearer_env && source_env)
+			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
+			if(pressure < ONE_ATMOSPHERE)
+				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
+		else
+			pressure_factor = 0
+		if(effective_distance <= 1)
+			pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
+		sound_update.volume *= pressure_factor
+
+	if(sound_update.volume <= 0)
+		remove_spatial_listener(mob)
+		return null
+
+	sound_update.x = source_x - mob_x
+	sound_update.z = source_y - mob_y
+	sound_update.y = (source_z - mob_z) * 5 // misnomer, spatial grid is xzy instead of xyz
+	sound_update.falloff = effective_distance || 1
+
+	return sound_update
 
 /datum/playsound/proc/calculate_mob_local_sound(mob/mob)
 	if(!mob.client || !mob.can_hear())
@@ -158,50 +290,11 @@ WITH_X(spatial_aware)
 	var/sound/local_sound = sound(sound)
 	local_sound.wait = 0
 	local_sound.channel = channel
+
 	if(vary_frequency)
 		local_sound.frequency = get_rand_frequency()
 	else
 		local_sound.frequency = frequency
-
-	if(!isnull(source))
-		var/effective_distance
-		var/x = mob.x
-		var/y = mob.y
-		var/z = mob.z
-		if(z == source.z)
-			effective_distance = get_dist_euclidean(src, source)
-		else // not the same z level, use the penalty modifier
-			effective_distance = get_dist_euclidean(src, locate(source.x, source.y, z))
-			effective_distance *= ((z_traversal_modifier / 1) ** abs(z - source.z))
-		// https://www.desmos.com/calculator/sqdfl8ipgf
-		local_sound.volume = volume - ((max(effective_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(range, effective_distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
-
-		if(atmospherics_affected)
-			// this ignores the fact that you can have multiple different gas mixtures inbetween the source and the mob
-			// if you want to implement that be my guest
-
-			var/pressure_factor = 1
-			var/datum/gas_mixture/hearer_env = get_turf(src).return_air()
-			var/datum/gas_mixture/source_env = get_turf(source).return_air()
-
-			if(hearer_env && source_env)
-				var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
-				if(pressure < ONE_ATMOSPHERE)
-					pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
-			else //space
-				pressure_factor = 0
-			if(effective_distance <= 1)
-				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
-			local_sound.volume *= pressure_factor
-
-		var/turf/turf_source = get_turf(source)
-		local_sound.x = turf_source.x - x
-		local_sound.z = turf_source.y - y
-		local_sound.y = (turf_source.z - z) * 5
-		local_sound.falloff = effective_distance || 1
-
-	if(local_sound.volume <= 0)
-		return
 
 	if(mob.sound_environment_override != SOUND_ENVIRONMENT_NONE)
 		local_sound.environment = mob.sound_environment_override
@@ -212,7 +305,7 @@ WITH_X(spatial_aware)
 		local_sound.echo[3] = 0
 		local_sound.echo[4] = 0
 
-	return local_sound
+	return update_local_mob_sound(mob, update_target = local_sound)
 
 /mob/proc/stop_sound_channel(chan)
 	SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = chan))
