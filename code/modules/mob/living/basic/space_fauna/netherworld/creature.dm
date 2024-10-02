@@ -111,7 +111,3 @@
 	health = 25
 	maxHealth = 25
 	health_scaling = FALSE
-
-/mob/living/basic/creature/hatchling/Initialize(mapload)
-	. = ..()
-	update_transform(0.85)
