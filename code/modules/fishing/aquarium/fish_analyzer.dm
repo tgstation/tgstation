@@ -8,6 +8,7 @@
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
 	obj_flags = CONDUCTS_ELECTRICITY
+	custom_price = PAYCHECK_CREW * 3
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -65,6 +66,7 @@
 
 	if(isfish(target) || istype(target, /obj/structure/aquarium))
 		scanned_item = WEAKREF(target)
+		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 

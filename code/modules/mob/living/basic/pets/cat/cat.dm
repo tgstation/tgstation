@@ -24,8 +24,6 @@
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon_state = "cat"
-	has_collar_resting_icon_state = TRUE
 	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/cat
 	held_state = "cat2"
@@ -33,7 +31,8 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	cult_icon_state = "cat_cult"
+	///icon of the collar we can wear
+	var/collar_icon_state = "cat"
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -50,9 +49,13 @@
 	var/obj/item/held_food
 	///mutable appearance for held item
 	var/mutable_appearance/held_item_overlay
+	///icon state of our cult icon
+	var/cult_icon_state = "cat_cult"
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
+	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
@@ -147,7 +150,6 @@
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
 	ai_controller = /datum/ai_controller/basic_controller/cat/bread
-	collar_icon_state = null
 	held_state = "breadcat"
 	can_interact_with_stove = TRUE
 	butcher_results = list(
@@ -156,6 +158,7 @@
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
+	collar_icon_state = null
 
 /mob/living/basic/pet/cat/breadcat/add_cell_sample()
 	return
@@ -167,7 +170,6 @@
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
-	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
 
@@ -183,10 +185,10 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	collar_icon_state = "kitten"
 	can_breed = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/cat/kitten
 	can_hold_item = FALSE
+	collar_icon_state = "kitten"
 
 /mob/living/basic/pet/cat/kitten/Initialize(mapload)
 	. = ..()

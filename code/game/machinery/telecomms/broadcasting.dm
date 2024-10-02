@@ -78,7 +78,7 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency
@@ -92,7 +92,7 @@
 		"compression" = rand(COMPRESSION_VOCAL_SIGNAL_MIN, COMPRESSION_VOCAL_SIGNAL_MAX),
 		"language" = lang_instance.name,
 		"spans" = spans,
-		"mods" = message_mods
+		"mods" = message_mods,
 	)
 	levels = SSmapping.get_connected_levels(get_turf(source))
 
@@ -155,7 +155,7 @@
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
 			for(var/obj/item/radio/independent_radio in GLOB.all_radios["[frequency]"])
-				if(independent_radio.independent && independent_radio.can_receive(frequency, signal_reaches_every_z_level))
+				if((independent_radio.special_channels & RADIO_SPECIAL_CENTCOM) && independent_radio.can_receive(frequency, signal_reaches_every_z_level))
 					radios += independent_radio
 
 	for(var/obj/item/radio/called_radio as anything in radios)

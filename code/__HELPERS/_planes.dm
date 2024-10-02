@@ -29,8 +29,8 @@
 
 // Now for the more niche things
 
-/// Takes an object, new plane, and multipler, and offsets the plane
-/// This is for cases where you have a multipler precalculated, and just want to use it
+/// Takes an object, new plane, and multiplier, and offsets the plane
+/// This is for cases where you have a multiplier precalculated, and just want to use it
 /// Often an optimization, sometimes a necessity
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 

@@ -349,6 +349,7 @@
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	flags = HIGH_IMPACT_RULESET
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
+	signup_item_path = /obj/item/clothing/head/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if(!check_candidates())
@@ -388,6 +389,7 @@
 	requirements = REQUIREMENTS_VERY_HIGH_THREAT_NEEDED
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	flags = HIGH_IMPACT_RULESET
+	signup_item_path = /obj/machinery/nuclearbomb
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 
@@ -411,7 +413,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/finish_setup(mob/new_character, index)
-	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+	new_character.mind.set_assigned_role(SSjob.get_job_type(/datum/job/nuclear_operative))
 	new_character.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	if(index == 1)
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
@@ -433,6 +435,7 @@
 	cost = 8
 	minimum_players = 25
 	repeatable = TRUE
+	signup_item_path = /obj/structure/blob/normal
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
 	var/body = applicant.become_overmind()
@@ -506,6 +509,7 @@
 	cost = 10
 	minimum_players = 25
 	repeatable = TRUE
+	signup_item_path = /mob/living/basic/alien
 	var/list/vents = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/forget_startup()
@@ -554,6 +558,7 @@
 	cost = 5
 	minimum_players = 15
 	repeatable = TRUE
+	signup_item_path = /obj/item/light_eater
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat_level = 0)
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
@@ -567,7 +572,7 @@
 
 	var/mob/living/carbon/human/new_nightmare = new (find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 	player_mind.transfer_to(new_nightmare)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nightmare))
+	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/nightmare))
 	player_mind.special_role = ROLE_NIGHTMARE
 	player_mind.add_antag_datum(/datum/antagonist/nightmare)
 	new_nightmare.set_species(/datum/species/shadow/nightmare)
@@ -590,6 +595,7 @@
 	cost = 7
 	minimum_players = 25
 	repeatable = TRUE
+	signup_item_path = /mob/living/basic/space_dragon
 	var/list/spawn_locs = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/forget_startup()
@@ -669,6 +675,7 @@
 	minimum_players = 30
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
+	signup_item_path = /obj/item/energy_katana
 
 	var/list/spawn_locs = list()
 
@@ -728,6 +735,7 @@
 	cost = 5
 	minimum_players = 15
 	repeatable = TRUE
+	signup_item_path = /mob/living/basic/revenant
 	var/dead_mobs_required = 20
 	var/need_extra_spawns_value = 15
 	var/list/spawn_locs = list()
@@ -870,6 +878,7 @@
 	cost = 7
 	minimum_players = 15
 	repeatable = TRUE
+	signup_item_path = /obj/effect/meteor/meaty/changeling
 
 /datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
 	var/body = generate_changeling_meteor(applicant)
@@ -964,13 +973,15 @@
 	cost = 5
 	minimum_players = 40
 	repeatable = TRUE
+	signup_item_path = /obj/item/cosmic_skull
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	/// The space turf we find in acceptable(), cached for ease
 	var/space_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
 	space_turf = find_space_spawn()
-	if(!space_turf)
+	// Space only antag and will die on planetary gravity.
+	if(SSmapping.is_planetary() || !space_turf)
 		return FALSE
 	return ..()
 
@@ -980,7 +991,7 @@
 
 	var/mob/living/carbon/human/voidwalker = new (space_turf)
 	player_mind.transfer_to(voidwalker)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/voidwalker))
+	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag
 	player_mind.add_antag_datum(antag_datum)
 

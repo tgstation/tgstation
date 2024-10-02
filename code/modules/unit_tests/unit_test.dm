@@ -112,6 +112,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	allocated += instance
 	return instance
 
+/// Resets the air of our testing room to its default
+/datum/unit_test/proc/restore_atmos()
+	var/area/working_area = run_loc_floor_bottom_left.loc
+	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
+	for(var/turf/open/restore in to_restore)
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
+		restore.copy_air(GM)
+		restore.temperature = initial(restore.temperature)
+		restore.air_update_turf(update = FALSE, remove = FALSE)
+
 /datum/unit_test/proc/test_screenshot(name, icon/icon)
 	if (!istype(icon))
 		TEST_FAIL("[icon] is not an icon.")
@@ -179,6 +189,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	else
 
 		test.Run()
+		test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null

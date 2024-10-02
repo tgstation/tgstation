@@ -53,12 +53,14 @@
 
 /obj/machinery/fishing_portal_generator/proc/activate(datum/fish_source/selected_source)
 	active = AddComponent(/datum/component/fishing_spot, selected_source)
+	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/fishing_portal_generator/proc/deactivate()
 	QDEL_NULL(active)
 	use_power = IDLE_POWER_USE
+	REMOVE_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	update_icon()
 
 /obj/machinery/fishing_portal_generator/on_set_is_operational(old_value)
@@ -100,3 +102,7 @@
 	if(!choice || !can_interact(user))
 		return
 	activate(available_fish_sources[choice])
+
+/obj/machinery/fishing_portal_generator/emagged
+	obj_flags = parent_type::obj_flags | EMAGGED
+	circuit = /obj/item/circuitboard/machine/fishing_portal_generator/emagged

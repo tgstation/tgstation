@@ -186,6 +186,13 @@
 	if(smoothing_flags & SMOOTH_QUEUED)
 		SSicon_smooth.remove_from_queues(src)
 
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)
@@ -683,10 +690,10 @@
 			created_atoms.Add(created_atom)
 		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
-		UsedforProcessing(user, process_item, chosen_option)
+		UsedforProcessing(user, process_item, chosen_option, created_atoms)
 		return
 
-/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option)
+/atom/proc/UsedforProcessing(mob/living/user, obj/item/used_item, list/chosen_option, list/created_atoms)
 	qdel(src)
 	return
 
@@ -940,13 +947,18 @@
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 		new_maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
 
-	INVOKE_ASYNC(src, PROC_REF(set_hover_maptext), client, active_hud, new_maptext)
+	if (length(name) * 10 > active_hud.screentip_text.maptext_width)
+		INVOKE_ASYNC(src, PROC_REF(set_hover_maptext), client, active_hud, new_maptext)
+		return
+
+	active_hud.screentip_text.maptext = new_maptext
+	active_hud.screentip_text.maptext_y = 10 - (extra_lines > 0 ? 11 + 9 * (extra_lines - 1): 0)
 
 /atom/proc/set_hover_maptext(client/client, datum/hud/active_hud, new_maptext)
 	var/map_height
 	WXH_TO_HEIGHT(client.MeasureText(new_maptext, null, active_hud.screentip_text.maptext_width), map_height)
 	active_hud.screentip_text.maptext = new_maptext
-	active_hud.screentip_text.maptext_y = 22 - map_height
+	active_hud.screentip_text.maptext_y = 26 - map_height
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.

@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
-	invocation = "An'gar baltil!"
+	invocation = "C'SM'S 'XP'ND"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

@@ -16,7 +16,7 @@
 #define LIMB_MAX_HP_ALIEN_CORE 500 //Used by xenomorph chests and heads
 
 /// Limb Body Damage Coefficient
-/// A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
+/// A multiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 /// For instance, if a limb has 50 damage, and has a coefficient of 50%, the human is considered to have suffered 25 damage to their total health.
 
 #define LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED 0.5 //Used by advanced robotic limbs.

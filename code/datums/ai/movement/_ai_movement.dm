@@ -1,4 +1,4 @@
-///This datum is an abstract class that can be overriden for different types of movement
+///This datum is an abstract class that can be overridden for different types of movement
 /datum/ai_movement
 	///Assoc list ist of controllers that are currently moving as key, and what they are moving to as value
 	var/list/moving_controllers = list()
@@ -59,7 +59,7 @@
 	var/datum/ai_controller/controller = source.extra_info
 
 	// Check if this controller can actually run, so we don't chase people with corpses
-	if(!controller.able_to_run())
+	if(!controller.able_to_run)
 		controller.CancelActions()
 		qdel(source) //stop moving
 		return MOVELOOP_SKIP_STEP

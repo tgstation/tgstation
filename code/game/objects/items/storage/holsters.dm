@@ -33,6 +33,8 @@
 		/obj/item/gun/energy/laser/captain,
 		/obj/item/gun/energy/e_gun/hos,
 	))
+	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.open_sound_vary = TRUE
 
 /obj/item/storage/belt/holster/energy
 	name = "energy shoulder holsters"
@@ -111,8 +113,8 @@
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 		/obj/item/ammo_box/c38 = 2,
+		/obj/item/gun/ballistic/revolver/c38/detective = 1,
 	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
@@ -124,8 +126,8 @@
 
 /obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
 	),src)
 
 /obj/item/storage/belt/holster/chameleon
@@ -195,8 +197,8 @@
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 		/obj/item/ammo_box/a357 = 2,
+		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 	), src)
 
 

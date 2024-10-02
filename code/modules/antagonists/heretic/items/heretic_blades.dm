@@ -10,6 +10,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	obj_flags = CONDUCTS_ELECTRICITY
+	slot_flags = ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
@@ -229,7 +230,7 @@
 /obj/item/melee/sickly_blade/cursed/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(!heretic_datum)
 		return NONE
 

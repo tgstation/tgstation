@@ -9,6 +9,11 @@
 #error You need version 515.1627 or higher
 #endif
 
+// Unable to compile this version thanks to mutable appearance changes
+#if (DM_VERSION == 515 && DM_BUILD == 1643)
+#error This version of BYOND cannot compile this project. Visit www.byond.com/download/build to download an older version or update (if possible).
+#endif
+
 // Keep savefile compatibilty at minimum supported level
 /savefile/byond_version = MIN_COMPILER_VERSION
 

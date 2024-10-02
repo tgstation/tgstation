@@ -13,6 +13,13 @@
 	throw_range = 7
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
+
+	unique_reskin = list(
+		"Brown" = "clipboard",
+		"Black" = "clipboard_black",
+		"White" = "clipboard_white",
+	)
+
 	/// The stored pen
 	var/obj/item/pen/pen
 	/// Is the pen integrated?
@@ -151,7 +158,7 @@
 
 	return data
 
-/obj/item/clipboard/ui_act(action, params)
+/obj/item/clipboard/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -87,6 +87,10 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
+/obj/item/clothing/head/costume/lobsterhat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+
 /obj/item/clothing/head/costume/drfreezehat
 	name = "doctor freeze's wig"
 	desc = "A cool wig for cool people."
@@ -115,14 +119,10 @@
 /obj/item/clothing/head/costume/cardborg/equipped(mob/living/user, slot)
 	..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/costume/cardborg))
-			var/obj/item/clothing/suit/costume/cardborg/CB = H.wear_suit
-			CB.disguise(user, src)
-
-/obj/item/clothing/head/costume/cardborg/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("standard_borg_disguise")
+		var/mob/living/carbon/human/human_user = user
+		if(istype(human_user.wear_suit, /obj/item/clothing/suit/costume/cardborg))
+			var/obj/item/clothing/suit/costume/cardborg/suit = human_user.wear_suit
+			suit.disguise(user, src)
 
 /obj/item/clothing/head/costume/bronze
 	name = "bronze hat"

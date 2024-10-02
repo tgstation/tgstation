@@ -425,8 +425,7 @@
 	if(!user)
 		return
 
-	user.status_flags &= ~GODMODE
-	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
+	user.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 	user.forceMove(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
@@ -437,8 +436,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
-	user.status_flags |= GODMODE
+	user.add_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 
 	user_ref = WEAKREF(user)
 
@@ -557,7 +555,6 @@
 	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human, chest)
 	wings = new wings()
 	wings.Insert(exposed_human)
-	exposed_human.dna.species.handle_mutant_bodyparts(exposed_human)
 	playsound(exposed_human.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")
@@ -622,6 +619,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	body_parts_covered = HANDS|ARMS
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
 	armor_type = /datum/armor/gloves_gauntlets
 

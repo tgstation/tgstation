@@ -183,11 +183,13 @@
 			and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
 
 /obj/item/laser_pointer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
-/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	laser_act(interacting_with, user, modifiers)
 	return ITEM_INTERACT_BLOCKING
+
+/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 ///Handles shining the clicked atom,
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, list/modifiers)
@@ -271,13 +273,13 @@
 
 	//catpeople: make any felinid near the target to face the target, chance for felinids to pounce at the light, stepping to the target
 	for(var/mob/living/carbon/human/target_felinid in view(1, targloc))
-		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated())
+		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated)
 			continue
 		if(target_felinid.body_position == STANDING_UP)
 			target_felinid.setDir(get_dir(target_felinid, targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				target_felinid.visible_message(span_warning("[target_felinid] makes a grab for the light!"), span_userdanger("LIGHT!"))
-				target_felinid.Move(targloc)
+				target_felinid.Move(targloc, get_dir(target_felinid, targloc))
 				log_combat(user, target_felinid, "moved with a laser pointer", src)
 			else
 				target_felinid.visible_message(span_notice("[target_felinid] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))

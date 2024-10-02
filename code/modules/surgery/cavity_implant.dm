@@ -9,6 +9,8 @@
 		/datum/surgery_step/handle_cavity,
 		/datum/surgery_step/close)
 
+GLOBAL_LIST_INIT(heavy_cavity_implants, typecacheof(list(/obj/item/transfer_valve)))
+
 //handle cavity
 /datum/surgery_step/handle_cavity
 	name = "implant item"
@@ -49,7 +51,7 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery = FALSE)
 	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
-		if(item_for_cavity || tool.w_class > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || isorgan(tool))
+		if(item_for_cavity || ((tool.w_class > WEIGHT_CLASS_NORMAL) && !is_type_in_typecache(tool, GLOB.heavy_cavity_implants)) || HAS_TRAIT(tool, TRAIT_NODROP) || isorgan(tool))
 			to_chat(user, span_warning("You can't seem to fit [tool] in [target]'s [target_zone]!"))
 			return FALSE
 		else

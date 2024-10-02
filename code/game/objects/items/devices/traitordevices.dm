@@ -138,7 +138,7 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -360,15 +360,6 @@ effective or pretty fucking useless.
 	new /obj/item/crowbar(src)
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
-
-/obj/item/storage/toolbox/emergency/turret/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/wrench/combat))
-		return TRUE
-	if(!user.combat_mode)
-		return TRUE
-	if(!inserted.toolspeed)
-		return TRUE
-	return FALSE
 
 /obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/wrench/combat))

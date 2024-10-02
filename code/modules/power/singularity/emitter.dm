@@ -421,7 +421,7 @@
 	. = ..()
 
 /obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
-	if(user.incapacitated() || !istype(user))
+	if(user.incapacitated || !istype(user))
 		return
 	for(var/atom/movable/atom in get_turf(src))
 		if(atom.density && (atom != src && atom != buckled_mob))
@@ -504,6 +504,8 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/turret_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/turret_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

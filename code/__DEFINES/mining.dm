@@ -9,6 +9,7 @@
 #define MAX_BOULDERS_PER_VENT 10
 /// Time multiplier
 #define INATE_BOULDER_SPEED_MULTIPLIER 3
+
 // Vent type
 /// Large vents, giving large boulders.
 #define LARGE_VENT_TYPE "large"
@@ -16,6 +17,14 @@
 #define MEDIUM_VENT_TYPE "medium"
 /// Small vents, giving small boulders.
 #define SMALL_VENT_TYPE "small"
+
+// Timers for the ore vents to perform wave defense.
+/// Duration for wave defense for a small vent.
+#define WAVE_DURATION_SMALL 60 SECONDS
+/// Duration for wave defense for a medium vent.
+#define WAVE_DURATION_MEDIUM 90 SECONDS
+/// Duration for wave defense for a large vent.
+#define WAVE_DURATION_LARGE 150 SECONDS
 
 /// Proximity to a vent that a wall ore needs to be for 5 ore to be mined.
 #define VENT_PROX_VERY_HIGH 3
