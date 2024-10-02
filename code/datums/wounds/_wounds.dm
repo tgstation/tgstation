@@ -342,17 +342,18 @@
 
 	if(limb && !ignore_limb)
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
-		// if you want to keep the ref, do it externally, there's no reason for us to remember it
+		// if you want to fkeep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
 		SEND_SIGNAL(mob_victim, COMSIG_CARBON_POST_LOSE_WOUND, src, old_limb, ignore_limb, replaced)
+		if(!replaced && !limb)
+			mob_victim.update_health_hud()
 
 /datum/wound/proc/remove_wound_from_victim()
 	if(!victim)
 		return
 	LAZYREMOVE(victim.all_wounds, src)
-	victim.update_health_hud()
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**

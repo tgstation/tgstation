@@ -795,8 +795,8 @@
 
 		edit_zone.icon_state = "[part_zone][icon_key]"
 
-	// a new bodypart was wounded, we need to re-sync the animations!
-	if(LAZYLEN(animated_zones) > LAZYLEN(current_animated))
+	// time to re-sync animations, something changed
+	if(animated_zones ~! current_animated)
 		for(var/animated_zone in animated_zones)
 			var/atom/wounded_zone = limbs[animated_zone]
 			var/existing_filter = wounded_zone.get_filter("wound_outline")
