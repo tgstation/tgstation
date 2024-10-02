@@ -25,7 +25,7 @@
 
 /datum/component/appearance_on_aggro/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_AI_BLACKBOARD_KEY_SET(target_key), PROC_REF(on_set_target))
-	RegisterSignals(parent, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key), COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN), PROC_REF(cut_alt_appearance))
+	RegisterSignals(parent, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key), COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN), PROC_REF(revert_appearance))
 	if (!isnull(aggro_state))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_icon_state_updated))
 	if (!isnull(aggro_overlay))
@@ -56,11 +56,8 @@
 	revert_appearance(parent)
 	return ..()
 
-/datum/component/appearance_on_aggro/proc/cut_alt_appearance(atom/source)
-	SIGNAL_HANDLER
-	revert_appearance(parent)
-
 /datum/component/appearance_on_aggro/proc/revert_appearance(mob/living/source)
+	SIGNAL_HANDLER
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
 	if (!isnull(alpha_on_deaggro))
