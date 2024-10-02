@@ -19,6 +19,8 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TACKLING_TAILED_DEFENDER,
+		TRAIT_EXPERT_FISHER,
+		TRAIT_BEAST_EMPATHY,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
@@ -30,7 +32,6 @@
 	)
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inert_mutation = /datum/mutation/human/mute
 	death_sound = 'modular_doppler/modular_species/species_types/ramatae/sounds/scugdeath.ogg'
 	species_language_holder = /datum/language_holder/ramatan
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
@@ -48,10 +49,37 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/ramatan,
 	)
 
+/datum/species/snail/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bone",
+			SPECIES_PERK_NAME = "50% Boneless",
+			SPECIES_PERK_DESC = "Ramatae have cartilage skeletons, making bone wounds barely a concern.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fa-volume-xmark",
+			SPECIES_PERK_NAME = "Keep Quiet",
+			SPECIES_PERK_DESC = "Ramatae, while adept at sign language and making /noises,/ have underdeveloped larynxes incapable of verbal speech.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fa-fish",
+			SPECIES_PERK_NAME = "Survivalist",
+			SPECIES_PERK_DESC = "Ramatae are naturally adept at living off the land; catching fish and taming beasts better than others."
+	)
+
 /datum/outfit/scug_preview
 	name = "Ramatan (Species Preview)"
 	head = /obj/item/clothing/head/beret/doppler_command/science
 	neck = /obj/item/clothing/neck/doppler_mantle/science
+
+/datum/species/ramatan/on_species_gain(mob/living/carbon/human/new_ramatan, datum/species/old_species, pref_load)
+	. = ..()
+	new_ramatan.AddComponent(/datum/component/sign_language)
 
 /datum/species/ramatan/prepare_human_for_preview(mob/living/carbon/human/scug_for_preview)
 	scug_for_preview.dna.features["lizard_markings"] = "Ramatan Underbelly"
@@ -108,46 +136,45 @@
 		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
 	)
 
-/datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_sneeze_sound(mob/living/carbon/human/scug)
 	if(scug.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
 	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
 
-/datum/species/lizard/get_laugh_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_laugh_sound(mob/living/carbon/human/scug)
 	return 'modular_doppler/modular_species/species_types/ramatae/sounds/scuglaugh_1.ogg'
 
-/datum/species/lizard/get_sigh_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_sigh_sound(mob/living/carbon/human/scug)
 	if(scug.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
 	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
 
-/datum/species/lizard/get_sniff_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_sniff_sound(mob/living/carbon/human/scug)
 	if(scug.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 /// SOUNDS BREAKER END
 
 /datum/species/ramatan/get_species_description()
-	return "Nimble omnivores frequently cursed with chronic mutism and a natural aptitude for talking to machines, the Ramatae are a rare sight in systems far from their homeworld of Talon III.  \
-		Genetically engineered over untold cycles by the manipulation of their homeworld's Resonance field, Ramatae are crafty and intelligent, with incredible capabilities yet incredible fragility, \
-		still carrying the scars of their homeworld's brush with death long, long ago."
+	return "Nimble, silent, omnivores with a natural aptitude for talking to machines, the Ramatae and their many tribes are a rare sight in systems far from their homeworld of Aadia III.  \
+		Ramatae are known for being crafty and intelligent, but equally deeply spiritual, firmly believing in their roles as reincarnated embodiments of their own, distant soul. \
+		They have been in friendly contact with a machine intelligence of a long-gone culture, VISHVA, for twenty thousand years, owing their capacity for spaceflight to their symbiosis with it."
 
 /datum/species/ramatan/get_species_lore()
 	return list(
-		"Nimble omnivores, both predator and prey, they served as the eyes and ears of the great mechanical minds, the Iterators, as they worked to uncover the secrets of the progenitor species who once ruled their homeworld.  \
-			Over time, Iterators began to see Ramatae as more than mere servants, treating them as friends and trusted allies despite their small stature.  Gazes At Satellites, the leader \
-			of the Primary Group began a research project in tandem with 6 Small Stones to try and further guide the growth & evolution of Ramatae.",
+		"Ramatae, individually Ramatan, are a species of opportunistic humanoid omnivores, native to Aadia III. A species of simultaneous hermaphrodites, Ramatae stand at around four to five feet tall, known for their strange morphology.  \
+			Their skeletons are made of cartilage, able to flex and bend in almost any way they need. Their bodies are highly adapted for 'arboreal' three-dimensional movement-- three long and flexible digits paired with semi-retractile claws on both hand and foot, mostly good for climbing.  \
+			However, while Ramatae have been shown to be in every way as cognitively capable as other races of the Orion Spur, their larynxes are heavily underdeveloped, only good for a few cries or trilling sounds; leaving them incapable of verbal communication.",
 
-		"After many cycles of study & untold many, many more of natural adaptation, Ramatae have ascended to a more recognizable humanoid form, trading some of their nimbleness for craftiness \
-			and intelligence to more than rival their most notable compeititors, the Scavs.  When exploration probes from 4CA's Ministry of Contact entered orbit of Tallon III, \
-			they were contacted by Gazes At Satellites, and soon Ramatae entered the collective consciousness of the galaxy...and due to their history, the baleful gaze of the AIA.",
+		"They're typically rather slender, with the exception of their tails; fat and heavy, nearly as long as they are tall, and where the vast majority of their fat is stored. \
+			Ramataen bodies constantly produce a slick mucus, predominantly serving to prevent them from being snatched by predators. \
+			Some develop an extra fine coat of fur similar to a viverrid, others a double layer giving them a very oily and fluffed-up appearance.",
 
-		"Ramatae remain uncommonly seen beyond the Talon system, as their numbers remain few despite improvements that have been made to the safety and stability of the so-called \"Rain World's\" eco-system.  \
-			As such, those who do choose to venture beyond their world must do so with their Iterator's express approval and guidance, and typically seek employ and residence within outposts near the Talon system.  \
-			Ramatae who venture beyond Talon III typically retain the titles given to them by their tribe & Iterator, such as \"The Hunter\" or \"The Artificer\", although some take on the names given to them by their compatriots beyond the stars.",
+		"Ramatae are a heavily spiritual people, having a belief system focused around the concept of reincarnation. Tying in with their natural nomadic instincts, their culture holds that their bodies are a vessel for their soul to wander; \
+			their soul remembering what their bodies do not. They believe themselves to be sent to the material world to gain particular experiences, to gain particular viewpoints, and to live particular lives-- \
+			all in the service of their eventual 'ascension' as they become 'complete people.' Plural Ramatae are particularly revered, thought of as multiple sharing one experience together.",
 
-		"Most of those who do venture beyond remain independents primarily tied to their homeworld, or within the service of the Fourth Celestial Alignment.  The Iterators hold a steadfast neutral stance- \
-			Talon III remains officially neutral & unaligned, which is how both they & the Ramatae prefer it.  This has drawn intense ire from the AIA, whose attempts to convince Ramatae to join them have thus far failed; \
-			the entire AIA playbook is based around collective trauma & hatred of uplifting factions...yet amongst the Ramatae' closest allies and confidantes are the Iterators, themselves such a faction. \
-			As such, most Ramatae hold a strong dislike & distrust of the AIA, despite their official stance of neutrality.",
+		"While they hold traditional names amongst their tribes, a Ramatan is particularly known by their self-sought epithet; examples such as The Sage, The Archivist, The Justice, The Kind, The Magician, The Digger, The Reclaimer, The Vessel... \
+			These epithets are typically carried throughout a Ramatan's life, the personal meaning of these titles shifting over time, and it being their job to find out what their name and role means to them. \
+			They embody what an individual Ramatan aspires to be and do in the world, and only in response to major life events will they ever change.",
 	)

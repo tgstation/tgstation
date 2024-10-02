@@ -87,6 +87,10 @@
 	name = "Camo Pants"
 	item_path = /obj/item/clothing/under/pants/camo
 
+/datum/loadout_item/undersuit/pants/big_pants
+	name = "JUNCO megacargo pants"
+	item_path = /obj/item/clothing/under/pants/big_pants
+
 /*
 *	BUTTONDOWNS
 */
@@ -163,3 +167,11 @@
 /datum/loadout_item/undersuit/dress/strapless
 	name = "Strapless Dress"
 	item_path = /obj/item/clothing/under/dress/doppler/strapless
+
+/*
+*	MISCELLANEOUS
+*/
+
+/datum/loadout_item/undersuit/gear_harness
+	name = "Gear Harness"
+	item_path = /obj/item/clothing/under/misc/gear_harness
