@@ -228,6 +228,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
 /turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/fullbright)
 "W" = (
