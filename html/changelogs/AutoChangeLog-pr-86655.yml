@@ -1,0 +1,9 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Adds an assistant and hitchiker shuttle event, replenishing the crew mid flight!"
+  - admin: "Adds two intern wave shuttle events"
+  - code_imp: "You can now supply shuttle events with outfits!"
+  - code_imp: "You can now shoot projectiles with the shuttle events!"
+  - bugfix: "Fixes projectiles bugging out when fired in shuttle transit space"
+  - bugfix: "Fixes admin forced shuttle events not activating when added mid transit"
