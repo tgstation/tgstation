@@ -772,29 +772,19 @@
 		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
 			icon_key = overridable_key[1] // thanks i hate it
 		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
-			var/damage = body_part.burn_dam + body_part.brute_dam
-			var/comparison = (body_part.max_damage / 5)
-			if(damage > (comparison * 4))
-				icon_key = 5
-			else if(damage > (comparison * 3))
-				icon_key = 4
-			else if(damage > (comparison * 2))
-				icon_key = 3
-			else if(damage > (comparison * 1))
-				icon_key = 2
-			else if(damage > 0)
-				icon_key = 1
+			var/damage = body_part.get_damage() / body_part.max_damage
+			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
+			icon_key = clamp(ceil(damage * 5), 0, 5)
 
-		var/atom/edit_zone = limbs[part_zone]
 		if(length(body_part.wounds))
 			LAZYSET(animated_zones, part_zone, TRUE)
-
-		else if(LAZYACCESS(animated_zones, part_zone))
+		else
 			LAZYREMOVE(animated_zones, part_zone)
-			edit_zone.remove_filter("wound_outline")
-
-		edit_zone.icon_state = "[part_zone][icon_key]"
-
+		limbs[part_zone].icon_state = "[part_zone][icon_key]"
+	// handle leftovers
+	for(var/missing_zone in owner.get_missing_limbs())
+		limbs[missing_zone].icon_state = "[missing_zone]6"
+		LAZYREMOVE(animated_zones, missing_zone)
 	// time to re-sync animations, something changed
 	if(animated_zones ~! current_animated)
 		for(var/animated_zone in animated_zones)
@@ -807,9 +797,9 @@
 				existing_filter = wounded_zone.get_filter("wound_outline")
 			animate(existing_filter, alpha = 200, time = 1.5 SECONDS, loop = -1)
 			animate(alpha = 0, time = 1.5 SECONDS)
-	// and handle leftovers
-	for(var/missing_zone in owner.get_missing_limbs())
-		limbs[missing_zone].icon_state = "[missing_zone]6"
+		if(LAZYLEN(current_animated)) // avoid null - list() runtimes please
+			for(var/lost_zone in current_animated - animated_zones)
+				limbs[lost_zone].remove_filter("wound_outline")
 
 // Basically just holds an icon we can put a filter on
 /atom/movable/screen/healthdoll_limb

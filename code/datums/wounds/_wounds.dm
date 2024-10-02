@@ -342,7 +342,7 @@
 
 	if(limb && !ignore_limb)
 		set_limb(null, replaced) // since we're removing limb's ref to us, we should do the same
-		// if you want to fkeep the ref, do it externally, there's no reason for us to remember it
+		// if you want to keep the ref, do it externally, there's no reason for us to remember it
 
 	if (ismob(old_victim))
 		var/mob/mob_victim = old_victim
