@@ -6071,6 +6071,9 @@
 /area/station/science/lower)
 "aWx" = (
 /obj/machinery/quantum_server/prisoner/solo2,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "aWJ" = (
@@ -6524,6 +6527,13 @@
 /obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron/recharge_floor,
 /area/station/security/mechbay)
+"biF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/end,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "biS" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -10294,14 +10304,19 @@
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "cyf" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Isolation Wing";
-	unres_sensor = 1;
-	unres_sides = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/machinery/door/airlock/security/glass{
+	name = "Torment Nexus"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "cyq" = (
@@ -11415,6 +11430,7 @@
 /area/station/maintenance/radshelter/civil)
 "cQI" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "cQK" = (
@@ -12500,6 +12516,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
+"djX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "dka" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -14252,8 +14278,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "dQo" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/quantum_server/prisoner/group,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/structure/sign/poster/official/obey/directional/west,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "dQs" = (
@@ -14884,6 +14913,10 @@
 "ebP" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/netpod/prisoner/solo_3,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "ecg" = (
@@ -15347,6 +15380,9 @@
 /area/station/medical/coldroom)
 "elS" = (
 /obj/machinery/quantum_server/prisoner/solo1,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "elV" = (
@@ -15531,8 +15567,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "epN" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/quantum_server/prisoner/solo3,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/machinery/digital_clock/directional/east,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "epP" = (
@@ -17357,6 +17396,12 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"eZM" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "eZO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -23784,6 +23829,10 @@
 /area/station/science/breakroom)
 "hva" = (
 /obj/machinery/netpod/prisoner/solo_1,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "hvm" = (
@@ -26171,6 +26220,9 @@
 /obj/machinery/computer/quantum_console/prisoner_group{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "irN" = (
@@ -26566,8 +26618,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "iyX" = (
-/obj/machinery/light/directional/west,
 /obj/machinery/netpod/prisoner/coop,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "izd" = (
@@ -30678,6 +30732,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "jVO" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "jVT" = (
@@ -31121,8 +31178,11 @@
 /turf/open/floor/grass,
 /area/station/hallway/secondary/construction/engineering)
 "kbp" = (
-/obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "kbq" = (
@@ -34025,6 +34085,15 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"kWz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "kWH" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment{
@@ -39017,6 +39086,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
+"mHD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/warning/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "mHO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -39390,6 +39467,10 @@
 /area/station/medical/treatment_center)
 "mOk" = (
 /obj/machinery/netpod/prisoner/coop,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "mOq" = (
@@ -44104,12 +44185,15 @@
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
 "ozZ" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "oAg" = (
@@ -46357,6 +46441,9 @@
 /area/station/command/heads_quarters/hos)
 "ptC" = (
 /obj/machinery/netpod/prisoner/solo_2,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "ptD" = (
@@ -47562,6 +47649,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
+"pMU" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "pMW" = (
 /turf/open/space/openspace,
 /area/space)
@@ -49446,6 +49537,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "quB" = (
@@ -50095,6 +50189,12 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "qGy" = (
@@ -54195,6 +54295,9 @@
 "seq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
@@ -58401,6 +58504,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "tBo" = (
@@ -59749,8 +59858,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "uaU" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/closed/wall/r_wall,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "uba" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -63147,8 +63258,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"vdB" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "vdH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "vdX" = (
@@ -65681,6 +65801,13 @@
 /obj/structure/ladder,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"vXy" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "vXL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
@@ -69189,6 +69316,12 @@
 /area/station/security/brig)
 "xoU" = (
 /obj/machinery/computer/quantum_console/prisoner_solo1,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "xoW" = (
@@ -70207,6 +70340,12 @@
 /obj/machinery/computer/quantum_console/prisoner_solo2{
 	dir = 8
 	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Isolation Chambers"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
 "xLh" = (
@@ -70394,6 +70533,11 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
+"xNn" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron,
+/area/station/security/torment_nexus)
 "xNq" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -71604,6 +71748,9 @@
 "yjI" = (
 /obj/machinery/computer/quantum_console/prisoner_solo3{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/security/torment_nexus)
@@ -86480,7 +86627,7 @@ jYq
 iuC
 qGh
 mOk
-mOk
+iyX
 iyX
 irL
 dQo
@@ -86735,12 +86882,12 @@ aaa
 aaa
 jYq
 xoU
-cQI
-jVO
+mHD
+eZM
 vdH
 quu
 jVO
-jVO
+xNn
 jYq
 jvE
 eTl
@@ -86993,11 +87140,11 @@ abM
 jYq
 elS
 cQI
-cQI
+vXy
 tBm
-tBm
-tBm
-tBm
+biF
+kWz
+djX
 cyf
 ozZ
 eLB
@@ -87249,12 +87396,12 @@ abM
 abM
 jYq
 hva
-jVO
-jVO
-jVO
-jVO
+vdB
+uaU
+uaU
+uaU
 seq
-jVO
+pMU
 jYq
 fUm
 xgp
@@ -87762,8 +87909,8 @@ bhr
 ryo
 bhr
 jYq
-uaU
-uaU
+jYq
+jYq
 jYq
 jYq
 jYq
