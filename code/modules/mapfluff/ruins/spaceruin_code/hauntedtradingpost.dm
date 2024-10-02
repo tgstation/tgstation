@@ -278,9 +278,7 @@
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
-	if (!isliving(living))
-		return
-	if (!living.stat) //ensure the guy triggering us is alive
+	if (living.stat) //ensure the guy triggering us is alive
 		return
 	if (!faction_check_atom(living)) //and make sure it ain't someone on our team
 		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
