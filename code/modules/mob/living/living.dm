@@ -2166,6 +2166,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	looking_vertically = TRUE
 
+	// In order, check if user is lower than the max z level of the map,
+	// check if user is at the station's lowest level or above
+	// this makes it so if you change floor to the highest z level, it stops you from looking up
+	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z || src.z < 2)
+		to_chat(src, span_warning("There's nothing interesting above."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		if (prob(0.1))
@@ -2218,6 +2227,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	SIGNAL_HANDLER
 
 	looking_vertically = TRUE
+
+	// In order, check if user is at the max z level of the map or lower,
+	// check if user is above the station's lowest z level
+	// this makes it so if you change floor to the lowest z level, it stops you from looking down
+	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z - 1 || src.z < 3)
+		to_chat(src, span_warning("There's nothing interesting below."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
 
 	var/turf/floor = get_turf(src)
 	var/turf/lower_level = get_step_multiz(floor, DOWN)
@@ -2768,22 +2786,28 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	set name = "Look Up"
 	set category = "IC"
 
-	//In order, check if user is lower than the max z level of the map,
-	//check if user is at the station's lowest level or above
+	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
+	// In order, check if user is lower than the max z level of the map,
+	// check if user is at the station's lowest level or above
 	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z || src.z < 2)
 		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
 		return
 
-	if(looking_vertically)
-		to_chat(src, "You set your head straight again.")
-		end_look_up()
-	else
-		to_chat(src, "You tilt your head upwards.")
-		look_up()
+	to_chat(src, "You tilt your head upwards.")
+	look_up()
 
 /mob/living/verb/lookdown()
 	set name = "Look Down"
 	set category = "IC"
+
+	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
+		end_look_down()
+		return
 
 	// In order, check if user is at the max z level of the map or lower,
 	// check if user is above the station's lowest z level
@@ -2791,12 +2815,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		to_chat(src, span_warning("There's nothing interesting below. Better keep your eyes ahead."))
 		return
 
-	if(looking_vertically)
-		to_chat(src, "You set your head straight again.")
-		end_look_down()
-	else
-		to_chat(src, "You tilt your head downwards.")
-		look_down()
+	to_chat(src, "You tilt your head downwards.")
+	look_down()
 
 /**
  * Totals the physical cash on the mob and returns the total.
