@@ -78,8 +78,13 @@
 
 /obj/item/organ/external/wings/moth/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
-	if (!allow_flight())
+
+	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		return
+
+	if (!allow_flight() || !source.client.intended_direction)
+		return
+
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
 ///check if our wings can burn off ;_;
