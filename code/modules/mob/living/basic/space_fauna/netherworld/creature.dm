@@ -100,3 +100,11 @@
 		exit_jaunt(cast_on)
 		return
 	enter_jaunt(cast_on)
+
+/mob/living/basic/creature/tiggles
+	name = "Miss Tiggles"
+
+/mob/living/basic/creature/hatchling
+	name = "hatchling"
+	health = 25
+	maxHealth = 25
