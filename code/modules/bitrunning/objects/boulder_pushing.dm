@@ -123,6 +123,14 @@
 	anchored = TRUE
 	flags_1 = INDESTRUCTIBLE
 
+
+/obj/bitrunning/boulder_checkpoint/CanAllowThrough(atom/movable/mover, border_dir)
+	if(istype(mover, /obj/bitrunning/hungry_customer))
+		if(border_dir == NORTH)
+			return FALSE
+	. = ..()
+
+
 /obj/bitrunning/customer_destination
 	name = "customer destination"
 	desc = "If you can see this, file a bug report!"
