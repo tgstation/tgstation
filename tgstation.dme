@@ -5482,6 +5482,7 @@
 #include "code\modules\power\powernet.dm"
 #include "code\modules\power\rtg.dm"
 #include "code\modules\power\smes.dm"
+#include "code\modules\power\smes_portable.dm"
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\thermoelectric_generator.dm"
