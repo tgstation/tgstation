@@ -52,7 +52,6 @@ function Verify-Node {
 
 	if ($ExpectedSha -ne $ActualSha) {
 		Write-Output "$ExpectedSha != $ActualSha"
-		exit
 		if ($Tries -gt 3) {
 			Write-Output "Failed to verify Node checksum three times. Aborting."
 			exit 1
