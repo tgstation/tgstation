@@ -96,6 +96,11 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
 
+/datum/sprite_accessory/ears_more/ramatan/none
+	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
+	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
+	icon_state = /datum/sprite_accessory/ears/none::icon_state
+
 /// Tail time
 /datum/sprite_accessory/tails/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
@@ -163,6 +168,11 @@
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
 
 /datum/sprite_accessory/tails/humanoid/none
+	icon = /datum/sprite_accessory/tails/none::icon
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
+	icon_state = /datum/sprite_accessory/tails/none::icon_state
+
+/datum/sprite_accessory/tails/ramatan/none
 	icon = /datum/sprite_accessory/tails/none::icon
 	name = DOPPLER_SPRITE_ACCESSORY_NOTAIL
 	icon_state = /datum/sprite_accessory/tails/none::icon_state
