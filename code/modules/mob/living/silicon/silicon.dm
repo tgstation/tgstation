@@ -490,5 +490,5 @@
 	. = ..()
 	var/list/law_list = list("Obey these laws:")
 	law_list += laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
-	for(var/borg_laws as anything in law_list)
-		. +=  borg_laws
+	for(var/borg_laws in law_list)
+		. += borg_laws
