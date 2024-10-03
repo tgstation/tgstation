@@ -7,7 +7,7 @@
     taste_mult = 1
     color = "#A9FBFB"
     reagent_state = LIQUID
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/synth_blood
     required_drink_type = /datum/reagent/synth_blood
@@ -55,7 +55,7 @@
 /datum/reagent/toxin/acid/hyflo_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
     . = ..()
     if(affected_mob.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
-    return UPDATE_MOB_HEALTH
+	    return UPDATE_MOB_HEALTH
 
 
 /datum/chemical_reaction/hyflo_acid
@@ -76,7 +76,7 @@
     thermic_constant = -200
     H_ion_release = -20
     rate_up_lim = 25
-    purity/min = 0
+    purity_min = 0
     reaction_flags = REACTION_PH_VOL_CONSTANT
     reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_CHEMICAL
 
