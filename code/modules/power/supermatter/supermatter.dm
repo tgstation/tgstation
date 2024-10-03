@@ -315,7 +315,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			power_level = internal_energy,
 			color = zap_color,
 		)
-		zap_energy_accumulation[ZAP_ENERGY_ACCUMULATION_NORMAL] -= discharged_energy
 
 		last_power_zap = world.time
 	last_energy_accumulation_perspective_machines = SSmachines.times_fired

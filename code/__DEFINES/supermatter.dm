@@ -76,7 +76,7 @@
 #define ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY "high"
 
 /// Zap energy discharge portion per tick.
-#define ZAP_ENERGY_DISCHARGE_PORTION 0.04
+#define ZAP_ENERGY_DISCHARGE_PORTION 0.1
 
 #define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
 
