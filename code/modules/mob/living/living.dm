@@ -2166,10 +2166,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	looking_vertically = TRUE
 
-	// In order, check if user is lower than the max z level of the map,
-	// check if user is at the station's lowest level or above
-	// this makes it so if you change floor to the highest z level, it stops you from looking up
-	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z || src.z < 2)
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf above exists
+	if(!above_turf)
 		to_chat(src, span_warning("There's nothing interesting above."))
 		to_chat(src, "You set your head straight again.")
 		end_look_up()
@@ -2228,10 +2229,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	looking_vertically = TRUE
 
-	// In order, check if user is at the max z level of the map or lower,
-	// check if user is above the station's lowest z level
-	// this makes it so if you change floor to the lowest z level, it stops you from looking down
-	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z - 1 || src.z < 3)
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
 		to_chat(src, span_warning("There's nothing interesting below."))
 		to_chat(src, "You set your head straight again.")
 		end_look_up()
@@ -2791,9 +2793,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		end_look_up()
 		return
 
-	// In order, check if user is lower than the max z level of the map,
-	// check if user is at the station's lowest level or above
-	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z || src.z < 2)
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf aboveexists
+	if(!above_turf)
 		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
 		return
 
@@ -2809,9 +2813,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		end_look_down()
 		return
 
-	// In order, check if user is at the max z level of the map or lower,
-	// check if user is above the station's lowest z level
-	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) < src.z - 1 || src.z < 3)
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
 		to_chat(src, span_warning("There's nothing interesting below. Better keep your eyes ahead."))
 		return
 
