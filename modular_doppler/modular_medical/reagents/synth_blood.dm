@@ -38,8 +38,8 @@
 
 
 /datum/reagent/toxin/acid/hyflo_acid
-    name = "Hydroflouric Acid"
-    description = "A highly corrosive solution of hydrogen and flourine."
+    name = "Hydrofluoric Acid"
+    description = "A highly corrosive solution of hydrogen and fluorine."
     taste_description = "acid"
     taste_mult = 10
     reagent_state = LIQUID
@@ -55,12 +55,12 @@
 /datum/reagent/toxin/acid/hyflo_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
     . = ..()
     if(affected_mob.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
-      return UPDATE_MOB_HEALTH
+    return UPDATE_MOB_HEALTH
 
 
 /datum/chemical_reaction/hyflo_acid
     results = list(/datum/reagent/toxin/acid/hyflo_acid = 2)
-    required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/flourine = 1)
+    required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1)
     required_catalyists = list(/datum/reagent/water = 5)
     mix_message = "The mixture bubbles briefly."
    //fermichem
