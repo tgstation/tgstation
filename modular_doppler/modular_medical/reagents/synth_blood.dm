@@ -7,7 +7,7 @@
     taste_mult = 1
     color = "#A9FBFB"
     reagent_state = LIQUID
-chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+    chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/drinking_glass/synth_blood
     required_drink_type = /datum/reagent/synth_blood
@@ -15,8 +15,8 @@ chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
     desc = "Doesn't really move around like water - oddly thick."
 
 /datum/chemical_reaction/synth_blood
-  results = list(datum/reagent/synth_blood = 1)
-  required_reagents = list(datum/reagent/toxin/acid/hyflo_acid = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/stable_plasma = 1)
+  results = list(/datum/reagent/synth_blood = 1)
+  required_reagents = list(/datum/reagent/toxin/acid/hyflo_acid = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/stable_plasma = 1)
   mix_message = "The solution becomes clear and stabilizes."
   mix_sound = 'sound/effects/bubbles/bubbles.ogg'
   //fermichem
