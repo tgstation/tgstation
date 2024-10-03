@@ -22,11 +22,11 @@
 	can_randomize = FALSE
 	relevant_external_organ = /obj/item/organ/internal/ears/cat
 
-/datum/preference/choiced/ears/init_possible_values()
+/datum/preference/choiced/felinid_ears/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.ears_list)
 
-/datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/felinid_ears/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["ears"] = value
 
-/datum/preference/choiced/ears/create_default_value()
+/datum/preference/choiced/felinid_ears/create_default_value()
 	return /datum/sprite_accessory/ears/cat::name
