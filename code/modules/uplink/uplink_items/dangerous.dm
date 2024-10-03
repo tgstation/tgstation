@@ -95,14 +95,7 @@
 	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
-
-/datum/uplink_item/dangerous/revolver/badass
-	name = "Badass Revolver"
-	desc = "A modified syndicate revolver meant to make you feel Badass. Offers no tactical advantage whatsoever. Fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver/badass
-	cost = 13
-	surplus = 50
-	purchasable_from = UPLINK_ALL_SYNDIE_OPS //nukies get their own version
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //only traitors get the original revolver
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
