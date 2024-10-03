@@ -186,7 +186,7 @@
 		if(weapon)
 			weapon.melee_attack_chain(living_pawn, target)
 		else
-			living_pawn.UnarmedAttack(target, null, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarmin
+			controller.ai_interact(target = target, modifiers = disarm ? list(RIGHT_CLICK = TRUE) : null)
 		controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE) // We reset their memory of the gun being 'broken' if they accomplish some other attack
 	else if(weapon)
 		var/atom/real_target = target

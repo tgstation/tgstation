@@ -7,6 +7,7 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -2
 
 /datum/armor/space_pirate
 	melee = 30
@@ -31,6 +32,7 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -3
 
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"

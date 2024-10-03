@@ -64,7 +64,7 @@
 	block_chance = 15
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = 'sound/weapons/chainsawhit.ogg'
+	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
@@ -180,8 +180,8 @@
 	inhand_icon_state = "armored_pike"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	block_sound = 'sound/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	force = 20
 	sharpness = SHARP_EDGED
 	wound_bonus = -15
@@ -199,6 +199,7 @@
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20
 	fish_traits = list(/datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive, /datum/fish_trait/picky_eater, /datum/fish_trait/stinger)
+	evolution_types = null
 	compatible_types = list(/obj/item/fish/pike)
 	favorite_bait = list(
 		list(
