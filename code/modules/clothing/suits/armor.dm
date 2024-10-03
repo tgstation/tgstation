@@ -299,7 +299,7 @@
 	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
-/obj/item/clothing/suit/armor/riot/init_rustle_component()
+/obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 /datum/armor/armor_riot
