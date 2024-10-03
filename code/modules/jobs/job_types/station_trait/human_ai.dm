@@ -161,6 +161,6 @@
 	user.balloon_alert(user, "unpacking...")
 	if(!do_after(user, 5 SECONDS, src))
 		return
-	playsound(src, 'sound/items/drill_use.ogg', 40, TRUE)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 40, TRUE)
 	new /obj/machinery/computer/camera_advanced/human_ai(get_turf(src))
 	qdel(src)

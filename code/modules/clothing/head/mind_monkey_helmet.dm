@@ -42,7 +42,7 @@
 		var/mob/living/something = user
 		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
@@ -64,7 +64,7 @@
 		switch(rage_chance)
 			if(-7 to 0)
 				user.visible_message(span_notice("[src] falls silent and drops on the floor. Try again later?"))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				particle_path = null
 			if(7 to 13)
 				user.visible_message(span_notice("[src] sparkles momentarily, then falls silent and drops on the floor. Maybe you should try again later?"))
@@ -80,7 +80,7 @@
 			if(21 to INFINITY)
 				user.visible_message(span_notice("[src] buzzes and smokes heavily, then falls silent and drops on the floor. This is clearly a bad idea."))
 				do_sparks(6, FALSE, src)
-				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				particle_path = /particles/smoke/steam
 		rage_chance += 7
 
@@ -117,7 +117,7 @@
 			malfunction(magnification)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null

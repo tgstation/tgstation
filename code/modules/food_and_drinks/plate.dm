@@ -121,7 +121,7 @@
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate_shard1"
 	base_icon_state = "plate_shard"
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 5

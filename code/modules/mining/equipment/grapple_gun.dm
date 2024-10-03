@@ -64,7 +64,7 @@
 	if(user.CanReach(attacked_atom))
 		return ITEM_INTERACT_BLOCKING
 
-	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/weapons/zipline_fire.ogg')
+	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/items/weapons/zipline_fire.ogg')
 	zipline = user.Beam(bullet, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
 	hooked = FALSE
 	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
@@ -181,6 +181,6 @@
 	range = 9
 	speed = 0.1
 	can_hit_turfs = TRUE
-	hitsound = 'sound/weapons/zipline_hit.ogg'
+	hitsound = 'sound/items/weapons/zipline_hit.ogg'
 
 #undef DAMAGE_ON_IMPACT

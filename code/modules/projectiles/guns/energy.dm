@@ -3,8 +3,8 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/weapons/guns/energy.dmi'
-	pickup_sound = 'sound/items/gun_pick_up.ogg'
-	drop_sound = 'sound/items/gun_drop.ogg'
+	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
+	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
 
 	/// What type of power cell this uses

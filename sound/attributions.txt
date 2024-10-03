@@ -28,7 +28,7 @@ splatter.ogg adapted from https://freesound.org/people/Rocktopus/sounds/233418/
 hohoho.ogg and hehe.ogg are cut from a recording by Nanakisan on freesound: https://freesound.org/people/Nanakisan/sounds/253534/
 mbox_full.ogg and mbox_end.ogg make use of The Ragtime Drummer by James Lent, in the public domain
 
-growl1.ogg and growl2.ogg in /sound/creatures/dog are adapted from Glitchedtones's Freesound shih-tzu uploads https://freesound.org/people/Glitchedtones/
+growl1.ogg and growl2.ogg in /sound/mobs/non-humanoids/dog are adapted from Glitchedtones's Freesound shih-tzu uploads https://freesound.org/people/Glitchedtones/
 
 eject.ogg is by magedu, adapted from https://freesound.org/people/magedu/sounds/267832/
 
@@ -93,6 +93,8 @@ https://www.zapsplat.com/sound-effect-category/sleigh-bells/
 
 tada_fanfare.ogg is adapted from plasterbrain's "Tada Fanfare A", which is public domain (CC 0):
 https://freesound.org/people/plasterbrain/sounds/397355/
+
+mountedgun.ogg and mountedgunend.ogg are a combination of the cannon, cqc grab, and syndicate revolver sounds.
 
 glockenspiel_ping.ogg is adapted from FunWithSound's "Short Success Sound Glockenspiel Treasure Video Game", which is public domain (CC 0):
 https://freesound.org/people/FunWithSound/sounds/456965/
@@ -179,15 +181,7 @@ https://freesound.org/people/shw489/sounds/234389/
 soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
 https://freesound.org/people/jorickhoofd/sounds/632783/
 
-compressed_air1.ogg is taken from Freesound and converted to ogg:
-https://freesound.org/people/Geoff-Bremner-Audio/sounds/682952/
-compressed_air2.ogg is taken from Freesound and converted to ogg:
-https://freesound.org/people/Geoff-Bremner-Audio/sounds/682816/
-tank_insert_clunky.ogg was created by mixing compressed_air1 and clunk sound from Freesound:
-https://freesound.org/people/BinaryMonkFlint/sounds/333296/
-tank_remove_thunk.ogg was made by mixing two sound tracks from Freesound:
-https://freesound.org/people/lowdjinn/sounds/533885/ and;
-https://freesound.org/people/BMacZero/sounds/96137/
+
 
 valve_opening.ogg was made by mixing water flowing samples from:
 https://freesound.org/people/scriotxstudios/sounds/349111/?attribution=1 and squeaky scrape sound from:
@@ -213,3 +207,5 @@ place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License
 glass_reverse.ogg is adapted from a combination of:
 https://freesound.org/people/C_Rogers/sounds/203368/ -- glass-shattering-hit_01.ogg by C_Rogers on freesound.org (CC0)
 https://freesound.org/people/Czarcazas/sounds/330800/ -- Audio reversal/fading of Shattering Glass (Small) by Czarcazas -- https://freesound.org/s/330800/ -- License: Attribution 3.0
+
+sound/effects/bonk.ogg - recorded by oranges on a coke zero bottle, edited by ninjanomnom, released to public domain

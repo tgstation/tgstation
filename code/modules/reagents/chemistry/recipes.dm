@@ -25,7 +25,7 @@
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
-	var/mix_sound = 'sound/effects/bubbles.ogg'
+	var/mix_sound = 'sound/effects/bubbles/bubbles.ogg'
 
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
@@ -403,7 +403,7 @@
 	var/turf/this_turf = get_turf(holder.my_atom)
 	if(sound_and_text)
 		holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
-		playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+		playsound(this_turf, 'sound/effects/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
 	for(var/atom/movable/movey as anything in orange(range, this_turf))
 		if(!istype(movey, /atom/movable))

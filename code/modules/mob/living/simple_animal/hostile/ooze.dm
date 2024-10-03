@@ -21,7 +21,7 @@
 	maxHealth = 200
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
-	attack_sound = 'sound/effects/blobattack.ogg'
+	attack_sound = 'sound/effects/blob/blobattack.ogg'
 	combat_mode = TRUE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
@@ -196,7 +196,7 @@
 ///This action lets you consume the mob you're currently pulling. I'M GONNA CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
 /datum/action/consume
 	name = "Consume"
-	desc = "Consume a mob that you are dragging to gain nutrition from them"
+	desc = "Consume a mob that you are dragging to gain nutrition from them."
 	background_icon_state = "bg_hive"
 	overlay_icon_state = "bg_hive_border"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -216,16 +216,16 @@
 	if(!.)
 		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	if(vored_mob) //one happy meal at a time, buddy
+		stop_consuming()
+		return FALSE
 	if(!isliving(ooze.pulling))
 		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
 		return FALSE
-	if(vored_mob)
-		to_chat(src, span_warning("You are already consuming another creature!"))
-		return FALSE
-	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
-	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
-		return FALSE
 	var/mob/living/eat_target = ooze.pulling
+	owner.visible_message(span_warning("[ooze] starts attempting to devour [eat_target]!"), span_notice("You start attempting to devour [eat_target]."))
+	if(!do_after(ooze, 1.5 SECONDS, eat_target))
+		return FALSE
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
 		to_chat(src, span_warning("This creature isn't to my tastes!"))
@@ -240,6 +240,7 @@
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 ///Stop consuming the mob; dump them on the floor
 /datum/action/consume/proc/stop_consuming()
@@ -252,6 +253,7 @@
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 ///Gain health for the consumption and dump some brute loss on the target.
 /datum/action/consume/process()
@@ -260,14 +262,26 @@
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
-	///Dump em at 200 bruteloss.
-	if(vored_mob.getBruteLoss() >= 200)
+	///Dump 'em if they're dead.
+	if(vored_mob.stat == DEAD)
 		stop_consuming()
 
 /datum/action/consume/Remove(mob/remove_from)
 	stop_consuming()
 	return ..()
 
+/datum/action/consume/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	if(vored_mob)
+		name = "Eject Mob"
+		desc = "Eject the mob you're currently consuming."
+	else
+		name = "Consume"
+		desc = "Consume a mob that you are dragging to gain nutrition from them."
+	return ..()
+
+/datum/action/consume/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	button_icon_state = vored_mob ? "eject" : "consume"
+	return ..()
 
 ///* Gelatinious Grapes code below *\\\\
 
