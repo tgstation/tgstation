@@ -30,7 +30,6 @@
 
 	if(custom_sounds)
 		rustle_sounds = custom_sounds
-	else
 		rustle_sounds = default_rustle_sounds
 	if(isnum(volume_override))
 		volume = volume_override
