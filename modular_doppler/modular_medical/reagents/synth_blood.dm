@@ -7,6 +7,7 @@
     taste_mult = 1
     color = "#A9FBFB"
     reagent_state = LIQUID
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
   
 /datum/glass_style/drinking_glass/synth_blood
     required_drink_type = /datum/reagent/synth_blood
