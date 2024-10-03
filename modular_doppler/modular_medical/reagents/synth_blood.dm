@@ -61,7 +61,7 @@
 /datum/chemical_reaction/hyflo_acid
     results = list(/datum/reagent/toxin/acid/hyflo_acid = 2)
     required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1)
-    required_catalyists = list(/datum/reagent/water = 5)
+    required_catalysts = list(/datum/reagent/water = 5)
     mix_message = "The mixture bubbles briefly."
    //fermichem
     is_cold_recipe = FALSE
