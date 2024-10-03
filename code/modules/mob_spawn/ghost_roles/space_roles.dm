@@ -196,7 +196,6 @@
 	icon_state = "robot_old"
 	mob_species = /datum/species/android
 	you_are_text = "you are an ancient android stationed in an old research outpost inside of a super dense asteroid"
-	flavour_text = "Over the years the asteroid rock has become super dense and essentially unable to be broken by any means"
 	important_text = "Do NOT Leave the asteroid in any way"
 	outfit = /datum/outfit/ancient_android
 	spawner_job_path = /datum/job/scientist
