@@ -1,10 +1,15 @@
+#define FISH_ORGAN_COLOR "#875652" //dark moderate magenta
+#define FISH_SCLERA_COLOR COLOR_WHITE
+#define FISH_PUPIL_COLOR COLOR_BLUE
+#define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
+
 ///bonus of the observing gondola: you can ignore environmental hazards
 /datum/status_effect/organ_set_bonus/fish
 	id = "organ_set_bonus_fish"
 	tick_interval = 1 SECONDS
 	organs_needed = 3
 	bonus_activate_text = span_notice("Fish DNA is deeply infused with you! While wet, you crawl faster, are slippery, and cannot slip, and it takes longer to dry out. \
-		You're also more resistant to high pressure,better at fishing, but somewhat weaker when dry, especially against burns.")
+		You're also more resistant to high pressure, better at fishing, but less resilient when dry, especially against burns.")
 	bonus_deactivate_text = span_notice("You no longer feel as fishy. The moisture around your body begins to dissipate faster...")
 	bonus_traits = list(
 		TRAIT_RESISTHIGHPRESSURE,
@@ -28,8 +33,11 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		human.physiology.damage_resistance += 5 //base 5% damage resistance, much wow.
-		if(!HAS_TRAIT(owner, TRAIT_IS_WET))
-			apply_debuff()
+	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
+		apply_debuff()
+	else
+		ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
+		owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/fish))
 		add_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, SKILL_EXP_JOURNEYMAN, silent = TRUE)
@@ -43,9 +51,12 @@
 		SIGNAL_REMOVETRAIT(TRAIT_IS_WET),
 		COMSIG_LIVING_TREAT_MESSAGE,
 	))
+	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
+		remove_debuff()
+	else
+		REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
+	owner.clear_mood_event("fish_organs_bonus")
 	if(ishuman(owner))
-		if(!HAS_TRAIT(owner, TRAIT_IS_WET))
-			remove_debuff()
 		var/mob/living/carbon/human/human = owner
 		human.physiology.damage_resistance -= 5
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/fish))
@@ -71,6 +82,9 @@
 		remove_speed_buff()
 
 /datum/status_effect/organ_set_bonus/fish/proc/apply_debuff()
+	REMOVE_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
+	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_waterless)
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human = owner
@@ -83,6 +97,9 @@
 	human.physiology.damage_resistance -= 10 //from +5% to -5%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
+	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src)) //harder to grab when wet.
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/fish_waterless)
+	owner.add_mood_event("fish_organs_bonus", /datum/mood_event/fish_water)
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human = owner
@@ -158,11 +175,11 @@
 	if(was_water && !is_water)
 		source.remove_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 		source.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
-		ADD_TRAIT(source, TRAIT_NO_STAGGER, type)
+		source.add_traits(list(TRAIT_OFF_BALANCE_TACKLER, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
 	else if(!was_water && is_water)
 		source.add_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 		source.add_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
-		REMOVE_TRAIT(source, TRAIT_NO_STAGGER, type)
+		source.add_traits(list(TRAIT_OFF_BALANCE_TACKLER, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
 
 /datum/bodypart_overlay/mutant/tail/fish
 	color_source = ORGAN_COLOR_HAIR
@@ -252,7 +269,7 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = "#a25690" //dark moderate magenta
+	greyscale_colors = FISH_COLORS
 
 	organ_traits = list(TRAIT_STRONG_STOMACH, TRAIT_FISH_EATER)
 	disgust_metabolism = 2.5
@@ -277,7 +294,7 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = "#a25690" //dark moderate magenta
+	greyscale_colors = FISH_COLORS
 
 	organ_traits = list(TRAIT_TETRODOTOXIN_HEALING)
 	liver_resistance = parent_type::liver_resistance * 1.5
@@ -287,3 +304,8 @@
 /obj/item/organ/internal/liver/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+
+#undef FISH_ORGAN_COLOR
+#undef FISH_SCLERA_COLOR
+#undef FISH_PUPIL_COLOR
+#undef FISH_COLORS

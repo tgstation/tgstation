@@ -1320,7 +1320,7 @@
 		need_mob_update = affected_mob.adjustToxLoss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		need_mob_update += affected_mob.adjustBruteLoss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjustFireLoss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	return need_mob_update ? UPDATE_MOB_HEALTH : .
+		return need_mob_update ? UPDATE_MOB_HEALTH : .
 
 	liver_tolerance_multiplier = initial(liver_tolerance_multiplier)
 

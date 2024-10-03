@@ -185,3 +185,7 @@
 /datum/movespeed_modifier/fish_on_water
 	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
 	multiplicative_slowdown = - /turf/open/water::slowdown
+
+///speed malus given by the fish organ set when dry
+/datum/movespeed_modifier/fish_waterless
+	multiplicative_slowdown = 0.35
