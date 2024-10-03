@@ -680,12 +680,8 @@
 
 /obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER
-	. = COMPONENT_BLOCK_LIGHT_EATER
-	if(status == LIGHT_EMPTY)
-		return
-	var/obj/item/light/tube = drop_light_tube()
-	tube?.burn()
-	return
+	break_light_tube()
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
 	. = ..()

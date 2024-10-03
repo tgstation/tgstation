@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "Reinforced tables may now be hooked up directly to the grid much like grilles, electrocuting people who attempt to disassemble it."

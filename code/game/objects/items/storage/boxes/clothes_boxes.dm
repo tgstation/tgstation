@@ -38,8 +38,8 @@
 	new /obj/item/stack/sticky_tape(src)
 
 /obj/item/storage/box/fakesyndiesuit
-	name = "boxed space suit and helmet"
-	desc = "A sleek, sturdy box used to hold replica spacesuits."
+	name = "boxed replica space suit and helmet"
+	desc = "A sleek, sturdy box used to hold toy spacesuits."
 	icon_state = "syndiebox"
 	illustration = "syndiesuit"
 

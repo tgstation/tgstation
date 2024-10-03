@@ -1,6 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "gelatinous cubes now puke out their consume victim when said victim dies, not when it accumulates 200 brute damage (not all mobs can get damaged to that point)"
-  - qol: "gelatinous cube's Consume action can now be used to eject the currently consumed mob"
-  - bugfix: "fixed gelatinous cube's consume attempt not showing the victim's name properly (You start attempting to devour  !)"

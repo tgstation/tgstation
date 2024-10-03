@@ -394,7 +394,7 @@
 		if("mix")
 			mix(50 DECISECONDS, user)
 		if("examine")
-			to_chat(user, examine_block("<span class='infoplain'>[examine(user)]</span>"))
+			to_chat(user, examine_block(span_infoplain("[examine(user)]")))
 
 /**
  * Checks if the radial menu can interact with this machine
