@@ -2,7 +2,7 @@
 	var/default_rustle_sounds = SFX_SUIT_STEP
 
 	///sound that plays, use an SFX define if there is multiple.
-	var/rustle_sounds
+	var/rustle_sounds = SFX_SUIT_STEP
 	///human that has the item equipped.
 	var/mob/holder
 
