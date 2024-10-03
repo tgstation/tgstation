@@ -39,6 +39,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/added_difficulty = 0
 	/// Reagents to add to the fish whenever the COMSIG_GENERATE_REAGENTS_TO_ADD signal is sent. Their values will be multiplied later.
 	var/list/reagents_to_add
+	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
+	var/infusion_entry
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -423,6 +425,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 1)
+	infusion_entry = /datum/infuser_entry/ttx_healing
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -530,6 +533,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	infusion_entry = /datum/infuser_entry/amphibious
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -708,6 +712,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish possess a sac that produces ink."
 	diff_traits_inheritability = 70
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
+	infusion_entry = /datum/infuser_entry/squid
 
 /datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
 	. = ..()
