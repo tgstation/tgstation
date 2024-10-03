@@ -28,7 +28,7 @@
 	if(!.)
 		return
 	RegisterSignals(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(check_tail))
-	RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
@@ -146,15 +146,13 @@
 	desc = "A severed tail from some sort of marine creature... or a fish-infused spaceman. It's smooth, faintly wet and definitely not flopping."
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-
+	dna_block = DNA_FISH_TAIL_BLOCK
 	wag_flags = WAG_ABLE
 	organ_traits = list(TRAIT_FLOPPING)
 
 /obj/item/organ/external/tail/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
-	var/datum/bodypart_overlay/mutant/overlay = bodypart_overlay
-	overlay.randomize_sprite()
 
 /obj/item/organ/external/tail/fish/on_mob_insert(mob/living/carbon/owner)
 	. = ..()
@@ -184,6 +182,14 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	color_source = ORGAN_COLOR_HAIR
 
+/datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
+	//Initialize the related dna feature block if we don't have any so it doesn't error out.
+	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
+	if(imprint_on_next_insertion && receiver.dna.features["fish_tail"])
+		receiver.dna.features["fish_tail"] = pick(SSaccessories.tails_list_fish)
+		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
+	return ..()
+
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
 
@@ -206,9 +212,11 @@
 	add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+
 /obj/item/organ/internal/lungs/fish/on_mob_insert(mob/living/carbon/owner)
 	. = ..()
 	bubble_icon = owner.AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN_SET_BONUS)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills around %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 
 /obj/item/organ/internal/lungs/fish/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
@@ -286,6 +294,10 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
+
+/obj/item/organ/internal/tongue/inky/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noticable_organ, "Slick black ink seldom rivulets from %PRONOUN_their mouth.", BODY_ZONE_PRECISE_MOUTH)
 
 ///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/internal/liver/fish
