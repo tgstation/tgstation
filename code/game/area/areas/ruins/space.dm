@@ -763,3 +763,32 @@
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_DANGER
+
+//Android RND Asteroid Base
+
+/area/ruin/space/has_grav/powered/android/hallway
+	name = "Outpost Hallway"
+
+/area/ruin/space/has_grav/powered/android/freezer
+	name = "Outpost Ordnance Freezer"
+
+/area/ruin/space/has_grav/powered/android/burn
+	name = "Outpost Ordnance Burn Chamber"
+
+/area/ruin/space/has_grav/powered/android/circuit
+	name = "Outpost Circuit Lab"
+
+/area/ruin/space/has_grav/powered/android/cytology
+	name = "Outpost Cytology Lab"
+
+/area/ruin/space/has_grav/powered/android/research
+	name = "Outpost Research and Development"
+
+/area/ruin/space/has_grav/powered/android/ordnance
+	name = "Outpost Ordnance Lab"
+
+/area/ruin/space/has_grav/powered/android/robotics
+	name = "Outpost Robotics Lab"
+
+/area/ruin/space/has_grav/powered/android/warehouse
+	name = "Outpost Warehouse"

@@ -513,3 +513,9 @@
 	suffix = "hauntedtradingpost.dmm"
 	name = "Space-Ruin Donk Co. Interstellar Trading Post 6016"
 	description = "A small station for trading ships to dock at. It's been abandoned for some time, but its security systems have kept looters away. Rumored to be haunted."
+
+/datum/map_template/ruin/space/androidrdsat
+	id = "androidrdsat"
+	suffix = "androidrdsat.dmm"
+	name = "Space-Ruin Super-Dense Android Asteroid Outpost"
+	description = "An Ancient Android Outpost contained within a Super-Dense asteroid"

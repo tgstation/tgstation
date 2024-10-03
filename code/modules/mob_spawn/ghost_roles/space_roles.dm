@@ -186,3 +186,28 @@
 	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
+
+//android outpost
+
+/obj/effect/mob_spawn/ghost_role/human/androidoutpost
+	name = "Ancient Android"
+	prompt_name = "an old android"
+	icon = 'icons/mob/silicon/robots.dmi'
+	icon_state = "robot_old"
+	mob_species = /datum/species/android
+	you_are_text = "you are an ancient android stationed in an old research outpost inside of a super dense asteroid"
+	flavour_text = "Over the years the asteroid rock has become super dense and essentially unable to be broken by any means"
+	important_text = "Do NOT Leave the asteroid in any way"
+	outfit = /datum/outfit/ancient_android
+	spawner_job_path = /datum/job/scientist
+
+/datum/outfit/ancient_android
+	name = "Ancient Android"
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/job/scientist
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	head = /obj/item/clothing/head/beret/science
+	back = /obj/item/storage/backpack/science
+	glasses = /obj/item/clothing/glasses/science
