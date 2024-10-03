@@ -298,5 +298,5 @@
 	return ..()
 
 /datum/pet_command/point_targeting/fish/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target_combat_mode, BB_CURRENT_PET_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off, BB_CURRENT_PET_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING

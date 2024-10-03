@@ -63,7 +63,7 @@
 	var/obj/structure/cat_house/home = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(living_pawn == home.resident_cat || isnull(home.resident_cat))
-		living_pawn.melee_attack(home)
+		controller.ai_interact(target = home)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -213,13 +213,13 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/find_cat_food
 	target_key = BB_CAT_FOOD_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/find_cat_food
 	finding_behavior = /datum/ai_behavior/find_hunt_target/find_cat_food
 	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse, /obj/item/food/fishmeat)
 	hunt_chance = 75
 	hunt_range = 9
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+/datum/ai_behavior/hunt_target/interact_with_target/find_cat_food
 	always_reset_target = TRUE
 
 /datum/ai_behavior/find_hunt_target/find_cat_food/valid_dinner(mob/living/source, atom/dinner, radius)
@@ -253,7 +253,6 @@
 		return kitten
 	return null
 
-/datum/ai_behavior/deliver_food_to_kitten
 /datum/ai_behavior/deliver_food_to_kitten
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 5 SECONDS
