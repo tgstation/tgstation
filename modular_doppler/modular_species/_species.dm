@@ -1,3 +1,13 @@
+/// Cybernetic limbs logic here!
+//	Used for most races
+/datum/species/on_species_gain(mob/living/carbon/human/target, datum/species/old_species, pref_load)
+	var/list/frame_bodyparts = target.dna.features["frame_list"]
+
+	if(frame_bodyparts && frame_bodyparts[BODY_ZONE_HEAD])
+		bodypart_overrides[BODY_ZONE_HEAD] = frame_bodyparts[BODY_ZONE_HEAD]
+
+	return ..()
+
 /// Animal trait logic goes here!
 //	Used for the genemod and anthro species
 

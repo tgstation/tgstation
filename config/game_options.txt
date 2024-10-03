@@ -384,7 +384,7 @@ ROUNDSTART_RACES snail
 #ROUNDSTART_RACES pod
 
 ## Races that are radical departures to what a species is, so while they technically can be roundstart - it's probably not wise
-#ROUNDSTART_RACES android
+ROUNDSTART_RACES android
 ROUNDSTART_RACES golem
 
 ##-------------------------------------------------------------------------------------------
