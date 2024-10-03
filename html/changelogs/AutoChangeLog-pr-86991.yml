@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "fixes stun not getting applied if you are riding a carp"

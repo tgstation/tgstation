@@ -1,5 +1,0 @@
-author: "Dmeto"
-delete-after: True
-changes:
-  - bugfix: "Printing factory machine boards now results in their respective board and not the assembled machine."
-  - bugfix: "Sorter machines now use their respective board."

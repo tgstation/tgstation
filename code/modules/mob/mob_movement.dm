@@ -548,6 +548,11 @@
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
+	var/obj/structure/ladder/current_ladder = locate() in current_turf
+	if(current_ladder)
+		current_ladder.use(src, TRUE)
+		return
+
 	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving up...")
@@ -569,6 +574,11 @@
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
+
+	var/obj/structure/ladder/current_ladder = locate() in current_turf
+	if(current_ladder)
+		current_ladder.use(src, FALSE)
+		return
 
 	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return

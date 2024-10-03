@@ -344,12 +344,32 @@
 		/datum/stock_part/capacitor = 1)
 	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
+/obj/item/circuitboard/machine/smes/connector
+	name = "power connector"
+	build_path = /obj/machinery/power/smes/connector
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/capacitor = 1,)
+
+/obj/item/circuitboard/machine/smesbank
+	name = "portable SMES"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	needs_anchored = FALSE
+	build_path = /obj/machinery/power/smesbank
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/power_store/battery = 5,)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
+
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
 
 /obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
+
+/obj/item/circuitboard/machine/smesbank/super
 	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
