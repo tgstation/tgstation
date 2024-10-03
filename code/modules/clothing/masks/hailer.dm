@@ -56,7 +56,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
-	has_fov = FALSE
 	fishing_modifier = 0
 	unique_death = 'sound/items/sec_hailer/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
