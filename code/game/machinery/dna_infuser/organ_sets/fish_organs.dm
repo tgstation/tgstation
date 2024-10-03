@@ -302,13 +302,13 @@
 ///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/internal/liver/fish
 	name = "mutated fish-liver"
-	desc = "Fish DNA infused into a stomach that now uses tetrodotoxin as regenerative materia."
+	desc = "Fish DNA infused into a stomach that now uses tetrodotoxin as regenerative material. It also processes alcohol quite well."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = FISH_COLORS
 
-	organ_traits = list(TRAIT_TETRODOTOXIN_HEALING)
+	organ_traits = list(TRAIT_TETRODOTOXIN_HEALING, TRAIT_ALCOHOL_TOLERANCE) //drink like a fish :^)
 	liver_resistance = parent_type::liver_resistance * 1.5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5, /datum/reagent/toxin/tetrodotoxin = 5)

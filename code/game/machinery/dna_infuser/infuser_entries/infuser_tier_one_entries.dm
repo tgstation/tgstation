@@ -151,9 +151,10 @@
 	name = "TTX healing"
 	infuse_mob_name = "Tetraodontiformes"
 	desc = "Fish of the Tetraodontiformes (pufferfish etc.) order are know for the highly poisonous tetrodotoxin (TTX) in their bodies. \
-		Extracting their DNA can provide a way to utilize it for healing instead."
+		Extracting their DNA can provide a way to utilize it for healing instead. It also metabolizes alcohol better"
 	qualities = list(
 		"TTX healing",
+		"drink like a fish",
 	)
 	output_organs = list(
 		/obj/item/organ/internal/liver/fish
