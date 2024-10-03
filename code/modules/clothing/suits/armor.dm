@@ -426,7 +426,7 @@
 	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 	init_rustle_component()
 
-/obj/item/clothing/suit/armor/swat/init_rustle_component()
+/obj/item/clothing/suit/armor/swat/proc/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 
