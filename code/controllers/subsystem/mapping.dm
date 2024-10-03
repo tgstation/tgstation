@@ -386,13 +386,23 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if (!length(traits))  // null or empty - default
 		for (var/i in 1 to total_z)
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
 	else if (total_z != traits.len)  // mismatch
 		INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [total_z] z-levels in [path]!")
 		if (total_z < traits.len)  // ignore extra traits
 			traits.Cut(total_z + 1)
 		while (total_z > traits.len)  // fall back to defaults on extra levels
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
+
+	if(total_z > 1) // it's a multi z map
+		for(var/z in 1 to total_z)
+			if(z == 1) // bottom z-level
+				traits[z]["Up"] = TRUE
+			else if(z == total_z) // top z-level
+				traits[z]["Down"] = TRUE
+			else
+				traits[z]["Down"] = TRUE
+				traits[z]["Up"] = TRUE
 
 	// preload the relevant space_level datums
 	var/start_z = world.maxz + 1
