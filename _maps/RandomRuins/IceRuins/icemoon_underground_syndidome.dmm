@@ -131,7 +131,7 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "bJ" = (
 /obj/structure/fluff/tram_rail/end{
@@ -184,25 +184,12 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "cB" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/mask/surgical{
-	pixel_x = 6;
-	pixel_y = 10
-	},
+/obj/machinery/smartfridge/organ,
 /obj/item/organ/internal/alien/resinspinner,
-/obj/item/clothing/gloves/latex/coroner{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/organ/internal/eyes/night_vision{
-	pixel_x = 9;
-	pixel_y = 8
-	},
+/obj/item/organ/internal/eyes/night_vision,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "cE" = (
@@ -389,7 +376,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "fI" = (
 /obj/structure/fluff/tram_rail/end{
@@ -446,7 +433,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "gt" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -497,6 +484,9 @@
 /area/icemoon/surface/outdoors/noteleport)
 "he" = (
 /mob/living/basic/gorilla/genetics,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "hf" = (
@@ -702,12 +692,17 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/obj/effect/gibspawner/human/bodypartless,
-/obj/item/organ/internal/brain/primate{
-	pixel_x = 0;
-	pixel_y = 6
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/surgery_tray/full,
+/obj/item/clothing/gloves/latex/coroner{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "jd" = (
@@ -767,6 +762,9 @@
 "jT" = (
 /obj/structure/mirror/directional/east,
 /obj/machinery/light/small/dim/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "jV" = (
@@ -909,6 +907,9 @@
 /obj/item/pen/red{
 	pixel_x = 5;
 	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
@@ -1223,7 +1224,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass/plastitanium,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "qz" = (
 /obj/effect/turf_decal/trimline/neutral/line{
@@ -1404,7 +1405,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "tx" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners{
@@ -1868,7 +1869,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "xN" = (
 /obj/structure/fluff/tram_rail/electric/anchor{
@@ -2062,7 +2063,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "zI" = (
 /obj/effect/decal/cleanable/blood/trails{
@@ -2210,7 +2211,7 @@
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/warm/directional/south,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Ct" = (
 /obj/item/kirbyplants/organic/plant22,
@@ -2332,6 +2333,9 @@
 "DL" = (
 /obj/structure/dresser,
 /obj/machinery/digital_clock/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "DS" = (
@@ -2347,6 +2351,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "Es" = (
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "Ex" = (
@@ -2725,7 +2730,7 @@
 /obj/effect/turf_decal/trimline/dark/line{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Jm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2859,6 +2864,9 @@
 	name = "Window Shutter Control";
 	id = "bsyndidomRD"
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "KX" = (
@@ -2874,6 +2882,9 @@
 "Lc" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/pdapainter/research,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "Le" = (
@@ -3242,6 +3253,7 @@
 /area/ruin/syndibiodome)
 "OK" = (
 /obj/machinery/light/small/dim/directional/south,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/ruin/syndibiodome)
 "OL" = (
@@ -3387,7 +3399,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "QM" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -4022,7 +4034,7 @@
 /obj/effect/turf_decal/trimline/dark/line{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "WH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4205,6 +4217,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Zd" = (
