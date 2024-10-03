@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "Portable power storage units and power connectors! Under the same research node as regular power storage units, and not mapped in anywhere. Build a connector and portable unit, wire the connector like a regular SMES, wrench the portable unit onto the connector, unwrench as needed."
-  - code_imp: "SMES attackby was broken up into several tool_acts instead of a big attackby chain. If something stops working in regards to using tools on SMESes, please file a bug report."
