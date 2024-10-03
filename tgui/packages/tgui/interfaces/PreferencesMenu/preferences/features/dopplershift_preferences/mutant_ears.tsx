@@ -112,12 +112,3 @@ export const feature_synth_ears: FeatureChoiced = {
     return <FeatureDropdownInput buttons {...props} />;
   },
 };
-
-export const feature_ramatan_ears: FeatureChoiced = {
-  name: 'Ears',
-  component: (
-    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-  ) => {
-    return <FeatureDropdownInput buttons {...props} />;
-  },
-};

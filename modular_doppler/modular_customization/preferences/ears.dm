@@ -12,7 +12,6 @@
 	var/list/ears_list_bug
 	var/list/ears_list_humanoid
 	var/list/ears_list_synthetic
-	var/list/ears_list_ramatan
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -28,7 +27,6 @@
 	ears_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bug)["default_sprites"]
 	ears_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/humanoid)["default_sprites"]
 	ears_list_synthetic = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/synthetic)["default_sprites"]
-	ears_list_ramatan = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/ramatan)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give

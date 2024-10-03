@@ -25,6 +25,7 @@
 	name = "Rattlesnake"
 	icon_state = "rattlesnake"
 
+
 /datum/sprite_accessory/tails/lizard/big
 	icon = 'modular_doppler/modular_customization/accessories/icons/lizard/lizard_tail_big.dmi'
 	name = "Shadekin (Big)"

@@ -113,3 +113,5 @@
 
 /datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()
 	return SSaccessories.ears_list_synthetic
+
+

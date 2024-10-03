@@ -187,6 +187,7 @@
 /datum/bodypart_overlay/mutant/tail/synthetic/get_global_feature_list()
 	return SSaccessories.tails_list_synth
 
+
 /// Humanoid tail
 //
 /obj/item/organ/external/tail/humanoid

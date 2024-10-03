@@ -10,7 +10,6 @@
 	var/list/tails_list_bug
 	var/list/tails_list_synth
 	var/list/tails_list_humanoid
-	var/list/tails_list_ramatan
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -474,7 +473,6 @@
 /datum/preference/choiced/humanoid_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_humanoid[value]
 	return generate_back_icon(chosen_tail, "tail")
-
 
 #define WIDTH_WINGS_FILE 45
 #define HEIGHT_WINGS_FILE 34

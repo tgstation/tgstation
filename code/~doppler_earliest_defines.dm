@@ -80,7 +80,6 @@
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
 
-
 /datum/sprite_accessory/ears_more/bug/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
@@ -92,11 +91,6 @@
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
 
 /datum/sprite_accessory/ears_more/synthetic/none
-	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
-	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
-	icon_state = /datum/sprite_accessory/ears/none::icon_state
-
-/datum/sprite_accessory/ears_more/ramatan/none
 	icon = 'modular_doppler/modular_customization/accessories/code/~overrides/icons/fallbacks.dmi'
 	name = DOPPLER_SPRITE_ACCESSORY_NOEARS
 	icon_state = /datum/sprite_accessory/ears/none::icon_state
