@@ -1,5 +1,4 @@
 /datum/component/item_equipped_movement_rustle
-	var/default_rustle_sounds = SFX_SUIT_STEP
 
 	///sound that plays, use an SFX define if there is multiple.
 	var/rustle_sounds = SFX_SUIT_STEP
