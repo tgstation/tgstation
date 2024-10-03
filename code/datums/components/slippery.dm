@@ -79,6 +79,7 @@
 	if(!ismovable(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
 	else if(isitem(parent))
+		src.lube_flags |= SLIPPERY_WHEN_LYING_DOWN
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 		RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
@@ -111,7 +112,7 @@
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
 	var/list/connections_to_use
-	if(ismob(parent))
+	if(isliving(parent))
 		connections_to_use = mob_connections
 	else if(ismovable(parent))
 		connections_to_use = default_connections
@@ -231,7 +232,8 @@
 /datum/component/slippery/proc/slip_on_mob(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(holder.body_position == LYING_DOWN && !holder.buckled)
+	var/mob/living/living = holder || parent
+	if(!(lube_flags & SLIPPERY_WHEN_LYING_DOWN) || (living.body_position == LYING_DOWN && !living.buckled))
 		Slip(source, arrived)
 
 /datum/component/slippery/UnregisterFromParent()
