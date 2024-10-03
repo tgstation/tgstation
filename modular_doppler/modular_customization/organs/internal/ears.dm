@@ -113,14 +113,3 @@
 
 /datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()
 	return SSaccessories.ears_list_synthetic
-
-/// Ramatan ears
-//
-/obj/item/organ/internal/ears/ramatan
-	preference = "feature_ramatan_ears"
-	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/ramatan_ears
-
-/datum/bodypart_overlay/mutant/ears/ramatan_ears/get_global_feature_list()
-	return SSaccessories.ears_list_ramatan
-
-

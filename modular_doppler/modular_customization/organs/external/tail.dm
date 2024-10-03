@@ -199,16 +199,3 @@
 
 /datum/bodypart_overlay/mutant/tail/humanoid/get_global_feature_list()
 	return SSaccessories.tails_list_humanoid
-
-/// Ramatan tail
-//
-/obj/item/organ/external/tail/ramatan
-	preference = "feature_ramatan_tail"
-	dna_block = null
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/ramatan
-
-/datum/bodypart_overlay/mutant/tail/ramatan
-	feature_key = "tail_other"
-
-/datum/bodypart_overlay/mutant/tail/ramatan/get_global_feature_list()
-	return SSaccessories.tails_list_ramatan

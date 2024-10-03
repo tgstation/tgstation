@@ -65,11 +65,6 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
 	return data
 
-/datum/preference/choiced/ramatan_tail/compile_constant_data()
-	var/list/data = ..()
-	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
-	return data
-
 
 /// Tail colors!
 /datum/preference/tri_color/tail_color

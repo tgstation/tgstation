@@ -456,35 +456,6 @@
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_synthetic[value]
 	return generate_ears_icon(chosen_ears)
 
-//	Ramatan
-/datum/preference/choiced/ramatan_ears
-	savefile_key = "feature_ramatan_ears"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_CLOTHING
-	relevant_external_organ = null
-	should_generate_icons = TRUE
-	main_feature_name = "Ears"
-
-/datum/preference/choiced/ramatan_ears/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.ears_list_ramatan)
-
-/datum/preference/choiced/ramatan_ears/is_accessible(datum/preferences/preferences)
-	. = ..()
-	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
-	if(chosen_variation == RAMATAN)
-		return TRUE
-	return FALSE
-
-/datum/preference/choiced/ramatan_ears/create_default_value()
-	return /datum/sprite_accessory/ears_more/ramatan/none::name
-
-/datum/preference/choiced/ramatan_ears/apply_to_human(mob/living/carbon/human/target, value)
-	if(target.dna.ear_type == RAMATAN)
-		target.dna.features["ears"] = value
-
-/datum/preference/choiced/ramatan_ears/icon_for(value)
-	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_ramatan[value]
-	return generate_ears_icon(chosen_ears)
 
 /// Proc to gen that icon
 //	We don't wanna copy paste this
