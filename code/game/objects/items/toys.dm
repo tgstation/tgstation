@@ -1562,7 +1562,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define DISARM "disarm"
 #define GRAB "grab"
 #define HARM "harm"
-#define ICON_SPLIT world.icon_size/2
+#define ICON_SPLIT ICON_SIZE_ALL/2
 
 // These states do not have any associated processing.
 #define STATE_AWAITING_PLAYER_INPUT "awaiting_player_input"

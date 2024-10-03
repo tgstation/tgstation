@@ -216,11 +216,9 @@
 
 /datum/ai_planning_subtree/random_speech/cats
 	speech_chance = 10
-	speak = list(
-		"mrawww!",
-		"meow!",
-		"maw!",
-	)
+	sound = list(SFX_CAT_MEOW)
+	emote_hear = list("meows.")
+	emote_see = list("meows.")
 
 /datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
 	speech_chance = 1

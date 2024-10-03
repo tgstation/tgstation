@@ -166,7 +166,7 @@
 	if(ignore_next_glide)
 		ignore_next_glide = FALSE
 		return
-	var/glide_delay = round(world.icon_size / glide_size, 1) * world.tick_lag
+	var/glide_delay = round(ICON_SIZE_ALL / glide_size, 1) * world.tick_lag
 	drifting_loop.pause_for(glide_delay)
 	delayed = TRUE
 
