@@ -1,22 +1,31 @@
 /obj/machinery/limbgrower/Initialize(mapload)
-	categories += list(SPECIES_SNAIL, SPECIES_SLUGCAT, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
+	categories += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
 
 /datum/design/leftarm/New()
-	category += list(SPECIES_SNAIL, SPECIES_SLUGCAT, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
+	category += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
 
 /datum/design/rightarm/New()
-	category += list(SPECIES_SNAIL, SPECIES_SLUGCAT, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
+	category += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
 
 /datum/design/leftleg/New()
-	category += list(SPECIES_SNAIL, SPECIES_SLUGCAT, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
+	category += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
 
 /datum/design/rightleg/New()
-	category += list(SPECIES_SNAIL, SPECIES_SLUGCAT, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
+	category += list(SPECIES_SNAIL, SPECIES_RAMATAN, SPECIES_ANTHROMORPH, SPECIES_INSECTOID, SPECIES_AQUATIC)
 	return ..()
+
+/datum/design/tongue/ramatan
+	name = "Ramatan Tongue"
+	id = "ramatantongue"
+	build_path = /obj/item/organ/internal/tongue/ramatan
+	category = list(
+		SPECIES_RAMATAN,
+		RND_CATEGORY_INITIAL,
+	)
 
 /datum/design/tongue/snail
 	name = "Snail Tongue"

@@ -39,3 +39,19 @@
 	greyscale_colors = "#874f16"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	alternate_worn_layer = LOW_FACEMASK_LAYER
+
+/obj/item/clothing/under/misc/gear_harness
+	name = "gear harness"
+	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+	icon_state = "gear_harness"
+	body_parts_covered = NONE
+	attachment_slot_override = CHEST
+	can_adjust = FALSE
+	slot_flags = ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/misc/gear_harness/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.colonist_suit_allowed
