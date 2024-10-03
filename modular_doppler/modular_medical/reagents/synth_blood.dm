@@ -55,7 +55,7 @@
 /datum/reagent/toxin/acid/hyflo_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
     . = ..()
     if(affected_mob.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
-	    return UPDATE_MOB_HEALTH
+    return UPDATE_MOB_HEALTH
 
 
 /datum/chemical_reaction/hyflo_acid
