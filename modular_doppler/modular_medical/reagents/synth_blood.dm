@@ -8,7 +8,7 @@
     color = "#A9FBFB"
     reagent_state = LIQUID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-  
+
 /datum/glass_style/drinking_glass/synth_blood
     required_drink_type = /datum/reagent/synth_blood
     name = "glass of water"
@@ -51,12 +51,12 @@
     toxpwr = 1
     acidpwr = 10.0
     chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-  
+
 /datum/reagent/toxin/acid/hyflo_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
     . = ..()
     if(affected_mob.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
       return UPDATE_MOB_HEALTH
-    
+
 
 /datum/chemical_reaction/hyflo_acid
     results = list(/datum/reagent/toxin/acid/hyflo_acid = 2)
@@ -79,4 +79,4 @@
     purity/min = 0
     reaction_flags = REACTION_PH_VOL_CONSTANT
     reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_CHEMICAL
-    
+
