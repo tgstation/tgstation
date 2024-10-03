@@ -111,3 +111,4 @@
 	health = 25
 	maxHealth = 25
 	health_scaling = FALSE
+	current_size = 0.85
