@@ -35,7 +35,7 @@
 	var/last_feeding
 
 	/// Can fish reproduce in this quarium.
-	var/allow_breeding = TRUE
+	var/reproduction_and_growth = TRUE
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
@@ -295,7 +295,7 @@
 		else
 			dead_fish++
 
-	var/morb = HAS_TRAIT(user, TRAIT_MORBID)
+	var/morb = HAS_MIND_TRAIT(user, TRAIT_MORBID)
 	//Check if there are live fish - good mood
 	//All fish dead - bad mood.
 	//No fish - nothing.
@@ -309,7 +309,7 @@
 	. = ..()
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["allowBreeding"] = allow_breeding
+	.["allowBreeding"] = reproduction_and_growth
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -356,8 +356,8 @@
 				fluid_type = params["fluid"]
 				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
-		if("allow_breeding")
-			allow_breeding = !allow_breeding
+		if("reproduction_and_growth")
+			reproduction_and_growth = !reproduction_and_growth
 			. = TRUE
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
@@ -396,7 +396,7 @@
 		possible_destinations_for_fish = get_adjacent_open_turfs(droploc)
 	else
 		possible_destinations_for_fish = list(droploc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 	for(var/atom/movable/fish in contents)
 		fish.forceMove(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)

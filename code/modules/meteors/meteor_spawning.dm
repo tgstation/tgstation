@@ -104,7 +104,7 @@
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
 	player_mind.add_antag_datum(/datum/antagonist/changeling/space)
-	SEND_SOUND(new_changeling, 'sound/magic/mutate.ogg')
+	SEND_SOUND(new_changeling, 'sound/effects/magic/mutate.ogg')
 	message_admins("[ADMIN_LOOKUPFLW(new_changeling)] has been made into a space changeling by an event.")
 	new_changeling.log_message("was spawned as a midround space changeling by an event.", LOG_GAME)
 

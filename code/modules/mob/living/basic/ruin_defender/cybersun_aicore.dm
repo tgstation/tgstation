@@ -31,8 +31,8 @@
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
 	//is this being used as part of the haunted trading post ruin? if true, stuff there will self destruct when this mob dies
 	var/donk_ai_master = FALSE
-// list of stuff tagged to self destruct when this mob dies
-GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
+	/// the queue id for the stuff that selfdestructs when we die
+	var/selfdestruct_queue_id = "hauntedtradingpost_sd"
 
 /mob/living/basic/cybersun_ai_core/Initialize(mapload)
 	. = ..()
@@ -45,21 +45,20 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		BARRAGE_ABILITY_TYPEPATH = BB_CYBERSUN_CORE_BARRAGE,
 	)
 	grant_actions_by_list(innate_actions)
+	if(mapload && donk_ai_master)
+		return INITIALIZE_HINT_LATELOAD
+
+/mob/living/basic/cybersun_ai_core/LateInitialize()
+	SSqueuelinks.add_to_queue(src, selfdestruct_queue_id)
+	SSqueuelinks.pop_link(selfdestruct_queue_id)
+
+/mob/living/basic/cybersun_ai_core/MatchedLinks(id, list/partners) // id == queue id (for multiple queue objects)
+	if(id != selfdestruct_queue_id)
+		return
+	for(var/datum/partner as anything in partners) // all our partners in the selfdestruct queue are now registered to qdel if I die
+		partner.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/datum, selfdelete))
 
 /mob/living/basic/cybersun_ai_core/death(gibbed)
-	if(donk_ai_master == TRUE)
-		//disable all the tripwire traps
-		for (var/obj/item/pressure_plate/puzzle/invisible_tripwire as anything in GLOB.selfdestructs_when_boss_dies)
-			qdel(invisible_tripwire)
-		//and the electric overload traps
-		for (var/obj/effect/overloader_trap as anything in GLOB.selfdestructs_when_boss_dies)
-			qdel(overloader_trap)
-		//then disable the AI defence holograms
-		for (var/obj/structure/holosign/barrier/cyborg/cybersun_ai_shield as anything in GLOB.selfdestructs_when_boss_dies)
-			qdel(cybersun_ai_shield)
-		//then the power generator
-		for (var/obj/machinery/power/smes/magical/cybersun as anything in GLOB.selfdestructs_when_boss_dies)
-			qdel(cybersun)
 	do_sparks(number = 5, source = src)
 	return ..()
 
@@ -78,7 +77,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 ///dramatic death animations
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/robot(my_turf)
-	playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/explosion/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
 	for (var/mob/witness in range(10, src))
 		if (!witness.client || !isliving(witness))
 			continue
@@ -120,7 +119,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	. = ..()
 	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
 	new/obj/effect/temp_visual/lightning_strike(get_turf(target))
-	playsound(owner, 'sound/effects/sparks1.ogg', vol = 120, vary = TRUE)
+	playsound(owner, 'sound/effects/sparks/sparks1.ogg', vol = 120, vary = TRUE)
 
 /obj/effect/temp_visual/lightning_strike
 	name = "lightning strike"
@@ -143,7 +142,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 
 /obj/effect/temp_visual/lightning_strike/proc/zap()
 	new/obj/effect/temp_visual/lightning_strike_zap(loc)
-	playsound(src, 'sound/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
+	playsound(src, 'sound/effects/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
 	if (!isturf(loc))
 		return
 	for(var/mob/living/victim in loc)
@@ -189,7 +188,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	if(lockon_zone == my_turf)
 		return
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
-	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
+	playsound(lockon_zone, 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
 	StartCooldown(cooldown_time)
 	return ..()
 

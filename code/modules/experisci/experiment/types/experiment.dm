@@ -99,3 +99,9 @@
 	experiment_handler.selected_experiment = null
 	var/announcetext = experiment_handler.linked_web.complete_experiment(src)
 	experiment_handler.announce_message_to_all(announcetext)
+
+/datum/experiment/proc/get_points_reward_text()
+	var/list/english_list_keys = list()
+	for(var/points_type in points_reward)
+		english_list_keys += "[points_reward[points_type]] [points_type]"
+	return "[english_list(english_list_keys)] points"

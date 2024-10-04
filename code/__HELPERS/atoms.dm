@@ -63,6 +63,8 @@
 	var/turf/target_turf = get_turf(target)
 	if(get_dist(source, target) > length)
 		return FALSE
+	if(current == target_turf)
+		return TRUE
 	var/steps = 1
 	if(current == target_turf)//they are on the same turf, source can see the target
 		return TRUE
@@ -83,9 +85,9 @@
 	return get_dir(start, end) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 /**
- * Finds the distance between two atoms, in pixels
- * centered = FALSE counts from turf edge to edge
- * centered = TRUE counts from turf center to turf center
+ * Finds the distance between two atoms, in pixels \
+ * centered = FALSE counts from turf edge to edge \
+ * centered = TRUE counts from turf center to turf center \
  * of course mathematically this is just adding world.icon_size on again
 **/
 /proc/get_pixel_distance(atom/start, atom/end, centered = TRUE)
@@ -93,7 +95,7 @@
 		return 0
 	. = bounds_dist(start, end) + sqrt((((start.pixel_x + end.pixel_x) ** 2) + ((start.pixel_y + end.pixel_y) ** 2)))
 	if(centered)
-		. += world.icon_size
+		. += ICON_SIZE_ALL
 
 /**
  * Check if there is already a wall item on the turf loc
@@ -334,6 +336,6 @@ rough example of the "cone" made by the 3 dirs checked
 	var/icon_width = icon_dimensions["width"]
 	var/icon_height = icon_dimensions["height"]
 	return list(
-		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
-		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
+		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
+		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)

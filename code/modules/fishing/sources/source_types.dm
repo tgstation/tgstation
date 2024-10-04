@@ -1,17 +1,24 @@
 /datum/fish_source/ocean
+	radial_state = "seaboat"
+	overlay_state = "portal_ocean"
 	fish_table = list(
-		FISHING_DUD = 11,
+		FISHING_DUD = 10,
 		/obj/effect/spawner/message_in_a_bottle = 4,
-		/obj/item/coin/gold = 7,
-		/obj/item/fish/clownfish = 15,
-		/obj/item/fish/pufferfish = 15,
-		/obj/item/fish/cardinal = 15,
-		/obj/item/fish/greenchromis = 15,
+		/obj/item/coin/gold = 6,
+		/obj/item/fish/clownfish = 11,
+		/obj/item/fish/pufferfish = 11,
+		/obj/item/fish/cardinal = 11,
+		/obj/item/fish/greenchromis = 11,
+		/obj/item/fish/squid = 11,
+		/obj/item/fish/stingray = 8,
+		/obj/item/fish/plaice = 8,
+		/obj/item/fish/monkfish = 5,
 		/obj/item/fish/stingray = 10,
 		/obj/item/fish/lanternfish = 7,
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
+		/obj/item/fish/swordfish = 3,
 		/obj/structure/mystery_box/fishing = 2,
 	)
 	fish_counts = list(
@@ -28,9 +35,13 @@
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
+	radial_state = "palm_beach"
+	overlay_state = "portal_beach"
 
 /datum/fish_source/ice_fishing
 	catalog_description = "Ice-covered water"
+	radial_state = "ice"
+	overlay_state = "portal_ocean"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/arctic_char = 5,
@@ -42,21 +53,34 @@
 
 /datum/fish_source/river
 	catalog_description = "River water"
+	radial_state = "river"
+	overlay_state = "portal_river"
 	fish_table = list(
 		FISHING_DUD = 4,
 		/obj/item/fish/goldfish = 5,
 		/obj/item/fish/guppy = 5,
+		/obj/item/fish/perch = 4,
 		/obj/item/fish/angelfish = 4,
 		/obj/item/fish/catfish = 4,
+		/obj/item/fish/perch = 5,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/sockeye_salmon = 1,
 		/obj/item/fish/arctic_char = 1,
+		/obj/item/fish/pike = 1,
 		/obj/item/fish/goldfish/three_eyes = 1,
 	)
+	fish_counts = list(
+		/obj/item/fish/pike = 3,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/pike = 4 MINUTES,
+	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
+	explosive_malus = TRUE
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
+	radial_state = "palm_beach"
 	fish_table = list(
 		FISHING_DUD = 8,
 		/obj/item/fish/sand_crab = 10,
@@ -65,9 +89,11 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	explosive_malus = TRUE
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
+	radial_state = "cursed"
 	fish_table = list(
 		FISHING_DUD = 2,
 		/obj/item/fish/soul = 3,
@@ -78,6 +104,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
+	explosive_malus = TRUE
 
 /datum/fish_source/portal
 	fish_table = list(
@@ -85,15 +112,13 @@
 		/obj/item/fish/goldfish = 10,
 		/obj/item/fish/guppy = 10,
 		/obj/item/fish/angelfish = 10,
+		/obj/item/fish/perch = 5,
 		/obj/item/fish/goldfish/three_eyes = 3,
 	)
 	catalog_description = "Aquarium dimension (Fishing portal generator)"
+	radial_state = "fish_tank"
 	///The name of this option shown in the radial menu on the fishing portal generator
 	var/radial_name = "Aquarium"
-	///The icon state shown for this option in the radial menu
-	var/radial_state = "fish_tank"
-	///The icon state of the overlay shown on the machine when active.
-	var/overlay_state = "portal_aquarium"
 
 /datum/fish_source/portal/beach
 	fish_table = list(
@@ -103,6 +128,8 @@
 		/obj/item/fish/pufferfish = 10,
 		/obj/item/fish/cardinal = 10,
 		/obj/item/fish/greenchromis = 10,
+		/obj/item/fish/squid = 8,
+		/obj/item/fish/plaice = 8,
 	)
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
@@ -141,6 +168,7 @@
 		/obj/item/fish/armorfish = 5,
 		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/stingray = 4,
+		/obj/item/fish/monkfish = 4,
 		/obj/item/fish/swordfish = 3,
 	)
 	fish_counts = list(
@@ -185,13 +213,16 @@
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
 		/obj/item/fish/jumpercable = 5,
-		/obj/item/fish/chainsawfish = 3,
+		/obj/item/fish/chainsawfish = 2,
+		/obj/item/fish/pike/armored = 2,
 	)
 	fish_counts = list(
 		/obj/item/fish/chainsawfish = 1,
+		/obj/item/fish/pike/armored = 1,
 	)
 	fish_count_regen = list(
 		/obj/item/fish/chainsawfish = 7 MINUTES,
+		/obj/item/fish/pike/armored = 7 MINUTES,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -234,7 +265,7 @@
 		fish_table[reward_path] = rand(1, 4)
 
 ///Difficulty has to be calculated before the rest, because of how it influences jump chances
-/datum/fish_source/portal/random/calculate_difficulty(result, obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/challenge)
+/datum/fish_source/portal/random/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
 	. += rand(-10, 15)
 
@@ -274,12 +305,13 @@
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
 	background = "background_lavaland"
+	radial_state = "ground_hole"
+	overlay_state = "portal_chasm"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab = 15,
 		/datum/chasm_detritus = 30,
 	)
-
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
 /datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
@@ -303,6 +335,8 @@
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
+	radial_state = "lava"
+	overlay_state = "portal_lava"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
@@ -346,15 +380,17 @@
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
+	radial_state = "garbage"
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
-		/obj/item/fish/slimefish = 4
+		/obj/item/fish/slimefish = 4,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
 /datum/fish_source/toilet
 	catalog_description = "Station toilets"
+	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
 	fish_table = list(
 		FISHING_DUD = 18,
@@ -380,6 +416,21 @@
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
 
+/datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
+	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
+
+/datum/fish_source/holographic/on_fishing_spot_del(datum/component/fishing_spot/spot)
+	REMOVE_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src))
+
+/datum/fish_source/holographic/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/obj/item/fish/prototype = /obj/item/fish/holo/checkered
+	return LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Holographic Fish",
+		FISH_SOURCE_AUTOWIKI_ICON = FISH_AUTOWIKI_FILENAME(prototype),
+		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
+		FISH_SOURCE_AUTOWIKI_NOTES = "Holographic fish disappears outside the Holodeck",
+	))
+
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	if(!istype(get_area(fisherman), /area/station/holodeck))
@@ -399,6 +450,8 @@
 
 /datum/fish_source/oil_well
 	catalog_description = "Oil wells"
+	radial_state = "oil"
+	overlay_state = "portal_chasm" //close enough to pitch black
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/boned = 10,
@@ -421,10 +474,11 @@
 
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
+	radial_state = "hydro"
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
-		RANDOM_SEED = 16,
+		FISHING_RANDOM_SEED = 16,
 		/obj/item/seeds/grass = 6,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
@@ -433,12 +487,54 @@
 	fish_counts = list(
 		/obj/item/food/grown/grass = 10,
 		/obj/item/seeds/grass = 4,
-		RANDOM_SEED = 4,
+		FISHING_RANDOM_SEED = 4,
 		/obj/item/seeds/random = 1,
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+/datum/fish_source/hydro_tray/generate_wiki_contents(datum/autowiki/fish_sources/wiki)
+	var/list/data = list()
+	var/total_weight = 0
+	var/critter_weight = 0
+	var/seed_weight = 0
+	var/other_weight = 0
+	var/dud_weight = fish_table[FISHING_DUD]
+	for(var/content in fish_table)
+		var/weight = fish_table[content]
+		total_weight += weight
+		if(ispath(content, /mob/living))
+			critter_weight += weight
+		else if(ispath(content, /obj/item/food/grown) || ispath(content, /obj/item/seeds) || content == FISHING_RANDOM_SEED)
+			seed_weight += weight
+		else if(content != FISHING_DUD)
+			other_weight += weight
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = FISH_SOURCE_AUTOWIKI_DUD,
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(dud_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_WEIGHT_SUFFIX = "WITHOUT A BAIT",
+		FISH_SOURCE_AUTOWIKI_NOTES = "",
+	))
+
+	data += LIST_VALUE_WRAP_LISTS(list(
+		FISH_SOURCE_AUTOWIKI_NAME = "Critter",
+		FISH_SOURCE_AUTOWIKI_DUD = "",
+		FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(critter_weight/total_weight),
+		FISH_SOURCE_AUTOWIKI_NOTES = "A small creature, usually a frog or an axolotl",
+	))
+
+	if(other_weight)
+		data += LIST_VALUE_WRAP_LISTS(list(
+			FISH_SOURCE_AUTOWIKI_NAME = "Other Stuff",
+			FISH_SOURCE_AUTOWIKI_DUD = "",
+			FISH_SOURCE_AUTOWIKI_WEIGHT = PERCENT(other_weight/total_weight),
+			FISH_SOURCE_AUTOWIKI_NOTES = "Other stuff, who knows...",
+		))
+
+	return data
 
 /datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	if(!istype(parent, /obj/machinery/hydroponics/constructable))
@@ -483,3 +579,24 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
+
+/datum/fish_source/deepfryer
+	catalog_description = "Deep Fryers"
+	radial_state = "fryer"
+	fish_table = list(
+		/obj/item/food/badrecipe = 15,
+		/obj/item/food/nugget = 5,
+		/obj/item/fish/fryish = 40,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/fryish = 10,
+		/obj/item/fish/fryish/fritterish = 4,
+		/obj/item/fish/fryish/nessie = 1,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/fryish = 2 MINUTES,
+		/obj/item/fish/fryish/fritterish = 6 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13

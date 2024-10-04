@@ -35,6 +35,9 @@
 	// (because the desired effect will just work out of the box)
 	if(istype(interacting_with, /obj/structure/sink) || istype(interacting_with, /obj/structure/mop_bucket/janitorialcart) || istype(interacting_with, /obj/machinery/hydroponics))
 		return NONE
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -66,7 +69,7 @@
 
 	playsound(src, spray_sound, 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE * 2)
-	user.newtonian_move(get_dir(target, user))
+	user.newtonian_move(get_angle(target, user))
 	return TRUE
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
@@ -229,8 +232,8 @@
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
-	pickup_sound = 'sound/items/pepper_spray_pick_up.ogg'
-	drop_sound = 'sound/items/pepper_spray_drop.ogg'
+	pickup_sound = 'sound/items/handling/pepper_spray/pepper_spray_pick_up.ogg'
+	drop_sound = 'sound/items/handling/pepper_spray/pepper_spray_drop.ogg'
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null

@@ -4,17 +4,17 @@
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
 	telegraph_duration = 400
-	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
+	telegraph_message = span_danger("The air begins to grow warm.")
 
-	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
+	weather_message = span_userdanger("<i>You feel waves of heat wash over you! Find shelter!</i>")
 	weather_overlay = "ash_storm"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
 	weather_color = "green"
-	weather_sound = 'sound/misc/bloblarm.ogg'
+	weather_sound = 'sound/announcer/alarm/bloblarm.ogg'
 
 	end_duration = 100
-	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
+	end_message = span_notice("The air seems to be cooling off again.")
 
 	area_type = /area
 	protected_areas = list(/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload, /area/station/ai_monitored/turret_protected/ai_upload_foyer,
@@ -34,28 +34,28 @@
 	status_alarm(TRUE)
 
 
-/datum/weather/rad_storm/weather_act(mob/living/L)
+/datum/weather/rad_storm/weather_act(mob/living/living)
 	if(!prob(mutate_chance))
 		return
 
-	if(!ishuman(L))
+	if(!ishuman(living) || HAS_TRAIT(living, TRAIT_GODMODE))
 		return
 
-	var/mob/living/carbon/human/H = L
-	if(!H.can_mutate() || H.status_flags & GODMODE)
+	var/mob/living/carbon/human/human = living
+	if(!human.can_mutate())
 		return
 
-	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(human, TRAIT_RADIMMUNE))
 		return
 
-	if (SSradiation.wearing_rad_protected_clothing(H))
+	if (SSradiation.wearing_rad_protected_clothing(human))
 		return
 
-	H.random_mutate_unique_identity()
-	H.random_mutate_unique_features()
+	human.random_mutate_unique_identity()
+	human.random_mutate_unique_features()
 
 	if(prob(50))
-		do_mutate(L)
+		do_mutate(human)
 
 /datum/weather/rad_storm/end()
 	if(..())

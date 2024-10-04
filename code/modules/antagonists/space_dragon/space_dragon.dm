@@ -37,7 +37,7 @@
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/magic/demon_attack1.ogg', 80)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/magic/demon_attack1.ogg', 80)
 
 /datum/antagonist/space_dragon/forge_objectives()
 	var/static/list/area/allowed_areas
@@ -67,12 +67,12 @@
 	forge_objectives()
 	rift_ability = new()
 	owner.special_role = ROLE_SPACE_DRAGON
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_dragon))
 	return ..()
 
 /datum/antagonist/space_dragon/on_removal()
 	owner.special_role = null
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 	return ..()
 
 /datum/antagonist/space_dragon/apply_innate_effects(mob/living/mob_override)
@@ -142,7 +142,7 @@
 	if(riftTimer >= maxRiftTimer)
 		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
-		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
+		SEND_SOUND(owner.current, sound('sound/effects/magic/demon_dies.ogg'))
 		owner.current.death(/* gibbed = */ TRUE)
 		QDEL_NULL(owner.current)
 
@@ -182,7 +182,7 @@
 	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
 		Remaining crew are advised to evacuate as soon as possible.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
-	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg', volume = 75)
+	sound_to_playing_players('sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg', volume = 75)
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
 		rift.time_charged = rift.max_charge
@@ -256,7 +256,7 @@
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
 
 	if(length(carp))
-		parts += "<br><span class='header'>The [name] was assisted by:</span>"
+		parts += span_header("<br>The [name] was assisted by:")
 		parts += "<ul class='playerlist'>"
 		var/list/players_to_carp_taken = list()
 		for(var/datum/mind/carpy as anything in carp)

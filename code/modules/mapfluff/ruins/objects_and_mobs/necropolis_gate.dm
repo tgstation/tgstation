@@ -122,7 +122,7 @@
 			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(0.25 SECONDS)
-		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
+		playsound(T, 'sound/effects/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
 		add_overlay(door_overlay)
 		open = FALSE
 	else
@@ -183,7 +183,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")
 			user.log_message("released Legion.", LOG_GAME)
 
-		var/sound/legion_sound = sound('sound/creatures/legion_spawn.ogg')
+		var/sound/legion_sound = sound('sound/mobs/non-humanoids/legion/legion_spawn.ogg')
 		for(var/mob/M in GLOB.player_list)
 			if(is_valid_z_level(get_turf(M), T))
 				to_chat(M, span_userdanger("Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released."))

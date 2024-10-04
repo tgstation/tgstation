@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	voice_filter = "lowpass=f=750,volume=2"
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -28,19 +29,19 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/has_fov = TRUE
 	///Cigarette in the mask
 	var/obj/item/cigarette/cig
-	voice_filter = "lowpass=f=750,volume=2"
+	///How much does this mask affect fishing difficulty
+	var/fishing_modifier = 2
 
 /datum/armor/mask_gas
 	bio = 100
 
-/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	if(!isinhands && cig)
-		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
-
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 	init_fov()
+
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -48,6 +49,11 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		var/obj/item/gas_filter/inserted_filter = new starting_filter_type(src)
 		LAZYADD(gas_filters, inserted_filter)
 	has_filter = TRUE
+
+/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(!isinhands && cig)
+		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 
 /obj/item/clothing/mask/gas/Destroy()
 	QDEL_LAZYLIST(gas_filters)
@@ -222,6 +228,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 	clothing_flags = parent_type::clothing_flags | INTERNALS_ADJUST_EXEMPT
+	fishing_modifier = 8
 
 /datum/armor/gas_welding
 	melee = 10
@@ -235,7 +242,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 50, TRUE)
+	if(!fishing_modifier)
+		return
+	if(up)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+	else
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
 /obj/item/clothing/mask/gas/welding/update_icon_state()
 	. = ..()
@@ -266,6 +279,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -285,6 +299,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_fov = FALSE
 	var/list/clownmask_designs = list()
 	voice_filter = null // performer masks expect to be talked through
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -327,6 +342,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -340,6 +356,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
 	has_fov = FALSE
+	fishing_modifier = 0
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/plasmaman
@@ -384,6 +401,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -395,6 +413,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
@@ -403,6 +422,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -413,6 +433,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	fishing_modifier = -1
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
@@ -421,6 +442,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
+	fishing_modifier = -3
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
@@ -434,6 +456,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
+	fishing_modifier = -2
 	var/list/tikimask_designs = list()
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
@@ -476,6 +499,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
 	has_fov = FALSE
+	fishing_modifier = -2
 
 /obj/item/clothing/mask/gas/prop
 	name = "prop gas mask"
@@ -486,6 +510,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/atmosprop
 	name = "prop atmospheric gas mask"
@@ -497,6 +522,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSMOUTH
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/driscoll
 	name = "driscoll mask"
@@ -505,3 +531,4 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
+	fishing_modifier = 0

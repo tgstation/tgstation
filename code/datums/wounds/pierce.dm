@@ -6,7 +6,7 @@
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
-	sound_effect = 'sound/weapons/slice.ogg'
+	sound_effect = 'sound/items/weapons/slice.ogg'
 	processes = TRUE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
@@ -42,14 +42,26 @@
 		if(1 to 6)
 			victim.bleed(blood_bled, TRUE)
 		if(7 to 13)
-			victim.visible_message("<span class='smalldanger'>Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone].</span>", span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
+				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			victim.bleed(blood_bled, TRUE)
 		if(14 to 19)
-			victim.visible_message("<span class='smalldanger'>A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!</span>", span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
+				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 			victim.bleed(blood_bled)
 		if(20 to INFINITY)
-			victim.visible_message(span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"), span_danger("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
+				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			victim.bleed(blood_bled)
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
@@ -180,7 +192,10 @@
 /datum/wound/pierce/bleed/moderate
 	name = "Minor Skin Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // space is cold in ss13, so it's like an ice pack!
+	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with food and a rest period."
+	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has a small, circular hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
@@ -211,7 +226,10 @@
 /datum/wound/pierce/bleed/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
-	treat_text = "Repair punctures in skin by suture or cautery, extreme cold may also work."
+	treat_text = "Swiftly apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with iron supplements and a rest period."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
@@ -241,7 +259,10 @@
 /datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
-	treat_text = "Surgical repair of puncture wound, followed by supervised resanguination."
+	treat_text = "Immediately apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with supervised resanguination."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is ripped clear through, barely held together by exposed bone"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'

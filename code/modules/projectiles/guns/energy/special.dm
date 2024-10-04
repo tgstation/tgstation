@@ -95,7 +95,7 @@
 	can_charge = FALSE
 	gun_flags = NOT_A_REAL_GUN
 	heat = 3800
-	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
+	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
@@ -106,7 +106,7 @@
 		speed = 2.5 SECONDS, \
 		effectiveness = 105, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/plasma_cutter.ogg', \
+		butcher_sound = 'sound/items/weapons/plasma_cutter.ogg', \
 	)
 	AddElement(/datum/element/tool_flash, 1)
 
@@ -141,7 +141,7 @@
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
-/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount, heat_required)
 	if(QDELETED(cell))
 		balloon_alert(user, "no cell inserted!")
 		return FALSE
@@ -150,6 +150,9 @@
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
 		balloon_alert(user, "not enough charge!")
+		return FALSE
+	if(heat < heat_required)
+		to_chat(user, span_warning("[src] is not hot enough to complete this task!"))
 		return FALSE
 
 	return TRUE
@@ -376,7 +379,7 @@
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	ammo_type = list(/obj/item/ammo_casing/energy/marksman)
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	automatic_charge_overlays = FALSE
 	/// How many coins we can have at a time. Set to 0 for infinite
 	var/max_coins = 4
@@ -437,7 +440,7 @@
 	desc = "A competitive design to the tesla cannon, that instead of charging latent electrons, releases energy into photons. Eye protection is recommended."
 	icon_state = "photon"
 	inhand_icon_state = "tesla"
-	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/photon)
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY

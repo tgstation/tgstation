@@ -21,7 +21,8 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// How many prior grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
@@ -147,7 +148,7 @@
 			haunt_color = spell_colour, \
 			haunt_duration = 10 SECONDS, \
 			aggro_radius = 0, \
-			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies..."), \
+			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldly energies..."), \
 		)
 		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
 	cheese_sacrificed += length(cheese_to_haunt)
@@ -162,7 +163,7 @@
 		on_invocation_complete(user)
 		return
 	flick("[icon_state]_flash", src)
-	playsound(src,'sound/magic/staff_animation.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_animation.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 
 /// Add special effects for casting a spell, basically you glow and hover in the air.
@@ -181,7 +182,7 @@
 /// Called when you actually finish the damn thing
 /obj/effect/grand_rune/proc/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
-	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_change.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(summon_round_event), user) // Running the event sleeps
 	trigger_side_effects()
 	tear_reality()
@@ -253,7 +254,7 @@
 	while(created < to_create && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
-		// We don't want them close to each other - at least 1 tile of seperation
+		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
 		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
@@ -393,7 +394,7 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

@@ -441,7 +441,7 @@
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
 		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (I.Height()/ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -563,7 +563,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)

@@ -23,6 +23,8 @@
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
 	var/treat_text = ""
+	/// Even more basic treatment
+	var/treat_text_short = ""
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
@@ -643,22 +645,42 @@
 		return span_bold("[desc]!")
 	return "[desc]."
 
+/**
+ * Prints the details about the wound for the wound scanner on simple mode
+ */
 /datum/wound/proc/get_scanner_description(mob/user)
-	return "Type: [name]\nSeverity: [severity_text(simple = FALSE)]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
+	return "Type: [name]<br>\
+		Severity: [severity_text()]<br>\
+		Description: [desc]<br>\
+		Recommended Treatment: [treat_text]"
 
+/**
+ * Prints the details about the wound for the wound scanner on complex mode
+ */
 /datum/wound/proc/get_simple_scanner_description(mob/user)
-	return "[name] detected!\nRisk: [severity_text(simple = TRUE)]\nDescription: [simple_desc ? simple_desc : desc]\n<i>Treatment Guide: [simple_treat_text]</i>\n<i>Homemade Remedies: [homemade_treat_text]</i>"
+	var/severity_text_formatted = severity_text()
+	for(var/i in 1 to severity)
+		severity_text_formatted += "!"
 
-/datum/wound/proc/severity_text(simple = FALSE)
+	return "[name] detected!<br>\
+		Risk: [severity_text_formatted]<br>\
+		Description: [simple_desc || desc]<br>\
+		<i>Treatment Guide: [simple_treat_text]</i><br>\
+		<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+/**
+ * Returns what text describes this wound
+ */
+/datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
 			return "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate" + (simple ? "!" : "")
+			return "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "Severe" + (simple ? "!!" : "")
+			return "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "Critical" + (simple ? "!!!" : "")
+			return "<b>Critical</b>"
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".
@@ -694,7 +716,7 @@
 
 	var/datum/wound_pregen_data/pregen_data = get_pregen_data()
 
-	if (WOUND_BLUNT in pregen_data.required_wounding_types && severity >= WOUND_SEVERITY_CRITICAL)
+	if ((WOUND_BLUNT in pregen_data.required_wounding_types) && severity >= WOUND_SEVERITY_CRITICAL)
 		return WOUND_CRITICAL_BLUNT_DISMEMBER_BONUS // we only require mangled bone (T2 blunt), but if there's a critical blunt, we'll add 15% more
 
 /// Returns our pregen data, which is practically guaranteed to exist, so this proc can safely be used raw.

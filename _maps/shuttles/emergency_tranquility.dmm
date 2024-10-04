@@ -453,7 +453,7 @@
 /area/shuttle/escape)
 "jb" = (
 /obj/machinery/barsign/all_access/directional/north,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/stone,
 /area/shuttle/escape)
 "jl" = (

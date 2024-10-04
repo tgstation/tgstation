@@ -13,7 +13,7 @@
 	var/base_state = "clusterbang"
 	var/payload = /obj/item/grenade/flashbang/cluster
 	var/payload_spawner = /obj/effect/payload_spawner
-	var/prime_sound = 'sound/weapons/armbomb.ogg'
+	var/prime_sound = 'sound/items/weapons/armbomb.ogg'
 	var/min_spawned = 4
 	var/max_spawned = 8
 	var/segment_chance = 35
@@ -207,7 +207,7 @@
 	icon_state = "slimebang"
 	base_state = "slimebang"
 	payload_spawner = /obj/effect/payload_spawner/random_slime
-	prime_sound = 'sound/effects/bubbles.ogg'
+	prime_sound = 'sound/effects/bubbles/bubbles.ogg'
 
 /obj/item/grenade/clusterbuster/slime/volatile
 	payload_spawner = /obj/effect/payload_spawner/random_slime/volatile

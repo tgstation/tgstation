@@ -21,6 +21,26 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/power_connector
+	name = "Power Connector Board"
+	desc = "The circuit board for a portable SMES power connector."
+	id = "power_connector"
+	build_path = /obj/item/circuitboard/machine/smes/connector
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/smesbank
+	name = "Portable SMES Board"
+	desc = "The circuit board for a portable SMES, which requires a connector to use."
+	id = "portable_smes"
+	build_path = /obj/item/circuitboard/machine/smesbank
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/announcement_system
 	name = "Automated Announcement System Board"
 	desc = "The circuit board for an automated announcement system."
@@ -1257,3 +1277,73 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/manulathe
+	name = "Manufacturing Lathe Board"
+	desc = "The circuit board for this machine."
+	id = "manulathe"
+	build_path = /obj/item/circuitboard/machine/manulathe
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manucrafter
+	name = "Manufacturing Assembling Machine Board"
+	desc = "The circuit board for this machine."
+	id = "manucrafter"
+	build_path = /obj/item/circuitboard/machine/manucrafter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manucrusher
+	name = "Manufacturing Crusher Board"
+	desc = "The circuit board for this machine."
+	id = "manucrusher"
+	build_path = /obj/item/circuitboard/machine/manucrusher
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manurouter
+	name = "Manufacturing Router Board"
+	desc = "The circuit board for this machine."
+	id = "manurouter"
+	build_path = /obj/item/circuitboard/machine/manurouter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manusorter
+	name = "Conveyor Sort-Router Board"
+	desc = "The circuit board for this machine."
+	id = "manusorter"
+	build_path = /obj/item/circuitboard/machine/manusorter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manuunloader
+	name = "Manufacturing Crate Unloader Board"
+	desc = "The circuit board for this machine."
+	id = "manuunloader"
+	build_path = /obj/item/circuitboard/machine/manuunloader
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/manusmelter
+	name = "Manufacturing Smelter Board"
+	desc = "The circuit board for this machine."
+	id = "manusmelter"
+	build_path = /obj/item/circuitboard/machine/manusmelter
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO

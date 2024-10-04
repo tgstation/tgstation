@@ -345,7 +345,12 @@
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	var/reason = tgui_input_text(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
+	var/reason = tgui_input_text(
+		src,
+		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
+		"Confirm Shuttle Call",
+		max_length = MAX_MESSAGE_LEN,
+	)
 
 	if(incapacitated)
 		return
@@ -778,12 +783,26 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_malf_core"
 
+/datum/action/innate/core_return/Grant(mob/new_owner)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_SILICON_AI_VACATE_APC, PROC_REF(returned_to_core))
+
+/datum/action/innate/core_return/proc/returned_to_core(datum/source)
+	SIGNAL_HANDLER
+
+	Remove(source)
+	UnregisterSignal(source, COMSIG_SILICON_AI_VACATE_APC)
+
 /datum/action/innate/core_return/Activate()
 	var/obj/machinery/power/apc/apc = owner.loc
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	apc.malfvacate()
+	if(SEND_SIGNAL(owner, COMSIG_SILICON_AI_CORE_STATUS) & COMPONENT_CORE_ALL_GOOD)
+		apc.malfvacate()
+	else
+		to_chat(owner, span_danger("Linked core not detected!"))
+		return
 	qdel(src)
 
 /mob/living/silicon/ai/proc/toggle_camera_light()
@@ -1011,16 +1030,16 @@
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
 	malf_picker.processing_time += 10
 	var/area/apcarea = apc.area
-	var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
+	var/datum/ai_module/malf/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/malf/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
 	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
 		doom_n_boom.hacked_command_areas += apcarea
 		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
@@ -1172,7 +1191,7 @@
 /mob/living/silicon/ai/get_exp_list(minutes)
 	. = ..()
 
-	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
+	var/datum/job/ai/ai_job_ref = SSjob.get_job_type(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
 

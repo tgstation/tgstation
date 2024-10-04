@@ -5,10 +5,10 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	burst_fire_selection = TRUE
 
 /obj/item/gun/ballistic/automatic/proto
@@ -105,9 +105,9 @@
 	click_on_low_ammo = FALSE
 	/// List of the possible firing sounds
 	var/list/firing_sound_list = list(
-		'sound/weapons/gun/smartgun/smartgun_shoot_1.ogg',
-		'sound/weapons/gun/smartgun/smartgun_shoot_2.ogg',
-		'sound/weapons/gun/smartgun/smartgun_shoot_3.ogg',
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_1.ogg',
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_2.ogg',
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_3.ogg',
 	)
 
 /obj/item/gun/ballistic/automatic/smartgun/fire_sounds()
@@ -123,7 +123,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
@@ -153,7 +153,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()
@@ -254,9 +254,9 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	tac_reloads = FALSE
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	fire_sound = 'sound/items/weapons/gun/l6/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/l6/l6_rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
@@ -277,7 +277,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -319,7 +319,7 @@
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus
-	name = "Surplus Rifle"
+	name = "surplus rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	worn_icon_state = null
@@ -348,5 +348,5 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'sound/items/weapons/laser.ogg'
 	casing_ejector = FALSE

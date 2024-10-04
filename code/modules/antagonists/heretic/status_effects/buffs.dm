@@ -190,7 +190,7 @@
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
+	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
 	source.visible_message(
 		span_warning("[to_remove] orbiting [source] snaps in front of [attack_text], blocking it before vanishing!"),
 		span_warning("[to_remove] orbiting you snaps in front of [attack_text], blocking it before vanishing!"),
@@ -251,22 +251,20 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
+	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
-	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags |= GODMODE
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
 	owner.remove_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
-	owner.status_flags &= ~GODMODE
 	owner.alpha = initial(owner.alpha)
 	owner.density = initial(owner.density)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
@@ -283,14 +281,14 @@
 
 /datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)
 	SIGNAL_HANDLER
-	playsound(get_turf(owner), 'sound/effects/curse1.ogg', 80, TRUE)
+	playsound(get_turf(owner), 'sound/effects/curse/curse1.ogg', 80, TRUE)
 	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
 	owner.remove_status_effect(type)
 
 /datum/status_effect/caretaker_refuge/proc/on_focus_lost()
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
-	owner.remove_status_effect(type)
+	qdel(src)
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER

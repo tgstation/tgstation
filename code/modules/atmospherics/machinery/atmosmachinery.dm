@@ -34,7 +34,7 @@
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
 
-	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	///This only works on pipes, because they have 1000 subtypes which need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
 	///The image of the pipe/device used for ventcrawling
@@ -331,7 +331,7 @@
 	if(isnull(given_layer))
 		given_layer = piping_layer
 
-	// you cant place the machine on the same location as the target cause it blocks
+	// you can't place the machine on the same location as the target cause it blocks
 	if(target.loc == loc)
 		return FALSE
 
@@ -478,7 +478,7 @@
  * Called by wrench_act() before deconstruct()
  * Arguments:
  * * mob_user - the mob doing the act
- * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the enviroment pressure and the pipe internal pressure
+ * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the environment pressure and the pipe internal pressure
  */
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
@@ -569,7 +569,7 @@
 
 // Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!direction) //cant go this way.
+	if(!direction) //can't go this way.
 		return
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
@@ -614,8 +614,8 @@
 	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
 	// If the new x is greater (move is left to right) we get a negative offset. vis versa
-	our_client.pixel_x = (x - target_move.x) * world.icon_size
-	our_client.pixel_y = (y - target_move.y) * world.icon_size
+	our_client.pixel_x = (x - target_move.x) * ICON_SIZE_X
+	our_client.pixel_y = (y - target_move.y) * ICON_SIZE_Y
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 

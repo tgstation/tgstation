@@ -68,7 +68,7 @@
  * Place our tile on a plating, or replace it.
  *
  * Arguments:
- * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
+ * * target_plating - Instance of the plating we want to place on. Replaced during successful executions.
  * * user - The mob doing the placing.
  */
 /obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user)
@@ -83,7 +83,7 @@
 			return
 		target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
 		target_plating.setDir(turf_dir)
-		playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		return target_plating // Most executions should end here.
 
 	// If we and the target tile share the same initial baseturf and they consent, replace em.
@@ -98,7 +98,7 @@
 
 	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
 	target_plating.setDir(turf_dir)
-	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
 /obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, list/modifiers)
@@ -1259,7 +1259,7 @@
 	inhand_icon_state = "tile-catwalk"
 	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	turf_type = /turf/open/floor/catwalk_floor
-	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
+	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with each other
 	tile_reskin_types = list(
 		/obj/item/stack/tile/catwalk_tile,
 		/obj/item/stack/tile/catwalk_tile/iron,

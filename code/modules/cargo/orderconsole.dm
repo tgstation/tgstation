@@ -235,18 +235,18 @@
 	var/reason = ""
 	if(requestonly && !self_paid)
 		working_list = SSshuttle.request_list
-		reason = tgui_input_text(user, "Reason", name)
+		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 
 	if(pack.goody && !self_paid)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
 
@@ -384,7 +384,7 @@
 			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
-			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
+			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.pack.name != order_name)
 					continue

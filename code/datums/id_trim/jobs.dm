@@ -24,10 +24,10 @@
 
 /datum/id_trim/job/New()
 	if(ispath(job))
-		job = SSjob.GetJobType(job)
+		job = SSjob.get_job_type(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -75,6 +75,9 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 	return TRUE
+
+/datum/id_trim/job/find_job()
+	return job
 
 /datum/id_trim/job/assistant
 	assignment = JOB_ASSISTANT
@@ -155,6 +158,29 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/bartender
+
+/datum/id_trim/job/pun_pun
+	assignment = "Busser"
+	trim_state = "trim_busser"
+	department_color = COLOR_SERVICE_LIME
+	subdepartment_color = COLOR_SERVICE_LIME
+	sechud_icon_state = SECHUD_BUSSER
+	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_SERVICE,
+		ACCESS_THEATRE,
+		)
+	extra_access = list(
+		ACCESS_HYDROPONICS,
+		ACCESS_KITCHEN,
+		ACCESS_BAR,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
+		)
+	job = /datum/job/pun_pun
 
 /datum/id_trim/job/bitrunner
 	assignment = JOB_BITRUNNER
@@ -1070,7 +1096,7 @@
 
 	if(CONFIG_GET(number/depsec_access_level) == POPULATION_SCALED_ACCESS)
 		var/minimal_security_officers = 3 // We do not spawn in any more lockers if there are 5 or less security officers, so let's keep it lower than that number.
-		var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
+		var/datum/job/J = SSjob.get_job(JOB_SECURITY_OFFICER)
 		if((J.spawn_positions - minimal_security_officers) <= 0)
 			access |= elevated_access
 

@@ -228,7 +228,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and flashes everyone in sight."
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	for(var/mob/living/L in view(user,7))
 		L.flash_act()
 

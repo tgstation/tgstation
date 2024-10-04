@@ -99,7 +99,7 @@
 		var/obj/item/stock_parts/attack_diode = attack_item
 		if(crystal_lens && attack_diode.rating < 3) //only tier 3 and up are small enough to fit
 			to_chat(user, span_warning("You try to jam \the [attack_item.name] in place, but \the [crystal_lens.name] is in the way!"))
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 20)
+			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, attack_item)
 				if(atom_to_teleport == user)
@@ -113,7 +113,7 @@
 			return
 		if(!user.transferItemToLoc(attack_item, src))
 			return
-		playsound(src, 'sound/items/screwdriver.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
 		diode = attack_item
 		balloon_alert(user, "installed \the [diode.name]")
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
@@ -129,7 +129,7 @@
 		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = attack_item
 		if(diode && diode.rating < 3) //only lasers of tier 3 and up can house a lens
 			to_chat(user, span_warning("You try to jam \the [crystal_stack.name] in front of the diode, but it's a bad fit!"))
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 20)
+			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, src)
 				if(atom_to_teleport == user)
@@ -148,7 +148,7 @@
 		if(!user.transferItemToLoc(single_crystal, src))
 			return
 		crystal_lens = single_crystal
-		playsound(src, 'sound/items/screwdriver2.ogg', 30)
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 			It can now be used to shine through obstacles at the cost of double the energy drain."))
@@ -183,11 +183,13 @@
 			and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
 
 /obj/item/laser_pointer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
-/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	laser_act(interacting_with, user, modifiers)
 	return ITEM_INTERACT_BLOCKING
+
+/obj/item/laser_pointer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 ///Handles shining the clicked atom,
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, list/modifiers)
@@ -233,9 +235,12 @@
 		else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
+			var/always_fail = FALSE
+			if(istype(target_humanoid.glasses, /obj/item/clothing/glasses/eyepatch) && prob(50))
+				always_fail = TRUE
 
 			//chance to actually hit the eyes depends on internal component
-			if(prob(effectchance * diode.rating) && target_humanoid.flash_act(severity))
+			if(prob(effectchance * diode.rating) && !always_fail && target_humanoid.flash_act(severity))
 				outmsg = span_notice("You blind [target_humanoid] by shining [src] in [target_humanoid.p_their()] eyes.")
 				log_combat(user, target_humanoid, "blinded with a laser pointer", src)
 			else

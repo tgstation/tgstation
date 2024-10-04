@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Demonstrate your incredible and destructive magical powers."
 	hardcore_random_bonus = TRUE
+
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -124,7 +125,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
-		SSjob.SendToLateJoin(owner.current)
+		SSjob.send_to_late_join(owner.current)
 		to_chat(owner, "HOT INSERTION, GO GO GO")
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
@@ -443,10 +444,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 /datum/team/wizard/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += span_header("Wizards/witches of [master_wizard.owner.name] team were:")
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices and minions were:</span>"
+	parts += span_header("[master_wizard.owner.name] apprentices and minions were:")
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

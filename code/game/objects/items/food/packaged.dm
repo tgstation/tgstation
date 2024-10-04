@@ -156,6 +156,25 @@
 	tastes = list("seafood" = 7, "tin" = 1)
 	foodtypes = SEAFOOD
 
+/obj/item/food/canned/squid_ink/open_can(mob/user)
+	. = ..()
+	AddComponent(/datum/component/splat, \
+		memory_type = /datum/memory/witnessed_inking, \
+		smudge_type = /obj/effect/decal/cleanable/food/squid_ink, \
+		moodlet_type = /datum/mood_event/inked, \
+		splat_color = COLOR_NEARLY_ALL_BLACK, \
+		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
+	)
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, INNATE_TRAIT) //good luck catching the liquid
+
+/obj/item/food/canned/squid_ink/proc/blind_em(mob/living/victim, can_splat_on)
+	if(can_splat_on)
+		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
+		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
+		victim.Paralyze(2 SECONDS) //splat!
+	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)
+
 /obj/item/food/canned/chap
 	name = "can of CHAP"
 	desc = "CHAP: Chopped Ham And Pork. The classic American canned meat product that won a world war, then sent millions of servicemen home with heart congestion."

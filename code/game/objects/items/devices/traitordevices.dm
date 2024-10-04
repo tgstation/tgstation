@@ -361,15 +361,6 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/wrench/combat))
-		return TRUE
-	if(!user.combat_mode)
-		return TRUE
-	if(!inserted.toolspeed)
-		return TRUE
-	return FALSE
-
 /obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/wrench/combat))
 		return NONE
@@ -389,7 +380,7 @@ effective or pretty fucking useless.
 		COMBAT_MESSAGE_RANGE,
 	)
 
-	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src

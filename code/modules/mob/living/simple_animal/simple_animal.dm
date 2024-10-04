@@ -234,7 +234,7 @@
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
 /mob/living/simple_animal/update_stat()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
 		if(health <= 0)
@@ -389,8 +389,8 @@
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))
-		var/mob/M = the_target
-		if(M.status_flags & GODMODE)
+		var/mob/mob = the_target
+		if(HAS_TRAIT(mob, TRAIT_GODMODE))
 			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
@@ -561,7 +561,7 @@
 	if(isliving(hunted)) // Are we hunting a living mob?
 		var/mob/living/prey = hunted
 		if(inept_hunter) // Make your hunter inept to have them unable to catch their prey.
-			visible_message("<span class='warning'>[src] chases [prey] around, to no avail!</span>")
+			visible_message(span_warning("[src] chases [prey] around, to no avail!"))
 			step(prey, pick(GLOB.cardinals))
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return

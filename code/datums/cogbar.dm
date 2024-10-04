@@ -44,7 +44,7 @@
 
 /// Adds the cog to the user, visible by other players
 /datum/cogbar/proc/add_cog_to_user()
-	cog = SSvis_overlays.add_vis_overlay(user, 
+	cog = SSvis_overlays.add_vis_overlay(user,
 		icon = 'icons/effects/progressbar.dmi',
 		iconstate = "cog",
 		plane = HIGH_GAME_PLANE,
@@ -52,7 +52,7 @@
 		unique = TRUE,
 		alpha = 0,
 	)
-	cog.pixel_y = world.icon_size + offset_y
+	cog.pixel_y = ICON_SIZE_Y + offset_y
 	animate(cog, alpha = 255, time = COGBAR_ANIMATION_TIME)
 
 	if(isnull(user_client))
@@ -61,7 +61,7 @@
 	blank = image('icons/blanks/32x32.dmi', cog, "nothing")
 	SET_PLANE_EXPLICIT(blank, HIGH_GAME_PLANE, user)
 	blank.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	blank.override = TRUE	
+	blank.override = TRUE
 
 	user_client.images += blank
 
@@ -74,7 +74,7 @@
 
 	animate(cog, alpha = 0, time = COGBAR_ANIMATION_TIME)
 
-	QDEL_IN(src, COGBAR_ANIMATION_TIME)   
+	QDEL_IN(src, COGBAR_ANIMATION_TIME)
 
 
 /// When the user is deleted, remove the cog
@@ -82,6 +82,6 @@
 	SIGNAL_HANDLER
 
 	qdel(src)
-	
+
 
 #undef COGBAR_ANIMATION_TIME

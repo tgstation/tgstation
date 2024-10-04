@@ -19,7 +19,7 @@
 	maxHealth = 60
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_MUSHROOM)
@@ -78,14 +78,9 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/mushroom_food
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target
 	hunt_targets = list(/obj/item/food/grown/mushroom)
 	hunt_range = 6
-
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/mushroom_food
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
 
 /mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()

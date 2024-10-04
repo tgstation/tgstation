@@ -1,6 +1,6 @@
 /datum/ai_planning_subtree/find_and_hunt_target/heal_raptors
 	target_key = BB_INJURED_RAPTOR
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/heal_raptor
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/heal_raptor
 	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_raptor
 	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 70
@@ -13,7 +13,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_start_trouble
 	target_key = BB_RAPTOR_VICTIM
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bully_raptors
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target/bully_raptors
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_victim
 	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 30
@@ -36,7 +36,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/care_for_young
 	target_key = BB_RAPTOR_BABY
-	hunting_behavior = /datum/ai_behavior/hunt_target/care_for_young
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
 	hunt_targets = list(/mob/living/basic/raptor/baby_raptor)
 	hunt_chance = 75
@@ -49,7 +49,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough
 	target_key = BB_RAPTOR_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_trough
 	hunt_targets = list(/obj/structure/ore_container/food_trough/raptor_trough)
 	hunt_chance = 80
