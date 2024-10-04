@@ -42,7 +42,7 @@
 	name = "7mm hollow-point bullet"
 	damage = 50
 	sharpness = SHARP_EDGED
-	weakness_against_armour = TRUE
+	weak_against_armour = TRUE
 	wound_bonus = -40
 	bare_wound_bonus = 30
 	wound_falloff_tile = -8

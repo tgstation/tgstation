@@ -25,7 +25,7 @@
 /obj/projectile/bullet/c9mm/hp
 	name = "9mm hollow-point bullet"
 	damage = 40
-	weakness_against_armour = TRUE
+	weak_against_armour = TRUE
 
 /obj/projectile/bullet/incendiary/c9mm
 	name = "9mm incendiary bullet"
@@ -46,7 +46,7 @@
 /obj/projectile/bullet/c10mm/hp
 	name = "10mm hollow-point bullet"
 	damage = 50
-	weakness_against_armour = TRUE
+	weak_against_armour = TRUE
 
 /obj/projectile/bullet/incendiary/c10mm
 	name = "10mm incendiary bullet"

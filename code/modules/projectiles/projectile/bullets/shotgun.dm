@@ -30,7 +30,7 @@
 	damage = 20
 	stamina = 160 //BONK
 	wound_bonus = 30
-	weakness_against_armour = TRUE
+	weak_against_armour = TRUE
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -128,7 +128,7 @@
 	ricochet_decay_chance = 0.6
 	ricochet_decay_damage = 0.3
 	demolition_mod = 10
-	weakness_against_armour = TRUE
+	weak_against_armour = TRUE
 
 // Mech Scattershot
 

@@ -169,7 +169,7 @@
 		return prob(actual_chance)
 
 	//Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
-	var/penetrative_behaviour = embedding_item.weakness_against_armour ? ARMOR_WEAKENED_MULTIPLIER : 1
+	var/penetrative_behaviour = embedding_item.weak_against_armour ? ARMOR_WEAKENED_MULTIPLIER : 1
 	var/pen_mod = -(armor * penetrative_behaviour) // if our shrapnel is weak into armor, then we restore our armor to the full value.
 	actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 	if(actual_chance <= 0)
