@@ -157,7 +157,8 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	var/slip_time = 6 SECONDS
 	var/slip_flags = NO_SLIP_WHEN_WALKING
 
