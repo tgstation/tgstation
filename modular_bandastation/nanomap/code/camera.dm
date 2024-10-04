@@ -11,7 +11,7 @@
 		return
 	if(!findtext(z_level.name, "Station"))
 		return
-	nanomap_png = "[SSmapping.config.map_name]_nanomap_z[z-1].png" // Station starts at Z-level 2
+	nanomap_png = "[SSmapping.current_map.map_name]_nanomap_z[z-1].png" // Station starts at Z-level 2
 
 /obj/machinery/computer/security
 	var/list/z_levels = list() // Assoc list, "z_level":"nanomap.png"
