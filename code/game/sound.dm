@@ -532,7 +532,7 @@
 				'sound/mobs/humanoids/human/snore/snore_female3.ogg' = 33,
 				'sound/mobs/humanoids/human/snore/snore_mimimi1.ogg' = 1,
 			))
-		if(SFX_SNORE_FEMALE)
+		if(SFX_SNORE_MALE)
 			soundin = pick_weight(list(
 				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,

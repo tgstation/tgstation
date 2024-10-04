@@ -213,18 +213,3 @@
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/snore
-	key = "snore"
-	key_third_person = "snores"
-	message = "snores."
-	message_mime = "sleeps soundly."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	stat_allowed = UNCONSCIOUS
-	vary = TRUE
-
-// eventually we want to give species their own "snoring" sounds
-/datum/emote/living/carbon/human/snore/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_snore_sound(user)

@@ -114,7 +114,6 @@
 	return SFX_SNORE_MALE
 
 
-
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
 		purrbation_apply(mob)
