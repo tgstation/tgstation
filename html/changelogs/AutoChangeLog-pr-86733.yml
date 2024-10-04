@@ -1,4 +1,0 @@
-author: "Chubbygummibear"
-delete-after: True
-changes:
-  - bugfix: "fixed multi-z weather overlays stacking and not hiding overlays above you"

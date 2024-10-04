@@ -1,7 +1,0 @@
-author: "DaCoolBoss"
-delete-after: True
-changes:
-  - bugfix: "Donk Co. and S.E.L.F. crates now properly display their lock (or lack therof)."
-  - image: "New sprites for unlocked Donk Co. crates and locked S.E.L.F. crates."
-  - spellcheck: "The names of syndicate-branded crates now use proper nouns."
-  - spellcheck: "Fixed a typo in the description for Donk Co. fridges."
