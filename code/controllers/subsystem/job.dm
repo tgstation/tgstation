@@ -362,13 +362,21 @@ SUBSYSTEM_DEF(job)
 	for(var/datum/job/job as anything in command_department.department_jobs)
 		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 			continue
+
 		var/list/candidates = find_occupation_candidates(job, level)
 		if(!candidates.len)
 			continue
+
 		var/mob/dead/new_player/candidate = pick(candidates)
-		// Eligibility checks done as part of find_occupation_candidates
-		if(assign_role(candidate, job, do_eligibility_checks = FALSE))
-			.++
+
+		// Eligibility checks done as part of find_occupation_candidates() above.
+		if(!assign_role(candidate, job, do_eligibility_checks = FALSE))
+			continue
+
+		.++
+
+		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+			job_debug("JOBS: Command Job is now full, Job: [job], Positions: [job.current_positions], Limit: [job.spawn_positions]")
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -443,12 +451,21 @@ SUBSYSTEM_DEF(job)
 	// From assign_all_overflow_positions()
 	// 4. Anyone with the overflow role enabled has been given the overflow role.
 
-	// Shuffle the joinable occupation list and filter out ineligible occupations due to above job assignments.
+	// Copy the joinable occupation list and filter out ineligible occupations due to above job assignments.
 	var/list/available_occupations = joinable_occupations.Copy()
+	var/datum/job_department/command_department = get_department_type(/datum/job_department/command)
+
 	for(var/datum/job/job in available_occupations)
 		// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked.
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("DO: Job is now filled, Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
+			available_occupations -= job
+			continue
+
+		// Command jobs are handled via fill_all_head_positions_at_priority(...)
+		// Remove these jobs from the list of available occupations to prevent multiple players being assigned to the same
+		// limited role without constantly having to iterate over the available_occupations list and re-check them.
+		if(job in command_department?.department_jobs)
 			available_occupations -= job
 
 	job_debug("DO: Running standard job assignment")

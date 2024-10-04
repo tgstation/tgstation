@@ -674,7 +674,9 @@
 			continue
 		if(length(fish_traits & trait.incompatible_traits))
 			continue
-		if((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability))
+		// If there's no partner, we've been reated through parthenogenesis or growth, therefore, traits are copied
+		// Otherwise, we do some probability checks.
+		if(!y_traits || ((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability)))
 			fish_traits |= trait_type
 			incompatible_traits |= trait.incompatible_traits
 
