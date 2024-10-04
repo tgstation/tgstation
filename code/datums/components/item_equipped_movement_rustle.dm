@@ -48,18 +48,11 @@
 	SIGNAL_HANDLER
 	holder = equipper
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
-	//just qdeleting
-	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleted), override = TRUE)
 
 /datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	move_counter = 0
-	UnregisterSignal(equipper, list(COMSIG_MOVABLE_MOVED,COMSIG_QDELETING))
-	holder = null
-
-///just gets rid of the reference to holder in the case that they're qdeleted.
-/datum/component/item_equipped_movement_rustle/proc/holder_deleted(datum/source, datum/possible_holder)
-	SIGNAL_HANDLER
+	UnregisterSignal(equipper, COMSIG_MOVABLE_MOVED)
 	holder = null
 
 /datum/component/item_equipped_movement_rustle/proc/try_step(obj/item/clothing/source)
