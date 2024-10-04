@@ -125,4 +125,4 @@
 
 ///Defines for priorities for the bubble_icon_override comp
 #define BUBBLE_ICON_PRIORITY_ACCESSORY 2
-#define BUBBLE_ICON_PRIORITY_ORGAN_SET_BONUS 1
+#define BUBBLE_ICON_PRIORITY_ORGAN 1

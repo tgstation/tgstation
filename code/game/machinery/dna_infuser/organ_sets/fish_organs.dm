@@ -205,30 +205,19 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not drowing
 	var/safe_water_level = 29
-	///The special bubble icon that we give to mobs with this organ. It's a indie rpg reference btw
-	var/datum/component/bubble_icon_override/bubble_icon
 
 /obj/item/organ/internal/lungs/fish/Initialize(mapload)
-	//This takes precedence over oygen for the amphibious subtype
-	add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
-
-/obj/item/organ/internal/lungs/fish/on_mob_insert(mob/living/carbon/owner)
-	. = ..()
-	bubble_icon = owner.AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN_SET_BONUS)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills around %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
-
-/obj/item/organ/internal/lungs/fish/on_mob_remove(mob/living/carbon/owner)
-	. = ..()
-	QDEL_NULL(bubble_icon)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
+	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
 
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
 	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
-		return FALSE
+		return
 
 	if(old_water_pp < safe_water_level)
 		breather.failed_last_breath = FALSE
@@ -239,7 +228,6 @@
 	// Heal mob if not in crit.
 	if(breather.health >= breather.crit_threshold && breather.oxyloss)
 		breather.adjustOxyLoss(-5)
-	return TRUE
 
 /// Called when there isn't enough water to breath
 /obj/item/organ/internal/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
@@ -247,7 +235,6 @@
 	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
 	if(water_pp)
 		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide, volume = gas_breathed)
-	return
 
 /// Subtype of gills that allow the mob to optionally breathe water.
 /obj/item/organ/internal/lungs/fish/amphibious
@@ -255,19 +242,35 @@
 	desc = "DNA from an amphibious or semi-aquatic creature infused on a pair lungs. Enjoy breathing underwater without drowning outside water."
 	safe_oxygen_min = /obj/item/organ/internal/lungs::safe_oxygen_min
 	safe_water_level = 19
-	///If true, we don't have to breathe air since we've water vapor (or are wet)
-	var/breathed_water = FALSE
+	/**
+	 * If false, we don't breathe air since we've got water instead.
+	 * Set to FALSE at the start of each cycle and TRUE on on_low_water()
+	 */
+	var/should_breathe_oxygen = FALSE
 
-/obj/item/organ/internal/lungs/fish/amphibious/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
-	breathed_water = ..()
-	if(breathed_water && breather.failed_last_breath) //in case we had neither oxygen nor water last tick.
-		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+/obj/item/organ/internal/lungs/fish/amphibious/Initialize(mapload)
+	. = ..()
+	/**
+	 * We're setting the gas reaction for breathing oxygen here,
+	 * since gas reation procs are run in the order they're added,
+	 * and we want breathe_water() to run before breathe_oxygen,
+	 * so that if we're breathing water vapor (or are wet), we won't have to breathe oxygen.
+	 */
+	safe_oxygen_min = /obj/item/organ/internal/lungs::safe_oxygen_min
+	add_gas_reaction(/datum/gas/oxygen, always = PROC_REF(breathe_oxygen))
+
+/obj/item/organ/internal/lungs/fish/amphibious/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
+	should_breathe_oxygen = FALSE //assume we don't have to breathe oxygen until we fail to breathe water
+	return ..()
 
 /obj/item/organ/internal/lungs/fish/amphibious/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
-	return //do nothing, fall back on breathing oxygen instead.
+	should_breathe_oxygen = TRUE
+	return
 
 /obj/item/organ/internal/lungs/fish/amphibious/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
-	if(breathed_water)
+	if(!should_breathe_oxygen)
+		if(breather.failed_last_breath) //in case we had neither oxygen nor water last tick.
+			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return
 	return ..()
 
