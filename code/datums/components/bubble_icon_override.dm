@@ -1,3 +1,8 @@
+/**
+ * A component that overrides the bubble_icon variable when equipped or implanted
+ * while having a simple priority system, so accessories have higher priority than
+ * organs, for example.
+ */
 /datum/component/bubble_icon_override
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	can_transfer = TRUE //sure why not
@@ -9,7 +14,7 @@
 	var/active = FALSE
 
 /datum/component/bubble_icon_override/Initialize(bubble_icon, priority)
-	if(!isclothing(parent) || !isorgan(parent))
+	if(!isclothing(parent) && !isorgan(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.bubble_icon = bubble_icon
 	src.priority = priority
