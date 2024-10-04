@@ -1,0 +1,4 @@
+#include "_nanomap.dm"
+
+#include "code/camera.dm"
+#include "code/nanomaps_asset.dm"

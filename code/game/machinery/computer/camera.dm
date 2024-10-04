@@ -104,8 +104,16 @@
 		data["cameras"] += list(list(
 			name = C.c_tag,
 			ref = REF(C),
+		// BANDASTATION EDIT START - Nanomap
+			x = C.x,
+			y = C.y,
+			z = C.z,
+			status = C.camera_enabled,
 		))
-
+		if("[C.z]" in z_levels || !C.nanomap_png)
+			continue
+		z_levels += list("[C.z]" = C.nanomap_png)
+		// BANDASTATION EDIT END - Nanomap
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
