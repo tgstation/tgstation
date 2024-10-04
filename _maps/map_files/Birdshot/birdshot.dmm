@@ -325,6 +325,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "ahf" = (
@@ -1745,12 +1746,15 @@
 /area/station/maintenance/department/engine/atmos)
 "aIr" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/right/directional/south,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
 	name = "Kitchen Shutters"
 	},
-/turf/open/floor/iron/kitchen/small,
+/obj/effect/turf_decal/siding/end{
+	dir = 8
+	},
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "aIu" = (
 /obj/structure/bookcase/random/reference,
@@ -8882,12 +8886,12 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "dob" = (
@@ -11437,9 +11441,11 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding/end,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "elc" = (
 /obj/structure/cable,
@@ -12397,6 +12403,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "eDr" = (
@@ -15471,9 +15478,13 @@
 /obj/machinery/smartfridge,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/iron/kitchen/small,
+/obj/effect/turf_decal/siding/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "fGT" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -20814,9 +20825,11 @@
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 8
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/siding/end,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "hrx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24362,6 +24375,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/storage/gas)
 "izF" = (
@@ -35398,6 +35412,18 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
+"lZs" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
+/obj/effect/turf_decal/siding/end{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/service/kitchen)
 "lZt" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -40506,9 +40532,16 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "nQa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46327,6 +46360,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "pUx" = (
@@ -47427,7 +47461,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "qmz" = (
@@ -52457,12 +52491,19 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/effect/spawner/random/food_or_drink/condiment,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/condiment,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "rVy" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -55678,12 +55719,19 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
+/obj/effect/spawner/random/food_or_drink/donuts,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
-	name = "Kitchen Shutters"
+	name = "Kitchen Shutters";
+	dir = 4
 	},
-/obj/effect/spawner/random/food_or_drink/donuts,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
 "sZo" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
@@ -63483,13 +63531,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "vvC" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Airlock"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
+/obj/machinery/door/airlock/engineering{
+	name = "Main Engineering"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "vvK" = (
@@ -98891,7 +98940,7 @@ sJL
 sne
 aTg
 aTg
-aIr
+lZs
 bIN
 nUd
 bmY

@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Added a null check to mood, because it caused runtimes. Nonhumans have mood, but they never initialize it, yet surgery mood assumes it is."
-  - bugfix: "Removed unnecessary ishuman check in the organizer, allowing it to work on xenomorphs and other theoretical carbons."

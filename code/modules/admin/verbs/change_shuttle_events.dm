@@ -27,5 +27,5 @@ ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Chang
 			port.event_list.Remove(active[options[result]])
 			message_admins("[key_name_admin(user)] has removed '[active[result]]' from [port].")
 		else
-			port.event_list.Add(new typepath (port))
 			message_admins("[key_name_admin(user)] has added '[typepath]' to [port].")
+			port.add_shuttle_event(typepath)

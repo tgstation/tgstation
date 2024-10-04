@@ -13,7 +13,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
@@ -28,16 +28,18 @@
 	lighting_cutoff_blue = 15
 
 	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
+	var/health_scaling = TRUE
 
 /mob/living/basic/creature/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
-	AddComponent(
-		/datum/component/health_scaling_effects,\
-		min_health_attack_modifier_lower = 15,\
-		min_health_attack_modifier_upper = 30,\
-		min_health_slowdown = -1.5,\
-	)
+	if(health_scaling)
+		AddComponent(
+			/datum/component/health_scaling_effects,\
+			min_health_attack_modifier_lower = 15,\
+			min_health_attack_modifier_upper = 30,\
+			min_health_slowdown = -1.5,\
+		)
 
 	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/creature_teleport)
 
@@ -100,3 +102,13 @@
 		exit_jaunt(cast_on)
 		return
 	enter_jaunt(cast_on)
+
+/mob/living/basic/creature/tiggles
+	name = "Miss Tiggles"
+
+/mob/living/basic/creature/hatchling
+	name = "hatchling"
+	health = 25
+	maxHealth = 25
+	health_scaling = FALSE
+	current_size = 0.85

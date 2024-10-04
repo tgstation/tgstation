@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	icon_state = "pig"
 	inhand_icon_state = null
 	animal_sounds = list("Oink!","Squeeeeeeee!","Oink Oink!")
-	curse_spawn_sound = 'sound/magic/pighead_curse.ogg'
+	curse_spawn_sound = 'sound/effects/magic/pighead_curse.ogg'
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/mask/animal/pig/cursed
@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	icon_state = "cowmask"
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	curse_spawn_sound = 'sound/magic/cowhead_curse.ogg'
+	curse_spawn_sound = 'sound/effects/magic/cowhead_curse.ogg'
 	animal_sounds = list("Moooooooo!","Moo!","Moooo!")
 
 /obj/item/clothing/mask/animal/cowmask/cursed
@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	inhand_icon_state = null
 	animal_sounds = list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEYES|HIDEEARS|HIDESNOUT
-	curse_spawn_sound = 'sound/magic/horsehead_curse.ogg'
+	curse_spawn_sound = 'sound/effects/magic/horsehead_curse.ogg'
 
 /obj/item/clothing/mask/animal/horsehead/cursed
 	cursed = TRUE
