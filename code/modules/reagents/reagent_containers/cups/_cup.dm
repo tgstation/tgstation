@@ -349,6 +349,9 @@
 /obj/item/reagent_containers/cup/beaker/synthflesh
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)
 
+/obj/item/reagent_containers/cup/beaker/synthflesh/named
+	name = "synthflesh beaker"
+
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."

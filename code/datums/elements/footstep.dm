@@ -106,6 +106,9 @@
 /datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
+
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
@@ -124,6 +127,9 @@
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
+
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
 
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
@@ -174,6 +180,9 @@
 ///Prepares a footstep for machine walking
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
+
+	if(source.moving_diagonally == SECOND_DIAG_STEP)
+		return // to prevent a diagonal step from counting as 2
 
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return

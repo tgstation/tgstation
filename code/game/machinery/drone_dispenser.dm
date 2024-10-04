@@ -14,40 +14,58 @@
 	integrity_failure = 0.33
 
 	// These allow for different icons when creating custom dispensers
+	/// Icon string to use when the drone dispenser is not processing.
 	var/icon_off = "off"
+	/// Icon string to use when the drone dispenser is processing.
 	var/icon_on = "on"
+	/// Icon string to use when the drone dispenser is on cooldown.
 	var/icon_recharging = "recharge"
+	/// Icon string to use when the drone dispenser is making a new shell.
 	var/icon_creating = "make"
 
+	/// The quantity of materials used when generating a new drone shell.
 	var/list/using_materials
+	/// Quantity of materials to automatically insert when the drone dispenser is spawned.
 	var/starting_amount = 0
 	var/iron_cost = HALF_SHEET_MATERIAL_AMOUNT
 	var/glass_cost = HALF_SHEET_MATERIAL_AMOUNT
+	/// Energy to draw when processing a new drone shell fresh.
 	var/energy_used = 1 KILO JOULES
 
+	/// What operation the drone shell dispenser is currently in, checked in process() to determine behavior
 	var/mode = DRONE_READY
+	/// Reference to world.time to use for calculation of cooldowns and production of a new drone dispenser.
 	var/timer
+	/// How long should the drone dispenser be on cooldown after operating
 	var/cooldownTime = 3 MINUTES
-	var/production_time = 30
+	/// How long does it the drone dispenser take to generate a new drone shell?
+	var/production_time = 3 SECONDS
 	//The item the dispenser will create
-	var/dispense_type = /obj/effect/mob_spawn/ghost_role/drone
+	var/list/dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone)
 
-	// The maximum number of "idle" drone shells it will make before
-	// ceasing production. Set to 0 for infinite.
+	/// The maximum number of "idle" drone shells it will make before ceasing production. Set to 0 for infinite.
 	var/maximum_idle = 3
 
+	/// Sound that the drone dispnser plays when it's ready to start making more drones.
 	var/work_sound = 'sound/items/tools/rped.ogg'
+	/// Sound that the drone dispnser plays when it's created a new drone.
 	var/create_sound = 'sound/items/deconstruct.ogg'
+	/// Sound that the drone dispnser plays when it's recharged it's cooldown.
 	var/recharge_sound = 'sound/machines/ping.ogg'
 
+	/// String that's displayed for when the drone dispenser start working.
 	var/begin_create_message = "whirs to life!"
+	/// String that's displayed for when the drone dispenser stops working.
 	var/end_create_message = "dispenses a drone shell."
+	/// String that's displayed for when the drone dispenser finished it's cooldown.
 	var/recharge_message = "pings."
+	/// String that's displayed for when the drone dispenser is still on cooldown.
 	var/recharging_text = "It is whirring and clicking. It seems to be recharging."
-
+	/// String that's displayed for when the drone dispenser is broken.
 	var/break_message = "lets out a tinny alarm before falling dark."
+	/// Sound that the drone dispnser plays when it's broken.
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
-
+	/// Reference to the object's internal storage for materials.
 	var/datum/component/material_container/materials
 
 /obj/machinery/drone_dispenser/Initialize(mapload)
@@ -75,7 +93,7 @@
 /obj/machinery/drone_dispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
-	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/syndrone
+	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone)
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
@@ -84,14 +102,14 @@
 /obj/machinery/drone_dispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting. This one seems ominous."
-	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/syndrone/badass
+	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone/badass)
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
+	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/snowflake)
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
 	iron_cost = SHEET_MATERIAL_AMOUNT
@@ -103,7 +121,7 @@
 /obj/machinery/drone_dispenser/derelict
 	name = "derelict drone shell dispenser"
 	desc = "A rusty machine that, when supplied with iron and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/derelict
+	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/derelict)
 	end_create_message = "dispenses a derelict drone shell."
 	iron_cost = SHEET_MATERIAL_AMOUNT * 5
 	glass_cost = SHEET_MATERIAL_AMOUNT * 2.5
@@ -113,7 +131,7 @@
 /obj/machinery/drone_dispenser/classic
 	name = "classic drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/classic
+	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/classic)
 	end_create_message = "dispenses a classic drone shell."
 
 // An example of a custom drone dispenser.
@@ -131,7 +149,7 @@
 	glass_cost = 0
 	energy_used = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
-	dispense_type = /mob/living/basic/hivebot
+	dispense_type = list(/mob/living/basic/hivebot)
 	begin_create_message = "closes and begins fabricating something within."
 	end_create_message = "slams open, revealing a hivebot!"
 	recharge_sound = null
@@ -141,7 +159,7 @@
 /obj/machinery/drone_dispenser/binoculars
 	name = "binoculars fabricator"
 	desc = "A hefty machine that periodically creates a pair of binoculars. Really, Nanotrasen? We're getting this lazy?"
-	dispense_type = /obj/item/binoculars
+	dispense_type = list(/obj/item/binoculars)
 	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5 //Redudant
 	maximum_idle = 1
 	cooldownTime = 5 SECONDS
@@ -194,8 +212,9 @@
 			if(energy_used)
 				use_energy(energy_used)
 
-			var/atom/A = new dispense_type(loc)
-			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+			for(var/spawnable_item as anything in dispense_type)
+				var/atom/spawned_atom = new spawnable_item(loc)
+				spawned_atom.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
 				playsound(src, create_sound, 50, TRUE)
@@ -217,9 +236,10 @@
 
 /obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
-	for(var/a in loc)
-		if(istype(a, dispense_type))
-			.++
+	for(var/actual_shell in loc)
+		for(var/potential_item as anything in dispense_type)
+			if(istype(actual_shell, potential_item))
+				.++
 
 /obj/machinery/drone_dispenser/update_icon_state()
 	if(machine_stat & (BROKEN|NOPOWER))

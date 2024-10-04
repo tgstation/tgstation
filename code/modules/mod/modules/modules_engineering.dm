@@ -97,12 +97,21 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc)
+	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc, src)
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
+
+/obj/item/mod/module/tether/get_configuration()
+	. = ..()
+	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "pin", TRUE)
+
+/obj/item/mod/module/tether/configure_edit(key, value)
+	if (key != "cut_tethers")
+		return
+	SEND_SIGNAL(src, COMSIG_MOD_TETHER_SNAP)
 
 /obj/projectile/tether
 	name = "tether"
@@ -120,15 +129,19 @@
 	var/line
 	/// Last turf that we passed before impact
 	var/turf/open/last_turf
+	/// MODsuit tether module that fired us
+	var/obj/item/mod/module/tether/parent_module
 
-/obj/projectile/tether/Initialize(mapload)
+/obj/projectile/tether/Initialize(mapload, module)
 	. = ..()
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_EMBEDDED, PROC_REF(on_embedded))
+	if (!isnull(module))
+		parent_module = module
 
 /obj/projectile/tether/proc/on_embedded(datum/source, obj/item/payload, atom/hit)
 	SIGNAL_HANDLER
 
-	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload)
+	firer.AddComponent(/datum/component/tether, hit, 7, "MODtether", payload, parent_module = parent_module)
 
 /obj/projectile/tether/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -150,7 +163,7 @@
 		return
 
 	if (istype(target, /obj/item/tether_anchor) || isstructure(target) || ismachinery(target))
-		firer.AddComponent(/datum/component/tether, target, 7, "MODtether")
+		firer.AddComponent(/datum/component/tether, target, 7, "MODtether", parent_module = parent_module)
 		return
 
 	var/hitx
@@ -177,7 +190,7 @@
 	anchor.pixel_x = hitx
 	anchor.pixel_y = hity
 	anchor.anchored = TRUE
-	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether")
+	firer.AddComponent(/datum/component/tether, anchor, 7, "MODtether", parent_module = parent_module)
 
 /obj/projectile/tether/Destroy()
 	QDEL_NULL(line)
@@ -194,6 +207,7 @@
 /obj/item/tether_anchor/examine(mob/user)
 	. = ..()
 	. += span_info("It can be secured by using a wrench on it. Use right-click to tether yourself to [src].")
+	. += span_info("LMB shortens the tether while RMB lengthens it. Ctrl-click to cut the tether.")
 
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
