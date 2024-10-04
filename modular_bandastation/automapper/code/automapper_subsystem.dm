@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(automapper)
 	SSatoms.initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	// Force everything to init as if INITIALIZE_IMMEDIATE was called on them.
-	for(var/atom/atom_to_init as anything in parent.get_all_contents_ignoring(type_blacklist) - parent)
+	for(var/atom/atom_to_init as anything in (parent.get_all_contents_ignoring(type_blacklist) - parent))
 		if(atom_to_init.flags_1 & INITIALIZED_1)
 			continue
 		SSatoms.InitAtom(atom_to_init, FALSE, mapload_args)
