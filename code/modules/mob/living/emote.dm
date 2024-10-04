@@ -447,7 +447,7 @@
 // eventually we want to give species their own "snoring" sounds
 /datum/emote/living/snore/get_sound(mob/living/user)
 	if(ishuman(user))
-		return user.dna.species.get_snore_sound(user)
+		return get_snore_sound(user)
 	return null
 
 /datum/emote/living/stare
