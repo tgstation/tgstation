@@ -445,9 +445,9 @@
 	stat_allowed = UNCONSCIOUS
 
 // eventually we want to give species their own "snoring" sounds
-/datum/emote/living/carbon/human/snore/get_sound(mob/living/carbon/human/user)
-	if(!istype(user) || !ishuman(user))
-		return
+/datum/emote/living/snore/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return null
 	return user.dna.species.get_snore_sound(user)
 
 /datum/emote/living/stare
