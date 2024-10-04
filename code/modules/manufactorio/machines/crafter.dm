@@ -67,10 +67,8 @@
 	if(isnull(recipe) || !isitem(receiving) || surplus() < power_cost)
 		return MANUFACTURING_FAIL
 	if(receive_dir == dir || !valid_for_recipe(receiving))
-		to_chat(world, "1")
 		return MANUFACTURING_FAIL
 	if(isstack(receiving) && count_path(receiving.type) && !may_merge_in_contents_and_do_so(receiving))
-		to_chat(world, "2")
 		return MANUFACTURING_FAIL_FULL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
