@@ -114,4 +114,12 @@
 /datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()
 	return SSaccessories.ears_list_synthetic
 
+/// Alien ears
+//
+/obj/item/organ/internal/ears/alien
+	preference = "feature_alien_ears"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/alien_ears
+
+/datum/bodypart_overlay/mutant/ears/alien_ears/get_global_feature_list()
+	return SSaccessories.ears_list_alien
 

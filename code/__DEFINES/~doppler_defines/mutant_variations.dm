@@ -14,6 +14,7 @@
 #define BUG "bug"
 #define SYNTHETIC "synthetic"
 #define HUMANOID "humanoid"
+#define ALIEN "alien"
 
 ///	This list gets read by the dropdown pref when a player chooses what type of sprite accessory to access
 GLOBAL_LIST_INIT(mutant_variations, list(
@@ -30,6 +31,7 @@ GLOBAL_LIST_INIT(mutant_variations, list(
 	MONKEY,
 	MOUSE,
 	SYNTHETIC,
+	ALIEN,
 ))
 
 ///	This list gets read by the animalistic preference for genemod and anthros
