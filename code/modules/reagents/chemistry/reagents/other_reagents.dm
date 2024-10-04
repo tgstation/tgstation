@@ -391,6 +391,7 @@
 	data["deciseconds_metabolized"] += (seconds_per_tick * 1 SECONDS * REM)
 
 	affected_mob.adjust_jitter_up_to(4 SECONDS * REM * seconds_per_tick, 20 SECONDS)
+	var/need_mob_update = FALSE
 
 	if(IS_CULTIST(affected_mob))
 		for(var/datum/action/innate/cult/blood_magic/BM in affected_mob.actions)
@@ -411,6 +412,9 @@
 				affected_mob.Unconscious(12 SECONDS)
 				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
+		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
+			affected_mob.emote("scream")
+			need_mob_update += affected_mob.adjustBruteLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
 
 	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(affected_mob))
@@ -419,6 +423,11 @@
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder?.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
+		if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
+			need_mob_update += affected_mob.adjustBruteLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
