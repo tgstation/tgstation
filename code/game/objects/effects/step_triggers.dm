@@ -220,3 +220,13 @@
 
 	if(happens_once)
 		qdel(src)
+
+/obj/effect/step_trigger/sound_effect/lavaland_cult_altar
+	happens_once = 1
+	name = "a grave mistake";
+	sound = 'sound/effects/hallucinations/i_see_you1.ogg'
+	triggerer_only = 1
+
+/obj/effect/step_trigger/lavaland_cult_altar/message
+	message = "<span class='cult italic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>"
+	name = "ohfuck"
