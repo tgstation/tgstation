@@ -18,71 +18,66 @@
 /datum/component/clothing_dirt/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_remove))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
-
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
 	clothing = parent
-	if (iscarbon(clothing.loc))
-		var/mob/living/carbon/mob_clothing = clothing.loc
-		if ((mob_clothing.wear_mask == mob_clothing) || (mob_clothing.head == mob_clothing))
-			wearer = mob_clothing
-			RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(expose_atom))
-	else
-		RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(expose_atom))
 
 /datum/component/clothing_dirt/UnregisterFromParent()
-	clothing = parent
 	clothing.tint -= dirtiness
-	dirtiness = 0
+	clothing = null
 	if (!isnull(wearer))
 		wearer.update_tint()
-		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENT)
+		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+		wearer = null
 	else
-		UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT)
+		UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_ITEM_DROPPED,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_COMPONENT_CLEAN_ACT,
 	))
 	return ..()
 
-/datum/component/clothing_dirt/proc/on_equip(datum/source, mob/equipper)
+/datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
-	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT)
-	wearer = equipper
-	RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(expose_atom))
+	if (!(slot & (ITEM_SLOT_MASK | ITEM_SLOT_HEAD)))
+		return
+	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
+	wearer = user
+	RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
 
-/datum/component/clothing_dirt/proc/on_remove()
+/datum/component/clothing_dirt/proc/on_drop()
 	SIGNAL_HANDLER
-	UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENT)
+	UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	wearer = null
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(expose_atom))
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
 
 /datum/component/clothing_dirt/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if (dirtiness > 0)
 		examine_list += span_red("It appears to be covered in some oily substance. Won't see much while wearing it until you wash it off.")
 
-/datum/component/clothing_dirt/proc/expose_atom(atom/parent_atom, datum/reagent/exposing_reagent, methods)
+/datum/component/clothing_dirt/proc/expose_mask(atom/source, list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	SIGNAL_HANDLER
-	if(QDELETED(wearer) || is_protected())
+	if(QDELETED(wearer) || is_protected() )
 		return
-	if(!istype(exposing_reagent, /datum/reagent/consumable/condensedcapsaicin))
+	if(!is_path_in_list(/datum/reagent/consumable/condensedcapsaicin, reagents))
 		return
-	clothing = parent
-	if ((methods & VAPOR) || (methods & TOUCH))
-		dirtiness += 1
-		clothing.tint += 1
+
+	if (methods & (TOUCH | VAPOR))
+		clothing.tint -= dirtiness
+		dirtiness = min(dirtiness + 1, 3)
+		clothing.tint += dirtiness
 		if(!isnull(wearer))
 			wearer.update_tint()
 
 /datum/component/clothing_dirt/proc/is_protected()
 	return wearer.check_obscured_slots(TRUE) & equipped_slot
 
-/datum/component/clothing_dirt/proc/on_clean(datum/source, clean_types)
+/datum/component/clothing_dirt/proc/on_clean(datum/target, clean_types)
 	SIGNAL_HANDLER
-	clothing = parent
 	if (clean_types & CLEAN_WASH & CLEAN_SCRUB)
 		clothing.tint -= dirtiness
 		dirtiness = 0
