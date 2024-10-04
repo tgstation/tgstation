@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(area_spawn)
 	var/list/blacklisted_stations = list("Runtime Station", "MultiZ Debug", "Gateway Test")
 
 /datum/area_spawn/proc/try_spawn()
-	if(SSmapping.config.map_name in blacklisted_stations)
+	if(SSmapping.current_map.map_name in blacklisted_stations)
 		return
 
 	// Turfs that are available
@@ -281,7 +281,7 @@ SUBSYSTEM_DEF(area_spawn)
 
 	if(!LAZYLEN(available_turfs))
 		if(!optional)
-			log_mapping("[src.type] could not find any suitable turfs on map [SSmapping.config.map_name]!")
+			log_mapping("[src.type] could not find any suitable turfs on map [SSmapping.current_map.map_name]!")
 			SSarea_spawn.failed_area_spawns += src.type
 		return
 
@@ -349,7 +349,7 @@ SUBSYSTEM_DEF(area_spawn)
  * Spawn the atoms.
  */
 /datum/area_spawn_over/proc/try_spawn()
-    if(SSmapping.config.map_name in blacklisted_stations)
+    if(SSmapping.current_map.map_name in blacklisted_stations)
         return
     for(var/area_type in target_areas)
         try_spawn_area(area_type)
