@@ -132,12 +132,12 @@
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
 	antag.balloon_alert(antag, "scanning...")
 	chosen_forge.setup_particles(angry = TRUE)
-	radio.talk_into(src, "SECURITY BREACH: Unauthorized entry sequence detected.", RADIO_CHANNEL_SUPPLY)
+	radio.talk_into(src, "SECURITY BREACH: Unauthorized entry sequence detected.", radio_channel_to_use)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
-		radio.talk_into(src, "Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_SUPPLY)
+		radio.talk_into(src, "Fabrication protocols have crashed unexpectedly. Please evacuate the area.", radio_channel_to_use)
 		timeout = 10 SECONDS
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
@@ -160,7 +160,7 @@
 	if(ishuman(antag))
 		reset_equipment(antag)
 	else
-		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.")
+		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.", radio_channel_to_use)
 
 	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
 	if(istype(antag_datum))

@@ -188,6 +188,17 @@
 	pierce_hits -= 1
 	return ..()
 
+/obj/projectile/beam/fake_pulse
+	name = "pulse"
+	icon_state = "u_laser"
+	damage = 0
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	light_color = LIGHT_COLOR_BLUE
+	tracer_type = /obj/effect/projectile/tracer/pulse
+	muzzle_type = /obj/effect/projectile/muzzle/pulse
+	impact_type = /obj/effect/projectile/impact/pulse
+	wound_bonus = 0
+
 /obj/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"

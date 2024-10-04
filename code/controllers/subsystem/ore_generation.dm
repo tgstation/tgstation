@@ -75,12 +75,10 @@ SUBSYSTEM_DEF(ore_generation)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
-	available_boulders.Cut() // reset upon new fire.
 	for(var/obj/structure/ore_vent/current_vent as anything in processed_vents)
 
 		var/local_vent_count = 0
 		for(var/obj/item/boulder/old_rock in current_vent.loc)
-			available_boulders += old_rock
 			local_vent_count++
 
 		if(local_vent_count >= MAX_BOULDERS_PER_VENT)

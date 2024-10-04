@@ -1,0 +1,1251 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/structure/flora/rock/pile/jungle/style_5,
+/obj/machinery/conveyor/auto/fast{
+	dir = 10
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"az" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"aR" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"bl" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/item/ammo_casing{
+	dir = 5;
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -3
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"cc" = (
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"cj" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"cp" = (
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"dm" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"dy" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"dZ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"fn" = (
+/obj/structure/flora/rock/pile/jungle/large/style_2,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"fv" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"fD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"fR" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"fT" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"fZ" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"gE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"hf" = (
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"ht" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"hy" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"hC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/structure/fluff/minepost,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"hN" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"iS" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/obj/item/storage/belt/bandolier,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"jj" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"jm" = (
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"jR" = (
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 4
+	},
+/obj/structure/plasticflaps/opaque,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"jX" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/machinery/door/poddoor/shutters/window/indestructible,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"jY" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 8
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_spawner/station_high,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"lt" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"lE" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"lJ" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"mH" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
+/obj/effect/decal/cleanable/xenoblood,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"mT" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/item/knife/hunting{
+	anchored = 1
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"nD" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"oR" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"pa" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"pv" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"pI" = (
+/obj/machinery/conveyor/auto/fast{
+	dir = 6
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"pZ" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 4
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_spawner/station_high,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"qa" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor/auto/fast{
+	dir = 5
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"qb" = (
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/item/ammo_casing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"rw" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"rM" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"rW" = (
+/obj/structure/fake_stairs/directional/north,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"sq" = (
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"ti" = (
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 8
+	},
+/obj/structure/plasticflaps/opaque,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"tl" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"tG" = (
+/obj/structure/flora/rock/pile/jungle/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"tI" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/flora/rock/pile/jungle/style_3,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"tO" = (
+/obj/machinery/power/shuttle_engine/large,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"uc" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"uX" = (
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"ve" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"vG" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 6
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"vT" = (
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"we" = (
+/obj/machinery/conveyor/auto/fast{
+	dir = 9
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"wq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"ws" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"wP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/fast,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"yd" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/fluff/minepost,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"yg" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"yx" = (
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"yE" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"zg" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/bot,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"zk" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	alpha = 25
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"zT" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"As" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Au" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"AB" = (
+/obj/structure/flora/bush/large/style_2,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"AM" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/flora/rock/pile/style_3,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"BA" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"BU" = (
+/obj/structure/flora/rock/pile/jungle/large/style_3,
+/obj/machinery/conveyor/auto/fast{
+	dir = 5
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"CQ" = (
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"Dz" = (
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"DX" = (
+/obj/structure/flora/tree/jungle/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Eg" = (
+/obj/machinery/digital_clock/score_card,
+/turf/closed/wall/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"FP" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 5;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Gl" = (
+/obj/structure/flora/bush/large,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Gm" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"GH" = (
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 6
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Ia" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"If" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"Im" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"IA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 5
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"IN" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Jd" = (
+/obj/structure/flora/rock/pile/jungle/large,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"Ji" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"Jo" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/obj/item/ammo_casing,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Ju" = (
+/obj/structure/flora/rock,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Jx" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"Ka" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/large/style_3,
+/obj/machinery/conveyor/auto/fast{
+	dir = 6
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Kg" = (
+/obj/effect/turf_decal/caution,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/item/ammo_casing{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/body,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Kt" = (
+/obj/structure/flora/bush/large/style_3,
+/obj/machinery/conveyor/auto/fast{
+	dir = 9
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"KB" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 6;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Lk" = (
+/obj/structure/flora/bush/large,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Lx" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"LU" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"LV" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Mr" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"My" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/fast{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Ng" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"ND" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"NZ" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/rock,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Oi" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+"Oq" = (
+/obj/structure/flora/bush/large/style_2,
+/obj/machinery/conveyor/auto/fast{
+	dir = 10
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Ot" = (
+/obj/machinery/gateway{
+	density = 0
+	},
+/obj/effect/turf_decal/caution{
+	dir = 1
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"OL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Pb" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Ph" = (
+/obj/structure/flora/rock/pile/jungle/style_3,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"PP" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Qb" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"Qh" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/barricade/sandbags,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Qp" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Rt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"SK" = (
+/obj/structure/flora/bush/large,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 9
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"SZ" = (
+/obj/structure/flora/rock/pile/jungle/large/style_3,
+/obj/machinery/conveyor/auto/fast{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Tn" = (
+/obj/machinery/conveyor/auto/fast{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"Tv" = (
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 10
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"TQ" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4;
+	alpha = 25
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Ur" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/virtual_domain/fullbright)
+"Ux" = (
+/obj/structure/fake_stairs/directional/north,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"UK" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Vk" = (
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/item/clothing/head/costume/pirate/bandana,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"VF" = (
+/obj/structure/flora/rock/pile/jungle/style_3,
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"WI" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 1;
+	alpha = 25
+	},
+/obj/bitrunning/watcher_hunt_spawner/station_max,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Xp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/xtracks,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"XS" = (
+/obj/structure/flora/rock/pile/jungle/style_2,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 10
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"XU" = (
+/obj/structure/flora/bush/large,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Yk" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"YA" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass{
+	icon_state = "sand"
+	},
+/area/virtual_domain/fullbright)
+"YG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"ZK" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"ZR" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/asteroid,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+"}
+(2,1,1) = {"
+ws
+ws
+ws
+ws
+pa
+pa
+pa
+pZ
+pa
+Ji
+pa
+Ji
+pa
+ti
+pa
+pa
+Ji
+ws
+"}
+(3,1,1) = {"
+As
+lE
+lE
+As
+lE
+Gl
+NZ
+fT
+Dz
+Ia
+SK
+IA
+dy
+Ur
+ND
+DX
+pa
+ws
+"}
+(4,1,1) = {"
+lE
+FP
+WI
+lJ
+Lx
+YA
+jm
+Ka
+wP
+ai
+pI
+SZ
+pI
+Oq
+PP
+uX
+pa
+ws
+"}
+(5,1,1) = {"
+LV
+Ng
+lJ
+sq
+tO
+LU
+fn
+jm
+rM
+gE
+uX
+Oi
+hy
+aR
+vT
+rM
+pa
+ws
+"}
+(6,1,1) = {"
+LV
+TQ
+lJ
+sq
+sq
+Xp
+VF
+cp
+Qp
+cj
+ZR
+nD
+hN
+nD
+uX
+fR
+Ji
+ws
+"}
+(7,1,1) = {"
+As
+mT
+uc
+uc
+lE
+Yk
+Au
+fv
+nD
+hf
+az
+Oi
+jm
+nD
+hf
+hC
+pa
+ws
+"}
+(8,1,1) = {"
+lE
+tl
+qb
+iS
+jX
+Ux
+OL
+uX
+ZR
+Mr
+hf
+dm
+Oi
+Qh
+Mr
+hf
+pa
+ws
+"}
+(9,1,1) = {"
+lE
+Ot
+yx
+Kg
+lE
+tI
+ht
+Mr
+Eg
+If
+zg
+zg
+jj
+ZR
+XU
+BA
+Ji
+ZK
+"}
+(10,1,1) = {"
+As
+mH
+Vk
+Jo
+jX
+rW
+fD
+cp
+oR
+hf
+hf
+Gm
+uX
+Qp
+jm
+uX
+pa
+ws
+"}
+(11,1,1) = {"
+lE
+bl
+Qb
+Qb
+As
+AM
+jm
+Oi
+nD
+gE
+Jx
+rM
+Oi
+ZR
+yE
+yd
+pa
+ws
+"}
+(12,1,1) = {"
+LV
+rw
+lJ
+sq
+tO
+Xp
+Ph
+uX
+ZR
+Pb
+nD
+ZR
+cj
+fZ
+hf
+tG
+Ji
+ws
+"}
+(13,1,1) = {"
+LV
+ve
+lJ
+sq
+sq
+CQ
+Rt
+YG
+dZ
+uX
+uX
+cp
+uX
+jm
+Im
+zT
+pa
+ws
+"}
+(14,1,1) = {"
+lE
+KB
+zk
+lJ
+lt
+YA
+Lk
+Jd
+My
+Kt
+qa
+Tn
+BU
+we
+AB
+wq
+pa
+ws
+"}
+(15,1,1) = {"
+lE
+lE
+lE
+lE
+lE
+pv
+cc
+IN
+XS
+vG
+Tv
+GH
+XS
+UK
+yg
+Ju
+Ji
+ws
+"}
+(16,1,1) = {"
+ws
+ws
+ws
+ws
+pa
+Ji
+pa
+jR
+pa
+Ji
+Ji
+pa
+pa
+jY
+pa
+Ji
+pa
+ws
+"}
+(17,1,1) = {"
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+ws
+"}

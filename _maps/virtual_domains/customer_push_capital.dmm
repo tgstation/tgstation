@@ -1,0 +1,1775 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/item/storage/briefcase{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"aI" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"bd" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-"
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/bitrunning/customer_waiter/west/fast,
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"bM" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-"
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"bT" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"bZ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/right,
+/obj/bitrunning/hungry_customer,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"cG" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/structure/fluff/bus/dense{
+	icon_state = "hoodtop"
+	},
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"do" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"dH" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/bitrunning/customer_waiter/east/slow,
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"dJ" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"hM" = (
+/obj/structure/hedge,
+/obj/effect/turf_decal/siding/wideplating_new/dark/end,
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"ie" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"jj" = (
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"jW" = (
+/obj/structure/billboard/space_cola,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"kt" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"lg" = (
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"ll" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"lz" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"lF" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/catwalk_floor/iron,
+/area/virtual_domain/fullbright)
+"lY" = (
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"mn" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/left,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/storage/briefcase{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"mC" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"mS" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"no" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"nv" = (
+/obj/bitrunning/customer_speech,
+/obj/bitrunning/customer_waiter/east/slow,
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"nE" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"nL" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"nV" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/vehicle/ridden/speedbike/red{
+	dir = 8;
+	anchored = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"or" = (
+/obj/structure/floodlight_frame/completed,
+/obj/structure/marker_beacon/olive{
+	layer = 2.9;
+	pixel_x = 0;
+	pixel_y = 13
+	},
+/obj/structure/marker_beacon/yellow{
+	layer = 2.9;
+	pixel_x = 0;
+	pixel_y = 7
+	},
+/obj/structure/marker_beacon/burgundy{
+	layer = 2.9;
+	pixel_x = 0;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"pd" = (
+/obj/effect/food_cart_stand,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/machinery/icecream_vat,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"pg" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"ps" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"pE" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"qm" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"rr" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"rZ" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"se" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"sM" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/bitrunning/customer_waiter/east/fast,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"sO" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/vehicle/ridden/atv{
+	dir = 4;
+	anchored = 1
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"tB" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/structure/fluff/bus/dense{
+	icon_state = "hoodbottom"
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"tO" = (
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"tT" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/right,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"tZ" = (
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"ut" = (
+/turf/cordon,
+/area/virtual_domain/fullbright)
+"uE" = (
+/obj/structure/flora/tree/jungle/small/style_2,
+/turf/open/misc/dirt/dark/station,
+/area/virtual_domain/fullbright)
+"wS" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"xC" = (
+/obj/structure/hedge,
+/obj/effect/turf_decal/siding/wideplating_new/dark/end{
+	dir = 1
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"xH" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-"
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/vehicle/ridden/atv{
+	dir = 4;
+	anchored = 1
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"xP" = (
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"yA" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"yJ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"zH" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/bitrunning/customer_waiter/west/fast,
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"zR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Aw" = (
+/obj/structure/railing,
+/obj/structure/fans/tiny,
+/turf/open/floor/catwalk_floor/iron,
+/area/virtual_domain/fullbright)
+"Ay" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"AQ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/obj/structure/billboard/donk_n_go{
+	density = 0
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"AU" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"AW" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/structure/chair/sofa/bench/solo{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Bd" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 1;
+	pixel_x = -13;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Cc" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing,
+/obj/structure/fluff/bus/passable{
+	icon_state = "wheredahoodat";
+	layer = 5.01
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/virtual_domain/fullbright)
+"Cv" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Cw" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/bitrunning/customer_waiter/east/slow,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"Cy" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"CH" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"CR" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/item/storage/briefcase/secure{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"CV" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 11;
+	pixel_y = 17
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = 17
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"DU" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/structure/fluff/bus/passable{
+	icon_state = "bottomdoor"
+	},
+/turf/open/floor/iron/dark{
+	icon_state = "bus"
+	},
+/area/virtual_domain/fullbright)
+"Ej" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"El" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench/solo{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Ex" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"EB" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"EH" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"EP" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/food/burger/baconburger,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"EW" = (
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"Fx" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/catwalk_floor/iron,
+/area/virtual_domain/fullbright)
+"GQ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"HQ" = (
+/obj/structure/fluff/bus/passable{
+	icon_state = "topdoor"
+	},
+/turf/open/floor/iron/dark{
+	icon_state = "bus"
+	},
+/area/virtual_domain/fullbright)
+"Ic" = (
+/obj/structure/fluff/minepost{
+	color = "#636066"
+	},
+/obj/effect/turf_decal/trimline/dark/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/marker_beacon/yellow{
+	layer = 2.9;
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/structure/marker_beacon/yellow{
+	layer = 2.9;
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Ih" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/fluff/bus/dense,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Iu" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"IL" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/vehicle/ridden/atv{
+	dir = 4;
+	anchored = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"IM" = (
+/obj/machinery/door/airlock/multi_tile/public,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"IX" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"JW" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"JX" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-"
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/vehicle/ridden/speedbike{
+	dir = 8;
+	anchored = 1
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"Ka" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/structure/fluff/bus/passable/seat/driver,
+/turf/open/floor/iron/dark{
+	icon_state = "bus"
+	},
+/area/virtual_domain/fullbright)
+"Km" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Kt" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"KR" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/bitrunning/customer_waiter/west/fast,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"Lt" = (
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/fullbright)
+"PJ" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"Qc" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -14;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -14;
+	pixel_y = 3
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"QL" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Rx" = (
+/obj/structure/flora/tree/jungle/small/style_3,
+/turf/open/misc/dirt/dark/station,
+/area/virtual_domain/fullbright)
+"RR" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Sy" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Ti" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/bitrunning/customer_waiter/east/fast,
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"TI" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"UI" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Vw" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"VL" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -14;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 14;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	color = "#fcb000";
+	pixel_x = -14;
+	pixel_y = 3
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"VV" = (
+/turf/closed/indestructible/iron,
+/area/virtual_domain/fullbright)
+"Wo" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4;
+	pixel_x = 13;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Wr" = (
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-"
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/crayon/rune2{
+	icon_state = "-";
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"WS" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/vehicle/ridden/speedbike/red{
+	dir = 8;
+	anchored = 1
+	},
+/turf/open/floor/iron/dark/side,
+/area/virtual_domain/fullbright)
+"WU" = (
+/obj/structure/hedge,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/asphalt,
+/area/virtual_domain/fullbright)
+"Xy" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/bus/dense{
+	icon_state = "fronttire"
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"Yv" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/bitrunning/customer_destination,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"YH" = (
+/obj/machinery/food_cart,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Zf" = (
+/obj/effect/food_cart_stand,
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/item/food/hotdog/debug,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"Zu" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4;
+	pixel_x = 13;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
+"ZG" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 8
+	},
+/obj/item/newspaper,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+qm
+"}
+(2,1,1) = {"
+bT
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+bT
+"}
+(3,1,1) = {"
+bT
+ut
+xC
+WU
+hM
+Ej
+Ti
+Wr
+rZ
+AU
+xC
+WU
+hM
+Ih
+Ka
+HQ
+DU
+TI
+xC
+WU
+hM
+jW
+IL
+bM
+sO
+EH
+Ic
+ut
+bT
+"}
+(4,1,1) = {"
+bT
+ut
+VV
+Zf
+GQ
+Aw
+dJ
+bM
+nL
+Fx
+do
+El
+yA
+Cc
+cG
+tB
+Xy
+lF
+CV
+El
+pE
+Aw
+dH
+xH
+Cw
+tT
+Bd
+ut
+bT
+"}
+(5,1,1) = {"
+bT
+ut
+VV
+EP
+Yv
+or
+dJ
+bM
+rZ
+AU
+Ay
+Rx
+ie
+or
+dJ
+Qc
+sM
+TI
+Ay
+uE
+mC
+Ej
+pg
+bM
+nL
+Sy
+Zu
+ut
+bT
+"}
+(6,1,1) = {"
+bT
+ut
+VV
+YH
+se
+Cy
+tO
+xP
+tO
+aI
+ll
+AW
+ah
+Cy
+tO
+xP
+tO
+aI
+Km
+AW
+ps
+Cy
+tO
+xP
+tO
+RR
+Ic
+ut
+bT
+"}
+(7,1,1) = {"
+bT
+ut
+IM
+CH
+CH
+lz
+lg
+nv
+lg
+yJ
+mS
+CH
+CH
+lz
+lg
+jj
+lg
+yJ
+CH
+ZG
+mS
+lz
+lg
+jj
+lg
+EB
+Bd
+ut
+bT
+"}
+(8,1,1) = {"
+bT
+ut
+tZ
+nE
+nE
+lz
+lg
+jj
+lg
+yJ
+nE
+nE
+Kt
+lz
+lg
+jj
+lg
+yJ
+Kt
+nE
+nE
+lz
+lg
+jj
+lg
+zR
+Zu
+ut
+bT
+"}
+(9,1,1) = {"
+bT
+ut
+VV
+pd
+Iu
+rr
+EW
+Lt
+EW
+IX
+wS
+El
+JW
+rr
+EW
+Lt
+EW
+IX
+wS
+El
+pE
+rr
+EW
+Lt
+EW
+Ex
+Ic
+ut
+bT
+"}
+(10,1,1) = {"
+bT
+ut
+VV
+no
+lY
+or
+dJ
+JX
+KR
+AU
+Ay
+uE
+mC
+AQ
+pg
+Vw
+nL
+AU
+Ay
+Rx
+Cv
+or
+pg
+Wr
+rZ
+bZ
+Bd
+ut
+bT
+"}
+(11,1,1) = {"
+bT
+ut
+VV
+PJ
+kt
+Aw
+WS
+Wr
+nV
+Fx
+CR
+AW
+UI
+Aw
+dJ
+VL
+rZ
+Fx
+QL
+AW
+UI
+Aw
+dJ
+bM
+rZ
+mn
+Wo
+ut
+bT
+"}
+(12,1,1) = {"
+bT
+ut
+xC
+WU
+hM
+Ej
+dJ
+bM
+nL
+AU
+xC
+WU
+hM
+Ej
+zH
+Qc
+nL
+AU
+xC
+WU
+hM
+yJ
+pg
+bd
+nL
+EH
+Ic
+ut
+bT
+"}
+(13,1,1) = {"
+bT
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+ut
+bT
+"}
+(14,1,1) = {"
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+"}

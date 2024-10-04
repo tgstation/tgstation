@@ -1,0 +1,1848 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/structure/meateor_fluff/eyeball,
+/mob/living/basic/heretic_summon/raw_prophet/ruins,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"aI" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = 20;
+	pixel_y = 20
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"bf" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/fluff/paper/stack,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"bn" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/chair/sofa/corp/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"bP" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/stack{
+	dir = 10;
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"cn" = (
+/mob/living/basic/alien/drone,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"dy" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 24
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"dF" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"eC" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/fluff/paper,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"eI" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -18;
+	pixel_y = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"eS" = (
+/mob/living/basic/carp,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"ff" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 24
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"fj" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"fY" = (
+/obj/structure/fluff/paper,
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"gu" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/flora/grass/both/style_random,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"he" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -1;
+	pixel_y = -20
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"hh" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/flora/bush/snow/style_3,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"hG" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"hZ" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -1;
+	pixel_y = -20
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"iz" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"iD" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_x = 4;
+	pixel_y = -15
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"iY" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/paper,
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"jr" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"jN" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"jP" = (
+/obj/structure/fluff/paper,
+/obj/structure/rack,
+/obj/item/storage/bag/quiver/full,
+/obj/item/gun/ballistic/bow,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"jR" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -1;
+	pixel_y = -20
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"jY" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"kC" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"kZ" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -9
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"lk" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = 20;
+	pixel_y = 20
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"lt" = (
+/obj/effect/heretic_rune/big{
+	pixel_x = -30;
+	pixel_y = -32
+	},
+/obj/effect/spawner/random/lavaland_mob/goliath,
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"mc" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"mI" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = 20;
+	pixel_y = 0
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"nt" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"nx" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"nE" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -18;
+	pixel_y = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"nH" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = 20;
+	pixel_y = 0
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"oF" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"oN" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"oO" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = 20;
+	pixel_y = 0
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"oS" = (
+/obj/structure/fluff/paper,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"pR" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"qw" = (
+/mob/living/basic/mining/ice_whelp,
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"qI" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/flora/grass/green/style_2,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"rq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"ry" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"rz" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -9
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"rI" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"rQ" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"sf" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"sG" = (
+/turf/closed/indestructible/paper,
+/area/virtual_domain/fullbright)
+"sR" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_x = 20;
+	pixel_y = 17
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"sV" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_x = 20;
+	pixel_y = 17
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"tl" = (
+/obj/structure/fluff/paper/stack{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/obj/item/paper,
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"ts" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/left,
+/mob/living/basic/mothroach,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"tD" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"tU" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"uo" = (
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -9
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"uD" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"uL" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = 20;
+	pixel_y = 20
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"uV" = (
+/obj/structure/fluff/paper,
+/obj/structure/rack,
+/obj/item/storage/medkit,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"vm" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"vy" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"wb" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"wk" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/obj/structure/flora/bush/snow/style_6,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"ww" = (
+/obj/structure/fluff/paper,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"wB" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"xX" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"yb" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/flora/grass/brown/style_3,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"yq" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -18;
+	pixel_y = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"yJ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/bed/pod,
+/obj/effect/spawner/random/bedsheet,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"zN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"Ag" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"AI" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"AQ" = (
+/obj/structure/fluff/paper,
+/obj/structure/fluff/paper/stack{
+	dir = 10;
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Bq" = (
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"BP" = (
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/militia,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"BY" = (
+/turf/open/floor/carpet,
+/area/virtual_domain/fullbright)
+"Dk" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Dl" = (
+/obj/structure/hedge,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Fq" = (
+/obj/structure/flora/rock/pile/jungle/large,
+/obj/structure/flora/bush/ferny,
+/mob/living/basic/spider/giant/guard,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"FT" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"Gk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"Gq" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"GJ" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"Hk" = (
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Hr" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"HJ" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = 20;
+	pixel_y = 20
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"HM" = (
+/mob/living/basic/bear/snow,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"Iz" = (
+/obj/structure/fluff/paper,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Jc" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Jq" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_x = 20;
+	pixel_y = 17
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"JF" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Mm" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"MT" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/claymore/shortsword,
+/obj/item/shield/roman,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Np" = (
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/rack,
+/obj/item/clothing/under/costume/roman,
+/obj/item/clothing/head/helmet/roman,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Nw" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -18;
+	pixel_y = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/flora/bush/snow/style_5,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"NI" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"NL" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"NM" = (
+/obj/structure/fluff/paper,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"ON" = (
+/obj/structure/fluff/paper,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"OV" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -1;
+	pixel_y = -20
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"Pe" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"Ph" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"PI" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -1;
+	pixel_y = -20
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"PK" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/bulletproof,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"PQ" = (
+/mob/living/basic/creature,
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"Qs" = (
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Rc" = (
+/obj/structure/fluff/paper,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"RD" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"RF" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 9;
+	pixel_x = -9;
+	pixel_y = 18
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"RJ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/bitrunning/teleporter,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"SS" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/bitrunning/teleporter,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"TC" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"TE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/dresser,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"TH" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"TI" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"TJ" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"TM" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"TQ" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"TT" = (
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"UB" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/flora/bush/snow/style_2,
+/turf/open/misc/asteroid/snow,
+/area/virtual_domain/fullbright)
+"UD" = (
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"US" = (
+/obj/structure/fluff/paper/stack{
+	dir = 9
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Vx" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"VA" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = 20;
+	pixel_y = 0
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"VV" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8;
+	pixel_x = -18;
+	pixel_y = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis,
+/area/virtual_domain/fullbright)
+"Wa" = (
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Xm" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/mob/living/basic/trooper/syndicate/melee,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Xr" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"XY" = (
+/obj/structure/fluff/paper{
+	dir = 6
+	},
+/obj/structure/rack,
+/obj/item/storage/pill_bottle/multiver,
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Ys" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Yv" = (
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 9
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Yw" = (
+/obj/structure/fluff/paper/stack{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+"Za" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_x = 20;
+	pixel_y = 17
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/structure/alien/weeds/creature,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"Zn" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/floor/fakeice,
+/area/virtual_domain/fullbright)
+"Zv" = (
+/obj/structure/fluff/paper{
+	dir = 5
+	},
+/turf/open/indestructible/paper,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+Dk
+"}
+(2,1,1) = {"
+ry
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+ry
+"}
+(3,1,1) = {"
+ry
+sG
+Ph
+Hr
+dF
+tl
+Ph
+sG
+Ph
+Hr
+Gq
+tl
+Ph
+sG
+Ph
+Hr
+dF
+tl
+Ph
+sG
+bn
+zN
+SS
+sG
+ry
+"}
+(4,1,1) = {"
+ry
+sG
+Hr
+aI
+VV
+nt
+iY
+sG
+rz
+Yv
+PI
+mI
+iY
+sG
+Hr
+HJ
+eI
+rQ
+iY
+sG
+ts
+BY
+Gk
+sG
+ry
+"}
+(5,1,1) = {"
+ry
+sG
+UD
+hG
+lt
+tD
+AQ
+sG
+UD
+US
+Fq
+eC
+Rc
+sG
+UD
+AI
+eS
+Hk
+AQ
+sG
+mc
+BY
+TE
+sG
+ry
+"}
+(6,1,1) = {"
+ry
+sG
+Zv
+FT
+NI
+pR
+TM
+sG
+Zv
+JF
+sR
+sf
+ff
+sG
+Zv
+jY
+Xr
+fj
+TM
+sG
+RJ
+rq
+yJ
+sG
+ry
+"}
+(7,1,1) = {"
+ry
+sG
+Ph
+Zv
+RF
+TM
+Ph
+sG
+Ph
+Zv
+Ys
+bf
+Ph
+sG
+Ph
+Zv
+RF
+TM
+Ph
+sG
+sG
+sG
+sG
+sG
+sG
+"}
+(8,1,1) = {"
+ry
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+Np
+Qs
+dF
+BP
+sG
+"}
+(9,1,1) = {"
+ry
+sG
+Ph
+Hr
+Gq
+tl
+Ph
+sG
+Ph
+Hr
+dF
+tl
+Ph
+sG
+Ph
+Hr
+Gq
+tl
+Ph
+sG
+MT
+he
+Wa
+jP
+sG
+"}
+(10,1,1) = {"
+ry
+sG
+rz
+Mm
+jR
+VA
+iY
+sG
+Hr
+wB
+nE
+uD
+iY
+sG
+rz
+Pe
+OV
+oO
+iY
+sG
+GJ
+NL
+uo
+ww
+sG
+"}
+(11,1,1) = {"
+ry
+sG
+UD
+xX
+ax
+NM
+Rc
+sG
+kC
+TH
+Xm
+rI
+bP
+sG
+UD
+jN
+PQ
+fY
+Rc
+sG
+Dl
+UD
+Bq
+ON
+sG
+"}
+(12,1,1) = {"
+ry
+sG
+Zv
+RD
+Jq
+nx
+ff
+sG
+Zv
+TQ
+iD
+oN
+TM
+sG
+Zv
+tU
+Za
+wb
+ff
+sG
+oF
+Jc
+dy
+Iz
+sG
+"}
+(13,1,1) = {"
+ry
+sG
+Ph
+Zv
+Ys
+bf
+Ph
+sG
+Ph
+Zv
+RF
+TM
+Ph
+sG
+Ph
+Zv
+Ys
+bf
+Ph
+sG
+TC
+kZ
+Yw
+uV
+sG
+"}
+(14,1,1) = {"
+ry
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+PK
+Ys
+Ys
+XY
+sG
+"}
+(15,1,1) = {"
+ry
+sG
+Ph
+Hr
+dF
+tl
+Ph
+sG
+Ph
+Hr
+Gq
+tl
+Ph
+sG
+Ph
+Hr
+dF
+tl
+Ph
+sG
+sG
+sG
+sG
+sG
+sG
+"}
+(16,1,1) = {"
+ry
+sG
+Hr
+lk
+Nw
+yb
+iY
+sG
+rz
+jr
+hZ
+nH
+iY
+sG
+Hr
+uL
+yq
+TT
+iY
+sG
+ry
+ry
+ry
+ry
+ry
+"}
+(17,1,1) = {"
+ry
+sG
+UD
+hh
+HM
+wk
+AQ
+sG
+UD
+iz
+cn
+oS
+Rc
+sG
+UD
+vy
+qw
+Ag
+AQ
+sG
+ry
+ry
+ry
+ry
+ry
+"}
+(18,1,1) = {"
+ry
+sG
+Zv
+gu
+UB
+qI
+TM
+sG
+Zv
+vm
+sV
+TJ
+ff
+sG
+Zv
+TI
+Zn
+Vx
+TM
+sG
+ry
+ry
+ry
+ry
+ry
+"}
+(19,1,1) = {"
+ry
+sG
+Ph
+Zv
+RF
+TM
+Ph
+sG
+Ph
+Zv
+Ys
+bf
+Ph
+sG
+Ph
+Zv
+RF
+TM
+Ph
+sG
+ry
+ry
+ry
+ry
+ry
+"}
+(20,1,1) = {"
+ry
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+sG
+ry
+ry
+ry
+ry
+ry
+"}
+(21,1,1) = {"
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+"}

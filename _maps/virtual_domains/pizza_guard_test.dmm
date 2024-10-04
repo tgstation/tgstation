@@ -1,0 +1,395 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
+"e" = (
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"f" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"g" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"n" = (
+/obj/machinery/door/poddoor/bitrunner_left,
+/obj/effect/oneway,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"o" = (
+/obj/machinery/door/poddoor/bitrunner_right,
+/obj/effect/oneway,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"p" = (
+/obj/machinery/light/small/dim/bitrunner_right,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"u" = (
+/obj/bitrunning/animatronic_movement_node/standard/door,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"v" = (
+/obj/bitrunning/animatronic_phone,
+/obj/item/clothing/glasses/night,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"x" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"y" = (
+/obj/bitrunning/animatronic/standard,
+/obj/bitrunning/animatronic_movement_node/standard/stage,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"A" = (
+/obj/bitrunning/animatronic_movement_node/standard/bathroom,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"D" = (
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"F" = (
+/obj/bitrunning/door_button/left{
+	pixel_x = -9
+	},
+/obj/bitrunning/light_button/left{
+	pixel_x = -9
+	},
+/obj/bitrunning/light_button/right{
+	pixel_x = 12
+	},
+/obj/bitrunning/door_button/right{
+	pixel_x = 12
+	},
+/obj/structure/table/reinforced,
+/obj/effect/oneway,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"G" = (
+/obj/machinery/light/small/dim/bitrunner_left,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"H" = (
+/obj/bitrunning/animatronic_movement_node/standard/hallway,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"J" = (
+/obj/bitrunning/animatronic_movement_node/standard/kitchen,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"L" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/bitrunning/animatronic_movement_node/standard/kills_you,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"Q" = (
+/obj/bitrunning/animatronic_movement_node/standard/tables,
+/turf/open/floor/iron/textured,
+/area/virtual_domain)
+"T" = (
+/obj/bitrunning/animatronic_controller,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"W" = (
+/obj/effect/turf_decal/arrows,
+/obj/machinery/computer/security/bitrunner,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/fullbright)
+"X" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+"}
+(2,1,1) = {"
+X
+a
+a
+a
+a
+a
+a
+a
+X
+X
+X
+X
+X
+"}
+(3,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(4,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(5,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(6,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(7,1,1) = {"
+X
+a
+e
+y
+J
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(8,1,1) = {"
+X
+a
+e
+e
+e
+e
+G
+x
+D
+f
+f
+f
+X
+"}
+(9,1,1) = {"
+X
+a
+e
+Q
+e
+e
+e
+n
+T
+L
+g
+f
+X
+"}
+(10,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+F
+v
+W
+g
+f
+X
+"}
+(11,1,1) = {"
+X
+a
+e
+A
+e
+e
+u
+o
+N
+L
+g
+f
+X
+"}
+(12,1,1) = {"
+X
+a
+e
+e
+H
+e
+p
+x
+D
+f
+f
+f
+X
+"}
+(13,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(14,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(15,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(16,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(17,1,1) = {"
+X
+a
+e
+e
+e
+e
+e
+a
+X
+X
+X
+X
+X
+"}
+(18,1,1) = {"
+X
+a
+a
+a
+a
+a
+a
+a
+X
+X
+X
+X
+X
+"}
+(19,1,1) = {"
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+"}

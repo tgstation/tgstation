@@ -1,0 +1,481 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"b" = (
+/obj/machinery/conveyor/auto/slow{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"f" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"h" = (
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"i" = (
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"j" = (
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"l" = (
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"n" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto/slow{
+	dir = 8
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"o" = (
+/obj/machinery/digital_clock/score_card,
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"p" = (
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"r" = (
+/obj/bitrunning/watcher_hunt_spawner/station_low/no_replace,
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"s" = (
+/obj/machinery/conveyor/auto/fast{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"w" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"y" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"z" = (
+/obj/machinery/conveyor/auto/very_fast/inverted,
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"A" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"B" = (
+/obj/machinery/conveyor/auto/fast{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"C" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"D" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"E" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto/slow{
+	dir = 8
+	},
+/obj/bitrunning/watcher_hunt_spawner/station_medium,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"G" = (
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"H" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"I" = (
+/obj/structure/table,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"J" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"K" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"L" = (
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 4
+	},
+/obj/bitrunning/watcher_hunt_spawner/station_medium/no_replace,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"O" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 4
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"R" = (
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"S" = (
+/obj/machinery/conveyor/auto/inverted{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"U" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"W" = (
+/obj/machinery/conveyor/auto/very_fast,
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_spawner/station_max,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"X" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Y" = (
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Z" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/obj/bitrunning/watcher_hunt_spawner/station_low/no_replace,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+f
+f
+O
+f
+n
+f
+r
+f
+U
+f
+f
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+W
+j
+i
+h
+b
+h
+J
+h
+H
+h
+f
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+f
+R
+L
+B
+b
+h
+J
+h
+H
+h
+f
+f
+f
+f
+a
+"}
+(5,1,1) = {"
+a
+f
+R
+p
+s
+b
+h
+J
+h
+H
+h
+f
+y
+y
+f
+a
+"}
+(6,1,1) = {"
+a
+f
+R
+L
+B
+b
+h
+J
+h
+S
+Y
+I
+K
+K
+f
+a
+"}
+(7,1,1) = {"
+a
+f
+R
+p
+s
+b
+h
+J
+h
+h
+H
+D
+h
+C
+f
+a
+"}
+(8,1,1) = {"
+a
+f
+R
+L
+B
+b
+h
+J
+h
+h
+H
+I
+h
+C
+f
+w
+"}
+(9,1,1) = {"
+a
+f
+R
+p
+s
+b
+h
+J
+h
+h
+H
+D
+h
+C
+f
+a
+"}
+(10,1,1) = {"
+a
+f
+R
+L
+B
+b
+h
+J
+h
+A
+G
+I
+h
+h
+f
+a
+"}
+(11,1,1) = {"
+a
+f
+R
+p
+s
+b
+h
+J
+h
+H
+h
+o
+h
+h
+f
+a
+"}
+(12,1,1) = {"
+a
+f
+R
+L
+B
+b
+h
+J
+h
+H
+h
+f
+f
+f
+f
+a
+"}
+(13,1,1) = {"
+a
+z
+l
+p
+s
+b
+h
+J
+h
+H
+h
+f
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+f
+f
+N
+f
+E
+f
+X
+f
+Z
+f
+f
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

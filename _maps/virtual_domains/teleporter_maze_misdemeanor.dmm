@@ -1,0 +1,598 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"c" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"d" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"e" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"f" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"g" = (
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/virtual_domain/fullbright)
+"h" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"i" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"j" = (
+/obj/item/food/meat/slab,
+/obj/effect/decal/cleanable/blood,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"k" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"l" = (
+/obj/structure/flora/bush/jungle/c/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"m" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"n" = (
+/obj/structure/punji_sticks/spikes,
+/obj/structure/flora/bush/leafy,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"o" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"q" = (
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"r" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"s" = (
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"t" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"u" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"v" = (
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"w" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/end{
+	dir = 8
+	},
+/turf/open/lava,
+/area/virtual_domain/fullbright)
+"A" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = -8
+	},
+/obj/item/toy/crayon/spraycan/infinite,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = 8
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"B" = (
+/obj/effect/turf_decal/trimline/dark,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"C" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/end{
+	dir = 4
+	},
+/turf/open/lava,
+/area/virtual_domain/fullbright)
+"D" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"E" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"F" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/bush/leafy,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"G" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"H" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"I" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"K" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"L" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"M" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/structure/trap/fire,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"O" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"P" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"Q" = (
+/obj/structure/trap/stun,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"R" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"S" = (
+/obj/structure/meateor_fluff/eyeball,
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"T" = (
+/obj/structure/punji_sticks/spikes,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"V" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"W" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+"X" = (
+/turf/open/indestructible/meat,
+/area/virtual_domain/fullbright)
+"Y" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/asteroid/basalt,
+/area/virtual_domain/fullbright)
+"Z" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+c
+"}
+(2,1,1) = {"
+e
+e
+e
+e
+e
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+e
+e
+e
+e
+e
+"}
+(3,1,1) = {"
+e
+e
+e
+e
+e
+m
+K
+w
+v
+s
+v
+C
+v
+v
+Y
+m
+e
+e
+e
+e
+e
+"}
+(4,1,1) = {"
+e
+e
+e
+e
+e
+m
+v
+C
+v
+w
+Y
+v
+v
+w
+v
+m
+e
+e
+e
+e
+e
+"}
+(5,1,1) = {"
+e
+m
+m
+m
+m
+m
+s
+v
+I
+C
+v
+w
+I
+C
+K
+m
+m
+m
+m
+m
+e
+"}
+(6,1,1) = {"
+e
+m
+E
+O
+O
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+t
+O
+O
+m
+e
+"}
+(7,1,1) = {"
+e
+m
+V
+B
+u
+m
+K
+T
+G
+l
+Z
+T
+l
+q
+r
+m
+A
+B
+h
+m
+e
+"}
+(8,1,1) = {"
+e
+m
+g
+B
+M
+m
+H
+n
+k
+F
+P
+n
+q
+a
+i
+m
+M
+B
+h
+m
+e
+"}
+(9,1,1) = {"
+e
+m
+V
+B
+u
+m
+L
+l
+H
+a
+q
+l
+W
+F
+K
+m
+A
+B
+h
+m
+e
+"}
+(10,1,1) = {"
+e
+m
+R
+d
+d
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+o
+d
+d
+m
+e
+"}
+(11,1,1) = {"
+e
+m
+m
+m
+m
+m
+S
+j
+D
+N
+j
+Q
+S
+D
+j
+m
+m
+m
+m
+m
+e
+"}
+(12,1,1) = {"
+e
+e
+e
+e
+e
+m
+D
+Q
+S
+f
+X
+N
+f
+N
+S
+m
+e
+e
+e
+e
+e
+"}
+(13,1,1) = {"
+e
+e
+e
+e
+e
+m
+K
+N
+j
+Q
+D
+S
+j
+Q
+K
+m
+e
+e
+e
+e
+e
+"}
+(14,1,1) = {"
+e
+e
+e
+e
+e
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+m
+e
+e
+e
+e
+e
+"}
+(15,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+"}

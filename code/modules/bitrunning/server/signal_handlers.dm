@@ -47,6 +47,8 @@
 		return
 
 	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+		var/goal_turf = get_turf(arrived)
+		new /obj/effect/bitrunner_exit_portal(goal_turf)
 		generate_loot(arrived, chosen_forge)
 		return
 
@@ -66,7 +68,7 @@
 /// Scans over the inbound created_atoms from lazy templates
 /obj/machinery/quantum_server/proc/on_template_loaded(datum/lazy_template/source, list/created_atoms)
 	SIGNAL_HANDLER
-
+	var/current_teleporter = 0
 	for(var/thing in created_atoms)
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
@@ -97,6 +99,47 @@
 		if(istype(thing, /obj/item/mod/control))
 			var/obj/item/mod/control/modsuit = thing
 			modsuit.disable_modlink()
+
+		if(istype(thing, /obj/machinery/janitorial_scanner))
+			var/obj/machinery/janitorial_scanner/jani_scanner = thing
+			jani_scanner.unique_id = REF(src)
+			jani_scanner.our_room = detect_room(get_turf(jani_scanner))
+			for(var/turf/floor in jani_scanner.our_room) // We fuck up the corpses here because this is our opportunity to do so after they've been spawned.
+				for(var/mob/living/carbon/human/corpse in floor)
+					for(var/_ in 1 to rand(5, 15))
+						corpse.apply_damage(
+							damage = rand(25,50),
+							damagetype = pick(list(BRUTE, BURN)),
+							forced = TRUE,
+							spread_damage = FALSE,
+							wound_bonus = rand(0, 50),
+							bare_wound_bonus = rand(0, 20),
+							sharpness = pick(list(null, SHARP_EDGED, SHARP_POINTY)),
+							attack_direction = pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)),
+						)
+
+		if(istype(thing, /obj/machinery/janitorial_submit))
+			var/obj/machinery/janitorial_submit/jani_plunger = thing
+			jani_plunger.unique_id = REF(src)
+
+		if(istype(thing, /obj/bitrunning/teleporter))
+			var/obj/bitrunning/teleporter/teleporter_found = thing
+			teleporter_found.current_id = "[REF(src)]_[current_teleporter]"
+			current_teleporter++
+
+	var/list/possible_teleporters = list()
+	for(var/obj/bitrunning/teleporter/teleporter_found in created_atoms)
+		possible_teleporters += teleporter_found
+	if(length(possible_teleporters) && length(possible_teleporters) % 2 != 0)
+		CRASH("While loading [name], discovered [length(possible_teleporters)] teleporters, not an even number! Ensure you have an even number of teleporters for auto-linkage to work.")
+
+	if(length(possible_teleporters))
+		possible_teleporters = shuffle(possible_teleporters)
+		for(var/i in 1 to length(possible_teleporters) / 2)
+			var/obj/bitrunning/teleporter/picked_teleporter = pick_n_take(possible_teleporters)
+			var/obj/bitrunning/teleporter/picked_target_porter = pick_n_take(possible_teleporters)
+			picked_teleporter.target_id = picked_target_porter.current_id
+			picked_target_porter.target_id = picked_teleporter.current_id
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 

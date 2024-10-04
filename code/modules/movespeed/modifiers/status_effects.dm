@@ -59,3 +59,6 @@
 
 /datum/movespeed_modifier/status_effect/guardian_shield
 	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/status_effect/shoving_customer
+	multiplicative_slowdown = 1.5

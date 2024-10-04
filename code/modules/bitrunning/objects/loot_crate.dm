@@ -22,6 +22,11 @@
 	damage_deflection = 30
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security
+	desc = "Drop this off at a return point to exit the Torment Nexus."
+	icon_state = "weaponcrate"
+	base_icon_state = "weaponcrate"
+
 /obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
 
@@ -83,6 +88,63 @@
 			new path(src)
 
 	return TRUE
+
+/obj/structure/closet/crate/secure/bitrunning/decrypted/security
+	name = "decrypted cache"
+	desc = "Compiled from the virtual domain. The reward of a successful Torment Nexus rehabilitation."
+	icon_state = "weaponcrate"
+	base_icon_state = "weaponcrate"
+	locked = TRUE // this has guns in it, make sure it's locked
+	req_access = list(ACCESS_ARMORY)
+
+/obj/structure/closet/crate/secure/bitrunning/decrypted/security/PopulateContents(reward_points, list/completion_loot, rewards_multiplier)
+	spawn_loot(completion_loot)
+	switch(reward_points)
+		if(BITRUNNER_REWARD_MIN)
+			new /obj/item/gun/energy/disabler(src)
+			new /obj/item/gun/energy/disabler(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/grenade/flashbang(src)
+			new /obj/item/grenade/flashbang(src)
+		if(BITRUNNER_REWARD_LOW)
+			new /obj/item/gun/energy/laser(src)
+			new /obj/item/gun/energy/laser(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/grenade/flashbang(src)
+			new /obj/item/grenade/flashbang(src)
+			new /obj/item/gun/energy/disabler/smg(src)
+			new /obj/item/gun/energy/disabler/smg(src)
+		if(BITRUNNER_REWARD_MEDIUM)
+			new /obj/item/gun/energy/lasercannon(src)
+			new /obj/item/gun/energy/lasercannon(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/melee/baton/security/loaded(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/gun/energy/laser/carbine(src)
+			new /obj/item/gun/energy/laser/carbine(src)
+		if(BITRUNNER_REWARD_HIGH)
+			new /obj/item/gun/energy/laser/hellgun(src)
+			new /obj/item/gun/energy/laser/hellgun(src)
+			new /obj/item/knife/combat(src)
+			new /obj/item/knife/combat(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/gun/energy/laser/carbine(src)
+			new /obj/item/gun/energy/laser/carbine(src)
+		if(BITRUNNER_REWARD_EXTREME)
+			new /obj/item/gun/energy/xray(src)
+			new /obj/item/gun/energy/xray(src)
+			new /obj/item/knife/combat(src)
+			new /obj/item/knife/combat(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/frag(src)
+			new /obj/item/grenade/flashbang/cluster(src)
+			new /obj/item/grenade/flashbang/cluster(src)
+			new /obj/item/gun/energy/laser/hellgun(src)
+			new /obj/item/gun/energy/laser/hellgun(src)
 
 #undef ORE_MULTIPLIER_IRON
 #undef ORE_MULTIPLIER_GLASS

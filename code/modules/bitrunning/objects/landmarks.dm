@@ -78,6 +78,10 @@
 	name = "Bitrunning modular mob segment"
 	icon_state = "mob_segment"
 
+/// A location for bitrunners to spawn.
+/obj/effect/landmark/bitrunning/bitrunner_spawn
+	name = "Bitrunning spawn"
+	icon_state = "mob_segment"
 
 /// Bitrunning safehouses. Typically 7x6 rooms with a single entrance.
 /obj/modular_map_root/safehouse
