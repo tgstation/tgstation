@@ -466,4 +466,5 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		return CLICK_ACTION_BLOCKING
 	use_command = !use_command
 	to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
 	return CLICK_ACTION_SUCCESS
