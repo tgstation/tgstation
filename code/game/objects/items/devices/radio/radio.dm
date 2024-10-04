@@ -516,6 +516,9 @@
 					recalculateChannels()
 				. = TRUE
 
+/obj/item/radio/handle_ui_act()
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+
 /obj/item/radio/examine(mob/user)
 	. = ..()
 	if (frequency && in_range(src, user))
