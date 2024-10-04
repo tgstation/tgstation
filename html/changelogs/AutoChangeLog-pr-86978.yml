@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed BCIs sending messages twice and circuit laser pointers sometimes failing to work"

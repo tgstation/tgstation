@@ -46,3 +46,37 @@
   - bugfix: fixed chappies being able to buy an unintended nullrod type
   grungussuss:
   - bugfix: fixed footsteps counting twice on diagonal movement
+2024-10-04:
+  00-Steven:
+  - rscadd: Reinforced tables may now be hooked up directly to the grid much like
+      grilles, electrocuting people who attempt to disassemble it.
+  Ben10Omintrix:
+  - bugfix: fixes some mobs having their aggro appearance linger around after sentience
+  - refactor: basic mob AI interactions has been refactored. please report any bugs
+  Chubbygummibear:
+  - bugfix: fixed multi-z weather overlays stacking and not hiding overlays above
+      you
+  DaCoolBoss:
+  - bugfix: Donk Co. and S.E.L.F. crates now properly display their lock (or lack
+      therof).
+  - image: New sprites for unlocked Donk Co. crates and locked S.E.L.F. crates.
+  - spellcheck: The names of syndicate-branded crates now use proper nouns.
+  - spellcheck: Fixed a typo in the description for Donk Co. fridges.
+  Jewelry-x:
+  - qol: change floor button now interacts with ladder if it is in the current turf
+  - bugfix: fixes stun not getting applied if you are riding a carp
+  SmArtKar:
+  - bugfix: Fixed BCIs sending messages twice and circuit laser pointers sometimes
+      failing to work
+  - qol: Added an explanation of how to change tether length and cut them to tether
+      anchors
+  - qol: MODsuits can now quickly snap all tethers attached to you
+  - balance: Tethers can now be cut significantly quicker
+  Y0SH1M4S73R:
+  - balance: The hatchlings on the Derelict Outpost are marginally less deadly, to
+      the extent that fighting them is slightly more feasible.
+  grungussuss:
+  - bugfix: fixed all mobs being able to meow
+  - bugfix: fixed wabbajack statue not activating
+  timothymtorres:
+  - code_imp: Automatically link maps multi-z up/down traits
