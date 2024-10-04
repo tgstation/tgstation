@@ -3,6 +3,10 @@
 /atom/proc/on_loadout_custom_described()
 	return
 
+/// Called after a loadout item gets custom named
+/atom/proc/on_loadout_custom_named()
+	return
+
 /*
  * Generate a list of singleton loadout_item datums from all subtypes of [type_to_generate]
  *
