@@ -1,6 +1,6 @@
 /datum/quirk/evil
 	name = "Fundamentally Evil"
-	desc = "Where you would have a soul is but an ink-black void. While you are committed to maintaing your social standing, \
+	desc = "Where you would have a soul is but an ink-black void. While you are committed to maintain your social standing, \
 		anyone who stares too long into your cold, uncaring eyes will know the truth. You are truly evil. There is nothing \
 		wrong with you. You chose to be evil, committed to it. Your ambitions come first above all."
 	icon = FA_ICON_HAND_MIDDLE_FINGER
