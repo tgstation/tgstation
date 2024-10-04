@@ -1361,6 +1361,8 @@
 	toysound = 'sound/effects/magic/disintegrate.ogg'
 
 /obj/item/toy/figure/wizard/special
+
+	name = "\improper Wizard action figure special edition"
 	toysay = "CLANG!";
 	toysound = 'sound/effects/clang.ogg'
 
