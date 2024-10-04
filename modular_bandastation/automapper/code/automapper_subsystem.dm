@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(automapper)
 	SSatoms.initialized = previous_initialized_value
 
 	// NOW we can finally delete everything.
-	for(var/atom/atom_to_del as anything in parent.get_all_contents() - parent)
+	for(var/atom/atom_to_del as anything in (parent.get_all_contents() - parent))
 		qdel(atom_to_del, TRUE)
 
 /**
