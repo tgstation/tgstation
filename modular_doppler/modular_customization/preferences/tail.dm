@@ -10,6 +10,7 @@
 	var/list/tails_list_bug
 	var/list/tails_list_synth
 	var/list/tails_list_humanoid
+	var/list/tails_list_alien
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -23,6 +24,7 @@
 	tails_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bug)["default_sprites"]
 	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/synthetic)["default_sprites"]
 	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
+	tails_list_alien = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/alien)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -472,6 +474,36 @@
 
 /datum/preference/choiced/humanoid_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_humanoid[value]
+	return generate_back_icon(chosen_tail, "tail")
+
+//	Alien
+/datum/preference/choiced/alien_tail
+	savefile_key = "feature_alien_tail"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Tail"
+
+/datum/preference/choiced/alien_tail/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.tails_list_alien)
+
+/datum/preference/choiced/alien_tail/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
+	if(chosen_variation == ALIEN)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/alien_tail/create_default_value()
+	return /datum/sprite_accessory/tails/alien/none::name
+
+/datum/preference/choiced/alien_tail/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.tail_type == ALIEN)
+		target.dna.features["tail_other"] = value
+
+/datum/preference/choiced/alien_tail/icon_for(value)
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_alien[value]
 	return generate_back_icon(chosen_tail, "tail")
 
 #define WIDTH_WINGS_FILE 45

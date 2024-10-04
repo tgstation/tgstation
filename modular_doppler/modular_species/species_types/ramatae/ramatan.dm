@@ -28,7 +28,7 @@
 		/obj/item/organ/internal/ears = "Ramatan",
 		/obj/item/organ/external/frills = "None",
 		/obj/item/organ/external/snout = "Ramatan",
-		/obj/item/organ/external/tail/lizard = "Ramatan",
+		/obj/item/organ/external/tail/alien = "Ramatan",
 	)
 	payday_modifier = 1.0
 	mutanttongue = /obj/item/organ/internal/tongue/ramatan
@@ -89,7 +89,7 @@
 	ramatan_for_preview.dna.features["lizard_markings"] = "Ramatan Underbelly"
 	ramatan_for_preview.dna.features["body_markings_color_1"] = "#ccecff"
 	ramatan_for_preview.dna.features["mcolor"] = "#FFFFFF"
-	ramatan_for_preview.dna.ear_type = LIZARD
+	ramatan_for_preview.dna.ear_type = ALIEN
 	ramatan_for_preview.dna.features["ears"] = "Ramatan"
 	ramatan_for_preview.dna.features["ears_color_1"] = "#ffffff"
 	ramatan_for_preview.dna.features["ears_color_2"] = "#dddddd"

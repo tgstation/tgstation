@@ -12,6 +12,7 @@
 	var/list/ears_list_bug
 	var/list/ears_list_humanoid
 	var/list/ears_list_synthetic
+	var/list/ears_list_alien
 
 /datum/controller/subsystem/accessories/setup_lists()
 	. = ..()
@@ -27,6 +28,7 @@
 	ears_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bug)["default_sprites"]
 	ears_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/humanoid)["default_sprites"]
 	ears_list_synthetic = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/synthetic)["default_sprites"]
+	ears_list_alien = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/alien)["default_sprites"]
 
 /datum/dna
 	///	This variable is read by the regenerate_organs() proc to know what organ subtype to give
@@ -452,6 +454,36 @@
 
 /datum/preference/choiced/synthetic_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_synthetic[value]
+	return generate_ears_icon(chosen_ears)
+
+//	Alien
+/datum/preference/choiced/alien_ears
+	savefile_key = "feature_alien_ears"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_CLOTHING
+	relevant_external_organ = null
+	should_generate_icons = TRUE
+	main_feature_name = "Ears"
+
+/datum/preference/choiced/alien_ears/init_possible_values()
+	return assoc_to_keys_features(SSaccessories.ears_list_alien)
+
+/datum/preference/choiced/alien_ears/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
+	if(chosen_variation == ALIEN)
+		return TRUE
+	return FALSE
+
+/datum/preference/choiced/alien_ears/create_default_value()
+	return /datum/sprite_accessory/ears_more/alien/none::name
+
+/datum/preference/choiced/alien_ears/apply_to_human(mob/living/carbon/human/target, value)
+	if(target.dna.ear_type == ALIEN)
+		target.dna.features["ears"] = value
+
+/datum/preference/choiced/alien_ears/icon_for(value)
+	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_alien[value]
 	return generate_ears_icon(chosen_ears)
 
 
