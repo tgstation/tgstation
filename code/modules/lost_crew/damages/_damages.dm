@@ -1,11 +1,19 @@
+#define CORPSE_DAMAGE_ORGAN_DECAY "organ decay"
+#define CORPSE_DAMAGE_ORGAN_LOSS "organ loss"
+#define CORPSE_DAMAGE_LIMB_LOSS "limb loss"
+
 /// The main style controller for new dead bodies! Determines the character, lore, possible causes of death, decay and every other modifier!
 /datum/corpse_damage_class
+	/// Message sent to the recovered crew, constructed from the different death lores
+	var/list/death_lore = list()
 	/// Lore we give on revival, this is the first line
 	var/area_lore = "I was doing something"
 	/// Weight given to this class. Setting this is all that's needed for it to be rollable
 	var/weight
 	/// Different character archetypes we can spawn
-	var/list/possible_character_types = list(/datum/corpse_character = 1)
+	var/list/possible_character_types
+	/// Assignments that can be given to the corpse
+	var/list/possible_character_assignments
 	/// Whatever killed us
 	var/list/possible_causes_of_death
 	/// Goddamn space vultures stealing my organs
@@ -18,16 +26,23 @@
 	var/lore_death_time_max = 5 YEARS
 
 /// Generate and apply a possible character (species etc)
-/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/saved_objects, list/body_data)
+/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/body_data)
 	var/datum/corpse_character/character = pick_weight(possible_character_types)
 	character = new character()
-	character.apply_character(fashion_corpse, saved_objects)
+	character.apply_character(fashion_corpse, protected_objects)
+
+	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
+	assignment = new assignment()
+	assignment.apply_assignment(fashion_corpse, protected_objects)
+
+	death_lore += assignment.job_lore
 
 	body_data += character
+	body_data += assignment
 
 /// Set up injuries
 /datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/body_data)
-	var/datum/corpse_damage/cause_of_death = pick_damage_type(possible_causes_of_death)
+	var/datum/corpse_damage/cause_of_death/cause_of_death = pick_damage_type(possible_causes_of_death)
 	cause_of_death.apply_to_body(victim, rand(), saved_objects)
 
 	var/datum/corpse_damage/post_mortem = pick_damage_type(post_mortem_effects)
@@ -43,6 +58,8 @@
 	body_data += cause_of_death
 	body_data += post_mortem
 	body_data += decay
+
+	death_lore += area_lore + " " + cause_of_death
 
 /// Wrapped pickweight so we can have a bit more controle over how we pick our rules
 /datum/corpse_damage_class/proc/pick_damage_type(list/damages, list/used_damage_types)

@@ -234,7 +234,9 @@
 					. += "[t_He] [t_has] a stupid expression on [t_his] face."
 		if(get_organ_by_type(/obj/item/organ/internal/brain) && isnull(ai_controller))
 			var/npc_message = ""
-			if(!key)
+			if(HAS_TRAIT(get_organ_by_type(/obj/item/organ/internal/brain), TRAIT_GHOSTROLE_ON_REVIVE))
+				npc_message = "Soul is pending..."
+			else if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
 			else if(!client)
 				npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."

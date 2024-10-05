@@ -409,13 +409,20 @@
 
 /obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
 	var/list/recovered_items = list()
+	var/list/protected_items = list()
 	var/list/lost_crew_data = list()
-	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, body_data = lost_crew_data)
+	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
+	corpse.mind_initialize()
 	corpse.forceMove(src)
 
-	//remember to make special box
 	for(var/obj/object in recovered_items)
 		object.forceMove(src)
+
+	if(protected_items.len && corpse.mind)
+		var/obj/item/storage/mind_lockbox/box = new(src)
+		box.mind = corpse.mind
+		for(var/obj/object in protected_items)
+			box.forceMove(object)
 
 	process_data(lost_crew_data)
 

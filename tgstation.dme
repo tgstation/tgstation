@@ -4547,6 +4547,7 @@
 #include "code\modules\lootpanel\ss_looting.dm"
 #include "code\modules\lootpanel\ui.dm"
 #include "code\modules\lost_crew\lost_crew_manager.dm"
+#include "code\modules\lost_crew\character\_assignment.dm"
 #include "code\modules\lost_crew\character\_character.dm"
 #include "code\modules\lost_crew\damages\_damages.dm"
 #include "code\modules\lost_crew\damages\accident.dm"
