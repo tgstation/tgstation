@@ -1,13 +1,13 @@
 // Mouse subtree to hunt down delicious cheese.
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mouse
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/mouse
 	hunt_targets = list(/obj/item/food/cheese)
 	hunt_range = 1
 
 // Mouse subtree to hunt down ... delicious cabling?
 /datum/ai_planning_subtree/find_and_hunt_target/look_for_cables
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/mouse
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/mouse
 	finding_behavior = /datum/ai_behavior/find_hunt_target/mouse_cable
 	hunt_targets = list(/obj/structure/cable)
 	hunt_range = 0 // Only look below us
@@ -28,5 +28,5 @@
 	return below_the_cable.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
 
 // Our hunts have a decent cooldown.
-/datum/ai_behavior/hunt_target/unarmed_attack_target/mouse
+/datum/ai_behavior/hunt_target/interact_with_target/mouse
 	hunt_cooldown = 20 SECONDS

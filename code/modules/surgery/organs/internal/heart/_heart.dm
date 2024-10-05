@@ -92,6 +92,15 @@
 /obj/item/organ/internal/heart/proc/is_beating()
 	return beating
 
+/obj/item/organ/internal/heart/get_status_text(advanced, add_tooltips)
+	if(!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD)
+		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	return ..()
+
+/obj/item/organ/internal/heart/show_on_condensed_scans()
+	// Always show if the guy needs a heart (so its status can be monitored)
+	return ..() || owner.needs_heart()
+
 /obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()
 
@@ -115,11 +124,11 @@
 		if(beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			to_chat(owner, span_notice("You feel your heart slow down..."))
-			SEND_SOUND(owner, sound('sound/health/slowbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 40))
+			SEND_SOUND(owner, sound('sound/effects/health/slowbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 40))
 
 	else if(owner.stat == HARD_CRIT)
 		if(beat != BEAT_FAST && owner.has_status_effect(/datum/status_effect/jitter))
-			SEND_SOUND(owner, sound('sound/health/fastbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 40))
+			SEND_SOUND(owner, sound('sound/effects/health/fastbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 40))
 			beat = BEAT_FAST
 
 	else if(beat != BEAT_NONE)

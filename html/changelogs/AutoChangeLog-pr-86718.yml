@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Snow bears are no longer impervious to all sources of damage"
-  - bugfix: "Cameras, living floors and ghost of poly no longer can be pushed around"

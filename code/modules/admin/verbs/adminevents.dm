@@ -168,7 +168,7 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't ge
 	priority_announce(
 		text = "Emergency Shuttle uplink failure, shuttle disabled until further notice.",
 		title = "Uplink Failure",
-		sound = 'sound/misc/announce_dig.ogg',
+		sound = 'sound/announcer/announcement/announce_dig.ogg',
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "grey",
 	)
@@ -194,7 +194,7 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting
 	priority_announce(
 		text = "Emergency Shuttle uplink reestablished, shuttle enabled.",
 		title = "Uplink Restored",
-		sound = 'sound/misc/announce_dig.ogg',
+		sound = 'sound/announcer/announcement/announce_dig.ogg',
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "green",
 	)
@@ -269,13 +269,21 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a 
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
-	command_report_footnote.message = tgui_input_text(user, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
+	command_report_footnote.message = tgui_input_text(
+		user,
+		"This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.",
+		"P.S.",
+	)
 	if(!command_report_footnote.message)
 		GLOB.communications_controller.block_command_report -= 1
 		qdel(command_report_footnote)
 		return
 
-	command_report_footnote.signature = tgui_input_text(user, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+	command_report_footnote.signature = tgui_input_text(
+		user,
+		"Whose signature will appear on this footnote?",
+		"Also sign here, here, aaand here.",
+	)
 
 	if(!command_report_footnote.signature)
 		command_report_footnote.signature = "Classified"

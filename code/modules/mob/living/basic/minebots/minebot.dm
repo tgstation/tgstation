@@ -18,7 +18,7 @@
 	obj_damage = 10
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
-	attack_sound = 'sound/weapons/circsawhit.ogg'
+	attack_sound = 'sound/items/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
 	mob_biotypes = MOB_ROBOTIC

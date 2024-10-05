@@ -14,9 +14,9 @@
 	/// You can use this var for item path, it would be converted into an item on New().
 	var/obj/item/active_item
 	/// Sound played when extending
-	var/extend_sound = 'sound/mecha/mechmove03.ogg'
+	var/extend_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Sound played when retracting
-	var/retract_sound = 'sound/mecha/mechmove03.ogg'
+	var/retract_sound = 'sound/vehicles/mecha/mechmove03.ogg'
 	/// Organ slot that the implant occupies for the right arm
 	var/right_arm_organ_slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	/// Organ slot that the implant occupies for the left arm
@@ -235,7 +235,7 @@
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!"))
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
+		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
@@ -467,7 +467,7 @@
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
-			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			playsound(living_target.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -480,7 +480,7 @@
 		potential_damage += biotype_bonus_damage
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(living_target.loc, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
 	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)

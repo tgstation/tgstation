@@ -35,6 +35,8 @@
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+	/// Significantly heavier than humans
+	inertia_force_weight = 5
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
 	var/step_energy_drain = 0.008 * STANDARD_CELL_CHARGE
 	///How much energy we drain each time we mechpunch someone
@@ -134,12 +136,12 @@
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
-	var/stepsound = 'sound/mecha/mechstep.ogg'
+	var/stepsound = 'sound/vehicles/mecha/mechstep.ogg'
 	///Sound played when the mech walks
-	var/turnsound = 'sound/mecha/mechturn.ogg'
+	var/turnsound = 'sound/vehicles/mecha/mechturn.ogg'
 	///Sounds for types of melee attack
-	var/brute_attack_sound = 'sound/weapons/punch4.ogg'
-	var/burn_attack_sound = 'sound/items/welder.ogg'
+	var/brute_attack_sound = 'sound/items/weapons/punch4.ogg'
+	var/burn_attack_sound = 'sound/items/tools/welder.ogg'
 	var/tox_attack_sound = 'sound/effects/spray2.ogg'
 	///Sound on wall destroying
 	var/destroy_wall_sound = 'sound/effects/meteorimpact.ogg'
@@ -376,7 +378,7 @@
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
 	if(!safety_sound_custom)
-		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+		SEND_SOUND(user, sound('sound/machines/beep/beep.ogg', volume = 25))
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -819,7 +821,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	playsound(src, 'sound/machines/airlock.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
 
 /// Special light eater handling
 /obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
