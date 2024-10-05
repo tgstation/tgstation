@@ -650,7 +650,7 @@
 
 	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_STANDING)
 		var/mob/living/living_user = user
-		if (living_user.body_position)
+		if(!(living_user.mobility_flags & MOBILITY_MOVE))
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
