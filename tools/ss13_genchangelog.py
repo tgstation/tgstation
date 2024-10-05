@@ -63,7 +63,7 @@ validPrefixes = [
     'server',
     'sound',
     'image',
-    'map'
+    'map',
 ]
 
 def dictToTuples(inp):
