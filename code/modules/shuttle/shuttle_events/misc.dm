@@ -41,7 +41,7 @@
 
 ///Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through
 /datum/shuttle_event/simple_spawner/black_hole
-	name = "Black Hole (Oh no!)"
+	name = "Black Hole (Oh no! Just one though!)"
 	event_probability = 0 // only admin spawnable
 	spawn_probability_per_process = 10
 	activation_fraction = 0.35
@@ -53,9 +53,10 @@
 
 ///Kobayashi Maru version
 /datum/shuttle_event/simple_spawner/black_hole/adminbus
-	name = "Black Holes (OH GOD!)"
+	name = "Black Holes (OH GOD! Will literally kill everyone!)"
 	event_probability = 0
 	spawn_probability_per_process = 50
 	activation_fraction = 0.2
 	spawning_list = list(/obj/singularity/shuttle_event = 10)
 	remove_from_list_when_spawned = TRUE
+

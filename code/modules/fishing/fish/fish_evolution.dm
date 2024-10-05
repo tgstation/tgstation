@@ -167,6 +167,7 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 
 /datum/fish_evolution/fritterish
 	new_fish_type = /obj/item/fish/fryish/fritterish
+	removed_traits = list(/datum/fish_trait/no_mating)
 	conditions_note = "Fryish will grow into it over time."
 
 /datum/fish_evolution/nessie

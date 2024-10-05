@@ -142,7 +142,7 @@
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
-	///Whether or not our object is easily hindered by the presence of armor
+	///Whether or not our object doubles the value of affecting armour
 	var/weak_against_armour = FALSE
 	/// The click cooldown given after attacking. Lower numbers means faster attacks
 	var/attack_speed = CLICK_CD_MELEE
@@ -1801,8 +1801,8 @@
 	var/list/special_identifier = identifier
 	switch(special_identifier[FISH_BAIT_TYPE])
 		if(FISH_BAIT_FOODTYPE)
-			var/obj/item/food/food_bait = bait
-			return istype(food_bait) && food_bait.foodtypes & special_identifier[FISH_BAIT_VALUE]
+			var/datum/component/edible/edible = bait.GetComponent(/datum/component/edible)
+			return edible?.foodtypes & special_identifier[FISH_BAIT_VALUE]
 		if(FISH_BAIT_REAGENT)
 			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
 		else
