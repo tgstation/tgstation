@@ -65,11 +65,7 @@
 			spawn_probability_per_process -= probability_rate_of_change
 
 	if(prob(spawn_probability_per_process))
-		for(var/i in 1 to spawns_per_spawn)
-			spawn_movable(get_type_to_spawn())
-
-	var/was_averted = FALSE
-	if(was_averted)
+		spawn_movable(get_type_to_spawn())
 		return SHUTTLE_EVENT_CLEAR
 
 /datum/shuttle_event/simple_spawner/black_hole/no_escape/get_spawn_turf()
