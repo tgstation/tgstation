@@ -725,7 +725,7 @@
 	var/append_message = weapon ? " with [weapon]" : ""
 	// If it's in our typecache, they're staggered and it exists, disarm. If they're knocked down, disarm too.
 	if(target.get_timed_status_effect_duration(/datum/status_effect/staggered))
-		if(target_held_item && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
+		if(target_held_item && (is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target.body_position == LYING_DOWN))
 			target.dropItemToGround(target_held_item)
 			append_message = "causing [target.p_them()] to drop [target_held_item]"
 			target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
