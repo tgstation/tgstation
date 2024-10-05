@@ -196,6 +196,17 @@ Striking a noncultist, however, will tear their flesh."}
 	)
 	actions_types = list(/datum/action/item_action/haunted_blade)
 
+/obj/item/melee/cultblade/haunted/examine(mob/user)
+	. = ..()
+
+	var/examine_text = ""
+	if(bound)
+		examine_text = "[src] shines a dull, sickly green, the power emanating from it clearly bound by the runes on its blade. You could unbind it, and wield its fearsome power. But is it worth loosening the bindings of the spirit inside?"
+	else
+		examine_text = "[src] flares a bright and malicious pale lime shade. Someone has unbound the spirit within, and power now clearly resonates from inside the blade, barely restrained and brimming with fury. You may attempt to bind it once more, sealing the horror, or try to harness its strength as a blade."
+
+	. += span_cult(examine_text)
+
 /datum/action/item_action/haunted_blade
 	name = "Unseal Spirit" // img is of a chained shade
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
