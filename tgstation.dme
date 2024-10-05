@@ -605,6 +605,7 @@
 #include "code\_globalvars\traits\admin_tooling.dm"
 #include "code\_globalvars\~doppler_globalvars\bitfields.dm"
 #include "code\_globalvars\~doppler_globalvars\configuration.dm"
+#include "code\_globalvars\~doppler_globalvars\names.dm"
 #include "code\_globalvars\~doppler_globalvars\objective.dm"
 #include "code\_globalvars\~doppler_globalvars\religion.dm"
 #include "code\_js\byjax.dm"

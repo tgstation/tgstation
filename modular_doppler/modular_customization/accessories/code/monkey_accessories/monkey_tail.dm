@@ -8,3 +8,5 @@
 	icon = 'modular_doppler/modular_customization/accessories/icons/monkey/monkey_tail_big.dmi'
 	name = "Ring Tail"
 	icon_state = "bigring"
+	dimension_x = 64
+	center = TRUE
