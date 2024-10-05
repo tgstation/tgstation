@@ -1,5 +1,5 @@
 /datum/traitor_objective/ultimate/no_escape
-	name = "Attatch a beacon to the escape shuttle that will attract a singularity to consume everything."
+	name = "Attach a beacon to the escape shuttle that will attract a singularity to consume everything."
 	description = "Go to %AREA%, and receive the smuggled beacon. Set up the beacon anywhere on the shuttle, \
 	and charge it using an inducer then, IT COMES. Warning: The singularity will consume all in it's path, you included."
 
