@@ -144,6 +144,10 @@
 /obj/item/organ/external/tail/fish
 	name = "fish tail"
 	desc = "A severed tail from some sort of marine creature... or a fish-infused spaceman. It's smooth, faintly wet and definitely not flopping."
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "fish_tail"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = FISH_COLORS
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
 	dna_block = DNA_FISH_TAIL_BLOCK
@@ -167,6 +171,9 @@
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
+/obj/item/organ/external/tail/fish/get_greyscale_color_from_draw_color()
+	set_greyscale(list(bodypart_overlay.draw_color, FISH_SCLERA_COLOR, FISH_PUPIL_COLOR))
+
 /obj/item/organ/external/tail/fish/proc/check_location(mob/living/carbon/source, atom/movable/old_loc, dir, forced)
 	var/was_water = istype(old_loc, /turf/open/water)
 	var/is_water = istype(source.loc, /turf/open/water) && !HAS_TRAIT(source.loc, TRAIT_TURF_IGNORE_SLOWDOWN)
@@ -189,6 +196,7 @@
 	if(imprint_on_next_insertion && !receiver.dna.features["fish_tail"])
 		receiver.dna.features["fish_tail"] = pick(SSaccessories.tails_list_fish)
 		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
+
 	return ..()
 
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
@@ -206,11 +214,32 @@
 	///The required partial pressure of water_vapor for not drowing
 	var/safe_water_level = 29
 
+	/// Bodypart overlay applied to the chest where the lungs are in
+	var/datum/bodypart_overlay/simple/gills/gills
+
+	var/has_gills = TRUE
+
 /obj/item/organ/internal/lungs/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
+	if(has_gills)
+		gills = new()
+		AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
+
+/obj/item/organ/internal/lungs/fish/Destroy()
+	QDEL_NULL(gills)
+	return ..()
+
+/obj/item/organ/internal/lungs/fish/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	if(gills)
+		limb.add_bodypart_overlay(gills)
+
+/obj/item/organ/internal/lungs/fish/on_bodypart_remove(obj/item/bodypart/limb)
+	. = ..()
+	if(gills)
+		limb.remove_bodypart_overlay(gills)
 
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
@@ -236,12 +265,26 @@
 	if(water_pp)
 		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide, volume = gas_breathed)
 
+// Simple overlay so we can add gills to those with fish lungs
+/datum/bodypart_overlay/simple/gills
+	icon = 'icons/mob/human/fish_features.dmi'
+	icon_state = "gills"
+	layers = EXTERNAL_FRONT
+
+/datum/bodypart_overlay/simple/gills/get_image(image_layer, obj/item/bodypart/limb)
+	return image(
+		icon = icon,
+		icon_state = "[icon_state]_[mutant_bodyparts_layertext(image_layer)]",
+		layer = image_layer,
+	)
+
 /// Subtype of gills that allow the mob to optionally breathe water.
 /obj/item/organ/internal/lungs/fish/amphibious
 	name = "mutated semi-aquatic lungs"
 	desc = "DNA from an amphibious or semi-aquatic creature infused on a pair lungs. Enjoy breathing underwater without drowning outside water."
 	safe_oxygen_min = /obj/item/organ/internal/lungs::safe_oxygen_min
 	safe_water_level = 19
+	has_gills = FALSE
 	/**
 	 * If false, we don't breathe air since we've got water instead.
 	 * Set to FALSE at the start of each cycle and TRUE on on_low_water()
