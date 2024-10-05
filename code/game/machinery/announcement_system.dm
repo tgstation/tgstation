@@ -97,12 +97,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	switch(message_type)
 		if(AUTO_ANNOUNCE_ARRIVAL)
 			if(!arrival_toggle)
-				message = CompileText(arrival, target, rank)
 				return
+			message = CompileText(arrival, target, rank)
 		if(AUTO_ANNOUNCE_NEWHEAD)
 			if(!newhead_toggle)
-				message = CompileText(newhead, target, rank)
 				return
+			message = CompileText(newhead, target, rank)
 		if(AUTO_ANNOUNCE_ARRIVALS_BROKEN)
 			message = "The arrivals shuttle has been damaged. Docking for repairs..."
 		if(AUTO_ANNOUNCE_NODE)
@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(machine_stat & BROKEN)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
 		if("ArrivalText")

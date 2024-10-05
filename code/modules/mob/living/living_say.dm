@@ -287,21 +287,43 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(raw_message != untranslated_raw_message)
 			understood = FALSE
 
+	var/speaker_is_signing = HAS_TRAIT(speaker, TRAIT_SIGN_LANG)
+
+
 	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
 	// Less than or equal to 0 means normal hearing. More than 0 and less than or equal to EAVESDROP_EXTRA_RANGE means
 	// partial hearing. More than EAVESDROP_EXTRA_RANGE means no hearing. Exception for GOOD_HEARING trait
 	var/dist = get_dist(speaker, src) - message_range
 	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
-	if (message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
-		return FALSE // Too far away and don't have good hearing, you can't hear anything
+	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE && !HAS_TRAIT(src, TRAIT_GOOD_HEARING) && !isobserver(src))
+		// Too far away and don't have good hearing, you can't hear anything
+		if(is_blind() || HAS_TRAIT(speaker, TRAIT_INVISIBLE_MAN)) // Can't see them speak either
+			return FALSE
+		if(!isturf(speaker.loc)) // If they're inside of something, probably can't see them speak
+			return FALSE
+
+		// But we can still see them speak
+		if(speaker_is_signing)
+			deaf_message = "[span_name("[speaker]")] [speaker.get_default_say_verb()] something, but the motions are too subtle to make out from afar."
+		else if(can_hear()) // If we can't hear we want to continue to the default deaf message
+			var/mob/living/living_speaker = speaker
+			if(istype(living_speaker) && living_speaker.is_mouth_covered()) // Can't see them speak if their mouth is covered
+				return FALSE
+			deaf_message = "[span_name("[speaker]")] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
+
+		if(deaf_message)
+			deaf_type = MSG_VISUAL
+			message = deaf_message
+			return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+
 
 	// we need to send this signal before compose_message() is used since other signals need to modify
 	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
 	// by compose_message() to be displayed in chat boxes for to_chat or runechat
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
+	if(speaker_is_signing) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods, TRUE)
 
 		if(speaker != src)
@@ -360,6 +382,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
 			listening.Remove(listening_movable)
+
+	if(imaginary_group)
+		listening |= imaginary_group
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)

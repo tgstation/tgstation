@@ -137,7 +137,7 @@
 	if(!length(possible_turfs))
 		return FALSE
 
-	playsound(owner, 'sound/magic/fireball.ogg', 70, TRUE)
+	playsound(owner, 'sound/effects/magic/fireball.ogg', 70, TRUE)
 	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
 	StartCooldown()

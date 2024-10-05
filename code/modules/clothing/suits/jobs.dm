@@ -124,6 +124,7 @@
 	armor_type = /datum/armor/jacket_det_suit
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
+	flags_inv = HIDEBELT
 
 /datum/armor/jacket_det_suit
 	melee = 25

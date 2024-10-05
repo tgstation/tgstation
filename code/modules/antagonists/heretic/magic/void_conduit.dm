@@ -108,7 +108,7 @@
 				affected_structure.take_damage(rand(10, 20))
 
 /datum/looping_sound/void_conduit
-	mid_sounds = 'sound/ambience/ambiatm1.ogg'
+	mid_sounds = 'sound/ambience/misc/ambiatm1.ogg'
 	mid_length = 1 SECONDS
 	extra_range = 10
 	volume = 40

@@ -1,0 +1,123 @@
+2024-10-01:
+  DaCoolBoss:
+  - balance: Donksoft vendors now stock slightly more items, slightly less of each
+      item, and has increased prices across the board.
+2024-10-02:
+  EEASAS:
+  - bugfix: fixes multiple issues in metastation cargo
+  Ghommie:
+  - bugfix: Items that adjust fishing difficulty no longer have misleading examine
+      tips.
+  Hardly:
+  - image: Resprited kitsune masks
+  - image: Kitsune masks are now adjustable. Use it in-hand!
+  Jewelry-x:
+  - qol: you only need to wait 1 second if you can move into that z level instead
+      of most cases
+  - code_imp: mob/verb/up() and mob/verb/down() cleanup
+  grungus:
+  - rscadd: cat mobs can *meow and *purr
+  - sound: sound for meow and purr emotes
+  - code_imp: added support for passing emotes into the pet_bonus element
+2024-10-03:
+  Ben10Omintrix:
+  - bugfix: goldgrub AI now correctly digs away from people
+  Dmeto:
+  - bugfix: Printing factory machine boards now results in their respective board
+      and not the assembled machine.
+  - bugfix: Sorter machines now use their respective board.
+  Hatterhat:
+  - rscadd: Portable power storage units and power connectors! Under the same research
+      node as regular power storage units, and not mapped in anywhere. Build a connector
+      and portable unit, wire the connector like a regular SMES, wrench the portable
+      unit onto the connector, unwrench as needed.
+  - code_imp: SMES attackby was broken up into several tool_acts instead of a big
+      attackby chain. If something stops working in regards to using tools on SMESes,
+      please file a bug report.
+  Time-Green:
+  - rscadd: Adds an assistant and hitchiker shuttle event, replenishing the crew mid
+      flight!
+  - admin: Adds two intern wave shuttle events
+  - code_imp: You can now supply shuttle events with outfits!
+  - code_imp: You can now shoot projectiles with the shuttle events!
+  - bugfix: Fixes projectiles bugging out when fired in shuttle transit space
+  - bugfix: Fixes admin forced shuttle events not activating when added mid transit
+  carlarctg:
+  - bugfix: fixed chappies being able to buy an unintended nullrod type
+  grungussuss:
+  - bugfix: fixed footsteps counting twice on diagonal movement
+2024-10-04:
+  00-Steven:
+  - rscadd: Reinforced tables may now be hooked up directly to the grid much like
+      grilles, electrocuting people who attempt to disassemble it.
+  Ben10Omintrix:
+  - bugfix: fixes some mobs having their aggro appearance linger around after sentience
+  - refactor: basic mob AI interactions has been refactored. please report any bugs
+  Chubbygummibear:
+  - bugfix: fixed multi-z weather overlays stacking and not hiding overlays above
+      you
+  DaCoolBoss:
+  - bugfix: Donk Co. and S.E.L.F. crates now properly display their lock (or lack
+      therof).
+  - image: New sprites for unlocked Donk Co. crates and locked S.E.L.F. crates.
+  - spellcheck: The names of syndicate-branded crates now use proper nouns.
+  - spellcheck: Fixed a typo in the description for Donk Co. fridges.
+  Jewelry-x:
+  - qol: change floor button now interacts with ladder if it is in the current turf
+  - bugfix: fixes stun not getting applied if you are riding a carp
+  SmArtKar:
+  - bugfix: Fixed BCIs sending messages twice and circuit laser pointers sometimes
+      failing to work
+  - qol: Added an explanation of how to change tether length and cut them to tether
+      anchors
+  - qol: MODsuits can now quickly snap all tethers attached to you
+  - balance: Tethers can now be cut significantly quicker
+  Y0SH1M4S73R:
+  - balance: The hatchlings on the Derelict Outpost are marginally less deadly, to
+      the extent that fighting them is slightly more feasible.
+  grungussuss:
+  - bugfix: fixed all mobs being able to meow
+  - bugfix: fixed wabbajack statue not activating
+  timothymtorres:
+  - code_imp: Automatically link maps multi-z up/down traits
+2024-10-05:
+  00-Steven:
+  - bugfix: Prosopagnosia actually accounts for hover screentips, showing humans as
+      Unknown in those too.
+  Archemagus:
+  - qol: Airlock_pump now dock with shuttles in more pleasant way
+  Bisar:
+  - rscadd: Clothing can now hide what you're wearing on your belt.
+  EnterTheJake:
+  - bugfix: Heretic Carving Knife runes are no longer triggered by hovering projectiles.
+  GremlinSeeker:
+  - rscadd: Birdshot Cargo now has a lobby and is slightly more open overall.
+  - rscadd: Re-added the DnD room  to Birdshot
+  - rscadd: re-added the skill station to the library.
+  Jewelry-x:
+  - bugfix: Security Officers (Engineering) can now open crucial doors in Engineering
+      on Birdshot
+  - bugfix: Corrected access inconsistencies for maintenance doors in the Engineering
+      department on Birdshot
+  - bugfix: Resolved naming inconsistency for the front doors of Engineering on Birdshot
+  Melbert:
+  - qol: Runes, crayons, and similar decals no longer have shadows
+  - bugfix: Blood and similar "mess" decals no longer have shadows (again)
+  SmArtKar:
+  - bugfix: Fixed luminiscent major extract activation button not disappearing/updating
+      when it should've
+  Timberpoes:
+  - bugfix: Fixes a bug where the game would assign multiple players to single-slot
+      command roles.
+  Xackii:
+  - rscadd: Showers now heals stamina when you washing. But not for you catgitls.
+  grungussuss:
+  - bugfix: fixed drones being able to store multiple of the same type of tools in
+      their toolbox
+  imedial:
+  - qol: puts silicon laws in the status panel
+  timothymtorres:
+  - bugfix: Fix air alarms to work correctly while connected to a gas sensor
+  - bugfix: Fix paired air alarms and sensors to be able to relink to other devices
+      if turned off, reset, or destroyed.
+  - bugfix: Fix air alarm disabled setting to silence warnings

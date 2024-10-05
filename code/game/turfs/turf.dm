@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/requires_activation //add to air processing after initialize?
 	var/changing_turf = FALSE
 
-	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_bounce_sound = 'sound/items/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * type_list - are we checking for types of atoms to ignore and not physical atoms
  */
 /turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
-	if(density)
+	if((!isnull(source_atom) && !CanPass(source_atom, get_dir(src, source_atom))) || density)
 		return TRUE
 
 	for(var/atom/movable/movable_content as anything in contents)

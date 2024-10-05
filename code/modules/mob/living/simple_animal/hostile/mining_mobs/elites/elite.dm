@@ -353,7 +353,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor. Note, it's your only way to heal.\n\
 			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
 			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
-		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
+		to_chat(mychild, span_boldbig("Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!"))
 
 /obj/item/tumor_shard
 	name = "tumor shard"
@@ -380,8 +380,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	E.revive(HEAL_ALL)
 	user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
 	E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-	to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
-	to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
+	to_chat(E, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
+	to_chat(E, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
 	E.maxHealth = E.maxHealth * 0.4
 	E.health = E.maxHealth
 	E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
