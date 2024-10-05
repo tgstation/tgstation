@@ -179,8 +179,7 @@
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
-	if(cell)
-		cell.emp_act(severity)
+	cell?.emp_act(severity)
 
 /obj/machinery/power/singularity_beacon/syndicate/no_escape/process()
 	if(cell.charge())
