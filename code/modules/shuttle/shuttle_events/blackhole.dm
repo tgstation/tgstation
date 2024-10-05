@@ -36,7 +36,7 @@
 	priority_announce(
 		text = "Sensors indicate that a black hole's gravitational field is affecting the region of space we are heading through.",
 		title = "The Orion Trail",
-		sound = 'sound/misc/notice1.ogg',
+		sound = 'sound/announcer/notice/notice1.ogg',
 		has_important_message = TRUE,
 		sender_override = "Emergency Shuttle",
 		color_override = "red",
