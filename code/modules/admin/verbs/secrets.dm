@@ -624,7 +624,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			for(var/mob/living/player in GLOB.player_list)
 				player.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 
-			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
+			PLAYSOUND(GLOBAL_SOUND, 'sound/effects/pray_chaplain.ogg').play()
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
 
@@ -648,12 +648,12 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE
 	if (playlightning)
-		sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
+		PLAYSOUND(GLOBAL_SOUND, 'sound/effects/magic/lightning_chargeup.ogg').play()
 		sleep(8 SECONDS)
 	priority_announce(replacetext(announcement, "%STATION%", station_name()))
 	if (playlightning)
 		sleep(2 SECONDS)
-		sound_to_playing_players('sound/effects/magic/lightningbolt.ogg')
+		PLAYSOUND(GLOBAL_SOUND, 'sound/effects/magic/lightningbolt.ogg').play()
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use

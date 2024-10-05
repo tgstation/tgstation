@@ -496,7 +496,7 @@
 
 	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
 	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
-	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
+	PLAYSOUND(src, 'sound/items/tools/change_drill.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()

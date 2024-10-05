@@ -466,7 +466,7 @@
  * Tram crash sound and visuals
  */
 /datum/transport_controller/linear/tram/proc/crash_fx()
-	playsound(source = nav_beacon, soundin = 'sound/vehicles/car_crash.ogg', vol = 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
+	PLAYSOUND(nav_beacon, 'sound/vehicles/car_crash.ogg').volume(100).falloff_distance(DEFAULT_TRAM_LENGTH).play()
 	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 		if(tram_passenger.stat != CONSCIOUS)

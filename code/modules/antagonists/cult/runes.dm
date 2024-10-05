@@ -696,7 +696,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	cult_team.narsie_summoned = TRUE
 	..()
-	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
+	PLAYSOUND(GLOBAL_SOUND, 'sound/effects/dimensional_rend.ogg').play()
 	var/turf/rune_turf = get_turf(src)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		cult_team.true_cultists += cult_mind

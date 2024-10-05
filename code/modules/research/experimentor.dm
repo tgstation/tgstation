@@ -652,20 +652,20 @@
 // Artefact Powers \\
 
 /obj/item/relic/proc/corgi_cannon(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(user))
 	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/cleaning_foam(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	spawned_foamer.detonate()
 	qdel(spawned_foamer)
 	warn_admins(user, "Foam", 0)
 
 /obj/item/relic/proc/flashbanger(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/grenade/flashbang/spawned_flashbang = new/obj/item/grenade/flashbang(user.loc)
 	spawned_flashbang.detonate()
 	warn_admins(user, "Flash")

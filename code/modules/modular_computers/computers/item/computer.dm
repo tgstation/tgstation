@@ -196,7 +196,7 @@
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		PLAYSOUND(loc, ).volume(get_clamped_volume().play(), TRUE, -1) //Likewise for the tap sound
+		PLAYSOUND(loc, ).volume(get_clamped_volume()).vary(TRUE).extra_range(-1).play()
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()

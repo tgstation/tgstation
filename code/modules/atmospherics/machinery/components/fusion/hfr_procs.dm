@@ -435,7 +435,7 @@
 			continue
 		else if(i > 50)
 			if(i == 10 SECONDS && critical)
-				sound_to_playing_players('sound/machines/hypertorus/HFR_critical_explosion.ogg')
+				PLAYSOUND(GLOBAL_SOUND, 'sound/machines/hypertorus/HFR_critical_explosion.ogg').play()
 			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
 		else
 			speaking = "[i*0.1]..."
