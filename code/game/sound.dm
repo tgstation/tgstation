@@ -43,6 +43,9 @@
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
+	if(islist(soundin))
+		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
+
 	var/turf/turf_source = get_turf(source)
 
 	if (!turf_source || !soundin || !vol)
@@ -515,5 +518,25 @@
 			soundin = pick(
 				'sound/mobs/non-humanoids/fish/fish_pickup1.ogg',
 				'sound/mobs/non-humanoids/fish/fish_pickup2.ogg',
+			)
+		if(SFX_LIQUID_POUR)
+			soundin = pick(
+				'sound/effects/liquid_pour/liquid_pour1.ogg',
+				'sound/effects/liquid_pour/liquid_pour2.ogg',
+				'sound/effects/liquid_pour/liquid_pour3.ogg',
+			)
+		if(SFX_CAT_MEOW)
+			soundin = pick_weight(list(
+				'sound/creatures/cat/cat_meow1.ogg' = 33,
+				'sound/creatures/cat/cat_meow2.ogg' = 33,
+				'sound/creatures/cat/cat_meow3.ogg' = 33,
+				'sound/creatures/cat/oranges_meow1.ogg' = 1,
+			))
+		if(SFX_CAT_PURR)
+			soundin = pick(
+				'sound/creatures/cat/cat_purr1.ogg',
+				'sound/creatures/cat/cat_purr2.ogg',
+				'sound/creatures/cat/cat_purr3.ogg',
+				'sound/creatures/cat/cat_purr4.ogg',
 			)
 	return soundin

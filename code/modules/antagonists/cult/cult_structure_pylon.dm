@@ -6,7 +6,7 @@
 	light_range = 1.5
 	light_color = COLOR_SOFT_RED
 	break_sound = 'sound/effects/glass/glassbr2.ogg'
-	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
+	break_message = span_warning("The blood-red crystal falls to the floor and shatters!")
 	/// Length of the cooldown in between tile corruptions. Doubled if no turfs are found.
 	var/corruption_cooldown_duration = 5 SECONDS
 	/// The cooldown for corruptions.

@@ -83,6 +83,6 @@
 	else
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/carrot
+/datum/ai_behavior/hunt_target/interact_with_target/carrot
 	hunt_cooldown = 2 SECONDS
 	always_reset_target = TRUE
