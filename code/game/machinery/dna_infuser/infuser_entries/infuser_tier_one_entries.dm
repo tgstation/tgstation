@@ -164,6 +164,8 @@
 		/obj/item/organ/internal/liver/fish
 	)
 	tier = DNA_MUTANT_TIER_ONE
+	unreachable_effect = TRUE
+	status_effect_type = /datum/status_effect/organ_set_bonus/fish
 
 /datum/infuser_entry/amphibious
 	name = "Amphibious"
@@ -184,3 +186,5 @@
 	)
 	infusion_desc = "semi-aquatic"
 	tier = DNA_MUTANT_TIER_ONE
+	unreachable_effect = TRUE
+	status_effect_type = /datum/status_effect/organ_set_bonus/fish
