@@ -59,7 +59,7 @@
 		return FALSE
 
 	user.balloon_alert(user, "зарядка...")
-	playsound(src, 'sound/effects/sparks3.ogg', 10, 1)
+	playsound(src, 'sound/effects/sparks/sparks3.ogg', 10, 1)
 	do_sparks(1, 1, src)
 
 	if(!do_after(user, 3 SECONDS, target = src))

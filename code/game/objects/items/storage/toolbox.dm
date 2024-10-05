@@ -16,9 +16,9 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
@@ -33,8 +33,8 @@
 			if(prob(1))
 				latches = "triple_latch"
 	update_appearance()
-	atom_storage.open_sound = 'sound/items/toolbox_open.ogg'
-	atom_storage.rustle_sound = 'sound/items/toolbox_rustle.ogg'
+	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
+	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/storage/toolbox/update_overlays()
@@ -410,6 +410,7 @@
 	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
 	icon_state = "snake_eater"
 	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"

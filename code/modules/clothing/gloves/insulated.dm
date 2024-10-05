@@ -13,15 +13,18 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
-	clothing_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/clothing/gloves/color/yellow/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 10)
 
 /obj/item/clothing/gloves/color/yellow/apply_fantasy_bonuses(bonus)
 	. = ..()
 	if(bonus >= 10)
-		detach_clothing_traits(TRAIT_CHUNKYFINGERS)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
 
 /obj/item/clothing/gloves/color/yellow/remove_fantasy_bonuses(bonus)
-	attach_clothing_traits(TRAIT_CHUNKYFINGERS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 10)
 	return ..()
 
 /datum/armor/color_yellow
@@ -116,6 +119,10 @@
 	greyscale_colors = null
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
+/obj/item/clothing/gloves/cut/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
+
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
@@ -131,3 +138,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/chief_engineer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)

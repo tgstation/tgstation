@@ -8,7 +8,6 @@
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
-	item_flags = XENOMORPH_HOLDABLE // playing ball against a xeno is rigged since they cannot be disarmed
 	/// The person dribbling the basketball
 	var/mob/living/wielder
 	/// So the basketball doesn't make sound every step

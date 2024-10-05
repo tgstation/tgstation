@@ -161,9 +161,6 @@
 		return CLEAN_BLOCKED
 	return ..()
 
-/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
-	return !user.combat_mode  // only cleans a storage item if on combat
-
 /*
  * Bike Horns
  */
@@ -212,7 +209,7 @@
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
-	sound_file = 'sound/items/airhorn2.ogg'
+	sound_file = 'sound/items/airhorn/airhorn2.ogg'
 
 /datum/crafting_recipe/airhorn
 	name = "Air Horn"

@@ -16,6 +16,8 @@
 	var/list/fishing_line_traits
 	/// Color of the fishing line
 	var/line_color = COLOR_GRAY
+	///The description given to the autowiki
+	var/wiki_desc = "A generic fishing line. <b>Without one, the casting range of the rod will be significantly hampered.</b>"
 
 /obj/item/fishing_line/reinforced
 	name = "reinforced fishing line reel"
@@ -23,6 +25,7 @@
 	icon_state = "reel_green"
 	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
+	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
@@ -30,6 +33,7 @@
 	icon_state = "reel_white"
 	fishing_line_traits = FISHING_LINE_CLOAKED
 	line_color = "#82cfdd"
+	wiki_desc = "Fishing anxious and wary fish will be easier with this equipped."
 
 /obj/item/fishing_line/bouncy
 	name = "flexible fishing line reel"
@@ -37,6 +41,7 @@
 	icon_state = "reel_red"
 	fishing_line_traits = FISHING_LINE_BOUNCY
 	line_color = "#99313f"
+	wiki_desc = "It reduces the progression loss during the fishing minigame."
 
 /obj/item/fishing_line/sinew
 	name = "fishing sinew"
@@ -44,6 +49,7 @@
 	icon_state = "reel_sinew"
 	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
 	line_color = "#d1cca3"
+	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
 
 /**
  * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,
@@ -52,10 +58,13 @@
  */
 /obj/item/fishing_line/auto_reel
 	name = "fishing line auto-reel"
-	desc = "A fishing line that automatically starts reeling in fish the moment they bite. Also good for hurling things at yourself."
+	desc = "A fishing line that automatically spins lures and begins reeling in fish the moment it bites. Also good for hurling things towards you."
 	icon_state = "reel_auto"
 	fishing_line_traits = FISHING_LINE_AUTOREEL
 	line_color = "#F88414"
+	wiki_desc = "Automatically starts the minigame once the fish bites the bait. It also spin fishing lures for you without needing an input. \
+		It can also be used to snag in objects from a distance more rapidly.<br>\
+		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
@@ -90,7 +99,7 @@
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
 		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
 	else
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -118,7 +127,8 @@
 	var/rod_overlay_icon_state = "hook_overlay"
 	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
 	var/chasm_detritus_type = /datum/chasm_detritus
-
+	///The description given to the autowiki
+	var/wiki_desc = "A generic fishing hook. <b>You won't be able to fish without one.</b>"
 
 /**
  * Simple getter proc for hooks to implement special hook bonuses for
@@ -162,7 +172,22 @@
 	icon_state = "treasure"
 	rod_overlay_icon_state = "hook_treasure_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
+	wiki_desc = "It vastly improves the chances of catching things other than fish."
 
+/obj/item/fishing_hook/magnet/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(hook_equipped))
+
+///We make sure that the fishng rod doesn't need a bait to reliably catch non-fish loot.
+/obj/item/fishing_hook/magnet/proc/hook_equipped(datum/source, obj/item/fishing_rod/rod)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
+
+/obj/item/fishing_hook/magnet/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(old_loc, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -171,19 +196,19 @@
 	// We multiply the odds by five for everything that's not a fish nor a dud
 	return MAGNET_HOOK_BONUS_MULTIPLIER
 
-
 /obj/item/fishing_hook/shiny
 	name = "shiny lure hook"
 	icon_state = "gold_shiny"
 	fishing_hook_traits = FISHING_HOOK_SHINY
 	rod_overlay_icon_state = "hook_shiny_overlay"
+	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
 	icon_state = "weighted"
 	fishing_hook_traits = FISHING_HOOK_WEIGHTED
 	rod_overlay_icon_state = "hook_weighted_overlay"
-
+	wiki_desc = "It reduces the bounce that happens when you hit the boundaries of the minigame bar."
 
 /obj/item/fishing_hook/rescue
 	name = "rescue hook"
@@ -191,6 +216,8 @@
 	icon_state = "rescue"
 	rod_overlay_icon_state = "hook_rescue_overlay"
 	chasm_detritus_type = /datum/chasm_detritus/restricted/bodies
+	wiki_desc = "A hook used to rescue bodies whom have fallen into chasms. \
+		You won't catch fish with it, nor it can't be used for fishing outside of chasms, though it can still be used to reel in people and items from unreachable locations.."
 
 /obj/item/fishing_hook/rescue/can_be_hooked(atom/target)
 	return ..() || isliving(target)
@@ -220,6 +247,7 @@
 	name = "bone hook"
 	desc = "A simple hook carved from sharpened bone"
 	icon_state = "hook_bone"
+	wiki_desc = "A generic fishing hook carved out of sharpened bone. Bone fishing rods come pre-equipped with it."
 
 /obj/item/fishing_hook/stabilized
 	name = "gyro-stabilized hook"
@@ -227,6 +255,8 @@
 	icon_state = "gyro"
 	fishing_hook_traits = FISHING_HOOK_BIDIRECTIONAL
 	rod_overlay_icon_state = "hook_gyro_overlay"
+	wiki_desc = "It allows you to move both up (left-click) and down (right-click) during the minigame while negating gravity.<br>\
+		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
@@ -239,6 +269,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
+	wiki_desc = "A beartrap-looking hook that makes losing the fishing minigame impossible (Unless you drop the rod or get stunned). However it'll hurt the fish and eventually kill it. \
+		Funnily enough, you can snag in people with it too. It won't hurt them like a actual beartrap, but it'll still slow them down.<br>\
+		<b>It has to be bought from the black market uplink.</b>"
 
 /obj/item/fishing_hook/jaws/can_be_hooked(atom/target)
 	return ..() || isliving(target)
@@ -254,6 +287,9 @@
 	icon_state = "fishing"
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
+	custom_price = PAYCHECK_CREW * 3
+	///How much holding this affects fishing difficulty
+	var/fishing_modifier = -2
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -262,6 +298,7 @@
 		/obj/item/fishing_rod,
 	))
 	atom_storage.exception_hold = exception_cache
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
@@ -292,6 +329,7 @@
 	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
+	fishing_modifier = -7
 
 /obj/item/storage/toolbox/fishing/master/PopulateContents()
 	new /obj/item/fishing_rod/telescopic/master(src)
@@ -306,6 +344,7 @@
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
 	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/box/fishing_hooks/PopulateContents()
 	new /obj/item/fishing_hook/magnet(src)
@@ -322,6 +361,7 @@
 /obj/item/storage/box/fishing_lines
 	name = "fishing line set"
 	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/box/fishing_lines/PopulateContents()
 	new /obj/item/fishing_line/bouncy(src)
@@ -347,7 +387,7 @@
 	name = "fishing tip"
 	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
 
-/obj/item/paper/paperslip/fortune/Initialize(mapload)
+/obj/item/paper/paperslip/fishing_tip/Initialize(mapload)
 	default_raw_text = pick(GLOB.fishing_tips)
 	return ..()
 
@@ -363,6 +403,44 @@
 	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
 	new /obj/item/storage/fish_case(src)
 	new /obj/item/storage/fish_case(src)
+
+/obj/item/storage/box/fishing_lures
+	name = "fishing lures set"
+	desc = "A small tackle box containing all the fishing lures you will ever need to curb randomness."
+	icon_state = "plasticbox"
+	foldable_result = null
+	illustration = "fish"
+	custom_price = PAYCHECK_CREW * 9
+
+/obj/item/storage/box/fishing_lures/PopulateContents()
+	new /obj/item/paper/lures_instructions(src)
+	var/list/typesof = typesof(/obj/item/fishing_lure)
+	for(var/type in typesof)
+		new type (src)
+	atom_storage.set_holdable(/obj/item/fishing_lure) //can only hold lures
+	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
+	atom_storage.max_slots = length(typesof) + 1
+	atom_storage.max_total_storage = WEIGHT_CLASS_SMALL * (atom_storage.max_slots + 1)
+
+/obj/item/paper/lures_instructions
+	name = "instructions paper"
+	icon_state = "slipfull"
+	show_written_words = FALSE
+	desc = "A piece of grey paper with a how-to for dummies about fishing lures printed on it. Smells cheap."
+	default_raw_text =  "<b>Thank you for buying this set.</b><br>\
+		This a simple non-exhaustive set of instructions on how to use fishing lures, some information may \
+		be slightly incorrect or oversimplified.<br><br>\
+
+		First and foremost, fishing lures are <b>inedible, artificial baits</b> sturdy enough to not end up being \
+		consumed by the hungry fish. However, they need to be <b>spun at intervals</b> to replicate \
+		the motion of a prey or organic bait and tempt the fish, since a piece of plastic and metal ins't \
+		all that appetitizing by itself. <b>Different lures</b> can be used to catch <b>different fish</b>.<br><br>\
+
+		To help you, each lure comes with a <b>small light</b> diode that's attached to the <b>float</b> of your fishing rod. \
+		A float is basically the thing bobbing up'n'down above the fishing spot. \
+		The light will flash <b>green</b> and a <b>sound</b> cue will be played when the lure is <b>ready</b> to be spun. \
+		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
+		That's all, best of luck to your angling journey."
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

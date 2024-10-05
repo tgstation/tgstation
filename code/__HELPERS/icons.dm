@@ -402,7 +402,7 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to process.len) { \
@@ -466,24 +466,23 @@ world
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
+	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
-
-	// Expand our canvas to fit if we're too big
-	if(render_icon)
-		var/icon/active_icon = icon(curicon)
-		if(active_icon.Width() != 32 || active_icon.Height() != 32)
-			flat.Scale(active_icon.Width(), active_icon.Height())
 
 	var/curblend = appearance.blend_mode || defblend
 
@@ -514,6 +513,20 @@ world
 		var/addY1 = 0
 		var/addY2 = 0
 
+		if(appearance.color)
+			if(islist(appearance.color))
+				flat.MapColors(arglist(appearance.color))
+			else
+				flat.Blend(appearance.color, ICON_MULTIPLY)
+
+		if(parentcolor && !(appearance.appearance_flags & RESET_COLOR))
+			if(islist(parentcolor))
+				flat.MapColors(arglist(parentcolor))
+			else
+				flat.Blend(parentcolor, ICON_MULTIPLY)
+
+		var/next_parentcolor = appearance.color || parentcolor
+
 		for(var/image/layer_image as anything in layers)
 			if(layer_image.alpha == 0)
 				continue
@@ -521,8 +534,14 @@ world
 			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
+				if(appearance.color)
+					if(islist(appearance.color))
+						add.MapColors(arglist(appearance.color))
+					else
+						add.Blend(appearance.color, ICON_MULTIPLY)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, next_parentcolor)
+
 			if(!add)
 				continue
 
@@ -554,11 +573,6 @@ world
 			// Blend the overlay into the flattened icon
 			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
 
-		if(appearance.color)
-			if(islist(appearance.color))
-				flat.MapColors(arglist(appearance.color))
-			else
-				flat.Blend(appearance.color, ICON_MULTIPLY)
 
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
@@ -1024,7 +1038,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/icon/target_icon = target
 		var/icon_base64 = icon2base64(target_icon)
 
-		if (target_icon.Height() > world.icon_size || target_icon.Width() > world.icon_size)
+		if (target_icon.Height() > ICON_SIZE_Y || target_icon.Width() > ICON_SIZE_X)
 			var/icon_md5 = md5(icon_base64)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
@@ -1078,14 +1092,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
 	filters += top_part_filter
 	var/filter_index = length(filters)
-	animate(filters[filter_index],y=-32,time=time)
+	animate(filters[filter_index],y=-ICON_SIZE_Y,time=time)
 	//Appearing part
 	var/obj/effect/overlay/appearing_part = new
 	appearing_part.appearance = result_appearance
 	appearing_part.appearance_flags |= KEEP_TOGETHER | KEEP_APART
 	appearing_part.vis_flags = VIS_INHERIT_ID
 	appearing_part.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
-	animate(appearing_part.filters[1],y=-32,time=time)
+	animate(appearing_part.filters[1],y=-ICON_SIZE_Y,time=time)
 	transformation_objects += appearing_part
 	//Transform effect thing
 	if(transform_appearance)
@@ -1132,19 +1146,19 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(!x_dimension || !y_dimension)
 		return
 
-	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+	if((x_dimension == ICON_SIZE_X) && (y_dimension == ICON_SIZE_Y))
 		return image_to_center
 
 	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
-	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
-	var/y_offset = -((y_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
+	var/x_offset = -((x_dimension / ICON_SIZE_X) - 1) * (ICON_SIZE_X * 0.5)
+	var/y_offset = -((y_dimension / ICON_SIZE_Y) - 1) * (ICON_SIZE_Y * 0.5)
 
-	//Correct values under world.icon_size
-	if(x_dimension < world.icon_size)
+	//Correct values under icon_size
+	if(x_dimension < ICON_SIZE_X)
 		x_offset *= -1
-	if(y_dimension < world.icon_size)
+	if(y_dimension < ICON_SIZE_Y)
 		y_offset *= -1
 
 	image_to_center.pixel_x = x_offset
@@ -1202,7 +1216,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
  */
 /proc/get_size_in_tiles(obj/target)
 	var/icon/size_check = icon(target.icon, target.icon_state)
-	var/size = size_check.Width() / world.icon_size
+	var/size = size_check.Width() / ICON_SIZE_X
 
 	return size
 
@@ -1215,11 +1229,11 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/size = get_size_in_tiles(src)
 
 	if(dir in list(NORTH, SOUTH))
-		bound_width = size * world.icon_size
-		bound_height = world.icon_size
+		bound_width = size * ICON_SIZE_X
+		bound_height = ICON_SIZE_Y
 	else
-		bound_width = world.icon_size
-		bound_height = size * world.icon_size
+		bound_width = ICON_SIZE_X
+		bound_height = size * ICON_SIZE_Y
 
 /// Returns a list containing the width and height of an icon file
 /proc/get_icon_dimensions(icon_path)
@@ -1247,15 +1261,15 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
 
-	if(width > world.icon_size)
-		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-	if(height > world.icon_size)
-		alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-	if(width > world.icon_size || height > world.icon_size)
+	if(width > ICON_SIZE_X)
+		alert_overlay.pixel_x = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
+	if(height > ICON_SIZE_Y)
+		alert_overlay.pixel_y = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
+	if(width > ICON_SIZE_X || height > ICON_SIZE_Y)
 		if(width >= height)
-			scale = world.icon_size / width
+			scale = ICON_SIZE_X / width
 		else
-			scale = world.icon_size / height
+			scale = ICON_SIZE_Y / height
 	alert_overlay.transform = alert_overlay.transform.Scale(scale)
 
 	return alert_overlay

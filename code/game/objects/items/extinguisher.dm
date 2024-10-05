@@ -5,7 +5,7 @@
 	icon_state = "fire_extinguisher0"
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
-	hitsound = 'sound/weapons/smash.ogg'
+	hitsound = 'sound/items/weapons/smash.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -207,13 +207,15 @@
 	else
 		return FALSE
 
-/obj/item/extinguisher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/extinguisher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if (interacting_with.loc == user)
+	if(interacting_with.loc == user)
 		return NONE
+	// Always skip interaction if it's a bag or table (that's not on fire)
+	if(!(interacting_with.resistance_flags & ON_FIRE) && HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
+/obj/item/extinguisher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(refilling)
 		refilling = FALSE
 		return NONE
@@ -238,7 +240,7 @@
 		var/movementdirection = REVERSE_DIR(direction)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 0.1 SECONDS)
 	else
-		user.newtonian_move(REVERSE_DIR(direction))
+		user.newtonian_move(dir2angle(REVERSE_DIR(direction)))
 
 	//Get all the turfs that can be shot at
 	var/turf/T = get_turf(interacting_with)

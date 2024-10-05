@@ -84,7 +84,7 @@
 	if(scribble_page == current_page)
 		user.balloon_alert(user, "already scribbled!")
 		return
-	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something")
+	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something", max_length = MAX_MESSAGE_LEN)
 	if(isnull(new_scribble_text))
 		return
 	add_fingerprint(user)

@@ -1,13 +1,13 @@
 /mob/living/basic/bot/proc/diag_hud_set_bothealth()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/icon_image = icon(icon, icon_state, dir)
-	holder.pixel_y = icon_image.Height() - world.icon_size
+	holder.pixel_y = icon_image.Height() - ICON_SIZE_Y
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/basic/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/our_icon = icon(icon, icon_state, dir)
-	holder.pixel_y = our_icon.Height() - world.icon_size
+	holder.pixel_y = our_icon.Height() - ICON_SIZE_Y
 	if(bot_mode_flags & BOT_MODE_ON)
 		holder.icon_state = "hudstat"
 		return
@@ -19,7 +19,7 @@
 /mob/living/basic/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	var/image/holder = hud_list[DIAG_BOT_HUD]
 	var/icon/icon_image = icon(icon, icon_state, dir)
-	holder.pixel_y = icon_image.Height() - world.icon_size
+	holder.pixel_y = icon_image.Height() - ICON_SIZE_Y
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return
@@ -47,12 +47,14 @@
 	if(isnull(ai_controller))
 		return
 
+	//Removes path images and handles removing hud client images
 	clear_path_hud()
+
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	LAZYCLEARLIST(path_images)
 
-	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
 
 	var/atom/move_target = ai_controller.current_movement_target
 	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
@@ -61,9 +63,6 @@
 	var/list/our_path = source.movement_path
 	if(!length(our_path))
 		return
-
-	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
-		hud.remove_atom_from_hud(src)
 
 	for(var/index in 1 to our_path.len)
 		if(index == 1 || index == our_path.len)
@@ -75,7 +74,9 @@
 		var/next_direction = get_dir(previous_turf, next_turf)
 		var/previous_direction = get_dir(current_turf, previous_turf)
 
-		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = next_direction)
+		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = BOT_PATH_LAYER, dir = next_direction)
+
+		SET_PLANE(path_display, GAME_PLANE, current_turf)
 
 		if((ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))))
 			var/turn_value = (next_direction == SOUTHWEST || next_direction == NORTHEAST) ? 90 : -90
@@ -117,4 +118,9 @@
 		var/image/our_image = current_pathed_turfs[index]
 		animate(our_image, alpha = 0, time = 0.3 SECONDS)
 		current_pathed_turfs -= index
+
+	// Call hud remove handlers to ensure viewing user client images are removed
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC], GLOB.huds[DATA_HUD_BOT_PATH])
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
 

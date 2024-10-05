@@ -4,7 +4,6 @@
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
 	gender = NEUTER
-	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
 	flags_1 = ALLOW_DARK_PAINTS_1
 	var/do_icon_rotate = TRUE
@@ -13,6 +12,10 @@
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null)
 	. = ..()
+	if(isclosedturf(loc) && loc.density)
+		// allows for wall graffiti to be seen
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
+		layer = GAME_CLEAN_LAYER
 	if(e_name)
 		name = e_name
 	if(desc_override)

@@ -49,7 +49,7 @@
 	id = "asteroid6"
 	suffix = "asteroid6.dmm"
 	name = "Space-Ruin Asteroid 6"
-	description = "This asteroid has brittle bone disease, so it is fortunate asteroids dont have bones."
+	description = "This asteroid has brittle bone disease, so it is fortunate asteroids don't have bones."
 
 /datum/map_template/ruin/space/deep_storage
 	id = "deep-storage"
@@ -70,7 +70,7 @@
 	suffix = "derelict_construction.dmm"
 	name = "Space-Ruin Derelict Construction"
 	description = "Construction supplies are in high demand due to non-trivial damage routinely sustained by most space stations in this sector. \
-	Space pirates who dont attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
+	Space pirates who don't attempt to rob corporate research stations with only 3 collaborators live long enough to sell captured construction \
 	equipment back to the highest bidder."
 
 /datum/map_template/ruin/space/derelict_sulaco
@@ -181,7 +181,7 @@
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
 	name = "Space-Ruin The Twin-Nexus Hotel"
-	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residential staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -470,7 +470,7 @@
 	id = "Space_phonebooth"
 	suffix = "phonebooth.dmm"
 	name = "Space-Ruin Phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads."
+	description = "A venture by Nanotrasen to help popularize the use of holopads."
 
 /datum/map_template/ruin/space/the_outlet
 	id = "the_outlet"
@@ -500,7 +500,7 @@
 	id = "garbagetruck3"
 	suffix = "garbagetruck3.dmm"
 	name = "Space-Ruin Decommissioned Garbage Truck NX3"
-	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of industrial garbage, and a russian drug den."
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of industrial garbage, and a Russian drug den."
 
 /datum/map_template/ruin/space/garbagetruck4
 	id = "garbagetruck4"

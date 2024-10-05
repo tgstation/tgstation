@@ -6,8 +6,8 @@
 	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	usesound = 'sound/items/crowbar.ogg'
-	operating_sound = 'sound/items/crowbar_prying.ogg'
+	usesound = 'sound/items/tools/crowbar.ogg'
+	operating_sound = 'sound/items/tools/crowbar_prying.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
@@ -15,8 +15,8 @@
 	demolition_mod = 1.25
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
-	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
-	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/crowbar_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/crowbar_pickup.ogg'
 
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
@@ -35,7 +35,7 @@
 
 /obj/item/crowbar/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/crowbar/red
@@ -47,7 +47,7 @@
 	name = "alien crowbar"
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
 	icon = 'icons/obj/antags/abductor.dmi'
-	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
@@ -115,7 +115,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.75)
-	usesound = 'sound/items/jaws_pry.ogg'
+	usesound = 'sound/items/tools/jaws_pry.ogg'
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -152,7 +152,7 @@
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
 	if(user)
 		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
-	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CROWBAR)
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else
@@ -174,10 +174,10 @@
 /obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/tools/jaws_pry.ogg', 50, TRUE, -1)
 	else
 		user.visible_message(span_suicide("[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!"))
-		playsound(loc, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/tools/jaws_cut.ogg', 50, TRUE, -1)
 		if(iscarbon(user))
 			var/mob/living/carbon/suicide_victim = user
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
@@ -192,7 +192,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
 	worn_icon_state = "toolkit_engiborg_crowbar" //error sprite - this shouldn't have been dropped
-	usesound = 'sound/items/jaws_pry.ogg'
+	usesound = 'sound/items/tools/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
 
@@ -234,7 +234,7 @@
 	user.log_message("tried to pry open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
-	playsound(mech, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	playsound(mech, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 	if(!use_tool(mech, user, (mech.mecha_flags & IS_ENCLOSED) ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
 		mech.balloon_alert(user, "interrupted!")
 		return
@@ -243,7 +243,7 @@
 		if(isAI(occupant))
 			continue
 		mech.mob_exit(occupant, randomstep = TRUE)
-	playsound(mech, 'sound/machines/airlockforced.ogg', 75, TRUE)
+	playsound(mech, 'sound/machines/airlock/airlockforced.ogg', 75, TRUE)
 
 /obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
 	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir

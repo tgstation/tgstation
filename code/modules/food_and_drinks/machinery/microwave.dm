@@ -381,12 +381,20 @@
 	if(operating)
 		return NONE
 
-	if (item.item_flags & ABSTRACT)
+	if(item.item_flags & ABSTRACT)
+		return NONE
+
+	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "it's too dirty!")
+			return ITEM_INTERACT_BLOCKING
 		return NONE
 
 	if(broken > NOT_BROKEN)
-		balloon_alert(user, "it's broken!")
-		return ITEM_INTERACT_BLOCKING
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "it's broken!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(istype(item, /obj/item/stock_parts/power_store/cell) && cell_powered)
 		var/swapped = FALSE
@@ -405,12 +413,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!anchored)
-		balloon_alert(user, "not secured!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
-		balloon_alert(user, "it's too dirty!")
-		return ITEM_INTERACT_BLOCKING
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "not secured!")
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
 		balloon_alert(user, "max 1 device!")
@@ -483,7 +489,7 @@
 
 	vampire_charging_enabled = !vampire_charging_enabled
 	balloon_alert(user, "set to [vampire_charging_enabled ? "charge" : "cook"]")
-	playsound(src, 'sound/machines/twobeep_high.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, FALSE)
 	if(HAS_SILICON_ACCESS(user))
 		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 	return CLICK_ACTION_SUCCESS
@@ -582,11 +588,11 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		balloon_alert(cooker, "no power draw!")
 		return
 
@@ -622,7 +628,7 @@
 /obj/machinery/microwave/proc/wzhzhzh()
 	if(cell_powered && !isnull(cell))
 		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			return
 
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
@@ -802,13 +808,13 @@
 /obj/machinery/microwave/proc/vampire(mob/cooker)
 	var/obj/item/modular_computer/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
 		return
 
 	vampire_cell = vampire_pda.internal_cell
 	if(isnull(vampire_cell))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
 		return
 
@@ -819,7 +825,7 @@
 /obj/machinery/microwave/proc/charge(mob/cooker)
 	if(!vampire_charging_capable)
 		balloon_alert(cooker, "needs upgrade!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(operating || broken > 0 || panel_open || dirty >= MAX_MICROWAVE_DIRTINESS)
@@ -827,14 +833,14 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
 		if(!istype(potential_item, /obj/item/modular_computer))
 			balloon_alert(cooker, "pda only!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			eject()
 			return
 

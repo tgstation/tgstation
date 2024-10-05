@@ -30,7 +30,7 @@
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 /// Opens a menu and allows the mob to pick an option from the list
@@ -162,7 +162,7 @@
 // just drops the box at their feet, "quiet" and "sneaky"
 /obj/item/choice_beacon/augments/spawn_option(obj/choice_path, mob/living/user)
 	new choice_path(get_turf(user))
-	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
+	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"
@@ -176,7 +176,7 @@
 	if(user.mind?.holy_role)
 		return ..()
 
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, TRUE)
 	return FALSE
 
 // Overrides generate options so that we can show a neat radial instead

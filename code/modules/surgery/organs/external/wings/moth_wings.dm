@@ -1,3 +1,5 @@
+#define MOTH_WING_FORCE 1 NEWTONS
+
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/external/wings/moth
 	name = "moth wings"
@@ -18,30 +20,60 @@
 	. = ..()
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
-	RegisterSignal(receiver, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(update_float_move))
+	RegisterSignal(receiver, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
+	START_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/external/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
-	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_MOVE_NOGRAV))
+	STOP_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt
 
-///Check if we can flutter around
-/obj/item/organ/external/wings/moth/proc/update_float_move()
+/obj/item/organ/external/wings/moth/proc/allow_flight()
+	if(!owner || !owner.client)
+		return FALSE
+	if(!isturf(owner.loc))
+		return FALSE
+	if(!(owner.movement_type & FLOATING) || owner.buckled)
+		return FALSE
+	if(owner.pulledby)
+		return FALSE
+	if(owner.throwing)
+		return FALSE
+	if(owner.has_gravity())
+		return FALSE
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.wear_suit?.flags_inv & HIDEMUTWINGS)
+			return FALSE //Can't fly with hidden wings
+	if(burnt)
+		return FALSE
+	var/datum/gas_mixture/current = owner.loc.return_air()
+	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))
+		return TRUE
+	return FALSE
+
+/obj/item/organ/external/wings/moth/process(seconds_per_tick)
+	if (!owner || !allow_flight() || isnull(owner.drift_handler))
+		return
+
+	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick * 1 SECONDS))
+
+/obj/item/organ/external/wings/moth/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
 
-	if(!isspaceturf(owner.loc) && !burnt)
-		var/datum/gas_mixture/current = owner.loc.return_air()
-		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
-			ADD_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
-			return
+	if (!allow_flight())
+		return
 
-	REMOVE_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
+	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = MOTH_WING_FORCE, controlled_cap = max_drift_force)
+	source.setDir(source.client.intended_direction)
 
 ///check if our wings can burn off ;_;
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
@@ -96,3 +128,5 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
+
+#undef MOTH_WING_FORCE

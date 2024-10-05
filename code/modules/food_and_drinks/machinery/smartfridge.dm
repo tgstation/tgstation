@@ -203,7 +203,7 @@
 
 /// Returns details related to the fridge structure
 /obj/machinery/smartfridge/proc/structure_examine()
-	. = ""
+	. = list()
 
 	if(welded_down)
 		. += span_info("It's moorings are firmly [EXAMINE_HINT("welded")] to the floor.")
@@ -253,9 +253,9 @@
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
 	playsound(src, SFX_SHATTER, 50, TRUE)
@@ -313,7 +313,7 @@
 		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
 		return FALSE
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
 		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
 		return FALSE
 

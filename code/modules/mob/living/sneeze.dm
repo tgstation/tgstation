@@ -30,8 +30,8 @@
 	if(catcher && catcher.given_turf)
 		catcher.calculate_params()
 		/// Take the target and subtract self for relative grid position. Then take the pixel x on the tile and divide by the tiles pixel size, and add 0.5 so it's fired from the center
-		var/sneeze_x = catcher.given_turf.x - x + catcher.given_x / world.icon_size - 0.5
-		var/sneeze_y = catcher.given_turf.y - y + catcher.given_y / world.icon_size - 0.5
+		var/sneeze_x = catcher.given_turf.x - x + catcher.given_x / ICON_SIZE_X - 0.5
+		var/sneeze_y = catcher.given_turf.y - y + catcher.given_y / ICON_SIZE_Y - 0.5
 		angle = ATAN2(sneeze_y, sneeze_x)
 
 		// Check if we're within the sneeze cone, otherwise just sneeze straight
