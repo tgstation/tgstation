@@ -5,7 +5,7 @@
 
 /obj/effect/decal/remains/acid_act()
 	visible_message(span_warning("[src] dissolve[gender == PLURAL?"":"s"] into a puddle of sizzling goop!"))
-	PLAYSOUND(src, 'sound/items/tools/welder.ogg').volume(150).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/welder.ogg').volume(150).vary(TRUE).play()
 	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	qdel(src)
 	return TRUE

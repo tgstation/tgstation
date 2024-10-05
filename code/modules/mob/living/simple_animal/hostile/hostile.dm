@@ -429,7 +429,7 @@
 
 /mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
 	do_alert_animation()
-	PLAYSOUND(loc, 'sound/machines/chime.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/machines/chime.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	var/atom/target_from = GET_TARGETS_FROM(src)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, target_from))
 		if(faction_check_atom(M, TRUE))
@@ -471,7 +471,7 @@
 	face_atom(targeted_atom)
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
-		PLAYSOUND(get_sfx(src), projectilesound).volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(src), projectilesound).volume(100).vary(TRUE).play()
 		var/targeted_zone
 		if(ismob(targeted_atom))
 			var/mob/targeted_mob = targeted_atom

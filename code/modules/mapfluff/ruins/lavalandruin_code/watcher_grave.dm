@@ -63,7 +63,7 @@
 	if (steps_travelled < steps_to_hatch)
 		return
 	visible_message(span_boldnotice("[src] splits and unfurls into a baby Watcher!"))
-	PLAYSOUND(new_loc, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(new_loc, 'sound/effects/splat.ogg').vary(TRUE).play()
 	new /obj/effect/decal/cleanable/greenglow(new_loc)
 	new /obj/item/watcher_hatchling(new_loc)
 	qdel(src)

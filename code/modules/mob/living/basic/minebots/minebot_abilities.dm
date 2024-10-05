@@ -132,7 +132,7 @@
 
 /obj/effect/temp_visual/rising_rocket/Initialize(mapload)
 	. = ..()
-	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
 	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = EASE_IN)
 
 /obj/effect/temp_visual/falling_rocket
@@ -154,7 +154,7 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
-	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(1, holder = src)
 	smoke.start()

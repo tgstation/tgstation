@@ -242,11 +242,11 @@
 		assembly_turf.visible_message(span_warning("[src] is on cooldown! Please wait [timeleft]."), vision_distance = SAMETILE_MESSAGE_RANGE)
 		return
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, src) & LINKED_UP)
-		PLAYSOUND(assembly_turf, 'sound/machines/chime.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(assembly_turf, 'sound/machines/chime.ogg').vary(TRUE).play()
 		assembly_turf.visible_message(span_notice("[src] has linked up to a nearby trapdoor! \
 		You may now use it to check where the trapdoor is... be careful!"), vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
-		PLAYSOUND(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
+		PLAYSOUND(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
 		assembly_turf.visible_message(span_warning("[src] has failed to find a trapdoor nearby to link to."), vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
@@ -321,7 +321,7 @@
 		return TRUE
 
 	user.balloon_alert(user, "trapdoor triggered")
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)

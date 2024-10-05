@@ -84,7 +84,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your arm!"))
 		if(affecting?.receive_damage(30))
 			bite_victim.update_damage_overlays()
-			PLAYSOUND(src, 'sound/items/weapons/bite.ogg').volume(70).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/weapons/bite.ogg').volume(70).vary(TRUE).play()
 			return
 	to_chat(user, span_warning("You find nothing of value..."))
 
@@ -299,7 +299,7 @@ at the cost of risking a vicious bite.**/
 		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		deconstruct()
 		return TRUE
 
@@ -321,7 +321,7 @@ at the cost of risking a vicious bite.**/
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(range = 1, amount = 1, location = src)
 	smoke.start()
-	PLAYSOUND(src, 'sound/machines/steam_hiss.ogg').volume(75).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/machines/steam_hiss.ogg').volume(75).vary(TRUE).range(-2 + SOUND_RANGE).play()
 	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 
 /obj/structure/steam_vent/update_icon_state()

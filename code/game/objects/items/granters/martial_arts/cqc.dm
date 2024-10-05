@@ -22,7 +22,7 @@
 
 /obj/item/book/granter/martial/cqc/recoil(mob/living/user)
 	to_chat(user, span_warning("[src] explodes!"))
-	PLAYSOUND(src, 'sound/effects/explosion/explosion1.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/explosion/explosion1.ogg').volume(40).vary(TRUE).play()
 	user.flash_act(1, 1)
 	user.adjustBruteLoss(6)
 	user.adjustFireLoss(6)

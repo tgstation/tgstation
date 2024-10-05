@@ -235,7 +235,7 @@
 	if(old_mag)
 		user.put_in_hands(old_mag)
 	balloon_alert(user, "secondary [magazine_wording] loaded")
-	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	PLAYSOUND(src, load_empty_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -245,14 +245,14 @@
 		secondary_magazine = null
 		user.put_in_hands(old_mag)
 		update_appearance()
-		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+		PLAYSOUND(src, load_empty_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 
 /obj/item/gun/ballistic/shotgun/bulldog/proc/toggle_magazine()
 	var/primary_magazine = magazine
 	var/alternative_magazine = secondary_magazine
 	magazine = alternative_magazine
 	secondary_magazine = primary_magazine
-	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	PLAYSOUND(src, load_empty_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 	update_appearance()
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted

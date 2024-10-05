@@ -221,7 +221,7 @@
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)
 		if(living_mob)
-			PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 			living_mob.adjustBruteLoss(60 * seconds_per_tick)
 			new /obj/effect/gibspawner/generic(get_turf(living_mob), living_mob)
 			if(living_mob.stat == DEAD)
@@ -290,7 +290,7 @@
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
 	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!"))
-	PLAYSOUND(proteon, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(proteon, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary(TRUE).play()
 	proteon.balloon_alert_to_viewers("awoken!")
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
 

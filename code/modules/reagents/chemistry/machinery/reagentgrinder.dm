@@ -429,9 +429,9 @@
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
 	operating = TRUE
 	if(!juicing)
-		PLAYSOUND(src, 'sound/machines/blender.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/blender.ogg').vary(TRUE).play()
 	else
-		PLAYSOUND(src, 'sound/machines/juicer.ogg').volume(20).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/juicer.ogg').volume(20).vary(TRUE).play()
 
 	var/total_weight
 	for(var/obj/item/weapon in src)
@@ -496,7 +496,7 @@
 
 	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
 	operating = TRUE
-	PLAYSOUND(src, 'sound/machines/juicer.ogg').volume(20).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/juicer.ogg').volume(20).vary(TRUE).play()
 
 	addtimer(CALLBACK(src, PROC_REF(mix_complete), duration), duration)
 

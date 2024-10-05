@@ -20,7 +20,7 @@
 		to_chat(cast_on, span_warning("Your focus is broken, and the episodic rom-com moments slowly fade."))
 		return
 
-	PLAYSOUND(cast_on, 'sound/effects/bamf.ogg').volume(75).vary_frequency(TRUE).range(5 + SOUND_RANGE).play()
+	PLAYSOUND(cast_on, 'sound/effects/bamf.ogg').volume(75).vary(TRUE).range(5 + SOUND_RANGE).play()
 	to_chat(cast_on, span_danger("You feel your very essense binding to a slice-of-life format!"))
 
 	cast_on.AddComponent(/datum/component/chuunibyou)

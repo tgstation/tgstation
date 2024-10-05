@@ -142,7 +142,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
-	PLAYSOUND(src, 'sound/misc/insane_low_laugh.ogg').volume(200).vary_frequency(1).play()
+	PLAYSOUND(src, 'sound/misc/insane_low_laugh.ogg').volume(200).vary(1).play()
 	visible_message(span_warning("[src] starts picking up speed!"))
 	color = COLOR_RED
 	set_varspeed(0)
@@ -163,7 +163,7 @@
 		var/turf/T = get_step(src, spawndir)
 		if(T)
 			child.forceMove(T)
-			PLAYSOUND(src, 'sound/effects/bamf.ogg').volume(100).vary_frequency(1).play()
+			PLAYSOUND(src, 'sound/effects/bamf.ogg').volume(100).vary(1).play()
 
 //The goliath's children.  Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child

@@ -15,7 +15,7 @@
 				ignored_mobs = user,
 			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -33,7 +33,7 @@
 		ignored_mobs = user,
 	)
 	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
-	PLAYSOUND(loc, attacked_sound).volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, attacked_sound).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
 	updatehealth()
@@ -56,7 +56,7 @@
 	. = ..()
 	if(!.)
 		return
-	PLAYSOUND(loc, get_sfx(SFX_PUNCH)).volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
@@ -72,7 +72,7 @@
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
 							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 
 /mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -80,7 +80,7 @@
 	if(!.)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		PLAYSOUND(loc, 'sound/items/weapons/pierce.ogg').volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/pierce.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
 			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
@@ -90,7 +90,7 @@
 	visible_message(span_danger("[user] slashes at [src]!"), \
 		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You slash at [src]!"))
-	PLAYSOUND(loc, 'sound/items/weapons/slice.ogg').volume(25).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
 

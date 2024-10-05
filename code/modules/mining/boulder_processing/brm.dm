@@ -152,7 +152,7 @@
 	if(batch_processing)
 		balloon_alert(user, "batch still processing!")
 		return FALSE
-	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	PLAYSOUND(src, MANUAL_TELEPORT_SOUND).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/brm/attack_ai(mob/user)

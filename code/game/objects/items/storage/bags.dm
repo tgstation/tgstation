@@ -70,7 +70,7 @@
 
 /obj/item/storage/bag/trash/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
-	PLAYSOUND(loc, 'sound/items/eatfood.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/eatfood.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	return TOXLOSS
 
 /obj/item/storage/bag/trash/update_icon_state()
@@ -191,7 +191,7 @@
 					spam_protection = TRUE
 					continue
 	if(show_message)
-		PLAYSOUND(get_sfx(user), SFX_RUSTLE).volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(user), SFX_RUSTLE).volume(50).vary(TRUE).play()
 		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
 			return
 
@@ -396,9 +396,9 @@
 		do_scatter(tray_item)
 
 	if(prob(50))
-		PLAYSOUND(M, 'sound/items/trayhit/trayhit1.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(M, 'sound/items/trayhit/trayhit1.ogg').vary(TRUE).play()
 	else
-		PLAYSOUND(M, 'sound/items/trayhit/trayhit2.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(M, 'sound/items/trayhit/trayhit2.ogg').vary(TRUE).play()
 
 	if(ishuman(M))
 		if(prob(10))

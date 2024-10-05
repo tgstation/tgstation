@@ -135,7 +135,7 @@
 			human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES)
 
 		do_sparks(4, FALSE, human_mob)
-		PLAYSOUND(human_mob, 'sound/machines/defib/defib_zap.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(human_mob, 'sound/machines/defib/defib_zap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /datum/action/cooldown/spell/aoe/revenant/defile
@@ -230,7 +230,7 @@
 			thing.emag_act(caster)
 	// Only works on cyborgs, not AI!
 	for(var/mob/living/silicon/robot/cyborg in victim)
-		PLAYSOUND(cyborg, 'sound/machines/warning-buzzer.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(cyborg, 'sound/machines/warning-buzzer.ogg').vary(TRUE).play()
 		new /obj/effect/temp_visual/revenant(cyborg.loc)
 		cyborg.spark_system.start()
 		cyborg.emp_act(EMP_HEAVY)

@@ -279,7 +279,7 @@
 	if (user)
 		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 // update the HUD icon

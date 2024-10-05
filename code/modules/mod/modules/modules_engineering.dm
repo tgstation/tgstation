@@ -100,7 +100,7 @@
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc)
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
-	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').volume(25).vary(TRUE).play()
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 

@@ -9,7 +9,7 @@
 		if (buildstage == AIR_ALARM_BUILD_NO_WIRES)
 			to_chat(user, span_notice("You remove the air alarm electronics."))
 			new /obj/item/electronics/airalarm(drop_location())
-			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			buildstage = AIR_ALARM_BUILD_NO_CIRCUIT
 			update_appearance()
 	return TRUE
@@ -88,7 +88,7 @@
 	obj_flags |= EMAGGED
 	visible_message(span_warning("Sparks fly out of [src]!"))
 	balloon_alert(user, "authentication sensors scrambled")
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/airalarm/on_deconstruction(disassembled = TRUE)

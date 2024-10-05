@@ -331,7 +331,7 @@
 		var/obj/item/computer_disk/virus/clown/cart = inserted_disk
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
-			PLAYSOUND(src, 'sound/machines/ping.ogg').volume(30).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 
 /obj/item/modular_computer/pda/clown/proc/after_sitcom_laugh(mob/victim)
 	victim.visible_message("[src] lets out a burst of laughter!")

@@ -115,7 +115,7 @@
 		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
 		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
 		balloon_alert_to_viewers("scanning...")
-		PLAYSOUND(src, 'sound/effects/genetics.ogg').volume(40).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/effects/genetics.ogg').volume(40).vary(FALSE).play()
 		COOLDOWN_START(src, scanning_person, 4 SECONDS)
 		if(!do_after(user, 4 SECONDS, interacting_with))
 			return ITEM_INTERACT_BLOCKING
@@ -208,11 +208,11 @@
 	create_slip()
 	switch(print_sound_mode)
 		if(INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-			PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/high_tech_confirm.ogg').vary(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-			PLAYSOUND(src, 'sound/items/biddledeep.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/biddledeep.ogg').vary(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_HONK)
-			PLAYSOUND(src, 'sound/items/bikehorn.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/bikehorn.ogg').vary(FALSE).play()
 		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
 			playsound(src, pick(list('sound/items/robofafafoggy.ogg', 'sound/items/robofafafoggy2.ogg')), 50, FALSE)
 
@@ -373,7 +373,7 @@
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
-	PLAYSOUND(src, 'sound/effects/angryboat.ogg').volume(150).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/effects/angryboat.ogg').volume(150).vary(FALSE).play()
 
 /obj/item/inspector/clown/bananium/create_slip()
 	if(time_mode == INSPECTOR_TIME_MODE_HONK)

@@ -127,7 +127,7 @@
 /obj/effect/sound_emitter/proc/activate(mob/user)
 	var/list/hearing_mobs = list()
 	if(motus_operandi == SOUND_EMITTER_LOCAL)
-		playsound(src, sound_file, sound_volume, FALSE)
+		PLAYSOUND(src, sound_file).volume(sound_volume).vary(FALSE).play()
 		return
 	switch(emitter_range)
 		if(SOUND_EMITTER_RADIUS)

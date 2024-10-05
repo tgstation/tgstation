@@ -337,7 +337,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/balloon_vest/proc/pop()
-	PLAYSOUND(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary(TRUE).play()
 	qdel(src)
 
 

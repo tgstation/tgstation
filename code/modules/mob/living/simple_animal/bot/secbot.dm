@@ -289,7 +289,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		PLAYSOUND(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg').volume(75).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play() // evil laughter
+		PLAYSOUND(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg').volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play() // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -334,7 +334,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	PLAYSOUND(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -349,12 +349,12 @@
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
-		PLAYSOUND(get_sfx(src), SFX_LAW).volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(get_sfx(src), SFX_LAW).volume(50).vary(FALSE).play()
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5

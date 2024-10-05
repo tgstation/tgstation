@@ -92,10 +92,10 @@
 	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
 	balloon_alert(exorcist, "exorcising...")
-	PLAYSOUND(src, 'sound/effects/hallucinations/veryfar_noise.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/hallucinations/veryfar_noise.ogg').volume(40).vary(TRUE).play()
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
-	PLAYSOUND(src, 'sound/effects/pray_chaplain.ogg').volume(60).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/pray_chaplain.ogg').volume(60).vary(TRUE).play()
 	required_role = null
 	theme = THEME_HOLY
 

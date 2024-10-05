@@ -195,7 +195,7 @@
 				set_anchored(FALSE)
 				to_chat(user, span_notice("You unsecure the generator from the floor."))
 
-			PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			return
 		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
 			toggle_panel_open()

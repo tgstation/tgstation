@@ -39,9 +39,9 @@
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 		if(BRUTE)
-			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -270,7 +270,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
@@ -515,7 +515,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
@@ -582,9 +582,9 @@
 /obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 		if(BRUTE)
-			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 
 //the shield wall is immune to damage but it drains the stored power of the generators.
 /obj/machinery/shieldwall/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)

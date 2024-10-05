@@ -88,10 +88,10 @@
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
-			PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').volume(5).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/synth/synth_no.ogg').volume(5).vary(TRUE).play()
 		else
 			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again."))
-			PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').volume(5).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').volume(5).vary(TRUE).play()
 
 		brainmob.reset_perspective()
 		brain = newbrain

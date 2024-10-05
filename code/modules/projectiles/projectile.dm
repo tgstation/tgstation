@@ -304,7 +304,7 @@
 		var/volume = clamp(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
-		playsound(loc, hitsound_wall, volume, TRUE, -1)
+		PLAYSOUND(loc, hitsound_wall).volume(volume).vary(TRUE).extra_range(-1).play()
 
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
@@ -351,14 +351,14 @@
 		if(hit_limb_zone)
 			organ_hit_text = " in \the [living_target.parse_zone_with_bodypart(hit_limb_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
-			PLAYSOUND(loc, hitsound).volume(5).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, hitsound).volume(5).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		else if(suppressed)
-			PLAYSOUND(loc, hitsound).volume(5).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, hitsound).volume(5).vary(TRUE).range(-1 + SOUND_RANGE).play()
 			to_chat(living_target, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
-				playsound(src, hitsound, volume, TRUE, -1)
+				PLAYSOUND(src, hitsound).volume(volume).vary(TRUE).extra_range(-1).play()
 			living_target.visible_message(span_danger("[living_target] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(living_target.is_blind())
@@ -1157,7 +1157,7 @@
 /// Fire a projectile from this atom at another atom
 /atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, list/ignore_targets = list())
 	if (!isnull(sound))
-		playsound(src, sound, vol = 100, vary = TRUE)
+		PLAYSOUND(src, sound).volume(100).vary(TRUE).play()
 
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)

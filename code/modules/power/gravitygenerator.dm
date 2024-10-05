@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 					if(PS.get_amount() >= 10)
 						PS.use(10)
 						to_chat(user, span_notice("You add the plating to the framework."))
-						PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(75).vary_frequency(TRUE).play()
+						PLAYSOUND(src.loc, 'sound/machines/click.ogg').volume(75).vary(TRUE).play()
 						broken_state++
 						update_appearance()
 					else
@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			charge_count -= 2
 
 		if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-			PLAYSOUND(src.loc, 'sound/effects/empulse.ogg').volume(100).vary_frequency(TRUE).play()
+			PLAYSOUND(src.loc, 'sound/effects/empulse.ogg').volume(100).vary(TRUE).play()
 
 		var/overlay_state = null
 		switch(charge_count)

@@ -154,12 +154,12 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
-	PLAYSOUND(src, 'sound/effects/magic/ethereal_exit.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).play()
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)
 		M.forceMove(loc)
-	PLAYSOUND(src, 'sound/effects/glass/glassbr3.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/glass/glassbr3.ogg').vary(TRUE).play()
 	return ..()
 
 //Gold capture device - Chilling Gold

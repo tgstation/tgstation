@@ -9,7 +9,7 @@
 	var/datum/callback/post_honk_callback
 
 /datum/action/cooldown/mob_cooldown/bot/honk/Activate()
-	PLAYSOUND(owner, 'sound/items/bikehorn.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(owner, 'sound/items/bikehorn.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	post_honk_callback?.Invoke()
 	StartCooldown()
 	return TRUE

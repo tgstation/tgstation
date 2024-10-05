@@ -413,7 +413,7 @@
 				sound_to_play = H.dna.species.grab_sound
 			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
-		playsound(src.loc, sound_to_play, 50, TRUE, -1)
+		PLAYSOUND(src.loc, sound_to_play).volume(50).vary(TRUE).extra_range(-1).play()
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -1125,7 +1125,7 @@
 	return TRUE
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	PLAYSOUND(src, 'sound/effects/space_wind.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/space_wind.ogg').vary(TRUE).play()
 	if(buckled || mob_negates_gravity())
 		return
 

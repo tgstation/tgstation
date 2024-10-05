@@ -601,7 +601,7 @@
 		user.update_pipe_vision(full_refresh = TRUE)
 	if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 		user.last_played_vent = world.time
-		PLAYSOUND(src, 'sound/machines/ventcrawl.ogg').vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+		PLAYSOUND(src, 'sound/machines/ventcrawl.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 
 	//Would be great if this could be implemented when someone alt-clicks the image.
 	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)

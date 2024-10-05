@@ -125,9 +125,9 @@
 	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
 		if(isidcard(W))
-			PLAYSOUND(src, 'sound/machines/card_slide.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/card_slide.ogg').vary(TRUE).play()
 		else
-			PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').vary(TRUE).play()
 
 		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, span_notice("The machine appears to be disabled."))
@@ -135,17 +135,17 @@
 
 		if(!player_card.registered_account)
 			say("You don't have a bank account!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 			return FALSE
 
 		if(my_card)
 			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
-				PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				say("You do not have the funds to play! Lower your bet or get more money.")
-				PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary_frequency(TRUE).play()
+				PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
 				return FALSE
@@ -362,7 +362,7 @@
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
 	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
-	PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 	return FALSE
 
 /obj/machinery/roulette/update_overlays()

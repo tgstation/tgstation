@@ -126,7 +126,7 @@
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2 SECONDS)
 	if(funny_ending)
-		PLAYSOUND(src, 'sound/effects/explosion/explosion3.ogg').vary_frequency(FALSE).play() //node drone died on the way back to his home planet.
+		PLAYSOUND(src, 'sound/effects/explosion/explosion3.ogg').vary(FALSE).play() //node drone died on the way back to his home planet.
 		visible_message(span_notice("...or maybe not."))
 	qdel(src)
 

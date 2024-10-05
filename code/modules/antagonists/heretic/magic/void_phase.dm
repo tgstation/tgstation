@@ -50,7 +50,7 @@
 /// Does the AOE effect of the blinka t the passed turf
 /datum/action/cooldown/spell/pointed/void_phase/proc/cause_aoe(turf/target_turf, effect_type = /obj/effect/temp_visual/voidin)
 	new effect_type(target_turf)
-	PLAYSOUND(target_turf, 'sound/effects/magic/voidblink.ogg').volume(60).vary_frequency(FALSE).play()
+	PLAYSOUND(target_turf, 'sound/effects/magic/voidblink.ogg').volume(60).vary(FALSE).play()
 	for(var/mob/living/living_mob in range(damage_radius, target_turf))
 		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue

@@ -14,6 +14,10 @@
 /datum/playsound/proc/update_spatial_grid_from_source_movement()
 	return
 
+/proc/__setup_playsound(source, sound)
+	RETURN_TYPE(/datum/playsound)
+	return new /datum/playsound(source, sound)
+
 ///Default override for echo
 /sound
 	echo = list(
@@ -60,7 +64,7 @@
 		/// The frequency the sound is played at.
 		var/frequency = null
 		/// If TRUE the pitch of the sound is shifted for each listener.
-		var/vary_frequency = FALSE
+		var/vary = FALSE
 
 		/// The exponent used to calculate distance falloff. Should be above 1.
 		var/falloff_exponent = SOUND_FALLOFF_EXPONENT
@@ -106,7 +110,7 @@ WITH_X(volume)
 WITH_X(range)
 WITH_X(use_reverb)
 WITH_X(frequency)
-WITH_X(vary_frequency)
+WITH_X(vary)
 WITH_X(falloff_exponent)
 WITH_X(falloff_distance)
 WITH_X(atmospherics_affected)
@@ -116,6 +120,11 @@ WITH_X(z_traversal_modifier)
 WITH_X(spatial_aware)
 
 #undef WITH_X
+
+/datum/playsound/proc/extra_range(extra_range)
+	RETURN_TYPE(/datum/playsound)
+	range = SOUND_RANGE + extra_range
+	return src
 
 /datum/playsound/proc/get_listeners()
 	RETURN_TYPE(/list/mob)
@@ -291,7 +300,7 @@ WITH_X(spatial_aware)
 	local_sound.wait = 0
 	local_sound.channel = channel
 
-	if(vary_frequency)
+	if(vary)
 		local_sound.frequency = get_rand_frequency()
 	else
 		local_sound.frequency = frequency
@@ -299,7 +308,8 @@ WITH_X(spatial_aware)
 	if(mob.sound_environment_override != SOUND_ENVIRONMENT_NONE)
 		local_sound.environment = mob.sound_environment_override
 	else
-		local_sound.environment = get_area(src).environment
+		var/area/mob_area = get_area(mob)
+		local_sound.environment = mob_area.sound_environment
 
 	if(use_reverb && local_sound.environment != SOUND_ENVIRONMENT_NONE)
 		local_sound.echo[3] = 0

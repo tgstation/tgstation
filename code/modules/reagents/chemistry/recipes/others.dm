@@ -916,7 +916,7 @@
 		eigen.data["location_created"] = location
 
 	do_sparks(5,FALSE,location)
-	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary(TRUE).play()
 
 /datum/chemical_reaction/eigenstate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
@@ -924,7 +924,7 @@
 		return
 	var/turf/location = get_turf(holder.my_atom)
 	do_sparks(3,FALSE,location)
-	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary(TRUE).play()
 	for(var/mob/living/nearby_mob in range(location, 3))
 		do_sparks(3,FALSE,nearby_mob)
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
@@ -939,7 +939,7 @@
 	var/turf/location = get_turf(holder.my_atom)
 	do_sparks(3,FALSE,location)
 	holder.chem_temp += 10
-	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(location, 'sound/effects/phasein.ogg').volume(80).vary(TRUE).play()
 	for(var/obj/machinery/duct/duct in range(location, 3))
 		do_teleport(duct, location, 3, no_effects=TRUE)
 		equilibrium.data["ducts_teleported"] = TRUE //If we teleported a duct - call the process in

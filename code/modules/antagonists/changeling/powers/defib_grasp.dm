@@ -38,12 +38,12 @@
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)
 	changeling.emote("scream")
-	PLAYSOUND(changeling, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(changeling, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 
 	// Mimics some real defib stuff (wish this was more generalized)
-	PLAYSOUND(get_sfx(defib), SFX_BODYFALL).volume(50).vary_frequency(TRUE).play()
-	PLAYSOUND(defib, 'sound/machines/defib/defib_zap.ogg').volume(75).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
-	PLAYSOUND(defib, 'sound/machines/defib/defib_success.ogg').vary_frequency(FALSE).play() // I guess
+	PLAYSOUND(get_sfx(defib), SFX_BODYFALL).volume(50).vary(TRUE).play()
+	PLAYSOUND(defib, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(defib, 'sound/machines/defib/defib_success.ogg').vary(FALSE).play() // I guess
 	defib.shock_pulling(30, changeling)
 
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.

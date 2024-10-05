@@ -53,7 +53,7 @@
 
 	// We can keep bouncing, try to continue the chain
 	if(bounces >= 1)
-		playsound(to_beam, sound, 50, vary = TRUE, extrarange = -1)
+		PLAYSOUND(to_beam, sound).volume(50).vary(TRUE).extra_range(-1).play()
 		// Chain continues shortly after. If they extinguish themselves in this time, the chain will stop anyways.
 		addtimer(CALLBACK(src, PROC_REF(continue_beam), to_beam, bounces), beam_duration * 0.5)
 

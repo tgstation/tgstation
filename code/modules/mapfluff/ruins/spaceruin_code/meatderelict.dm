@@ -83,7 +83,7 @@
 
 /obj/machinery/puzzle/button/meatderelict/on_puzzle_complete()
 	. = ..()
-	PLAYSOUND(src, 'sound/effects/alert.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/alert.ogg').volume(100).vary(TRUE).play()
 	visible_message(span_warning("[src] lets out an alarm as the lockdown is lifted!"))
 
 /obj/structure/puzzle_blockade/meat

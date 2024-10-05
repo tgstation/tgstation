@@ -53,7 +53,7 @@
 /obj/item/circuit_component/wiremod_scanner/proc/handle_interaction(atom/source, mob/user, atom/target, ...)
 	SIGNAL_HANDLER
 	source.balloon_alert(user, "scanned object")
-	PLAYSOUND(get_sfx(source), SFX_TERMINAL_TYPE).volume(25).vary_frequency(FALSE).play()
+	PLAYSOUND(get_sfx(source), SFX_TERMINAL_TYPE).volume(25).vary(FALSE).play()
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)

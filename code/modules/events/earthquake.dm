@@ -147,7 +147,7 @@
 				rock_to_clear.gets_drilled(give_exp = FALSE)
 		for(var/turf/turf_to_quake in edges)
 			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
-		PLAYSOUND(epicenter, 'sound/misc/metal_creak.ogg').volume(125).vary_frequency(TRUE).play()
+		PLAYSOUND(epicenter, 'sound/misc/metal_creak.ogg').volume(125).vary(TRUE).play()
 
 /datum/round_event/earthquake/end()
 	PLAYSOUND(epicenter, 'sound/ambience/earth_rumble/earth_rumble.ogg').volume(125).play()

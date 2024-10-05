@@ -31,7 +31,7 @@
 		for(var/turf/nearby_turf as anything in get_adjacent_open_turfs(our_turf))
 			if(prob(10 * current_mass))
 				new /obj/effect/decal/cleanable/greenglow(nearby_turf)
-		PLAYSOUND(our_turf, 'sound/effects/bubbles/bubbles2.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(our_turf, 'sound/effects/bubbles/bubbles2.ogg').vary(TRUE).play()
 
 	return ..()
 
@@ -164,7 +164,7 @@
 
 	var/obj/item/spawned_pot = new spawned_type(drop_location())
 
-	PLAYSOUND(src, 'sound/effects/desecration/desecration-02.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/desecration/desecration-02.ogg').volume(75).vary(TRUE).play()
 	visible_message(span_notice("[src]'s shining liquid drains into a flask, creating a [spawned_pot.name]!"))
 	balloon_alert(user, "potion created")
 
@@ -199,7 +199,7 @@
 		return
 
 	current_mass++
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(100).vary(TRUE).play()
 	visible_message(span_notice("[src] devours [consumed] and fills itself with a little bit of liquid!"))
 
 	if(feeder)
@@ -238,7 +238,7 @@
 	if(!iscarbon(user))
 		return
 
-	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').vary(TRUE).play()
 
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))

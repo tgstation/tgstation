@@ -188,7 +188,7 @@
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(user, 'sound/misc/scary_horn.ogg').volume(70).vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/misc/scary_horn.ogg').volume(70).vary(TRUE).play()
 	forceMove(user.drop_location())
 	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
 	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"

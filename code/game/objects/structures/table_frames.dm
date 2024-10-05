@@ -27,7 +27,7 @@
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	deconstruct(TRUE)
 	return TRUE
 

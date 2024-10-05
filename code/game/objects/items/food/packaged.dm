@@ -21,7 +21,7 @@
 
 /obj/item/food/canned/proc/open_can(mob/user)
 	to_chat(user, span_notice("You pull back the tab of \the [src]."))
-	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
+	PLAYSOUND(user.loc, ).volume(50).play()
 	reagents.flags |= OPENCONTAINER
 	preserved_food = FALSE
 
@@ -173,7 +173,7 @@
 		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
 		victim.Paralyze(2 SECONDS) //splat!
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
-	PLAYSOUND(get_sfx(victim), SFX_DESECRATION).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(victim), SFX_DESECRATION).volume(50).vary(TRUE).play()
 
 /obj/item/food/canned/chap
 	name = "can of CHAP"

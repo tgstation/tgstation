@@ -141,7 +141,7 @@
 	var/mob/living/carbon/C = occupant
 	if(C.nutrition <= stop_at)
 		open_machine()
-		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
 		return
 	C.adjust_nutrition(-bite_size * seconds_per_tick)
 	nutrients += bite_size * seconds_per_tick
@@ -149,7 +149,7 @@
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
 		say(pick(fat_facts))
-		PLAYSOUND(loc, 'sound/machines/chime.ogg').volume(30).vary_frequency(FALSE).play()
+		PLAYSOUND(loc, 'sound/machines/chime.ogg').volume(30).vary(FALSE).play()
 	else
 		next_fact--
 	use_energy(active_power_usage * seconds_per_tick)
@@ -166,7 +166,7 @@
 			set_light(2, 1, "#ff0000")
 		else
 			say("Subject not fat enough.")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it won't work
 
 /obj/machinery/fat_sucker/proc/stop()

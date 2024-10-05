@@ -94,7 +94,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 

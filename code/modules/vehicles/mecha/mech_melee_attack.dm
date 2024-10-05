@@ -42,9 +42,9 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
@@ -79,9 +79,9 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)

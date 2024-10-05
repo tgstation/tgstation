@@ -505,7 +505,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		PLAYSOUND(projection, 'sound/effects/empulse.ogg').volume(40).vary_frequency(TRUE).play()
+		PLAYSOUND(projection, 'sound/effects/empulse.ogg').volume(40).vary(TRUE).play()
 		my_store = new_store
 
 /**

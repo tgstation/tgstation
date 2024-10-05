@@ -247,7 +247,7 @@
 		if(initial(tool.tool_behaviour) == new_tool_behaviour)
 			reference = tool
 			update_appearance(UPDATE_ICON_STATE)
-			PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').vary(TRUE).play()
 			break
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
@@ -267,7 +267,7 @@
 /obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
 	upgraded = upgraded
 
-	PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/change_jaws.ogg').vary(TRUE).play()
 
 /obj/item/borg/cyborg_omnitool/medical
 	name = "surgical omni-toolset"

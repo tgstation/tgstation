@@ -67,7 +67,7 @@
 		return
 	if(occupant && infusing_from)
 		if(!occupant.can_infuse(user))
-			PLAYSOUND(src, 'sound/machines/scanner/scanbuzz.ogg').volume(35).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/scanner/scanbuzz.ogg').volume(35).vary(TRUE).play()
 			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
@@ -89,7 +89,7 @@
 		infusing_into = GLOB.infuser_entries[/datum/infuser_entry/fly]
 		fail_title = "Overcomplexity"
 		fail_explanation = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
-	PLAYSOUND(src, 'sound/machines/blender.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/blender.ogg').vary(TRUE).play()
 	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
@@ -106,9 +106,9 @@
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
-	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
 	if(fail_explanation)
-		PLAYSOUND(src, 'sound/machines/printer.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/printer.ogg').volume(100).vary(TRUE).play()
 		visible_message(span_notice("[src] prints an error report."))
 		var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
 		printed_paper.name = "error report - '[fail_title]'"
@@ -125,7 +125,7 @@
 		&& target.has_status_effect(infusing_into.status_effect_type) \
 	)
 		max_tier_allowed++
-		PLAYSOUND(src, 'sound/machines/ding.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/ding.ogg').vary(TRUE).play()
 		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
 
 /obj/machinery/dna_infuser/update_icon_state()

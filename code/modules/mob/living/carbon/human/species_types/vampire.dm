@@ -191,7 +191,7 @@
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
 			victim.show_message(span_danger("[H] is draining your blood!"))
 			to_chat(H, span_notice("You drain some blood!"))
-			PLAYSOUND(H, 'sound/items/drink.ogg').volume(30).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+			PLAYSOUND(H, 'sound/items/drink.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
 			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)

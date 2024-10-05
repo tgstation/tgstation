@@ -90,7 +90,7 @@
 	sleep(2 SECONDS)
 	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
 	user.say("BOOORK!", forced = "chef hat suicide")
-	PLAYSOUND(user, 'sound/machines/ding.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/machines/ding.ogg').vary(TRUE).play()
 	return FIRELOSS
 
 //Captain
@@ -331,7 +331,7 @@
 		return
 
 	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(30).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 	set_phrase(desired_phrase,item)
 
 	return TRUE

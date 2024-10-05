@@ -47,7 +47,7 @@
 		trigger()
 
 /obj/item/reverse_bear_trap/proc/trigger()
-	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
 	soundloop.stop()
 	soundloop2.stop()
 	to_chat(loc, span_userdanger("*ding*"))
@@ -121,7 +121,7 @@
 	var/mob/living/carbon/human/victim = loc
 	if(!istype(victim) || victim.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		visible_message(span_warning("[src]'s jaws snap open with an ear-piercing crack!"))
-		PLAYSOUND(src, 'sound/effects/snap.ogg').volume(75).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).play()
 	else
 		var/mob/living/carbon/human/jill = loc
 		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_userdanger("[src] goes off!"))

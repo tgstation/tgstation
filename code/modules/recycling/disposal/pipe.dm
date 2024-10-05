@@ -138,7 +138,7 @@
 	else if(floorturf)
 		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-	PLAYSOUND(src, 'sound/machines/hiss.ogg').vlume(50).vary_frequency(FALSE).range(SOUND_RANGE + FALSE).play()
+	PLAYSOUND(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
 	pipe_eject(H, direction, TRUE, target, eject_range)
 	H.vent_gas(T)
 	qdel(H)

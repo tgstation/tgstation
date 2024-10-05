@@ -219,7 +219,7 @@
 	carbon_victim.Paralyze(5 SECONDS)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_R_LEG)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_L_LEG)
-	PLAYSOUND(src, 'sound/effects/magic/demon_attack1.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/demon_attack1.ogg').volume(75).vary(TRUE).play()
 
 /obj/structure/trap/eldritch/mad
 	name = "mad carving"
@@ -240,4 +240,4 @@
 	carbon_victim.set_dizzy_if_lower(40 SECONDS)
 	carbon_victim.adjust_temp_blindness(4 SECONDS)
 	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
-	PLAYSOUND(src, 'sound/effects/magic/blind.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/blind.ogg').volume(75).vary(TRUE).play()

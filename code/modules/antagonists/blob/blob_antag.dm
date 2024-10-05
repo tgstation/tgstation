@@ -133,7 +133,7 @@
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
-	PLAYSOUND(get_turf(blob_cam), 'sound/music/antag/blobalert.ogg').volume(50).vary_frequency(FALSE).play()
+	PLAYSOUND(get_turf(blob_cam), 'sound/music/antag/blobalert.ogg').volume(50).vary(FALSE).play()
 	blobtag.has_already_popped = TRUE
 
 	notify_ghosts(

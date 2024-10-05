@@ -353,7 +353,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(primed)
 		return
 	primed = TRUE
-	PLAYSOUND(src, 'sound/effects/hit_on_shattered_glass.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/hit_on_shattered_glass.ogg').vary(TRUE).play()
 	icon_state = "gibtonite_active"
 	var/notify_admins = FALSE
 	if(!is_mining_level(z))//Only annoy the admins ingame if we're triggered off the mining zlevel
@@ -514,7 +514,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		flick("coin_[coinflip]_flip", src)
 		coinflip = pick(sideslist)
 		icon_state = "coin_[coinflip]"
-		PLAYSOUND(user.loc, 'sound/items/coinflip.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(user.loc, 'sound/items/coinflip.ogg').vary(TRUE).play()
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated)
@@ -596,7 +596,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		flick("coin_[coinflip]_flip", src)
 		coinflip = pick(sideslist)
 		icon_state = "coin_[coinflip]"
-		PLAYSOUND(user.loc, 'sound/items/coinflip.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(user.loc, 'sound/items/coinflip.ogg').vary(TRUE).play()
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated)

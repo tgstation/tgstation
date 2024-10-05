@@ -20,7 +20,7 @@
 
 /obj/item/implant/sad_trombone/proc/on_deathgasp(mob/source)
 	SIGNAL_HANDLER
-	PLAYSOUND(loc, 'sound/misc/sadtrombone.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(loc, 'sound/misc/sadtrombone.ogg').vary(FALSE).play()
 
 ///Implanter that spawns with a sad trombone implant, as well as an appropriate name
 /obj/item/implanter/sad_trombone

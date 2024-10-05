@@ -40,7 +40,7 @@
 ///generates the telegraph signs to inform the player we're about to launch an attack
 /datum/component/basic_mob_ability_telegraph/proc/generate_tell_signs(mob/living/source)
 	if(sound_path)
-		PLAYSOUND(get_sfx(source), sound_path).volume(50).vary_frequency(FALSE).play()
+		PLAYSOUND(get_sfx(source), sound_path).volume(50).vary(FALSE).play()
 	source.Shake(duration = telegraph_time)
 
 ///use the ability

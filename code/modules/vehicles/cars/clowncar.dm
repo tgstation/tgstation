@@ -60,7 +60,7 @@
 
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
-	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+	PLAYSOUND(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg')).volume(75).play()
 	if(iscarbon(M))
 		var/mob/living/carbon/forced_mob = M
 		if(forced_mob.has_reagent(/datum/reagent/consumable/ethanol/irishcarbomb))
@@ -143,13 +143,13 @@
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
 		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
-		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
+		PLAYSOUND(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg')).volume(75).play()
 		log_combat(src, hittarget_living, "sucked up")
 		return
 	if(!isclosedturf(bumped))
 		return
 	visible_message(span_warning("[src] rams into [bumped] and crashes!"))
-	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
+	PLAYSOUND(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg')).volume(75).play()
 	PLAYSOUND(src, 'sound/vehicles/clowncar_crashpins.ogg').volume(75).play()
 	dump_mobs(TRUE)
 	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
@@ -301,7 +301,7 @@
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 	mob_exit(unlucky_sod, silent = TRUE)
 	flick("clowncar_recoil", src)
-	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
+	PLAYSOUND(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg')).volume(75).play()
 	unlucky_sod.throw_at(target, 10, 2)
 	log_combat(user, unlucky_sod, "fired", src, "towards [target]") //this doesn't catch if the mob hits something between the car and the target
 	return COMSIG_MOB_CANCEL_CLICKON

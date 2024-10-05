@@ -30,7 +30,7 @@
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
 		if(human.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
-			PLAYSOUND(attacked_mob, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(attacked_mob, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
@@ -54,7 +54,7 @@
 			span_userdanger("[user] prods you with [src]!"),
 		)
 
-	PLAYSOUND(loc, 'sound/items/weapons/egloves.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/egloves.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
@@ -114,7 +114,7 @@
 					span_notice("You playfully boop [attacked_mob] on the head!"),
 				)
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
-				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+				PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(
@@ -133,7 +133,7 @@
 					span_notice("[user] pets [attacked_mob]!"),
 					span_notice("You pet [attacked_mob]!"),
 				)
-			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 		if(HUG_MODE_HUG)
 			if(ishuman(attacked_mob))
 				attacked_mob.adjust_status_effects_on_shake_up()
@@ -160,7 +160,7 @@
 					span_warning("[user] bops [attacked_mob] on the head!"),
 					span_warning("You bop [attacked_mob] on the head!"),
 				)
-			PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 		if(HUG_MODE_SHOCK)
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
@@ -184,7 +184,7 @@
 						span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"),
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
-			PLAYSOUND(loc, 'sound/effects/sparks/sparks2.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/effects/sparks/sparks2.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 			user.cell.use(0.5 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
@@ -200,7 +200,7 @@
 					span_userdanger("[user] crushes [attacked_mob]!"),
 						span_danger("You crush [attacked_mob]!"),
 				)
-			PLAYSOUND(loc, 'sound/items/weapons/smash.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/smash.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 			attacked_mob.adjustBruteLoss(15)
 			user.cell.use(0.3 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
@@ -378,7 +378,7 @@
 			carbon.adjust_confusion(6 SECONDS)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		PLAYSOUND(get_turf(src), 'sound/mobs/non-humanoids/cyborg/harmalarm.ogg').volume(70).vary_frequency(3).play()
+		PLAYSOUND(get_turf(src), 'sound/mobs/non-humanoids/cyborg/harmalarm.ogg').volume(70).vary(3).play()
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.log_message("used a Cyborg Harm Alarm", LOG_ATTACK)
 		if(iscyborg(user))
@@ -398,7 +398,7 @@
 					carbon.adjust_confusion(10 SECONDS)
 					carbon.adjust_stutter(30 SECONDS)
 					carbon.adjust_jitter(50 SECONDS)
-		PLAYSOUND(get_turf(src), 'sound/machines/warning-buzzer.ogg').volume(130).vary_frequency(3).play()
+		PLAYSOUND(get_turf(src), 'sound/machines/warning-buzzer.ogg').volume(130).vary(3).play()
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
 

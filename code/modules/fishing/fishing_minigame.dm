@@ -217,7 +217,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	float.update_appearance(UPDATE_OVERLAYS)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
-	PLAYSOUND(float, 'sound/machines/ping.ogg').vlume(10).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(float, 'sound/machines/ping.ogg').volume(10).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /datum/fishing_challenge/proc/auto_spin()
 	if(phase != WAIT_PHASE || !float.spin_ready)

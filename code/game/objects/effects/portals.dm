@@ -6,8 +6,8 @@
 	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
 	if(!istype(P1) || !istype(P2))
 		return
-	PLAYSOUND(P1, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-	PLAYSOUND(P2, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(P1, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(P2, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE
 	return list(P1, P2)
@@ -110,7 +110,7 @@
 		apply_wibbly_filters(src)
 
 /obj/effect/portal/proc/expire()
-	PLAYSOUND(loc, get_sfx(SFX_PORTAL_CLOSE)).volume(50).vary_frequency(FALSE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(loc, get_sfx(SFX_PORTAL_CLOSE)).volume(50).vary(FALSE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	qdel(src)
 
 /obj/effect/portal/singularity_pull()
@@ -153,8 +153,8 @@
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
 		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
-		PLAYSOUND(start_turf, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(real_target, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		PLAYSOUND(start_turf, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		PLAYSOUND(real_target, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 		return TRUE
 	return FALSE
 

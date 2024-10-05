@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
-	PLAYSOUND(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg').vlume(40).vary_frequency(TRUE).range(SOUND_RANGE + TRUE).play()  //Alien roars when starting to break free
+	PLAYSOUND(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg').volume(40).vary(TRUE).range(SOUND_RANGE + TRUE).play()  //Alien roars when starting to break free
 	..(I, cuff_break = INSTANT_CUFFBREAK)
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)

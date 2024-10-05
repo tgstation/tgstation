@@ -243,7 +243,7 @@
 			span_danger("[src] smashes into [smacked], breaking into pieces!"),
 			span_userdanger("You are smacked by [src] as it breaks into pieces!"),
 		)
-		PLAYSOUND(src, 'sound/effects/break_stone.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/break_stone.ogg').vary(TRUE).play()
 		momentum = 0
 
 	else
@@ -251,7 +251,7 @@
 			span_danger("[src] smashes into [smacked]!"),
 			span_userdanger("You are smacked by [src]!"),
 		)
-	PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 	take_damage(max_integrity * 0.05)
 	momentum = floor(momentum / momentum_mod)
 	if(smacked.body_position == LYING_DOWN)
@@ -323,7 +323,7 @@
 	Move(new_destination)
 	var/sound/thud_sound = sound('sound/items/weapons/thudswoosh.ogg')
 	thud_sound.pitch = 0.5
-	PLAYSOUND(get_sfx(src), thud_sound).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), thud_sound).volume(50).vary(TRUE).play()
 
 /**
  * Attempt to put the cart on rails
@@ -343,7 +343,7 @@
 	update_rail_state(TRUE)
 	var/sound/click_sound = sound('sound/machines/click.ogg')
 	click_sound.pitch = 0.5
-	PLAYSOUND(get_sfx(src), click_sound).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), click_sound).volume(50).vary(TRUE).play()
 
 /obj/structure/closet/crate/miningcar/Bump(atom/bumped_atom)
 	. = ..()

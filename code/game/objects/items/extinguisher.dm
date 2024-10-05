@@ -197,7 +197,7 @@
 		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
+			PLAYSOUND(src.loc, ).volume(50).vary(TRUE).extra_range(-6).play()
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
@@ -231,7 +231,7 @@
 
 	src.last_use = world.time
 
-	playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+	PLAYSOUND(src.loc, ).volume(75).vary(TRUE).extra_range(-3).play()
 
 	var/direction = get_dir(src,interacting_with)
 

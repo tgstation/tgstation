@@ -461,7 +461,7 @@
 		target.color = COLOR_HERETIC_GREEN
 		animate(target, color = old_color, time = 4 SECONDS, easing = EASE_IN)
 		target.mob_light(range = 1.5, power = 2.5, color = COLOR_HERETIC_GREEN, duration = 0.5 SECONDS)
-		PLAYSOUND(target, 'sound/effects/magic/magic_block_mind.ogg').volume(150).vary_frequency(TRUE).play() // insanely quiet
+		PLAYSOUND(target, 'sound/effects/magic/magic_block_mind.ogg').volume(150).vary(TRUE).play() // insanely quiet
 
 		to_chat(user, span_warning("An eldritch force intervenes as you touch [target], absorbing most of the effects!"))
 		to_chat(target, span_warning("As [user] touches you with vile magicks, the Mansus absorbs most of the effects!"))
@@ -534,8 +534,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
-		PLAYSOUND(origin, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
-		PLAYSOUND(dest, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+		PLAYSOUND(origin, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+		PLAYSOUND(dest, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	return ..()
 
 //Shackles
@@ -559,7 +559,7 @@
 
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
-		PLAYSOUND(loc, 'sound/items/weapons/cablecuff.ogg').volume(30).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
 		C.visible_message(span_danger("[user] begins restraining [C] with dark magic!"), \
 								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
 		if(do_after(user, 3 SECONDS, C))
@@ -642,7 +642,7 @@
 		if(candidate.mmi || candidate.shell)
 			channeling = TRUE
 			user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
-			PLAYSOUND(T, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(80).vary_frequency(TRUE).play()
+			PLAYSOUND(T, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(80).vary(TRUE).play()
 			var/prev_color = candidate.color
 			candidate.color = "black"
 			if(!do_after(user, 9 SECONDS, target = candidate))
@@ -673,7 +673,7 @@
 
 	if(istype(target,/obj/machinery/door/airlock))
 		channeling = TRUE
-		PLAYSOUND(T, 'sound/machines/airlock/airlockforced.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(T, 'sound/machines/airlock/airlockforced.ogg').vary(TRUE).play()
 		do_sparks(5, TRUE, target)
 		if(!do_after(user, 5 SECONDS, target = user) && !QDELETED(target))
 			channeling = FALSE

@@ -47,13 +47,13 @@
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		PLAYSOUND(src, 'sound/items/weapons/chainsawhit.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/chainsawhit.ogg').volume(100).vary(TRUE).play()
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		PLAYSOUND(src, 'sound/items/weapons/genhit1.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/genhit1.ogg').volume(100).vary(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)
@@ -110,7 +110,7 @@
 	if (isnull(head))
 		return ..()
 
-	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
+	PLAYSOUND(user, ).volume(80).vary(TRUE).play()
 
 	target_mob.balloon_alert(user, "cutting off head...")
 	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))

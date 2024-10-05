@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/vehicles/mecha/mechmove03.ogg').vary(TRUE).play()
 	if(!fishing_modifier)
 		return
 	if(up)

@@ -30,12 +30,12 @@
 		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
 		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
 		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
-		PLAYSOUND(src.loc, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
+		PLAYSOUND(src.loc, 'sound/machines/terminal/terminal_on.ogg').vary(FALSE).play()
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
-		PLAYSOUND(src.loc, 'sound/machines/terminal/terminal_off.ogg').vary_frequency(FALSE).play()
+		PLAYSOUND(src.loc, 'sound/machines/terminal/terminal_off.ogg').vary(FALSE).play()
 	area.power_change()
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)

@@ -52,7 +52,7 @@
 		span_notice("You start to pry open [src]."),
 		span_notice("You hear loud prying on metal.")
 	)
-	PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary(TRUE).play()
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_CROWBAR_ALERT, pryer)
 

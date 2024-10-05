@@ -290,7 +290,7 @@
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
 	if(!prob((damage_ratio * 100) - 50) && damage_ratio != 1)
-		PLAYSOUND(play_from, 'sound/mobs/non-humanoids/alien/alien_organ_cut.ogg').volume(100).vary_frequency(1).play()
+		PLAYSOUND(play_from, 'sound/mobs/non-humanoids/alien/alien_organ_cut.ogg').volume(100).vary(1).play()
 		// We try and line up the "jump" here with the sound of the hit
 		var/oldx = play_from.pixel_x
 		var/oldy = play_from.pixel_y

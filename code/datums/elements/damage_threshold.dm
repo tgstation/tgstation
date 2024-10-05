@@ -45,7 +45,7 @@
 			span_hear("You hear a thud."),
 			COMBAT_MESSAGE_RANGE,
 		)
-		playsound(source, 'sound/items/weapons/tap.ogg', tap_vol, TRUE, -1)
+		PLAYSOUND(source, ).volume(tap_vol).vary(TRUE).extra_range(-1).play()
 		return SUCCESSFUL_BLOCK
 
 	return NONE

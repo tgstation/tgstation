@@ -58,7 +58,7 @@
 
 	if(honkvirus_amount > 0) // EXTRA annoying, huh!
 		honkvirus_amount--
-		PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(30).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/bikehorn.ogg').volume(30).vary(TRUE).play()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -211,7 +211,7 @@
 		if("PC_Imprint_ID")
 			imprint_id()
 			UpdateDisplay()
-			PLAYSOUND(src, 'sound/machines/terminal/terminal_processing.ogg').volume(15).vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_processing.ogg').volume(15).vary(TRUE).play()
 
 		if("PC_Pai_Interact")
 			switch(params["option"])

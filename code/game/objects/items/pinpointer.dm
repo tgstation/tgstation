@@ -44,7 +44,7 @@
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
-	PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary(TRUE).play()
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else

@@ -35,7 +35,7 @@
 
 /obj/item/folder/biscuit/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] tries to eat [src]! [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg').volume(40).vary_frequency(TRUE).play() //Don't eat plastic cards kids, they get really sharp if you chew on them.
+	PLAYSOUND(get_turf(user), 'sound/effects/wounds/crackandbleed.ogg').volume(40).vary(TRUE).play() //Don't eat plastic cards kids, they get really sharp if you chew on them.
 	return BRUTELOSS
 
 /obj/item/folder/biscuit/update_overlays()

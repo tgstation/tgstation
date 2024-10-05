@@ -51,7 +51,7 @@
 	. = ..()
 	if(!has_crit)
 		return
-	PLAYSOUND(target, 'sound/effects/wounds/crackandbleed.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(target, 'sound/effects/wounds/crackandbleed.ogg').volume(100).vary(TRUE).play()
 	if(target.stat == DEAD)
 		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
 	else if(!HAS_TRAIT(target, TRAIT_HULK) && (iscarbon(target) || issilicon(target)))

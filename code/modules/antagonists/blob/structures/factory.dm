@@ -81,7 +81,7 @@
 
 	modify_max_integrity(initial(max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
 	visible_message(span_boldwarning("The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!"))
-	PLAYSOUND(loc, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/effects/splat.ogg').vary(TRUE).play()
 
 	blobbernaut = new_naut
 	blobbernaut.link_to_factory(src)

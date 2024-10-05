@@ -103,7 +103,7 @@
 /obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
 	if(needs_air == FALSE)
 		return
-	PLAYSOUND(src, 'sound/items/tools/ratchet.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/tools/ratchet.ogg').vary(TRUE).play()
 	pressure_setting = pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : pressure_setting + 1
 	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
 	return TRUE
@@ -204,7 +204,7 @@
 				    		 span_danger("You fire \the [src]!"))
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	PLAYSOUND(get_sfx(src), fire_sound).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), fire_sound).volume(50).vary(TRUE).play()
 	fire_items(T, user)
 	if(pressure_setting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user

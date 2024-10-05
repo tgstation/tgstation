@@ -63,7 +63,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').volume(40).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/tap.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 
@@ -72,7 +72,7 @@
 
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
-	PLAYSOUND(loc, 'sound/items/weapons/slash.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/slash.ogg').volume(100).vary(TRUE).play()
 	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
 
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -84,7 +84,7 @@
 		var/play_soundeffect = 1
 		if(user.environment_smash)
 			play_soundeffect = 0
-			PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
@@ -268,7 +268,7 @@
 			cell = weapon
 			balloon_alert(user, "installed power cell")
 			diag_hud_set_mechcell()
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
 			log_message("Power cell installed", LOG_MECHA)
 		else
 			balloon_alert(user, "already installed!")
@@ -280,7 +280,7 @@
 				return
 			scanmod = weapon
 			balloon_alert(user, "installed scanning module")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -293,7 +293,7 @@
 				return
 			capacitor = weapon
 			balloon_alert(user, "installed capacitor")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -306,7 +306,7 @@
 				return
 			servo = weapon
 			balloon_alert(user, "installed servo")
-			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else

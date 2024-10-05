@@ -54,7 +54,7 @@
 		return
 
 	item.add_fingerprint(user)
-	playsound(item, item.hitsound, 30, TRUE, -1)
+	PLAYSOUND(item, item.hitsound).volume(30).vary(TRUE).extra_range(-1).play()
 	user.do_attack_animation(target)
 	if (target == user)
 		user.visible_message(

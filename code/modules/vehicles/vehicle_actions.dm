@@ -343,7 +343,7 @@
 	rider.adjustStaminaLoss(vehicle.instability* 0.75)
 	if (rider.getStaminaLoss() >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		vehicle.unbuckle_mob(rider)
 		rider.throw_at(landing_turf, 2, 2)
 		rider.Paralyze(40)
@@ -360,7 +360,7 @@
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
-	PLAYSOUND(vehicle, 'sound/vehicles/skateboard_ollie.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(vehicle, 'sound/vehicles/skateboard_ollie.ogg').vary(TRUE).play()
 	passtable_on(rider, VEHICLE_TRAIT)
 	passtable_on(vehicle, VEHICLE_TRAIT)
 	rider.Move(landing_turf, vehicle_target.dir)
@@ -379,7 +379,7 @@
 
 	rider.adjustStaminaLoss(board.instability)
 	if (rider.getStaminaLoss() >= 100)
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		board.unbuckle_mob(rider)
 		rider.Paralyze(50)
 		if(prob(15))
@@ -400,7 +400,7 @@
 		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
 		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
 	)
-	PLAYSOUND(board, 'sound/vehicles/skateboard_ollie.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(board, 'sound/vehicles/skateboard_ollie.ogg').vary(TRUE).play()
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)

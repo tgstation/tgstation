@@ -10,7 +10,7 @@
 
 	new /obj/structure/alien/egg/delivery(spawn_turf)
 	new /obj/effect/temp_visual/gravpush(spawn_turf)
-	PLAYSOUND(spawn_turf, 'sound/items/party_horn.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(spawn_turf, 'sound/items/party_horn.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 	message_admins("An alien egg has been delivered to [ADMIN_VERBOSEJMP(spawn_turf)].")
 	log_game("An alien egg has been delivered to [AREACOORD(spawn_turf)]")

@@ -150,7 +150,7 @@
 			else
 				camera_ref = null
 			if(!spying)
-				PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(25).vary_frequency(FALSE).play()
+				PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(25).vary(FALSE).play()
 			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker)
@@ -198,7 +198,7 @@
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
-			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').volume(25).vary_frequency(FALSE).play()
+			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').volume(25).vary(FALSE).play()
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()

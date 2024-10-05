@@ -112,7 +112,7 @@
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
-				PLAYSOUND(master, 'sound/effects/splat.ogg').volume(100).vary_frequency(FALSE).play()
+				PLAYSOUND(master, 'sound/effects/splat.ogg').volume(100).vary(FALSE).play()
 			else
 				master.apply_status_effect(/datum/status_effect/his_grace)
 		return
@@ -133,8 +133,8 @@
 		if(!L.stat)
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			PLAYSOUND(L, 'sound/items/weapons/smash.ogg').vary_frequency(TRUE).play()
-			PLAYSOUND(L, 'sound/effects/desecration/desecration-01.ogg').vary_frequency(TRUE).play()
+			PLAYSOUND(L, 'sound/items/weapons/smash.ogg').vary(TRUE).play()
+			PLAYSOUND(L, 'sound/effects/desecration/desecration-01.ogg').vary(TRUE).play()
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -172,7 +172,7 @@
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message(span_boldwarning("[src] slowly stops rattling and falls still, His latch snapping shut."))
-	PLAYSOUND(loc, 'sound/items/weapons/batonextend.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/batonextend.ogg').volume(100).vary(TRUE).play()
 	name = initial(name)
 	desc = initial(desc)
 	animate(src, transform=matrix())
@@ -189,8 +189,8 @@
 	var/victims = 0
 	meal.visible_message(span_warning("[src] swings open and devours [meal]!"), "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	PLAYSOUND(meal, 'sound/effects/desecration/desecration-02.ogg').volume(75).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(meal, 'sound/effects/desecration/desecration-02.ogg').volume(75).vary(TRUE).play()
+	PLAYSOUND(src, 'sound/items/eatfood.ogg').volume(100).vary(TRUE).play()
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst

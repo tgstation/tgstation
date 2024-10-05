@@ -88,7 +88,7 @@
 		if(carbon_user.wear_mask)
 			in_mouth = ", barely missing [carbon_user.p_their()] nose"
 	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
-	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
+	PLAYSOUND(loc, hitsound).volume(get_clamped_volume().play(), TRUE, -1)
 	add_fingerprint(user)
 
 /obj/item/melee/energy/update_icon_state()

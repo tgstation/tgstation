@@ -147,7 +147,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 			continue
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
-		playsound(M.loc, 'sound/effects/magic/staff_change.ogg', 50, TRUE, -1)
+		PLAYSOUND(M.loc, ).volume(50).vary(TRUE).extra_range(-1).play()
 
 		M.wabbajack()
 

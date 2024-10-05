@@ -95,16 +95,16 @@
 		// Log in.
 		if("PRG_authenticate")
 			if(!computer || !inserted_auth_card)
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary(FALSE).play()
 				return TRUE
 			if(authenticate(user, inserted_auth_card))
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary(FALSE).play()
 				return TRUE
 		// Log out.
 		if("PRG_logout")
 			authenticated_card = null
 			authenticated_user = null
-			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(computer, 'sound/machines/terminal/terminal_off.ogg').vary(FALSE).play()
 			return TRUE
 		// Print a report.
 		if("PRG_print")
@@ -129,7 +129,7 @@
 				to_chat(usr, span_notice("Printer is out of paper."))
 				return TRUE
 			else
-				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary_frequency(FALSE).play()
+				PLAYSOUND(computer, 'sound/machines/terminal/terminal_on.ogg').vary(FALSE).play()
 				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
 		if("PRG_eject_id")
@@ -153,7 +153,7 @@
 			inserted_auth_card.assignment = is_centcom ? "Fired" : "Demoted"
 			SSid_access.remove_trim_from_card(inserted_auth_card)
 
-			PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(computer, 'sound/machines/terminal/terminal_prompt_deny.ogg').vary(FALSE).play()
 			return TRUE
 		// Change ID card assigned name.
 		if("PRG_edit")
@@ -168,7 +168,7 @@
 
 			if(!new_name)
 				inserted_auth_card.registered_name = null
-				PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+				PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 				inserted_auth_card.update_label()
 				// We had a name before and now we have no name, so this will unassign the card and we update the icon.
 				if(old_name)
@@ -183,7 +183,7 @@
 				return TRUE
 
 			inserted_auth_card.registered_name = new_name
-			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 			inserted_auth_card.update_label()
 			// Card wasn't assigned before and now it is, so update the icon accordingly.
 			if(!old_name)
@@ -200,7 +200,7 @@
 				return TRUE
 
 			inserted_auth_card.registered_age = new_age
-			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 			return TRUE
 		// Change assignment
 		if("PRG_assign")
@@ -208,14 +208,14 @@
 				return TRUE
 			var/new_asignment = trim(sanitize(params["assignment"]), MAX_NAME_LEN)
 			inserted_auth_card.assignment = new_asignment
-			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 			inserted_auth_card.update_label()
 			return TRUE
 		// Add/remove access.
 		if("PRG_access")
 			if(!computer || !authenticated_card || !inserted_auth_card)
 				return TRUE
-			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
 			if(!(access_type in valid_access))
@@ -241,7 +241,7 @@
 			if(!computer || !authenticated_card || !inserted_auth_card)
 				return TRUE
 
-			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary_frequency(FALSE).play()
+			PLAYSOUND(get_sfx(computer), SFX_TERMINAL_TYPE).volume(50).vary(FALSE).play()
 			var/template_name = params["name"]
 
 			if(!template_name)

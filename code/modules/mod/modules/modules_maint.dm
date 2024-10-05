@@ -31,7 +31,7 @@
 	if(!(methods & (VAPOR|PATCH|TOUCH)) || set_off || mod.wearer.stat == DEAD)
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	PLAYSOUND(src, 'sound/items/modsuit/springlock.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/modsuit/springlock.ogg').volume(75).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
 	set_off = TRUE
@@ -152,7 +152,7 @@
 	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /obj/item/mod/module/tanner/on_use()
-	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/microwave/microwave-end.ogg').vary(TRUE).play()
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
@@ -179,7 +179,7 @@
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(oxygen_damage)
-	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').vary(TRUE).play()
 	var/obj/item/balloon = new balloon_path(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_energy_cost)
@@ -207,7 +207,7 @@
 	crisp_paper.desc = "It's crisp and warm to the touch. Must be fresh."
 
 	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
-	PLAYSOUND(get_turf(src), 'sound/machines/click.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(src), 'sound/machines/click.ogg').volume(50).vary(TRUE).play()
 	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
 
 	mod.wearer.put_in_hands(crisp_paper)

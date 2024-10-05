@@ -79,7 +79,7 @@
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-		PLAYSOUND(get_turf(src), 'sound/effects/magic/repulse.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_turf(src), 'sound/effects/magic/repulse.ogg').volume(100).vary(TRUE).play()
 
 		return
 
@@ -116,17 +116,17 @@
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(15).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	cut_overlay("flaps")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(15).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	cut_overlay("hatch")
 	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
-	PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').vary(FALSE).play()
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -158,7 +158,7 @@
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
-	PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/beep/triple_beep.ogg').vary(FALSE).play()
 	add_overlay("text")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
@@ -254,6 +254,6 @@
 
 /obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
-	PLAYSOUND(get_sfx(src), SFX_EXPLOSION).volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), SFX_EXPLOSION).volume(80).vary(TRUE).play()
 	dump.forceMove(get_turf(src))
 	qdel(src) //The target's purpose is complete. It can rest easy now

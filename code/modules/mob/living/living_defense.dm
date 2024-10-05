@@ -166,7 +166,7 @@
 			skipcatch = TRUE
 			blocked = TRUE
 		else
-			PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play() //Item sounds are handled in the item itself
+			PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play() //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
 				visible_message(span_danger("[src] is hit by [AM]!"), \
 							span_userdanger("You're hit by [AM]!"))
@@ -280,7 +280,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.grab_sound)
 			sound_to_play = H.dna.species.grab_sound
-	playsound(src.loc, sound_to_play, 50, TRUE, -1)
+	PLAYSOUND(src.loc, sound_to_play).volume(50).vary(TRUE).extra_range(-1).play()
 
 	if(user.grab_state) //only the first upgrade is instantaneous
 		var/old_grab_state = user.grab_state
@@ -354,7 +354,7 @@
 		return FALSE
 
 	if(user.attack_sound)
-		playsound(src, user.attack_sound, 50, TRUE, TRUE)
+		PLAYSOUND(src, user.attack_sound).volume(50).vary(TRUE).extra_range(TRUE).play()
 
 	user.do_attack_animation(src)
 	visible_message(
@@ -422,7 +422,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 	if (HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || prob(75))
 		log_combat(user, src, "attacked")
-		PLAYSOUND(loc, 'sound/items/weapons/bite.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/items/weapons/bite.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 		visible_message(span_danger("[user.name] bites [src]!"), \
 						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You bite [src]!"))
@@ -449,7 +449,7 @@
 			visible_message(span_danger("[L.name] bites [src]!"), \
 							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_danger("You bite [src]!"))
-			PLAYSOUND(loc, 'sound/items/weapons/bite.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/items/weapons/bite.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 			return TRUE
 		else
 			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
@@ -657,10 +657,10 @@
 	var/shove_flags = target.get_shove_flags(src, weapon)
 	if(weapon)
 		do_attack_animation(target, used_item = weapon)
-		PLAYSOUND(target, 'sound/effects/glass/glassbash.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(target, 'sound/effects/glass/glassbash.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		PLAYSOUND(target, 'sound/items/weapons/shove.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+		PLAYSOUND(target, 'sound/items/weapons/shove.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	if (ishuman(target) && isnull(weapon))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)

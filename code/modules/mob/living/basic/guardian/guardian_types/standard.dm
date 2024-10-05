@@ -34,7 +34,7 @@
 
 /// Echo our punching sounds
 /mob/living/basic/guardian/standard/proc/do_attack_sound(atom/playing_from)
-	playsound(playing_from, attack_sound, 50, TRUE, TRUE)
+	PLAYSOUND(playing_from, attack_sound).volume(50).vary(TRUE).extra_range(TRUE).play()
 
 /// Action to change our battlecry
 /datum/action/select_guardian_battlecry

@@ -31,7 +31,7 @@
 
 /// This is the proc that actually does the throwing. Charge only adds a timer for this.
 /datum/action/cooldown/mob_cooldown/chase_target/proc/throw_thyself()
-	PLAYSOUND(owner, 'sound/items/weapons/sonic_jackhammer.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(owner, 'sound/items/weapons/sonic_jackhammer.ogg').vary(TRUE).play()
 	owner.throw_at(target, 7, 1.1, owner, FALSE, FALSE, CALLBACK(src, PROC_REF(throw_impact_sound)), INFINITY)
 
 /datum/action/cooldown/mob_cooldown/chase_target/proc/throw_impact_sound()

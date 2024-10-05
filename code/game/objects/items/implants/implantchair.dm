@@ -84,7 +84,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
-		PLAYSOUND(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary_frequency(TRUE).play()
+		PLAYSOUND(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary(TRUE).play()
 	update_appearance()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)

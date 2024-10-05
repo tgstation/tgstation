@@ -98,7 +98,7 @@
  * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
 /obj/machinery/computer/piratepad_control/civilian/send()
-	PLAYSOUND(loc, 'sound/machines/wewewew.ogg').volume(70).vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/wewewew.ogg').volume(70).vary(TRUE).play()
 	if(!sending)
 		return
 	if(!inserted_scan_id)
@@ -242,13 +242,13 @@
 
 	if(target)
 		if(holder_item && inserting_item.InsertID(target))
-			PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
 		else
 			id_eject(user, target)
 
 	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
 						span_notice("You insert \the [card_to_insert] into \the [src]."))
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
 	ui_interact(user)
 	return TRUE
 
@@ -263,7 +263,7 @@
 			user.put_in_hands(target)
 		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
 							span_notice("You get \the [target] from \the [src]."))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
 		inserted_scan_id = null
 		return TRUE
 
@@ -408,7 +408,7 @@
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(80).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(80).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

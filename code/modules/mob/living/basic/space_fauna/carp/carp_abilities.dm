@@ -14,7 +14,7 @@
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
-	playsound(get_turf(firer), projectile_sound, 100, vary = TRUE)
+	PLAYSOUND(get_turf(firer), projectile_sound).volume(100).vary(TRUE).play()
 	return ..()
 
 /// Chaos variant picks one from a list

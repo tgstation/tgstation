@@ -69,7 +69,7 @@
 	if(QDELING(src) || !hit_atom)	//Invalid loc
 		return
 	var/obj/item/shard/ampoule_shard = new(drop_location())
-	PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(40).vary(TRUE).play()
 	transfer_fingerprints_to(ampoule_shard)
 	spillable = TRUE
 	SplashReagents(hit_atom, TRUE)

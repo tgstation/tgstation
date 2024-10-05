@@ -145,7 +145,7 @@
 		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
+	PLAYSOUND(get_turf(loc), ).volume(50).vary(TRUE).extra_range(-1).play()
 	..()
 
 /obj/effect/landmark/error

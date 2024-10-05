@@ -212,7 +212,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary_frequency(FALSE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(FALSE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
@@ -360,16 +360,16 @@
 	switch(type)
 		if(SIGH)
 			audible_message(span_hear("[src] makes a sighing buzz."))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
 		if(ANNOYED)
 			audible_message(span_hear("[src] makes an annoyed buzzing sound."))
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/buzz/buzz-two.ogg').vary(FALSE).play()
 		if(DELIGHT)
 			audible_message(span_hear("[src] makes a delighted ping!"))
-			PLAYSOUND(src, 'sound/machines/ping.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/ping.ogg').vary(FALSE).play()
 		if(CHIME)
 			audible_message(span_hear("[src] makes a chiming sound!"))
-			PLAYSOUND(src, 'sound/machines/chime.ogg').vary_frequency(FALSE).play()
+			PLAYSOUND(src, 'sound/machines/chime.ogg').vary(FALSE).play()
 	flick("[base_icon]1", src)
 
 
@@ -689,7 +689,7 @@
 		span_userdanger("[src] drives over you!"),
 	)
 
-	PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 
 	var/damage = rand(5, 15)
 	crushed.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, MELEE))

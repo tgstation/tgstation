@@ -135,7 +135,7 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharpness = SHARP_POINTY
-		PLAYSOUND(loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary(TRUE).play()
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)

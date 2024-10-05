@@ -342,7 +342,7 @@
 			return
 	sinched = !sinched
 	if(sinched)
-		PLAYSOUND(loc, sinch_sound).volume(15).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+		PLAYSOUND(loc, sinch_sound).volume(15).vary(TRUE).range(-2 + SOUND_RANGE).play()
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))
@@ -380,7 +380,7 @@
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').volume(80).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight
 	name = "hardlight prisoner bodybag"
@@ -392,4 +392,4 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
-		PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').volume(80).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()

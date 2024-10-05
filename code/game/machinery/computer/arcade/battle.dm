@@ -250,11 +250,11 @@
 		ui_panel = UI_PANEL_GAMEOVER
 		feedback_message = "GAME OVER."
 		say("You have been crushed! GAME OVER.")
-		PLAYSOUND(loc, 'sound/machines/arcade/lose.ogg').volume(40).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/machines/arcade/lose.ogg').volume(40).vary(TRUE).play()
 		lose_game(user)
 	else
 		feedback_message = "User took [damage_taken] damage!"
-		PLAYSOUND(loc, 'sound/machines/arcade/hit.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+		PLAYSOUND(loc, 'sound/machines/arcade/hit.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 		SStgui.update_uis(src)
 
 ///Called when you attack the enemy.
@@ -270,17 +270,17 @@
 		if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 			feedback_message = "User prepares to counterattack!"
 			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_COUNTERATTACK)
-			PLAYSOUND(loc, 'sound/machines/arcade/mana.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/machines/arcade/mana.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 		if(BATTLE_ARCADE_PLAYER_DEFEND)
 			feedback_message = "User pulls up their shield!"
 			process_enemy_turn(user, defending_flags = BATTLE_ATTACK_FLAG_DEFEND)
-			PLAYSOUND(loc, 'sound/machines/arcade/mana.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/machines/arcade/mana.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 
 	if(!damage_dealt)
 		return
 	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "[enemy_name] took [damage_dealt] damage!"
-	PLAYSOUND(loc, 'sound/machines/arcade/hit.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/machines/arcade/hit.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	process_enemy_turn(user)
 
 ///Called when you successfully counterattack the enemy.
@@ -289,7 +289,7 @@
 	var/damage_dealt = (rand(20, 30) * (!isnull(weapon) ? weapon.bonus_modifier : 1))
 	enemy_hp -= round(max(0, damage_dealt), 1)
 	feedback_message = "User counterattacked for [damage_dealt] damage!"
-	PLAYSOUND(loc, 'sound/machines/arcade/boom.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/machines/arcade/boom.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	if(enemy_hp <= 0)
 		on_battle_win(user)
 	SStgui.update_uis(src)
@@ -334,7 +334,7 @@
 			enemy_hp = round(min(enemy_max_hp, enemy_hp + healed_amount), 1)
 			enemy_mp -= round(max(0, 10), 1)
 			feedback_message = "[enemy_name] healed for [healed_amount] health points!"
-			PLAYSOUND(loc, 'sound/machines/arcade/heal.ogg').volume(40).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+			PLAYSOUND(loc, 'sound/machines/arcade/heal.ogg').volume(40).vary(TRUE).range(-3 + SOUND_RANGE).play()
 			SStgui.update_uis(src)
 			return
 		if(player_current_mp >= 5) //minimum to steal
@@ -342,7 +342,7 @@
 			player_current_mp -= round(max(0, healed_amount), 1)
 			enemy_mp += healed_amount
 			feedback_message = "[enemy_name] stole [healed_amount] MP from you!"
-			PLAYSOUND(loc, 'sound/machines/arcade/steal.ogg').volume(40).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/machines/arcade/steal.ogg').volume(40).vary(TRUE).play()
 			SStgui.update_uis(src)
 			return
 		//we couldn't heal ourselves or steal MP, we'll just attack instead.

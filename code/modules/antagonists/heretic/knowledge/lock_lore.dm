@@ -90,7 +90,7 @@
 
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)
-	PLAYSOUND(target, 'sound/effects/magic/hereticknock.ogg').volume(100).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(target, 'sound/effects/magic/hereticknock.ogg').volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 	return COMPONENT_USE_HAND
 

@@ -88,26 +88,26 @@
 
 	if(!isliving(user) || issilicon(user))
 		to_chat(user, span_warning("ACCESS DENIED"))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary(TRUE).play()
 		return FALSE
 
 	var/mob/living/player = user
 	var/obj/item/card/id/auth = player.get_idcard(TRUE)
 	if(!auth)
 		to_chat(user, span_warning("ACCESS DENIED: No ID card detected."))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary(TRUE).play()
 		return FALSE
 
 	var/datum/bank_account/account = auth.registered_account
 	if(!account?.account_holder || account.account_holder == "Unassigned")
 		to_chat(user, span_warning("ACCESS DENIED: No account linked to ID."))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary(TRUE).play()
 		return FALSE
 
 	var/amount = params["amount"]
 	if(!amount || !isnum(amount) || amount > warrant.fine || !account.adjust_money(-amount, "Paid fine for [target.name]"))
 		to_chat(user, span_warning("ACCESS DENIED: Invalid amount."))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary(TRUE).play()
 		return FALSE
 
 	account.bank_card_talk("You have paid [amount]cr towards [target.name]'s fine of [warrant.fine]cr.")
@@ -139,7 +139,7 @@
 /// Finishes printing, resets the printer.
 /obj/machinery/computer/warrant/proc/print_finish(obj/item/paper/bounty)
 	printing = FALSE
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_eject.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_eject.ogg').volume(100).vary(TRUE).play()
 	bounty.forceMove(loc)
 
 	return TRUE
@@ -148,7 +148,7 @@
 /obj/machinery/computer/warrant/proc/print_bounty(mob/user, list/params)
 	if(printing)
 		balloon_alert(user, "printer busy")
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(100).vary(TRUE).play()
 		return FALSE
 
 	var/datum/record/crew/target = locate(params["crew_ref"]) in GLOB.manifest.general
@@ -169,7 +169,7 @@
 
 	printing = TRUE
 	balloon_alert(user, "printing")
-	PLAYSOUND(src, 'sound/machines/printer.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/printer.ogg').volume(100).vary(TRUE).play()
 
 	var/obj/item/paper/bounty = new(null)
 	bounty.name = "Bounty for [target.name]"

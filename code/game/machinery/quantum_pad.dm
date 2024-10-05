@@ -132,7 +132,7 @@
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(!target_pad)
 		return
-	PLAYSOUND(get_turf(src), 'sound/items/weapons/flash.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(src), 'sound/items/weapons/flash.ogg').volume(25).vary(TRUE).play()
 	teleporting = TRUE
 
 	addtimer(CALLBACK(src, PROC_REF(teleport_contents), user, target_pad), teleport_speed)
@@ -156,9 +156,9 @@
 	target_pad.sparks()
 
 	flick("qpad-beam", src)
-	PLAYSOUND(get_turf(src), 'sound/items/weapons/emitter2.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(src), 'sound/items/weapons/emitter2.ogg').volume(25).vary(TRUE).play()
 	flick("qpad-beam", target_pad)
-	PLAYSOUND(get_turf(target_pad), 'sound/items/weapons/emitter2.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(target_pad), 'sound/items/weapons/emitter2.ogg').volume(25).vary(TRUE).play()
 	for(var/atom/movable/ROI in get_turf(src))
 		if(QDELETED(ROI))
 			continue //sleeps in CHECK_TICK

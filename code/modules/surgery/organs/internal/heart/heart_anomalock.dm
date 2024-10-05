@@ -59,7 +59,7 @@
 	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
-	PLAYSOUND(target_mob, 'sound/items/weapons/slice.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(target_mob, 'sound/items/weapons/slice.ogg').volume(100).vary(TRUE).play()
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
@@ -126,7 +126,7 @@
 		return ITEM_INTERACT_BLOCKING
 	core = tool
 	balloon_alert(user, "core installed")
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(30).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS

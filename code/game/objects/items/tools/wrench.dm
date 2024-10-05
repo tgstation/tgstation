@@ -35,7 +35,7 @@
 
 /obj/item/wrench/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/items/weapons/genhit.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	return BRUTELOSS
 
 /obj/item/wrench/abductor
@@ -71,7 +71,7 @@
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
 	user.add_overlay(mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
-	PLAYSOUND(loc, 'sound/effects/pray.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/effects/pray.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 	// Let the sound effect finish playing
 	add_fingerprint(user)

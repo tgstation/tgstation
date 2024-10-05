@@ -226,7 +226,7 @@
 
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
-	PLAYSOUND(loc, 'sound/misc/slip.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(loc, 'sound/misc/slip.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	bomb.arm_grenade(user, 0, FALSE)
 	return BRUTELOSS
 

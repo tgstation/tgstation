@@ -69,7 +69,7 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
-	PLAYSOUND(src, get_sfx(SFX_RUSTLE)).volume(50).vary_frequency(TRUE).range(-5 + SOUND_RANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_RUSTLE)).volume(50).vary(TRUE).range(-5 + SOUND_RANGE).play()
 	user.suicide_log()
 	qdel(user)
 
@@ -455,7 +455,7 @@
 		return ..()
 
 	balloon_alert(user, "unzipping...")
-	PLAYSOUND(get_sfx(src), unzip_sfx).volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(get_sfx(src), unzip_sfx).volume(100).vary(FALSE).play()
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, unzip_duration, src, extra_checks = can_unzip))
 		user.balloon_alert(user, "unzip failed!")
@@ -472,7 +472,7 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	balloon_alert(user, "zipping...")
-	PLAYSOUND(get_sfx(src), zip_up_sfx).volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(get_sfx(src), zip_up_sfx).volume(100).vary(FALSE).play()
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, zip_up_duration, src, extra_checks = can_zip))
 		user.balloon_alert(user, "zip failed!")

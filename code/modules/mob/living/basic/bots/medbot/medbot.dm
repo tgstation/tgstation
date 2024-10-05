@@ -253,7 +253,7 @@
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick("medibot_spark", src)
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /mob/living/basic/bot/medbot/examine()

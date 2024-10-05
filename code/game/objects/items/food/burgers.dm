@@ -31,7 +31,7 @@
 	. = ..()
 	if(prob(1))
 		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
-		PLAYSOUND(src, 'sound/effects/smoke.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/smoke.ogg').vary(TRUE).play()
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
@@ -243,7 +243,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			PLAYSOUND(loc, 'sound/misc/chain_rattling.ogg').volume(300).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/misc/chain_rattling.ogg').volume(300).vary(TRUE).play()
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -259,7 +259,7 @@
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
-			PLAYSOUND(loc, 'sound/effects/splat.ogg').volume(200).vary_frequency(TRUE).play()
+			PLAYSOUND(loc, 'sound/effects/splat.ogg').volume(200).vary(TRUE).play()
 
 /obj/item/food/burger/ghost/Destroy()
 	STOP_PROCESSING(SSobj, src)

@@ -44,7 +44,7 @@
 		new /obj/item/grenade/clusterbuster/segment(drop_location(), src)//Creates 'segments' that launches a few more payloads
 
 	new payload_spawner(drop_location(), payload, numspawned)//Launches payload
-	PLAYSOUND(src, prime_sound).volume(75).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(src, prime_sound).volume(75).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	qdel(src)
 
 //////////////////////
@@ -78,7 +78,7 @@
 
 /obj/item/grenade/clusterbuster/segment/detonate(mob/living/lanced_by)
 	new payload_spawner(drop_location(), payload, rand(min_spawned, max_spawned))
-	PLAYSOUND(src, prime_sound).volume(75).vary_frequency(TRUE).range(-3 + SOUND_RANGE).play()
+	PLAYSOUND(src, prime_sound).volume(75).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	qdel(src)
 
 //////////////////////////////////

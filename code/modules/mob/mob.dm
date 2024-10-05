@@ -987,7 +987,7 @@
 		)
 		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-		PLAYSOUND(src, 'sound/effects/magic/magic_block.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/magic/magic_block.ogg').vary(TRUE).play()
 
 	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
 		visible_message(
@@ -996,7 +996,7 @@
 		)
 		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-		PLAYSOUND(src, 'sound/effects/magic/magic_block_holy.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/magic/magic_block_holy.ogg').vary(TRUE).play()
 
 	else if(magic_flags & MAGIC_RESISTANCE_MIND)
 		visible_message(
@@ -1005,7 +1005,7 @@
 		)
 		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
-		PLAYSOUND(src, 'sound/effects/magic/magic_block_mind.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/magic/magic_block_mind.ogg').vary(TRUE).play()
 
 	mob_light(range = 2, power = 2, color = antimagic_color, duration = 5 SECONDS)
 	add_overlay(antimagic_effect)

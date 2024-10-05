@@ -160,7 +160,7 @@
 		organ_list += organ
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
-		PLAYSOUND(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary(TRUE).play()
 		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
@@ -169,7 +169,7 @@
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
 	projectile.preparePixelProjectile(target, mod.wearer)
 	projectile.firer = mod.wearer
-	PLAYSOUND(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary(TRUE).play()
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -369,7 +369,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 		ripped_clothing -= clothing
 	if(zipped)
-		PLAYSOUND(src, 'sound/items/zip/zip.ogg').volume(25).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/zip/zip.ogg').volume(25).vary(TRUE).play()
 		balloon_alert(mod.wearer, "clothing mended")
 
 /obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
@@ -382,7 +382,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 	ripped_clothing = list()
 	if(!deleting)
-		PLAYSOUND(src, 'sound/items/zip/zip.ogg').volume(25).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/zip/zip.ogg').volume(25).vary(TRUE).play()
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor

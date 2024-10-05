@@ -153,7 +153,7 @@
 
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
-		PLAYSOUND(src, 'sound/effects/bang.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 		audible_message(span_danger("You hear a CLANG!"))
 
 	if(special_target && clong == special_target)
@@ -229,7 +229,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_ROD_SUPLEX))
 		return
 
-	PLAYSOUND(src, 'sound/effects/meteorimpact.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 	for(var/mob/living/nearby_mob in urange(8, src))
 		if(nearby_mob.stat != CONSCIOUS)
 			continue

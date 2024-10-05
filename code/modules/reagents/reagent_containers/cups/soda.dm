@@ -39,7 +39,7 @@
 		open_soda()
 		sleep(1 SECONDS)
 	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
-	PLAYSOUND(H, 'sound/items/drink.ogg').volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(H, 'sound/items/drink.ogg').volume(80).vary(TRUE).play()
 	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
 	sleep(0.5 SECONDS)
 	H.say(pick(
@@ -52,7 +52,7 @@
 	if(H.age >= 30)
 		H.Stun(50)
 		sleep(5 SECONDS)
-		PLAYSOUND(H, 'sound/items/drink.ogg').volume(80).vary_frequency(TRUE).play()
+		PLAYSOUND(H, 'sound/items/drink.ogg').volume(80).vary(TRUE).play()
 		H.say(pick(
 			"Another day, another dollar.",
 			"I wonder if I should hold?",
@@ -96,7 +96,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
-	PLAYSOUND(get_sfx(src), SFX_CAN_OPEN).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), SFX_CAN_OPEN).volume(50).vary(TRUE).play()
 	spillable = TRUE
 	throwforce = 0
 
@@ -118,7 +118,7 @@
 			if(iter_mob != target)
 				iter_mob.add_mood_event("observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
-	PLAYSOUND(src, 'sound/effects/can/can_pop.ogg').volume(80).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/can/can_pop.ogg').volume(80).vary(TRUE).play()
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
@@ -151,7 +151,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
-		PLAYSOUND(src, 'sound/effects/can/can_shake.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/can/can_shake.ogg').vary(TRUE).play()
 		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
 		fizziness += SODA_FIZZINESS_SHAKE
 		return

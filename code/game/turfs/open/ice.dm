@@ -48,7 +48,7 @@
 	if(tool.tool_behaviour != TOOL_SHOVEL && tool.tool_behaviour != TOOL_MINING)
 		return NONE
 	balloon_alert(user, "digging...")
-	PLAYSOUND(src, 'sound/effects/shovel_dig.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/shovel_dig.ogg').vary(TRUE).play()
 	if(!do_after(user, 5 SECONDS, src))
 		return NONE
 	balloon_alert(user, "dug hole")

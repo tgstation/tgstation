@@ -149,7 +149,7 @@ Difficulty: Hard
 
 /proc/wendigo_scream(mob/owner)
 	SLEEP_CHECK_DEATH(5, owner)
-	playsound(owner.loc, 'sound/effects/magic/demon_dies.ogg', 600, FALSE, 10)
+	PLAYSOUND(owner.loc, ).volume(600).vary(FALSE).extra_range(10).play()
 	var/pixel_shift = rand(5, 15)
 	animate(owner, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
@@ -164,7 +164,7 @@ Difficulty: Hard
 		return
 	var/list/all_turfs = RANGE_TURFS(range, origin)
 	for(var/sound_range = 0 to range)
-		PLAYSOUND(origin, 'sound/effects/bamf.ogg').volume(600).vary_frequency(TRUE).range(10 + SOUND_RANGE).play()
+		PLAYSOUND(origin, 'sound/effects/bamf.ogg').volume(600).vary(TRUE).range(10 + SOUND_RANGE).play()
 		for(var/turf/stomp_turf in all_turfs)
 			if(get_dist(origin, stomp_turf) > sound_range)
 				continue

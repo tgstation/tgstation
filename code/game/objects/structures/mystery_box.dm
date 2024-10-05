@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
 	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
-	playsound(src, crate_open_sound, 80)
+	PLAYSOUND(src, crate_open_sound).volume(80).play()
 	if(user.mind)
 		LAZYINITLIST(minds_that_opened_us)
 		var/datum/weakref/ref = WEAKREF(user.mind)
@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	QDEL_NULL(presented_item)
 	deltimer(box_close_timer)
 	deltimer(box_expire_timer)
-	playsound(src, crate_close_sound, 100)
+	PLAYSOUND(src, crate_close_sound).volume(100).play()
 	box_close_timer = null
 	box_expire_timer = null
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)

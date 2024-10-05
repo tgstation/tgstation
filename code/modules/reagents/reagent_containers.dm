@@ -153,7 +153,7 @@
 			span_userdanger("You feel drenched!"),
 		)
 
-	PLAYSOUND(target, 'sound/effects/slosh.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(target, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
@@ -252,7 +252,7 @@
 		if(QDELETED(src))
 			return
 
-	PLAYSOUND(target, 'sound/effects/slosh.ogg').volume(25).vary_frequency(TRUE).play()
+	PLAYSOUND(target, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))

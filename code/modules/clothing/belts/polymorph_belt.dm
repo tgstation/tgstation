@@ -49,7 +49,7 @@
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	PLAYSOUND(src, 'sound/machines/crate/crate_open.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/crate/crate_open.ogg').vary(FALSE).play()
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
@@ -79,7 +79,7 @@
 	visible_message(span_notice("[user] scans [target_mob] with [src]."))
 	stored_mob_type = target_mob.type
 	update_transform_action()
-	PLAYSOUND(src, 'sound/machines/ping.ogg').vary_frequency(FALSE).play()
+	PLAYSOUND(src, 'sound/machines/ping.ogg').vary(FALSE).play()
 	return TRUE
 
 /// Make sure we can transform into the scanned target
@@ -145,7 +145,7 @@
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
 	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
-	PLAYSOUND(cast_on, 'sound/effects/magic/demon_consume.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(cast_on, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)
 	. = ..()

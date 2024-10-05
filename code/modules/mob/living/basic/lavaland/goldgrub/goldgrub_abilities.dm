@@ -55,7 +55,7 @@
 
 	if(!is_jaunting(owner))
 		owner.visible_message(span_danger("[owner] buries into the ground, vanishing from sight!"))
-		playsound(get_turf(owner), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
+		PLAYSOUND(get_turf(owner), ).volume(50).vary(TRUE).extra_range(-1).play()
 		holder = new /obj/effect/dummy/phased_mob/grub_burrow(current_loc, owner)
 		return TRUE
 
@@ -68,7 +68,7 @@
 		var/turf/closed/mineral/mineral_turf = current_loc
 		mineral_turf.gets_drilled(owner)
 
-	PLAYSOUND(current_loc, 'sound/effects/break_stone.ogg').vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(current_loc, 'sound/effects/break_stone.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	StartCooldown()
 	return TRUE
 

@@ -142,7 +142,7 @@
 	gross_smoke.attach(below_where)
 	gross_smoke.set_up(2, holder = where, location = below_where, silent = TRUE)
 	gross_smoke.start()
-	PLAYSOUND(below_where, 'sound/effects/smoke.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(below_where, 'sound/effects/smoke.ogg').vary(TRUE).play()
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machine spitting radiation

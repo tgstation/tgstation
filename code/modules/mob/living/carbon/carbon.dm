@@ -99,7 +99,7 @@
 		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
-		PLAYSOUND(src, 'sound/items/weapons/punch1.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/weapons/punch1.ogg').vary(TRUE).play()
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -478,7 +478,7 @@
 	if(knockdown)
 		Knockdown(8 SECONDS)
 
-	PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 
 	var/need_mob_update = FALSE
 	var/turf/location = get_turf(src)

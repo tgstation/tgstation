@@ -33,7 +33,7 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
 
 	points += generated_domain.reward_points
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').volume(30).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/terminal/terminal_success.ogg').volume(30).vary(TRUE).play()
 
 	var/bonus = calculate_rewards()
 

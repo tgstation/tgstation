@@ -249,7 +249,7 @@
 	if (isnull(vored_mob))
 		return
 	vored_mob.forceMove(get_turf(owner))
-	PLAYSOUND(get_turf(owner), 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(owner), 'sound/effects/splat.ogg').volume(50).vary(TRUE).play()
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
@@ -507,7 +507,7 @@
 ///This proc dumps the mob and handles associated audiovisual feedback
 /obj/structure/gel_cocoon/proc/dump_inhabitant(destroy_after = TRUE)
 	inhabitant.forceMove(get_turf(src))
-	PLAYSOUND(get_turf(inhabitant), 'sound/effects/splat.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(inhabitant), 'sound/effects/splat.ogg').volume(50).vary(TRUE).play()
 	inhabitant.Paralyze(10)
 	inhabitant.visible_message(span_warning("[inhabitant] falls out of [src]!"), span_notice("You fall out of [src]."))
 	if(destroy_after)

@@ -80,11 +80,11 @@
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return
-	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/open_machine(drop = TRUE, density_to_set = FALSE)
-	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/curtain.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/update_icon_state()
@@ -141,12 +141,12 @@
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
 		return
-	PLAYSOUND(src, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).play()
 	flash()
 	if(!do_after(occupant, 3 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
 		return
-	PLAYSOUND(src, 'sound/items/polaroid/polaroid2.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/polaroid/polaroid2.ogg').volume(75).vary(TRUE).play()
 	flash()
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE

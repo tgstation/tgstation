@@ -25,7 +25,7 @@
 
 /datum/status_effect/song/antimagic/on_apply()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	PLAYSOUND(owner, 'sound/items/weapons/fwoosh.ogg').volume(75).vary_frequency(FALSE).play()
+	PLAYSOUND(owner, 'sound/items/weapons/fwoosh.ogg').volume(75).vary(FALSE).play()
 	return ..()
 
 /datum/status_effect/song/antimagic/on_remove()
@@ -45,7 +45,7 @@
 
 /datum/status_effect/song/light/on_apply()
 	mob_light_obj = owner.mob_light(3, 1.5, color = LIGHT_COLOR_DIM_YELLOW)
-	PLAYSOUND(owner, 'sound/items/weapons/fwoosh.ogg').volume(75).vary_frequency(FALSE).play()
+	PLAYSOUND(owner, 'sound/items/weapons/fwoosh.ogg').volume(75).vary(FALSE).play()
 	return TRUE
 
 /datum/status_effect/song/light/on_remove()

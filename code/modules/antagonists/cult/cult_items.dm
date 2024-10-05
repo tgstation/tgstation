@@ -717,7 +717,7 @@ Striking a noncultist, however, will tear their flesh."}
 			SSshuttle.block_recall(surplus)
 		totalcurses++
 		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
-		PLAYSOUND(user.loc, 'sound/effects/glass/glassbr1.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(user.loc, 'sound/effects/glass/glassbr1.ogg').vary(TRUE).play()
 
 		if(!remaining_curses)
 			remaining_curses = strings(CULT_SHUTTLE_CURSE, "curse_announce")
@@ -859,7 +859,7 @@ Striking a noncultist, however, will tear their flesh."}
 	var/atom/movable/pulled = handle_teleport_grab(destination, user_cultist)
 
 	if(!destination || !do_teleport(user_cultist, destination, channel = TELEPORT_CHANNEL_CULT))
-		PLAYSOUND(src, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary(TRUE).play()
 		balloon_alert(user, "teleport failed!")
 		return
 
@@ -873,9 +873,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	PLAYSOUND(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-	PLAYSOUND(destination, 'sound/effects/phasein.ogg').vlume(25).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-	PLAYSOUND(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary_frequency(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(destination, 'sound/effects/phasein.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	PLAYSOUND(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -1142,7 +1142,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
-	PLAYSOUND(src, 'sound/effects/magic/lightning_chargeup.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/magic/lightning_chargeup.ogg').volume(100).vary(TRUE).play()
 	for(var/i in 1 to 12)
 		if(!charging)
 			break
@@ -1171,13 +1171,13 @@ Striking a noncultist, however, will tear their flesh."}
 		second = !second //Handles beam firing in pairs
 		if(!firing)
 			break
-		PLAYSOUND(src, 'sound/effects/magic/exit_blood.ogg').volume(75).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/magic/exit_blood.ogg').volume(75).vary(TRUE).play()
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
 		for(var/turf/T in get_line(targets_from,temp_target))
 			if (locate(/obj/effect/blessing, T))
 				temp_target = T
-				PLAYSOUND(T, 'sound/effects/parry.ogg').vary_frequency(TRUE).play()
+				PLAYSOUND(T, 'sound/effects/parry.ogg').vary(TRUE).play()
 				new /obj/effect/temp_visual/at_shield(T, T)
 				break
 			T.narsie_act(TRUE, TRUE)
@@ -1199,7 +1199,7 @@ Striking a noncultist, however, will tear their flesh."}
 					if(L.density)
 						L.Paralyze(20)
 						L.adjustBruteLoss(45)
-						PLAYSOUND(L, 'sound/effects/hallucinations/wail.ogg').vary_frequency(TRUE).play()
+						PLAYSOUND(L, 'sound/effects/hallucinations/wail.ogg').vary(TRUE).play()
 						L.emote("scream")
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 

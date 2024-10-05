@@ -253,12 +253,12 @@
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			PLAYSOUND(src.loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary_frequency(TRUE).play()
+			PLAYSOUND(src.loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary_frequency(TRUE).play()
+			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
-	PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_sfx(src), SFX_SHATTER).volume(50).vary(TRUE).play()
 	return ..()
 
 /obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, params)
@@ -425,7 +425,7 @@
 				dispensed_amount++
 				amount--
 			if(dispensed_amount && vend_sound)
-				playsound(src, vend_sound, 50, TRUE, extrarange = -3)
+				PLAYSOUND(src, vend_sound).volume(50).vary(TRUE).extra_range(-3).play()
 			if (visible_contents)
 				update_appearance()
 			return TRUE

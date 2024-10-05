@@ -881,7 +881,7 @@
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	PLAYSOUND(drinker, 'sound/effects/explosion/explosion_distant.ogg').volume(100).vary_frequency(FALSE).play()
+	PLAYSOUND(drinker, 'sound/effects/explosion/explosion_distant.ogg').volume(100).vary(FALSE).play()
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -1118,7 +1118,7 @@
 
 		var/turf/gravity_well_turf = get_turf(drinker)
 		goonchem_vortex(gravity_well_turf, 0, suck_range)
-		PLAYSOUND(get_turf(drinker), 'sound/effects/supermatter.ogg').volume(150).vary_frequency(TRUE).play()
+		PLAYSOUND(get_turf(drinker), 'sound/effects/supermatter.ogg').volume(150).vary(TRUE).play()
 		drinker.add_filter("singulo_rays", 1, ray_filter)
 		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
 		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/datum, remove_filter), "singulo_rays"), 1.5 SECONDS)
@@ -1259,7 +1259,7 @@
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(2.5, seconds_per_tick))
-		PLAYSOUND(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg').volume(100).vary(TRUE).play()
 
 /datum/reagent/consumable/ethanol/hiveminderaser
 	name = "Hivemind Eraser"

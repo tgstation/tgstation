@@ -230,7 +230,7 @@
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
-		playsound(src, list(insert_sound,remove_sound), sound_vol)
+		PLAYSOUND(src, list(insert_sound).volume(remove_sound).play(), sound_vol)
 	else if(holding)//we remove a tank
 		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
 		to_chat(user, span_notice("You remove [holding] from [src]."))
@@ -238,14 +238,14 @@
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
-		playsound(src, remove_sound, sound_vol)
+		PLAYSOUND(src, remove_sound).volume(sound_vol).play()
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
 	else if(new_tank)//we insert the tank
 		investigate_log("had [new_tank] inserted into it by [key_name(user)].", INVESTIGATE_ATMOS)
 		to_chat(user, span_notice("You insert [new_tank] into [src]."))
 		holding = new_tank
-		playsound(src, insert_sound, sound_vol)
+		PLAYSOUND(src, insert_sound).volume(sound_vol).play()
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)

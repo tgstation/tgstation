@@ -239,7 +239,7 @@
 	set_welding(!welding)
 	if(welding)
 		if(get_fuel() >= 1)
-			PLAYSOUND(get_sfx(loc), activation_sound).volume(50).vary_frequency(TRUE).play()
+			PLAYSOUND(get_sfx(loc), activation_sound).volume(50).vary(TRUE).play()
 			force = 15
 			damtype = BURN
 			hitsound = 'sound/items/tools/welder.ogg'
@@ -249,7 +249,7 @@
 			balloon_alert(user, "no fuel!")
 			switched_off(user)
 	else
-		PLAYSOUND(get_sfx(loc), deactivation_sound).volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(loc), deactivation_sound).volume(50).vary(TRUE).play()
 		switched_off(user)
 
 /// Switches the welder off

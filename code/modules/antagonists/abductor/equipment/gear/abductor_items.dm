@@ -393,7 +393,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toggle(user)
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
-	PLAYSOUND(src, on_stun_sound).vary_frequency(TRUE).range(-1 + SOUND_RANGE).play()
+	PLAYSOUND(src, on_stun_sound).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
@@ -422,7 +422,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			PLAYSOUND(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary_frequency(TRUE).range(-2 + SOUND_RANGE).play()
+			PLAYSOUND(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
@@ -534,7 +534,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			if(thing.density || ismachinery(thing) || isstructure(thing))
 				viable = FALSE
 	if(viable)
-		PLAYSOUND(src, 'sound/effects/phasein.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/phasein.ogg').vary(TRUE).play()
 		var/new_machine = new spawned_machine(loc)
 		visible_message(span_notice("[new_machine] warps on top of the beacon!"))
 		qdel(src)
@@ -687,14 +687,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if("Welding Tool")
 			tool_behaviour = TOOL_WELDER
 
-	PLAYSOUND(loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers) //ADD SFX FOR USING THE TOOL
 	if(!user)
 		return
 
 	set_toolset(user)
-	PLAYSOUND(loc, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
 	if(!istype(user))

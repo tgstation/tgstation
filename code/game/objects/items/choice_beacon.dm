@@ -30,7 +30,7 @@
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE
 
-	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(TRUE).play()
 	return FALSE
 
 /// Opens a menu and allows the mob to pick an option from the list
@@ -176,7 +176,7 @@
 	if(user.mind?.holy_role)
 		return ..()
 
-	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(TRUE).play()
 	return FALSE
 
 // Overrides generate options so that we can show a neat radial instead
@@ -210,7 +210,7 @@
 	consume_use(chosen_type, user)
 
 /obj/item/choice_beacon/holy/spawn_option(obj/choice_path, mob/living/user)
-	PLAYSOUND(src, 'sound/effects/pray_chaplain.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/pray_chaplain.ogg').volume(40).vary(TRUE).play()
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice_path]")
 	GLOB.holy_armor_type = choice_path
 	return ..()

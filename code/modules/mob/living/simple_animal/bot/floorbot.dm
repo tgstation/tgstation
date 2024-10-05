@@ -316,7 +316,7 @@
 	if(check_bot_working(target_turf))
 		add_to_ignore(target_turf)
 		target = null
-		PLAYSOUND(src, 'sound/mobs/non-humanoids/floorbot/whistlereset.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/mobs/non-humanoids/floorbot/whistlereset.ogg').vary(TRUE).play()
 		return
 	if(isspaceturf(target_turf))
 		//Must be a hull breach or in line mode to continue.

@@ -50,7 +50,7 @@
 	if (!replace_turf(affected_turf))
 		return
 	if (!skip_sound)
-		PLAYSOUND(get_sfx(affected_turf), sound).volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(affected_turf), sound).volume(100).vary(TRUE).play()
 	if(show_effect)
 		new /obj/effect/temp_visual/transmute_tile_flash(affected_turf)
 	for (var/obj/object in affected_turf)

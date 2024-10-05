@@ -82,7 +82,7 @@
 	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
-	PLAYSOUND(src, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 	for(var/obj/item/stack/ore/ore in src)
 		ore.forceMove(loc)
 	if(!gibbed)

@@ -108,7 +108,7 @@
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
 	balloon_alert(user, "system jailbroken...")
-	PLAYSOUND(src, 'sound/effects/sparks/sparks1.ogg').volume(35).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/sparks/sparks1.ogg').volume(35).vary(TRUE).play()
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)

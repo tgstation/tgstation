@@ -80,7 +80,7 @@
 	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
 		return
 	if(istype(chem,/datum/reagent/consumable/salt))
-		PLAYSOUND(get_sfx(affected), SFX_SEAR).volume(30).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(affected), SFX_SEAR).volume(30).vary(TRUE).play()
 		affected.adjustFireLoss(2 * REM * seconds_per_tick)
 		affected.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_CHECK

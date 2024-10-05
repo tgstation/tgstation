@@ -180,13 +180,13 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	balloon_alert_to_viewers("*click*")
-	playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
+	PLAYSOUND(src, dry_fire_sound).volume(dry_fire_sound_volume).vary(TRUE).play()
 
 /obj/item/gun/proc/fire_sounds()
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+		PLAYSOUND(src, fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
@@ -267,7 +267,7 @@
 			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
 			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
 		)
-		PLAYSOUND(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).vary_frequency(FALSE).play()
+		PLAYSOUND(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).vary(FALSE).play()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

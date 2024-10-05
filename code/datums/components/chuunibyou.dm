@@ -71,7 +71,7 @@
 /datum/component/chuunibyou/proc/on_spell_projectile(mob/living/source, datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
 	SIGNAL_HANDLER
 
-	PLAYSOUND(to_fire, 'sound/effects/magic/staff_change.ogg').volume(75).vary_frequency(TRUE).play()
+	PLAYSOUND(to_fire, 'sound/effects/magic/staff_change.ogg').volume(75).vary(TRUE).play()
 	to_fire.color = "#f825f8"
 	to_fire.name = "chuuni-[to_fire.name]"
 	to_fire.set_light(2, 2, LIGHT_COLOR_PINK, l_on = TRUE)

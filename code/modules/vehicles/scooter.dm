@@ -95,7 +95,7 @@
 
 	next_crash = world.time + 10
 	rider.adjustStaminaLoss(instability*6)
-	PLAYSOUND(src, 'sound/effects/bang.ogg').volume(40).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/effects/bang.ogg').volume(40).vary(TRUE).play()
 	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
@@ -136,7 +136,7 @@
 	skater.adjustStaminaLoss(instability*0.3)
 	if(skater.getStaminaLoss() >= 100)
 		obj_flags = CAN_BE_HIT
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
@@ -145,7 +145,7 @@
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
-	PLAYSOUND(src, 'sound/vehicles/skateboard_roll.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/vehicles/skateboard_roll.ogg').vary(TRUE).play()
 	var/turf/location = get_turf(src)
 
 	if(location)

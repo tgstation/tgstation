@@ -159,14 +159,14 @@
 		return
 	if(occupant.flags_1 & HOLOGRAM_1)
 		audible_message(span_hear("You hear a very short metallic grinding sound."))
-		PLAYSOUND(loc, 'sound/machines/hiss.ogg').volume(20).vary_frequency(TRUE).play()
+		PLAYSOUND(loc, 'sound/machines/hiss.ogg').volume(20).vary(TRUE).play()
 		qdel(occupant)
 		set_occupant(null)
 		return
 
 	use_energy(active_power_usage)
 	audible_message(span_hear("You hear a loud squelchy grinding sound."))
-	PLAYSOUND(loc, 'sound/machines/juicer.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(loc, 'sound/machines/juicer.ogg').vary(TRUE).play()
 	operating = TRUE
 	update_appearance()
 
@@ -230,7 +230,7 @@
 	addtimer(CALLBACK(src, PROC_REF(make_meat), skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
-	PLAYSOUND(src.loc, 'sound/effects/splat.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src.loc, 'sound/effects/splat.ogg').vary(TRUE).play()
 	operating = FALSE
 	if (!dirty && prob(50))
 		dirty = TRUE

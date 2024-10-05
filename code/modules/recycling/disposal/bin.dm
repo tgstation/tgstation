@@ -277,7 +277,7 @@
 	flushAnimation()
 	sleep(1 SECONDS)
 	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
-		PLAYSOUND(src, 'sound/machines/disposalflush.ogg').vlume(50).vary_frequency(FALSE).range(SOUND_RANGE + FALSE).play()
+		PLAYSOUND(src, 'sound/machines/disposalflush.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
 		last_sound = world.time
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
@@ -305,7 +305,7 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
-	PLAYSOUND(src, 'sound/machines/hiss.ogg').vlume(50).vary_frequency(FALSE).range(SOUND_RANGE + FALSE).play()
+	PLAYSOUND(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
 
 	pipe_eject(H)
 
@@ -389,7 +389,7 @@
 		new_tagger.moveToNullspace()
 		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
 		balloon_alert(user, "tagger returned")
-		PLAYSOUND(src, 'sound/machines/click.ogg').vary_frequency(TRUE).play()
+		PLAYSOUND(src, 'sound/machines/click.ogg').vary(TRUE).play()
 		mounted_tagger = new_tagger
 		update_appearance()
 		return
@@ -407,7 +407,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
 	balloon_alert(user, "tagger pulled")
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(60).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 	mounted_tagger = null
 	update_appearance(UPDATE_OVERLAYS)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -685,6 +685,6 @@
 
 	update_appearance()
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	PLAYSOUND(broom.loc, ).volume(30).vary(TRUE).extra_range(-1).play()
 
 #undef SEND_PRESSURE

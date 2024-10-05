@@ -54,7 +54,7 @@
 		gear_fugitive_leader(leader, landing_turf, backstory)
 
 	//after spawning
-	PLAYSOUND(src, 'sound/items/weapons/emitter.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/emitter.ogg').vary(TRUE).play()
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	var/hunter_backstory = pick(
 		HUNTER_PACK_COPS,

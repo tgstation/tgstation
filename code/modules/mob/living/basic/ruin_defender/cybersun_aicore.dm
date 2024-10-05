@@ -119,7 +119,7 @@
 	. = ..()
 	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
 	new/obj/effect/temp_visual/lightning_strike(get_turf(target))
-	playsound(owner, 'sound/effects/sparks/sparks1.ogg', vol = 120, vary = TRUE)
+	PLAYSOUND(owner, ).volume(120).vary(TRUE).play()
 
 /obj/effect/temp_visual/lightning_strike
 	name = "lightning strike"
@@ -142,7 +142,7 @@
 
 /obj/effect/temp_visual/lightning_strike/proc/zap()
 	new/obj/effect/temp_visual/lightning_strike_zap(loc)
-	playsound(src, 'sound/effects/magic/lightningbolt.ogg', vol = 70, vary = TRUE)
+	PLAYSOUND(src, ).volume(70).vary(TRUE).play()
 	if (!isturf(loc))
 		return
 	for(var/mob/living/victim in loc)
@@ -188,7 +188,7 @@
 	if(lockon_zone == my_turf)
 		return
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
-	playsound(lockon_zone, 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
+	PLAYSOUND(lockon_zone, ).volume(60).vary(TRUE).play()
 	StartCooldown(cooldown_time)
 	return ..()
 

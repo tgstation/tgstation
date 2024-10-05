@@ -495,11 +495,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		PLAYSOUND(get_sfx(src), knock_sound).volume(50).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(src), knock_sound).volume(50).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		PLAYSOUND(get_sfx(src), bash_sound).volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_sfx(src), bash_sound).volume(100).vary(TRUE).play()
 
 /obj/machinery/door/firedoor/wrench_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
@@ -514,7 +514,7 @@
 		span_notice("You start unfastening [src]'s floor bolts..."))
 	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
 		return ITEM_INTERACT_SUCCESS
-	PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 	user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
 		span_notice("You undo [src]'s floor bolts."))
 	deconstruct(TRUE)
@@ -830,7 +830,7 @@
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
-				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 				user.visible_message(span_notice("[user] removes [src]'s circuit board."), \
 					span_notice("You remove the circuit board from [src]."))
 				new /obj/item/electronics/firelock(drop_location())
@@ -850,7 +850,7 @@
 					return
 				user.visible_message(span_notice("[user] finishes the firelock."), \
 					span_notice("You finish the firelock."))
-				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
 				else
@@ -867,13 +867,13 @@
 					return
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))
-				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 				if(do_after(user, DEFAULT_STEP_TIME, target = src))
 					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
 						return
 					user.visible_message(span_notice("[user] reinforces [src]."), \
 						span_notice("You reinforce [src]."))
-					PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+					PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 					plasteel_sheet.use(2)
 					reinforced = 1
 				return
@@ -881,7 +881,7 @@
 			if(istype(attacking_object, /obj/item/electronics/firelock))
 				user.visible_message(span_notice("[user] starts adding [attacking_object] to [src]..."), \
 					span_notice("You begin adding a circuit board to [src]..."))
-				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 				if(!do_after(user, DEFAULT_STEP_TIME, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
@@ -889,7 +889,7 @@
 				qdel(attacking_object)
 				user.visible_message(span_notice("[user] adds a circuit to [src]."), \
 					span_notice("You insert and secure [attacking_object]."))
-				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary_frequency(TRUE).play()
+				PLAYSOUND(get_turf(src), 'sound/items/deconstruct.ogg').volume(50).vary(TRUE).play()
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				return
 			if(attacking_object.tool_behaviour == TOOL_WELDER)

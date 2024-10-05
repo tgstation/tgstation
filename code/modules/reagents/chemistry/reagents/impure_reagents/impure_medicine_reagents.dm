@@ -69,7 +69,7 @@
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	to_chat(affected_mob, span_hierophant("You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!"))
-	playsound(affected_mob.loc, 'sound/effects/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
+	PLAYSOUND(affected_mob.loc, ).volume(80).vary(TRUE).extra_range(-1).play() //Very obvious tell so people can be ready
 
 //Sends hands after you for your hubris
 /*

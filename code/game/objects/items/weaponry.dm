@@ -332,7 +332,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_held_items()
 
 	name = new_name
-	PLAYSOUND(user, 'sound/items/tools/screwdriver2.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(user, 'sound/items/tools/screwdriver2.ogg').vary(TRUE).play()
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -675,7 +675,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -892,7 +892,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_warning("You're already ready to do a home run!"))
 		return ..()
 	to_chat(user, span_warning("You begin gathering strength..."))
-	PLAYSOUND(get_turf(src), 'sound/effects/magic/lightning_chargeup.ogg').volume(65).vary_frequency(TRUE).play()
+	PLAYSOUND(get_turf(src), 'sound/effects/magic/lightning_chargeup.ogg').volume(65).vary(TRUE).play()
 	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
 		homerun_ready = TRUE
@@ -910,7 +910,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(!QDELETED(target))
 			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
-		PLAYSOUND(get_turf(src), 'sound/items/weapons/homerun.ogg').volume(100).vary_frequency(TRUE).play()
+		PLAYSOUND(get_turf(src), 'sound/items/weapons/homerun.ogg').volume(100).vary(TRUE).play()
 		homerun_ready = FALSE
 		return
 	else if(!QDELETED(target) && !target.anchored)
@@ -956,14 +956,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	animate(target, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 	user.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3)
 	animate(user, 0.5 SECONDS, color = null, flags = ANIMATION_PARALLEL)
-	PLAYSOUND(src, 'sound/items/baseballhit.ogg').volume(100).vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/baseballhit.ogg').volume(100).vary(TRUE).play()
 	user.do_attack_animation(target, used_item = src)
 	ADD_TRAIT(user, TRAIT_IMMOBILIZED, type)
 	addtimer(CALLBACK(src, PROC_REF(launch_back), target, user, return_to_sender, datum_throw_speed), 0.5 SECONDS)
 	return TRUE
 
 /obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
-	PLAYSOUND(target, 'sound/effects/magic/tail_swing.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(target, 'sound/effects/magic/tail_swing.ogg').vary(TRUE).play()
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
 	target.mouse_opacity = initial(target.mouse_opacity)
 	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
@@ -1210,8 +1210,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_target = WEAKREF(target)
 	previous_x = x_slashed
 	previous_y = y_slashed
-	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(100).vary_frequency(TRUE).play()
-	PLAYSOUND(src, 'sound/items/weapons/zapbang.ogg').vary_frequency(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/bladeslice.ogg').volume(100).vary(TRUE).play()
+	PLAYSOUND(src, 'sound/items/weapons/zapbang.ogg').vary(TRUE).play()
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)

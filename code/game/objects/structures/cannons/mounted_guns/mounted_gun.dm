@@ -82,9 +82,9 @@
 		if(loaded_gun)
 
 			if (times_fired < shots_in_gun)
-				PLAYSOUND(src, fire_sound).vary_frequency(FALSE).range(5 + SOUND_RANGE).play()
+				PLAYSOUND(src, fire_sound).vary(FALSE).range(5 + SOUND_RANGE).play()
 			else
-				PLAYSOUND(src, last_fire_sound).vary_frequency(TRUE).range(5 + SOUND_RANGE).play()
+				PLAYSOUND(src, last_fire_sound).vary(TRUE).range(5 + SOUND_RANGE).play()
 			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
 			fired_projectile.firer = src
 			fired_projectile.fired_from = src
@@ -135,7 +135,7 @@
 				shake_camera(shaken_mob, 3, 1)
 			icon_state = icon_state_fire
 		if(loaded_gun)
-			PLAYSOUND(src, fire_sound).vary_frequency(TRUE).range(5 + SOUND_RANGE).play()
+			PLAYSOUND(src, fire_sound).vary(TRUE).range(5 + SOUND_RANGE).play()
 
 			var/list_of_projectiles = list(
 			/obj/projectile/bullet/junk = 40,
