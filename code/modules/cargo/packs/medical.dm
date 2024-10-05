@@ -194,17 +194,8 @@
 
 /datum/supply_pack/medical/lost_crew
 	name = "Recovered NT Employee corpse"
-	desc = "We don't have the manpower to bring them back, could we send them to you? Please revive and employ them. \
+	desc = "We don't have the accomodations to bring them back, could we send them to you? Please revive and employ them. \
 	The price is a downpayment, we will reimburse the medical budget once our employee has been alive again for a bit."
-	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/reagent_containers/blood = 2,
-					/obj/item/reagent_containers/blood/a_plus,
-					/obj/item/reagent_containers/blood/a_minus,
-					/obj/item/reagent_containers/blood/b_plus,
-					/obj/item/reagent_containers/blood/b_minus,
-					/obj/item/reagent_containers/blood/o_plus,
-					/obj/item/reagent_containers/blood/o_minus,
-					/obj/item/reagent_containers/blood/lizard,
-					/obj/item/reagent_containers/blood/ethereal,
-				)
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
 	crate_name = "body freezer"

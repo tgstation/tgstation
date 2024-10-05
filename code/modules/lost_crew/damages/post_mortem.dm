@@ -1,6 +1,9 @@
+/// Damn space vultures man! At least they dont go for the brain
 /datum/corpse_damage/post_mortem/organ_loss
 	damage_type = CORPSE_DAMAGE_ORGAN_LOSS
+	/// Minimum organs we can lose
 	var/min_organs = 2
+	/// Maximum organs we can lose
 	var/max_organs = 8
 
 /datum/corpse_damage/post_mortem/organ_loss/apply_to_body(mob/living/carbon/human/body, severity, list/saved_movables)
@@ -15,9 +18,12 @@
 		else
 			qdel(organ)
 
+/// Damn space vultures man! At least they dont go for the chest or head, or they do but we don't get to see those bodies :O
 /datum/corpse_damage/post_mortem/limb_loss
 	damage_type = CORPSE_DAMAGE_LIMB_LOSS
+	/// Min limbs we can lose
 	var/min_limbs = 1
+	/// Max limbs we can lose
 	var/max_limbs = 4
 
 /datum/corpse_damage/post_mortem/limb_loss/apply_to_body(mob/living/carbon/human/body, severity, list/saved_movables)

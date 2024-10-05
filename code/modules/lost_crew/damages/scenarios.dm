@@ -13,9 +13,9 @@
 		)
 
 	post_mortem_effects = list(
-		/datum/corpse_damage/post_mortem/limb_loss = 1,
-		/datum/corpse_damage/post_mortem/organ_loss = 1,
-		null = 2,
+		/datum/corpse_damage/post_mortem/limb_loss = 2,
+		/datum/corpse_damage/post_mortem/organ_loss = 2,
+		null = 1,
 		)
 
 	decays = list(
@@ -25,8 +25,12 @@
 		)
 
 /datum/corpse_damage_class/station/spaced
-	weight = 3
+	weight = 2
 	possible_causes_of_death = list(/datum/corpse_damage/cause_of_death/spaced = 1)
 	decays = list(/datum/corpse_damage/post_mortem/organ_decay/light = 1)
 
+/datum/corpse_damage_class/station/morgue/human
+	possible_character_types = list(/datum/corpse_character/human = 1)
 
+/datum/corpse_damage_class/station/morgue/non_human
+	possible_character_types = list(/datum/corpse_character/roundstart/all_roundstart_no_human = 1)

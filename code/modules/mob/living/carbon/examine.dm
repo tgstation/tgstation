@@ -310,6 +310,8 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
+	if(HAS_TRAIT(get_organ_by_type(/obj/item/organ/internal/brain), TRAIT_GHOSTROLE_ON_REVIVE))
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; but their soul might yet come back...")
 	if(get_organ_by_type(/obj/item/organ/internal/brain) && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else

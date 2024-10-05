@@ -400,17 +400,33 @@
 
 	icon_state = "bodybag_lost"
 
-	/// How many humans can we ever stasiserize? Really only made for one but go wild
-	var/stasis_uses = 1
+	foldedbag_path = /obj/item/bodybag/lost_crew
 
-/obj/structure/closet/body_bag/lost_crew/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
+/// Filled with one body. If folded, gives the parent type so we dont make infinite corpses
+/obj/structure/closet/body_bag/lost_crew/with_body
+	/// Whether or not we spawn a paper with everything thats happened to the body
+	var/debug = FALSE
 
-	if(iscarbon(arrived) && stasis_uses > 0)
-		ADD_TRAIT(body, TRAIT_STASIS, type)
-		stasis_uses--
+/obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
+	var/list/recovered_items = list()
+	var/list/lost_crew_data = list()
+	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, body_data = lost_crew_data)
+	corpse.forceMove(src)
 
-/obj/structure/closet/body_bag/lost_crew/Exited(atom/movable/gone, direction)
-	. = ..()
+	//remember to make special box
+	for(var/obj/object in recovered_items)
+		object.forceMove(src)
 
-	REMOVE_TRAIT(gone, TRAIT_STASIS, type)
+	process_data(lost_crew_data)
+
+/obj/structure/closet/body_bag/lost_crew/with_body/proc/process_data(list/crew_data)
+	if(!debug)
+		return
+
+	var/obj/item/paper/paper = new(src)
+	paper.add_raw_text(english_list(crew_data), advanced_html = TRUE)
+
+/// Subtype for debugging damage types
+/obj/structure/closet/body_bag/lost_crew/with_body/debug
+	debug = TRUE
+
