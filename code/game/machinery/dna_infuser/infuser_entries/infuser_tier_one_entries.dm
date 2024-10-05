@@ -141,7 +141,7 @@
 	infuse_mob_name = "ink-producing sealife"
 	desc = "Some marine mollusks like cuttlefish, squids and octopus release ink when threatened as a smokescreen for their escape. \
 		This kind of infusion enhances the salivary glands. producing excessive quantities of ink which can later be spat to blind foes."
-	theshold_desc = DNA_INFUSION_NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"spit ink to blind foes",
 	)
@@ -155,7 +155,7 @@
 	infuse_mob_name = "Tetraodontiformes"
 	desc = "Fish of the Tetraodontiformes (pufferfish etc.) order are know for the highly poisonous tetrodotoxin (TTX) in their bodies. \
 		Extracting their DNA can provide a way to utilize it for healing instead. It also metabolizes alcohol better"
-	theshold_desc = DNA_INFUSION_NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"TTX healing",
 		"drink like a fish",
@@ -169,7 +169,7 @@
 	name = "Amphibious"
 	infuse_mob_name = "Semi-aquatic critters"
 	desc = "Some animals breathe air, some breath water, a few can breath both, even if none (at least on Earth) can breathe in space."
-	theshold_desc = DNA_INFUSION_NO_THRESHOLD
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"no need to breathe while wet",
 		"can beathe water vapor",
