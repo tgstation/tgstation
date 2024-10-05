@@ -80,3 +80,44 @@
   - bugfix: fixed wabbajack statue not activating
   timothymtorres:
   - code_imp: Automatically link maps multi-z up/down traits
+2024-10-05:
+  00-Steven:
+  - bugfix: Prosopagnosia actually accounts for hover screentips, showing humans as
+      Unknown in those too.
+  Archemagus:
+  - qol: Airlock_pump now dock with shuttles in more pleasant way
+  Bisar:
+  - rscadd: Clothing can now hide what you're wearing on your belt.
+  EnterTheJake:
+  - bugfix: Heretic Carving Knife runes are no longer triggered by hovering projectiles.
+  GremlinSeeker:
+  - rscadd: Birdshot Cargo now has a lobby and is slightly more open overall.
+  - rscadd: Re-added the DnD room  to Birdshot
+  - rscadd: re-added the skill station to the library.
+  Jewelry-x:
+  - bugfix: Security Officers (Engineering) can now open crucial doors in Engineering
+      on Birdshot
+  - bugfix: Corrected access inconsistencies for maintenance doors in the Engineering
+      department on Birdshot
+  - bugfix: Resolved naming inconsistency for the front doors of Engineering on Birdshot
+  Melbert:
+  - qol: Runes, crayons, and similar decals no longer have shadows
+  - bugfix: Blood and similar "mess" decals no longer have shadows (again)
+  SmArtKar:
+  - bugfix: Fixed luminiscent major extract activation button not disappearing/updating
+      when it should've
+  Timberpoes:
+  - bugfix: Fixes a bug where the game would assign multiple players to single-slot
+      command roles.
+  Xackii:
+  - rscadd: Showers now heals stamina when you washing. But not for you catgitls.
+  grungussuss:
+  - bugfix: fixed drones being able to store multiple of the same type of tools in
+      their toolbox
+  imedial:
+  - qol: puts silicon laws in the status panel
+  timothymtorres:
+  - bugfix: Fix air alarms to work correctly while connected to a gas sensor
+  - bugfix: Fix paired air alarms and sensors to be able to relink to other devices
+      if turned off, reset, or destroyed.
+  - bugfix: Fix air alarm disabled setting to silence warnings

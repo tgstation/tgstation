@@ -1,4 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - bugfix: "Heretic Carving Knife runes are no longer triggered by hovering projectiles."
