@@ -154,12 +154,15 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	var/datum/mutation/human/actual_mutation = get_mutation(mutation_type)
 
+	if(!actual_mutation)
+		return FALSE
+
 	// Check that it exists first before trying to remove it with mutadone
-	if((actual_mutation && (actual_mutation.mutadone_proof && mutadone)))
+	if(actual_mutation.mutadone_proof && mutadone)
 		return FALSE
 
 	SEND_SIGNAL(holder, COMSIG_CARBON_LOSE_MUTATION, mutation_type)
-	return force_lose(actual_mutation || mutation_type)
+	return force_lose(actual_mutation)
 
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
