@@ -190,10 +190,9 @@
 			// beacon must be on the traveling escape shuttle (not a pod)
 			if(istype(escape_shuttle_area, /area/shuttle/escape) && (SSshuttle.emergency.mode == SHUTTLE_ESCAPE) && SSshuttle.emergency.is_in_shuttle_bounds(src))
 				var/obj/docking_port/mobile/port = SSshuttle.emergency
-				no_escape_event = new /datum/shuttle_event/simple_spawner/black_hole/no_escape(port)
-				no_escape_event.beacon = src
-				port.event_list.Add(no_escape_event)
-				no_escape_event.start_up_event(SSshuttle.emergency_escape_time * port.engine_coeff)
+				var/datum/shuttle_event/simple_spawner/black_hole/no_escape/event = port.add_shuttle_event(/datum/shuttle_event/simple_spawner/black_hole/no_escape)
+				event.beacon = src
+
 	else
 		Deactivate()
 		say("Insufficient charge detected - powering down")
