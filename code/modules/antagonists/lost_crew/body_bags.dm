@@ -18,7 +18,7 @@
 	var/debug = FALSE
 
 /obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
-	if(QDELETED)
+	if(QDELETED(src))
 		return
 
 	var/list/recovered_items = list()
