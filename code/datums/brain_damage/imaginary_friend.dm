@@ -1,3 +1,8 @@
+
+#define IMAGINARY_FRIEND_RANGE 9
+#define IMAGINARY_FRIEND_SPEECH_RANGE IMAGINARY_FRIEND_RANGE
+#define IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE 999
+
 /datum/brain_trauma/special/imaginary_friend
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
@@ -87,6 +92,9 @@
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
+
+	/// Whether our host and other imaginary friends can hear us only when nearby or practically anywhere.
+	var/extended_message_range = TRUE
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -214,7 +222,7 @@
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/send_speech(message, range = 7, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
+/mob/camera/imaginary_friend/send_speech(message, range = IMAGINARY_FRIEND_SPEECH_RANGE, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
 	message = get_message_mods(message, message_mods)
 	message = capitalize(message)
 
@@ -233,6 +241,9 @@
 		var/randomnote = pick("♩", "♪", "♫")
 		message = "[randomnote] [capitalize(message)] [randomnote]"
 		spans |= SPAN_SINGING
+
+	if(extended_message_range)
+		range = IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE
 
 	var/eavesdrop_range = 0
 
@@ -385,7 +396,7 @@
 	var/obj/visual = image('icons/hud/screen_gen.dmi', our_tile, "arrow", FLY_LAYER)
 
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), visual, group_clients(), 2.5 SECONDS)
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * ICON_SIZE_X + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * ICON_SIZE_Y + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
@@ -530,3 +541,7 @@
 	real_name = "[owner.real_name]?"
 	name = real_name
 	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+
+#undef IMAGINARY_FRIEND_RANGE
+#undef IMAGINARY_FRIEND_SPEECH_RANGE
+#undef IMAGINARY_FRIEND_EXTENDED_SPEECH_RANGE

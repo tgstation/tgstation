@@ -48,6 +48,8 @@
 	var/allowed_pressure_error = ONE_ATMOSPHERE / 100
 	///Minimal distro pressure to start cycling
 	var/min_distro_pressure = ONE_ATMOSPHERE / 10
+	///Which pressure holds docked vessel\station for override of external_pressure_target
+	var/docked_side_pressure
 	///Rate of the pump to remove gases from the air
 	var/volume_rate = 1000
 	///The start time of the current cycle to calculate cycle duration
@@ -125,7 +127,31 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/post_machine_initialize()
 	. = ..()
 	set_links()
+	// If we are on docked shuttle - setup docking variables
+	// Example - 'build your own shuttle' evac vessel
+	var/turf/local_turf = get_turf(src)
+	if (!cycling_set_up || !isshuttleturf(local_turf))
+		return
 
+	var/tile_air_pressure
+	for(var/obj/machinery/door/airlock/external_airlock in external_airlocks)
+		var/current_area = get_area(external_airlock)
+		for(var/obj/machinery/door/airlock/other_airlock in orange(2, external_airlock))  // does not include src, extended because some escape pods have 1 plating turf exposed to space
+			if(get_area(other_airlock) != current_area)  // does not include double-wide airlocks unless actually docked
+				// Cycle linking is only disabled if we are actually adjacent to another airlock
+				external_airlock.shuttledocked = TRUE
+				other_airlock.shuttledocked = TRUE
+				if (other_airlock.cycle_pump)
+					INVOKE_ASYNC(other_airlock.cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), internal_pressure_target) // Only case when airlock pumps speaking to each other directly
+				// Save external airlocks turf in case our own docking purpouses
+				local_turf = get_turf(other_airlock)
+
+	if (local_turf)
+		local_turf = get_step(local_turf, REVERSE_DIR(dir))
+		tile_air_pressure = 0
+		if (local_turf)
+			tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+		on_dock_request(tile_air_pressure)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/New()
 	. = ..()
@@ -239,6 +265,22 @@
 		airlock.say("Airlock pair not found.")
 		return
 	if(airlock in external_airlocks)
+		// If it's not null - we shuttledocked
+		// (it may be 0. Maybe badmin set internal pressure to 0 as well, who knows)
+		if(docked_side_pressure != null)
+			// Space-faced airlock detection
+			var/turf/external_tile = get_step(airlock, REVERSE_DIR(dir))
+			// Map edge or space turf
+			if (external_tile == null || is_space_or_openspace(external_tile))
+				airlock.run_animation(DOOR_DENY_ANIMATION)
+				return
+			var/tile_air_pressure = max(0, external_tile.return_air().return_pressure())
+			var/pressure_delta = docked_side_pressure - tile_air_pressure
+			if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error*10) : (pressure_delta*-1 > allowed_pressure_error*10))
+				// Disabled to avoid airlocks close-open spam
+				airlock.run_animation(DOOR_DENY_ANIMATION)
+				return
+
 		start_cycle(ATMOS_DIRECTION_SIPHONING, airlock)
 	else if(airlock in internal_airlocks)
 		start_cycle(ATMOS_DIRECTION_RELEASING, airlock)
@@ -281,16 +323,11 @@
 		if(is_cycling_audible)
 			source_airlock.say("Pressurizing airlock.")
 	else
-		cycle_pressure_target = external_pressure_target
+		cycle_pressure_target = docked_side_pressure != null ? docked_side_pressure : external_pressure_target
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
 		if(pressure_delta <= allowed_pressure_error)
 			stop_cycle("Pressure nominal, cycle skipped.")
 			return TRUE
-
-		for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
-			if(airlock.shuttledocked)
-				stop_cycle("Shuttle docked, cycle skipped.")
-				return TRUE
 
 		if(!source_airlock)
 			source_airlock = external_airlocks[1]
@@ -307,6 +344,11 @@
 		return FALSE
 	on = FALSE
 
+	// In case we can open both sides safe_dock will do it for us
+	// it also handles its own messages. If we can't - procceed
+	if (docked_side_pressure != null && safe_dock(unbolt_only))
+		return TRUE
+
 	var/list/obj/machinery/door/airlock/unlocked_airlocks = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlocks : external_airlocks
 	for(var/obj/machinery/door/airlock/airlock as anything in unlocked_airlocks)
 		airlock.unbolt()
@@ -322,6 +364,106 @@
 
 	update_appearance()
 	return TRUE
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/on_dock_request(requester_pressure = 0)
+	if (docked_side_pressure != null)
+		return
+
+	docked_side_pressure = requester_pressure
+
+	if (!powered() || !cycling_set_up)
+		return
+
+	// We just finishing previous cycle
+	if (airlocks_animating)
+		say("Docking request queued.")
+		stoplag(1.1 SECONDS) // Wait for opening animation
+		if (airlocks_animating)	// Should (almost) never happened
+			say("ERROR: D11. Please re-initiate docking sequence.")
+			return
+
+	if (on)
+		// You can't go there, there is a shuttle now
+		if (pump_direction == ATMOS_DIRECTION_SIPHONING)
+			stop_cycle("Cycling sequence overriden by docking sequence.", TRUE)
+			start_cycle(ATMOS_DIRECTION_RELEASING)
+		// If cycling inside, docking will be handled by stop_cycle proc
+		return
+
+	// Check if we need cycle in
+	var/turf/local_turf = get_turf(src)
+	var/tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+	var/pressure_delta = internal_pressure_target - tile_air_pressure
+	if(pressure_delta <= allowed_pressure_error)
+		// We fine
+		safe_dock()
+	else
+		var/obj/machinery/door/airlock/source_airlock = pick(internal_airlocks)
+		source_airlock.say("Docking sequence initiated")
+		start_cycle(ATMOS_DIRECTION_RELEASING)
+
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/safe_dock(unbolt_only = FALSE)
+	var/pressure_delta = internal_pressure_target - docked_side_pressure
+	// Docked vessel has pressure higher then our internal
+	if ((pressure_delta + allowed_pressure_error) < 0)
+		return FALSE
+	// Pressure is too different, its unsafe to open both sides
+	else if (pressure_delta > allowed_pressure_error * 10)
+		return FALSE
+	// No power handles by stop_cycle pretty good
+	else if (!powered())
+		return FALSE
+
+	var/turf/local_turf = get_turf(src)
+	var/tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+	pressure_delta = internal_pressure_target - tile_air_pressure
+	// Chamber is not pressurised
+	if(pressure_delta > allowed_pressure_error)
+		return FALSE
+
+	for(var/obj/machinery/door/airlock/airlock as anything in (external_airlocks + internal_airlocks))
+		if (airlock in external_airlocks)
+			airlock.air_tight = TRUE
+			local_turf = get_step(airlock, REVERSE_DIR(dir))
+			// Map edge or space turf
+			if (local_turf == null || is_space_or_openspace(local_turf))
+				continue
+
+			tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+			pressure_delta = docked_side_pressure - tile_air_pressure
+			// Do not open airlocks leading in space
+			// If docked entity now has pressure lower or higher then was declared on docking
+			// We will keep airlocks closed until redocking or fixing atmos
+			if (pressure_delta > 0 ? (pressure_delta > allowed_pressure_error*10) : (pressure_delta*-1 > allowed_pressure_error*10))
+				continue
+
+		airlock.unbolt()
+		if(open_airlock_on_cycle && !unbolt_only)
+			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
+
+	airlocks_animating = TRUE
+	stoplag(1 SECONDS) // Wait for closing animation
+	airlocks_animating = FALSE
+	update_appearance()
+	say("Docking complete.")
+	return TRUE
+
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/undock()
+	if (docked_side_pressure == null)
+		return
+	docked_side_pressure = null
+	if(!powered())
+		return
+
+	for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
+		INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close), TRUE)
+
+	say("Docking connection terminated.")
+	airlocks_animating = TRUE
+	stoplag(1 SECONDS) // Wait for closing animation
+	airlocks_animating = FALSE
 
 
 ///Update adjacent_turfs with atmospherically adjacent tiles

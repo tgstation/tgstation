@@ -1110,7 +1110,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	humi.adjust_coretemperature(skin_core_change)
 
 	// get the enviroment details of where the mob is standing
-	var/datum/gas_mixture/environment = humi.loc.return_air()
+	var/datum/gas_mixture/environment = humi.loc?.return_air()
 	if(!environment) // if there is no environment (nullspace) drop out here.
 		return
 
@@ -1369,7 +1369,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	if(H.movement_type & FLYING)
+	if((H.movement_type & FLYING) && !H.buckled)
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
@@ -1454,6 +1454,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Returns the species' sneeze sound.
 /datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' snore sound.
+/datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
 	return
 
 /datum/species/proc/get_mut_organs(include_brain = TRUE)

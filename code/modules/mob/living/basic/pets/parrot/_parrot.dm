@@ -152,11 +152,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	. = ..()
 	. += "Held Item: [held_item]"
 
-/mob/living/basic/parrot/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(stat != DEAD) // parrots have evolved to let them fly in space because fucking uhhhhhhhhhh
-		return TRUE
-	return ..()
-
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
 	if(. != NONE)
