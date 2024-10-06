@@ -52,6 +52,16 @@
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts), aliver)
 
 /datum/component/ghostrole_on_revive/proc/poll_ghosts(mob/living/aliver)
+	var/soul_eyes
+	var/obj/item/bodypart/head
+	// adds soulful SOUL PENDING eyes to indicate what's happening to observers
+	if(ishuman(aliver))
+		var/mob/living/carbon/human/hewmon = aliver
+		head = hewmon.get_bodypart(BODY_ZONE_HEAD)
+		soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes ()
+		head?.add_bodypart_overlay(soul_eyes)
+		hewmon.update_body_parts()
+
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
 		role = ROLE_RECOVERED_CREW,
@@ -62,6 +72,9 @@
 		alert_pic = aliver,
 		role_name_text = "recovered crew",
 	)
+
+	head?.remove_bodypart_overlay(soul_eyes)
+
 	if(!isobserver(chosen_one))
 		if(refuse_revival_if_failed)
 			aliver.death()

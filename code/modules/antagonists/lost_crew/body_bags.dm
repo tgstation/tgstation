@@ -50,7 +50,3 @@
 
 	var/obj/item/paper/paper = new(src)
 	paper.add_raw_text(english_list(crew_data), advanced_html = TRUE)
-
-/// Subtype for debugging damage types
-/obj/structure/closet/body_bag/lost_crew/with_body/debug
-	debug = TRUE
