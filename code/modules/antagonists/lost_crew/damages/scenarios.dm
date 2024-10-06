@@ -1,4 +1,4 @@
-
+/// Default scenario, with normal species, assignments and damages etc
 /datum/corpse_damage_class/station
 	area_lore = "I was working in a space station"
 	weight = 10
@@ -22,8 +22,8 @@
 		)
 
 	post_mortem_effects = list(
-		/datum/corpse_damage/post_mortem/limb_loss = 2,
-		/datum/corpse_damage/post_mortem/organ_loss = 2,
+		/datum/corpse_damage/post_mortem/limb_loss = 5,
+		/datum/corpse_damage/post_mortem/organ_loss = 5,
 		null = 1,
 		)
 
@@ -33,15 +33,18 @@
 		/datum/corpse_damage/post_mortem/organ_decay/heavy = 1,
 		)
 
+/// Less decay, spread burn and brute damage
 /datum/corpse_damage_class/station/spaced
 	weight = 2
 	possible_causes_of_death = list(/datum/corpse_damage/cause_of_death/spaced = 1)
 	decays = list(/datum/corpse_damage/post_mortem/organ_decay/light = 1)
 
+/// Human morgue body
 /datum/corpse_damage_class/station/morgue/human
 	weight = 0
 	possible_character_types = list(/datum/corpse_character/human = 1)
 
+/// Non-human morgue body
 /datum/corpse_damage_class/station/morgue/non_human
 	weight = 0
 	possible_character_types = list(/datum/corpse_character/roundstart/all_roundstart_no_human = 1)

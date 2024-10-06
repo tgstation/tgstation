@@ -137,9 +137,3 @@
 	icon_state = "syndieenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
-
-/obj/item/bodybag/lost_crew
-	name = "long-term body bag"
-	desc = "A folded bag designed for the long-term storage and transportation of cadavers."
-	unfoldedbag_path = /obj/structure/closet/body_bag/lost_crew
-	icon_state = "bodybag_lost_folded"

@@ -1,11 +1,12 @@
+/// Manager for the lost crew bodies, for spawning and granting rewards
 GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
-/// Handles procs and timers for the lost
+/// Handles procs and timers for the lost crew bodies
 /datum/lost_crew_manager
 	/// How many credits we reward the medical budget on a succesful revive
 	var/credits_on_succes = CARGO_CRATE_VALUE * 10
 	/// How long after succesful revival we check to see if theyre still alive, and give rewards
-	var/succes_check_time = 3 SECONDS //set to 3 minutes when done testing
+	var/succes_check_time = 3 MINUTES
 
 /**
  * Creates a body with random background and injuries

@@ -1,3 +1,4 @@
+// Unique damage types we can apply for blacklisting, so we dont remove all organs twice etc
 #define CORPSE_DAMAGE_ORGAN_DECAY "organ decay"
 #define CORPSE_DAMAGE_ORGAN_LOSS "organ loss"
 #define CORPSE_DAMAGE_LIMB_LOSS "limb loss"
@@ -37,8 +38,8 @@
 
 	death_lore += assignment.job_lore
 
-	body_data += character
-	body_data += assignment
+	body_data += character.type
+	body_data += assignment?.type
 
 /// Set up injuries
 /datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/body_data)
@@ -55,9 +56,9 @@
 	victim.blood_volume = max(victim.blood_volume - victim.bleedDragAmount() * rand(20, 100), 0)
 	set_death_date(victim)
 
-	body_data += cause_of_death
-	body_data += post_mortem
-	body_data += decay
+	body_data += cause_of_death.type
+	body_data += post_mortem?.type
+	body_data += decay.type
 
 	death_lore += area_lore + " " + cause_of_death.cause_of_death
 

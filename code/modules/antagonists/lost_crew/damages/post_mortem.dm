@@ -1,6 +1,9 @@
 /// Damn space vultures man! At least they dont go for the brain
 /datum/corpse_damage/post_mortem/organ_loss
 	damage_type = CORPSE_DAMAGE_ORGAN_LOSS
+
+	/// Chance that the organ is stored and delivered with the body
+	var/organ_save_chance = 20
 	/// Minimum organs we can lose
 	var/min_organs = 2
 	/// Maximum organs we can lose
@@ -12,7 +15,7 @@
 
 	for(var/i in 1 to organs_to_take)
 		var/obj/organ = pick(organs_we_can_take)
-		if(prob(20))
+		if(prob(organ_save_chance)) //if lucky, we can save the organ and have it be delivered with the body
 			organ.moveToNullspace()
 			saved_movables += organ
 		else
@@ -21,6 +24,9 @@
 /// Damn space vultures man! At least they dont go for the chest or head, or they do but we don't get to see those bodies :O
 /datum/corpse_damage/post_mortem/limb_loss
 	damage_type = CORPSE_DAMAGE_LIMB_LOSS
+
+	/// Chance that the limb is stored and delivered with the body
+	var/limb_save_chance = 20
 	/// Min limbs we can lose
 	var/min_limbs = 1
 	/// Max limbs we can lose
@@ -32,7 +38,7 @@
 
 	for(var/i in 1 to limbs_to_take)
 		var/obj/limb = pick(limbs_we_can_take)
-		if(prob(20))
+		if(prob(limb_save_chance))
 			limb.moveToNullspace()
 			saved_movables += limb
 		else

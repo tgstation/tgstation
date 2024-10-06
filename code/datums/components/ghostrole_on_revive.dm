@@ -35,6 +35,8 @@
 			RegisterSignal(brain, COMSIG_ORGAN_REMOVED, PROC_REF(prepare_brain))
 
 /datum/component/ghostrole_on_revive/proc/prepare_brain(obj/item/organ/brein)
+	SIGNAL_HANDLER
+
 	RegisterSignal(brein, COMSIG_ORGAN_IMPLANTED, PROC_REF(prepare_mob_from_brain))
 	UnregisterSignal(brein, COMSIG_ORGAN_REMOVED)
 
