@@ -15,8 +15,8 @@
 /atom/declent_ru(case_id, list/ru_names_override)
 	var/list/list_to_use = ru_names_override || ru_names
 	if(length(list_to_use))
-		return list_to_use[case_id] || "<i>[name]</i>"
-	return "<i>[name]</i>"
+		return list_to_use[case_id] || name
+	return name
 
 /// Склонения, например "секунда", "секунды", "секунд".
 /proc/declension_ru(num, single_name, double_name, multiple_name)
