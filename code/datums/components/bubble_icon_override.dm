@@ -10,8 +10,6 @@
 	var/bubble_icon
 	///The priority of this bubble icon compared to others
 	var/priority
-	///
-	var/active = FALSE
 
 /datum/component/bubble_icon_override/Initialize(bubble_icon, priority)
 	if(!isclothing(parent) && !isorgan(parent))
