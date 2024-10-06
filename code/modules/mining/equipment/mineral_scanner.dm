@@ -95,10 +95,6 @@
 			C.icon_state = M.scan_state
 
 	if(vents_nearby && scanner)
-		if(undiscovered)
-
-		else
-
 		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 

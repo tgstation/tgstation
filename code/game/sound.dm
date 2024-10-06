@@ -302,8 +302,10 @@ WITH_X(spatial_aware)
 		// if you want to implement that be my guest
 
 		var/pressure_factor = 1
-		var/datum/gas_mixture/hearer_env = get_turf(src).return_air()
-		var/datum/gas_mixture/source_env = get_turf(source).return_air()
+		var/turf/src_turf = get_turf(src)
+		var/turf/source_turf = get_turf(source)
+		var/datum/gas_mixture/hearer_env = src_turf.return_air()
+		var/datum/gas_mixture/source_env = source_turf.return_air()
 
 		if(hearer_env && source_env)
 			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
