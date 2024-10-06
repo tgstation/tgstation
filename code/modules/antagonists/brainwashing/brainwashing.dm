@@ -30,7 +30,7 @@
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
-	stinger_sound = 'sound/ambience/antag/brainwashed.ogg'
+	stinger_sound = 'sound/music/antag/brainwashed.ogg'
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
 	antag_hud_name = "brainwashed"
@@ -61,7 +61,7 @@
 		return
 	var/list/objectives = list()
 	do
-		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing")
+		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing", max_length = MAX_MESSAGE_LEN)
 		if(objective)
 			objectives += objective
 	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")

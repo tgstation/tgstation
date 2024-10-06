@@ -4,7 +4,7 @@
 		summons monkeys and gorillas that will promptly flip out and attack everything in sight. Fun! \
 		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
 	button_icon_state = "simian"
-	sound = 'sound/ambience/antag/monkey.ogg'
+	sound = 'sound/music/antag/monkey.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 1.5 MINUTES

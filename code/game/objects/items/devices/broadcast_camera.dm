@@ -22,6 +22,8 @@
 	light_on = FALSE
 	/// Is camera streaming
 	var/active = FALSE
+	/// Is the microphone turned on
+	var/active_microphone = TRUE
 	/// The name of the broadcast
 	var/broadcast_name = "Curator News"
 	/// The networks it broadcasts to, default is CAMERANET_NETWORK_CURATOR
@@ -56,6 +58,7 @@
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
 	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
+	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()
@@ -85,9 +88,11 @@
 
 	// INTERNAL RADIO
 	internal_radio = new(src)
+	/// Sets the state of the microphone
+	set_microphone_state()
 
 	set_light_on(TRUE)
-	playsound(source = src, soundin = 'sound/machines/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
+	playsound(source = src, soundin = 'sound/machines/terminal/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
 	balloon_alert_to_viewers("live!")
 
 /// When deactivating the camera
@@ -100,5 +105,20 @@
 	stop_broadcasting_network(camera_networks)
 
 	set_light_on(FALSE)
-	playsound(source = src, soundin = 'sound/machines/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
+	playsound(source = src, soundin = 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
 	balloon_alert_to_viewers("offline")
+
+/obj/item/broadcast_camera/click_alt(mob/user)
+	active_microphone = !active_microphone
+
+	/// Text popup for letting the user know that the microphone has changed state
+	balloon_alert(user, "turned [active_microphone ? "on" : "off"] the microphone.")
+
+	///If the radio exists as an object, set its state accordingly
+	if(active)
+		set_microphone_state()
+
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/broadcast_camera/proc/set_microphone_state()
+	internal_radio.set_broadcasting(active_microphone)

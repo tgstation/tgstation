@@ -39,8 +39,6 @@ multiple modular subtrees with behaviors
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
-	///Cooldown for new plans, to prevent AI from going nuts if it can't think of new plans and looping on end
-	COOLDOWN_DECLARE(failed_planning_cooldown)
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
 	var/list/planning_subtrees
 
@@ -69,14 +67,15 @@ multiple modular subtrees with behaviors
 	var/able_to_run = FALSE
 	/// are we even able to plan?
 	var/able_to_plan = TRUE
+	/// are we currently on failed planning timeout?
+	var/on_failed_planning_timeout = FALSE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
 
-
 	if(idle_behavior)
-		idle_behavior = new idle_behavior()
+		idle_behavior = SSidle_ai_behaviors.idle_behaviors[idle_behavior]
 
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
@@ -240,7 +239,7 @@ multiple modular subtrees with behaviors
 	if(!pawn_turf)
 		CRASH("AI controller [src] controlling pawn ([pawn]) is not on a turf.")
 #endif
-	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]))
+	if(!length(SSmobs.clients_by_zlevel[pawn_turf.z]) || on_failed_planning_timeout || !able_to_run)
 		return AI_STATUS_OFF
 	if(should_idle())
 		return AI_STATUS_IDLE
@@ -285,6 +284,7 @@ multiple modular subtrees with behaviors
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -300,6 +300,9 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/update_able_to_run()
 	SIGNAL_HANDLER
 	able_to_run = get_able_to_run()
+	if(!able_to_run)
+		GLOB.move_manager.stop_looping(pawn) //stop moving
+	set_ai_status(get_expected_ai_status())
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
@@ -309,16 +312,34 @@ multiple modular subtrees with behaviors
 		return FALSE
 	return TRUE
 
+///Can this pawn interact with objects?
+/datum/ai_controller/proc/ai_can_interact()
+	SHOULD_CALL_PARENT(TRUE)
+	return !QDELETED(pawn)
+
+///Interact with objects
+/datum/ai_controller/proc/ai_interact(target, combat_mode, list/modifiers)
+	if(!ai_can_interact())
+		return FALSE
+
+	var/atom/final_target = isdatum(target) ? target : blackboard[target] //incase we got a blackboard key instead
+
+	if(QDELETED(final_target))
+		return FALSE
+	var/params = list2params(modifiers)
+	var/mob/living/living_pawn = pawn
+	if(isnull(combat_mode))
+		living_pawn.ClickOn(final_target, params)
+		return TRUE
+
+	var/old_combat_mode = living_pawn.combat_mode
+	living_pawn.set_combat_mode(combat_mode)
+	living_pawn.ClickOn(final_target, params)
+	living_pawn.set_combat_mode(old_combat_mode)
+	return TRUE
+
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
-
-	if(!able_to_run)
-		GLOB.move_manager.stop_looping(pawn) //stop moving
-		return //this should remove them from processing in the future through event-based stuff.
-
-	if(!length(current_behaviors) && idle_behavior)
-		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
-		return
 
 	if(current_movement_target)
 		if(!isatom(current_movement_target))
@@ -329,7 +350,6 @@ multiple modular subtrees with behaviors
 		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
 			CancelActions()
 			return
-
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
@@ -393,17 +413,24 @@ multiple modular subtrees with behaviors
 	//remove old status, if we've got one
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
 	stop_previous_processing()
 	ai_status = new_ai_status
 	GLOB.ai_controllers_by_status[new_ai_status] += src
+	if(ai_status == AI_STATUS_OFF)
+		CancelActions()
+		return
+	if(!length(current_behaviors))
+		add_to_unplanned_controllers()
+		return
+	start_ai_processing()
+
+/datum/ai_controller/proc/start_ai_processing()
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_IDLE)
 			START_PROCESSING(SSidle_ai_behaviors, src)
-			CancelActions()
-		if(AI_STATUS_OFF)
-			CancelActions()
 
 /datum/ai_controller/proc/stop_previous_processing()
 	switch(ai_status)
@@ -416,6 +443,16 @@ multiple modular subtrees with behaviors
 	paused_until = world.time + time
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
+
+/datum/ai_controller/proc/add_to_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF || isnull(idle_behavior))
+		return
+	GLOB.unplanned_controllers[ai_status][src] = TRUE
+
+/datum/ai_controller/proc/remove_from_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF)
+		return
+	GLOB.unplanned_controllers[ai_status] -= src
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
 	behavior_cooldowns[behavior] = new_cooldown
@@ -435,6 +472,7 @@ multiple modular subtrees with behaviors
 	if(!behavior.setup(arglist(arguments)))
 		return
 
+	var/should_exit_unplanned = !length(current_behaviors)
 	planned_behaviors[behavior] = TRUE
 	current_behaviors[behavior] = TRUE
 
@@ -447,6 +485,9 @@ multiple modular subtrees with behaviors
 	if(!(behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //this one blocks planning!
 		able_to_plan = FALSE
 
+	if(should_exit_unplanned)
+		exit_unplanned_mode()
+
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/check_able_to_plan()
@@ -458,6 +499,16 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
 	current_behaviors -= behavior
 	able_to_plan = check_able_to_plan()
+	if(!length(current_behaviors))
+		enter_unplanned_mode()
+
+/datum/ai_controller/proc/exit_unplanned_mode()
+	remove_from_unplanned_controllers()
+	start_ai_processing()
+
+/datum/ai_controller/proc/enter_unplanned_mode()
+	add_to_unplanned_controllers()
+	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)
@@ -491,6 +542,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	reset_ai_status()
+	update_able_to_run()
 
 /datum/ai_controller/proc/on_sentience_gained()
 	SIGNAL_HANDLER
@@ -530,6 +582,15 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/datum/ai_controller/proc/planning_failed()
+	on_failed_planning_timeout = TRUE
+	set_ai_status(get_expected_ai_status())
+	addtimer(CALLBACK(src, PROC_REF(resume_planning)), AI_FAILED_PLANNING_COOLDOWN)
+
+/datum/ai_controller/proc/resume_planning()
+	on_failed_planning_timeout = FALSE
+	set_ai_status(get_expected_ai_status())
 
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
