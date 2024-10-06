@@ -451,7 +451,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	AddComponent(/datum/component/item_killsound, \
 	allowed_mobs = list(/mob/living/carbon/human), \
-	killsound = 'sound/weapons/hammer_death_scream.ogg', \
+	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
 	replace_default_death_sound = TRUE, \
 	)
 
