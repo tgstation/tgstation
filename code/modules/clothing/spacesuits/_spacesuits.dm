@@ -167,7 +167,10 @@
 		thermal_on = FALSE
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell
