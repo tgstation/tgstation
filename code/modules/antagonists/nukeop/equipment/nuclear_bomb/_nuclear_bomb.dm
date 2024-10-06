@@ -247,10 +247,6 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(detonation_timer < world.time)
 		explode()
-		return
-
-	var/volume = (get_time_left() <= 20 ? 30 : 5)
-
 
 /// Changes what mode the UI is depending on the state of the nuke.
 /obj/machinery/nuclearbomb/proc/update_ui_mode()

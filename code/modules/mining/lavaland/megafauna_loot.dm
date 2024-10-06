@@ -1071,7 +1071,7 @@
 		if((target_turf.z in weather.impacted_z_levels) && ispath(target_area.type, weather.area_type))
 			power_boosted = TRUE
 			break
-	playsound(src, 'sound/effects/magic/lightningshoot.ogg').volume(10).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
+	playsound(src, 'sound/effects/magic/lightningshock.ogg').volume(10).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)

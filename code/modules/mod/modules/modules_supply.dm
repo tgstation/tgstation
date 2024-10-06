@@ -505,7 +505,7 @@
 
 /obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/items/modsuit/balling.ogg').volume(100).vary(TRUE).frequency(-1).play()
+		playsound(src, 'sound/items/modsuit/ballin.ogg').volume(100).vary(TRUE).frequency(-1).play()
 	mod.wearer.base_pixel_y += 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)

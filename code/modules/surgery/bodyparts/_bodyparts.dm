@@ -408,8 +408,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	..()
-	if(IS_ORGANIC_LIMB(src))
-
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 

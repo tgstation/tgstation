@@ -883,9 +883,6 @@
 		return
 
 	if(iscarbon(target))
-		if(pre_noise || post_noise)
-
-
 		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
@@ -914,8 +911,6 @@
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
-
-		if(pre_noise || post_noise)
 
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
@@ -960,8 +955,6 @@
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
-
-		if(pre_noise || post_noise)
 
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return

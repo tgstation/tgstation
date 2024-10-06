@@ -37,8 +37,6 @@
 		return NONE
 
 	if(damage <= force_threshold)
-		var/obj/item/item_hitting = hitby
-		var/tap_vol = istype(item_hitting) ? item_hitting.get_clamped_volume() : 50
 		source.visible_message(
 			span_warning("[source] looks unharmed!"),
 			span_warning("[attack_text] deals no damage to you!"),

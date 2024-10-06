@@ -260,7 +260,6 @@ WITH_X(spatial_aware)
 	if(!spatial_aware)
 		CRASH("Attempted to call [__PROC__] despite not being a spatial aware sound.")
 
-	var/needs_update = FALSE
 	var/datum/sound_spatial_cache/cache = spatial_tracking_by_mob_tag[mob.tag]
 	if(spatial_aware && !cache)
 		cache = spatial_tracking_by_mob_tag[mob.tag] = new /datum/sound_spatial_cache

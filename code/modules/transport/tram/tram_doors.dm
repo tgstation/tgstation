@@ -68,9 +68,6 @@
 		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
-	if(retry_counter == 1)
-
-
 	addtimer(CALLBACK(src, PROC_REF(verify_status)), TRAM_DOOR_RECYCLE_TIME)
 	try_to_close()
 

@@ -761,7 +761,7 @@
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound).volume(EQUIP_SOUND_VOLUME).vary(TRUE).play()
-		else if(slot & ITEM_SLOT_HANDS)
+		else if(pickup_sound && (slot & ITEM_SLOT_HANDS))
 			playsound(src, pickup_sound).volume(PICKUP_SOUND_VOLUME).play()
 	user.update_equipment_speed_mods()
 

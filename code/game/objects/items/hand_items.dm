@@ -224,7 +224,6 @@
 		potential_tailed.unwag_tail()
 	user.do_attack_animation(slapped)
 
-	var/slap_volume = 50
 	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(/datum/status_effect/offering)
 	if(kiss_check && istype(kiss_check.offered_item, /obj/item/hand_item/kisser) && (user in kiss_check.possible_takers))
 		user.visible_message(
@@ -234,7 +233,6 @@
 			ignored_mobs = slapped,
 		)
 		to_chat(slapped, span_userdanger("You see [user] scoff and pull back [user.p_their()] arm, then suddenly you're on the ground with an ungodly ringing in your ears!"))
-		slap_volume = 120
 		SEND_SOUND(slapped, sound('sound/items/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)

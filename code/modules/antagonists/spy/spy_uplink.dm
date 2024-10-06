@@ -100,7 +100,7 @@
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
-	playsound(stealing, 'sound/items/phsoom/phsoom.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.33).play()
+	playsound(stealing, 'sound/items/pshoom/pshoom.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.33).play()
 
 	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
 	active_scan_effect.appearance = stealing.appearance
