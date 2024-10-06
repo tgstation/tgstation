@@ -8,6 +8,9 @@
 	var/datum/id_trim/trim
 
 /datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear)
+	if(!job_gear)
+		return
+
 	for(var/item in job_stuffs)
 		job_gear += new item ()
 	job_gear += job_stuffs

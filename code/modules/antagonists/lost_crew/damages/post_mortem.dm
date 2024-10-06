@@ -15,7 +15,7 @@
 
 	for(var/i in 1 to organs_to_take)
 		var/obj/organ = pick(organs_we_can_take)
-		if(prob(organ_save_chance)) //if lucky, we can save the organ and have it be delivered with the body
+		if(prob(organ_save_chance) && saved_movables) //if lucky, we can save the organ and have it be delivered with the body
 			organ.moveToNullspace()
 			saved_movables += organ
 		else
@@ -36,9 +36,11 @@
 	var/limbs_to_take = round(min_limbs + (max_limbs - min_limbs) * severity)
 	var/list/limbs_we_can_take = body.bodyparts - body.get_bodypart(BODY_ZONE_HEAD) - body.get_bodypart(BODY_ZONE_CHEST)
 
+	if(!limbs_we_can_take)
+		return
 	for(var/i in 1 to limbs_to_take)
 		var/obj/limb = pick(limbs_we_can_take)
-		if(prob(limb_save_chance))
+		if(prob(limb_save_chance) && saved_movables)
 			limb.moveToNullspace()
 			saved_movables += limb
 		else
