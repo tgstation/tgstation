@@ -525,4 +525,34 @@
 				'sound/effects/liquid_pour/liquid_pour2.ogg',
 				'sound/effects/liquid_pour/liquid_pour3.ogg',
 			)
+		if(SFX_SNORE_FEMALE)
+			soundin = pick_weight(list(
+				'sound/mobs/humanoids/human/snore/snore_female1.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_female2.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_female3.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_mimimi1.ogg' = 1,
+			))
+		if(SFX_SNORE_MALE)
+			soundin = pick_weight(list(
+				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male5.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_mimimi2.ogg' = 1,
+			))
+		if(SFX_CAT_MEOW)
+			soundin = pick_weight(list(
+				'sound/creatures/cat/cat_meow1.ogg' = 33,
+				'sound/creatures/cat/cat_meow2.ogg' = 33,
+				'sound/creatures/cat/cat_meow3.ogg' = 33,
+				'sound/creatures/cat/oranges_meow1.ogg' = 1,
+			))
+		if(SFX_CAT_PURR)
+			soundin = pick(
+				'sound/creatures/cat/cat_purr1.ogg',
+				'sound/creatures/cat/cat_purr2.ogg',
+				'sound/creatures/cat/cat_purr3.ogg',
+				'sound/creatures/cat/cat_purr4.ogg',
+			)
 	return soundin

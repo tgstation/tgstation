@@ -73,7 +73,7 @@
 ///consume food!
 /datum/ai_planning_subtree/find_and_hunt_target/food_trough
 	target_key = BB_TROUGH_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/food_trough
 	finding_behavior = /datum/ai_behavior/find_hunt_target/food_trough
 	hunt_targets = list(/obj/structure/ore_container/food_trough/gutlunch_trough)
 	hunt_chance = 75
@@ -96,9 +96,9 @@
 
 	return can_see(source, target, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
+/datum/ai_behavior/hunt_target/interact_with_target/food_trough
 	always_reset_target = TRUE
-	switch_combat_mode = TRUE
+	behavior_combat_mode = FALSE
 
 /datum/pet_command/mine_walls
 	command_name = "Mine"

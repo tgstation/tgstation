@@ -1204,6 +1204,14 @@
 	for(var/item in removees)
 		event_list.Remove(item)
 
+/// Give a typepath of a shuttle event to add to the shuttle. If added during endgame transit, will insta start the event
+/obj/docking_port/mobile/proc/add_shuttle_event(typepath)
+	var/datum/shuttle_event/event = new typepath (src)
+	event_list.Add(event)
+	if(launch_status == ENDGAME_LAUNCHED)
+		event.start_up_event(0)
+	return event
+
 #ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT
 #endif

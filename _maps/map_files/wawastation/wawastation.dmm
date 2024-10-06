@@ -26151,6 +26151,7 @@
 	},
 /obj/structure/closet/secure_closet/captains,
 /obj/machinery/firealarm/directional/north,
+/obj/item/storage/lockbox/medal,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "jpe" = (
@@ -38292,7 +38293,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/ai_monitored/turret_protected/ai)
 "nAa" = (
 /obj/machinery/door/firedoor/border_only{
@@ -41519,7 +41520,7 @@
 	name = "AI Core Shutters"
 	},
 /obj/structure/cable,
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/ai_monitored/turret_protected/ai)
 "oOb" = (
 /obj/effect/turf_decal/tile/neutral{

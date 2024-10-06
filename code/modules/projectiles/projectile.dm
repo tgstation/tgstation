@@ -153,7 +153,7 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
-	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
+	///Whether or not our projectile doubles the value of affecting armour
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
@@ -223,6 +223,8 @@
 	if(get_embed())
 		AddElement(/datum/element/embed)
 	AddElement(/datum/element/connect_loc, projectile_connections)
+
+	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
 /obj/projectile/proc/Range()
 	range--

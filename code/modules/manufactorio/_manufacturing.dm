@@ -117,7 +117,14 @@
 	if(!istype(stack))
 		return
 	for(var/obj/item/stack/other in contents - circuit)
-		if(!other.can_merge(stack))
+		if(!stack.can_merge(other))
 			continue
 		if(other.amount + stack.amount <= other.max_amount)
 			return other
+
+/obj/machinery/power/manufacturing/proc/may_merge_in_contents_and_do_so(obj/item/stack/stack)
+	var/merging_into = may_merge_in_contents(stack)
+	if(isnull(merging_into))
+		return
+	return stack.merge(merging_into)
+

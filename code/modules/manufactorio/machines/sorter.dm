@@ -5,7 +5,7 @@
 	layer = BELOW_OPEN_DOOR_LAYER
 	density = FALSE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	circuit = /obj/item/circuitboard/machine/manurouter
+	circuit = /obj/item/circuitboard/machine/manusorter 
 	/// for mappers; filter path = list(direction, value), otherwise a list of initialized filters
 	var/list/sort_filters = list()
 	/// dir to push to if there is no criteria
