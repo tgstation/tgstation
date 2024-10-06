@@ -232,9 +232,10 @@
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					. += "[t_He] [t_has] a stupid expression on [t_his] face."
-		if(get_organ_by_type(/obj/item/organ/internal/brain) && isnull(ai_controller))
+		var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
+		if(brain && isnull(ai_controller))
 			var/npc_message = ""
-			if(HAS_TRAIT(get_organ_by_type(/obj/item/organ/internal/brain), TRAIT_GHOSTROLE_ON_REVIVE))
+			if(HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
 				npc_message = "Soul is pending..."
 			else if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
