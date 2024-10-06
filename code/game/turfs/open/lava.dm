@@ -46,7 +46,7 @@
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
-	if(fish_source_type)
+	if(fish_source_type && (is_mining_level(z) || is_away_level(z)))
 		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
 	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
