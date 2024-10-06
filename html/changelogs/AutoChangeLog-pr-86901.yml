@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored materials code. report any issue."
+  - rscadd: "Cleric maces (The autolathe-printable weapon design from outer space) can now be made of two different materials."
+  - balance: "Buffed cleric maces a little."
+  - bugfix: "toolboxes' stats are now affected by materials again."
