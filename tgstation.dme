@@ -3240,6 +3240,7 @@
 #include "code\modules\antagonists\heretic\structures\mawed_crucible.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\hypnotized\hypnotized.dm"
+#include "code\modules\antagonists\lost_crew\body_bags.dm"
 #include "code\modules\antagonists\lost_crew\lost_crew_manager.dm"
 #include "code\modules\antagonists\lost_crew\recovered_crew.dm"
 #include "code\modules\antagonists\lost_crew\character\_assignment.dm"
