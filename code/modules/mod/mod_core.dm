@@ -223,11 +223,11 @@
 		return FALSE
 	if(!mod.open)
 		mod.balloon_alert(user, "open the cover first!")
-		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(cell)
 		mod.balloon_alert(user, "cell already installed!")
-		playsound(mod, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	install_cell(attacking_item)
 	mod.balloon_alert(user, "cell installed")
@@ -358,7 +358,7 @@
 /obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
 	SIGNAL_HANDLER
 
-	return item_interaction(thing, user)
+	return item_interaction(user, thing)
 
 /obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return charge_plasma(tool, user) ? ITEM_INTERACT_SUCCESS : NONE

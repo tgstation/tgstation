@@ -119,7 +119,7 @@
 
 /datum/status_effect/bounty/on_apply()
 	to_chat(owner, span_boldnotice("You hear something behind you talking... \"You have been marked for death by [rewarded]. If you die, they will be rewarded.\""))
-	playsound(owner, 'sound/weapons/gun/shotgun/rack.ogg', 75, FALSE)
+	playsound(owner, 'sound/items/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/bounty/tick(seconds_between_ticks)
@@ -130,7 +130,7 @@
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
 		to_chat(owner, span_boldnotice("You hear something behind you talking... \"Bounty claimed.\""))
-		playsound(owner, 'sound/weapons/gun/shotgun/shot.ogg', 75, FALSE)
+		playsound(owner, 'sound/items/weapons/gun/shotgun/shot.ogg', 75, FALSE)
 		to_chat(rewarded, span_greentext("You feel a surge of mana flow into you!"))
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
 			spell.reset_spell_cooldown()
@@ -609,3 +609,32 @@
 /datum/status_effect/gutted/proc/stop_gutting()
 	SIGNAL_HANDLER
 	qdel(src)
+
+/atom/movable/screen/alert/status_effect/shower_regen
+	name = "Washing"
+	desc = "A good wash fills me with energy!"
+	icon_state = "shower_regen"
+
+/atom/movable/screen/alert/status_effect/shower_regen/catgirl
+	name = "Washing"
+	desc = "Waaater... Fuck this WATER!!"
+	icon_state = "shower_regen_catgirl"
+
+/datum/status_effect/shower_regen
+	id = "shower_regen"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/shower_regen
+	/// How many heals from washing.
+	var/stamina_heal_per_tick = 4
+
+/datum/status_effect/shower_regen/on_apply()
+	. = ..()
+	if(isfelinid(owner))
+		alert_type = /atom/movable/screen/alert/status_effect/shower_regen/catgirl
+
+
+/datum/status_effect/shower_regen/tick(seconds_between_ticks)
+	. = ..()
+	var/heal_or_deal = isfelinid(owner) ? 1 : -1
+	owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks)

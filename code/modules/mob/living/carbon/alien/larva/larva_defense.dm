@@ -17,7 +17,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 		apply_damage(damage, BRUTE, affecting)
 	else
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user]'s kick misses [src]!"), \
 						span_danger("You avoid [user]'s kick!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your kick misses [src]!"))

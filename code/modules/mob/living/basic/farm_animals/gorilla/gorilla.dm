@@ -31,7 +31,7 @@
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	unique_name = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
@@ -146,10 +146,7 @@
 	obj_damage = 15
 	ai_controller = /datum/ai_controller/basic_controller/gorilla/lesser
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
-
-/mob/living/basic/gorilla/lesser/Initialize(mapload)
-	. = ..()
-	transform *= 0.75
+	current_size = 0.75
 
 /// Cargo's wonderful mascot, the tranquil box-carrying ape
 /mob/living/basic/gorilla/cargorilla

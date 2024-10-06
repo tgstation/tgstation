@@ -585,7 +585,7 @@
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
-	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
@@ -640,18 +640,18 @@
 /datum/chemical_reaction/scream/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	/// List of screams to play.
 	var/static/list/screams = list(
-		'sound/voice/human/femalescream_1.ogg',
-		'sound/voice/human/femalescream_2.ogg',
-		'sound/voice/human/femalescream_3.ogg',
-		'sound/voice/human/femalescream_4.ogg',
-		'sound/voice/human/femalescream_5.ogg',
-		'sound/voice/human/malescream_1.ogg',
-		'sound/voice/human/malescream_2.ogg',
-		'sound/voice/human/malescream_3.ogg',
-		'sound/voice/human/malescream_4.ogg',
-		'sound/voice/human/malescream_5.ogg',
-		'sound/voice/human/malescream_6.ogg',
-		'sound/voice/human/wilhelm_scream.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+		'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg',
 	)
 
 	playsound(holder.my_atom, pick(screams), created_volume*5,TRUE)
@@ -884,7 +884,7 @@
 	results = list(/datum/reagent/eigenstate = 1)
 	required_reagents = list(/datum/reagent/bluespace = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/consumable/caramel = 1)
 	mix_message = "the reaction zaps suddenly!"
-	mix_sound = 'sound/chemistry/bluespace.ogg'
+	mix_sound = 'sound/effects/chemistry/bluespace.ogg'
 	//FermiChem vars:
 	required_temp = 350
 	optimal_temp = 600
