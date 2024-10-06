@@ -18,9 +18,6 @@
 	var/debug = FALSE
 
 /obj/structure/closet/body_bag/lost_crew/with_body/PopulateContents()
-	if(QDELETED(src))
-		return
-
 	var/list/recovered_items = list()
 	var/list/protected_items = list()
 	var/list/lost_crew_data = list()
@@ -41,12 +38,13 @@
 
 	process_data(lost_crew_data)
 
-	qdel(recovered_items)
-	qdel(protected_items)
-
 /obj/structure/closet/body_bag/lost_crew/with_body/proc/process_data(list/crew_data)
 	if(!debug)
 		return
 
 	var/obj/item/paper/paper = new(src)
 	paper.add_raw_text(english_list(crew_data), advanced_html = TRUE)
+
+/// Subtype for debugging damage types
+/obj/structure/closet/body_bag/lost_crew/with_body/debug
+	debug = TRUE
