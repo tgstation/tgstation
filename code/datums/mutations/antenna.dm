@@ -99,7 +99,7 @@
 	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
 		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
 			you feel the overwhelming emptiness within. A truly evil being. \
-			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone of like-mind." : "What is wrong with this person?"]"))
+			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
 
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
 	if(prob(20))
