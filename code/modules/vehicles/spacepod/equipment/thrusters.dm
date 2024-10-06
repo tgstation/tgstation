@@ -1,6 +1,7 @@
 /obj/item/pod_equipment/thrusters
 	slot = POD_SLOT_THRUSTERS
 	interface_id = "GenericLines"
+	icon_state = "thruster1" // the tiered parts should have sprites for each tier but DAMN am i not spriting that
 	/// max drift speed we can get via moving intentionally
 	var/max_speed = 0
 	/// Force per process run to bring us to a halt
@@ -38,7 +39,7 @@
 	stabilizer_force = 0.75 NEWTONS
 
 /obj/item/pod_equipment/thrusters/fast
-	name = "pod cesium-ion thruster array"
+	name = "pod cesium-ion thruster array" // go play pogmind....
 	desc = "A variant of the standard NT thruster array, for greater speeds."
 	max_speed = 15 NEWTONS
 	stabilizer_force = 1 NEWTONS
