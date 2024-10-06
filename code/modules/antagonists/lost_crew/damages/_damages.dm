@@ -59,7 +59,7 @@
 	body_data += post_mortem
 	body_data += decay
 
-	death_lore += area_lore + " " + cause_of_death
+	death_lore += area_lore + " " + cause_of_death.cause_of_death
 
 /// Wrapped pickweight so we can have a bit more controle over how we pick our rules
 /datum/corpse_damage_class/proc/pick_damage_type(list/damages, list/used_damage_types)

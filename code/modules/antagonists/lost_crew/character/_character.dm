@@ -5,7 +5,7 @@
 
 /datum/corpse_character/proc/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects)
 	fashionable_corpse.set_species(species_type)
-	fashionable_corpse.fully_replace_character_name(generate_random_name_species_based(fashionable_corpse.gender, species_type = species_type))
+	fashionable_corpse.fully_replace_character_name(fashionable_corpse.real_name, fashionable_corpse.generate_random_mob_name())
 
 /// Not really all roundstart species, but plasmaman is a bit too flamboyant and felinids aren't interesting
 /datum/corpse_character/roundstart

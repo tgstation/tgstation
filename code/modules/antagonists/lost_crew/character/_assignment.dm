@@ -8,10 +8,14 @@
 	var/datum/id_trim/trim
 
 /datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear)
+	for(var/item in job_stuffs)
+		job_gear += new item ()
 	job_gear += job_stuffs
 
 	if(trim)
 		var/obj/item/card/id/advanced/card = new()
+		card.registered_name = working_dead.name
+		card.registered_age = working_dead.age
 		SSid_access.apply_trim_to_card(card, trim)
 		job_gear += card
 

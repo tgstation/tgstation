@@ -50,7 +50,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
-		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), span_boldnotice(death_lore[i])), 1 SECONDS * i)
+		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), owner, span_boldnotice(death_lore[i])), 1 SECONDS * i)
 
 	addtimer(CALLBACK(src, PROC_REF(award_succes), owner.mind, death_lore), succes_check_time)
 
@@ -62,11 +62,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 	// i am incredibly disappointed in you
 	if(revived_mind.current.stat == DEAD)
-		radio.talk_into(radio, "Sensors indicate lifesigns of [revived_mind.name] have seized. Please inform their family of your failure.", FREQ_MEDICAL)
+		radio.talk_into(radio, "Sensors indicate lifesigns of [revived_mind.name] have seized. Please inform their family of your failure.", RADIO_CHANNEL_MEDICAL)
 		return
 
 	// You are a credit to society
-	radio.talk_into(radio, "Sensors indicate continued survival of [revived_mind.name]. Well done, [credits_on_succes]cr has been transferred to the medical budget.", FREQ_MEDICAL)
+	radio.talk_into(radio, "Sensors indicate continued survival of [revived_mind.name]. Well done, [credits_on_succes]cr has been transferred to the medical budget.", RADIO_CHANNEL_MEDICAL)
 
 	var/datum/bank_account/medical_budget = SSeconomy.get_dep_account(ACCOUNT_MED)
 	medical_budget.adjust_money(credits_on_succes)
@@ -113,7 +113,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 /obj/item/storage/mind_lockbox/update_icon_state()
 	. = ..()
-	else if(atom_storage?.locked)
+	if(atom_storage?.locked)
 		icon_state = icon_locked
 	else if(open)
 		icon_state = icon_open

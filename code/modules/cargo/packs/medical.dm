@@ -199,3 +199,4 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
 	crate_name = "body freezer"
+	crate_type = /obj/structure/closet/crate/secure/freezer

@@ -422,7 +422,7 @@
 		var/obj/item/storage/mind_lockbox/box = new(src)
 		box.mind = corpse.mind
 		for(var/obj/object in protected_items)
-			box.forceMove(object)
+			object.forceMove(box)
 
 	process_data(lost_crew_data)
 

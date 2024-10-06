@@ -39,7 +39,9 @@
 	decays = list(/datum/corpse_damage/post_mortem/organ_decay/light = 1)
 
 /datum/corpse_damage_class/station/morgue/human
+	weight = 0
 	possible_character_types = list(/datum/corpse_character/human = 1)
 
 /datum/corpse_damage_class/station/morgue/non_human
+	weight = 0
 	possible_character_types = list(/datum/corpse_character/roundstart/all_roundstart_no_human = 1)

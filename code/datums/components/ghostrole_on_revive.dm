@@ -52,7 +52,7 @@
 /datum/component/ghostrole_on_revive/proc/poll_ghosts(mob/living/aliver)
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
-		role = null,
+		role = ROLE_RECOVERED_CREW,
 		check_jobban = null,
 		poll_time = 15 SECONDS,
 		checked_target = aliver,
