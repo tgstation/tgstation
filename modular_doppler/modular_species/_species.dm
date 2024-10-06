@@ -6,6 +6,9 @@
 	if(frame_bodyparts && frame_bodyparts[BODY_ZONE_HEAD])
 		bodypart_overrides[BODY_ZONE_HEAD] = frame_bodyparts[BODY_ZONE_HEAD]
 
+	if(frame_bodyparts && frame_bodyparts[BODY_ZONE_R_ARM])
+		bodypart_overrides[BODY_ZONE_R_ARM] = frame_bodyparts[BODY_ZONE_R_ARM]
+
 	return ..()
 
 /// Animal trait logic goes here!

@@ -48,6 +48,13 @@
 /datum/preference/toggle/markings/create_default_value()
 	return FALSE
 
+/datum/preference/toggle/markings/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 //toggle pref integration
 /datum/preference/choiced/lizard_body_markings
 	category = PREFERENCE_CATEGORY_CLOTHING

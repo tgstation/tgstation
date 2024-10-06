@@ -13,3 +13,12 @@ export const head_type: FeatureChoiced = {
     return <FeatureDropdownInput buttons {...props} />;
   },
 };
+
+export const arm_r_type: FeatureChoiced = {
+  name: 'Arm Right Type',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};

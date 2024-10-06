@@ -66,6 +66,12 @@
 	if(chosen_variation == NO_VARIATION)
 		target.dna.features["ears"] = /datum/sprite_accessory/ears/none::name
 
+/datum/preference/choiced/ear_variation/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
 
 ///	All current ear types to choose from
 //	Cat

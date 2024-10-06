@@ -24,6 +24,13 @@
 /datum/preference/toggle/snout/create_default_value()
 	return FALSE
 
+/datum/preference/toggle/snout/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 /datum/preference/choiced/lizard_snout
 	category = PREFERENCE_CATEGORY_CLOTHING
 

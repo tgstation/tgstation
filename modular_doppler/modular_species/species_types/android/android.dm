@@ -12,7 +12,6 @@
 		TRAIT_NO_PLASMA_TRANSFORM,
 		TRAIT_OVERDOSEIMMUNE,
 		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		/*TG traits we remove
@@ -22,11 +21,14 @@
 		TRAIT_NOBLOOD,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_RESISTHEAT,
+		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		*/
 	)
-
 	mutantheart = /obj/item/organ/internal/heart/cybernetic
+
+//	bodytemp_heat_damage_limit =
+//	bodytemp_cold_damage_limit =
 
 /datum/species/android/get_physical_attributes()
 	return "Androids are almost, but not quite, identical to fully augmented humans. \

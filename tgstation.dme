@@ -419,6 +419,7 @@
 #include "code\__DEFINES\~doppler_defines\manufacturer_strings.dm"
 #include "code\__DEFINES\~doppler_defines\mobfactions.dm"
 #include "code\__DEFINES\~doppler_defines\mobs.dm"
+#include "code\__DEFINES\~doppler_defines\mutant_blacklists.dm"
 #include "code\__DEFINES\~doppler_defines\mutant_variations.dm"
 #include "code\__DEFINES\~doppler_defines\obj_flags_doppler.dm"
 #include "code\__DEFINES\~doppler_defines\organ_slots.dm"

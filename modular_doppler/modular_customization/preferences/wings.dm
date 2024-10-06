@@ -60,6 +60,13 @@
 		if("Moth Wings")
 			target.dna.features["wings"] = /datum/sprite_accessory/wings_more/none::name
 
+/datum/preference/choiced/wing_variation/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 //	Wings
 /datum/preference/choiced/wings
 	savefile_key = "feature_wings"

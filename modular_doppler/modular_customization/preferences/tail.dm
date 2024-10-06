@@ -73,6 +73,13 @@
 /datum/preference/choiced/tail_variation/init_possible_values()
 	return list(NO_VARIATION) + (GLOB.mutant_variations)
 
+/datum/preference/choiced/tail_variation/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 /datum/preference/choiced/tail_variation/apply_to_human(mob/living/carbon/human/target, chosen_variation)
 //	Read by the regenerate_organs() proc to know what organ subtype to grant
 	target.dna.tail_type = chosen_variation

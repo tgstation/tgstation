@@ -31,6 +31,13 @@
 /datum/preference/toggle/fluff/create_default_value()
 	return FALSE
 
+/datum/preference/toggle/fluff/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 /datum/preference/choiced/fluff
 	savefile_key = "fluff"
 	savefile_identifier = PREFERENCE_CHARACTER
