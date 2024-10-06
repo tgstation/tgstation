@@ -140,7 +140,7 @@
 	name = "Ink Production"
 	infuse_mob_name = "ink-producing sealife"
 	desc = "Some marine mollusks like cuttlefish, squids and octopus release ink when threatened as a smokescreen for their escape. \
-		This kind of infusion enhances the salivary glands. producing excessive quantities of ink which can later be spat to blind foes."
+		This kind of infusion enhances the salivary glands, producing excessive quantities of ink which can later be spat to blind foes."
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"spit ink to blind foes",
@@ -153,8 +153,8 @@
 /datum/infuser_entry/ttx_healing
 	name = "TTX healing"
 	infuse_mob_name = "Tetraodontiformes"
-	desc = "Fish of the Tetraodontiformes (pufferfish etc.) order are know for the highly poisonous tetrodotoxin (TTX) in their bodies. \
-		Extracting their DNA can provide a way to utilize it for healing instead. It also metabolizes alcohol better"
+	desc = "Fish of the Tetraodontiformes (pufferfish etc.) order are known for the highly poisonous tetrodotoxin (TTX) in their bodies. \
+		Extracting their DNA can provide a way to utilize it for healing instead. It also enables better alcohol metabolization."
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"TTX healing",

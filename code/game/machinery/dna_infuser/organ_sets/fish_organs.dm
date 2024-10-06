@@ -104,12 +104,12 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human = owner
-	human.physiology.burn_mod *= 1/1.5
-	human.physiology.heat_mod *= 1/1.2
-	human.physiology.brute_mod *= 1/1.1
-	human.physiology.stun_mod *= 1/1.1
-	human.physiology.knockdown_mod *= 1/1.1
-	human.physiology.stamina_mod *= 1/1.1
+	human.physiology.burn_mod /= 1.5
+	human.physiology.heat_mod /= 1.2
+	human.physiology.brute_mod /= 1.1
+	human.physiology.stun_mod /= 1.1
+	human.physiology.knockdown_mod /= 1.1
+	human.physiology.stamina_mod /= 1.1
 	human.physiology.damage_resistance += 16 //from -8% to +8%
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
@@ -162,7 +162,7 @@
 	. = ..()
 	owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
-	check_location(owner, owner.loc)
+	check_location(owner, null)
 
 /obj/item/organ/external/tail/fish/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
@@ -175,6 +175,7 @@
 	set_greyscale(bodypart_overlay.draw_color)
 
 /obj/item/organ/external/tail/fish/proc/check_location(mob/living/carbon/source, atom/movable/old_loc, dir, forced)
+	SIGNAL_HANDLER
 	var/was_water = istype(old_loc, /turf/open/water)
 	var/is_water = istype(source.loc, /turf/open/water) && !HAS_TRAIT(source.loc, TRAIT_TURF_IGNORE_SLOWDOWN)
 	if(was_water && !is_water)

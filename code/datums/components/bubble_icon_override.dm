@@ -46,8 +46,8 @@
 		unregister_owner(target)
 
 /datum/component/bubble_icon_override/proc/unregister_owner(mob/living/owner)
-		UnregisterSignal(owner, list(COMSIG_GET_BUBBLE_ICON))
-		get_bubble_icon(owner)
+	UnregisterSignal(owner, list(COMSIG_GET_BUBBLE_ICON))
+	get_bubble_icon(owner)
 
 ///Returns the potential wearer/owner of the object when the component is un/registered to/from it
 /datum/component/bubble_icon_override/proc/get_bubble_icon_target()
