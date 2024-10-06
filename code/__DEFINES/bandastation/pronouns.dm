@@ -2,17 +2,17 @@
 
 // Падежи русского языка
 /// Именительный: Кто это? Клоун и ассистуха.
-#define NOMINATIVE 1
+#define NOMINATIVE "именительный"
 /// Родительный: Откусить кусок от кого? От клоуна и ассистухи.
-#define GENITIVE 2
+#define GENITIVE "родительный"
 /// Дательный: Дать полный доступ кому? Клоуну и ассистухе.
-#define DATIVE 3
+#define DATIVE "дательный"
 /// Винительный: Обвинить кого? Клоуна и ассистуху.
-#define ACCUSATIVE 4
+#define ACCUSATIVE "винительный"
 /// Творительный: Возить по полу кем? Клоуном и ассистухой.
-#define INSTRUMENTAL 5
+#define INSTRUMENTAL "творительный"
 /// Предложный: Прохладная история о ком? О клоуне и об ассистухе.
-#define PREPOSITIONAL 6
+#define PREPOSITIONAL "предложный"
 
 /// Макрос для упрощения создания листа падежей для объекта
-#define RU_NAMES_LIST_INIT(nominative, genitive, dative, accusative, instrumental, prepositional) (list(NOMINATIVE = nominative, GENITIVE = genitive, DATIVE = dative, ACCUSATIVE = accusative, INSTRUMENTAL = instrumental, PREPOSITIONAL = prepositional))
+#define RU_NAMES_LIST_INIT(base, nominative, genitive, dative, accusative, instrumental, prepositional) (list("base" = base, NOMINATIVE = nominative, GENITIVE = genitive, DATIVE = dative, ACCUSATIVE = accusative, INSTRUMENTAL = instrumental, PREPOSITIONAL = prepositional))
