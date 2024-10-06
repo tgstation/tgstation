@@ -191,7 +191,7 @@
 
 	// Only show a message if we succeeded at least once
 	if(done_any)
-		user.visible_message(span_notice("[user] recharged [interacting_with]!"), span_notice("You recharged [interacting_with]!"))
+		user.visible_message(span_notice("[user] recharges [interacting_with]!"), span_notice("You recharge [interacting_with]!"))
 
 	return ITEM_INTERACT_SUCCESS
 
