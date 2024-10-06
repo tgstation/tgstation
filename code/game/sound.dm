@@ -111,6 +111,9 @@
 		else
 			sound = get_sfx(sound)
 
+	if(isfile(sound))
+		sound = sound(sound)
+
 	if(!istype(sound, /sound))
 		CRASH("Invalid sound type ([sound:type]) passed to [type]")
 
