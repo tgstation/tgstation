@@ -1622,6 +1622,7 @@
 #include "code\datums\id_trim\syndicate.dm"
 #include "code\datums\job_configs\_job_configs.dm"
 #include "code\datums\job_configs\default_positions.dm"
+#include "code\datums\job_configs\human_authority.dm"
 #include "code\datums\job_configs\playtime_requirements.dm"
 #include "code\datums\job_configs\required_account_age.dm"
 #include "code\datums\job_configs\required_character_age.dm"
