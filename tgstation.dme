@@ -4623,6 +4623,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\bigderelict1.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\caravanambush.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\clericsden.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\commsbuoy.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\crashedclownship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\crashedship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\cyborgmothership.dm"
