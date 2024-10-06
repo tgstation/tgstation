@@ -81,5 +81,5 @@
 /datum/component/holderloving/proc/no_unequip(obj/item/I, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	if(!isturf(newloc))
+	if(!isturf(newloc) && invdrop)
 		return COMPONENT_ITEM_BLOCK_UNEQUIP
