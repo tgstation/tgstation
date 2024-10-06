@@ -73,8 +73,18 @@
 
 /obj/effect/gibspawner/generic/smol
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs)
-	gibamounts = list(2, 2, 1)
+	gibamounts = list(2, 2)
 	sound_vol = 40
+
+/obj/effect/gibspawner/human/smol/Initialize(mapload)
+	if(!gibdirections.len)
+		gibdirections = list(\
+			list(pick(GLOB.alldirs)),\
+			list(pick(GLOB.alldirs)),\
+			)
+		list_pick
+	return ..()
+
 
 /obj/effect/gibspawner/human
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/up, /obj/effect/decal/cleanable/blood/gibs/down, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/body, /obj/effect/decal/cleanable/blood/gibs/limb, /obj/effect/decal/cleanable/blood/gibs/core)

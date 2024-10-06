@@ -621,6 +621,8 @@
 	// you can use this without lowering integrity! let's be honest. nobody's doing that
 	var/allowed_usage = 3
 	var/reload_charge = 10 SECONDS
+	// current particle effect used for smoking brain
+	var/obj/effect/abstract/particle_holder/particle_effect
 
 /obj/item/skillchip/acrobatics/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
@@ -630,26 +632,26 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOB_EMOTE_COOLDOWN_CHECK)
 
+/obj/item/skillchip/acrobatics/Destroy(force)
+	qdel(sparks)
+	qdel(particle_effect)
+	. = ..()
+
 /obj/item/skillchip/acrobatics/proc/whowee(mob/living/carbon/bozo, emote_key, emote_intentional)
 	SIGNAL_HANDLER
 
 	if(!(emote_key in affected_emotes))
 		return
 
-	var/integrity_loss = 1
-	if(emote_key == "flip") // twice as obtrusive
-		integrity_loss = 2
-
 	if(allowed_usage)
 		allowed_usage--
 		addtimer(CALLBACK(src, PROC_REF(charge)), reload_charge)
 	else
-		take_damage(integrity_loss, sound_effect = FALSE)
+		take_damage(1, sound_effect = FALSE)
 
 	if(!sparks)
 		sparks = new(src)
 
-	var/cancel_flip = FALSE
 	// minimum roll is by default capped at 50, with the min value lowering as integrity is reduced.
 	var/mintegrity = clamp(50 - (100 - get_integrity()), 1, 100)
 	switch(rand(mintegrity, get_integrity())) // 1 to 100 but gets worse every time
@@ -669,18 +671,19 @@
 				splashed.adjust_confusion(3 SECONDS)
 
 			// GORE
-			var/obj/item/bodypart/bozopart = bozo.bodyparts[/obj/item/bodypart/head]
+			/*
+			var/obj/item/bodypart/bozopart = bozo.get_bodypart(BODY_ZONE_HEAD)
 			if(bozopart)
 				var/datum/wound/cranial_fissure/crit_wound = new()
 				crit_wound.apply_wound(bozopart)
-				var/obj/item/thing_to_drop = pick(bozopart.contents)
-				// assign to bodypart, change to organ inside
-				if(thing_to_drop)
-					thing_to_drop = pick(thing_to_drop.contents)
+				var/list/droppage_candidates = bozo.get_organs_for_zone(BODY_ZONE_HEAD, include_children = TRUE)
+				if(droppage_candidates)
+					var/obj/thing_to_drop = pick(droppage_candidates)
 					thing_to_drop.forceMove(bozo.drop_location())
+			*/ //WHY DOESNTY IT OWRK
+
 			// does not always kill you directly. instead it causes cranial fissure + something to drop from your head. could be eyes, tongue, ears, brain, even implants
-			new /obj/effect/gibspawner/generic/smol(get_turf(src))
-			cancel_flip = TRUE
+			new /obj/effect/gibspawner/generic/smol(get_turf(bozo), bozo)
 
 			sparks.set_up(15, cardinals_only = FALSE, location = get_turf(src))
 			sparks.start()
@@ -695,6 +698,7 @@
 			// if they're susceptible to electrocution, confuse them
 			if(bozo.electrocute_act(15, bozo, 1, SHOCK_NOGLOVES|SHOCK_NOSTUN))
 				bozo.adjust_confusion(15 SECONDS)
+				bozo.set_eye_blur_if_lower(10 SECONDS)
 			// but the rest of the effects will happen either way
 			bozo.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
 
@@ -704,6 +708,7 @@
 		// brain Smoking. you should probably stop now
 		if(13 to 15)
 			// if already hot, light 'em up
+			var/particle_path = /particles/smoke/steam/mild
 			if(bozo.has_status_effect(/datum/status_effect/temperature_over_time/chip_overheat))
 				bozo.adjust_fire_stacks(11 - get_integrity())
 				bozo.ignite_mob()
@@ -711,34 +716,44 @@
 					span_danger("[bozo]'s head lights up!"),
 					span_userdanger("Your head hurts so much, it feels like it's on fire!"),
 				)
-				INVOKE_ASYNC(bozo, TYPE_PROC_REF(/mob/living, emote), "scream")
-				bozo.emote("scream")
+				ASYNC
+					bozo.emote("scream")
+				if(particle_effect?.type == particle_path)
+					return
+				particle_path = /particles/smoke/steam/bad
 			else
 				bozo.visible_message(
 					span_danger("[bozo]'s head starts smoking!"),
-					span_userdanger("You get a massive headache! This can't be good..."),
+					span_userdanger("Your brain feels like it's on fire!"),
 				)
 
+				// increase smokiness if already smoking
+				if(particle_effect?.type == /particles/smoke/steam/mild)
+					particle_path = /particles/smoke/steam
+				else
+					particle_path = /particles/smoke/steam/mild
 
-			var/particles/smoke/steam/mild/particle_effect = new(bozo)
-			bozo.apply_status_effect(/datum/status_effect/temperature_over_time/chip_overheat)
+			bozo.adjust_confusion(4 SECONDS)
+			bozo.set_eye_blur_if_lower(3 SECONDS)
+
+			particle_effect = new(bozo, particle_path)
+			// roughly head position.
+			// dont know how to make this not hardcoded
+			particle_effect.set_particle_position(-2, 12, 0)
+			bozo.apply_status_effect(/datum/status_effect/temperature_over_time/chip_overheat, 15 SECONDS)
 			QDEL_IN(particle_effect, 15 SECONDS)
 
 			sparks.set_up(10, cardinals_only = FALSE, location = get_turf(src))
 			sparks.start()
+
 		// hey, something isn't right...
 		if(16 to 50)
 			bozo.visible_message(
 				span_warning("[bozo]'s head sparks."),
-				span_danger("[name] sparks a little."),
 			)
 
 			sparks.set_up(rand(1,2), cardinals_only = TRUE, location = get_turf(src))
 			sparks.start()
-
-	// no spin :(
-	if(cancel_flip)
-		return
 
 	return COMPONENT_EMOTE_COOLDOWN_BYPASS
 

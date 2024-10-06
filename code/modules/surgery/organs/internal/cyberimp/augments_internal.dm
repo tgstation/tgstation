@@ -217,29 +217,29 @@
 	var/fail_string = owner.implant_skillchip(skillchip, force = FALSE)
 	if(fail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz-sigh.ogg', 10, vary = TRUE) // your brani is quiet
+		playsound(owner, 'sound/machines/buzz-sigh.ogg', 10, vary = TRUE)
 		return
 
 	var/refail_string = skillchip.try_activate_skillchip(silent = FALSE, force = FALSE)
 	if(refail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz-two.ogg', 10, vary = TRUE) // your brani is quiet
+		playsound(owner, 'sound/machines/buzz-two.ogg', 10, vary = TRUE)
 		return
 
 	// success!
-	playsound(owner, 'sound/machines/chime.ogg', 10, vary = TRUE) // your brani is quiet
+	playsound(owner, 'sound/machines/chime.ogg', 10, vary = TRUE)
 
 /obj/item/organ/internal/cyberimp/brain/connector/proc/remove_skillchip(obj/item/organ/internal/brain/chippy_brain)
-	var/obj/item/skillchip/skillchip = tgui_input_list(owner, "Select a skillchip to remove:", "Remove Chip", chippy_brain.skillchips)
+	var/obj/item/skillchip/skillchip = show_radial_menu(owner, owner, chippy_brain.skillchips)
 	if(skillchip)
 		owner.remove_skillchip(skillchip, silent = FALSE)
 		skillchip.forceMove(owner.drop_location())
 		owner.put_in_hands(skillchip, del_on_fail = FALSE)
-		playsound(owner, 'sound/machines/click.ogg', 10, vary = TRUE) // your brani is quiet
+		playsound(owner, 'sound/machines/click.ogg', 10, vary = TRUE)
 		to_chat(owner, span_warning("You take [skillchip] out of [src]."))
 		return
 
-	to_chat(owner, span_warning("Your brain is empty!"))
+	to_chat(owner, span_warning("Your brain is empty!")) // heh
 
 /obj/item/organ/internal/cyberimp/brain/connector/emp_act(severity)
 	. = ..()

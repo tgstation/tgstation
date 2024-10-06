@@ -29,9 +29,15 @@
 	/// Effect removed outright at this temperature or below.
 	var/removal_temperature_cold = BODYTEMP_COLD_WARNING_3
 
+/datum/status_effect/temperature_over_time/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
 /datum/status_effect/temperature_over_time/on_apply()
 	. = ..()
-	if((TRAIT_RESISTHEAT && temperature_value > 1) || (TRAIT_RESISTCOLD && temperature_value < 1))
+	if((HAS_TRAIT(owner, TRAIT_RESISTHEAT) && temperature_value > 1))
+		qdel(src) // git out
+	else if((HAS_TRAIT(owner, TRAIT_RESISTCOLD) && temperature_value < 1))
 		qdel(src) // git out
 
 /datum/status_effect/temperature_over_time/on_remove()
