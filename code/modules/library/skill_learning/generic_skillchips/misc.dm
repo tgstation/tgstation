@@ -141,7 +141,7 @@
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
 
-	action_types = list(/datum/action/cooldown/fishing_tip)
+	actions_types = list(/datum/action/cooldown/fishing_tip)
 
 /datum/action/cooldown/fishing_tip
 	name = "Dispense Fishing Tip"
