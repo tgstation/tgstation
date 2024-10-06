@@ -6,7 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "crucible"
 	base_icon_state = "crucible"
-	break_sound = 'sound/hallucinations/wail.ogg'
+	break_sound = 'sound/effects/hallucinations/wail.ogg'
 	light_power = 1
 	anchored = TRUE
 	density = TRUE
@@ -31,7 +31,7 @@
 		for(var/turf/nearby_turf as anything in get_adjacent_open_turfs(our_turf))
 			if(prob(10 * current_mass))
 				new /obj/effect/decal/cleanable/greenglow(nearby_turf)
-		playsound(our_turf, 'sound/effects/bubbles2.ogg', 50, TRUE)
+		playsound(our_turf, 'sound/effects/bubbles/bubbles2.ogg', 50, TRUE)
 
 	return ..()
 
@@ -69,12 +69,6 @@
 		bite_the_hand(user)
 		return TRUE
 
-	if(istype(weapon, /obj/item/codex_cicatrix) || istype(weapon, /obj/item/melee/touch_attack/mansus_fist))
-		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
-		set_anchored(!anchored)
-		balloon_alert(user, "[anchored ? "":"un"]anchored")
-		return TRUE
-
 	if(isbodypart(weapon))
 
 		var/obj/item/bodypart/consumed = weapon
@@ -98,6 +92,13 @@
 		return TRUE
 
 	return ..()
+
+/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
+		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+		set_anchored(!anchored)
+		balloon_alert(user, "[anchored ? "":"un"]anchored")
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -163,7 +164,7 @@
 
 	var/obj/item/spawned_pot = new spawned_type(drop_location())
 
-	playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
 	visible_message(span_notice("[src]'s shining liquid drains into a flask, creating a [spawned_pot.name]!"))
 	balloon_alert(user, "potion created")
 
@@ -237,7 +238,7 @@
 	if(!iscarbon(user))
 		return
 
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))

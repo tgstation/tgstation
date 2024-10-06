@@ -153,7 +153,7 @@
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
-	selected_message = tgui_input_text(user, "What is your question?", "Eightball") || initial(selected_message)
+	selected_message = tgui_input_text(user, "What is your question?", "Eightball", max_length = MAX_MESSAGE_LEN) || initial(selected_message)
 	if (!(src in user.held_items))
 		return FALSE
 	notify_ghosts(

@@ -374,7 +374,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 	))
-	atom_storage.open_sound = 'sound/items/holster.ogg'
+	atom_storage.open_sound = 'sound/items/handling/holster_open.ogg'
 	atom_storage.open_sound_vary = TRUE
 	atom_storage.rustle_sound = FALSE
 
@@ -515,6 +515,7 @@
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.set_holdable(/obj/item/clothing/mask/luchador)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
 
 /obj/item/storage/belt/military
 	name = "chest rig"

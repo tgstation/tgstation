@@ -31,3 +31,4 @@
 	icon_state = /turf/open/floor/wood::icon_state
 	base_icon_state = /turf/open/floor/wood::base_icon_state
 	icon = /turf/open/floor/wood::icon
+	smoothing_flags = NONE

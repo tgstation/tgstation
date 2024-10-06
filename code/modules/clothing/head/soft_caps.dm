@@ -175,6 +175,7 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 #define PROPHAT_MOOD "prophat"
 

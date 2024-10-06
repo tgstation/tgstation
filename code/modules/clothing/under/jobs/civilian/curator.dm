@@ -28,6 +28,10 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
+/obj/item/clothing/under/rank/civilian/curator/treasure_hunter/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3)
+
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
