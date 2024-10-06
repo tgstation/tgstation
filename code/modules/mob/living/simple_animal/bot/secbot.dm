@@ -289,7 +289,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg').volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play() // evil laughter
+		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg').volume(75).vary(TRUE).extra_range(-1).play() // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -334,7 +334,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	playsound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -354,7 +354,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/items/weapons/egloves.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/egloves.ogg').vary(TRUE).extra_range(-1).play()
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5

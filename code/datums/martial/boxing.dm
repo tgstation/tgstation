@@ -136,7 +136,7 @@
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/armor_block = defender.run_armor_check(affecting, MELEE, armour_penetration = base_unarmed_effectiveness)
 
-	playsound(defender, attack_sound).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(defender, attack_sound).volume(25).vary(TRUE).extra_range(-1).play()
 
 	defender.visible_message(
 		span_danger("[attacker] [current_atk_verbed] [defender]!"),

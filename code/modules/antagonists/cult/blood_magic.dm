@@ -534,8 +534,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
-		playsound(origin, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
-		playsound(dest, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+		playsound(origin, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		playsound(dest, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	return ..()
 
 //Shackles
@@ -559,7 +559,7 @@
 
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
-		playsound(loc, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
+		playsound(loc, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 		C.visible_message(span_danger("[user] begins restraining [C] with dark magic!"), \
 								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
 		if(do_after(user, 3 SECONDS, C))

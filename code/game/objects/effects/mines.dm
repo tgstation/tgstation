@@ -57,7 +57,7 @@
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
 	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/machines/nuke/angry_beep.ogg').volume(40).vary(FALSE).range(-2 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/nuke/angry_beep.ogg').volume(40).vary(FALSE).extra_range(-2).play()
 	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /// Can this mine trigger on the passed movable?
@@ -283,7 +283,7 @@
 /// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()
 	do_alert_animation()
-	playsound(loc, 'sound/machines/chime.ogg').volume(30).vary(FALSE).range(-3 + SOUND_RANGE).play()
+	playsound(loc, 'sound/machines/chime.ogg').volume(30).vary(FALSE).extra_range(-3).play()
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
 	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))

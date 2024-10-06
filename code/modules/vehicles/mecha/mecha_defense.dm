@@ -63,7 +63,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	playsound(loc, 'sound/items/weapons/tap.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(loc, 'sound/items/weapons/tap.ogg').volume(40).vary(TRUE).extra_range(-1).play()
 	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 

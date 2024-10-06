@@ -17,7 +17,7 @@
 	user.played_game()
 	var/obj/item/bodypart/chopchop = user.get_active_hand()
 	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
-		playsound(src, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(src, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()
 		qdel(chopchop)
@@ -29,7 +29,7 @@
 		return
 	if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
-		playsound(src, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(src, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	else
 		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
 	user.lost_game()

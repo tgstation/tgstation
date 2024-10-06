@@ -128,7 +128,7 @@
 		zap_count += 1
 
 	if(zap_count >= 1)
-		playsound(loc, 'sound/items/weapons/emitter2.ogg').volume(100).vary(TRUE).range(10 + SOUND_RANGE).play()
+		playsound(loc, 'sound/items/weapons/emitter2.ogg').volume(100).vary(TRUE).extra_range(0).play()
 		var/delta_time = (SSmachines.times_fired - last_high_energy_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
 		if(delta_time)
 			for(var/i in 1 to zap_count)

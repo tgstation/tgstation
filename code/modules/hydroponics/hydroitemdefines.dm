@@ -499,7 +499,7 @@
 
 /obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/hatchet/wooden

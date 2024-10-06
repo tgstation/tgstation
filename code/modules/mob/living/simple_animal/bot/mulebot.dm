@@ -212,7 +212,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(FALSE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3

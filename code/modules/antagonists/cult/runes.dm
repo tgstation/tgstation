@@ -568,7 +568,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, get_sfx(SFX_PORTAL_CREATED)).volume(100).vary(TRUE).range(14 + SOUND_RANGE).play()
+	playsound(T, get_sfx(SFX_PORTAL_CREATED)).volume(100).vary(TRUE).extra_range(4).play()
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -889,8 +889,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	playsound(src, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
-	playsound(old_turf, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+	playsound(old_turf, get_sfx(SFX_PORTAL_ENTER)).volume(100).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby

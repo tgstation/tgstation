@@ -448,7 +448,7 @@
 		return FALSE
 	else
 		flick("apc-spark", src)
-		playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		obj_flags |= EMAGGED
 		locked = FALSE
 		balloon_alert(user, "interface damaged")

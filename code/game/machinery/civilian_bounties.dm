@@ -408,7 +408,7 @@
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(80).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(80).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

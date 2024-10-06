@@ -20,7 +20,7 @@
 
 /obj/item/gavelhammer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/gavel.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(loc, 'sound/items/gavel.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/gavelblock

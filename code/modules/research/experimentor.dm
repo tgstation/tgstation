@@ -316,7 +316,7 @@
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -328,7 +328,7 @@
 			tmp_holder.add_reagent(chosenchem , 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -407,7 +407,7 @@
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+			playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -434,14 +434,14 @@
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes way too many levels too high, crushing right through space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+			playsound(src, 'sound/effects/supermatter.ogg').vary(TRUE).extra_range(-3).play()
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes one level too high, crushing right into space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+			playsound(src, 'sound/effects/supermatter.ogg').vary(TRUE).extra_range(-3).play()
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
@@ -459,7 +459,7 @@
 
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message(span_notice("[src] scans the [exp_on], revealing its true nature!"))
-		playsound(src, 'sound/effects/supermatter.ogg').vary(3).range(-1 + SOUND_RANGE).play()
+		playsound(src, 'sound/effects/supermatter.ogg').vary(3).extra_range(-1).play()
 		var/obj/item/relic/loaded_artifact = loaded_item
 		loaded_artifact.reveal()
 		investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)

@@ -523,14 +523,12 @@
 /datum/plant_gene/trait/bomb_plant/proc/trigger_detonation(obj/item/our_plant, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/food/grown/grown_plant = our_plant
 	// If we have an alt icon, use that to show our plant is exploding.
 	if(istype(our_plant) && grown_plant.alt_icon)
 		our_plant.icon_state = grown_plant.alt_icon
 	else
 		our_plant.color = COLOR_RED
-
 
 	user.visible_message(
 		span_warning("[user] plucks the stem from [our_plant]!"),

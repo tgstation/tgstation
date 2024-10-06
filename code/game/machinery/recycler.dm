@@ -94,7 +94,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safeties disabled")
 	return FALSE
 

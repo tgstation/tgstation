@@ -493,7 +493,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	if(hivemind)
 		return
 
-	playsound(owner, get_sfx(SFX_HISS)).volume(25).vary(TRUE).range(SOUND_RANGE + TRUE).play()
+	playsound(owner, get_sfx(SFX_HISS)).volume(25).vary(TRUE).extra_range(TRUE).play()
 
 /obj/item/organ/internal/tongue/bone
 	name = "bone \"tongue\""

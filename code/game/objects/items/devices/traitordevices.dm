@@ -380,7 +380,7 @@ effective or pretty fucking useless.
 		COMBAT_MESSAGE_RANGE,
 	)
 
-	playsound(src, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).extra_range(-1).play()
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src

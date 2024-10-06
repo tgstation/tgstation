@@ -185,7 +185,7 @@
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg').volume(75).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/effects/extinguish.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 		extinguisher.reagents.remove_all(1)
 		return TRUE
 

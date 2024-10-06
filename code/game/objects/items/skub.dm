@@ -14,5 +14,5 @@
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has declared themself as anti-skub! The skub tears them apart!"))
 	user.gib(DROP_ALL_REMAINS)
-	playsound(src, 'sound/items/eatfood.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/eatfood.ogg').vary(TRUE).extra_range(-1).play()
 	return MANUAL_SUICIDE

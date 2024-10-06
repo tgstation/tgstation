@@ -393,7 +393,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toggle(user)
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
-	playsound(src, on_stun_sound).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, on_stun_sound).vary(TRUE).extra_range(-1).play()
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
@@ -422,7 +422,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			playsound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).range(-2 + SOUND_RANGE).play()
+			playsound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())

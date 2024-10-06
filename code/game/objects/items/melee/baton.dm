@@ -507,7 +507,7 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	playsound(source_turf, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(source_turf, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).extra_range(-1).play()
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
@@ -595,7 +595,7 @@
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
 	update_appearance()
 	toggle_light()
 	do_sparks(1, TRUE, src)
@@ -606,7 +606,7 @@
 	active = FALSE
 	set_light_on(FALSE)
 	update_appearance()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 
@@ -709,7 +709,7 @@
 	active = !active
 	toggle_light()
 	do_sparks(1, TRUE, src)
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

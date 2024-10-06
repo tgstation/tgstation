@@ -34,7 +34,7 @@
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
 		balloon_alert(user, "access controller shorted")
-	playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)

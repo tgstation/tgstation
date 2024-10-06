@@ -351,9 +351,9 @@
 		if(hit_limb_zone)
 			organ_hit_text = " in \the [living_target.parse_zone_with_bodypart(hit_limb_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
-			playsound(loc, hitsound).volume(5).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, hitsound).volume(5).vary(TRUE).extra_range(-1).play()
 		else if(suppressed)
-			playsound(loc, hitsound).volume(5).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, hitsound).volume(5).vary(TRUE).extra_range(-1).play()
 			to_chat(living_target, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
 		else
 			if(hitsound)

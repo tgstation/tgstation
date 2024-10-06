@@ -167,7 +167,7 @@
 		var/turf/T = get_turf(holder.my_atom)
 		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
-		playsound(T, 'sound/effects/pray.ogg').volume(80).vary(FALSE).range(SOUND_RANGE + effective_size).play()
+		playsound(T, 'sound/effects/pray.ogg').volume(80).vary(FALSE).extra_range(effective_size).play()
 		for(var/mob/living/basic/revenant/ghostie in get_hearers_in_view(7,T))
 			var/deity
 			if(GLOB.deity)
@@ -378,7 +378,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(location, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 	if(S)
 		S.set_up(amount = created_volume * 3, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
 		S.start(log = TRUE)
@@ -396,7 +396,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(location, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 	if(S)
 		S.set_up(amount = created_volume, holder = holder.my_atom, location = location, carry = holder, silent = FALSE)
 		S.start(log = TRUE)

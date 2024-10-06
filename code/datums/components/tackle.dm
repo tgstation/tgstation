@@ -104,7 +104,7 @@
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
-	playsound(user, 'sound/items/weapons/thudswoosh.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(user, 'sound/items/weapons/thudswoosh.ogg').volume(40).vary(TRUE).extra_range(-1).play()
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, clicked_atom, 7))

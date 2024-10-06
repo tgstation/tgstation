@@ -49,7 +49,7 @@
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
@@ -68,7 +68,7 @@
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()

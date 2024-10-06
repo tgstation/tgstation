@@ -70,7 +70,7 @@
 
 /obj/item/storage/bag/trash/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
-	playsound(loc, 'sound/items/eatfood.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(loc, 'sound/items/eatfood.ogg').vary(TRUE).extra_range(-1).play()
 	return TOXLOSS
 
 /obj/item/storage/bag/trash/update_icon_state()

@@ -42,7 +42,7 @@
 			and [emag_card.p_they()] become stuck together!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	playsound(src, 'sound/effects/bang.ogg').volume(33).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, 'sound/effects/bang.ogg').volume(33).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
 	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
 	vis_contents += emag_card
@@ -125,7 +125,7 @@
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)

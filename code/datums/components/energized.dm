@@ -76,7 +76,7 @@
 	if(prob(100 - toast_prob))
 		if(prob(25))
 			do_sparks(1, FALSE, source)
-			playsound(parent, get_sfx(SFX_SPARKS)).volume(40).vary(TRUE).range(SHORT_RANGE_SOUND_EXTRARANGE+ SOUND_RANGE)
+			playsound(parent, get_sfx(SFX_SPARKS)).volume(40).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			source.audible_message(span_danger("[parent] makes an electric crackle..."))
 		return FALSE
 
@@ -111,7 +111,7 @@
 
 	// Finally the interesting part where they ACTUALLY get hit!
 	do_sparks(4, FALSE, source)
-	playsound(parent, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(parent, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
 	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))
 	future_tram_victim.electrocute_act(15, parent, 1)

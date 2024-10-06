@@ -74,7 +74,7 @@
 		if(istype(target, /turf/closed/mineral/gibtonite))
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
-				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 

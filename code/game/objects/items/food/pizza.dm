@@ -395,7 +395,7 @@
 		return
 	to_chat(user, span_userdanger("Maybe I'll give you a pizza, maybe I'll break off your arm.")) //makes the reference more obvious
 	user.visible_message(span_warning("\The [src] breaks off [user]'s arm!"), span_warning("\The [src] breaks off your arm!"))
-	playsound(user, get_sfx(SFX_DESECRATION)).volume(50).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(user, get_sfx(SFX_DESECRATION)).volume(50).vary(TRUE).extra_range(-1).play()
 
 /obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)
 	if(istype(item, /obj/item/food/pineappleslice))

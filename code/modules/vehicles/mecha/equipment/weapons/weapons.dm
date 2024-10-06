@@ -596,7 +596,7 @@
 			balloon_alert(source, "no room!")
 			return
 
-		playsound(chassis, clampsound).vary(FALSE).range(-6 + SOUND_RANGE).play()
+		playsound(chassis, clampsound).vary(FALSE).extra_range(-6).play()
 		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
 		if(!do_after_cooldown(mobtarget, source))
 			return
@@ -613,7 +613,7 @@
 	if(istype(target, /obj/machinery/door))
 		. = ..()
 		var/obj/machinery/door/target_door = target
-		playsound(chassis, clampsound).vary(FALSE).range(-6 + SOUND_RANGE).play()
+		playsound(chassis, clampsound).vary(FALSE).extra_range(-6).play()
 		target_door.try_to_crowbar(src, source)
 		return
 

@@ -277,7 +277,7 @@
 	flushAnimation()
 	sleep(1 SECONDS)
 	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
-		playsound(src, 'sound/machines/disposalflush.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
+		playsound(src, 'sound/machines/disposalflush.ogg').volume(50).vary(FALSE).extra_range(FALSE).play()
 		last_sound = world.time
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
@@ -305,7 +305,7 @@
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
-	playsound(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
+	playsound(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).extra_range(FALSE).play()
 
 	pipe_eject(H)
 

@@ -142,7 +142,7 @@
 /obj/cascade_portal/Bumped(atom/movable/hit_object)
 	consume(hit_object)
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(loc, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /**
  * Proc to consume the objects colliding with the portal
@@ -172,7 +172,7 @@
 		consumed_mob.flash_act(1, TRUE, TRUE)
 
 		new /obj/effect/particle_effect/sparks(consumed_object)
-		playsound(consumed_object, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(consumed_object, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	else if(isitem(consumed_object))
 		consumed_object.visible_message(span_danger("\The [consumed_object] smacks into \the [src] and disappears out of sight."), null,
 			span_hear("You hear a loud crack as a small distortion passes through you."))

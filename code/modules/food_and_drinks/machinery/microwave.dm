@@ -792,7 +792,7 @@
 
 /obj/machinery/microwave/proc/open(autoclose = 2 SECONDS)
 	open = TRUE
-	playsound(loc, 'sound/machines/click.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(loc, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(close)), autoclose)
 

@@ -321,7 +321,7 @@ at the cost of risking a vicious bite.**/
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(range = 1, amount = 1, location = src)
 	smoke.start()
-	playsound(src, 'sound/machines/steam_hiss.ogg').volume(75).vary(TRUE).range(-2 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/steam_hiss.ogg').volume(75).vary(TRUE).extra_range(-2).play()
 	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 
 /obj/structure/steam_vent/update_icon_state()

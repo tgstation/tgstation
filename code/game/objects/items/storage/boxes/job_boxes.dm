@@ -158,7 +158,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, get_sfx(SFX_RUSTLE)).vary(TRUE).range(SOUND_RANGE - 5).play()
+	playsound(loc, get_sfx(SFX_RUSTLE)).vary(TRUE).extra_range(-5).play()
 	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/black
@@ -234,7 +234,7 @@
 /obj/item/storage/box/survival/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, get_sfx(SFX_RUSTLE)).vary(TRUE).range(SOUND_RANGE - 5).play()
+	playsound(loc, get_sfx(SFX_RUSTLE)).vary(TRUE).extra_range(-5).play()
 	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/plushes

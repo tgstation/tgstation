@@ -137,7 +137,6 @@
 WITH_X(channel)
 WITH_X(volume)
 WITH_X(wait)
-WITH_X(range)
 WITH_X(use_reverb)
 WITH_X(frequency)
 WITH_X(vary)

@@ -124,4 +124,4 @@
 	user.toner -= printcost  //All fun allowed.
 	user.visible_message(span_notice("[user.name] spits out a photograph from a narrow slot on its chassis."), span_notice("You print a photograph."))
 	balloon_alert(user, "photograph printed")
-	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg').vary(TRUE).extra_range(-3).play()

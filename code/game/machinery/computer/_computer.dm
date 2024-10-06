@@ -139,7 +139,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(!issilicon(ui.user))
-		playsound(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary(TRUE).range(SOUND_RANGE + FALSE).play()
+		playsound(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary(TRUE).extra_range(FALSE).play()
 
 /obj/machinery/computer/ui_close(mob/user)
 	SHOULD_CALL_PARENT(TRUE)

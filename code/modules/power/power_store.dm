@@ -284,7 +284,7 @@
 		return
 	user.dropItemToGround(src)
 	user.dust(just_ash = TRUE)
-	playsound(src, 'sound/effects/magic/lightningshock.ogg').vary(TRUE).range(10 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/magic/lightningshock.ogg').vary(TRUE).extra_range(0).play()
 	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 
 /obj/item/stock_parts/power_store/attack_self(mob/user)

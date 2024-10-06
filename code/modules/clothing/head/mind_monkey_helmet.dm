@@ -118,7 +118,7 @@
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
 	new /obj/effect/decal/cleanable/ash(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation

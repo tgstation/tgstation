@@ -54,7 +54,7 @@
 			span_userdanger("[user] prods you with [src]!"),
 		)
 
-	playsound(loc, 'sound/items/weapons/egloves.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(loc, 'sound/items/weapons/egloves.ogg').vary(TRUE).extra_range(-1).play()
 	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
@@ -114,7 +114,7 @@
 					span_notice("You playfully boop [attacked_mob] on the head!"),
 				)
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
-				playsound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+				playsound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).extra_range(-1).play()
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(
@@ -133,7 +133,7 @@
 					span_notice("[user] pets [attacked_mob]!"),
 					span_notice("You pet [attacked_mob]!"),
 				)
-			playsound(loc, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).extra_range(-1).play()
 		if(HUG_MODE_HUG)
 			if(ishuman(attacked_mob))
 				attacked_mob.adjust_status_effects_on_shake_up()
@@ -160,7 +160,7 @@
 					span_warning("[user] bops [attacked_mob] on the head!"),
 					span_warning("You bop [attacked_mob] on the head!"),
 				)
-			playsound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).extra_range(-1).play()
 		if(HUG_MODE_SHOCK)
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
@@ -184,7 +184,7 @@
 						span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"),
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
-			playsound(loc, 'sound/effects/sparks/sparks2.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/effects/sparks/sparks2.ogg').vary(TRUE).extra_range(-1).play()
 			user.cell.use(0.5 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
@@ -200,7 +200,7 @@
 					span_userdanger("[user] crushes [attacked_mob]!"),
 						span_danger("You crush [attacked_mob]!"),
 				)
-			playsound(loc, 'sound/items/weapons/smash.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/items/weapons/smash.ogg').vary(TRUE).extra_range(-1).play()
 			attacked_mob.adjustBruteLoss(15)
 			user.cell.use(0.3 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)

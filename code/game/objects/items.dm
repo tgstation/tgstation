@@ -868,7 +868,7 @@
 		else
 
 	else
-		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg').volume(1).vary(volume).range(-1 + SOUND_RANGE).play()
+		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg').volume(1).vary(volume).extra_range(-1).play()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))

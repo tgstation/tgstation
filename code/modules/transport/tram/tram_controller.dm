@@ -887,9 +887,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		playsound(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).extra_range(-3).play()
 	else
-		playsound(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).extra_range(-3).play()
 	cover_open = !cover_open
 	update_appearance()
 
@@ -1041,7 +1041,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	cover_locked = FALSE
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 

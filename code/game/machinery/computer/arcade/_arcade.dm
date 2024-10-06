@@ -96,5 +96,5 @@
 		else
 			prizeselect = pick_weight(GLOB.arcade_prize_pool)
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
-		playsound(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(src, 'sound/machines/machine_vend.ogg').vary(TRUE).extra_range(-3).play()
 		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))

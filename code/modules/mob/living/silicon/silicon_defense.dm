@@ -10,7 +10,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
 			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/items/weapons/slash.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/items/weapons/slash.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("[user] slashes at you!"), null, null, user)
 			to_chat(user, span_danger("You slash at [src]!"))
@@ -19,7 +19,7 @@
 			log_combat(user, src, "attacked")
 			adjustBruteLoss(damage)
 		else
-			playsound(loc, 'sound/items/weapons/slashmiss.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, 'sound/items/weapons/slashmiss.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user]'s swipe misses [src]!"), \
 							span_danger("You avoid [user]'s swipe!"), null, null, user)
 			to_chat(user, span_warning("Your swipe misses [src]!"))
@@ -50,7 +50,7 @@
 	if(!.)
 		return
 	adjustBruteLoss(rand(10, 15))
-	playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))

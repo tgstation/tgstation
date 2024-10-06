@@ -170,7 +170,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(loc, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(loc, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	update_appearance()
 	to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
 	return FALSE

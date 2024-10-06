@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if(!clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			return FALSE
 		clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this)
-		playsound(loc, 'sound/effects/spray3.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + MEDIUM_RANGE_SOUND_EXTRARANGE).play()
+		playsound(loc, 'sound/effects/spray3.ogg').volume(50).vary(TRUE).extra_range(MEDIUM_RANGE_SOUND_EXTRARANGE).play()
 		user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
 		jammed = FALSE
 		return TRUE
@@ -369,7 +369,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if (FAX.jammed)
 			do_sparks(5, TRUE, src)
 			balloon_alert(usr, "destination port jammed")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)

@@ -873,9 +873,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-	playsound(destination, 'sound/effects/phasein.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-	playsound(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(destination, 'sound/effects/phasein.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"

@@ -116,12 +116,12 @@
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 	cut_overlay("flaps")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 	cut_overlay("hatch")
 	sleep(3 SECONDS)
 	if(QDELETED(src))

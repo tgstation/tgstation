@@ -44,7 +44,7 @@
 	if(!SPT_PROB(20, seconds_per_tick))
 		return
 	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(target, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).extra_range(-1).play()
 	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
 
 /// Let them know we mean business

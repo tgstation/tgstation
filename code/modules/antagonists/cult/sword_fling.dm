@@ -56,7 +56,7 @@
 
 		new particle_to_spawn(get_turf(loccer))
 		loccer.shake_up_animation()
-		playsound(loccer, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(loccer, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).extra_range(-1).play()
 
 		if(prob(resist_chance))
 			flinged_sword.forceMove(get_turf(loccer))

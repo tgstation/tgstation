@@ -81,7 +81,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
-	playsound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).range(-6 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).extra_range(-6).play()
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
@@ -503,7 +503,7 @@
 		return
 	if(new_mode != SHOOTING_ASSISTANT_OFF && !mod.get_charge())
 		balloon_alert(mod.wearer, "no charge!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return
 
 	//Remove the effects of the previously selected mode

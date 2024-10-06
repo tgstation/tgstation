@@ -495,7 +495,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/structure/puzzle_blockade/proc/try_signal(datum/source)
 	SIGNAL_HANDLER
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)
 

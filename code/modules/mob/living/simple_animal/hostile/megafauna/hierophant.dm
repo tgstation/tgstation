@@ -505,7 +505,7 @@ Difficulty: Hard
 	if(!stat && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
-		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg').volume(80).vary(TRUE).range(-4 + SOUND_RANGE).play()
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg').volume(80).vary(TRUE).extra_range(-4).play()
 		if(target)
 			arena_trap(target)
 
@@ -718,7 +718,7 @@ Difficulty: Hard
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
-		playsound(L, 'sound/items/weapons/sear.ogg').vary(TRUE).range(-4 + SOUND_RANGE).play()
+		playsound(L, 'sound/items/weapons/sear.ogg').vary(TRUE).extra_range(-4).play()
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
@@ -742,7 +742,7 @@ Difficulty: Hard
 			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
 			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
-			playsound(M, 'sound/items/weapons/sear.ogg').vary(TRUE).range(-4 + SOUND_RANGE).play()
+			playsound(M, 'sound/items/weapons/sear.ogg').vary(TRUE).extra_range(-4).play()
 			M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/temp_visual/hierophant/blast/visual
@@ -756,7 +756,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/blast/visual/Initialize(mapload, new_caster)
 	. = ..()
 	var/turf/src_turf = get_turf(src)
-	playsound(src_turf, 'sound/effects/magic/blind.ogg').volume(65).vary(TRUE).range(-5 + SOUND_RANGE).play()
+	playsound(src_turf, 'sound/effects/magic/blind.ogg').volume(65).vary(TRUE).extra_range(-5).play()
 
 /obj/effect/hierophant
 	name = "hierophant beacon"
@@ -773,7 +773,7 @@ Difficulty: Hard
 		if(club.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
 			if(do_after(user, 5 SECONDS, target = src))
-				playsound(src, 'sound/effects/magic/blind.ogg').volume(100).vary(TRUE).range(-4 + SOUND_RANGE).play()
+				playsound(src, 'sound/effects/magic/blind.ogg').volume(100).vary(TRUE).extra_range(-4).play()
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
 				club.beacon = null

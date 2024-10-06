@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				built_in_his_image.update_damage_overlays()
 		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
 		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(built_in_his_image, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(built_in_his_image, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
 		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(target_mob.stat == DEAD)
 		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-			playsound(target_mob, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(target_mob, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
 		return
 
 	if(user == target_mob)
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-	playsound(target_mob, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(target_mob, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
 	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)

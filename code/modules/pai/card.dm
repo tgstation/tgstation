@@ -285,6 +285,6 @@
 	RegisterSignal(pai, COMSIG_QDELETING, PROC_REF(on_pai_del))
 	emotion_icon = "null"
 	update_appearance()
-	playsound(src, 'sound/effects/pai_boot.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/pai_boot.ogg').vary(TRUE).extra_range(-1).play()
 	audible_message("[src] plays a cheerful startup noise!")
 	return TRUE

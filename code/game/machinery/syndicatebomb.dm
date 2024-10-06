@@ -508,7 +508,7 @@
 		message_admins(adminlog)
 		log_game(adminlog)
 
-	playsound(loc, 'sound/effects/bamf.ogg').volume(75).vary(TRUE).range(5 + SOUND_RANGE).play()
+	playsound(loc, 'sound/effects/bamf.ogg').volume(75).vary(TRUE).extra_range(5).play()
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)

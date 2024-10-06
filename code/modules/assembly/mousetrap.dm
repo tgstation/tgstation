@@ -89,7 +89,7 @@
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 					pulse()
 		update_appearance()
-		playsound(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 
 /obj/item/assembly/mousetrap/update_icon_state()
 	icon_state = "mousetrap[armed ? "armed" : ""]"
@@ -174,7 +174,7 @@
 		to_chat(user, span_notice("You disarm [src]."))
 	armed = !armed
 	update_appearance()
-	playsound(src, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 
 
 // Clumsy check only

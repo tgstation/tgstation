@@ -342,7 +342,7 @@
 			return
 	sinched = !sinched
 	if(sinched)
-		playsound(loc, sinch_sound).volume(15).vary(TRUE).range(-2 + SOUND_RANGE).play()
+		playsound(loc, sinch_sound).volume(15).vary(TRUE).extra_range(-2).play()
 	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
 							span_notice("You [sinched ? null : "un"]sinch [src]."),
 							span_hear("You hear stretching followed by metal clicking from [src]."))

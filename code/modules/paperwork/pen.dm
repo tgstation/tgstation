@@ -76,7 +76,7 @@
 
 	if(user)
 		balloon_alert(user, "clicked")
-	playsound(src, 'sound/items/pen_click.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/pen_click.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 	icon_state = initial(icon_state) + (active ? "_retracted" : "")
 	update_appearance(UPDATE_ICON)
 
@@ -146,7 +146,7 @@
 	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
 	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
 	balloon_alert(user, "clicked")
-	playsound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 
 /obj/item/pen/fountain
 	name = "fountain pen"

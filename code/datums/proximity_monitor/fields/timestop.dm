@@ -51,7 +51,7 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	if(!hidden)
-		playsound(src, 'sound/effects/magic/timeparadox2.ogg').volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(src, 'sound/effects/magic/timeparadox2.ogg').volume(75).vary(TRUE).extra_range(-1).play()
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)

@@ -117,7 +117,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/effects/meteorimpact.ogg').volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
+	playsound(source, 'sound/effects/meteorimpact.ogg').volume(200).vary(TRUE).extra_range(2).play()
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)

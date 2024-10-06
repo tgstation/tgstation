@@ -40,7 +40,7 @@
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
-	playsound(src, 'sound/effects/bubbles/bubbles2.ogg').volume(80).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/bubbles/bubbles2.ogg').volume(80).vary(TRUE).extra_range(-3).play()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
 

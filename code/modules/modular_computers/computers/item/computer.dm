@@ -726,7 +726,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary(TRUE).range(SOUND_RANGE + FALSE).play()
+		playsound(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary(TRUE).extra_range(FALSE).play()
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return

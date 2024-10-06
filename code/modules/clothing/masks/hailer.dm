@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/items/whistle/whistle.ogg').vary(FALSE).range(4 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/whistle/whistle.ogg').vary(FALSE).extra_range(4).play()
 
 /datum/action/item_action/halt
 	name = "HALT!"

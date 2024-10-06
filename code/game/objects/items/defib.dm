@@ -418,7 +418,7 @@
 	user.visible_message(span_danger("[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(req_defib)
 		defib.deductcharge(revivecost)
-	playsound(src, 'sound/machines/defib/defib_zap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/defib/defib_zap.ogg').vary(TRUE).extra_range(-1).play()
 	return OXYLOSS
 
 /obj/item/shockpaddles/update_icon_state()
@@ -559,8 +559,8 @@
 				do_cancel()
 				return
 			user.visible_message(span_boldannounce("<i>[user] shocks [H] with \the [src]!"), span_warning("You shock [H] with \the [src]!"))
-			playsound(src, 'sound/machines/defib/defib_zap.ogg').volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
-			playsound(src, 'sound/items/weapons/egloves.ogg').volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(src, 'sound/machines/defib/defib_zap.ogg').volume(100).vary(TRUE).extra_range(-1).play()
+			playsound(src, 'sound/items/weapons/egloves.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 			H.emote("scream")
 			shock_pulling(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
@@ -598,7 +598,7 @@
 			if(H.stat == DEAD)
 				H.visible_message(span_warning("[H]'s body convulses a bit."))
 				playsound(get_sfx(src), SFX_BODYFALL).volume(50).vary(TRUE).play()
-				playsound(src, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+				playsound(src, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).extra_range(-1).play()
 				shock_pulling(30, H)
 
 				var/defib_result = H.can_defib()
@@ -664,7 +664,7 @@
 				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
 				playsound(src, 'sound/machines/defib/defib_failed.ogg').vary(FALSE).play()
 			else if(H.undergoing_cardiac_arrest())
-				playsound(src, 'sound/machines/defib/defib_zap.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+				playsound(src, 'sound/machines/defib/defib_zap.ogg').vary(TRUE).extra_range(-1).play()
 				if(!(heart.organ_flags & ORGAN_FAILING))
 					H.set_heartattack(FALSE)
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again."))

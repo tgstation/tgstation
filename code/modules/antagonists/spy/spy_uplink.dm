@@ -161,7 +161,7 @@
 	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
 		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
 
-	playsound(parent, 'sound/machines/wewewew.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(parent, 'sound/machines/wewewew.ogg').volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 	log_combat(spy, stealing, "stole", parent, "(spy bounty)")
 	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] by stealing [stealing] for \a [reward].")

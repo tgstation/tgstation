@@ -64,14 +64,14 @@
 	flick("outlet-open", src)
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
-		playsound(src, 'sound/machines/warning-buzzer.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
+		playsound(src, 'sound/machines/warning-buzzer.ogg').volume(50).vary(FALSE).extra_range(FALSE).play()
 		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 2 SECONDS)
 	else
 		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 2 SECONDS)
 
 /obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
 	if(playsound)
-		playsound(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).range(SOUND_RANGE + FALSE).play()
+		playsound(src, 'sound/machines/hiss.ogg').volume(50).vary(FALSE).extra_range(FALSE).play()
 
 	if(QDELETED(H))
 		return

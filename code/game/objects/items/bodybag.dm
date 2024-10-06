@@ -46,7 +46,7 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		user.forceMove(R)
-		playsound(src, 'sound/items/zip/zip.ogg').volume(15).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(src, 'sound/items/zip/zip.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 		return OXYLOSS
 
 // Bluespace bodybag

@@ -204,7 +204,7 @@
 	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
 		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
 		reagents.remove_reagent(reagent_id, amount_to_leak)
-		playsound(src, 'sound/effects/glug.ogg').volume(33).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/effects/glug.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return TRUE
 	return FALSE
 

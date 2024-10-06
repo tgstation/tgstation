@@ -17,7 +17,7 @@
 /datum/action/cooldown/mob_cooldown/spine_traps/Activate(atom/target)
 	. = ..()
 
-	playsound(owner, 'sound/effects/magic/demon_consumed.ogg').volume(100).vary(TRUE).falloff_exponent(2).play()
+	playsound(owner, 'sound/effects/magic/demon_consume.ogg').volume(100).vary(TRUE).falloff_exponent(2).play()
 	var/list/valid_turfs = list()
 	var/turf/our_turf = get_turf(owner)
 	for (var/turf/zone_turf in orange(range, our_turf))

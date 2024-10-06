@@ -116,7 +116,7 @@
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
 
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safeties overridden")
 	return TRUE
 

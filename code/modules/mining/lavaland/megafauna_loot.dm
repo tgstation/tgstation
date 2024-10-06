@@ -128,7 +128,7 @@
 			span_notice("You start detaching the hierophant beacon..."))
 			if(do_after(user, 5 SECONDS, target = user) && !beacon)
 				var/turf/user_turf = get_turf(user)
-				playsound(user_turf, 'sound/effects/magic/blind.ogg').volume(200).vary(TRUE).range(-4 + SOUND_RANGE).play()
+				playsound(user_turf, 'sound/effects/magic/blind.ogg').volume(200).vary(TRUE).extra_range(-4).play()
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
 				beacon = new/obj/effect/hierophant(user_turf)
 				user.update_mob_action_buttons()

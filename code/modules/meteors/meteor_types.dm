@@ -342,7 +342,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/airhorn/AirHorn.ogg').volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/airhorn/AirHorn.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
@@ -368,7 +368,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/items/weapons/zapbang.ogg').volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/zapbang.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 	empulse(src, 3, 8)
 
 //Meaty Ore
