@@ -1,0 +1,4 @@
+author: "TheSmallBlue"
+delete-after: True
+changes:
+  - config: "Both human authority settings were combined into a singular one, allowing for more flexibility"
