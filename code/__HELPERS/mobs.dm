@@ -599,10 +599,14 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			return mob
 
 /// Returns a string for the specified body zone. If we have a bodypart in this zone, refers to its plaintext_zone instead.
-/mob/living/proc/parse_zone_with_bodypart(zone)
+/mob/living/proc/parse_zone_with_bodypart(zone, declent = NOMINATIVE) // BANDASTATION EDIT - Declents
 	var/obj/item/bodypart/part = get_bodypart(zone)
 
-	return part?.plaintext_zone || parse_zone(zone)
+	// BANDASTATION EDIT START - Declents
+	if(part?.ru_plaintext_zone[declent])
+		return part.ru_plaintext_zone[declent]
+	return ru_parse_zone(zone, declent)
+	// BANDASTATION EDIT END
 
 ///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
 /proc/parse_zone(zone)
