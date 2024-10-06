@@ -2796,7 +2796,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
-	//Check if turf aboveexists
+	//Check if turf above exists
 	if(!above_turf)
 		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
 		return
