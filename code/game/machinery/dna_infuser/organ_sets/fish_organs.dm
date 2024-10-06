@@ -21,6 +21,7 @@
 		TRAIT_WET_FOR_LONGER,
 		TRAIT_SLIPPERY_WHEN_WET,
 		TRAIT_EXPANDED_FOV, //fish vision
+		TRAIT_WATER_ADAPTATION,
 		)
 
 /datum/status_effect/organ_set_bonus/fish/enable_bonus()
@@ -32,7 +33,7 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
-		human.physiology.damage_resistance += 5 //base 5% damage resistance, much wow.
+		human.physiology.damage_resistance += 8 //base 8% damage resistance, much wow.
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		apply_debuff()
 	else
@@ -58,7 +59,7 @@
 	owner.clear_mood_event("fish_organs_bonus")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
-		human.physiology.damage_resistance -= 5
+		human.physiology.damage_resistance -= 8
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/fish))
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
@@ -94,7 +95,7 @@
 	human.physiology.stun_mod *= 1.1
 	human.physiology.knockdown_mod *= 1.1
 	human.physiology.stamina_mod *= 1.1
-	human.physiology.damage_resistance -= 10 //from +5% to -5%
+	human.physiology.damage_resistance -= 16 //from +8% to -8%
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_debuff()
 	ADD_TRAIT(owner, TRAIT_GRABRESISTANCE, REF(src)) //harder to grab when wet.
@@ -106,11 +107,10 @@
 	human.physiology.burn_mod *= 1/1.5
 	human.physiology.heat_mod *= 1/1.2
 	human.physiology.brute_mod *= 1/1.1
-	human.physiology.brute_mod *= 1/1.1
 	human.physiology.stun_mod *= 1/1.1
 	human.physiology.knockdown_mod *= 1/1.1
 	human.physiology.stamina_mod *= 1/1.1
-	human.physiology.damage_resistance += 10 //from -5% to +5%
+	human.physiology.damage_resistance += 16 //from -8% to +8%
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
@@ -146,8 +146,8 @@
 	desc = "A severed tail from some sort of marine creature... or a fish-infused spaceman. It's smooth, faintly wet and definitely not flopping."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "fish_tail"
-	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = FISH_COLORS
+	greyscale_config = /datum/greyscale_config/fish_tail
+	greyscale_colors = FISH_ORGAN_COLOR
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
 	dna_block = DNA_FISH_TAIL_BLOCK
@@ -172,7 +172,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /obj/item/organ/external/tail/fish/get_greyscale_color_from_draw_color()
-	set_greyscale(list(bodypart_overlay.draw_color, FISH_SCLERA_COLOR, FISH_PUPIL_COLOR))
+	set_greyscale(bodypart_overlay.draw_color)
 
 /obj/item/organ/external/tail/fish/proc/check_location(mob/living/carbon/source, atom/movable/old_loc, dir, forced)
 	var/was_water = istype(old_loc, /turf/open/water)
@@ -221,6 +221,8 @@
 
 /obj/item/organ/internal/lungs/fish/Initialize(mapload)
 	. = ..()
+	add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
+	respiration_type |= RESPIRATION_OXYGEN //after all, we get oxygen from water
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 	if(has_gills)
 		gills = new()
@@ -241,6 +243,10 @@
 	if(gills)
 		limb.remove_bodypart_overlay(gills)
 
+/obj/item/organ/internal/lungs/fish/on_mob_remove(mob/living/carbon/owner)
+	. = ..()
+	owner.clear_alert(ALERT_NOT_ENOUGH_WATER)
+
 /// Requires the spaceman to have either water vapor or be wet.
 /obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
 	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
@@ -248,7 +254,7 @@
 		on_low_water(breather, breath, water_pp)
 		return
 
-	if(old_water_pp < safe_water_level)
+	if(old_water_pp < safe_water_level || breather.failed_last_breath)
 		breather.failed_last_breath = FALSE
 		breather.clear_alert(ALERT_NOT_ENOUGH_WATER)
 
@@ -269,7 +275,7 @@
 /datum/bodypart_overlay/simple/gills
 	icon = 'icons/mob/human/fish_features.dmi'
 	icon_state = "gills"
-	layers = EXTERNAL_FRONT
+	layers = EXTERNAL_ADJACENT
 
 /datum/bodypart_overlay/simple/gills/get_image(image_layer, obj/item/bodypart/limb)
 	return image(

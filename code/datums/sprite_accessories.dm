@@ -1747,7 +1747,7 @@
 ///Used for fish-infused tails, which come in different flavors.
 /datum/sprite_accessory/tails/fish
 	icon = 'icons/mob/human/fish_features.dmi'
-	color_src = TRUE
+	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/fish/default
 	name = "Fish"

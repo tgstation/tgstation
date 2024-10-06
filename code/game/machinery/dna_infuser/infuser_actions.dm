@@ -4,6 +4,7 @@
 	desc = "Spits ink at someone, blinding them temporarily."
 	button_icon = 'icons/hud/radial_fishing.dmi'
 	button_icon_state = "oil"
+	base_background_icon_state = "bg_default"
 	active_background_icon_state = "bg_default_on"
 	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
@@ -24,16 +25,14 @@
 		return
 
 	to_chat(on_who, span_notice("You prepare your ink glands. <B>Right-click to fire at a target!</B>"))
-
 	build_all_button_icons()
-	on_who.update_icons()
 
 /datum/action/cooldown/ink_spit/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	on_who.update_icons()
+	build_all_button_icons()
 
 // We do this in InterceptClickOn() instead of Activate()
 // because we use the click parameters for aiming the projectile
@@ -46,12 +45,13 @@
 	var/modifiers = params2list(params)
 	caller.visible_message(
 		span_danger("[caller] spits ink!"),
-		span_alertalien("You spit ink."),
+		span_bold("You spit ink."),
 	)
 	var/obj/projectile/ink_spit/ink = new /obj/projectile/ink_spit(caller.loc)
 	ink.preparePixelProjectile(target, caller, modifiers)
 	ink.firer = caller
 	ink.fire()
+	playsound(loc, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
 	caller.newtonian_move(get_angle(target, caller))
 	StartCooldown()
 	return TRUE

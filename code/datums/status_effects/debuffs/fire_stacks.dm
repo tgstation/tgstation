@@ -321,7 +321,7 @@
 
 /datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
 	SIGNAL_HANDLER
-	stack_modifier = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -3 : -1
+	stack_modifier = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -3.5 : -1
 
 /datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
 	SIGNAL_HANDLER
@@ -337,7 +337,7 @@
 	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
-	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.033 : -0.5
+	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
 	adjust_stacks(decay * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
