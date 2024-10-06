@@ -1,7 +1,7 @@
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
 
-/mob/living/carbon/human/get_examine_name(mob/user)
+/mob/living/carbon/human/get_examine_name(mob/user, declent) // BANDASTATION EDIT - Declents
 	if(!HAS_TRAIT(user, TRAIT_PROSOPAGNOSIA))
 		return ..()
 

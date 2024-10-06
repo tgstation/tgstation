@@ -108,8 +108,8 @@
  * You can override what is returned from this proc by registering to listen for the
  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
  */
-/atom/proc/get_examine_name(mob/user)
-	var/list/override = list(article, null, "<em>[get_visible_name()]</em>")
+/atom/proc/get_examine_name(mob/user, declent = NOMINATIVE) // BANDASTATION EDIT - Declents
+	var/list/override = list(article, null, "<em>[get_visible_name(declent = declent)]</em>") // BANDASTATION EDIT - Declents
 	SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override)
 
 	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
@@ -117,11 +117,11 @@
 		return jointext(override, " ")
 	if(!isnull(override[EXAMINE_POSITION_BEFORE]))
 		override -= null // There is no article, don't try to join it
-		return "\a [jointext(override, " ")]"
-	return "\a [src]"
+		return "[jointext(override, " ")]" // BANDASTATION EDIT - Declents
+	return "[declent_ru(declent)]" // BANDASTATION EDIT - Declents
 
-/mob/living/get_examine_name(mob/user)
-	return get_visible_name()
+/mob/living/get_examine_name(mob/user, declent = NOMINATIVE) // BANDASTATION EDIT - Declents
+	return get_visible_name(declent = declent) // BANDASTATION EDIT - Declents
 
 /// Icon displayed in examine
 /atom/proc/get_examine_icon(mob/user)
@@ -133,9 +133,9 @@
  * * user - the mob examining the atom
  * * thats - whether to include "That's", or similar (mobs use "This is") before the name
  */
-/atom/proc/examine_title(mob/user, thats = FALSE)
+/atom/proc/examine_title(mob/user, thats = FALSE, declent = NOMINATIVE) // BANDASTATION EDIT - Declents
 	var/examine_icon = get_examine_icon(user)
-	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""]<em>[get_examine_name(user)]</em>"
+	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""]<em>[get_examine_name(user, declent)]</em>" // BANDASTATION EDIT - Declents
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.
@@ -152,5 +152,5 @@
 
 /// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name. add_id_name will control whether or not we append "(as [id_name])".
 /// force_real_name will always return real_name and add (as face_name/id_name) if it doesn't match their appearance
-/atom/proc/get_visible_name(add_id_name, force_real_name)
-	return name
+/atom/proc/get_visible_name(add_id_name, force_real_name, declent = NOMINATIVE) // BANDASTATION EDIT - Declents
+	return declent_ru(declent) // BANDASTATION EDIT - Declents
