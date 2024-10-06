@@ -1,0 +1,7 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "fixed not being able to stop looking up or down if unable to find something until you found something"
+  - qol: "feedback for \"Look Up\" or \"Look Down\" verbs to reduce confusion caused by the verbs"
+  - qol: "limited usage of \"Look Up\" and \"Look Down\" to cases where there is a turf above your or below you accordingly"
+  - qol: "automatically stops you from looking up or down when there is no turf above or below you"
