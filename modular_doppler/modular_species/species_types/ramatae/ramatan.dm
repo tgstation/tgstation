@@ -15,20 +15,21 @@
 	name = "\improper Ramatan"
 	plural_form = "Ramatae"
 	id = SPECIES_RAMATAN
-	preview_outfit = /datum/outfit/scug_preview
+	preview_outfit = /datum/outfit/ramatan_preview
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 		TRAIT_EXPERT_FISHER,
 		TRAIT_BEAST_EMPATHY,
+		TRAIT_MUTE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
 	mutant_organs = list(
-		/obj/item/organ/external/horns = "Ramatan",
+		/obj/item/organ/internal/ears = "Ramatan",
 		/obj/item/organ/external/frills = "None",
 		/obj/item/organ/external/snout = "Ramatan",
-		/obj/item/organ/external/tail/lizard = "Ramatan",
+		/obj/item/organ/external/tail/alien = "Ramatan",
 	)
 	payday_modifier = 1.0
 	mutanttongue = /obj/item/organ/internal/tongue/ramatan
@@ -76,7 +77,7 @@
 
 	return to_add
 
-/datum/outfit/scug_preview
+/datum/outfit/ramatan_preview
 	name = "Ramatan (Species Preview)"
 	head = /obj/item/clothing/head/beret/doppler_command/science
 	neck = /obj/item/clothing/neck/doppler_mantle/science
@@ -85,32 +86,33 @@
 	. = ..()
 	new_ramatan.AddComponent(/datum/component/sign_language)
 
-/datum/species/ramatan/prepare_human_for_preview(mob/living/carbon/human/scug_for_preview)
-	scug_for_preview.dna.features["lizard_markings"] = "Ramatan Underbelly"
-	scug_for_preview.dna.features["body_markings_color_1"] = "#ccecff"
-	scug_for_preview.dna.features["mcolor"] = "#FFFFFF"
-	scug_for_preview.dna.features["frills"] = "Ramatan"
-	scug_for_preview.dna.features["frills_color_1"] = "#ccecff"
-	scug_for_preview.dna.features["snout"] = "Ramatan"
-	scug_for_preview.dna.features["snout_color_1"] = "#ffffff"
-	scug_for_preview.dna.features["snout_color_2"] = "#dddddd"
-	scug_for_preview.dna.features["snout_color_3"] = "#9a9b9e"
-	scug_for_preview.dna.features["horns"] = "Ramatan"
-	scug_for_preview.dna.features["horns_color_1"] = "#ffffff"
-	scug_for_preview.dna.features["horns_color_2"] = "#dddddd"
-	scug_for_preview.eye_color_left = "#CCECFF"
-	scug_for_preview.eye_color_right = "#CCECFF"
-	regenerate_organs(scug_for_preview)
-	scug_for_preview.update_body(is_creating = TRUE)
+/datum/species/ramatan/prepare_human_for_preview(mob/living/carbon/human/ramatan_for_preview)
+	ramatan_for_preview.dna.features["lizard_markings"] = "Ramatan Underbelly"
+	ramatan_for_preview.dna.features["body_markings_color_1"] = "#ccecff"
+	ramatan_for_preview.dna.features["mcolor"] = "#FFFFFF"
+	ramatan_for_preview.dna.ear_type = ALIEN
+	ramatan_for_preview.dna.features["ears"] = "Ramatan"
+	ramatan_for_preview.dna.features["ears_color_1"] = "#ffffff"
+	ramatan_for_preview.dna.features["ears_color_2"] = "#dddddd"
+	ramatan_for_preview.dna.features["frills"] = "Ramatan"
+	ramatan_for_preview.dna.features["frills_color_1"] = "#ccecff"
+	ramatan_for_preview.dna.features["snout"] = "Ramatan"
+	ramatan_for_preview.dna.features["snout_color_1"] = "#ffffff"
+	ramatan_for_preview.dna.features["snout_color_2"] = "#dddddd"
+	ramatan_for_preview.dna.features["snout_color_3"] = "#9a9b9e"
+	ramatan_for_preview.eye_color_left = "#CCECFF"
+	ramatan_for_preview.eye_color_right = "#CCECFF"
+	regenerate_organs(ramatan_for_preview)
+	ramatan_for_preview.update_body(is_creating = TRUE)
 
 /// SOUNDS BREAKER
-/datum/species/ramatan/get_scream_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_scream_sound(mob/living/carbon/human/ramatan)
 	return pick(
 		'modular_doppler/modular_species/species_types/ramatae/sounds/scugscream_1.ogg',
 	)
 
-/datum/species/ramatan/get_cough_sound(mob/living/carbon/human/scug)
-	if(scug.physique == FEMALE)
+/datum/species/ramatan/get_cough_sound(mob/living/carbon/human/ramatan)
+	if(ramatan.physique == FEMALE)
 		return pick(
 			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
 			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
@@ -128,8 +130,8 @@
 		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
 	)
 
-/datum/species/ramatan/get_cry_sound(mob/living/carbon/human/scug)
-	if(scug.physique == FEMALE)
+/datum/species/ramatan/get_cry_sound(mob/living/carbon/human/ramatan)
+	if(ramatan.physique == FEMALE)
 		return pick(
 			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
 			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
@@ -140,21 +142,21 @@
 		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
 	)
 
-/datum/species/ramatan/get_sneeze_sound(mob/living/carbon/human/scug)
-	if(scug.physique == FEMALE)
+/datum/species/ramatan/get_sneeze_sound(mob/living/carbon/human/ramatan)
+	if(ramatan.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
 	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
 
-/datum/species/ramatan/get_laugh_sound(mob/living/carbon/human/scug)
+/datum/species/ramatan/get_laugh_sound(mob/living/carbon/human/ramatan)
 	return 'modular_doppler/modular_species/species_types/ramatae/sounds/scuglaugh_1.ogg'
 
-/datum/species/ramatan/get_sigh_sound(mob/living/carbon/human/scug)
-	if(scug.physique == FEMALE)
+/datum/species/ramatan/get_sigh_sound(mob/living/carbon/human/ramatan)
+	if(ramatan.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
 	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
 
-/datum/species/ramatan/get_sniff_sound(mob/living/carbon/human/scug)
-	if(scug.physique == FEMALE)
+/datum/species/ramatan/get_sniff_sound(mob/living/carbon/human/ramatan)
+	if(ramatan.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 /// SOUNDS BREAKER END

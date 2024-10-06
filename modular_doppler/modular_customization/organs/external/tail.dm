@@ -200,3 +200,17 @@
 
 /datum/bodypart_overlay/mutant/tail/humanoid/get_global_feature_list()
 	return SSaccessories.tails_list_humanoid
+
+
+/// Alien tail
+//
+/obj/item/organ/external/tail/alien
+	preference = "feature_alien_tail"
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/alien
+
+/datum/bodypart_overlay/mutant/tail/alien
+	feature_key = "tail_other"
+
+/datum/bodypart_overlay/mutant/tail/alien/get_global_feature_list()
+	return SSaccessories.tails_list_alien
