@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Space carps and space dragons can now fish. Space dragons can now eat fish too, for a very mild healing."
+  - rscadd: "The carp rift is now a fishing spot, filled with carp-related loot, including baby space carps (aquarium fish that eventually grows into a real space carp in a matter of half a dozen minutes)."
+  - rscadd: "Added a shark form (and relative achievement) to space dragons, unlocked after eating an unspecificatedly high amount of fish."
