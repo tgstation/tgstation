@@ -1,5 +1,5 @@
 // TODO!!
-/mob/playsound_local(vol, max_distance, channel, pressure_affected, sound_to_use, vary, use_reverb, distance_multiplier, falloff_exponent, falloff_distance, frequency)
+/mob/proc/playsound_local(vol, max_distance, channel, pressure_affected, sound_to_use, vary, use_reverb, distance_multiplier, falloff_exponent, falloff_distance, frequency)
 	return
 
 // TODO!!
