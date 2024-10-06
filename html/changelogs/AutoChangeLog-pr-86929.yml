@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds extra examines & screentips for inducer"
+  - bugfix: "inducer charging rate scales with cell rating"
+  - bugfix: "syndicate inducers now have correct charge & batteries installed"
+  - refactor: "inducer attack chain has been improved & redundant vars/procs have been removed, report bugs on github"
