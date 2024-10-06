@@ -1,6 +1,39 @@
 #define ANDROID_BODYPARTS_DMI 'modular_doppler/modular_species/species_types/android/icons/android_parts.dmi'
 
 ///
+// Overwrites
+///
+/obj/item/bodypart/head/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+/obj/item/bodypart/chest/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+/obj/item/bodypart/arm/right/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+/obj/item/bodypart/arm/left/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+/obj/item/bodypart/leg/right/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+/obj/item/bodypart/leg/left/robot/android
+	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	brute_modifier = 1
+	burn_modifier = 1
+
+///
 // Classic (this may look empty, but its a load-bearing definition)
 ///
 /obj/item/bodypart/head/robot/android/classic
@@ -101,6 +134,7 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "e3n_head"
 	limb_id = "e3n"
+	head_flags = NONE
 
 /obj/item/bodypart/chest/robot/android/e_three_n
 	icon_static = ANDROID_BODYPARTS_DMI

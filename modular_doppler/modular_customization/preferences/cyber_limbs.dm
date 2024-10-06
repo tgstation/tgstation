@@ -91,11 +91,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Head
 /datum/preference/choiced/head_type
-	main_feature_name = "Head Type"
+	main_feature_name = "Add Limb: Head"
 	savefile_key = "head_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/head_type/compile_constant_data()
 	var/list/data = ..()
@@ -122,11 +121,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Chest
 /datum/preference/choiced/chest_type
-	main_feature_name = "Chest Type"
+	main_feature_name = "Add Limb: Chest"
 	savefile_key = "chest_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/chest_type/compile_constant_data()
 	var/list/data = ..()
@@ -153,11 +151,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Right arm
 /datum/preference/choiced/arm_r_type
-	main_feature_name = "Arm Right Type"
+	main_feature_name = "Add Limb: R-Arm"
 	savefile_key = "arm_r_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/arm_r_type/compile_constant_data()
 	var/list/data = ..()
@@ -184,11 +181,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Left arm
 /datum/preference/choiced/arm_l_type
-	main_feature_name = "Arm Left Type"
+	main_feature_name = "Add Limb: L-Arm"
 	savefile_key = "arm_l_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/arm_l_type/compile_constant_data()
 	var/list/data = ..()
@@ -215,11 +211,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Right leg
 /datum/preference/choiced/leg_r_type
-	main_feature_name = "Leg Right Type"
+	main_feature_name = "Add Limb: R-Leg"
 	savefile_key = "leg_r_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/leg_r_type/compile_constant_data()
 	var/list/data = ..()
@@ -246,11 +241,10 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 // Left leg
 /datum/preference/choiced/leg_l_type
-	main_feature_name = "Leg Left Type"
+	main_feature_name = "Add Limb: L-Leg"
 	savefile_key = "leg_l_type"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
-	should_generate_icons = FALSE
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/leg_l_type/compile_constant_data()
 	var/list/data = ..()
