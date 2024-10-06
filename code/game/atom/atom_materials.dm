@@ -64,7 +64,7 @@
 	return material_effects
 
 /**
- * A proc that can be used to selectively control the statistics and affects from a material without affecting the others.
+ * A proc that can be used to selectively control the stat changes and effects from a material without affecting the others.
  *
  * For example, we can have items made of two different materials, with the primary contributing a good 1.2 multiplier
  * and the second a meager 0.3.
