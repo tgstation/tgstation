@@ -70,7 +70,7 @@
 
 		move(4 + orbiting_balls.len * 1.5)
 
-		PLAYSOUND(src.loc, ).volume(100).vary(TRUE).extra_range(30).play()
+
 
 		pixel_x = 0
 		pixel_y = 0
@@ -126,7 +126,7 @@
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		PLAYSOUND(src.loc, ).volume(100).vary(TRUE).extra_range(30).play()
+
 		addtimer(CALLBACK(src, PROC_REF(new_mini_ball)), 10 SECONDS)
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.25

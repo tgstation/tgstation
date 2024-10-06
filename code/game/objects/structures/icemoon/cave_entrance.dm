@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  *
  */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
-	PLAYSOUND(loc, 'sound/effects/explosion/explosionfar.ogg').volume(200).vary(TRUE).play()
+	playsound(loc, 'sound/effects/explosion/explosionfar.ogg').volume(200).vary(TRUE).play()
 	visible_message(span_boldannounce("[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!"))
 
 /**
@@ -122,7 +122,13 @@ GLOBAL_LIST_INIT(ore_probability, list(
 
 /obj/effect/collapsing_demonic_portal/Initialize(mapload)
 	. = ..()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/tendril_destroyed.ogg')\
+		.volume(200)\
+		.vary(FALSE)\
+		.extra_range(50)\
+		.atmospherics_affected(TRUE)\
+		.ignore_walls(TRUE)\
+		.play()
 	visible_message(span_boldannounce("[src] begins to collapse, cutting it off from this world!"))
 	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)

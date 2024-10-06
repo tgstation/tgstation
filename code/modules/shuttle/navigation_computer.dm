@@ -358,7 +358,7 @@
 	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
 
-	PLAYSOUND(console, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(25).vary(FALSE).play()
+	playsound(console, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(25).vary(FALSE).play()
 
 	var/list/L = list()
 	for(var/V in SSshuttle.stationary_docking_ports)
@@ -383,18 +383,18 @@
 		else
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
-	PLAYSOUND(console, 'sound/machines/terminal/terminal_prompt.ogg').volume(25).vary(FALSE).play()
+	playsound(console, 'sound/machines/terminal/terminal_prompt.ogg').volume(25).vary(FALSE).play()
 	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sort_list(L))
 	if(isnull(selected))
-		PLAYSOUND(console, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(25).vary(FALSE).play()
+		playsound(console, 'sound/machines/terminal/terminal_prompt_deny.ogg').volume(25).vary(FALSE).play()
 		return
 	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
 		return
-	PLAYSOUND(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).vary(FALSE).play()
+	playsound(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).vary(FALSE).play()
 	var/turf/T = get_turf(L[selected])
 	if(isnull(T))
 		return
-	PLAYSOUND(console, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(25).vary(FALSE).play()
+	playsound(console, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(25).vary(FALSE).play()
 	remote_eye.setLoc(T)
 	to_chat(owner, span_notice("Jumped to [selected]."))
 	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)

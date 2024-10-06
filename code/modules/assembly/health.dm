@@ -59,7 +59,7 @@
 	//do the pulse & the scan
 	pulse()
 	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
-	PLAYSOUND(src, ).volume(ASSEMBLY_BEEP_VOLUME).vary(TRUE).play()
+
 	toggle_scan()
 
 /obj/item/assembly/health/proc/toggle_scan()

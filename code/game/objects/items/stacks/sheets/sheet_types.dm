@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
-			PLAYSOUND(I, 'sound/items/bikehorn.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(I, 'sound/items/bikehorn.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 			to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix

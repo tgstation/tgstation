@@ -59,7 +59,7 @@
 		return
 
 	balloon_alert(user, "selected")
-	PLAYSOUND(user, 'sound/items/click.ogg').vary(TRUE).play()
+	playsound(user, 'sound/items/click.ogg').vary(TRUE).play()
 	choice_made = choice
 
 /// Tier 1 programs. Simple, funny, or helpful.
@@ -113,7 +113,7 @@
 			granted_item = thing
 
 	balloon_alert(user, "selected")
-	PLAYSOUND(user, 'sound/items/click.ogg').vary(TRUE).play()
+	playsound(user, 'sound/items/click.ogg').vary(TRUE).play()
 	choice_made = choice
 
 /// Tier 1 items. Simple, funny, or helpful.

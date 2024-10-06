@@ -49,7 +49,7 @@
 	dodge_prob = LERP(50, 10, health_ratio)
 
 /mob/living/basic/migo/proc/make_migo_sound()
-	PLAYSOUND(src, pick(migo_sounds)).volume(50).vary(TRUE).play()
+	playsound(src, pick(migo_sounds)).volume(50).vary(TRUE).play()
 
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
@@ -90,7 +90,7 @@
 	faction = list(FACTION_NEUTRAL)
 
 /mob/living/basic/migo/hatsune/make_migo_sound()
-	PLAYSOUND(src, 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg').vary(TRUE).play()
+	playsound(src, 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg').vary(TRUE).play()
 
 /mob/living/basic/migo/hatsune/Initialize(mapload)
 	. = ..()

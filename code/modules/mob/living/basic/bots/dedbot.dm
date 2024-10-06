@@ -103,7 +103,7 @@
 		return FALSE
 	caster.Shake(1.4, 0.8, 0.3 SECONDS)
 	caster.visible_message(span_danger("[caster] shakes violently!"))
-	PLAYSOUND(caster, 'sound/items/weapons/drill.ogg').volume(120).vary(TRUE).play()
+	playsound(caster, 'sound/items/weapons/drill.ogg').volume(120).vary(TRUE).play()
 	slash_em(caster)
 	StartCooldown(cooldown_time)
 

@@ -266,7 +266,7 @@
 	if(!eating_success || QDELETED(src) || charge == 0)
 		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
-	playsound(user, 'sound/effects/sparks/sparks1.ogg', charge / maxcharge)
+	playsound(user, 'sound/effects/sparks/sparks1.ogg').volume(50 * (charge / maxcharge)).play()
 	var/damage = charge / (1 KILO JOULES)
 	user.electrocute_act(damage, src, 1, SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
 	charge = 0
@@ -284,7 +284,7 @@
 		return
 	user.dropItemToGround(src)
 	user.dust(just_ash = TRUE)
-	PLAYSOUND(src, 'sound/effects/magic/lightningshock.ogg').vary(TRUE).range(10 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/magic/lightningshock.ogg').vary(TRUE).range(10 + SOUND_RANGE).play()
 	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 
 /obj/item/stock_parts/power_store/attack_self(mob/user)

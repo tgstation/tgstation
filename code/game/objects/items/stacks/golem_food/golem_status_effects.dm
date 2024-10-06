@@ -215,7 +215,7 @@
 /// Shoot a beam at the target atom
 /datum/status_effect/golem/plasma/proc/zap_effect(atom/target)
 	owner.Beam(target, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	PLAYSOUND(owner, ).volume(50).vary(TRUE).play()
+
 
 /// Makes you spaceproof
 /datum/status_effect/golem/plasteel

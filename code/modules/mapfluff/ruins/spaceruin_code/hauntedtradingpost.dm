@@ -211,7 +211,7 @@
 /obj/machinery/button/door/selfdestructs/attempt_press(mob/user)
 	. = ..()
 	do_sparks(rand(1,3), src)
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	qdel(src)
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it

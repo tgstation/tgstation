@@ -35,7 +35,7 @@
 	update_appearance()
 
 /obj/machinery/mod_installer/proc/play_install_sound()
-	PLAYSOUND(src, 'sound/items/tools/rped.ogg').volume(30).vary(FALSE).play()
+	playsound(src, 'sound/items/tools/rped.ogg').volume(30).vary(FALSE).play()
 
 /obj/machinery/mod_installer/update_icon_state()
 	icon_state = busy ? busy_icon_state : "[base_icon_state][state_open ? "_open" : null]"
@@ -69,7 +69,7 @@
 	if(!human_occupant.equip_to_slot_if_possible(mod_unit, mod_unit.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
 	human_occupant.update_action_buttons(TRUE)
-	PLAYSOUND(src, 'sound/machines/ping.ogg').volume(30).vary(FALSE).play()
+	playsound(src, 'sound/machines/ping.ogg').volume(30).vary(FALSE).play()
 	if(!human_occupant.dropItemToGround(human_occupant.wear_suit) || !human_occupant.dropItemToGround(human_occupant.head))
 		finish_completion()
 		return

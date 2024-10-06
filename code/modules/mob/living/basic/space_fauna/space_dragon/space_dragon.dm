@@ -176,7 +176,7 @@
 	adjust_health(-food.maxHealth * 0.25)
 	if (QDELETED(food) || food.loc == src)
 		return FALSE
-	PLAYSOUND(src, 'sound/effects/magic/demon_attack1.ogg').volume(60).vary(TRUE).play()
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg').volume(60).vary(TRUE).play()
 	visible_message(span_boldwarning("[src] swallows [food] whole!"))
 	food.extinguish_mob() // It's wet in there, and our food is likely to be on fire. Let's be decent and not husk them.
 	food.forceMove(src)
@@ -198,7 +198,7 @@
 	if (eaten.stat == DEAD)
 		return
 	new /obj/effect/decal/cleanable/vomit(loc)
-	PLAYSOUND(src, ).volume(50).vary(TRUE).play()
+
 	visible_message(span_danger("[src] vomits up [eaten]!"))
 	eaten.forceMove(loc)
 	eaten.Paralyze(5 SECONDS)

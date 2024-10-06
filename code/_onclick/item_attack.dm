@@ -214,9 +214,9 @@
 		return FALSE
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		PLAYSOUND(src, 'sound/items/weapons/tap.ogg').volume(get_clamped_volume()).vary(TRUE).range(SOUND_RANGE - 1).play()
+		playsound(src, 'sound/items/weapons/tap.ogg').volume(get_clamped_volume()).vary(TRUE).range(SOUND_RANGE - 1).play()
 	else if(hitsound)
-		PLAYSOUND(src, hitsound) \
+		playsound(src, hitsound) \
 			.volume(get_clamped_volume()) \
 			.vary(TRUE) \
 			.range(SOUND_RANGE + (stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1)) \

@@ -68,7 +68,7 @@
 	if(!T)
 		return CLICK_ACTION_BLOCKING
 
-	PLAYSOUND(src, 'sound/effects/pop.ogg').volume(100).play()
+	playsound(src, 'sound/effects/pop.ogg').volume(100).play()
 	var/area/user_area = T.loc
 	var/datum/weather/ongoing_weather = null
 
@@ -105,7 +105,7 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, span_notice("[src]'s barometer function is ready!"))
-	PLAYSOUND(src, 'sound/machines/click.ogg').volume(100).play()
+	playsound(src, 'sound/machines/click.ogg').volume(100).play()
 	cooldown = FALSE
 
 /// Applies the barometer inaccuracy to the gas reading.

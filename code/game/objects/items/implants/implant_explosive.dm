@@ -137,7 +137,7 @@
 				notify_volume = 75,
 			)
 
-	PLAYSOUND(loc, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
+	playsound(loc, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
 	if(imp_in && !imp_in.stat && !no_paralyze)
@@ -149,7 +149,7 @@
 		while(bomb_beeps_until_boom > 0)
 			//for extra spice
 			var/beep_volume = 35
-			PLAYSOUND(loc, ).volume(beep_volume).vary(FALSE).play()
+
 			sleep(delay * 0.25)
 			bomb_beeps_until_boom--
 			beep_volume += 5
@@ -158,7 +158,7 @@
 		addtimer(CALLBACK(src, PROC_REF(explode)), delay)
 		while(delay > 1) //so we dont accidentally enter an infinite sleep
 			var/beep_volume = 35
-			PLAYSOUND(loc, ).volume(beep_volume).vary(FALSE).play()
+
 			sleep(delay * 0.2)
 			delay -= delay * 0.2
 			beep_volume += 5

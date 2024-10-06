@@ -458,7 +458,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			if (isnull(soundInput))
 				return
 			var/sound/tempSound = sound(soundInput)
-			PLAYSOUND(holder.mob, tempSound).volume(1).play()
+			playsound(holder.mob, tempSound).volume(1).play()
 			var/list/sounds_list = holder.SoundQuery()
 			var/soundLen = 0
 			for (var/playing_sound in sounds_list)

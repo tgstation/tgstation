@@ -93,7 +93,7 @@
 	SIGNAL_HANDLER
 	if ((isnull(selected_experiment) && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)) || (config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		return
-	PLAYSOUND(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
+	playsound(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 /**
@@ -127,10 +127,10 @@
 	if(!(config_flags & EXPERIMENT_CONFIG_IMMEDIATE_ACTION) && !do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
-		PLAYSOUND(user, 'sound/machines/ping.ogg').volume(25).play()
+		playsound(user, 'sound/machines/ping.ogg').volume(25).play()
 		to_chat(user, span_notice("You scan [target]."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		PLAYSOUND(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
+		playsound(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 /**
@@ -141,7 +141,7 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-			PLAYSOUND(our_scanner, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
+			playsound(our_scanner, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 			to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
@@ -150,10 +150,10 @@
 			successful_scan = TRUE
 			break
 	if(successful_scan)
-		PLAYSOUND(our_scanner, 'sound/machines/ping.ogg').volume(25).play()
+		playsound(our_scanner, 'sound/machines/ping.ogg').volume(25).play()
 		to_chat(our_scanner, span_notice("The scan succeeds."))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 		our_scanner.say("The scan did not result in anything.")
 
 /// Hooks on a successful autopsy experiment
@@ -161,7 +161,7 @@
 	SIGNAL_HANDLER
 
 	if (action_experiment(source, target))
-		PLAYSOUND(source, 'sound/machines/ping.ogg').volume(25).play()
+		playsound(source, 'sound/machines/ping.ogg').volume(25).play()
 		source.say("New unique autopsy successfully catalogued.")
 
 

@@ -218,7 +218,7 @@
 	if(default_deconstruction_crowbar(attacking_item))
 		if(biomass > 0)
 			drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
-			PLAYSOUND(drop_location, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
+			playsound(drop_location, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 			new /obj/effect/decal/cleanable/greenglow(drop_location)
 
 		return

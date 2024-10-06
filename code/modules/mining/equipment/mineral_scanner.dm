@@ -96,9 +96,9 @@
 
 	if(vents_nearby && scanner)
 		if(undiscovered)
-			PLAYSOUND(scanner, ).volume(radar_volume).vary(FALSE).play()
+
 		else
-			PLAYSOUND(scanner, ).volume(radar_volume).vary(FALSE).play()
+
 		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 

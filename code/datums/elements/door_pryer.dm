@@ -60,7 +60,7 @@
 		message = span_warning("[attacker] starts forcing the [airlock_target] open!"),
 		blind_message = span_hear("You hear a metal screeching sound."),
 	)
-	PLAYSOUND(airlock_target, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary(TRUE).play()
+	playsound(airlock_target, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary(TRUE).play()
 	airlock_target.balloon_alert(attacker, "prying...")
 	if(!do_after(attacker, pry_time, airlock_target))
 		airlock_target.balloon_alert(attacker, "interrupted!")

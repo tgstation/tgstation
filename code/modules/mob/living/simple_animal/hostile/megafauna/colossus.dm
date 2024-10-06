@@ -129,7 +129,7 @@
 		if(viewer.client)
 			flash_color(viewer.client, "#C80000", 1)
 			shake_camera(viewer, 4, 3)
-	PLAYSOUND(src, 'sound/effects/magic/clockwork/narsie_attack.ogg').volume(200).vary(TRUE).play()
+	playsound(src, 'sound/effects/magic/clockwork/narsie_attack.ogg').volume(200).vary(TRUE).play()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
@@ -297,7 +297,7 @@
 	if(use_time)
 		charge_animation()
 	COOLDOWN_START(src, cooldown_timer, cooldown_add)
-	PLAYSOUND(get_sfx(user), activation_sound).volume(100).vary(TRUE).play()
+	playsound(get_sfx(user), activation_sound).volume(100).vary(TRUE).play()
 	log_game("[src] activated by [key_name(user)] in [AREACOORD(src)]. The last fingerprints on the [src] was [fingerprintslast].")
 	return TRUE
 
@@ -306,7 +306,7 @@
 	active = TRUE
 	set_anchored(TRUE)
 	balloon_alert_to_viewers("charging...")
-	PLAYSOUND(src, 'sound/effects/magic/disable_tech.ogg').vary(TRUE).play()
+	playsound(src, 'sound/effects/magic/disable_tech.ogg').vary(TRUE).play()
 	sleep(use_time)
 	icon_state = initial(icon_state)
 	active = FALSE

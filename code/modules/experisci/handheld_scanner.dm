@@ -37,8 +37,8 @@
 	icon_state = "experiscanner_closed"
 	add_atom_colour(COLOR_RED, ADMIN_COLOUR_PRIORITY)
 
-	PLAYSOUND(src, 'sound/effects/pope_entry.ogg').volume(60).vary(TRUE).play()
-	PLAYSOUND(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg').volume(40).play()
+	playsound(src, 'sound/effects/pope_entry.ogg').volume(60).vary(TRUE).play()
+	playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg').volume(40).play()
 	user.emote("scream")
 
 	addtimer(CALLBACK(src, PROC_REF(make_meat_toilet), user), 5 SECONDS)

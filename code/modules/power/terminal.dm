@@ -59,7 +59,7 @@
 	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
 	balloon_alert(user, "cutting the cables...")
 
-	PLAYSOUND(src.loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+	playsound(src.loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	if(I.use_tool(src, user, 50))
 		if(master && !master.can_terminal_dismantle())
 			return

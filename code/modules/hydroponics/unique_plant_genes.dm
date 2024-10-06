@@ -531,7 +531,7 @@
 	else
 		our_plant.color = COLOR_RED
 
-	PLAYSOUND(our_plant, ).volume(our_seed.potency).vary(FALSE).play()
+
 	user.visible_message(
 		span_warning("[user] plucks the stem from [our_plant]!"),
 		span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"),
@@ -593,7 +593,7 @@
 	else
 		our_plant.color = COLOR_RED
 
-	PLAYSOUND(our_plant.drop_location(), ).volume(75).vary(TRUE).extra_range(-3).play()
+
 	addtimer(CALLBACK(src, PROC_REF(detonate), our_plant), rand(1 SECONDS, 6 SECONDS))
 
 /datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)

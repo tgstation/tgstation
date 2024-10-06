@@ -45,7 +45,7 @@
 		else
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
-	PLAYSOUND(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(200).vary(TRUE).extra_range(5).play()
+	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(200).vary(TRUE).extra_range(5).play()
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name, TRUE)
 
 /datum/brain_trauma/special/bluespace_prophet

@@ -121,7 +121,7 @@
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		PLAYSOUND(chap, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(chap, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -161,7 +161,7 @@
 		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
 		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
-		PLAYSOUND(chap, 'sound/effects/bang.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(chap, 'sound/effects/bang.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		return TRUE
 	if(!ishuman(target))
 		return
@@ -183,7 +183,7 @@
 			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
 			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
 			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			PLAYSOUND(chap, 'sound/machines/synth/synth_yes.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(chap, 'sound/machines/synth/synth_yes.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		return TRUE
 
 	//charge(?) and go
@@ -192,7 +192,7 @@
 
 	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs and charges" : "repairs"] [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
-	PLAYSOUND(chap, 'sound/effects/bang.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(chap, 'sound/effects/bang.ogg').volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -282,7 +282,7 @@
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
-		PLAYSOUND(chap, 'sound/effects/cashregister.ogg').volume(60).vary(TRUE).play()
+		playsound(chap, 'sound/effects/cashregister.ogg').volume(60).vary(TRUE).play()
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -376,7 +376,7 @@
 	if(transferred)
 		target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
 		to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		PLAYSOUND(chaplain, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
+		playsound(chaplain, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 		target.add_mood_event("blessing", /datum/mood_event/blessing)
 	else
 		to_chat(chaplain, span_warning("They hold no burden!"))
@@ -444,7 +444,7 @@
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
-	PLAYSOUND(chap, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(chap, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 
@@ -458,7 +458,7 @@
 		return
 	to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
 	adjust_favor(favor_earned, user)
-	PLAYSOUND(get_turf(offering), 'sound/items/drink.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(offering), 'sound/items/drink.ogg').volume(50).vary(TRUE).play()
 	offering.reagents.clear_reagents()
 	return TRUE
 

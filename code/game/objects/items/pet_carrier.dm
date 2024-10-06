@@ -57,14 +57,14 @@
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)
 		to_chat(user, span_notice("You close [src]'s door."))
-		PLAYSOUND(user, 'sound/effects/bin/bin_close.ogg').vary(TRUE).play()
+		playsound(user, 'sound/effects/bin/bin_close.ogg').vary(TRUE).play()
 		open = FALSE
 	else
 		if(locked)
 			to_chat(user, span_warning("[src] is locked!"))
 			return
 		to_chat(user, span_notice("You open [src]'s door."))
-		PLAYSOUND(user, 'sound/effects/bin/bin_open.ogg').vary(TRUE).play()
+		playsound(user, 'sound/effects/bin/bin_open.ogg').vary(TRUE).play()
 		open = TRUE
 	update_appearance()
 
@@ -74,9 +74,9 @@
 	locked = !locked
 	to_chat(user, span_notice("You flip the lock switch [locked ? "down" : "up"]."))
 	if(locked)
-		PLAYSOUND(user, 'sound/machines/airlock/boltsdown.ogg').volume(30).vary(TRUE).play()
+		playsound(user, 'sound/machines/airlock/boltsdown.ogg').volume(30).vary(TRUE).play()
 	else
-		PLAYSOUND(user, 'sound/machines/airlock/boltsup.ogg').volume(30).vary(TRUE).play()
+		playsound(user, 'sound/machines/airlock/boltsup.ogg').volume(30).vary(TRUE).play()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -129,7 +129,7 @@
 		loc.visible_message(span_warning("[user] flips the lock switch on [src] by reaching through!"), null, null, null, user)
 		to_chat(user, span_boldannounce("Bingo! The lock pops open!"))
 		locked = FALSE
-		PLAYSOUND(src, 'sound/machines/airlock/boltsup.ogg').volume(30).vary(TRUE).play()
+		playsound(src, 'sound/machines/airlock/boltsup.ogg').volume(30).vary(TRUE).play()
 		update_appearance()
 	else
 		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)

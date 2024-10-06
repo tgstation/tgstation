@@ -18,7 +18,7 @@
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
 		balloon_alert(user, "bolt opened")
-		PLAYSOUND(src, rack_sound).volume(rack_sound_volume).vary(rack_sound_vary).play()
+		playsound(src, rack_sound).volume(rack_sound_volume).vary(rack_sound_vary).play()
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
 		update_appearance()
@@ -83,7 +83,7 @@
 			else
 				unjam_chance += 10
 				balloon_alert(user, "jammed!")
-				PLAYSOUND(user, 'sound/items/weapons/jammed.ogg').volume(75).vary(TRUE).play()
+				playsound(user, 'sound/items/weapons/jammed.ogg').volume(75).vary(TRUE).play()
 				return FALSE
 	..()
 
@@ -225,7 +225,7 @@
 		drop_bolt(user)
 		return
 	balloon_alert(user, "bowstring loosened")
-	PLAYSOUND(src, rack_sound).volume(rack_sound_volume).vary(rack_sound_vary).play()
+	playsound(src, rack_sound).volume(rack_sound_volume).vary(rack_sound_vary).play()
 	handle_chamber(empty_chamber =  FALSE, from_firing = FALSE, chamber_next_round = FALSE)
 	bolt_locked = TRUE
 	update_appearance()
@@ -233,7 +233,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
 	if(!do_after(user, draw_time, target = src))
 		return
-	PLAYSOUND(src, bolt_drop_sound).volume(bolt_drop_sound_volume).vary(FALSE).play()
+	playsound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).vary(FALSE).play()
 	balloon_alert(user, "bowstring drawn")
 	chamber_round()
 	bolt_locked = FALSE
@@ -453,9 +453,9 @@
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
 	. = ..()
 	if(suppressed)
-		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/eject.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 	else
-		PLAYSOUND(src, 'sound/machines/eject.ogg').vary(TRUE).play()
+		playsound(src, 'sound/machines/eject.ogg').vary(TRUE).play()
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \

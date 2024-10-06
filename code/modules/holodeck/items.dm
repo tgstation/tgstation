@@ -62,7 +62,7 @@
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
-		PLAYSOUND(src, 'sound/items/dodgeball.ogg').vary(TRUE).play()
+		playsound(src, 'sound/items/dodgeball.ogg').vary(TRUE).play()
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Paralyze(60)

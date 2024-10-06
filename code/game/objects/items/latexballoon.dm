@@ -64,7 +64,7 @@
 		burst() // too much air, pop it!
 		return
 
-	PLAYSOUND(src, 'sound/items/modsuit/inflate_bloon.ogg').vary(TRUE).play()
+	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg').vary(TRUE).play()
 
 	balloon_alert(user, "you blow up the balloon!") // because it's a balloon obviously
 
@@ -81,7 +81,7 @@
 		return
 
 	set_state(POPPED)
-	PLAYSOUND(src, 'sound/items/balloon_pop.ogg').volume(75).vary(TRUE).play()
+	playsound(src, 'sound/items/balloon_pop.ogg').volume(75).vary(TRUE).play()
 	loc.assume_air(air_contents)
 
 /obj/item/latexballoon/ex_act(severity, target)

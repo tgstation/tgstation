@@ -44,7 +44,7 @@
 	if(!circuits)
 		to_chat(R, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
 		return
-	PLAYSOUND(R, 'sound/items/tools/rped.ogg').vary(TRUE).play()
+	playsound(R, 'sound/items/tools/rped.ogg').vary(TRUE).play()
 	recharging = TRUE
 	circuits--
 	maptext = MAPTEXT(circuits)
@@ -64,12 +64,12 @@
 		span_notice("User breaks down [interacting_with] with [src]."),
 		span_notice("You recycle [interacting_with] into [src]. It now has material for <b>[circuits]</b> circuits.")
 	)
-	PLAYSOUND(user, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+	playsound(user, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	qdel(interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electroadaptive_pseudocircuit/proc/recharge()
-	PLAYSOUND(src, 'sound/machines/chime.ogg').volume(25).vary(TRUE).play()
+	playsound(src, 'sound/machines/chime.ogg').volume(25).vary(TRUE).play()
 	recharging = FALSE
 	icon_state = initial(icon_state)
 

@@ -95,9 +95,9 @@
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			PLAYSOUND(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
+			playsound(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
+			playsound(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.combat_mode)

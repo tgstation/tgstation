@@ -512,7 +512,7 @@
 
 	if(pre_noise)
 		audible_message(span_notice("You hear spraying."))
-		PLAYSOUND(user.loc, ).volume(5).vary(TRUE).extra_range(5).play()
+
 
 	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -566,7 +566,7 @@
 
 	if(post_noise)
 		audible_message(span_hear("You hear spraying."))
-		PLAYSOUND(user.loc, ).volume(5).vary(TRUE).extra_range(5).play()
+
 
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
@@ -836,7 +836,7 @@
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced = "spraycan suicide")
 	if(pre_noise || post_noise)
-		PLAYSOUND(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
+		playsound(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
 	if(can_change_colour)
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
@@ -884,7 +884,7 @@
 
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
-			PLAYSOUND(user.loc, ).volume(25).vary(TRUE).extra_range(5).play()
+
 
 		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
@@ -916,7 +916,7 @@
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
-			PLAYSOUND(user.loc, ).volume(5).vary(TRUE).extra_range(5).play()
+
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
@@ -962,7 +962,7 @@
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
-			PLAYSOUND(user.loc, ).volume(5).vary(TRUE).extra_range(5).play()
+
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
@@ -991,7 +991,7 @@
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE)))
-				PLAYSOUND(user.loc, ).volume(5).vary(TRUE).extra_range(5).play()
+
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return ITEM_INTERACT_SUCCESS
 	if(interacting_with.color)

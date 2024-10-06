@@ -390,7 +390,7 @@
 	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-	PLAYSOUND(T, get_sfx(SFX_DESECRATION)).volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(T, get_sfx(SFX_DESECRATION)).volume(100).vary(TRUE).range(-1 + SOUND_RANGE).play()
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"
@@ -488,7 +488,7 @@
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
 		animate(wasting_effect, alpha = 0, time = 32)
-		PLAYSOUND(owner, 'sound/effects/curse/curse5.ogg').volume(20).vary(TRUE).range(-1 + SOUND_RANGE).play()
+		playsound(owner, 'sound/effects/curse/curse5.ogg').volume(20).vary(TRUE).range(-1 + SOUND_RANGE).play()
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -511,7 +511,7 @@
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	PLAYSOUND(spawn_turf, 'sound/effects/curse/curse2.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	var/obj/projectile/curse_hand/C = new (spawn_turf)
 	C.preparePixelProjectile(owner, spawn_turf)
 	C.fire()

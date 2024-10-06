@@ -92,10 +92,10 @@
 	if(IS_CULTIST(exorcist) || theme == THEME_HOLY)
 		return
 	balloon_alert(exorcist, "exorcising...")
-	PLAYSOUND(src, 'sound/effects/hallucinations/veryfar_noise.ogg').volume(40).vary(TRUE).play()
+	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg').volume(40).vary(TRUE).play()
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
-	PLAYSOUND(src, 'sound/effects/pray_chaplain.ogg').volume(60).vary(TRUE).play()
+	playsound(src, 'sound/effects/pray_chaplain.ogg').volume(60).vary(TRUE).play()
 	required_role = null
 	theme = THEME_HOLY
 
@@ -509,7 +509,7 @@
 	var/makeicon = newstruct.icon_state
 	var/theme = newstruct.theme
 	flick("make_[makeicon][theme]", newstruct)
-	PLAYSOUND(newstruct, 'sound/effects/constructform.ogg').play()
+	playsound(newstruct, 'sound/effects/constructform.ogg').play()
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
 		newstruct.construct_master = stoner

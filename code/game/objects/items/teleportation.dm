@@ -367,7 +367,7 @@
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
 			balloon_alert(holder, "teleporter beeps")
-		playsound(src, 'sound/machines/beep/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/beep/twobeep.ogg').volume(10).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 
 /obj/item/syndicate_teleporter/emp_act(severity)
 	. = ..()
@@ -433,9 +433,9 @@
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
-		PLAYSOUND(current_location, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(destination, 'sound/effects/phasein.ogg').volume(25).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(current_location, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(destination, 'sound/effects/phasein.ogg').volume(25).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	var/area/current_area = get_area(current_location)
@@ -472,10 +472,10 @@
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
-		PLAYSOUND(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(emergency_destination, 'sound/effects/phasein.ogg').volume(25).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(emergency_destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-		PLAYSOUND(src, 'sound/machines/warning-buzzer.ogg').volume(25).vary(TRUE).play()
+		playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(emergency_destination, 'sound/effects/phasein.ogg').volume(25).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(emergency_destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/machines/warning-buzzer.ogg').volume(25).vary(TRUE).play()
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -485,9 +485,9 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	PLAYSOUND(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
-	PLAYSOUND(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
-	PLAYSOUND(destination, 'sound/effects/magic/disintegrate.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/magic/disintegrate.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else
@@ -520,7 +520,7 @@
 	// sometimes lose a lot
 	// average evens out to 10 per teleport, but the randomness spices things up
 	if(prob(25) && bleed_amount)
-		PLAYSOUND(src, 'sound/effects/wounds/pierce1.ogg').volume(40).vary(TRUE).play()
+		playsound(src, 'sound/effects/wounds/pierce1.ogg').volume(40).vary(TRUE).play()
 		visible_message(span_warning("Blood visibly spurts out of [user] as [src] fails to teleport [user.p_their()] body properly!"), \
 			span_boldwarning("Blood visibly spurts out of you as [src] fails to teleport your body properly!"))
 		carbon_user.bleed(bleed_amount * 0.75)

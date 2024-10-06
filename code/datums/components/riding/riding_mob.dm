@@ -389,7 +389,7 @@
 
 	if(human_user && is_clown_job(human_user.mind?.assigned_role))
 		// there's a new sheriff in town
-		PLAYSOUND(movable_parent, 'sound/mobs/non-humanoids/pony/clown_gallup.ogg').play()
+		playsound(movable_parent, 'sound/mobs/non-humanoids/pony/clown_gallup.ogg').play()
 		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear/handle_specials()

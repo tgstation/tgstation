@@ -97,7 +97,7 @@
 		return
 
 	if(sound)
-		PLAYSOUND(get_sfx(location), sound).volume(60).vary(TRUE).play()
+		playsound(get_sfx(location), sound).volume(60).vary(TRUE).play()
 	if(effect)
 		effect.attach(location)
 		effect.start()

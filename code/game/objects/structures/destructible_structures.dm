@@ -13,4 +13,4 @@
 	if(break_message)
 		visible_message(break_message)
 	if(break_sound)
-		PLAYSOUND(get_sfx(src), break_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), break_sound).volume(50).vary(TRUE).play()

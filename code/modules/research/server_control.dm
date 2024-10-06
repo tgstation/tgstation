@@ -24,7 +24,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "console emagged")
 	return TRUE
 
@@ -67,7 +67,7 @@
 		return TRUE
 	if(!allowed(usr) && !(obj_flags & EMAGGED))
 		balloon_alert(usr, "access denied!")
-		PLAYSOUND(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
+		playsound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		return TRUE
 
 	switch(action)

@@ -31,7 +31,7 @@
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	span_notice("You raise [src] skywards, inspiring your allies!"))
-	PLAYSOUND(get_sfx(src), SFX_RUSTLE).volume(100).vary(FALSE).play()
+	playsound(get_sfx(src), SFX_RUSTLE).volume(100).vary(FALSE).play()
 	if(warcry)
 		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform
@@ -75,7 +75,7 @@
 	inspired_human.AdjustImmobilized(-40)
 	inspired_human.AdjustParalyzed(-40)
 	inspired_human.AdjustUnconscious(-40)
-	PLAYSOUND(inspired_human, 'sound/effects/magic/staff_healing.ogg').volume(25).vary(FALSE).play()
+	playsound(inspired_human, 'sound/effects/magic/staff_healing.ogg').volume(25).vary(FALSE).play()
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return

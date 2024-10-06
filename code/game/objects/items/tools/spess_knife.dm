@@ -68,7 +68,7 @@
 
 	update_tool_parameters()
 	update_appearance(UPDATE_ICON_STATE)
-	PLAYSOUND(src, 'sound/items/weapons/empty.ogg').vary(TRUE).play()
+	playsound(src, 'sound/items/weapons/empty.ogg').vary(TRUE).play()
 
 /// Used to pick random tool behavior for the knife
 /obj/item/spess_knife/proc/pick_tool()

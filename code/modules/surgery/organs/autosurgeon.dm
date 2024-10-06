@@ -93,7 +93,7 @@
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null
 	name = initial(name) //get rid of the organ in the name
-	PLAYSOUND(target.loc, ).volume(50).vary(TRUE).play()
+
 	update_appearance()
 
 	if(uses)

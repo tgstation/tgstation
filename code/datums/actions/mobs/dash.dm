@@ -52,11 +52,11 @@
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_forward_turf)
 	var/obj/effect/temp_visual/decoy/fading/halfsecond/D = new (own_turf, owner)
 	owner.forceMove(step_back_turf)
-	PLAYSOUND(own_turf, 'sound/items/weapons/punchmiss.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(own_turf, 'sound/items/weapons/punchmiss.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	owner.alpha = 0
 	animate(owner, alpha = 255, time = 5)
 	SLEEP_CHECK_DEATH(0.2 SECONDS, owner)
 	D.forceMove(step_forward_turf)
 	owner.forceMove(target_turf)
-	PLAYSOUND(target_turf, 'sound/items/weapons/punchmiss.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(target_turf, 'sound/items/weapons/punchmiss.ogg').volume(40).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	SLEEP_CHECK_DEATH(0.1 SECONDS, owner)

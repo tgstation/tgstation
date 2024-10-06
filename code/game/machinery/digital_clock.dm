@@ -24,7 +24,7 @@
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
@@ -52,7 +52,7 @@
 	balloon_alert(user, "resetting...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "reset")
 		obj_flags &= ~EMAGGED
 		return TRUE
@@ -60,7 +60,7 @@
 /obj/machinery/digital_clock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
 	return TRUE

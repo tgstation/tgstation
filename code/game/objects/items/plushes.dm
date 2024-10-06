@@ -438,7 +438,7 @@
 			clash_target = null
 			P.clashing = FALSE
 			return
-		playsound(src, 'sound/effects/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/effects/magic/clockwork/ratvar_attack.ogg').volume(50).vary(TRUE).frequency(2).play()
 		sleep(0.24 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -457,7 +457,7 @@
 		if(QDELETED(P))
 			clash_target = null
 			return
-		playsound(P, 'sound/effects/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(P, 'sound/effects/magic/clockwork/narsie_attack.ogg').volume(50).vary(TRUE).frequency(2).play()
 		sleep(0.33 SECONDS)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -476,16 +476,16 @@
 	if(a_winnar_is == src)
 		say(pick("DIE.", "ROT."))
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
-		playsound(src, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
-		playsound(P, 'sound/effects/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg').volume(50).vary(TRUE).frequency(2).play()
+		playsound(P, 'sound/effects/magic/demon_dies.ogg').volume(50).vary(TRUE).frequency(2).play()
 		explosion(P, light_impact_range = 1)
 		qdel(P)
 		clash_target = null
 	else
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
-		playsound(src, 'sound/effects/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
-		playsound(P, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/effects/magic/clockwork/anima_fragment_death.ogg').volume(62).vary(TRUE).frequency(2).play()
+		playsound(P, 'sound/effects/magic/demon_attack1.ogg').volume(50).vary(TRUE).frequency(2).play()
 		explosion(src, light_impact_range = 1)
 		qdel(src)
 		P.clashing = FALSE
@@ -647,7 +647,7 @@
 		say(pick(cry_alone_messages))
 	else
 		say(pick(cry_still_messages))
-	PLAYSOUND(src, 'sound/items/intents/Help.ogg').vary(FALSE).play()
+	playsound(src, 'sound/items/intents/Help.ogg').vary(FALSE).play()
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"
@@ -701,7 +701,7 @@
 		going_hard = FALSE
 		update_icon(UPDATE_OVERLAYS)
 	icon_state = "goat_splat"
-	PLAYSOUND(get_sfx(src), SFX_DESECRATION).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), SFX_DESECRATION).volume(50).vary(TRUE).play()
 	visible_message(span_danger("[src] gets absolutely flattened!"))
 	splat = TRUE
 
@@ -737,7 +737,7 @@
 		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
 		divine = TRUE
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	PLAYSOUND(src, 'sound/effects/hallucinations/wail.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/hallucinations/wail.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	var/list/available_spots = get_adjacent_open_turfs(loc)
 	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
 		var/turf/open/random_open_spot = pick(available_spots)

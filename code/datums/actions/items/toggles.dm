@@ -138,7 +138,7 @@
 		stored_cutoffs = null
 		if(stored_colour)
 			goggles.change_glass_color(stored_colour)
-		PLAYSOUND(goggles, 'sound/items/night_vision_on.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(goggles, 'sound/items/night_vision_on.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	else
 		stored_cutoffs = goggles.color_cutoffs
 		stored_colour = goggles.glass_colour_type
@@ -146,6 +146,6 @@
 		goggles.flash_protect = FLASH_PROTECTION_NONE
 		if(stored_colour)
 			goggles.change_glass_color(null)
-		PLAYSOUND(goggles, 'sound/machines/click.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(goggles, 'sound/machines/click.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	holder?.update_sight()
 	goggles.update_appearance()

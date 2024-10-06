@@ -32,7 +32,7 @@
 	if(!use_energy(active_power_usage, force = FALSE))
 		return
 	flick("ecto_sniffer_flick", src)
-	PLAYSOUND(loc, 'sound/machines/ectoscope_beep.ogg').volume(75).play()
+	playsound(loc, 'sound/machines/ectoscope_beep.ogg').volume(75).play()
 	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey

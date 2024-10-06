@@ -119,7 +119,7 @@
 		return FALSE
 	var/obj/effect/mine/minebot/my_mine = new(my_turf)
 	my_mine.ignore_list = owner.faction.Copy()
-	PLAYSOUND(my_turf, 'sound/items/weapons/armbomb.ogg').volume(20).play()
+	playsound(my_turf, 'sound/items/weapons/armbomb.ogg').volume(20).play()
 	StartCooldown()
 	return TRUE
 
@@ -132,7 +132,7 @@
 
 /obj/effect/temp_visual/rising_rocket/Initialize(mapload)
 	. = ..()
-	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
+	playsound(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
 	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = EASE_IN)
 
 /obj/effect/temp_visual/falling_rocket
@@ -154,7 +154,7 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
-	PLAYSOUND(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
+	playsound(src, 'sound/items/weapons/minebot_rocket.ogg').volume(100).vary(FALSE).play()
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(1, holder = src)
 	smoke.start()
@@ -176,7 +176,7 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src)
 	smoke.start()
-	PLAYSOUND(src, 'sound/effects/explosion/explosion3.ogg').volume(100).play()
+	playsound(src, 'sound/effects/explosion/explosion3.ogg').volume(100).play()
 	victim.apply_damage(damage_to_apply)
 
 /obj/effect/mine/minebot/can_trigger(atom/movable/on_who)

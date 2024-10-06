@@ -45,7 +45,7 @@
 			span_hear("You hear a thud."),
 			COMBAT_MESSAGE_RANGE,
 		)
-		PLAYSOUND(source, ).volume(tap_vol).vary(TRUE).extra_range(-1).play()
+
 		return SUCCESSFUL_BLOCK
 
 	return NONE

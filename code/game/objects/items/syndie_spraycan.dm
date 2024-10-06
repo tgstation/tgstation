@@ -90,7 +90,7 @@
 		drawing_rune = FALSE
 		return FALSE
 
-	PLAYSOUND(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
 	drawing_rune = FALSE
 	return TRUE
 
@@ -142,7 +142,7 @@
 	var/mob/living/carbon/human/suicider = user
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced="spraycan suicide")
-	PLAYSOUND(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).range(5 + SOUND_RANGE).play()
 	suicider.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	return OXYLOSS
 

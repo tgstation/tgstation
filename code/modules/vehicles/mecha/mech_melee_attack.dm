@@ -21,15 +21,15 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
 	if(prob(hardness + mecha_attacker.force) && mecha_attacker.force > 20)
 		dismantle_wall(1)
-		PLAYSOUND(src, mecha_attacker.destroy_wall_sound).volume(100).vary(TRUE).play()
+		playsound(src, mecha_attacker.destroy_wall_sound).volume(100).vary(TRUE).play()
 	else
 		add_dent(WALL_DENT_HIT)
 	..()
@@ -42,9 +42,9 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
+			playsound(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
+			playsound(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
@@ -58,9 +58,9 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
@@ -79,9 +79,9 @@
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
-			PLAYSOUND(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
+			playsound(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
+			playsound(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 		else
 			return
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
@@ -109,11 +109,11 @@
 				mecha_attacker.melee_attack_effect(src, heavy = TRUE)
 			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
-			PLAYSOUND(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.brute_attack_sound).vary(TRUE).play()
 		if(FIRE)
-			PLAYSOUND(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.burn_attack_sound).vary(TRUE).play()
 		if(TOX)
-			PLAYSOUND(src, mecha_attacker.tox_attack_sound).vary(TRUE).play()
+			playsound(src, mecha_attacker.tox_attack_sound).vary(TRUE).play()
 			var/bio_armor = (100 - run_armor_check(attack_flag = BIO, silent = TRUE)) / 100
 			if((reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + mecha_attacker.force) < mecha_attacker.force * 2)
 				reagents.add_reagent(/datum/reagent/cryptobiolin, mecha_attacker.force / 2 * bio_armor)

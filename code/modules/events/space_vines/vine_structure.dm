@@ -91,11 +91,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				PLAYSOUND(src, 'sound/items/weapons/slash.ogg').vary(TRUE).play()
+				playsound(src, 'sound/items/weapons/slash.ogg').vary(TRUE).play()
 			else
-				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
+				playsound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			PLAYSOUND(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
+			playsound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/spacevine/proc/on_entered(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER

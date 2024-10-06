@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 /datum/sm_gas/zauker/extra_effects(obj/machinery/power/supermatter_crystal/sm)
 	if(!prob(sm.gas_percentage[/datum/gas/zauker] * 100))
 		return
-	PLAYSOUND(sm.loc, ).volume(100).vary(TRUE).extra_range(10).play()
+
 	sm.supermatter_zap(
 		sm,
 		range = 6,

@@ -94,7 +94,7 @@
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE

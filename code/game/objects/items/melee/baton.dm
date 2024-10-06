@@ -167,7 +167,7 @@
 			desc = get_cyborg_stun_description(target, user)
 		else
 			desc = get_unga_dunga_cyborg_stun_description(target, user)
-			PLAYSOUND(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary(TRUE).play() //bonk
+			playsound(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary(TRUE).play() //bonk
 			. = BATON_ATTACK_DONE
 	else
 		desc = get_stun_description(target, user)
@@ -177,7 +177,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		PLAYSOUND(human_target, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
+		playsound(human_target, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 		return TRUE
 	return FALSE
 
@@ -187,7 +187,7 @@
 
 	cooldown_check = world.time + cooldown
 	if(on_stun_sound)
-		PLAYSOUND(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
+		playsound(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
 	if(user)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -273,9 +273,9 @@
 			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
 			if(on_stun_sound)
-				PLAYSOUND(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
+				playsound(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
 		else
-			PLAYSOUND(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary(TRUE).play()
+			playsound(get_turf(src), 'sound/effects/bang.ogg').volume(10).vary(TRUE).play()
 	else
 		//straight up always force say for clumsy humans
 		if(ishuman(user))
@@ -285,7 +285,7 @@
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
-			PLAYSOUND(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
+			playsound(get_turf(src), on_stun_sound).volume(on_stun_volume).vary(TRUE).extra_range(-1).play()
 
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
@@ -355,7 +355,7 @@
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
-		PLAYSOUND(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
 		add_fingerprint(user)
 	else
 		attack_self(user)
@@ -387,7 +387,7 @@
 	else
 		drop_sound = unfolded_drop_sound
 		pickup_sound = unfolded_pickup_sound
-	PLAYSOUND(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton
@@ -507,7 +507,7 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	PLAYSOUND(source_turf, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(source_turf, 'sound/items/tools/drill_use.ogg').volume(80).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
@@ -595,7 +595,7 @@
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	update_appearance()
 	toggle_light()
 	do_sparks(1, TRUE, src)
@@ -606,7 +606,7 @@
 	active = FALSE
 	set_light_on(FALSE)
 	update_appearance()
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 
@@ -709,7 +709,7 @@
 	active = !active
 	toggle_light()
 	do_sparks(1, TRUE, src)
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(-1 + SOUND_RANGE).play()
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

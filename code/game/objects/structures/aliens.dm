@@ -24,12 +24,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				PLAYSOUND(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
+				playsound(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
 			else
-				PLAYSOUND(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
+				playsound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
 			if(damage_amount)
-				PLAYSOUND(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
+				playsound(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -392,7 +392,7 @@
 				return
 			if(BURST)
 				to_chat(user, span_notice("You clear the hatched egg."))
-				PLAYSOUND(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
+				playsound(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
 				qdel(src)
 				return
 			if(GROWING)

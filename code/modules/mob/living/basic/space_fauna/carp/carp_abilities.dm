@@ -14,7 +14,7 @@
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
-	PLAYSOUND(get_turf(firer), projectile_sound).volume(100).vary(TRUE).play()
+	playsound(get_turf(firer), projectile_sound).volume(100).vary(TRUE).play()
 	return ..()
 
 /// Chaos variant picks one from a list
@@ -140,8 +140,8 @@
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)
-	PLAYSOUND(src, 'sound/effects/magic/wand_teleport.ogg').play()
-	PLAYSOUND(destination, 'sound/effects/magic/wand_teleport.ogg').play()
+	playsound(src, 'sound/effects/magic/wand_teleport.ogg').play()
+	playsound(destination, 'sound/effects/magic/wand_teleport.ogg').play()
 
 /// Doesn't actually do anything, just a visual marker
 /obj/effect/temp_visual/lesser_carp_rift/exit

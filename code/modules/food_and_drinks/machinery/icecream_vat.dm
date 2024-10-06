@@ -154,7 +154,7 @@
 
 	if(added_reagents)
 		balloon_alert(user, "refilling reagents")
-		PLAYSOUND(src, 'sound/items/drink.ogg').volume(25).vary(TRUE).play()
+		playsound(src, 'sound/items/drink.ogg').volume(25).vary(TRUE).play()
 	else
 		balloon_alert(user, "no reagents to transfer!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

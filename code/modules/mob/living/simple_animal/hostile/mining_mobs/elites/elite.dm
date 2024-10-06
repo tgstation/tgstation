@@ -204,7 +204,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/phasein.ogg')\
+		.volume(200)\
+		.vary(0)\
+		.extra_range(50)\
+		.atmospherics_affected(TRUE)\
+		.ignore_walls(TRUE)\
+		.play()
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
@@ -222,7 +228,13 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/phasein.ogg')\
+		.volume(200)\
+		.vary(0)\
+		.extra_range(50)\
+		.atmospherics_affected(TRUE)\
+		.ignore_walls(TRUE)\
+		.play()
 	mychild.revive(HEAL_ALL)
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
@@ -319,14 +331,32 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
 		visible_message(span_boldwarning("[activator] suddenly reappears above [src]!"))
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		playsound(loc, 'sound/effects/phasein.ogg')\
+			.volume(200)\
+			.vary(0)\
+			.extra_range(50)\
+			.atmospherics_affected(TRUE)\
+			.ignore_walls(TRUE)\
+			.play()
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
 		visible_message(span_boldwarning("[mychild] suddenly reappears above [src]!"))
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		playsound(loc, 'sound/effects/phasein.ogg')\
+			.volume(200)\
+			.vary(0)\
+			.extra_range(50)\
+			.atmospherics_affected(TRUE)\
+			.ignore_walls(TRUE)\
+			.play()
 
 /obj/structure/elite_tumor/proc/onEliteLoss()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
+	playsound(loc, 'sound/effects/tendril_destroyed.ogg')\
+		.volume(200)\
+		.vary(0)\
+		.extra_range(50)\
+		.atmospherics_affected(TRUE)\
+		.ignore_walls(TRUE)\
+		.play()
 	visible_message(span_boldwarning("[src] begins to convulse violently before beginning to dissipate."))
 	visible_message(span_boldwarning("As [src] closes, something is forced up from down below."))
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)

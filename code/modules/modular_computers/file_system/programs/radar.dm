@@ -397,7 +397,7 @@
 	if(!computer)
 		return
 
-	PLAYSOUND(computer, 'sound/items/nuke_toy_lowpower.ogg').vary(FALSE).play()
+	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg').vary(FALSE).play()
 	if(isliving(computer.loc))
 		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
 	else

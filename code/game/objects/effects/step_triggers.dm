@@ -216,7 +216,7 @@
 		var/mob/B = A
 		B.playsound_local(T, sound, volume, freq_vary)
 	else
-		PLAYSOUND(T, sound).volume(volume).vary(freq_vary).extra_range(extra_range).play()
+		playsound(T, sound).volume(volume).vary(freq_vary).extra_range(extra_range).play()
 
 	if(happens_once)
 		qdel(src)

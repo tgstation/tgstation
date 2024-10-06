@@ -147,7 +147,7 @@
 	if(air_contents.return_pressure() > max_pressure)
 		take_damage(0.1, BRUTE, sound_effect = FALSE)
 		if(prob(40))
-			PLAYSOUND(src, pick(breaking_sounds)).volume(30).vary(TRUE).play()
+			playsound(src, pick(breaking_sounds)).volume(30).vary(TRUE).play()
 
 	refresh_window()
 

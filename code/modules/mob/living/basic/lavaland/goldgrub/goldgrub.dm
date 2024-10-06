@@ -82,7 +82,7 @@
 	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
-	PLAYSOUND(src, 'sound/effects/splat.ogg').vary(TRUE).play()
+	playsound(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 	for(var/obj/item/stack/ore/ore in src)
 		ore.forceMove(loc)
 	if(!gibbed)
@@ -127,7 +127,7 @@
 	. = ..()
 	if(!istype(arrived, /obj/item/stack/ore))
 		return
-	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(src, 'sound/items/eatfood.ogg').volume(rand(10,50)).vary(TRUE).play()
 	if(!can_lay_eggs)
 		return
 	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))

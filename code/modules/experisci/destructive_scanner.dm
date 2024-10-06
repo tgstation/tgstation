@@ -33,7 +33,7 @@
 	var/aggressive = FALSE
 	for(var/mob/living/living_mob in pickup_zone)
 		if(!(obj_flags & EMAGGED) && ishuman(living_mob)) //Can only kill humans when emagged.
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).play()
 			say("Cannot scan with humans inside.")
 			return
 		aggressive = TRUE
@@ -50,16 +50,16 @@
 	flick("tube_down", src)
 	scanning = TRUE
 	update_icon()
-	PLAYSOUND(src, 'sound/machines/destructive_scanner/TubeDown.ogg').volume(100).play()
+	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg').volume(100).play()
 	use_energy(idle_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(start_scanning), aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
 /obj/machinery/destructive_scanner/proc/start_scanning(aggressive)
 	if(aggressive)
-		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
+		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg').volume(100).extra_range(5).play()
 	else
-		PLAYSOUND(src, 'sound/machines/destructive_scanner/ScanSafe.ogg').volume(100).play()
+		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg').volume(100).play()
 	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(finish_scanning), aggressive), 6 SECONDS)
 
@@ -69,7 +69,7 @@
 	flick("tube_up", src)
 	scanning = FALSE
 	update_icon()
-	PLAYSOUND(src, 'sound/machines/destructive_scanner/TubeUp.ogg').volume(100).play()
+	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg').volume(100).play()
 	addtimer(CALLBACK(src, PROC_REF(open), aggressive), 1.2 SECONDS)
 
 ///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
@@ -94,7 +94,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 

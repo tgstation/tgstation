@@ -384,7 +384,7 @@
 	if(prob(5))
 		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]"))
 		if(reaction.mix_sound)
-			PLAYSOUND(get_turf(holder.my_atom), reaction.mix_sound).volume(80).vary(TRUE).play()
+			playsound(get_turf(holder.my_atom), reaction.mix_sound).volume(80).vary(TRUE).play()
 
 	//Used for UI output
 	reaction_quality = purity

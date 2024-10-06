@@ -186,5 +186,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_FISH_PICKUP "fish_pickup"
 #define SFX_LIQUID_POUR "liquid_pour"
 
-#define PLAYSOUND(source, sound) __setup_playsound(source, sound)
 #define GLOBAL_SOUND null

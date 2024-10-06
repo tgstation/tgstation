@@ -62,7 +62,7 @@
 		return ITEM_INTERACT_BLOCKING
 	turf_target.visible_message(span_warning("A storm of paper materializes!"))
 	new /obj/effect/temp_visual/paper_scatter(turf_target)
-	PLAYSOUND(turf_target, 'sound/effects/magic/smoke.ogg').volume(30).play()
+	playsound(turf_target, 'sound/effects/magic/smoke.ogg').volume(30).play()
 	new barrier_type(turf_target, user)
 	uses--
 	if(uses <= 0)

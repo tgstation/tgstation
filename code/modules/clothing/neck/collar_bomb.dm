@@ -56,13 +56,13 @@
 /obj/item/clothing/neck/collar_bomb/proc/explosive_countdown(ticks_left)
 	active = TRUE
 	if(ticks_left > 0)
-		PLAYSOUND(src, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
+		playsound(src, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
 		balloon_alert_to_viewers("[ticks_left]")
 		ticks_left--
 		addtimer(CALLBACK(src, PROC_REF(explosive_countdown), ticks_left), 1 SECONDS)
 		return
 
-	PLAYSOUND(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).play()
+	playsound(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).play()
 	if(!ishuman(loc))
 		balloon_alert_to_viewers("dud...")
 		active = FALSE
@@ -73,7 +73,7 @@
 		active = FALSE
 		return
 	visible_message(span_warning("[src] goes off, outright decapitating [brian]!"), span_hear("You hear a fleshy boom!"))
-	PLAYSOUND(get_sfx(src), SFX_EXPLOSION).volume(30).vary(TRUE).play()
+	playsound(get_sfx(src), SFX_EXPLOSION).volume(30).vary(TRUE).play()
 	brian.apply_damage(200, BRUTE, BODY_ZONE_HEAD)
 	var/obj/item/bodypart/head/myhead = brian.get_bodypart(BODY_ZONE_HEAD)
 	myhead?.dismember()
@@ -101,7 +101,7 @@
 	balloon_alert_to_viewers("pushing the button...")
 	if(!do_after(user, 1.2 SECONDS, target = src))
 		return
-	PLAYSOUND(user, 'sound/machines/click.ogg').volume(25).vary(TRUE).play()
+	playsound(user, 'sound/machines/click.ogg').volume(25).vary(TRUE).play()
 	if(!collar|| collar.active)
 		return
 	collar.explosive_countdown(ticks_left = 5)

@@ -586,7 +586,7 @@
 
 /datum/component/construction/mecha/honker/custom_action(obj/item/I, mob/living/user, diff)
 	if(istype(I, /obj/item/bikehorn))
-		PLAYSOUND(parent, 'sound/items/bikehorn.ogg').vary(TRUE).play()
+		playsound(parent, 'sound/items/bikehorn.ogg').vary(TRUE).play()
 		user.balloon_alert_to_viewers("HONK!")
 		return TRUE
 

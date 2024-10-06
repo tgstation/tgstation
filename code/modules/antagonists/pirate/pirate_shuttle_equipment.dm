@@ -331,7 +331,7 @@
 		for(var/datum/export/exported_datum in report.total_amount)
 			total_report.total_amount[exported_datum] += report.total_amount[exported_datum]
 			total_report.total_value[exported_datum] += report.total_value[exported_datum]
-		PLAYSOUND(loc, 'sound/machines/wewewew.ogg').volume(70).vary(TRUE).play()
+		playsound(loc, 'sound/machines/wewewew.ogg').volume(70).vary(TRUE).play()
 
 	points += value
 
@@ -438,7 +438,7 @@
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
-	PLAYSOUND(picked_turf, 'sound/items/weapons/emitter2.ogg').volume(25).vary(TRUE).play()
+	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg').volume(25).vary(TRUE).play()
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)

@@ -563,7 +563,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	PLAYSOUND(loc, ).volume(80).vary(TRUE).play()
+
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)

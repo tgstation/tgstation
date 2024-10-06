@@ -96,6 +96,6 @@
 	printed_canvas.no_save = TRUE
 	printed_canvas.update_icon()
 	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
-	PLAYSOUND(computer.physical, 'sound/items/poster/poster_being_created.ogg').volume(100).vary(TRUE).play()
+	playsound(computer.physical, 'sound/items/poster/poster_being_created.ogg').volume(100).vary(TRUE).play()
 
 #undef CANVAS_PAPER_COST

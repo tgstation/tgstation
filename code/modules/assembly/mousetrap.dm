@@ -89,7 +89,7 @@
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 					pulse()
 		update_appearance()
-		PLAYSOUND(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
 
 /obj/item/assembly/mousetrap/update_icon_state()
 	icon_state = "mousetrap[armed ? "armed" : ""]"
@@ -116,7 +116,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/victim = target
 		if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-			PLAYSOUND(src, 'sound/effects/snap.ogg').vary(TRUE).play()
+			playsound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 			pulse()
 			return FALSE
 		switch(type)
@@ -143,7 +143,7 @@
 	else if(isregalrat(target))
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
-	PLAYSOUND(src, 'sound/effects/snap.ogg').vary(TRUE).play()
+	playsound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 	pulse()
 
 /**
@@ -174,7 +174,7 @@
 		to_chat(user, span_notice("You disarm [src]."))
 	armed = !armed
 	update_appearance()
-	PLAYSOUND(src, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).range(-3 + SOUND_RANGE).play()
 
 
 // Clumsy check only

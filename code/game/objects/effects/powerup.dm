@@ -49,7 +49,7 @@
 	if(pickup_message)
 		to_chat(target, span_notice("[pickup_message]"))
 	if(pickup_sound)
-		PLAYSOUND(get_turf(target), pickup_sound).volume(50).vary(TRUE).extra_range(-1).play()
+		playsound(get_turf(target), pickup_sound).volume(50).vary(TRUE).extra_range(-1).play()
 	return TRUE
 
 /obj/effect/powerup/health

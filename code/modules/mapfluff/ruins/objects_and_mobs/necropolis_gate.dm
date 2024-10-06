@@ -108,7 +108,7 @@
 		new /obj/effect/temp_visual/necropolis(T)
 		visible_message(span_boldwarning("The door slams closed!"))
 		sleep(0.1 SECONDS)
-		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 80000)
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg').volume(300).vary(TRUE).frequency(80000).play()
 		sleep(0.1 SECONDS)
 		set_density(TRUE)
 		sleep(0.1 SECONDS)
@@ -122,7 +122,7 @@
 			sight_blocker.pixel_y = initial(sight_blocker.pixel_y) - (32 * sight_blocker_distance)
 			sight_blocker.forceMove(sight_blocker_turf)
 		sleep(0.25 SECONDS)
-		playsound(T, 'sound/effects/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
+		playsound(T, 'sound/effects/magic/clockwork/invoke_general.ogg').volume(30).vary(TRUE).frequency(15000).play()
 		add_overlay(door_overlay)
 		open = FALSE
 	else
@@ -130,7 +130,7 @@
 		new /obj/effect/temp_visual/necropolis/open(T)
 		sleep(0.2 SECONDS)
 		visible_message(span_warning("The door starts to grind open..."))
-		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg').volume(300).vary(TRUE).frequency(20000).play()
 		sleep(2.2 SECONDS)
 		sight_blocker.forceMove(src)
 		sleep(0.5 SECONDS)
@@ -164,7 +164,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
 		user.visible_message(span_warning("[user] knocks on [src]..."), span_boldannounce("You tentatively knock on [src]..."))
-		PLAYSOUND(user.loc, 'sound/effects/shieldbash.ogg').volume(100).vary(TRUE).play()
+		playsound(user.loc, 'sound/effects/shieldbash.ogg').volume(100).vary(TRUE).play()
 		sleep(5 SECONDS)
 	return ..()
 

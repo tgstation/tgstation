@@ -212,9 +212,9 @@
 
 /obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
 	var/turf/T = get_turf(src)
-	PLAYSOUND(T, 'sound/effects/magic/fleshtostone.ogg').volume(80).vary(TRUE).play()
+	playsound(T, 'sound/effects/magic/fleshtostone.ogg').volume(80).vary(TRUE).play()
 	sleep(duration)
-	PLAYSOUND(T, 'sound/effects/magic/fireball.ogg').volume(200).vary(TRUE).play()
+	playsound(T, 'sound/effects/magic/fireball.ogg').volume(200).vary(TRUE).play()
 
 	for(var/mob/living/L in T.contents - owner)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
@@ -281,13 +281,13 @@
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	PLAYSOUND(T, 'sound/effects/magic/fleshtostone.ogg').volume(80).vary(TRUE).play()
+	playsound(T, 'sound/effects/magic/fleshtostone.ogg').volume(80).vary(TRUE).play()
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
-	PLAYSOUND(get_sfx(T), SFX_EXPLOSION).volume(80).vary(TRUE).play()
+	playsound(get_sfx(T), SFX_EXPLOSION).volume(80).vary(TRUE).play()
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)

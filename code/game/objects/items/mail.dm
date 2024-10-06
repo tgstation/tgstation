@@ -107,7 +107,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			PLAYSOUND(loc, ).volume(100).vary(TRUE).play()
+
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
@@ -145,7 +145,7 @@
 			user.put_in_hands(stuff)
 		else
 			stuff.forceMove(drop_location())
-	PLAYSOUND(loc, ).volume(50).vary(TRUE).play()
+
 	qdel(src)
 	return TRUE
 
@@ -402,7 +402,7 @@
 
 /obj/item/mail/traitor/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
-	PLAYSOUND(loc, ).volume(50).vary(TRUE).play()
+
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
 			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
@@ -419,7 +419,7 @@
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE
 		balloon_alert(user, "disarmed")
-		PLAYSOUND(src, ).volume(100).vary(TRUE).play()
+
 		armed = FALSE
 		return TRUE
 	else
@@ -430,7 +430,7 @@
 			return FALSE
 		if(prob(50))
 			balloon_alert(user, "disarmed something...?")
-			PLAYSOUND(src, ).volume(100).vary(TRUE).play()
+
 			armed = FALSE
 			return TRUE
 		else

@@ -181,7 +181,7 @@
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, PROC_REF(decal_detached))
-	PLAYSOUND(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg').play()
+	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg').play()
 	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
 
@@ -197,7 +197,7 @@
 	if(blocking)
 		trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!"))
 		return
-	PLAYSOUND(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg').play()
+	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg').play()
 	trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] swings shut!"))
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
 
@@ -242,11 +242,11 @@
 		assembly_turf.visible_message(span_warning("[src] is on cooldown! Please wait [timeleft]."), vision_distance = SAMETILE_MESSAGE_RANGE)
 		return
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, src) & LINKED_UP)
-		PLAYSOUND(assembly_turf, 'sound/machines/chime.ogg').vary(TRUE).play()
+		playsound(assembly_turf, 'sound/machines/chime.ogg').vary(TRUE).play()
 		assembly_turf.visible_message(span_notice("[src] has linked up to a nearby trapdoor! \
 		You may now use it to check where the trapdoor is... be careful!"), vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
-		PLAYSOUND(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
+		playsound(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
 		assembly_turf.visible_message(span_warning("[src] has failed to find a trapdoor nearby to link to."), vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
@@ -321,7 +321,7 @@
 		return TRUE
 
 	user.balloon_alert(user, "trapdoor triggered")
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)

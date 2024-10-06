@@ -95,7 +95,7 @@
 
 /datum/action/cooldown/spell/jaunt/creature_teleport/cast(atom/cast_on)
 	. = ..()
-	PLAYSOUND(get_turf(owner), ).volume(50).vary(TRUE).extra_range(-1).play()
+
 	if(is_jaunting(cast_on))
 		exit_jaunt(cast_on)
 		return

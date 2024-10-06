@@ -102,7 +102,7 @@
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "audible_emote_cooldown"))
 		TIMER_COOLDOWN_START(user, "audible_emote_cooldown", audio_cooldown)
-		PLAYSOUND(user, tmp_sound).vary(vary).ignore_walls(sound_wall_ignore)
+		playsound(user, tmp_sound).vary(vary).ignore_walls(sound_wall_ignore)
 
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE

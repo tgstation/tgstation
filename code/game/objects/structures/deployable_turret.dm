@@ -70,7 +70,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
+	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -103,7 +103,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	PLAYSOUND(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
+	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
@@ -174,7 +174,7 @@
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
 			warned = TRUE
-			PLAYSOUND(get_sfx(src), overheatsound).volume(100).vary(TRUE).play()
+			playsound(get_sfx(src), overheatsound).volume(100).vary(TRUE).play()
 		return
 	else
 		cooldown = world.time + cooldown_duration
@@ -194,7 +194,7 @@
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/projectile/projectile_to_fire = new projectile_type(targets_from)
-	PLAYSOUND(get_sfx(src), firesound).volume(75).vary(TRUE).play()
+	playsound(get_sfx(src), firesound).volume(75).vary(TRUE).play()
 	projectile_to_fire.preparePixelProjectile(target, targets_from)
 	projectile_to_fire.firer = user
 	projectile_to_fire.fired_from = src

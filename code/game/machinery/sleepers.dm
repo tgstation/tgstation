@@ -372,7 +372,7 @@
 		var/datum/reagents/holder = new()
 		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
 		holder.trans_to(occupant, 10, methods = VAPOR)
-		PLAYSOUND(src.loc, ).volume(50).vary(TRUE).extra_range(-6).play()
+
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 		return TRUE

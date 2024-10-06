@@ -25,7 +25,7 @@
 		return
 
 	update_mob()
-	PLAYSOUND(src, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 	var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 	smoke.set_up(4, holder = src, location = src)
 	smoke.start()

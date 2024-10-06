@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	PLAYSOUND(src, 'sound/effects/bubbles/bubbles.ogg').vary(TRUE).play()
-	PLAYSOUND(src, 'sound/effects/glass/glassbr1.ogg').vary(TRUE).play()
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg').vary(TRUE).play()
+	playsound(src, 'sound/effects/glass/glassbr1.ogg').vary(TRUE).play()
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()

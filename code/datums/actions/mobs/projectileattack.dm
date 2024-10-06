@@ -150,7 +150,7 @@
 		if(counter < 1)
 			counter = 16
 		shoot_projectile(firer, target, counter * 22.5, firer, null, null)
-		PLAYSOUND(get_turf(firer), projectile_sound).volume(20).vary(TRUE).play()
+		playsound(get_turf(firer), projectile_sound).volume(20).vary(TRUE).play()
 		SLEEP_CHECK_DEATH(0.1 SECONDS, firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus
@@ -190,7 +190,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/attack_sequence(mob/living/firer, atom/target)
 	var/turf/U = get_turf(firer)
-	PLAYSOUND(U, projectile_sound).volume(300).vary(TRUE).range(5 + SOUND_RANGE).play()
+	playsound(U, projectile_sound).volume(300).vary(TRUE).range(5 + SOUND_RANGE).play()
 	for(var/i in 1 to 32)
 		shoot_projectile(firer, target, rand(0, 360), firer, null, null)
 
@@ -215,7 +215,7 @@
 	fire_shotgun(firer, target, shot_angles)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/proc/fire_shotgun(mob/living/firer, atom/target, list/chosen_angles)
-	PLAYSOUND(firer, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
+	playsound(firer, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
 	for(var/spread in chosen_angles)
 		shoot_projectile(firer, target, null, firer, spread, null)
 
@@ -277,7 +277,7 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/proc/fire_in_directions(mob/living/firer, atom/target, list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
-	PLAYSOUND(firer, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
+	playsound(firer, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
 	for(var/dir in dirs)
 		shoot_projectile(firer, target, dir2angle(dir), firer)
 
@@ -312,7 +312,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/Activate(atom/target_atom)
 	. = ..()
-	PLAYSOUND(owner, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
+	playsound(owner, projectile_sound).volume(200).vary(TRUE).range(2 + SOUND_RANGE).play()
 	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
 	owner.face_atom(target_atom)
 	new /obj/effect/temp_visual/dir_setting/firing_effect(owner.loc, owner.dir)

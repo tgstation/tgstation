@@ -28,7 +28,7 @@
 	var/mob/living/basic/space_dragon/dragon = new(spawn_location)
 	dragon.key = chosen_one.key
 	dragon.mind.add_antag_datum(/datum/antagonist/space_dragon)
-	PLAYSOUND(dragon, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
+	playsound(dragon, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).range(-1 + SOUND_RANGE).play()
 	message_admins("[ADMIN_LOOKUPFLW(dragon)] has been made into a Space Dragon by an event.")
 	dragon.log_message("was spawned as a Space Dragon by an event.", LOG_GAME)
 	spawned_mobs += dragon

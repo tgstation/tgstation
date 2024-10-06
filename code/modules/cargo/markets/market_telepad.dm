@@ -125,11 +125,11 @@
 
 /obj/machinery/ltsrbt/open_machine(drop = TRUE, density_to_set = FALSE)
 	. = ..()
-	PLAYSOUND(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
+	playsound(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
 
 /obj/machinery/ltsrbt/close_machine(atom/movable/target, density_to_set = TRUE)
 	. = ..()
-	PLAYSOUND(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
+	playsound(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
 
 /obj/machinery/ltsrbt/set_occupant(obj/item/new_occupant)
 	. = ..()
@@ -176,7 +176,7 @@
 	if(state_open)
 		if(locate(/mob/living) in tool.get_all_contents())
 			say("Living being detected, cannot sell!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "stuck to your hands!")
@@ -193,7 +193,7 @@
 
 	if(creds_value < restock_cost)
 		say("Insufficient credits!")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/holochip))
@@ -271,7 +271,7 @@
 		return
 	if(locate(/mob/living) in occupant.get_all_contents())
 		say("Living being detected, cannot sell!")
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 		return
 	var/datum/bank_account/account
 	var/datum/market/our_market = SSmarket.markets[/datum/market/blackmarket]
@@ -280,17 +280,17 @@
 			return
 		if(length(our_market.available_items[/datum/market_item/local_good::category]) >= LTSRBT_MAX_MARKET_ITEMS)
 			say("Local market saturated, buy some goods first!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 			return
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
 		if(!(card?.registered_account))
 			say("No bank account to charge market fees detected!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
 			say("Insufficient credits!")
-			PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
 			return
 		account = card.registered_account
 
@@ -313,7 +313,7 @@
 	our_market.add_item(new_item)
 
 	say("Item placed on the market!")
-	PLAYSOUND(src, 'sound/effects/cashregister.ogg').volume(40).vary(FALSE).play()
+	playsound(src, 'sound/effects/cashregister.ogg').volume(40).vary(FALSE).play()
 	COOLDOWN_START(src, recharge_cooldown, recharge_time * 3)
 
 #undef LTSRBT_MAX_MARKET_ITEMS

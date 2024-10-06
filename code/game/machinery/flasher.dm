@@ -108,7 +108,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		power_change()
 		return
 
-	PLAYSOUND(src, 'sound/items/weapons/flash.ogg').volume(100).vary(TRUE).play()
+	playsound(src, 'sound/items/weapons/flash.ogg').volume(100).vary(TRUE).play()
 	flick("[base_icon_state]_flash", src)
 	flash_lighting_fx()
 
@@ -151,7 +151,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		var/obj/item/wallframe/flasher/flasher_obj = new(get_turf(src))
 		transfer_fingerprints_to(flasher_obj)
 		flasher_obj.id = id
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	else
 		new /obj/item/stack/sheet/iron (loc, 2)
 

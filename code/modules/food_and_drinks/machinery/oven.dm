@@ -152,14 +152,14 @@
 	. = ..()
 	open = !open
 	if(open)
-		PLAYSOUND(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
+		playsound(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		to_chat(user, span_notice("You open [src]."))
 		end_processing()
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
-		PLAYSOUND(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
+		playsound(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
 		to_chat(user, span_notice("You close [src]."))
 		if(used_tray)
 			begin_processing()
@@ -177,14 +177,14 @@
 	. = ..()
 	open = !open
 	if(open)
-		PLAYSOUND(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
+		playsound(src, 'sound/machines/oven/oven_open.ogg').volume(75).vary(TRUE).play()
 		set_smoke_state(OVEN_SMOKE_STATE_NONE)
 		to_chat(user, span_notice("You open [src]."))
 		end_processing()
 		if(used_tray)
 			used_tray.vis_flags &= ~VIS_HIDE
 	else
-		PLAYSOUND(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
+		playsound(src, 'sound/machines/oven/oven_close.ogg').volume(75).vary(TRUE).play()
 		to_chat(user, span_notice("You close [src]."))
 		if(used_tray)
 			begin_processing()

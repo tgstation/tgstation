@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	for(var/i in 1 to number_of_wormholes)
 		var/turf/T = pick(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
-		PLAYSOUND(T, get_sfx(SFX_PORTAL_CREATED)).volume(20).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play() // much much quieter
+		playsound(T, get_sfx(SFX_PORTAL_CREATED)).volume(20).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play() // much much quieter
 
 /datum/round_event/wormholes/announce(fake)
 	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 			var/turf/T = pick(pick_turfs)
 			if(isopenturf(T))
 				O.forceMove(T)
-				PLAYSOUND(T, get_sfx(SFX_PORTAL_CREATED)).volume(20).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
+				playsound(T, get_sfx(SFX_PORTAL_CREATED)).volume(20).vary(TRUE).range(SOUND_RANGE + SILENCED_SOUND_EXTRARANGE).play()
 
 /datum/round_event/wormholes/end()
 	QDEL_LIST(wormholes)
@@ -81,5 +81,5 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 			return
 		var/turf/start_turf = get_turf(M)
 		if(do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE)) ///You will appear adjacent to the beacon
-			PLAYSOUND(start_turf, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
-			PLAYSOUND(hard_target, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+			playsound(start_turf, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+			playsound(hard_target, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(1).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()

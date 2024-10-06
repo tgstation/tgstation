@@ -256,7 +256,7 @@
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
-		PLAYSOUND(paired_cabinet, ).volume(40).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 		paired_cabinet.say("Controller reset.")
 
 	if(malf_active)
@@ -346,7 +346,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
-		PLAYSOUND(paired_cabinet, ).volume(40).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
 		speed_limiter = initial(speed_limiter)
@@ -366,7 +366,7 @@
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
-		PLAYSOUND(paired_cabinet, ).volume(40).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
 		speed_limiter = initial(speed_limiter)
@@ -375,7 +375,7 @@
 		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 		malf_active = FALSE
 		throw_chance = initial(throw_chance)
-		PLAYSOUND(paired_cabinet, ).volume(60).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 		paired_cabinet.say("Controller error. Please contact your engineering department.")
 	idle_platform = destination_platform
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
@@ -393,7 +393,7 @@
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
 	if(controller_status & SYSTEM_FAULT)
 		if(!isnull(paired_cabinet))
-			PLAYSOUND(paired_cabinet, ).volume(60).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 			paired_cabinet.say("Controller error. Please contact your engineering department.")
 		log_transport("TC: [specific_transport_id] Transport Controller failed!")
 
@@ -421,7 +421,7 @@
 		if(get_turf(idle_platform) == get_turf(nav_beacon))
 			set_status_code(SYSTEM_FAULT, FALSE)
 			set_status_code(EMERGENCY_STOP, FALSE)
-			PLAYSOUND(paired_cabinet, ).volume(40).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 			paired_cabinet.say("Controller reset.")
 			log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([idle_platform.x], [idle_platform.y], [idle_platform.z]).")
 			return
@@ -436,7 +436,7 @@
 	var/reset_beacon = closest_nav_in_travel_dir(nav_beacon, tram_velocity_sign, specific_transport_id)
 
 	if(!reset_beacon)
-		PLAYSOUND(paired_cabinet, ).volume(60).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 		paired_cabinet.say("Controller reset failed. Contact manufacturer.") // If you screwed up the tram this bad, I don't even
 		log_transport("TC: [specific_transport_id] non-recoverable error! Tram is at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z] [tram_velocity_sign ? "OUTBOUND" : "INBOUND"]) and can't find a reset beacon.")
 		message_admins("Tram ID [specific_transport_id] is in a non-recoverable error state at [ADMIN_JMP(nav_beacon)]. If it's causing problems, delete the controller datum from the 'Reset Tram' proc in the Debug tab.")
@@ -447,7 +447,7 @@
 	travel_trip_length = travel_remaining
 	destination_platform = reset_beacon
 	speed_limiter = 1.5
-	PLAYSOUND(paired_cabinet, ).volume(40).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining].")
 	cycle_doors(CYCLE_CLOSED)
@@ -457,7 +457,7 @@
 	log_transport("TC: [specific_transport_id] trying to reset at [destination_platform].")
 
 /datum/transport_controller/linear/tram/proc/estop()
-	PLAYSOUND(paired_cabinet, ).volume(60).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+
 	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
 	log_transport("TC: [specific_transport_id] requested emergency stop.")
@@ -466,7 +466,7 @@
  * Tram crash sound and visuals
  */
 /datum/transport_controller/linear/tram/proc/crash_fx()
-	PLAYSOUND(nav_beacon, 'sound/vehicles/car_crash.ogg').volume(100).falloff_distance(DEFAULT_TRAM_LENGTH).play()
+	playsound(nav_beacon, 'sound/vehicles/car_crash.ogg').volume(100).falloff_distance(DEFAULT_TRAM_LENGTH).play()
 	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 		if(tram_passenger.stat != CONSCIOUS)
@@ -887,9 +887,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		PLAYSOUND(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).range(-3 + SOUND_RANGE).play()
 	else
-		PLAYSOUND(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 	cover_open = !cover_open
 	update_appearance()
 
@@ -919,7 +919,7 @@
 		tool.play_tool_sound(src)
 		if(!tool.use_tool(src, user, 6 SECONDS))
 			return
-		PLAYSOUND(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "unsecured")
 		deconstruct(TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1041,7 +1041,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	cover_locked = FALSE
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 

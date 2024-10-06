@@ -75,7 +75,7 @@
 		living_parent.balloon_alert(human_target, "already cuffed!")
 		return
 
-	PLAYSOUND(parent, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).play()
+	playsound(parent, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).play()
 	human_target.visible_message(span_danger("[parent] is trying to put zipties on [human_target]!"),\
 		span_danger("[parent] is trying to put zipties on you!"))
 
@@ -88,7 +88,7 @@
 /datum/component/stun_n_cuff/proc/stun_target(mob/living/carbon/human_target)
 	if(!COOLDOWN_FINISHED(src, stun_cooldown))
 		return
-	PLAYSOUND(get_sfx(parent), stun_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(parent), stun_sound).volume(50).vary(TRUE).play()
 	human_target.Paralyze(stun_timer)
 	human_target.set_stutter(40 SECONDS)
 	log_combat(parent, human_target, "honked")

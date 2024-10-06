@@ -210,7 +210,7 @@
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
 		to_chat(user, span_notice("You insert [C] into the wormhole projector and the weapon gently hums to life."))
 		firing_core = TRUE
-		PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
+		playsound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 		qdel(C)
 		return
 
@@ -288,7 +288,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
-	PLAYSOUND(new_portal, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(new_portal, get_sfx(SFX_PORTAL_CREATED)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
@@ -350,7 +350,7 @@
 	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
 		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
 		firing_core = TRUE
-		PLAYSOUND(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
+		playsound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 		qdel(C)
 		return
 	return ..()
@@ -428,7 +428,7 @@
 		coin_count = max(0, coin_count - 1)
 
 	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
-	PLAYSOUND(user.loc, 'sound/effects/coin2.ogg').vary(TRUE).play()
+	playsound(user.loc, 'sound/effects/coin2.ogg').vary(TRUE).play()
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.preparePixelProjectile(target_turf, user)

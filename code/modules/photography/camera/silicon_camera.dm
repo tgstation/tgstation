@@ -31,11 +31,11 @@
 		// Trying to turn on camera mode while you have another click intercept active, such as malf abilities
 		if(sound)
 			balloon_alert(user, "can't enable camera mode!")
-			PLAYSOUND(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary(TRUE).play()
+			playsound(user, 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary(TRUE).play()
 		return
 
 	if(sound)
-		PLAYSOUND(user, 'sound/items/tools/wirecutter.ogg').vary(TRUE).play()
+		playsound(user, 'sound/items/tools/wirecutter.ogg').vary(TRUE).play()
 		balloon_alert(user, "camera mode [user.click_intercept == src ? "activated" : "deactivated"]")
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
@@ -102,7 +102,7 @@
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
 		balloon_alert(user, "image recorded and saved locally")
-	playsound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE, -3)
+	playsound(src, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
 	if(istype(user) && user.connected_ai)
@@ -124,4 +124,4 @@
 	user.toner -= printcost  //All fun allowed.
 	user.visible_message(span_notice("[user.name] spits out a photograph from a narrow slot on its chassis."), span_notice("You print a photograph."))
 	balloon_alert(user, "photograph printed")
-	PLAYSOUND(src, 'sound/items/taperecorder/taperecorder_print.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()

@@ -116,7 +116,7 @@
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED
 
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safeties overridden")
 	return TRUE
 
@@ -126,7 +126,7 @@
 		return
 
 	balloon_alert(user, "resetting panel...")
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
+	playsound(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
 	if(!do_after(user, 6 SECONDS, src))
 		balloon_alert(user, "interrupted!")
 		return TRUE
@@ -158,7 +158,7 @@
 
 	// Be vague about whether something was accomplished or not
 	balloon_alert(user, "panel reset")
-	PLAYSOUND(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
+	playsound(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
 
 	return TRUE
 

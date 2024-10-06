@@ -522,7 +522,7 @@ Possible to do for anyone motivated enough:
 		if(outgoing_call)
 			holocall.Disconnect(src)//can't answer calls while calling
 		else
-			PLAYSOUND(src, 'sound/machines/beep/twobeep.ogg').volume(100).play() //bring, bring!
+			playsound(src, 'sound/machines/beep/twobeep.ogg').volume(100).play() //bring, bring!
 			are_ringing = TRUE
 
 	if(ringing != are_ringing)
@@ -820,7 +820,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(replay_holo)
 				replay_holo.say(message, sanitize = FALSE)
 		if(HOLORECORD_SOUND)
-			playsound(src,entry[2],50,TRUE)
+			playsound(src, entry[2]) .vary(TRUE).play()
 		if(HOLORECORD_DELAY)
 			addtimer(CALLBACK(src, PROC_REF(replay_entry),entry_number+1),entry[2])
 			return

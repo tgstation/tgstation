@@ -147,7 +147,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 			continue
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
-		PLAYSOUND(M.loc, ).volume(50).vary(TRUE).extra_range(-1).play()
+
 
 		M.wabbajack()
 
@@ -187,7 +187,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	PLAYSOUND(target, 'sound/items/weapons/gun/revolver/shot.ogg').volume(100).play()
+	playsound(target, 'sound/items/weapons/gun/revolver/shot.ogg').volume(100).play()
 	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus

@@ -98,7 +98,7 @@
 
 /datum/surgery_step/revive/play_preop_sound(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/shockpaddles))
-		PLAYSOUND(tool, 'sound/machines/defib/defib_charge.ogg').volume(75).vary(0).play()
+		playsound(tool, 'sound/machines/defib/defib_charge.ogg').volume(75).vary(0).play()
 	else
 		..()
 

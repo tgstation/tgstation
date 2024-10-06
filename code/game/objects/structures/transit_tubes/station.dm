@@ -251,14 +251,14 @@
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
-	PLAYSOUND(src, 'sound/items/weapons/emitter2.ogg').vary(TRUE).play()
+	playsound(src, 'sound/items/weapons/emitter2.ogg').vary(TRUE).play()
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)
 	pod.update_appearance()
 	launch_pod()
 
 /obj/structure/transit_tube/station/dispenser/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
-	PLAYSOUND(src, 'sound/machines/ding.ogg').vary(TRUE).play()
+	playsound(src, 'sound/machines/ding.ogg').vary(TRUE).play()
 	qdel(pod)
 
 /obj/structure/transit_tube/station/dispenser/flipped

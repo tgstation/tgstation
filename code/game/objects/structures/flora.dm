@@ -122,13 +122,13 @@
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
 	if(flora_flags & FLORA_HERBAL)
-		PLAYSOUND(src, SFX_CRUNCHY_BUSH_WHACK).vary(FALSE).play()
+		playsound(src, SFX_CRUNCHY_BUSH_WHACK).vary(FALSE).play()
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_WOODEN)
-		PLAYSOUND(src, SFX_TREE_CHOP).vary(FALSE).play()
+		playsound(src, SFX_TREE_CHOP).vary(FALSE).play()
 		use_default_sound = FALSE
 	if(flora_flags & FLORA_STONE)
-		PLAYSOUND(src, SFX_ROCK_TAP).vary(FALSE).play()
+		playsound(src, SFX_ROCK_TAP).vary(FALSE).play()
 		use_default_sound = FALSE
 	if(use_default_sound)
 		return ..()
@@ -311,13 +311,13 @@
 /obj/structure/flora/tree/harvest(mob/living/user, product_amount_multiplier)
 	. = ..()
 	var/turf/my_turf = get_turf(src)
-	PLAYSOUND(my_turf, ).volume(100).vary(FALSE).extra_range(FALSE).play()
+
 	var/obj/structure/flora/tree/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
 
 /obj/structure/flora/tree/uproot(mob/living/user)
 	..()
-	PLAYSOUND(get_turf(src), ).volume(100).vary(FALSE).extra_range(FALSE).play()
+
 
 /obj/structure/flora/tree/stump
 	name = "stump"

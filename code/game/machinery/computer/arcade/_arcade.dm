@@ -33,7 +33,7 @@
 		var/radial_reset_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE)
 		if(radial_reset_menu != "Reset Cabinet")
 			return ITEM_INTERACT_BLOCKING
-		PLAYSOUND(loc, 'sound/items/rattling_keys.ogg').volume(25).vary(TRUE).play()
+		playsound(loc, 'sound/items/rattling_keys.ogg').volume(25).vary(TRUE).play()
 		if(!do_after(user, 10 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "cabinet reset")
@@ -96,5 +96,5 @@
 		else
 			prizeselect = pick_weight(GLOB.arcade_prize_pool)
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
-		PLAYSOUND(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))

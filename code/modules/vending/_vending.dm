@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"][credits_contained > 0 ? " and some credits" : ""]!"))
 
 	for(var/i in 1 to freebies)
-		PLAYSOUND(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+		playsound(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 		for(var/datum/data/vending_product/record in shuffle(product_records))
 
 			if(record.amount <= 0) //Try to use a record that actually has something to dump.
@@ -896,8 +896,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 				living_target.Paralyze(paralyze_time)
 				living_target.emote("scream")
-				PLAYSOUND(living_target, 'sound/effects/blob/blobattack.ogg').volume(40).vary(TRUE).play()
-				PLAYSOUND(living_target, 'sound/effects/splat.ogg').vary(TRUE).play()
+				playsound(living_target, 'sound/effects/blob/blobattack.ogg').volume(40).vary(TRUE).play()
+				playsound(living_target, 'sound/effects/splat.ogg').vary(TRUE).play()
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
@@ -912,7 +912,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 		var/matrix/to_turn = turn(transform, rotation)
 		animate(src, transform = to_turn, 0.2 SECONDS)
-		PLAYSOUND(src, 'sound/effects/bang.ogg').volume(40).play()
+		playsound(src, 'sound/effects/bang.ogg').volume(40).play()
 
 		visible_message(span_danger("[src] tips over, slamming hard onto [target]!"))
 		flags_to_return |= SUCCESSFULLY_FELL_OVER
@@ -1461,7 +1461,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
-	PLAYSOUND(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
+	playsound(src, 'sound/machines/machine_vend.ogg').vary(TRUE).range(-3 + SOUND_RANGE).play()
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
@@ -1672,7 +1672,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
 	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
-	PLAYSOUND(src, 'sound/effects/cashregister.ogg').volume(40).vary(TRUE).play()
+	playsound(src, 'sound/effects/cashregister.ogg').volume(40).vary(TRUE).play()
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 

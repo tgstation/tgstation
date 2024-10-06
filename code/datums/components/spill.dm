@@ -66,6 +66,6 @@
 	if(droptext)
 		fool.visible_message(arglist(droptext))
 	if(dropsound)
-		PLAYSOUND(master, pick(dropsound)).volume(30).play()
+		playsound(master, pick(dropsound)).volume(30).play()
 	if(drop_memory)
 		fool.add_mob_memory(drop_memory)

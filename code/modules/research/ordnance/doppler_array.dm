@@ -87,9 +87,9 @@
 	record_data.possible_experiments = apply_experiments(record)
 
 	if(inserted_disk.add_file(record_data))
-		PLAYSOUND(src, 'sound/machines/ping.ogg').volume(25).play()
+		playsound(src, 'sound/machines/ping.ogg').volume(25).play()
 	else
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_error.ogg').volume(25).play()
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg').volume(25).play()
 
 /**
  * Checks a specified tachyon record for fitting reactions, then returns a list with
@@ -211,7 +211,7 @@
 		user.put_in_hands(inserted_disk)
 	else
 		inserted_disk.forceMove(drop_location())
-	PLAYSOUND(src, 'sound/machines/card_slide.ogg').play()
+	playsound(src, 'sound/machines/card_slide.ogg').play()
 	return TRUE
 
 /// We rely on exited to clear references.

@@ -106,7 +106,7 @@
 /datum/action/cooldown/spell/aoe/repulse/xeno/cast(atom/cast_on)
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_caster = cast_on
-		PLAYSOUND(get_turf(carbon_caster), ).volume(80).vary(TRUE).extra_range(TRUE).play()
+
 		carbon_caster.spin(6, 1)
 
 	return ..()

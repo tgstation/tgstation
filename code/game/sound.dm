@@ -14,9 +14,16 @@
 /datum/playsound/proc/update_spatial_grid_from_source_movement()
 	return
 
-/proc/__setup_playsound(source, sound)
+/proc/playsound(source, sound)
 	RETURN_TYPE(/datum/playsound)
 	return new /datum/playsound(source, sound)
+
+/datum/playsound/Destroy(force)
+	..()
+	source = null
+	sound = null
+	spatial_tracking_by_mob_tag.Cut()
+	return QDEL_HINT_IWILLGC
 
 ///Default override for echo
 /sound
@@ -54,6 +61,9 @@
 		/// The channel the sound is being played on.
 		var/channel
 
+		/// The amount of wait time before the sound is played.
+		var/wait = 0
+
 		/// The volume the sound will be played at.
 		var/volume = 50
 		/// The range of the sound.
@@ -85,6 +95,25 @@
 		var/spatial_aware = FALSE
 		var/list/datum/sound_spatial_cache/spatial_tracking_by_mob_tag
 
+/datum/playsound/New(source, sound)
+	..()
+	src.source = source
+
+	if(isnull(sound))
+		CRASH("null sound passed to [type]")
+
+	if(islist(sound))
+		sound = pick(sound)
+
+	if(istext(sound))
+		if(fexists(sound))
+			sound = sound(sound)
+		else
+			sound = get_sfx(sound)
+
+	if(!istype(sound, /sound))
+		CRASH("Invalid sound type ([sound:type]) passed to [type]")
+
 /// Stores the data used to last calculate a local sound.
 /// We trade memory use for runtime optimization.
 /datum/sound_spatial_cache
@@ -107,6 +136,7 @@
 
 WITH_X(channel)
 WITH_X(volume)
+WITH_X(wait)
 WITH_X(range)
 WITH_X(use_reverb)
 WITH_X(frequency)
@@ -161,6 +191,12 @@ WITH_X(spatial_aware)
 	return candidates
 
 /datum/playsound/proc/play()
+	if(wait)
+		var/old_wait = wait
+		wait = 0
+		addtimer(CALLBACK(src, PROC_REF(play)), old_wait, TIMER_DELETE_ME|TIMER_CLIENT_TIME)
+		return
+
 	ASSERT(istype(source) || !isarea(source), "invalid type of source atom passed to [type]")
 	if(!channel)
 		channel = SSsounds.random_available_channel()
@@ -179,11 +215,8 @@ WITH_X(spatial_aware)
 	if(spatial_aware)
 		spatial_tracking_by_mob_tag = list()
 
-	var/list/mob/initial_listeners = get_listeners()
-	var/source = get_turf(src.source)
-
 	var/list/mob/listeners = list()
-	for(var/mob/listening_mob as anything in initial_listeners)
+	for(var/mob/listening_mob as anything in get_listeners())
 		var/sound/local_sound = calculate_mob_local_sound(listening_mob)
 		if(!local_sound)
 			continue

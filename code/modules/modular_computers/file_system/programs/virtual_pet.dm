@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	level++
 	grant_level_abilities()
 	pet.ai_controller?.set_blackboard_key(BB_VIRTUAL_PET_LEVEL, level)
-	PLAYSOUND(computer.loc, ).volume(50).play()
+
 	to_next_level += (level**2) + 500
 	SEND_SIGNAL(pet, COMSIG_VIRTUAL_PET_LEVEL_UP, level) //its a signal so different path types of virtual pets can handle leveling up differently
 	announce_global_updates(message = "has reached level [level]!")
@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		GLOB.global_pet_updates.Cut(1,2)
 
 	GLOB.global_pet_updates += list(message_to_announce)
-	PLAYSOUND(computer.loc, ).volume(50).play()
+
 
 /datum/computer_file/program/virtual_pet/proc/remove_pet(datum/source)
 	SIGNAL_HANDLER
@@ -560,7 +560,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(!isnull(trick_name))
 				pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, trick_name)
 			pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, trick_sequence)
-			PLAYSOUND(computer.loc, ).volume(50).play()
+
 
 	return TRUE
 
@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	pet.befriend(our_user) //befriend whoever set us out
 	animate(pet, transform = matrix(), time = 1.5 SECONDS)
 	pet.forceMove(final_turf)
-	PLAYSOUND(computer.loc, ).volume(20).play()
+
 	new /obj/effect/temp_visual/guardian/phase(pet.loc)
 
 #undef PET_MAX_LEVEL

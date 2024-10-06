@@ -283,7 +283,7 @@
 	y_clicked = (-(ROUND_UP((y_clicked - 4) / 8) - 4) - 1) * 3
 	light_clicked = x_clicked + y_clicked
 	switch_light(light_clicked)
-	PLAYSOUND(src, 'sound/machines/click.ogg').vary(TRUE).play()
+	playsound(src, 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/structure/light_puzzle/proc/switch_light(light)
 	var/list/updating_lights = list()
@@ -305,7 +305,7 @@
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
-	PLAYSOUND(src, 'sound/machines/synth/synth_yes.ogg').volume(100).vary(TRUE).play()
+	playsound(src, 'sound/machines/synth/synth_yes.ogg').volume(100).vary(TRUE).play()
 
 //
 // literally just buttons
@@ -363,7 +363,7 @@
 	used = single_use
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_button07.ogg').volume(45).vary(TRUE).play()
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg').volume(45).vary(TRUE).play()
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
@@ -381,12 +381,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 	var/obj/item/keycard/key = attacking_item
 	var/correct_card = key.puzzle_id == id
 	balloon_alert_to_viewers("[correct_card ? "correct" : "incorrect"] card swiped[correct_card ? "" : "!"]")
-	PLAYSOUND(src, 'sound/machines/card_slide.ogg').volume(45).vary(TRUE).play()
+	playsound(src, 'sound/machines/card_slide.ogg').volume(45).vary(TRUE).play()
 	if(!correct_card)
 		return
 	used = TRUE
 	update_icon_state()
-	PLAYSOUND(src, 'sound/machines/beep/beep.ogg').volume(45).vary(TRUE).play()
+	playsound(src, 'sound/machines/beep/beep.ogg').volume(45).vary(TRUE).play()
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
@@ -419,11 +419,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
 	if(!correct)
-		PLAYSOUND(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(45).vary(TRUE).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(45).vary(TRUE).play()
 		return
 	used = single_use
 	update_icon_state()
-	PLAYSOUND(src, 'sound/machines/terminal/terminal_button07.ogg').volume(45).vary(TRUE).play()
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg').volume(45).vary(TRUE).play()
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
@@ -495,7 +495,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/structure/puzzle_blockade/proc/try_signal(datum/source)
 	SIGNAL_HANDLER
-	PLAYSOUND(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)
 

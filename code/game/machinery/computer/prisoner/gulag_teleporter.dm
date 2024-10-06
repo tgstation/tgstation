@@ -72,7 +72,7 @@
 	if(.)
 		return
 	if(isliving(usr))
-		PLAYSOUND(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
+		playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
 	if(!allowed(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return
@@ -144,12 +144,12 @@
 	user.log_message("teleported [key_name(prisoner)] to the Labor Camp [COORD(beacon)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME)
 	prisoner.log_message("teleported to Labor Camp [COORD(beacon)] by [key_name(user)] for [id_goal_not_set ? "default goal of ":""][contained_id.goal] points.", LOG_GAME, log_globally = FALSE)
 	teleporter.handle_prisoner(contained_id, temporary_record)
-	PLAYSOUND(src, 'sound/items/weapons/emitter.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, 'sound/items/weapons/emitter.ogg').volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	prisoner.forceMove(get_turf(beacon))
 	prisoner.Paralyze(40) // small travel dizziness
 	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	PLAYSOUND(src, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).range(SOUND_RANGE + SHORT_RANGE_SOUND_EXTRARANGE).play()
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

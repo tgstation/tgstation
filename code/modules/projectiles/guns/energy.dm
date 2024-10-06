@@ -65,9 +65,9 @@
 	playing_sound.pitch = pitch_to_use
 
 	if(suppressed)
-		playsound(src, playing_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, playing_sound).volume(suppressed_volume).vary(vary_fire_sound).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 	else
-		PLAYSOUND(src, playing_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
+		playsound(src, playing_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -284,7 +284,7 @@
 		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
-			PLAYSOUND(loc, fire_sound).vary(TRUE).range(-1 + SOUND_RANGE).play()
+			playsound(loc, fire_sound).vary(TRUE).range(-1 + SOUND_RANGE).play()
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()
@@ -294,7 +294,7 @@
 			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
-		PLAYSOUND(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play()
+		playsound(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play()
 		return OXYLOSS
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)
@@ -318,20 +318,20 @@
 			. = ""
 		else if(loaded_projectile.damage <= 0 || loaded_projectile.damage_type == STAMINA)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass."))
-			PLAYSOUND(user, E.fire_sound).volume(50).vary(TRUE).play()
-			PLAYSOUND(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
 			cell.use(E.e_cost)
 			. = ""
 		else if(loaded_projectile.damage_type != BURN)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass."))
-			PLAYSOUND(user, E.fire_sound).volume(50).vary(TRUE).play()
-			PLAYSOUND(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
 			cell.use(E.e_cost)
 			qdel(A)
 			. = ""
 		else
-			PLAYSOUND(user, E.fire_sound).volume(50).vary(TRUE).play()
-			PLAYSOUND(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
 			cell.use(E.e_cost)
 			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 

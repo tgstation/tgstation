@@ -35,7 +35,7 @@
 
 /obj/vehicle/sealed/mecha/honker/play_stepsound()
 	if(squeak)
-		PLAYSOUND(get_sfx(src), SFX_CLOWN_STEP).volume(70).vary(1).play()
+		playsound(get_sfx(src), SFX_CLOWN_STEP).volume(70).vary(1).play()
 	squeak = !squeak
 
 

@@ -33,7 +33,7 @@
 		if(shaken_mob.stat == CONSCIOUS)
 			shake_camera(shaken_mob, 3, 1)
 
-		PLAYSOUND(get_sfx(src), fire_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), fire_sound).volume(50).vary(TRUE).play()
 		flick(icon_state+"_fire", src)
 	if(loaded_cannonball)
 		var/obj/projectile/fired_projectile = new loaded_cannonball.projectile_type(get_turf(src))

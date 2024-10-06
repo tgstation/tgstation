@@ -31,7 +31,7 @@
 	. = ..()
 	if(prob(1))
 		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
-		PLAYSOUND(src, 'sound/effects/smoke.ogg').vary(TRUE).play()
+		playsound(src, 'sound/effects/smoke.ogg').vary(TRUE).play()
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
@@ -243,7 +243,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			PLAYSOUND(loc, 'sound/misc/chain_rattling.ogg').volume(300).vary(TRUE).play()
+			playsound(loc, 'sound/misc/chain_rattling.ogg').volume(300).vary(TRUE).play()
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -255,11 +255,11 @@
 			var/obj/machinery/light/light = locate(/obj/machinery/light) in view(4, src)
 			light?.flicker()
 		if(62 to 64)
-			playsound(loc, pick('sound/effects/hallucinations/i_see_you1.ogg', 'sound/effects/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
+			playsound(loc, pick('sound/effects/hallucinations/i_see_you1.ogg', 'sound/effects/hallucinations/i_see_you2.ogg')).volume(50).vary(TRUE).play()
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
-			PLAYSOUND(loc, 'sound/effects/splat.ogg').volume(200).vary(TRUE).play()
+			playsound(loc, 'sound/effects/splat.ogg').volume(200).vary(TRUE).play()
 
 /obj/item/food/burger/ghost/Destroy()
 	STOP_PROCESSING(SSobj, src)

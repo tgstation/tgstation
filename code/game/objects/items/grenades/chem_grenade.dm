@@ -234,7 +234,7 @@
 
 	active = TRUE
 	update_icon_state()
-	PLAYSOUND(src, ).volume(volume).vary(TRUE).play()
+
 	if(landminemode)
 		landminemode.activate()
 		return

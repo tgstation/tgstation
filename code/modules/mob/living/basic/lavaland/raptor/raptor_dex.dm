@@ -56,7 +56,7 @@
 		return NONE
 
 	raptor = WEAKREF(attacked_atom)
-	PLAYSOUND(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg').volume(20).play()
+	playsound(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg').volume(20).play()
 	balloon_alert(user, "scanned")
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS

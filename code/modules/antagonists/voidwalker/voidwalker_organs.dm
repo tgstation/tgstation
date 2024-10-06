@@ -96,7 +96,7 @@
 	var/turf/spawn_loc = get_turf(owner)
 	new /obj/effect/spawner/random/glass_shards (spawn_loc)
 	new /obj/item/cosmic_skull (spawn_loc)
-	PLAYSOUND(get_turf(owner), SFX_SHATTER).volume(100).play()
+	playsound(get_turf(owner), SFX_SHATTER).volume(100).play()
 
 	qdel(owner)
 

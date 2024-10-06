@@ -68,7 +68,7 @@
 	return TRUE
 
 /obj/item/chameleon/proc/make_copy(atom/target, mob/user)
-	PLAYSOUND(get_turf(src), ).volume(100).vary(TRUE).extra_range(-6).play()
+
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()
 	temp.appearance = target.appearance
@@ -86,13 +86,13 @@
 		return
 	if(active_dummy)
 		eject_all()
-		PLAYSOUND(get_turf(src), ).volume(100).vary(TRUE).extra_range(-6).play()
+
 		qdel(active_dummy)
 		active_dummy = null
 		to_chat(user, span_notice("You deactivate \the [src]."))
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
-		PLAYSOUND(get_turf(src), ).volume(100).vary(TRUE).extra_range(-6).play()
+
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)
 		to_chat(user, span_notice("You activate \the [src]."))

@@ -93,7 +93,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(brainmob.client)
 		visible_message(success_message)
-		PLAYSOUND(src, 'sound/machines/ping.ogg').volume(15).vary(TRUE).play()
+		playsound(src, 'sound/machines/ping.ogg').volume(15).vary(TRUE).play()
 	else
 		visible_message(fail_message)
 
@@ -257,7 +257,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		var/obj/item/item = pick(loc.contents)
 		if(istype(loc, /obj/item/storage))
 			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
-			PLAYSOUND(get_sfx(src), SFX_RUSTLE).volume(30).vary(TRUE).play()
+			playsound(get_sfx(src), SFX_RUSTLE).volume(30).vary(TRUE).play()
 		return
 
 	// MOVE US

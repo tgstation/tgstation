@@ -66,8 +66,8 @@
 	var/mob/living/living_target = target
 	if(living_target.blood_volume < BLOOD_VOLUME_SURVIVE)
 		return
-	PLAYSOUND(target, 'sound/effects/wounds/crackandbleed.ogg').volume(100).play()
-	PLAYSOUND(target, 'sound/effects/magic/charge.ogg').volume(100).play()
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg').volume(100).play()
+	playsound(target, 'sound/effects/magic/charge.ogg').volume(100).play()
 	var/attack_direction = get_dir(user, living_target)
 	if(iscarbon(living_target))
 		var/mob/living/carbon/carbon_target = living_target
