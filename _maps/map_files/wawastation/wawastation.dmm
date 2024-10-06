@@ -26151,6 +26151,7 @@
 	},
 /obj/structure/closet/secure_closet/captains,
 /obj/machinery/firealarm/directional/north,
+/obj/item/storage/lockbox/medal,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "jpe" = (
