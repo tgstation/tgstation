@@ -121,3 +121,14 @@
   - bugfix: Fix paired air alarms and sensors to be able to relink to other devices
       if turned off, reset, or destroyed.
   - bugfix: Fix air alarm disabled setting to silence warnings
+2024-10-06:
+  Ghommie:
+  - bugfix: The pre-emagged fishing portal circuitboard now actually gives you an
+      emagged fishing portal generator.
+  LemonInTheDark:
+  - map: added a map specific changelog entry
+  SmArtKar:
+  - qol: Jetpack movement is now much smoother
+  iwishforducks:
+  - image: Traitors now get the classic Revolver in their uplink. Nuclear Operatives
+      still keep the red look for their revolvers.
