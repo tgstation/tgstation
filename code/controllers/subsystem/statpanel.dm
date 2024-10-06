@@ -173,6 +173,7 @@ SUBSYSTEM_DEF(statpanels)
 		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
 		list("","")
 	)
+#if defined(MC_TAB_TRACY_INFO) || defined(SPACEMAN_DMM)
 	var/static/tracy_dll
 	var/static/tracy_present
 	if(isnull(tracy_dll))
@@ -189,6 +190,7 @@ SUBSYSTEM_DEF(statpanels)
 			mc_data.Insert(2, list(list("byond-tracy:", "Inactive")))
 	else
 		mc_data.Insert(2, list(list("byond-tracy:", "[tracy_dll] not present")))
+#endif
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", text_ref(GLOB.cameranet))
