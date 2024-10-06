@@ -366,13 +366,6 @@
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/costume/swagoutfit
-	name = "Swag outfit"
-	desc = "Why don't you go secure some bitches?"
-	icon_state = "SwagOutfit"
-	inhand_icon_state = null
-	can_adjust = FALSE
-
 /obj/item/clothing/under/costume/referee
 	name = "referee uniform"
 	desc = "A standard black and white striped uniform to signal authority."

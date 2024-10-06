@@ -218,7 +218,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table,
 /obj/item/reagent_containers/spray/cleaner,
-/obj/item/clothing/shoes/swagshoes,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "jR" = (
