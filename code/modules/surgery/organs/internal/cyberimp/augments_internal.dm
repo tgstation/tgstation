@@ -217,13 +217,13 @@
 	var/fail_string = owner.implant_skillchip(skillchip, force = FALSE)
 	if(fail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz-sigh.ogg', 10, vary = TRUE)
+		playsound(owner, 'sound/machines/buzz/buzz-sigh.ogg', 10, vary = TRUE)
 		return
 
 	var/refail_string = skillchip.try_activate_skillchip(silent = FALSE, force = FALSE)
 	if(refail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz-two.ogg', 10, vary = TRUE)
+		playsound(owner, 'sound/machines/buzz/buzz-two.ogg', 10, vary = TRUE)
 		return
 
 	// success!
@@ -258,7 +258,7 @@
 		if(skillchip)
 			owner.remove_skillchip(skillchip, silent = TRUE)
 			skillchip.forceMove(owner.drop_location())
-			playsound(owner, 'sound/machines/terminal_eject.ogg', 25, TRUE)
+			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
 		else
 			remove_brain()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
