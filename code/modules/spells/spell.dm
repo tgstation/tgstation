@@ -379,7 +379,8 @@
 
 	///even INVOCATION_NONE should go through this because the signal might change that
 	invocation(invoker)
-	playsound(invoker, sound).vary(TRUE).play()
+	if(sound)
+		playsound(invoker, sound).vary(TRUE).play()
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation(mob/living/invoker)
