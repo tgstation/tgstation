@@ -61,14 +61,13 @@
 
 /datum/language/movespeak/get_random_name(
 	gender = NEUTER,
-	name_count = 1,
+	name_count = default_name_count,
 	syllable_min = default_name_syllable_min,
 	syllable_max = default_name_syllable_max,
 	force_use_syllables = FALSE,
 )
 	if(force_use_syllables)
 		return ..()
-
 	return "[pick(GLOB.ramatan_names)]"
 
 /datum/language/common
