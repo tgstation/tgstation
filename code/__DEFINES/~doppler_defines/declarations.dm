@@ -8,3 +8,5 @@
 #define TRAIT_OXYIMMUNE	"oxyimmune" // Immune to oxygen damage, ideally give this to all non-breathing species or bad stuff will happen
 // Trait for extra language point.
 #define TRAIT_LINGUIST "Linguist"
+/// Trait that defines if an android species type is charging their cell
+#define TRAIT_CHARGING "Charging"

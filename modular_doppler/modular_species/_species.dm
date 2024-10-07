@@ -13,6 +13,8 @@
 	var/list/language_prefs_whitelist
 	///If a species can always be picked in prefs for the purposes of customizing it for ghost roles or events
 	var/always_customizable = FALSE
+	///How are we treated regarding processing reagents, by default we process them as if we're organic
+	var/reagent_flags = PROCESS_ORGANIC
 	///This is the outfit which will be used by the species its preview portrait
 	var/datum/outfit/preview_outfit = /datum/outfit/job/assistant/consistent
 
@@ -66,3 +68,13 @@
 			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
 
+
+/// spec_revival logic
+/datum/species/proc/spec_revival(mob/living/carbon/human/target)
+	return
+
+/mob/living/carbon/human/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(.)
+		if(dna && dna.species)
+			dna.species.spec_revival(src)

@@ -1,3 +1,8 @@
+/// The starter amount for the android's core
+#define ENERGY_START_AMT 10 MEGA JOULES
+/// The amount at which mob energy decreases
+#define ENERGY_DRAIN_AMT 10 KILO JOULES
+
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
@@ -6,39 +11,103 @@
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_PLASMA_TRANSFORM,
-		TRAIT_OVERDOSEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_TOXIMMUNE,
 		/*TG traits we remove
-		TRAIT_NOCRITDAMAGE,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_PIERCEIMMUNE,
+		TRAIT_OVERDOSEIMMUNE,
+		TRAIT_TOXIMMUNE,
 		TRAIT_NOFIRE,
 		TRAIT_NOBLOOD,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		*/
+		TRAIT_RESISTHIGHPRESSURE,*/
+		TRAIT_STABLEHEART,
 	)
-	mutantheart = /obj/item/organ/internal/heart/cybernetic
+	reagent_flags = PROCESS_SYNTHETIC
+	mutantheart = /obj/item/organ/internal/heart/cybernetic/tier2
+	mutantstomach = /obj/item/organ/internal/stomach/cybernetic/tier2
+	mutantliver = /obj/item/organ/internal/liver/cybernetic/tier2
 	exotic_blood = /datum/reagent/synth_blood
 	exotic_bloodtype = "R*"
 
 	bodytemp_heat_damage_limit = (BODYTEMP_NORMAL + 146) // 456 K / 183 C
 	bodytemp_cold_damage_limit = (BODYTEMP_NORMAL - 80) // 230 K / -43 C
+	/// Ability to recharge!
+	var/datum/action/innate/power_cord/power_cord
+	/// Hud element to display our energy level
+	var/atom/movable/screen/android/energy/energy_tracker
+	/// How much energy we start with
+	var/core_energy = ENERGY_START_AMT
 
 /datum/outfit/android_preview
 	name = "Android (Species Preview)"
 	uniform = /obj/item/clothing/under/syndicate/skirt
 
+/datum/species/android/on_species_gain(mob/living/carbon/target, datum/species/old_species, pref_load)
+	. = ..()
+	if(ishuman(target))
+		power_cord = new
+		power_cord.Grant(target)
+
+/datum/species/android/on_species_loss(mob/living/carbon/target, datum/species/new_species, pref_load)
+	. = ..()
+	if(power_cord)
+		power_cord.Remove(target)
+	if(target.hud_used)
+		var/datum/hud/hud_used = target.hud_used
+		hud_used.infodisplay -= energy_tracker
+		QDEL_NULL(energy_tracker)
+
+/datum/species/android/spec_revival(mob/living/carbon/human/target)
+	playsound(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
+	target.visible_message(span_notice("[target]'s LEDs flicker to life!"), span_notice("All systems nominal. You're back online!"))
+
+/datum/species/android/spec_life(mob/living/carbon/human/target, seconds_per_tick, times_fired)
+	. = ..()
+	handle_hud(target)
+
+	if(target.stat == SOFT_CRIT || target.stat == HARD_CRIT)
+		target.adjustFireLoss(1) //Still deal some damage in case a cold environment would be preventing us from the sweet release to robot heaven
+		target.adjust_bodytemperature(13) //We're overheating!!
+		if(prob(10))
+			to_chat(target, span_warning("Alert: Critical damage taken! Cooling systems failing!"))
+			do_sparks(3, FALSE, target)
+
+	if(HAS_TRAIT(target, TRAIT_CHARGING))
+		return
+	if(core_energy > 0)
+		core_energy -= ENERGY_DRAIN_AMT
+	if(core_energy <= 0)
+		target.death() // You can do a lot in a day.
+
+/datum/species/android/proc/handle_hud(mob/living/carbon/human/target)
+	// update it
+	if(energy_tracker)
+		energy_tracker.update_energy_hud(core_energy)
+	// initialize it
+	else if(target.hud_used)
+		var/datum/hud/hud_used = target.hud_used
+		energy_tracker = new(null, hud_used)
+		hud_used.infodisplay += energy_tracker
+
+		target.hud_used.show_hud(target.hud_used.hud_version)
+
 /datum/species/android/prepare_human_for_preview(mob/living/carbon/human/robot_for_preview)
-	robot_for_preview.dna.features["frame_list"][BODY_ZONE_HEAD] = /obj/item/bodypart/head/robot/android/e_three_n
+	robot_for_preview.dna.features["frame_list"] = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android/e_three_n,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot/android/e_three_n,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/android/e_three_n,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot/android/e_three_n,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android/e_three_n,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android/e_three_n)
 	regenerate_organs(robot_for_preview)
 	robot_for_preview.update_body(is_creating = TRUE)
 
@@ -54,3 +123,6 @@
 	return list(
 		"Androids are a synthetic species created by Nanotrasen as an intermediary between humans and cyborgs."
 	)
+
+#undef ENERGY_START_AMT
+#undef ENERGY_DRAIN_AMT

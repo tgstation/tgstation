@@ -13,6 +13,9 @@
 	brute_modifier = 1
 	burn_modifier = 1
 
+/obj/item/bodypart/chest/robot/android/check_limbs()
+	return
+
 /obj/item/bodypart/arm/right/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
 	brute_modifier = 1
