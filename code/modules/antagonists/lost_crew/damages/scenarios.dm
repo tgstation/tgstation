@@ -2,7 +2,7 @@
 /datum/corpse_damage_class/station
 	area_lore = "I was working in a space station"
 	weight = 10
-	possible_character_types = list(/datum/corpse_character/roundstart = 1)
+	possible_character_types = list(/datum/corpse_character/mostly_roundstart = 1)
 	possible_character_assignments = list(
 		/datum/corpse_assignment/engineer = 1,
 		/datum/corpse_assignment/medical = 1,
@@ -40,11 +40,6 @@
 	decays = list(/datum/corpse_damage/post_mortem/organ_decay/light = 1)
 
 /// Human morgue body
-/datum/corpse_damage_class/station/morgue/human
+/datum/corpse_damage_class/station/morgue
 	weight = 0
-	possible_character_types = list(/datum/corpse_character/human = 1)
-
-/// Non-human morgue body
-/datum/corpse_damage_class/station/morgue/non_human
-	weight = 0
-	possible_character_types = list(/datum/corpse_character/roundstart/all_roundstart_no_human = 1)
+	possible_character_types = list(/datum/corpse_character/morgue = 1)

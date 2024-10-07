@@ -7,7 +7,7 @@
 	/// The maximum amount of hits
 	var/max_hits = 15
 
-/datum/corpse_damage/cause_of_death/melee_weapon/apply_to_body(mob/living/carbon/human/body, severity, list/storage)
+/datum/corpse_damage/cause_of_death/melee_weapon/apply_to_body(mob/living/carbon/human/body, severity, list/storage, list/datum/callback/on_revive_and_player_occupancy)
 	weapon = get_weapon(body)
 
 	var/hits = ((max_hits - min_hits) * severity + min_hits)

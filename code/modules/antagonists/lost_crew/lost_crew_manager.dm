@@ -28,11 +28,13 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		for(var/datum/corpse_damage_class/scenario as anything in types)
 			scenarios[scenario] = initial(scenario.weight)
 
+	var/list/datum/callback/on_revive_and_player_occupancy = list()
+
 	var/datum/corpse_damage_class/scenario = forced_class || pick_weight(scenarios)
 	scenario = new scenario ()
 
-	scenario.apply_character(new_body, protected_items, body_data)
-	scenario.apply_injuries(new_body, recovered_items, body_data)
+	scenario.apply_character(new_body, protected_items, on_revive_and_player_occupancy, body_data)
+	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
 
 	// so bodies can also be used for runes, morgue, etc
@@ -41,19 +43,27 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		new_body.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 5)
 
 		var/obj/item/organ/internal/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
-		hersens.AddComponent(/datum/component/ghostrole_on_revive, /* refuse_revival_if_failed = */ TRUE, /*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore))
+		hersens.AddComponent(
+			/datum/component/ghostrole_on_revive, \
+			/* refuse_revival_if_failed = */ TRUE, \
+			/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
+		)
 
 	return new_body
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore)
+/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/owner = brain.owner
 
 	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
-		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), owner, span_boldnotice(death_lore[i])), 1 SECONDS * i)
+		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), owner, span_boldnotice(death_lore[i])), 10 SECONDS + 2 SECONDS * i)
 
 	addtimer(CALLBACK(src, PROC_REF(award_succes), owner.mind, death_lore), succes_check_time)
+
+	// Run any callbacks our characters or damages may have placed for some effects for when the player is revived
+	for(var/datum/callback/callback as anything in on_revive_and_player_occupancy)
+		callback.Invoke()
 
 /// Give medbay a happy announcement and put some money into their budget
 /datum/lost_crew_manager/proc/award_succes(datum/mind/revived_mind, list/death_lore)

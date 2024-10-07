@@ -27,14 +27,14 @@
 	var/lore_death_time_max = 5 YEARS
 
 /// Generate and apply a possible character (species etc)
-/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/body_data)
+/datum/corpse_damage_class/proc/apply_character(mob/living/carbon/human/fashion_corpse, list/protected_objects, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
 	var/datum/corpse_character/character = pick_weight(possible_character_types)
 	character = new character()
-	character.apply_character(fashion_corpse, protected_objects)
+	character.apply_character(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
 
 	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
 	assignment = new assignment()
-	assignment.apply_assignment(fashion_corpse, protected_objects)
+	assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
 
 	death_lore += assignment.job_lore
 
@@ -42,15 +42,15 @@
 	body_data += assignment?.type
 
 /// Set up injuries
-/datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/body_data)
+/datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
 	var/datum/corpse_damage/cause_of_death/cause_of_death = pick_damage_type(possible_causes_of_death)
-	cause_of_death.apply_to_body(victim, rand(), saved_objects)
+	cause_of_death.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
 
 	var/datum/corpse_damage/post_mortem = pick_damage_type(post_mortem_effects)
-	post_mortem?.apply_to_body(victim, rand(), saved_objects)
+	post_mortem?.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
 
 	var/datum/corpse_damage/decay = pick_damage_type(decays)
-	decay?.apply_to_body(victim, rand(), saved_objects)
+	decay?.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
 
 	// Simulate bloodloss by dragging/moving
 	victim.blood_volume = max(victim.blood_volume - victim.bleedDragAmount() * rand(20, 100), 0)

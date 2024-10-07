@@ -6,14 +6,19 @@
 	var/list/job_stuffs
 	/// Trim on the ID we give to the revived person (no trim = no id)
 	var/datum/id_trim/trim
+	/// Job datum to apply to the human
+	var/datum/job/job_datum
 
-/datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear)
+/datum/corpse_assignment/proc/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear, list/datum/callback/on_revive_and_player_occupancy)
 	if(!job_gear)
 		return
 
 	for(var/item in job_stuffs)
 		job_gear += new item ()
 	job_gear += job_stuffs
+
+	if(job_datum)
+		on_revive_and_player_occupancy += CALLBACK(src, PROC_REF(assign_job), working_dead) //this needs to happen once the body has been succesfully occupied and revived
 
 	if(trim)
 		var/obj/item/card/id/advanced/card = new()
@@ -22,10 +27,14 @@
 		SSid_access.apply_trim_to_card(card, trim)
 		job_gear += card
 
+/datum/corpse_assignment/proc/assign_job(mob/living/carbon/human/working_undead)
+	working_undead.mind.set_assigned_role_with_greeting(job_datum, working_undead.client)
+
 /datum/corpse_assignment/engineer
 	job_lore = "I was employed as an engineer"
 	job_stuffs = list(/obj/item/clothing/under/rank/engineering/engineer)
 	trim = /datum/id_trim/job/visiting_engineer
+	job_datum = /datum/job/recovered_crew/engineer
 
 /datum/id_trim/job/visiting_engineer
 	assignment = JOB_LOSTCREW_ENGINEER
@@ -43,6 +52,7 @@
 	job_lore = "I was employed as a doctor"
 	job_stuffs = list(/obj/item/clothing/under/rank/medical/doctor)
 	trim = /datum/id_trim/job/visiting_doctor
+	job_datum = /datum/job/recovered_crew/doctor
 
 /datum/id_trim/job/visiting_doctor
 	assignment = JOB_LOSTCREW_MEDICAL
@@ -59,6 +69,7 @@
 	job_lore = "I was employed as security"
 	job_stuffs = list(/obj/item/clothing/under/rank/security/officer)
 	trim = /datum/id_trim/job/visiting_security
+	job_datum = /datum/job/recovered_crew/security
 
 /datum/corpse_assignment/security/apply_assignment(mob/living/carbon/human/working_dead, list/job_gear)
 	. = ..()
@@ -81,6 +92,7 @@
 	job_lore = "I was employed as a scientist"
 	job_stuffs = list(/obj/item/clothing/under/rank/rnd/scientist)
 	trim = /datum/id_trim/job/visiting_scientist
+	job_datum = /datum/job/recovered_crew/scientist
 
 /datum/id_trim/job/visiting_scientist
 	assignment = JOB_LOSTCREW_SCIENCE
@@ -97,6 +109,7 @@
 	job_lore = "I was employed as a technician"
 	job_stuffs = list(/obj/item/clothing/under/rank/cargo/tech)
 	trim = /datum/id_trim/job/visiting_technician
+	job_datum = /datum/job/recovered_crew/cargo
 
 /datum/id_trim/job/visiting_technician
 	assignment = JOB_LOSTCREW_CARGO
@@ -113,6 +126,7 @@
 	job_lore = "I was employed as a civllian"
 	job_stuffs = list(/obj/item/clothing/under/color/grey)
 	trim = /datum/id_trim/job/visiting_civillian
+	job_datum = /datum/job/recovered_crew/civillian
 
 /datum/id_trim/job/visiting_civillian
 	assignment = JOB_LOSTCREW_CIVILLIAN

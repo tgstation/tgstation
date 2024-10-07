@@ -3245,6 +3245,7 @@
 #include "code\modules\antagonists\lost_crew\recovered_crew.dm"
 #include "code\modules\antagonists\lost_crew\character\_assignment.dm"
 #include "code\modules\antagonists\lost_crew\character\_character.dm"
+#include "code\modules\antagonists\lost_crew\character\job_datums.dm"
 #include "code\modules\antagonists\lost_crew\damages\_damages.dm"
 #include "code\modules\antagonists\lost_crew\damages\accident.dm"
 #include "code\modules\antagonists\lost_crew\damages\decay.dm"

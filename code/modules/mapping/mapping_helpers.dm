@@ -875,9 +875,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	///number of bodies to spawn
 	var/bodycount = 3
 	/// Corpse type we spawn thats always human
-	var/datum/corpse_damage_class/corpse_type_human = /datum/corpse_damage_class/station/morgue/human
-	/// Corpse type we spawn which can be any race
-	var/datum/corpse_damage_class/corpse_type_other = /datum/corpse_damage_class/station/morgue/non_human
+	var/datum/corpse_damage_class/morgue_body_class = /datum/corpse_damage_class/station/morgue
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -905,17 +903,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
-	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
-	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability) * use_species
-
 	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = prob(species_probability) ? corpse_type_other : corpse_type_human)
+		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = morgue_body_class)
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
-		body_bag.handle_tag("[new_human.real_name][new_human.dna?.species ? " - [capitalize(new_human.dna.species.name)]" : " - Human"]")
+		body_bag.handle_tag("[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]")
 		body_bag.forceMove(morgue_tray)
 
 		morgue_tray.update_appearance()
