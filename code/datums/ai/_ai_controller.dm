@@ -91,7 +91,7 @@ multiple modular subtrees with behaviors
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
 	if(current_movement_target)
-		UnregisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, COMSIG_PREQDLETED)
+		UnregisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, COMSIG_PREQDELETED)
 	if(!isnull(target) && !isatom(target))
 		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
 		CancelActions()
