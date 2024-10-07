@@ -388,6 +388,6 @@
 /datum/cardboard_cutout/abductor
 	name = "Abductor Agent"
 	applied_name = "Unknown"
-	applied_desc = "A cardboard cutout of an abductor agent"
+	applied_desc = "A cardboard cutout of an abductor agent."
 	species = /datum/species/abductor
 	outfit = /datum/outfit/abductor/agent/cardboard
