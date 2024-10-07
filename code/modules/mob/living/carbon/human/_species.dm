@@ -371,9 +371,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
-	if(human_who_gained_species.hud_used)
-		human_who_gained_species.hud_used.update_locked_slots()
-
 	human_who_gained_species.mob_biotypes = inherent_biotypes
 	human_who_gained_species.mob_respiration_type = inherent_respiration_type
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
@@ -382,7 +379,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		replace_body(human_who_gained_species, src)
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
-
+	// Update locked slots AFTER all organ and body stuff is handled
+	human_who_gained_species.hud_used?.update_locked_slots()
 	// Drop the items the new species can't wear
 	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), human_who_gained_species, TRUE)
 
