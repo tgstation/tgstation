@@ -189,7 +189,7 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 
 /obj/machinery/telecomms/process_atmos()
 	var/turf/local_turf = loc
-	if(!istype(local_turf)) // double check if this is even neccessary
+	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
 		set_machine_stat(machine_stat | BAD_TEMP)
 		update_power()
 		return
@@ -203,12 +203,10 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 		return
 
 	set_machine_stat(machine_stat & ~BAD_TEMP)
+	update_power()
 
 	generate_heat(atmos_machine_use_counter * heating_energy_generated)
 	atmos_machine_use_counter = 0
-
-	update_power()
-
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()

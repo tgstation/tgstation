@@ -90,7 +90,7 @@
 
 /obj/machinery/rnd/server/process_atmos()
 	var/turf/local_turf = loc
-	if(!istype(local_turf)) // double check if this is even neccessary
+	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
 		set_machine_stat(machine_stat | BAD_TEMP)
 		refresh_working()
 		return

@@ -324,15 +324,12 @@
 		return FALSE
 
 	var/turf/local_turf = loc
-	if(!istype(local_turf)) // double check if this is even neccessar
+	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
 		return FALSE
 
 	var/datum/gas_mixture/enviroment = local_turf.return_air()
 	enviroment.temperature += amount / enviroment.heat_capacity()
 	air_update_turf(FALSE, FALSE)
-
-	do_sparks(1, TRUE, src)
-
 	return amount
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
