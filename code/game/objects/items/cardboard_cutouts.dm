@@ -376,7 +376,7 @@
 /datum/cardboard_cutout/pirate
 	name = "Pirate"
 	applied_name = "Unknown"
-	applied_desc = "A cardboard cutout of a a space pirate"
+	applied_desc = "A cardboard cutout of a space pirate."
 	outfit = /datum/outfit/pirate/space/captain/cardboard
 
 /datum/cardboard_cutout/ninja
