@@ -12,10 +12,10 @@
 	circuit = /obj/item/circuitboard/computer/pandemic
 
 	/// Whether the pandemic is ready to make another culture/vaccine
-	var/wait
-	/// The currently selected symptom
+	var/wait = FALSE
+	///The currently selected symptom
 	var/datum/symptom/selected_symptom
-	/// The inserted beaker
+	///The inserted beaker
 	var/obj/item/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize(mapload)
@@ -78,9 +78,10 @@
 	if(gone == beaker)
 		beaker = null
 		update_appearance()
+		SStgui.update_uis(src)
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
-	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")

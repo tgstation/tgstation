@@ -13,14 +13,17 @@
 	var/atom/embed_target
 	/// Beam effect
 	var/datum/beam/tether_beam
+	/// Tether module if we were created by one
+	var/obj/item/mod/module/tether/parent_module
 
-/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null)
+/datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, parent_module = null)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
 		return COMPONENT_INCOMPATIBLE
 
 	src.tether_target = tether_target
 	src.embed_target = embed_target
 	src.max_dist = max_dist
+	src.parent_module = parent_module
 	cur_dist = max_dist
 	if (start_distance != null)
 		cur_dist = start_distance
@@ -45,6 +48,9 @@
 	if (!isnull(embed_target))
 		RegisterSignal(embed_target, COMSIG_ITEM_UNEMBEDDED, PROC_REF(on_embedded_removed))
 		RegisterSignal(embed_target, COMSIG_QDELETING, PROC_REF(on_delete))
+
+	if (!isnull(parent_module))
+		RegisterSignals(parent_module, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOD_TETHER_SNAP), PROC_REF(snap))
 
 /datum/component/tether/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
@@ -111,8 +117,15 @@
 	var/atom/atom_target = parent
 	// Something broke us out, snap the tether
 	if (get_dist(atom_target, tether_target) > cur_dist + 1 || !isturf(atom_target.loc) || !isturf(tether_target.loc) || atom_target.z != tether_target.z)
-		atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
-		qdel(src)
+		snap()
+
+/datum/component/tether/proc/snap()
+	SIGNAL_HANDLER
+
+	var/atom/atom_target = parent
+	atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
+	playsound(atom_target, 'sound/effects/snap.ogg', 50, TRUE)
+	qdel(src)
 
 /datum/component/tether/proc/on_delete()
 	SIGNAL_HANDLER
@@ -132,7 +145,7 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")
-		if (!do_after(user, 5 SECONDS, user))
+		if (!do_after(user, 1 SECONDS, user))
 			return
 
 		qdel(src)

@@ -96,6 +96,7 @@
 
 /obj/item/nullrod/non_station
 	station_holy_item = FALSE
+	chaplain_spawnable = FALSE
 
 /// Claymore Variant
 /// This subtype possesses a block chance and is sharp.
