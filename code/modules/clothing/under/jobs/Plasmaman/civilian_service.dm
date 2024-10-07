@@ -38,7 +38,7 @@
 		return
 
 	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
@@ -150,7 +150,7 @@
 		return
 
 	var/mob/living/carbon/human/owner = loc
-	if (owner.on_fire || !owner.fire_stacks || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+	if (owner.on_fire || !owner.fire_stacks || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))

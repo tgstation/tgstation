@@ -1051,7 +1051,7 @@
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
-/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, ignore_chest_pressureprot = TRUE)
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, ignore_chest_pressureprot = FALSE)
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
