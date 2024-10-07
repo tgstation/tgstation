@@ -46,8 +46,8 @@
 		update_appearance()
 
 /obj/machinery/telecomms/hub/Initialize(mapload)
-	. = ..()
 	soundloop = new(src, on)
+	. = ..()
 
 /obj/machinery/telecomms/hub/Destroy()
 	QDEL_NULL(soundloop)
