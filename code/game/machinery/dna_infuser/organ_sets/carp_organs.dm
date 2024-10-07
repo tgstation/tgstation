@@ -10,28 +10,7 @@
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
-
-/datum/status_effect/organ_set_bonus/carp/enable_bonus()
-	. = ..()
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
-		limb.add_bodypart_overlay(new /datum/bodypart_overlay/texture/carpskin())
-		limb.variable_color = COLOR_WHITE
-	carbon_owner.update_body()
-
-/datum/status_effect/organ_set_bonus/carp/disable_bonus()
-	. = ..()
-	if(!iscarbon(owner) || QDELETED(owner))
-		return
-	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
-		var/overlay = locate(/datum/bodypart_overlay/texture/carpskin) in limb.bodypart_overlays
-		if(overlay)
-			limb.remove_bodypart_overlay(overlay)
-			limb.variable_color = null
-	carbon_owner.update_body()
+	limb_overlay = /datum/bodypart_overlay/texture/carpskin
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
