@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(pet_options, list(
 
 			var/selected_color = params["selected_carrier"]
 			if(!isnull(selected_color))
-				pet_carrier = possible_colors[selected_color]
+				pet_carrier = selected_color
 
 			var/selected_specie = params["selected_specie"]
 			if(!isnull(selected_specie))
@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(pet_options, list(
 	var/obj/item/pet_carrier/carrier = new(get_turf(spawned))
 	carrier.open = FALSE
 	carrier.update_appearance()
-	var/final_color = pet_carrier || COLOR_BLUE
+	var/final_color = possible_colors[pet_carrier] || COLOR_BLUE
 	carrier.set_greyscale(final_color)
 	var/mob/living/our_pet = new selected_path(get_turf(spawned)) //spawning these in nullspace leads to runtimes
 	our_pet.gender = pet_gender
