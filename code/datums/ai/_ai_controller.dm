@@ -377,7 +377,7 @@ multiple modular subtrees with behaviors
 			ProcessBehavior(action_seconds_per_tick, current_behavior)
 			return
 
-		if(!current_movement_target)
+		if(isnull(current_movement_target))
 			fail_behavior(current_behavior)
 			return
 		///Stops pawns from performing such actions that should require the target to be adjacent.
