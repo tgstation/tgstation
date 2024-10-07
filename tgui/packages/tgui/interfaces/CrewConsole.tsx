@@ -250,7 +250,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {/* DOPPLER ADDITION START */}
-        {is_robot ? <Icon name="wrench" color="#9C38B5" size={1} /> : ''}
+        {is_robot ? <Icon name="bolt" color="#FFE254" size={1} /> : ''}
         {charge !== undefined ? ` ${charge}` : ''}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">

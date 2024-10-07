@@ -1,7 +1,7 @@
 ///	Green blood reagent
 /datum/reagent/blood/green
 	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
-	name = "Green Blood"
+	name = "insect blood"
 	color = "#50c034" // rgb: 0, 200, 0
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
@@ -22,7 +22,7 @@
 	splatter_type = "xsplatter"
 
 /obj/effect/decal/cleanable/blood/green
-	name = "green blood"
+	name = "insect blood"
 	desc = "It's green... And it looks like... <i>blood?</i>"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
