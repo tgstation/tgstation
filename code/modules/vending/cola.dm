@@ -64,7 +64,11 @@
 	var/removed_volume = vended_item.reagents.remove_all(rand(5, vended_item.reagents.maximum_volume * 0.5))
 	if (!removed_volume)
 		return
+	// Don't want bubbling sodas when we add some rum to cola
+	ADD_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
 	vended_item.reagents.add_reagent(pick_weight(spiking_booze), removed_volume)
+	vended_item.reagents.handle_reactions()
+	REMOVE_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
 
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
