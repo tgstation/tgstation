@@ -1,5 +1,6 @@
 /obj/machinery/griddle
 	name = "griddle"
+	ru_names = RU_NAMES_LIST_INIT("griddle", "гридль", "гридля", "гридлю", "гридль", "гридлем", "гридле")
 	desc = "Because using pans is for pansies."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "griddle1_off"

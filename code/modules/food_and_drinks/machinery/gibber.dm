@@ -1,5 +1,6 @@
 /obj/machinery/gibber
 	name = "gibber"
+	ru_names = RU_NAMES_LIST_INIT("gibber", "мясорубка", "мясорубки", "мясорубке", "мясорубку", "мясорубкой", "мясорубке")
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"

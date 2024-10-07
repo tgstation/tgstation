@@ -19,6 +19,7 @@
 
 /obj/machinery/microwave
 	name = "microwave oven"
+	ru_names = RU_NAMES_LIST_INIT("microwave oven", "миркроволновка", "миркроволновки", "миркроволновке", "миркроволновку", "миркроволновкой", "миркроволновке")
 	desc = "Cooks and boils stuff."
 	icon = 'icons/obj/machines/microwave.dmi'
 	base_icon_state = ""

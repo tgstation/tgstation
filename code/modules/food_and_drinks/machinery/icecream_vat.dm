@@ -8,6 +8,7 @@
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
+	ru_names = RU_NAMES_LIST_INIT("ice cream vat", "машина для мороженного", "машины для мороженного", "машине для мороженного", "машину для мороженного", "машиной для мороженного", "машине для мороженного")
 	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_vat"
