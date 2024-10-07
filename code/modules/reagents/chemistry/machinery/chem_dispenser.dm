@@ -621,7 +621,8 @@
 		/datum/reagent/iron,
 		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/consumable/ethanol/fernet
+		/datum/reagent/consumable/ethanol/fernet,
+		/datum/reagent/toxin/fakebeer
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/Initialize(mapload)
