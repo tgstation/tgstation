@@ -1857,3 +1857,14 @@
 			return bait.reagents?.has_reagent(special_identifier[FISH_BAIT_VALUE], special_identifier[FISH_BAIT_AMOUNT], check_subtypes = TRUE)
 		else
 			CRASH("Unknown bait identifier in fish favourite/disliked list")
+
+/obj/item/vv_get_header()
+	. = ..()
+	. += {"
+		<br><font size='1'>
+			DAMTYPE: <font size='1'><a href='?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=damtype' id='damtype'>[uppertext(damtype)]</a>
+			FORCE: <font size='1'><a href='?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=force' id='force'>[force]</a>
+			WOUND: <font size='1'><a href='?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=wound' id='wound'>[wound_bonus]</a>
+			BARE WOUND: <font size='1'><a href='?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[bare_wound_bonus]</a>
+		</font>
+	"}
