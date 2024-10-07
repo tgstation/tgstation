@@ -50,15 +50,18 @@
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
 
-/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
-	..()
-	if (istype(E, /obj/item/extinguisher_refill))
-		if (extinguishes_left == 5)
-			to_chat(user, span_notice("The inbuilt extinguisher is full."))
-		else
-			extinguishes_left = 5
-			to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
-			qdel(E)
+/obj/item/clothing/under/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/extinguisher_refill))
+		return
+
+	if (extinguishes_left == 5)
+		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	extinguishes_left = 5
+	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"

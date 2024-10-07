@@ -50,6 +50,19 @@
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
 
+/obj/item/clothing/suit/space/eva/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/extinguisher_refill))
+		return
+
+	if (extinguishes_left == 5)
+		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	extinguishes_left = 5
+	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
 //I just want the light feature of helmets
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
