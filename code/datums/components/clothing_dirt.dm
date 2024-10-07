@@ -52,8 +52,9 @@
 
 /datum/component/clothing_dirt/proc/on_drop()
 	SIGNAL_HANDLER
-	UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
-	wearer = null
+	if(!isnull(wearer))
+		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+		wearer = null
 	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
 
 /datum/component/clothing_dirt/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -61,14 +62,15 @@
 	if (dirtiness > 0)
 		examine_list += span_warning("It appears to be covered in some oily substance. Won't see much while wearing it until you wash it off.")
 
-/datum/component/clothing_dirt/proc/on_expose(atom/source, list/reagents, datum/reagents/source, methods)
+/datum/component/clothing_dirt/proc/on_expose(atom/target, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
 	if(QDELETED(wearer) || is_protected() )
 		return
-	if(!is_path_in_list(/datum/reagent/consumable/condensedcapsaicin, reagents))
-		return
 
 	var/datum/reagent/consumable/condensedcapsaicin/pepper = locate() in reagents
+	if(isnull(pepper))
+		return
+
 	if (methods & (TOUCH | VAPOR))
 		clothing.tint -= dirtiness
 		dirtiness = min(dirtiness + round(reagents[pepper] / 5), 3)
