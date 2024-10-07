@@ -11,7 +11,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_cookie = /obj/item/food/muffin/moffin
 	species_language_holder = /datum/language_holder/moth
-	death_sound = 'sound/voice/moth/moth_death.ogg'
+	death_sound = 'sound/mobs/humanoids/moth/moth_death.ogg'
 	payday_modifier = 1.0
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
@@ -44,59 +44,59 @@
 	return features
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/moth)
-	return 'sound/voice/moth/scream_moth.ogg'
+	return 'sound/mobs/humanoids/moth/scream_moth.ogg'
 
 /datum/species/moth/get_cough_sound(mob/living/carbon/human/moth)
 	if(moth.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cough1.ogg',
-			'sound/voice/human/female_cough2.ogg',
-			'sound/voice/human/female_cough3.ogg',
-			'sound/voice/human/female_cough4.ogg',
-			'sound/voice/human/female_cough5.ogg',
-			'sound/voice/human/female_cough6.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cough1.ogg',
-		'sound/voice/human/male_cough2.ogg',
-		'sound/voice/human/male_cough3.ogg',
-		'sound/voice/human/male_cough4.ogg',
-		'sound/voice/human/male_cough5.ogg',
-		'sound/voice/human/male_cough6.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
 	)
 
 
 /datum/species/moth/get_cry_sound(mob/living/carbon/human/moth)
 	if(moth.physique == FEMALE)
 		return pick(
-			'sound/voice/human/female_cry1.ogg',
-			'sound/voice/human/female_cry2.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
 		)
 	return pick(
-		'sound/voice/human/male_cry1.ogg',
-		'sound/voice/human/male_cry2.ogg',
-		'sound/voice/human/male_cry3.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
 	)
 
 
 /datum/species/moth/get_sneeze_sound(mob/living/carbon/human/moth)
 	if(moth.physique == FEMALE)
-		return 'sound/voice/human/female_sneeze1.ogg'
-	return 'sound/voice/human/male_sneeze1.ogg'
+		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
+	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
 
 
 /datum/species/moth/get_laugh_sound(mob/living/carbon/human/moth)
-	return 'sound/voice/moth/moth_laugh1.ogg'
+	return 'sound/mobs/humanoids/moth/moth_laugh1.ogg'
 
 /datum/species/moth/get_sigh_sound(mob/living/carbon/human/moth)
 	if(moth.physique == FEMALE)
-		return 'sound/voice/human/female_sigh.ogg'
-	return 'sound/voice/human/male_sigh.ogg'
+		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
+	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
 
 /datum/species/moth/get_sniff_sound(mob/living/carbon/human/moth)
 	if(moth.physique == FEMALE)
-		return 'sound/voice/human/female_sniff.ogg'
-	return 'sound/voice/human/male_sniff.ogg'
+		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
+	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 
 /datum/species/moth/get_physical_attributes()
 	return "Moths have large and fluffy wings, which help them navigate the station if gravity is offline by pushing the air around them. \

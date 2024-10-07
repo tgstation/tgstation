@@ -212,6 +212,9 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return TRUE
+
 /// A beam subtype used for advanced beams, to react to atoms entering the beam
 /obj/effect/ebeam/reacting
 	/// If TRUE, atoms that exist in the beam's loc when inited count as "entering" the beam

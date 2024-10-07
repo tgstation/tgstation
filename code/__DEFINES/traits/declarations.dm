@@ -963,6 +963,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
 #define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
 
+/// Stops a movable from being removed from the mob it's in by the content_barfer component.
+#define TRAIT_NOT_BARFABLE "not_barfable"
+
 ///fish traits
 #define TRAIT_FISH_STASIS "fish_stasis"
 #define TRAIT_FISH_FLOPPING "fish_flopping"
@@ -1279,6 +1282,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
+
+///Trait that prevents mobs from stopping by grabbing objects
+#define TRAIT_NOGRAV_ALWAYS_DRIFT "nograv_always_drift"
 
 ///Mobs with these trait do not get italicized/quiet speech when speaking in low pressure
 #define TRAIT_SPEECH_BOOSTER "speech_booster"

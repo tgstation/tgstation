@@ -15,13 +15,51 @@ function Extract-Variable {
 
 function Download-Node {
 	if (Test-Path $NodeTarget -PathType Leaf) {
+		Verify-Node
 		return
 	}
+
 	Write-Output "Downloading Node v$NodeVersion (may take a while)"
 	New-Item $NodeTargetDir -ItemType Directory -ErrorAction silentlyContinue | Out-Null
 	$WebClient = New-Object Net.WebClient
 	$WebClient.DownloadFile($NodeSource, "$NodeTarget.downloading")
 	Rename-Item "$NodeTarget.downloading" $NodeTarget
+	Verify-Node
+}
+
+function Verify-Node {
+	$Tries = $Tries + 1
+
+	Write-Output "Verifying Node checksum"
+	$FileHash = Get-FileHash $NodeTarget -Algorithm SHA256
+	$ActualSha = $FileHash.Hash
+	$LoginResponse = Invoke-WebRequest "https://nodejs.org/download/release/v$NodeVersion/SHASUMS256.txt"
+	$ShaArray = $LoginResponse.Content.split("`n")
+	foreach ($ShaArrayEntry in $ShaArray) {
+		$EntrySplit = $ShaArrayEntry -split "\s+"
+		$EntrySha = $EntrySplit[0]
+		$EntryExe = $EntrySplit[1]
+		if ($EntryExe -eq "win-x64/node.exe") {
+			$ExpectedSha = $EntrySha
+			break
+		}
+	}
+
+	if ($null -eq $ExpectedSha) {
+		Write-Output "Failed to determine the correct checksum value. This is probably fine."
+		return
+	}
+
+	if ($ExpectedSha -ne $ActualSha) {
+		Write-Output "$ExpectedSha != $ActualSha"
+		if ($Tries -gt 3) {
+			Write-Output "Failed to verify Node checksum three times. Aborting."
+			exit 1
+		}
+		Write-Output "Checksum mismatch on Node. Retrying."
+		Remove-Item $NodeTarget
+		Download-Node
+	}
 }
 
 ## Convenience variables

@@ -37,7 +37,7 @@
 
 /datum/job/pun_pun/after_spawn(mob/living/carbon/human/monkey, client/player_client)
 	. = ..()
-	monkey.make_clever_and_no_dna_scramble()
+	monkey.crewlike_monkify()
 
 /datum/outfit/job/pun_pun
 	name = "Pun Pun"

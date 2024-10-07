@@ -319,7 +319,7 @@
 			// This canonizes that MMI'd cyborgs have memories of their previous life
 			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
 			brainmob.mind.transfer_to(O)
-			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+			playsound(O.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)
 				to_chat(O, span_userdanger("You have been robotized!"))

@@ -1,3 +1,6 @@
+#define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
+#define FUNCTIONAL_WING_STABILIZATION 1.2 NEWTONS
+
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
 	name = "Toggle Flight"
@@ -10,11 +13,6 @@
 	var/obj/item/organ/external/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(wings?.can_fly(human))
 		wings.toggle_flight(human)
-		if(!(human.movement_type & FLYING))
-			to_chat(human, span_notice("You settle gently back onto the ground..."))
-		else
-			to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			human.set_resting(FALSE, TRUE)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
@@ -54,7 +52,7 @@
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(!(human.movement_type & FLYING))
+	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
@@ -64,7 +62,7 @@
 
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
 /obj/item/organ/external/wings/functional/proc/can_fly(mob/living/carbon/human/human)
-	if(human.stat || human.body_position == LYING_DOWN)
+	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if(!cant_hide && human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
@@ -78,8 +76,7 @@
 	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
 		to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
 		return FALSE
-	else
-		return TRUE
+	return TRUE
 
 ///Slipping but in the air?
 /obj/item/organ/external/wings/functional/proc/fly_slip(mob/living/carbon/human/human)
@@ -106,18 +103,59 @@
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
-	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
+	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
-		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
+		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
+		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
+		human.AddElement(/datum/element/forced_gravity, 0)
 		passtable_on(human, SPECIES_FLIGHT_TRAIT)
+		RegisterSignal(human, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
+		RegisterSignal(human, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
+		START_PROCESSING(SSnewtonian_movement, src)
 		open_wings()
-	else
-		human.physiology.stun_mod *= 0.5
-		human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
-		passtable_off(human, SPECIES_FLIGHT_TRAIT)
-		close_wings()
+		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
+		human.set_resting(FALSE, TRUE)
+		human.refresh_gravity()
+		return
 
+	human.physiology.stun_mod *= 0.5
+	human.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
+	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
+	human.RemoveElement(/datum/element/forced_gravity, 0)
+	passtable_off(human, SPECIES_FLIGHT_TRAIT)
+	UnregisterSignal(human, list(COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE))
+	STOP_PROCESSING(SSnewtonian_movement, src)
+	to_chat(human, span_notice("You settle gently back onto the ground..."))
+	close_wings()
 	human.refresh_gravity()
+
+/obj/item/organ/external/wings/functional/proc/on_client_move(mob/source, list/move_args)
+	SIGNAL_HANDLER
+
+	if (!can_fly(source))
+		return
+
+	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = FUNCTIONAL_WING_FORCE, controlled_cap = max_drift_force)
+	source.setDir(source.client.intended_direction)
+
+/obj/item/organ/external/wings/functional/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
+	SIGNAL_HANDLER
+
+	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
+		return
+
+	if (!can_fly(source) || !source.client.intended_direction)
+		return
+
+	return COMPONENT_PREVENT_SPACEMOVE_HALT
+
+/obj/item/organ/external/wings/functional/process(seconds_per_tick)
+	if (!owner || !can_fly(owner) || isnull(owner.drift_handler))
+		return
+
+	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, FUNCTIONAL_WING_STABILIZATION * (seconds_per_tick * 1 SECONDS))
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
@@ -194,7 +232,7 @@
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
 
 /obj/item/organ/external/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
 
 ///mothra wings, which relate to moths.
 /obj/item/organ/external/wings/functional/moth/mothra
@@ -219,3 +257,6 @@
 	name = "slime wings"
 	desc = "How does something so squishy even fly?"
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
+
+#undef FUNCTIONAL_WING_FORCE
+#undef FUNCTIONAL_WING_STABILIZATION

@@ -27,6 +27,13 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, drop_bitflags)
 	qdel(src)
 
+// Plays an animation that makes mobs appear to inflate before finally gibbing
+/mob/living/proc/inflate_gib(drop_bitflags=DROP_BRAIN|DROP_ORGANS|DROP_ITEMS, gib_time = 2.5 SECONDS, anim_time = 4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(gib), drop_bitflags), gib_time)
+	var/matrix/M = matrix()
+	M.Scale(1.8, 1.2)
+	animate(src, time = anim_time, transform = M, easing = SINE_EASING)
+
 /mob/living/proc/gib_animation()
 	return
 

@@ -93,7 +93,7 @@
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null
 	name = initial(name) //get rid of the organ in the name
-	playsound(target.loc, 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	playsound(target.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 	update_appearance()
 
 	if(uses)

@@ -447,13 +447,13 @@
 		if(BRUTE)
 			switch(status)
 				if(LIGHT_EMPTY)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+					playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
 				if(LIGHT_BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
 				else
-					playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+					playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
@@ -641,7 +641,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(on)
 			do_sparks(3, TRUE, src)
 	status = LIGHT_BROKEN
@@ -680,12 +680,8 @@
 
 /obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER
-	. = COMPONENT_BLOCK_LIGHT_EATER
-	if(status == LIGHT_EMPTY)
-		return
-	var/obj/item/light/tube = drop_light_tube()
-	tube?.burn()
-	return
+	break_light_tube()
+	return COMPONENT_BLOCK_LIGHT_EATER
 
 /obj/machinery/light/on_saboteur(datum/source, disrupt_duration)
 	. = ..()

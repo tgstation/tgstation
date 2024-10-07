@@ -377,8 +377,8 @@
 	skill_name = "Underwater Basketweaving"
 	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
 	skill_icon = "shopping-basket"
-	activate_message = "<span class='notice'>You're one with the twine and the sea.</span>"
-	deactivate_message = "<span class='notice'>Higher mysteries of underwater basketweaving leave your mind.</span>"
+	activate_message = span_notice("You're one with the twine and the sea.")
+	deactivate_message = span_notice("Higher mysteries of underwater basketweaving leave your mind.")
 
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
@@ -387,8 +387,8 @@
 	skill_name = "Wine Tasting"
 	skill_description = "Recognize wine vintage from taste alone. Never again lack an opinion when presented with an unknown drink."
 	skill_icon = "wine-bottle"
-	activate_message = "<span class='notice'>You recall wine taste.</span>"
-	deactivate_message = "<span class='notice'>Your memories of wine evaporate.</span>"
+	activate_message = span_notice("You recall wine taste.")
+	deactivate_message = span_notice("Your memories of wine evaporate.")
 
 /obj/item/skillchip/bonsai
 	name = "Hedge 3 skillchip"
@@ -396,16 +396,16 @@
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
-	activate_message = "<span class='notice'>Your mind is filled with plant arrangments.</span>"
-	deactivate_message = "<span class='notice'>You can't remember what a hedge looks like anymore.</span>"
+	activate_message = span_notice("Your mind is filled with plant arrangments.")
+	deactivate_message = span_notice("You can't remember what a hedge looks like anymore.")
 
 /obj/item/skillchip/useless_adapter
 	name = "Skillchip adapter"
 	skill_name = "Useless adapter"
 	skill_description = "Allows you to insert another skillchip into this adapter after it has been inserted into your brain..."
 	skill_icon = "plug"
-	activate_message = "<span class='notice'>You can now activate another chip through this adapter, but you're not sure why you did this...</span>"
-	deactivate_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
+	activate_message = span_notice("You can now activate another chip through this adapter, but you're not sure why you did this...")
+	deactivate_message = span_notice("You no longer have the useless skillchip adapter.")
 	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	// Literally does nothing.
 	complexity = 0
@@ -417,8 +417,8 @@
 	skill_name = "Lightbulb Removing"
 	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
 	skill_icon = "lightbulb"
-	activate_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
-	deactivate_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
+	activate_message = span_notice("Your feel like your pain receptors are less sensitive to hot objects.")
+	deactivate_message = span_notice("You feel like hot objects could stop you again...")
 
 /obj/item/skillchip/disk_verifier
 	name = "K33P-TH4T-D15K skillchip"
@@ -426,8 +426,8 @@
 	skill_name = "Nuclear Disk Verification"
 	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
 	skill_icon = "save"
-	activate_message = "<span class='notice'>You feel your mind automatically verifying long serial numbers on disk shaped objects.</span>"
-	deactivate_message = "<span class='notice'>The innate recognition of absurdly long disk-related serial numbers fades from your mind.</span>"
+	activate_message = span_notice("You feel your mind automatically verifying long serial numbers on disk shaped objects.")
+	deactivate_message = span_notice("The innate recognition of absurdly long disk-related serial numbers fades from your mind.")
 
 /obj/item/skillchip/entrails_reader
 	name = "3NTR41LS skillchip"
@@ -435,8 +435,8 @@
 	skill_name = "Entrails Reader"
 	skill_description = "Be able to learn about a person's life, by looking at their internal organs. Not to be confused with looking into the future."
 	skill_icon = "lungs"
-	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
-	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+	activate_message = span_notice("You feel that you know a lot about interpreting organs.")
+	deactivate_message = span_notice("Knowledge of liver damage, heart strain and lung scars fades from your mind.")
 
 /obj/item/skillchip/appraiser
 	name = "GENUINE ID Appraisal Now! skillchip"

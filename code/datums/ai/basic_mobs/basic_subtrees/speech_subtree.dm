@@ -46,7 +46,7 @@
 
 /datum/ai_planning_subtree/random_speech/insect
 	speech_chance = 5
-	sound = list('sound/creatures/chitter.ogg')
+	sound = list('sound/mobs/non-humanoids/insect/chitter.ogg')
 	emote_hear = list("chitters.")
 
 /datum/ai_planning_subtree/random_speech/mothroach
@@ -56,7 +56,7 @@
 /datum/ai_planning_subtree/random_speech/mouse
 	speech_chance = 1
 	speak = list("Squeak!", "SQUEAK!", "Squeak?")
-	sound = list('sound/creatures/mousesqueek.ogg')
+	sound = list('sound/mobs/non-humanoids/mouse/mousesqueek.ogg')
 	emote_hear = list("squeaks.")
 	emote_see = list("runs in a circle.", "shakes.")
 
@@ -72,7 +72,7 @@
 /datum/ai_planning_subtree/random_speech/sheep
 	speech_chance = 5
 	speak = list("baaa","baaaAAAAAH!","baaah")
-	sound = list('sound/creatures/sheep1.ogg', 'sound/creatures/sheep2.ogg', 'sound/creatures/sheep3.ogg')
+	sound = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg')
 	emote_hear = list("bleats.")
 	emote_see = list("shakes her head.", "stares into the distance.")
 
@@ -101,21 +101,21 @@
 /datum/ai_planning_subtree/random_speech/chicken
 	speech_chance = 15 // really talkative ladies
 	speak = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak.")
-	sound = list('sound/creatures/clucks.ogg', 'sound/creatures/bagawk.ogg')
+	sound = list('sound/mobs/non-humanoids/chicken/clucks.ogg', 'sound/mobs/non-humanoids/chicken/bagawk.ogg')
 	emote_hear = list("clucks.", "croons.")
 	emote_see = list("pecks at the ground.","flaps her wings viciously.")
 
 /datum/ai_planning_subtree/random_speech/chick
 	speech_chance = 4
 	speak = list("Cherp.", "Cherp?", "Chirrup.", "Cheep!")
-	sound = list('sound/creatures/chick_peep.ogg')
+	sound = list('sound/mobs/non-humanoids/chicken/chick_peep.ogg')
 	emote_hear = list("cheeps.")
 	emote_see = list("pecks at the ground.","flaps her tiny wings.")
 
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
-	sound = list('sound/creatures/cow.ogg')
+	sound = list('sound/mobs/non-humanoids/cow/cow.ogg')
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
 
@@ -164,19 +164,19 @@
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
 	speak = list("oink?","oink","snurf")
-	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
+	sound = list('sound/mobs/non-humanoids/pig/pig1.ogg', 'sound/mobs/non-humanoids/pig/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
 
 /datum/ai_planning_subtree/random_speech/pony
 	speech_chance = 3
-	sound = list('sound/creatures/pony/whinny01.ogg', 'sound/creatures/pony/whinny02.ogg', 'sound/creatures/pony/whinny03.ogg')
+	sound = list('sound/mobs/non-humanoids/pony/whinny01.ogg', 'sound/mobs/non-humanoids/pony/whinny02.ogg', 'sound/mobs/non-humanoids/pony/whinny03.ogg')
 	emote_hear = list("whinnies!")
 	emote_see = list("horses around.")
 
 /datum/ai_planning_subtree/random_speech/pony/tamed
 	speech_chance = 3
-	sound = list('sound/creatures/pony/snort.ogg')
+	sound = list('sound/mobs/non-humanoids/pony/snort.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("snorts.")
 
@@ -188,7 +188,7 @@
 /datum/ai_planning_subtree/random_speech/ant
 	speech_chance = 1
 	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
-	sound = list('sound/creatures/chitter.ogg')
+	sound = list('sound/mobs/non-humanoids/insect/chitter.ogg')
 	emote_hear = list("buzzes.", "clacks.")
 	emote_see = list("shakes their head.", "twitches their antennae.")
 
@@ -200,7 +200,7 @@
 
 /datum/ai_planning_subtree/random_speech/crab
 	speech_chance = 1
-	sound = list('sound/creatures/claw_click.ogg')
+	sound = list('sound/mobs/non-humanoids/crab/claw_click.ogg')
 	emote_hear = list("clicks.")
 	emote_see = list("clacks.")
 
@@ -216,11 +216,9 @@
 
 /datum/ai_planning_subtree/random_speech/cats
 	speech_chance = 10
-	speak = list(
-		"mrawww!",
-		"meow!",
-		"maw!",
-	)
+	sound = list(SFX_CAT_MEOW)
+	emote_hear = list("meows.")
+	emote_see = list("meows.")
 
 /datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
 	speech_chance = 1

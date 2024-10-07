@@ -141,3 +141,11 @@
 }\
 /datum/controller/subsystem/ai_controllers/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/ai_controllers/##X
+
+#define UNPLANNED_CONTROLLER_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/unplanned_controllers/##X);\
+/datum/controller/subsystem/unplanned_controllers/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/unplanned_controllers/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/unplanned_controllers/##X
