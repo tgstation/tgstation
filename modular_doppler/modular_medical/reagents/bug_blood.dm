@@ -15,7 +15,7 @@
   results = list(/datum/reagent/bug_blood = 2)
   required_reagents = list(/datum/reagent/imidazole = 6, /datum/reagent/copper = 2, /datum/reagent/oxygen = 1)
   mix_message = "The solution thickens and turns a buggy-blue"
-  //fermichem
+//fermichem
   is_cold_recipe = FALSE
   required_temp = 293
   optimal_temp = 300
@@ -45,7 +45,7 @@
   results = list(/datum/reagent/imidazole = 0.5)
   required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/ammonia = 5, /datum/reagent/glyoxal = 1)
   mix_message = "The solution clouds and becomes white"
-  //fermichem
+//fermichem
   is_cold_recipe = FALSE
   required_temp = 362
   optimal_temp = 420
@@ -74,7 +74,7 @@
   results = list(/datum/reagent/glyoxal = 2)
   required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/nitracid = 1)
   required_catalysts = list(/datum/reagent/oxygen = 10)
-  //fermichem
+//fermichem
   is_cold_recipe = FALSE
   required_temp = 270
   optimal_temp = 324
