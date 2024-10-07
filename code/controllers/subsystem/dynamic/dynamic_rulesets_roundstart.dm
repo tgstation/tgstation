@@ -10,6 +10,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	name = "Traitors"
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	minimum_required_age = 0
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -52,6 +53,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/malf_ai
 	name = "Malfunctioning AI"
 	antag_flag = ROLE_MALF
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/malf_ai
 	minimum_required_age = 14
 	exclusive_roles = list(JOB_AI)
@@ -98,6 +100,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/brother
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -148,6 +151,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/changeling
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -196,6 +200,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/heretics
 	name = "Heretics"
 	antag_flag = ROLE_HERETIC
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/heretic
 	protected_roles = list(
 		JOB_CAPTAIN,
@@ -316,6 +321,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/bloodcult
 	name = "Blood Cult"
 	antag_flag = ROLE_CULTIST
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -491,6 +497,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV_HEAD
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
 	restricted_roles = list(

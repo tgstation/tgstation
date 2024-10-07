@@ -44,3 +44,5 @@
 #define RULESET_CATEGORY_DEFAULT (1 << 0)
 /// Rulesets not including crew antagonists, non-witting referring to antags like obsessed which aren't really enemies of the station
 #define RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS (1 << 1)
+/// Rulesets not including outside antagonists or infestations like Nuke Ops, Aliens or etc. Blob infection is a exception.
+#define RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS (1 << 2)
