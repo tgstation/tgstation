@@ -80,7 +80,7 @@
 
 	broken = TRUE
 	soundloop.stop()
-	playsound(get_sfx(src), break_sound).volume(40).vary(FALSE).play()
+	playsound(get_sfx(src), break_sound).volume(40).play()
 	times_broken++
 	update_appearance(UPDATE_ICON)
 	return TRUE

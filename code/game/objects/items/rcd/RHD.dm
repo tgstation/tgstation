@@ -165,7 +165,7 @@
 	playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(loc, 'sound/effects/pop.ogg').vary(FALSE).play()
+	playsound(loc, 'sound/effects/pop.ogg').play()
 	if(prob(20))
 		spark_system.start()
 

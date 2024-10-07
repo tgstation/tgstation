@@ -213,8 +213,7 @@
 		return
 
 	if(triggerer_only && ismob(A))
-		var/mob/B = A
-		B.playsound_local(T, sound, volume, freq_vary)
+		playsound(T, sound).volume(volume).vary(freq_vary).direct_listeners(A).play()
 	else
 		playsound(T, sound).volume(volume).vary(freq_vary).extra_range(extra_range).play()
 

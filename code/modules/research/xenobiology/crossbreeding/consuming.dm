@@ -251,7 +251,7 @@ Consuming extracts:
 		fail_effect(eater)
 		return
 	new /obj/effect/particle_effect/sparks(target)
-	playsound(target, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(target, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
 	eater.visible_message(
@@ -400,7 +400,7 @@ Consuming extracts:
 	M.dropItemToGround(held)
 	var/newcoin = /obj/item/coin/gold
 	var/obj/item/coin/C = new newcoin(get_turf(M))
-	playsound(get_turf(C), 'sound/items/coinflip.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(C), 'sound/items/coinflip.ogg').vary(TRUE).play()
 	M.put_in_hand(C)
 
 /obj/item/slimecross/consuming/oil

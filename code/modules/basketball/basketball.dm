@@ -84,7 +84,7 @@
 	SIGNAL_HANDLER
 
 	if(steps > step_delay)
-		playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).vary(FALSE).play()
+		playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).play()
 		steps = 0
 	else
 		steps++
@@ -114,7 +114,7 @@
 	if(!prob(disarm_chance))
 		return // the disarm failed
 
-	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).vary(FALSE).play()
+	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).play()
 	var/blocking_dir_bonus = check_target_facings(stealer, baller)
 
 	switch(blocking_dir_bonus)
@@ -153,7 +153,7 @@
 	if(!iscarbon(target) || user.combat_mode)
 		return ..()
 
-	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).vary(FALSE).play()
+	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).play()
 	target.put_in_hands(src)
 
 /obj/item/toy/basketball/attack_self(mob/living/user)
@@ -170,7 +170,7 @@
 
 	last_use = world.time
 	user.swap_hand(user.get_held_index_of_item(src))
-	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).vary(FALSE).play()
+	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).play()
 
 /obj/item/toy/basketball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
@@ -205,7 +205,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/basketball/throw_impact(mob/living/carbon/target, datum/thrownthing/throwingdatum)
-	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).vary(FALSE).play()
+	playsound(src, 'sound/items/basketball_bounce.ogg').volume(75).play()
 
 	if(!istype(target))
 		return ..()

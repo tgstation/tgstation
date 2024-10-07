@@ -205,7 +205,7 @@
 		mod.balloon_alert(user, "interrupted!")
 		return
 	mod.balloon_alert(user, "cell removed")
-	playsound(mod, 'sound/machines/click.ogg').volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+	playsound(mod, 'sound/machines/click.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	var/obj/item/cell_to_move = cell
 	cell_to_move.forceMove(drop_location())
 	user.put_in_hands(cell_to_move)
@@ -231,7 +231,7 @@
 		return FALSE
 	install_cell(attacking_item)
 	mod.balloon_alert(user, "cell installed")
-	playsound(mod, 'sound/machines/click.ogg').volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+	playsound(mod, 'sound/machines/click.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)

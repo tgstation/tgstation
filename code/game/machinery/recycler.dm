@@ -206,7 +206,7 @@
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound).volume(50 + nom.len * 5).vary(TRUE).extra_range(nom.len).ignore_walls(nom.len > 10).play()
 	if(not_eaten)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50 + not_eaten * 5).vary(FALSE).extra_range(not_eaten).ignore_walls(not_eaten > 10).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50 + not_eaten * 5).extra_range(not_eaten).ignore_walls(not_eaten > 10).play()
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
 	. = FALSE
@@ -225,13 +225,13 @@
 	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 	safety_mode = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src, 'sound/machines/ping.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/ping.ogg').play()
 	safety_mode = FALSE
 	update_appearance()
 

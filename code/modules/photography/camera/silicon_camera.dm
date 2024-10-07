@@ -80,7 +80,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	balloon_alert(user, "image recorded")
-	user.playsound_local(get_turf(user), pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 50, TRUE, -3)
+	playsound(user, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg')).vary(TRUE).extra_range(-3).direct_listeners(user).play()
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"

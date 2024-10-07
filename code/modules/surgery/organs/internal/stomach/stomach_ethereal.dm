@@ -116,6 +116,6 @@
 			var/datum/disease/D = new /datum/disease/heart_failure
 			carbon.ForceContractDisease(D)
 			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
+			playsound(carbon, 'sound/effects/singlebeat.ogg').volume(100).direct_listeners(carbon).play()
 
 		carbon.Paralyze(100)

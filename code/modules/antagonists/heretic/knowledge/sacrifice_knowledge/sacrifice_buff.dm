@@ -48,7 +48,7 @@
 		owner.adjust_hallucinations_up_to(6 SECONDS, 48 SECONDS)
 
 	if(prob(2))
-		playsound(owner, pick(GLOB.creepy_ambience)).volume(50).vary(TRUE).play()
+		playsound(owner, pick(GLOB.creepy_ambience)).vary(TRUE).play()
 
 	adjust_all_damages(healing_amount, seconds_between_ticks)
 	adjust_temperature(seconds_between_ticks)

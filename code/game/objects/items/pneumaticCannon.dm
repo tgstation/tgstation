@@ -204,7 +204,7 @@
 				    		 span_danger("You fire \the [src]!"))
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(get_sfx(src), fire_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), fire_sound).vary(TRUE).play()
 	fire_items(T, user)
 	if(pressure_setting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user

@@ -56,7 +56,7 @@
 /obj/item/clothing/neck/collar_bomb/proc/explosive_countdown(ticks_left)
 	active = TRUE
 	if(ticks_left > 0)
-		playsound(src, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
+		playsound(src, 'sound/items/timer.ogg').volume(30).play()
 		balloon_alert_to_viewers("[ticks_left]")
 		ticks_left--
 		addtimer(CALLBACK(src, PROC_REF(explosive_countdown), ticks_left), 1 SECONDS)

@@ -223,7 +223,7 @@
 	if(istype(target, /obj/machinery/light))
 		if(replace_light(target, user) && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(1).play()
+			playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 		return TRUE
 
 	// if we are attacking a floodlight frame finish it
@@ -233,7 +233,7 @@
 			new /obj/machinery/power/floodlight(frame.loc)
 			if(bluespace_toggle)
 				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(1).play()
+				playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
 			qdel(frame)
 		return TRUE
@@ -246,7 +246,7 @@
 				light_replaced = TRUE
 		if(light_replaced && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(1).play()
+			playsound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 		return TRUE
 
 	return FALSE

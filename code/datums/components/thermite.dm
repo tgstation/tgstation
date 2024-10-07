@@ -187,7 +187,7 @@
 	affecting.receive_damage(burn = 5)
 	to_chat(user, span_userdanger("The ignited thermite on \the [source] burns your hand!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(get_sfx(source), SFX_SEAR).volume(50).vary(TRUE).play()
+	playsound(get_sfx(source), SFX_SEAR).vary(TRUE).play()
 	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

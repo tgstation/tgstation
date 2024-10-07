@@ -695,7 +695,7 @@
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(!silent)
+	if(!silent && drop_sound)
 		playsound(src, drop_sound).volume(DROP_SOUND_VOLUME).vary(sound_vary).play()
 	user?.update_equipment_speed_mods()
 

@@ -112,7 +112,7 @@
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
-				playsound(master, 'sound/effects/splat.ogg').volume(100).vary(FALSE).play()
+				playsound(master, 'sound/effects/splat.ogg').volume(100).play()
 			else
 				master.apply_status_effect(/datum/status_effect/his_grace)
 		return

@@ -117,7 +117,7 @@
 		var/mob/living/basic/mining/mook/mook_owner = owner
 		mook_owner.change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(owner))
-	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(owner), 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).play()
 	animate(owner, pixel_y = owner.base_pixel_y + 146, time = 0.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(land_on_turf), target), 0.5 SECONDS)
 

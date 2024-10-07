@@ -176,7 +176,7 @@
 	if(state_open)
 		if(locate(/mob/living) in tool.get_all_contents())
 			say("Living being detected, cannot sell!")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "stuck to your hands!")
@@ -193,7 +193,7 @@
 
 	if(creds_value < restock_cost)
 		say("Insufficient credits!")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/holochip))
@@ -271,7 +271,7 @@
 		return
 	if(locate(/mob/living) in occupant.get_all_contents())
 		say("Living being detected, cannot sell!")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 		return
 	var/datum/bank_account/account
 	var/datum/market/our_market = SSmarket.markets[/datum/market/blackmarket]
@@ -280,17 +280,17 @@
 			return
 		if(length(our_market.available_items[/datum/market_item/local_good::category]) >= LTSRBT_MAX_MARKET_ITEMS)
 			say("Local market saturated, buy some goods first!")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 			return
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
 		if(!(card?.registered_account))
 			say("No bank account to charge market fees detected!")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
 			say("Insufficient credits!")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(40).play()
 			return
 		account = card.registered_account
 
@@ -313,7 +313,7 @@
 	our_market.add_item(new_item)
 
 	say("Item placed on the market!")
-	playsound(src, 'sound/effects/cashregister.ogg').volume(40).vary(FALSE).play()
+	playsound(src, 'sound/effects/cashregister.ogg').volume(40).play()
 	COOLDOWN_START(src, recharge_cooldown, recharge_time * 3)
 
 #undef LTSRBT_MAX_MARKET_ITEMS

@@ -117,7 +117,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary(TRUE).play()
+		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).vary(TRUE).play()
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
@@ -133,7 +133,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary(TRUE).play()
+		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).vary(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -159,7 +159,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).volume(50).vary(TRUE).play()
+		playsound(target.loc, get_sfx(SFX_LIQUID_POUR)).vary(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()

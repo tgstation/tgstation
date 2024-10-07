@@ -86,7 +86,7 @@
 			return SHAME
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		user_head.drop_limb()
-		playsound(loc, get_sfx(SFX_DESECRATION)).volume(50).vary(TRUE).extra_range(-1).play()
+		playsound(loc, get_sfx(SFX_DESECRATION)).vary(TRUE).extra_range(-1).play()
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
 	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))

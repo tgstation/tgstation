@@ -477,7 +477,7 @@
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
 
-	playsound(get_sfx(loc), SFX_SHATTER).volume(50).vary(TRUE).play()
+	playsound(get_sfx(loc), SFX_SHATTER).vary(TRUE).play()
 
 	new frame(loc)
 
@@ -493,7 +493,7 @@
 		return
 	else
 		var/turf/T = get_turf(src)
-		playsound(get_sfx(T), SFX_SHATTER).volume(50).vary(TRUE).play()
+		playsound(get_sfx(T), SFX_SHATTER).vary(TRUE).play()
 
 		new frame(loc)
 		new glass_shard_type(loc)

@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
-	playsound(get_turf(user), RPD_USE_SOUND).volume(50).vary(TRUE).play()
+	playsound(get_turf(user), RPD_USE_SOUND).vary(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
 		spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg').volume(50).vary(FALSE).play()
+		playsound(get_turf(src), 'sound/effects/pop.ogg').play()
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/atom_to_attack, mob/user, params)
@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		playsound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
-		playsound(get_turf(src), RPD_USE_SOUND).volume(50).vary(TRUE).play()
+		playsound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 		qdel(attack_target)
 		return
 
@@ -559,7 +559,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						qdel(new_disposals_segment)
 						return
 
-					playsound(get_turf(src), RPD_USE_SOUND).volume(50).vary(TRUE).play()
+					playsound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 
 					new_disposals_segment.add_fingerprint(usr)
 					new_disposals_segment.update_appearance()
@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 				playsound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				if(do_after(user, transit_build_speed, target = attack_target))
-					playsound(get_turf(src), RPD_USE_SOUND).volume(50).vary(TRUE).play()
+					playsound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 					if(queued_pipe_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
 						pod.add_fingerprint(usr)
@@ -635,7 +635,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(multi_layer)
 				continue
 			return FALSE
-		playsound(get_turf(src), RPD_USE_SOUND).volume(50).vary(TRUE).play()
+		playsound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 		if(recipe.type == /datum/pipe_info/meter)
 			var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(atom_to_target))
 			new_meter.setAttachLayer(layer_to_build)

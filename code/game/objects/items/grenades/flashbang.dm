@@ -132,7 +132,7 @@
 /obj/item/grenade/primer/attack_self(mob/user)
 	. = ..()
 	if(active)
-		user.playsound_local(user, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		playsound(user, 'sound/misc/box_deploy.ogg').vary(TRUE).direct_listeners(user).play()
 		rots++
 		user.changeNext_move(CLICK_CD_RAPID)
 

@@ -172,7 +172,7 @@
 /obj/item/organ/internal/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
 		owner.visible_message(span_warning("[owner]'s [limb.plaintext_zone] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.plaintext_zone] suddenly detaches from your body!"))
-		playsound(owner, get_sfx(SFX_DESECRATION)).volume(50).vary(TRUE).extra_range(-1).play()
+		playsound(owner, get_sfx(SFX_DESECRATION)).vary(TRUE).extra_range(-1).play()
 		limb.drop_limb()
 	else
 		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))

@@ -125,7 +125,7 @@
 		machine.balloon_alert(user, "interrupted!")
 		return FALSE
 
-	playsound(src, 'sound/machines/synth/synth_yes.ogg').volume(75).use_reverb(TRUE).play()
+	playsound(src, 'sound/machines/synth/synth_yes.ogg').volume(75).play()
 	machine.balloon_alert(user, "success!")
 	UnregisterSignal(src, repair_signals)
 	LAZYNULL(repair_signals)

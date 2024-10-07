@@ -413,7 +413,7 @@
 				sound_to_play = H.dna.species.grab_sound
 			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
-		playsound(src.loc, sound_to_play).volume(50).vary(TRUE).extra_range(-1).play()
+		playsound(src.loc, sound_to_play).vary(TRUE).extra_range(-1).play()
 	update_pull_hud_icon()
 
 	if(ismob(AM))

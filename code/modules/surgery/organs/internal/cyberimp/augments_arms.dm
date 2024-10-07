@@ -156,7 +156,7 @@
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 	active_item = null
-	playsound(get_turf(owner), retract_sound).volume(50).vary(TRUE).play()
+	playsound(get_turf(owner), retract_sound).vary(TRUE).play()
 	return TRUE
 
 /obj/item/organ/internal/cyberimp/arm/proc/Extend(obj/item/augment)
@@ -193,7 +193,7 @@
 	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_notice("You extend [active_item] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
 		span_hear("You hear a short mechanical noise."))
-	playsound(get_turf(owner), extend_sound).volume(50).vary(TRUE).play()
+	playsound(get_turf(owner), extend_sound).vary(TRUE).play()
 
 	if(length(items_list) > 1)
 		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders

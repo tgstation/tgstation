@@ -337,7 +337,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, hitsound).volume(50).vary(TRUE).play()
+	playsound(src, hitsound).vary(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/chair/narsie_act()
@@ -472,7 +472,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/bronze/process()
 	setDir(turn(dir,-90))
-	playsound(src, 'sound/effects/servostep.ogg').vary(FALSE).play()
+	playsound(src, 'sound/effects/servostep.ogg').play()
 	turns++
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)

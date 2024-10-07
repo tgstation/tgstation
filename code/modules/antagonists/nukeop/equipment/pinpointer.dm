@@ -27,7 +27,7 @@
 		if(!bomb.timing)
 			continue
 		alert = TRUE
-		playsound(src, 'sound/items/nuke_toy_lowpower.ogg').vary(FALSE).play()
+		playsound(src, 'sound/items/nuke_toy_lowpower.ogg').play()
 		if(isliving(loc))
 			var/mob/living/alerted_holder = loc
 			to_chat(alerted_holder, span_userdanger("Your [name] vibrates and lets out an ominous alarm. Uh oh."))

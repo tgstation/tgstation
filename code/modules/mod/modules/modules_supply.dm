@@ -189,7 +189,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, PROC_REF(move_ore), ore)
-		playsound(get_sfx(src), SFX_RUSTLE).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), SFX_RUSTLE).vary(TRUE).play()
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)

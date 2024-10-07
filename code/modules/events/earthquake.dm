@@ -109,16 +109,12 @@
 				if(!is_station_level(earthquake_witness.z))
 					continue
 				shake_camera(earthquake_witness, 1 SECONDS, 1 + (activeFor % 10))
-				earthquake_witness.playsound_local(
-					earthquake_witness,
-					pick(
-						'sound/ambience/earth_rumble/earth_rumble_distant1.ogg',
-						'sound/ambience/earth_rumble/earth_rumble_distant2.ogg',
-						'sound/ambience/earth_rumble/earth_rumble_distant3.ogg',
-						'sound/ambience/earth_rumble/earth_rumble_distant4.ogg',
-					),
-					75,
-				)
+				playsound(earthquake_witness, pick(
+					'sound/ambience/earth_rumble/earth_rumble_distant1.ogg',
+					'sound/ambience/earth_rumble/earth_rumble_distant2.ogg',
+					'sound/ambience/earth_rumble/earth_rumble_distant3.ogg',
+					'sound/ambience/earth_rumble/earth_rumble_distant4.ogg',
+				)).volume(75).direct_listeners(earthquake_witness).play()
 
 			for(var/turf/turf_to_quake in underbelly)
 				turf_to_quake.Shake(pixelshiftx = 0.1, pixelshifty = 0.1, duration = 1 SECONDS)
@@ -155,7 +151,7 @@
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
-		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosion/explosionfar.ogg', 75)
+		playsound(earthquake_witness, 'sound/effects/explosion/explosionfar.ogg').volume(75).direct_listeners(earthquake_witness).play()
 
 	// Step two of the destruction, which detonates the turfs in the earthquake zone. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
 	// All turfs, and everything else that IS in the earthquake zone, however, will behave as if it were bombed.

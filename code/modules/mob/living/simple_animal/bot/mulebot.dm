@@ -212,7 +212,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(FALSE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).volume(100).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
@@ -360,16 +360,16 @@
 	switch(type)
 		if(SIGH)
 			audible_message(span_hear("[src] makes a sighing buzz."))
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 		if(ANNOYED)
 			audible_message(span_hear("[src] makes an annoyed buzzing sound."))
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg').vary(FALSE).play()
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg').play()
 		if(DELIGHT)
 			audible_message(span_hear("[src] makes a delighted ping!"))
-			playsound(src, 'sound/machines/ping.ogg').vary(FALSE).play()
+			playsound(src, 'sound/machines/ping.ogg').play()
 		if(CHIME)
 			audible_message(span_hear("[src] makes a chiming sound!"))
-			playsound(src, 'sound/machines/chime.ogg').vary(FALSE).play()
+			playsound(src, 'sound/machines/chime.ogg').play()
 	flick("[base_icon]1", src)
 
 
@@ -630,7 +630,7 @@
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!"))
-				calling_ai.playsound_local(calling_ai, 'sound/machines/chime.ogg', 40, FALSE)
+				playsound(calling_ai, 'sound/machines/chime.ogg').volume(40).direct_listeners(calling_ai).play()
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 

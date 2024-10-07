@@ -191,7 +191,7 @@
 					spam_protection = TRUE
 					continue
 	if(show_message)
-		playsound(get_sfx(user), SFX_RUSTLE).volume(50).vary(TRUE).play()
+		playsound(get_sfx(user), SFX_RUSTLE).vary(TRUE).play()
 		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
 			return
 

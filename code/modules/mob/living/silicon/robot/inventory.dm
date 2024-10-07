@@ -180,7 +180,7 @@
 			inv3.icon_state = "[initial(inv3.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg').volume(50).vary(TRUE).extra_range(TRUE).play()
+			playsound(src, 'sound/machines/warning-buzzer.ogg').vary(TRUE).extra_range(TRUE).play()
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
 			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 

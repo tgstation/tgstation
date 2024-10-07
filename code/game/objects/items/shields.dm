@@ -74,7 +74,7 @@
 	if(!COOLDOWN_FINISHED(src, baton_bash))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
-	playsound(get_sfx(src), shield_bash_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), shield_bash_sound).vary(TRUE).play()
 	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
 	return ITEM_INTERACT_SUCCESS
 
@@ -99,7 +99,7 @@
 	take_damage(damage, damage_type, armor_flag, armour_penetration = penetration)
 
 /obj/item/shield/atom_destruction(damage_flag)
-	playsound(src, shield_break_sound).volume(50).play()
+	playsound(src, shield_break_sound).play()
 	new shield_break_leftover(get_turf(src))
 	if(isliving(loc))
 		loc.balloon_alert(loc, "shield broken!")

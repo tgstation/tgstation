@@ -306,7 +306,7 @@
 /obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
 	if(death_sound && death_sound_volume)
-		playsound(wearer, death_sound).volume(death_sound_volume).vary(FALSE).play()
+		playsound(wearer, death_sound).volume(death_sound_volume).play()
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
@@ -933,7 +933,7 @@
 	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
-	playsound(src, get_sfx(SFX_RUSTLE)).volume(50).vary(TRUE).extra_range(-5).play()
+	playsound(src, get_sfx(SFX_RUSTLE)).vary(TRUE).extra_range(-5).play()
 
 /obj/item/mod/module/recycler/on_select_use(atom/target)
 	. = ..()

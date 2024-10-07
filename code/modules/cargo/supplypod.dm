@@ -374,7 +374,7 @@
 		if (holder_as_mob.key && !forced && !broken) //If we are player controlled, then we shouldn't open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
 			return
 	if (openingSound)
-		playsound(get_turf(holder), openingSound).volume(soundVolume).vary(FALSE).extra_range(FALSE).play() //Special admin sound to play
+		playsound(get_turf(holder), openingSound).volume(soundVolume).extra_range(FALSE).play() //Special admin sound to play
 	for (var/turf_type in turfs_in_cargo)
 		turf_underneath.place_on_top(turf_type)
 	for (var/cargo in holder.contents)
@@ -394,7 +394,7 @@
 
 /obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (leavingSound)
-		playsound(get_turf(holder), leavingSound).volume(soundVolume).vary(FALSE).extra_range(FALSE).play()
+		playsound(get_turf(holder), leavingSound).volume(soundVolume).extra_range(FALSE).play()
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)

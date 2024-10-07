@@ -112,7 +112,7 @@
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
 			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)
-			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			playsound(owner, slowbeat).channel(CHANNEL_HEARTBEAT).volume(40).direct_listeners(owner).play()
 			close_stalker = TRUE
 	else
 		if(close_stalker)

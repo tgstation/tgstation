@@ -124,9 +124,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	. = ..()
 	playsound(loc, 'sound/effects/tendril_destroyed.ogg')\
 		.volume(200)\
-		.vary(FALSE)\
 		.extra_range(50)\
-		.atmospherics_affected(TRUE)\
 		.ignore_walls(TRUE)\
 		.play()
 	visible_message(span_boldannounce("[src] begins to collapse, cutting it off from this world!"))

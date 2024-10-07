@@ -49,7 +49,7 @@
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	playsound(src, 'sound/machines/crate/crate_open.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/crate/crate_open.ogg').play()
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
@@ -79,7 +79,7 @@
 	visible_message(span_notice("[user] scans [target_mob] with [src]."))
 	stored_mob_type = target_mob.type
 	update_transform_action()
-	playsound(src, 'sound/machines/ping.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/ping.ogg').play()
 	return TRUE
 
 /// Make sure we can transform into the scanned target

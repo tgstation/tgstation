@@ -290,7 +290,7 @@
 	limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage * 1.5, sharpness = SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
 	victim.cause_wound_of_type_and_severity(WOUND_PIERCE, limb, WOUND_SEVERITY_MODERATE)
 	victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
-	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg').vary(TRUE).play()
 
 	var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
 	if(dist < 7)

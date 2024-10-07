@@ -34,9 +34,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth/synth_yes.ogg').volume(50).vary(TRUE).frequency(sound_freq).play()
+			playsound(src, 'sound/machines/synth/synth_yes.ogg').vary(TRUE).frequency(sound_freq).play()
 		else
-			playsound(src, 'sound/machines/synth/synth_no.ogg').volume(50).vary(TRUE).frequency(sound_freq).play()
+			playsound(src, 'sound/machines/synth/synth_no.ogg').vary(TRUE).frequency(sound_freq).play()
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)

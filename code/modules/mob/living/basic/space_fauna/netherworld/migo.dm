@@ -49,7 +49,7 @@
 	dodge_prob = LERP(50, 10, health_ratio)
 
 /mob/living/basic/migo/proc/make_migo_sound()
-	playsound(src, pick(migo_sounds)).volume(50).vary(TRUE).play()
+	playsound(src, pick(migo_sounds)).vary(TRUE).play()
 
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()

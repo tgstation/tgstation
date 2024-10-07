@@ -192,7 +192,7 @@
 /turf/open/indestructible/honk/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(ismob(arrived))
-		playsound(get_sfx(src), sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), sound).vary(TRUE).play()
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"

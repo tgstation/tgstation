@@ -108,7 +108,7 @@
 		CRASH("[type] attempted to create a rune of incorrect type! (got: [to_make])")
 
 	target_turf.balloon_alert(user, "carving [picked_choice]...")
-	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, TRUE)
+	playsound(target_turf, 'sound/items/sheath.ogg').vary(TRUE).direct_listeners(user).play()
 	if(!do_after(user, 5 SECONDS, target = target_turf))
 		target_turf.balloon_alert(user, "interrupted!")
 		return
@@ -152,7 +152,7 @@
 	if(!.)
 		return
 
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/effects/magic/blind.ogg').vary(TRUE).direct_listeners(owner).play()
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
@@ -203,7 +203,7 @@
 	var/mob/living/real_owner = owner?.resolve()
 	if(real_owner)
 		to_chat(real_owner, span_userdanger("[victim.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
-		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/magic/curse.ogg', 50, TRUE)
+		playsound(get_turf(real_owner), 'sound/effects/magic/curse.ogg').vary(TRUE).direct_listeners(real_owner).play()
 
 /obj/structure/trap/eldritch/tentacle
 	name = "grasping carving"

@@ -47,7 +47,7 @@
 		trigger()
 
 /obj/item/reverse_bear_trap/proc/trigger()
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 	soundloop.stop()
 	soundloop2.stop()
 	to_chat(loc, span_userdanger("*ding*"))
@@ -127,7 +127,7 @@
 		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_userdanger("[src] goes off!"))
 		jill.emote("scream")
 		playsound(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).frequency(0.5).play()
-		playsound(src, 'sound/effects/splat.ogg').volume(50).vary(TRUE).frequency(0.5).play()
+		playsound(src, 'sound/effects/splat.ogg').vary(TRUE).frequency(0.5).play()
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
 		jill.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		jill.death() //just in case, for some reason, they're still alive

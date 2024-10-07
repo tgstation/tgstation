@@ -180,13 +180,13 @@
 	to_chat(user, span_notice("You [lit ? "extinguish" : "ignite"] [src]!"))
 	lit = !lit
 	if(lit)
-		playsound(get_sfx(loc), acti_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(loc), acti_sound).vary(TRUE).play()
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
 			warned_admins = TRUE
 	else
-		playsound(get_sfx(loc), deac_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(loc), deac_sound).vary(TRUE).play()
 		STOP_PROCESSING(SSobj,src)
 	set_light_on(lit)
 	update_appearance()

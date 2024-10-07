@@ -78,7 +78,7 @@
 		return
 
 	if(recharge_sound)
-		playsound(get_sfx(dashing_item), recharge_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(dashing_item), recharge_sound).vary(TRUE).play()
 
 	if(!owner)
 		return

@@ -171,7 +171,7 @@
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
 	var/turf/landed_on = get_turf(chassis)
 	chassis.visible_message(span_danger("[chassis] lands from above!"))
-	playsound(chassis, 'sound/effects/explosion/explosion1.ogg').vary(1).play()
+	playsound(chassis, 'sound/effects/explosion/explosion1.ogg').vary(TRUE).play()
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
 	chassis.phasing = initial(chassis.phasing)

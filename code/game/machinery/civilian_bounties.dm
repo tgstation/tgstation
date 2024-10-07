@@ -242,13 +242,13 @@
 
 	if(target)
 		if(holder_item && inserting_item.InsertID(target))
-			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
+			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 		else
 			id_eject(user, target)
 
 	user.visible_message(span_notice("[user] inserts \the [card_to_insert] into \the [src]."),
 						span_notice("You insert \the [card_to_insert] into \the [src]."))
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 	ui_interact(user)
 	return TRUE
 
@@ -263,7 +263,7 @@
 			user.put_in_hands(target)
 		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
 							span_notice("You get \the [target] from \the [src]."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 		inserted_scan_id = null
 		return TRUE
 

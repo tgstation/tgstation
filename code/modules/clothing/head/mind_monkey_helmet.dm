@@ -95,7 +95,7 @@
 		return
 
 	magnification.key = chosen_one.key
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
 	var/policy = get_policy(ROLE_MONKEY_HELMET)
 	if(policy)

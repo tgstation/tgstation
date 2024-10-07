@@ -356,7 +356,7 @@
 
 ///Drops the bolt from a locked position
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
-	playsound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).vary(FALSE).play()
+	playsound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).play()
 	if (user)
 		balloon_alert(user, "[bolt_wording] dropped")
 	chamber_round()

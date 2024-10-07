@@ -156,7 +156,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("Something knocks on [src]."))
 	add_fingerprint(user)
-	playsound(get_sfx(src), knock_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), knock_sound).vary(TRUE).play()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -176,7 +176,7 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(get_sfx(src), knock_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), knock_sound).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))

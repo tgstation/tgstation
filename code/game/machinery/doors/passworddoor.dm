@@ -96,9 +96,9 @@
 /obj/machinery/door/password/animation_effects(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			playsound(get_sfx(src), door_open).volume(50).vary(TRUE).play()
+			playsound(get_sfx(src), door_open).vary(TRUE).play()
 		if(DOOR_CLOSING_ANIMATION)
-			playsound(get_sfx(src), door_close).volume(50).vary(TRUE).play()
+			playsound(get_sfx(src), door_close).vary(TRUE).play()
 		if(DOOR_DENY_ANIMATION)
 			playsound(get_sfx(src), door_deny).volume(30).vary(TRUE).play()
 

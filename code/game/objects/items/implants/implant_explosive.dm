@@ -137,7 +137,7 @@
 				notify_volume = 75,
 			)
 
-	playsound(loc, 'sound/items/timer.ogg').volume(30).vary(FALSE).play()
+	playsound(loc, 'sound/items/timer.ogg').volume(30).play()
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
 	if(imp_in && !imp_in.stat && !no_paralyze)

@@ -61,7 +61,7 @@
 		return FALSE
 	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
 		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
-		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').volume(50).vary(TRUE).play()
+		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').vary(TRUE).play()
 		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return FALSE
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
@@ -71,7 +71,7 @@
 	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
-	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').vary(TRUE).play()
 	return TRUE
 
 ///Mostly useless funny rite for forgiving someone, making them innocent once again.
@@ -105,7 +105,7 @@
 		return FALSE
 	honor.guilty -= who
 	who = null
-	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg').vary(TRUE).play()
 	return TRUE
 
 /datum/religion_rites/summon_rules

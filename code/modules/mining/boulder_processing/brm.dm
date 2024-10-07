@@ -152,7 +152,7 @@
 	if(batch_processing)
 		balloon_alert(user, "batch still processing!")
 		return FALSE
-	playsound(src, MANUAL_TELEPORT_SOUND).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, MANUAL_TELEPORT_SOUND).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/brm/attack_ai(mob/user)
@@ -291,7 +291,7 @@
 
 	//pick & spawn the boulder
 	flick("brm-flash", src)
-	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	SSore_generation.available_boulders -= random_boulder
 	random_boulder.forceMove(drop_location())

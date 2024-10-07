@@ -287,7 +287,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -321,7 +321,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').vary(FALSE).play()
+		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -551,7 +551,7 @@
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(get_sfx(src), sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), sound).vary(TRUE).play()
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring

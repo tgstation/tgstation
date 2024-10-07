@@ -544,8 +544,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		playsound(get_sfx(src), SFX_PORTAL_ENTER).volume(50).vary(TRUE).play()
-		playsound(get_sfx(target), SFX_PORTAL_ENTER).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), SFX_PORTAL_ENTER).vary(TRUE).play()
+		playsound(get_sfx(target), SFX_PORTAL_ENTER).vary(TRUE).play()
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE

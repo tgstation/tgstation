@@ -240,7 +240,7 @@
 	on_victim_start_consume(victim, jaunter)
 
 	for(var/i in 1 to 3)
-		playsound(get_turf(jaunter), consume_sound).volume(50).vary(TRUE).play()
+		playsound(get_turf(jaunter), consume_sound).vary(TRUE).play()
 		if(!do_after(jaunter, 3 SECONDS, victim))
 			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE

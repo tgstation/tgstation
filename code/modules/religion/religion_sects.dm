@@ -458,7 +458,7 @@
 		return
 	to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
 	adjust_favor(favor_earned, user)
-	playsound(get_turf(offering), 'sound/items/drink.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(offering), 'sound/items/drink.ogg').vary(TRUE).play()
 	offering.reagents.clear_reagents()
 	return TRUE
 

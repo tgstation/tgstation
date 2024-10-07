@@ -115,7 +115,7 @@
 		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
 		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
 		balloon_alert_to_viewers("scanning...")
-		playsound(src, 'sound/effects/genetics.ogg').volume(40).vary(FALSE).play()
+		playsound(src, 'sound/effects/genetics.ogg').volume(40).play()
 		COOLDOWN_START(src, scanning_person, 4 SECONDS)
 		if(!do_after(user, 4 SECONDS, interacting_with))
 			return ITEM_INTERACT_BLOCKING
@@ -373,7 +373,7 @@
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/effects/angryboat.ogg').volume(150).vary(FALSE).play()
+	playsound(src, 'sound/effects/angryboat.ogg').volume(150).play()
 
 /obj/item/inspector/clown/bananium/create_slip()
 	if(time_mode == INSPECTOR_TIME_MODE_HONK)

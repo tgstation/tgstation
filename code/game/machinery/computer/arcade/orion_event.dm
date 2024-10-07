@@ -523,7 +523,7 @@
 			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]fuel, [food] food, -Crew)"
 			if(game.obj_flags & EMAGGED)
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
-				playsound(game, 'sound/items/weeoo1.ogg').volume(100).vary(FALSE).play()
+				playsound(game, 'sound/items/weeoo1.ogg').volume(100).play()
 				for(var/i in 1 to 3)
 					var/mob/living/basic/trooper/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
 					spaceport_security.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, usr)

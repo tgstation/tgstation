@@ -50,7 +50,7 @@
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
 	playsound(mod.wearer, 'sound/effects/snap.ogg').volume(75).vary(TRUE).frequency(0.5).play()
-	playsound(mod.wearer, 'sound/effects/splat.ogg').volume(50).vary(TRUE).frequency(0.5).play()
+	playsound(mod.wearer, 'sound/effects/splat.ogg').vary(TRUE).frequency(0.5).play()
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
@@ -207,7 +207,7 @@
 	crisp_paper.desc = "It's crisp and warm to the touch. Must be fresh."
 
 	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
-	playsound(get_turf(src), 'sound/machines/click.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(src), 'sound/machines/click.ogg').vary(TRUE).play()
 	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
 
 	mod.wearer.put_in_hands(crisp_paper)

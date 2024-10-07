@@ -107,7 +107,7 @@
 		if(fancy)
 
 		else
-			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg').volume(100).vary(1).play()
+			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg').volume(100).vary(TRUE).play()
 		if(isliving(loc))
 			var/mob/living/male_model = loc
 			if(male_model.fire_stacks && !(male_model.on_fire))

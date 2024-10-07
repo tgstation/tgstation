@@ -963,7 +963,7 @@
 		cooldown = world.time + 600
 		user.audible_message(span_hear("You hear the click of a button."), self_message = span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
-		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).vary(FALSE).play()
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).play()
 		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
@@ -973,7 +973,7 @@
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
 		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).vary(FALSE).play()
+		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).play()
 		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1032,7 +1032,7 @@
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message(span_warning("[user] presses the big red button."), span_notice("You press the button, it plays a loud noise!"), span_hear("The button clicks loudly."))
-		playsound(src, 'sound/effects/explosion/explosionfar.ogg').vary(FALSE).play()
+		playsound(src, 'sound/effects/explosion/explosionfar.ogg').play()
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
@@ -1104,7 +1104,7 @@
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message(span_warning("[user] rotates a cogwheel on [src]."), span_notice("You rotate a cogwheel on [src], it plays a loud noise!"), span_hear("You hear cogwheels turning."))
-		playsound(src, 'sound/effects/magic/clockwork/ark_activation.ogg').vary(FALSE).play()
+		playsound(src, 'sound/effects/magic/clockwork/ark_activation.ogg').play()
 	else
 		to_chat(user, span_alert("The cogwheels are already turning!"))
 
@@ -1145,7 +1145,7 @@
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
 		var/list/possible_sounds = list('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
-		playsound(get_turf(src), chosen_sound).volume(50).vary(TRUE).play()
+		playsound(get_turf(src), chosen_sound).vary(TRUE).play()
 		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
 	else
 		to_chat(user, span_warning("The string on [src] hasn't rewound all the way!"))
@@ -1637,7 +1637,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/boot()
 	say("Game starting!")
-	playsound(src, 'sound/machines/synth/synth_yes.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/synth/synth_yes.ogg').play()
 
 	state = STATE_STARTING
 	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
@@ -1716,7 +1716,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
-	playsound(src, 'sound/machines/synth/synth_no.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/synth/synth_no.ogg').play()
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)

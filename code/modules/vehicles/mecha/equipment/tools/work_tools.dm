@@ -63,7 +63,7 @@
 
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
-		playsound(chassis, clampsound).vary(FALSE).extra_range(-6).play()
+		playsound(chassis, clampsound).extra_range(-6).play()
 		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
@@ -75,7 +75,7 @@
 		if(workmech.cargo_hold.contents.len >= workmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
-		playsound(chassis, clampsound).vary(FALSE).extra_range(-6).play()
+		playsound(chassis, clampsound).extra_range(-6).play()
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
@@ -370,7 +370,7 @@
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(newmech), 'sound/items/tools/ratchet.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(newmech), 'sound/items/tools/ratchet.ogg').vary(TRUE).play()
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
 	name = "Paddy Conversion Kit"

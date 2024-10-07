@@ -1138,7 +1138,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(secure && !broken)
 		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
 		balloon_alert(user, "lock broken open")
-		playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(src, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		broken = TRUE
 		locked = FALSE
 		update_appearance()

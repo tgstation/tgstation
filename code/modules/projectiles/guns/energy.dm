@@ -318,20 +318,20 @@
 			. = ""
 		else if(loaded_projectile.damage <= 0 || loaded_projectile.damage_type == STAMINA)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but it doesn't do anything. Dumbass."))
-			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
-			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).vary(TRUE).play()
 			cell.use(E.e_cost)
 			. = ""
 		else if(loaded_projectile.damage_type != BURN)
 			user.visible_message(span_danger("[user] tries to light [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src], but only succeeds in utterly destroying it. Dumbass."))
-			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
-			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).vary(TRUE).play()
 			cell.use(E.e_cost)
 			qdel(A)
 			. = ""
 		else
-			playsound(user, E.fire_sound).volume(50).vary(TRUE).play()
-			playsound(user, loaded_projectile.hitsound).volume(50).vary(TRUE).play()
+			playsound(user, E.fire_sound).vary(TRUE).play()
+			playsound(user, loaded_projectile.hitsound).vary(TRUE).play()
 			cell.use(E.e_cost)
 			. = span_danger("[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.")
 

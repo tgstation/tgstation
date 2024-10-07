@@ -548,7 +548,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, SFX_DESECRATION).volume(50).vary(TRUE).extra_range(-1).play()
+			playsound(src, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/scythe/pre_attack(atom/target, mob/living/user, params)

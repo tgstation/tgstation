@@ -355,7 +355,7 @@
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
-		playsound(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), on_sound).vary(TRUE).play()
 		add_fingerprint(user)
 	else
 		attack_self(user)
@@ -387,7 +387,7 @@
 	else
 		drop_sound = unfolded_drop_sound
 		pickup_sound = unfolded_pickup_sound
-	playsound(get_sfx(src), on_sound).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), on_sound).vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton

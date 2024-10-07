@@ -539,7 +539,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
-	affected_mob.playsound_local(affected_mob, 'sound/effects/health/fastbeat.ogg', 65)
+	playsound(affected_mob, 'sound/effects/health/fastbeat.ogg').volume(65).direct_listeners(affected_mob).play()
 
 /datum/reagent/inverse/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

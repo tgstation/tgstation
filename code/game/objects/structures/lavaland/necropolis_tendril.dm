@@ -92,9 +92,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
 	playsound(loc, 'sound/effects/tendril_destroyed.ogg')\
 		.volume(200)\
-		.vary(FALSE)\
 		.extra_range(50)\
-		.atmospherics_affected(TRUE)\
 		.ignore_walls(TRUE)\
 		.play()
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)

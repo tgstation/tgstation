@@ -152,7 +152,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "machine rigged")
 	return TRUE
 
@@ -275,7 +275,7 @@
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
 	for(var/list/reel in reels)
 		if(!value)
-			playsound(src, 'sound/machines/ding_short.ogg').volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+			playsound(src, 'sound/machines/ding_short.ogg').vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		reels[reel] = value
 		if(delay)
 			sleep(delay)
@@ -317,7 +317,7 @@
 				cointype = pick(subtypesof(/obj/item/coin))
 				var/obj/item/coin/payout_coin = new cointype(loc)
 				random_step(payout_coin, 2, 50)
-				playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).volume(50).vary(TRUE).play()
+				playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).vary(TRUE).play()
 				sleep(REEL_DEACTIVATE_DELAY)
 
 	else if(linelength == 5)
@@ -412,7 +412,7 @@
 			else
 				random_step(thrown_coin, 2, 40)
 
-	playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).volume(50).vary(TRUE).play()
+	playsound(src, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).vary(TRUE).play()
 	return amount
 
 #undef BIG_PRIZE

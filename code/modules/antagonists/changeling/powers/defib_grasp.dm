@@ -41,9 +41,9 @@
 	playsound(changeling, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 
 	// Mimics some real defib stuff (wish this was more generalized)
-	playsound(get_sfx(defib), SFX_BODYFALL).volume(50).vary(TRUE).play()
+	playsound(get_sfx(defib), SFX_BODYFALL).vary(TRUE).play()
 	playsound(defib, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).extra_range(-1).play()
-	playsound(defib, 'sound/machines/defib/defib_success.ogg').vary(FALSE).play() // I guess
+	playsound(defib, 'sound/machines/defib/defib_success.ogg').play() // I guess
 	defib.shock_pulling(30, changeling)
 
 /// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.

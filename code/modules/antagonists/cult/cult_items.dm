@@ -873,9 +873,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(mobloc, get_sfx(SFX_PORTAL_ENTER)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	playsound(destination, 'sound/effects/phasein.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
-	playsound(destination, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(destination, get_sfx(SFX_PORTAL_ENTER)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
@@ -1069,7 +1069,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/projectile/magic/arcane_barrage/blood/Bump(atom/target)
 	. = ..()
 	var/turf/our_turf = get_turf(target)
-	playsound(our_turf, 'sound/effects/splat.ogg').volume(50).vary(TRUE).play()
+	playsound(our_turf, 'sound/effects/splat.ogg').vary(TRUE).play()
 	new /obj/effect/temp_visual/cult/sparks(our_turf)
 
 /obj/projectile/magic/arcane_barrage/blood/prehit_pierce(atom/target)

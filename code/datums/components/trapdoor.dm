@@ -246,7 +246,7 @@
 		assembly_turf.visible_message(span_notice("[src] has linked up to a nearby trapdoor! \
 		You may now use it to check where the trapdoor is... be careful!"), vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
-		playsound(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
+		playsound(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg').play()
 		assembly_turf.visible_message(span_warning("[src] has failed to find a trapdoor nearby to link to."), vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
@@ -321,7 +321,7 @@
 		return TRUE
 
 	user.balloon_alert(user, "trapdoor triggered")
-	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').play()
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)

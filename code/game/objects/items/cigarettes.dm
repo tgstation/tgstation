@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
-	playsound(src.loc, 'sound/items/lighter/cig_light.ogg').volume(100).vary(1).play()
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg').volume(100).vary(TRUE).play()
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -396,7 +396,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
-	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg').volume(100).vary(1).play()
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg').volume(100).vary(TRUE).play()
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
@@ -1018,7 +1018,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		puff.set_up(4, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
-			playsound(get_turf(src), 'sound/effects/pop_expl.ogg').volume(50).vary(FALSE).play()
+			playsound(get_turf(src), 'sound/effects/pop_expl.ogg').play()
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
 			M.Paralyze(300)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread

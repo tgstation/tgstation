@@ -132,7 +132,7 @@
 		return
 
 	obj_flags |= EMAGGED
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 	say("ERROR: Unauthorized firmware access.")
 	return TRUE
 

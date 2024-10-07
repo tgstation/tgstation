@@ -131,7 +131,7 @@
 				return ITEM_INTERACT_BLOCKING
 			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
 			playsound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
-			playsound(loc, 'sound/effects/light_flicker.ogg').vary(FALSE).play()
+			playsound(loc, 'sound/effects/light_flicker.ogg').play()
 			if(!do_after(user, BUILD_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING

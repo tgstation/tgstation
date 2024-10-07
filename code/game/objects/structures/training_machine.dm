@@ -118,7 +118,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(get_sfx(src), SFX_RUSTLE).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), SFX_RUSTLE).vary(TRUE).play()
 
 /**
  * Attach an item to the machine
@@ -186,7 +186,7 @@
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(get_sfx(src), SFX_RUSTLE).volume(50).vary(TRUE).play()
+	playsound(get_sfx(src), SFX_RUSTLE).vary(TRUE).play()
 	return CLICK_ACTION_SUCCESS
 
 /**
@@ -209,7 +209,7 @@
 	moving = FALSE
 	starting_turf = null
 	say(message)
-	playsound(src, 'sound/machines/synth/synth_no.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/synth/synth_no.ogg').play()
 	STOP_PROCESSING(SSfastprocess, src)
 
 /**
@@ -221,7 +221,7 @@
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
-	playsound(src, 'sound/machines/beep/triple_beep.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/beep/triple_beep.ogg').play()
 	START_PROCESSING(SSfastprocess, src)
 
 /**
@@ -390,9 +390,9 @@
 			return FALSE
 	total_hits++
 	lap_hits++
-	playsound(src, 'sound/items/weapons/smash.ogg').vary(FALSE).play()
+	playsound(src, 'sound/items/weapons/smash.ogg').play()
 	if (lap_hits % HITS_TO_KILL == 0)
-		playsound(src, 'sound/machines/beep/twobeep.ogg').volume(25).vary(FALSE).play()
+		playsound(src, 'sound/machines/beep/twobeep.ogg').volume(25).play()
 	return TRUE
 
 /obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

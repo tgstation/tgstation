@@ -82,7 +82,7 @@
 		if(loaded_gun)
 
 			if (times_fired < shots_in_gun)
-				playsound(src, fire_sound).vary(FALSE).extra_range(5).play()
+				playsound(src, fire_sound).extra_range(5).play()
 			else
 				playsound(src, last_fire_sound).vary(TRUE).extra_range(5).play()
 			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))

@@ -167,7 +167,7 @@
 		var/turf/T = get_turf(holder.my_atom)
 		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
-		playsound(T, 'sound/effects/pray.ogg').volume(80).vary(FALSE).extra_range(effective_size).play()
+		playsound(T, 'sound/effects/pray.ogg').volume(80).extra_range(effective_size).play()
 		for(var/mob/living/basic/revenant/ghostie in get_hearers_in_view(7,T))
 			var/deity
 			if(GLOB.deity)
@@ -498,7 +498,7 @@
 	if(!cryostylane)
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg').vary(1).play()
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).play()
 	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
@@ -508,7 +508,7 @@
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg').vary(1).play()
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).play()
 	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
 	new /obj/structure/statue/snow/snowman(local_turf)

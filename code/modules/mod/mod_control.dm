@@ -222,7 +222,7 @@
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(user, "retract parts first!")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(FALSE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			return FALSE
 
 /obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
@@ -231,7 +231,7 @@
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(wearer, "retract parts first!")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(FALSE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			return
 	if(!wearer.incapacitated)
 		var/atom/movable/screen/inventory/hand/ui_hand = over_object
@@ -351,7 +351,7 @@
 		var/obj/item/mod/core/attacking_core = tool
 		attacking_core.install(src)
 		balloon_alert(user, "core installed")
-		playsound(src, 'sound/machines/click.ogg').volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/machines/click.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return ITEM_INTERACT_SUCCESS
 	if(open)
 		if(is_wire_tool(tool))
@@ -579,7 +579,7 @@
 		new_module.on_suit_activation()
 	if(user)
 		balloon_alert(user, "[new_module] added")
-		playsound(src, 'sound/machines/click.ogg').volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		playsound(src, 'sound/machines/click.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 
 /obj/item/mod/control/proc/uninstall(obj/item/mod/module/old_module, deleting = FALSE)
 	modules -= old_module

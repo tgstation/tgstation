@@ -534,8 +534,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
-		playsound(origin, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
-		playsound(dest, get_sfx(SFX_PORTAL_ENTER)).volume(50).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		playsound(origin, get_sfx(SFX_PORTAL_ENTER)).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		playsound(dest, get_sfx(SFX_PORTAL_ENTER)).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	return ..()
 
 //Shackles
@@ -866,7 +866,7 @@
 	human_bloodbag.blood_volume -= BLOOD_DRAIN_GAIN * USES_TO_BLOOD
 	uses += BLOOD_DRAIN_GAIN
 	user.Beam(human_bloodbag, icon_state="drainbeam", time = 1 SECONDS)
-	playsound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg').volume(50).play()
+	playsound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg').play()
 	human_bloodbag.visible_message(span_danger("[user] drains some of [human_bloodbag]'s blood!"))
 	to_chat(user,span_cult_italic("Your blood rite gains 50 charges from draining [human_bloodbag]'s blood."))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))

@@ -37,7 +37,7 @@
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/magic/demon_attack1.ogg', 80)
+	playsound(owner.current, 'sound/effects/magic/demon_attack1.ogg').volume(80).direct_listeners(owner.current).play()
 
 /datum/antagonist/space_dragon/forge_objectives()
 	var/static/list/area/allowed_areas

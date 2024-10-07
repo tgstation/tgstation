@@ -246,7 +246,7 @@
 	if(locked)
 		return
 	set_bolt(TRUE)
-	playsound(src, boltDown).volume(30).vary(FALSE).extra_range(3).play()
+	playsound(src, boltDown).volume(30).extra_range(3).play()
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()
 
@@ -264,7 +264,7 @@
 	if(!locked)
 		return
 	set_bolt(FALSE)
-	playsound(src, boltUp).volume(30).vary(FALSE).extra_range(3).play()
+	playsound(src, boltUp).volume(30).extra_range(3).play()
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()
 
@@ -602,7 +602,7 @@
 		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
-				playsound(src, doorDeni).volume(50).vary(FALSE).extra_range(3).play()
+				playsound(src, doorDeni).extra_range(3).play()
 				addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()

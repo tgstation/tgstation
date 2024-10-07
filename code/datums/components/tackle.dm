@@ -562,7 +562,7 @@
 			user.adjustBruteLoss(30)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
+			playsound(user, 'sound/items/weapons/flashbang.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 			shake_camera(user, 6, 6)
 			user.flash_act(1, TRUE, TRUE, length = 3.5)
 
@@ -573,7 +573,7 @@
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
+			playsound(user, 'sound/items/weapons/flashbang.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 			user.Knockdown(4 SECONDS)
 			shake_camera(user, 5, 5)
 			user.flash_act(1, TRUE, TRUE, length = 2.5)

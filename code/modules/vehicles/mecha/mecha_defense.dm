@@ -268,7 +268,7 @@
 			cell = weapon
 			balloon_alert(user, "installed power cell")
 			diag_hud_set_mechcell()
-			playsound(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
+			playsound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("Power cell installed", LOG_MECHA)
 		else
 			balloon_alert(user, "already installed!")
@@ -280,7 +280,7 @@
 				return
 			scanmod = weapon
 			balloon_alert(user, "installed scanning module")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
+			playsound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -293,7 +293,7 @@
 				return
 			capacitor = weapon
 			balloon_alert(user, "installed capacitor")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
+			playsound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -306,7 +306,7 @@
 				return
 			servo = weapon
 			balloon_alert(user, "installed servo")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg').vary(FALSE).play()
+			playsound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else

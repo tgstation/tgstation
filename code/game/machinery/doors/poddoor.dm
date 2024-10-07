@@ -244,9 +244,9 @@
 /obj/machinery/door/poddoor/animation_effects(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			playsound(get_sfx(src), animation_sound).volume(50).vary(TRUE).play()
+			playsound(get_sfx(src), animation_sound).vary(TRUE).play()
 		if(DOOR_CLOSING_ANIMATION)
-			playsound(get_sfx(src), animation_sound).volume(50).vary(TRUE).play()
+			playsound(get_sfx(src), animation_sound).vary(TRUE).play()
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))

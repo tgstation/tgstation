@@ -187,7 +187,7 @@
 	src.ethereal_heart = ethereal_heart
 	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
 	to_chat(ethereal_heart.owner, span_notice("You are encased in a huge crystal!"))
-	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg').volume(50).play()
+	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg').play()
 	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
 	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
 	ethereal_heart.owner.forceMove(src) //put that ethereal in

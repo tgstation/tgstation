@@ -88,7 +88,7 @@
 				volume = 10
 			else
 				volume = 5
-		playsound(loc, beepsound).volume(volume).vary(FALSE).play()
+		playsound(loc, beepsound).volume(volume).play()
 		next_beep = world.time + 10
 
 	if(active && ((detonation_timer <= world.time) || explode_now))

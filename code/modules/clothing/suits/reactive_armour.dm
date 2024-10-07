@@ -134,7 +134,7 @@
 /obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings itself clear of [attack_text], leaving someone behind in the process!"))
 	owner.dropItemToGround(src, TRUE, TRUE)
-	playsound(get_turf(owner), 'sound/machines/buzz/buzz-sigh.ogg').volume(50).vary(TRUE).play()
+	playsound(get_turf(owner), 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 	playsound(get_turf(owner), 'sound/effects/magic/blink.ogg').volume(100).vary(TRUE).play()
 	do_teleport(src, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration

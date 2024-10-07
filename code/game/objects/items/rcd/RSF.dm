@@ -91,7 +91,7 @@ RSF
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg').vary(FALSE).play()
+	playsound(src.loc, 'sound/effects/pop.ogg').play()
 	var/target = cost_by_item
 	var/cost = 0
 	//Warning, prepare for bodgecode

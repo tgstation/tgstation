@@ -1034,7 +1034,7 @@
 		return
 	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
 	span_notice("You hold [src] skyward, dispelling the storm!"))
-	playsound(user, 'sound/effects/magic/staff_change.ogg').volume(200).vary(FALSE).play()
+	playsound(user, 'sound/effects/magic/staff_change.ogg').volume(200).play()
 	var/old_color = user.color
 	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	var/old_transform = user.transform

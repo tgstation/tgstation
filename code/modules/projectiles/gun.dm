@@ -228,7 +228,7 @@
 	var/mob/living/holder = loc
 	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
-		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
+		playsound(get_turf(src), 'sound/items/weapons/smash.ogg').vary(TRUE).direct_listeners(holder).play()
 	return ..()
 
 /obj/item/gun/emp_act(severity)
@@ -267,7 +267,7 @@
 			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
 			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
 		)
-		playsound(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).vary(FALSE).play()
+		playsound(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).play()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

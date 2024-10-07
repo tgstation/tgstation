@@ -130,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
-			playsound(src, baton.on_stun_sound).volume(50).vary(TRUE).play()
+			playsound(src, baton.on_stun_sound).vary(TRUE).play()
 			return
 
 	if(istype(O, /obj/item/mop))

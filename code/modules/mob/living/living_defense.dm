@@ -280,7 +280,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.grab_sound)
 			sound_to_play = H.dna.species.grab_sound
-	playsound(src.loc, sound_to_play).volume(50).vary(TRUE).extra_range(-1).play()
+	playsound(src.loc, sound_to_play).vary(TRUE).extra_range(-1).play()
 
 	if(user.grab_state) //only the first upgrade is instantaneous
 		var/old_grab_state = user.grab_state
@@ -354,7 +354,7 @@
 		return FALSE
 
 	if(user.attack_sound)
-		playsound(src, user.attack_sound).volume(50).vary(TRUE).extra_range(TRUE).play()
+		playsound(src, user.attack_sound).vary(TRUE).extra_range(TRUE).play()
 
 	user.do_attack_animation(src)
 	visible_message(

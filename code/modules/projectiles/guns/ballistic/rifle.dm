@@ -233,7 +233,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
 	if(!do_after(user, draw_time, target = src))
 		return
-	playsound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).vary(FALSE).play()
+	playsound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).play()
 	balloon_alert(user, "bowstring drawn")
 	chamber_round()
 	bolt_locked = FALSE

@@ -136,7 +136,7 @@
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
+			playsound(src, meteorsound).vary(TRUE).frequency(random_frequency).direct_listeners(M).play()
 
 /**
  * Used to check if someone who has examined a meteor will receive an award.

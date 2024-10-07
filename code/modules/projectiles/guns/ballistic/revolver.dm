@@ -80,7 +80,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(get_sfx(usr), SFX_REVOLVER_SPIN).volume(30).vary(FALSE).play()
+		playsound(get_sfx(usr), SFX_REVOLVER_SPIN).volume(30).play()
 		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 		balloon_alert(user, "chamber spun")
 	else

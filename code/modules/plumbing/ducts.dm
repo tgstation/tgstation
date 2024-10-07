@@ -377,7 +377,7 @@ All the important duct code:
 		var/turf/open/open_turf = target
 		var/is_omni = duct_color == DUCT_COLOR_OMNI
 		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer], null, is_omni)
-		playsound(get_turf(src), 'sound/machines/click.ogg').volume(50).vary(TRUE).play()
+		playsound(get_turf(src), 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/item/stack/ducts/fifty
 	amount = 50

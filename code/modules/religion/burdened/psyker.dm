@@ -225,7 +225,7 @@
 		return
 	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
 	magazine.top_off()
-	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg').vary(TRUE).direct_listeners(user).play()
 	chamber_round()
 
 /datum/action/item_action/pray_refill

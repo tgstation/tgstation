@@ -202,13 +202,13 @@
 	guardian.locked = TRUE
 	guardian.forceMove(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
-	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
+	playsound(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg').vary(TRUE).direct_listeners(guardian).play()
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
-	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/repulse.ogg', 50, TRUE)
+	playsound(get_turf(guardian), 'sound/effects/magic/repulse.ogg').vary(TRUE).direct_listeners(guardian).play()
 
 /datum/action/item_action/hands_free/memento_mori
 	check_flags = NONE
@@ -903,7 +903,7 @@
 
 	healthscan(living_owner, living_scanned, 1, TRUE)
 
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/smoke.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/effects/magic/smoke.ogg').vary(TRUE).direct_listeners(owner).play()
 	owner.balloon_alert(owner, "[living_scanned] scanned")
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 

@@ -348,17 +348,17 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = TRUE
 		icon_state = "crateopen"
-		playsound(get_sfx(src), open_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), open_sound).vary(TRUE).play()
 		for(var/atom/movable/AM in src)
 			AM.forceMove(loc)
 	else
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
 		opened = FALSE
 		icon_state = "crate"
-		playsound(get_sfx(src), close_sound).volume(50).vary(TRUE).play()
+		playsound(get_sfx(src), close_sound).vary(TRUE).play()
 		for(var/atom/movable/AM in get_turf(src))
 			if(AM != src && insert(AM) == -1)
-				playsound(get_sfx(src), full_sound).volume(50).vary(TRUE).play()
+				playsound(get_sfx(src), full_sound).vary(TRUE).play()
 				break
 /**
 * Called by toggle_open to put items inside the mimic when it's being closed

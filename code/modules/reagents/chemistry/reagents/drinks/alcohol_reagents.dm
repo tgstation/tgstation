@@ -285,7 +285,7 @@
 		var/datum/disease/heart_attack = new /datum/disease/heart_failure
 		drinker.ForceContractDisease(heart_attack)
 		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-		drinker.playsound_local(drinker, 'sound/effects/singlebeat.ogg', 100, 0)
+		playsound(drinker, 'sound/effects/singlebeat.ogg').volume(100).direct_listeners(drinker).play()
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -881,7 +881,7 @@
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	playsound(drinker, 'sound/effects/explosion/explosion_distant.ogg').volume(100).vary(FALSE).play()
+	playsound(drinker, 'sound/effects/explosion/explosion_distant.ogg').volume(100).play()
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"

@@ -106,7 +106,7 @@
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 	if(fail_explanation)
 		playsound(src, 'sound/machines/printer.ogg').volume(100).vary(TRUE).play()
 		visible_message(span_notice("[src] prints an error report."))

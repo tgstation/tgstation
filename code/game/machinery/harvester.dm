@@ -144,7 +144,7 @@
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 	else
 		say("Subject has been successfully harvested.")
-		playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).vary(FALSE).play()
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE

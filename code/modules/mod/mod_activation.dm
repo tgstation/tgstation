@@ -180,7 +180,7 @@
 		if(active)
 			playsound(src, 'sound/machines/synth/synth_yes.ogg').vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).frequency(6000).play()
 			if(!malfunctioning)
-				wearer.playsound_local(get_turf(src), 'sound/vehicles/mecha/nominal.ogg', 50)
+				playsound(get_turf(src), 'sound/vehicles/mecha/nominal.ogg').direct_listeners(wearer).play()
 		else
 			playsound(src, 'sound/machines/synth/synth_no.ogg').vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).frequency(6000).play()
 	activating = FALSE

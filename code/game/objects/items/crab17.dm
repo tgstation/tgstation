@@ -126,7 +126,7 @@
 	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/beep/twobeep.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/beep/twobeep.ogg').play()
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -158,7 +158,7 @@
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/beep/triple_beep.ogg').vary(FALSE).play()
+	playsound(src, 'sound/machines/beep/triple_beep.ogg').play()
 	add_overlay("text")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
