@@ -54,6 +54,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 /// Set a timer for awarding succes and drop some awesome deathlore
 /datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/owner = brain.owner
+	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew)
 
 	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
@@ -84,49 +85,17 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	qdel(radio)
 
 /// A box for recovered items that can only be opened by the new crewmember
-/obj/item/storage/mind_lockbox
+/obj/item/storage/lockbox/mind
 	name = "mind lockbox"
-	desc = "A locked box, openable only by only one mind."
-	icon = 'icons/obj/storage/case.dmi'
-	icon_state = "lockbox+l"
-	inhand_icon_state = "lockbox"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	/// Are we open?
-	var/open = FALSE
-	/// Icon for when we're locked
-	var/icon_locked = "lockbox+l"
-	/// Icon for when we're closed
-	var/icon_closed = "lockbox"
-	/// Icon for when we're open
-	var/icon_open = "lockbox"
+	desc = "A locked box, openable only by one mind."
+
 	/// The mind needed to unlock the box
 	var/datum/mind/mind
 
-/obj/item/storage/mind_lockbox/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 14
-	atom_storage.max_slots = 4
-	atom_storage.locked = STORAGE_FULLY_LOCKED
-
-	register_context()
-	update_appearance()
-
-/obj/item/storage/mind_lockbox/attack_self(mob/user, modifiers)
+/obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
 	. = ..()
 
 	if(user.mind == mind)
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
 		update_appearance()
-
-/obj/item/storage/mind_lockbox/update_icon_state()
-	. = ..()
-	if(atom_storage?.locked)
-		icon_state = icon_locked
-	else if(open)
-		icon_state = icon_open
-	else
-		icon_state = icon_closed

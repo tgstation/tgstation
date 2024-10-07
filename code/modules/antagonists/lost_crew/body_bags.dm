@@ -31,7 +31,7 @@
 
 	// Spawn a mind lockbox with job stuffs for them to work with when they return
 	if(protected_items.len && corpse.mind)
-		var/obj/item/storage/mind_lockbox/box = new(src)
+		var/obj/item/storage/lockbox/mind/box = new(src)
 		box.mind = corpse.mind
 		for(var/obj/object in protected_items)
 			object.forceMove(box)

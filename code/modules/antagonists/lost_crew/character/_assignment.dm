@@ -28,7 +28,7 @@
 		job_gear += card
 
 /datum/corpse_assignment/proc/assign_job(mob/living/carbon/human/working_undead)
-	working_undead.mind.set_assigned_role_with_greeting(job_datum, working_undead.client)
+	working_undead.mind.set_assigned_role_with_greeting(new job_datum (), working_undead.client)
 
 /datum/corpse_assignment/engineer
 	job_lore = "I was employed as an engineer"
