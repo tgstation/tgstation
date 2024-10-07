@@ -137,8 +137,7 @@
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
-	--assembly.linked
-	if (assembly.linked < 0) assembly.linked = 0
+	assembly.linked = max(assembly.linked - 1, 0)
 	stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
@@ -198,8 +197,7 @@
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
-			--assembly.linked
-			if (assembly.linked < 0) assembly.linked = 0
+			assembly.linked = max(assembly.linked - 1, 0)
 			stored_decals.Cut()
 			assembly = null
 		return
@@ -379,8 +377,7 @@
 	return TRUE
 
 /obj/item/trapdoor_remote/item_ctrl_click(mob/user)
-	if (loc != user)
-		// You have to hold it in your hand to ctrl-click
+	if (!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
 	if(!internals)
 		user.balloon_alert(user, "no device!")
