@@ -67,7 +67,7 @@
 	text = "Oh no! The engine has broken down! \
 	You can repair it with an engine part, or you \
 	can make repairs for 3 days."
-	emag_message = "<span class='warning'>You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...</span>"
+	emag_message = span_warning("You hear some large object lurch to a halt right behind you! When you go to look, nothing's there...")
 	emag_sound = 'sound/effects/creak/creak1.ogg'
 	weight = 2
 	event_responses = list()

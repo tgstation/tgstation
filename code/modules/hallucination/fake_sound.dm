@@ -58,8 +58,8 @@
 	sound_type = list('sound/effects/glass/glassbr1.ogg', 'sound/effects/glass/glassbr2.ogg', 'sound/effects/glass/glassbr3.ogg')
 
 /datum/hallucination/fake_sound/normal/alarm
-	volume = 100
-	sound_type = 'sound/machines/alarm.ogg'
+	volume = 70
+	sound_type = 'sound/announcer/alarm/nuke_alarm.ogg'
 
 /datum/hallucination/fake_sound/normal/beepsky
 	volume = 35

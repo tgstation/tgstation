@@ -88,6 +88,13 @@
 	cell_line = null
 	starting_reagent_purity = 0.3
 
+///carp fillet, but without the toxin. Used by baby carps (fish item), which have a trait that handles the toxin already.
+/obj/item/food/fishmeat/carp/no_tox
+
+/obj/item/food/fishmeat/carp/no_tox/Initialize(mapload)
+	food_reagents -= /datum/reagent/toxin/carpotoxin
+	return ..()
+
 /obj/item/food/fishmeat/moonfish
 	name = "moonfish fillet"
 	desc = "A fillet of moonfish."
@@ -290,6 +297,7 @@
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/fish_poke
@@ -306,6 +314,7 @@
 	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////

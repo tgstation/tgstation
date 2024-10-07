@@ -54,8 +54,6 @@
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
 
-	return .
-
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
 	switch(key)
 		if("mode")

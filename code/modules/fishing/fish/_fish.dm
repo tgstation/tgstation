@@ -674,7 +674,9 @@
 			continue
 		if(length(fish_traits & trait.incompatible_traits))
 			continue
-		if((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability))
+		// If there's no partner, we've been reated through parthenogenesis or growth, therefore, traits are copied
+		// Otherwise, we do some probability checks.
+		if(!y_traits || ((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability)))
 			fish_traits |= trait_type
 			incompatible_traits |= trait.incompatible_traits
 
@@ -1301,6 +1303,10 @@
 
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
+
+/obj/item/fish/update_atom_colour()
+	. = ..()
+	aquarium_vc_color = color || initial(aquarium_vc_color)
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

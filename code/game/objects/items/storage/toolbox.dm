@@ -19,7 +19,7 @@
 	hitsound = 'sound/items/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -381,7 +381,7 @@
 
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate/nuclear
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
 	extra_to_spawn = /obj/item/ammo_box/a357
 
 /obj/item/storage/toolbox/guncase/sword_and_board

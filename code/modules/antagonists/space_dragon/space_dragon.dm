@@ -112,7 +112,7 @@
 	var/icon/icon = icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon")
 
 	icon.Blend(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/spacedragon.dmi', "overlay_base"), ICON_OVERLAY)
+	icon.Blend(icon('icons/mob/nonhuman-player/spacedragon.dmi', "spacedragon_overlay_base"), ICON_OVERLAY)
 
 	icon.Crop(10, 9, 54, 53)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
@@ -256,7 +256,7 @@
 		parts += "<span class='redtext big'>The [name] has failed!</span>"
 
 	if(length(carp))
-		parts += "<br><span class='header'>The [name] was assisted by:</span>"
+		parts += span_header("<br>The [name] was assisted by:")
 		parts += "<ul class='playerlist'>"
 		var/list/players_to_carp_taken = list()
 		for(var/datum/mind/carpy as anything in carp)
