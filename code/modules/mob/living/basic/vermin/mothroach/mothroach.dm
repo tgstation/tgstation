@@ -33,11 +33,19 @@
 	faction = list(FACTION_NEUTRAL)
 
 	ai_controller = /datum/ai_controller/basic_controller/mothroach
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
 	var/static/list/food_types = list(/obj/item/clothing)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")

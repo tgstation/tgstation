@@ -45,6 +45,14 @@
 		/obj/item/food/deadmouse,
 		/obj/item/food/fishmeat,
 	)
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
+
 	///item we are currently holding
 	var/obj/item/held_food
 	///mutable appearance for held item
@@ -74,6 +82,7 @@
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
@@ -224,3 +233,9 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	gender = MALE
+
+/mob/living/basic/pet/cat/tabby
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"
