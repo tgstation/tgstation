@@ -84,11 +84,10 @@
 	src.sound = sound
 
 /datum/playsound/Destroy(force)
-	..()
 	kill_spatial_tracking()
 	source = null
 	sound = null
-	return QDEL_HINT_IWILLGC
+	return ..()
 
 #define WITH_X(var) /datum/playsound/proc/##var(##var) {\
 	RETURN_TYPE(/datum/playsound); \
