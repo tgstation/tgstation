@@ -297,7 +297,7 @@
 			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
-		playsound(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play()
+		playsound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 		return OXYLOSS
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)

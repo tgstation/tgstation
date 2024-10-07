@@ -173,7 +173,7 @@
 		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
 		victim.Paralyze(2 SECONDS) //splat!
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
-	playsound(get_sfx(victim), SFX_DESECRATION).vary(TRUE).play()
+	playsound(victim, SFX_DESECRATION).vary(TRUE).play()
 
 /obj/item/food/canned/chap
 	name = "can of CHAP"

@@ -29,7 +29,7 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
-	playsound(get_sfx(src), stepsound).volume(40).vary(TRUE).play()
+	playsound(src, stepsound).volume(40).vary(TRUE).play()
 
 // Do whatever you do to mobs to these fuckers too
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)

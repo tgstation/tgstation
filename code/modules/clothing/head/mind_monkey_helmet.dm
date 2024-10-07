@@ -68,14 +68,14 @@
 				particle_path = null
 			if(7 to 13)
 				user.visible_message(span_notice("[src] sparkles momentarily, then falls silent and drops on the floor. Maybe you should try again later?"))
-				playsound(get_sfx(src), SFX_SPARKS).volume(30).vary(TRUE).play()
+				playsound(src, SFX_SPARKS).volume(30).vary(TRUE).play()
 				do_sparks(2, FALSE, src)
 				particle_path = /particles/smoke/steam/mild
 			if(14 to 21)
 				user.visible_message(span_notice("[src] sparkles and shatters ominously, then falls silent and drops on the floor. Maybe you shouldn't try again later."))
 				do_sparks(4, FALSE, src)
-				playsound(get_sfx(src), SFX_SPARKS).volume(15).vary(TRUE).play()
-				playsound(get_sfx(src), SFX_SHATTER).volume(30).vary(TRUE).play()
+				playsound(src, SFX_SPARKS).volume(15).vary(TRUE).play()
+				playsound(src, SFX_SHATTER).volume(30).vary(TRUE).play()
 				particle_path = /particles/smoke/steam/bad
 			if(21 to INFINITY)
 				user.visible_message(span_notice("[src] buzzes and smokes heavily, then falls silent and drops on the floor. This is clearly a bad idea."))
@@ -118,7 +118,7 @@
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
 	new /obj/effect/decal/cleanable/ash(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation

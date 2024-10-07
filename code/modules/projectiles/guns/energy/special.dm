@@ -288,7 +288,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
-	playsound(new_portal, get_sfx(SFX_PORTAL_CREATED)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(new_portal, SFX_PORTAL_CREATED).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE

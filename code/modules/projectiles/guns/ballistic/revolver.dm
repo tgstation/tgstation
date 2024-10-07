@@ -80,7 +80,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(get_sfx(usr), SFX_REVOLVER_SPIN).volume(30).play()
+		playsound(usr, SFX_REVOLVER_SPIN).volume(30).play()
 		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 		balloon_alert(user, "chamber spun")
 	else
@@ -235,7 +235,7 @@
 		if(!can_trigger_gun(user))
 			return
 	if(target != user)
-		playsound(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play()
+		playsound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 		user.visible_message(
 			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."),
 			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
@@ -287,7 +287,7 @@
 			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
-		playsound(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play()
+		playsound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)

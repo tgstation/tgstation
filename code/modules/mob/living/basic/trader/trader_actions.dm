@@ -45,7 +45,7 @@
 	shop_spot_ref = WEAKREF(shop_spot)
 	owner.ai_controller?.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
 
-	playsound(get_sfx(owner), shop_sound).vary(TRUE).play()
+	playsound(owner, shop_sound).vary(TRUE).play()
 
 	var/turf/sign_turf
 

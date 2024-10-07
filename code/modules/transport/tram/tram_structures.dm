@@ -118,11 +118,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(get_sfx(src), knock_sound).vary(TRUE).play()
+		playsound(src, knock_sound).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(get_sfx(src), bash_sound).volume(100).vary(TRUE).play()
+		playsound(src, bash_sound).volume(100).vary(TRUE).play()
 
 /obj/structure/tram/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

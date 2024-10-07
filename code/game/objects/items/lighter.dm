@@ -55,7 +55,7 @@
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
-	playsound(get_sfx(victim), SFX_RICOCHET).volume(100).vary(TRUE).play()
+	playsound(victim, SFX_RICOCHET).volume(100).vary(TRUE).play()
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)

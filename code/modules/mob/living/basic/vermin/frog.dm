@@ -76,7 +76,7 @@
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
-			playsound(get_sfx(src), stepped_sound).vary(TRUE).play()
+			playsound(src, stepped_sound).vary(TRUE).play()
 
 /mob/living/basic/frog/icemoon_facility
 	name = "Peter Jr."

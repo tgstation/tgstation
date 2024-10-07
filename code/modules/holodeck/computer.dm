@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(!LAZYLEN(emag_programs))
 		balloon_alert(user, "no card swipe port!")
 		return FALSE
-	playsound(get_sfx(src), SFX_SPARKS).volume(75).vary(TRUE).play()
+	playsound(src, SFX_SPARKS).volume(75).vary(TRUE).play()
 	obj_flags |= EMAGGED
 	if (user)
 		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor

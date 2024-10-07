@@ -297,7 +297,7 @@
 	if(use_time)
 		charge_animation()
 	COOLDOWN_START(src, cooldown_timer, cooldown_add)
-	playsound(get_sfx(user), activation_sound).volume(100).vary(TRUE).play()
+	playsound(user, activation_sound).volume(100).vary(TRUE).play()
 	log_game("[src] activated by [key_name(user)] in [AREACOORD(src)]. The last fingerprints on the [src] was [fingerprintslast].")
 	return TRUE
 

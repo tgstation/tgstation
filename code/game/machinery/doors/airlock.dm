@@ -1377,7 +1377,7 @@
 			if(obj_flags & EMAGGED)
 				return FALSE
 			use_energy(50 JOULES)
-			playsound(get_sfx(src), doorClose).volume(30).vary(TRUE).play()
+			playsound(src, doorClose).volume(30).vary(TRUE).play()
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)

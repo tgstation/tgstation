@@ -597,7 +597,7 @@
 				return
 			if(H.stat == DEAD)
 				H.visible_message(span_warning("[H]'s body convulses a bit."))
-				playsound(get_sfx(src), SFX_BODYFALL).vary(TRUE).play()
+				playsound(src, SFX_BODYFALL).vary(TRUE).play()
 				playsound(src, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).extra_range(-1).play()
 				shock_pulling(30, H)
 

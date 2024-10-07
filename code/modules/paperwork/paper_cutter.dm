@@ -86,7 +86,7 @@
 			return SHAME
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		user_head.drop_limb()
-		playsound(loc, get_sfx(SFX_DESECRATION)).vary(TRUE).extra_range(-1).play()
+		playsound(loc, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
 	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -123,7 +123,7 @@
 			return
 		if(!user.transferItemToLoc(inserted_item, src))
 			return
-		playsound(get_sfx(loc), SFX_PAGE_TURN).volume(60).vary(TRUE).play()
+		playsound(loc, SFX_PAGE_TURN).volume(60).vary(TRUE).play()
 		balloon_alert(user, "paper inserted")
 		stored_paper = inserted_item
 

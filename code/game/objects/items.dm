@@ -1372,12 +1372,12 @@
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(get_sfx(victim), SFX_SHATTER).volume(25).vary(TRUE).play()
+				playsound(victim, SFX_SHATTER).volume(25).vary(TRUE).play()
 				qdel(src)
 				if(QDELETED(source_item))
 					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(get_sfx(victim), SFX_SHATTER).volume(15).vary(TRUE).play()
+				playsound(victim, SFX_SHATTER).volume(15).vary(TRUE).play()
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)

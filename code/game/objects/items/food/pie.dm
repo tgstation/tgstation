@@ -84,7 +84,7 @@
 	if(can_splat_on)
 		victim.adjust_eye_blur(2 SECONDS)
 	victim.visible_message(span_warning("[victim] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
-	playsound(get_sfx(victim), SFX_DESECRATION).vary(TRUE).play()
+	playsound(victim, SFX_DESECRATION).vary(TRUE).play()
 
 /obj/item/food/pie/cream/nostun
 	stunning = FALSE

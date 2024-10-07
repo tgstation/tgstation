@@ -183,7 +183,7 @@
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
 			if(target_bodypart)
 				target_bodypart.drop_limb()
-				playsound(loc, get_sfx(SFX_DESECRATION)).vary(TRUE).extra_range(-1).play()
+				playsound(loc, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/crowbar/cyborg

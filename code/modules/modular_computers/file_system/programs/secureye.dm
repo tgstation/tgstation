@@ -150,7 +150,7 @@
 			else
 				camera_ref = null
 			if(!spying)
-				playsound(get_sfx(computer), SFX_TERMINAL_TYPE).volume(25).play()
+				playsound(computer, SFX_TERMINAL_TYPE).volume(25).play()
 			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker)

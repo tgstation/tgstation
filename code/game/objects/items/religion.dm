@@ -31,7 +31,7 @@
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	span_notice("You raise [src] skywards, inspiring your allies!"))
-	playsound(get_sfx(src), SFX_RUSTLE).volume(100).play()
+	playsound(src, SFX_RUSTLE).volume(100).play()
 	if(warcry)
 		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform

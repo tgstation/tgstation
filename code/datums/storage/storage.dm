@@ -563,7 +563,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(remove_to_loc)
 
 		if(do_rustle && !silent)
-			playsound(parent, get_sfx(SFX_RUSTLE)).vary(TRUE).extra_range(-5).play()
+			playsound(parent, SFX_RUSTLE).vary(TRUE).extra_range(-5).play()
 	else
 		thing.moveToNullspace()
 
@@ -797,7 +797,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(do_rustle)
-			playsound(parent, get_sfx(SFX_RUSTLE)).vary(TRUE).extra_range(-5).play()
+			playsound(parent, SFX_RUSTLE).vary(TRUE).extra_range(-5).play()
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)

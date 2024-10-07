@@ -349,7 +349,7 @@
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
-		playsound(get_sfx(src), SFX_LAW).play()
+		playsound(src, SFX_LAW).play()
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)

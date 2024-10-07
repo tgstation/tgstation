@@ -156,7 +156,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("Something knocks on [src]."))
 	add_fingerprint(user)
-	playsound(get_sfx(src), knock_sound).vary(TRUE).play()
+	playsound(src, knock_sound).vary(TRUE).play()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -176,11 +176,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(get_sfx(src), knock_sound).vary(TRUE).play()
+		playsound(src, knock_sound).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(get_sfx(src), bash_sound).volume(100).vary(TRUE).play()
+		playsound(src, bash_sound).volume(100).vary(TRUE).play()
 
 /obj/structure/window/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -319,7 +319,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(get_sfx(src), hit_sound).volume(75).vary(TRUE).play()
+				playsound(src, hit_sound).volume(75).vary(TRUE).play()
 			else
 				playsound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
@@ -328,7 +328,7 @@
 
 /obj/structure/window/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		playsound(get_sfx(src), break_sound).volume(70).vary(TRUE).play()
+		playsound(src, break_sound).volume(70).vary(TRUE).play()
 		for(var/obj/item/shard/debris in spawn_debris(drop_location()))
 			transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	update_nearby_icons()

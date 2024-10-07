@@ -303,7 +303,7 @@
 	if(isnull(T[camera]))
 		return
 	var/obj/machinery/camera/final = T[camera]
-	playsound(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).play()
+	playsound(src, SFX_TERMINAL_TYPE).volume(25).play()
 	if(final)
 		playsound(origin, 'sound/machines/terminal/terminal_prompt_confirm.ogg').volume(25).play()
 		remote_eye.setLoc(get_turf(final))

@@ -83,7 +83,7 @@
 
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
-		playsound(src.loc, get_sfx(SFX_SWING_HIT)).volume(25).vary(TRUE).play()
+		playsound(src.loc, SFX_SWING_HIT).volume(25).vary(TRUE).play()
 		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)

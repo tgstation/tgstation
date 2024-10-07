@@ -740,7 +740,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 			mood_event_type = /datum/mood_event/inked, \
 		)
 	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
-	playsound(get_sfx(target), SFX_DESECRATION).vary(TRUE).play()
+	playsound(target, SFX_DESECRATION).vary(TRUE).play()
 	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM)
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM), 9 SECONDS)
 

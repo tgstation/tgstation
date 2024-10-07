@@ -69,7 +69,7 @@
 		span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
 	)
 
-	playsound(get_sfx(poor_target), impact_sound).vary(TRUE).play()
+	playsound(poor_target, impact_sound).vary(TRUE).play()
 
 	if(!crushes_people)
 		return

@@ -481,7 +481,7 @@
 		playsound(src, 'sound/items/click.ogg').volume(25).vary(TRUE).play()
 		return TRUE
 	to_chat(user, span_warning("You put your hand on the hand scanner, and it rejects it with an angry chimpanzee screech!"))
-	playsound(get_sfx(src), SFX_SCREECH).volume(75).vary(TRUE).play()
+	playsound(src, SFX_SCREECH).volume(75).vary(TRUE).play()
 	return FALSE
 
 /obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()

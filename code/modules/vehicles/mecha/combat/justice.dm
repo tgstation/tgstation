@@ -121,7 +121,7 @@
 	var/turf/for_line_turf = get_turf(my_mech)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
 	in_your_head?.dismember(BRUTE)
-	playsound(get_sfx(src), brute_attack_sound).volume(75).play()
+	playsound(src, brute_attack_sound).volume(75).play()
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
 
@@ -313,7 +313,7 @@
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(chassis))
 	ADD_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
-	playsound(get_sfx(chassis), stealth_pre_attack_sound).volume(75).play()
+	playsound(chassis, stealth_pre_attack_sound).volume(75).play()
 	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 1 SECONDS)
 	return TRUE
 
@@ -339,7 +339,7 @@
 			var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 			cut_bodypart?.dismember(BRUTE)
 		something_living.apply_damage(35, BRUTE)
-	playsound(get_sfx(chassis), stealth_attack_sound).volume(75).play()
+	playsound(chassis, stealth_attack_sound).volume(75).play()
 	REMOVE_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
 	on = !on
 	charge = FALSE
@@ -493,7 +493,7 @@
 		return FALSE
 	chassis.forceMove(here_we_go)
 	start_charge_here.Beam(chassis, icon_state = "mech_charge", time = 8)
-	playsound(get_sfx(chassis), charge_attack_sound).volume(75).play()
+	playsound(chassis, charge_attack_sound).volume(75).play()
 	on = !on
 	chassis.use_energy(energy_cost)
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)

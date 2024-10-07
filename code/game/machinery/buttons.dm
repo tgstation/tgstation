@@ -209,7 +209,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	obj_flags |= EMAGGED
 
 	// The device inside can be emagged by swiping the button

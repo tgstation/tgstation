@@ -701,7 +701,7 @@
 		going_hard = FALSE
 		update_icon(UPDATE_OVERLAYS)
 	icon_state = "goat_splat"
-	playsound(get_sfx(src), SFX_DESECRATION).vary(TRUE).play()
+	playsound(src, SFX_DESECRATION).vary(TRUE).play()
 	visible_message(span_danger("[src] gets absolutely flattened!"))
 	splat = TRUE
 

@@ -98,7 +98,7 @@
 	var/obj/placed_structure = new structure_path(place_turf)
 	base_console.structures[structure_name]--
 	var/remaining = base_console.structures[structure_name]
-	playsound(get_sfx(place_turf), place_sound).vary(TRUE).play()
+	playsound(place_turf, place_sound).vary(TRUE).play()
 	after_place(placed_structure, remaining)
 
 ///Proc to handle additional behavior after placing an object

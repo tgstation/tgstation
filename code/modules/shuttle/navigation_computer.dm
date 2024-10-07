@@ -390,7 +390,7 @@
 		return
 	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
 		return
-	playsound(get_sfx(src), SFX_TERMINAL_TYPE).volume(25).play()
+	playsound(src, SFX_TERMINAL_TYPE).volume(25).play()
 	var/turf/T = get_turf(L[selected])
 	if(isnull(T))
 		return

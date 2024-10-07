@@ -125,7 +125,7 @@
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	playsound(src, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_SPARKS).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)

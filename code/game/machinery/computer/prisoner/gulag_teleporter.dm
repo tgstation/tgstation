@@ -149,7 +149,7 @@
 	prisoner.Paralyze(40) // small travel dizziness
 	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	playsound(src, get_sfx(SFX_PORTAL_ENTER)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_PORTAL_ENTER).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

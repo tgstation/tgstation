@@ -381,7 +381,7 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!is_simian(user))
-		playsound(get_sfx(src), SFX_SCREECH).volume(75).vary(TRUE).play()
+		playsound(src, SFX_SCREECH).volume(75).vary(TRUE).play()
 		return FALSE
 	return TRUE
 

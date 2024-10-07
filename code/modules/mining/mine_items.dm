@@ -323,7 +323,7 @@
 	Move(new_destination)
 	var/sound/thud_sound = sound('sound/items/weapons/thudswoosh.ogg')
 	thud_sound.pitch = 0.5
-	playsound(get_sfx(src), thud_sound).vary(TRUE).play()
+	playsound(src, thud_sound).vary(TRUE).play()
 
 /**
  * Attempt to put the cart on rails
@@ -343,7 +343,7 @@
 	update_rail_state(TRUE)
 	var/sound/click_sound = sound('sound/machines/click.ogg')
 	click_sound.pitch = 0.5
-	playsound(get_sfx(src), click_sound).vary(TRUE).play()
+	playsound(src, click_sound).vary(TRUE).play()
 
 /obj/structure/closet/crate/miningcar/Bump(atom/bumped_atom)
 	. = ..()

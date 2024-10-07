@@ -6,7 +6,7 @@
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
-		playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
+		playsound(loc, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 		log_combat(user, src, "attacked")
 		visible_message(span_danger("[user] kicks [src]!"), \
 						span_userdanger("[user] kicks you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)

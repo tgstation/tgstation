@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	playsound(get_sfx(src), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
+	playsound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	var/playeffect = TRUE
 	switch(action)

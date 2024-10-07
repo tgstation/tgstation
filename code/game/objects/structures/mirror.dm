@@ -264,7 +264,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
-		playsound(get_sfx(src), SFX_SHATTER).volume(70).vary(TRUE).play()
+		playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE

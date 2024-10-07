@@ -202,7 +202,7 @@
 			if(begin_create_message)
 				visible_message(span_notice("[src] [begin_create_message]"))
 			if(work_sound)
-				playsound(get_sfx(src), work_sound).vary(TRUE).play()
+				playsound(src, work_sound).vary(TRUE).play()
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
 			update_appearance()
@@ -217,7 +217,7 @@
 				spawned_atom.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
-				playsound(get_sfx(src), create_sound).vary(TRUE).play()
+				playsound(src, create_sound).vary(TRUE).play()
 			if(end_create_message)
 				visible_message(span_notice("[src] [end_create_message]"))
 
@@ -227,7 +227,7 @@
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
-				playsound(get_sfx(src), recharge_sound).vary(TRUE).play()
+				playsound(src, recharge_sound).vary(TRUE).play()
 			if(recharge_message)
 				visible_message(span_notice("[src] [recharge_message]"))
 
@@ -292,7 +292,7 @@
 	if(break_message)
 		audible_message(span_warning("[src] [break_message]"))
 	if(break_sound)
-		playsound(get_sfx(src), break_sound).vary(TRUE).play()
+		playsound(src, break_sound).vary(TRUE).play()
 
 #undef DRONE_PRODUCTION
 #undef DRONE_RECHARGING

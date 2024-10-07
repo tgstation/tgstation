@@ -334,7 +334,7 @@
 	if(disassembled)
 		return
 
-	playsound(get_sfx(src), SFX_SHATTER).volume(70).vary(TRUE).play()
+	playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))
@@ -368,7 +368,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+		playsound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE

@@ -146,7 +146,7 @@
 		// Emagging an intercom with an emaggable lock will remove the lock
 		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
 			balloon_alert(user, "frequency lock cleared")
-			playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+			playsound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			freqlock = RADIO_FREQENCY_UNLOCKED
 			obj_flags |= EMAGGED
 			return TRUE

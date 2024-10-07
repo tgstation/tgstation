@@ -93,7 +93,7 @@
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
-		playsound(get_sfx(src), SFX_SHATTER).volume(70).vary(TRUE).play()
+		playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		update_appearance()
 		trigger_alarm()
 
@@ -673,7 +673,7 @@
 	. = ..()
 	if(!broken)
 		broken = TRUE
-		playsound(get_sfx(src), SFX_SHATTER).volume(70).vary(TRUE).play()
+		playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		update_appearance()
 		trigger_alarm() //In case it's given an alarm anyway.
 

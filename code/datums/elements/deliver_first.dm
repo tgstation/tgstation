@@ -99,7 +99,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, target.loc)
 	spark_system.start()
-	playsound(src, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	target.RemoveElement(/datum/element/deliver_first, goal_area_type, payment)
 
 #undef DENY_SOUND_COOLDOWN

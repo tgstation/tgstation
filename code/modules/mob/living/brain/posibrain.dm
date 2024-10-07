@@ -257,7 +257,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		var/obj/item/item = pick(loc.contents)
 		if(istype(loc, /obj/item/storage))
 			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
-			playsound(get_sfx(src), SFX_RUSTLE).volume(30).vary(TRUE).play()
+			playsound(src, SFX_RUSTLE).volume(30).vary(TRUE).play()
 		return
 
 	// MOVE US

@@ -1183,7 +1183,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		to_chat(user, span_notice("[src] says \"[toysay]\""))
-		playsound(get_sfx(user), toysound).volume(20).vary(TRUE).play()
+		playsound(user, toysound).volume(20).vary(TRUE).play()
 
 /obj/item/toy/figure/cmo
 	name = "\improper Chief Medical Officer action figure"

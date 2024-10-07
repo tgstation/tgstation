@@ -146,7 +146,7 @@
 
 		var/obj/item/bodypart/head/head = victim.get_bodypart("head")
 
-		playsound(get_sfx(src), drop_sound).volume(100).vary(TRUE).play()
+		playsound(src, drop_sound).volume(100).vary(TRUE).play()
 		if(head)
 			if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 				head.dismember()

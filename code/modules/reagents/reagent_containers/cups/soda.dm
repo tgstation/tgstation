@@ -96,7 +96,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
-	playsound(get_sfx(src), SFX_CAN_OPEN).vary(TRUE).play()
+	playsound(src, SFX_CAN_OPEN).vary(TRUE).play()
 	spillable = TRUE
 	throwforce = 0
 

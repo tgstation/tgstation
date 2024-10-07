@@ -56,7 +56,7 @@
 	if(emag_message)
 		game.audible_message(emag_message)
 	if(emag_sound)
-		playsound(get_sfx(game), emag_sound).volume(100).vary(TRUE).play()
+		playsound(game, emag_sound).volume(100).vary(TRUE).play()
 
 #define BUTTON_FIX_ENGINE "Fix Engine"
 #define BUTTON_WAIT "Wait"

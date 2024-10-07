@@ -154,7 +154,7 @@
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
 	if(!QDELETED(affecting) && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.owner == user && !QDELETED(user))
-		playsound(get_sfx(user), hitsound).volume(25).vary(TRUE).play()
+		playsound(user, hitsound).volume(25).vary(TRUE).play()
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 

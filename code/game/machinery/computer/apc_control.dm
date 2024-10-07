@@ -34,7 +34,7 @@
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
 		balloon_alert(user, "access controller shorted")
-	playsound(src, get_sfx(SFX_SPARKS)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	playsound(src, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
@@ -156,7 +156,7 @@
 			addtimer(CALLBACK(src, PROC_REF(restore_comp)), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
-			playsound(get_sfx(src), SFX_TERMINAL_TYPE).play()
+			playsound(src, SFX_TERMINAL_TYPE).play()
 			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			connect_apc(APC, usr)
 		if("check-logs")

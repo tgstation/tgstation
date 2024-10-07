@@ -345,7 +345,7 @@
 	return data
 
 /obj/item/construction/rcd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(get_sfx(src), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
+	playsound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	switch(action)
 		if("root_category")

@@ -219,7 +219,7 @@
 	var/sound = 'sound/items/bikehorn.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
-	playsound(get_sfx(loc), sound).volume(100).vary(TRUE).play()
+	playsound(loc, sound).volume(100).vary(TRUE).play()
 
 /obj/effect/mine/sound/bwoink
 	name = "bwoink mine"

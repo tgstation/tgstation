@@ -118,7 +118,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(get_sfx(src), SFX_RUSTLE).vary(TRUE).play()
+	playsound(src, SFX_RUSTLE).vary(TRUE).play()
 
 /**
  * Attach an item to the machine
@@ -186,7 +186,7 @@
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(get_sfx(src), SFX_RUSTLE).vary(TRUE).play()
+	playsound(src, SFX_RUSTLE).vary(TRUE).play()
 	return CLICK_ACTION_SUCCESS
 
 /**

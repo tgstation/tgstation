@@ -174,7 +174,7 @@
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
 			warned = TRUE
-			playsound(get_sfx(src), overheatsound).volume(100).vary(TRUE).play()
+			playsound(src, overheatsound).volume(100).vary(TRUE).play()
 		return
 	else
 		cooldown = world.time + cooldown_duration
@@ -194,7 +194,7 @@
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/projectile/projectile_to_fire = new projectile_type(targets_from)
-	playsound(get_sfx(src), firesound).volume(75).vary(TRUE).play()
+	playsound(src, firesound).volume(75).vary(TRUE).play()
 	projectile_to_fire.preparePixelProjectile(target, targets_from)
 	projectile_to_fire.firer = user
 	projectile_to_fire.fired_from = src

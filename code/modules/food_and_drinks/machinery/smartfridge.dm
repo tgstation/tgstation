@@ -258,7 +258,7 @@
 			playsound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
-	playsound(get_sfx(src), SFX_SHATTER).vary(TRUE).play()
+	playsound(src, SFX_SHATTER).vary(TRUE).play()
 	return ..()
 
 /obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, params)

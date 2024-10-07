@@ -56,7 +56,7 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/shoot_with_empty_chamber(mob/living/user)
-	playsound(get_sfx(src), dry_fire_sound).volume(30).vary(TRUE).play() //click sound but no to_chat message to cut on spam
+	playsound(src, dry_fire_sound).volume(30).vary(TRUE).play() //click sound but no to_chat message to cut on spam
 	return
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_seclight_point()

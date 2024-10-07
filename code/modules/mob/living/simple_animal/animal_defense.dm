@@ -46,7 +46,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
+	playsound(loc, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))

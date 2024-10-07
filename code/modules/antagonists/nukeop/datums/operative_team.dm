@@ -208,7 +208,7 @@
 	// add some pizzazz
 	do_sparks(4, FALSE, spawn_loc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(spawn_loc)
-	playsound(get_sfx(spawn_loc), SFX_SPARKS).vary(TRUE).play()
+	playsound(spawn_loc, SFX_SPARKS).vary(TRUE).play()
 	playsound(spawn_loc, 'sound/effects/phasein.ogg').vary(TRUE).play()
 
 	tgui_alert(admin, "Reinforcement spawned at [infil_or_nukebase] with [tc_to_spawn].", "Reinforcements have arrived", list("God speed"))

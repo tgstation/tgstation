@@ -9,7 +9,7 @@
 	if(mob_size < MOB_SIZE_LARGE)
 		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
 		hitverb = "slam"
-	playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
+	playsound(loc, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 	visible_message(span_danger("[user] [hitverb]s [src]!"), \
 					span_userdanger("[user] [hitverb]s you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You [hitverb] [src]!"))
@@ -20,7 +20,7 @@
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
-		playsound(loc, get_sfx(SFX_PUNCH)).volume(25).vary(TRUE).extra_range(-1).play()
+		playsound(loc, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 		visible_message(span_danger("[user] punches [src]!"), \
 						span_userdanger("[user] punches you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You punch [src]!"))

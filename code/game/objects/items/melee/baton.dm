@@ -355,7 +355,7 @@
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(active)
-		playsound(get_sfx(src), on_sound).vary(TRUE).play()
+		playsound(src, on_sound).vary(TRUE).play()
 		add_fingerprint(user)
 	else
 		attack_self(user)
@@ -387,7 +387,7 @@
 	else
 		drop_sound = unfolded_drop_sound
 		pickup_sound = unfolded_pickup_sound
-	playsound(get_sfx(src), on_sound).vary(TRUE).play()
+	playsound(src, on_sound).vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton
@@ -595,7 +595,7 @@
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
+	playsound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(-1).play()
 	update_appearance()
 	toggle_light()
 	do_sparks(1, TRUE, src)
@@ -606,7 +606,7 @@
 	active = FALSE
 	set_light_on(FALSE)
 	update_appearance()
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
+	playsound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(-1).play()
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 
@@ -709,7 +709,7 @@
 	active = !active
 	toggle_light()
 	do_sparks(1, TRUE, src)
-	playsound(src, get_sfx(SFX_SPARKS)).volume(75).vary(TRUE).extra_range(-1).play()
+	playsound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(-1).play()
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

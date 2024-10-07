@@ -390,7 +390,7 @@
 	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-	playsound(T, get_sfx(SFX_DESECRATION)).volume(100).vary(TRUE).extra_range(-1).play()
+	playsound(T, SFX_DESECRATION).volume(100).vary(TRUE).extra_range(-1).play()
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"

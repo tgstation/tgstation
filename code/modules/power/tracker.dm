@@ -144,7 +144,7 @@
 			S.forceMove(loc)
 			S.give_glass(machine_stat & BROKEN)
 	else
-		playsound(get_sfx(src), SFX_SHATTER).volume(70).vary(TRUE).play()
+		playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		new /obj/item/shard(src.loc)
 		new /obj/item/shard(src.loc)
 

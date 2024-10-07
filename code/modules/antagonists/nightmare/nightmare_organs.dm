@@ -59,7 +59,7 @@
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
 		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
 	)
-	playsound(get_sfx(source), SFX_BULLET_MISS).volume(75).vary(TRUE).play()
+	playsound(source, SFX_BULLET_MISS).volume(75).vary(TRUE).play()
 	return COMPONENT_BULLET_PIERCED
 
 /obj/item/organ/internal/heart/nightmare

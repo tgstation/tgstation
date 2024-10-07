@@ -74,7 +74,7 @@
 	if(!COOLDOWN_FINISHED(src, baton_bash))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
-	playsound(get_sfx(src), shield_bash_sound).vary(TRUE).play()
+	playsound(src, shield_bash_sound).vary(TRUE).play()
 	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
 	return ITEM_INTERACT_SUCCESS
 

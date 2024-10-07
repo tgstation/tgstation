@@ -551,7 +551,7 @@
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(get_sfx(src), sound).vary(TRUE).play()
+	playsound(src, sound).vary(TRUE).play()
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
@@ -726,7 +726,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, get_sfx(SFX_KEYBOARD_CLICKS)).volume(10).vary(TRUE).extra_range(FALSE).play()
+		playsound(src, SFX_KEYBOARD_CLICKS).volume(10).vary(TRUE).extra_range(FALSE).play()
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
