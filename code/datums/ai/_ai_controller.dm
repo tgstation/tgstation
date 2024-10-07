@@ -307,6 +307,7 @@ multiple modular subtrees with behaviors
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -425,17 +426,24 @@ multiple modular subtrees with behaviors
 	//remove old status, if we've got one
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+	remove_from_unplanned_controllers()
 	stop_previous_processing()
 	ai_status = new_ai_status
 	GLOB.ai_controllers_by_status[new_ai_status] += src
+	if(ai_status == AI_STATUS_OFF)
+		CancelActions()
+		return
+	if(!length(current_behaviors))
+		add_to_unplanned_controllers()
+		return
+	start_ai_processing()
+
+/datum/ai_controller/proc/start_ai_processing()
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_IDLE)
 			START_PROCESSING(SSidle_ai_behaviors, src)
-			CancelActions()
-		if(AI_STATUS_OFF)
-			CancelActions()
 
 /datum/ai_controller/proc/stop_previous_processing()
 	switch(ai_status)
@@ -448,6 +456,16 @@ multiple modular subtrees with behaviors
 	paused_until = world.time + time
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
+
+/datum/ai_controller/proc/add_to_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF || isnull(idle_behavior))
+		return
+	GLOB.unplanned_controllers[ai_status][src] = TRUE
+
+/datum/ai_controller/proc/remove_from_unplanned_controllers()
+	if(isnull(ai_status) || ai_status == AI_STATUS_OFF)
+		return
+	GLOB.unplanned_controllers[ai_status] -= src
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
 	behavior_cooldowns[behavior] = new_cooldown
@@ -467,6 +485,7 @@ multiple modular subtrees with behaviors
 	if(!behavior.setup(arglist(arguments)))
 		return
 
+	var/should_exit_unplanned = !length(current_behaviors)
 	planned_behaviors[behavior] = TRUE
 	current_behaviors[behavior] = TRUE
 
@@ -479,6 +498,9 @@ multiple modular subtrees with behaviors
 	if(!(behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //this one blocks planning!
 		able_to_plan = FALSE
 
+	if(should_exit_unplanned)
+		exit_unplanned_mode()
+
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/check_able_to_plan()
@@ -490,6 +512,16 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/dequeue_behavior(datum/ai_behavior/behavior)
 	current_behaviors -= behavior
 	able_to_plan = check_able_to_plan()
+	if(!length(current_behaviors))
+		enter_unplanned_mode()
+
+/datum/ai_controller/proc/exit_unplanned_mode()
+	remove_from_unplanned_controllers()
+	start_ai_processing()
+
+/datum/ai_controller/proc/enter_unplanned_mode()
+	add_to_unplanned_controllers()
+	stop_previous_processing()
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)

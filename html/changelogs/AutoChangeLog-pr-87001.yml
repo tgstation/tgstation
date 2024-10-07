@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed drones being able to store multiple of the same type of tools in their toolbox"

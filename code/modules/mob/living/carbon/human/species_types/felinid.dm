@@ -108,6 +108,10 @@
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 
+/datum/species/human/felinid/get_snore_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
 
 
 /proc/mass_purrbation()

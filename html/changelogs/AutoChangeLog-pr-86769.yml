@@ -1,6 +1,0 @@
-author: "GremlinSeeker"
-delete-after: True
-changes:
-  - rscadd: "Birdshot Cargo now has a lobby and is slightly more open overall."
-  - rscadd: "Re-added the DnD room  to Birdshot"
-  - rscadd: "re-added the skill station to the library."

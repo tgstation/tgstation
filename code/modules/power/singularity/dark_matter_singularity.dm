@@ -13,11 +13,12 @@
 	icon_state = "dark_matter_s1"
 	singularity_icon_variant = "dark_matter"
 	maximum_stage = STAGE_FOUR
+	energy = 250
 	singularity_component_type = /datum/component/singularity/bloodthirsty
 	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
 	COOLDOWN_DECLARE(initial_explosion_immunity)
 
-/obj/singularity/dark_matter/Initialize(mapload, starting_energy = 250)
+/obj/singularity/dark_matter/Initialize(mapload, starting_energy)
 	. = ..()
 	COOLDOWN_START(src, initial_explosion_immunity, 5 SECONDS)
 

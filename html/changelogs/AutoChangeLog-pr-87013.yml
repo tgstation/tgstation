@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Runes, crayons, and similar decals no longer have shadows"
-  - bugfix: "Blood and similar \"mess\" decals no longer have shadows (again)"

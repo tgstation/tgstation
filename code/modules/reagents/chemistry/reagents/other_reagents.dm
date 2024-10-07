@@ -117,13 +117,13 @@
 	var/obj/effect/decal/cleanable/blood/bloodsplatter = locate() in exposed_turf //find some blood here
 	if(!bloodsplatter)
 		bloodsplatter = new(exposed_turf, data["viruses"])
-	else if(LAZYLEN(data["viruses"]))
-		var/list/viri_to_add = list()
+	if(LAZYLEN(data["viruses"]))
+		var/list/viruses_to_add = list()
 		for(var/datum/disease/virus in data["viruses"])
 			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-				viri_to_add += virus
-		if(LAZYLEN(viri_to_add))
-			bloodsplatter.AddComponent(/datum/component/infective, viri_to_add)
+				viruses_to_add += virus
+		if(LAZYLEN(viruses_to_add))
+			bloodsplatter.AddComponent(/datum/component/infective, viruses_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -2691,7 +2691,7 @@
 	taste_mult = 0 // oderless and tasteless
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	/// The material flags used to apply the transmuted materials
-	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials
 	var/default_material_amount = 100
 

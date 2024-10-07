@@ -41,8 +41,10 @@
 	builtintools += new /obj/item/t_scanner/drone(src)
 	builtintools += new /obj/item/analyzer/drone(src)
 	builtintools += new /obj/item/soap/drone(src)
+
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
+		ADD_TRAIT(tool, TRAIT_NODROP, REF(src))
 
 
 /obj/item/crowbar/drone

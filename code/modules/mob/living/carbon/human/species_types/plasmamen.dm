@@ -90,7 +90,7 @@
 	var/can_burn = FALSE
 	if(!isclothing(H.w_uniform) || !(H.w_uniform.clothing_flags & PLASMAMAN_PREVENT_IGNITION))
 		can_burn = TRUE
-	else if(!isclothing(H.gloves))
+	else if(!isclothing(H.gloves) || H.num_hands < H.default_num_hands) //If you dont have the other glove then the suit isnt really sealed is it?
 		can_burn = TRUE
 	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE

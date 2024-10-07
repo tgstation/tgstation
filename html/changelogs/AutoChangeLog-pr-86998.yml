@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed luminiscent major extract activation button not disappearing/updating when it should've"
