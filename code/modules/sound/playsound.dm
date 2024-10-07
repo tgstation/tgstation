@@ -9,53 +9,52 @@
  * Datum used to manage the playing of sounds.
  */
 /datum/playsound
-	VAR_PRIVATE
-		/// The source of the sound.
-		var/atom/source
-		/// The base sound file.
-		var/sound/sound
-		/// The channel the sound is being played on.
-		var/channel
+	/// The source of the sound.
+	VAR_PRIVATE/atom/source
+	/// The base sound file.
+	VAR_PRIVATE/sound/sound
+	/// The channel the sound is being played on.
+	VAR_PRIVATE/channel
 
-		/// The amount of wait time before the sound is played.
-		var/wait = 0
-		/// The world.time the sound was played
-		var/start_time
+	/// The amount of wait time before the sound is played.
+	VAR_PRIVATE/wait = 0
+	/// The world.time the sound was played
+	VAR_PRIVATE/start_time
 
-		/// A list of listeners that will have the sound played to them.
-		var/list/mob/direct_listeners
+	/// A list of listeners that will have the sound played to them.
+	VAR_PRIVATE/list/mob/direct_listeners
 
-		/// The volume the sound will be played at.
-		var/volume = 50
-		/// The range of the sound.
-		var/range = SOUND_RANGE
+	/// The volume the sound will be played at.
+	VAR_PRIVATE/volume = 50
+	/// The range of the sound.
+	VAR_PRIVATE/range = SOUND_RANGE
 
-		/// Does the sound allow reverb (simulates the sound bouncing off of walls)
-		var/use_reverb = TRUE
-		/// The frequency the sound is played at.
-		var/frequency = null
-		/// If TRUE the pitch of the sound is shifted for each listener.
-		var/vary = FALSE
+	/// Does the sound allow reverb (simulates the sound bouncing off of walls)
+	VAR_PRIVATE/use_reverb = TRUE
+	/// The frequency the sound is played at.
+	VAR_PRIVATE/frequency = null
+	/// If TRUE the pitch of the sound is shifted for each listener.
+	VAR_PRIVATE/vary = FALSE
 
-		/// The exponent used to calculate distance falloff. Should be above 1.
-		var/falloff_exponent = SOUND_FALLOFF_EXPONENT
-		/// The distance at which falloff begins to take effect.
-		var/falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
+	/// The exponent used to calculate distance falloff. Should be above 1.
+	VAR_PRIVATE/falloff_exponent = SOUND_FALLOFF_EXPONENT
+	/// The distance at which falloff begins to take effect.
+	VAR_PRIVATE/falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
 
-		/// Is the sound affected by atmospheric conditions?
-		var/atmospherics_affected = TRUE
-		/// Does the sound play through walls.
-		var/ignore_walls = FALSE
+	/// Is the sound affected by atmospheric conditions?
+	VAR_PRIVATE/atmospherics_affected = TRUE
+	/// Does the sound play through walls.
+	VAR_PRIVATE/ignore_walls = FALSE
 
-		/// Can this sound play through Z levels?
-		var/z_traversal_allowed = TRUE
-		/// What is the penalty modifier for crossing a Z level?
-		var/z_traversal_modifier = 0.75
+	/// Can this sound play through Z levels?
+	VAR_PRIVATE/z_traversal_allowed = TRUE
+	/// What is the penalty modifier for crossing a Z level?
+	VAR_PRIVATE/z_traversal_modifier = 0.75
 
-		/// Does the sound follow the source atom as it moves?
-		var/spatial_aware = FALSE
-		var/list/datum/sound_spatial_cache/spatial_tracking_by_mob_tag = list()
-		var/list/datum/spatial_grid_cell/registered_spatial_grid_cells = list()
+	/// Does the sound follow the source atom as it moves?
+	VAR_PRIVATE/spatial_aware = FALSE
+	VAR_PRIVATE/list/datum/sound_spatial_cache/spatial_tracking_by_mob_tag = list()
+	VAR_PRIVATE/list/datum/spatial_grid_cell/registered_spatial_grid_cells = list()
 
 /datum/playsound/New(source, sound)
 	..()
