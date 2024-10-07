@@ -81,6 +81,7 @@
 
 	if(!istype(sound, /sound))
 		CRASH("Invalid sound type ([sound:type]) passed to [type]")
+	src.sound = sound
 
 /datum/playsound/Destroy(force)
 	..()
