@@ -625,6 +625,12 @@
 		/datum/reagent/toxin/fakebeer,
 	)
 
+/obj/machinery/chem_dispenser/drinks/beer/emag_act(mob/user, obj/item/card/emag/emag_card)
+    if(obj_flags & EMAGGED)
+        return FALSE
+    if(!HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER))
+        to_chat(user, span_warning("You need a deeper connection with alcohol to know where to swipe it."))
+
 /obj/machinery/chem_dispenser/drinks/beer/Initialize(mapload)
 	dispensable_reagents = beer_dispensable_reagents
 	emagged_reagents = beer_emagged_reagents
