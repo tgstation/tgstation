@@ -174,8 +174,8 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	// At this point the slot is free, insert it as normal
 	borgo.laws.remove_supplied_law_by_num(old_prio)
 	borgo.laws.add_supplied_law(new_prio, law)
-	log_admin("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]") // Normal insertion, I.E upload
-	message_admins("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]")
+	log_admin("[key_name(user)] has UPLOADED a supplied law to [key_name(borgo)] stating: [law]") // Normal insertion, I.E upload
+	message_admins("[key_name(user)] has UPLOADED a supplied law to [key_name(borgo)] stating: [law]")
 	return TRUE
 
 /datum/law_panel/proc/remove_law_helper(mob/living/user, mob/living/silicon/borgo, lawtype, law)
