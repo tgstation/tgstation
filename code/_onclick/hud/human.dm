@@ -323,7 +323,7 @@
 				blocked_slots |= ITEM_SLOT_RPOCKET
 		if(isnull(human_mob.wear_suit))
 			blocked_slots |= ITEM_SLOT_SUITSTORE
-		if(human_mob.num_hands < 2) // update this when you can wear gloves on one hand
+		if(human_mob.num_hands <= 0)
 			blocked_slots |= ITEM_SLOT_GLOVES
 		if(human_mob.num_legs < 2) // update this when you can wear shoes on one foot
 			blocked_slots |= ITEM_SLOT_FEET
