@@ -151,6 +151,9 @@
 	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return

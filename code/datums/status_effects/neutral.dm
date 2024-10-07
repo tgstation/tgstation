@@ -609,3 +609,32 @@
 /datum/status_effect/gutted/proc/stop_gutting()
 	SIGNAL_HANDLER
 	qdel(src)
+
+/atom/movable/screen/alert/status_effect/shower_regen
+	name = "Washing"
+	desc = "A good wash fills me with energy!"
+	icon_state = "shower_regen"
+
+/atom/movable/screen/alert/status_effect/shower_regen/catgirl
+	name = "Washing"
+	desc = "Waaater... Fuck this WATER!!"
+	icon_state = "shower_regen_catgirl"
+
+/datum/status_effect/shower_regen
+	id = "shower_regen"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/shower_regen
+	/// How many heals from washing.
+	var/stamina_heal_per_tick = 4
+
+/datum/status_effect/shower_regen/on_apply()
+	. = ..()
+	if(isfelinid(owner))
+		alert_type = /atom/movable/screen/alert/status_effect/shower_regen/catgirl
+
+
+/datum/status_effect/shower_regen/tick(seconds_between_ticks)
+	. = ..()
+	var/heal_or_deal = isfelinid(owner) ? 1 : -1
+	owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks)

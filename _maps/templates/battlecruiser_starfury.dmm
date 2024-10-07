@@ -2364,11 +2364,11 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver/syndicate{
+/obj/item/gun/ballistic/revolver/badass{
 	pixel_x = -1;
 	pixel_y = 2
 	},

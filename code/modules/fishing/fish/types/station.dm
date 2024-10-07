@@ -138,7 +138,7 @@
 	///The evolution datum of the next thing we grow into, given time (and food)
 	var/next_type = /datum/fish_evolution/fritterish
 	///How long does it take for us to grow up?
-	var/growth_time = 5 MINUTES
+	var/growth_time = 3.5 MINUTES
 
 /obj/item/fish/fryish/Initialize(mapload)
 	. = ..()
@@ -184,7 +184,7 @@
 	fish_movement_type = /datum/fish_movement
 	is_bait = FALSE
 	next_type = /datum/fish_evolution/nessie
-	growth_time = 10 MINUTES
+	growth_time = 8 MINUTES
 
 /obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
