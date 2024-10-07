@@ -251,7 +251,7 @@
 	if(stat == DEAD)
 		return
 	new /obj/effect/decal/cleanable/vomit(loc)
-	playsound(src, 'sound/effects/splat.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 	visible_message(span_danger("[src] vomits up everything it ate so far!"))
 	for(var/atom/movable/eaten in src)
 		if(HAS_TRAIT(eaten, TRAIT_NOT_BARFABLE))

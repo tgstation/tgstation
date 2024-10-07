@@ -128,7 +128,7 @@
 		zap_count += 1
 
 	if(zap_count >= 1)
-		playsound(loc, 'sound/items/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+		playsound(src, 'sound/items/weapons/emitter2.ogg').volume(1000).vary(TRUE).extra_range(100).play()
 		var/delta_time = (SSmachines.times_fired - last_high_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
 		var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_HIGH_ENERGY, energy = clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time)
 		if(accumulated_energy)

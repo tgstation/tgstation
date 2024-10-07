@@ -202,18 +202,9 @@
 	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier
 	var/picked_range = footstep_sounds[3] + e_range + range_adjustment
 
-	heard_clients = playsound(
-		source = source,
-		soundin = picked_sound,
-		vol = picked_volume,
-		vary = sound_vary,
-		extrarange = picked_range,
-		falloff_distance = 1,
-	)
-
+	heard_clients = playsound(source, picked_sound).volume(picked_volume).vary(sound_vary).extra_range(picked_range).falloff_distance(1).play()
 	if(length(heard_clients))
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
-
 
 ///Prepares a footstep for machine walking
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
