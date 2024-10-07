@@ -144,10 +144,13 @@
 
 	if(!source)
 		CRASH("Attempted to call [__PROC__] on a global sound.")
-	else if(get_turf(source) == null)
+
+	var/turf/source_turf = get_turf(source)
+	if(source_turf == null)
 		return null
 
-	if(get_turf(mob) == null)
+	var/turf/mob_turf = get_turf(mob)
+	if(mob_turf == null)
 		return null
 
 	if(mob.client == null || !mob.can_hear())
@@ -157,12 +160,12 @@
 	if(spatial_aware && !cache)
 		cache = spatial_tracking_by_mob_tag[mob.tag] = new /datum/sound_spatial_cache
 
-	var/mob_x = mob.x
-	var/mob_y = mob.y
-	var/mob_z = mob.z
-	var/source_x = source.x
-	var/source_y = source.y
-	var/source_z = source.z
+	var/mob_x = mob_turf.x
+	var/mob_y = mob_turf.y
+	var/mob_z = mob_turf.z
+	var/source_x = source_turf.x
+	var/source_y = source_turf.y
+	var/source_z = source_turf.z
 
 	if(spatial_aware)
 		var/list/last_mob_coords = cache.mob_coords
@@ -181,9 +184,9 @@
 
 	var/effective_distance
 	if(mob_z == source_z)
-		effective_distance = get_dist_euclidean(mob, source)
+		effective_distance = get_dist_euclidean(mob_turf, source_turf)
 	else // not the same z level, use the penalty modifier
-		effective_distance = get_dist_euclidean(mob, locate(source_x, source_y, mob_z))
+		effective_distance = get_dist_euclidean(mob_turf, locate(source_x, source_y, mob_z))
 		effective_distance *= ((z_traversal_modifier / 1) ** abs(mob_z - source_z))
 	// https://www.desmos.com/calculator/sqdfl8ipgf
 	sound_update.volume = volume - ((max(effective_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(range, effective_distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
@@ -193,8 +196,6 @@
 		// if you want to implement that be my guest
 
 		var/pressure_factor = 1
-		var/turf/mob_turf = get_turf(mob)
-		var/turf/source_turf = get_turf(source)
 		var/datum/gas_mixture/hearer_env = mob_turf.return_air()
 		var/datum/gas_mixture/source_env = source_turf.return_air()
 
