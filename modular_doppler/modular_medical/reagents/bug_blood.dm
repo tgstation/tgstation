@@ -72,7 +72,7 @@
 
 /datum/chemical_reaction/glyoxal
   results = list(/datum/reagent/glyoxal = 2)
-  required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/nitracid = 1)
+  required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/acid/nitracid = 1)
   required_catalysts = list(/datum/reagent/oxygen = 10)
 //fermichem
   is_cold_recipe = FALSE
