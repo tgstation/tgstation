@@ -8,9 +8,10 @@
   color = "#82fac6" //rgb 130,250,198
   reagent_state = LIQUID
   ph = 7.4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/chemical_reaction/bug_blood
-  results = list(datum/reagent/bug_blood
+  results = list(datum/reagent/bug_blood = 2)
   required_reagents = list(/datum/reagent/imidazole = 6, /datum/reagent/copper = 2, /datum/reagent/oxygen = 1)
   mix_message = "The solution thickens and turns a buggy-blue"
   //fermichem
@@ -28,7 +29,7 @@
   rate_up_lim = 10
   purity_min = 0
   reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_UNIQUE
-  
+
 /datum/reagent/imidazole
   name = "Imidazole"
   description = "A white water-soluble organic compound."
@@ -36,14 +37,14 @@
   taste_mult = 2.5
   ph = 14
   reagent_state = SOLID
-  
+
 
 /datum/chemical_reaction/imidazole
   results = list(datum/reagent/imidazole = 0.5)
   required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/ammonia = 5, /datum/reagent/glyoxal = 1)
   mix_message = "The solution clouds and becomes white"
   //fermichem
-  is_cold_recipe = FALSE 
+  is_cold_recipe = FALSE
   required_temp = 362
   optimal_temp = 420
   overheat_temp = 529
@@ -57,7 +58,7 @@
   rate_up_lim = 10
   purity_min = 0
   reaction_tags = REACTION_TAG_CHEMICAL
-  
+
 /datum/reagent/glyoxal
   name = "Glyoxal"
   description = "A yellow organic compound."
@@ -65,6 +66,7 @@
   taste_mult = 4
   ph = 4.5
   reagent_state = LIQUID
+	chemical
 
 /datum/chemical_reaction/glyoxal
   results = list(datum/reagent/glyoxal = 2)
