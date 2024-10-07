@@ -1,11 +1,22 @@
 /atom
 	// code\__DEFINES\bandastation\pronouns.dm for more info
-	/// ru_names = RU_NAMES_LIST_INIT("jaws of life", "именительный", "родительный", "дательный", "винительный", "творительный", "предложный")
+	/// RU_NAMES_LIST_INIT("name", "именительный", "родительный", "дательный", "винительный", "творительный", "предложный")
 	var/list/ru_names
+	var/ru_name_nominative
+	var/ru_name_genitive
+	var/ru_name_dative
+	var/ru_name_accusative
+	var/ru_name_instrumental
+	var/ru_name_prepositional
+
+/atom/proc/ru_names_rename(var/list/new_list)
+	if(!length(new_list) || length(ru_names) != length(new_list))
+		return
+	RU_NAMES_LIST_INIT(new_list["base"], new_list[NOMINATIVE], new_list[GENITIVE], new_list[DATIVE], new_list[ACCUSATIVE], new_list[INSTRUMENTAL], new_list[PREPOSITIONAL])
 
 /**
 * Процедура выбора правильного падежа для любого предмета, если у него указан словарь «ru_names», примерно такой:
-* ru_names = RU_NAMES_LIST_INIT("jaws of life", "челюсти жизни", "челюстей жизни", "челюстям жизни","челюсти жизни", "челюстями жизни", "челюстях жизни")
+* RU_NAMES_LIST_INIT("jaws of life", "челюсти жизни", "челюстей жизни", "челюстям жизни", "челюсти жизни", "челюстями жизни", "челюстях жизни")
 */
 /datum/proc/declent_ru(case_id, list/ru_names_override)
 	var/list/list_to_use = ru_names_override

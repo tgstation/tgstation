@@ -2,7 +2,7 @@
 
 /obj/machinery/processor
 	name = "food processor"
-	ru_names = RU_NAMES_LIST_INIT("food processor", "комбайн", "комбайна", "комбайну", "комбайн", "комбайном", "комбайне")
+	RU_NAMES_LIST_INIT("food processor", "комбайн", "комбайна", "комбайну", "комбайн", "комбайном", "комбайне")
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	base_icon_state = "processor"

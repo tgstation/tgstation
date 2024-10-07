@@ -16,6 +16,7 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
+	RU_NAMES_LIST_INIT("area power controller", "локальный контроллер питания", "локального контроллера питания", "локальному контроллеру питания", "локальный контроллер питания", "локальным контроллером питания", "локальном контроллере питания")
 	desc = "A control terminal for the area's electrical systems."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"
@@ -197,6 +198,7 @@
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
+		RU_NAMES_LIST_INIT("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]")
 
 	//Initialize its electronics
 	set_wires(new /datum/wires/apc(src))
@@ -267,6 +269,7 @@
 	. = ..()
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
+		RU_NAMES_LIST_INIT("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]")
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)

@@ -2,6 +2,7 @@
 
 /obj/machinery/airalarm
 	name = "air alarm"
+	RU_NAMES_LIST_INIT("air alarm", "воздушная сигнализация", "воздушной сигнализации", "воздушной сигнализации", "воздушную сигнализацию", "воздушной сигнализацией", "воздушной сигнализации")
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarmp"
@@ -95,6 +96,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
+		RU_NAMES_LIST_INIT("[get_area_name(src)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]")
 
 	tlv_collection = list()
 	tlv_collection["pressure"] = new /datum/tlv/pressure
@@ -175,6 +177,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 /obj/machinery/airalarm/update_name(updates)
 	. = ..()
 	name = "[get_area_name(my_area)] Air Alarm"
+	RU_NAMES_LIST_INIT("[get_area_name(my_area)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]")
 
 /obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place
@@ -667,6 +670,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for engine_access air alarm helper, which set air alarm's required access to away_general_access.
 /obj/machinery/airalarm/proc/give_engine_access()
 	name = "engine air alarm"
+	RU_NAMES_LIST_INIT("engine air alarm", "воздушная сигнализация двигателя", "воздушной сигнализации двигателя", "воздушной сигнализации двигателя", "воздушную сигнализацию двигателя", "воздушной сигнализацией двигателя", "воздушной сигнализации двигателя")
 	locked = FALSE
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINEERING)
@@ -674,6 +678,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for mixingchamber_access air alarm helper, which set air alarm's required access to away_general_access.
 /obj/machinery/airalarm/proc/give_mixingchamber_access()
 	name = "chamber air alarm"
+	RU_NAMES_LIST_INIT("chamber air alarm", "воздушная сигнализация камеры сжигания", "воздушной сигнализации камеры сжигания", "воздушной сигнализации камеры сжигания", "воздушную сигнализацию камеры сжигания", "воздушной сигнализацией камеры сжигания", "воздушной сигнализации камеры сжигания")
 	locked = FALSE
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ORDNANCE)
@@ -681,6 +686,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for all_access air alarm helper, which set air alarm's required access to null.
 /obj/machinery/airalarm/proc/give_all_access()
 	name = "all-access air alarm"
+	RU_NAMES_LIST_INIT("all-access air alarm", "воздушная сигнализация с общим доступом", "воздушной сигнализации с общим доступом", "воздушной сигнализации с общим доступом", "воздушную сигнализацию с общим доступом", "воздушной сигнализацией с общим доступом", "воздушной сигнализации с общим доступом")
 	desc = "This particular atmos control unit appears to have no access restrictions."
 	locked = FALSE
 	req_access = null

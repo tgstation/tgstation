@@ -10,7 +10,7 @@
 
 /obj/machinery/oven
 	name = "oven"
-	ru_names = RU_NAMES_LIST_INIT("oven", "духовка", "духовки", "духовке", "духовку", "духовкой", "духовке")
+	RU_NAMES_LIST_INIT("oven", "духовка", "духовки", "духовке", "духовку", "духовкой", "духовке")
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "oven_off"
