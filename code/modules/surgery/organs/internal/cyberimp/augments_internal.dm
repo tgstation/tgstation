@@ -246,7 +246,10 @@
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	organ_flags |= ORGAN_FAILING
-	for(var/i in 1 to severity)
+	var/loops = 1
+	if(severity != EMP_LIGHT)
+		loops = 2
+	for(var/i in 1 to loops)
 		// you either lose a chip or a bit of your brain
 		owner.visible_message(span_warning("Something falls to the ground from behind [owner]'s head."),\
 			span_boldwarning("You feel something fall off from behind your head."))
