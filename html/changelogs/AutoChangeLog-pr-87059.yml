@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Syringes can be put into cake/bread/cheese on right click again."
-  - spellcheck: "Biting into a hidden syringe no longer displays things like \"a the syringe\"."
