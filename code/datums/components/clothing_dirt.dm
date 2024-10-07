@@ -1,3 +1,5 @@
+/// This component applies tint to clothing when its exposed to pepperspray, used in /obj/item/clothing/mask/gas.
+
 /datum/component/clothing_dirt
 	/// The ITEM_SLOT_* slot the item is equipped on, if it is.
 	var/equipped_slot
@@ -20,7 +22,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
 	clothing = parent
 
 /datum/component/clothing_dirt/UnregisterFromParent()
@@ -46,29 +48,30 @@
 		return
 	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
 	wearer = user
-	RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
+	RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
 
 /datum/component/clothing_dirt/proc/on_drop()
 	SIGNAL_HANDLER
 	UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	wearer = null
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(expose_mask))
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
 
 /datum/component/clothing_dirt/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if (dirtiness > 0)
-		examine_list += span_red("It appears to be covered in some oily substance. Won't see much while wearing it until you wash it off.")
+		examine_list += span_warning("It appears to be covered in some oily substance. Won't see much while wearing it until you wash it off.")
 
-/datum/component/clothing_dirt/proc/expose_mask(atom/source, list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+/datum/component/clothing_dirt/proc/on_expose(atom/source, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
 	if(QDELETED(wearer) || is_protected() )
 		return
 	if(!is_path_in_list(/datum/reagent/consumable/condensedcapsaicin, reagents))
 		return
 
+	var/datum/reagent/consumable/condensedcapsaicin/pepper = locate() in reagents
 	if (methods & (TOUCH | VAPOR))
 		clothing.tint -= dirtiness
-		dirtiness = min(dirtiness + 1, 3)
+		dirtiness = min(dirtiness + round(reagents[pepper] / 5), 3)
 		clothing.tint += dirtiness
 		if(!isnull(wearer))
 			wearer.update_tint()
