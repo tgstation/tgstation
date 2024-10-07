@@ -857,7 +857,8 @@
 		if(throw_drop_sound)
 			playsound(src, throw_drop_sound).volume(YEET_SOUND_VOLUME).vary(TRUE).play()
 			return
-		playsound(src, drop_sound).volume(YEET_SOUND_VOLUME).vary(sound_vary).play()
+		if(drop_sound)
+			playsound(src, drop_sound).volume(YEET_SOUND_VOLUME).vary(sound_vary).play()
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
