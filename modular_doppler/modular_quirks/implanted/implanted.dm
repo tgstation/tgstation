@@ -2,6 +2,7 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 	"Engineering Toolset" = /obj/item/organ/internal/cyberimp/arm/toolset,
 	"Surgery Toolset" = /obj/item/organ/internal/cyberimp/arm/surgery,
 	"Hydroponics Toolset" = /obj/item/organ/internal/cyberimp/arm/botany,
+	"Sanitation Toolset" = /obj/item/organ/internal/cyberimp/arm/janitor,
 	"Razorclaw Implant" = /obj/item/organ/internal/cyberimp/arm/razor_claws,
 	"Excavator Implant" = /obj/item/organ/internal/cyberimp/arm/mining_drill,
 ))
