@@ -1,87 +1,86 @@
-Sage
-Archivist
-Justice
-Kind
-Magician
-Reclaimer
-Vessel
-Fool
-Hermit
-Wanderer
-Nomad
-Itinerant
-Mendicant
-Errant
-Seer
-Rider
-Purifier
-Porter
-Monk
-Corsair
-Mercurial
-Martyr
-Lover
-Fighter
-Machinist
-Keeper
-Jester
-Enkindler
-Duelist
-Hunter
-Hunted
-Demolitionist
-Cursed
-Alchemist
-Brawler
-Apostle
-Evoker
-Driver
-Hollow
-Shifter
-Other
-Fixer
-Silent
-Stranger
-Bearer
-Devourer
-Ascetic
-Dancer
-Vagabond
-Wayfarer
-Thief
-Harbinger
-Intertwined
-Weaver
-Luminate
-Marionette
-Mystic
-Penitent
-Drifter
-Sage
-Masked
-Hidden
-Occult
-Archon
-Blessed
-Multitude
-Indolent
-Evergreen
-Preserver
-Butcher
-Frenzied
-Tempest
-Healer
-Poisonous
-Watcher
-Seeker
-Iron
-Psychic
-Sleeper
-Severed
-Veiled
-Witch
-Untethered
-Vestige
-Traveler
-Speaker
-Gunslinger
+The Alchemist
+The Apostle
+The Archivist
+The Archon
+The Ascetic
+The Bearer
+The Blessed
+The Brawler
+The Butcher
+The Corsair
+The Cursed
+The Dancer
+The Demolitionist
+The Devourer
+The Drifter
+The Driver
+The Duelist
+The Enkindler
+The Errant
+The Evergreen
+The Evoker
+The Fighter
+The Fixer
+The Fool
+The Frenzied
+The Gunslinger
+The Harbinger
+The Healer
+The Hermit
+The Hidden
+The Hollow
+The Hunted
+The Hunter
+The Indolent
+The Intertwined
+The Iron
+The Itinerant
+The Jester
+The Justice
+The Keeper
+The Kind
+The Lover
+The Luminate
+The Machinist
+The Magician
+The Marionette
+The Martyr
+The Masked
+The Mendicant
+The Mercurial
+The Monk
+The Multitude
+The Mystic
+The Nomad
+The Occult
+The Other
+The Penitent
+The Poisonous
+The Porter
+The Preserver
+The Psychic
+The Purifier
+The Reclaimer
+The Rider
+The Sage
+The Seeker
+The Seer
+The Severed
+The Shifter
+The Silent
+The Sleeper
+The Speaker
+The Stranger
+The Tempest
+The Thief
+The Traveler
+The Untethered
+The Vagabond
+The Veiled
+The Vessel
+The Vestige
+The Wanderer
+The Watcher
+The Wayfarer
+The Weaver
+The Witch

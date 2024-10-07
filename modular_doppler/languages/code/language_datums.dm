@@ -69,7 +69,7 @@
 	if(force_use_syllables)
 		return ..()
 
-	return "The [pick(GLOB.ramatan_names)]"
+	return "[pick(GLOB.ramatan_names)]"
 
 /datum/language/common
 	name = "Sol Common"
