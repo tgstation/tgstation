@@ -74,7 +74,7 @@
 	SIGNAL_HANDLER
 
 	if(prob(squeak_chance))
-		playsound(parent, pick_weight(override_squeak_sounds || default_squeak_sounds))\
+		create_sound(parent, pick_weight(override_squeak_sounds || default_squeak_sounds))\
 			.volume(volume)\
 			.vary(TRUE)\
 			.extra_range(sound_extra_range)\

@@ -237,14 +237,14 @@
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
-		playsound(src, remove_sound).volume(sound_vol).play()
+		create_sound(src, remove_sound).volume(sound_vol).play()
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
 	else if(new_tank)//we insert the tank
 		investigate_log("had [new_tank] inserted into it by [key_name(user)].", INVESTIGATE_ATMOS)
 		to_chat(user, span_notice("You insert [new_tank] into [src]."))
 		holding = new_tank
-		playsound(src, insert_sound).volume(sound_vol).play()
+		create_sound(src, insert_sound).volume(sound_vol).play()
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)

@@ -187,7 +187,7 @@
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 	user.adjustStaminaLoss(iteration + 5)
-	playsound(user, pick('sound/effects/rustle/rustle1.ogg','sound/effects/rustle/rustle2.ogg','sound/effects/rustle/rustle3.ogg','sound/effects/rustle/rustle4.ogg','sound/effects/rustle/rustle5.ogg')).play()
+	create_sound(user, pick('sound/effects/rustle/rustle1.ogg','sound/effects/rustle/rustle2.ogg','sound/effects/rustle/rustle3.ogg','sound/effects/rustle/rustle4.ogg','sound/effects/rustle/rustle5.ogg')).play()
 
 	if(prob(33))
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
@@ -296,7 +296,7 @@
 /// Slap the table, get some attention
 /obj/item/hand_item/slapper/proc/slap_table(obj/structure/table/table, mob/living/user)
 	user.do_attack_animation(table)
-	playsound(get_turf(table), 'sound/effects/tableslam.ogg').volume(40).vary(TRUE).play()
+	create_sound(get_turf(table), 'sound/effects/tableslam.ogg').volume(40).vary(TRUE).play()
 	user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [table]."), span_notice("You slap your hand on [table]."), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	table_smacks_left--
@@ -317,7 +317,7 @@
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, table)
 	SEND_SIGNAL(table, COMSIG_TABLE_SLAMMED, user)
 
-	playsound(get_turf(table), 'sound/effects/tableslam.ogg').volume(110).vary(TRUE).play()
+	create_sound(get_turf(table), 'sound/effects/tableslam.ogg').volume(110).vary(TRUE).play()
 	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
 
@@ -575,7 +575,7 @@
  * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
  */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
-	playsound(get_turf(living_target), hitsound).volume(100).vary(TRUE).play()
+	create_sound(get_turf(living_target), hitsound).volume(100).vary(TRUE).play()
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 

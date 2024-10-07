@@ -413,7 +413,7 @@
 				sound_to_play = H.dna.species.grab_sound
 			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
-		playsound(src.loc, sound_to_play).vary(TRUE).extra_range(-1).play()
+		create_sound(src.loc, sound_to_play).vary(TRUE).extra_range(-1).play()
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -1125,7 +1125,7 @@
 	return TRUE
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	playsound(src, 'sound/effects/space_wind.ogg').vary(TRUE).play()
+	create_sound(src, 'sound/effects/space_wind.ogg').vary(TRUE).play()
 	if(buckled || mob_negates_gravity())
 		return
 
@@ -2876,7 +2876,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	ADD_TRAIT(src, TRAIT_BLOCKING_PROJECTILES, BLOCKING_TRAIT)
 	var/icon/selected_overlay = pick(blocking_overlay)
 	add_overlay(selected_overlay)
-	playsound(src, 'sound/items/weapons/fwoosh.ogg').volume(90).frequency(0.7).play()
+	create_sound(src, 'sound/items/weapons/fwoosh.ogg').volume(90).frequency(0.7).play()
 	update_transform(1.25)
 	addtimer(CALLBACK(src, PROC_REF(end_block_effects), selected_overlay), 0.6 SECONDS)
 

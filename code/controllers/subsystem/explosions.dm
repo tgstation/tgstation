@@ -542,17 +542,17 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 		var/base_shake_amount = sqrt(near_distance / (distance + 1))
 
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
-			playsound(epicenter, near_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
+			create_sound(epicenter, near_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
 			if(base_shake_amount > 0)
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
 		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
 			if(creaking)
-				playsound(epicenter, creaking_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
+				create_sound(epicenter, creaking_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
 			else if(prob(FAR_SOUND_PROB)) // Sound variety during meteor storm/tesloose/other bad event
-				playsound(epicenter, far_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
+				create_sound(epicenter, far_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
 			else
-				playsound(epicenter, echo_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
+				create_sound(epicenter, echo_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
 
 			if(base_shake_amount || quake_factor)
 				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
@@ -565,10 +565,10 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 				shake_camera(listener, FAR_SHAKE_DURATION, clamp(quake_factor / 4, 0, FAR_SHAKE_CAP))
 			else
 				echo_volume = 40
-			playsound(epicenter, echo_sound).volume(echo_volume).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
+			create_sound(epicenter, echo_sound).volume(echo_volume).vary(TRUE).frequency(frequency).direct_listeners(listener).play()
 
 		if(creaking) // 5 seconds after the bang, the station begins to creak
-			playsound(epicenter, hull_creaking_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).wait(CREAK_DELAY).play()
+			create_sound(epicenter, hull_creaking_sound).volume(100).vary(TRUE).frequency(frequency).direct_listeners(listener).wait(CREAK_DELAY).play()
 
 #undef CREAK_DELAY
 #undef QUAKE_CREAK_PROB

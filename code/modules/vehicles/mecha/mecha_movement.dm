@@ -29,7 +29,7 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
-	playsound(src, stepsound).volume(40).vary(TRUE).play()
+	create_sound(src, stepsound).volume(40).vary(TRUE).play()
 
 // Do whatever you do to mobs to these fuckers too
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -133,7 +133,7 @@
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && (!strafe || forcerotate || keyheld))
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
-			playsound(src, turnsound).volume(40).vary(TRUE).play()
+			create_sound(src, turnsound).volume(40).vary(TRUE).play()
 
 		setDir(direction)
 		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop

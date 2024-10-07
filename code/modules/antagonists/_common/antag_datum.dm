@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/play_stinger()
 	if(isnull(stinger_sound))
 		return
-	playsound(owner.current, stinger_sound).volume(100).direct_listeners(owner.current).play()
+	create_sound(owner.current, stinger_sound).volume(100).direct_listeners(owner.current).play()
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.

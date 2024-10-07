@@ -155,7 +155,7 @@
 		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
-		playsound(parent, sound_to_play)\
+		create_sound(parent, sound_to_play)\
 			.volume(volume)\
 			.vary(vary)\
 			.extra_range(extra_range)\

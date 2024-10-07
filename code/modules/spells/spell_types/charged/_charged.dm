@@ -75,7 +75,7 @@
 	to_chat(cast_on, channel_message)
 
 	if(charge_sound_instance)
-		playsound(cast_on, charge_sound_instance).play()
+		create_sound(cast_on, charge_sound_instance).play()
 
 	if(charge_overlay_instance)
 		cast_on.add_overlay(charge_overlay_instance)

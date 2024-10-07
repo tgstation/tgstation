@@ -68,7 +68,7 @@
 		var/turf/closed/mineral/mineral_turf = current_loc
 		mineral_turf.gets_drilled(owner)
 
-	playsound(current_loc, 'sound/effects/break_stone.ogg').vary(TRUE).extra_range(-1).play()
+	create_sound(current_loc, 'sound/effects/break_stone.ogg').vary(TRUE).extra_range(-1).play()
 	StartCooldown()
 	return TRUE
 

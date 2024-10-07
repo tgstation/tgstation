@@ -216,10 +216,10 @@
 /datum/traitor_objective/proc/finish_objective(mob/user)
 	switch(objective_state)
 		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
-			playsound(user, 'sound/music/antag/traitor/objective_failed.ogg').volume(100).channel(CHANNEL_TRAITOR).direct_listeners(user).play()
+			create_sound(user, 'sound/music/antag/traitor/objective_failed.ogg').volume(100).channel(CHANNEL_TRAITOR).direct_listeners(user).play()
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
-			playsound(user, 'sound/music/antag/traitor/objective_success.ogg').volume(100).channel(CHANNEL_TRAITOR).direct_listeners(user).play()
+			create_sound(user, 'sound/music/antag/traitor/objective_success.ogg').volume(100).channel(CHANNEL_TRAITOR).direct_listeners(user).play()
 			completion_payout()
 			return TRUE
 	return FALSE

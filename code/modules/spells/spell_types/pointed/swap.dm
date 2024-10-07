@@ -82,12 +82,12 @@
 		do_teleport(second_target, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(cast_on, second_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		playsound(second_target, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(second_target).play()
-		playsound(cast_on, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(cast_on).play()
-		playsound(owner, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(owner).play()
+		create_sound(second_target, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(second_target).play()
+		create_sound(cast_on, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(cast_on).play()
+		create_sound(owner, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(owner).play()
 	else
 		do_teleport(cast_on, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		playsound(cast_on, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(cast_on).play()
-		playsound(owner, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(owner).play()
+		create_sound(cast_on, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(cast_on).play()
+		create_sound(owner, 'sound/effects/magic/swap.ogg').vary(TRUE).direct_listeners(owner).play()
 	second_target = null

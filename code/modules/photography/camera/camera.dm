@@ -252,7 +252,7 @@
 		printpicture(user, picture)
 
 	if(!silent)
-		playsound(loc, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).extra_range(-3).play()
+		create_sound(loc, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

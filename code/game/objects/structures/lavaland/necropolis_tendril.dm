@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	emitted_light = new(loc)
 	visible_message(span_boldannounce("The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!"))
 	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
-	playsound(loc, 'sound/effects/tendril_destroyed.ogg')\
+	create_sound(loc, 'sound/effects/tendril_destroyed.ogg')\
 		.volume(200)\
 		.extra_range(50)\
 		.ignore_walls(TRUE)\
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 /obj/effect/collapse/proc/collapse()
 	for(var/mob/M in range(7,src))
 		shake_camera(M, 15, 1)
-	playsound(get_turf(src), 'sound/effects/explosion/explosionfar.ogg').volume(200).vary(TRUE).play()
+	create_sound(get_turf(src), 'sound/effects/explosion/explosionfar.ogg').volume(200).vary(TRUE).play()
 	visible_message(span_boldannounce("The tendril falls inward, the ground around it widening into a yawning chasm!"))
 	for(var/turf/T in RANGE_TURFS(2,src))
 		if(HAS_TRAIT(T, TRAIT_NO_TERRAFORM))

@@ -159,6 +159,6 @@
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)
-		playsound(src, 'sound/items/tools/welder.ogg').volume(20).vary(TRUE).wait(bounce_delay).play()
+		create_sound(src, 'sound/items/tools/welder.ogg').volume(20).vary(TRUE).wait(bounce_delay).play()
 	else if(T?.bullet_bounce_sound)
-		playsound(src, T.bullet_bounce_sound).volume(20).vary(TRUE).wait(bounce_delay).play()
+		create_sound(src, T.bullet_bounce_sound).volume(20).vary(TRUE).wait(bounce_delay).play()

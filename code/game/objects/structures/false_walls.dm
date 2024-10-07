@@ -130,7 +130,7 @@
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
-		playsound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
+		create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/atom_deconstruct(disassembled = TRUE)

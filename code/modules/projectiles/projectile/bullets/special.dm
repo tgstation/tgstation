@@ -119,7 +119,7 @@
 /obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(!valid && get_dist(loc, target_turf) < 1)
-		playsound(src, 'sound/machines/ping.ogg').volume(30).direct_listeners(original_firer).play()
+		create_sound(src, 'sound/machines/ping.ogg').volume(30).direct_listeners(original_firer).play()
 		valid = TRUE
 	else if(valid && get_dist(loc, target_turf) > 1)
 		valid = FALSE

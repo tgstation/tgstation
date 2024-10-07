@@ -101,7 +101,7 @@
 
 	for(var/mob/occupant in occupants)
 		balloon_alert(occupant, "strafing [strafe?"on":"off"]")
-		playsound(src, 'sound/machines/terminal/terminal_eject.ogg').vary(TRUE).direct_listeners(occupant).play()
+		create_sound(src, 'sound/machines/terminal/terminal_eject.ogg').vary(TRUE).direct_listeners(occupant).play()
 	log_message("Toggled strafing mode [strafe?"on":"off"].", LOG_MECHA)
 
 	for(var/occupant in occupants)

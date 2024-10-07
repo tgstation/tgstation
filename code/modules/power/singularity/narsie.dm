@@ -68,7 +68,7 @@
 	))
 
 	send_to_playing_players(span_narsie("NAR'SIE HAS RISEN"))
-	playsound(GLOBAL_SOUND, 'sound/music/antag/bloodcult/narsie_rises.ogg').play()
+	create_sound(GLOBAL_SOUND, 'sound/music/antag/bloodcult/narsie_rises.ogg').play()
 
 	var/area/area = get_area(src)
 	if(area)
@@ -124,7 +124,7 @@
 			summon_objective.killed = TRUE
 
 	send_to_playing_players(span_narsie(span_bold(pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-"))))
-	playsound(GLOBAL_SOUND, 'sound/effects/magic/demon_dies.ogg').play()
+	create_sound(GLOBAL_SOUND, 'sound/effects/magic/demon_dies.ogg').play()
 
 /obj/narsie/vv_get_dropdown()
 	. = ..()
@@ -291,7 +291,7 @@
 		return
 	if(GLOB.cult_narsie.resolved == FALSE)
 		GLOB.cult_narsie.resolved = TRUE
-		playsound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
+		create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper)), 12 SECONDS)
 
 ///Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]

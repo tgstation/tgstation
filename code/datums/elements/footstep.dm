@@ -71,7 +71,7 @@
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
 		if(turf.footstep)
-			playsound(turf, 'sound/effects/footstep/crawl1.ogg').volume(15 * volume).vary(TRUE).falloff_distance(1).play()
+			create_sound(turf, 'sound/effects/footstep/crawl1.ogg').volume(15 * volume).vary(TRUE).falloff_distance(1).play()
 		return
 
 	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
@@ -125,13 +125,13 @@
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source, footstep_sounds).volume(volume).vary(sound_vary).falloff_distance(1).play()
+		create_sound(source, footstep_sounds).volume(volume).vary(sound_vary).falloff_distance(1).play()
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
 	if(isnull(turf_footstep) || !footstep_sounds[turf_footstep])
 		return
-	playsound(source, pick(footstep_sounds[turf_footstep][1]))\
+	create_sound(source, pick(footstep_sounds[turf_footstep][1]))\
 		.volume(footstep_sounds[turf_footstep][2] * volume)\
 		.vary(sound_vary)\
 		.extra_range(footstep_sounds[turf_footstep][3] + e_range)\
@@ -196,13 +196,13 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	// list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
+	// list returned by create_sound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 	var/picked_sound = pick(footstep_sounds[1])
 	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier
 	var/picked_range = footstep_sounds[3] + e_range + range_adjustment
 
-	heard_clients = playsound(source, picked_sound).volume(picked_volume).vary(sound_vary).extra_range(picked_range).falloff_distance(1).play()
+	heard_clients = create_sound(source, picked_sound).volume(picked_volume).vary(sound_vary).extra_range(picked_range).falloff_distance(1).play()
 	if(length(heard_clients))
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
 
@@ -223,6 +223,6 @@
 	if(CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 
-	playsound(source_loc, footstep_sounds).vary(sound_vary).falloff_distance(1).play()
+	create_sound(source_loc, footstep_sounds).vary(sound_vary).falloff_distance(1).play()
 
 #undef SHOULD_DISABLE_FOOTSTEPS

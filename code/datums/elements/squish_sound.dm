@@ -19,4 +19,4 @@
 
 	if(!isliving(crossed) || (crossed.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crossed.throwing)
 		return
-	playsound(source, sound_to_play).volume(HAS_TRAIT(crossed, TRAIT_LIGHT_STEP) ? 20 : 50).vary(TRUE).play()
+	create_sound(source, sound_to_play).volume(HAS_TRAIT(crossed, TRAIT_LIGHT_STEP) ? 20 : 50).vary(TRUE).play()

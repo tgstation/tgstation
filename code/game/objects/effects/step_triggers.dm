@@ -213,9 +213,9 @@
 		return
 
 	if(triggerer_only && ismob(A))
-		playsound(T, sound).volume(volume).vary(freq_vary).direct_listeners(A).play()
+		create_sound(T, sound).volume(volume).vary(freq_vary).direct_listeners(A).play()
 	else
-		playsound(T, sound).volume(volume).vary(freq_vary).extra_range(extra_range).play()
+		create_sound(T, sound).volume(volume).vary(freq_vary).extra_range(extra_range).play()
 
 	if(happens_once)
 		qdel(src)

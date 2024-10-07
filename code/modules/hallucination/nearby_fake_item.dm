@@ -67,12 +67,12 @@
 	image_icon_state = "e_sword_on_red"
 
 /datum/hallucination/nearby_fake_item/e_sword/generate_fake_image(mob/living/carbon/human/holder, file)
-	playsound(get_turf(holder), 'sound/items/weapons/saberon.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
+	create_sound(get_turf(holder), 'sound/items/weapons/saberon.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		playsound(get_turf(holder), 'sound/items/weapons/saberoff.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
+		create_sound(get_turf(holder), 'sound/items/weapons/saberoff.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/double_bladed
@@ -92,7 +92,7 @@
 	image_icon_state = "baton"
 
 /datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
-	playsound(holder, SFX_SPARKS).volume(75).vary(TRUE).direct_listeners(hallucinator).play()
+	create_sound(holder, SFX_SPARKS).volume(75).vary(TRUE).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/flash
@@ -101,12 +101,12 @@
 	image_icon_state = "flashtool"
 
 /datum/hallucination/nearby_fake_item/flash/generate_fake_image(mob/living/carbon/human/holder, file)
-	playsound(holder, 'sound/items/handling/component_pickup.ogg').volume(35).direct_listeners(hallucinator).play()
+	create_sound(holder, 'sound/items/handling/component_pickup.ogg').volume(35).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/flash/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		playsound(holder, 'sound/items/handling/component_drop.ogg').volume(35).direct_listeners(hallucinator).play()
+		create_sound(holder, 'sound/items/handling/component_drop.ogg').volume(35).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/armblade
@@ -115,12 +115,12 @@
 	image_icon_state = "arm_blade"
 
 /datum/hallucination/nearby_fake_item/armblade/generate_fake_image(mob/living/carbon/human/holder, file)
-	playsound(get_turf(holder), 'sound/effects/blob/blobattack.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
+	create_sound(get_turf(holder), 'sound/effects/blob/blobattack.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/armblade/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		playsound(get_turf(holder), 'sound/effects/blob/blobattack.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
+		create_sound(get_turf(holder), 'sound/effects/blob/blobattack.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
 	return ..()
 
 /datum/hallucination/nearby_fake_item/ttv

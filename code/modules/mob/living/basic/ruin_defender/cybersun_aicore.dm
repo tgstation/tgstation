@@ -69,7 +69,7 @@
 
 /obj/effect/temp_visual/cybersun_ai_core_death/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/misc/metal_creak.ogg').volume(100).vary(TRUE).play()
+	create_sound(src, 'sound/misc/metal_creak.ogg').volume(100).vary(TRUE).play()
 	Shake(1, 0, 2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 
@@ -77,7 +77,7 @@
 ///dramatic death animations
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/robot(my_turf)
-	playsound(loc, 'sound/effects/explosion/explosion2.ogg').volume(75).vary(TRUE).play()
+	create_sound(loc, 'sound/effects/explosion/explosion2.ogg').volume(75).vary(TRUE).play()
 	for (var/mob/witness in range(10, src))
 		if (!witness.client || !isliving(witness))
 			continue

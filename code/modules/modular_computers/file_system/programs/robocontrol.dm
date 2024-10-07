@@ -142,4 +142,4 @@
 			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
 			_alert_drones(msg, TRUE, current_user)
 			to_chat(current_user, msg)
-			playsound(src, 'sound/machines/terminal/terminal_success.ogg').volume(15).vary(TRUE).play()
+			create_sound(src, 'sound/machines/terminal/terminal_success.ogg').volume(15).vary(TRUE).play()

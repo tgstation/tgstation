@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(tts)
 		if(!holder.has_language(language))
 			continue
 		if(get_dist(listening_mob, turf_source) <= range)
-			playsound(turf_source, audio_to_use)\
+			create_sound(turf_source, audio_to_use)\
 				.volume(sound_volume)\
 				.falloff_distance(SOUND_DEFAULT_FALLOFF_DISTANCE)\
 				.falloff_exponent(SOUND_FALLOFF_EXPONENT)\

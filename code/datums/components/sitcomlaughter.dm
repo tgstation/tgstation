@@ -31,6 +31,6 @@
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, laugh_cooldown))
 		return
-	playsound(parent, pick(comedysounds)).volume(100).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).wait(laugh_delay).play()
+	create_sound(parent, pick(comedysounds)).volume(100).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).wait(laugh_delay).play()
 	post_comedy_callback?.Invoke(source)
 	COOLDOWN_START(src, laugh_cooldown, cooldown_time)

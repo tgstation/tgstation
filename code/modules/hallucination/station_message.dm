@@ -120,8 +120,8 @@
 	random_hallucination_weight = 0
 
 /datum/hallucination/station_message/clock_cult_ark/start()
-	playsound(hallucinator, 'sound/machines/clockcult/ark_deathrattle.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
-	playsound(hallucinator, 'sound/effects/clockcult_gateway_disrupted.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
+	create_sound(hallucinator, 'sound/machines/clockcult/ark_deathrattle.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
+	create_sound(hallucinator, 'sound/effects/clockcult_gateway_disrupted.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
 	addtimer(CALLBACK(src, PROC_REF(play_distant_explosion_sound)), 2.7 SECONDS)
 	return TRUE // does not call parent to finish up the sound in a few seconds
 
@@ -129,5 +129,5 @@
 	if(QDELETED(src))
 		return
 
-	playsound(get_turf(hallucinator), 'sound/effects/explosion/explosion_distant.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
+	create_sound(get_turf(hallucinator), 'sound/effects/explosion/explosion_distant.ogg').atmospherics_affected(FALSE).direct_listeners(hallucinator).play()
 	qdel(src)

@@ -212,7 +212,7 @@
 
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
-		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound).volume(80).vary(TRUE).play()
+		create_sound(get_turf(my_atom), equilibrium.reaction.mix_sound).volume(80).vary(TRUE).play()
 	qdel(equilibrium)
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
@@ -328,7 +328,7 @@
 	if(cached_my_atom)
 		if(!ismob(cached_my_atom)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
-				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound).volume(80).vary(TRUE).play()
+				create_sound(get_turf(cached_my_atom), selected_reaction.mix_sound).volume(80).vary(TRUE).play()
 			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
 		//use slime extract

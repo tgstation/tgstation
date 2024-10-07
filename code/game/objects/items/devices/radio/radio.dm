@@ -663,7 +663,7 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	playsound(src, SFX_MUFFLED_SPEECH).volume(60).vary(TRUE).extra_range(-4).play()
+	create_sound(src, SFX_MUFFLED_SPEECH).volume(60).vary(TRUE).extra_range(-4).play()
 	return ..()
 
 /obj/item/radio/entertainment/speakers/physical // Can be used as a physical item

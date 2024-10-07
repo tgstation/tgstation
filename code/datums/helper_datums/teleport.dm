@@ -97,7 +97,7 @@
 		return
 
 	if(sound)
-		playsound(location, sound).volume(60).vary(TRUE).play()
+		create_sound(location, sound).volume(60).vary(TRUE).play()
 	if(effect)
 		effect.attach(location)
 		effect.start()

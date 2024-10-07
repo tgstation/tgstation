@@ -466,7 +466,7 @@
  * Tram crash sound and visuals
  */
 /datum/transport_controller/linear/tram/proc/crash_fx()
-	playsound(nav_beacon, 'sound/vehicles/car_crash.ogg').volume(100).falloff_distance(DEFAULT_TRAM_LENGTH).play()
+	create_sound(nav_beacon, 'sound/vehicles/car_crash.ogg').volume(100).falloff_distance(DEFAULT_TRAM_LENGTH).play()
 	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 		if(tram_passenger.stat != CONSCIOUS)
@@ -887,9 +887,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		playsound(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).extra_range(-3).play()
+		create_sound(loc, 'sound/machines/closet/closet_open.ogg').volume(35).vary(TRUE).extra_range(-3).play()
 	else
-		playsound(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).extra_range(-3).play()
+		create_sound(loc, 'sound/machines/closet/closet_close.ogg').vary(TRUE).extra_range(-3).play()
 	cover_open = !cover_open
 	update_appearance()
 
@@ -919,7 +919,7 @@
 		tool.play_tool_sound(src)
 		if(!tool.use_tool(src, user, 6 SECONDS))
 			return
-		playsound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "unsecured")
 		deconstruct(TRUE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1041,7 +1041,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	cover_locked = FALSE
-	playsound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	create_sound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 

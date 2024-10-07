@@ -36,7 +36,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
 	var/datum/gas_mixture/base_mix = SSair.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
 	for(var/turf/open/turf_fix in connected_turfs)
@@ -62,7 +62,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/turf_loc in view(refill_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
@@ -86,7 +86,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/turf_loc in view(fill_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
@@ -118,7 +118,7 @@
 
 	chem_splash(detonation_turf, null, breach_range, reactants)
 
-	playsound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
 	update_mob()

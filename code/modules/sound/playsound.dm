@@ -1,7 +1,7 @@
 /**
  * Sets up a playsound datum with the minimum required information to play the sound.
  */
-/proc/playsound(source, sound)
+/proc/create_sound(source, sound)
 	RETURN_TYPE(/datum/playsound)
 	return new /datum/playsound(source, sound)
 

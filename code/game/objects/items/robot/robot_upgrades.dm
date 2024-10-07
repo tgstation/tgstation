@@ -607,7 +607,7 @@
 	smoke.start()
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg')).volume(80).vary(TRUE).extra_range(-1).play()
+		create_sound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg')).volume(80).vary(TRUE).extra_range(-1).play()
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -827,9 +827,9 @@
 
 	if(borgo.mind)
 		borgo.mind.grab_ghost()
-		playsound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg').volume(75).vary(TRUE).play()
+		create_sound(loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg').volume(75).vary(TRUE).play()
 	else
-		playsound(loc, 'sound/machines/ping.ogg').volume(75).vary(TRUE).play()
+		create_sound(loc, 'sound/machines/ping.ogg').volume(75).vary(TRUE).play()
 
 	borgo.revive()
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")

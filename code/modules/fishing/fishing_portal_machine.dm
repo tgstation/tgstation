@@ -155,7 +155,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	balloon_alert(user, "syndicate setting loaded")
-	playsound(src, SFX_SPARKS).volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+	create_sound(src, SFX_SPARKS).volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/fishing_portal_generator/interact(mob/user)

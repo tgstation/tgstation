@@ -184,7 +184,7 @@
 			go_back = rank > rank_changed ? 100 : 0
 
 			if(multitooled && (rank_changed > rank)) // make funny noises
-				playsound(parent, pick(rankup_sounds[rank_changed])).volume(70).direct_listeners(parent).play()
+				create_sound(parent, pick(rankup_sounds[rank_changed])).volume(70).direct_listeners(parent).play()
 
 			if((rank < hotswap_rank) && (rank_changed >= hotswap_rank))
 				var/mob/mob_parent = parent

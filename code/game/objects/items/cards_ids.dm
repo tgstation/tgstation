@@ -505,7 +505,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, 'sound/effects/empulse.ogg').volume(40).vary(TRUE).play()
+		create_sound(projection, 'sound/effects/empulse.ogg').volume(40).vary(TRUE).play()
 		my_store = new_store
 
 /**
@@ -768,7 +768,7 @@
 			ADD_TRAIT(src, TRAIT_NODROP, "psycho")
 			. += span_hypnophrase("Look at that subtle coloring... The tasteful thickness of it. Oh my God, it even has a watermark...")
 			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)
-			playsound(src, slowbeat).volume(40).channel(CHANNEL_HEARTBEAT).direct_listeners(user).play()
+			create_sound(src, slowbeat).volume(40).channel(CHANNEL_HEARTBEAT).direct_listeners(user).play()
 			if(isliving(user))
 				var/mob/living/living_user = user
 				living_user.adjust_jitter(10 SECONDS)

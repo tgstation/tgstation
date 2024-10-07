@@ -123,7 +123,7 @@
 	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
 		var/atom/movable/screen/splash/Spl = new(null, boarder.client, TRUE)
 		Spl.Fade(TRUE)
-		playsound(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg').volume(25).direct_listeners(boarder).play()
+		create_sound(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg').volume(25).direct_listeners(boarder).play()
 	boarder.update_parallax_teleport()
 
 

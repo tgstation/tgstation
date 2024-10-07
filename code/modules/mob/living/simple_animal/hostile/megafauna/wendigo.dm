@@ -164,7 +164,7 @@ Difficulty: Hard
 		return
 	var/list/all_turfs = RANGE_TURFS(range, origin)
 	for(var/sound_range = 0 to range)
-		playsound(origin, 'sound/effects/bamf.ogg').volume(600).vary(TRUE).extra_range(0).play()
+		create_sound(origin, 'sound/effects/bamf.ogg').volume(600).vary(TRUE).extra_range(0).play()
 		for(var/turf/stomp_turf in all_turfs)
 			if(get_dist(origin, stomp_turf) > sound_range)
 				continue
@@ -238,7 +238,7 @@ Difficulty: Hard
 	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
 	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
 	transformation_spell.Grant(user)
-	playsound(human_user.loc, 'sound/items/drink.ogg').volume(rand(10,50)).vary(TRUE).play()
+	create_sound(human_user.loc, 'sound/items/drink.ogg').volume(rand(10,50)).vary(TRUE).play()
 	qdel(src)
 
 /obj/item/crusher_trophy/wendigo_horn

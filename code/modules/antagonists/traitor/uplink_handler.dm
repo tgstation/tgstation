@@ -255,7 +255,7 @@
 	if(!(to_take in potential_objectives))
 		return
 
-	playsound(user, 'sound/music/antag/traitor/objective_taken.ogg').volume(100).channel(CHANNEL_TRAITOR).play()
+	create_sound(user, 'sound/music/antag/traitor/objective_taken.ogg').volume(100).channel(CHANNEL_TRAITOR).play()
 	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take

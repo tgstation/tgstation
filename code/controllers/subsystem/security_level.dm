@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(security_level)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE
 		return
-	playsound(GLOBAL_SOUND, current_security_level.looping_sound).play()
+	create_sound(GLOBAL_SOUND, current_security_level.looping_sound).play()
 
 /**
  * Sets a new security level as our current level

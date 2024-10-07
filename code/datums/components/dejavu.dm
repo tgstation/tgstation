@@ -138,12 +138,12 @@
 	no_rewinds_message = "\"Rewind complete. You have arrived at: 10 seconds ago.\""
 
 /datum/component/dejavu/timeline/rewind()
-	playsound(parent, 'sound/items/modsuit/rewinder.ogg').play()
+	create_sound(parent, 'sound/items/modsuit/rewinder.ogg').play()
 	. = ..()
 
 /datum/component/dejavu/wizard
 	rewind_message = "Your temporal ward activated, pulling you through spacetime!"
 
 /datum/component/dejavu/wizard/rewind()
-	playsound(parent, 'sound/items/modsuit/rewinder.ogg').play()
+	create_sound(parent, 'sound/items/modsuit/rewinder.ogg').play()
 	. = ..()

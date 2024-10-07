@@ -46,7 +46,7 @@
 
 		sleep(TRAM_DOOR_CYCLE_TIME)
 	else
-		playsound(src, doorOpen).volume(40).play()
+		create_sound(src, doorOpen).volume(40).play()
 		sleep(TRAM_DOOR_WARNING_TIME)
 
 	set_density(FALSE)
@@ -86,9 +86,9 @@
 	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || !safe)
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
-		playsound(src, SFX_SPARKS).volume(75).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
+		create_sound(src, SFX_SPARKS).volume(75).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	use_energy(50 JOULES)
-	playsound(src, doorClose).volume(40).play()
+	create_sound(src, doorClose).volume(40).play()
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_CLOSING, 1)

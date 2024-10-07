@@ -62,7 +62,7 @@
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
 		to_chat(user,span_warning("You shatter [src]."))
-	playsound(src, SFX_SHATTER).volume(70).vary(TRUE).play() //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play() //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
@@ -210,7 +210,7 @@
 		if(!affecting)
 			return
 		affecting.receive_damage(burn = 5)
-		playsound(src, SFX_SEAR).volume(25).vary(TRUE).play()
+		create_sound(src, SFX_SEAR).volume(25).vary(TRUE).play()
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))

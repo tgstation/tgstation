@@ -4,7 +4,7 @@
 		return
 
 	target.AddComponent(/datum/component/netpod_healing, pod = src)
-	playsound(src, 'sound/effects/submerge.ogg').volume(20).vary(TRUE).direct_listeners(target).play()
+	create_sound(src, 'sound/effects/submerge.ogg').volume(20).vary(TRUE).direct_listeners(target).play()
 	target.extinguish_mob()
 	update_use_power(ACTIVE_POWER_USE)
 
@@ -15,7 +15,7 @@
 		return
 
 	var/mob/player = occupant
-	playsound(src, 'sound/effects/splash.ogg').volume(60).vary(TRUE).direct_listeners(player).play()
+	create_sound(src, 'sound/effects/splash.ogg').volume(60).vary(TRUE).direct_listeners(player).play()
 	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
 	open_machine()
 
@@ -29,7 +29,7 @@
 		open_machine()
 		return
 
-	playsound(src, 'sound/effects/magic/blink.ogg').volume(25).vary(TRUE).direct_listeners(mob_occupant).play()
+	create_sound(src, 'sound/effects/magic/blink.ogg').volume(25).vary(TRUE).direct_listeners(mob_occupant).play()
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
 	mob_occupant.Paralyze(2 SECONDS)

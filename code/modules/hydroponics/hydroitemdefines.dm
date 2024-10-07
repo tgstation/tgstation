@@ -460,7 +460,7 @@
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
 		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
-		playsound(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
+		create_sound(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
@@ -499,7 +499,7 @@
 
 /obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).extra_range(-1).play()
+	create_sound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/hatchet/wooden
@@ -548,7 +548,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
+			create_sound(src, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/scythe/pre_attack(atom/target, mob/living/user, params)

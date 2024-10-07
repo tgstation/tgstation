@@ -64,7 +64,7 @@
 		return TRUE
 
 	user.balloon_alert(user, "taking aim...")
-	playsound(get_turf(user), 'sound/items/weapons/gun/general/chunkyrack.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
+	create_sound(get_turf(user), 'sound/items/weapons/gun/general/chunkyrack.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 
 	var/image/reticle = image(
 		icon = 'icons/mob/actions/actions_items.dmi',

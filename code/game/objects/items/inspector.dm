@@ -115,17 +115,17 @@
 		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
 		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
 		balloon_alert_to_viewers("scanning...")
-		playsound(src, 'sound/effects/genetics.ogg').volume(40).play()
+		create_sound(src, 'sound/effects/genetics.ogg').volume(40).play()
 		COOLDOWN_START(src, scanning_person, 4 SECONDS)
 		if(!do_after(user, 4 SECONDS, interacting_with))
 			return ITEM_INTERACT_BLOCKING
 
 	if(contraband_scan(interacting_with, user))
-		playsound(src, 'sound/machines/uplink/uplinkerror.ogg').volume(40).play()
+		create_sound(src, 'sound/machines/uplink/uplinkerror.ogg').volume(40).play()
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
 	else
-		playsound(src, 'sound/machines/ping.ogg').volume(20).play()
+		create_sound(src, 'sound/machines/ping.ogg').volume(20).play()
 		balloon_alert(user, "clear")
 		return ITEM_INTERACT_SUCCESS
 
@@ -208,13 +208,13 @@
 	create_slip()
 	switch(print_sound_mode)
 		if(INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-			playsound(src, 'sound/machines/high_tech_confirm.ogg').play()
+			create_sound(src, 'sound/machines/high_tech_confirm.ogg').play()
 		if(INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-			playsound(src, 'sound/items/biddledeep.ogg').play()
+			create_sound(src, 'sound/items/biddledeep.ogg').play()
 		if(INSPECTOR_PRINT_SOUND_MODE_HONK)
-			playsound(src, 'sound/items/bikehorn.ogg').play()
+			create_sound(src, 'sound/items/bikehorn.ogg').play()
 		if(INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY)
-			playsound(src, pick('sound/items/robofafafoggy.ogg', 'sound/items/robofafafoggy2.ogg')).play()
+			create_sound(src, pick('sound/items/robofafafoggy.ogg', 'sound/items/robofafafoggy2.ogg')).play()
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -373,7 +373,7 @@
 
 /obj/item/inspector/clown/bananium/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/effects/angryboat.ogg').volume(150).play()
+	create_sound(src, 'sound/effects/angryboat.ogg').volume(150).play()
 
 /obj/item/inspector/clown/bananium/create_slip()
 	if(time_mode == INSPECTOR_TIME_MODE_HONK)

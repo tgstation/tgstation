@@ -69,7 +69,7 @@
 	. = ..() //What could go wrong
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound).volume(40).vary(TRUE).play()
+		create_sound(src.loc, meteorsound).volume(40).vary(TRUE).play()
 		get_hit()
 
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
@@ -135,7 +135,7 @@
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			playsound(src, meteorsound).vary(TRUE).frequency(random_frequency).direct_listeners(M).play()
+			create_sound(src, meteorsound).vary(TRUE).frequency(random_frequency).direct_listeners(M).play()
 
 /**
  * Used to check if someone who has examined a meteor will receive an award.
@@ -341,7 +341,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/airhorn/AirHorn.ogg').volume(100).vary(TRUE).extra_range(-1).play()
+	create_sound(src, 'sound/items/airhorn/AirHorn.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
@@ -367,7 +367,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/items/weapons/zapbang.ogg').volume(100).vary(TRUE).extra_range(-1).play()
+	create_sound(src, 'sound/items/weapons/zapbang.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 	empulse(src, 3, 8)
 
 //Meaty Ore

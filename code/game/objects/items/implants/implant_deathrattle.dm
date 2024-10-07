@@ -71,7 +71,7 @@
 		// Deliberately the same message framing as ghost deathrattle
 		var/mob/living/recipient = implant.imp_in
 		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
-		playsound(recipient, sound).volume(75).direct_listeners(recipient).play()
+		create_sound(recipient, sound).volume(75).direct_listeners(recipient).play()
 
 /obj/item/implant/deathrattle
 	name = "deathrattle implant"
