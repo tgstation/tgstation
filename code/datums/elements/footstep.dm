@@ -80,9 +80,10 @@
 	steps_for_living[source] += 1
 	var/steps = steps_for_living[source]
 
-	if(steps >= 8)
-		// 0, 2, 4, 6 -> reset to 0, repeat
-		// right foot = 0, 4, left foot = 2, 6
+	if(steps >= 24)
+		// right foot = 0, 4, 8, 12, 16, 20
+		// left foot = 2, 6, 10, 14, 18, 22
+		// 24 -> return to 0 -> right foot, repeat
 		steps_for_living[source] = 0
 		steps = 0
 
@@ -142,18 +143,19 @@
 	var/footstep_type = null
 	var/list/footstep_sounds
 	var/stepcount = steps_for_living[source]
-	var/obj/item/bodypart/leg/left_leg = source.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/bodypart/leg/right_leg = source.get_bodypart(BODY_ZONE_R_LEG)
 	// any leg covering sounds defaults to shoe sounds
 	if((source.wear_suit?.body_parts_covered|source.w_uniform?.body_parts_covered|source.shoes?.body_parts_covered) & FEET)
 		footstep_type = FOOTSTEP_MOB_SHOE
 	// now pick whether to draw from left foot or right foot sounds
-	else if(stepcount == 2 || stepcount == 6)
-		footstep_sounds = left_leg?.special_footstep_sounds || right_leg?.special_footstep_sounds
-		footstep_type = left_leg?.footstep_type || right_leg?.footstep_type
 	else
-		footstep_sounds = right_leg?.special_footstep_sounds || left_leg?.special_footstep_sounds
-		footstep_type = right_leg?.footstep_type || left_leg?.footstep_type
+		var/obj/item/bodypart/leg/left_leg = source.get_bodypart(BODY_ZONE_L_LEG)
+		var/obj/item/bodypart/leg/right_leg = source.get_bodypart(BODY_ZONE_R_LEG)
+		if(stepcount == 2 || stepcount == 6)
+			footstep_sounds = left_leg?.special_footstep_sounds || right_leg?.special_footstep_sounds
+			footstep_type = left_leg?.footstep_type || right_leg?.footstep_type
+		else
+			footstep_sounds = right_leg?.special_footstep_sounds || left_leg?.special_footstep_sounds
+			footstep_type = right_leg?.footstep_type || left_leg?.footstep_type
 
 	// allow for snowflake effects to take priority
 	if(!length(footstep_sounds))
