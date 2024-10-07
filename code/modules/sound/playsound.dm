@@ -59,6 +59,10 @@
 
 /datum/playsound/New(source, sound)
 	..()
+
+	if(source && !isatom(source))
+		CRASH("Invalid source type ([source:type]) passed to [type]")
+
 	src.source = source
 
 	if(isnull(sound))

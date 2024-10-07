@@ -104,9 +104,7 @@
 		attack_verb_simple = string_list(list("burn", "singe"))
 		heat = heat_while_on
 		START_PROCESSING(SSobj, src)
-		if(fancy)
-
-		else
+		if(!fancy)
 			playsound(src.loc, 'sound/items/lighter/lighter_on.ogg').volume(100).vary(TRUE).play()
 		if(isliving(loc))
 			var/mob/living/male_model = loc
@@ -119,9 +117,6 @@
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
-		if(fancy)
-
-		else
 
 	set_light_on(lit)
 	update_appearance()

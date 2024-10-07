@@ -865,7 +865,6 @@
 			playsound(hit_atom, mob_throw_hit_sound).volume(volume).vary(TRUE).extra_range(-1).play()
 		else if(hitsound)
 			playsound(hit_atom, hitsound).volume(volume).vary(TRUE).extra_range(-1).play()
-		else
 
 	else
 		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg').volume(1).vary(volume).extra_range(-1).play()

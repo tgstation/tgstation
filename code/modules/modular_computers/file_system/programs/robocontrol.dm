@@ -121,7 +121,6 @@
 			if(id_card)
 				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
 				computer.RemoveID(usr)
-			else
 
 		if("changedroneaccess")
 			if(!computer || !computer.computer_id_slot || !id_card)
