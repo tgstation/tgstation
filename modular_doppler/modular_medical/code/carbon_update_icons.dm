@@ -1,7 +1,7 @@
 /mob/living/carbon/proc/update_bandage_overlays()
 	remove_overlay(BANDAGE_LAYER)
 
-	var/mutable_appearance/overlays = mutable_appearance('modular_doppler/modular_medical/icons/on_limb_overlays.dmi', "", -BANDAGE_LAYER)
+	var/mutable_appearance/overlays = mutable_appearance('modular_doppler/modular_medical/icons/wounds_onmob.dmi', "", -BANDAGE_LAYER)
 	overlays_standing[BANDAGE_LAYER] = overlays
 
 	for(var/b in bodyparts)

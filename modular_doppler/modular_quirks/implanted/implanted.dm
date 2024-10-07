@@ -1,5 +1,9 @@
 GLOBAL_LIST_INIT(possible_quirk_implants, list(
-	"Toolset" = /obj/item/organ/internal/cyberimp/arm/toolset,
+	"Engineering Toolset" = /obj/item/organ/internal/cyberimp/arm/toolset,
+	"Surgery Toolset" = /obj/item/organ/internal/cyberimp/arm/surgery,
+	"Hydroponics Toolset" = /obj/item/organ/internal/cyberimp/arm/botany,
+	"Razorclaw Implant" = /obj/item/organ/internal/cyberimp/arm/razor_claws,
+	"Excavator Implant" = /obj/item/organ/internal/cyberimp/arm/mining_drill,
 ))
 
 /datum/quirk/implanted_quirk
@@ -17,7 +21,7 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 
 /datum/quirk/implanted_quirk/add_unique(client/client_source)
 	var/desired_implant = GLOB.possible_quirk_implants[client_source?.prefs?.read_preference(/datum/preference/choiced/implanted_quirk)]
-	if(isnull(desired_implant) || desired_implant == "Random")  //Client gone or they chose a random prosthetic
+	if(isnull(desired_implant))  //Client gone or they chose a random prosthetic
 		desired_implant = GLOB.possible_quirk_implants[pick(GLOB.possible_quirk_implants)]
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/organ/internal/cybernetic = new desired_implant()
