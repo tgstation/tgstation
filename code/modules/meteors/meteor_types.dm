@@ -125,7 +125,6 @@
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
-		var/sound/meteor_sound = sound(meteorsound)
 		var/random_frequency = get_rand_frequency()
 
 		for(var/mob/M in GLOB.player_list)
