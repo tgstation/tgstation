@@ -48,11 +48,15 @@
 	var/datum/language_holder/lang_holder = new species.species_language_holder()
 	for(var/language in preferences.get_adjusted_language_holder())
 		preferences.languages[language] = LANGUAGE_SPOKEN
+		preferences.languages[language] = LANGUAGE_UNDERSTOOD
 	qdel(lang_holder)
 	qdel(species)
 
 	for(var/language in lang_holder.spoken_languages)
 		preferences.languages[language] = LANGUAGE_SPOKEN
+
+	for(var/language in lang_holder.understood_languages)
+		preferences.languages[language] = LANGUAGE_UNDERSTOOD
 
 	qdel(lang_holder)
 	qdel(species)
@@ -73,6 +77,7 @@
 		preferences.languages = list()
 		for(var/language in lang_holder.spoken_languages)
 			preferences.languages[language] = LANGUAGE_SPOKEN
+			preferences.languages[language] = LANGUAGE_UNDERSTOOD
 
 	var/list/selected_languages = list()
 	var/list/unselected_languages = list()
@@ -84,6 +89,8 @@
 			continue
 
 		if(species.always_customizable && !(language.type in lang_holder.spoken_languages)) // For the ghostrole species. We don't want ashwalkers speaking beachtongue now.
+			continue
+		if(species.always_customizable && !(language.type in lang_holder.understood_languages)) // For the ghostrole species. We don't want ashwalkers speaking beachtongue now.
 			continue
 		if(preferences.languages[language.type])
 			selected_languages += list(list(
