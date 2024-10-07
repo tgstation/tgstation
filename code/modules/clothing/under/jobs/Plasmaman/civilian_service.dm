@@ -11,7 +11,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
-	var/next_extinguish = 0
+	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
@@ -22,21 +22,33 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
-	. += span_notice("There are [extinguishes_left] extinguisher charges left in this suit.")
+	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charges left in this suit.")
 
-/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_ICLOTHING)
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/under/plasmaman/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/under/plasmaman/process(seconds_per_tick)
+	if (!ishuman(loc))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	var/mob/living/carbon/human/owner = loc
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+		return
+
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(owner))
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
@@ -53,7 +65,6 @@
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/canisters.dmi'
-
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
@@ -134,20 +145,23 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/clown/process(seconds_per_tick)
+	if (!ishuman(loc))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
-			H.extinguish_mob()
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			var/datum/reagents/foamreagent = new /datum/reagents(15)
-			foamreagent.add_reagent(/datum/reagent/lube, 15)
-			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
-			foam.start() //Truly terrifying.
+	var/mob/living/carbon/human/owner = loc
+	if (owner.on_fire || !owner.fire_stacks || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+		return
+
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
+	owner.extinguish_mob()
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	var/datum/reagents/foamreagent = new /datum/reagents(15)
+	foamreagent.add_reagent(/datum/reagent/lube, 15)
+	foam.set_up(4, holder = src, location = get_turf(owner), carry = foamreagent)
+	foam.start() //Truly terrifying.

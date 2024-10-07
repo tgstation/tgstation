@@ -9,10 +9,9 @@
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
 	fishing_modifier = 0
-	var/next_extinguish = 0
+	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
-
 
 /datum/armor/eva_plasmaman
 	bio = 100
@@ -23,21 +22,33 @@
 	. = ..()
 	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.")
 
+/obj/item/clothing/suit/space/eva/plasmaman/equipped(mob/living/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_OCLOTHING)
+		START_PROCESSING(SSprocessing, src)
 
-/obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/suit/space/eva/plasmaman/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/suit/space/eva/plasmaman/process(seconds_per_tick)
+	. = ..()
+
+	if (!ishuman(loc))
 		return
 
-	if(H.fire_stacks > 0)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	var/mob/living/carbon/human/owner = loc
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+		return
 
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(owner))
 
 //I just want the light feature of helmets
 /obj/item/clothing/head/helmet/space/plasmaman
