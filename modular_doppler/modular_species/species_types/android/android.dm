@@ -30,6 +30,7 @@
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,*/
 		TRAIT_STABLEHEART,
+		TRAIT_STABLELIVER,
 	)
 	reagent_flags = PROCESS_SYNTHETIC
 	mutantheart = /obj/item/organ/internal/heart/cybernetic/tier2
