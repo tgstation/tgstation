@@ -364,7 +364,7 @@
 /datum/cardboard_cutout/heretic
 	name = "Heretic"
 	applied_name = "Unknown"
-	applied_desc = "A cardboard cutout of a Heretic"
+	applied_desc = "A cardboard cutout of a Heretic."
 	outfit = /datum/outfit/heretic_hallucination
 
 /datum/cardboard_cutout/changeling
