@@ -157,9 +157,6 @@
 	if(spatial_aware && !cache)
 		cache = spatial_tracking_by_mob_tag[mob.tag] = new /datum/sound_spatial_cache
 
-	var/list/last_mob_coords = cache.mob_coords
-	var/list/last_src_coords = cache.source_coords
-
 	var/mob_x = mob.x
 	var/mob_y = mob.y
 	var/mob_z = mob.z
@@ -168,6 +165,8 @@
 	var/source_z = source.z
 
 	if(spatial_aware)
+		var/list/last_mob_coords = cache.mob_coords
+		var/list/last_src_coords = cache.source_coords
 		if( \
 			last_mob_coords[1] == mob_x && last_mob_coords[2] == mob_y && last_mob_coords[3] == mob_z && \
 			last_src_coords[1] == source_x && last_src_coords[2] == source_y && last_src_coords[3] == source_z \
@@ -182,9 +181,9 @@
 
 	var/effective_distance
 	if(mob_z == source_z)
-		effective_distance = get_dist_euclidean(src, source)
+		effective_distance = get_dist_euclidean(mob, source)
 	else // not the same z level, use the penalty modifier
-		effective_distance = get_dist_euclidean(src, locate(source_x, source_y, mob_z))
+		effective_distance = get_dist_euclidean(mob, locate(source_x, source_y, mob_z))
 		effective_distance *= ((z_traversal_modifier / 1) ** abs(mob_z - source_z))
 	// https://www.desmos.com/calculator/sqdfl8ipgf
 	sound_update.volume = volume - ((max(effective_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(range, effective_distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
@@ -194,9 +193,9 @@
 		// if you want to implement that be my guest
 
 		var/pressure_factor = 1
-		var/turf/src_turf = get_turf(src)
+		var/turf/mob_turf = get_turf(mob)
 		var/turf/source_turf = get_turf(source)
-		var/datum/gas_mixture/hearer_env = src_turf.return_air()
+		var/datum/gas_mixture/hearer_env = mob_turf.return_air()
 		var/datum/gas_mixture/source_env = source_turf.return_air()
 
 		if(hearer_env && source_env)
