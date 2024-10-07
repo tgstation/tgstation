@@ -4953,6 +4953,7 @@
 #include "code\modules\mob\living\basic\pets\fox.dm"
 #include "code\modules\mob\living\basic\pets\penguin.dm"
 #include "code\modules\mob\living\basic\pets\pet.dm"
+#include "code\modules\mob\living\basic\pets\pet_designer.dm"
 #include "code\modules\mob\living\basic\pets\sloth.dm"
 #include "code\modules\mob\living\basic\pets\cat\bread_cat_ai.dm"
 #include "code\modules\mob\living\basic\pets\cat\cat.dm"

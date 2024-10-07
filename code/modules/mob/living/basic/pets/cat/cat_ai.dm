@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/cat
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_HOSTILE_MEOWS = list("Mawwww", "Mrewwww", "mhhhhng..."),
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/cat),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/pet/cat/kitten),
@@ -9,6 +10,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/reside_in_home,
 		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
