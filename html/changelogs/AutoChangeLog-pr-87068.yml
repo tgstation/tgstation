@@ -1,0 +1,4 @@
+author: "siliconOpossum"
+delete-after: True
+changes:
+  - bugfix: "The preview for writing on paper updates in real-time again"

@@ -13,8 +13,6 @@
 	var/alpha_on_aggro
 	/// visibility of our icon when deaggroed
 	var/alpha_on_deaggro
-	/// do we currently have a target
-	var/atom/current_target
 
 /datum/component/appearance_on_aggro/Initialize(aggro_state, overlay_icon, overlay_state, alpha_on_aggro, alpha_on_deaggro)
 	if (!isliving(parent))
@@ -27,7 +25,7 @@
 
 /datum/component/appearance_on_aggro/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_AI_BLACKBOARD_KEY_SET(target_key), PROC_REF(on_set_target))
-	RegisterSignal(parent, COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key), PROC_REF(on_clear_target))
+	RegisterSignals(parent, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key), COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN), PROC_REF(revert_appearance))
 	if (!isnull(aggro_state))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_icon_state_updated))
 	if (!isnull(aggro_overlay))
@@ -35,32 +33,31 @@
 
 /datum/component/appearance_on_aggro/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_AI_BLACKBOARD_KEY_SET(target_key), COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key)))
+	UnregisterSignal(parent, list(
+		COMSIG_AI_BLACKBOARD_KEY_SET(target_key),
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(target_key),
+		COMSIG_LIVING_DEATH,
+		COMSIG_MOB_LOGIN,
+	))
 
 /datum/component/appearance_on_aggro/proc/on_set_target(mob/living/source)
 	SIGNAL_HANDLER
 
-	var/atom/target = source.ai_controller.blackboard[target_key]
+	var/atom/target = source.ai_controller?.blackboard[target_key]
 	if (QDELETED(target))
 		return
 
-	current_target = target
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
 	if (!isnull(alpha_on_aggro))
 		animate(source, alpha = alpha_on_aggro, time = 2 SECONDS)
 
 /datum/component/appearance_on_aggro/Destroy()
-	if (!isnull(current_target))
-		revert_appearance(parent)
+	revert_appearance(parent)
 	return ..()
 
-/datum/component/appearance_on_aggro/proc/on_clear_target(atom/source)
-	SIGNAL_HANDLER
-	revert_appearance(parent)
-
 /datum/component/appearance_on_aggro/proc/revert_appearance(mob/living/source)
-	current_target = null
+	SIGNAL_HANDLER
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
 	if (!isnull(alpha_on_deaggro))
@@ -70,11 +67,11 @@
 	SIGNAL_HANDLER
 	if (source.stat == DEAD)
 		return
-	source.icon_state = isnull(current_target) ? initial(source.icon_state) : aggro_state
+	source.icon_state = source.ai_controller?.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
 
-/datum/component/appearance_on_aggro/proc/on_overlays_updated(atom/source, list/overlays)
+/datum/component/appearance_on_aggro/proc/on_overlays_updated(mob/living/basic/source, list/overlays)
 	SIGNAL_HANDLER
 
-	if (isnull(current_target))
+	if(!(source.ai_controller?.blackboard_key_exists(target_key)))
 		return
 	overlays += aggro_overlay

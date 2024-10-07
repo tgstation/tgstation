@@ -15,7 +15,7 @@
 	///The type of projectile that fires from attacks.
 	var/projectiletype = /obj/projectile/neurotoxin/damaging
 	///The sound that plays when the projectile is fired.
-	var/projectilesound = 'sound/weapons/pierce.ogg'
+	var/projectilesound = 'sound/items/weapons/pierce.ogg'
 
 /mob/living/basic/alien/queen/Initialize(mapload)
 	. = ..()

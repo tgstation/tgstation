@@ -1,6 +1,0 @@
-author: "Redrover1760"
-delete-after: True
-changes:
-  - bugfix: "Fixed light overloads not draining significant amounts of energy."
-  - bugfix: "Power sinks now drain APCs at a significant rate instead of glacially slow."
-  - balance: "Power sinks are adjusted to not explode within 30 seconds of the average power output a station produces."

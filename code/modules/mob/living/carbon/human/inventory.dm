@@ -209,6 +209,7 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
+		hud_used?.update_locked_slots()
 
 		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
 		if(equipping.body_parts_covered & FEET || (equipping.flags_inv | equipping.transparent_protection) & HIDESHOES)
@@ -300,6 +301,7 @@
 
 	update_equipment_speed_mods()
 	update_obscured_slots(I.flags_inv)
+	hud_used?.update_locked_slots()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
@@ -374,7 +376,7 @@
 /// take the most recent item out of a slot or place held item in a slot
 
 /mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
-	if(incapacitated())
+	if(incapacitated)
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)

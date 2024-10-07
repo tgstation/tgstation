@@ -133,7 +133,7 @@
 	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(affected_mob, "You feel confused and disoriented.")
 		if(prob(30))
-			SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
+			SEND_SOUND(affected_mob, sound('sound/items/weapons/flash_ring.ogg'))
 
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
@@ -1093,7 +1093,7 @@
 	var/mob/living/carbon/human/human_mob = affected_mob
 	if (ismonkey(human_mob))
 		if (!HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
-			human_mob.dna.remove_mutation(/datum/mutation/human/race)
+			human_mob.dna.remove_mutation(/datum/mutation/human/race, mutadone = TRUE)
 	else if (HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
 		human_mob.monkeyize()
 

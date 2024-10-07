@@ -150,7 +150,7 @@
 	name = "Syndicate Rebar Crossbow"
 	desc = "A much more professional version of the engineer's bootleg rebar crossbow. 3 shot mag, quicker loading, and better ammo. Owners manual included."
 	item = /obj/item/storage/box/syndie_kit/rebarxbowsyndie
-	cost = 10
+	cost = 12
 	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
 
 /datum/uplink_item/role_restricted/magillitis_serum
@@ -361,10 +361,10 @@
 	name = "Simian Agent Reinforcements"
 	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
 		They've been trained to operate machinery and can read, but they can't speak Common. \
-		Please note that these are free-range monkeys that don't react with Mutadone."
+		Please note that these are free-range monkeys that don't react with Mutadone. May contain severe allergies to species-changing phenomena."
 	item = /obj/item/antag_spawner/loadout/monkey_man
 	cost = 6
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	restricted = TRUE
 	refundable = TRUE
 
@@ -375,7 +375,7 @@
 	item = /obj/item/storage/toolbox/guncase/monkeycase
 	cost = 4
 	limited_stock = 3
-	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN, JOB_PUN_PUN)
 	restricted = TRUE
 	refundable = FALSE
 

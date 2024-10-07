@@ -13,11 +13,11 @@
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 
-	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/voice/ed209_20sec.ogg')
+	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/mobs/non-humanoids/ed209/ed209_20sec.ogg')
 
 	var/lastfired = 0
 	var/shot_delay = 15
-	var/shoot_sound = 'sound/weapons/laser.ogg'
+	var/shoot_sound = 'sound/items/weapons/laser.ogg'
 	var/projectile = /obj/projectile/beam/disabler
 	var/fair_market_projectile = /obj/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
 
@@ -42,7 +42,7 @@
 	var/list/targets = list()
 	for(var/mob/living/carbon/nearby_carbon in view(7, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(nearby_carbon.incapacitated())
+		if(nearby_carbon.incapacitated)
 			continue
 		threatlevel = nearby_carbon.assess_threat(judgement_criteria)
 		if(threatlevel < THREAT_ASSESS_DANGEROUS)
@@ -59,10 +59,10 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+	playsound(src, pick('sound/mobs/non-humanoids/ed209/ed209_20sec.ogg', 'sound/mobs/non-humanoids/ed209/edplaceholder.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
-	shoot_sound = 'sound/weapons/laser.ogg'
+	shoot_sound = 'sound/items/weapons/laser.ogg'
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		projectile = /obj/projectile/beam
 	else

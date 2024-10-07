@@ -27,9 +27,9 @@
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
 	/// Sound to play at the end of a burst
-	var/overheatsound = 'sound/weapons/sear.ogg'
+	var/overheatsound = 'sound/items/weapons/sear.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	var/firesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
 	/// What gets spawned if the object is undeployed
@@ -70,7 +70,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -85,7 +85,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/deployable_turret/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(user.incapacitated() || !istype(user))
+	if(user.incapacitated || !istype(user))
 		return
 	M.forceMove(get_turf(src))
 	. = ..()
@@ -103,7 +103,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
@@ -129,7 +129,7 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, target_turf, modifiers)
 
 /obj/machinery/deployable_turret/proc/direction_track(mob/user, atom/targeted)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
@@ -169,7 +169,7 @@
 
 /obj/machinery/deployable_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
-	if(target == user || user.incapacitated() || target == get_turf(src))
+	if(target == user || user.incapacitated || target == get_turf(src))
 		return
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
@@ -187,7 +187,7 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/deployable_turret/, fire_helper), user), i*rate_of_fire)
 
 /obj/machinery/deployable_turret/proc/fire_helper(mob/user)
-	if(user.incapacitated() || !(user in buckled_mobs))
+	if(user.incapacitated || !(user in buckled_mobs))
 		return
 	update_positioning() //REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
@@ -221,8 +221,8 @@
 	number_of_shots = 3
 	cooldown_duration = 2 SECONDS
 	rate_of_fire = 2
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/hmg/hmg.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
@@ -259,11 +259,11 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/deployable_turret/E = user.buckled
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
 	E.direction_track(user, interacting_with)
 	E.checkfire(interacting_with, user)
 
-/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)

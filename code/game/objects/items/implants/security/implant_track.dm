@@ -48,7 +48,7 @@
 		return
 
 	if(params["implant_action"] == "warn")
-		var/warning = tgui_input_text(user, "What warning do you want to send to [imp_in.name]?", "Messaging")
+		var/warning = tgui_input_text(user, "What warning do you want to send to [imp_in.name]?", "Messaging", max_length = MAX_MESSAGE_LEN)
 		if(!warning || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
 			return TRUE
 		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))

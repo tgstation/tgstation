@@ -115,7 +115,7 @@ export function Evidence(props: EvidenceProps) {
       <Stack vertical>
         <Stack.Item>
           <Box className="Evidence__Box">
-            <Flex justify="space-between" align="center">
+            <Flex justify="space-between" mt={0.5} align="top">
               <Flex.Item align="left">
                 <Pin
                   evidence={evidence}

@@ -225,11 +225,11 @@
 
 	for(var/y in first_y to last_y)
 
-		var/y_pixel_offset = world.icon_size * y
+		var/y_pixel_offset = ICON_SIZE_Y * y
 
 		for(var/x in first_x to last_x)
 
-			var/x_pixel_offset = world.icon_size * x
+			var/x_pixel_offset = ICON_SIZE_X * x
 
 			var/turf/set_turf = locate(x + min_x, y + min_y, z)
 
@@ -294,8 +294,8 @@
 		destination = travel_direction
 		travel_direction = get_dir_multiz(loc, travel_direction)
 
-	var/x_offset = ROUND_UP(bound_width / 32) - 1 //how many tiles our horizontally farthest edge is from us
-	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
+	var/x_offset = ROUND_UP(bound_width / ICON_SIZE_X) - 1 //how many tiles our horizontally farthest edge is from us
+	var/y_offset = ROUND_UP(bound_height / ICON_SIZE_Y) - 1 //how many tiles our vertically farthest edge is from us
 
 	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
 	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
@@ -612,7 +612,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Gotta be awake and aware
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	// Maintain the god given right to fight an elevator
 	if(user.combat_mode)
@@ -704,7 +704,7 @@
  * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
  */
 /obj/structure/transport/linear/proc/check_menu(mob/user, starting_loc)
-	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
+	if(user.incapacitated || !user.Adjacent(src) || starting_loc != src.loc)
 		return FALSE
 	return TRUE
 

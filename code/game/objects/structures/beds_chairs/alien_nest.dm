@@ -38,7 +38,7 @@
 		unbuckle_mob(captive)
 		add_fingerprint(hero)
 		return
-	
+
 	captive.visible_message(span_warning("[captive.name] struggles to break free from the gelatinous resin!"),
 		span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),
 		span_hear("You hear squelching..."))
@@ -56,7 +56,7 @@
 	add_fingerprint(hero)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated || M.buckled )
 		return
 
 	if(M.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
@@ -95,9 +95,9 @@
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+			playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.combat_mode)

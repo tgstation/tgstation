@@ -194,7 +194,7 @@ GLOBAL_VAR(basketball_game)
 			player_client.prefs.safe_transfer_prefs_to(baller, is_antag = TRUE)
 		baller.key = player_key
 
-		SEND_SOUND(baller, sound('sound/misc/whistle.ogg', volume=30))
+		SEND_SOUND(baller, sound('sound/items/whistle/whistle.ogg', volume=30))
 		if(is_player_referee)
 			to_chat(baller, span_notice("You are a referee. Make sure the teams play fair and use your whistle to call fouls appropriately."))
 		else

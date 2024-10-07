@@ -52,6 +52,8 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
+/// From base of /client/Move(): (new_loc, direction)
+#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -140,6 +142,11 @@
 	#define SPEECH_SAYMODE 10
 	#define SPEECH_MODS 11
 
+///from /datum/component/speechmod/handle_speech(): ()
+#define COMSIG_TRY_MODIFY_SPEECH "try_modify_speech"
+	///Return value if we prevent speech from being modified
+	#define PREVENT_MODIFY_SPEECH 1
+
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
@@ -151,8 +158,6 @@
 /// from base of mob/swap_hand(): ()
 /// Performed after the hands are swapped.
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
-///from base of /mob/verb/pointed: (atom/A)
-#define COMSIG_MOB_POINTED "mob_pointed"
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
@@ -172,8 +177,8 @@
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///From /datum/component/creamed/Initialize()
-#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /datum/component/face_decal/splat/Initialize()
+#define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
@@ -249,3 +254,10 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// from /mob/Process_Spacemove(movement_dir, continuous_move): (movement_dir, continuous_move, atom/backup)
+#define COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE "mob_attempt_halt_spacemove"
+	#define COMPONENT_PREVENT_SPACEMOVE_HALT (1<<0)
+
+/// from /mob/update_incapacitated(): (old_incap, new_incap)
+#define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"

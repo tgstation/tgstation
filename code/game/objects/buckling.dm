@@ -266,7 +266,7 @@
  */
 /atom/movable/proc/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
 	// Standard adjacency and other checks.
-	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
+	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated || target.anchored)
 		return FALSE
 
 	if(iscarbon(user))

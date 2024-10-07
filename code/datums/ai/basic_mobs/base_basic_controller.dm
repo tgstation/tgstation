@@ -12,17 +12,32 @@
 
 	return ..() //Run parent at end
 
-
-/datum/ai_controller/basic_controller/able_to_run()
+/datum/ai_controller/basic_controller/on_stat_changed(mob/living/source, new_stat)
 	. = ..()
-	if(!isliving(pawn))
-		return
-	var/mob/living/living_pawn = pawn
-	var/incap_flags = NONE
-	if (ai_traits & CAN_ACT_IN_STASIS)
-		incap_flags |= IGNORE_STASIS
-	if(!(ai_traits & CAN_ACT_WHILE_DEAD) && (living_pawn.incapacitated(incap_flags) || living_pawn.stat))
+	update_able_to_run()
+
+/datum/ai_controller/basic_controller/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+	if(ai_traits & PAUSE_DURING_DO_AFTER)
+		RegisterSignals(pawn, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_able_to_run))
+
+
+/datum/ai_controller/basic_controller/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
+	return ..()
+
+/datum/ai_controller/basic_controller/get_able_to_run()
+	. = ..()
+	if(!.)
 		return FALSE
+	var/mob/living/living_pawn = pawn
+	if(!(ai_traits & CAN_ACT_WHILE_DEAD))
+		// Unroll for flags here
+		if (ai_traits & CAN_ACT_IN_STASIS && (living_pawn.stat || INCAPACITATED_IGNORING(living_pawn, INCAPABLE_STASIS)))
+			return FALSE
+		else if(IS_DEAD_OR_INCAP(living_pawn))
+			return FALSE
 	if(ai_traits & PAUSE_DURING_DO_AFTER && LAZYLEN(living_pawn.do_afters))
 		return FALSE
 

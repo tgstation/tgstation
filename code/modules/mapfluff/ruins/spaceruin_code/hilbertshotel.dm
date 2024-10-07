@@ -72,7 +72,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(target, span_warning("You too far away from \the [src] to enter it!"))
 
 	// If the target is incapacitated after selecting a room, they're not allowed to teleport.
-	if(target.incapacitated())
+	if(target.incapacitated)
 		to_chat(target, span_warning("You aren't able to activate \the [src] anymore!"))
 
 	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
@@ -395,7 +395,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	has_gravity = TRUE
 	area_flags = NOTELEPORT | HIDDEN_AREA
 	static_lighting = TRUE
-	ambientsounds = list('sound/ambience/servicebell.ogg')
+	ambientsounds = list('sound/ambience/ruin/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
 	var/datum/turf_reservation/reservation

@@ -193,8 +193,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
-	return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+		return pick('sound/mobs/humanoids/human/gasp/gasp_female1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female2.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female3.ogg')
+	return pick('sound/mobs/humanoids/human/gasp/gasp_male1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_male2.ogg')
 
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
@@ -234,20 +234,6 @@
 	key = "grimace"
 	key_third_person = "grimaces"
 	message = "grimaces."
-
-/datum/emote/living/jump
-	key = "jump"
-	key_third_person = "jumps"
-	message = "jumps!"
-	hands_use_check = TRUE
-
-/datum/emote/living/jump/run_emote(mob/living/user, params, type_override, intentional)
-	. = ..()
-	animate(user, pixel_y = user.pixel_y + 4, time = 0.1 SECONDS)
-	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
-
-/datum/emote/living/jump/get_sound(mob/living/user)
-	return 'sound/weapons/thudswoosh.ogg'
 
 /datum/emote/living/kiss
 	key = "kiss"
@@ -450,7 +436,6 @@
 		return
 	return user.dna.species.get_sniff_sound(user)
 
-
 /datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
@@ -458,6 +443,12 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+
+// eventually we want to give species their own "snoring" sounds
+/datum/emote/living/snore/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_snore_sound(user)
 
 /datum/emote/living/stare
 	key = "stare"
@@ -757,4 +748,4 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	return 'sound/voice/human/whistle1.ogg'
+	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'

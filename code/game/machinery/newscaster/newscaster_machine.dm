@@ -405,14 +405,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("setCriminalName")
-			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", MAX_NAME_LEN, multiline = FALSE)
+			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
 			if(!temp_name)
 				return TRUE
 			criminal_name = temp_name
 			return TRUE
 
 		if("setCrimeData")
-			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", MAX_BROADCAST_LEN, multiline = TRUE)
+			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 			if(!temp_desc)
 				return TRUE
 			crime_description = temp_desc
@@ -529,9 +529,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(machine_stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 
 /obj/machinery/newscaster/on_deconstruction(disassembled)
@@ -542,7 +542,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 
 
 /obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
@@ -623,7 +623,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(channel)
 		if(update_alert)
 			say("Breaking news from [channel]!")
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -703,7 +703,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(channel_name == potential_channel.channel_ID)
 			current_channel = potential_channel
 			break
-	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
+	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 	if(temp_message)
@@ -745,10 +745,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/delete_bounty_request()
 	if(!active_request || !current_user)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
 	if(active_request?.owner != current_user.account_holder)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
 	say("Deleted current request.")
 	GLOB.request_list.Remove(active_request)
@@ -759,7 +759,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/create_bounty()
 	if(!current_user || !bounty_text)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
 	for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
 		if(iterated_station_request.req_number == current_user.account_id)
@@ -779,11 +779,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		say("No ID detected.")
 		return TRUE
 	if(current_user.account_holder == active_request.owner)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
 	for(var/new_apply in active_request?.applicants)
 		if(current_user.account_holder == active_request?.applicants[new_apply])
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 			return TRUE
 	active_request.applicants += list(current_user)
 
@@ -794,7 +794,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user)
 		return TRUE
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
 	say("Paid out [active_request.value] credits.")

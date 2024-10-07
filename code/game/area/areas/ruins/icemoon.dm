@@ -57,6 +57,11 @@
 /area/ruin/planetengi
 	name = "\improper Engineering Outpost"
 
+/area/ruin/huntinglodge
+	name = "\improper Hunting Lodge"
+	mood_bonus = -5
+	mood_message = "Something feels off..."
+
 /area/ruin/smoking_room/house
 	name = "\improper Tobacco House"
 	sound_environment = SOUND_ENVIRONMENT_CITY
@@ -75,3 +80,7 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
+/area/ruin/syndielab
+	name = "\improper Syndicate Lab"
+	ambience_index = AMBIENCE_DANGER
+	sound_environment = SOUND_ENVIRONMENT_CAVE

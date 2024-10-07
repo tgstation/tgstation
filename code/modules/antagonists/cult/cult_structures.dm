@@ -1,7 +1,7 @@
 // Cult buildings!
 /obj/structure/destructible/cult
 	icon = 'icons/obj/antags/cult/structures.dmi'
-	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
+	break_sound = 'sound/effects/hallucinations/veryfar_noise.ogg'
 	density = TRUE
 	anchored = TRUE
 	light_power = 2
@@ -137,7 +137,7 @@
 
 /*
  * Set up and populate our list of options.
- * Overriden by subtypes.
+ * Overridden by subtypes.
  *
  * The list of options is a associated list of format:
  *   item_name = list(
@@ -201,7 +201,7 @@
  * Returns TRUE if the user is a living mob that is a cultist and is not incapacitated.
  */
 /obj/structure/destructible/cult/item_dispenser/proc/check_menu(mob/user)
-	return isliving(user) && is_cultist_check(user) && !user.incapacitated()
+	return isliving(user) && is_cultist_check(user) && !user.incapacitated
 
 // Spooky looking door used in gateways. Or something.
 /obj/effect/gateway

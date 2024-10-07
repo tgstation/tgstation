@@ -141,11 +141,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	add_to_dead_mob_list()
 
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.apply_to_new_mob(src)
 
 	. = ..()
 
@@ -486,7 +483,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
-	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+	orbitsize -= (orbitsize/ICON_SIZE_ALL)*(ICON_SIZE_ALL*0.25)
 
 	var/rot_seg
 

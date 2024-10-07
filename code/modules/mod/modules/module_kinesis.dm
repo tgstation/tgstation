@@ -67,7 +67,7 @@
 	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(seconds_per_tick)
-	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
+	if(!mod.wearer.client || INCAPACITATED_IGNORING(mod.wearer, INCAPABLE_GRAB))
 		clear_grab()
 		return
 	if(!range_check(grabbed_atom))
@@ -81,12 +81,12 @@
 		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
-		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
+		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - ICON_SIZE_X/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - ICON_SIZE_Y/2)
 			return //spare us redrawing if we are standing still
-		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 		kinesis_beam.redrawing()
 		return
-	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
 	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
@@ -100,13 +100,13 @@
 	var/pixel_y_change = 0
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
-		pixel_y_change = world.icon_size/2
+		pixel_y_change = ICON_SIZE_Y/2
 	else if(direction & SOUTH)
-		pixel_y_change = -world.icon_size/2
+		pixel_y_change = -ICON_SIZE_Y/2
 	if(direction & EAST)
-		pixel_x_change = world.icon_size/2
+		pixel_x_change = ICON_SIZE_X/2
 	else if(direction & WEST)
-		pixel_x_change = -world.icon_size/2
+		pixel_x_change = -ICON_SIZE_X/2
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + pixel_x_change, pixel_y = grabbed_atom.base_pixel_y + pixel_y_change)
 	kinesis_beam.redrawing()
 	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
@@ -161,7 +161,7 @@
 		RegisterSignal(grabbed_atom, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
 	ADD_TRAIT(grabbed_atom, TRAIT_NO_FLOATING_ANIM, REF(src))
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_setanchored))
-	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
+	playsound(grabbed_atom, 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg', 75, TRUE)
 	kinesis_icon = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", layer = grabbed_atom.layer - 0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	kinesis_icon.overlays += emissive_appearance(icon = 'icons/effects/effects.dmi', icon_state = "kinesis", offset_spokesman = grabbed_atom)
@@ -223,7 +223,7 @@
 		clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch(atom/movable/launched_object)
-	playsound(launched_object, 'sound/magic/repulse.ogg', 100, TRUE)
+	playsound(launched_object, 'sound/effects/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(launched_object, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, launched_object), get_turf(src), 10)
 	launched_object.throw_at(target_turf, range = grab_range, speed = launched_object.density ? 3 : 4, thrower = mod.wearer, spin = isitem(launched_object))

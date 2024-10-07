@@ -41,7 +41,7 @@ Difficulty: Hard
 	maxHealth = 2500
 	attack_verb_continuous = "clubs"
 	attack_verb_simple = "club"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
 	health_doll_icon = "hierophant"
@@ -66,72 +66,83 @@ Difficulty: Hard
 	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
 	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
-	death_sound = 'sound/magic/repulse.ogg'
+	death_sound = 'sound/effects/magic/repulse.ogg'
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blink,
 							   /datum/action/innate/megafauna_attack/chaser_swarm,
 							   /datum/action/innate/megafauna_attack/cross_blasts,
 							   /datum/action/innate/megafauna_attack/blink_spam)
 
-	var/burst_range = 3 //range on burst aoe
-	var/beam_range = 5 //range on cross blast beams
-	var/chaser_speed = 3 //how fast chasers are currently
-	var/major_attack_cooldown = 6 SECONDS //base cooldown for major attacks
-	var/chaser_cooldown_time = 10.1 SECONDS //base cooldown for spawning chasers
-	var/chaser_cooldown = 0
-	var/arena_cooldown_time = 20 SECONDS //base cooldown for making arenas
-	var/arena_cooldown = 0
-	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
-	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
-	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
-	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
+	/// range on burst aoe
+	var/burst_range = 3
+	/// range on cross blast beams
+	var/beam_range = 5
+	/// how fast chasers are currently
+	var/chaser_speed = 3
+	/// base delay for major attacks
+	var/major_attack_cooldown = 6 SECONDS
+	/// base delay for spawning chasers
+	var/chaser_cooldown_time = 10.1 SECONDS
+	/// the current chaser cooldown
+	COOLDOWN_DECLARE(chaser_cooldown)
+	/// base delay for making arenas
+	var/arena_cooldown_time = 20 SECONDS
+	COOLDOWN_DECLARE(arena_cooldown)
+	/// if we're doing something that requires us to stand still and not attack
+	var/blinking = FALSE
+	/// weakref to our "home base" beacon
+	var/datum/weakref/spawned_beacon_ref
+	/// If we are sitting at home base and not doing anything
+	var/sitting_at_center = TRUE
+	/// timer id for any active attempts to "go home"
+	var/respawn_timer_id = null
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
-	spawned_beacon = new(loc)
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/hiero_boss.ogg', 145 SECONDS)
+	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', 145 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
-	QDEL_NULL(spawned_beacon)
-	. = ..()
+	QDEL_NULL(spawned_beacon_ref)
+	return ..()
 
 /datum/action/innate/megafauna_attack/blink
 	name = "Blink To Target"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
-	chosen_message = "<span class='colossus'>You are now blinking to your target.</span>"
+	chosen_message = span_colossus("You are now blinking to your target.")
 	chosen_attack_num = 1
 
 /datum/action/innate/megafauna_attack/chaser_swarm
 	name = "Chaser Swarm"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "hierophant_squares_indefinite"
-	chosen_message = "<span class='colossus'>You are firing a chaser swarm at your target.</span>"
+	chosen_message = span_colossus("You are firing a chaser swarm at your target.")
 	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/cross_blasts
 	name = "Cross Blasts"
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "hierophant_blast_indefinite"
-	chosen_message = "<span class='colossus'>You are now firing cross blasts at your target.</span>"
+	chosen_message = span_colossus("You are now firing cross blasts at your target.")
 	chosen_attack_num = 3
 
 /datum/action/innate/megafauna_attack/blink_spam
 	name = "Blink Chase"
 	button_icon = 'icons/obj/mining_zones/artefacts.dmi'
 	button_icon_state = "hierophant_club_ready_beacon"
-	chosen_message = "<span class='colossus'>You are now repeatedly blinking at your target.</span>"
+	chosen_message = span_colossus("You are now repeatedly blinking at your target.")
 	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_CHASER])
-		chaser_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_CHASER]
+		COOLDOWN_START(src, chaser_cooldown, cooldown_updates[COOLDOWN_UPDATE_SET_CHASER])
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER])
 		chaser_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER]
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_ARENA])
-		arena_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ARENA]
+		COOLDOWN_START(src, arena_cooldown, cooldown_updates[COOLDOWN_UPDATE_SET_ARENA])
 	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA])
 		arena_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]
 
@@ -179,7 +190,7 @@ Difficulty: Hard
 			possibilities += "cross_blast_spam"
 		if(get_dist(src, target) > 2)
 			possibilities += "blink_spam"
-		if(chaser_cooldown < world.time)
+		if(COOLDOWN_FINISHED(src, chaser_cooldown))
 			if(prob(anger_modifier * 2))
 				possibilities = list("chaser_swarm")
 			else
@@ -194,7 +205,7 @@ Difficulty: Hard
 					chaser_swarm(blink_counter, target_slowness, cross_counter)
 			return
 
-	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
+	if(COOLDOWN_FINISHED(src, chaser_cooldown)) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
 		update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
@@ -294,7 +305,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/hierophant/telegraph/diagonal(T, src)
 	else
 		new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T, 'sound/effects/bin_close.ogg', 75, TRUE)
+	playsound(T, 'sound/effects/bin/bin_close.ogg', 75, TRUE)
 	SLEEP_CHECK_DEATH(2, src)
 	new /obj/effect/temp_visual/hierophant/blast/damaging(T, src, FALSE)
 	for(var/d in directions)
@@ -311,7 +322,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/arena_trap(mob/victim) //trap a target in an arena
 	var/turf/T = get_turf(victim)
-	if(!istype(victim) || victim.stat == DEAD || !T || arena_cooldown > world.time)
+	if(!istype(victim) || victim.stat == DEAD || !T || !COOLDOWN_FINISHED(src, arena_cooldown))
 		return
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
@@ -342,8 +353,8 @@ Difficulty: Hard
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/wand_teleport.ogg', 80, TRUE)
-	playsound(source,'sound/machines/airlockopen.ogg', 80, TRUE)
+	playsound(T,'sound/effects/magic/wand_teleport.ogg', 80, TRUE)
+	playsound(source,'sound/machines/airlock/airlockopen.ogg', 80, TRUE)
 	blinking = TRUE
 	SLEEP_CHECK_DEATH(2, src) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -375,14 +386,14 @@ Difficulty: Hard
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
-	playsound(T,'sound/effects/bin_close.ogg', 75, TRUE)
+	playsound(T,'sound/effects/bin/bin_close.ogg', 75, TRUE)
 	SLEEP_CHECK_DEATH(2, src)
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast/damaging(t, src, FALSE)
 
 //expanding square
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
-	playsound(original,'sound/machines/airlockopen.ogg', 750, TRUE)
+	playsound(original,'sound/machines/airlock/airlockopen.ogg', 750, TRUE)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -397,23 +408,30 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
 	hierophant_burst(src, original, burst_range, spread_speed)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	. = ..()
-	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
-		if(target || loc == spawned_beacon.loc)
-			timeout_time = initial(timeout_time)
-		else
-			timeout_time--
-		if(timeout_time <= 0 && !did_reset)
-			did_reset = TRUE
-			visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
-			blink(spawned_beacon)
-			adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
-			wander = FALSE
-			if(health > maxHealth * 0.9)
-				visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
-			else
-				visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\""))
+	if(!isnull(new_target))
+		deltimer(respawn_timer_id)
+		respawn_timer_id = null
+		return
+	if(respawn_timer_id || client || !spawned_beacon_ref)
+		return
+	respawn_timer_id = addtimer(CALLBACK(src, PROC_REF(send_me_home)), 30 SECONDS, flags = TIMER_STOPPABLE|TIMER_DELETE_ME)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/send_me_home()
+	respawn_timer_id = null
+	var/obj/effect/hierophant/beacon = spawned_beacon_ref.resolve()
+	if(!beacon || client)
+		return
+	sitting_at_center = TRUE
+	visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
+	blink(beacon)
+	adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
+	wander = FALSE
+	if(health > maxHealth * 0.9)
+		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
+	else
+		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\""))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
 	if(health > 0 || stat == DEAD)
@@ -444,14 +462,15 @@ Difficulty: Hard
 	. = ..()
 	if(. && target && !targets_the_same)
 		visible_message(span_hierophant_warning("\"[pick(target_phrases)]\""))
-		if(spawned_beacon && loc == spawned_beacon.loc && did_reset)
+		var/obj/effect/hierophant/beacon = spawned_beacon_ref.resolve()
+		if(beacon && loc == beacon.loc && sitting_at_center)
 			arena_trap(src)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(src && . && !blinking)
 		wander = TRUE
-		did_reset = FALSE
+		sitting_at_center = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
@@ -486,7 +505,7 @@ Difficulty: Hard
 	if(!stat && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
-		playsound(src, 'sound/mecha/mechmove04.ogg', 80, TRUE, -4)
+		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 80, TRUE, -4)
 		if(target)
 			arena_trap(target)
 
@@ -496,7 +515,7 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
-	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
+	sitting_at_center = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
 	anger_modifier = clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
@@ -678,7 +697,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/blind.ogg', 65, TRUE, -5) //make a sound
+	playsound(T,'sound/effects/magic/blind.ogg', 65, TRUE, -5) //make a sound
 	sleep(0.6 SECONDS) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
@@ -699,7 +718,7 @@ Difficulty: Hard
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
-		playsound(L,'sound/weapons/sear.ogg', 50, TRUE, -4)
+		playsound(L,'sound/items/weapons/sear.ogg', 50, TRUE, -4)
 		to_chat(L, span_userdanger("You're struck by a [name]!"))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
@@ -723,7 +742,7 @@ Difficulty: Hard
 			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
 			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
-			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
+			playsound(M,'sound/items/weapons/sear.ogg', 50, TRUE, -4)
 			M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/temp_visual/hierophant/blast/visual
@@ -737,7 +756,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/blast/visual/Initialize(mapload, new_caster)
 	. = ..()
 	var/turf/src_turf = get_turf(src)
-	playsound(src_turf,'sound/magic/blind.ogg', 65, TRUE, -5)
+	playsound(src_turf,'sound/effects/magic/blind.ogg', 65, TRUE, -5)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"
@@ -754,7 +773,7 @@ Difficulty: Hard
 		if(club.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
 			if(do_after(user, 5 SECONDS, target = src))
-				playsound(src,'sound/magic/blind.ogg', 100, TRUE, -4)
+				playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
 				club.beacon = null

@@ -52,6 +52,10 @@
 	greyscale_colors = "#313c6e"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/suit/apron/overalls/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
 	name = "captain's parade jacket"
@@ -120,6 +124,7 @@
 	armor_type = /datum/armor/jacket_det_suit
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
+	flags_inv = HIDEBELT
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -348,6 +353,10 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 	)
+
+/obj/item/clothing/suit/apron/surgical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2) // FISH DOCTOR?!
 
 //Curator
 /obj/item/clothing/suit/jacket/curator

@@ -181,7 +181,7 @@
 
 	//First we spawn a dude.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
-	SSjob.SendToLateJoin(new_character)
+	SSjob.send_to_late_join(new_character)
 
 	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
@@ -235,7 +235,7 @@
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(!character.mind)
 		return
 	if(!GLOB.announcement_systems.len)
@@ -243,8 +243,16 @@
 	if(!(character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		return
 
-	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	var/obj/machinery/announcement_system/announcer
+	var/list/available_machines = list()
+	for(var/obj/machinery/announcement_system/announce as anything in GLOB.announcement_systems)
+		if(announce.arrival_toggle)
+			available_machines += announce
+			break
+	if(!length(available_machines))
+		return
+	announcer = pick(available_machines)
+	announcer.announce(AUTO_ANNOUNCE_ARRIVAL, character.real_name, rank, list()) //make the list empty to make it announce it in common
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)
