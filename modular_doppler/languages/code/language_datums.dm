@@ -59,6 +59,9 @@
 	icon_state = "movespeak"
 	default_priority = 93
 
+	default_name_syllable_min = 5
+	default_name_syllable_max = 10
+
 /datum/language/movespeak/get_random_name(
 	gender = NEUTER,
 	name_count = default_name_count,
