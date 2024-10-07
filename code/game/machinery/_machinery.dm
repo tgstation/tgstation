@@ -1167,9 +1167,9 @@
 /obj/machinery/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
-		. += span_notice("It looks broken and non-functional.")
+		. += span_warning("It looks broken and non-functional.")
 	if(machine_stat & BAD_TEMP)
-		. += span_notice("It has a warning light on that indicates a temperature limit of [temperature_tolerance_min]K to [temperature_tolerance_max]K.")
+		. += span_warning("It has a warning light on that indicates a temperature limit of [temperature_tolerance_min]K to [temperature_tolerance_max]K.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
