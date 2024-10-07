@@ -234,7 +234,7 @@
 			addtimer(CALLBACK(src, PROC_REF(begin_sharkify)), 2 SECONDS)
 			fish_left = initial(fish_left) //prevent begin_sharkify from being called again by eating another fish.
 	adjust_health(round(-health_recovered, 1))
-	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 40, TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg').volume(40).vary(TRUE).play()
 	visible_message(span_boldwarning("[src] swallows [fish] whole!"))
 	if(HAS_TRAIT(fish, TRAIT_YUCKY_FISH))
 		balloon_alert(src, "disgusting!")
