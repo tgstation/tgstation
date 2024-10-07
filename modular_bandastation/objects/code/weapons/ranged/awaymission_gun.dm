@@ -33,8 +33,10 @@
 		cell.change(-STANDARD_BATTERY_CHARGE)
 		update_appearance()
 		if(ismob(loc))
-			to_chat(loc, span_danger("[src.name] деактивируется, так как он подавляется системами станции."))
-			recharge_newshot(no_cyborg_drain = TRUE)
+			var/turf/our_turf = get_turf(src)
+			if(is_station_level(our_turf.z))
+				to_chat(loc, span_danger("[capitalize(declent_ru(NOMINATIVE))] деактивируется, так как подавляется системами станции."))
+				recharge_newshot(no_cyborg_drain = TRUE)
 
 /obj/item/gun/energy/laser/awaymission_aeg/mk2
 	name = "Exploreverse Mk.II"
