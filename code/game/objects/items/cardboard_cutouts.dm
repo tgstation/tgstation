@@ -370,7 +370,7 @@
 /datum/cardboard_cutout/changeling
 	name = "Changeling"
 	applied_name = "Unknown"
-	applied_desc = "A cardboard cutout of a Changeling"
+	applied_desc = "A cardboard cutout of a Changeling."
 	outfit = /datum/outfit/changeling
 
 /datum/cardboard_cutout/pirate
