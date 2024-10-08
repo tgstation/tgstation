@@ -147,7 +147,7 @@
 
 /obj/item/clothing/suit/armor/vest/cuirass/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle(SFX_PLATE_ARMOR_RUSTLE))
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -532,7 +532,7 @@
 		/obj/item/tank/internals/plasmaman,
 		)
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
-	return
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
