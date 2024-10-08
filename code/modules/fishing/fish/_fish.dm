@@ -616,7 +616,7 @@
 	if(bonus_malus)
 		calculate_fish_force_bonus(bonus_malus)
 
-	if(material_flags & MATERIAL_EFFECTS) //struck by metal gen or something.
+	if(material_flags & MATERIAL_EFFECTS && length(custom_materials)) //struck by metal gen or something.
 		var/multiplier = 1 / length(custom_materials)
 		if(material_flags & MATERIAL_AFFECT_STATISTICS)
 			for(var/current_material in custom_materials)
@@ -673,17 +673,18 @@
 /obj/item/fish/apply_material_effects()
 	. = ..()
 	//Either effects aren't applied of he materials are simply being increased/decreased along with the weight. Avoids recursion.
-	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT))
+	if(!(material_flags & MATERIAL_EFFECTS) || (fish_flags & FISH_FLAG_UPDATING_SIZE_AND_WEIGHT) || material_weight_mult == 1)
 		return
 	maximum_weight *= material_weight_mult
 	update_size_and_weight(size, (temp_weight || weight) * material_weight_mult, update_materials = FALSE)
 
 /obj/item/fish/remove_material_effects(replace_mats = TRUE)
 	. = ..()
-	if(!replace_mats && (material_flags & MATERIAL_EFFECTS))
-		maximum_weight /= material_weight_mult
-		update_size_and_weight(size, (temp_weight || weight * material_weight_mult))
-		material_weight_mult = 1
+	if(replace_mats || !(material_flags & MATERIAL_EFFECTS) || material_weight_mult == 1)
+		return
+	maximum_weight /= material_weight_mult
+	update_size_and_weight(size, weight / material_weight_mult)
+	material_weight_mult = 1
 
 /**
  * This proc has fish_traits list populated with fish_traits paths from three different lists:
