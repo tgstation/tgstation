@@ -59,6 +59,21 @@
 	icon_state = "movespeak"
 	default_priority = 93
 
+	default_name_syllable_min = 5
+	default_name_syllable_max = 10
+
+/datum/language/movespeak/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+
+	return "The [pick(GLOB.ramatan_last)]"
+
 /datum/language/common
 	name = "Sol Common"
 	desc = "And when contact was established, the Admiral waved at the screen and said, \"Mi parolas la lingvon de la Homines!\" - I speak the language of Mankind. A simplified mix of Esperanto and Modern Latin, and the only recognized official language of the Sol Federation. This peculiar constructed language became popular during SolFed's earliest days, and was almost entirely overtaken by other popular tongues - it became widespread through heavy-handed political maneuvering with the help of corporate bureaucrats and other undesirables. Nowadays, it's a near-universal tongue and a must-know for any sentient being that plans to leap forward into space."
