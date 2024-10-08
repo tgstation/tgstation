@@ -192,6 +192,14 @@
 	. += span_notice("[milk_required] milk, [enzyme_required] enzyme and you got cheese.")
 	. += span_warning("Remember, the enzyme isn't used up, so return it to the bottle, dingus!")
 
+/obj/item/reagent_containers/condiment/moltobeso
+	name = "Molt'Obeso"
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure!\
+			 The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	icon_state = "moltobeso"
+	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
