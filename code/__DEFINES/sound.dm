@@ -191,3 +191,5 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_CAT_MEOW "cat_meow"
 #define SFX_CAT_PURR "cat_purr"
 #define SFX_LIQUID_POUR "liquid_pour"
+#define SFX_SNORE_FEMALE "snore_female"
+#define SFX_SNORE_MALE "snore_male"
