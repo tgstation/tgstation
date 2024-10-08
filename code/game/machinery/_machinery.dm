@@ -126,7 +126,7 @@
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
+	/// Viable flags to go here are START_PROCESSING_ON_INIT, START_PROCESSING_MANUALLY, or ATMOS_SENSITIVE. See code\__DEFINES\machines.dm for more information on these flags.
 	var/processing_flags = START_PROCESSING_ON_INIT
 	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
 	var/subsystem_type = /datum/controller/subsystem/machines
@@ -139,14 +139,14 @@
 
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
-	/// Do we want to skip atmos related systems on this machine?
-	var/temperature_ignore_atmos = TRUE
 	/// The minimum temperature the machine can operate in before freezing
 	var/temperature_tolerance_min = TCMB
 	/// The maximum temperature the machine can operate in before overheating
 	var/temperature_tolerance_max = INFINITY
-	/// The heat the machine outputs while active
-	var/heating_energy_generated = (0 JOULES)
+	/// The equipment temperature while active
+	var/temperature_while_active = T20C
+	/// The equipment heat capacity while active
+	var/heat_capacity_while_active = 0
 
 	/// world.time of last use by [/mob/living]
 	var/last_used_time = 0
@@ -180,6 +180,9 @@
 	if(processing_flags & START_PROCESSING_ON_INIT)
 		begin_processing()
 
+	if(processing_flags & ATMOS_SENSITIVE)
+		SSair.start_processing_machine(src)
+
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
@@ -203,6 +206,9 @@
 
 	clear_components()
 	unset_static_power()
+
+	if(processing_flags & ATMOS_SENSITIVE)
+		SSair.stop_processing_machine(src)
 
 	return ..()
 
@@ -314,23 +320,22 @@
 /**
  * Generates heat on the turf that the machine is located on
  * Args:
- * - amount: The amount of heat to create
+ * - temperature: The temperature of the object generating heat
+ * - heat_capacity: The heat capacity of the object generating heat
  */
-/obj/machinery/proc/generate_heat(amount)
-	if(temperature_ignore_atmos) // skips all atmos related mechanics for machines
+/obj/machinery/proc/generate_heat(temperature, heat_capacity)
+	if(!(processing_flags & ATMOS_SENSITIVE))
 		return TRUE
-
-	if(amount <= 0) //just in case
-		return FALSE
 
 	var/turf/local_turf = loc
 	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
 		return FALSE
 
 	var/datum/gas_mixture/enviroment = local_turf.return_air()
-	enviroment.temperature += amount / enviroment.heat_capacity()
+
+	// the base T1 thermomachine heat capacity is 5000
+	enviroment.temperature_share(null, OPEN_HEAT_TRANSFER_COEFFICIENT, temperature, heat_capacity)
 	air_update_turf(FALSE, FALSE)
-	return amount
 
 ///Called when we want to change the value of the machine_stat variable. Holds bitflags.
 /obj/machinery/proc/set_machine_stat(new_value)

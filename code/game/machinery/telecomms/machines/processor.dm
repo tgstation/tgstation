@@ -37,7 +37,7 @@
 		relay_information(signal, signal.server_type)
 
 	use_energy(idle_power_usage)
-	atmos_machine_use_counter++
+	atmos_heat_counter++
 
 #undef COMPRESSION_AMOUNT_COMPRESSING
 #undef COMPRESSION_AMOUNT_DECOMPRESSING

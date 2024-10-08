@@ -48,7 +48,7 @@
 			break
 
 	use_energy(idle_power_usage)
-	atmos_machine_use_counter++
+	atmos_heat_counter++
 
 // Preset Buses
 

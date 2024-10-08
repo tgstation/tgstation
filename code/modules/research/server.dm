@@ -10,8 +10,6 @@
 #define HDD_OVERLOADED 4
 
 #define SERVER_NOMINAL_TEXT "Nominal"
-/// The amount of heat energy the RD server generates while active
-#define HEAT_GENERATED_RD_SERVER (500 JOULES)
 
 /obj/machinery/rnd/server
 	name = "\improper R&D Server"
@@ -26,10 +24,11 @@
 	var/working = TRUE
 	/// if TRUE, someone manually disabled us via console.
 	var/research_disabled = FALSE
-	temperature_ignore_atmos = FALSE
+	processing_flags = START_PROCESSING_ON_INIT|ATMOS_SENSITIVE
 	temperature_tolerance_min = RD_SERVER_TEMP_MIN
 	temperature_tolerance_max = RD_SERVER_TEMP_MAX
-	heating_energy_generated = HEAT_GENERATED_RD_SERVER
+	temperature_while_active = RD_SERVER_TEMP_HEAT
+	heat_capacity_while_active = RD_SERVER_HEAT_CAPACITY
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
@@ -43,9 +42,6 @@
 			connect_techweb(science_web)
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
-
-	if(!temperature_ignore_atmos)
-		SSair.start_processing_machine(src)
 
 /obj/machinery/rnd/server/Destroy()
 	if(stored_research)
@@ -82,7 +78,7 @@
 	else
 		working = TRUE
 
-	if(!temperature_ignore_atmos)
+	if(processing_flags & ATMOS_SENSITIVE)
 		SSair.start_processing_machine(src)
 
 	update_current_power_usage()
@@ -104,7 +100,7 @@
 		return
 
 	set_machine_stat(machine_stat & ~BAD_TEMP)
-	generate_heat(heating_energy_generated)
+	generate_heat(temperature_while_active, heat_capacity_while_active)
 
 /obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
@@ -302,7 +298,7 @@
 
 /obj/machinery/rnd/server/off_station
 	req_access = null
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT
 
 #undef HDD_CUT_LOOSE
 #undef HDD_OVERLOADED
@@ -310,4 +306,3 @@
 #undef HDD_PANEL_OPEN
 #undef HDD_PRIED
 #undef SERVER_NOMINAL_TEXT
-#undef HEAT_GENERATED_RD_SERVER

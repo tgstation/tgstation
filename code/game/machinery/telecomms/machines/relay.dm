@@ -33,7 +33,7 @@
 			signal.levels |= SSmapping.get_connected_levels(relay_turf)
 
 	use_energy(idle_power_usage)
-	atmos_machine_use_counter++
+	atmos_heat_counter++
 
 /**
  * Checks to see if the relay can send/receive the signal, by checking if it's
@@ -86,22 +86,22 @@
 /obj/machinery/telecomms/relay/preset/telecomms
 	id = "Telecomms Relay"
 	autolinkers = list("relay")
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT
 
 /obj/machinery/telecomms/relay/preset/mining
 	id = "Mining Relay"
 	autolinkers = list("m_relay")
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
 	hide = 1
 	toggled = FALSE
 	autolinkers = list("r_relay")
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT
 
 // Generic preset relay
 /obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
 	autolinkers = list("autorelay")
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT

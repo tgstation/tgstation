@@ -62,7 +62,7 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 	use_energy(idle_power_usage)
-	atmos_machine_use_counter++
+	atmos_heat_counter++
 
 #undef MAX_LOG_ENTRIES
 

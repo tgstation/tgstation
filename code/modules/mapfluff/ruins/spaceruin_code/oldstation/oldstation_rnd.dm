@@ -2,7 +2,7 @@
 	name = "\improper Ancient R&D Server"
 	circuit = /obj/item/circuitboard/machine/rdserver/oldstation
 	req_access = list(ACCESS_AWAY_SCIENCE)
-	temperature_ignore_atmos = TRUE
+	processing_flags = START_PROCESSING_ON_INIT
 
 /obj/machinery/rnd/server/oldstation/Initialize(mapload)
 	var/datum/techweb/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs

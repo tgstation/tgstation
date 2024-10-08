@@ -1,19 +1,6 @@
 /// A list of all of the `/obj/machinery/telecomms` (and subtypes) machines
 /// that exist in the world currently.
 GLOBAL_LIST_EMPTY(telecomms_list)
-/// The amount of heat energy telecomms equipment generates when used
-#define HEAT_GENERATED_TCOMMS (5 KILO JOULES) // this supports about ~10 TCOMM messages a minute before it overheats
-
-/**
-MATH TIME
-- Average pop at ~50 players emit rougly 10-20 TCOMM messages a minute, 30 at peak volume (from eyeballing logs)
-- Radio spam from air alarms will emit a message about once every ~10 seconds (with intercom on)
-- We also want to account for people trying to spam using multiple radios
-
-So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
-**/
-
-
 
 /**
  * The basic telecomms machinery type, implementing all of the logic that's
@@ -22,10 +9,11 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
-	temperature_ignore_atmos = FALSE
+	processing_flags = START_PROCESSING_ON_INIT|ATMOS_SENSITIVE
 	temperature_tolerance_min = TCOMMS_EQUIPMENT_TEMP_MIN
 	temperature_tolerance_max = TCOMMS_EQUIPMENT_TEMP_MAX
-	heating_energy_generated = HEAT_GENERATED_TCOMMS
+	temperature_while_active = TCOMMS_EQUIPMENT_TEMP_HEAT
+	heat_capacity_while_active = TCOMMS_EQUIPMENT_HEAT_CAPACITY
 
 	/// list of machines this machine is linked to
 	var/list/links = list()
@@ -60,7 +48,7 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 	var/hide = FALSE
 
 	/// A counter that increases each time machine used. Processed during the atmos tick to generate heat and then reset to zero
-	var/atmos_machine_use_counter = 0
+	var/atmos_heat_counter = 0
 
 	/// Looping sounds for any servers
 	var/datum/looping_sound/server/soundloop
@@ -123,9 +111,6 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
 	GLOB.telecomms_list += src
-
-	if(!temperature_ignore_atmos)
-		SSair.start_processing_machine(src)
 
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
@@ -204,9 +189,9 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 
 	set_machine_stat(machine_stat & ~BAD_TEMP)
 	update_power()
-
-	generate_heat(atmos_machine_use_counter * heating_energy_generated)
-	atmos_machine_use_counter = 0
+	if(atmos_heat_counter)
+		generate_heat(temperature_while_active, atmos_heat_counter * heat_capacity_while_active)
+		atmos_heat_counter = 0
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
@@ -221,4 +206,3 @@ So aiming for 60 TCOMM messages a minute gives us wiggle room with redundancies
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)
 
-#undef HEAT_GENERATED_TCOMMS
