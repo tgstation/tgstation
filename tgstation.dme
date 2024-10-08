@@ -6839,6 +6839,7 @@
 #include "modular_doppler\modular_quirks\excitable\excitable.dm"
 #include "modular_doppler\modular_quirks\left_handed\left_handed.dm"
 #include "modular_doppler\modular_quirks\linguist\linguist.dm"
+#include "modular_doppler\modular_quirks\overwrites\musician.dm"
 #include "modular_doppler\modular_quirks\paycheck_rations\code\quirk.dm"
 #include "modular_doppler\modular_quirks\paycheck_rations\code\rationpacks.dm"
 #include "modular_doppler\modular_quirks\paycheck_rations\code\reagents.dm"
