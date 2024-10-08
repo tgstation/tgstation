@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	fishing_modifier = 2
+	pepper_tint = 0
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"

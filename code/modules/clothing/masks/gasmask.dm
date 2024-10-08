@@ -29,6 +29,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/obj/item/cigarette/cig
 	///How much does this mask affect fishing difficulty
 	var/fishing_modifier = 2
+	///Applies clothing_dirt component to the pepperproof mask if true
+	var/pepper_tint = 1
 
 /datum/armor/mask_gas
 	bio = 100
@@ -36,7 +38,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 
-	if(flags_cover & PEPPERPROOF)
+	if((flags_cover & PEPPERPROOF) & pepper_tint)
 		AddComponent(/datum/component/clothing_dirt)
 
 	if(fishing_modifier)
@@ -273,6 +275,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
 	fishing_modifier = 0
+	pepper_tint = 0
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
