@@ -559,12 +559,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.6
 
-/datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
-/datum/material/runite/on_removed(atom/source, mat_amount, multiplier)
+/datum/material/adamantine/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
@@ -828,7 +828,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/paper/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
 	SIGNAL_HANDLER
-	if(prob(15))
+	if(prob(40)) //consider the default reward and it's 15%
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_stickman))
 
 /datum/material/paper/proc/roll_stickman(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)
@@ -903,7 +903,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/bone/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
 	SIGNAL_HANDLER
-	if(prob(30))
+	if(prob(40))
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_bones))
 
 /datum/material/bone/proc/roll_bones(datum/source, obj/item/fishing_rod/rod, mob/fisherman, atom/location, list/rewards)

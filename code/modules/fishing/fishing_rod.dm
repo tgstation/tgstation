@@ -130,15 +130,20 @@
 
 	. += examine_block(block.Join("\n"))
 
-	if((material_effects & MATERIAL_EFFECTS) && deeper_knowledge)
-		. += examine_block(span_info("Fish caught by this fishing rod have a [material_fish_chance]% of being made of its same materials"))
-
+	if(deeper_knowledge && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
+		block = list()
+		block += span_info("Fish caught by this fishing rod have a [material_fish_chance]% of being made of its same materials.")
+		var/datum/material/material = get_master_material()
+		if(material.fish_weight_modifier != 1)
+			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
+			block += span_info("Fish made of the same material as this rod tend to be [abs(material.fish_weight_modifier - 1) * 100]% [heavier].")
+		. += examine_block(block.Join("\n"))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
-		block += span_info("This fishing rod will attract shiny-loving fish")
+		block += span_info("This fishing rod will attract shiny-loving fish.")
 	if(HAS_TRAIT(src, TRAIT_ROD_IGNORE_ENVIRONMENT))
-		block += span_info("Environment and light shouldn't be an issue with this rod")
+		block += span_info("Environment and light shouldn't be an issue with this rod.")
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)) // Duds are innately removed by baits, we all know that.
 		block += span_info("You won't catch duds with this rod.")
 	if(length(block))
@@ -173,10 +178,18 @@
 	if(isnull(reward))
 		return
 	var/isfish = isfish(reward)
-	if((material_flags & MATERIAL_EFFECTS) && isfish && prob(material_fish_chance))
-		var/obj/item/fish/fish = reward
-		var/datum/material/material = get_master_material()
-		if(material)
+	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials))
+		var/material_chance = material_fish_chance
+		if(bait)
+			if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
+				material_chance += 16
+			else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
+				material_chance += 8
+			else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
+				material_chance += 4
+		if(prob(material_chance))
+			var/obj/item/fish/fish = reward
+			var/datum/material/material = get_master_material()
 			fish.set_custom_materials(list(material.type = fish.weight * 0.5))
 	// catching things that aren't fish or alive mobs doesn't consume baits.
 	if(isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
