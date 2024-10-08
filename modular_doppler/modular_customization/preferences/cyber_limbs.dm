@@ -38,15 +38,14 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
-	if(target.dna.features["frame_list"])
+	if(target.dna.features["frame_list"] && !(type in GLOB.species_blacklist_no_humanoid))
 		//head
-		if(target.dna.features["frame_list"][BODY_ZONE_HEAD])
+		if(target.dna.features["frame_list"][BODY_ZONE_HEAD] && type == /datum/species/android)
 			var/obj/item/bodypart/head/old_limb = target.get_bodypart(BODY_ZONE_HEAD)
 			old_limb.drop_limb(TRUE, FALSE, FALSE)
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/head/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_HEAD])
 			replacement.try_attach_limb(target, TRUE)
-			return .
 		//chest
 		if(target.dna.features["frame_list"][BODY_ZONE_CHEST])
 			var/obj/item/bodypart/chest/old_limb = target.get_bodypart(BODY_ZONE_CHEST)
@@ -54,7 +53,6 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/chest/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_CHEST])
 			replacement.try_attach_limb(target, TRUE)
-			return .
 		//right arm
 		if(target.dna.features["frame_list"][BODY_ZONE_R_ARM])
 			var/obj/item/bodypart/arm/right/old_limb = target.get_bodypart(BODY_ZONE_R_ARM)
@@ -62,7 +60,6 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/arm/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_ARM])
 			replacement.try_attach_limb(target, TRUE)
-			return .
 		//left arm
 		if(target.dna.features["frame_list"][BODY_ZONE_L_ARM])
 			var/obj/item/bodypart/arm/left/old_limb = target.get_bodypart(BODY_ZONE_L_ARM)
@@ -70,7 +67,6 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/arm/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_ARM])
 			replacement.try_attach_limb(target, TRUE)
-			return .
 		//right leg
 		if(target.dna.features["frame_list"][BODY_ZONE_R_LEG])
 			var/obj/item/bodypart/leg/right/old_limb = target.get_bodypart(BODY_ZONE_R_LEG)
@@ -78,7 +74,6 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/leg/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_LEG])
 			replacement.try_attach_limb(target, TRUE)
-			return .
 		//left leg
 		if(target.dna.features["frame_list"][BODY_ZONE_L_LEG])
 			var/obj/item/bodypart/leg/left/old_limb = target.get_bodypart(BODY_ZONE_L_LEG)
@@ -86,8 +81,7 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 			old_limb.moveToNullspace()
 			var/obj/item/bodypart/leg/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_LEG])
 			replacement.try_attach_limb(target, TRUE)
-			return .
-
+		return .
 
 // Head
 /datum/preference/choiced/head_type

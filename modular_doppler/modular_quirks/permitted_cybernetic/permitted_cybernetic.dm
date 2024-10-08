@@ -30,6 +30,9 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 		if(HAS_TRAIT(human_holder, TRAIT_LEFT_HANDED)) //Left handed person? Give them a leftie implant
 			desired_implant = text2path("[desired_implant]/l")
 
+	if(human_holder.dna.species.type in GLOB.species_blacklist_no_humanoid)
+		return
+
 	var/obj/item/organ/internal/cybernetic = new desired_implant()
 	cybernetic.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	medical_record_text = "Patient has a company approved [cybernetic.name] installed within their body."
@@ -56,6 +59,10 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 	var/icon/temporary_icon = icon(icon, icon_state, dir)
 	quirk_holder.pixel_y = temporary_icon.Height() - world.icon_size
 
+	if(ishuman(src))
+		var/mob/living/carbon/human/target = src
+		if(target.dna.species.type in GLOB.species_blacklist_no_humanoid)
+			return
 	if(HAS_TRAIT(src, TRAIT_PERMITTED_CYBERNETIC))
 		set_hud_image_active(SEC_IMPLANT_HUD)
 		quirk_holder.icon = 'modular_doppler/overwrites/huds/hud.dmi'

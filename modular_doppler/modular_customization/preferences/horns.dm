@@ -62,7 +62,7 @@
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
-	if(target.dna.features["horns"])
+	if(target.dna.features["horns"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["horns"] != /datum/sprite_accessory/horns/none::name && target.dna.features["horns"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/horns)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -78,6 +78,9 @@
 
 /datum/preference/choiced/lizard_horns/is_accessible(datum/preferences/preferences)
 	. = ..()
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species.type in GLOB.species_blacklist_no_mutant)
+		return FALSE
 	var/has_horns = preferences.read_preference(/datum/preference/toggle/horns)
 	if(has_horns == TRUE)
 		return TRUE
