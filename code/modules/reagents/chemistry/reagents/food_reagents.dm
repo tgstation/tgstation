@@ -853,9 +853,7 @@
 
 /datum/reagent/consumable/moltobeso/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	for(var/datum/reagent/consumable/food as anything in affected_mob.reagents.reagent_list)
-		if(!istype(food))
-			continue
+	for(var/datum/reagent/consumable/food in affected_mob.reagents.reagent_list)
 		if(food == src)
 			continue
 		var/food_factor = food.get_nutriment_factor(affected_mob)
