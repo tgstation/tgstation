@@ -858,9 +858,10 @@
 			continue
 		if(food == src)
 			continue
-		if(food.get_nutriment_factor() <= 0)
+		var/food_factor = food.get_nutriment_factor(affected_mob)
+		if(food_factor <= 0)
 			continue
-		affected_mob.adjust_nutrition(food.get_nutriment_factor(affected_mob) * REM * seconds_per_tick)
+		affected_mob.adjust_nutrition(food_factor * REM * seconds_per_tick)
 
 /datum/reagent/consumable/eggrot
 	name = "Rotten Eggyolk"
