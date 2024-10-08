@@ -1446,9 +1446,6 @@
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "aBz" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -15632,12 +15629,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/service/kitchen)
-"fGF" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 4
-	},
-/turf/open/floor/circuit,
-/area/station/tcommsat/computer)
 "fGT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -37302,11 +37293,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"mJd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/circuit,
-/area/station/tcommsat/computer)
 "mJe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57225,7 +57211,6 @@
 "twc" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server/upper)
 "twe" = (
@@ -119553,8 +119538,8 @@ kjd
 quv
 quv
 quv
-fGF
 vyV
+fZd
 dqH
 msJ
 xQj
@@ -119811,7 +119796,7 @@ kjv
 fWO
 kjd
 gyz
-mJd
+gtX
 dqH
 msJ
 cYk
