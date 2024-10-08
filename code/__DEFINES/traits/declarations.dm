@@ -836,6 +836,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
@@ -962,6 +963,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
 #define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
+
+/// Stops a movable from being removed from the mob it's in by the content_barfer component.
+#define TRAIT_NOT_BARFABLE "not_barfable"
 
 ///fish traits
 #define TRAIT_FISH_STASIS "fish_stasis"

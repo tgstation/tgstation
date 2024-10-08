@@ -42,8 +42,8 @@
 
 /// Called from update_health_hud, whenever a bodypart is being updated on the health doll
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
-	/// Return to override that bodypart's health hud with your own icon
-	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+	/// Return to override that bodypart's health hud with whatever is returned by the list
+	#define OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
 
 /// Called from /obj/item/bodypart/check_for_injuries (mob/living/carbon/examiner, list/check_list)
 #define COMSIG_BODYPART_CHECKED_FOR_INJURY "bodypart_injury_checked"

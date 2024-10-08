@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix air alarms to work correctly while connected to a gas sensor"
-  - bugfix: "Fix paired air alarms and sensors to be able to relink to other devices if turned off, reset, or destroyed."

@@ -280,7 +280,7 @@ SUBSYSTEM_DEF(polling)
 			return FALSE
 
 	if(check_jobban)
-		if(is_banned_from(potential_candidate.ckey, list(check_jobban, ROLE_SYNDICATE)))
+		if(is_banned_from(potential_candidate.ckey, list(ROLE_SYNDICATE) + check_jobban))
 			return FALSE
 
 	return TRUE
