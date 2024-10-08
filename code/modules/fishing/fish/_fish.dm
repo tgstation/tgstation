@@ -1304,6 +1304,10 @@
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
 
+/obj/item/fish/update_atom_colour()
+	. = ..()
+	aquarium_vc_color = color || initial(aquarium_vc_color)
+
 /obj/item/fish/get_infusion_entry()
 	var/amphibious = required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS)
 	var/list/possible_infusions = list(/datum/infuser_entry/fish)
