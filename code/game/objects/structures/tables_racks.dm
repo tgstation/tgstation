@@ -185,7 +185,7 @@
 	pushed_mob.apply_damage(40, STAMINA)
 	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
-	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
+	create_sound(pushed_mob, 'sound/effects/tableslam.ogg').volume(90).vary(TRUE).play()
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
@@ -202,7 +202,7 @@
 	take_damage(50)
 	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
-	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
+	create_sound(pushed_mob, 'sound/effects/bang.ogg').volume(90).vary(TRUE).play()
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
@@ -221,7 +221,7 @@
 		return NONE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		frame = null
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -474,7 +474,7 @@
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
 
-	playsound(loc, SFX_SHATTER, 50, TRUE)
+	create_sound(loc, SFX_SHATTER).vary(TRUE).play()
 
 	new frame(loc)
 
@@ -490,7 +490,7 @@
 		return
 	else
 		var/turf/T = get_turf(src)
-		playsound(T, SFX_SHATTER, 50, TRUE)
+		create_sound(T, SFX_SHATTER).vary(TRUE).play()
 
 		new frame(loc)
 		new glass_shard_type(loc)
@@ -731,7 +731,7 @@
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
-	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg').vary(TRUE).play()
 
 /obj/structure/table/reinforced/rglass
 	name = "reinforced glass table"
@@ -945,11 +945,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/items/dodgeball.ogg', 80, TRUE)
+				create_sound(loc, 'sound/items/dodgeball.ogg').volume(80).vary(TRUE).play()
 			else
-				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/items/tools/welder.ogg', 40, TRUE)
+			create_sound(loc, 'sound/items/tools/welder.ogg').volume(40).vary(TRUE).play()
 
 /*
  * Rack destruction

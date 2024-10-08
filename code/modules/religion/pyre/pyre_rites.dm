@@ -33,7 +33,7 @@
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
-		playsound(get_turf(religious_tool), 'sound/effects/magic/fireball.ogg', 50, TRUE)
+		create_sound(get_turf(religious_tool), 'sound/effects/magic/fireball.ogg').vary(TRUE).play()
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
@@ -94,7 +94,7 @@
 	GLOB.religious_sect.adjust_favor(favor_gained, user)
 	to_chat(user, span_notice("[GLOB.deity] absorbs the charred corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor."))
 	chosen_sacrifice.dust(force = TRUE)
-	playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
+	create_sound(get_turf(religious_tool), 'sound/effects/supermatter.ogg').vary(TRUE).play()
 	chosen_sacrifice = null
 	return TRUE
 
@@ -110,7 +110,7 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
-	playsound(altar_turf, 'sound/effects/magic/fireball.ogg', 50, TRUE)
+	create_sound(altar_turf, 'sound/effects/magic/fireball.ogg').vary(TRUE).play()
 	return TRUE
 
 /datum/religion_rites/blazing_star
@@ -145,7 +145,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	enchanting.visible_message(span_notice("[enchant_target] is blessed by holy fire!"))
-	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
+	create_sound(tool_turf, 'sound/effects/pray.ogg').vary(TRUE).play()
 	new /obj/item/ammo_casing/arrow/holy/blazing(tool_turf)
 	qdel(enchanting)
 	return TRUE

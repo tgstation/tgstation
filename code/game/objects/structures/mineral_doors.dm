@@ -102,7 +102,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
-	playsound(src, openSound, 100, TRUE)
+	create_sound(src, openSound).volume(100).vary(TRUE).play()
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
 	sleep(1 SECONDS)
@@ -123,7 +123,7 @@
 	for(var/mob/living/L in T)
 		return
 	isSwitchingStates = TRUE
-	playsound(src, closeSound, 100, TRUE)
+	create_sound(src, closeSound).volume(100).vary(TRUE).play()
 	flick("[initial(icon_state)]closing",src)
 	sleep(1 SECONDS)
 	set_density(TRUE)

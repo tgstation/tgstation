@@ -96,7 +96,7 @@
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
 
-	playsound(victim, 'sound/items/handling/surgery/organ2.ogg', 50, TRUE)
+	create_sound(victim, 'sound/items/handling/surgery/organ2.ogg').vary(TRUE).play()
 	victim.balloon_alert(user, "pulling out eyes...")
 	user.visible_message(
 		span_boldwarning("[user] reaches inside [victim]'s skull..."),
@@ -116,7 +116,7 @@
 
 	log_combat(user, victim, "pulled out the eyes of")
 
-	playsound(victim, 'sound/items/handling/surgery/organ1.ogg', 75, TRUE)
+	create_sound(victim, 'sound/items/handling/surgery/organ1.ogg').volume(75).vary(TRUE).play()
 	user.visible_message(
 		span_boldwarning("[user] rips out [victim]'s eyes!"),
 		span_boldwarning("You rip out [victim]'s eyes!"),

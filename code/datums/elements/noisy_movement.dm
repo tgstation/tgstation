@@ -17,5 +17,5 @@
 /datum/element/noisy_movement/proc/play_sound(atom/movable/source, old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 	if(!forced && !CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL) && source.has_gravity())
-		playsound(source, movement_sound, volume, TRUE)
+		create_sound(source, movement_sound).volume(volume).vary(TRUE).play()
 

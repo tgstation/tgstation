@@ -39,7 +39,7 @@
 	if(chassis)
 		if(LAZYLEN(chassis.occupants))
 			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_danger("[src] is destroyed!")]")
-			playsound(chassis, destroy_sound, 50)
+			create_sound(chassis, destroy_sound).play()
 		detach(get_turf(src))
 		log_message("[src] is destroyed.", LOG_MECHA)
 		chassis = null
@@ -201,7 +201,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
-	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
+	create_sound(chassis, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 	LAZYREMOVE(chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)

@@ -91,11 +91,11 @@
 
 /obj/machinery/hypnochair/proc/interrogate()
 	if(!trigger_phrase)
-		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
+		create_sound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary(TRUE).play()
 		return
 	var/mob/living/carbon/C = occupant
 	if(!istype(C))
-		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
+		create_sound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg').volume(25).vary(TRUE).play()
 		return
 	victim = C
 	if(C.get_eye_protection() <= 0)
@@ -131,7 +131,7 @@
 	var/temp_trigger = trigger_phrase
 	trigger_phrase = "" //Erase evidence, in case the subject is able to look at the panel afterwards
 	audible_message(span_notice("[src] pings!"))
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 
 	if(QDELETED(victim) || victim != occupant)
 		victim = null

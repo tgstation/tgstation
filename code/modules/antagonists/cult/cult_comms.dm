@@ -236,15 +236,15 @@
 					switch(i)
 						if(1)
 							new /obj/effect/temp_visual/cult/sparks(mobloc, B.current.dir)
-							playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+							create_sound(mobloc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 						if(2)
 							new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, B.current.dir)
-							playsound(mobloc, SFX_PORTAL_ENTER, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+							create_sound(mobloc, SFX_PORTAL_ENTER).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 						if(3)
 							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
-							playsound(mobloc, SFX_PORTAL_ENTER, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+							create_sound(mobloc, SFX_PORTAL_ENTER).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 						if(4)
-							playsound(mobloc, 'sound/effects/magic/exit_blood.ogg', 100, TRUE)
+							create_sound(mobloc, 'sound/effects/magic/exit_blood.ogg').volume(100).vary(TRUE).play()
 							if(B.current != owner)
 								var/turf/final = pick(destinations)
 								if(istype(B.current.loc, /obj/item/soulstone))
@@ -268,13 +268,13 @@
 			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
 		if(2)
 			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 50, TRUE)
+			create_sound(get_turf(owner), 'sound/effects/magic/clockwork/narsie_attack.ogg').vary(TRUE).play()
 		if(3)
 			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 75, TRUE)
+			create_sound(get_turf(owner), 'sound/effects/magic/clockwork/narsie_attack.ogg').volume(75).vary(TRUE).play()
 		if(4)
 			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
-			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 100, TRUE)
+			create_sound(get_turf(owner), 'sound/effects/magic/clockwork/narsie_attack.ogg').volume(100).vary(TRUE).play()
 
 /datum/action/innate/cult/master/cultmark
 	name = "Mark Target"
@@ -452,7 +452,7 @@
 
 		var/turf/throwee_turf = get_turf(throwee)
 
-		playsound(throwee_turf, 'sound/effects/magic/exit_blood.ogg')
+		create_sound(throwee_turf, 'sound/effects/magic/exit_blood.ogg').play()
 		new /obj/effect/temp_visual/cult/sparks(throwee_turf, caller.dir)
 		throwee.visible_message(
 			span_warning("A pulse of magic whisks [throwee] away!"),

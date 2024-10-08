@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
+	create_sound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').volume(75).vary(TRUE).play()
 	..()
 
 /obj/structure/fluff/fake_camera

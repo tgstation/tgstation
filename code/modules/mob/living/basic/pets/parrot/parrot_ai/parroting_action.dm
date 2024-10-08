@@ -46,7 +46,7 @@
 		modify_voice(speaking_pawn, speech)
 	speaking_pawn.say(modified_speech, forced = "AI Controller")
 	if(speech_sound)
-		playsound(speaking_pawn, speech_sound, 80, vary = TRUE)
+		create_sound(speaking_pawn, speech_sound).volume(80).vary(TRUE).play()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/perform_speech/parrot/proc/modify_voice(mob/living/speaking_pawn, list/speech)

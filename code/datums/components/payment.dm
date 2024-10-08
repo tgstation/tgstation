@@ -122,7 +122,7 @@
 			user.pulling = holochange
 	log_econ("[total_cost] credits were spent on [parent] by [user].")
 	to_chat(user, span_notice("Purchase completed with held credits."))
-	playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
+	create_sound(user, 'sound/effects/cashregister.ogg').volume(20).vary(TRUE).play()
 	return TRUE
 
 /**
@@ -167,7 +167,7 @@
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
-	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	create_sound(src, 'sound/effects/cashregister.ogg').volume(20).vary(TRUE).play()
 	SSeconomy.track_purchase(idcard.registered_account, total_cost, parent)
 	return TRUE
 

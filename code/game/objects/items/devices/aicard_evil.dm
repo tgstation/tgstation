@@ -74,7 +74,7 @@
 	AI.control_disabled = FALSE
 	AI.radio_enabled = TRUE
 	do_sparks(4, TRUE, src)
-	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
+	create_sound(src, 'sound/machines/chime.ogg').volume(25).vary(TRUE).play()
 	return
 
 /obj/item/aicard/syndie/loaded/upload_ai(atom/to_what, mob/living/user)
@@ -102,13 +102,13 @@
 	else
 		AI = locate() in A
 	if(!AI || AI.interaction_range == INFINITY)
-		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 		to_chat(user, span_notice("Error! Incompatible object!"))
 		return ..()
 	AI.interaction_range += 2
 	if(AI.interaction_range > 7)
 		AI.interaction_range = INFINITY
-	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
+	create_sound(src, 'sound/machines/beep/twobeep.ogg').play()
 	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
 	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
 	qdel(src)

@@ -104,7 +104,7 @@
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
-	playsound(user, 'sound/items/weapons/thudswoosh.ogg', 40, TRUE, -1)
+	create_sound(user, 'sound/items/weapons/thudswoosh.ogg').volume(40).vary(TRUE).extra_range(-1).play()
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, clicked_atom, 7))
@@ -533,9 +533,9 @@
 			else
 				user.adjustBruteLoss(40, updating_health=FALSE)
 			user.adjustStaminaLoss(30)
-			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
-			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
-			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
+			create_sound(user, 'sound/effects/blob/blobattack.ogg').volume(60).vary(TRUE).play()
+			create_sound(user, 'sound/effects/splat.ogg').volume(70).vary(TRUE).play()
+			create_sound(user, 'sound/effects/wounds/crack2.ogg').volume(70).vary(TRUE).play()
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
@@ -550,8 +550,8 @@
 				user.adjustBruteLoss(40, updating_health = FALSE)
 			user.adjustStaminaLoss(30)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			playsound(user, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
-			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
+			create_sound(user, 'sound/effects/blob/blobattack.ogg').volume(60).vary(TRUE).play()
+			create_sound(user, 'sound/effects/splat.ogg').volume(70).vary(TRUE).play()
 			user.emote("gurgle")
 			shake_camera(user, 7, 7)
 			user.flash_act(1, TRUE, TRUE, length = 4.5)
@@ -562,7 +562,7 @@
 			user.adjustBruteLoss(30)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
-			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
+			create_sound(user, 'sound/items/weapons/flashbang.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 			shake_camera(user, 6, 6)
 			user.flash_act(1, TRUE, TRUE, length = 3.5)
 
@@ -573,7 +573,7 @@
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
+			create_sound(user, 'sound/items/weapons/flashbang.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 			user.Knockdown(4 SECONDS)
 			shake_camera(user, 5, 5)
 			user.flash_act(1, TRUE, TRUE, length = 2.5)
@@ -593,7 +593,7 @@
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)
 
-	playsound(user, 'sound/items/weapons/smash.ogg', 70, TRUE)
+	create_sound(user, 'sound/items/weapons/smash.ogg').volume(70).vary(TRUE).play()
 
 
 /datum/component/tackler/proc/resetTackle()
@@ -603,7 +603,7 @@
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
-	playsound(user, 'sound/effects/glass/Glasshit.ogg', 140, TRUE)
+	create_sound(user, 'sound/effects/glass/Glasshit.ogg').volume(140).vary(TRUE).play()
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
@@ -627,7 +627,7 @@
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)
 		W.atom_destruction()
-		playsound(W, SFX_SHATTER, 70, TRUE)
+		create_sound(W, SFX_SHATTER).volume(70).vary(TRUE).play()
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
@@ -682,7 +682,7 @@
 
 	var/datum/thrownthing/tackle = tackle_ref?.resolve()
 
-	playsound(owner, 'sound/items/weapons/smash.ogg', 70, TRUE)
+	create_sound(owner, 'sound/items/weapons/smash.ogg').volume(70).vary(TRUE).play()
 	if(tackle)
 		tackle.finalize(hit=TRUE)
 	resetTackle()

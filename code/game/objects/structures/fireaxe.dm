@@ -93,11 +93,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	switch(damage_type)
 		if(BRUTE)
 			if(broken)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
+				create_sound(loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(90).vary(TRUE).play()
 			else
-				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
+				create_sound(loc, 'sound/effects/glass/glasshit.ogg').volume(90).vary(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	if(open)
@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(!broken)
 		update_appearance()
 		broken = TRUE
-		playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		create_sound(src, 'sound/effects/glass/glassbr3.ogg').volume(100).vary(TRUE).play()
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
@@ -190,7 +190,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, span_notice("Resetting circuitry..."))
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
 	if(do_after(user, 2 SECONDS, target = src))
 		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
 		locked = !locked
@@ -202,7 +202,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		return
 	else
 		open = !open
-		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 		update_appearance()
 		return
 

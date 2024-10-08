@@ -114,7 +114,7 @@
 
 /obj/item/gun/ballistic/automatic/smartgun/fire_sounds()
 	var/picked_fire_sound = pick(firing_sound_list)
-	playsound(src, picked_fire_sound, fire_sound_volume, vary_fire_sound)
+	create_sound(src, picked_fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -279,7 +279,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	create_sound(src, 'sound/items/weapons/gun/l6/l6_door.ogg').volume(60).vary(TRUE).play()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

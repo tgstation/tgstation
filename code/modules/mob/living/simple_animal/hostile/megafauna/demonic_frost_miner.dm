@@ -143,7 +143,7 @@ Difficulty: Extremely Hard
 	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
 	spin(100, 10)
 	SLEEP_CHECK_DEATH(60, src)
-	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/explosion/explosion3.ogg').volume(100).vary(TRUE).play()
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
@@ -152,7 +152,7 @@ Difficulty: Extremely Hard
 	SLEEP_CHECK_DEATH(8, src)
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
 	enraging = FALSE
 	adjustHealth(-maxHealth)

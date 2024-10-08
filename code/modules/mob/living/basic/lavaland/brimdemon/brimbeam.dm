@@ -52,7 +52,7 @@
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
 	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
-	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
+	create_sound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg').volume(150).extra_range(0).play()
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)
 	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf

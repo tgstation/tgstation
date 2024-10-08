@@ -82,7 +82,7 @@
 			continue
 		if(cell_line.growth >= VATGROWING_DANGER_MINIMUM)
 			risk += cell_line.growth * 0.6 //60% per cell_line potentially. Kryson should probably tweak this
-	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
+	create_sound(vat, 'sound/effects/splat.ogg').vary(TRUE).play()
 	if(rand(1, 100) < risk) //Fail roll!
 		fuck_up_growing(vat)
 

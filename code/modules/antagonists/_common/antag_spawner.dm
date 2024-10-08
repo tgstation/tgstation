@@ -274,7 +274,7 @@
 		spawn_antag(chosen_one.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
+		create_sound(user.loc, 'sound/effects/glass/glassbr1.ogg').volume(100).vary(TRUE).play()
 		qdel(src)
 	else
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))

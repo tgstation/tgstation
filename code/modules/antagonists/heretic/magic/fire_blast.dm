@@ -53,12 +53,12 @@
 
 	// We can keep bouncing, try to continue the chain
 	if(bounces >= 1)
-		playsound(to_beam, sound, 50, vary = TRUE, extrarange = -1)
+		create_sound(to_beam, sound).vary(TRUE).extra_range(-1).play()
 		// Chain continues shortly after. If they extinguish themselves in this time, the chain will stop anyways.
 		addtimer(CALLBACK(src, PROC_REF(continue_beam), to_beam, bounces), beam_duration * 0.5)
 
 	else
-		playsound(to_beam, sound, 50, vary = TRUE, frequency = 12000)
+		create_sound(to_beam, sound).vary(TRUE).frequency(12000).play()
 		// We hit the maximum chain length, apply a bonus for managing it
 		new /obj/effect/temp_visual/fire_blast_bonus(to_beam.loc)
 		for(var/mob/living/nearby_living in range(1, to_beam))

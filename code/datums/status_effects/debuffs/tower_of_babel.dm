@@ -41,7 +41,7 @@
 		return
 
 	owner.emote("mumble")
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/magic_block_mind.ogg', 75, vary = TRUE) // sound of creepy whispers
+	create_sound(owner, 'sound/effects/magic/magic_block_mind.ogg').volume(75).vary(TRUE).direct_listeners(owner).play()
 	to_chat(owner, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
 
 /datum/status_effect/tower_of_babel/magical/on_remove()

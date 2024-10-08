@@ -335,7 +335,7 @@
 	whistler = user
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
-	playsound(current_turf,'sound/effects/magic/warpwhistle.ogg', 200, TRUE)
+	create_sound(current_turf, 'sound/effects/magic/warpwhistle.ogg').volume(200).vary(TRUE).play()
 	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
@@ -472,7 +472,7 @@
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
-		playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
+		create_sound(src, 'sound/items/weapons/resonator_fire.ogg').vary(TRUE).play()
 		user.visible_message(span_warning("[user] summons a runic vendor!"))
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--

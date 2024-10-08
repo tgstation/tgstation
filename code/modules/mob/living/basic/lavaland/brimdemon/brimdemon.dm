@@ -72,7 +72,7 @@
 /// Make an explosion
 /obj/effect/temp_visual/brim_burst/proc/bang()
 	var/turf/origin_turf = get_turf(src)
-	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 50)
+	create_sound(origin_turf, 'sound/effects/pop_expl.ogg').play()
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 	var/list/possible_targets = range(1, origin_turf)
 	for(var/mob/living/target in possible_targets)

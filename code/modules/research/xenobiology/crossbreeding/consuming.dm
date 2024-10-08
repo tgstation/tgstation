@@ -25,13 +25,13 @@ Consuming extracts:
 			nutriment_eaten += N.volume
 			to_chat(user, span_notice("[src] opens up and swallows [O] whole!"))
 			qdel(O)
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			create_sound(src, 'sound/items/eatfood.ogg').volume(20).vary(TRUE).play()
 		else
 			to_chat(user, span_warning("[src] burbles unhappily at the offering."))
 		if(nutriment_eaten >= nutriment_required)
 			nutriment_eaten = 0
 			user.visible_message(span_notice("[src] swells up and produces a small pile of cookies!"))
-			playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
+			create_sound(src, 'sound/effects/splat.ogg').volume(40).vary(TRUE).play()
 			last_produced = world.time
 			for(var/i in 1 to cookies)
 				var/obj/item/S = spawncookie()
@@ -74,7 +74,7 @@ Consuming extracts:
 
 		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
 			to_chat(M, span_notice("Tastes like [taste]."))
-		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
+		create_sound(get_turf(M), 'sound/items/eatfood.ogg').volume(20).vary(TRUE).play()
 		if(nutrition)
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
 		do_effect(M, user)
@@ -251,7 +251,7 @@ Consuming extracts:
 		fail_effect(eater)
 		return
 	new /obj/effect/particle_effect/sparks(target)
-	playsound(target, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(target, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
 	eater.visible_message(
@@ -348,7 +348,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/red/do_effect(mob/living/M, mob/user)
 	new /obj/effect/decal/cleanable/blood(get_turf(M))
-	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, TRUE)
+	create_sound(get_turf(M), 'sound/effects/splat.ogg').volume(10).vary(TRUE).play()
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.blood_volume += 25 //Half a vampire drain.
@@ -400,7 +400,7 @@ Consuming extracts:
 	M.dropItemToGround(held)
 	var/newcoin = /obj/item/coin/gold
 	var/obj/item/coin/C = new newcoin(get_turf(M))
-	playsound(get_turf(C), 'sound/items/coinflip.ogg', 50, TRUE)
+	create_sound(get_turf(C), 'sound/items/coinflip.ogg').vary(TRUE).play()
 	M.put_in_hand(C)
 
 /obj/item/slimecross/consuming/oil

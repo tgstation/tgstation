@@ -289,7 +289,7 @@
 	if(!glass.tool_start_check(user, amount = 2))
 		return FALSE
 	if(time > 0)
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		balloon_alert(user, "adding glass...")
 	if(!glass.use_tool(src, user, time, amount = 2) || state != FRAME_COMPUTER_STATE_WIRED)
 		return FALSE

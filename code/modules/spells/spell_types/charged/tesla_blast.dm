@@ -27,7 +27,7 @@
 /// Zaps a target, the bolt originating from origin.
 /datum/action/cooldown/spell/charged/beam/tesla/send_beam(atom/origin, mob/living/carbon/to_beam, bolt_energy = 30, bounces = 5)
 	origin.Beam(to_beam, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	playsound(get_turf(to_beam), 'sound/effects/magic/lightningshock.ogg', 50, TRUE, -1)
+
 
 	if(to_beam.can_block_magic(antimagic_flags))
 		to_beam.visible_message(

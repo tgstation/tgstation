@@ -69,7 +69,7 @@
 
 /// The actual "turning over of the page" flavor bit that happens while someone is reading the granter.
 /obj/item/book/granter/proc/turn_page(mob/living/user)
-	playsound(user, pick(book_sounds), 30, TRUE)
+	create_sound(user, pick(book_sounds)).volume(30).vary(TRUE).play()
 
 	if(!do_after(user, reading_time, src))
 		return FALSE

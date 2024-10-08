@@ -45,7 +45,7 @@
 		hallucinator.client?.images |= fake_broken_wall
 		hallucinator.client?.images |= fake_rune
 
-		hallucinator.playsound_local(wall_source, 'sound/effects/meteorimpact.ogg', 150, TRUE)
+		create_sound(wall_source, 'sound/effects/meteorimpact.ogg').volume(150).vary(TRUE).direct_listeners(hallucinator).play()
 
 	if(haunt_them)
 		to_chat(hallucinator, pick(hallucination_lines))
@@ -76,7 +76,7 @@
 
 	fake_bubbles.forceMove(get_step_towards(fake_bubbles, landing_turf))
 	fake_bubbles.setDir(get_dir(fake_bubbles, landing_turf))
-	hallucinator.playsound_local(get_turf(fake_bubbles), 'sound/effects/meteorimpact.ogg', 150, TRUE)
+	create_sound(get_turf(fake_bubbles), 'sound/effects/meteorimpact.ogg').volume(150).vary(TRUE).direct_listeners(hallucinator).play()
 	shake_camera(hallucinator, 2, 1)
 
 	if(fake_bubbles.Adjacent(hallucinator))

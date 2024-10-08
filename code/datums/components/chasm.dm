@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	if(turf.GetComponent(/datum/component/chasm))
 		turf.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [turf]!"))
 	else
-		playsound(turf, 'sound/effects/bang.ogg', 50, TRUE)
+		create_sound(turf, 'sound/effects/bang.ogg').vary(TRUE).play()
 		turf.visible_message(span_boldwarning("[escapee] busts through [turf], leaping out of the chasm below"))
 		turf.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in

@@ -156,7 +156,7 @@
  */
 /datum/status_effect/stacking/brimdust_coating/proc/explode()
 	var/turf/origin_turf = get_turf(owner)
-	playsound(origin_turf, 'sound/effects/pop_expl.ogg', 50)
+	create_sound(origin_turf, 'sound/effects/pop_expl.ogg').play()
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 
 	var/damage_dealt = blast_damage

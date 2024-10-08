@@ -95,7 +95,7 @@
 	animate(owner, alpha = 255, transform = oldtransform, descentTime)
 	SLEEP_CHECK_DEATH(descentTime, owner)
 	owner.mouse_opacity = initial(owner.mouse_opacity)
-	playsound(owner.loc, 'sound/effects/meteorimpact.ogg', 200, TRUE)
+	create_sound(owner.loc, 'sound/effects/meteorimpact.ogg').volume(200).vary(TRUE).play()
 	for(var/mob/living/victim in orange(1, owner) - owner)
 		victim.adjustBruteLoss(75)
 		if(!QDELETED(victim)) // Some mobs are deleted on death

@@ -232,19 +232,19 @@
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
-	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	create_sound(src, 'sound/effects/break_stone.ogg').vary(TRUE).play() //beautiful destruction
 	mined.update_visuals()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	balloon_alert(user, "digging...")
-	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/break_stone.ogg').vary(TRUE).play()
 	if(do_after(user, 4 SECONDS, target = src))
 		gets_drilled(user)
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
 	if(do_after(H, 5 SECONDS, target = src))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		create_sound(src, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
 	return TRUE
@@ -839,7 +839,7 @@
 		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
-		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
+		create_sound(src, 'sound/effects/hit_on_shattered_glass.ogg').vary(TRUE).play()
 		explosive_reaction(user)
 		return
 	if(stage == GIBTONITE_ACTIVE && mineralAmt >= 1) //Gibtonite deposit goes kaboom
@@ -923,7 +923,7 @@
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
-	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	create_sound(src, 'sound/effects/break_stone.ogg').vary(TRUE).play() //beautiful destruction
 	mined.update_visuals()
 	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 

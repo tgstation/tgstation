@@ -68,7 +68,7 @@
 	if(istype(core))
 		STOP_PROCESSING(SSobj, core)
 		icon_state = "core_container_sealed"
-		playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
+		create_sound(src, 'sound/items/deconstruct.ogg').volume(60).vary(TRUE).play()
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is permanently sealed, [core]'s radiation is contained."))
 
@@ -179,7 +179,7 @@
 	else
 		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
 		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 		qdel(W)
 		qdel(src)
 
@@ -203,7 +203,7 @@
 	victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 	qdel(src)
 
 /obj/item/nuke_core/supermatter_sliver/pickup(mob/living/user)
@@ -214,7 +214,7 @@
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
 			span_hear("Everything suddenly goes silent."))
 	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 	user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	user.dust()
 
@@ -243,7 +243,7 @@
 	if(istype(sliver))
 		STOP_PROCESSING(SSobj, sliver)
 		icon_state = "core_container_sealed"
-		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
+		create_sound(src, 'sound/items/Deconstruct.ogg').volume(60).vary(TRUE).play()
 		if(ismob(loc))
 			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
 
@@ -330,6 +330,6 @@
 		user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		user.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 	QDEL_NULL(sliver)
 	update_appearance()

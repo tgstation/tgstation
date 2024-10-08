@@ -39,7 +39,7 @@
 				maxcapacity = TRUE//Reached maximum battery capacity.
 			if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 				spark_system.start()
-				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				create_sound(loc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 				cell.use(drain)
 				hacking_module.mod.add_charge(drain)
 				drain_total += drain
@@ -47,7 +47,7 @@
 				break
 		if(!(obj_flags & EMAGGED))
 			flick("apc-spark", hacking_module)
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			create_sound(loc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			obj_flags |= EMAGGED
 			locked = FALSE
 			update_appearance()
@@ -75,7 +75,7 @@
 			maxcapacity = TRUE
 		if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 			spark_system.start()
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			create_sound(loc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			charge -= drain
 			hacking_module.mod.add_charge(drain)
 			drain_total += drain
@@ -277,7 +277,7 @@
 				maxcapacity = TRUE
 			if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 				spark_system.start()
-				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				create_sound(loc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 				cell.use(drain)
 				hacking_module.mod.add_charge(drain)
 				drain_total += drain
@@ -298,7 +298,7 @@
 	if(!do_after(ninja, 6 SECONDS, target = src, hidden = TRUE))
 		return
 	spark_system.start()
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(loc, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 	faction = list(ROLE_NINJA)
 	bubble_icon = "syndibot"
@@ -354,7 +354,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(number = 3, cardinal_only = FALSE, source = src)
-	playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 35, TRUE)
+	create_sound(get_turf(src), 'sound/machines/warning-buzzer.ogg').volume(35).vary(TRUE).play()
 	balloon_alert(ninja, "stand back!")
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 0, 1, 2, 3), 2.5 SECONDS)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

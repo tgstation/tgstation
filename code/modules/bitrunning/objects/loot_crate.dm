@@ -37,7 +37,7 @@
 	rewards_multiplier = 1,
 	)
 	. = ..()
-	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/blink.ogg').vary(TRUE).play()
 
 	if(isnull(completed_domain))
 		return

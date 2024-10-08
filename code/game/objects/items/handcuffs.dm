@@ -110,7 +110,7 @@
 	if(victim.is_blind())
 		to_chat(victim, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
 
-	playsound(loc, cuffsound, 30, TRUE, -2)
+	create_sound(loc, cuffsound).volume(30).vary(TRUE).extra_range(-2).play()
 	log_combat(user, victim, "attempted to handcuff")
 
 	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
@@ -125,7 +125,7 @@
 		return
 
 	apply_cuffs(victim, user, dispense = iscyborg(user))
-	playsound(loc, cuffsuccesssound, 30, TRUE, -2)
+	create_sound(loc, cuffsuccesssound).volume(30).vary(TRUE).extra_range(-2).play()
 
 	victim.visible_message(
 		span_notice("[user] handcuffs [victim]."),
@@ -424,7 +424,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
@@ -444,7 +444,7 @@
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
 	update_appearance()
-	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 
 /obj/item/restraints/legcuffs/beartrap/proc/trap_stepped_on(datum/source, atom/movable/entering, ...)
 	SIGNAL_HANDLER
@@ -551,7 +551,7 @@
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
 		return
-	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
+	create_sound(src.loc, 'sound/items/weapons/bolathrow.ogg').volume(75).vary(TRUE).play()
 
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -581,7 +581,7 @@
 	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	snared_mob.Knockdown(knockdown)
-	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 
 /**
  * A traitor variant of the bola.

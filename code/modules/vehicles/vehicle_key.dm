@@ -16,7 +16,7 @@
 /obj/item/key/security/suicide_act(mob/living/carbon/user)
 	if(!user.emote("spin")) //In the off chance that someone attempts this suicide while under the effects of mime's bane they deserve the silliness.
 		user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide... But [user.p_they()] sputters and stalls out! "))
-		playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
+		create_sound(src, 'sound/misc/sadtrombone.ogg').vary(TRUE).extra_range(-1).play()
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("Vroom vroom!!", forced="secway key suicide") //Not doing a shamestate here, because even if they fail to speak they're spinning.
@@ -63,7 +63,7 @@
 		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy shit, look at that janny go!
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
-			playsound(src, 'sound/effects/magic/lightning_chargeup.ogg', 50, TRUE, -1)
+			create_sound(src, 'sound/effects/magic/lightning_chargeup.ogg').vary(TRUE).extra_range(-1).play()
 			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) //Gotta go fast!
 			for(var/i in 1 to 150)
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
@@ -75,7 +75,7 @@
 		user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		user.visible_message(span_suicide("[user] forgot [user.p_they()] isn't actually a janicart! That's a paddlin'!"))
 		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
-			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
+			create_sound(src, 'sound/effects/adminhelp.ogg').vary(TRUE).extra_range(-1).play()
 		user.adjustOxyLoss(200)
 		user.death(FALSE)
 

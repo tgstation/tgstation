@@ -47,7 +47,7 @@
 	atom_storage.max_total_storage = 3
 	atom_storage.locked = STORAGE_NOT_LOCKED
 	icon_state = icon_closed
-	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/blink.ogg').vary(TRUE).play()
 
 /obj/item/storage/lockbox/bitrunning/decrypted/PopulateContents()
 	var/choice = SSbitrunning.pick_secondary_loot(source_domain)

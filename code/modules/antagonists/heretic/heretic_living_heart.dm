@@ -141,7 +141,7 @@
 		last_tracked_name = null
 		return FALSE
 
-	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	create_sound(owner, 'sound/effects/singlebeat.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
 	// Let them know how to sacrifice people if they're able to be sac'd

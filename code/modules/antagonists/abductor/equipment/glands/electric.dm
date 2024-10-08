@@ -18,9 +18,9 @@
 /obj/item/organ/internal/heart/gland/electric/activate()
 	owner.visible_message(span_danger("[owner]'s skin starts emitting electric arcs!"),\
 	span_warning("You feel electric energy building up inside you!"))
-	playsound(get_turf(owner), SFX_SPARKS, 100, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(owner, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	addtimer(CALLBACK(src, PROC_REF(zap)), rand(3 SECONDS, 10 SECONDS))
 
 /obj/item/organ/internal/heart/gland/electric/proc/zap()
 	tesla_zap(source = owner, zap_range = 4, power = 8e3, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN)
-	playsound(get_turf(owner), 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/magic/lightningshock.ogg').vary(TRUE).play()

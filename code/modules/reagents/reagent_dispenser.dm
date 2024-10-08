@@ -204,7 +204,7 @@
 	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
 		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
 		reagents.remove_reagent(reagent_id, amount_to_leak)
-		playsound(src, 'sound/effects/glug.ogg', 33, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/effects/glug.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return TRUE
 	return FALSE
 
@@ -304,7 +304,7 @@
 			return
 		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
-		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/refill.ogg').vary(TRUE).play()
 		refilling_welder.update_appearance()
 		return
 
@@ -315,7 +315,7 @@
 			return
 		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
 		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
-		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
+		create_sound(src, 'sound/effects/refill.ogg').volume(25).vary(TRUE).play()
 		return
 
 	if(!reagents.has_reagent(/datum/reagent/fuel))

@@ -33,7 +33,7 @@
 		var/damage_to_be = damage + external_damage_immediate * clamp((emergency_point - damage) / emergency_point, 0, 1)
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
-		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED

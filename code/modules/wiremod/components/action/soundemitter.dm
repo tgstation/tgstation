@@ -100,6 +100,5 @@
 	if(backwards.value)
 		actual_frequency = -actual_frequency
 
-	playsound(src, sound_to_play, actual_volume, TRUE, frequency = actual_frequency)
-
+	create_sound(src, sound_to_play).volume(actual_volume).vary(TRUE).play()
 	TIMER_COOLDOWN_START(parent.shell, COOLDOWN_CIRCUIT_SOUNDEMITTER, sound_cooldown)

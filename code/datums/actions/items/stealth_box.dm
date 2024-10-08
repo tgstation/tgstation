@@ -19,7 +19,7 @@
 	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
 		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		if(box.open())
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+			create_sound(box, 'sound/misc/box_deploy.ogg').vary(TRUE).direct_listeners(owner).play()
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
@@ -30,7 +30,7 @@
 	COOLDOWN_START(src, box_cooldown, 10 SECONDS)
 	var/box = new boxtype(owner.drop_location())
 	owner.forceMove(box)
-	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	create_sound(box, 'sound/misc/box_deploy.ogg').vary(TRUE).direct_listeners(owner).play()
 
 /datum/action/item_action/agent_box/Grant(mob/grant_to)
 	. = ..()
@@ -49,7 +49,7 @@
 		return
 
 	var/obj/structure/closet/cardboard/agent/box = owner.loc
-	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	create_sound(box, 'sound/misc/box_deploy.ogg').vary(TRUE).direct_listeners(owner).play()
 	box.open()
 	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
 	owner.throw_at(get_turf(owner))

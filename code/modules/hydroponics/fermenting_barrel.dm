@@ -81,13 +81,13 @@
 		open = FALSE
 		reagents.flags |= DRAINABLE
 		reagents.flags &= ~(REFILLABLE | TRANSPARENT)
-		playsound(src, lid_close_sound, sound_volume)
+		create_sound(src, lid_close_sound).volume(sound_volume).play()
 		start_fermentation()
 	else
 		open = TRUE
 		reagents.flags &= ~(DRAINABLE)
 		reagents.flags |= REFILLABLE | TRANSPARENT
-		playsound(src, lid_open_sound, sound_volume)
+		create_sound(src, lid_open_sound).volume(sound_volume).play()
 		stop_fermentation()
 	update_appearance(UPDATE_ICON)
 

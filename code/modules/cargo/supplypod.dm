@@ -343,9 +343,9 @@
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
-		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
+		create_sound(src, SFX_EXPLOSION).volume(landingSound ? soundVolume * 0.25 : soundVolume).vary(TRUE).play()
 	if (landingSound)
-		playsound(turf_underneath, landingSound, soundVolume, FALSE, FALSE)
+		create_sound(turf_underneath, landingSound).volume(soundVolume).play()
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
 		qdel(src)
@@ -374,14 +374,14 @@
 		if (holder_as_mob.key && !forced && !broken) //If we are player controlled, then we shouldn't open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
 			return
 	if (openingSound)
-		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
+		create_sound(get_turf(holder), openingSound).volume(soundVolume).extra_range(FALSE).play() //Special admin sound to play
 	for (var/turf_type in turfs_in_cargo)
 		turf_underneath.place_on_top(turf_type)
 	for (var/cargo in holder.contents)
 		var/atom/movable/movable_cargo = cargo
 		movable_cargo.forceMove(turf_underneath)
 	if (!effectQuiet && !openingSound && !ispath(style, /datum/pod_style/seethrough) && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
-		playsound(get_turf(holder), open_sound, 15, TRUE, -3)
+		create_sound(get_turf(holder), open_sound).volume(15).vary(TRUE).extra_range(-3).play()
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
 	if (ispath(style, /datum/pod_style/seethrough))
@@ -394,7 +394,7 @@
 
 /obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (leavingSound)
-		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
+		create_sound(get_turf(holder), leavingSound).volume(soundVolume).extra_range(FALSE).play()
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
@@ -409,7 +409,7 @@
 	if (!holder)
 		return
 	take_contents(holder)
-	playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
+	create_sound(holder, close_sound).volume(soundVolume * 0.75).vary(TRUE).extra_range(-3).play()
 	holder.setClosed()
 	addtimer(CALLBACK(src, PROC_REF(preReturn), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 
@@ -704,7 +704,7 @@
 	addtimer(CALLBACK(src, PROC_REF(beginLaunch), pod.effectCircle), pod.delays[POD_TRANSIT])
 
 /obj/effect/pod_landingzone/proc/playFallingSound()
-	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
+	create_sound(src, pod.fallingSound).volume(pod.soundVolume).vary(TRUE).extra_range(6).play()
 
 /obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.addGlow()

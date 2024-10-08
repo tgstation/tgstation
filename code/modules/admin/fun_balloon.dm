@@ -29,7 +29,7 @@
 
 /obj/effect/fun_balloon/proc/pop()
 	visible_message(span_notice("[src] pops!"))
-	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
+	create_sound(get_turf(src), pop_sound_effect).vary(TRUE).extra_range(-1).play()
 	qdel(src)
 
 // ----------- Sentience Balloon

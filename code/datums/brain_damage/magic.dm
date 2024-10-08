@@ -104,7 +104,7 @@
 		create_stalker()
 
 	if(get_dist(owner, stalker) <= 1)
-		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50)
+		create_sound(owner, 'sound/effects/magic/demon_attack1.ogg').play()
 		owner.visible_message(span_warning("[owner] is torn apart by invisible claws!"), span_userdanger("Ghostly claws tear your body apart!"))
 		owner.take_bodypart_damage(rand(20, 45), wound_bonus=CANT_WOUND)
 	else if(SPT_PROB(30, seconds_per_tick))
@@ -112,7 +112,7 @@
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
 			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)
-			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			create_sound(owner, slowbeat).channel(CHANNEL_HEARTBEAT).volume(40).direct_listeners(owner).play()
 			close_stalker = TRUE
 	else
 		if(close_stalker)

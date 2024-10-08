@@ -130,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
 								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
-			playsound(src, baton.on_stun_sound, 50, TRUE)
+			create_sound(src, baton.on_stun_sound).vary(TRUE).play()
 			return
 
 	if(istype(O, /obj/item/mop))
@@ -140,7 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		reagents.trans_to(O, 5, transferred_by = user)
 		begin_reclamation()
 		to_chat(user, span_notice("You wet [O] in [src]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		create_sound(loc, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 		return
 
 	if(O.tool_behaviour == TOOL_WRENCH)
@@ -184,7 +184,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			to_chat(user, span_warning("There is already has a water recycler installed."))
 			return
 
-		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		qdel(O)
 		has_water_reclaimer = TRUE
 		begin_reclamation()
@@ -280,7 +280,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), TRUE)
 		new_sink.set_custom_materials(custom_materials)
 		qdel(src)
-		playsound(new_sink, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(new_sink, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		return
 	return ..()
 

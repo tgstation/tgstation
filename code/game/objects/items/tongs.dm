@@ -55,14 +55,14 @@
 /// Play a clacking sound and appear closed, then open again
 /obj/item/kitchen/tongs/proc/click_clack()
 	COOLDOWN_START(src, clack_cooldown, clack_delay)
-	playsound(src, clack_sound, vol = 100, vary = FALSE)
+	create_sound(src, clack_sound).volume(100).play()
 	icon_state = "[base_icon_state]_closed"
 	var/delay = min(0.5 SECONDS, clack_delay / 2) // Just in case someone's been fucking with the cooldown
 	addtimer(CALLBACK(src, PROC_REF(clack)), delay, TIMER_DELETE_ME)
 
 /// Plays a clacking sound and appear open
 /obj/item/kitchen/tongs/proc/clack()
-	playsound(src, clack_sound, vol = 100, vary = FALSE)
+	create_sound(src, clack_sound).volume(100).play()
 	icon_state = base_icon_state
 
 /obj/item/kitchen/tongs/Exited(atom/movable/leaving, direction)

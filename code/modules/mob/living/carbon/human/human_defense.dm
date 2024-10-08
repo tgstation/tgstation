@@ -58,7 +58,7 @@
 			// Finds and plays the block_sound of item which reflected
 			for(var/obj/item/held_item in held_items)
 				if(held_item.IsReflect(def_zone))
-					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
+					create_sound(src, held_item.block_sound).volume(BLOCK_SOUND_VOLUME).vary(TRUE).play()
 			// Find a turf near or on the original location to bounce to
 			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 				bullet.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
@@ -122,7 +122,7 @@
 	if(check_block(user, 15, "the [hulk_verb]ing", attack_type = UNARMED_ATTACK))
 		return
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
+	create_sound(loc, active_arm.unarmed_attack_sound).volume(25).vary(TRUE).extra_range(-1).play()
 	visible_message(span_danger("[user] [hulk_verb]ed [src]!"), \
 					span_userdanger("[user] [hulk_verb]ed [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
@@ -163,12 +163,12 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
-			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/slash.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] disarmed [src]!"), \
 							span_userdanger("[user] disarmed you!"), span_hear("You hear aggressive shuffling!"), null, user)
 			to_chat(user, span_danger("You disarm [src]!"))
 		else if(!user.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
-			playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/pierce.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			if (src.IsKnockdown() && !src.IsParalyzed())
 				Paralyze(40)
 				log_combat(user, src, "pinned")
@@ -209,12 +209,12 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand if there is one. If there's no item, shove the target. If the target is incapacitated, slam them into the ground to stun them.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/slash.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] disarms [src]!"), \
 							span_userdanger("[user] disarms you!"), span_hear("You hear aggressive shuffling!"), null, user)
 			to_chat(user, span_danger("You disarm [src]!"))
 		else if(!HAS_TRAIT(src, TRAIT_INCAPACITATED))
-			playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/pierce.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			var/shovetarget = get_edge_target_turf(user, get_dir(user, get_step_away(src, user)))
 			adjustStaminaLoss(35)
 			throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
@@ -224,7 +224,7 @@
 			to_chat(user, span_danger("You shove [src] with great force!"))
 		else
 			Paralyze(5 SECONDS)
-			playsound(loc, 'sound/items/weapons/punch3.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/punch3.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] slams [src] into the floor!"), \
 							span_userdanger("[user] slams you into the ground!"), span_hear("You hear something slam loudly onto the floor!"), null, user)
 			to_chat(user, span_danger("You slam [src] into the floor beneath you!"))
@@ -236,7 +236,7 @@
 			w_uniform.add_fingerprint(user)
 		var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
 		if(!damage)
-			playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/slashmiss.ogg').vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] lunges at [src]!"), \
 							span_userdanger("[user] lunges at you!"), span_hear("You hear a swoosh!"), null, user)
 			to_chat(user, span_danger("You lunge at [src]!"))
@@ -244,7 +244,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 		var/armor_block = run_armor_check(affecting, MELEE,"","",10)
 
-		playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
+		create_sound(loc, 'sound/items/weapons/slice.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 		visible_message(span_danger("[user] slashes at [src]!"), \
 						span_userdanger("[user] slashes at you!"), span_hear("You hear a sickening sound of a slice!"), null, user)
 		to_chat(user, span_danger("You slash at [src]!"))

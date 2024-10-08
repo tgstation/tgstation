@@ -78,7 +78,7 @@
 
 /obj/projectile/hallucination/fire()
 	if(hal_fire_sound)
-		parent.hallucinator.playsound_local(get_turf(src), hal_fire_sound, 60, TRUE)
+		create_sound(src, hal_fire_sound).volume(60).vary(TRUE).direct_listeners(parent.hallucinator).play()
 
 	fake_bullet = image(hal_icon, src, hal_icon_state, ABOVE_MOB_LAYER)
 	parent.hallucinator.client?.images += fake_bullet
@@ -91,12 +91,12 @@
 
 	if(ismob(target))
 		if(hal_hitsound)
-			parent.hallucinator.playsound_local(target, hal_hitsound, 100, 1)
+			create_sound(target, hal_hitsound).volume(100).vary(TRUE).direct_listeners(parent.hallucinator).play()
 		on_mob_hit(target)
 
 	else
 		if(hal_hitsound_wall)
-			parent.hallucinator.playsound_local(loc, hal_hitsound_wall, 40, 1)
+			create_sound(loc, hal_hitsound_wall).volume(40).vary(TRUE).direct_listeners(parent.hallucinator).play()
 		if(hal_impact_effect_wall)
 			spawn_hit(target, TRUE)
 

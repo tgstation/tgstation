@@ -66,7 +66,7 @@
 			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+					create_sound(src, 'sound/items/deconstruct.ogg').volume(80).vary(TRUE).play()
 					R.use(2)
 					to_chat(user, span_notice("You reinforce the floor."))
 				return
@@ -100,7 +100,7 @@
 				if(sheets.get_amount() < PLATE_REINFORCE_COST)
 					return
 				sheets.use(PLATE_REINFORCE_COST)
-				playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
+				create_sound(src, 'sound/machines/creak.ogg').volume(100).vary(TRUE).play()
 				place_on_top(/turf/open/floor/plating/reinforced)
 		else
 			if(!iscyborg(user))
@@ -148,10 +148,10 @@
 			if(L)
 				qdel(L)
 			to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-			playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/weapons/Genhit.ogg').vary(TRUE).play()
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	else
-		playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
+		create_sound(src, 'sound/items/weapons/tap.ogg').volume(100).vary(TRUE).play() //The attack sound is muffled by the foam itself
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if(prob(I.force * 20 - 25))
@@ -305,7 +305,7 @@
 		below_turf = get_step_multiz(below_turf, DOWN)
 	if(!isnull(below_turf) && !isspaceturf(below_turf))
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
-		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+		create_sound(src, 'sound/effects/structure_stress/pop3.ogg').volume(100).vary(TRUE).play()
 
 /turf/open/floor/plating/reinforced/airless
 	initial_gas_mix = AIRLESS_ATMOS

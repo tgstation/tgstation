@@ -219,9 +219,9 @@
 	if(last_accent_sound < world.time && prob(20))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
 		if(critical_threshold_proximity >= 300)
-			playsound(src, SFX_HYPERTORUS_MELTING, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+			create_sound(src, SFX_HYPERTORUS_MELTING).volume(max(50, aggression)).extra_range(25).falloff_distance(10).play()
 		else
-			playsound(src, SFX_HYPERTORUS_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+			create_sound(src, SFX_HYPERTORUS_CALM).volume(max(50, aggression)).extra_range(25).falloff_distance(10).play()
 		var/next_sound = round((100 - aggression) * 5) + 5
 		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
@@ -301,13 +301,13 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/alarm()
 	switch(get_status())
 		if(HYPERTORUS_MELTING)
-			playsound(src, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			create_sound(src, 'sound/announcer/alarm/bloblarm.ogg').volume(100).extra_range(40).falloff_distance(10).play()
 		if(HYPERTORUS_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			create_sound(src, 'sound/machines/engine_alert/engine_alert1.ogg').volume(100).extra_range(40).falloff_distance(10).play()
 		if(HYPERTORUS_DANGER)
-			playsound(src, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			create_sound(src, 'sound/machines/engine_alert/engine_alert2.ogg').volume(100).extra_range(40).falloff_distance(10).play()
 		if(HYPERTORUS_WARNING)
-			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 75)
+			create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').volume(75).play()
 
 /**
  * Getter for the machine integrity
@@ -435,7 +435,7 @@
 			continue
 		else if(i > 50)
 			if(i == 10 SECONDS && critical)
-				sound_to_playing_players('sound/machines/hypertorus/HFR_critical_explosion.ogg')
+				create_sound(GLOBAL_SOUND, 'sound/machines/hypertorus/HFR_critical_explosion.ogg').play()
 			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
 		else
 			speaking = "[i*0.1]..."

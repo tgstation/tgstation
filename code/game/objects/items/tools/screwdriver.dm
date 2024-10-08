@@ -130,7 +130,7 @@
 	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
 	if(user)
 		balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
-	playsound(src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/tools/change_drill.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/screwdriver/power/examine()
@@ -142,7 +142,7 @@
 		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/tools/drill_use.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/tools/drill_use.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/screwdriver/cyborg

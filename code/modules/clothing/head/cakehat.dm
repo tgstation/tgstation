@@ -76,11 +76,11 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
-	playsound(src, 'sound/items/weapons/saberon.ogg', 5, TRUE)
+	create_sound(src, 'sound/items/weapons/saberon.ogg').volume(5).vary(TRUE).play()
 	to_chat(user, span_warning("You turn on \the [src]."))
 	return ..()
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_off(mob/living/user)
-	playsound(src, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(src, 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 	to_chat(user, span_warning("You turn off \the [src]."))
 	return ..()

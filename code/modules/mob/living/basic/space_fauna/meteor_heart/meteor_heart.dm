@@ -102,7 +102,7 @@
 
 /obj/effect/temp_visual/meteor_heart_death/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/effects/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	create_sound(src, 'sound/effects/magic/demon_dies.ogg').volume(100).vary(TRUE).play()
 	Shake(2, 0, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 	soundloop = new(src, start_immediately = FALSE)
@@ -116,7 +116,7 @@
 
 /// Make this place a mess
 /obj/effect/temp_visual/meteor_heart_death/proc/gib()
-	playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	create_sound(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/human(my_turf)
 	for (var/obj/structure/eyeball as anything in GLOB.meteor_eyeballs)

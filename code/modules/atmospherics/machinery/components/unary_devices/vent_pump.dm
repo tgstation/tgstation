@@ -230,7 +230,7 @@
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
-		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
+		create_sound(src, 'sound/machines/fan/fan_break.ogg').volume(100).play()
 		fan_overclocked = FALSE
 
 	if(fan_overclocked)
@@ -360,7 +360,7 @@
 	update_appearance()
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
-	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
+	create_sound(loc, 'sound/items/weapons/bladeslice.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"

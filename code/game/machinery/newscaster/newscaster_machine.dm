@@ -511,7 +511,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 	if(!tool.use_tool(src, user, 60, volume=50))
 		return
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	if((machine_stat & BROKEN))
 		to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
 		new /obj/item/stack/sheet/iron(loc, 5)
@@ -527,11 +527,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
+				create_sound(loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(100).vary(TRUE).play()
 			else
-				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
+				create_sound(loc, 'sound/effects/glass/glasshit.ogg').volume(90).vary(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 
 /obj/machinery/newscaster/on_deconstruction(disassembled)
@@ -542,7 +542,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		create_sound(loc, 'sound/effects/glass/glassbr3.ogg').volume(100).vary(TRUE).play()
 
 
 /obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
@@ -605,7 +605,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/new_newspaper = new(loc)
-	playsound(loc, SFX_PAGE_TURN, 50, TRUE)
+	create_sound(loc, SFX_PAGE_TURN).vary(TRUE).play()
 	try_put_in_hand(new_newspaper, user)
 	paper_remaining--
 
@@ -623,14 +623,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(channel)
 		if(update_alert)
 			say("Breaking news from [channel]!")
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
+			create_sound(loc, 'sound/machines/beep/twobeep_high.ogg').volume(75).vary(TRUE).play()
 		alert = TRUE
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+		create_sound(loc, 'sound/machines/warning-buzzer.ogg').volume(75).vary(TRUE).play()
 
 /**
  * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.
@@ -745,10 +745,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/delete_bounty_request()
 	if(!active_request || !current_user)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 		return TRUE
 	if(active_request?.owner != current_user.account_holder)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 		return TRUE
 	say("Deleted current request.")
 	GLOB.request_list.Remove(active_request)
@@ -759,7 +759,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/create_bounty()
 	if(!current_user || !bounty_text)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 		return TRUE
 	for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
 		if(iterated_station_request.req_number == current_user.account_id)
@@ -769,7 +769,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	GLOB.request_list += list(curr_request)
 	for(var/obj/iterated_bounty_board as anything in GLOB.allbountyboards)
 		iterated_bounty_board.say("New bounty added!")
-		playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
+		create_sound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg').volume(30).vary(TRUE).play()
 /**
  * This sorts through the current list of bounties, and confirms that the intended request found is correct.
  * Then, adds the current user to the list of applicants to that bounty.
@@ -779,11 +779,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		say("No ID detected.")
 		return TRUE
 	if(current_user.account_holder == active_request.owner)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 		return TRUE
 	for(var/new_apply in active_request?.applicants)
 		if(current_user.account_holder == active_request?.applicants[new_apply])
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+			create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 			return TRUE
 	active_request.applicants += list(current_user)
 
@@ -794,7 +794,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user)
 		return TRUE
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		return TRUE
 	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
 	say("Paid out [active_request.value] credits.")

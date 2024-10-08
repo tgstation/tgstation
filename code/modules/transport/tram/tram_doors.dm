@@ -43,10 +43,10 @@
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
-		playsound(src, 'sound/machines/airlock/airlockforced.ogg', vol = 40, vary = FALSE)
+
 		sleep(TRAM_DOOR_CYCLE_TIME)
 	else
-		playsound(src, doorOpen, vol = 40, vary = FALSE)
+		create_sound(src, doorOpen).volume(40).play()
 		sleep(TRAM_DOOR_WARNING_TIME)
 
 	set_density(FALSE)
@@ -68,9 +68,6 @@
 		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
-	if(retry_counter == 1)
-		playsound(src, 'sound/machines/chime.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-
 	addtimer(CALLBACK(src, PROC_REF(verify_status)), TRAM_DOOR_RECYCLE_TIME)
 	try_to_close()
 
@@ -89,9 +86,9 @@
 	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || !safe)
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
-		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(src, SFX_SPARKS).volume(75).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	use_energy(50 JOULES)
-	playsound(src, doorClose, vol = 40, vary = FALSE)
+	create_sound(src, doorClose).volume(40).play()
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
@@ -101,7 +98,7 @@
 			for(var/atom/movable/blocker in checked_turf)
 				if(blocker.density && blocker != src) //something is blocking the door
 					say("Please stand clear of the doors!")
-					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 					layer = OPEN_DOOR_LAYER
 					update_icon(ALL, AIRLOCK_OPEN, 1)
 					operating = FALSE
@@ -167,7 +164,7 @@
 		close()
 		return
 
-	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 	say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
 	close(forced = BYPASS_DOOR_CHECKS)
 

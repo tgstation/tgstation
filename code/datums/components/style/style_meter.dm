@@ -41,7 +41,7 @@
 	RegisterSignal(interacting_with, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	RegisterSignal(interacting_with, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(redirect_multitool))
 	balloon_alert(user, "style meter attached")
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 	if(!iscarbon(interacting_with.loc))
 		return .
 

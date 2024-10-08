@@ -200,7 +200,7 @@
 
 /obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)
 	SIGNAL_HANDLER
-	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
+	create_sound(result, result.attack_sound).vary(TRUE).play() // reeeeeeeeeeeeeee...
 
 /obj/item/fish/tadpole/get_export_price(price, percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.

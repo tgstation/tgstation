@@ -156,7 +156,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("Something knocks on [src]."))
 	add_fingerprint(user)
-	playsound(src, knock_sound, 50, TRUE)
+	create_sound(src, knock_sound).vary(TRUE).play()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -176,11 +176,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(src, knock_sound, 50, TRUE)
+		create_sound(src, knock_sound).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(src, bash_sound, 100, TRUE)
+		create_sound(src, bash_sound).volume(100).vary(TRUE).play()
 
 /obj/structure/window/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -247,7 +247,7 @@
 	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 	if (!QDELETED(G))
 		G.add_fingerprint(user)
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	to_chat(user, span_notice("You successfully disassemble [src]."))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -319,16 +319,16 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hit_sound, 75, TRUE)
+				create_sound(src, hit_sound).volume(75).vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 
 /obj/structure/window/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		playsound(src, break_sound, 70, TRUE)
+		create_sound(src, break_sound).volume(70).vary(TRUE).play()
 		for(var/obj/item/shard/debris in spawn_debris(drop_location()))
 			transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	update_nearby_icons()
@@ -442,7 +442,7 @@
 
 	//dissapear in 1 second
 	dramatically_disappearing = TRUE
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, break_sound, 70, TRUE), time_to_go) //SHATTER SOUND
+	create_sound(src, break_sound).volume(70).vary(TRUE).wait(time_to_go).play()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
 
 	// come back in 1 + 4 seconds
@@ -450,7 +450,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), time_to_go + time_to_return)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/glass/glass_reverse.ogg', 70, TRUE), time_to_go + time_to_return)
+	create_sound(src, 'sound/effects/glass/glass_reverse.ogg').volume(70).vary(TRUE).wait(time_to_go + time_to_return).play()
 
 	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) : null
 	if(grill)

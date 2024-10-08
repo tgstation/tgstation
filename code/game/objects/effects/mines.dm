@@ -57,7 +57,7 @@
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
 	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
+	create_sound(src, 'sound/machines/nuke/angry_beep.ogg').volume(40).extra_range(-2).play()
 	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /// Can this mine trigger on the passed movable?
@@ -93,7 +93,7 @@
 			return //it didn't actually touch the mine, don't blow
 
 	visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 	if(gonna_blow)
 		RegisterSignal(arrived, COMSIG_MOVABLE_MOVED, PROC_REF(triggermine)) //wait for it to finish the movement before blowing so it takes proper damage
 		return
@@ -110,7 +110,7 @@
 	if(!foot_on_mine && gone.flags_1 & ON_BORDER_1)
 		if(gone.dir == REVERSE_DIR(direction)) //see if a north facing border atom (ie window) travels south (and other directions as needed)
 			visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
-			playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+			create_sound(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 			triggermine() //it "passed" over the mine briefly, triggering it in the process
 		return //either it blew up the mine, or it didn't and we don't have to worry about anything else.
 
@@ -219,7 +219,7 @@
 	var/sound = 'sound/items/bikehorn.ogg'
 
 /obj/effect/mine/sound/mineEffect(mob/victim)
-	playsound(loc, sound, 100, TRUE)
+	create_sound(loc, sound).volume(100).vary(TRUE).play()
 
 /obj/effect/mine/sound/bwoink
 	name = "bwoink mine"
@@ -275,7 +275,7 @@
 	if(active)
 		return
 
-	playsound(src, 'sound/items/weapons/armbomb.ogg', 70, TRUE)
+	create_sound(src, 'sound/items/weapons/armbomb.ogg').volume(70).vary(TRUE).play()
 	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(deploy_mine)), 3 SECONDS)
@@ -283,7 +283,7 @@
 /// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()
 	do_alert_animation()
-	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
+	create_sound(loc, 'sound/machines/chime.ogg').volume(30).extra_range(-3).play()
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
 	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))

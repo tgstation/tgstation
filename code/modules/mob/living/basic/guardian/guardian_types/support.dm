@@ -47,8 +47,7 @@
 		ignored_mobs = src,
 	)
 	to_chat(src, span_notice("You heal [healed]!"))
-	playsound(healed, attack_sound, 50, TRUE, TRUE, frequency = -1) // play punch sound in REVERSE
-
+	create_sound(healed, attack_sound).vary(TRUE).frequency(-1).play()
 
 /// Place a beacon and then listen for clicks to teleport people to it
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon
@@ -134,7 +133,7 @@
 /// Start teleporting
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/perform_teleport(mob/living/source, atom/target)
 	source.do_attack_animation(target)
-	playsound(target, 'sound/items/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
+	create_sound(target, 'sound/items/weapons/punch1.ogg').vary(TRUE).frequency(-1).play()
 	source.balloon_alert(source, "teleporting...")
 	target.visible_message(
 		span_danger("[target] starts to glow faintly!"), \

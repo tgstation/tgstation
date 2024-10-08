@@ -62,7 +62,7 @@
 	var/obj/spot_one = new phaseout(current_turf, user.dir)
 	var/obj/spot_two = new phasein(target_turf, user.dir)
 	spot_one.Beam(spot_two, beam_effect, time = beam_length)
-	playsound(target_turf, dash_sound, 25, TRUE)
+	create_sound(target_turf, dash_sound).volume(25).vary(TRUE).play()
 	current_charges--
 	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
 	owner?.update_mob_action_buttons()
@@ -78,7 +78,7 @@
 		return
 
 	if(recharge_sound)
-		playsound(dashing_item, recharge_sound, 50, TRUE)
+		create_sound(dashing_item, recharge_sound).vary(TRUE).play()
 
 	if(!owner)
 		return

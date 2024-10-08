@@ -64,14 +64,14 @@
 	flick("outlet-open", src)
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
-		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, FALSE)
+		create_sound(src, 'sound/machines/warning-buzzer.ogg').extra_range(FALSE).play()
 		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 2 SECONDS)
 	else
 		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 2 SECONDS)
 
 /obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
 	if(playsound)
-		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
+		create_sound(src, 'sound/machines/hiss.ogg').extra_range(FALSE).play()
 
 	if(QDELETED(H))
 		return
@@ -86,7 +86,7 @@
 	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return TRUE
 
-	playsound(src, 'sound/items/tools/welder2.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/tools/welder2.ogg').volume(100).vary(TRUE).play()
 	to_chat(user, span_notice("You start slicing the floorweld off [src]..."))
 	if(I.use_tool(src, user, 20))
 		to_chat(user, span_notice("You slice the floorweld off [src]."))

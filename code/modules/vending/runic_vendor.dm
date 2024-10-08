@@ -65,7 +65,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	visible_message(span_warning("[src] flickers and disappears!"))
-	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
+	create_sound(src, 'sound/items/weapons/resonator_blast.ogg').volume(25).vary(TRUE).play()
 	return ..()
 
 /obj/machinery/vending/runic_vendor/proc/runic_explosion()
@@ -80,7 +80,7 @@
 			hit_things += mob_to_be_pulsed_back
 			var/atom/target = get_edge_target_turf(mob_to_be_pulsed_back, get_dir(src, get_step_away(mob_to_be_pulsed_back, src)))
 			to_chat(mob_to_be_pulsed_back, span_userdanger("The field repels you with tremendous force!"))
-			playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
+			create_sound(src, 'sound/effects/gravhit.ogg').vary(TRUE).play()
 			mob_to_be_pulsed_back.throw_at(target, 4, 4)
 
 /obj/machinery/vending/runic_vendor/screwdriver_act(mob/living/user, obj/item/I)

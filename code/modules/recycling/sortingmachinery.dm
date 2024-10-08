@@ -32,10 +32,10 @@
 /obj/item/delivery/proc/post_unwrap_contents(mob/user, rip_open = TRUE)
 	var/turf/turf_loc = get_turf(user || src)
 	if(rip_open)
-		playsound(loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/poster/poster_ripped.ogg').vary(TRUE).play()
 		new /obj/effect/decal/cleanable/wrapping(turf_loc)
 	else
-		playsound(loc, 'sound/items/box_cut.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/box_cut.ogg').vary(TRUE).play()
 		new /obj/item/stack/package_wrap(turf_loc, 1)
 	for(var/atom/movable/movable_content as anything in contents)
 		movable_content.forceMove(turf_loc)
@@ -111,7 +111,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[dest_tagger.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = dest_tagger.currTag
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
+			create_sound(loc, 'sound/machines/beep/twobeep_high.ogg').volume(100).vary(TRUE).play()
 			update_appearance()
 	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
@@ -280,7 +280,7 @@
 		to_chat(user, span_notice("*HELL*"))//lizard nerf
 	else
 		to_chat(user, span_notice("*HEAVEN*"))
-	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
+	create_sound(src, 'sound/machines/beep/twobeep_high.ogg').volume(100).vary(TRUE).play()
 	return BRUTELOSS
 
 /** Standard TGUI actions */
@@ -361,7 +361,7 @@
 				return
 			else
 				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+				create_sound(src, 'sound/machines/ping.ogg').volume(40).vary(TRUE).play()
 				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
 		else if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
@@ -389,7 +389,7 @@
 		to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
 		return
 	paper_count -= 1
-	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(40).vary(TRUE).play()
 	to_chat(user, span_notice("You print a new barcode."))
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.

@@ -109,7 +109,7 @@
 	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/weapons/flash.ogg').volume(100).vary(TRUE).play()
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
@@ -328,7 +328,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
-	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/weapons/flash.ogg').volume(100).vary(TRUE).play()
 	update_icon(ALL, TRUE)
 	return TRUE
 

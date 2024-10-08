@@ -50,9 +50,9 @@
 /obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/piano_hit.ogg', 100, TRUE)
+			create_sound(src, 'sound/effects/piano_hit.ogg').volume(100).vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/musician/piano/atom_break(damage_flag)
 	. = ..()

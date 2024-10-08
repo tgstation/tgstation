@@ -42,14 +42,14 @@
 		var/mob/living/something = user
 		to_chat(something, span_boldnotice("You feel a stabbing pain in the back of your head for a moment."))
 		something.apply_damage(5,BRUTE,BODY_ZONE_HEAD,FALSE,FALSE,FALSE) //notably: no damage resist (it's in your helmet), no damage spread (it's in your helmet)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
 		return
 	magnification = user //this polls ghosts
 	visible_message(span_warning("[src] powers up!"))
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, PROC_REF(make_fall_off))
 	polling = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_MONKEY_HELMET, poll_time = 5 SECONDS, checked_target = magnification, ignore_category = POLL_IGNORE_MONKEY_HELMET, alert_pic = magnification, role_name_text = "mind-magnified monkey")
@@ -64,23 +64,23 @@
 		switch(rage_chance)
 			if(-7 to 0)
 				user.visible_message(span_notice("[src] falls silent and drops on the floor. Try again later?"))
-				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 				particle_path = null
 			if(7 to 13)
 				user.visible_message(span_notice("[src] sparkles momentarily, then falls silent and drops on the floor. Maybe you should try again later?"))
-				playsound(src, SFX_SPARKS, 30, TRUE)
+				create_sound(src, SFX_SPARKS).volume(30).vary(TRUE).play()
 				do_sparks(2, FALSE, src)
 				particle_path = /particles/smoke/steam/mild
 			if(14 to 21)
 				user.visible_message(span_notice("[src] sparkles and shatters ominously, then falls silent and drops on the floor. Maybe you shouldn't try again later."))
 				do_sparks(4, FALSE, src)
-				playsound(src, SFX_SPARKS, 15, TRUE)
-				playsound(src, SFX_SHATTER, 30, TRUE)
+				create_sound(src, SFX_SPARKS).volume(15).vary(TRUE).play()
+				create_sound(src, SFX_SHATTER).volume(30).vary(TRUE).play()
 				particle_path = /particles/smoke/steam/bad
 			if(21 to INFINITY)
 				user.visible_message(span_notice("[src] buzzes and smokes heavily, then falls silent and drops on the floor. This is clearly a bad idea."))
 				do_sparks(6, FALSE, src)
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 				particle_path = /particles/smoke/steam
 		rage_chance += 7
 
@@ -95,7 +95,7 @@
 		return
 
 	magnification.key = chosen_one.key
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	create_sound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 	to_chat(magnification, span_notice("You're a mind magnified monkey! Protect your helmet with your life- if you lose it, your sentience goes with it!"))
 	var/policy = get_policy(ROLE_MONKEY_HELMET)
 	if(policy)
@@ -117,8 +117,8 @@
 			malfunction(magnification)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
+	create_sound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
 	new /obj/effect/decal/cleanable/ash(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation

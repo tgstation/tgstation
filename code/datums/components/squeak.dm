@@ -74,10 +74,13 @@
 	SIGNAL_HANDLER
 
 	if(prob(squeak_chance))
-		if(!override_squeak_sounds)
-			playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
-		else
-			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+		create_sound(parent, pick_weight(override_squeak_sounds || default_squeak_sounds))\
+			.volume(volume)\
+			.vary(TRUE)\
+			.extra_range(sound_extra_range)\
+			.falloff_exponent(sound_falloff_exponent)\
+			.falloff_distance(sound_falloff_distance)\
+			.play()
 
 /datum/component/squeak/proc/step_squeak(obj/item/clothing/shoes/source)
 	SIGNAL_HANDLER

@@ -80,7 +80,7 @@
 	if(user)
 		target.balloon_alert(user, "access denied until delivery!")
 	if(COOLDOWN_FINISHED(src, deny_cooldown))
-		playsound(target, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+		create_sound(target, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 		COOLDOWN_START(src, deny_cooldown, DENY_SOUND_COOLDOWN)
 	return BLOCK_OPEN
 
@@ -99,7 +99,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, target.loc)
 	spark_system.start()
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	target.RemoveElement(/datum/element/deliver_first, goal_area_type, payment)
 
 #undef DENY_SOUND_COOLDOWN

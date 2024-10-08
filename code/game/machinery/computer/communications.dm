@@ -130,7 +130,7 @@
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
-		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').play()
 		return TRUE
 
 	if(obj_flags & EMAGGED)
@@ -139,7 +139,7 @@
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 	balloon_alert(user, "routing circuits scrambled")
-	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').play()
 	return TRUE
 
 /obj/machinery/computer/communications/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -193,11 +193,11 @@
 				var/obj/item/card/id/id_card = held_item?.GetID()
 				if (!istype(id_card))
 					to_chat(user, span_warning("You need to swipe your ID!"))
-					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
+					create_sound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg').play()
 					return
 				if (!(ACCESS_CAPTAIN in id_card.access))
 					to_chat(user, span_warning("You are not authorized to do this!"))
-					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
+					create_sound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg').play()
 					return
 
 			var/new_sec_level = SSsecurity_level.text_level_to_number(params["newSecurityLevel"])
@@ -209,7 +209,7 @@
 			SSsecurity_level.set_level(new_sec_level)
 
 			to_chat(user, span_notice("Authorization confirmed. Modifying security level."))
-			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').play()
 
 			// Only notify people if an actual change happened
 			user.log_message("changed the security level to [params["newSecurityLevel"]] with [src].", LOG_GAME)
@@ -234,7 +234,7 @@
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
 
-			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').play()
 			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
 
 			var/emagged = obj_flags & EMAGGED
@@ -300,7 +300,7 @@
 			to_chat(user, span_notice("Request sent."))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
 			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
-			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_prompt.ogg').play()
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("restoreBackupRoutingData")
 			if (!authenticated_as_non_silicon_captain(user))
@@ -308,7 +308,7 @@
 			if (!(obj_flags & EMAGGED))
 				return
 			to_chat(user, span_notice("Backup routing data restored."))
-			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').play()
 			obj_flags &= ~EMAGGED
 		if ("sendToOtherSector")
 			if (!authenticated_as_non_silicon_captain(user))
@@ -336,7 +336,7 @@
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
 				GLOB.communications_controller.soft_filtering = TRUE
 
-			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg').play()
 
 			var/destination = params["destination"]
 
@@ -389,7 +389,7 @@
 				authenticated = FALSE
 				authorize_access = null
 				authorize_name = null
-				playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/terminal/terminal_off.ogg').play()
 				return
 
 			if (obj_flags & EMAGGED)
@@ -397,7 +397,7 @@
 				authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 				authorize_name = "Unknown"
 				to_chat(user, span_warning("[src] lets out a quiet alarm as its login is overridden."))
-				playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 25, FALSE)
+				create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').volume(25).play()
 			else if(isliving(user))
 				var/mob/living/L = user
 				var/obj/item/card/id/id_card = L.get_idcard(hand_first = TRUE)
@@ -407,7 +407,7 @@
 					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 
 			state = STATE_MAIN
-			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/terminal/terminal_on.ogg').play()
 			imprint_gps(gps_tag = "Encrypted Communications Channel")
 
 		if ("toggleEmergencyAccess")

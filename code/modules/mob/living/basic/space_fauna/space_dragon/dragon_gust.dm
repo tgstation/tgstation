@@ -69,7 +69,7 @@
 	if (QDELETED(owner))
 		return
 	owner.pixel_y = 0
-	playsound(owner, 'sound/effects/gravhit.ogg', 100, TRUE)
+	create_sound(owner, 'sound/effects/gravhit.ogg').volume(100).vary(TRUE).play()
 	for (var/mob/living/candidate in view(gust_distance, owner))
 		if(candidate == owner || candidate.faction_check_atom(owner))
 			continue

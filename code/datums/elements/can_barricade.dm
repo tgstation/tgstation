@@ -34,7 +34,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	source.balloon_alert(user, "constructing barricade...")
-	playsound(source, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
+	create_sound(source, 'sound/items/hammering_wood.ogg').vary(TRUE).play()
 	INVOKE_ASYNC(src, PROC_REF(barricade), source, plank, user, params) //signal handlers can't have do_afters inside of them
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

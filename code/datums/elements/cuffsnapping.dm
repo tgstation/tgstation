@@ -81,12 +81,12 @@
 
 	if(cuffs.restraint_strength && isnull(src.snap_time_strong))
 		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		create_sound(cutter, cutter.usesound || cutter.hitsound).volume(cutter.get_clamped_volume()).vary(TRUE).play()
 		return COMPONENT_SKIP_ATTACK
 
 	else if(isnull(src.snap_time_weak))
 		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		create_sound(cutter, cutter.usesound || cutter.hitsound).volume(cutter.get_clamped_volume()).vary(TRUE).play()
 		return COMPONENT_SKIP_ATTACK
 
 	. = COMPONENT_SKIP_ATTACK
@@ -107,6 +107,6 @@
 		cutter_user.do_attack_animation(target, used_item = cutter)
 		cutter_user.visible_message(span_notice("[cutter_user] cuts [target]'s restraints with [cutter]!"))
 		qdel(target.handcuffed)
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+		create_sound(cutter, cutter.usesound || cutter.hitsound).volume(cutter.get_clamped_volume()).vary(TRUE).play()
 
 	return

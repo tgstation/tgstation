@@ -34,9 +34,9 @@
 		user.visible_message(span_suicide("[user] stuffs the chain of the [src] down the hole where their head should be! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return OXYLOSS
 
-	playsound(get_turf(src), fire_sound, 50, TRUE, -1)
+	create_sound(get_turf(src), fire_sound).vary(TRUE).extra_range(-1).play()
 	user.visible_message(span_suicide("[user] is using the [src] on their [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(get_turf(src), 'sound/items/weapons/bladeslice.ogg', 70)
+	create_sound(get_turf(src), 'sound/items/weapons/bladeslice.ogg').volume(70).play()
 	removable.dismember(silent = FALSE)
 	return BRUTELOSS
 

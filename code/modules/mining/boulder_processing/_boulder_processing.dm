@@ -199,7 +199,7 @@
 		return
 
 	maim_golem(rockman)
-	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, usage_sound).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
 
@@ -261,7 +261,7 @@
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
+			create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).play()
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool
@@ -358,7 +358,7 @@
 
 		//break the boulder down if we have processed all its materials
 		if(!length(chosen_boulder.custom_materials))
-			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			create_sound(loc, usage_sound).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			if(istype(chosen_boulder, /obj/item/boulder/artifact))
 				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
@@ -391,7 +391,7 @@
 
 	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
 	if(boulders_found)
-		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(loc, usage_sound).volume(29).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		balloon_alert_to_viewers(action)
 
 /**
@@ -420,6 +420,6 @@
 	specific_boulder.processed_by = src //so we don't take in the boulder again after we just ejected it
 	specific_boulder.forceMove(drop_location())
 	specific_boulder.processed_by = null //now since move is done we can safely clear the reference
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+	create_sound(loc, 'sound/machines/ping.ogg').play()
 
 	return TRUE

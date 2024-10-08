@@ -54,7 +54,7 @@
 
 /obj/item/circuit_component/controller/proc/handle_trigger(atom/source, user, port_name, datum/port/output/port_signal)
 	source.balloon_alert(user, "clicked [port_name] button")
-	playsound(source, SFX_KEYBOARD_CLICKS, 25, FALSE)
+	create_sound(source, SFX_KEYBOARD_CLICKS).volume(25).play()
 	entity.set_output(user)
 	port_signal.set_output(COMPONENT_SIGNAL)
 

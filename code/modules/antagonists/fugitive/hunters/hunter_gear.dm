@@ -157,11 +157,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
+				create_sound(src, 'sound/effects/blob/attackblob.ogg').vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/item/paper/crumpled/fluff/fortune_teller
 	name = "scribbled note"

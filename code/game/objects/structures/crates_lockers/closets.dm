@@ -487,7 +487,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	welded = FALSE
 	locked = FALSE
 	if(special_effects)
-		playsound(loc, open_sound, open_sound_volume, TRUE, -3)
+		create_sound(loc, open_sound).volume(open_sound_volume).vary(TRUE).extra_range(-3).play()
 	opened = TRUE
 	if(!dense_when_open)
 		set_density(FALSE)
@@ -559,7 +559,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!before_close(user) || (SEND_SIGNAL(src, COMSIG_CLOSET_PRE_CLOSE, user) & BLOCK_CLOSE))
 		return FALSE
 	take_contents()
-	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
+	create_sound(loc, close_sound).volume(close_sound_volume).vary(TRUE).extra_range(-3).play()
 	opened = FALSE
 	set_density(TRUE)
 	animate_door(TRUE)
@@ -1138,7 +1138,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(secure && !broken)
 		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
 		balloon_alert(user, "lock broken open")
-		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(src, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		broken = TRUE
 		locked = FALSE
 		update_appearance()

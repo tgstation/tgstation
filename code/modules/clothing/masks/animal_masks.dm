@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	name = "[animal_type] face"
 	desc = "It looks like a [animal_type] mask, but closer inspection reveals it's melded onto this person's face!"
 	if(curse_spawn_sound)
-		playsound(src, curse_spawn_sound, 50, TRUE)
+		create_sound(src, curse_spawn_sound).vary(TRUE).play()
 	var/update_speech_mod = !modifies_speech && LAZYLEN(animal_sounds)
 	if(update_speech_mod)
 		modifies_speech = TRUE

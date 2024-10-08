@@ -29,7 +29,7 @@
 	target.forceMove(puzzgrid_effect)
 	puzzgrid_effect.visible_message(span_warning("[target] has suddenly transformed into a fiendishly hard puzzle!"))
 
-	playsound(puzzgrid_effect, 'sound/effects/magic.ogg', 70)
+	create_sound(puzzgrid_effect, 'sound/effects/magic.ogg').volume(70).play()
 
 /obj/structure/puzzgrid_effect
 	anchored = TRUE

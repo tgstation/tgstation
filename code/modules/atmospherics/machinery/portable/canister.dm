@@ -76,7 +76,7 @@
 	. = ..()
 	if(!allowed(user))
 		to_chat(user, span_alert("Error - Unauthorized User."))
-		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/compiler/compiler-failure.ogg').vary(TRUE).play()
 		return
 
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -439,7 +439,7 @@
 	atom_break()
 
 	set_density(FALSE)
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
+
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)

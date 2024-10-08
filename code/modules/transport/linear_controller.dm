@@ -345,7 +345,7 @@
 	var/obj/structure/transport/linear/prime_lift = return_closest_platform_to_z(direction == UP ? world.maxz : 0)
 
 	// ...because we use the duration of the sound effect to make it last for roughly the duration of the lift travel
-	playsound(prime_lift, 'sound/vehicles/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(HYDRAULIC_SFX_DURATION / lift_move_duration, 0.33, 3))
+	create_sound(prime_lift, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary(TRUE).frequency(clamp(HYDRAULIC_SFX_DURATION / lift_move_duration, 0.33, 3)).play()
 
 	// Move the platform after a timer
 	addtimer(CALLBACK(src, PROC_REF(move_lift_vertically), direction, user), lift_move_duration, TIMER_UNIQUE)
@@ -509,7 +509,7 @@
 			if(CYCLE_OPEN)
 				elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 				if(!played_ding)
-					playsound(elevator_door, 'sound/machines/ping.ogg', 50, TRUE)
+					create_sound(elevator_door, 'sound/machines/ping.ogg').vary(TRUE).play()
 					played_ding = TRUE
 				addtimer(CALLBACK(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open)), 0.7 SECONDS)
 			if(CYCLE_CLOSED)

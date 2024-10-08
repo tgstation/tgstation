@@ -82,7 +82,7 @@
 /obj/item/gun/energy/recharge/proc/reload()
 	cell.give(cell.maxcharge)
 	if(!suppressed && recharge_sound)
-		playsound(src.loc, recharge_sound, 60, TRUE)
+		create_sound(src.loc, recharge_sound).volume(60).vary(TRUE).play()
 	else
 		to_chat(loc, span_warning("[src] silently charges up."))
 	update_appearance()

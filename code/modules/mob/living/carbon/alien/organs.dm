@@ -290,7 +290,7 @@
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
 	if(!prob((damage_ratio * 100) - 50) && damage_ratio != 1)
-		playsound(play_from, 'sound/mobs/non-humanoids/alien/alien_organ_cut.ogg', 100, 1)
+		create_sound(play_from, 'sound/mobs/non-humanoids/alien/alien_organ_cut.ogg').volume(100).vary(TRUE).play()
 		// We try and line up the "jump" here with the sound of the hit
 		var/oldx = play_from.pixel_x
 		var/oldy = play_from.pixel_y
@@ -318,7 +318,7 @@
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
 			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
 
-	playsound(get_turf(play_from), 'sound/mobs/non-humanoids/alien/alien_explode.ogg', 100, extrarange = 4)
+	create_sound(play_from, 'sound/mobs/non-humanoids/alien/alien_explode.ogg').volume(100).extra_range(4).play()
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1, 8)
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)

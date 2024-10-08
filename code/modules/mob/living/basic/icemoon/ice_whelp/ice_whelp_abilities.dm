@@ -31,7 +31,7 @@
 	fire_range = 6
 
 /datum/action/cooldown/mob_cooldown/fire_breath/ice/cross/attack_sequence(atom/target)
-	playsound(owner.loc, fire_sound, 200, TRUE)
+	create_sound(owner.loc, fire_sound).volume(200).vary(TRUE).play()
 	for(var/direction in GLOB.cardinals)
 		var/turf/target_fire_turf = get_ranged_target_turf(owner, direction, fire_range)
 		fire_line(target_fire_turf)

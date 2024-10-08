@@ -32,7 +32,7 @@
 		var/turf/victim_turf = get_turf(victim)
 		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
-		victim.playsound_local(victim_turf, 'sound/effects/magic/charge.ogg')
+		create_sound(victim, 'sound/effects/magic/charge.ogg').direct_listeners(victim).play()
 		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
 			var/message = ""
 			var/location = victim.loc

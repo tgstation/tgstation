@@ -89,7 +89,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	affecting.receive_damage(burn = 5)
 	to_chat(user, span_userdanger("You burn your hand on [source]!"))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(source, SFX_SEAR, 50, TRUE)
+	create_sound(source, SFX_SEAR).vary(TRUE).play()
 	user.update_damage_overlays()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

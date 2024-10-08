@@ -168,7 +168,7 @@
 	var/obj/item/card/id/card = thing
 	fused_ids[card.name] = card
 	card.moveToNullspace()
-	playsound(drop_location(),'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	create_sound(drop_location(), 'sound/items/eatfood.ogg').volume(rand(10,50)).vary(TRUE).play()
 	access += card.access
 
 /obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)

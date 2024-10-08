@@ -63,7 +63,7 @@
 			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 	reagents.trans_to(M, 10, transferred_by = user, methods = INGEST)
-	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	create_sound(M.loc,'sound/items/drink.ogg').volume(rand(10,50)).vary(TRUE).play()
 	return TRUE
 
 /obj/item/reagent_containers/condiment/interact_with_atom(atom/target, mob/living/user, list/modifiers)

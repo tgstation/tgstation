@@ -192,7 +192,7 @@
 	COOLDOWN_START(src, alert_cooldown, 5 SECONDS)
 	add_alert()
 	addtimer(CALLBACK(src, PROC_REF(remove_alert)), 5 SECONDS)
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 	visible_message(span_notice("[src] flashes a message across its screen: New personalities available for download!"), blind_message = span_notice("[src] vibrates with an alert."))
 
 /**
@@ -234,7 +234,7 @@
 		balloon_alert(user, "request sent too recently")
 		return FALSE
 	request_spam = TRUE
-	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(20).vary(TRUE).play()
 	balloon_alert(user, "pAI assistance requested")
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 
@@ -285,6 +285,6 @@
 	RegisterSignal(pai, COMSIG_QDELETING, PROC_REF(on_pai_del))
 	emotion_icon = "null"
 	update_appearance()
-	playsound(src, 'sound/effects/pai_boot.ogg', 50, TRUE, -1)
+	create_sound(src, 'sound/effects/pai_boot.ogg').vary(TRUE).extra_range(-1).play()
 	audible_message("[src] plays a cheerful startup noise!")
 	return TRUE

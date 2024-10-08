@@ -335,7 +335,14 @@
 		blind_message = span_hear("You hear aggressive crackling!"),
 		vision_distance = 15,
 	)
-	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	create_sound(src, 'sound/effects/clockcult_gateway_disrupted.ogg')\
+		.volume(200)\
+		.extra_range(3)\
+		.falloff_exponent(1)\
+		.frequency(-1)\
+		.ignore_walls(TRUE)\
+		.falloff_distance(7)\
+		.play()
 	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
 	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
 	animate(time = 0.5 SECONDS, alpha = 0)
@@ -343,7 +350,7 @@
 	qdel(boh)
 
 /obj/singularity/proc/consume_boh_sfx()
-	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	create_sound(src, 'sound/effects/supermatter.ogg').volume(200).vary(TRUE).extra_range(3).falloff_exponent(1).ignore_walls(TRUE).falloff_distance(7).play()
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.

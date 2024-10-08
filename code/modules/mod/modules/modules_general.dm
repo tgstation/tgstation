@@ -213,7 +213,7 @@
 	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
 		start_cooldown(FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
 		return FALSE
-	playsound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+	create_sound(mod.wearer, 'sound/vehicles/rocketlaunch.ogg').volume(100).vary(TRUE).play()
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
 	var/turf/launch_from = get_turf(mod.wearer)
 	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
@@ -306,7 +306,7 @@
 /obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
 	if(death_sound && death_sound_volume)
-		playsound(wearer, death_sound, death_sound_volume, FALSE)
+		create_sound(wearer, death_sound).volume(death_sound_volume).play()
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
@@ -507,7 +507,7 @@
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
-	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(100).vary(TRUE).play()
 	drain_power(use_energy_cost)
 	return dispensed
 
@@ -933,7 +933,7 @@
 	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
-	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	create_sound(src, SFX_RUSTLE).vary(TRUE).extra_range(-5).play()
 
 /obj/item/mod/module/recycler/on_select_use(atom/target)
 	. = ..()
@@ -948,10 +948,10 @@
 /obj/item/mod/module/recycler/proc/dispense(atom/target)
 	if(container.retrieve_all(target))
 		balloon_alert(mod.wearer, "material dispensed")
-		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/microwave/microwave-end.ogg').vary(TRUE).play()
 		return
 	balloon_alert(mod.wearer, "not enough material")
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 
 /obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets, atom/context)
 	SIGNAL_HANDLER
@@ -980,12 +980,12 @@
 /obj/item/mod/module/recycler/donk/dispense(atom/target)
 	if(!container.use_amount_mat(required_amount, /datum/material/iron))
 		balloon_alert(mod.wearer, "not enough material")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 		return
 	var/obj/item/ammo_box/product = new ammobox_type(target)
 	attempt_insert_storage(product)
 	balloon_alert(mod.wearer, "ammo box dispensed.")
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/microwave/microwave-end.ogg').vary(TRUE).play()
 
 /obj/item/mod/module/fishing_glove
 	name = "MOD fishing glove module"
@@ -1024,7 +1024,7 @@
 		user.balloon_alert(user, "it's stuck!")
 	equipped = tool
 	balloon_alert(user, "rod inserted")
-	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/click.ogg').vary(TRUE).play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/module/fishing_glove/attack_hand_secondary(mob/user, list/modifiers)
@@ -1035,7 +1035,7 @@
 		return
 	user.put_in_hands(equipped)
 	balloon_alert(user, "rod removed")
-	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/click.ogg').vary(TRUE).play()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/module/fishing_glove/Exited(atom/movable/gone)

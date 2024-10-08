@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
-		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
+		create_sound(loc, 'sound/items/weapons/slice.ogg').vary(TRUE).extra_range(-1).play()
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice("You cut the hair from [src.name]."))

@@ -195,7 +195,7 @@
 				if(istype(tool, /obj/item/circuitboard/aicore))
 					if(!user.transferItemToLoc(tool, src))
 						return
-					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+					create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 					balloon_alert(user, "circuit board inserted")
 					update_appearance()
 					state = CIRCUIT_CORE
@@ -224,7 +224,7 @@
 				if(istype(tool, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/C = tool
 					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+						create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 						balloon_alert(user, "adding cables to frame...")
 						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
@@ -251,7 +251,7 @@
 						return
 					var/obj/item/stack/sheet/rglass/G = tool
 					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+						create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 						balloon_alert(user, "adding glass panel...")
 						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
 							balloon_alert(user, "added glass panel")

@@ -210,7 +210,7 @@
 		skinhead.set_facial_hairstyle("Shaved", update = TRUE)
 	else
 		skinhead.set_hairstyle("Skinhead", update = TRUE)
-	playsound(loc, 'sound/items/tools/welder2.ogg', 20, TRUE)
+	create_sound(loc, 'sound/items/tools/welder2.ogg').volume(20).vary(TRUE).play()
 
 /obj/item/razor/attack(mob/target_mob, mob/living/user, params)
 	if(!ishuman(target_mob))

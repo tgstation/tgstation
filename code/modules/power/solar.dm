@@ -94,10 +94,10 @@
 		atom_integrity = max_integrity
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	user.visible_message(span_notice("[user] begins to take the glass off [src]."), span_notice("You begin to take the glass off [src]..."))
 	if(I.use_tool(src, user, 50))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(src.loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
 		deconstruct(TRUE)
 	return TRUE
@@ -106,17 +106,17 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
+				create_sound(loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(60).vary(TRUE).play()
 			else
-				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
+				create_sound(loc, 'sound/effects/glass/glasshit.ogg').volume(90).vary(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 
 /obj/machinery/power/solar/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		create_sound(loc, 'sound/effects/glass/glassbr3.ogg').volume(100).vary(TRUE).play()
 		unset_control()
 		// Make sure user can see it's broken
 		var/new_angle = rand(160, 200)
@@ -130,7 +130,7 @@
 			S.forceMove(loc)
 			S.give_glass(machine_stat & BROKEN)
 	else
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		new /obj/item/shard(src.loc)
 		new /obj/item/shard(src.loc)
 
@@ -333,7 +333,7 @@
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
 			glass_type = W.type
-			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 			user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
@@ -557,16 +557,16 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+				create_sound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg').volume(70).vary(TRUE).play()
 			else
-				playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
+				create_sound(src.loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/power/solar_control/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+		create_sound(loc, 'sound/effects/glass/glassbr3.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen

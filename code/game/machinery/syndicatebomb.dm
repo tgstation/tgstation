@@ -88,7 +88,7 @@
 				volume = 10
 			else
 				volume = 5
-		playsound(loc, beepsound, volume, FALSE)
+		create_sound(loc, beepsound).volume(volume).play()
 		next_beep = world.time + 10
 
 	if(active && ((detonation_timer <= world.time) || explode_now))
@@ -226,7 +226,7 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
@@ -423,7 +423,7 @@
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
-	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+	create_sound(src, 'sound/misc/sadtrombone.ogg').play()
 	..()
 
 /obj/item/bombcore/large
@@ -501,14 +501,14 @@
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
-		playsound(loc, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/tools/screwdriver2.ogg').vary(TRUE).play()
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
 
-	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
+	create_sound(loc, 'sound/effects/bamf.ogg').volume(75).vary(TRUE).extra_range(5).play()
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
@@ -669,7 +669,7 @@
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existent++
-		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(user, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		to_chat(user, span_notice("[existent] found, [detonated] triggered."))
 		if(detonated)
 			detonated--

@@ -10,7 +10,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
 			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/slash.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("[user] slashes at you!"), null, null, user)
 			to_chat(user, span_danger("You slash at [src]!"))
@@ -19,7 +19,7 @@
 			log_combat(user, src, "attacked")
 			adjustBruteLoss(damage)
 		else
-			playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
+			create_sound(loc, 'sound/items/weapons/slashmiss.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 			visible_message(span_danger("[user]'s swipe misses [src]!"), \
 							span_danger("You avoid [user]'s swipe!"), null, null, user)
 			to_chat(user, span_warning("Your swipe misses [src]!"))
@@ -50,7 +50,7 @@
 	if(!.)
 		return
 	adjustBruteLoss(rand(10, 15))
-	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+	create_sound(loc, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
@@ -69,7 +69,7 @@
 		return TRUE
 	if(user.combat_mode)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
+		create_sound(src.loc, 'sound/effects/bang.ogg').volume(10).vary(TRUE).play()
 		visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
 						span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
@@ -85,7 +85,7 @@
 	if(.)
 		return TRUE
 	if(damage_type == BRUTE && attack_type == UNARMED_ATTACK && attack_flag == MELEE && damage <= 10)
-		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').volume(10).vary(TRUE).play()
 		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return TRUE
 	return FALSE

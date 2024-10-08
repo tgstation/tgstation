@@ -95,7 +95,7 @@
 
 	next_crash = world.time + 10
 	rider.adjustStaminaLoss(instability*6)
-	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
+	create_sound(src, 'sound/effects/bang.ogg').volume(40).vary(TRUE).play()
 	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
@@ -136,7 +136,7 @@
 	skater.adjustStaminaLoss(instability*0.3)
 	if(skater.getStaminaLoss() >= 100)
 		obj_flags = CAN_BE_HIT
-		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
@@ -145,7 +145,7 @@
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
-	playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
+	create_sound(src, 'sound/vehicles/skateboard_roll.ogg').vary(TRUE).play()
 	var/turf/location = get_turf(src)
 
 	if(location)
@@ -154,7 +154,7 @@
 			sparks.start() //the most radical way to start plasma fires
 	for(var/mob/living/carbon/victim in location)
 		if(victim.body_position == LYING_DOWN)
-			playsound(location, 'sound/items/trayhit/trayhit2.ogg', 40)
+			create_sound(location, 'sound/items/trayhit/trayhit2.ogg').volume(40).play()
 			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = victim.get_random_valid_zone(even_weights = TRUE), wound_bonus = 20)
 			victim.Paralyze(1.5 SECONDS)
 			skater.adjustStaminaLoss(instability)

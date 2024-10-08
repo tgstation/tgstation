@@ -23,7 +23,7 @@
 	if(!flashbang_turf)
 		return
 	do_sparks(rand(5, 9), FALSE, src)
-	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	create_sound(flashbang_turf, 'sound/items/weapons/flashbang.ogg').volume(100).vary(TRUE).extra_range(8).falloff_exponent(0.9).play()
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, COLOR_WHITE, 2)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(living_mob), living_mob)
@@ -91,7 +91,7 @@
 	if(!flashbang_turf)
 		return
 	do_sparks(rand(5, 9), FALSE, src)
-	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 50, TRUE, 8, 0.9)
+	create_sound(flashbang_turf, 'sound/items/weapons/flashbang.ogg').vary(TRUE).extra_range(8).falloff_exponent(0.9).play()
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 2, COLOR_WHITE, 1)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
 		pop(get_turf(living_mob), living_mob)
@@ -132,7 +132,7 @@
 /obj/item/grenade/primer/attack_self(mob/user)
 	. = ..()
 	if(active)
-		user.playsound_local(user, 'sound/misc/box_deploy.ogg', 50, TRUE)
+		create_sound(user, 'sound/misc/box_deploy.ogg').vary(TRUE).direct_listeners(user).play()
 		rots++
 		user.changeNext_move(CLICK_CD_RAPID)
 

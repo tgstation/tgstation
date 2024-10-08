@@ -116,10 +116,10 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
+	create_sound(container.parent, 'sound/items/unsheath.ogg').volume(25).vary(TRUE).play()
 
 /obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
+	create_sound(container.parent, 'sound/items/sheath.ogg').volume(25).vary(TRUE).play()
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
@@ -154,7 +154,7 @@
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
 	if(!QDELETED(affecting) && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.owner == user && !QDELETED(user))
-		playsound(user, hitsound, 25, TRUE)
+		create_sound(user, hitsound).volume(25).vary(TRUE).play()
 		affecting.dismember(BRUTE)
 		user.adjustBruteLoss(20)
 
@@ -199,11 +199,11 @@
 
 /obj/item/melee/parsnip_sabre/on_exit_storage(datum/storage/container)
 	. = ..()
-	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
+	create_sound(container.parent, 'sound/items/unsheath.ogg').volume(25).vary(TRUE).play()
 
 /obj/item/melee/parsnip_sabre/on_enter_storage(datum/storage/container)
 	. = ..()
-	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
+	create_sound(container.parent, 'sound/items/sheath.ogg').volume(25).vary(TRUE).play()
 
 /obj/item/melee/beesword
 	name = "The Stinger"
@@ -239,7 +239,7 @@
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(get_turf(src), hitsound, 75, TRUE, -1)
+	create_sound(get_turf(src), hitsound).volume(75).vary(TRUE).extra_range(-1).play()
 	return TOXLOSS
 
 /obj/item/melee/supermatter_sword
@@ -348,7 +348,7 @@
 	var/turf/newT = turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(newT.type == oldtype)
 		return
-	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
+	create_sound(turf, 'sound/effects/supermatter.ogg').vary(TRUE).play()
 	turf.visible_message(
 		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
@@ -434,7 +434,7 @@
 	inhand_icon_state = active ? "nullrod" : null
 	if(user)
 		balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
@@ -475,7 +475,7 @@
 		return NONE
 	if (istype(interacting_with, /obj/singularity) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
-		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/tools/rped.ogg').vary(TRUE).play()
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -486,21 +486,21 @@
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
 	to_chat(user, span_notice("You extend [src] towards [interacting_with]."))
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 	finish_roasting(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	if(do_after(user, 10 SECONDS, target = user))
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
-		playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/tools/welder2.ogg').vary(TRUE).play()
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
 		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
 		update_appearance()
 	else
 		QDEL_NULL(beam)
-		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 		to_chat(user, span_notice("You put [src] away."))
 
 /obj/item/melee/cleric_mace

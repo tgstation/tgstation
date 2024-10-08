@@ -174,7 +174,7 @@
 	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
 
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
-		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
+		create_sound(carbon_mob, pick(spooks)).vary(TRUE).extra_range(10).play()
 
 // Your skin falls off
 /datum/species/human/krokodil_addict

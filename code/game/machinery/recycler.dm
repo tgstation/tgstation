@@ -94,7 +94,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	balloon_alert(user, "safeties disabled")
 	return FALSE
 
@@ -204,9 +204,9 @@
 			break
 		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
 	if(nom.len && sound)
-		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+		create_sound(src, item_recycle_sound).volume(50 + nom.len * 5).vary(TRUE).extra_range(nom.len).ignore_walls(nom.len > 10).play()
 	if(not_eaten)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(50 + not_eaten * 5).extra_range(not_eaten).ignore_walls(not_eaten > 10).play()
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
 	. = FALSE
@@ -225,13 +225,13 @@
 	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 	safety_mode = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
-	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/ping.ogg').play()
 	safety_mode = FALSE
 	update_appearance()
 
@@ -239,9 +239,9 @@
 	L.forceMove(loc)
 
 	if(issilicon(L))
-		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 	else
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)

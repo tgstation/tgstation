@@ -76,7 +76,7 @@
 
 	if(user)
 		balloon_alert(user, "clicked")
-	playsound(src, 'sound/items/pen_click.ogg', 30, TRUE, -3)
+	create_sound(src, 'sound/items/pen_click.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 	icon_state = initial(icon_state) + (active ? "_retracted" : "")
 	update_appearance(UPDATE_ICON)
 
@@ -146,7 +146,7 @@
 	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
 	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
 	balloon_alert(user, "clicked")
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
+	create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).extra_range(-3).play()
 
 /obj/item/pen/fountain
 	name = "fountain pen"
@@ -368,14 +368,14 @@
 
 /obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/items/weapons/saberon.ogg', 5, TRUE)
+	create_sound(source, 'sound/items/weapons/saberon.ogg').volume(5).vary(TRUE).play()
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
 	source.hitsound = transform_comp.hitsound_on
 	source.set_light(light_range, light_power, light_color, l_on = TRUE)
 
 /obj/item/pen/edagger/proc/on_containing_dart_drop(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
-	playsound(new_casing, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(new_casing, 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 
 /obj/item/pen/edagger/proc/on_containing_dart_embedded(datum/source, obj/item/ammo_casing/new_casing)
 	SIGNAL_HANDLER
@@ -384,12 +384,12 @@
 
 /obj/item/pen/edagger/proc/on_containing_dart_failed_embed(obj/item/ammo_casing/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(source, 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 
 /obj/item/pen/edagger/proc/on_embedded_removed(obj/item/ammo_casing/source, mob/living/carbon/victim)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(source, 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 	victim.visible_message(
 		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
@@ -432,7 +432,7 @@
 
 	if(user)
 		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
-	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -514,7 +514,7 @@
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
 	if(user)
 		balloon_alert(user, active ? "extended" : "retracted")
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 
 	if(!active)
 		tool_behaviour = initial(tool_behaviour)
@@ -568,6 +568,6 @@
 
 /obj/effect/temp_visual/security_holosign/Initialize(mapload, creator)
 	. = ..()
-	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE) //make some noise!
+	create_sound(loc, 'sound/machines/chime.ogg').play() //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a security hologram!"))

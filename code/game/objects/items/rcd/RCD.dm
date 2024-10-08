@@ -106,7 +106,7 @@
 			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		useResource(16, user)
 		activate()
-		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+		create_sound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
@@ -147,7 +147,7 @@
 
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				create_sound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				balloon_alert(user, "something is blocking the turf")
 				return FALSE
 
@@ -158,7 +158,7 @@
 		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd  && (!istype(target_turf, /turf/open/floor) || istype(target, /obj/structure/girder)))
 			//if a player builds a wallgirder on top of himself manually with iron sheets he can't finish the wall if he is still on the girder. Exclude the girder itself when checking for other dense objects on the turf
 			if(istype(target, /obj/structure/girder) && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = list(target)))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				create_sound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
 
@@ -193,7 +193,7 @@
 
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_types, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				create_sound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				balloon_alert(user, "something is on the tile!")
 				return FALSE
 
@@ -277,7 +277,7 @@
 	if(!target.rcd_act(user, src, rcd_results))
 		qdel(rcd_effect)
 		return FALSE
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	rcd_effect.end_animation()
 	return TRUE
 
@@ -345,7 +345,7 @@
 	return data
 
 /obj/item/construction/rcd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	create_sound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	switch(action)
 		if("root_category")

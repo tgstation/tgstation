@@ -54,7 +54,7 @@
 /datum/surgery_step/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
 		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
-		playsound(get_turf(target), 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
+		create_sound(bloodfilter, 'sound/machines/ping.ogg').volume(75).vary(TRUE).falloff_exponent(12).falloff_distance( 1).play()
 		return FALSE
 
 	if(!length(bloodfilter.whitelist))

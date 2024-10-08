@@ -209,7 +209,7 @@
 			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
 		else
 			visible_message(span_danger("[src] crashes into [bumped_atom], sending [disabled] flying!"))
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)

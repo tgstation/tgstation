@@ -121,7 +121,7 @@
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
 			user.apply_damage(20, STAMINA)
-			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 	produce_boulder(TRUE)
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 
@@ -339,7 +339,7 @@
 			balloon_alert(user, "already scanning!")
 			return
 		balloon_alert(user, "scanning...")
-		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
+		create_sound(src, 'sound/items/timer.ogg').volume(30).vary(TRUE).play()
 		if(!do_after(user, 4 SECONDS, src))
 			return
 

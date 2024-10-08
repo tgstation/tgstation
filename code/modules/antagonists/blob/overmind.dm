@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blobstrain.on_sporedeath(spore)
 
 /mob/camera/blob/proc/victory()
-	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
+	create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
 		var/turf/guy_turf = get_turf(live_guy)
@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			continue
 
 		if(!(ROLE_BLOB in live_guy.faction))
-			playsound(live_guy, 'sound/effects/splat.ogg', 50, TRUE)
+			create_sound(live_guy, 'sound/effects/splat.ogg').vary(TRUE).play()
 			if(live_guy.stat != DEAD)
 				live_guy.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			live_guy.death()

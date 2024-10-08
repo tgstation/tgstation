@@ -184,8 +184,7 @@
 			go_back = rank > rank_changed ? 100 : 0
 
 			if(multitooled && (rank_changed > rank)) // make funny noises
-				var/mob/mob_parent = parent
-				mob_parent.playsound_local(get_turf(mob_parent), pick(rankup_sounds[rank_changed]), 70, vary = FALSE)
+				create_sound(parent, pick(rankup_sounds[rank_changed])).volume(70).direct_listeners(parent).play()
 
 			if((rank < hotswap_rank) && (rank_changed >= hotswap_rank))
 				var/mob/mob_parent = parent

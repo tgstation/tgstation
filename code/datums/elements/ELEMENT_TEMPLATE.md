@@ -21,5 +21,5 @@ See _element.dm for detailed explanations
 
 /datum/element/myelement/proc/myproc(datum/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/effects/gong.ogg', 50, TRUE)
+	create_sound(source, 'sound/effects/gong.ogg').vary(TRUE).play()
 ```

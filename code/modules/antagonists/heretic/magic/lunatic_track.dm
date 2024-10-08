@@ -20,7 +20,7 @@
 		owner.balloon_alert(owner, "what cruel fate, your master is gone...")
 		StartCooldown(1 SECONDS)
 		return FALSE
-	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	create_sound(owner, 'sound/effects/singlebeat.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
 
 	if(ascended_heretic.stat == DEAD)

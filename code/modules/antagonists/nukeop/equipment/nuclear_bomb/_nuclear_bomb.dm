@@ -95,7 +95,7 @@ GLOBAL_VAR(station_nuke_source)
 			return TRUE
 		auth = weapon
 		update_ui_mode()
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 		add_fingerprint(user)
 		return TRUE
 
@@ -247,10 +247,6 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(detonation_timer < world.time)
 		explode()
-		return
-
-	var/volume = (get_time_left() <= 20 ? 30 : 5)
-	playsound(loc, 'sound/items/timer.ogg', volume, FALSE)
 
 /// Changes what mode the UI is depending on the state of the nuke.
 /obj/machinery/nuclearbomb/proc/update_ui_mode()
@@ -332,20 +328,20 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
-	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
+	create_sound(src, SFX_TERMINAL_TYPE).volume(20).play()
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
-				playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
-				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
+				create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 				auth.forceMove(get_turf(src))
 				auth = null
 				. = TRUE
 			else
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
 				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
-					playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
-					playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+					create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
+					create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 					auth = I
 					. = TRUE
 			update_ui_mode()
@@ -357,10 +353,10 @@ GLOBAL_VAR(station_nuke_source)
 						if(auth && ui_mode == NUKEUI_AWAIT_ARM)
 							toggle_nuke_safety()
 							yes_code = FALSE
-							playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
+							create_sound(src, 'sound/machines/nuke/confirm_beep.ogg').play()
 							update_ui_mode()
 						else
-							playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+							create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 						numeric_input = ""
 						. = TRUE
 					if("E")
@@ -369,20 +365,20 @@ GLOBAL_VAR(station_nuke_source)
 								if(numeric_input == r_code)
 									numeric_input = ""
 									yes_code = TRUE
-									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+									create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 									. = TRUE
 								else
-									playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+									create_sound(src, 'sound/machines/nuke/angry_beep.ogg').play()
 									numeric_input = "ERROR"
 							if(NUKEUI_AWAIT_TIMER)
 								var/number_value = text2num(numeric_input)
 								if(number_value)
 									timer_set = clamp(number_value, minimum_timer_set, maximum_timer_set)
-									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+									create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 									toggle_nuke_safety()
 									. = TRUE
 							else
-								playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+								create_sound(src, 'sound/machines/nuke/angry_beep.ogg').play()
 						update_ui_mode()
 					if("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
 						if(numeric_input != "ERROR")
@@ -390,24 +386,24 @@ GLOBAL_VAR(station_nuke_source)
 							if(length(numeric_input) > 5)
 								numeric_input = "ERROR"
 							else
-								playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+								create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 							. = TRUE
 			else
-				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/nuke/angry_beep.ogg').play()
 		if("arm")
 			if(auth && yes_code && !safety && !exploded)
-				playsound(src, 'sound/machines/nuke/confirm_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/nuke/confirm_beep.ogg').play()
 				toggle_nuke_armed()
 				update_ui_mode()
 				. = TRUE
 			else
-				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/nuke/angry_beep.ogg').play()
 		if("anchor")
 			if(auth && yes_code)
-				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/nuke/general_beep.ogg').play()
 				set_anchor(usr)
 			else
-				playsound(src, 'sound/machines/nuke/angry_beep.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/nuke/angry_beep.ogg').play()
 
 /// Anchors the nuke, duh. Can only be done if the disk is inside.
 /obj/machinery/nuclearbomb/proc/set_anchor(mob/anchorer)
@@ -519,7 +515,7 @@ GLOBAL_VAR(station_nuke_source)
 	yes_code = FALSE
 	safety = TRUE
 	update_appearance()
-	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
+	create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 

@@ -210,7 +210,7 @@
 	if(!red_alert_access)
 		return
 	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
-	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/airlock/boltsup.ogg').vary(TRUE).play()
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	return FALSE
@@ -399,13 +399,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
+				create_sound(loc, 'sound/effects/glass/glasshit.ogg').volume(90).vary(TRUE).play()
 			else if(damage_amount)
-				playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
+				create_sound(loc, 'sound/items/weapons/smash.ogg').vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/door/emp_act(severity)
 	. = ..()

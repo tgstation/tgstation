@@ -292,7 +292,7 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(loc, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
+	create_sound(loc, 'sound/effects/magic/summon_magic.ogg').vary(TRUE).extra_range(TRUE).play()
 	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
 	M.faction += list("[REF(usr)]")
 	robe_charge = FALSE

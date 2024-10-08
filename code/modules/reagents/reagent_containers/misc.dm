@@ -42,7 +42,7 @@
 	if(reagents.chem_temp >= max_temp)
 		change_power_status(FALSE)
 		audible_message(span_notice("The Mauna Mug lets out a happy beep and turns off!"))
-		playsound(src, 'sound/machines/chime.ogg', 50)
+		create_sound(src, 'sound/machines/chime.ogg').play()
 
 /obj/item/reagent_containers/cup/maunamug/Destroy()
 	if(cell)

@@ -412,7 +412,7 @@
 		if(autoeject) // Eject if configured.
 			msg += " Auto ejecting patient now."
 			open_machine()
-		playsound(src, 'sound/machines/cryo_warning.ogg', 100)
+		create_sound(src, 'sound/machines/cryo_warning.ogg').volume(100).play()
 		radio.talk_into(src, msg, RADIO_CHANNEL_MEDICAL)
 		return PROCESS_KILL
 
@@ -423,14 +423,14 @@
 			if(C.all_wounds)
 				if(!treating_wounds) // if we have wounds and haven't already alerted the doctors we're only dealing with the wounds, let them know
 					treating_wounds = TRUE
-					playsound(src, 'sound/machines/cryo_warning.ogg', 100) // Bug the doctors.
+					create_sound(src, 'sound/machines/cryo_warning.ogg').volume(100).play() // Bug the doctors.
 					radio.talk_into(src, "Patient vitals fully recovered, continuing automated wound treatment.", RADIO_CHANNEL_MEDICAL)
 			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
 				treating_wounds = FALSE
 
 		if(!treating_wounds)
 			set_on(FALSE)
-			playsound(src, 'sound/machines/cryo_warning.ogg', 100) // Bug the doctors.
+			create_sound(src, 'sound/machines/cryo_warning.ogg').volume(100).play() // Bug the doctors.
 			var/msg = "Patient fully restored."
 			if(autoeject) // Eject if configured.
 				msg += " Auto ejecting patient now."

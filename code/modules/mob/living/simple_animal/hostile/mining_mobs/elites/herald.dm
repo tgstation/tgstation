@@ -67,7 +67,7 @@
 	. = ..()
 	if(stat != CONSCIOUS)
 		return
-	playsound(src, 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(src, 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 
 /datum/action/innate/elite_attack/herald_trishot
 	name = "Triple Shot"
@@ -146,14 +146,14 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_trishot(target)
 	ranged_cooldown = world.time + 30
-	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 	var/target_turf = get_turf(target)
 	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, FALSE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 0.2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 0.4 SECONDS)
 	if(health < maxHealth * 0.5 && !is_mirror)
-		playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 1 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 1.2 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(shoot_projectile), target_turf, angle_to_target, FALSE, TRUE), 1.4 SECONDS)
@@ -172,23 +172,23 @@
 	ranged_cooldown = world.time + 3 SECONDS
 	if(!is_mirror)
 		icon_state = "herald_enraged"
-	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(herald_circleshot), 0), 0.5 SECONDS)
 	if(health < maxHealth * 0.5 && !is_mirror)
-		playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 		addtimer(CALLBACK(src, PROC_REF(herald_circleshot), 22.5), 1.5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(unenrage)), 2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_teleshot(target)
 	ranged_cooldown = world.time + 30
-	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 	var/target_turf = get_turf(target)
 	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, TRUE, FALSE)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
 	ranged_cooldown = world.time + 4 SECONDS
-	playsound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(get_turf(src), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 	if(my_mirror != null)
 		qdel(my_mirror)
 		my_mirror = null
@@ -286,7 +286,7 @@
 		return
 	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
-	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(20).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 1 SECONDS)
 
 #undef HERALD_TRISHOT

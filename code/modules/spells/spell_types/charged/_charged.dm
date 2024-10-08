@@ -75,7 +75,7 @@
 	to_chat(cast_on, channel_message)
 
 	if(charge_sound_instance)
-		playsound(cast_on, charge_sound_instance, 50, FALSE)
+		create_sound(cast_on, charge_sound_instance).play()
 
 	if(charge_overlay_instance)
 		cast_on.add_overlay(charge_overlay_instance)
@@ -105,8 +105,6 @@
 
 	if(charge_sound_instance)
 		for_who.stop_sound_channel(CHANNEL_CHARGED_SPELL)
-		// Play a null sound in to cancel the sound playing, because byond
-		playsound(for_who, sound(null, repeat = 0, channel = CHANNEL_CHARGED_SPELL), 50, FALSE)
 
 	currently_channeling = FALSE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)

@@ -240,7 +240,7 @@
 	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
 		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
 		return
-	playsound(vehicle_entered_target, hornsound, 75)
+	create_sound(vehicle_entered_target, hornsound).volume(75).play()
 
 /datum/action/vehicle/sealed/headlights
 	name = "Toggle Headlights"
@@ -252,7 +252,7 @@
 	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
 	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
 	vehicle_entered_target.update_appearance()
-	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
+	create_sound(owner, vehicle_entered_target.headlights_toggle ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg').volume(40).vary(TRUE).play()
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -321,7 +321,7 @@
 	if(TIMER_COOLDOWN_RUNNING(src, bell_cooldown))
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
-	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
+	create_sound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg').volume(70).play()
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"
@@ -342,7 +342,7 @@
 	rider.adjustStaminaLoss(vehicle.instability* 0.75)
 	if (rider.getStaminaLoss() >= 100)
 		vehicle.obj_flags &= ~CAN_BE_HIT
-		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		vehicle.unbuckle_mob(rider)
 		rider.throw_at(landing_turf, 2, 2)
 		rider.Paralyze(40)
@@ -359,7 +359,7 @@
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
-	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+	create_sound(vehicle, 'sound/vehicles/skateboard_ollie.ogg').vary(TRUE).play()
 	passtable_on(rider, VEHICLE_TRAIT)
 	passtable_on(vehicle, VEHICLE_TRAIT)
 	rider.Move(landing_turf, vehicle_target.dir)
@@ -378,7 +378,7 @@
 
 	rider.adjustStaminaLoss(board.instability)
 	if (rider.getStaminaLoss() >= 100)
-		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').volume(20).vary(TRUE).play()
 		board.unbuckle_mob(rider)
 		rider.Paralyze(50)
 		if(prob(15))
@@ -399,7 +399,7 @@
 		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
 		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
 	)
-	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
+	create_sound(board, 'sound/vehicles/skateboard_ollie.ogg').vary(TRUE).play()
 	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)
@@ -426,7 +426,7 @@
 		return FALSE
 	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
 	vehicle_entered_target.visible_message(span_notice("[vehicle_entered_target] [sound_message]"))
-	playsound(vim_mecha, sound_path, 75)
+	create_sound(vim_mecha, sound_path).volume(75).play()
 	return TRUE
 
 /datum/action/vehicle/sealed/noise/chime

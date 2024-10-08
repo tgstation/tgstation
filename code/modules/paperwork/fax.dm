@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return FALSE
 	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		playsound(src, 'sound/mobs/non-humanoids/dog/growl2.ogg', 50, FALSE)
+		create_sound(src, 'sound/mobs/non-humanoids/dog/growl2.ogg').play()
 		balloon_alert(user, "migrated to syndienet 2.0")
 		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 		return TRUE
@@ -208,7 +208,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if(!clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			return FALSE
 		clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this)
-		playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		create_sound(loc, 'sound/effects/spray3.ogg').vary(TRUE).extra_range(MEDIUM_RANGE_SOUND_EXTRARANGE).play()
 		user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
 		jammed = FALSE
 		return TRUE
@@ -296,7 +296,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 				return
 			loaded.forceMove(drop_location())
 			loaded_item_ref = null
-			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/eject.ogg').play()
 			update_appearance()
 			return TRUE
 
@@ -321,7 +321,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			fax_paper.loc = null
 
 			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
+			create_sound(src, 'sound/machines/high_tech_confirm.ogg').play()
 
 			history_add("Send", params["name"])
 
@@ -369,12 +369,12 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if (FAX.jammed)
 			do_sparks(5, TRUE, src)
 			balloon_alert(usr, "destination port jammed")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
-		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/high_tech_confirm.ogg').play()
 		return TRUE
 	return FALSE
 
@@ -387,7 +387,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * sender_name - The sender's name, which will be displayed in the message and recorded in the history of operations.
  */
 /obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
-	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/printer.ogg').play()
 	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)

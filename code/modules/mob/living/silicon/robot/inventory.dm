@@ -153,7 +153,7 @@
 			inv1.icon_state = "[initial(inv1.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+			create_sound(src, 'sound/machines/warning-buzzer.ogg').volume(75).vary(TRUE).extra_range(TRUE).play()
 			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
 
 			if(builtInCamera)
@@ -169,7 +169,7 @@
 			inv2.icon_state = "[initial(inv2.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
+			create_sound(src, 'sound/machines/warning-buzzer.ogg').volume(60).vary(TRUE).extra_range(TRUE).play()
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
 			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 
@@ -180,7 +180,7 @@
 			inv3.icon_state = "[initial(inv3.icon_state)] +b"
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
+			create_sound(src, 'sound/machines/warning-buzzer.ogg').vary(TRUE).extra_range(TRUE).play()
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
 			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
 

@@ -73,7 +73,7 @@
 		end_siphon()
 		return
 
-	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/poster/poster_being_created.ogg').volume(100).vary(TRUE).play()
 	syphoning_credits += siphon_am
 	synced_bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))

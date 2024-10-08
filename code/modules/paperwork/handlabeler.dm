@@ -80,7 +80,7 @@
 	)
 	var/obj/item/label/stick_label = new(null, label)
 	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
-	playsound(interacting_with, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
+	create_sound(interacting_with, 'sound/items/handling/component_pickup.ogg').volume(20).vary(TRUE).play()
 	labels_left--
 	return TRUE
 
@@ -284,10 +284,10 @@
 			return ITEM_INTERACT_BLOCKING
 
 		update_label_name(labeler.label)
-		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
+		create_sound(sticking_to, 'sound/items/handling/component_pickup.ogg').volume(20).vary(TRUE).play()
 		sticking_to.balloon_alert(user, "label renamed")
 	else
-		playsound(sticking_to, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
+		create_sound(sticking_to, 'sound/items/poster/poster_ripped.ogg').volume(20).vary(TRUE).play()
 		sticking_to.balloon_alert(user, "label removed")
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS

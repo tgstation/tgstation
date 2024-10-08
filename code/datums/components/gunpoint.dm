@@ -64,7 +64,7 @@
 	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
 	target.apply_status_effect(/datum/status_effect/grouped/heldup, REF(shooter))
 	target.do_alert_animation()
-	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
+	create_sound(target, 'sound/machines/chime.ogg').vary(TRUE).direct_listeners(target).play()
 	target.add_mood_event("gunpoint", /datum/mood_event/gunpoint)
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)

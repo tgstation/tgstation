@@ -57,7 +57,7 @@
 	owner.changeNext_move(CLICK_CD_RANGE)
 	check_rcd()
 	base_console.internal_rcd.rcd_create(rcd_target, owner) //Activate the RCD and force it to work remotely!
-	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
+	create_sound(target_turf, 'sound/items/deconstruct.ogg').volume(60).vary(TRUE).play()
 
 /datum/action/innate/construction/configure_mode
 	name = "Configure RCD"
@@ -98,7 +98,7 @@
 	var/obj/placed_structure = new structure_path(place_turf)
 	base_console.structures[structure_name]--
 	var/remaining = base_console.structures[structure_name]
-	playsound(place_turf, place_sound, 50, TRUE)
+	create_sound(place_turf, place_sound).vary(TRUE).play()
 	after_place(placed_structure, remaining)
 
 ///Proc to handle additional behavior after placing an object

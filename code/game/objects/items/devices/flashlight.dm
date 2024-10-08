@@ -78,7 +78,7 @@
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
-	playsound(src, light_on ? sound_off : sound_on, 40, TRUE)
+	create_sound(src, light_on ? sound_off : sound_on).volume(40).vary(TRUE).play()
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		if(user)
 			balloon_alert(user, "disrupted!")
@@ -342,7 +342,7 @@
 
 /obj/effect/temp_visual/medical_holosign/Initialize(mapload, creator)
 	. = ..()
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE) //make some noise!
+	create_sound(loc, 'sound/machines/ping.ogg').play() //make some noise!
 	if(creator)
 		visible_message(span_danger("[creator] created a medical hologram!"))
 

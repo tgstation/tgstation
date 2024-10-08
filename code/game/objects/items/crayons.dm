@@ -512,7 +512,7 @@
 
 	if(pre_noise)
 		audible_message(span_notice("You hear spraying."))
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+
 
 	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
@@ -566,7 +566,7 @@
 
 	if(post_noise)
 		audible_message(span_hear("You hear spraying."))
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+
 
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
@@ -836,7 +836,7 @@
 	user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
 	user.say("WITNESS ME!!", forced = "spraycan suicide")
 	if(pre_noise || post_noise)
-		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		create_sound(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).extra_range(5).play()
 	if(can_change_colour)
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
@@ -883,9 +883,6 @@
 		return
 
 	if(iscarbon(target))
-		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
-
 		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
@@ -915,8 +912,6 @@
 		use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
-		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
@@ -961,8 +956,6 @@
 			use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
 
-		if(pre_noise || post_noise)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
@@ -991,7 +984,7 @@
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE)))
-				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return ITEM_INTERACT_SUCCESS
 	if(interacting_with.color)

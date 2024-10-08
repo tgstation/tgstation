@@ -58,7 +58,7 @@
 
 		recent_examiner_refs += user_ref
 		apply_damage(maxHealth * 0.1) // We take 10% of our health as damage upon being examined
-		playsound(src, 'sound/effects/ghost2.ogg', 40, TRUE)
+		create_sound(src, 'sound/effects/ghost2.ogg').volume(40).vary(TRUE).play()
 		addtimer(CALLBACK(src, PROC_REF(clear_recent_examiner), user_ref), recent_examine_damage_cooldown, TIMER_DELETE_ME)
 		animate(src, alpha = 120, time = 0.5 SECONDS, easing = ELASTIC_EASING, loop = 2, flags = ANIMATION_PARALLEL)
 		animate(alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)

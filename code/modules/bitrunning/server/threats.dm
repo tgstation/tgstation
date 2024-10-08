@@ -121,7 +121,7 @@
 	antag_mind.special_role = ROLE_GLITCH
 	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
-	playsound(new_mob, 'sound/effects/magic/ethereal_exit.ogg', 50, vary = TRUE)
+	create_sound(new_mob, 'sound/effects/magic/ethereal_exit.ogg').vary(TRUE).play()
 	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into virtual antagonist by an event.")
 	new_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 

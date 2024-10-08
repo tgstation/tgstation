@@ -28,7 +28,7 @@
 	if(. != BULLET_ACT_HIT)
 		return .
 
-	playsound(src, hitting_projectile.hitsound, 50, TRUE)
+	create_sound(src, hitting_projectile.hitsound).vary(TRUE).play()
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(
@@ -50,9 +50,9 @@
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
 	if(density)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		create_sound(src, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
 	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", [no_damage_feedback]"]!"), span_danger("You smash [src][damage ? "" : ", [no_damage_feedback]"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
@@ -68,7 +68,7 @@
 
 /obj/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
-		playsound(src.loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
+		create_sound(src.loc, 'sound/items/weapons/slash.ogg').volume(100).vary(TRUE).play()
 
 /obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
@@ -83,7 +83,7 @@
 		else
 			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		if(. && play_soundeffect)
-			playsound(current_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+			create_sound(current_turf, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 		if(user.client)
 			log_combat(user, src, "attacked")
 

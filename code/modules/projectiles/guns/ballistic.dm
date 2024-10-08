@@ -172,13 +172,23 @@
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
 	var/play_click = round(sqrt(max_ammo * 2)) > current_ammo
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
-		if(play_click && click_on_low_ammo)
-			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+		create_sound(src, suppressed_sound).volume(suppressed_volume).vary(vary_fire_sound).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
+		if(play_click)
+			create_sound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg')\
+				.volume(suppressed_volume)\
+				.vary(vary_fire_sound)\
+				.extra_range(SILENCED_SOUND_EXTRARANGE)\
+				.falloff_distance(0)\
+				.frequency(click_frequency_to_use)\
+				.play()
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
-		if(play_click && click_on_low_ammo)
-			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+		create_sound(src, fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
+		if(play_click)
+			create_sound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg')\
+				.volume(fire_sound_volume)\
+				.vary(vary_fire_sound)\
+				.frequency(click_frequency_to_use)\
+				.play()
 
 
 /**
@@ -284,7 +294,7 @@
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	create_sound(user, 'sound/items/weapons/empty.ogg').volume(100).vary(TRUE).play()
 	update_appearance()
 	update_item_action_buttons()
 
@@ -339,14 +349,14 @@
 	process_chamber(!chambered, FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
-		playsound(src, lock_back_sound, lock_back_sound_volume, lock_back_sound_vary)
+		create_sound(src, lock_back_sound).volume(lock_back_sound_volume).vary(lock_back_sound_vary).play()
 	else
-		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+		create_sound(src, rack_sound).volume(rack_sound_volume).vary(rack_sound_vary).play()
 	update_appearance()
 
 ///Drops the bolt from a locked position
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
-	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
+	create_sound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).play()
 	if (user)
 		balloon_alert(user, "[bolt_wording] dropped")
 	chamber_round()
@@ -363,9 +373,9 @@
 		if (display_message)
 			balloon_alert(user, "[magazine_wording] loaded")
 		if (magazine.ammo_count())
-			playsound(src, load_sound, load_sound_volume, load_sound_vary)
+			create_sound(src, load_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 		else
-			playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+			create_sound(src, load_empty_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
 			chamber_round()
 		update_appearance()
@@ -379,9 +389,9 @@
 	if(bolt_type == BOLT_TYPE_OPEN)
 		chambered = null
 	if (magazine.ammo_count())
-		playsound(src, eject_sound, eject_sound_volume, eject_sound_vary)
+		create_sound(src, eject_sound).volume(eject_sound_volume).vary(eject_sound_vary).play()
 	else
-		playsound(src, eject_empty_sound, eject_sound_volume, eject_sound_vary)
+		create_sound(src, eject_empty_sound).volume(eject_sound_volume).vary(eject_sound_vary).play()
 	magazine.forceMove(drop_location())
 	var/obj/item/ammo_box/magazine/old_mag = magazine
 	if (tac_load)
@@ -427,7 +437,7 @@
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
 				balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
-				playsound(src, load_sound, load_sound_volume, load_sound_vary)
+				create_sound(src, load_sound).volume(load_sound_volume).vary(load_sound_vary).play()
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
 					chamber_round()
 				A.update_appearance()
@@ -515,14 +525,14 @@
 	if (!chambered && !get_ammo())
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
 			bolt_locked = TRUE
-			playsound(src, bolt_drop_sound, bolt_drop_sound_volume)
+			create_sound(src, bolt_drop_sound).volume(bolt_drop_sound_volume).play()
 			update_appearance()
 
 ///postfire empty checks for bolt locking and sound alarms
 /obj/item/gun/ballistic/proc/postfire_empty_checks(last_shot_succeeded)
 	if (!chambered && !get_ammo())
 		if (empty_alarm && last_shot_succeeded)
-			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
+			create_sound(src, empty_alarm_sound).volume(empty_alarm_volume).vary(empty_alarm_vary).play()
 			update_appearance()
 		if (last_shot_succeeded && bolt_type == BOLT_TYPE_LOCKING && semi_auto)
 			bolt_locked = TRUE
@@ -556,7 +566,7 @@
 				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
 		if (num_unloaded)
 			balloon_alert(user, "[num_unloaded] [cartridge_wording]\s unloaded")
-			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+			create_sound(user, eject_sound).volume(eject_sound_volume).vary(eject_sound_vary).play()
 			update_appearance()
 		else
 			balloon_alert(user, "it's empty!")
@@ -631,7 +641,7 @@
 			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
-		playsound(src, dry_fire_sound, 30, TRUE)
+		create_sound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 		return OXYLOSS
 
 #undef BRAINS_BLOWN_THROW_SPEED

@@ -70,7 +70,7 @@
 	else
 		movedelay = MOVEDELAY_ANGRY
 
-	playsound(src, 'sound/vehicles/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
+	create_sound(src, 'sound/vehicles/mecha/mech_blade_safty.ogg').volume(75).play() //everyone need to hear this sound
 
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -106,7 +106,7 @@
  */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(obj/vehicle/sealed/mecha/my_mech, mob/finisher, mob/living/him)
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
-	playsound(src, 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
+	create_sound(src, 'sound/vehicles/mecha/mech_stealth_pre_attack.ogg').volume(75).play()
 	if(!do_after(finisher, 1 SECONDS, him))
 		return
 	if(QDELETED(finisher))
@@ -121,7 +121,7 @@
 	var/turf/for_line_turf = get_turf(my_mech)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
 	in_your_head?.dismember(BRUTE)
-	playsound(src, brute_attack_sound, 75, FALSE)
+	create_sound(src, brute_attack_sound).volume(75).play()
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
 
@@ -140,13 +140,13 @@
 	if(alpha == 255)
 		return
 	animate(src, alpha = 255, time = 0.5 SECONDS)
-	playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	create_sound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 
 /obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if(LAZYLEN(occupants))
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
-			playsound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+			create_sound(src, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 			return
 	return ..()
 
@@ -208,7 +208,7 @@
 ///Called when invisibility activated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	create_sound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 	check_charge_attack()
 	animate(chassis, alpha = 0, time = 0.5 SECONDS)
 	button_icon_state = "mech_stealth_on"
@@ -223,7 +223,7 @@
 ///Called when invisibility deactivated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_off()
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
-	playsound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	create_sound(chassis, 'sound/vehicles/mecha/mech_stealth_effect.ogg').volume(75).play()
 	invisibility_timer = null
 	charge = FALSE
 	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
@@ -313,7 +313,7 @@
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(chassis))
 	ADD_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
-	playsound(chassis, stealth_pre_attack_sound, 75, FALSE)
+	create_sound(chassis, stealth_pre_attack_sound).volume(75).play()
 	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 1 SECONDS)
 	return TRUE
 
@@ -339,7 +339,7 @@
 			var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 			cut_bodypart?.dismember(BRUTE)
 		something_living.apply_damage(35, BRUTE)
-	playsound(chassis, stealth_attack_sound, 75, FALSE)
+	create_sound(chassis, stealth_attack_sound).volume(75).play()
 	REMOVE_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
 	on = !on
 	charge = FALSE
@@ -493,7 +493,7 @@
 		return FALSE
 	chassis.forceMove(here_we_go)
 	start_charge_here.Beam(chassis, icon_state = "mech_charge", time = 8)
-	playsound(chassis, charge_attack_sound, 75, FALSE)
+	create_sound(chassis, charge_attack_sound).volume(75).play()
 	on = !on
 	chassis.use_energy(energy_cost)
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)

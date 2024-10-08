@@ -99,7 +99,7 @@
 		var/obj/item/stock_parts/attack_diode = attack_item
 		if(crystal_lens && attack_diode.rating < 3) //only tier 3 and up are small enough to fit
 			to_chat(user, span_warning("You try to jam \the [attack_item.name] in place, but \the [crystal_lens.name] is in the way!"))
-			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
+			create_sound(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(20).play()
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, attack_item)
 				if(atom_to_teleport == user)
@@ -113,7 +113,7 @@
 			return
 		if(!user.transferItemToLoc(attack_item, src))
 			return
-		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
+		create_sound(src, 'sound/items/tools/screwdriver.ogg').volume(30).play()
 		diode = attack_item
 		balloon_alert(user, "installed \the [diode.name]")
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
@@ -129,7 +129,7 @@
 		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = attack_item
 		if(diode && diode.rating < 3) //only lasers of tier 3 and up can house a lens
 			to_chat(user, span_warning("You try to jam \the [crystal_stack.name] in front of the diode, but it's a bad fit!"))
-			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
+			create_sound(src, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(20).play()
 			if(do_after(user, 2 SECONDS, src))
 				var/atom/atom_to_teleport = pick(user, src)
 				if(atom_to_teleport == user)
@@ -148,7 +148,7 @@
 		if(!user.transferItemToLoc(single_crystal, src))
 			return
 		crystal_lens = single_crystal
-		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
+		create_sound(src, 'sound/items/tools/screwdriver2.ogg').volume(30).play()
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 			It can now be used to shine through obstacles at the cost of double the energy drain."))

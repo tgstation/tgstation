@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
-	playsound(victim, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
+	create_sound(victim, 'sound/effects/magic/magic_block_holy.ogg').vary(TRUE).play()
 	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				built_in_his_image.update_damage_overlays()
 		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
 		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
+		create_sound(built_in_his_image, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(target_mob.stat == DEAD)
 		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+			create_sound(target_mob, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 		return
 
 	if(user == target_mob)
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	create_sound(target_mob, SFX_PUNCH).volume(25).vary(TRUE).extra_range(-1).play()
 	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
@@ -310,9 +310,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
 		sword.balloon_alert(user, "exorcising...")
-		playsound(src,'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
+		create_sound(src, 'sound/effects/hallucinations/veryfar_noise.ogg').volume(40).vary(TRUE).play()
 		if(do_after(user, 4 SECONDS, target = sword))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+			create_sound(src, 'sound/effects/pray_chaplain.ogg').volume(60).vary(TRUE).play()
 			new /obj/item/nullrod/nullblade(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
 			qdel(sword)
@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	user.mind.holy_role = HOLY_ROLE_PRIEST
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
-	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/effects/snap.ogg').vary(TRUE).play()
 	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 	user.apply_damage(5, BRUTE, active_hand_zone, attacking_item = src)
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))

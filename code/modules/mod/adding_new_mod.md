@@ -236,7 +236,7 @@ After this, we want to put our special code, a basic effect of healing all mobs 
 			continue
 		carbon_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brain_damage_healed)
 		mod.wearer.Beam(carbon_mob, icon_state = "plasmabeam", time = 1.5 SECONDS)
-	playsound(src, 'sound/effects/magic.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/magic.ogg').volume(100).vary(TRUE).play()
 	drain_power(use_energy_cost)
 ```
 

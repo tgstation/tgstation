@@ -34,7 +34,7 @@
 	var/obj/item/slimecross/reproductive/parentSlimeExtract = parent
 
 	var/cores = rand(1,4)
-	playsound(parentSlimeExtract, 'sound/effects/splat.ogg', 40, TRUE)
+	create_sound(parentSlimeExtract, 'sound/effects/splat.ogg').volume(40).vary(TRUE).play()
 	parentSlimeExtract.last_produce = world.time
 	to_chat(user, span_notice("[parentSlimeExtract] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
 	for(var/i in 1 to cores)

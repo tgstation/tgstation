@@ -46,12 +46,12 @@
 		return ..()
 
 /obj/structure/closet/crate/bin/proc/do_animate()
-	playsound(loc, open_sound, 15, TRUE, -3)
+	create_sound(loc, open_sound).volume(15).vary(TRUE).extra_range(-3).play()
 	flick(base_icon_state + "_animate", src)
 	addtimer(CALLBACK(src, PROC_REF(do_close)), 1.1 SECONDS)
 
 /obj/structure/closet/crate/bin/proc/do_close()
-	playsound(loc, close_sound, 15, TRUE, -3)
+	create_sound(loc, close_sound).volume(15).vary(TRUE).extra_range(-3).play()
 	update_appearance()
 
 ///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
@@ -67,4 +67,4 @@
 	items_to_sweep.Cut()
 
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
+

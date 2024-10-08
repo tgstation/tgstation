@@ -14,7 +14,7 @@
 	smoke.set_up(2, holder = src, location = loc)
 	smoke.start()
 	visible_message(span_boldannounce("[src] warps in!"))
-	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
+	create_sound(src.loc, 'sound/effects/empulse.ogg').volume(25).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(warpbots)), rand(1 SECONDS, 1 MINUTES))
 
 /obj/structure/hivebot_beacon/proc/warpbots()
@@ -31,6 +31,6 @@
 				new /mob/living/basic/hivebot/rapid(get_turf(src))
 	sleep(10 SECONDS)
 	visible_message(span_boldannounce("[src] warps out!"))
-	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
+	create_sound(src.loc, 'sound/effects/empulse.ogg').volume(25).vary(TRUE).play()
 	qdel(src)
 	return

@@ -35,7 +35,7 @@
 		to_chat(owner, span_warning("The moon does not smile upon them."))
 		return FALSE
 
-	playsound(cast_on, 'sound/effects/hallucinations/i_see_you1.ogg', 50, 1)
+	create_sound(cast_on, 'sound/effects/hallucinations/i_see_you1.ogg').vary(TRUE).play()
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(moon_smile_duration + 1 SECONDS)
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 2 SECONDS)

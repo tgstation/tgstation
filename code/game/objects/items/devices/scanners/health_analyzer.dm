@@ -91,7 +91,7 @@
 
 	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
 	balloon_alert(user, "analyzing vitals")
-	playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50)
+
 
 	var/readability_check = user.can_read(src) && !user.is_blind()
 	switch (scanmode)
@@ -553,7 +553,7 @@
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			// Only emit the cheerful scanner message if this scan came from a scanner
-			playsound(simple_scanner, 'sound/machines/ping.ogg', 50, FALSE)
+			create_sound(simple_scanner, 'sound/machines/ping.ogg').play()
 			to_chat(user, span_notice("\The [simple_scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!"))
 			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
 		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
@@ -562,7 +562,7 @@
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
-			playsound(simple_scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
+			create_sound(simple_scanner, 'sound/machines/beep/twobeep.ogg').play()
 
 
 /obj/item/healthanalyzer/simple
@@ -586,7 +586,7 @@
 
 /obj/item/healthanalyzer/simple/attack_self(mob/user)
 	if(next_encouragement < world.time)
-		playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/ping.ogg').play()
 		to_chat(user, span_notice("[src] makes a happy ping and [pick(encouragements)]!"))
 		next_encouragement = world.time + 10 SECONDS
 		show_emotion(AID_EMOTION_HAPPY)
@@ -600,7 +600,7 @@
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/proc/violence(mob/user)
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 	if(isliving(user))
 		var/mob/living/L = user
 		to_chat(L, span_warning("[src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
@@ -625,7 +625,7 @@
 	)
 
 	if(!iscarbon(interacting_with))
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		to_chat(user, span_notice("[src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [interacting_with]."))
 		show_emotion(AI_EMOTION_SAD)
 		return ITEM_INTERACT_BLOCKING
@@ -711,13 +711,13 @@
 			</span>"
 
 	if(!length(render))
-		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+		create_sound(scanner, 'sound/machines/ping.ogg').play()
 		to_chat(user, span_notice("\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no diseases!"))
 		scanner.emotion = AID_EMOTION_HAPPY
 	else
 		to_chat(user, span_notice(render.Join("")))
 		scanner.emotion = AID_EMOTION_WARN
-		playsound(scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
+		create_sound(scanner, 'sound/machines/beep/twobeep.ogg').play()
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND

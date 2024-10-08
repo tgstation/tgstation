@@ -73,7 +73,7 @@
 		if(!DOING_INTERACTION_WITH_TARGET(user, src) && time != orig_time)
 			return
 		time_to_spend = rand(mintime, maxtime)
-		playsound(src, pick(beep_sounds), 75)
+		create_sound(src, pick(beep_sounds)).volume(75).play()
 		time -= time_to_spend
 		stoplag(time_to_spend)
 
@@ -132,7 +132,7 @@
 	if(!can_launch(user, where))
 		return
 	flick("mechpad-launch", connected_mechpad)
-	playsound(connected_mechpad, 'sound/machines/beep/triple_beep.ogg', 50, TRUE)
+	create_sound(connected_mechpad, 'sound/machines/beep/triple_beep.ogg').vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(start_launch), user, where), 1 SECONDS)
 
 /obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)

@@ -82,7 +82,7 @@
 	target.AddElement(/datum/element/forced_gravity, new_gravity)
 	gravity_targets[target] = new_gravity
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_target_moved))
-	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/gravhit.ogg').volume(100).vary(TRUE).play()
 
 /// Stop making something heavier
 /mob/living/basic/guardian/gravitokinetic/proc/remove_gravity(atom/target, too_far = FALSE)

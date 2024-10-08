@@ -308,7 +308,7 @@
 		R.remove_all(100)
 		var/obj/effect/resin_container/resin = new (get_turf(src))
 		user.log_message("used Resin Launcher", LOG_GAME)
-		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
+		create_sound(src, 'sound/items/syringeproj.ogg').volume(40).vary(TRUE).play()
 		var/delay = 2
 		var/datum/move_loop/loop = GLOB.move_manager.move_towards(resin, interacting_with, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
@@ -367,7 +367,7 @@
 	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
 	foaming.set_up(4, holder = src, location = loc)
 	foaming.start()
-	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
+	create_sound(src, 'sound/effects/bamf.ogg').volume(100).vary(TRUE).play()
 	qdel(src)
 
 // Please don't spacedrift thanks
