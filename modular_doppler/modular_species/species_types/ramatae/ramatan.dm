@@ -1,12 +1,15 @@
 /// Ramatan language holder - they are adept in understanding machines, though unable to speak the tongue themselves.
 /datum/language_holder/ramatan
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/movespeak = list(LANGUAGE_ATOM),
-								/datum/language/machine = list(LANGUAGE_ATOM),
-								/datum/language/drone = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/movespeak = list(LANGUAGE_ATOM))
-
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/movespeak = list(LANGUAGE_ATOM),
+		/datum/language/machine = list(LANGUAGE_ATOM),
+		/datum/language/drone = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/movespeak = list(LANGUAGE_ATOM),
+	)
 
 /mob/living/carbon/human/species/ramatan
 	race = /datum/species/ramatan
