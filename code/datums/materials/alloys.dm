@@ -42,6 +42,9 @@
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 	added_slowdown = 0.05
+	fish_weight_modifier = 1.75
+	fishing_difficulty_modifier = 5
+	fishing_experience_multiplier = 1.1
 
 /** Plastitanium
  *
@@ -65,6 +68,10 @@
 	)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
+	fish_weight_modifier = 1.1
+	fishing_difficulty_modifier = -10
+	fishing_cast_range = 1
+	fishing_experience_multiplier = 0.95
 
 /** Plasmaglass
  *
@@ -90,6 +97,9 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
+	fish_weight_modifier = 1.2
+	fishing_difficulty_modifier = 5
+	fishing_experience_multiplier = 1.3
 
 /** Titaniumglass
  *
@@ -114,6 +124,9 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
+	fish_weight_modifier = 1.25
+	fishing_difficulty_modifier = -5
+	fishing_experience_multiplier = 1.25
 
 /** Plastitanium Glass
  *
@@ -139,6 +152,8 @@
 		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
 	)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
+	fish_weight_modifier = 1.2
+	fishing_experience_multiplier = 1.5
 
 /** Alien Alloy
  *
@@ -164,6 +179,11 @@
 	)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 	added_slowdown = 0.1
+	fish_weight_modifier = 2.4
+	material_fish_extra_chance = 25
+	fishing_difficulty_modifier = -25
+	fishing_cast_range = 2
+	fishing_experience_multiplier = 0.6
 
 /datum/material/alloy/alien/on_applied(atom/target, mat_amount, multiplier)
 	. = ..()

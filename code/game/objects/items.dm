@@ -1801,13 +1801,13 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 
@@ -1823,6 +1823,16 @@
 	RETURN_TYPE(/obj/item)
 
 	return src
+
+///Called when an item is added to a slot of a fishing rod.
+/obj/item/proc/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, rod, slot)
+
+///Called when an item is removed from a slot of a fishing rod
+/obj/item/proc/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, rod, slot)
 
 /// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
 /obj/item/proc/check_bait(obj/item/fish/fish_type)

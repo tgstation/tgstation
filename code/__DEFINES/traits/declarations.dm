@@ -777,8 +777,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OMNI_BAIT "omni_bait"
 /// The bait won't be consumed when used
 #define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumable"
-/// This bait ignores environmental conditions for fishing (like low light for nocturnal fish)
-#define TRAIT_BAIT_IGNORE_ENVIRONMENT "bait_ignore_environment"
+/// This rod ignores environmental conditions for fishing (like low light for nocturnal fish)
+#define TRAIT_ROD_IGNORE_ENVIRONMENT "rod_ignore_environment"
+/// This rod attracts fish with the shiny lover fish trait
+#define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
 /**
  * This bait won't apply TRAIT_ROD_REMOVE_FISHING_DUD to the rod it's attached on,
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait

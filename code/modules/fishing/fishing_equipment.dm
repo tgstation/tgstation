@@ -66,19 +66,13 @@
 		It can also be used to snag in objects from a distance more rapidly.<br>\
 		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
-/obj/item/fishing_line/auto_reel/Initialize(mapload)
+/obj/item/fishing_line/auto_reel/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(line_equipped))
-
-/obj/item/fishing_line/auto_reel/proc/line_equipped(datum/source, obj/item/fishing_rod/rod)
-	SIGNAL_HANDLER
 	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_line/auto_reel/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(old_loc, COMSIG_FISHING_ROD_HOOKED_ITEM)
+/obj/item/fishing_line/auto_reel/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	UnregisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
 /obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -174,20 +168,13 @@
 	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
 	wiki_desc = "It vastly improves the chances of catching things other than fish."
 
-/obj/item/fishing_hook/magnet/Initialize(mapload)
+/obj/item/fishing_hook/magnet/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(hook_equipped))
-
-///We make sure that the fishng rod doesn't need a bait to reliably catch non-fish loot.
-/obj/item/fishing_hook/magnet/proc/hook_equipped(datum/source, obj/item/fishing_rod/rod)
-	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_hook/magnet/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(old_loc, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+/obj/item/fishing_hook/magnet/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -199,9 +186,18 @@
 /obj/item/fishing_hook/shiny
 	name = "shiny lure hook"
 	icon_state = "gold_shiny"
-	fishing_hook_traits = FISHING_HOOK_SHINY
 	rod_overlay_icon_state = "hook_shiny_overlay"
 	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
+
+/obj/item/fishing_hook/shiny/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	rod.material_fish_chance += 15 //Increases the chance of catching a shiny po... erh, material fish
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
+
+/obj/item/fishing_hook/shiny/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	rod.material_fish_chance -= 15
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"

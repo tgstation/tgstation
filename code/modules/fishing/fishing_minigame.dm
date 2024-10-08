@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	comp.fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
 	SEND_SIGNAL(user, COMSIG_MOB_BEGIN_FISHING, src)
+	SEND_SIGNAL(rod, COMSIG_ROD_BEGIN_FISHING, src, comp)
 	GLOB.fishing_challenges_by_user[user] = src
 
 	/// Enable special parameters
@@ -319,6 +320,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		var/extra_exp_malus = user.mind.get_skill_level(/datum/skill/fishing) - difficulty * 0.1
 		if(extra_exp_malus > 0)
 			experience_multiplier /= (1 + extra_exp_malus * EXPERIENCE_MALUS_MULT)
+		experience_multiplier *= used_rod.experience_multiplier
 		user.mind.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
 		if(user.mind.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
 			user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
