@@ -194,8 +194,8 @@
 
 /obj/item/reagent_containers/condiment/moltobeso
 	name = "Molt'Obeso"
-	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure!\
-			 The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure! \
+			The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
 	icon_state = "moltobeso"
 	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
 	fill_icon_thresholds = null
