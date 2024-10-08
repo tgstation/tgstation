@@ -6,4 +6,4 @@
 #define ishemophage(A) (is_species(A, /datum/species/genemod/hemophage))
 #define isramatan(A) (is_species(A, /datum/species/ramatan))
 //Species with green blood
-#define hasgreenblood(A) (isinsectoid(A) || issnail(A) || HAS_TRAIT(A, TRAIT_GREEN_BLOOD))
+#define hasgreenblood(A) (isinsectoid(A) || issnail(A) || isflyperson(A) || HAS_TRAIT(A, TRAIT_GREEN_BLOOD))

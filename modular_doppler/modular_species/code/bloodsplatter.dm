@@ -1,15 +1,3 @@
-///	Green blood reagent
-/datum/reagent/blood/green
-	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
-	name = "insect blood"
-	color = "#50c034" // rgb: 0, 200, 0
-	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
-	taste_description = "iron"
-	taste_mult = 1.3
-	penetrates_skin = NONE
-	ph = 7.4
-	default_container = /obj/item/reagent_containers/blood
-
 ///	In this .dm we make a green bloodsplatter subtype
 //	Using the xenoblood icons
 /obj/effect/decal/cleanable/blood/hitsplatter/green

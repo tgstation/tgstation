@@ -6858,6 +6858,7 @@
 #include "modular_doppler\modular_species\species_types\aquatic\aquatic.dm"
 #include "modular_doppler\modular_species\species_types\aquatic\aquatic_bodyparts.dm"
 #include "modular_doppler\modular_species\species_types\ethereal\ethereal.dm"
+#include "modular_doppler\modular_species\species_types\flypeople\flypeople.dm"
 #include "modular_doppler\modular_species\species_types\genemod\genemod.dm"
 #include "modular_doppler\modular_species\species_types\golem\golem.dm"
 #include "modular_doppler\modular_species\species_types\hemophage\_hemophage_defines.dm"
