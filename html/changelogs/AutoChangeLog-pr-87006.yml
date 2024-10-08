@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored footsteps for humans. Human footstep sound effects are now determined by your leg type. Report any oddities."
-  - qol: "Digitigrade legs now play claw footstep SFX. \"plat plat\" is dead, long live \"tap tap\"."

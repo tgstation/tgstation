@@ -1,5 +1,0 @@
-author: "wonderinghost"
-delete-after: True
-changes:
-  - rscadd: "Adds a few lights"
-  - bugfix: "removes the darkspot in wawa med"

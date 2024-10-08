@@ -228,3 +228,32 @@
   timothymtorres:
   - rscadd: Add no escape final traitor objective that spawns a stage six (11x11)
       singularity shuttle event.
+2024-10-08:
+  Ben10Omintrix:
+  - rscadd: adds a new station trait, "bring your pet to work" day
+  Melbert:
+  - admin: Items now have a header in VV allowing for quicker editing of combat properties
+  - refactor: Refactored footsteps for humans. Human footstep sound effects are now
+      determined by your leg type. Report any oddities.
+  - qol: Digitigrade legs now play claw footstep SFX. "plat plat" is dead, long live
+      "tap tap".
+  - qol: Unusable inventory slots (as according to your bodyparts or equipment) will
+      now be dimmed (similarly to how unusable inventory slots are dimmed for certain
+      species like Golems).
+  SmArtKar:
+  - balance: You can no longer view operating computer UI while lying down
+  antropod:
+  - rscadd: You can now link to multiple trapdoors with one remote
+  - rscadd: Trapdoor will automatically close in 5 seconds (ctrl-clicking on a remote
+      will toggle autoclose)
+  grungussuss:
+  - sound: ballistics have new handling sounds
+  siliconOpossum:
+  - bugfix: The preview for writing on paper updates in real-time again
+  timothymtorres:
+  - admin: Organize admin verbs for shuttle events into shuttle category
+  vinylspiders:
+  - qol: lets you continue to read paperwork after putting it into a folder
+  wonderinghost:
+  - rscadd: Adds a few lights
+  - bugfix: removes the darkspot in wawa med
