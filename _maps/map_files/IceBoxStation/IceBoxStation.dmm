@@ -3544,7 +3544,7 @@
 /obj/item/book/manual/wiki/tcomms,
 /obj/item/radio/off,
 /obj/item/paper/fluff/jobs/engineering/frequencies,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "aZD" = (
