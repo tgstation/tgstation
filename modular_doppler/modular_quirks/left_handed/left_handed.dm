@@ -1,7 +1,7 @@
 /datum/quirk/left_handed
 	name = "Left Handed"
 	desc = "test"
-	icon = FA_ICON_HAND
+	icon = FA_ICON_HAND_SPARKLES
 	value = 0
 	mob_trait = TRAIT_LEFT_HANDED
 	gain_text = span_notice("test")
