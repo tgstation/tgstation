@@ -35,7 +35,6 @@
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
-	PRIVATE_PROC(TRUE)
 	if(material_flags & MATERIAL_EFFECTS)
 		var/list/material_effects = get_material_effects_list(materials)
 		finalize_material_effects(material_effects)
@@ -45,7 +44,6 @@
 /// Proc responsible for removing material effects when setting materials.
 /atom/proc/remove_material_effects(replace_mats = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-	PRIVATE_PROC(TRUE)
 	//Only runs if custom materials existed at first and affected src.
 	if(material_flags & MATERIAL_EFFECTS)
 		var/list/material_effects = get_material_effects_list(custom_materials)
