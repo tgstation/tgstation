@@ -239,6 +239,7 @@
 			pill.forceMove(src)
 
 	name = "[owner.real_name]'s head"
+	RU_NAMES_LIST_INIT("[owner.real_name]'s head", "голова [owner.real_name]", "головы [owner.real_name]", "голове [owner.real_name]", "голову [owner.real_name]", "головой [owner.real_name]", "голове [owner.real_name]")
 	return ..()
 
 ///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
