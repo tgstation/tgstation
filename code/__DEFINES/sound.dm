@@ -189,3 +189,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_LIQUID_POUR "liquid_pour"
 #define SFX_SNORE_FEMALE "snore_female"
 #define SFX_SNORE_MALE "snore_male"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
