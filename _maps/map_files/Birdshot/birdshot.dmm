@@ -46004,7 +46004,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "pMa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/dark/icemoon,
 /area/station/science/server)
 "pMq" = (
@@ -54885,11 +54885,11 @@
 /turf/open/misc/asteroid,
 /area/station/maintenance/starboard/greater)
 "sJg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/door/airlock/command{
 	name = "Research Division Server Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/science/server)
 "sJi" = (
@@ -67398,7 +67398,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/white/small,
 /area/station/science/server)
 "wEf" = (

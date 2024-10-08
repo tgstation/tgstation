@@ -79926,7 +79926,7 @@
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/aft)
 "uHe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/circuit/icemoon,
 /area/station/science/server)
 "uHf" = (
