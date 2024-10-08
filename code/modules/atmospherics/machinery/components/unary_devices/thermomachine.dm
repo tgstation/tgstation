@@ -86,7 +86,7 @@
 	var/calculated_bin_rating = 0
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.tier
-	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
+	heat_capacity = THERMOMACHINE_HEAT_CAPACITY * ((calculated_bin_rating - 1) ** 2)
 
 	var/calculated_laser_rating = 0
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
