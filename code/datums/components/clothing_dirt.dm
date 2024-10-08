@@ -79,7 +79,7 @@
 			wearer.update_tint()
 
 /datum/component/clothing_dirt/proc/is_protected()
-	return wearer.check_obscured_slots(TRUE) & equipped_slot
+	return wearer.head && (wearer.head.flags_cover & PEPPERPROOF)
 
 /datum/component/clothing_dirt/proc/on_clean(datum/target, clean_types)
 	SIGNAL_HANDLER
