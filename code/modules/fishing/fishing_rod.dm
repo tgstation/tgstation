@@ -503,6 +503,11 @@
 	line = null
 	show_in_wiki = FALSE
 
+///From the mining order console, meant to help miners rescue their fallen brethren
+/obj/item/fishing_rod/rescue
+	hook = /obj/item/fishing_hook/rescue
+	show_in_wiki = FALSE
+
 /obj/item/fishing_rod/bone
 	name = "bone fishing rod"
 	desc = "A humble rod, made with whatever happened to be on hand."
