@@ -37,6 +37,7 @@
   description = "A white water-soluble organic compound."
   taste_description = "mildly alkaline"
   taste_mult = 2.5
+  color = "#FFFFFF"
   ph = 14
   reagent_state = SOLID
 
@@ -66,6 +67,7 @@
   description = "A yellow organic compound."
   taste_description = "acidic salt"
   taste_mult = 4
+  color = "#FFFF00"
   ph = 4.5
   reagent_state = LIQUID
   chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
