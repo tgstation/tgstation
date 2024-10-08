@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	///How much does this mask affect fishing difficulty
 	var/fishing_modifier = 2
 	///Applies clothing_dirt component to the pepperproof mask if true
-	var/pepper_tint = 1
+	var/pepper_tint = TRUE
 
 /datum/armor/mask_gas
 	bio = 100
@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 
-	if((flags_cover & PEPPERPROOF) & pepper_tint)
+	if((flags_cover & PEPPERPROOF) && pepper_tint)
 		AddComponent(/datum/component/clothing_dirt)
 
 	if(fishing_modifier)
