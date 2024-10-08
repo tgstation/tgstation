@@ -113,7 +113,7 @@
 		This infusion comes with many benefits and one potential major drawback being fish-mutated lungs, with \
 		additional organs depending on the traits of the fish used for the infusion."
 	threshold_desc = "While wet, you're slightly sturdier, immune to slips, and both slippery and faster while crawling. \
-		Drinking water and showers heal you mildly, and it takes longer to dry out, however your weaker when dry. \
+		Drinking water and showers heal you, and it takes longer to dry out, however you're weaker when dry. \
 		Finally, you resist high pressures and are better at fishing. "
 	qualities = list(
 		"faster in water",

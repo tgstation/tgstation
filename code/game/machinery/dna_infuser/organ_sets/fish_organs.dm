@@ -30,6 +30,7 @@
 		return
 	RegisterSignals(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(check_tail))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
+	RegisterSignals(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
@@ -51,6 +52,7 @@
 		SIGNAL_ADDTRAIT(TRAIT_IS_WET),
 		SIGNAL_REMOVETRAIT(TRAIT_IS_WET),
 		COMSIG_LIVING_TREAT_MESSAGE,
+		COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY,
 	))
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET))
 		remove_debuff()
@@ -63,6 +65,15 @@
 	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/external/tail/fish))
 		remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
+
+/datum/status_effect/organ_set_bonus/fish/proc/get_perceived_food_quality(datum/source, datum/component/edible/edible, list/extra_quality)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(edible.parent, TRAIT_GREAT_QUALITY_BAIT))
+		extra_quality += LIKED_FOOD_QUALITY_CHANGE * 3
+	else if(HAS_TRAIT(edible.parent, TRAIT_GOOD_QUALITY_BAIT))
+		extra_quality += LIKED_FOOD_QUALITY_CHANGE * 2
+	else if(HAS_TRAIT(edible.parent, TRAIT_BASIC_QUALITY_BAIT))
+		extra_quality += LIKED_FOOD_QUALITY_CHANGE
 
 /datum/status_effect/organ_set_bonus/fish/tick(seconds_between_ticks)
 	. = ..()

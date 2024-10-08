@@ -272,6 +272,9 @@
 #define COMSIG_LIVING_GRAB "living_grab"
 	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
 
+/// From /datum/component/edible/get_perceived_food_quality(): (datum/component/edible/edible, list/extra_quality)
+#define COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY "get_perceived_food_quality"
+
 ///Called when living finish eat (/datum/component/edible/proc/On_Consume)
 #define COMSIG_LIVING_FINISH_EAT "living_finish_eat"
 
