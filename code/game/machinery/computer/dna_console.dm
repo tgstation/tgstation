@@ -440,7 +440,7 @@
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			// GUARD CHECK - Is scramble DNA actually ready?
-			if(!can_modify_occupant() || !(scramble_ready < world.time))
+			if(!can_modify_occupant() || !(scramble_ready < world.time) || HAS_TRAIT(scanner_occupant, TRAIT_NO_DNA_SCRAMBLE))
 				return
 
 			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))

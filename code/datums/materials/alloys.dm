@@ -27,31 +27,21 @@
 	name = "plasteel"
 	desc = "The heavy duty result of infusing iron with plasma."
 	color = "#706374"
-	greyscale_colors = "#706374"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.135
 	strength_modifier = 1.25
 	integrity_modifier = 1.5 // Heavy duty.
 	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, FIRE = 1.1, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/plasteel
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
-
-/datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
-	. = ..()
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
-
-/datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, amount, material_flags)
-	. = ..()
-
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown -= MATERIAL_SLOWDOWN_PLASTEEL * amount / SHEET_MATERIAL_AMOUNT
+	added_slowdown = 0.05
 
 /** Plastitanium
  *
@@ -61,14 +51,18 @@
 	name = "plastitanium"
 	desc = "The extremely heat resistant result of infusing titanium with plasma."
 	color = "#3a313a"
-	greyscale_colors = "#3a313a"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.225
 	strength_modifier = 0.9 // It's a lightweight alloy.
 	integrity_modifier = 1.3
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, FIRE = 1.5, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 
@@ -80,7 +74,6 @@
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
 	color = "#ff80f4"
-	greyscale_colors = "#ff80f496"
 	alpha = 150
 	starlight_color = COLOR_STRONG_MAGENTA
 	init_flags = MATERIAL_INIT_MAPLOAD
@@ -90,7 +83,12 @@
 	shard_type = /obj/item/shard/plasma
 	debris_type = /obj/effect/decal/cleanable/glass/plasma
 	value_per_unit = 0.075
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
 
 /** Titaniumglass
@@ -101,7 +99,6 @@
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
 	color = "#cfbee0"
-	greyscale_colors = "#cfbee096"
 	alpha = 150
 	starlight_color = COLOR_COMMAND_BLUE
 	init_flags = MATERIAL_INIT_MAPLOAD
@@ -110,7 +107,12 @@
 	shard_type = /obj/item/shard/titanium
 	debris_type = /obj/effect/decal/cleanable/glass/titanium
 	value_per_unit = 0.04
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
 
 /** Plastitanium Glass
@@ -121,7 +123,6 @@
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
 	color = "#5d3369"
-	greyscale_colors = "#5d336996"
 	starlight_color = COLOR_CENTCOM_BLUE
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
@@ -131,7 +132,12 @@
 	shard_type = /obj/item/shard/plastitanium
 	debris_type = /obj/effect/decal/cleanable/glass/plastitanium
 	value_per_unit = 0.125
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
 
 /** Alien Alloy
@@ -144,30 +150,27 @@
 	name = "alien alloy"
 	desc = "An extremely dense alloy similar to plasteel in composition. It requires exotic metallurgical processes to create."
 	color = "#6041aa"
-	greyscale_colors = "#6041aa"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	strength_modifier = 1.5 // It's twice the density of plasteel and just as durable. Getting hit with it is going to HURT.
 	integrity_modifier = 1.5
 	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.2, ENERGY = 1.2, BOMB = 1.5, BIO = 1.2, FIRE = 1.2, ACID = 1.2)
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	value_per_unit = 0.4
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(
+		MAT_CATEGORY_RIGID=TRUE,
+		MAT_CATEGORY_BASE_RECIPES = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL = TRUE,
+		MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY = TRUE,
+	)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
+	added_slowdown = 0.1
 
-/datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
+/datum/material/alloy/alien/on_applied(atom/target, mat_amount, multiplier)
 	. = ..()
+	if(isobj(target))
+		target.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
 
-	target_item.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT
-
-/datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
+/datum/material/alloy/alien/on_removed(atom/target, mat_amount, multiplier)
 	. = ..()
-
-	target_item.RemoveElement(/datum/element/obj_regen, _rate=0.02)
-	if(!istype(target_item))
-		return
-
-	target_item.slowdown -= MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / SHEET_MATERIAL_AMOUNT
+	if(isobj(target))
+		target.RemoveElement(/datum/element/obj_regen, _rate=0.02)

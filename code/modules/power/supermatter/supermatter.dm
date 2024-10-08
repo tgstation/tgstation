@@ -153,10 +153,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
-	///Stores the tick of the machines subsystem of when the last zap occurred. Gives a passage of time in the perspective of SSmachines.
-	var/last_power_zap_perspective_machines = 0
-	///Same as [last_power_zap_perspective_machines], but based around the high energy zaps found in handle_high_power().
-	var/last_high_energy_zap_perspective_machines = 0
+	///Stores the tick of the machines subsystem of when the last zap energy accumulation occurred. Gives a passage of time in the perspective of SSmachines.
+	var/last_energy_accumulation_perspective_machines = 0
+	///Same as [last_energy_accumulation_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	var/last_high_energy_accumulation_perspective_machines = 0
+	/// Accumulated energy to be transferred from supermatter zaps.
+	var/list/zap_energy_accumulation = list()
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
@@ -297,22 +299,25 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_transmission_rate()
-	var/delta_time = (SSmachines.times_fired - last_power_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
-	if(delta_time && internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	var/delta_time = (SSmachines.times_fired - last_energy_accumulation_perspective_machines) * SSmachines.wait / (1 SECONDS)
+	var/accumulated_energy = accumulate_energy(ZAP_ENERGY_ACCUMULATION_NORMAL, energy = internal_energy * zap_transmission_rate * delta_time)
+	if(accumulated_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+		var/discharged_energy = discharge_energy(ZAP_ENERGY_ACCUMULATION_NORMAL)
 		playsound(src, 'sound/items/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = internal_energy * zap_transmission_rate * delta_time,
+			zap_str = discharged_energy,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 240 KILO WATTS * delta_time,
+			zap_cutoff = 240 KILO JOULES,
 			power_level = internal_energy,
 			color = zap_color,
 		)
+
 		last_power_zap = world.time
-		last_power_zap_perspective_machines = SSmachines.times_fired
+	last_energy_accumulation_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -716,7 +721,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		activation_logged = TRUE // so we dont spam the log.
 	else if(!internal_energy)
 		last_power_zap = world.time
-		last_power_zap_perspective_machines = SSmachines.times_fired
+		last_energy_accumulation_perspective_machines = SSmachines.times_fired
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.
@@ -892,6 +897,28 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy = new_delam
 	delamination_strategy.on_select(src)
 	return TRUE
+
+/**
+ * Accumulates energy for the zap_energy_accumulation key.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * energy: The amount of energy to accumulate.
+ * Returns: The accumulated energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/accumulate_energy(key, energy)
+	. = (zap_energy_accumulation[key] ? zap_energy_accumulation[key] : 0) + energy
+	zap_energy_accumulation[key] = .
+
+/**
+ * Depletes a portion of the accumulated energy for the given key and returns it. Used for discharging energy from the supermatter.
+ * Args:
+ * * key: The zap energy accumulation key to use.
+ * * portion: The portion of the accumulated energy that gets discharged.
+ * Returns: The discharged energy for that key.
+ */
+/obj/machinery/power/supermatter_crystal/proc/discharge_energy(key, portion = ZAP_ENERGY_DISCHARGE_PORTION)
+	. = portion * zap_energy_accumulation[key]
+	zap_energy_accumulation[key] -= .
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 3.2 MEGA JOULES, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1.2 MEGA JOULES, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))

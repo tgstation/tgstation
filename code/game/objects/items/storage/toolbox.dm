@@ -19,7 +19,7 @@
 	hitsound = 'sound/items/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5

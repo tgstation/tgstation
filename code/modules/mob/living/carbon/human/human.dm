@@ -705,46 +705,10 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-
 	// Updates the health bar, also sends signal
 	. = ..()
-
-	// Updates the health doll
-	if(!hud_used.healthdoll)
-		return
-
-	hud_used.healthdoll.cut_overlays()
-	if(stat == DEAD)
-		hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-		return
-
-	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-	for(var/obj/item/bodypart/body_part as anything in bodyparts)
-		var/icon_num = 0
-
-		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
-			continue
-
-		var/damage = body_part.burn_dam + body_part.brute_dam
-		var/comparison = (body_part.max_damage/5)
-		if(damage)
-			icon_num = 1
-		if(damage > (comparison))
-			icon_num = 2
-		if(damage > (comparison*2))
-			icon_num = 3
-		if(damage > (comparison*3))
-			icon_num = 4
-		if(damage > (comparison*4))
-			icon_num = 5
-		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
-			icon_num = 0
-		if(icon_num)
-			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-	for(var/t in get_missing_limbs()) //Missing limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-	for(var/t in get_disabled_limbs()) //Disabled limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
+	// Handles changing limb colors and stuff
+	hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -1074,16 +1038,18 @@
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
 
-///Proc used to prevent syndicate monkeys and player-selectable Pun Pun able to use objects while stuck in monkey mode.
-/mob/living/carbon/human/proc/make_clever_and_no_dna_scramble()
+///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
+/mob/living/carbon/human/proc/crewlike_monkify()
+	if(!ismonkey(src))
+		set_species(/datum/species/monkey)
 	dna.add_mutation(/datum/mutation/human/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
 	for(var/datum/mutation/human/mutation as anything in dna.mutations)
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
+		mutation.class = MUT_OTHER
 
-	// Extra backup!
-	ADD_TRAIT(src, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
+	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
