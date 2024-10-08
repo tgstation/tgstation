@@ -72,7 +72,7 @@
 	if(force_use_syllables)
 		return ..()
 
-	return "[pick(GLOB.ramatan_first)] [pick(GLOB.ramatan_last)]"
+	return "The [pick(GLOB.ramatan_last)]"
 
 /datum/language/common
 	name = "Sol Common"

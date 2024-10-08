@@ -52,6 +52,7 @@ Monk
 Multitude
 Mystic
 Nomad
+Obsessed
 Occult
 Other
 Penitent
@@ -64,7 +65,6 @@ Reclaimer
 Rider
 Sage
 Seeker
-Seer
 Severed
 Shifter
 Silent

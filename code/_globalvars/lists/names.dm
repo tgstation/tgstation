@@ -32,7 +32,6 @@ GLOBAL_LIST_INIT(guardian_tech_surnames, world.file2list("strings/names/guardian
 GLOBAL_LIST_INIT(guardian_fantasy_surnames, world.file2list("strings/names/guardian_tarot.txt"))
 GLOBAL_LIST_INIT(operative_aliases, world.file2list("strings/names/operative_alias.txt"))
 GLOBAL_LIST_INIT(voidwalker_names, world.file2list("strings/names/voidwalker.txt"))
-GLOBAL_LIST_INIT(ramatan_first, world.file2list("strings/names/ramatan_first.txt")) //DOPPLER EDIT ADDITION
 GLOBAL_LIST_INIT(ramatan_last, world.file2list("strings/names/ramatan_last.txt")) //DOPPLER EDIT ADDITION
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
