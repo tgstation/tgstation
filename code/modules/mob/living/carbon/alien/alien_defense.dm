@@ -27,7 +27,7 @@ In all, this is a lot like the monkey code. /N
 		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 		visible_message(span_danger("[user.name] bites [src]!"), \
 						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You bite [src]!"))

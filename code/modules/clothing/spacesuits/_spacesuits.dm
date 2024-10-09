@@ -25,6 +25,13 @@
 	resistance_flags = NONE
 	dog_fashion = null
 	slowdown = 0.5
+	///How much this helmet affects fishing difficulty
+	var/fishing_modifier = 3
+
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
 /datum/armor/helmet_space
 	bio = 100
@@ -70,6 +77,8 @@
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	///How much this suit affects fishing difficulty
+	var/fishing_modifier = 5
 
 /datum/armor/suit_space
 	bio = 100
@@ -80,6 +89,15 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+
+	if(fishing_modifier)
+		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+
+/obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(isnull(cell))
+		return
+	toggle_spacesuit(toggler = null, manual_toggle = FALSE) //turn on the thermal regulator by default.
 
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)
@@ -149,7 +167,10 @@
 		thermal_on = FALSE
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell

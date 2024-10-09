@@ -34,7 +34,7 @@ jobs:
           npm install node-fetch
       - name: Show screenshot test results
         if: steps.secrets_set.outputs.SECRETS_ENABLED
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           FILE_HOUSE_KEY: ${{ secrets.ARTIFACTS_FILE_HOUSE_KEY }}
         with:

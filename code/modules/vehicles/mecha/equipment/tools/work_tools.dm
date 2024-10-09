@@ -18,7 +18,7 @@
 	///How much base damage this clamp does
 	var/clamp_damage = 20
 	///Audio for using the hydraulic clamp
-	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	var/clampsound = 'sound/vehicles/mecha/hydraulic.ogg'
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/workmech
 
@@ -30,6 +30,15 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto)
 	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	workmech = null
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	return do_after_mecha(target, user, delay)
+
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/do_after_checks(atom/target)
+	// Gotta be close to the target
+	if(!loc.Adjacent(target))
+		return FALSE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
@@ -171,7 +180,7 @@
 
 
 /**
- * Handles attemted refills of the extinguisher.
+ * Handles attempted refills of the extinguisher.
  *
  * The mech can only refill an extinguisher that is in front of it.
  * Only water tank objects can be used.
@@ -310,7 +319,7 @@
 	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
 		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
 		return FALSE
-	if(LAZYLEN(mecha.occupants)) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+	if(LAZYLEN(mecha.occupants)) //We're actually making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
 		return FALSE
 	if(!mecha.cell) //Turns out things break if the cell is missing
@@ -361,7 +370,7 @@
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(newmech),'sound/items/ratchet.ogg',50,TRUE)
+	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
 	name = "Paddy Conversion Kit"

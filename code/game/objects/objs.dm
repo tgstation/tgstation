@@ -187,8 +187,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(desc_controls)
 		. += span_notice(desc_controls)
+
+/obj/examine_tags(mob/user)
+	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
-		. += span_notice("Use a pen on it to rename it or change its description.")
+		.["renameable"] = "Use a pen on it to rename it or change its description."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -288,3 +291,28 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		pixel_z = anchored_tabletop_offset
 	else
 		pixel_z = initial(pixel_z)
+
+/obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force *= strength_mod
+	throwforce *= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+
+///This proc is called when the material is removed from an object specifically.
+/obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(floor(max_integrity / integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force /= strength_mod
+	throwforce /= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))

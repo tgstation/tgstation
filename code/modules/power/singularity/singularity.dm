@@ -28,7 +28,7 @@
 	var/maximum_stage = STAGE_SIX
 
 	///How strong are we?
-	var/energy = 100
+	var/energy = 50
 	///Do we lose energy over time?
 	var/dissipate = TRUE
 	/// How long should it take for us to dissipate in seconds?
@@ -55,10 +55,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/singularity/Initialize(mapload, starting_energy = 50)
+/obj/singularity/Initialize(mapload, starting_energy)
 	. = ..()
 
-	energy = starting_energy
+	energy = starting_energy || energy
 
 	START_PROCESSING(SSsinguloprocess, src)
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -70,7 +70,7 @@
 
 	singularity_component = WEAKREF(new_component)
 
-	expand(current_size)
+	check_energy()
 
 	for (var/obj/machinery/power/singularity_beacon/singu_beacon as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/singularity_beacon))
 		if (singu_beacon.active)
@@ -293,19 +293,19 @@
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
-		if(1 to 199)
+		if(STAGE_ONE_ENERGY_REQUIREMENT to STAGE_TWO_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_ONE
-		if(200 to 499)
+		if(STAGE_TWO_ENERGY_REQUIREMENT to STAGE_THREE_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_TWO
-		if(500 to 999)
+		if(STAGE_THREE_ENERGY_REQUIREMENT to STAGE_FOUR_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_THREE
-		if(1000 to 1999)
+		if(STAGE_FOUR_ENERGY_REQUIREMENT to STAGE_FIVE_ENERGY_REQUIREMENT)
 			allowed_size = STAGE_FOUR
-		if(2000 to INFINITY)
-			if(energy >= 3000 && consumed_supermatter)
-				allowed_size = STAGE_SIX
-			else
-				allowed_size = STAGE_FIVE
+		if(STAGE_FIVE_ENERGY_REQUIREMENT to STAGE_SIX_ENERGY_REQUIREMENT)
+			allowed_size = STAGE_FIVE
+		if(STAGE_SIX_ENERGY_REQUIREMENT to INFINITY)
+			allowed_size = consumed_supermatter ? STAGE_SIX : STAGE_FIVE
+
 	if(current_size != allowed_size)
 		expand()
 	return TRUE
@@ -496,10 +496,6 @@
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
 
-/// Special singularity that spawns for shuttle events only
-/obj/singularity/shuttle_event
-	anchored = FALSE
-
 /// Special singularity spawned by being sucked into a black hole during emagged orion trail.
 /obj/singularity/orion
 	move_self = FALSE
@@ -512,3 +508,11 @@
 /obj/singularity/orion/process(seconds_per_tick)
 	if(SPT_PROB(0.5, seconds_per_tick))
 		mezzer()
+
+/// Special singularity that spawns for shuttle events only
+/obj/singularity/shuttle_event
+	anchored = FALSE // this is required to work with shuttle event otherwise singularity gets stuck and doesn't move
+
+/obj/singularity/shuttle_event/no_escape
+	energy = STAGE_SIX_ENERGY
+	consumed_supermatter = TRUE // so we can get to the final stage

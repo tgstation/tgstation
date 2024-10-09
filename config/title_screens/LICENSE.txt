@@ -19,10 +19,10 @@ Do not remove this notice.
 
 ---EXAMPLES (NOT PART OF ANY LICENSE)---
 
-These are examples of properly attrubuted and licensed images. 
+These are examples of properly attributed and licensed images. 
 They are not an actual part of any license under any circumstance.
 
-rare+foobar.png was created by Mya Quinn on Feburary 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
+rare+foobar.png was created by Mya Quinn on February 28, 2557. It is licensed under a Combative Clowning 3.0 HO-NK license (http://example.com/license/url/). 
 
 Unless otherwise noted all images were created by Cuban Pete on July 26, 2555. They are licensed under the RUMBABEAT Public License.(http://example.com/license/url/).
 

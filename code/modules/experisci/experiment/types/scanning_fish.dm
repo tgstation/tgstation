@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
 ///Only scannable fish will contribute towards the experiment.
 /datum/experiment/scanning/fish/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, obj/item/fish/target, typepath)
-	return target.experisci_scannable
+	return target.fish_flags & FISH_FLAG_EXPERIMENT_SCANNABLE
 
 /**
  * After a fish scanning experiment is done, more may be unlocked. If so, add them to the techweb

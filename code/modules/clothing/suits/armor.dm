@@ -294,6 +294,14 @@
 	equip_delay_other = 60
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	init_rustle_component()
+
+/obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
+	AddComponent(/datum/component/item_equipped_movement_rustle)
+
 /datum/armor/armor_riot
 	melee = 50
 	bullet = 10
@@ -333,7 +341,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/balloon_vest/proc/pop()
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
 	qdel(src)
 
 
@@ -412,6 +420,14 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+
+/obj/item/clothing/suit/armor/swat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	init_rustle_component()
+
+/obj/item/clothing/suit/armor/swat/proc/init_rustle_component()
+	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 
 //All of the armor below is mostly unused
@@ -511,6 +527,8 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
+/obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
+	return
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -553,6 +571,10 @@
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/durathread/Initialize(mapload)
+	. = ..()
+	allowed |= /obj/item/clothing/suit/apron::allowed
 
 /datum/armor/vest_durathread
 	melee = 20
@@ -694,6 +716,10 @@
 		/obj/item/spear,
 		/obj/item/gun/ballistic/bow
 	)
+
+/obj/item/clothing/suit/armor/vest/military/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 5)
 
 /datum/armor/military
 	melee = 45

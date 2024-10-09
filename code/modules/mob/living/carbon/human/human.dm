@@ -88,6 +88,59 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 
+	if(href_list["see_id"])
+		var/mob/viewer = usr
+		var/can_see_still = (viewer in viewers(src))
+
+		var/obj/item/card/id/id = wear_id?.GetID()
+		var/same_id = id && (href_list["id_ref"] == REF(id) || href_list["id_name"] == id.registered_name)
+		if(!same_id && can_see_still)
+			to_chat(viewer, span_notice("[p_They()] [p_are()] no longer wearing that ID card."))
+			return
+
+		var/viable_time = can_see_still ? 3 MINUTES : 1 MINUTES // assuming 3min is the length of a hop line visit - give some leeway if they're still in sight
+		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
+			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
+			return
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+			to_chat(viewer, span_notice("You can't make out that ID anymore."))
+			return
+		if(get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway
+			to_chat(viewer, span_notice("You can't make out that ID from here."))
+			return
+
+		var/id_name = id.registered_name
+		var/id_age = id.registered_age
+		var/id_job = id.assignment
+		// Should probably be recorded on the ID, but this is easier (albiet more restrictive) on chameleon ID users
+		var/datum/record/crew/record = find_record(id_name)
+		var/id_blood_type = record?.blood_type
+		var/id_gender = record?.gender
+		var/id_species = record?.species
+		var/id_icon = jointext(id.get_id_examine_strings(viewer), "")
+		// Fill in some blanks for chameleon IDs to maintain the illusion of a real ID
+		if(istype(id, /obj/item/card/id/advanced/chameleon))
+			id_gender ||= gender
+			id_species ||= dna.species.name
+			id_blood_type ||= dna.blood_type
+
+		var/id_examine = span_slightly_larger(separator_hr("This is <em>[src]'s ID card</em>."))
+		id_examine += "<div class='img_by_text_container'>"
+		id_examine += "[id_icon]"
+		id_examine += "<div class='img_text'>"
+		id_examine += jointext(list(
+			"&bull; Name: [id_name || "Unknown"]",
+			"&bull; Job: [id_job || "Unassigned"]",
+			"&bull; Age: [id_age || "Unknown"]",
+			"&bull; Gender: [id_gender || "Unknown"]",
+			"&bull; Blood Type: [id_blood_type || "?"]",
+			"&bull; Species: [id_species || "Unknown"]",
+		), "<br>")
+		id_examine += "</div>" // container
+		id_examine += "</div>" // text
+
+		to_chat(viewer, examine_block(span_info(id_examine)))
+
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr) && !isobserver(usr))
@@ -97,7 +150,7 @@
 		if(!HAS_TRAIT(human_or_ghost_user, TRAIT_SECURITY_HUD) && !HAS_TRAIT(human_or_ghost_user, TRAIT_MEDICAL_HUD))
 			return
 		if((text2num(href_list["examine_time"]) + 1 MINUTES) < world.time)
-			to_chat(human_or_ghost_user, "[span_notice("It's too late to use this now!")]")
+			to_chat(human_or_ghost_user, span_notice("It's too late to use this now!"))
 			return
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(href_list["photo_front"] || href_list["photo_side"])
@@ -269,7 +322,7 @@
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
 				if(href_list["add_citation"])
 					var/max_fine = CONFIG_GET(number/maxfine)
-					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD")
+					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD", max_length = MAX_MESSAGE_LEN)
 					var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, max_fine, 5)
 					if(!fine || !target_record || !citation_name || !allowed_access || !isnum(fine) || fine > max_fine || fine <= 0 || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
@@ -284,7 +337,7 @@
 					return
 
 				if(href_list["add_crime"])
-					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_MESSAGE_LEN)
 					if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -297,7 +350,7 @@
 					return
 
 				if(href_list["add_note"])
-					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", multiline = TRUE)
+					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 					if(!target_record || !new_note || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -652,46 +705,10 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-
 	// Updates the health bar, also sends signal
 	. = ..()
-
-	// Updates the health doll
-	if(!hud_used.healthdoll)
-		return
-
-	hud_used.healthdoll.cut_overlays()
-	if(stat == DEAD)
-		hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-		return
-
-	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-	for(var/obj/item/bodypart/body_part as anything in bodyparts)
-		var/icon_num = 0
-
-		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
-			continue
-
-		var/damage = body_part.burn_dam + body_part.brute_dam
-		var/comparison = (body_part.max_damage/5)
-		if(damage)
-			icon_num = 1
-		if(damage > (comparison))
-			icon_num = 2
-		if(damage > (comparison*2))
-			icon_num = 3
-		if(damage > (comparison*3))
-			icon_num = 4
-		if(damage > (comparison*4))
-			icon_num = 5
-		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
-			icon_num = 0
-		if(icon_num)
-			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-	for(var/t in get_missing_limbs()) //Missing limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-	for(var/t in get_disabled_limbs()) //Disabled limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
+	// Handles changing limb colors and stuff
+	hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -1020,6 +1037,19 @@
 	. = ..()
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
+
+///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
+/mob/living/carbon/human/proc/crewlike_monkify()
+	if(!ismonkey(src))
+		set_species(/datum/species/monkey)
+	dna.add_mutation(/datum/mutation/human/clever)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	for(var/datum/mutation/human/mutation as anything in dna.mutations)
+		mutation.mutadone_proof = TRUE
+		mutation.instability = 0
+		mutation.class = MUT_OTHER
+
+	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

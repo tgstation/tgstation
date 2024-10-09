@@ -29,7 +29,7 @@
 	held_state = "cat2"
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
+	attack_sound = 'sound/items/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	///icon of the collar we can wear
 	var/collar_icon_state = "cat"
@@ -45,6 +45,14 @@
 		/obj/item/food/deadmouse,
 		/obj/item/food/fishmeat,
 	)
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
+
 	///item we are currently holding
 	var/obj/item/held_food
 	///mutable appearance for held item
@@ -52,12 +60,33 @@
 	///icon state of our cult icon
 	var/cult_icon_state = "cat_cult"
 
+/datum/emote/cat
+	mob_type_allowed_typecache = /mob/living/basic/pet/cat
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/cat/meow
+	key = "meow"
+	key_third_person = "meows"
+	message = "meows!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_CAT_MEOW
+
+/datum/emote/cat/purr
+	key = "purr"
+	key_third_person = "purrs"
+	message = "purrs."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_CAT_PURR
+
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "purrs!")
+	AddElement(/datum/element/pet_bonus, null, /datum/mood_event/pet_animal, "purr")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
@@ -204,3 +233,9 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	gender = MALE
+
+/mob/living/basic/pet/cat/tabby
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"

@@ -23,7 +23,7 @@
 	throw_speed = 4
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.15, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT*2.075)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
@@ -49,7 +49,6 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -127,7 +126,7 @@
 	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
@@ -158,7 +157,7 @@
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -168,17 +167,18 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/weapons/kinetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
-/obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
+/obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	return COMSIG_SABOTEUR_SUCCESS
+	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
 	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
@@ -362,7 +362,7 @@
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
 		living_target.adjustFireLoss(bonus_value, forced = TRUE)

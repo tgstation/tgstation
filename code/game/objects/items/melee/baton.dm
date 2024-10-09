@@ -12,6 +12,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
+	sound_vary = TRUE
 
 	/// Whether this baton is active or not
 	var/active = TRUE
@@ -176,7 +177,7 @@
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
-		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(human_target, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
 	return FALSE
 
@@ -318,12 +319,15 @@
 	bare_wound_bonus = 5
 	clumsy_knockdown_time = 15 SECONDS
 	active = FALSE
-	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
-	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	var/folded_drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
+	var/folded_pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
+	var/unfolded_drop_sound = 'sound/items/baton/telescopic_baton_unfolded_drop.ogg'
+	var/unfolded_pickup_sound = 'sound/items/baton/telescopic_baton_unfolded_pickup.ogg'
+	pickup_sound = 'sound/items/baton/telescopic_baton_folded_pickup.ogg'
+	drop_sound = 'sound/items/baton/telescopic_baton_folded_drop.ogg'
 	sound_vary = TRUE
-
 	/// The sound effecte played when our baton is extended.
-	var/on_sound = 'sound/weapons/batonextend.ogg'
+	var/on_sound = 'sound/items/weapons/batonextend.ogg'
 	/// The inhand iconstate used when our baton is extended.
 	var/on_inhand_icon_state = "nullrod"
 	/// The force on extension.
@@ -377,6 +381,12 @@
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
+	if(!active)
+		drop_sound = folded_drop_sound
+		pickup_sound = folded_pickup_sound
+	else
+		drop_sound = unfolded_drop_sound
+		pickup_sound = unfolded_pickup_sound
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -397,10 +407,12 @@
 	stamina_damage = 85
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
-	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
+	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
+	unfolded_drop_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
+	unfolded_pickup_sound = 'sound/items/baton/contractor_baton_unfolded_pickup.ogg'
 
 	on_inhand_icon_state = "contractor_baton_on"
-	on_sound = 'sound/weapons/contractorbatonextend.ogg'
+	on_sound = 'sound/items/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
@@ -430,7 +442,7 @@
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 2.5 SECONDS
-	on_stun_sound = 'sound/weapons/egloves.ogg'
+	on_stun_sound = 'sound/items/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
@@ -439,10 +451,13 @@
 	light_on = FALSE
 	light_color = LIGHT_COLOR_ORANGE
 	light_power = 0.5
-	pickup_sound = 'sound/items/stun_baton_pick_up.ogg'
-	drop_sound = 'sound/items/stun_baton_drop.ogg'
+	var/inactive_drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
+	var/inactive_pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
+	var/active_drop_sound = 'sound/items/baton/stun_baton_active_drop.ogg'
+	var/active_pickup_sound = 'sound/items/baton/stun_baton_active_pickup.ogg'
+	drop_sound = 'sound/items/baton/stun_baton_inactive_drop.ogg'
+	pickup_sound = 'sound/items/baton/stun_baton_inactive_pickup.ogg'
 	sound_vary = TRUE
-
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/power_store/cell
@@ -464,7 +479,6 @@
 		else
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -493,25 +507,25 @@
 	var/turf/source_turf = get_turf(src)
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
-	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	playsound(source_turf, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	animate(src, alpha = 0, time = 1 SECONDS)
 	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
 	qdel(src)
 
-/obj/item/melee/baton/security/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/item/melee/baton/security/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	if(!active)
 		return
-	toggle_light()
-	active = FALSE
+	turn_off()
 	update_appearance()
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
+
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
 	if(mov_content == cell)
 		cell = null
-		active = FALSE
+		turn_off()
 		update_appearance()
 
 /obj/item/melee/baton/security/update_icon_state()
@@ -561,25 +575,40 @@
 	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
-	if(cell?.charge >= cell_hit_cost)
-		active = !active
-		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
-		toggle_light(user)
-		do_sparks(1, TRUE, src)
+	if(cell?.charge >= cell_hit_cost && !active)
+		turn_on(user)
+		balloon_alert(user, "turned on")
 	else
-		active = FALSE
+		turn_off()
 		if(!cell)
 			balloon_alert(user, "no power source!")
-		else
+		else if(cell?.charge < cell_hit_cost)
 			balloon_alert(user, "out of charge!")
-	update_appearance()
+		else
+			balloon_alert(user, "turned off")
 	add_fingerprint(user)
 
 /// Toggles the stun baton's light
-/obj/item/melee/baton/security/proc/toggle_light(mob/user)
+/obj/item/melee/baton/security/proc/toggle_light()
 	set_light_on(!light_on)
 	return
+
+/obj/item/melee/baton/security/proc/turn_on(mob/user)
+	active = TRUE
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	update_appearance()
+	toggle_light()
+	do_sparks(1, TRUE, src)
+	drop_sound = active_drop_sound
+	pickup_sound = active_pickup_sound
+
+/obj/item/melee/baton/security/proc/turn_off()
+	active = FALSE
+	set_light_on(FALSE)
+	update_appearance()
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	drop_sound = inactive_drop_sound
+	pickup_sound = inactive_pickup_sound
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
@@ -589,10 +618,7 @@
 	. = cell.use(deducted_charge)
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
-		active = FALSE
-		set_light_on(FALSE)
-		update_appearance()
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		turn_off()
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

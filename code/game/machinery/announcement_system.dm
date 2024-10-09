@@ -16,15 +16,25 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
+	///The headset that we use for broadcasting
 	var/obj/item/radio/headset/radio
+	///The message that we send when someone is joining.
 	var/arrival = "%PERSON has signed up as %RANK"
-	var/arrivalToggle = 1
+	///Whether the arrival message is sent
+	var/arrival_toggle = TRUE
+	///The message that we send when a department head arrives.
 	var/newhead = "%PERSON, %RANK, is the department head."
-	var/newheadToggle = 1
+	///Whether the newhead message is sent.
+	var/newhead_toggle = TRUE
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
+
+	///If true, researched nodes will be announced to the appropriate channels
+	var/announce_research_node = TRUE
+	/// The text that we send when announcing researched nodes.
+	var/node_message = "The '%NODE' techweb node has been researched"
 
 /obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
@@ -41,10 +51,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/update_overlays()
 	. = ..()
-	if(arrivalToggle)
+	if(arrival_toggle)
 		. += greenlight
 
-	if(newheadToggle)
+	if(newhead_toggle)
 		. += pinklight
 
 	if(machine_stat & BROKEN)
@@ -78,18 +88,25 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	str = replacetext(str, "%RANK", "[rank]")
 	return str
 
-/obj/machinery/announcement_system/proc/announce(message_type, user, rank, list/channels)
+/obj/machinery/announcement_system/proc/announce(message_type, target, rank, list/channels)
 	if(!is_operational)
 		return
 
 	var/message
 
-	if(message_type == "ARRIVAL" && arrivalToggle)
-		message = CompileText(arrival, user, rank)
-	else if(message_type == "NEWHEAD" && newheadToggle)
-		message = CompileText(newhead, user, rank)
-	else if(message_type == "ARRIVALS_BROKEN")
-		message = "The arrivals shuttle has been damaged. Docking for repairs..."
+	switch(message_type)
+		if(AUTO_ANNOUNCE_ARRIVAL)
+			if(!arrival_toggle)
+				return
+			message = CompileText(arrival, target, rank)
+		if(AUTO_ANNOUNCE_NEWHEAD)
+			if(!newhead_toggle)
+				return
+			message = CompileText(newhead, target, rank)
+		if(AUTO_ANNOUNCE_ARRIVALS_BROKEN)
+			message = "The arrivals shuttle has been damaged. Docking for repairs..."
+		if(AUTO_ANNOUNCE_NODE)
+			message = replacetext(node_message, "%NODE", target)
 
 	broadcast(message, channels)
 
@@ -118,9 +135,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/ui_data()
 	var/list/data = list()
 	data["arrival"] = arrival
-	data["arrivalToggle"] = arrivalToggle
+	data["arrivalToggle"] = arrival_toggle
 	data["newhead"] = newhead
-	data["newheadToggle"] = newheadToggle
+	data["newheadToggle"] = newhead_toggle
+	data["node_message"] = node_message
+	data["node_toggle"] = announce_research_node
 	return data
 
 /obj/machinery/announcement_system/ui_act(action, param)
@@ -131,29 +150,32 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 	if(machine_stat & BROKEN)
 		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
 		if("ArrivalText")
-			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
-				return
-			if(NewMessage)
-				arrival = NewMessage
-				usr.log_message("updated the arrivals announcement to: [NewMessage]", LOG_GAME)
+			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			if(new_message)
+				arrival = new_message
+				usr.log_message("updated the arrivals announcement to: [new_message]", LOG_GAME)
 		if("NewheadText")
-			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
-				return
-			if(NewMessage)
-				newhead = NewMessage
-				usr.log_message("updated the head announcement to: [NewMessage]", LOG_GAME)
-		if("NewheadToggle")
-			newheadToggle = !newheadToggle
+			var/new_message = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
+			if(new_message)
+				newhead = new_message
+				usr.log_message("updated the head announcement to: [new_message]", LOG_GAME)
+		if("node_message")
+			var/new_message = trim(html_encode(param["new_text"]), MAX_MESSAGE_LEN)
+			if(new_message)
+				node_message = new_message
+				usr.log_message("updated the researched node announcement to: [node_message]", LOG_GAME)
+		if("newhead_toggle")
+			newhead_toggle = !newhead_toggle
 			update_appearance()
-		if("ArrivalToggle")
-			arrivalToggle = !arrivalToggle
+		if("arrivalToggle")
+			arrival_toggle = !arrival_toggle
 			update_appearance()
+		if("node_toggle")
+			announce_research_node = !announce_research_node
 	add_fingerprint(usr)
 
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
@@ -173,6 +195,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
+	node_message = pick(list(
+		replacetext(/obj/machinery/announcement_system::node_message, "%NODE", /datum/techweb_node/mech_clown::display_name),
+		"R/NT1M3 A= ANNOUN-*#nt_SY!?EM.dm, LI%£ 86: N=0DE NULL!",
+		"BEPIS BEPIS BEPIS",
+	))
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()

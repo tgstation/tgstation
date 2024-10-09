@@ -408,16 +408,26 @@
 
 	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
 
+	. = FALSE
 	for(var/name in names)
 		if(filter_data[name])
 			filter_data -= name
-	update_filters()
+			. = TRUE
+
+	if(.)
+		update_filters()
+	return .
 
 /datum/proc/clear_filters()
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	filter_data = null
 	atom_cast.filters = null
+
+/// Calls qdel on itself, because signals dont allow callbacks
+/datum/proc/selfdelete()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Return text from this proc to provide extra context to hard deletes that happen to it
 /// Optional, you should use this for cases where replication is difficult and extra context is required

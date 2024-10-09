@@ -16,8 +16,8 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
-	drop_sound = 'sound/items/handling/rcd_drop.ogg'
-	pickup_sound = 'sound/items/handling/rcd_pickup.ogg'
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
 
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
@@ -126,7 +126,7 @@
 	var/atom/movable/rcd_structure = rcd_results["[RCD_DESIGN_PATH]"]
 	/**
 	 *For anything that does not go an a wall we have to make sure that turf is clear for us to put the structure on it
-	 *If we are just trying to destory something then this check is not nessassary
+	 *If we are just trying to destroy something then this check is not necessary
 	 *RCD_WALLFRAME is also returned as the rcd_mode when upgrading apc, airalarm, firealarm using simple circuits upgrade
 	 */
 	if(rcd_mode != RCD_WALLFRAME && rcd_mode != RCD_DECONSTRUCT)
@@ -142,7 +142,7 @@
 					structures_to_ignore = list(/obj/structure/grille)
 				else //when building directional windows we ignore the grill and other directional windows
 					structures_to_ignore = list(/obj/structure/grille, /obj/structure/window)
-			else //for directional windows we ignore other directional windows as they can be in diffrent directions on the turf.
+			else //for directional windows we ignore other directional windows as they can be in different directions on the turf.
 				structures_to_ignore = list(/obj/structure/window)
 
 			//check if we can build our window on the grill
@@ -152,7 +152,7 @@
 				return FALSE
 
 		/**
-		 * if we are trying to create plating on turf which is not a proper floor then dont check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
+		 * if we are trying to create plating on turf which is not a proper floor then don't check for objects on top of the turf just allow that turf to be converted into plating. e.g. create plating beneath a player or underneath a machine frame/any dense object
 		 * if we are trying to finish a wall girder then let it finish then make sure no one/nothing is stuck in the girder
 		 */
 		else if(rcd_mode == RCD_TURF && rcd_structure == /turf/open/floor/plating/rcd  && (!istype(target_turf, /turf/open/floor) || istype(target, /obj/structure/girder)))
@@ -184,10 +184,10 @@
 				ignored_types = list(/obj/structure/window)
 				//if we are trying to create grills/windoors we can go ahead and further ignore other windoors on the turf
 				if(rcd_mode == RCD_WINDOWGRILLE || (rcd_mode == RCD_AIRLOCK && ispath(rcd_structure, /obj/machinery/door/window)))
-					//only ignore mobs if we are trying to create windoors and not grills. We dont want to drop a grill on top of somebody
+					//only ignore mobs if we are trying to create windoors and not grills. We don't want to drop a grill on top of somebody
 					ignore_mobs = rcd_mode == RCD_AIRLOCK
 					ignored_types += /obj/machinery/door/window
-				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. dont ignore anything dense on the turf
+				//if we are trying to create full airlock doors then we do the regular checks and make sure we have the full space for them. i.e. don't ignore anything dense on the turf
 				else if(rcd_mode == RCD_AIRLOCK)
 					ignored_types = list()
 
@@ -207,15 +207,15 @@
  * * [mob][user]- the user building this structure
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
-	//straight up cant touch this
+	var/list/rcd_results = target.rcd_vals(user, src) // does this atom allow for rcd actions?
+	if(!rcd_results) // nope
+		return NONE
+
+	//straight up can't touch this
 	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
 		balloon_alert(user, "too durable!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	//does this atom allow for rcd actions?
-	var/list/rcd_results = target.rcd_vals(user, src)
-	if(!rcd_results)
-		return FALSE
 	rcd_results["[RCD_DESIGN_MODE]"] = mode
 	rcd_results["[RCD_DESIGN_PATH]"] = rcd_design_path
 
@@ -237,6 +237,7 @@
 		log_tool("[key_name(user)] used [src] to [rcd_results["[RCD_DESIGN_MODE]"] != RCD_DECONSTRUCT ? "construct [initial(design_path.name)]([design_path])" : "deconstruct [target_name]([target_path])"] at [location]")
 
 	current_active_effects -= 1
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Internal proc which creates the rcd effects & creates the structure
@@ -368,10 +369,10 @@
 			 * The advantage of organizing designs into categories is that
 			 * You can ignore an complete category if the design disk upgrade for that category isn't installed.
 			 */
-			//You can't select designs from the Machines category if you dont have the frames upgrade installed.
+			//You can't select designs from the Machines category if you don't have the frames upgrade installed.
 			if(category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
 				return TRUE
-			//You can't select designs from the Furniture category if you dont have the furnishing upgrade installed.
+			//You can't select designs from the Furniture category if you don't have the furnishing upgrade installed.
 			if(category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
 				return TRUE
 
@@ -401,37 +402,32 @@
 		return .
 
 	mode = construction_mode
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ranged || !range_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
 	mode = construction_mode
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ranged || !range_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 
 	mode = RCD_DECONSTRUCT
-	rcd_create(interacting_with, user)
-	return ITEM_INTERACT_SUCCESS
+	return rcd_create(interacting_with, user)
 
 /obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
 	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
-	audible_message("<span class='danger'><b>[src] begins to vibrate and \
-		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
-		vibrating violently!</b></span>")
+	audible_message(span_danger("<b>[src] begins to vibrate and buzz loudly!</b>"), \
+	span_danger("<b>[src] begins vibrating violently!</b>"))
 	// 5 seconds to get rid of it
 	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
 
