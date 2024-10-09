@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "We found out that the money meant to purchase mutation vaccines for Syndicate Monkey agents against mutation was being embezzled to buy Space Yachts. We've repurposed their biomass towards a new and improved vaccine, which has the minor side effect of causing allergies if their species type is forcibly altered."
