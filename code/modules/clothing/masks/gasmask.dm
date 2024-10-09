@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	"The Madman" = "joker",
 	"The Rainbow Color" = "rainbow",
 	"The Jester" = "chaos",
+	"The Joker" = "cards"
 ))
 
 /obj/item/clothing/mask/gas
@@ -311,7 +312,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		"The Coquette" = image(icon = src.icon, icon_state = "sexyclown"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
-		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
+		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
+		"The Dealer" = image(icon = src.icon, icon_state = "cards"),
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
