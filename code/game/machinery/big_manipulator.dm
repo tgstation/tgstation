@@ -425,7 +425,7 @@
 	if(isnull(priority_mode_list))
 		return
 	for(var/we_need_increasing in 1 to length(priority_mode_list))
-		for(var/datum/manipulator_priority/what_priority as allways in priority_mode_list)
+		for(var/datum/manipulator_priority/what_priority in priority_mode_list)
 			if(what_priority.number != we_need_increasing)
 				continue
 			allowed_priority_settings += what_priority
@@ -433,7 +433,7 @@
 /// Proc thet return item by type in priority list. Selects item and increasing priority number if don't found req type.
 /obj/machinery/big_manipulator/proc/search_type_by_priority_in_drop_turf(list/priority_list)
 	var/lazy_counter = 1
-	for(var/datum/manipulator_priority/take_type as allways in priority_list)
+	for(var/datum/manipulator_priority/take_type in priority_list)
 		/// If we set only_highest_priority on TRUE we don't go to priority below.
 		if(lazy_counter > 1 && only_highest_priority)
 			return null
