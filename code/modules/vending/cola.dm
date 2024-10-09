@@ -56,7 +56,7 @@
 
 /obj/machinery/vending/cola/on_dispense(obj/item/vended_item)
 	// 35% chance that your drink will be safe, as safe pure acid and sugar that these drinks probably are can be
-	if(!is_station_level(z) || !HAS_TRAIT(SSstation, STATION_TRAIT_SPIKED_DRINKS) || !prob(65))
+	if(!onstation || !HAS_TRAIT(SSstation, STATION_TRAIT_SPIKED_DRINKS) || !prob(65))
 		return
 	// Don't fill booze with more booze
 	if (isnull(vended_item.reagents) || vended_item.reagents.has_reagent(/datum/reagent/consumable/ethanol, check_subtypes = TRUE))
