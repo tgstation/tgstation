@@ -42,6 +42,7 @@
 	)
 	output_organs = list(
 		/obj/item/organ/internal/ears/fox,
+		/obj/item/organ/external/tail/fox,
 	)
 	infusion_desc = "inexcusable"
 	tier = DNA_MUTANT_TIER_ZERO
