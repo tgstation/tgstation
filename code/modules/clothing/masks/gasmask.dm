@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
 	fishing_modifier = 0
-	pepper_tint = 0
+	pepper_tint = FALSE
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"

@@ -1,17 +1,11 @@
 /// This component applies tint to clothing when its exposed to pepperspray, used in /obj/item/clothing/mask/gas.
 
 /datum/component/clothing_dirt
-	/// The ITEM_SLOT_* slot the item is equipped on, if it is.
-	var/equipped_slot
-
 	/// Mob wearing the clothing
 	var/mob/living/carbon/wearer
 
 	/// Amount of dirt stacks on the clothing
 	var/dirtiness = 0
-
-	/// Clothing we're applying tint on
-	var/obj/item/clothing/clothing
 
 /datum/component/clothing_dirt/Initialize()
 	if(!isclothing(parent))
@@ -23,9 +17,10 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
-	clothing = parent
+	// var/obj/item/clothing/clothing = parent
 
 /datum/component/clothing_dirt/UnregisterFromParent()
+	var/obj/item/clothing/clothing = parent
 	clothing.tint -= dirtiness
 	clothing = null
 	if (!isnull(wearer))
@@ -44,7 +39,8 @@
 
 /datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
-	if (!(slot & (ITEM_SLOT_MASK | ITEM_SLOT_HEAD)))
+	var/obj/item/clothing/clothing = parent
+	if (!(slot & clothing.slot_flags))
 		return
 	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
 	wearer = user
@@ -71,6 +67,7 @@
 	if(isnull(pepper))
 		return
 
+	var/obj/item/clothing/clothing = parent
 	if (methods & (TOUCH | VAPOR))
 		clothing.tint -= dirtiness
 		dirtiness = min(dirtiness + round(reagents[pepper] / 5), 3)
@@ -83,7 +80,8 @@
 
 /datum/component/clothing_dirt/proc/on_clean(datum/target, clean_types)
 	SIGNAL_HANDLER
-	if (clean_types & CLEAN_WASH & CLEAN_SCRUB)
+	var/obj/item/clothing/clothing = parent
+	if (clean_types & (CLEAN_WASH|CLEAN_SCRUB))
 		clothing.tint -= dirtiness
 		dirtiness = 0
 		if(!isnull(wearer))
