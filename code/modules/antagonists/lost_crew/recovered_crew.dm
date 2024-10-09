@@ -7,6 +7,7 @@
 	show_to_ghosts = FALSE
 	preview_outfit = /datum/outfit/recovered_crew
 	silent = TRUE
+	block_midrounds = FALSE
 
 /datum/outfit/recovered_crew
 	name = "Recovered Crew (Preview Only)"

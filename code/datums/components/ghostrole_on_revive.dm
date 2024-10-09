@@ -27,12 +27,20 @@
 /// Give the appropriate signals, and watch for organ removal
 /datum/component/ghostrole_on_revive/proc/prepare_mob(mob/living/liver)
 	RegisterSignal(liver, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+	ADD_TRAIT(liver, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	liver.med_hud_set_status()
 
 	if(iscarbon(liver))
 		var/mob/living/carbon/carbon = liver
 		var/obj/item/organ/brain = carbon.get_organ_by_type(/obj/item/organ/internal/brain)
 		if(brain)
-			RegisterSignal(brain, COMSIG_ORGAN_REMOVED, PROC_REF(prepare_brain))
+			RegisterSignal(brain, COMSIG_ORGAN_REMOVED, PROC_REF(on_remove))
+
+/datum/component/ghostrole_on_revive/proc/on_remove(obj/item/organ/brain, mob/living/old_owner)
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(old_owner, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	prepare_brain(brain)
 
 /datum/component/ghostrole_on_revive/proc/prepare_brain(obj/item/organ/brein)
 	SIGNAL_HANDLER
