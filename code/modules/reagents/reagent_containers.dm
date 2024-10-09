@@ -296,10 +296,10 @@
 
 /obj/item/reagent_containers/dropped(mob/user, silent)
 	. = ..()
-	if(reagent_container_liquid_sound && src.reagents.total_volume > 0)
+	if(reagent_container_liquid_sound && reagents.total_volume > 0)
 		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
 
 /obj/item/reagent_containers/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	if((slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && src.reagents.total_volume > 0)
+	if((slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
 		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
