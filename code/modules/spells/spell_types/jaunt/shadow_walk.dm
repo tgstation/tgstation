@@ -43,8 +43,6 @@
 
 /datum/action/cooldown/spell/jaunt/shadow_step/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/obj/effect/dummy/phased_mob/shadow/shadow = ..()
-	if(istype(shadow))
-		shadow.light_max = light_threshold
 	return shadow
 
 /datum/action/cooldown/spell/jaunt/shadow_step/can_cast_spell(feedback = TRUE)
@@ -89,8 +87,6 @@
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
-	/// Max amount of light permitted before being kicked out
-	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
 	var/healing_rate = 1.5
 	/// When cooldown is active, you are prevented from moving into tiles that would eject you from your jaunt
@@ -112,7 +108,6 @@
 	return ..()
 
 /obj/effect/dummy/phased_mob/shadow/process(seconds_per_tick)
-	var/turf/T = get_turf(src)
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
 		return
@@ -140,19 +135,15 @@
 	if(. && isspaceturf(.))
 		to_chat(user, span_warning("It really would not be wise to go into space."))
 		return FALSE
-	if(check_light_level(.))
-		if(!light_step_warning())
-			return FALSE
 
 /obj/effect/dummy/phased_mob/shadow/eject_jaunter(forced_out = FALSE)
 	var/turf/reveal_turf = get_turf(src)
 
-	if(istype(reveal_turf))
-		if(forced_out)
-			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
-		else
-			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1, ignore_walls = FALSE)
+	if(!reveal_turf)
+		return
+
+	reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
+	playsound(reveal_turf, 'sound/effects/nightmare_reappear.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 
 	return ..()
 
