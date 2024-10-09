@@ -339,9 +339,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
 
-	// Bodybags spawn with cached people inside (and their limbs and organs), which conflicts with create and destroys method of holding cached objects and their references
-	returnable_list += typesof(/obj/structure/closet/body_bag/lost_crew/with_body)
-
 	return returnable_list
 
 /proc/RunUnitTests()
