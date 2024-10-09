@@ -29,15 +29,26 @@
 	/// The person we've been tamed by
 	var/datum/weakref/my_owner
 
+
 	greyscale_config = /datum/greyscale_config/pony
 	/// Greyscale color config; 1st color is body, 2nd is mane
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
+
+/datum/emote/pony
+	mob_type_allowed_typecache = /mob/living/basic/pony
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/pony/whicker
+	key = "whicker"
+	key_third_person = "whickers"
+	message = "whickers."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /mob/living/basic/pony/Initialize(mapload)
 	. = ..()
 
 	apply_colour()
-	AddElement(/datum/element/pet_bonus, "whickers.")
+	AddElement(/datum/element/pet_bonus, "whicker")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)

@@ -33,6 +33,17 @@
 	/// What we grow into.
 	var/grow_as = /mob/living/basic/chicken
 
+/datum/emote/chick
+	mob_type_allowed_typecache = /mob/living/basic/chick
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/chick/chirp
+	key = "chirp"
+	key_third_person = "chirps"
+	message = "chirps!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+
 /mob/living/basic/chick/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-6, 6)
@@ -40,7 +51,7 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	AddElement(/datum/element/pet_bonus, "chirps!")
+	AddElement(/datum/element/pet_bonus, "chirp")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 
