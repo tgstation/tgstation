@@ -50,7 +50,7 @@
 
 /datum/outfit/android_preview
 	name = "Android (Species Preview)"
-	uniform = /obj/item/clothing/under/syndicate/skirt
+	// nude
 
 /datum/species/android/on_species_gain(mob/living/carbon/target, datum/species/old_species, pref_load)
 	. = ..()
@@ -102,13 +102,16 @@
 		target.hud_used.show_hud(target.hud_used.hud_version)
 
 /datum/species/android/prepare_human_for_preview(mob/living/carbon/human/robot_for_preview)
+	robot_for_preview.dna.ear_type = CYBERNETIC
+	robot_for_preview.dna.features["ears"] = "TV Antennae"
+	robot_for_preview.dna.features["ears_color_1"] = "#333333"
 	robot_for_preview.dna.features["frame_list"] = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android/e_three_n,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot/android/e_three_n,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/android/e_three_n,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot/android/e_three_n,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android/e_three_n,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android/e_three_n)
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android/sgm,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot/android/sgm,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/android/sgm,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot/android/sgm,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android/sgm,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android/sgm)
 	regenerate_organs(robot_for_preview)
 	robot_for_preview.update_body(is_creating = TRUE)
 
