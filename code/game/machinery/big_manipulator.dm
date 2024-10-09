@@ -433,7 +433,7 @@
 /// Proc thet return item by type in priority list. Selects item and increasing priority number if don't found req type.
 /obj/machinery/big_manipulator/proc/search_type_by_priority_in_drop_turf(list/priority_list)
 	var/lazy_counter = 1
-	for(var/datum/manipulator_priority/take_type in priority_list)
+	for(var/datum/manipulator_priority/take_type as always in priority_list)
 		/// If we set only_highest_priority on TRUE we don't go to priority below.
 		if(lazy_counter > 1 && only_highest_priority)
 			return null
