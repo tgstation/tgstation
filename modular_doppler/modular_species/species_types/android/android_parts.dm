@@ -1,3 +1,6 @@
+// easy define for head_flags of android heads that dont feature eyes (aka monitor heads (aka IPCs))
+#define HEAD_MONITOR_FACE (HEAD_HAIR|HEAD_LIPS|HEAD_DEBRAIN)
+// easy define for the android bodypart .dmi
 #define ANDROID_BODYPARTS_DMI 'modular_doppler/modular_species/species_types/android/icons/android_parts.dmi'
 
 ///
@@ -59,6 +62,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "synth_head"
 	limb_id = "synth"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/bare/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/bare/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/bare
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -137,7 +149,7 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "e3n_head"
 	limb_id = "e3n"
-	head_flags = NONE
+	head_flags = HEAD_MONITOR_FACE
 
 /obj/item/bodypart/chest/robot/android/e_three_n
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -177,6 +189,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "mc_head"
 	limb_id = "mc"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/mc/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/mc/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/mc
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -216,6 +237,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "bs_head"
 	limb_id = "bs"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/bs_one/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/bs_one/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/bs_one
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -255,6 +285,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "bs2_head"
 	limb_id = "bs2"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/bs_two/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/bs_two/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/bs_two
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -294,6 +333,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "hi_head"
 	limb_id = "hi"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/hi_one/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/hi_one/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/hi_one
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -333,6 +381,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "hi2_head"
 	limb_id = "hi2"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/hi_two/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/hi_two/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/hi_two
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -372,6 +429,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "sgm_head"
 	limb_id = "sgm"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/sgm/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/sgm/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/sgm
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -411,6 +477,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "wtm_head"
 	limb_id = "wtm"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/wtm/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/wtm/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/wtm
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -450,6 +525,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_head"
 	limb_id = "xmg"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/xmg_one/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/xmg_one/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/xmg_one
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -489,6 +573,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg2_head"
 	limb_id = "xmg2"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/xmg_two/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/xmg_two/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/xmg_two
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -529,6 +622,15 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "zhp_head"
 	limb_id = "zhp"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/zhp/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head)
+
+/obj/item/bodypart/head/robot/android/zhp/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head))
 
 /obj/item/bodypart/chest/robot/android/zhp
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -560,4 +662,5 @@
 	icon_state = "zhp_r_leg"
 	limb_id = "zhp"
 
+#undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI

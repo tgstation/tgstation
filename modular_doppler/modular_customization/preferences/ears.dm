@@ -27,7 +27,7 @@
 	ears_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/fish)["default_sprites"]
 	ears_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/bug)["default_sprites"]
 	ears_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/humanoid)["default_sprites"]
-	ears_list_synthetic = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/synthetic)["default_sprites"]
+	ears_list_synthetic = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/cybernetic)["default_sprites"]
 	ears_list_alien = init_sprite_accessory_subtypes(/datum/sprite_accessory/ears_more/alien)["default_sprites"]
 
 /datum/dna
@@ -463,7 +463,7 @@
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list_humanoid[value]
 	return generate_ears_icon(chosen_ears)
 
-//	Synthetic
+//	Cybernetic
 /datum/preference/choiced/synthetic_ears
 	savefile_key = "feature_synth_ears"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -481,15 +481,15 @@
 	if(species.type in GLOB.species_blacklist_no_mutant)
 		return FALSE
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/ear_variation)
-	if(chosen_variation == SYNTHETIC)
+	if(chosen_variation == CYBERNETIC)
 		return TRUE
 	return FALSE
 
 /datum/preference/choiced/synthetic_ears/create_default_value()
-	return /datum/sprite_accessory/ears_more/synthetic/none::name
+	return /datum/sprite_accessory/ears_more/cybernetic/none::name
 
 /datum/preference/choiced/synthetic_ears/apply_to_human(mob/living/carbon/human/target, value)
-	if(target.dna.ear_type == SYNTHETIC)
+	if(target.dna.ear_type == CYBERNETIC)
 		target.dna.features["ears"] = value
 
 /datum/preference/choiced/synthetic_ears/icon_for(value)

@@ -22,7 +22,7 @@
 	tails_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/deer)["default_sprites"]
 	tails_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fish)["default_sprites"]
 	tails_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bug)["default_sprites"]
-	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/synthetic)["default_sprites"]
+	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/cybernetic)["default_sprites"]
 	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
 	tails_list_alien = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/alien)["default_sprites"]
 
@@ -474,15 +474,15 @@
 	if(species.type in GLOB.species_blacklist_no_mutant)
 		return FALSE
 	var/chosen_variation = preferences.read_preference(/datum/preference/choiced/tail_variation)
-	if(chosen_variation == SYNTHETIC)
+	if(chosen_variation == CYBERNETIC)
 		return TRUE
 	return FALSE
 
 /datum/preference/choiced/synth_tail/create_default_value()
-	return /datum/sprite_accessory/tails/synthetic/none::name
+	return /datum/sprite_accessory/tails/cybernetic/none::name
 
 /datum/preference/choiced/synth_tail/apply_to_human(mob/living/carbon/human/target, value)
-	if(target.dna.tail_type == SYNTHETIC)
+	if(target.dna.tail_type == CYBERNETIC)
 		target.dna.features["tail_other"] = value
 
 /datum/preference/choiced/synth_tail/icon_for(value)
