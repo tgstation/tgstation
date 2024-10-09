@@ -12,7 +12,7 @@
 	inhand_icon_state = "lionhunter"
 	worn_icon_state = "lionhunter"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 
 	SET_BASE_PIXEL(-8, 0)
 
@@ -64,7 +64,7 @@
 		return TRUE
 
 	user.balloon_alert(user, "taking aim...")
-	user.playsound_local(get_turf(user), 'sound/weapons/gun/general/chunkyrack.ogg', 100, TRUE)
+	user.playsound_local(get_turf(user), 'sound/items/weapons/gun/general/chunkyrack.ogg', 100, TRUE)
 
 	var/image/reticle = image(
 		icon = 'icons/mob/actions/actions_items.dmi',

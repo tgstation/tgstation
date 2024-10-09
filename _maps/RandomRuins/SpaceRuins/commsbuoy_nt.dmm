@@ -1,0 +1,1209 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aJ" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Comms Buoy Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"aL" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"bj" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/nt_commsbuoy)
+"dO" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/nt_commsbuoy)
+"dX" = (
+/obj/machinery/computer/terminal/nt_commsbuoy,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"et" = (
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"ew" = (
+/obj/structure/fluff{
+	name = "telecommunication hub";
+	desc = "A mighty piece of hardware used to send/receive massive amounts of data.";
+	icon = 'icons/obj/machines/telecomms.dmi';
+	icon_state = "hub"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"eX" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/space/nearstation)
+"fx" = (
+/obj/structure/fluff{
+	icon = 'icons/obj/machines/wallmounts.dmi';
+	icon_state = "pod_off";
+	name = "radio dish controller";
+	desc = "A console for adjusting the satellite's radio dishes manually. The screen won't even power on without proper authorization, which you know you're never getting.";
+	pixel_y = 30
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"fJ" = (
+/turf/template_noop,
+/area/template_noop)
+"gw" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"hb" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end,
+/turf/template_noop,
+/area/space/nearstation)
+"hk" = (
+/obj/structure/table,
+/obj/item/paper/fluff/ruins/nt_commsbuoy/inspection{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"hn" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"hH" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space{
+	pixel_y = 5;
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/space{
+	pixel_y = 1;
+	pixel_x = 5
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_y = -10;
+	pixel_x = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"in" = (
+/obj/structure/fluff{
+	icon = 'icons/obj/machines/wallmounts.dmi';
+	icon_state = "pod_off";
+	name = "radio dish controller";
+	desc = "A console for adjusting the satellite's radio dishes manually. The screen won't even power on without proper authorization, which you know you're never getting.";
+	pixel_y = 30
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/mob_spawn/corpse/human/engineer,
+/obj/item/keycard/nt_commsbuoy{
+	pixel_y = 9;
+	pixel_x = 3
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"io" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"it" = (
+/obj/machinery/computer/terminal/nt_commsbuoy/blackbox,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"iv" = (
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/amplifier,
+/obj/structure/closet/crate/centcom,
+/obj/item/storage/box/lights/bulbs,
+/obj/effect/spawner/random/exotic/technology,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"jy" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"jz" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"kZ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"lu" = (
+/obj/machinery/porta_turret/syndicate/energy,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/nt_commsbuoy)
+"lB" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"lT" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"lY" = (
+/obj/structure/table,
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/fluff/ruins/nt_commsbuoy/table_of_contents,
+/obj/machinery/light/small/directional/east,
+/obj/item/gps/spaceruin{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"mu" = (
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"nn" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"oA" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"pC" = (
+/obj/machinery/door/puzzle/keycard/nt_commsbuoy,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"pR" = (
+/turf/open/floor/mineral/titanium/white/airless,
+/area/space/nearstation)
+"qi" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"ri" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"rl" = (
+/obj/structure/fluff{
+	icon = 'icons/mob/simple/hivebot.dmi';
+	icon_state = "def_radar-off";
+	name = "radio dish component";
+	desc = "Remarkable Nanotrasen technology. This does... something to make the radio dish work.";
+	pixel_y = 16
+	},
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"tq" = (
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 9
+	},
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"tx" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/space/nearstation)
+"tO" = (
+/obj/structure/fluff{
+	icon = 'icons/obj/machines/wallmounts.dmi';
+	icon_state = "airlock_control_standby";
+	name = "radio dish component";
+	desc = "Remarkable Nanotrasen technology. This does... something to make the radio dish work.";
+	pixel_y = 32;
+	pixel_x = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"uG" = (
+/obj/structure/fluff/commsbuoy_receiver,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"uH" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"vr" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Comms Buoy External Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"wS" = (
+/obj/structure/lattice,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"xI" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/full,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"yk" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"zt" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/titanium{
+	name = "Comms Buoy Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"zA" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"zO" = (
+/obj/structure/lattice,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"Ad" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"AA" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"AD" = (
+/obj/machinery/computer/terminal/nt_commsbuoy/relay{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"AE" = (
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"Br" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/nt_commsbuoy)
+"CN" = (
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"DW" = (
+/obj/structure/fluff/sat_dish{
+	dir = 8;
+	pixel_y = -5;
+	pixel_x = 17
+	},
+/obj/structure/fluff/sat_dish{
+	pixel_y = -10;
+	pixel_x = -5
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"EA" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"EQ" = (
+/obj/structure/fluff/sat_dish{
+	pixel_y = -18;
+	pixel_x = 6
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"ES" = (
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/space/nt_commsbuoy)
+"FC" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/nt_commsbuoy)
+"FH" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
+	},
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/orange{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/space/syndicate/orange{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"FK" = (
+/obj/structure/fluff/tram_rail/end,
+/turf/template_noop,
+/area/space/nearstation)
+"Gd" = (
+/obj/structure/fluff/commsbuoy_processor,
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"Gq" = (
+/obj/structure/sign/warning/radiation/directional/south,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/nt_commsbuoy)
+"Gw" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/unlocked,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"HC" = (
+/obj/structure/fluff/commsbuoy_broadcaster,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"II" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"Jp" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"Jv" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Kr" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"Lc" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"LI" = (
+/obj/machinery/telecomms/relay/preset/telecomms,
+/obj/structure/fluff/fake_camera{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"Mc" = (
+/obj/effect/decal/cleanable/greenglow/radioactive,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"Mp" = (
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"Qb" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/titanium{
+	name = "Comms Buoy Airlock"
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/nt_commsbuoy)
+"Qd" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 6
+	},
+/obj/item/paper/fluff/ruins/nt_commsbuoy/torn_page,
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"Re" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"RY" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"TS" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end,
+/turf/template_noop,
+/area/space/nearstation)
+"UR" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"Vg" = (
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"VI" = (
+/obj/structure/fluff/fake_camera{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"Ws" = (
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"WI" = (
+/obj/structure/fluff{
+	name = "comms buoy blackbox recorder";
+	desc = "A recording device that logs recent events and communications in the event of a catastrophic failiure or accident. This one is haphazardly adjusted to print the readout onto the accompanying console.";
+	icon = 'icons/obj/machines/telecomms.dmi';
+	icon_state = "blackbox"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space/nt_commsbuoy)
+"Xi" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"Yp" = (
+/obj/structure/fluff/fake_camera{
+	dir = 5
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"Yr" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/nt_commsbuoy)
+"YN" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+"YY" = (
+/turf/open/floor/plating,
+/area/ruin/space/nt_commsbuoy)
+
+(1,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(2,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+uG
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(3,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+hn
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(4,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+fJ
+hn
+fJ
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(5,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+Yr
+pR
+Yr
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(6,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(7,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+FC
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(8,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+bj
+bj
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(9,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+fx
+Mp
+hk
+bj
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(10,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+dX
+et
+AD
+bj
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(11,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+bj
+aJ
+bj
+bj
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(12,1,1) = {"
+fJ
+yk
+fJ
+fJ
+fJ
+fJ
+bj
+tq
+gw
+et
+EA
+bj
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(13,1,1) = {"
+fJ
+UR
+fJ
+fJ
+fJ
+DW
+bj
+it
+et
+et
+bj
+bj
+bj
+Yr
+fJ
+fJ
+fJ
+fJ
+"}
+(14,1,1) = {"
+fJ
+aL
+fJ
+yk
+EQ
+Yr
+bj
+WI
+et
+Gq
+bj
+YY
+iv
+bj
+fJ
+fJ
+yk
+fJ
+"}
+(15,1,1) = {"
+fJ
+wS
+hn
+zO
+hn
+bj
+bj
+ew
+et
+Br
+Qb
+Xi
+xI
+bj
+fJ
+fJ
+lT
+fJ
+"}
+(16,1,1) = {"
+fJ
+ri
+yk
+UR
+fJ
+eX
+bj
+LI
+et
+Br
+bj
+Mc
+YN
+bj
+fJ
+oA
+lT
+fJ
+"}
+(17,1,1) = {"
+fJ
+FK
+zO
+wS
+fJ
+hn
+bj
+Gd
+io
+Gw
+bj
+Kr
+Jp
+bj
+fJ
+Vg
+Ad
+fJ
+"}
+(18,1,1) = {"
+fJ
+fJ
+lT
+hb
+fJ
+fJ
+Yr
+bj
+bj
+pC
+bj
+bj
+bj
+Yr
+fJ
+Vg
+Jv
+fJ
+"}
+(19,1,1) = {"
+fJ
+fJ
+Re
+fJ
+fJ
+fJ
+fJ
+bj
+et
+et
+et
+EA
+bj
+fJ
+fJ
+Vg
+aL
+fJ
+"}
+(20,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+jz
+ES
+ES
+jy
+bj
+fJ
+fJ
+uH
+TS
+fJ
+"}
+(21,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+mu
+ES
+ES
+et
+bj
+fJ
+fJ
+qi
+lT
+fJ
+"}
+(22,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+et
+ES
+ES
+et
+bj
+Yr
+fJ
+qi
+UR
+fJ
+"}
+(23,1,1) = {"
+fJ
+fJ
+Yr
+Yr
+fJ
+fJ
+bj
+lu
+et
+ES
+ES
+et
+lu
+bj
+fJ
+HC
+aL
+fJ
+"}
+(24,1,1) = {"
+fJ
+fJ
+fJ
+Yr
+Yr
+fJ
+bj
+tO
+et
+ES
+ES
+et
+Lc
+bj
+eX
+tx
+zA
+fJ
+"}
+(25,1,1) = {"
+fJ
+rl
+hn
+pR
+bj
+FC
+bj
+in
+et
+ES
+ES
+et
+nn
+bj
+Ws
+tx
+RY
+fJ
+"}
+(26,1,1) = {"
+fJ
+fJ
+fJ
+Yr
+Yr
+fJ
+bj
+dX
+CN
+ES
+dO
+Yp
+bj
+bj
+fJ
+tx
+zA
+fJ
+"}
+(27,1,1) = {"
+fJ
+fJ
+Yr
+Yr
+fJ
+fJ
+bj
+lY
+kZ
+AE
+lB
+et
+bj
+fJ
+fJ
+qi
+aL
+fJ
+"}
+(28,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+bj
+bj
+zt
+bj
+Yr
+fJ
+fJ
+AA
+TS
+fJ
+"}
+(29,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+FH
+CN
+Qd
+bj
+fJ
+fJ
+fJ
+Vg
+Re
+fJ
+"}
+(30,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+bj
+II
+YY
+hH
+bj
+fJ
+fJ
+fJ
+FK
+fJ
+fJ
+"}
+(31,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+Yr
+bj
+vr
+bj
+Yr
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}
+(32,1,1) = {"
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+VI
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+fJ
+"}

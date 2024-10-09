@@ -57,6 +57,8 @@
 	var/required_biotype = MOB_ORGANIC
 	/// A list of traits added to the mob upon bonus activation, can be of any length.
 	var/list/bonus_traits = list()
+	/// Limb overlay to apply upon activation
+	var/limb_overlay
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
@@ -80,6 +82,13 @@
 		owner.add_traits(bonus_traits, REF(src))
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
+	if(!iscarbon(owner) || !limb_overlay)
+		return TRUE
+	var/mob/living/carbon/carbon_owner = owner
+	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
+		limb.add_bodypart_overlay(new limb_overlay())
+		limb.variable_color = COLOR_WHITE
+	carbon_owner.update_body()
 	return TRUE
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
@@ -89,3 +98,12 @@
 		owner.remove_traits(bonus_traits, REF(src))
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)
+	if(!iscarbon(owner) || QDELETED(owner) || !limb_overlay)
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	for(var/obj/item/bodypart/limb in carbon_owner.bodyparts)
+		var/overlay = locate(limb_overlay) in limb.bodypart_overlays
+		if(overlay)
+			limb.remove_bodypart_overlay(overlay)
+			limb.variable_color = null
+	carbon_owner.update_body()

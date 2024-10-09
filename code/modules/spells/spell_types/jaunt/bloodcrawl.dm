@@ -101,7 +101,7 @@
 		jaunter.put_in_hands(right_hand)
 
 	blood.visible_message(span_warning("[jaunter] sinks into [blood]!"))
-	playsound(jaunt_turf, 'sound/magic/enter_blood.ogg', 50, TRUE, -1)
+	playsound(jaunt_turf, 'sound/effects/magic/enter_blood.ogg', 50, TRUE, -1)
 	jaunter.extinguish_mob()
 
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
@@ -140,7 +140,7 @@
 /// Adds an coloring effect to mobs which exit blood crawl.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/exit_blood_effect(mob/living/exited)
 	var/turf/landing_turf = get_turf(exited)
-	playsound(landing_turf, 'sound/magic/exit_blood.ogg', 50, TRUE, -1)
+	playsound(landing_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
 
 	// Make the mob have the color of the blood pool it came out of
 	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
@@ -161,7 +161,7 @@
 	desc = "Allows you to phase in and out of existance via pools of blood. If you are dragging someone in critical or dead, \
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
-	var/consume_sound = 'sound/magic/demon_consume.ogg'
+	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
 	/// consume count (statistics and stuff)
 	var/consume_count = 0
 	/// Apply damage every 20 seconds if we bloodcrawling

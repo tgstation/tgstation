@@ -5,8 +5,8 @@
 	inhand_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
@@ -193,8 +193,8 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	icon_state = "sheet-leather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \
@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
-		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice("You cut the hair from [src.name]."))
@@ -348,8 +348,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
@@ -363,8 +363,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "sheet-wetleather"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
-	pickup_sound = 'sound/items/skin_pick_up.ogg'
-	drop_sound = 'sound/items/skin_drop.ogg'
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
 	/// Kelvin to start drying

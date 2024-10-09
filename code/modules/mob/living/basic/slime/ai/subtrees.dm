@@ -24,7 +24,7 @@
 // Slime subtree for hunting down people to drain
 /datum/ai_planning_subtree/find_and_hunt_target/find_slime_food
 	finding_behavior = /datum/ai_behavior/find_hunt_target/find_slime_food
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/slime
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/slime
 	hunt_targets = list(/mob/living)
 	hunt_range = 7
 
