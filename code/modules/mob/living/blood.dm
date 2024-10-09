@@ -361,7 +361,7 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
-	if(get_blood_id() != /datum/reagent/blood && !hasgreenblood(src)) // DOPPLER EDIT CHANGE START - ORIGINAL: if(get_blood_id() != /datum/reagent/blood)
+	if(get_blood_id() != /datum/reagent/blood && !hasgreenblood(src) && !hasblueblood(src)) // DOPPLER EDIT CHANGE START - ORIGINAL: if(get_blood_id() != /datum/reagent/blood)
 		return
 	if(!T)
 		T = get_turf(src)

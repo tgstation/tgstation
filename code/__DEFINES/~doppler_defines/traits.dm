@@ -19,6 +19,8 @@
 #define TRAIT_ANIMALISTIC "animalistic"
 // Green blood traits
 #define TRAIT_GREEN_BLOOD "green_blood"
+// Blue blood traits
+#define TRAIT_BLUE_BLOOD "blue_blood"
 // Trait that lets golems put stone limbs back on
 #define TRAIT_GOLEM_LIMBATTACHMENT "golem_limbattachment"
 
