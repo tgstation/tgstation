@@ -300,12 +300,45 @@
 
 	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
+	///If the mob has the TRAIT_SLIPPERY_WHEN_WET trait, the mob gets this component while it's wet
+	var/datum/component/slippery/slipperiness
+
+/datum/status_effect/fire_handler/wet_stacks/on_apply()
+	. = ..()
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_WET_FOR_LONGER), SIGNAL_REMOVETRAIT(TRAIT_WET_FOR_LONGER)), PROC_REF(update_wet_stack_modifier))
+	update_wet_stack_modifier()
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(become_slippery))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLIPPERY_WHEN_WET), PROC_REF(no_longer_slippery))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		become_slippery()
+	ADD_TRAIT(owner, TRAIT_IS_WET,  TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/fire_handler/wet_stacks/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
+	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
+		no_longer_slippery()
+
+/datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
+	SIGNAL_HANDLER
+	stack_modifier = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -3.5 : -1
+
+/datum/status_effect/fire_handler/wet_stacks/proc/become_slippery()
+	SIGNAL_HANDLER
+	slipperiness = owner.AddComponent(/datum/component/slippery, 5 SECONDS, lube_flags = SLIPPERY_WHEN_LYING_DOWN)
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/fire_handler/wet_stacks/proc/no_longer_slippery()
+	SIGNAL_HANDLER
+	QDEL_NULL(slipperiness)
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/get_examine_text()
 	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
-	adjust_stacks(-0.5 * seconds_between_ticks)
+	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
+	adjust_stacks(decay * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
 

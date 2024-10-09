@@ -34,7 +34,9 @@
 			inserted_organs += organ
 
 		// Search for added Status Effect.
-		var/datum/status_effect/organ_set_bonus/added_status = locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects
+		var/datum/status_effect/organ_set_bonus/added_status
+		if(!infuser_entry.unreachable_effect)
+			added_status = locate(/datum/status_effect/organ_set_bonus) in lab_rat.status_effects
 
 		// If threshold_desc is filled-in, it implies the organ_set_bonus Status Effect should be activated.
 		// Without it, we'll assume there isn't a Status Effect to look for.

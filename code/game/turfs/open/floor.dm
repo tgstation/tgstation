@@ -382,4 +382,4 @@
 	. = ..()
 	if(.)
 		var/obj/item/stack/tile = .
-		tile.set_mats_per_unit(custom_materials, 1)
+		tile.set_custom_materials(custom_materials)

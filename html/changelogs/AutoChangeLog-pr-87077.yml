@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "The fishing portal generator (fish-porter 3000) now correctly links with lava turfs from lavaland."
