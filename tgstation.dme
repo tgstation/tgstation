@@ -1919,6 +1919,7 @@
 #include "code\datums\storage\subtypes\backpack.dm"
 #include "code\datums\storage\subtypes\bag_of_holding.dm"
 #include "code\datums\storage\subtypes\cards.dm"
+#include "code\datums\storage\subtypes\drone.dm"
 #include "code\datums\storage\subtypes\duffel_bag.dm"
 #include "code\datums\storage\subtypes\extract_inventory.dm"
 #include "code\datums\storage\subtypes\fish_case.dm"
