@@ -1872,6 +1872,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(numba == 0)
 		numba = rand(1, 1000)
 	name = "[name] ([numba])"
+	RU_NAMES_LIST_INIT("[name] ([numba])", "[declent_ru(NOMINATIVE)] ([numba])", "[declent_ru(GENITIVE)] ([numba])", "[declent_ru(DATIVE)] ([numba])", "[declent_ru(ACCUSATIVE)] ([numba])", "[declent_ru(INSTRUMENTAL)] ([numba])", "[declent_ru(PREPOSITIONAL)] ([numba])")
 	real_name = name
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
