@@ -131,9 +131,9 @@
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
 		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
+		/obj/item/pipe_dispenser/drone,
+		/obj/item/t_scanner/drone,
+		/obj/item/analyzer/drone,
 		/obj/item/rack_parts,
 	)
 	/// whitelisted drone items, recursive/includes descendants

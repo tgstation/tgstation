@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Added an explanation of how to change tether length and cut them to tether anchors"
-  - qol: "MODsuits can now quickly snap all tethers attached to you"
-  - balance: "Tethers can now be cut significantly quicker"

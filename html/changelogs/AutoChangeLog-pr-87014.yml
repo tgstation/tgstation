@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "fixes some mobs having their aggro appearance linger around after sentience"

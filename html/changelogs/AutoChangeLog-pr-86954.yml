@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - qol: "change floor button now interacts with ladder if it is in the current turf"
