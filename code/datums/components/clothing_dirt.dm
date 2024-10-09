@@ -51,7 +51,7 @@
 	if(!isnull(wearer))
 		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 		wearer = null
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
+		RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
 
 /datum/component/clothing_dirt/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -60,8 +60,10 @@
 
 /datum/component/clothing_dirt/proc/on_expose(atom/target, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
-	if(QDELETED(wearer) || is_protected() )
-		return
+
+	if(!isnull(wearer))
+		if(QDELETED(wearer) || is_protected())
+			return
 
 	var/datum/reagent/consumable/condensedcapsaicin/pepper = locate() in reagents
 	if(isnull(pepper))
