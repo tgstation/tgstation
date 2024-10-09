@@ -22,7 +22,7 @@
 		else if(item.slot_flags & (ITEM_SLOT_BACK|ITEM_SLOT_FEET))
 			TEST_ASSERT_EQUAL(item.loc, dummy, "[item] should not have been dropped when unequipping the jumpsuit from \a [/datum/species/human::name].")
 		else
-			TEST_ASSERT_NOT(item.loc, dummy.loc, "[item] should have been dropped when unequipping the jumpsuit from \a [/datum/species/human::name].")
+			TEST_ASSERT_EQUAL(item.loc, dummy.loc, "[item] should have been dropped when unequipping the jumpsuit from \a [/datum/species/human::name].")
 
 /datum/unit_test/clothing_drops_items/proc/test_android()
 	var/list/robo_dummy_items = allocate_items()
