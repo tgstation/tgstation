@@ -452,7 +452,6 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"featured" = 'sound/announcer/vox_fem/featured.ogg',
 	"features" = 'sound/announcer/vox_fem/features.ogg',
 	"featuring" = 'sound/announcer/vox_fem/featuring.ogg',
-	"feet" = 'sound/announcer/vox_fem/feet.ogg',
 	"felinid" = 'sound/announcer/vox_fem/felinid.ogg',
 	"few" = 'sound/announcer/vox_fem/few.ogg',
 	"field" = 'sound/announcer/vox_fem/field.ogg',
