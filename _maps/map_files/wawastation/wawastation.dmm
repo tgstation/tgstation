@@ -17542,10 +17542,8 @@
 /area/space/nearstation)
 "gkj" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/camera/autoname/directional/north{
-	network = list("ss13","medbay")
-	},
 /obj/machinery/iv_drip,
+/obj/machinery/light/cold/dim/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "gkt" = (
@@ -22068,6 +22066,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light_switch/directional/west,
 /obj/item/wrench/medical,
+/obj/machinery/light/cold/dim/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hPs" = (
@@ -26151,6 +26150,7 @@
 	},
 /obj/structure/closet/secure_closet/captains,
 /obj/machinery/firealarm/directional/north,
+/obj/item/storage/lockbox/medal,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "jpe" = (
@@ -38292,7 +38292,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cell_5k,
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/ai_monitored/turret_protected/ai)
 "nAa" = (
 /obj/machinery/door/firedoor/border_only{
@@ -41519,7 +41519,7 @@
 	name = "AI Core Shutters"
 	},
 /obj/structure/cable,
-/turf/open/floor/circuit/green,
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/ai_monitored/turret_protected/ai)
 "oOb" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -65509,10 +65509,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "xcC" = (
-/obj/machinery/light/cold/dim/directional/north,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/vending/drugs,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/camera/autoname/directional/north{
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "xdf" = (

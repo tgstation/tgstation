@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger
 	// subtypes can override this to force a specific UI style
@@ -505,6 +505,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
 
+/// Handles dimming inventory slots that a mob can't equip items to in their current state
 /datum/hud/proc/update_locked_slots()
 	return
 
