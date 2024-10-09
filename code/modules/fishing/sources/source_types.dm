@@ -193,6 +193,7 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/starfish = 6,
+		/obj/item/fish/baby_carp = 6,
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/mob/living/basic/carp = 2,
 	)
@@ -353,9 +354,6 @@
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
-	var/turf/approx = get_turf(fisherman) //todo pass the parent
-	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
-		return "There doesn't seem to be anything to catch here."
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
 		return "You'll need reinforced fishing line to fish in there"
 
@@ -579,6 +577,25 @@
 
 	var/picked_path = pick(seeds_to_draw_from)
 	return new picked_path(get_turf(fishing_spot))
+
+/datum/fish_source/carp_rift
+	catalog_description = "Space Dragon Rifts"
+	radial_state = "carp"
+	fish_table = list(
+		FISHING_DUD = 3,
+		/obj/item/fish/baby_carp = 5,
+		/mob/living/basic/carp = 1,
+		/mob/living/basic/carp/passive = 1,
+		/mob/living/basic/carp/mega = 1,
+		/obj/item/clothing/head/fedora/carpskin = 1,
+		/obj/item/toy/plush/carpplushie = 1,
+		/obj/item/toy/plush/carpplushie/dehy_carp/peaceful = 1,
+		/obj/item/knife/carp = 1,
+	)
+	fish_counts = list(
+		/mob/living/basic/carp/mega = 2,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 18
 
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
