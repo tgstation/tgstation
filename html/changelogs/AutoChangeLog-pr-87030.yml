@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added a new infusion to the game: Fish. Its main gimmick revolves around being stronger and slippery when wet while weaker when dry."
+  - balance: "Buffed tetrodotoxin a little against liver tolerance and purging reagents."
