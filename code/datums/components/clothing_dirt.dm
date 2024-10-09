@@ -17,7 +17,6 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
-	// var/obj/item/clothing/clothing = parent
 
 /datum/component/clothing_dirt/UnregisterFromParent()
 	var/obj/item/clothing/clothing = parent
