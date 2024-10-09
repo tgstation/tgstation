@@ -2,11 +2,14 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 	"Disabled" = "none",
 	"Blank" = "blank",
 	"Blank (White)" = "blankwhite",
-	"Blue Screen of Death" = "bsod",
 	"Blue" = "blue",
+	"Blue Screen of Death" = "bsod",
 	"Breakout" = "breakout",
+	"Cigarette" = "smoking",
 	"Console" = "console",
 	"Cubic Wave" = "squarewave",
+	"Cyclops" = "eye",
+	"Database" = "database",
 	"ECG Wave" = "ecgwave",
 	"Eight" = "eight",
 	"Eyes" = "eyes",
@@ -14,7 +17,10 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 	"Gol Glider" = "golglider",
 	"Green" = "green",
 	"Heart" = "heart",
+	"Heartrate Monitor" = "heartrate",
+	"Luminous Eyes" = "lumi_eyes",
 	"Mono Eye" = "mono_eye",
+	"Music" = "music",
 	"Nature" = "nature",
 	"Pink" = "pink",
 	"Purple" = "purple",
@@ -28,8 +34,12 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 	"Smiley" = "yellow",
 	"Stars" = "stars",
 	"Sunburst" = "sunburst",
+	"Test Screen" = "test",
 	"Text Drop" = "textdrop",
 	"TV Static" = "static",
+	"TV Static (Color)" = "static3",
+	"TV Static (Slow)" = "static2",
+	"Waiting..." = "waiting",
 	))
 
 /datum/component/monitor_head
@@ -82,5 +92,5 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 
 /datum/bodypart_overlay/simple/monitor_head
 	icon = 'modular_doppler/modular_customization/accessories/icons/cybernetic/synth_screens.dmi'
-	icon_state = "blank"
+	icon_state = "none"
 	layers = EXTERNAL_ADJACENT
