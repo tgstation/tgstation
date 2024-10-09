@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you can drop/put drone tools back in the toolbox"
+  - bugfix: "you cannot dump the contents of the drone toolbox"
