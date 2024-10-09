@@ -44,6 +44,7 @@ Slimecrossing Armor
 /obj/item/clothing/glasses/prism_glasses/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses_color, forced_glass_color)
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
