@@ -31,7 +31,7 @@
 
 	for(var/slot in robo_dummy_items)
 		TEST_ASSERT(robo_dummy.equip_to_slot_if_possible(robo_dummy_items[slot], text2num(slot)), \
-			"[/datum/species/human::android] Dummy failed to equip one of the starting items ([robo_dummy_items[slot]]). Test aborted.")
+			"[/datum/species/android::name] Dummy failed to equip one of the starting items ([robo_dummy_items[slot]]). Test aborted.")
 
 	robo_dummy.dropItemToGround(robo_dummy.w_uniform)
 
