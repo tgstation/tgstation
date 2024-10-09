@@ -1,6 +1,5 @@
 /// Tests that removing a piece of clothing drops items that hold said piece of clothing
 /datum/unit_test/clothing_drops_items
-	abstract_type = /datum/unit_test/clothing_drops_items
 
 /datum/unit_test/clothing_drops_items/Run()
 	test_human()
