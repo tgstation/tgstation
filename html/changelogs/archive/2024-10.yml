@@ -257,3 +257,19 @@
   wonderinghost:
   - rscadd: Adds a few lights
   - bugfix: removes the darkspot in wawa med
+2024-10-09:
+  Ghommie:
+  - rscadd: 'Added a new infusion to the game: Fish. Its main gimmick revolves around
+      being stronger and slippery when wet while weaker when dry.'
+  - balance: Buffed tetrodotoxin a little against liver tolerance and purging reagents.
+  Iajret:
+  - bugfix: health analyzers will show if your heart is missing once again
+  SmArtKar:
+  - image: Carp infusion now changes how your skin looks to reflect your fishy nature
+  SyncIt21:
+  - bugfix: you can drop/put drone tools back in the toolbox
+  - bugfix: you cannot dump the contents of the drone toolbox
+  necromanceranne:
+  - rscadd: Fundamentally Evil quirk. You might act normal, but you know deep down
+      that you totally don't give a shit about anyone but yourself. Empaths better
+      watch out.
