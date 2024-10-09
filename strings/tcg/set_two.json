@@ -1,6 +1,6 @@
 {
 	"templates": [
-		{
+		{ 
 			"template": "default",
 			"icon": "icons/runtime/tcg/xenos.dmi",
 			"series": "resinfront",
@@ -297,7 +297,7 @@
 			"id": "hivemind",
 			"name": "Xenomorph Hivemind",
 			"desc": "Recently discovered to have sapience, this pulsating orb will dig into the earth and rapidly spread resin throughout planets.",
-			"rules": "{$Defender} Tap: Add 1 Xenomorph creature from your Deck to your hand.",
+			"rules": "{$Blocker} Tap: Add 1 Xenomorph creature from your Deck to your hand.",
 			"icon_state": "xeno_hivemind",
 			"power": 0,
 			"resolve": 1,
