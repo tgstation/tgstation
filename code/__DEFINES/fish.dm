@@ -46,14 +46,12 @@
 
 ///Reduces the difficulty of the minigame
 #define FISHING_LINE_CLOAKED (1 << 0)
-///Required to cast a line on lava.
-#define FISHING_LINE_REINFORCED (1 << 1)
 /// Much like FISHING_HOOK_ENSNARE but for the fishing line.
-#define FISHING_LINE_BOUNCY (1 << 2)
+#define FISHING_LINE_BOUNCY (1 << 1)
 /// The sorta opposite of FISHING_LINE_BOUNCY. It makes it slower to gain completion and faster to lose it.
-#define FISHING_LINE_STIFF (1 << 3)
+#define FISHING_LINE_STIFF (1 << 2)
 ///Skip the biting phase and go straight to the fishing phase.
-#define FISHING_LINE_AUTOREEL (1 << 4)
+#define FISHING_LINE_AUTOREEL (1 << 3)
 
 ///Keeps the bait from falling from gravity, instead allowing the player to move the bait down with right click.
 #define FISHING_MINIGAME_RULE_BIDIRECTIONAL (1 << 0)
