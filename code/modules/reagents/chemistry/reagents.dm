@@ -121,7 +121,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
-	if(((penetrates_skin & methods) || (methods & INJECT)) && exposed_mob.reagents) //smoke, foam, spray
+	if(penetrates_skin & (methods|INJECT)) //methods being 
 		var/amount = round(reac_volume*clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
 			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
