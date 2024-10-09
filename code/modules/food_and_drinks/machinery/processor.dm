@@ -193,6 +193,7 @@
 
 /obj/machinery/processor/slime
 	name = "slime processor"
+	RU_NAMES_LIST_INIT("slime processor", "переработчик слаймов", "переработчика слаймов", "переработчику слаймов", "переработчик слаймов", "переработчиком слаймов", "переработчике слаймов")
 	base_icon_state = "processor_slime"
 	icon_state = "processor_slime"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."

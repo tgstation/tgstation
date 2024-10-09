@@ -919,6 +919,7 @@
 
 /obj/machinery/microwave/engineering
 	name = "wireless microwave oven"
+	RU_NAMES_LIST_INIT("wireless microwave oven", "беспроводная микроволновка", "беспроводной микроволновки", "беспроводной микроволновке", "беспроводную микроволновку", "беспроводной микроволновкой", "беспроводной микроволновке")
 	desc = "For the hard-working tradesperson who's in the middle of nowhere and just wants to warm up their pastry-based savoury item from an overpriced vending machine."
 	base_icon_state = "engi_"
 	icon_state = "engi_mw_complete"

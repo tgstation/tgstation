@@ -225,6 +225,7 @@
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"
+	RU_NAMES_LIST_INIT("griddle stand", "столик гридля", "столика гридля", "столику гридля", "столик гридля", "столиком гридля", "столике гридля")
 	desc = "A more commercialized version of your traditional griddle. What happened to the good old days where people griddled with passion?"
 	variant = "stand"
 

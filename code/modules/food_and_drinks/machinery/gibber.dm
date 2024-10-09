@@ -20,6 +20,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	if(prob(5))
 		name = "meat grinder"
+		RU_NAMES_LIST_INIT("meat grinder", "мясорубка", "мясорубки", "мясорубке", "мясорубку", "мясорубкой", "мясорубке")
 		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
 			you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
 			push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
