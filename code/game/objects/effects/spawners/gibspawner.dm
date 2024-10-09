@@ -82,7 +82,6 @@
 			list(pick(GLOB.alldirs)),\
 			list(pick(GLOB.alldirs)),\
 			)
-		list_pick
 	return ..()
 
 
