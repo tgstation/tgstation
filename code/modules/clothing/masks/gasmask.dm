@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	"The Madman" = "joker",
 	"The Rainbow Color" = "rainbow",
 	"The Jester" = "chaos",
-	"The Joker" = "cards"
+	"The Dealer" = "cards"
 ))
 
 /obj/item/clothing/mask/gas
