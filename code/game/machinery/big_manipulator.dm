@@ -417,15 +417,15 @@
 /// Update priority list in ui. Creating new list and sort it by priority number.
 /obj/machinery/big_manipulator/proc/update_priority_list()
 	allowed_priority_settings = list()
-	var/list/priority_mode_list = list()
+	var/list/priority_mode_list
 	if(manipulate_mode == DROP_ITEM_MODE)
 		priority_mode_list = priority_settings_for_drop.Copy()
 	if(manipulate_mode == USE_ITEM_MODE)
 		priority_mode_list = priority_settings_for_use.Copy()
 	if(isnull(priority_mode_list))
 		return
-	for(var/we_need_increasing in 1 to priority_mode_list.len)
-		for(var/datum/manipulator_priority/what_priority in priority_mode_list)
+	for(var/we_need_increasing in 1 to length(priority_mode_list))
+		for(var/datum/manipulator_priority/what_priority as always in priority_mode_list)
 			if(what_priority.number != we_need_increasing)
 				continue
 			allowed_priority_settings += what_priority
