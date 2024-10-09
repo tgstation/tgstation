@@ -22,6 +22,9 @@
 	fishing_difficulty_modifier = -30 //Only the undead and the coroner can game this.
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 1.5
+	fishing_completion_speed = 1.1
+	fishing_bait_speed_mult = 0.85
+	fishing_gravity_mult = 0.8
 
 /datum/material/hauntium/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()

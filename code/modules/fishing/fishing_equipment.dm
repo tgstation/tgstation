@@ -23,9 +23,16 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
+
+/obj/item/fishing_line/reinforced/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/reinforced/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
@@ -47,9 +54,17 @@
 	name = "fishing sinew"
 	desc = "An all-natural fishing line made of stretched out sinew. A bit stiff, but usable to fish in extreme enviroments."
 	icon_state = "reel_sinew"
-	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
+	fishing_line_traits = FISHING_LINE_STIFF
 	line_color = "#d1cca3"
 	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
+
+/obj/item/fishing_line/sinew/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/sinew/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
  * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,

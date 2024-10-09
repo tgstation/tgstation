@@ -763,6 +763,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNCATCHABLE "uncatchable"
 /// You won't catch duds while fishing with this rod.
 #define TRAIT_ROD_REMOVE_FISHING_DUD "rod_remove_fishing_dud"
+/// This rod ignores environmental conditions for fishing (like low light for nocturnal fish)
+#define TRAIT_ROD_IGNORE_ENVIRONMENT "rod_ignore_environment"
+/// This rod attracts fish with the shiny lover fish trait
+#define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
+/// This rod can be used to fish on lava
+#define TRAIT_ROD_LAVA_USABLE "rod_lava_usable"
 /// Stuff that can go inside fish cases
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
 /// If the item can be used as a bit.
@@ -777,10 +783,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OMNI_BAIT "omni_bait"
 /// The bait won't be consumed when used
 #define TRAIT_BAIT_UNCONSUMABLE "bait_unconsumable"
-/// This rod ignores environmental conditions for fishing (like low light for nocturnal fish)
-#define TRAIT_ROD_IGNORE_ENVIRONMENT "rod_ignore_environment"
-/// This rod attracts fish with the shiny lover fish trait
-#define TRAIT_ROD_ATTRACT_SHINY_LOVERS "rod_attract_shiny_lovers"
 /**
  * This bait won't apply TRAIT_ROD_REMOVE_FISHING_DUD to the rod it's attached on,
  * instead, it'll allow the fishing dud to be there unless there's at least one fish that likes the bait

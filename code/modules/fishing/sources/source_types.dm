@@ -358,8 +358,8 @@
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
 		return "There doesn't seem to be anything to catch here."
-	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
-		return "You'll need reinforced fishing line to fish in there"
+	if(!HAS_TRAIT(rod, TRAIT_ROD_LAVA_USABLE))
+		return "You'll need reinforced fishing line to fish in there."
 
 /datum/fish_source/lavaland/icemoon
 	catalog_description = "Liquid plasma vents"

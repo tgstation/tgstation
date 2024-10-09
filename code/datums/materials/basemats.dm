@@ -20,6 +20,7 @@
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	fish_weight_modifier = 1.3
+	fishing_gravity_mult = 1.1
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -55,6 +56,10 @@
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = 5
 	fishing_experience_multiplier = 1.2
+	fishing_bait_speed_mult = 0.9
+	fishing_deceleration_mult = 1.2
+	fishing_bounciness_mult = 0.5
+	fishing_gravity_mult = 0.9
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
@@ -101,6 +106,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	is_shiny_fishing_lure = TRUE
 	fishing_difficulty_modifier = -5
 	fishing_experience_multiplier = 0.85
+	fishing_completion_speed = 1.1
+	fishing_bait_speed_mult = 1.1
+	fishing_deceleration_mult = 1.1
+	fishing_bounciness_mult = 0.9
+	fishing_gravity_mult = 1.15
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -135,6 +145,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -10
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.75
+	fishing_completion_speed = 1.2
+	fishing_bait_speed_mult = 1.3
+	fishing_deceleration_mult = 1.2
+	fishing_bounciness_mult = 0.8
+	fishing_gravity_mult = 1.25
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -171,6 +186,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -13
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 0.7
+	fishing_completion_speed = 1.25
+	fishing_bait_speed_mult = 1.3
+	fishing_deceleration_mult = 1.25
+	fishing_bounciness_mult = 0.8
+	fishing_gravity_mult = 1.2
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -198,6 +218,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 2
+	material_fish_extra_chance = 4
+	fishing_completion_speed = 0.9
+	fishing_bait_speed_mult = 0.8
+	fishing_deceleration_mult = 1.4
+	fishing_bounciness_mult = 0.6
+	fishing_gravity_mult = 1.6
 
 /datum/material/uranium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -242,18 +268,24 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.3
+	fishing_deceleration_mult = 1.3
+	fishing_bounciness_mult = 0.6
 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, 1 * multiplier)
 	source.AddComponent(/datum/component/combustible_flooder, "plasma", mat_amount * 0.05 * multiplier) //Empty temp arg, fully dependent on whatever ignited it.
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /datum/material/plasma/on_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, mat_amount = 1 * multiplier)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	qdel(source.GetComponent(/datum/component/explodable))
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
@@ -288,6 +320,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 5 //space-bending scifi magic
 	fishing_experience_multiplier = 0.85
+	fishing_completion_speed = 1.1
+	fishing_bait_speed_mult = 1.2
+	fishing_deceleration_mult = 0.9
+	fishing_bounciness_mult = 1.1
 
 /datum/material/bluespace/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -346,6 +382,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 20 //can't get a good grip on slipperiness.
 	fishing_cast_range = 3 //long slide
 	fishing_experience_multiplier = 1.6
+	fishing_completion_speed = 1.3
+	fishing_bait_speed_mult = 1.5
+	fishing_deceleration_mult = 0.5
+	fishing_bounciness_mult = 2
 
 /datum/material/bananium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -414,6 +454,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 1
+	fishing_completion_speed = 1.15
+	fishing_bait_speed_mult = 1.15
+	fishing_deceleration_mult = 1.3
+	fishing_bounciness_mult = 0.75
+	fishing_gravity_mult = 1.1
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -441,6 +486,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -18
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 3.2 //grind all the way to level 100 in no time.
+	fishing_completion_speed = 1.3
+	fishing_bait_speed_mult = 0.9
+	fishing_deceleration_mult = 1.2
+	fishing_gravity_mult = 1.25
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -480,6 +529,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 1.2
+	fishing_bait_speed_mult = 1.3
+	fishing_deceleration_mult = 0.8
+	fishing_bounciness_mult = 1.3
+	fishing_gravity_mult = 0.85
 
 /datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
 	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
@@ -515,6 +568,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 8
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 1.3
+	fishing_completion_speed = 0.9
+	fishing_bait_speed_mult = 0.8
+	fishing_deceleration_mult = 1.3
+	fishing_bounciness_mult = 0.4
+	fishing_gravity_mult = 0.8
 
 /datum/material/wood/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -558,6 +616,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -23
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.6
+	fishing_completion_speed = 1.3
+	fishing_bait_speed_mult = 1.3
+	fishing_deceleration_mult = 1.3
+	fishing_bounciness_mult = 0.7
+	fishing_gravity_mult = 1.4
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -596,6 +659,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -25
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 0.5
+	fishing_completion_speed = 1.35
+	fishing_bait_speed_mult = 1.35
+	fishing_deceleration_mult = 1.35
+	fishing_bounciness_mult = 0.65
+	fishing_gravity_mult = 1.4
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -634,6 +702,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -10
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.9
+	fishing_completion_speed = 1.4
+	fishing_bait_speed_mult = 1.5
+	fishing_deceleration_mult = 0.5
+	fishing_bounciness_mult = 0.3
+	fishing_gravity_mult = 0.8
 
 /datum/material/hot_ice/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -671,6 +744,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -15
 	fishing_cast_range = 4
 	fishing_experience_multiplier = 0.8
+	fishing_completion_speed = 1.4
+	fishing_bait_speed_mult = 1.6
+	fishing_deceleration_mult = 0.8
+	fishing_bounciness_mult = 1.7
+	fishing_gravity_mult = 0.7
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -698,6 +776,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 30 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.2
+	fishing_completion_speed = 0.8
+	fishing_bait_speed_mult = 0.8
+	fishing_deceleration_mult = 2.5
+	fishing_bounciness_mult = 0.3
+	fishing_gravity_mult = 0.9
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.adjust_disgust(17)
@@ -724,6 +807,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 25 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.3
+	fishing_completion_speed = 0.9
+	fishing_bait_speed_mult = 0.8
+	fishing_deceleration_mult = 2.5
+	fishing_bounciness_mult = 0.2
+	fishing_gravity_mult = 0.9
 
 /datum/material/snow
 	name = "snow"
@@ -747,6 +835,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 25
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.3
+	fishing_completion_speed = 0.9
+	fishing_bait_speed_mult = 0.75
+	fishing_deceleration_mult = 0.3
+	fishing_bounciness_mult = 0.2
+	fishing_gravity_mult = 0.7
 
 /datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
@@ -771,6 +864,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	material_fish_extra_chance = 30
 	fishing_difficulty_modifier = -12
 	fishing_experience_multiplier = 0.9
+	fishing_completion_speed = 1.2
+	fishing_bait_speed_mult = 1.666
+	fishing_deceleration_mult = 1.666
+	fishing_bounciness_mult = 0.666
+	fishing_gravity_mult = 1.666
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
@@ -793,6 +891,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.2
 	fish_weight_modifier = 1.4
 	material_fish_extra_chance = 5
+	fishing_bait_speed_mult = 1.1
+	fishing_deceleration_mult = 0.8
+	fishing_bounciness_mult = 1.2
+	fishing_gravity_mult = 1.05
 
 /datum/material/paper
 	name = "paper"
@@ -815,6 +917,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 40 //child's play
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.1
+	fishing_bait_speed_mult = 0.7
+	fishing_deceleration_mult = 1.5
+	fishing_bounciness_mult = 0.2
+	fishing_gravity_mult = 0.6
 
 /datum/material/paper/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -863,6 +969,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 40 //child's play
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.1
+	fishing_bait_speed_mult = 0.7
+	fishing_deceleration_mult = 1.5
+	fishing_bounciness_mult = 0.2
+	fishing_gravity_mult = 0.6
 
 /datum/material/cardboard/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -895,6 +1005,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = 15
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.85
+	fishing_completion_speed = 0.9
+	fishing_bait_speed_mult = 0.9
+	fishing_deceleration_mult = 0.9
+	fishing_bounciness_mult = 0.8
+	fishing_gravity_mult = 0.85
 
 /datum/material/bone/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -947,6 +1062,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -4
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 1.3
+	fishing_completion_speed = 1.15
+	fishing_bait_speed_mult = 1.2
+	fishing_deceleration_mult = 0.8
+	fishing_bounciness_mult = 0.7
+	fishing_gravity_mult = 0.7
 
 /datum/material/zaukerite
 	name = "zaukerite"
@@ -966,6 +1086,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	material_fish_extra_chance = 20
 	fishing_difficulty_modifier = -16
 	fishing_experience_multiplier = 0.9
+	fishing_completion_speed = 1.3
+	fishing_bait_speed_mult = 1.3
+	fishing_deceleration_mult = 1.3
+	fishing_bounciness_mult = 1.1
+	fishing_gravity_mult = 1.35
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()

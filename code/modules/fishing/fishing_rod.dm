@@ -59,6 +59,16 @@
 	var/material_fish_chance = 8
 	///The multiplier of how much experience is gained when fishing with this rod.
 	var/experience_multiplier = 1
+	///The multiplier of the completion gain during the minigame
+	var/completion_speed_mult = 1
+	///The multiplier of the speed of the bobber/bait during the minigame
+	var/bait_speed_mult = 1
+	///The multiplier of the decelaration during the minigame
+	var/deceleration_mult = 1
+	///The multiplier of the bounciness of the bobber/bait upon hitting the edges of the minigame area
+	var/bounciness_mult = 1
+	/// The multiplier of negative velocity that pulls the bait/bobber down when not holding the click
+	var/gravity_mult = 1
 
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
@@ -114,23 +124,21 @@
 	. = ..()
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		return
+
 	var/list/block = list()
+	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
-	var/deeper_knowledge = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
-	var/percent = deeper_knowledge ? "[abs(difficulty_modifier)]% " : ""
-	if(difficulty_modifier < 0) //negative modifier, easier time
-		block += span_nicegreen("Fishing will be [percent] easier with this fishing rod.")
-	else if(difficulty_modifier > 0) //+ modifier
-		block += span_danger("Fishing will be [percent]harder with this fishing rod.")
-	percent = deeper_knowledge ? "[abs(experience_multiplier-1)*100]% " : ""
-	if(experience_multiplier > 1)
-		block += span_nicegreen("You will gain experience [percent]faster this fishing rod.")
-	else if(difficulty_modifier < 1)
-		block += span_danger("You will gain experience [percent]slower with this fishing rod.")
+	block += get_stat_info(get_percent, difficulty_modifier, "Fishing will be", "easier", "harder", "with this fishing rod")
+	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
+	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
+	block += get_stat_info(get_percent, bait_speed_mult, "Reeling is", "faster", "slower")
+	block += get_stat_info(get_percent, deceleration_mult, "Deceleration is", "faster", "slower", less_is_better = TRUE)
+	block += get_stat_info(get_percent, bounciness_mult, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
+	block += get_stat_info(get_percent, gravity_mult, "The lure will sink", "faster", "slower", span_info = TRUE)
 
 	. += examine_block(block.Join("\n"))
 
-	if(deeper_knowledge && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
+	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
 		block = list()
 		block += span_info("Fish caught by this fishing rod have a [material_fish_chance]% of being made of its same materials.")
 		var/datum/material/material = get_master_material()
@@ -146,8 +154,23 @@
 		block += span_info("Environment and light shouldn't be an issue with this rod.")
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)) // Duds are innately removed by baits, we all know that.
 		block += span_info("You won't catch duds with this rod.")
+	if(HAS_TRAIT(src, TRAIT_ROD_LAVA_USABLE))
+		block += span_info("This fishing rod can be used to fish on lava.")
 	if(length(block))
 		. += examine_block(block.Join("\n"))
+
+///Used in examine_more to reduce all the copypasta when getting more information about the various stats of the fishing rod.
+/obj/item/fishing_rod/proc/get_stat_info(get_percent, value, prefix, easier, harder, suffix = "with this fishing rod", span_info = FALSE, less_is_better = FALSE)
+	if(value == 1)
+		return
+	var/percent = get_percent ? "[abs(value)]% " : ""
+	var/harder_easier = value > 1 ? easier : harder
+	. = "[prefix] [percent][harder_easier] [suffix]."
+	if(span_info)
+		return span_info(.)
+	if(less_is_better ? value < 1 : value > 1)
+		return span_nicegreen(.)
+	return span_danger(.)
 
 /obj/item/fishing_rod/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
@@ -155,6 +178,12 @@
 	difficulty_modifier += custom_material.fishing_difficulty_modifier * multiplier
 	cast_range += custom_material.fishing_cast_range * multiplier
 	experience_multiplier *= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
+	completion_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
+	bait_speed_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
+	deceleration_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
+	bounciness_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
+	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
+
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
@@ -162,6 +191,11 @@
 	difficulty_modifier -= custom_material.fishing_difficulty_modifier * multiplier
 	cast_range -= custom_material.fishing_cast_range * multiplier
 	experience_multiplier /= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
+	completion_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_completion_speed, multiplier)
+	bait_speed_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bait_speed_mult, multiplier)
+	deceleration_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
+	bounciness_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
+	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
@@ -223,7 +257,7 @@
 		return
 
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
+	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS * bait_speed_mult
 	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
 
@@ -614,6 +648,11 @@
 	ui_description = "A collapsible fishing rod that can fit within a backpack."
 	wiki_description = "<b>It has to be bought from Cargo</b>."
 	reel_overlay = "reel_telescopic"
+	completion_speed_mult = 1.1
+	bait_speed_mult = 1.1
+	deceleration_mult = 1.1
+	bounciness_mult = 0.9
+	gravity_mult = 0.9
 	///The force of the item when extended.
 	var/active_force = 8
 
@@ -682,6 +721,11 @@
 	cast_range = 5
 	line = /obj/item/fishing_line/bouncy
 	hook = /obj/item/fishing_hook/weighted
+	completion_speed_mult = 1.55
+	bait_speed_mult = 1.2
+	deceleration_mult = 1.55
+	bounciness_mult = 0.3
+	gravity_mult = 1.2
 
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
@@ -691,6 +735,10 @@
 	icon_state = "fishing_rod_science"
 	reel_overlay = "reel_science"
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
+	completion_speed_mult = 1.1
+	bait_speed_mult = 1.1
+	deceleration_mult = 1.1
+	gravity_mult = 1.2
 
 /obj/item/fishing_rod/tech/Initialize(mapload)
 	. = ..()
