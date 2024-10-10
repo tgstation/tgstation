@@ -72,7 +72,7 @@
 //// drips
 // green
 /obj/effect/decal/cleanable/blood/drip/green
-	name = "drips of blood"
+	name = "drips of insect blood"
 	desc = "It's green."
 	icon = 'modular_doppler/modular_species/icons/blood.dmi'
 	icon_state = "xdrip5"
@@ -83,7 +83,7 @@
 
 // blue
 /obj/effect/decal/cleanable/blood/drip/blue
-	name = "drips of blood"
+	name = "drips of robot blood"
 	desc = "It's blue."
 	icon = 'modular_doppler/modular_species/icons/blood.dmi'
 	icon_state = "bdrip5"
