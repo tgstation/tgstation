@@ -88,7 +88,7 @@
 
 		//Weapons
 		/obj/item/gun,
-		/obj/item/ammo_casing
+		/obj/item/ammo_casing,
 		/obj/item/knife,
 		/obj/item/melee,
 		/obj/item/spear,
