@@ -18,9 +18,9 @@
 		/obj/item/storage/bag,
 		/obj/item/pen,
 		/obj/item/stamp,
+		/obj/item/paper,
 		/obj/item/disk,
 		/obj/item/radio,
-
 		/obj/item/stack/spacecash,
 
 		/obj/item/reagent_containers/cup,
@@ -35,7 +35,6 @@
 		/obj/item/toy,
 		/obj/item/clothing/mask/facehugger/toy,
 		/obj/item/pillow,
-		/obj/item/abductor,
 
 		// Command
 		/obj/item/storage/lockbox/medal,
@@ -49,6 +48,7 @@
 		/obj/item/plant_analyzer,
 		/obj/item/secateurs,
 		/obj/item/seeds,
+		/obj/item/scythe,
 
 		// Chaplain
 		/obj/item/book/bible,
@@ -75,7 +75,6 @@
 		/obj/item/boxcutter,
 		/obj/item/dest_tagger,
 		/obj/item/universal_scanner,
-
 		/obj/item/mail,
 		/obj/item/delivery/small,
 
@@ -88,9 +87,12 @@
 		/obj/item/organ/internal/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/resonator,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 
 		//Weapons
-		/obj/item/gun,
+		/obj/item/gun, // maybe too liberal? could nerf this later, dunno
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/knife,
@@ -118,24 +120,17 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
+		/obj/item/grenade/chem_grenade,
 
 		/obj/item/assembly/flash/handheld,
 		/obj/item/gun/syringe,
 
 		/obj/item/biopsy_tool,
 		/obj/item/dnainjector,
-		/obj/item/paper,
 		/obj/item/sensor_device,
-		/obj/item/soap,
 		/obj/item/stack/medical,
-
 		/obj/item/sequence_scanner,
-
 		/obj/item/autopsy_scanner,
-		/obj/item/scythe,
-		/obj/item/shovel,
-		/obj/item/shovel/serrated,
-		/obj/item/trench_tool,
 
 		// Sec
 		/obj/item/detective_scanner,
@@ -143,10 +138,11 @@
 		/obj/item/taperecorder,
 		/obj/item/storage/belt/holster/,
 
+		// Janni
 		/obj/item/access_key,
-		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
 		/obj/item/key/janitor,
+		/obj/item/soap,
 
 		// Wiz
 		/obj/item/teleportation_scroll,
@@ -157,6 +153,9 @@
 		/obj/item/tome,
 		/obj/item/melee/cultblade,
 		/obj/item/melee/sickly_blade,
+
+		// Ayyy
+		/obj/item/abductor,
 
 		// Clown, the greatest antag of them all
 		/obj/item/megaphone/clown,
