@@ -112,6 +112,10 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
+//DOPPLER ADDITION START
+#define HIDETAIL (1<<16)
+#define HIDEHORNS (1<<17)
+//DOPPLER ADDITION END
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
