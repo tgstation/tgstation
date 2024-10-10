@@ -55,8 +55,12 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
-	icon_state = "sandbags"
+	desc = "A stack of filled sandbags, ready to be piled up defensively."
+	icon_state = "sandbag-pile"
 	singular_name = "sandbag"
+	inhand_icon_state = "sandbag-pile"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	layer = LOW_ITEM_LAYER
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/sandbags
@@ -69,24 +73,38 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	. = ..()
 	. += GLOB.sandbag_recipes
 
-/obj/item/emptysandbag
-	name = "empty sandbag"
+/obj/item/stack/sheet/mineral/emptysandbags
+	name = "empty sandbags"
+	singular_name = "empty sandbag"
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/stack_objects.dmi'
-	icon_state = "sandbag"
+	icon_state = "sandbag-stack"
+	inhand_icon_state = "sandbag-stack"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/ore/glass))
-		var/obj/item/stack/ore/glass/G = W
-		to_chat(user, span_notice("You fill the sandbag."))
-		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
-		qdel(src)
-		if (Adjacent(user) && !issilicon(user))
-			user.put_in_hands(I)
-		G.use(1)
-	else
+/obj/item/stack/sheet/mineral/emptysandbags/fifty
+	amount = 50
+
+/obj/item/stack/sheet/mineral/emptysandbags/attackby(obj/item/to_fill, mob/user, params)
+	add_fingerprint(user)
+	if(!istype(to_fill, /obj/item/stack/ore/glass))
 		return ..()
+	var/obj/item/stack/ore/glass/sand_fill = to_fill
+	if (!sand_fill.get_amount() >= 1 && get_amount() >= 1)
+		to_chat(user, span_warning("You need at least one piece of sand to fill an empty sandbag!"))
+		return ..()
+	to_chat(user, span_notice("You fill the sandbag."))
+	var/obj/item/stack/sheet/mineral/sandbags/new_bag = new (get_turf(user))
+	if(!QDELETED(new_bag))
+		new_bag.add_fingerprint(user)
+	var/replace = user.get_inactive_held_item() == src
+	sand_fill.use(1)
+	use(1)
+	if(QDELETED(src) && replace && !QDELETED(new_bag))
+		user.put_in_hands(new_bag)
+	return
 
 /*
  * Diamond
