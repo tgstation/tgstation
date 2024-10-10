@@ -76,6 +76,9 @@
 		/obj/item/dest_tagger,
 		/obj/item/universal_scanner,
 
+		/obj/item/mail,
+		/obj/item/delivery/small,
+
 		// Miner
 		/obj/item/melee/cleaving_saw,
 		/obj/item/climbing_hook,
@@ -88,6 +91,7 @@
 
 		//Weapons
 		/obj/item/gun,
+		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
 		/obj/item/knife,
 		/obj/item/melee,
@@ -95,6 +99,8 @@
 
 		/obj/item/banner,
 		/obj/item/claymore,
+
+		/obj/item/shield/energy,
 
 		// Medsci
 		/obj/item/healthanalyzer,
@@ -104,6 +110,8 @@
 		/obj/item/retractor,
 		/obj/item/scalpel,
 		/obj/item/surgical_drapes,
+
+		/obj/item/experi_scanner,
 
 		/obj/item/storage/pill_bottle,
 		/obj/item/reagent_containers/dropper,
@@ -155,9 +163,7 @@
 		/obj/item/soap,
 		/obj/item/food/pie/cream,
 		/obj/item/bikehorn,
-		/obj/item/bikehorn/golden,
-		/obj/item/bikehorn/airhorn,
-		/obj/item/instrument/bikehorn,
+		/obj/item/instrument,
 		/obj/item/reagent_containers/cup/soda_cans/canned_laughter,
 		/obj/item/toy/crayon,
 		/obj/item/toy/crayon/spraycan,

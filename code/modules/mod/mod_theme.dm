@@ -48,7 +48,7 @@
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed_suit_storage = list()
+	//var/list/allowed_suit_storage = list()
 	/// List of variants and items created by them, with the flags we set.
 	var/list/variants = list(
 		"standard" = list(
@@ -117,7 +117,7 @@
 		var/obj/item/mod_part = new path(mod)
 		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
 			var/obj/item/clothing/chestplate = mod_part
-			chestplate.allowed |= allowed_suit_storage
+			//chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
 		part_datum.part_item = mod_part
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
@@ -248,11 +248,6 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	allowed_suit_storage = list(
-		/obj/item/construction/rcd,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/storage/bag/construction,
-	)
 	variants = list(
 		"engineering" = list(
 			/obj/item/clothing/head/mod = list(
@@ -314,12 +309,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	allowed_suit_storage = list(
-		/obj/item/analyzer,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/pipe_dispenser,
-		/obj/item/t_scanner,
-	)
 	variants = list(
 		"atmospheric" = list(
 			/obj/item/clothing/head/mod = list(
@@ -384,15 +373,6 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
-	allowed_suit_storage = list(
-		/obj/item/analyzer,
-		/obj/item/construction/rcd,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/melee/baton/telescopic,
-		/obj/item/pipe_dispenser,
-		/obj/item/storage/bag/construction,
-		/obj/item/t_scanner,
-	)
 	variants = list(
 		"advanced" = list(
 			/obj/item/clothing/head/mod = list(
@@ -535,10 +515,6 @@
 		),
 	)
 
-/datum/mod_theme/mining/New()
-	.=..()
-	allowed_suit_storage = GLOB.mining_suit_allowed
-
 /datum/armor/mod_theme_mining
 	melee = 20
 	bullet = 5
@@ -570,12 +546,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	allowed_suit_storage = list(
-		/obj/item/mail,
-		/obj/item/delivery/small,
-		/obj/item/paper,
-		/obj/item/storage/bag/mail,
-	)
 	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
 	variants = list(
 		"loader" = list(
@@ -632,21 +602,6 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
-	allowed_suit_storage = list(
-		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
-		/obj/item/sensor_device,
-		/obj/item/storage/pill_bottle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
-	)
 	variants = list(
 		"medical" = list(
 			/obj/item/clothing/head/mod = list(
@@ -744,22 +699,6 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
-	allowed_suit_storage = list(
-		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/stack/medical,
-		/obj/item/sensor_device,
-		/obj/item/storage/pill_bottle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
-		/obj/item/melee/baton/telescopic,
-	)
 	variants = list(
 		"rescue" = list(
 			/obj/item/clothing/head/mod = list(
@@ -826,14 +765,6 @@
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
-	allowed_suit_storage = list(
-		/obj/item/analyzer,
-		/obj/item/dnainjector,
-		/obj/item/biopsy_tool,
-		/obj/item/experi_scanner,
-		/obj/item/storage/bag/bio,
-		/obj/item/melee/baton/telescopic,
-	)
 	variants = list(
 		"research" = list(
 			/obj/item/clothing/head/mod = list(
@@ -893,12 +824,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	slowdown_inactive = 1
 	slowdown_active = 0.5
-	allowed_suit_storage = list(
-		/obj/item/reagent_containers/spray/pepper,
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-	)
 	variants = list(
 		"security" = list(
 			/obj/item/clothing/head/mod = list(
@@ -962,12 +887,6 @@
 	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked)
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
-	allowed_suit_storage = list(
-		/obj/item/reagent_containers/spray/pepper,
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-	)
 	variants = list(
 		"safeguard" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1034,11 +953,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-	)
 	variants = list(
 		"magnate" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1099,14 +1013,6 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
-	allowed_suit_storage = list(
-		/obj/item/bikehorn,
-		/obj/item/food/grown/banana,
-		/obj/item/grown/bananapeel,
-		/obj/item/reagent_containers/spray/waterflower,
-		/obj/item/instrument,
-		/obj/item/toy/balloon_animal,
-	)
 	variants = list(
 		"cosmohonk" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1175,13 +1081,6 @@
 	ui_theme = "syndicate"
 	resistance_flags = FIRE_PROOF
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-		/obj/item/melee/energy/sword,
-		/obj/item/shield/energy,
-	)
 	variants = list(
 		"syndicate" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1282,13 +1181,6 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-		/obj/item/melee/energy/sword,
-		/obj/item/shield/energy,
-	)
 	variants = list(
 		"elite" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1357,13 +1249,6 @@
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
 	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer)
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-		/obj/item/melee/energy/sword,
-		/obj/item/shield/energy,
-	)
 	variants = list(
 		"infiltrator" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1427,27 +1312,6 @@
 	slowdown_inactive = 0.0
 	slowdown_active = -0.5
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
-	allowed_suit_storage = list(
-		/obj/item/assembly/flash,
-		/obj/item/healthanalyzer,
-		/obj/item/melee/baton,
-		/obj/item/melee/baton/telescopic,
-		/obj/item/melee/energy/sword,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/restraints/handcuffs,
-		/obj/item/sensor_device,
-		/obj/item/shield/energy,
-		/obj/item/stack/medical,
-		/obj/item/storage/bag/bio,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/pill_bottle,
-	)
 	variants = list(
 		"interdyne" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1515,11 +1379,6 @@
 	slowdown_active = 0.25
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
-	allowed_suit_storage = list(
-		/obj/item/teleportation_scroll,
-		/obj/item/highfrequencyblade/wizard,
-		/obj/item/gun/magic,
-	)
 	variants = list(
 		"enchanted" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1583,11 +1442,6 @@
 	slowdown_active = 0
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
-	allowed_suit_storage = list(
-		/obj/item/gun,
-		/obj/item/melee/baton,
-		/obj/item/restraints/handcuffs,
-	)
 	variants = list(
 		"ninja" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1654,12 +1508,6 @@
 	slowdown_active = 1
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prototype)
-	allowed_suit_storage = list(
-		/obj/item/analyzer,
-		/obj/item/t_scanner,
-		/obj/item/pipe_dispenser,
-		/obj/item/construction/rcd,
-	)
 	variants = list(
 		"prototype" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1721,12 +1569,6 @@
 	slowdown_active = 0.5
 	ui_theme = "terminal"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
-	allowed_suit_storage = list(
-		/obj/item/ammo_box,
-		/obj/item/ammo_casing,
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-	)
 	variants = list(
 		"glitch" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1788,11 +1630,6 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-	)
 	variants = list(
 		"responsory" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1900,13 +1737,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-		/obj/item/melee/energy/sword,
-		/obj/item/shield/energy,
-	)
 	variants = list(
 		"apocryphal" = list(
 			/obj/item/clothing/head/mod = list(
@@ -1971,11 +1801,6 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash,
-		/obj/item/melee/baton,
-	)
 	variants = list(
 		"corporate" = list(
 			/obj/item/clothing/head/mod = list(
@@ -2036,9 +1861,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
 	slowdown_inactive = 0
 	slowdown_active = 0
-	allowed_suit_storage = list(
-		/obj/item/restraints/handcuffs,
-	)
 	variants = list(
 		"chrono" = list(
 			/obj/item/clothing/head/mod = list(
@@ -2102,9 +1924,6 @@
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.2
-	allowed_suit_storage = list(
-		/obj/item/gun,
-	)
 	variants = list(
 		"debug" = list(
 			/obj/item/clothing/head/mod = list(
@@ -2169,9 +1988,6 @@
 	slowdown_inactive = 0
 	slowdown_active = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.01
-	allowed_suit_storage = list(
-		/obj/item/gun,
-	)
 	variants = list(
 		"debug" = list(
 			/obj/item/clothing/head/mod = list(
