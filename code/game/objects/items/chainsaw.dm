@@ -99,7 +99,7 @@
 	armour_penetration = 100
 	force_on = 30
 
-/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, params)
 	if (target_mob.stat != DEAD)
 		return ..()
 
