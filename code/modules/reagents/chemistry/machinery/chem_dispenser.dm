@@ -621,8 +621,25 @@
 		/datum/reagent/iron,
 		/datum/reagent/consumable/mintextract,
 		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/consumable/ethanol/fernet
+		/datum/reagent/consumable/ethanol/fernet,
+		/datum/reagent/toxin/fakebeer,
 	)
+
+/obj/machinery/chem_dispenser/drinks/beer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "already emagged!")
+		
+		return FALSE
+
+	if(!HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER))
+		to_chat(user, span_warning("You need a deeper connection with alcohol to know where to swipe it."))
+
+		return FALSE
+
+	balloon_alert(user, "safeties shorted out")
+	dispensable_reagents |= emagged_reagents
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/chem_dispenser/drinks/beer/Initialize(mapload)
 	dispensable_reagents = beer_dispensable_reagents
