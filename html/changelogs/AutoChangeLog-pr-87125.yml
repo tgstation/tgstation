@@ -1,0 +1,4 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - bugfix: "Ghosts can now see the details of an ID from any distance"

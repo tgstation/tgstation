@@ -64,14 +64,16 @@
 	return material_effects
 
 /**
- * A proc that can be used to selectively control the statistics and affects from a material without affecting the others
+ * A proc that can be used to selectively control the stat changes and effects from a material without affecting the others.
+ *
  * For example, we can have items made of two different materials, with the primary contributing a good 1.2 multiplier
  * and the second a meager 0.3.
- * The GET_MATERIAL_MODIFIER macro will handles some modifiers where the minimum should be 1 if above 1 and the maximum
- * 1 if below 1, so you shouldn't worry about returning values between 0 and 1. Be ware about returning negative values tho.
+ *
+ * The GET_MATERIAL_MODIFIER macro will handles some modifications where the minimum should be 1 if above 1 and the maximum
+ * be 1 if below 1. Just don't return negative values.
  */
 /atom/proc/get_material_multiplier(datum/material/custom_material, list/materials, index)
-	return 1
+	return 1/length(materials)
 
 ///Called by apply_material_effects(). It ACTUALLY handles applying effects common to all atoms (depending on material flags)
 /atom/proc/finalize_material_effects(list/materials)
