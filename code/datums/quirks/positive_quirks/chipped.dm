@@ -43,7 +43,7 @@
 	installed_chip.try_activate_skillchip(silent = FALSE, force = TRUE)
 
 	var/obj/item/organ/internal/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
-	itchy_timer = addtimer(CALLBACK(itchy_brain, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES)) // they get The Itch from a poor quality install every so often
+	itchy_timer = addtimer(CALLBACK(src, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES)) // they get The Itch from a poor quality install every so often
 
 /datum/quirk/chipped/remove()
 	qdel(installed_chip)
