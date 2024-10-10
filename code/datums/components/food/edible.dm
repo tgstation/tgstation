@@ -599,8 +599,12 @@ Behavior that's still missing from this component that original food items had t
 	return food.crafting_complexity + complexity_to_add
 
 /// Get food quality adjusted according to eater's preferences
-/datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
+/datum/component/edible/proc/get_perceived_food_quality(mob/living/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks

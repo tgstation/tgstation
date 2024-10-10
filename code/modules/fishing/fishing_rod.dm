@@ -69,6 +69,11 @@
 
 	update_appearance()
 
+	//Bane effect that make it extra-effective against mobs with water adaptation (read: fish infusion)
+	AddElement(/datum/element/bane, target_type = /mob/living, damage_multiplier = 1.25)
+	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
+	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
+
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
 		if(currently_hooked)
@@ -134,6 +139,19 @@
 
 	QDEL_NULL(bait)
 	update_icon()
+
+///Fishing rodss should only bane fish DNA-infused spessman
+/obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
+	SIGNAL_HANDLER
+	if(!force || !HAS_TRAIT(fish, TRAIT_WATER_ADAPTATION))
+		return COMPONENT_CANCEL_BANING
+
+///Fishing rods should hard-counter fish DNA-infused spessman
+/obj/item/fishing_rod/proc/bane_effects(datum/source, mob/living/fish)
+	SIGNAL_HANDLER
+	fish.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
+	fish.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+	fish.adjust_wet_stacks(-4)
 
 /obj/item/fishing_rod/interact(mob/user)
 	if(currently_hooked)

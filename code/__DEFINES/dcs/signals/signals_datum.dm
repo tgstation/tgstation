@@ -48,3 +48,6 @@
 
 ///from /datum/component/on_hit_effect/send_signal(): (user, target, hit_zone)
 #define COMSIG_ON_HIT_EFFECT "comsig_on_hit_effect"
+
+///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
+#define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"
