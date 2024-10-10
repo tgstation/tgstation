@@ -1036,7 +1036,7 @@
 	else
 		tips = world.file2list("strings/chemistrytips.txt")
 	var/message = pick(tips)
-	send_tip_of_the_round(affected_mob, message)
+	send_tip_of_the_round(affected_mob, message, source = "Chemical-induced wisdom")
 
 /datum/reagent/medicine/neurine
 	name = "Neurine"

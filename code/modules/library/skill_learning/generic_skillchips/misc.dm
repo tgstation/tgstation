@@ -156,4 +156,4 @@
 	. = ..()
 	if(!.)
 		return
-	send_tip_of_the_round(owner, pick(GLOB.fishing_tips))
+	send_tip_of_the_round(owner, pick(GLOB.fishing_tips), source = "Ancient fishing wisdom")
