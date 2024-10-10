@@ -27,16 +27,21 @@
 /obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ICLOTHING)
-		START_PROCESSING(SSprocessing, src)
+		RegisterSignal(user, COMSIG_LIVING_IGNITED, PROC_REF(on_ignition))
+		on_ignition()
 
 /obj/item/clothing/under/plasmaman/dropped(mob/living/user)
 	. = ..()
-	STOP_PROCESSING(SSprocessing, src)
+	UnregisterSignal(user, COMSIG_LIVING_IGNITED)
 
-/obj/item/clothing/under/plasmaman/process(seconds_per_tick)
+/obj/item/clothing/under/plasmaman/proc/on_ignition(datum/source)
+	SIGNAL_HANDLER
+
 	if (!ishuman(loc))
 		return
 
+	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
+	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
 	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
 		return
@@ -46,6 +51,8 @@
 
 	extinguishes_left -= 1
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	// Check if our (possibly other) wearer is on fire once the cooldown ends
+	addtimer(CALLBACK(src, PROC_REF(on_ignition)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
@@ -148,12 +155,14 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/plasmaman/clown/process(seconds_per_tick)
+/obj/item/clothing/under/plasmaman/clown/on_ignition(datum/source, datum/status_effect/fire_handler/status_effect)
 	if (!ishuman(loc))
 		return
 
+	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
+	// This is why we're ignoring source and instead checking by loc
 	var/mob/living/carbon/human/owner = loc
-	if (owner.on_fire || !owner.fire_stacks || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
 		return
 
 	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
@@ -161,6 +170,8 @@
 
 	extinguishes_left -= 1
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	// Check if our (possibly other) wearer is on fire once the cooldown ends
+	addtimer(CALLBACK(src, PROC_REF(on_ignition)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
 	owner.extinguish_mob()
 	var/datum/effect_system/fluid_spread/foam/foam = new
