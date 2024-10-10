@@ -1,0 +1,4 @@
+author: "Qwertytoforty"
+delete-after: True
+changes:
+  - bugfix: "Anomalies no longer spawn in objects or mobs from the supermatter."
