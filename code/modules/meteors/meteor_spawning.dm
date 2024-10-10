@@ -31,7 +31,7 @@
 	var/new_meteor = pick_weight(meteor_types)
 	new new_meteor(picked_start, picked_goal)
 
-/proc/spaceDebrisStartLoc(start_side, Z, distance_from_edge)
+/proc/spaceDebrisStartLoc(start_side, Z, distance_from_edge = 0)
 	var/starty
 	var/startx
 	switch(start_side)
