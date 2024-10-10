@@ -86,6 +86,11 @@
 	icon_state = "engine_sm_room"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/station/engineering/supermatter/room/upper
+	name = "\improper Upper Supermatter Engine Room"
+	icon_state = "engine_sm_room_upper"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
 /area/station/engineering/break_room
 	name = "\improper Engineering Foyer"
 	icon_state = "engine_break"
