@@ -20,6 +20,11 @@
 	desc = "A billboard advertising Donk-n-Go, Donk Co's ever-present and ever-unhealthy fast-food venture: GET IN, GET FED, GET GONE!"
 	icon_state = "billboard_donk_n_go"
 
+/obj/structure/billboard/waffle_corp
+	name = "\improper Waffle Corp billboard"
+	desc = "A billboard advertising Waffle Corporation, leaders in both the breakfast restaurant and ballistic weaponry industries."
+	icon_state = "billboard_waffle_corp"
+
 /obj/structure/billboard/space_cola
 	name = "\improper Space Cola billboard"
 	desc = "A billboard advertising Space Cola: Relax, have a Spoke."

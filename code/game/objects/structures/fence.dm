@@ -22,7 +22,8 @@
 	var/cuttable = TRUE
 	var/hole_size= NO_HOLE
 	var/invulnerable = FALSE
-
+	//chance bullets will pass fence without hitting it
+	var/proj_pass_rate = 75
 /obj/structure/fence/Initialize(mapload)
 	. = ..()
 
@@ -36,6 +37,13 @@
 			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
 			. += "\The [src] has been completely cut through."
+
+/obj/structure/fence/CanAllowThrough(atom/movable/mover, border_dir) // lets projectiles pass fence
+	. = ..()
+	if(isprojectile(mover))
+		if(prob(proj_pass_rate))
+			return TRUE
+		return FALSE
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -52,10 +60,12 @@
 /obj/structure/fence/cut/medium
 	icon_state = "straight_cut2"
 	hole_size = MEDIUM_HOLE
+	proj_pass_rate = 90
 
 /obj/structure/fence/cut/large
 	icon_state = "straight_cut3"
 	hole_size = LARGE_HOLE
+	proj_pass_rate = 100
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
@@ -98,9 +108,11 @@
 			icon_state = initial(icon_state)
 		if(MEDIUM_HOLE)
 			icon_state = "straight_cut2"
+			proj_pass_rate = 90
 		if(LARGE_HOLE)
 			icon_state = "straight_cut3"
 			new_density = FALSE
+			proj_pass_rate = 100
 	set_density(new_density)
 
 //FENCE DOORS

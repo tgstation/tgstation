@@ -1,0 +1,7626 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/item/chair/stool/bar,
+/obj/item/clothing/suit/apron/chef{
+	pixel_x = -6
+	},
+/obj/item/coin/gold,
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/bag/trash/filled{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"at" = (
+/obj/item/bodybag,
+/obj/structure/fluff/fake_camera,
+/obj/item/trash/candle{
+	pixel_x = 14;
+	pixel_y = 14
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/punch_shit/directional/west,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Donk";
+	paint_colour = "#c65102";
+	pixel_y = -32
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"av" = (
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"az" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4;
+	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"aA" = (
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"aB" = (
+/obj/machinery/oven,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"aC" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/computer/pod/old/syndicate,
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"aF" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 10
+	},
+/obj/item/bodypart/leg/right/skeleton{
+	pixel_x = -8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"aG" = (
+/obj/structure/flora/bush/leafy,
+/turf/open/floor/grass,
+/area/deathmatch)
+"aR" = (
+/turf/closed/indestructible/fakedoor{
+	name = "East Lake Recycling Company"
+	},
+/area/deathmatch)
+"aT" = (
+/obj/structure/flora/bush/fullgrass/style_2{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/structure/flora/rock/style_4,
+/turf/open/floor/grass,
+/area/deathmatch)
+"aW" = (
+/obj/item/trash/ready_donk{
+	pixel_y = 14;
+	pixel_x = 14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ba" = (
+/obj/structure/flora/bush{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"be" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/scanner_gate/preset_guns{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"bk" = (
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"bw" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 610";
+	dir = 8
+	},
+/area/deathmatch)
+"by" = (
+/obj/structure/mystery_box/guns,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"bP" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"bR" = (
+/obj/structure/table/reinforced,
+/obj/item/trash/tray,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"bW" = (
+/obj/structure/flora/bush/grassy/style_4{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"bX" = (
+/obj/structure/flora/rock/pile{
+	pixel_y = 10;
+	pixel_x = -6
+	},
+/obj/item/trash/boritos{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"bZ" = (
+/obj/structure/flora/rock/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"cg" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"cv" = (
+/obj/structure/flora/bush/pale/style_3{
+	pixel_y = -3;
+	pixel_x = 1
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"cw" = (
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/corner,
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/obj/structure/rack,
+/obj/item/plate/large,
+/obj/item/plate/oven_tray,
+/obj/item/plate,
+/obj/item/plate/small,
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"cy" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"cF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"cU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"dj" = (
+/obj/structure/sign/poster/contraband/c20r/directional/north,
+/obj/item/gun/ballistic/automatic/gyropistol,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate/secure/gorlex_weapons,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"dB" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"dE" = (
+/obj/structure/closet/crate/large,
+/obj/item/ammo_box/magazine/sniper_rounds,
+/obj/item/gun/ballistic/rifle/sniper_rifle/syndicate,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"dL" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"dS" = (
+/obj/structure/closet/crate/secure/gear,
+/obj/item/gun/ballistic/automatic/pistol/clandestine{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/gun/ballistic/automatic/pistol/clandestine{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"dX" = (
+/obj/effect/decal/cleanable/rubble,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"dZ" = (
+/obj/effect/decal/cleanable/food/egg_smudge{
+	pixel_x = 14;
+	pixel_y = 19
+	},
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"ea" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 512"
+	},
+/area/deathmatch)
+"ec" = (
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"ed" = (
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"eg" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	name = "Hab Block 620";
+	dir = 8
+	},
+/area/deathmatch)
+"ew" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ex" = (
+/obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"eE" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"eM" = (
+/obj/structure/disposaloutlet{
+	dir = 4;
+	name = "reject outlet"
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/deathmatch)
+"eN" = (
+/obj/structure/mystery_box/guns,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"eP" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"fd" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/paper_bin,
+/obj/item/pen{
+	pixel_x = -3
+	},
+/obj/item/pen/blue{
+	pixel_x = 3
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"ff" = (
+/obj/structure/fence/end{
+	dir = 8
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fg" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 1
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"fo" = (
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"ft" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/hedge/opaque,
+/turf/open/floor/grass,
+/area/deathmatch)
+"fu" = (
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"fw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"fx" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/structure/mystery_box/guns,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"fD" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/item/trash/tray,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"fE" = (
+/obj/machinery/conveyor/auto,
+/obj/machinery/light/small/red/directional/east,
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/floor/plating,
+/area/deathmatch)
+"fG" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/ammo_box/magazine/m12g/meteor{
+	pixel_y = 2
+	},
+/obj/item/ammo_box/magazine/m12g{
+	pixel_x = 7
+	},
+/obj/item/ammo_box/magazine/m12g{
+	pixel_x = -7
+	},
+/obj/item/ammo_box/magazine/m12g/slug{
+	pixel_y = -2
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"fQ" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"fR" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"fV" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/turf/open/indestructible,
+/area/deathmatch)
+"fX" = (
+/obj/structure/flora/bush/leavy{
+	pixel_x = -21
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"gb" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"gc" = (
+/obj/effect/decal/cleanable/rubble,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"gl" = (
+/obj/structure/flora/bush/lavendergrass/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"gA" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"gD" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/ash,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"gE" = (
+/obj/machinery/computer/pod/old/syndicate,
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/north,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"gK" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"gL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/grass,
+/area/deathmatch)
+"gQ" = (
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ha" = (
+/obj/structure/shipping_container/gorlex,
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"hf" = (
+/obj/structure/table/wood,
+/obj/item/barcodescanner{
+	pixel_y = 11;
+	pixel_x = 5
+	},
+/obj/item/universal_scanner{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"hk" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"hr" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"hB" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"hH" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"hS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fence,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"hX" = (
+/obj/effect/turf_decal/trimline/brown/end,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ia" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	name = "Hab Block 619"
+	},
+/area/deathmatch)
+"ik" = (
+/obj/structure/flora/bush/flowers_yw/style_2{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/trash/can{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"iv" = (
+/obj/structure/sign/poster/ripped/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"iH" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"iL" = (
+/obj/item/trash/can{
+	pixel_x = -2;
+	pixel_y = 14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"iP" = (
+/obj/machinery/conveyor/auto,
+/turf/open/floor/asphalt,
+/area/deathmatch)
+"iT" = (
+/obj/structure/flora/tree/jungle/small/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"iW" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"iZ" = (
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/obj/structure/sign/warning/firing_range/directional/north,
+/turf/open/floor/plating,
+/area/deathmatch)
+"jc" = (
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -14;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/poster/ripped/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ji" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/gun/ballistic/revolver/syndicate{
+	pixel_y = -2
+	},
+/obj/item/gun/ballistic/revolver/syndicate{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"jj" = (
+/obj/structure/flora/bush/lavendergrass/style_4{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/structure/flora/bush/pale/style_2{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"jk" = (
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ju" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 4
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"jw" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"jB" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/item/trash/cnds,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"jG" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/keycard/yellow{
+	pixel_y = 8;
+	pixel_x = 2;
+	puzzle_id = "waffle_arg2";
+	name = "keycard";
+	desc = "A yellow keycard."
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"jQ" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_x = 7
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"jZ" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ka" = (
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"kb" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"kf" = (
+/obj/structure/table_frame/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"kh" = (
+/obj/structure/flora/bush/lavendergrass/style_2,
+/turf/open/floor/grass,
+/area/deathmatch)
+"kp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ku" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard{
+	pixel_y = -2;
+	pixel_x = 8
+	},
+/obj/item/shard{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"kv" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"kz" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/no_nightlight/directional/east,
+/obj/item/trash/tray,
+/turf/open/indestructible,
+/area/deathmatch)
+"kA" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie{
+	pixel_y = 8;
+	pixel_x = 1
+	},
+/obj/item/ammo_casing/rebar/syndie,
+/obj/item/ammo_casing/rebar/syndie{
+	pixel_x = 4
+	},
+/obj/item/ammo_casing/rebar/syndie{
+	pixel_x = 8
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"kQ" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/grass,
+/area/deathmatch)
+"kR" = (
+/obj/structure/flora/bush/lavendergrass/style_4{
+	pixel_x = 7
+	},
+/obj/structure/flora/bush/fullgrass{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"kT" = (
+/obj/item/toy/figure/syndie{
+	pixel_y = 12;
+	pixel_x = -6
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"kX" = (
+/obj/structure/table/reinforced/ctf,
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/north,
+/obj/item/folder,
+/obj/item/pen,
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"kY" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"kZ" = (
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Bargain Thrifts"
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"la" = (
+/obj/item/trash/cheesie{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"lk" = (
+/obj/item/trash/pistachios{
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"lm" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"ln" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"lp" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 8
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"lv" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"lL" = (
+/obj/item/cigbutt{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_casing/a357/spent{
+	dir = 1;
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/structure/fence,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"lP" = (
+/turf/closed/indestructible/fakedoor{
+	name = "EMPLOYEES ONLY";
+	dir = 4
+	},
+/area/deathmatch)
+"lS" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"lW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"lX" = (
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"me" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/bouquet/rose{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/food/boiledegg/rotten{
+	pixel_x = -8
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/obj/structure/closet/crate/trashcart,
+/obj/structure/sign/poster/ripped/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"mf" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"mt" = (
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"my" = (
+/obj/structure/flora/bush/fullgrass/style_3,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Newton";
+	pixel_y = 32;
+	paint_colour = "#9b1010"
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"mz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/crate/preopen,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"mQ" = (
+/obj/structure/flora/bush/lavendergrass/style_3,
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"nf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"nj" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"nq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/structure/closet/crate/secure/wafflecorp,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"nw" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"nx" = (
+/obj/structure/flora/bush/leavy{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/obj/structure/flora/bush/leavy/style_2{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"nL" = (
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"nN" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"nP" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"nT" = (
+/obj/structure/flora/bush/fullgrass,
+/obj/structure/mystery_box/guns,
+/turf/open/floor/grass,
+/area/deathmatch)
+"nV" = (
+/obj/machinery/recycler/deathtrap{
+	dir = 1;
+	desc = "A large crushing machine used to recycle failed guns from the reject line. There are lights on the side."
+	},
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"nW" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ob" = (
+/obj/machinery/conveyor/auto,
+/turf/open/floor/plating,
+/area/deathmatch)
+"oi" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"oj" = (
+/obj/structure/flora/bush/sunny/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"ol" = (
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"or" = (
+/turf/template_noop,
+/area/template_noop)
+"os" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/light_emitter/fake_outdoors,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "blueprint";
+	paint_colour = "#558edf"
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"ot" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"oy" = (
+/obj/machinery/conveyor/auto,
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating,
+/area/deathmatch)
+"oA" = (
+/obj/structure/closet/crate/secure/trashcart,
+/obj/structure/flora/ash/cap_shroom,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/book/bible{
+	pixel_x = -6
+	},
+/obj/item/book/bible/syndicate{
+	pixel_x = 6
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"oB" = (
+/obj/structure/fluff/fake_camera,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"oK" = (
+/obj/structure/closet/crate/bin,
+/obj/structure/fluff/fake_camera,
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"oL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"oV" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"oZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"pa" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"pd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"pl" = (
+/obj/machinery/griddle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"pn" = (
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/floor/grass,
+/area/deathmatch)
+"pr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/plastic{
+	pixel_y = 10
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"ps" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"py" = (
+/obj/structure/sign/warning/explosives/directional/north,
+/obj/effect/decal/cleanable/wrapping,
+/obj/item/gun/ballistic/automatic/gyropistol,
+/obj/effect/turf_decal/bot_white,
+/obj/structure/closet/crate/secure/gorlex_weapons,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"pz" = (
+/obj/structure/fence/end,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"pF" = (
+/obj/structure/table/wood,
+/obj/machinery/light/no_nightlight/directional/west,
+/obj/item/pen/fountain{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/phone{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"pI" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"pK" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"pP" = (
+/turf/closed/indestructible/fakedoor{
+	name = "EMPLOYEES ONLY"
+	},
+/area/deathmatch)
+"pR" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/item/trash/syndi_cakes{
+	pixel_x = 16
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"pW" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"qc" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"qd" = (
+/obj/structure/sign/poster/contraband/grey_tide/directional/north,
+/obj/structure/closet/crate/secure/trashcart,
+/obj/item/keycard/library,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"qf" = (
+/obj/structure/flora/bush/generic/style_4{
+	pixel_y = 14;
+	pixel_x = -15
+	},
+/obj/item/trash/tray,
+/turf/open/floor/grass,
+/area/deathmatch)
+"qi" = (
+/obj/structure/safe,
+/obj/item/melee/supermatter_sword,
+/turf/open/floor/iron/dark,
+/area/deathmatch)
+"qn" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 9
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"qo" = (
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"qt" = (
+/obj/effect/turf_decal/box/corners,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"qF" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/paperwork,
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"qH" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/item/keycard/syndicate_fridge{
+	puzzle_id = "waffle_arg3";
+	name = "keycard";
+	desc = "A grey keycard."
+	},
+/obj/item/target,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"qL" = (
+/obj/structure/flora/bush/leavy/style_3{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"qP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"qX" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/weaponcrafting/stock{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/weaponcrafting/receiver{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/suppressor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"rc" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "matt";
+	pixel_y = -32;
+	paint_colour = "#dfa955"
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"rn" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	dir = 1
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"rp" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/structure/flora/bush/generic/style_4{
+	pixel_y = 13;
+	pixel_x = -15
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"rs" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"rv" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"rx" = (
+/obj/effect/decal/cleanable/glass{
+	pixel_x = -19;
+	pixel_y = -15
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"rE" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"rG" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Cyber";
+	pixel_y = -32;
+	paint_colour = "#80D0BD"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"rQ" = (
+/obj/structure/flora/bush/flowers_br,
+/turf/open/floor/grass,
+/area/deathmatch)
+"sb" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/item/broken_bottle{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/storage/bag/trash/filled{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/c_tube,
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/obj/structure/closet/crate/secure/trashcart,
+/obj/item/grown/bananapeel{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"sd" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"se" = (
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/deathmatch)
+"sh" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair,
+/turf/open/indestructible,
+/area/deathmatch)
+"sm" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible,
+/area/deathmatch)
+"so" = (
+/turf/open/indestructible/large/textured_half,
+/area/deathmatch)
+"sz" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"sD" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"sJ" = (
+/obj/structure/closet/crate/secure/weapon{
+	req_access = list("armory")
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/obj/item/gun/ballistic/revolver/syndicate,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"sN" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"sO" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/item/food/waffles{
+	pixel_y = 5
+	},
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"sP" = (
+/obj/effect/decal/cleanable/molten_object{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"sQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"sR" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair,
+/turf/open/indestructible,
+/area/deathmatch)
+"sT" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/item/chair{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"sZ" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Nanotrasen"
+	},
+/area/deathmatch)
+"tb" = (
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -11
+	},
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"tf" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/west,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ti" = (
+/obj/structure/sign/poster/contraband/clown/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"tn" = (
+/turf/closed/indestructible/binary,
+/area/deathmatch)
+"tp" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"tr" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/item/dice/d20{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/dice/d10{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/dice/d10,
+/obj/item/dice/d6{
+	pixel_y = -2;
+	pixel_x = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tx" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/trash/tray,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"tD" = (
+/obj/item/trash/ready_donk{
+	pixel_y = 14;
+	pixel_x = 14
+	},
+/obj/item/broken_missile{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"tK" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tW" = (
+/obj/structure/shipping_container/gorlex/red,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"tX" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ul" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"uo" = (
+/obj/structure/fence/cut/large,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"uu" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp/corner{
+	dir = 1
+	},
+/obj/machinery/light/no_nightlight/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/deathmatch)
+"uA" = (
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"uB" = (
+/obj/item/c_tube{
+	pixel_y = -13;
+	pixel_x = -11
+	},
+/obj/structure/flora/bush/pointy{
+	pixel_y = 8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"uF" = (
+/obj/structure/mystery_box/guns,
+/turf/open/floor/grass,
+/area/deathmatch)
+"uH" = (
+/obj/structure/flora/bush/grassy/style_2{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/obj/item/cigbutt/cigarbutt{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"uI" = (
+/obj/structure/fence/corner{
+	dir = 9
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"uW" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 6
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"va" = (
+/obj/structure/billboard/waffle_corp,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"vc" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ve" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/can{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"vh" = (
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Sleeping Carp";
+	pixel_y = -32;
+	paint_colour = "#a02ba2"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"vk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 8
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"vv" = (
+/turf/closed/indestructible/riveted,
+/area/deathmatch)
+"vy" = (
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "shotgun";
+	pixel_y = 34;
+	paint_colour = "#EEDDEE";
+	pixel_x = 14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"vB" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/deathmatch)
+"vC" = (
+/obj/machinery/light/no_nightlight/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/flour{
+	pixel_x = -2
+	},
+/obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"vF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/mask/balaclava{
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"vH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/terminal{
+	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "Controls locked.";
+	dir = 1;
+	tguitheme = "neutral"
+	},
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"wg" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"wm" = (
+/obj/machinery/computer/pod/old/syndicate,
+/obj/structure/table/reinforced/ctf,
+/obj/effect/turf_decal/tile/dark_blue,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"wA" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"wF" = (
+/turf/closed/indestructible/fakedoor{
+	name = "EMPLOYEES ONLY";
+	dir = 8
+	},
+/area/deathmatch)
+"wH" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"wT" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"xD" = (
+/obj/structure/flora/bush/sparsegrass{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"xJ" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"yc" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/relic{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/obj/item/relic/lavaland{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"yj" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ym" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/no_nightlight/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"yx" = (
+/obj/structure/flora/bush/fullgrass/style_2{
+	pixel_y = 8;
+	pixel_x = 5
+	},
+/obj/structure/fence/cut/large{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"yE" = (
+/obj/structure/flora/bush/leavy/style_2{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"yF" = (
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"yG" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"yX" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/deathmatch)
+"yZ" = (
+/obj/item/kirbyplants/synthetic,
+/obj/structure/flora/bush/fullgrass/style_2,
+/turf/open/floor/grass,
+/area/deathmatch)
+"zd" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "splatter";
+	paint_colour = "#3d1c0c";
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Gib";
+	paint_colour = "#EEDDEE";
+	pixel_x = 32
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"zo" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"zv" = (
+/obj/structure/mystery_box/guns,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"zA" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rofl Brothers Outlet"
+	},
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"zJ" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/tray,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"zM" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"zO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/robot_debris/old{
+	pixel_x = -6
+	},
+/obj/item/gun/ballistic/automatic/pistol/suppressed,
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"zW" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/sign/warning/no_smoking/circle/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"zX" = (
+/obj/machinery/light/no_nightlight/directional/south,
+/obj/structure/closet/crate/secure/wafflecorp,
+/obj/item/trash/tray{
+	pixel_y = -4
+	},
+/obj/item/trash/tray,
+/obj/item/trash/tray{
+	pixel_y = 4
+	},
+/obj/item/plate{
+	pixel_y = 6
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ad" = (
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Ao" = (
+/obj/structure/fence,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"As" = (
+/obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/north,
+/obj/structure/table/reinforced/ctf,
+/obj/item/stack/package_wrap,
+/obj/item/barcodescanner,
+/obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo{
+	pixel_y = -15;
+	pixel_x = 6
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"AD" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"AG" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"AH" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/obj/structure/fence/cut/large,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"AK" = (
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"AO" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"AR" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"AU" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"AV" = (
+/obj/structure/closet/crate/trashcart,
+/obj/machinery/light/no_nightlight/directional/north,
+/obj/item/traitor_bug{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/tank/internals/oxygen,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/target{
+	pixel_y = 1;
+	pixel_x = -4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Bf" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Bl" = (
+/obj/structure/flora/bush/grassy/style_3{
+	pixel_x = -11;
+	pixel_y = 7
+	},
+/obj/structure/sign/poster/contraband/self_ai_liberation/directional/north,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Bv" = (
+/obj/structure/fence/cut/large{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Bx" = (
+/obj/effect/light_emitter/fake_outdoors,
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"BB" = (
+/turf/closed/indestructible/reinforced,
+/area/deathmatch)
+"BE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"BI" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"BL" = (
+/obj/structure/flora/bush/flowers_br/style_2{
+	pixel_x = 15;
+	pixel_y = 15
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"BT" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 609"
+	},
+/area/deathmatch)
+"BW" = (
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Ck" = (
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Cv" = (
+/obj/structure/mystery_box/guns,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"CD" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "face";
+	paint_colour = "#40b488";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"CH" = (
+/obj/structure/mecha_wreckage/ripley/deathripley{
+	anchored = 1
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"CP" = (
+/obj/structure/flora/bush/leavy/style_2{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"CS" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tattoo_kit{
+	pixel_y = -2;
+	pixel_x = -5
+	},
+/obj/item/taperecorder/empty{
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/bag/trash/filled{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"CU" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/sign/poster/contraband/eat/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"Dc" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"De" = (
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Df" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"Dj" = (
+/obj/structure/flora/bush/fullgrass,
+/obj/item/trash/candy{
+	pixel_x = 13;
+	pixel_y = 9
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Dp" = (
+/obj/structure/mannequin/wood{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Dt" = (
+/obj/machinery/computer/terminal{
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "LOCKED";
+	dir = 8;
+	tguitheme = "ntOS95"
+	},
+/obj/structure/table/wood,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"DI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"DZ" = (
+/obj/structure/closet/crate/preopen,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/c20r/unrestricted{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Ea" = (
+/obj/structure/flora/tree/jungle/small/style_6{
+	pixel_x = -44
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Ed" = (
+/obj/machinery/light/small/broken/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ee" = (
+/obj/structure/flora/bush/sparsegrass/style_3,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "end";
+	paint_colour = "#EEDDEE";
+	pixel_x = 32
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Eh" = (
+/obj/structure/flora/bush/fullgrass,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Ey" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"EC" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"EH" = (
+/obj/structure/flora/bush/pointy/style_4,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/grass,
+/area/deathmatch)
+"EO" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/broken_bottle,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ET" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/condiment/rice{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/condiment/rice{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/rice{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/condiment/rice{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Fe" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Fg" = (
+/obj/structure/flora/bush/generic/style_4{
+	pixel_x = -11;
+	pixel_y = 14
+	},
+/obj/structure/flora/bush/fullgrass/style_2{
+	pixel_y = -8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Fi" = (
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fluff/fake_camera,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Fo" = (
+/obj/structure/billboard/waffle_corp,
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Fp" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Fs" = (
+/obj/machinery/vending/hotdog,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "Donk";
+	paint_colour = "#c65102";
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "nay";
+	paint_colour = "#8b0000";
+	pixel_x = 32
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Fy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"FF" = (
+/obj/structure/flora/bush/grassy/style_2{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"FN" = (
+/obj/structure/flora/bush/fullgrass{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"FP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"FQ" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/deathmatch)
+"FS" = (
+/obj/item/cigbutt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"FW" = (
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"FX" = (
+/obj/structure/girder/reinforced,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"FZ" = (
+/obj/structure/flora/bush/leavy/style_3{
+	pixel_y = -10;
+	pixel_x = -8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Gb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Gd" = (
+/obj/structure/hedge/opaque,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Gj" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Gp" = (
+/obj/structure/flora/bush/sparsegrass/style_3,
+/obj/structure/flora/bush/pointy/style_3{
+	pixel_x = 15
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Gs" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/deathmatch)
+"Gx" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Shady Steve's Umbrella and Parasol Warehouse"
+	},
+/area/deathmatch)
+"GC" = (
+/obj/structure/mystery_box/guns,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"GH" = (
+/obj/structure/shipping_container/cybersun,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"GJ" = (
+/obj/structure/closet/body_bag,
+/obj/machinery/light/small/directional/east,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/paper/calling_card,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"GQ" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/soup_pot{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/soup_pot{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/soup_pot{
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"GW" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"GX" = (
+/obj/item/broken_bottle{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"GZ" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Hb" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Hc" = (
+/obj/structure/flora/bush/sparsegrass/style_2,
+/obj/structure/flora/bush/pointy{
+	pixel_y = 8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Hg" = (
+/obj/structure/flora/bush/lavendergrass/style_2{
+	pixel_y = -15
+	},
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Hi" = (
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Hk" = (
+/obj/machinery/light/no_nightlight/directional/south,
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Hs" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"HH" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"HM" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/grass,
+/area/deathmatch)
+"HQ" = (
+/obj/structure/frame/machine/secured,
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"HY" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/molten_object{
+	pixel_x = -11;
+	pixel_y = -5
+	},
+/obj/item/trash/can{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ib" = (
+/obj/structure/flora/bush/fullgrass,
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Id" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Iv" = (
+/obj/structure/fence/door/opened,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"IJ" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	dir = 4;
+	name = "Waffle Corporation"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"IO" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Astral Ace Baking Depot";
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4;
+	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Jb" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/sign/warning/explosives/alt/directional/north,
+/obj/structure/fluff/fake_camera{
+	dir = 10
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/deathmatch)
+"Je" = (
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"Jf" = (
+/obj/machinery/light/broken/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"Jj" = (
+/obj/machinery/light/no_nightlight/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Jr" = (
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Js" = (
+/obj/effect/decal/cleanable/glass{
+	pixel_x = -14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Jw" = (
+/obj/structure/mannequin/wood{
+	dir = 4
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"JC" = (
+/obj/structure/flora/bush/lavendergrass/style_3,
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"JI" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/scanner_gate/preset_guns{
+	dir = 4;
+	pixel_x = -10
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"JN" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"JO" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"JP" = (
+/obj/structure/flora/bush/sparsegrass/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"JR" = (
+/obj/structure/fence/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"JS" = (
+/obj/item/cigbutt,
+/obj/structure/sign/poster/contraband/d_day_promo/directional/south,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Kj" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/obj/item/grown/bananapeel,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ko" = (
+/obj/structure/flora/bush/sparsegrass/style_2{
+	pixel_x = 7
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Ks" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/gun/ballistic/automatic/m90/unrestricted,
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/obj/structure/closet/crate/secure/wafflecorp,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Kv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/tray,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Kx" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"KA" = (
+/obj/machinery/vending/donksnack,
+/obj/effect/mapping_helpers/broken_machine,
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"KK" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"KP" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4
+	},
+/obj/item/tank/internals/emergency_oxygen/empty{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/soda_cans/beer{
+	pixel_x = -3
+	},
+/obj/structure/closet/crate/trashcart,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"KR" = (
+/obj/structure/flora/bush{
+	pixel_y = -6;
+	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Le" = (
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ll" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "ghost";
+	paint_colour = "#EEDDEE";
+	pixel_x = 32;
+	pixel_y = -8
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Lp" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/structure/fence/end,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Lq" = (
+/obj/structure/flora/bush/fullgrass/style_2{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Lx" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/paper_bin,
+/obj/item/folder/blue{
+	pixel_x = 15;
+	pixel_y = 2
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"Lz" = (
+/obj/machinery/light/no_nightlight/directional/east,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"LD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"LE" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/pinata/syndie{
+	pixel_y = 10
+	},
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"LH" = (
+/obj/structure/sign/poster/contraband/waffle_corp_rifles/directional/north,
+/obj/structure/flora/bush/fullgrass/style_3{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/grass,
+/area/deathmatch)
+"LI" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/flora/bush/generic{
+	pixel_x = 4;
+	pixel_y = 16
+	},
+/obj/structure/flora/bush{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"LQ" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"LS" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"LW" = (
+/obj/structure/flora/bush/grassy/style_2{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"LY" = (
+/obj/effect/decal/cleanable/wrapping,
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Md" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Ml" = (
+/obj/structure/flora/bush/fullgrass/style_2{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/structure/flora/bush/leavy/style_2{
+	pixel_y = -10;
+	pixel_x = 7
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Mn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen,
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"Mp" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"My" = (
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"MB" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ME" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"MM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"MU" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"MZ" = (
+/obj/machinery/light/no_nightlight/directional/east,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Nc" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Nh" = (
+/obj/structure/fluff/fake_camera{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ni" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/indestructible,
+/area/deathmatch)
+"Nk" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/computer/pod/old/syndicate{
+	dir = 8
+	},
+/turf/open/indestructible/vault,
+/area/deathmatch)
+"Nm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_x = -12;
+	pixel_y = -14
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Nt" = (
+/obj/effect/decal/cleanable/rubble,
+/obj/structure/flora/bush/lavendergrass/style_4,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Nx" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"NH" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bargain Thrifts"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"NK" = (
+/obj/item/reagent_containers/condiment/vegetable_oil,
+/obj/structure/sign/poster/contraband/donut_corp/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"NQ" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/item/food/rofflewaffles{
+	pixel_y = 5
+	},
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"NU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4;
+	desc = "A shutter with a thick see-through polycarbonate window. Its motor is no longer functional, leaving it stuck open."
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"NZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/trashcart,
+/obj/item/trash/tray,
+/obj/item/bikehorn/rubberducky{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/bikehorn,
+/obj/item/grown/bananapeel{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ob" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Od" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Oh" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 9;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = -1;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = -10;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_y = 2;
+	pixel_x = -9
+	},
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Oi" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Oo" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Or" = (
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Os" = (
+/obj/structure/hedge/opaque,
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Oz" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/grass,
+/area/deathmatch)
+"OA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"OC" = (
+/obj/structure/closet/crate/large,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/no_nightlight/directional/north,
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/item/documents/syndicate,
+/obj/item/barcode,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/paper{
+	default_raw_text = "146.3 <br> TRIANGLE CIRCLE TRIANGLE SQUARE SQUARE TRIANGLE";
+	name = "codesheet"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"OG" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"OK" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"OR" = (
+/obj/effect/light_emitter/fake_outdoors,
+/obj/item/bodypart/arm/left/skeleton{
+	pixel_x = -12;
+	pixel_y = -9
+	},
+/obj/structure/fence,
+/turf/open/floor/grass,
+/area/deathmatch)
+"OS" = (
+/obj/effect/light_emitter/fake_outdoors,
+/obj/item/toy/basketball,
+/turf/open/floor/grass,
+/area/deathmatch)
+"OY" = (
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Pg" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"Ph" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"Pj" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 8
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"Pn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Po" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "corgi";
+	pixel_y = -32;
+	paint_colour = "#b39b43"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"PA" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/deathmatch)
+"PB" = (
+/obj/structure/closet/crate,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/effect/turf_decal/bot_white,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"PL" = (
+/obj/structure/showcase/machinery/tv/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/no_nightlight/directional/north,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"PP" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Nanotrasen";
+	dir = 4
+	},
+/area/deathmatch)
+"PZ" = (
+/obj/structure/fence{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/rubble{
+	pixel_x = 5
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Qh" = (
+/obj/structure/closet/crate/secure/syndicrate,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Qi" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/fluff/fake_camera{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"Qp" = (
+/obj/structure/sign/poster/ripped/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/candy{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Qv" = (
+/obj/structure/closet/crate/secure/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard,
+/obj/item/reagent_containers/cup/glass/bottle/ritual_wine{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/cigarette/rollie/nicotine{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/broken_bottle{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"QC" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"QR" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Ri" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/table/reinforced,
+/turf/open/indestructible,
+/area/deathmatch)
+"Rl" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"RA" = (
+/obj/structure/flora/bush/grassy/style_3,
+/turf/open/floor/grass,
+/area/deathmatch)
+"RD" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"RE" = (
+/obj/structure/fence/cut/large{
+	dir = 8
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"RJ" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"RO" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	name = "Hab Block 609"
+	},
+/area/deathmatch)
+"RP" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch)
+"RS" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/brown/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/obj/item/reagent_containers/condiment/peanut_butter{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/condiment/peanut_butter{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/peanut_butter{
+	pixel_x = 5
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"RU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"RW" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/item/cigbutt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Sg" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/table/reinforced,
+/obj/item/food/waffles,
+/turf/open/indestructible,
+/area/deathmatch)
+"Sl" = (
+/obj/effect/decal/cleanable/wrapping,
+/obj/item/gun/ballistic/automatic/m90/unrestricted{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/structure/fluff/fake_camera,
+/obj/machinery/button/door/invisible_tripwire{
+	suicide_pact_id = "waffle_gun_factory";
+	suicide_pact = 1;
+	uses_remaining = 1;
+	sync_doors = 0;
+	id = "waffle_gun_factory"
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Sq" = (
+/obj/item/plate/oven_tray,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"SD" = (
+/obj/structure/flora/bush/generic/style_3{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/floor/grass,
+/area/deathmatch)
+"SL" = (
+/obj/structure/mecha_wreckage/ripley/deathripley{
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"SM" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 5
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ST" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/fluff/fake_camera,
+/turf/open/indestructible,
+/area/deathmatch)
+"SV" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"SW" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"SY" = (
+/obj/structure/flora/bush/fullgrass/style_2,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Te" = (
+/obj/item/food/waffles{
+	pixel_y = 14
+	},
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"Th" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Tr" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"Tt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/cheesie{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"TC" = (
+/obj/machinery/door/poddoor/shutters/window/indestructible{
+	id = "waffle_gun_factory"
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"TG" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 1
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"TK" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/structure/barricade/security/indestructible{
+	name = "police barrier";
+	desc = "The cops have stopped you going any further.";
+	proj_pass_rate = 60
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"TQ" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Ua" = (
+/obj/item/trash/tray,
+/obj/item/broken_bottle{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/badrecipe/moldy{
+	pixel_x = 4;
+	pixel_y = -15
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Uo" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	name = "Hab Block 610"
+	},
+/area/deathmatch)
+"Ur" = (
+/obj/structure/closet/cardboard,
+/mob/living/basic/snake/banded,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ux" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
+	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"UB" = (
+/obj/structure/shipping_container/gorlex,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"UH" = (
+/turf/open/floor/grass,
+/area/deathmatch)
+"UI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/broken/directional/north,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "stickman";
+	pixel_y = 32;
+	paint_colour = "#EEDDEE"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"UO" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"US" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"UU" = (
+/obj/effect/turf_decal/box/corners,
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Va" = (
+/obj/structure/closet/crate/secure/wafflecorp,
+/obj/item/gun/ballistic/revolver/syndicate{
+	pixel_y = 8
+	},
+/obj/item/gun/ballistic/automatic/c20r,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Vd" = (
+/obj/structure/flora/bush{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/ammo_casing/a357/spent{
+	dir = 6;
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Vi" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair/sofa/corp/left,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"Vk" = (
+/obj/machinery/deepfryer,
+/obj/structure/noticeboard/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"Vp" = (
+/obj/item/trash/popcorn/salty{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/effect/light_emitter/fake_outdoors,
+/obj/item/cigbutt,
+/obj/structure/flora/bush{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"Vq" = (
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Vr" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"VG" = (
+/obj/machinery/light/no_nightlight/directional/south,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"VN" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"VV" = (
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -11
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"We" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/hedge/opaque,
+/obj/structure/hedge/opaque,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Wq" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium/indestructible,
+/turf/open/floor/plating/reinforced,
+/area/deathmatch)
+"Wt" = (
+/obj/structure/table/reinforced/ctf,
+/obj/machinery/door/poddoor/shutters/indestructible{
+	dir = 4
+	},
+/turf/open/floor/plating/reinforced,
+/area/deathmatch)
+"WC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/frame/machine/secured,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"WI" = (
+/turf/closed/indestructible/fakedoor/maintenance{
+	name = "EMPLOYEES ONLY"
+	},
+/area/deathmatch)
+"WK" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"WN" = (
+/obj/structure/closet/crate/bin,
+/obj/machinery/puzzle/button/directional/east{
+	id = "waffle_arg"
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"WO" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/structure/fluff/fake_camera,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"WS" = (
+/obj/structure/billboard/waffle_corp,
+/obj/structure/flora/bush/fullgrass,
+/turf/open/floor/grass,
+/area/deathmatch)
+"WW" = (
+/obj/structure/flora/rock,
+/turf/open/floor/grass,
+/area/deathmatch)
+"WX" = (
+/obj/machinery/disposal/bin,
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Xd" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/item/chair{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible,
+/area/deathmatch)
+"Xe" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"Xi" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/rubble,
+/turf/open/floor/grass,
+/area/deathmatch)
+"Xs" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/mineral/stacking_machine,
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Xu" = (
+/obj/structure/hedge/opaque,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "revolution";
+	pixel_y = -32;
+	paint_colour = "#e91f1f"
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"XB" = (
+/obj/structure/flora/bush/lavendergrass/style_4{
+	pixel_x = -6
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"XE" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"XF" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"XM" = (
+/obj/effect/decal/cleanable/plastic,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"XP" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"XR" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch)
+"XX" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Yp" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fence{
+	dir = 1
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Ys" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard{
+	pixel_y = 4;
+	pixel_x = -11
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch)
+"Yx" = (
+/obj/structure/flora/tree/jungle/style_5,
+/turf/open/floor/grass,
+/area/deathmatch)
+"YI" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/trash/tray,
+/obj/item/fish/boned{
+	name = "\improper Fishbones";
+	desc = "A spooky fish-shaped skeleton. It's animated by either dark magic or dark technology, it's impossible to tell which.";
+	gender = "male"
+	},
+/obj/item/clothing/glasses/eyepatch{
+	pixel_x = -5
+	},
+/obj/structure/closet/crate/secure/trashcart,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"YJ" = (
+/obj/effect/turf_decal/trimline/brown/end{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"YO" = (
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/siding/wideplating_new/dark,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "uboa";
+	pixel_y = -32;
+	paint_colour = "#291933"
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"YX" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"YY" = (
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/structure/fence,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Zd" = (
+/obj/item/food/waffles,
+/obj/structure/table/reinforced,
+/turf/open/indestructible/large/textured,
+/area/deathmatch)
+"Zl" = (
+/obj/item/trash/boritos/purple{
+	pixel_x = 12
+	},
+/obj/structure/fence,
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Zn" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/siding/wideplating_new/dark{
+	dir = 1
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Zp" = (
+/obj/machinery/conveyor/auto{
+	armor_type = /datum/armor/immune
+	},
+/obj/machinery/door/poddoor/shutters/indestructible/preopen{
+	id = "waffle_gun_factory"
+	},
+/obj/structure/plasticflaps/opaque{
+	armor_type = /datum/armor/immune
+	},
+/turf/open/indestructible/plating/reinforced,
+/area/deathmatch)
+"Zq" = (
+/obj/structure/closet/crate/secure/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/storage/bag/trash/filled{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/storage/bag/trash/filled{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/clothing/accessory/clown_enjoyer_pin{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/food/bubblegum{
+	pixel_x = -5
+	},
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"Zu" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"Zw" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+"ZA" = (
+/obj/structure/flora/bush/pointy/style_3{
+	pixel_x = 15
+	},
+/turf/open/floor/grass,
+/area/deathmatch)
+"ZB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/indestructible/stone,
+/area/deathmatch)
+"ZP" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/window/indestructible/preopen{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"ZQ" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Hab Block 611"
+	},
+/area/deathmatch)
+"ZS" = (
+/obj/structure/mystery_box/guns,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ZX" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/asphalt/outdoors,
+/area/deathmatch)
+"ZY" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/storage/toolbox/guncase/sword_and_board{
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/deathmatch)
+
+(1,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(2,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+Wt
+Wt
+BB
+eg
+BB
+BB
+tn
+or
+or
+or
+or
+tn
+Od
+Nm
+zM
+gb
+OY
+OY
+vc
+cg
+XX
+Jr
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(3,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+qd
+Tt
+Jr
+Jr
+at
+BB
+tn
+or
+or
+or
+or
+tn
+Od
+qP
+zM
+kp
+OY
+OY
+OY
+Or
+tu
+yj
+TG
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(4,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+ia
+Ed
+qP
+qP
+Jr
+GJ
+RO
+tn
+or
+or
+or
+or
+tn
+zA
+Jr
+zM
+kp
+kp
+OY
+OY
+OY
+xJ
+OY
+TG
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(5,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+BB
+Qp
+Jr
+Jr
+BB
+BB
+tn
+or
+or
+or
+or
+tn
+BB
+Jr
+zM
+gQ
+OY
+OY
+OY
+Id
+Gb
+wA
+TG
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(6,1,1) = {"
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+BB
+dB
+Jr
+Po
+BB
+tn
+tn
+or
+or
+or
+or
+tn
+BT
+Jr
+zM
+OY
+OY
+OY
+OY
+cg
+Kj
+oB
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(7,1,1) = {"
+tn
+OY
+OY
+cg
+Jr
+Gd
+vv
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+tn
+BB
+FW
+FW
+DI
+BB
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+BB
+Jr
+Zn
+sd
+sd
+sd
+rs
+jZ
+Jr
+ti
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(8,1,1) = {"
+tn
+OY
+OY
+cg
+Jr
+Gd
+vv
+tn
+vv
+wF
+vv
+QR
+QR
+vv
+vv
+tn
+or
+or
+or
+or
+or
+or
+tn
+BB
+vy
+Jr
+vh
+BB
+BB
+BB
+BB
+lP
+BB
+BB
+BB
+BB
+Le
+zM
+Md
+OY
+OY
+OY
+cg
+Jr
+qP
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(9,1,1) = {"
+tn
+OY
+vc
+cg
+Jr
+We
+vv
+tn
+vv
+Ad
+cw
+AK
+AK
+Xe
+vv
+tn
+or
+or
+or
+or
+or
+or
+tn
+BB
+UI
+Jr
+zv
+BB
+tp
+uA
+Jf
+uA
+pF
+uA
+yc
+BB
+Jr
+zM
+OY
+OY
+OY
+OY
+cg
+Jr
+Jr
+sZ
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(10,1,1) = {"
+tn
+OY
+OY
+cg
+qP
+ft
+vv
+wF
+vv
+Jj
+nP
+YJ
+hX
+vC
+vv
+tn
+or
+or
+or
+or
+or
+or
+tn
+Uo
+sP
+Jr
+jc
+BB
+XR
+uA
+Dt
+hf
+ec
+uA
+LE
+BB
+FW
+fR
+Ck
+Ck
+Ck
+Ck
+Oo
+FW
+FW
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(11,1,1) = {"
+tn
+OY
+OY
+cg
+Jr
+yZ
+Wq
+qi
+vv
+Ad
+GQ
+Oh
+RS
+ET
+vv
+tn
+tn
+or
+or
+or
+or
+or
+tn
+BB
+me
+pa
+qP
+NH
+uA
+uA
+uA
+uA
+wg
+uA
+uA
+kZ
+Jr
+zM
+gQ
+OY
+mt
+OY
+cg
+Jr
+Hi
+vv
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+"}
+(12,1,1) = {"
+tn
+OY
+gQ
+cg
+Jr
+Gd
+vv
+vv
+vv
+IO
+NU
+az
+Hs
+Hs
+vv
+BB
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+BB
+HY
+pa
+Fi
+BB
+Jw
+Dp
+kf
+XE
+XE
+Dp
+by
+BB
+aW
+zM
+OY
+OY
+FS
+OY
+cg
+Jr
+MB
+vv
+vv
+lP
+vv
+vv
+vv
+tn
+or
+or
+or
+or
+or
+or
+"}
+(13,1,1) = {"
+tn
+OY
+kp
+cg
+Jr
+Gd
+Gd
+Gd
+yF
+pa
+Jr
+Js
+Jr
+Jr
+JS
+BB
+BB
+BB
+bw
+BB
+BB
+BB
+BB
+BB
+Jr
+LQ
+NZ
+BB
+BB
+pd
+oi
+Ys
+ku
+oi
+BB
+BB
+Jr
+zM
+OY
+OY
+OY
+OY
+cg
+Jr
+Jr
+kY
+qF
+ka
+ex
+oK
+vv
+tn
+or
+or
+or
+or
+or
+or
+"}
+(14,1,1) = {"
+tn
+OY
+kp
+ul
+Jr
+Jr
+Jr
+Jr
+FW
+Jr
+Jr
+Jr
+Jr
+LQ
+pa
+Jr
+tf
+gK
+Jr
+gc
+CD
+iv
+Jr
+qP
+qP
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+rx
+Jr
+Jr
+pa
+Jr
+Jr
+zM
+OY
+OY
+OY
+OY
+cg
+Jr
+Jr
+kY
+aC
+rv
+ka
+ka
+vv
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+"}
+(15,1,1) = {"
+tn
+OY
+OY
+Vq
+yj
+yj
+yj
+yj
+TK
+Pn
+yj
+AR
+RW
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+GW
+yj
+AR
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+GW
+yj
+ps
+OY
+OY
+OY
+OY
+cg
+qP
+Jr
+kY
+Lx
+nw
+ka
+nw
+vv
+tn
+tn
+vv
+Ur
+Jr
+vv
+tn
+"}
+(16,1,1) = {"
+tn
+OY
+OY
+OY
+OY
+kp
+OY
+OY
+Ck
+BE
+OY
+sd
+dX
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+kp
+OY
+OY
+OY
+sd
+OY
+OY
+OY
+XM
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+vc
+OY
+cg
+qP
+Jr
+vv
+kX
+Nk
+fd
+Nk
+vv
+tn
+tn
+vv
+Jr
+Jr
+Gx
+tn
+"}
+(17,1,1) = {"
+tn
+OY
+gQ
+OY
+OY
+OY
+gQ
+OY
+Ck
+OY
+gQ
+sd
+OY
+OY
+gQ
+OY
+OY
+OY
+OY
+OY
+gQ
+OY
+OY
+OY
+sd
+OY
+gQ
+OY
+OY
+OY
+OY
+OY
+gQ
+OY
+OY
+OY
+OY
+OY
+gQ
+OY
+OY
+OY
+cg
+Jr
+Hi
+vv
+vv
+kY
+kY
+kY
+vv
+PP
+vv
+vv
+ed
+Jr
+vv
+tn
+"}
+(18,1,1) = {"
+tn
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+Ck
+OY
+OY
+sd
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+sd
+OY
+OY
+OY
+OY
+OY
+Ob
+OY
+OY
+OY
+OY
+vc
+OY
+OY
+OY
+OY
+OY
+OY
+cg
+Jr
+LQ
+Jr
+Jr
+Jr
+Jr
+Hi
+Jr
+FW
+Jr
+fQ
+Jr
+rG
+vv
+tn
+"}
+(19,1,1) = {"
+tn
+kb
+US
+OY
+Id
+kb
+kb
+kb
+tK
+kb
+kb
+bP
+UO
+kb
+pR
+kb
+kb
+kb
+kb
+kb
+SW
+OY
+Id
+kb
+bP
+kb
+kb
+hr
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+kb
+jB
+kb
+uW
+qo
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+FW
+Jr
+Jr
+Jr
+Jr
+vv
+tn
+"}
+(20,1,1) = {"
+tn
+WN
+cF
+wT
+OA
+KA
+Fs
+qP
+FW
+Nh
+gD
+Jr
+Jr
+uI
+MM
+hk
+lW
+hk
+tb
+Lp
+zM
+OY
+cg
+XX
+Jr
+Jr
+Zu
+PZ
+hk
+fX
+MM
+hk
+hk
+hk
+lW
+Bv
+lW
+hk
+uo
+hk
+MM
+MM
+lW
+Yp
+HH
+WS
+nT
+UH
+RA
+Jr
+Dc
+vv
+vv
+vv
+lp
+lp
+vv
+tn
+"}
+(21,1,1) = {"
+tn
+vv
+lp
+lp
+lp
+vv
+BB
+BB
+BB
+BB
+SY
+Jr
+Ml
+oV
+va
+qo
+Jr
+Jr
+Jr
+Jr
+zM
+OY
+Nc
+Jr
+Jr
+Jr
+ff
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+RU
+qP
+qP
+qP
+Jr
+qn
+aa
+YI
+KP
+CS
+aF
+Oi
+Dj
+bW
+UH
+UH
+Jr
+WW
+vv
+tn
+tn
+tn
+tn
+tn
+tn
+"}
+(22,1,1) = {"
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+BB
+Bl
+pa
+aG
+oV
+VV
+Jr
+Jr
+Jr
+Jr
+Jr
+zM
+vc
+Vq
+yj
+AR
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+yj
+LS
+kp
+Ua
+vF
+Zq
+tr
+Oi
+UH
+la
+UH
+KR
+Jr
+bX
+vv
+tn
+or
+or
+or
+or
+or
+"}
+(23,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+UH
+Jr
+FZ
+oV
+pa
+Jr
+Jr
+LQ
+Jr
+Jr
+zM
+OY
+OY
+OY
+sd
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+kp
+OY
+pI
+ZS
+OY
+sb
+Oi
+bZ
+iT
+UH
+yE
+qP
+Jr
+aR
+tn
+or
+or
+or
+or
+or
+"}
+(24,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+Vp
+Jr
+UH
+oV
+GC
+Jr
+Jr
+pa
+Jr
+Jr
+Rl
+kb
+kb
+kb
+bP
+kb
+ju
+OY
+OY
+OY
+OY
+OY
+gQ
+OY
+Id
+SW
+OY
+OY
+gQ
+OY
+OY
+OY
+OY
+zJ
+Bx
+kT
+Ko
+ZA
+UH
+Hi
+JC
+vv
+tn
+or
+or
+or
+or
+or
+"}
+(25,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+ZQ
+Jr
+LQ
+Jr
+Iv
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
+qP
+nf
+Jr
+Jr
+Jr
+kv
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+sN
+OY
+KK
+OY
+ZX
+OY
+lS
+OY
+wH
+RE
+UH
+Gp
+Xi
+UH
+Jr
+XB
+TG
+tn
+or
+or
+or
+or
+or
+"}
+(26,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+my
+LI
+Eh
+yx
+Kv
+Jr
+Jr
+Jr
+Jr
+pa
+Fg
+GX
+jj
+cv
+kh
+gL
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+Oi
+Vd
+UH
+UH
+UH
+Jr
+nx
+TG
+tn
+or
+or
+or
+or
+or
+"}
+(27,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+BB
+vv
+vv
+vk
+vk
+vv
+ZP
+IJ
+vv
+vk
+vk
+vk
+vk
+vk
+vv
+vv
+kQ
+sN
+OY
+KK
+ZX
+OY
+OY
+lS
+kp
+eE
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+Oi
+qL
+UH
+rQ
+JP
+Jr
+gl
+TG
+tn
+or
+or
+or
+or
+or
+"}
+(28,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+vv
+ym
+sR
+NQ
+VN
+JI
+be
+sm
+ot
+Gs
+hH
+hH
+yX
+uu
+vv
+oj
+iH
+OY
+qt
+OY
+OY
+OY
+BI
+kp
+XP
+MU
+OY
+qt
+mt
+OY
+OY
+WK
+OY
+eP
+Oi
+yE
+UH
+Hc
+xD
+iL
+XB
+TG
+tn
+or
+or
+or
+or
+or
+"}
+(29,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+Qi
+fV
+fV
+fV
+fV
+fV
+fV
+Vi
+Ri
+Ri
+Sg
+OG
+PA
+Mn
+Nt
+sN
+OY
+KK
+XM
+OY
+OY
+lS
+kp
+eE
+sN
+OY
+tX
+BE
+OY
+OY
+lS
+OY
+eE
+Oi
+pn
+UH
+UH
+UH
+Jr
+bW
+vv
+tn
+or
+or
+or
+or
+or
+"}
+(30,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+zW
+fV
+gA
+fV
+fV
+fV
+fV
+RD
+fV
+fV
+fV
+fV
+Ni
+Mn
+kR
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+MU
+OY
+qt
+BE
+OY
+OY
+WK
+kp
+eP
+Oi
+UH
+UH
+UH
+UH
+qP
+JP
+BB
+tn
+or
+or
+or
+or
+or
+"}
+(31,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+XF
+fV
+Ri
+fV
+fV
+hB
+fV
+sh
+Ri
+Ph
+sh
+Ri
+VN
+Mn
+EH
+Fp
+Ob
+KK
+OY
+OY
+OY
+nW
+OY
+eE
+sN
+OY
+KK
+gQ
+OY
+OY
+lS
+OY
+eE
+Bx
+Eh
+ba
+pn
+BL
+Hi
+qP
+ea
+tn
+tn
+or
+or
+or
+or
+"}
+(32,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+Tr
+fV
+jw
+fV
+fV
+fV
+fV
+fV
+fV
+fV
+fV
+fV
+Tr
+Mn
+UH
+MU
+OY
+Bf
+OY
+OY
+OY
+WK
+OY
+eP
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+Oi
+uH
+UH
+av
+UH
+Jr
+Ux
+BB
+BB
+tn
+or
+or
+or
+or
+"}
+(33,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+CU
+fV
+fV
+fV
+vB
+RP
+fV
+fV
+sh
+Ri
+Ph
+sT
+sO
+Mn
+UH
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+Vr
+Oi
+yE
+BL
+UH
+JP
+Jr
+CP
+Gd
+BB
+tn
+or
+or
+or
+or
+"}
+(34,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+nj
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+fV
+fV
+fV
+XF
+Mn
+Lq
+fD
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+MU
+BE
+qt
+OY
+OY
+OY
+WK
+OY
+GZ
+Oi
+UH
+UH
+UH
+aT
+Jr
+pr
+Xu
+BB
+tn
+or
+or
+or
+or
+"}
+(35,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+PL
+Zd
+Te
+Je
+Je
+Je
+Je
+Pg
+Ni
+fV
+fV
+fV
+Df
+Mn
+uF
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+Gj
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+RE
+UH
+UH
+jQ
+UH
+qP
+Qv
+FQ
+BB
+tn
+or
+or
+or
+or
+"}
+(36,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+pl
+dZ
+nL
+nL
+nL
+nL
+nL
+vH
+Ni
+Ni
+kz
+rE
+mf
+vv
+Fo
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+Ob
+eP
+MU
+OY
+qt
+OY
+OY
+OY
+WK
+OY
+eP
+RE
+qf
+Ee
+SD
+lk
+FP
+oA
+os
+BB
+tn
+or
+or
+or
+or
+"}
+(37,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+Vk
+YX
+nL
+nL
+nL
+nL
+nL
+bR
+Ni
+ST
+vv
+vv
+vv
+vv
+Oz
+sN
+ZX
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+EO
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+BB
+BB
+BB
+BB
+BB
+lP
+BB
+BB
+BB
+tn
+or
+or
+or
+or
+"}
+(38,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+NK
+tC
+Sq
+aB
+eN
+Lz
+nL
+so
+Ni
+Xd
+vv
+tn
+tn
+vv
+UH
+TQ
+OY
+Mp
+OY
+OY
+OY
+nN
+OY
+eP
+MU
+OY
+qt
+gQ
+OY
+kp
+BI
+OY
+YO
+BB
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+"}
+(39,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+vv
+Pj
+Pj
+vv
+lP
+vv
+vv
+vv
+lP
+vv
+vv
+tn
+tn
+vv
+Ib
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+sN
+OY
+KK
+OY
+OY
+kp
+ME
+OY
+eE
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(40,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+vv
+LH
+MU
+OY
+qt
+vc
+OY
+OY
+WK
+OY
+eP
+MU
+OY
+qt
+OY
+vc
+OY
+WK
+OY
+eP
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(41,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+Yx
+sN
+OY
+KK
+OY
+OY
+OY
+lS
+OY
+eE
+sN
+OY
+KK
+OY
+OY
+OY
+AD
+OY
+Kx
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(42,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+pP
+HM
+Ey
+kb
+AG
+SW
+OY
+Id
+tx
+kb
+pW
+SM
+kb
+AG
+ln
+UO
+UO
+iW
+Hb
+rc
+BB
+tn
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(43,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+vv
+vv
+vv
+vv
+hS
+lL
+Ao
+pz
+zM
+OY
+cg
+JR
+YY
+Zl
+Ao
+AH
+BB
+BB
+BB
+FX
+oZ
+sD
+BB
+BB
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(44,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+vv
+vv
+vv
+lP
+vv
+As
+kA
+vv
+tW
+GH
+Nx
+yj
+ps
+OY
+Vq
+RJ
+yj
+ew
+yj
+Nx
+BB
+UB
+lX
+pK
+EC
+pK
+CH
+qX
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(45,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+Jb
+dE
+Va
+Ad
+fG
+Ad
+Qh
+vv
+WK
+OY
+qt
+OY
+OY
+OY
+OY
+OY
+OY
+WK
+OY
+qt
+BB
+lX
+lm
+lX
+lX
+lX
+lX
+OK
+WI
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(46,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+pP
+se
+MZ
+Ad
+Ad
+Ad
+Ad
+VG
+vv
+lS
+OY
+KK
+OY
+OY
+OY
+OY
+OY
+kp
+lS
+OY
+KK
+BB
+lX
+lm
+HQ
+lX
+EC
+lX
+lX
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(47,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+eM
+vv
+py
+jk
+dS
+Ad
+Sl
+vv
+sJ
+OY
+qt
+OY
+OY
+OY
+OY
+OY
+kp
+BI
+OY
+UU
+BB
+AV
+lX
+SL
+Cv
+lX
+lX
+zX
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(48,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+fo
+vv
+dj
+LY
+DZ
+Ad
+De
+TC
+OY
+OY
+kp
+OY
+ZX
+OY
+OY
+OY
+OY
+kp
+OY
+gQ
+fg
+lX
+lX
+lX
+lX
+lX
+lX
+Xs
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(49,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+iZ
+vv
+ha
+PB
+jk
+Ad
+De
+TC
+dL
+kp
+kp
+kp
+OY
+OY
+OY
+OY
+OY
+OY
+OY
+lv
+fg
+lX
+lX
+lX
+lm
+lm
+Fe
+sQ
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(50,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+bk
+vv
+jk
+ji
+jk
+Ad
+De
+TC
+kb
+fx
+hr
+kb
+kb
+kb
+kb
+wA
+kb
+kb
+kb
+kb
+fg
+lm
+lX
+lX
+lX
+lX
+QC
+zo
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(51,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+aA
+vv
+Fy
+zO
+nq
+LD
+Ks
+vv
+yG
+ZB
+ZB
+ZB
+ZB
+cU
+ZB
+ZB
+ZB
+ZB
+ZB
+ve
+BB
+OC
+oL
+Th
+mz
+WC
+fw
+Hk
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(52,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+ob
+oy
+ob
+oy
+ob
+fE
+ob
+Zp
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+iP
+rn
+My
+My
+My
+nV
+My
+My
+BW
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(53,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+tD
+ol
+ol
+Hg
+ol
+ol
+JN
+FN
+mQ
+fu
+mQ
+OR
+BB
+BB
+BB
+BB
+BB
+BB
+BB
+BB
+BB
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(54,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+pP
+AO
+qH
+Zw
+sz
+LW
+OS
+Ea
+rp
+FF
+ik
+uB
+vv
+vv
+sz
+sz
+vv
+vv
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(55,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+vv
+vv
+lP
+vv
+Gd
+Ll
+zd
+Gd
+Gd
+Os
+Gd
+vv
+gE
+cy
+wm
+WO
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(56,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+BB
+BB
+BB
+BB
+BB
+BB
+BB
+BB
+vv
+jG
+AU
+ZY
+qc
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(57,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+SV
+WX
+JO
+AO
+Zw
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(58,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+vv
+vv
+lP
+vv
+lP
+vv
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}
+(59,1,1) = {"
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+tn
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+or
+"}

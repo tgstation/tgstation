@@ -166,6 +166,14 @@
 	if(deploy_message)
 		visible_message(span_warning("[src] deploys!"))
 
+/obj/structure/barricade/security/indestructible
+	name = "prototype security barrier"
+	desc = "A deployable barrier. Provides total cover in fire fights, and is almost entirely indestructible."
+	proj_pass_rate = 0
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	armor_type = /datum/armor/immune
+	deploy_time = 0
+	deploy_message = FALSE
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
