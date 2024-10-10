@@ -147,6 +147,9 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
+	use_energy(idle_power_usage)
+	atmos_heat_counter++
+
 /obj/machinery/telecomms/message_server/update_overlays()
 	. = ..()
 

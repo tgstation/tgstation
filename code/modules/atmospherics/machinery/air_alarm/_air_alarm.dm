@@ -56,6 +56,10 @@
 
 	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
 	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_tcomms_room to adjust alarm threshold for extreme cold temperatures.
+	var/tlv_tcomms_room = FALSE
+	/// Used for air alarm helper called tlv_rd_server_room to adjust alarm threshold for extreme cold temperatures.
+	var/tlv_rd_server_room = FALSE
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
@@ -161,6 +165,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/power_change()
 	check_enviroment()
+	update_appearance()
 	return ..()
 
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
@@ -691,6 +696,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
 	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
 
+///Used for air alarm telecomms tlv helper, which only sets room temperature thresholds and ignores everything else
+/obj/machinery/airalarm/proc/set_tlv_tcomms_room()
+	tlv_collection["temperature"] = new /datum/tlv/tcomms_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
+///Used for air alarm rd server tlv helper, which only sets room temperature thresholds and ignores everything else
+/obj/machinery/airalarm/proc/set_tlv_rd_server_room()
+	tlv_collection["temperature"] = new /datum/tlv/rd_server_room_temperature
+	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
+
 ///Used for air alarm no tlv helper, which removes alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
@@ -702,7 +723,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
 	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
-	if(isnull(sensor))
+	if(!sensor)
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
 	if(connected_sensor)

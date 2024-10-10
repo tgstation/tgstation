@@ -36,6 +36,9 @@
 		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
+	use_energy(idle_power_usage)
+	atmos_heat_counter++
+
 #undef COMPRESSION_AMOUNT_COMPRESSING
 #undef COMPRESSION_AMOUNT_DECOMPRESSING
 
@@ -61,5 +64,3 @@
 	network = "tcommsat"
 	autolinkers = list("processor4")
 
-/obj/machinery/telecomms/processor/preset_one/birdstation
-	name = "Processor"

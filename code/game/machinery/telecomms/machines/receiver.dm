@@ -31,6 +31,7 @@
 		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
 	use_energy(idle_power_usage)
+	atmos_heat_counter++
 
 /**
  * Checks whether the signal can be received by this receiver or not, based on
@@ -74,6 +75,3 @@
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
-/obj/machinery/telecomms/receiver/preset_left/birdstation
-	name = "Receiver"
-	freq_listening = list()

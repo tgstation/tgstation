@@ -227,3 +227,6 @@
 
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/floor/engine/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

@@ -62,6 +62,7 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 	use_energy(idle_power_usage)
+	atmos_heat_counter++
 
 #undef MAX_LOG_ENTRIES
 
@@ -129,7 +130,3 @@
 	id = "Security Server"
 	freq_listening = list(FREQ_SECURITY)
 	autolinkers = list("security")
-
-/obj/machinery/telecomms/server/presets/common/birdstation/Initialize(mapload)
-	. = ..()
-	freq_listening = list()
