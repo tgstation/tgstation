@@ -1,0 +1,52 @@
+name: Discord Discussions
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - labeled
+      - closed
+    branches:
+      - master
+
+concurrency:
+  group: "discord-discussions-${{ github.head_ref }}"
+  cancel-in-progress: true
+
+jobs:
+  manage-discord-discussion:
+    name: Manage Discord Discussion
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'Discord Discussion')
+    steps:
+      - name: Fail if vars.DISCORD_DISCUSSIONS_CHANNEL_ID is unset
+        if: ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID == '' }}
+        run: |
+          echo "vars.DISCORD_DISCUSSIONS_CHANNEL_ID (${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }}) must be set to use this label!"
+          exit 1
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          dotnet-quality: ga
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Tgstation.DiscordDiscussions
+        run: dotnet publish -c Release -o discord_discussions_bins tools/Tgstation.DiscordDiscussions/Tgstation.DiscordDiscussions.csproj
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Run Tgstation.DiscordDiscussions
+        run: dotnet discord_discussions_bins/Tgstation.DiscordDiscussions.dll ${{ steps.app-token-generation.outputs.token }} ${{ github.repository_owner }} ${{ github.event.repository.name }} ${{ github.event.pull_request.number }} ${{ github.event.pull_request.merged && 'merged' || github.event.pull_request.state }} ${{ secrets.DISCORD_DISCUSSIONS_TOKEN }} ${{ vars.DISCORD_DISCUSSIONS_CHANNEL_ID }} ${{ github.event.action == 'reopened' && 'true' || 'false' }} ${{ vars.DISCORD_JOIN_LINK }}
+        env:
+          GITHUB_PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
