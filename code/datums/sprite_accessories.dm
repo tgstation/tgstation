@@ -1801,7 +1801,12 @@
 	name = "Fox"
 	icon = 'icons/mob/human/fox_features.dmi'
 	color_src = HAIR_COLOR
-	icon_state = "fox"
+
+/datum/sprite_accessory/tails/fox/default
+	icon_state = "default"
+
+/datum/sprite_accessory/tails/fox/dark
+	icon_state = "dark"
 
 /datum/sprite_accessory/tails/monkey
 
