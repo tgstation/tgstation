@@ -192,4 +192,5 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SNORE_MALE "snore_male"
 #define SFX_PLASTIC_BOTTLE_LIQUID_SLOSH "plastic_bottle_liquid_slosh"
 #define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
 #define SFX_PIG_OINK "pig_oink"
