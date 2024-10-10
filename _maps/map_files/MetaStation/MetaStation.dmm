@@ -8621,7 +8621,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/item/storage/test_tube_rack/full,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "dfh" = (
@@ -11724,29 +11723,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
 "ejD" = (
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/structure/table,
-/obj/item/stack/wrapping_paper,
-/obj/item/paper_bin/carbon{
-	pixel_y = 8;
-	pixel_x = 6
-	},
-/obj/item/pen/fourcolor{
-	pixel_y = 8;
-	pixel_x = 6
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/wrapping,
-/obj/item/sales_tagger{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/dest_tagger{
-	pixel_x = -2;
-	pixel_y = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "ejF" = (
@@ -12272,9 +12252,10 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/cargo/request{
+/obj/structure/chair{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "esd" = (
@@ -16791,20 +16772,9 @@
 /area/station/science/ordnance/storage)
 "gav" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/table,
-/obj/machinery/photocopier{
-	pixel_y = 9
-	},
-/obj/item/paper/fluff{
-	pixel_y = 8;
-	pixel_x = 4;
-	default_raw_text = "Next CT to photocopy their ass is getting thrown under the shuttle. I'm serious here.<br>- QM";
-	name = "note"
-	},
 /obj/machinery/newscaster/directional/east,
-/obj/item/pen/screwdriver{
-	pixel_x = 1;
-	pixel_y = 11
+/obj/machinery/modular_computer/preset/cargochat/cargo{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -30340,14 +30310,6 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/west,
-/obj/item/dest_tagger{
-	pixel_x = -9;
-	pixel_y = 12
-	},
-/obj/item/hand_labeler_refill{
-	pixel_x = -11;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -31446,9 +31408,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "lcI" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 1
-	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -38067,9 +38026,6 @@
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "nxI" = (
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
 /obj/structure/railing{
 	dir = 4
 	},
@@ -39507,6 +39463,23 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
+"nZW" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/pen/fourcolor{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/stack/wrapping_paper,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/turf/open/floor/iron,
+/area/station/cargo/sorting)
 "oac" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -41858,9 +41831,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "oRx" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
@@ -42828,8 +42798,8 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/disposalpipe/segment,
-/obj/structure/tank_holder/extinguisher,
 /obj/structure/sign/clock/directional/north,
+/obj/machinery/photocopier,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pke" = (
@@ -45828,7 +45798,6 @@
 /area/station/construction/storage_wing)
 "qme" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/item/storage/test_tube_rack/full,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
 "qmf" = (
@@ -49105,10 +49074,6 @@
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 6
 	},
-/obj/effect/landmark/start/assistant,
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
@@ -49884,8 +49849,12 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/modular_computer/preset/cargochat/cargo,
 /obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Cargo Office";
+	name = "Cargo Office Fax Machine"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rGm" = (
@@ -50312,6 +50281,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "rNA" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rNI" = (
@@ -50649,6 +50619,8 @@
 "rUd" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/warning,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rUo" = (
@@ -51382,7 +51354,10 @@
 "sgZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window,
+/obj/machinery/computer/cargo/request{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "shl" = (
@@ -57887,13 +57862,13 @@
 /area/station/security/mechbay)
 "uuW" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Cargo Office";
-	name = "Cargo Office Fax Machine"
-	},
 /obj/item/papercutter{
-	pixel_x = 8;
-	pixel_y = 8
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/dest_tagger{
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -58082,28 +58057,27 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/table,
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/item/stamp/granted{
-	pixel_x = -7;
-	pixel_y = 4
-	},
 /obj/item/stamp/denied{
 	pixel_x = -7;
-	pixel_y = 15
+	pixel_y = 10
+	},
+/obj/item/stamp/granted{
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 5;
-	pixel_y = 12
+	pixel_y = 5
 	},
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 5;
-	pixel_y = 24
+	pixel_y = 16
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -62962,6 +62936,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "wcf" = (
@@ -67906,6 +67881,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "xRR" = (
@@ -89489,7 +89465,7 @@ ryV
 mhM
 qCx
 cap
-wbW
+nZW
 wbW
 ygk
 hld
