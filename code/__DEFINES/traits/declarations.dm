@@ -1010,6 +1010,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
 ///This fish won't be killed when cooked.
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
+/**
+ * This fish has been fed teslium without the electrogenesis having trait.
+ * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
+ */
+#define TRAIT_FISH_ON_TESLIUM "fish_on_teslium"
+/// This fish has been fed growth serum or something and will grow 5 times faster, up to 50% weight and size gain when fed.
+#define TRAIT_FISH_QUICK_GROWTH "fish_quick_growth"
+/// This fish has been fed mutagen or something. Evolutions will have more than twice the probability
+#define TRAIT_FISH_MUTAGENIC "fish_mutagenic"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1086,6 +1095,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
+#define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 
 ///Deathmatch traits
 #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
@@ -1310,6 +1320,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
+
+///Trait which silences all chemical reactions in its container
+#define TRAIT_SILENT_REACTIONS "silent_reactions"
 
 /**
  *
