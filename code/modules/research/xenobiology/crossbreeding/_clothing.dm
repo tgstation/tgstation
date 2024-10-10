@@ -44,7 +44,6 @@ Slimecrossing Armor
 /obj/item/clothing/glasses/prism_glasses/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses_color, forced_glass_color)
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot & ITEM_SLOT_EYES)
@@ -150,6 +149,10 @@ Slimecrossing Armor
 	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
+
+/obj/item/clothing/suit/armor/heavy/adamantine/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
 	if((def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)) && prob(hit_reflect_chance))
