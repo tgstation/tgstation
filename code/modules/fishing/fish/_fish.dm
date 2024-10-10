@@ -1323,7 +1323,7 @@
 
 /obj/item/fish/get_infusion_entry()
 	var/amphibious = required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS)
-	var/list/possible_infusions = list(/datum/infuser_entry/fish)
+	var/list/possible_infusions = list()
 	for(var/type in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[type]
 		if(!trait.infusion_entry)
@@ -1337,6 +1337,7 @@
 	for(var/key in possible_infusions)
 		var/datum/infuser_entry/infusion = GLOB.infuser_entries[key]
 		entry.output_organs |= infusion.output_organs
+	return entry
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
