@@ -14,7 +14,7 @@
 			continue
 		LAZYADDASSOC(possible_appearances, types, image(icon = ANDROID_BODYPARTS_DMI, icon_state = "[types]_[body_zone]"))
 	//pick
-	var/new_type = show_radial_menu(user, src, possible_appearances, require_near = TRUE, radius = 48)
+	var/new_type = show_radial_menu(user, src, possible_appearances, require_near = TRUE, tooltips = TRUE, radius = 48)
 	if(!new_type)
 		return NONE
 	//weld
@@ -625,7 +625,7 @@
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_head"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 	head_flags = HEAD_MONITOR_FACE
 
 /obj/item/bodypart/head/robot/android/xmg_one/on_adding(mob/living/carbon/new_owner)
@@ -640,31 +640,31 @@
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_chest"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 
 /obj/item/bodypart/arm/right/robot/android/xmg_one
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_r_arm"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 
 /obj/item/bodypart/arm/left/robot/android/xmg_one
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_l_arm"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 
 /obj/item/bodypart/leg/right/robot/android/xmg_one
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_r_leg"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 
 /obj/item/bodypart/leg/left/robot/android/xmg_one
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "xmg_one_r_leg"
-	limb_id = "xmg_one_one"
+	limb_id = "xmg_one"
 
 ///
 // Xion Manufacturing Group 2.0
