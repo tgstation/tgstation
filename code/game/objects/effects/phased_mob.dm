@@ -11,11 +11,15 @@
 	var/movedelay = 0
 	/// The speed of movement while jaunted
 	var/movespeed = 0
+	/// The spell instance that generated this effect
+	var/datum/action/cooldown/spell/jaunt/jaunt_spell
 
-/obj/effect/dummy/phased_mob/Initialize(mapload, atom/movable/jaunter)
+/obj/effect/dummy/phased_mob/Initialize(mapload, atom/movable/jaunter, datum/action/cooldown/spell/jaunt/jaunt_spell)
 	. = ..()
 	if(jaunter)
 		set_jaunter(jaunter)
+	if(jaunt_spell)
+		src.jaunt_spell = jaunt_spell
 
 /// Sets [new_jaunter] as our jaunter, forcemoves them into our contents
 /obj/effect/dummy/phased_mob/proc/set_jaunter(atom/movable/new_jaunter)

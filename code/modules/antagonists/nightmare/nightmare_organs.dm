@@ -11,8 +11,8 @@
 	icon_state = "brain-x-d"
 	applied_status = /datum/status_effect/shadow_regeneration/nightmare
 	///Our associated shadow jaunt spell, for all nightmares
-	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
-	///Our associated terrorize spell, for antagonist nightmares
+	var/datum/action/cooldown/spell/jaunt/shadow_step/our_jaunt
+	///Our associated terrorize spell, for also all nightmares
 	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
 /obj/item/organ/internal/brain/shadow/nightmare/on_mob_insert(mob/living/carbon/brain_owner)
@@ -25,9 +25,8 @@
 	our_jaunt = new(brain_owner)
 	our_jaunt.Grant(brain_owner)
 
-	if(brain_owner.mind?.has_antag_datum(/datum/antagonist/nightmare)) //Only a TRUE NIGHTMARE is worthy of using this ability
-		terrorize_spell = new(src)
-		terrorize_spell.Grant(brain_owner)
+	terrorize_spell = new(src)
+	terrorize_spell.Grant(brain_owner)
 
 /obj/item/organ/internal/brain/shadow/nightmare/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()

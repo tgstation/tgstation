@@ -3,7 +3,7 @@
 
 /datum/unit_test/shadow_jaunt/Run()
 	var/mob/living/carbon/human/jaunter = allocate(/mob/living/carbon/human/consistent)
-	var/datum/action/cooldown/spell/jaunt/shadow_walk/walk = allocate(/datum/action/cooldown/spell/jaunt/shadow_walk, jaunter)
+	var/datum/action/cooldown/spell/jaunt/shadow_step/jaunt/walk = allocate(/datum/action/cooldown/spell/jaunt/shadow_step/jaunt, jaunter)
 	walk.Grant(jaunter)
 
 	var/turf/jaunt_turf = jaunter.loc
