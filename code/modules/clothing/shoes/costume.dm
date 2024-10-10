@@ -61,12 +61,6 @@
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = null
 
-/obj/item/clothing/shoes/swagshoes
-	name = "swag shoes"
-	desc = "They got me for my foams!"
-	icon_state = "SwagShoes"
-	inhand_icon_state = null
-
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
