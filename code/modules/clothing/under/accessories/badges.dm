@@ -198,7 +198,7 @@
 		return
 
 	// We already register context regardless in Initialize.
-	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+	RegisterSignal(src, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(on_click_ctrl_shift_reskin))
 
 /obj/item/clothing/accessory/deaf_pin
 	name = "deaf personnel pin"

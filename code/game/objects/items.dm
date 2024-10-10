@@ -305,7 +305,7 @@
 	if(current_skin && !(obj_flags & INFINITE_RESKIN))
 		return
 
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Reskin"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/click_ctrl(mob/user)

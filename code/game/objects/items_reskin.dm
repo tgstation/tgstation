@@ -1,5 +1,5 @@
 /// Called when alt clicked and the item has unique reskin options
-/obj/item/proc/on_click_alt_reskin(datum/source, mob/user)
+/obj/item/proc/on_click_ctrl_shift_reskin(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
@@ -38,7 +38,7 @@
 	if(!check_setup_reskinning())
 		return
 
-	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+	RegisterSignal(src, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(on_click_ctrl_shift_reskin))
 	register_context()
 
 /**
