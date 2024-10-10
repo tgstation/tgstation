@@ -602,3 +602,4 @@
 
 	. += span_notice("<i>On the back of the chip, you see a list of songs:</i>")
 	. += span_smallnotice("<i>[jointext(songs, "<br>")]</i>")
+
