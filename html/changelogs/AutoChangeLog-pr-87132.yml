@@ -1,0 +1,4 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - bugfix: "Server Hopping should fade your screen into black, as it should."
