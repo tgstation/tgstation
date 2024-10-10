@@ -37,9 +37,19 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
+/datum/emote/sloth
+	mob_type_allowed_typecache = /mob/living/basic/sloth
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/sloth/smile_slow
+	key = "ssmile"
+	key_third_person = "slowlysmiles"
+	message = "slowly smiles!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/sloth/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "slowly smiles!")
+	AddElement(/datum/element/pet_bonus, "ssmile")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber)

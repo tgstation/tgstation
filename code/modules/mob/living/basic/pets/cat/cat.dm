@@ -86,7 +86,7 @@
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, null, /datum/mood_event/pet_animal, "purr")
+	AddElement(/datum/element/pet_bonus, "purr", /datum/mood_event/pet_animal)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
