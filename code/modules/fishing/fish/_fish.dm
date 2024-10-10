@@ -713,12 +713,10 @@
 	if(status != FISH_ALIVE)
 		return
 
-	///If one of the reagent with REAGENT_FISH_EFFECTS is also our food reagent this is set to TRUE
+	///If one of the reagent with fish effects is also our food reagent this is set to TRUE
 	var/already_fed = FALSE
 	for(var/datum/reagent/reagent as anything in fed_reagents.reagent_list)
-		if(!(reagent.chemical_flags & REAGENT_FISH_EFFECTS) || !fed_reagents.has_reagent(reagent.type, 0.1))
-			continue
-		if(!reagent.used_on_fish(src))
+		if(!fed_reagents.has_reagent(reagent.type, 0.1) || !reagent.used_on_fish(src))
 			continue
 		fed_reagents.remove_reagent(reagent.type, 0.1)
 		if(reagent.type == food)

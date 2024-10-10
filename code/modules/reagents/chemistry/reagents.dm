@@ -282,7 +282,7 @@ Primarily used in reagents/reaction_agents
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
 
-///Called when feeding a fish, if the reagent has the REAGENT_FISH_EFFECTS flag. If TRUE is returned, a portion of reagent will be consumed.
+///Called when feeding a fish. If TRUE is returned, a portion of reagent will be consumed.
 /datum/reagent/proc/used_on_fish(obj/item/fish/fish)
 	return FALSE
 
