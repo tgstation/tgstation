@@ -324,7 +324,7 @@
 	living_manipulator_lmfao.put_in_active_hand(im_item)
 	if(!type_to_use.attackby(im_item, living_manipulator_lmfao))
 		im_item.melee_attack_chain(living_manipulator_lmfao, type_to_use)
-	src.do_attack_animation(drop_turf)
+	do_attack_animation(drop_turf)
 	manipulator_hand.do_attack_animation(drop_turf)
 	if(LAZYLEN(living_manipulator_lmfao.do_afters))
 		RegisterSignal(living_manipulator_lmfao, COMSIG_DO_AFTER_ENDED, PROC_REF(manipulator_finish_do_after))
@@ -403,7 +403,7 @@
 	var/mob/living/carbon/human/abstract_living = new /mob/living/carbon/human(get_turf(src))
 	abstract_living.icon_state = "blank"
 	abstract_living.alpha = 0
-	abstract_living.name = src.name
+	abstract_living.name = name
 	return abstract_living
 
 /// Proc called when we changing item interaction mode.
@@ -520,10 +520,9 @@
 			change_mode()
 			return TRUE
 		if("add_filter")
-			var/mob/user = ui.user
-			if(!isliving(user))
+			var/mob/living/living_user = ui.user
+			if(!isliving(living_user))
 				return FALSE
-			var/mob/living/living_user = user
 			var/obj/give_obj_back = filter_obj?.resolve()
 			if(give_obj_back)
 				give_obj_back.forceMove(get_turf(src))
