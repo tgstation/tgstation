@@ -34,10 +34,9 @@
 ///
 // Overwrites
 ///
+// head
 /obj/item/bodypart/head/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/head/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -47,10 +46,9 @@
 	. = ..()
 	. += span_blue("<b>Right-click</b> with a welding-tool to alter the limb appearance.")
 
+// chest
 /obj/item/bodypart/chest/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/chest/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -63,10 +61,9 @@
 /obj/item/bodypart/chest/robot/android/check_limbs()
 	return
 
+// right arm
 /obj/item/bodypart/arm/right/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/arm/right/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -76,11 +73,9 @@
 	. = ..()
 	. += span_blue("<b>Right-click</b> with a welding-tool to alter the limb appearance.")
 
-
+// left arm
 /obj/item/bodypart/arm/left/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/arm/left/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -90,10 +85,9 @@
 	. = ..()
 	. += span_blue("<b>Right-click</b> with a welding-tool to alter the limb appearance.")
 
+// right leg
 /obj/item/bodypart/leg/right/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/leg/right/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -103,10 +97,9 @@
 	. = ..()
 	. += span_blue("<b>Right-click</b> with a welding-tool to alter the limb appearance.")
 
+// left leg
 /obj/item/bodypart/leg/left/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
-	brute_modifier = 1
-	burn_modifier = 1
 
 /obj/item/bodypart/leg/left/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

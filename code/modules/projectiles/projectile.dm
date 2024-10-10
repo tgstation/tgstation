@@ -331,13 +331,13 @@
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
 				// DOPPLER ADDITION START
-	//			if(hasblueblood(living_target))
-	//				new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(target_turf, splatter_dir)
-				if(isalien(living_target) || hasgreenblood(living_target))
+				if(hasblueblood(living_target))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(target_turf, splatter_dir)
+				if(hasgreenblood(living_target))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(target_turf, splatter_dir)
-				// DOPPLER ADDITION END
-				else
+				if(!hasblueblood(living_target) && !hasgreenblood(living_target))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
+				// DOPPLER ADDITION END
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
 			if (hit_bodypart?.biological_state & (BIO_ROBOTIC)) // DOPPLER EDIT - old code: else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))

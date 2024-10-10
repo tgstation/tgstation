@@ -1,3 +1,12 @@
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "unsecure_moderate"
+
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unsecure_severe"
+
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "unsecure_critical"
+
 /datum/status_effect/wound/electrical_damage/slash/moderate
 	id = "electric_slash_moderate"
 

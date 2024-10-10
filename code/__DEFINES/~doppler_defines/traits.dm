@@ -49,3 +49,10 @@
 #define REAGENT_TRAIT "reagent"
 /// Trait that changes the ending effects of twitch leaving your system
 #define TRAIT_TWITCH_ADAPTED "twitch_adapted"
+
+////
+// Wounds
+////
+/// When someone is fixing electrical damage, this trait is set and prevents the wound from worsening.
+// We use a trait to avoid erronous setting of a variable to false if two people are repairing and one stops.
+#define TRAIT_ELECTRICAL_DAMAGE_REPAIRING "electrical_damage_repairing"

@@ -1444,6 +1444,8 @@
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter
 	if(hasgreenblood(src))
 		our_splatter = new /obj/effect/decal/cleanable/blood/hitsplatter/green(loc)
+	if(hasblueblood(src))
+		our_splatter = new /obj/effect/decal/cleanable/blood/hitsplatter/blue(loc)
 	else
 		our_splatter = new /obj/effect/decal/cleanable/blood/hitsplatter(loc)
 	// DOPPLER EDIT CHANGE END

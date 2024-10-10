@@ -385,7 +385,9 @@
 			// DOPPLER EDIT CHANGE START - ORIGINAL: drop = new(T, get_static_viruses())
 			if(hasgreenblood(src))
 				drop = new /obj/effect/decal/cleanable/blood/drip/green(T, get_static_viruses())
-			else
+			if(hasblueblood(src))
+				drop = new /obj/effect/decal/cleanable/blood/drip/blue(T, get_static_viruses())
+			if(!hasblueblood(src) && !hasgreenblood(src))
 				drop = new(T, get_static_viruses())
 			// DOPPLER EDIT END
 			drop.transfer_mob_blood_dna(src)
@@ -397,7 +399,9 @@
 		// DOPPLER EDIT CHANGE START - ORIGINAL: B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 		if(hasgreenblood(src))
 			B = new /obj/effect/decal/cleanable/blood/green/splatter(T, get_static_viruses())
-		else
+		if(hasblueblood(src))
+			B = new /obj/effect/decal/cleanable/blood/blue/splatter(T, get_static_viruses())
+		if(!hasblueblood(src) && !hasgreenblood(src))
 			B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 		// DOPPLER EDIT END
 	if(QDELETED(B)) //Give it up
