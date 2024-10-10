@@ -1,6 +1,8 @@
 /// This component applies tint to clothing when its exposed to pepperspray, used in /obj/item/clothing/mask/gas.
 
 /datum/component/clothing_dirt
+	/// Mob wearing the clothing
+	var/mob/living/carbon/wearer
 
 	/// Amount of dirt stacks on the clothing
 	var/dirtiness = 0
@@ -18,7 +20,6 @@
 
 /datum/component/clothing_dirt/UnregisterFromParent()
 	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 	clothing.tint -= dirtiness
 	clothing = null
 	if (!isnull(wearer))
@@ -38,7 +39,6 @@
 /datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 	if (!(slot & clothing.slot_flags))
 		return
 	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
@@ -47,8 +47,6 @@
 
 /datum/component/clothing_dirt/proc/on_drop()
 	SIGNAL_HANDLER
-	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 	if(!isnull(wearer))
 		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 		wearer = null
@@ -61,8 +59,6 @@
 
 /datum/component/clothing_dirt/proc/on_expose(atom/target, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
-	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 
 	if(!isnull(wearer))
 		if(QDELETED(wearer) || is_protected())
@@ -72,6 +68,7 @@
 	if(isnull(pepper))
 		return
 
+	var/obj/item/clothing/clothing = parent
 	if (methods & (TOUCH | VAPOR))
 		clothing.tint -= dirtiness
 		dirtiness = min(dirtiness + round(reagents[pepper] / 5), 3)
@@ -80,14 +77,11 @@
 			wearer.update_tint()
 
 /datum/component/clothing_dirt/proc/is_protected()
-	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 	return wearer.head && (wearer.head.flags_cover & PEPPERPROOF)
 
 /datum/component/clothing_dirt/proc/on_clean(datum/target, clean_types)
 	SIGNAL_HANDLER
 	var/obj/item/clothing/clothing = parent
-	var/mob/living/carbon/wearer = clothing.loc
 	if (clean_types & (CLEAN_WASH|CLEAN_SCRUB))
 		clothing.tint -= dirtiness
 		dirtiness = 0
