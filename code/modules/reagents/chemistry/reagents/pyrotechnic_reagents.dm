@@ -302,7 +302,7 @@
 	taste_description = "charged metal"
 	self_consuming = TRUE
 	var/shock_timer = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_FISH_EFFECTS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/teslium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

@@ -46,7 +46,7 @@
 	taste_description = "slime"
 	taste_mult = 0.9
 	ph = 2.3
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_FISH_EFFECTS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -338,7 +338,7 @@
 /datum/reagent/toxin/mindbreaker/fish/on_new(data)
 	. = ..()
 	if(holder?.my_atom)
-		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, TRAIT_FOOD_BBQ_GRILLED), PROC_REF(on_atom_cooked))
+		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_atom_cooked))
 
 /datum/reagent/toxin/mindbreaker/fish/proc/on_atom_cooked(datum/source, cooking_time)
 	SIGNAL_HANDLER

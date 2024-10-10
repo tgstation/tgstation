@@ -560,7 +560,7 @@
 	color = "#009CA8" // rgb: 0, 156, 168
 	taste_description = "cherry" // by popular demand
 	var/lube_kind = TURF_WET_LUBE ///What kind of slipperiness gets added to turfs
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_FISH_EFFECTS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/lube/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -2440,7 +2440,7 @@
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 	var/current_size = RESIZE_DEFAULT_SIZE
 	taste_description = "bitterness" // apparently what viagra tastes like
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_FISH_EFFECTS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/growthserum/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
