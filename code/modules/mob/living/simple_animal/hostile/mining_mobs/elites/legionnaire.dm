@@ -7,12 +7,12 @@
  * # Legionnaire
  *
  * A towering skeleton, embodying the power of Legion.
- * As it's health gets lower, the head does more damage.
- * It's attacks are as follows:
+ * As its health gets lower, the head does more damage.
+ * Its attacks are as follows:
  * - Charges at the target after a telegraph, throwing them across the arena should it connect.
- * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
+ * - Legionnaire's head detaches, attacking as its own entity.  Has abilities of its own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
  * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
- * - Spews a cloud of smoke from it's maw, wherever said maw is.
+ * - Spews a cloud of smoke from its maw, wherever said maw is.
  * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
  */
 
@@ -31,13 +31,13 @@
 	melee_damage_upper = 35
 	attack_verb_continuous = "slashes its arms at"
 	attack_verb_simple = "slash your arms at"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
 	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
-	death_sound = 'sound/magic/curse.ogg'
+	death_sound = 'sound/effects/magic/curse.ogg'
 	death_message = "'s arms reach out before it falls apart onto the floor, lifeless."
 	loot_drop = /obj/item/crusher_trophy/legionnaire_spine
 
@@ -55,25 +55,25 @@
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
 	button_icon_state = "legionnaire_charge"
-	chosen_message = "<span class='boldwarning'>You will attempt to grab your opponent and throw them.</span>"
+	chosen_message = span_boldwarning("You will attempt to grab your opponent and throw them.")
 	chosen_attack_num = LEGIONNAIRE_CHARGE
 
 /datum/action/innate/elite_attack/head_detach
 	name = "Release Head"
 	button_icon_state = "head_detach"
-	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
+	chosen_message = span_boldwarning("You will now detach your head or kill it if it is already released.")
 	chosen_attack_num = HEAD_DETACH
 
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
-	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
+	chosen_message = span_boldwarning("You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.")
 	chosen_attack_num = BONFIRE_TELEPORT
 
 /datum/action/innate/elite_attack/spew_smoke
 	name = "Spew Smoke"
 	button_icon_state = "spew_smoke"
-	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
+	chosen_message = span_boldwarning("Your head will spew smoke in an area, wherever it may be.")
 	chosen_attack_num = SPEW_SMOKE
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()
@@ -121,7 +121,7 @@
 	for(var/i in 1 to 6)
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
-	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
+	playsound(src,'sound/effects/magic/demon_attack1.ogg', 200, 1)
 	visible_message(span_boldwarning("[src] prepares to charge!"))
 	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 0.4 SECONDS)
 
@@ -200,7 +200,7 @@
 		var/obj/structure/legionnaire_bonfire/newpile = new /obj/structure/legionnaire_bonfire(loc)
 		mypile = newpile
 		mypile.myowner = src
-		playsound(get_turf(src),'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(get_turf(src),'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] summons a bonfire on [get_turf(src)]!"))
 		return
 	else
@@ -210,8 +210,8 @@
 			mypile.take_damage(100)
 			mypile = null
 			return
-		playsound(pileturf,'sound/items/fultext_deploy.ogg', 200, 1)
-		playsound(legionturf,'sound/items/fultext_deploy.ogg', 200, 1)
+		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
+		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
 		forceMove(pileturf)
 		visible_message(span_boldwarning("[src] forms from the bonfire!"))
@@ -249,7 +249,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
-	attack_sound = 'sound/effects/curse1.ogg'
+	attack_sound = 'sound/effects/curse/curse1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "simply misses"
 	speed = 0

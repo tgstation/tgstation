@@ -26,7 +26,7 @@
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
@@ -42,7 +42,7 @@
 
 /mob/living/basic/bear/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -90,16 +90,16 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
+	status_flags = CANPUSH
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"
 	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."
-	status_flags = CANPUSH | GODMODE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/bear/snow/Initialize(mapload)
+/mob/living/basic/bear/snow/ancient/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/basic/bear/russian
 	name = "combat bear"
@@ -135,7 +135,7 @@
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses its false life and collapses!"
 	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
-	attack_sound = 'sound/weapons/slap.ogg'
+	attack_sound = 'sound/items/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"

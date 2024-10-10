@@ -1,5 +1,5 @@
 /obj/item/seeds/garlic
-	name = "pack of garlic seeds"
+	name = "garlic seed pack"
 	desc = "A packet of extremely pungent seeds."
 	icon_state = "seed-garlic"
 	species = "garlic"

@@ -21,16 +21,13 @@
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!panel_open)
-		return
-	if(!multitool_check_buffer(user, tool))
-		return
+		return NONE
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
-
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.
 /obj/machinery/botpad/proc/launch(mob/living/user)
@@ -52,7 +49,7 @@
 	podspawn(list(
 		"target" = get_turf(src),
 		"path" = /obj/structure/closet/supplypod/botpod,
-		"style" = STYLE_SEETHROUGH,
+		"style" = /datum/pod_style/seethrough,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
 
@@ -70,7 +67,7 @@
 	simple_bot.call_bot(src,  get_turf(src))
 
 /obj/structure/closet/supplypod/botpod
-	style = STYLE_SEETHROUGH
+	style = /datum/pod_style/seethrough
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=FALSE)

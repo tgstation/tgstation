@@ -27,7 +27,7 @@
 	heatmod = 1.5
 	payday_modifier = 1.0
 	breathid = GAS_PLASMA
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
@@ -62,6 +62,7 @@
 		/datum/outfit/syndicate/reinforcement/mi13 = /datum/outfit/syndicate/reinforcement/plasmaman,
 		/datum/outfit/syndicate/reinforcement/waffle = /datum/outfit/syndicate/reinforcement/plasmaman,
 		/datum/outfit/syndicate/support = /datum/outfit/syndicate/support/plasmaman,
+		/datum/outfit/syndicate/full/loneop = /datum/outfit/syndicate/full/plasmaman/loneop,
 	)
 
 	/// If the bones themselves are burning clothes won't help you much
@@ -89,7 +90,7 @@
 	var/can_burn = FALSE
 	if(!isclothing(H.w_uniform) || !(H.w_uniform.clothing_flags & PLASMAMAN_PREVENT_IGNITION))
 		can_burn = TRUE
-	else if(!isclothing(H.gloves))
+	else if(!isclothing(H.gloves) || H.num_hands < H.default_num_hands) //If you dont have the other glove then the suit isnt really sealed is it?
 		can_burn = TRUE
 	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE
@@ -131,9 +132,9 @@
 
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
-		'sound/voice/plasmaman/plasmeme_scream_1.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
-		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
+		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
 	)
 
 /datum/species/plasmaman/get_physical_attributes()

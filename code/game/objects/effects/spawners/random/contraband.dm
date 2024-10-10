@@ -25,6 +25,12 @@
 		/obj/item/reagent_containers/pill/maintenance = 5,
 	)
 
+
+/obj/effect/spawner/random/contraband/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/made = ..()
+	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
+	return made
+
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"
 	desc = "Where'd ya find this?"

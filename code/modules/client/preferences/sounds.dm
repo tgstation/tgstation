@@ -7,6 +7,11 @@
 /datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
 	client.update_ambience_pref(value)
 
+/datum/preference/toggle/sound_breathing
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_breathing"
+	savefile_identifier = PREFERENCE_PLAYER
+
 /// Controls hearing announcement sounds
 /datum/preference/toggle/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -110,4 +115,10 @@
 /datum/preference/toggle/sound_elevator
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_elevator"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/// Controls hearing radio noise
+/datum/preference/toggle/radio_noise
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER

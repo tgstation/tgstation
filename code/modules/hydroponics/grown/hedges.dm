@@ -1,5 +1,5 @@
 /obj/item/seeds/shrub
-	name = "pack of shrub seeds"
+	name = "shrub seed pack"
 	desc = "These seeds grow into hedge shrubs."
 	icon_state = "seed-shrub"
 	species = "shrub"

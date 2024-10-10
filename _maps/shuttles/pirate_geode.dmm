@@ -430,8 +430,7 @@
 "vY" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 8;
-	x_offset = 10;
-	y_offset = 5
+	x_offset = -8
 	},
 /obj/effect/turf_decal/weather/dirt{
 	dir = 3
@@ -487,7 +486,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "yz" = (
 /obj/structure/flora/lunar_plant/style_3,
@@ -838,7 +837,7 @@
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Pr" = (
 /obj/structure/table/wood,

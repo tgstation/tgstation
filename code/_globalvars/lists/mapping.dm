@@ -132,9 +132,6 @@ GLOBAL_LIST_EMPTY(bar_areas)
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
 
-/// Away missions
-GLOBAL_LIST_EMPTY(vr_spawnpoints)
-
 /// Just a list of all the area objects in the game
 /// Note, areas can have duplicate types
 GLOBAL_LIST_EMPTY(areas)

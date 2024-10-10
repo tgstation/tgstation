@@ -4,7 +4,7 @@
 	icon = 'icons/obj/railings.dmi'
 	icon_state = "railing"
 	flags_1 = ON_BORDER_1
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
@@ -25,16 +25,28 @@
 	energy = 100
 	bomb = 10
 
+/obj/structure/railing/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
 	icon_state = "railing_corner"
 	density = FALSE
 	climbable = FALSE
 
+/obj/structure/railing/corner/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner/end //end of a segment of railing without making a loop
 	icon_state = "railing_end"
 
+/obj/structure/railing/corner/end/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/railing/corner/end/flip //same as above but flipped around
 	icon_state = "railing_end_flip"
+
+/obj/structure/railing/corner/end/flip/unbreakable
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -89,6 +101,10 @@
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
+	if(resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, span_warning("You try to cut apart the railing, but it's too hard!"))
+		I.play_tool_sound(src, 100)
+		return TRUE
 	to_chat(user, span_warning("You cut apart the railing."))
 	I.play_tool_sound(src, 100)
 	deconstruct()
@@ -155,6 +171,7 @@
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)
 	. = ..()
@@ -167,7 +184,6 @@
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
 	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
-	plane = (direction & NORTH) ? GAME_PLANE : initial(plane)
 
 
 /obj/structure/railing/corner/end/wooden_fence

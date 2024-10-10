@@ -7,7 +7,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_domain"
 
-	sound = 'sound/magic/cosmic_expansion.ogg'
+	sound = 'sound/effects/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 

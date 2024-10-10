@@ -1,6 +1,4 @@
 import { filter, sort } from 'common/collections';
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
 import {
   Button,
@@ -10,6 +8,8 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { BooleanLike, classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

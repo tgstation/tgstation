@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
+	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
 /obj/structure/fluff/fake_camera
@@ -78,15 +78,15 @@
 	desc = /obj/machinery/atmospherics/components/unary/vent_scrubber::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_scrubber::icon
 	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
-	plane = FLOOR_PLANE
+	plane = /obj/machinery/atmospherics/components/unary/vent_scrubber::plane
 	icon_state = "scrub_on"
 
 /obj/structure/fluff/fake_vent
 	name = /obj/machinery/atmospherics/components/unary/vent_pump::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_pump::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_pump::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
-	plane = FLOOR_PLANE
+	layer = /obj/machinery/atmospherics/components/unary/vent_pump::layer
+	plane = /obj/machinery/atmospherics/components/unary/vent_pump::plane
 	icon_state = "vent_out"
 
 /turf/open/mirage
@@ -159,7 +159,7 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	onstation_override = TRUE
+	all_products_free = TRUE
 
 /obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
 	return NONE
@@ -199,6 +199,6 @@
 	var/obj/structure/toilet/destination = pick(partners)
 	forceMove(destination)
 	destination.w_items += w_class
-	destination.contents += src
+	LAZYADD(destination.cistern_items, src)
 
 #undef CAFE_KEYCARD_TOILETS

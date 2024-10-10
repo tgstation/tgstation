@@ -58,7 +58,9 @@
 /area/shuttle/sbc_corvette)
 "ai" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
-	dir = 8
+	dir = 8;
+	y_offset = 0;
+	x_offset = -3
 	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -70,7 +72,10 @@
 	id_tag = "SBC_corvette_bolt";
 	name = "Syndicate Corvette Airlock"
 	},
-/obj/docking_port/mobile/syndicate_corvette,
+/obj/docking_port/mobile/syndicate_corvette{
+	preferred_direction = 1;
+	port_direction = 4
+	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -290,8 +295,7 @@
 /area/shuttle/sbc_corvette)
 "aO" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "SBC_corvette_blast";
-	layer = 3
+	id = "SBC_corvette_blast"
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,

@@ -43,7 +43,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 GLOBAL_LIST_EMPTY(player_list) //all mobs **with clients attached**.
 GLOBAL_LIST_EMPTY(keyloop_list) //as above but can be limited to boost performance
 GLOBAL_LIST_EMPTY(mob_list) //all mobs, including clientless
-GLOBAL_LIST_EMPTY(mob_directory) //mob_id -> mob
 GLOBAL_LIST_EMPTY(alive_mob_list) //all alive mobs, including clientless. Excludes /mob/dead/new_player
 GLOBAL_LIST_EMPTY(suicided_mob_list) //contains a list of all mobs that suicided, including their associated ghosts.
 GLOBAL_LIST_EMPTY(drones_list)
@@ -56,7 +55,6 @@ GLOBAL_LIST_EMPTY(mob_living_list) //all instances of /mob/living and subtypes
 GLOBAL_LIST_EMPTY(carbon_list) //all instances of /mob/living/carbon and subtypes, notably does not contain brains or simple animals
 GLOBAL_LIST_EMPTY(human_list) //all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(ai_list)
-GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
 GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
@@ -132,8 +130,6 @@ GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototyp
 	for(var/species_type in subtypesof(/datum/species))
 		species_list[species_type] = new species_type()
 	return species_list
-
-GLOBAL_LIST_EMPTY(sentient_disease_instances)
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 

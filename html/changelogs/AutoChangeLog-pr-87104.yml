@@ -1,0 +1,4 @@
+author: "Jewelry-x"
+delete-after: True
+changes:
+  - bugfix: "dead borgs no longer become invisible upon changing z level"

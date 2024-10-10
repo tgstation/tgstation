@@ -115,7 +115,7 @@
 /area/shuttle/escape/brig)
 "gW" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "hd" = (
@@ -750,7 +750,10 @@
 /obj/machinery/door/airlock/grunge{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/docking_port/mobile/emergency,
+/obj/docking_port/mobile/emergency{
+	port_direction = 4;
+	preferred_direction = 2
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "UR" = (

@@ -33,6 +33,9 @@
 ///keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
 
+///Pet customization settings saved for every client
+GLOBAL_LIST_EMPTY(customized_pets)
+
 //raptor defines
 
 #define RAPTOR_RED "Red"
@@ -70,5 +73,3 @@ GLOBAL_VAR_INIT(gutlunch_count, 0)
 #define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
 
 #define MAX_RAPTOR_POP 64
-
-

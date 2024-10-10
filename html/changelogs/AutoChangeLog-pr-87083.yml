@@ -1,0 +1,4 @@
+author: "StrangeWeirdKitten"
+delete-after: True
+changes:
+  - admin: "The Law Panel now properly logs and communicates law edits."

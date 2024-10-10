@@ -16,8 +16,8 @@
 	if(!view)
 		return list(0, 0)
 	var/list/view_info = getviewsize(view)
-	view_info[1] *= world.icon_size
-	view_info[2] *= world.icon_size
+	view_info[1] *= ICON_SIZE_X
+	view_info[2] *= ICON_SIZE_Y
 	return view_info
 
 /**

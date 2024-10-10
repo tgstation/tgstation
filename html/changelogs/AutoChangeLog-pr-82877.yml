@@ -1,9 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Heretics can now sacrifice Cultists for sweet loot."
-  - rscadd: "Cultists can now sacrifice Heretics for sick trinkets."
-  - rscdel: "Removed Bastard Blade from the game, code, and life"
-  - balance: "Aggressive Spread now rusts non-turfs next to you as well"
-  - balance: "Raise Construction cd raised to 7, now breaks rust walls as well, improved autoaim making it actually usable midfight"
-  - refactor: "Auto-aim code now works on any atoms if configured"

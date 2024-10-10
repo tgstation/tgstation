@@ -31,7 +31,7 @@
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 0.8 SECONDS
 	/// Instructions you can give to dogs
@@ -40,13 +40,20 @@
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
+		/datum/pet_command/perform_trick_sequence,
 		/datum/pet_command/point_targeting/attack/dog,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
 	)
+	///icon state of the collar we can wear
+	var/collar_icon_state
+	///icon state of our cult icon
+	var/cult_icon_state
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
+	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state)
 	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)

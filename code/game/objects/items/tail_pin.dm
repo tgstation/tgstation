@@ -7,14 +7,19 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
-	embedding = EMBED_HARMLESS
 	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pokes", "jabs", "pins the tail on")
 	attack_verb_simple = list("poke", "jab")
 	sharpness = SHARP_POINTY
 	max_integrity = 200
 	layer = CORGI_ASS_PIN_LAYER
+	embed_type = /datum/embed_data/corgi_pin
+
+/datum/embed_data/corgi_pin
+	pain_chance = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/poster/tail_board
 	name = "party game poster"
@@ -39,6 +44,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
 	var/list/modifiers = params2list(params)
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
-	I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-	I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+	I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+	I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 	return TRUE

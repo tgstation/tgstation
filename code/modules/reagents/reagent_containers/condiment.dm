@@ -368,6 +368,13 @@
 	list_reagents = list(/datum/reagent/consumable/grounding_solution = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/protein
+	name = "protein powder"
+	desc = "Fuel for your inner Hulk - because you can't spell 'swole' without 'whey'!"
+	icon_state = "protein"
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 40)
+	fill_icon_thresholds = null
+
 //technically condiment packs but they are non transparent
 
 /obj/item/reagent_containers/condiment/creamer

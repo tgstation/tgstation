@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "both engineers and roboticists may now access the controls of a firebot"

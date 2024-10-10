@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_QM = /obj/item/clothing/gloves/color/brown,
 		DYE_CAPTAIN = /obj/item/clothing/gloves/captain,
 		DYE_HOP = /obj/item/clothing/gloves/color/grey,
-		DYE_HOS = /obj/item/clothing/gloves/color/black,
+		DYE_HOS = /obj/item/clothing/gloves/color/black/security,
 		DYE_CE = /obj/item/clothing/gloves/chief_engineer,
 		DYE_RD = /obj/item/clothing/gloves/color/grey,
 		DYE_CMO = /obj/item/clothing/gloves/latex/nitrile,

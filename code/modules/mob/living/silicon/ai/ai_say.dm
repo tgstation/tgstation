@@ -18,12 +18,23 @@
 	return ..()
 
 /mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
 		to_chat(src, span_danger("Your radio transmitter is offline!"))
 		return FALSE
-	..()
+	. = ..()
+	if(.)
+		return .
+	if(message_mods[MODE_HEADSET])
+		if(radio)
+			radio.talk_into(src, message, , spans, language, message_mods)
+		return NOPASS
+	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+		if(radio)
+			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			return NOPASS
+	return FALSE
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
@@ -56,7 +67,7 @@
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	var/dat = {"
@@ -88,14 +99,20 @@
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
+	var/message = tgui_input_text(
+		src,
+		"WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'",
+		"Announcement",
+		src.last_announcement,
+		max_length = MAX_MESSAGE_LEN,
+	)
 
 	if(!message || announcing_vox > world.time)
 		return
 
 	last_announcement = message
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 
 	if(control_disabled)
