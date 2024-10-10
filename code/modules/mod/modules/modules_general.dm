@@ -675,10 +675,10 @@
 	return ..()
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
