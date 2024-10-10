@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "reagent containers now make sounds if there is liquid in them when picked up or dropped"
+  - sound: "fire extinguishers now make sounds when dropped or picked up"
