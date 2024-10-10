@@ -154,6 +154,4 @@
 
 /datum/action/cooldown/fishing_tip/Activate(atom/target_atom)
 	. = ..()
-	if(!.)
-		return
 	send_tip_of_the_round(owner, pick(GLOB.fishing_tips), source = "Ancient fishing wisdom")
