@@ -131,7 +131,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+/obj/item/chainsaw/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
 	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
