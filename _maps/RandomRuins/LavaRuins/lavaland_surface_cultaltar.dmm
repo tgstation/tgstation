@@ -64,7 +64,6 @@
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade/dagger,
 /obj/effect/step_trigger/sound_effect/lavaland_cult_altar,
-/obj/effect/step_trigger/lavaland_cult_altar/message,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
