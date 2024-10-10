@@ -27,14 +27,14 @@
 /obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ICLOTHING)
-		RegisterSignal(user, COMSIG_LIVING_IGNITED, PROC_REF(on_ignition))
-		on_ignition()
+		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED), PROC_REF(check_fire_state))
+		check_fire_state()
 
 /obj/item/clothing/under/plasmaman/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_IGNITED)
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED))
 
-/obj/item/clothing/under/plasmaman/proc/on_ignition(datum/source)
+/obj/item/clothing/under/plasmaman/proc/check_fire_state(datum/source)
 	SIGNAL_HANDLER
 
 	if (!ishuman(loc))
@@ -52,7 +52,7 @@
 	extinguishes_left -= 1
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
-	addtimer(CALLBACK(src, PROC_REF(on_ignition)), extinguish_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
