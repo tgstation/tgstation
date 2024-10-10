@@ -37,15 +37,15 @@
 	switch(start_side)
 		if(NORTH)
 			starty = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD) - distance_from_edge
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge),world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
 			startx = world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD) - distance_from_edge
 		if(SOUTH)
 			starty = (TRANSITIONEDGE + MAP_EDGE_PAD) + distance_from_edge
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxx-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD))
+			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge), world.maxy-(TRANSITIONEDGE + MAP_EDGE_PAD + distance_from_edge))
 			startx = (TRANSITIONEDGE + MAP_EDGE_PAD) + distance_from_edge
 	. = locate(startx, starty, Z)
 
