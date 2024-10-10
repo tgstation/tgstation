@@ -999,6 +999,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
+#define TRAIT_FLIPPING "flipping"
 
 /// This limb can't be torn open anymore
 #define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure"

@@ -164,6 +164,10 @@
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 	var/power_throw = 0
+	if(HAS_TRAIT(src, TRAIT_SPINNING) || HAS_TRAIT(src, TRAIT_FLIPPING))
+		to_chat(src, span_notice("You put your ENTIRE BODY into the throw!"))
+		src.adjustStaminaLoss(35)
+		power_throw++
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
 	if(HAS_TRAIT(src, TRAIT_DWARF))

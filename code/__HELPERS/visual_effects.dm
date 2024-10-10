@@ -80,6 +80,10 @@
  * * parallel: whether the animation calls have the ANIMATION_PARALLEL flag, necessary for it to run alongside concurrent animations.
  */
 /atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = TRUE, segments = 3, parallel = TRUE)
+	// this is most commonly used with the 'flip' emote, so we are just calling it that
+	if(loops != INFINITE)
+		ADD_TRAIT(src, TRAIT_FLIPPING, REF(src))
+		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_FLIPPING, REF(src)), speed * loops)
 	if(!segments)
 		return
 	var/segment = 360/segments
