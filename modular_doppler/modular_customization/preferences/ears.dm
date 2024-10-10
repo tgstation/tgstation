@@ -38,12 +38,18 @@
 	. = ..()
 	if(target.dna.features["ears"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.ear_type == NO_VARIATION)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(mutantears)
+			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 		else if(target.dna.features["ears"] != /datum/sprite_accessory/ears/none::name && target.dna.features["ears"] != /datum/sprite_accessory/blank::name)
 			var/obj/item/organ/organ_path = text2path("/obj/item/organ/internal/ears/[target.dna.ear_type]")
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
+	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EARS)
+	if(old_part)
+		old_part.Remove(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		old_part.moveToNullspace()
 
 /// Dropdown to select which ears you'll be rocking
 /datum/preference/choiced/ear_variation

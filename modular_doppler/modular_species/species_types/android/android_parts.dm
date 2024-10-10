@@ -250,7 +250,7 @@
 	icon = ANDROID_BODYPARTS_DMI
 	icon_state = "e_three_n_head"
 	limb_id = "e_three_n"
-	head_flags = HEAD_MONITOR_FACE
+	head_flags = (HEAD_HAIR|HEAD_DEBRAIN)
 
 /obj/item/bodypart/chest/robot/android/e_three_n
 	icon_static = ANDROID_BODYPARTS_DMI
