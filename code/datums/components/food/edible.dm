@@ -98,6 +98,9 @@ Behavior that's still missing from this component that original food items had t
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
@@ -113,6 +116,9 @@ Behavior that's still missing from this component that original food items had t
 	))
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+	if(foodtypes & GORE)
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
@@ -137,6 +143,9 @@ Behavior that's still missing from this component that original food items had t
 		foodtypes = old_comp.foodtypes
 		tastes = old_comp.tastes
 		eatverbs = old_comp.eatverbs
+
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 	// only edit if we're OG
 	if(!i_am_original)
