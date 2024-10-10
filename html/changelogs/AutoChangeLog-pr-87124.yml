@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - bugfix: "Xeno queens can once again promote Drones to Praetorians"
+  - bugfix: "They can also once again do hand emotes"

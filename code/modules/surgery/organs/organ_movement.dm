@@ -240,6 +240,15 @@
 
 	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 
+	if(greyscale_config)
+		get_greyscale_color_from_draw_color()
+	else
+		color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+///Here we define how draw_color from the bodypart overlay sets the greyscale colors of organs that use GAGS
+/obj/item/organ/proc/get_greyscale_color_from_draw_color()
+	color = bodypart_overlay.draw_color //Defaults to the legacy behaviour of applying the color to the item.
+
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
 	SIGNAL_HANDLER

@@ -71,7 +71,10 @@
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
 		if(turf.footstep)
-			playsound(turf, 'sound/effects/footstep/crawl1.ogg', 15 * volume, falloff_distance = 1, vary = sound_vary)
+			var/sound = 'sound/effects/footstep/crawl1.ogg'
+			if(HAS_TRAIT(source, TRAIT_FLOPPING))
+				sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
+			playsound(turf, sound, 15 * volume, falloff_distance = 1, vary = sound_vary)
 		return
 
 	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)

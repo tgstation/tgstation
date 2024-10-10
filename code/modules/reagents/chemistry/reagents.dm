@@ -78,6 +78,8 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	var/purge_multiplier = 1
 
 	///The default reagent container for the reagent, used for icon generation
 	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
@@ -121,7 +123,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
-	if((methods & penetrates_skin) && exposed_mob.reagents) //smoke, foam, spray
+	if((penetrates_skin|INJECT) & methods) //methods being
 		var/amount = round(reac_volume*clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
 			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
