@@ -48,7 +48,7 @@
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Allowed items in the chestplate's suit storage.
-	//var/list/allowed_suit_storage = list()
+	var/list/allowed_suit_storage = list()
 	/// List of variants and items created by them, with the flags we set.
 	var/list/variants = list(
 		"standard" = list(
@@ -117,7 +117,7 @@
 		var/obj/item/mod_part = new path(mod)
 		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
 			var/obj/item/clothing/chestplate = mod_part
-			//chestplate.allowed |= allowed_suit_storage
+			chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
 		part_datum.part_item = mod_part
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
