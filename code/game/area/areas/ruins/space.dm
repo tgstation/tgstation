@@ -369,9 +369,9 @@
 // Area define for organization
 /area/ruin/space/ks13/engineering
 
-/area/ruin/space/ks13/engineering/singulo
-	name = "\improper Derelict Singulairty Engine"
-	icon_state = "ks13_singulo"
+/area/ruin/space/ks13/engineering/supermatter
+	name = "\improper Derelict Supermatter Engine"
+	icon_state = "ks13_supermatter"
 
 /area/ruin/space/ks13/engineering/atmos
 	name = "\improper Derelict Atmospherics"
