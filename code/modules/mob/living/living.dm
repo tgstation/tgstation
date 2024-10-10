@@ -1,7 +1,9 @@
 /mob/living/Initialize(mapload)
 	. = ..()
 	if(current_size != RESIZE_DEFAULT_SIZE)
-		update_transform(current_size)
+		var/cached_size = current_size
+		current_size = RESIZE_DEFAULT_SIZE
+		update_transform(cached_size)
 	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
