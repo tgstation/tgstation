@@ -558,4 +558,9 @@
 				'sound/creatures/cat/cat_purr3.ogg',
 				'sound/creatures/cat/cat_purr4.ogg',
 			)
+		if(SFX_PIG_OINK)
+			soundin = pick(
+				'sound/mobs/non-humanoids/pig/pig1.ogg',
+				'sound/mobs/non-humanoids/pig/pig2.ogg',
+			)
 	return soundin

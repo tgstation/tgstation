@@ -53,6 +53,8 @@
 	key_third_person = "squeaks"
 	message = "squeak!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()

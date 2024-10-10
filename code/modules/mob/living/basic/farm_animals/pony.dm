@@ -29,7 +29,6 @@
 	/// The person we've been tamed by
 	var/datum/weakref/my_owner
 
-
 	greyscale_config = /datum/greyscale_config/pony
 	/// Greyscale color config; 1st color is body, 2nd is mane
 	var/list/ponycolors = list("#cc8c5d", "#cc8c5d")
@@ -43,6 +42,8 @@
 	key_third_person = "whickers"
 	message = "whickers."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/pony/snort.ogg'
 
 /mob/living/basic/pony/Initialize(mapload)
 	. = ..()

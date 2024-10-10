@@ -37,11 +37,11 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
-/datum/emote/slow
+/datum/emote/sloth
 	mob_type_allowed_typecache = /mob/living/basic/sloth
 	mob_type_blacklist_typecache = list()
 
-/datum/emote/slow/whicker
+/datum/emote/sloth/smile_slow
 	key = "ssmile"
 	key_third_person = "slowlysmiles"
 	message = "slowly smiles!"

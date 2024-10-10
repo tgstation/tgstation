@@ -45,6 +45,8 @@
 	key_third_person = "moos"
 	message = "moos happily!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/cow/cow.ogg'
 
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \

@@ -42,7 +42,8 @@
 	key_third_person = "chirps"
 	message = "chirps!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/chicken/chick_peep.ogg'
 
 /mob/living/basic/chick/Initialize(mapload)
 	. = ..()

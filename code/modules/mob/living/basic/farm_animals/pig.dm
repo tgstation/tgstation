@@ -37,7 +37,8 @@
 	key_third_person = "oinks"
 	message = "oinks!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-
+	vary = TRUE
+	sound = SFX_PIG_OINK
 /mob/living/basic/pig/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "oink")

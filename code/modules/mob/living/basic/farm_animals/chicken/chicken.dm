@@ -47,6 +47,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	key_third_person = "clucks"
 	message = "clucks happily!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/chicken/bagawk.ogg'
 
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()

@@ -58,6 +58,8 @@
 	key_third_person = "chitters"
 	message = "chitters."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
