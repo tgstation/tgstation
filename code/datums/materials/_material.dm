@@ -78,6 +78,30 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// The slowdown that is added to items.
 	var/added_slowdown = 0
 
+	/// Fish made of or infused with this material have their weight multiplied by this value.
+	var/fish_weight_modifier = 1
+
+	/// Fishing rods made of this material have an extra chance of catching fish made of the main mat the rod is made of.
+	var/material_fish_extra_chance = 0
+	/// If true, fishing rods made of this material will attract shiny lover fish. Ditto with fishing equipment
+	var/is_shiny_fishing_lure = FALSE
+	/// Additive bonus/malus to the fishing difficulty modifier of any rod made of this item. Negative is good, positive bad
+	var/fishing_difficulty_modifier = 0
+	/// Additive bonus/malus to the cast range of the fishing rod
+	var/fishing_cast_range = 0
+	/// The multiplier of how much experience is gained when using a fishing rod made of this material
+	var/fishing_experience_multiplier = 1
+	/// The multiplier to the completion gain of the fishing rod made of this material
+	var/fishing_completion_speed = 1
+	/// The multiplier of the bait/bobber speed of the fishing challenge for fishing rods made of this material
+	var/fishing_bait_speed_mult = 1
+	/// The multiplier of the deceleration/friction for fishing rods made of this material
+	var/fishing_deceleration_mult = 1
+	/// The multiplier of the bounciness of the bait/bobber upon hitting the edges of the minigame area
+	var/fishing_bounciness_mult = 1
+	/// The multiplier of negative velocity that pulls the bait/bobber of a fishing rod down when not holding the click
+	var/fishing_gravity_mult = 1
+
 /** Handles initializing the material.
  *
  * Arguments:
@@ -100,7 +124,23 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material becomes the one the object is composed of the most
 /datum/material/proc/on_main_applied(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(!is_shiny_fishing_lure || !isitem(source))
+		return
+	RegisterSignal(source, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(source, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+	if(istype(source, /obj/item/fishing_rod))
+		ADD_TRAIT(source, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+	if(istype(source.loc, /obj/item/fishing_rod))
+		on_fishing_rod_slotted(source, source.loc)
+
+/datum/material/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(source))
+
+/datum/material/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(source))
 
 /datum/material/proc/setup_glow(turf/on)
 	if(GET_TURF_PLANE_OFFSET(on) != GET_LOWEST_STACK_OFFSET(on.z)) // We ain't the bottom brother
@@ -126,7 +166,17 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 ///This proc is called when the material is no longer the one the object is composed by the most
 /datum/material/proc/on_main_removed(atom/source, mat_amount, multiplier)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(!is_shiny_fishing_lure || !isitem(source))
+		return
+	UnregisterSignal(source, list(
+		COMSIG_ITEM_FISHING_ROD_SLOTTED,
+		COMSIG_ITEM_FISHING_ROD_UNSLOTTED,
+	))
+	if(istype(source, /obj/item/fishing_rod))
+		REMOVE_TRAIT(source, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+	if(istype(source.loc, /obj/item/fishing_rod))
+		on_fishing_rod_unslotted(source, source.loc)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
