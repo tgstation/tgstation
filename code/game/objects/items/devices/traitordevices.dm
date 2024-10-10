@@ -363,6 +363,10 @@ effective or pretty fucking useless.
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return
 
+	if (!(interacting_with in view(7, user)))
+		user.balloon_alert(user, "out of reach!")
+		return
+
 	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
 	disable_radios_on(interacting_with)
 
