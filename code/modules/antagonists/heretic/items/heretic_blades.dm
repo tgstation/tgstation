@@ -137,6 +137,39 @@
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
 	after_use_message = "The Torn Champion hears your call..."
+	///If our blade is currently infused with the mansus grasp
+	var/infused = FALSE
+
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	if(!infused || target == user)
+		return
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	if(!heretic_datum)
+		return
+	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
+	if(!mark_to_apply)
+		return
+	mark_to_apply.create_mark(user, target)
+	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
+		to_infuse.infused = FALSE
+		to_infuse.update_appearance(UPDATE_ICON)
+	user.update_held_items()
+
+/obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
+	. = ..()
+	if(infused)
+		infused = FALSE
+		update_appearance(UPDATE_ICON)
+
+/obj/item/melee/sickly_blade/dark/update_icon_state()
+	. = ..()
+	if(infused)
+		icon_state = initial(icon_state) + "_infused"
+		inhand_icon_state = initial(icon_state) + "_infused"
+	else
+		icon_state = initial(icon_state)
+		inhand_icon_state = initial(icon_state)
 
 // Path of Cosmos's blade
 /obj/item/melee/sickly_blade/cosmic

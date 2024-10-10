@@ -100,7 +100,7 @@
 	target.balloon_alert(source, "backstab!")
 	playsound(get_turf(target), 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
-/// The cooldown duration between trigers of blade dance
+/// The cooldown duration between triggers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
 
 /datum/heretic_knowledge/blade_dance
@@ -329,6 +329,36 @@
 	var/offand_force_decrement = 0
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
 	var/last_weapon_force = -1
+
+/datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+
+/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST)
+
+///Tries to infuse our held blade with our mansus grasp
+/datum/heretic_knowledge/blade_upgrade/blade/proc/on_grasp_cast(mob/living/carbon/cast_on)
+	SIGNAL_HANDLER
+
+	var/held_item = cast_on.get_active_held_item()
+	if(!istype(held_item, /obj/item/melee/sickly_blade/dark))
+		return NONE
+	var/obj/item/melee/sickly_blade/dark/held_blade = held_item
+	if(held_blade.infused == TRUE)
+		return NONE
+	held_blade.infused = TRUE
+	held_blade.update_appearance(UPDATE_ICON)
+
+	//Infuse our off-hand blade just so it's nicer visually
+	var/obj/item/melee/sickly_blade/dark/off_hand_blade = cast_on.get_inactive_held_item()
+	if(istype(off_hand_blade, /obj/item/melee/sickly_blade/dark))
+		off_hand_blade.infused = TRUE
+		off_hand_blade.update_appearance(UPDATE_ICON)
+
+	cast_on.update_held_items()
+	return COMPONENT_CAST_HANDLESS
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
