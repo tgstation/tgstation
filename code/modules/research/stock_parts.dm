@@ -235,8 +235,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
-	pixel_x = base_pixel_x + rand(-5, 5)
-	pixel_y = base_pixel_y + rand(-5, 5)
+	if(pixel_y == 0 && pixel_x == 0)
+		pixel_x = base_pixel_x + rand(-5, 5)
+		pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/item/stock_parts/get_part_rating()
 	return rating

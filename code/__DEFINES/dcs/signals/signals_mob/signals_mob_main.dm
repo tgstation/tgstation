@@ -261,3 +261,4 @@
 
 /// from /mob/update_incapacitated(): (old_incap, new_incap)
 #define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"
+

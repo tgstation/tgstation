@@ -103,9 +103,9 @@ export const Section = forwardRef(
         {...computeBoxProps(rest)}
       >
         {hasTitle && (
-          <div className="Section__title">
-            <span className="Section__titleText">{title}</span>
-            <div className="Section__buttons">{buttons}</div>
+          <div className="Section__head">
+            <div className="Section__headTitle">{title}</div>
+            <div className="Section__headButtons">{buttons}</div>
           </div>
         )}
         <div className="Section__rest">

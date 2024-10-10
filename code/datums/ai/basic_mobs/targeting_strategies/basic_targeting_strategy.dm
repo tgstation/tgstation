@@ -53,8 +53,8 @@
 
 		return TRUE
 
-	if(ismecha(the_target)) //Targeting vs mechas
-		var/obj/vehicle/sealed/mecha/M = the_target
+	if(issealedvehicle(the_target)) //Targeting vs sealed vehicles
+		var/obj/vehicle/sealed/M = the_target
 		for(var/occupant in M.occupants)
 			if(can_attack(living_mob, occupant)) //Can we attack any of the occupants?
 				return TRUE

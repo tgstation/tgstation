@@ -328,3 +328,27 @@
 /obj/machinery/door/poddoor/massdriver_trash
 	name = "Disposals Launcher Bay Door"
 	id = MASSDRIVER_DISPOSALS
+
+/obj/machinery/door/poddoor/atmos_shielded
+	name = "atmos-shielded blast door"
+	can_atmos_pass = ATMOS_PASS_PROC
+
+/obj/machinery/door/poddoor/atmos_shielded/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/machinery/door/poddoor/atmos_shielded/can_atmos_pass(turf/T, vertical = FALSE)
+	return powered() ? FALSE : !density
+
+/obj/machinery/door/poddoor/atmos_shielded/power_change()
+	. = ..()
+	air_update_turf(update=TRUE, remove=FALSE)
+
+/obj/machinery/door/poddoor/atmos_shielded/update_overlays()
+	. = ..()
+	if(powered())
+		. += mutable_appearance('icons/obj/doors/blastdoor.dmi', "shield", BELOW_OPEN_DOOR_LAYER)
+
+/obj/machinery/door/poddoor/atmos_shielded/hangarbay
+	name = "Hangar Bay Door"
+	id = "stationhangarbay"

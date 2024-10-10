@@ -1268,6 +1268,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/podcommsreceiverdoor
+	name = "Pod Comms Receiver (Door) Board"
+	desc = "The circuit board for a pod comms receiver for doors."
+	id = "podcommsreceiverdoor"
+	build_path = /obj/item/circuitboard/machine/podcommsreceiverdoor
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/big_manipulator
 	name = "Big Manipulator Board"
 	desc = "The circuit board for a big manipulator."

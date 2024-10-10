@@ -42,6 +42,13 @@
 	if(light_on && (obj_flags & EMAGGED))
 		set_light_color(pick(headlight_colors))
 
+/obj/vehicle/sealed/car/clowncar/may_move(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(cannonmode)
+		return FALSE
+
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn, VEHICLE_CONTROL_DRIVE)
@@ -267,7 +274,6 @@
 		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
 		visible_message(span_danger("[src] starts going back into mobile mode."))
 	else
-		canmove = FALSE //anchor and activate canon
 		flick("clowncar_tofire", src)
 		icon_state = "clowncar_fire"
 		visible_message(span_danger("[src] opens up and reveals a large cannon."))
@@ -284,7 +290,6 @@
 
 ///Finalizes canon deactivation
 /obj/vehicle/sealed/car/clowncar/proc/deactivate_cannon()
-	canmove = TRUE
 	mouse_pointer = null
 	cannonmode = CLOWN_CANNON_INACTIVE
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))

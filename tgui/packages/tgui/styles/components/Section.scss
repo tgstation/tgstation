@@ -24,23 +24,18 @@ $separator-color: colors.$primary !default;
   }
 }
 
-.Section__title {
-  position: relative;
+.Section__head {
+  display: flex;
+  flex-flow: row nowrap;
   padding: 0.5em;
   border-bottom: base.em(2px) solid $separator-color;
 }
 
-.Section__titleText {
+.Section__headTitle {
+  flex-grow: 1;
   font-size: base.em(14px);
   font-weight: bold;
   color: $title-text-color;
-}
-
-.Section__buttons {
-  position: absolute;
-  display: inline-block;
-  right: 0.5em;
-  margin-top: base.em(-1px);
 }
 
 .Section__rest {

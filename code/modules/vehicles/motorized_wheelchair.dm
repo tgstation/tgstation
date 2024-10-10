@@ -84,18 +84,14 @@
 		power_cell = null
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
+/obj/vehicle/ridden/wheelchair/motorized/may_move(mob/living/user)
 	if(!power_cell)
 		to_chat(user, span_warning("There seems to be no cell installed in [src]."))
-		canmove = FALSE
-		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
 	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
 		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
-		canmove = FALSE
-		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
-	return ..()
+	return TRUE
 
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
