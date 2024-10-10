@@ -329,22 +329,48 @@ effective or pretty fucking useless.
 
 /obj/item/jammer
 	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication."
+	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all listening devices nearby."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
 	var/range = 12
+	var/jam_cooldown_duration = 15 SECONDS
+	COOLDOWN_DECLARE(jam_cooldown)
 
-/obj/item/jammer/attack_self(mob/user)
-	to_chat(user,span_notice("You [active ? "deactivate" : "activate"] [src]."))
+/obj/item/jammer/attack_self(mob/user, modifiers)
+	. = ..()
+	to_chat(user, span_notice("You [active ? "deactivate" : "activate"] [src]."))
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
-
 	else
 		GLOB.active_jammers -= src
-
 	update_appearance()
+
+/obj/item/jammer/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if (!COOLDOWN_FINISHED(src, jam_cooldown))
+		user.balloon_alert(user, "on cooldown!")
+		return
+	to_chat(user, span_notice("You release a distruptor wave, disabling all nearby radio devices."))
+	for (var/atom/potential_owner in view(7, user))
+		disable_radios_on(potential_owner)
+	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
+
+/obj/item/jammer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return
+
+	to_chat(user, span_notice("You release a directed distruptor wave, disabling all radio devices on [interacting_with]."))
+	disable_radios_on(interacting_with)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/jammer/proc/disable_radios_on(atom/target)
+	for (var/obj/item/radio/radio in target.get_all_contents() + target)
+		radio.set_broadcasting(FALSE)
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
