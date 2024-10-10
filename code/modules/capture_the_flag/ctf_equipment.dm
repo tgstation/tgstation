@@ -194,7 +194,7 @@
 	icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	armor_type = /datum/armor/none
-	allowed = null
+	allowed = null // leaving this to not mess with CTF
 	greyscale_config = /datum/greyscale_config/ctf_standard
 	greyscale_config_worn = /datum/greyscale_config/ctf_standard/worn
 	greyscale_colors = "#ffffff"

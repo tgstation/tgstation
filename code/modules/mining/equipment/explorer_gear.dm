@@ -43,7 +43,6 @@
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/hooded/explorer/Initialize(mapload)
 	. = ..()
@@ -118,10 +117,6 @@
 	armor_type = /datum/armor/hooded_goliath
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
 
-/obj/item/clothing/suit/hooded/cloak/goliath/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.mining_suit_allowed
-
 /datum/armor/hooded_goliath
 	melee = 60
 	bullet = 10
@@ -193,7 +188,6 @@
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -241,7 +235,6 @@
 
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/hooded/cloakhood/drake
 	name = "drake helm"
@@ -289,10 +282,6 @@
 	fire = 100
 	acid = 100
 	wound = 10
-
-/obj/item/clothing/suit/hooded/cloak/godslayer/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.mining_suit_allowed
 
 /obj/item/clothing/head/hooded/cloakhood/godslayer
 	name = "godslayer helm"

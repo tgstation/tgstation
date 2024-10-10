@@ -16,11 +16,6 @@
 	attack_verb_simple = list("warn", "caution", "smash")
 	armor_type = /datum/armor/suit_caution
 	species_exception = list(/datum/species/golem)
-	allowed = list(
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
-	)
 
 /datum/armor/suit_caution
 	melee = 5

@@ -19,11 +19,6 @@
 	base_icon_state = "chestplate"
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 	blood_overlay_type = "armor"
-	allowed = list(
-		/obj/item/tank/internals,
-		/obj/item/flashlight,
-		/obj/item/tank/jetpack/oxygen/captain,
-	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN
 	heat_protection = CHEST|GROIN

@@ -4,18 +4,167 @@
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	var/fire_resist = T0C+100
-	allowed = list(
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/storage/belt/holster,
-		)
 	armor_type = /datum/armor/none
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
+	allowed = list(
+		// basic stuff
+		/obj/item/tank,
+		/obj/item/flashlight,
+		/obj/item/modular_computer/pda,
+		/obj/item/storage/bag,
+		/obj/item/pen,
+		/obj/item/stamp,
+		/obj/item/disk,
+		/obj/item/radio,
+
+		/obj/item/stack/spacecash,
+
+		/obj/item/reagent_containers/cup,
+		/obj/item/reagent_containers/spray,
+		/obj/item/lighter,
+		/obj/item/storage/box/matches,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/cigarette,
+
+		/obj/item/cane,
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/toy,
+		/obj/item/clothing/mask/facehugger/toy,
+		/obj/item/pillow,
+		/obj/item/abductor,
+
+		// Command
+		/obj/item/storage/lockbox/medal,
+		/obj/item/tank/jetpack/oxygen/captain,
+
+		// Botanist
+		/obj/item/cultivator,
+		/obj/item/geneshears,
+		/obj/item/graft,
+		/obj/item/hatchet,
+		/obj/item/plant_analyzer,
+		/obj/item/secateurs,
+		/obj/item/seeds,
+
+		// Chaplain
+		/obj/item/book/bible,
+		/obj/item/nullrod,
+		/obj/item/storage/fancy/candle_box,
+
+		// Chef
+		/obj/item/kitchen,
+
+		// Engineering
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/construction/rtd,
+		/obj/item/crowbar,
+		/obj/item/multitool,
+		/obj/item/geiger_counter,
+
+		/obj/item/extinguisher,
+		/obj/item/fireaxe/metal_h2_axe,
+
+		// Cargo
+		/obj/item/boxcutter,
+		/obj/item/dest_tagger,
+		/obj/item/universal_scanner,
+
+		// Miner
+		/obj/item/melee/cleaving_saw,
+		/obj/item/climbing_hook,
+		/obj/item/grapple_gun,
+		/obj/item/kinetic_crusher,
+		/obj/item/mining_scanner,
+		/obj/item/organ/internal/monster_core,
+		/obj/item/pickaxe,
+		/obj/item/resonator,
+
+		//Weapons
+		/obj/item/gun,
+		/obj/item/ammo_casing
+		/obj/item/knife,
+		/obj/item/melee,
+		/obj/item/spear,
+
+		/obj/item/banner,
+		/obj/item/claymore,
+
+		// Medsci
+		/obj/item/healthanalyzer,
+		/obj/item/bonesetter,
+		/obj/item/cautery,
+		/obj/item/hemostat,
+		/obj/item/retractor,
+		/obj/item/scalpel,
+		/obj/item/surgical_drapes,
+
+		/obj/item/storage/pill_bottle,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/pill,
+
+		/obj/item/assembly/flash/handheld,
+		/obj/item/gun/syringe,
+
+		/obj/item/biopsy_tool,
+		/obj/item/dnainjector,
+		/obj/item/paper,
+		/obj/item/sensor_device,
+		/obj/item/soap,
+		/obj/item/stack/medical,
+
+		/obj/item/sequence_scanner,
+
+		/obj/item/autopsy_scanner,
+		/obj/item/scythe,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
+
+		// Sec
+		/obj/item/detective_scanner,
+		/obj/item/restraints/handcuffs,
+		/obj/item/taperecorder,
+		/obj/item/storage/belt/holster/,
+
+		/obj/item/access_key,
+		/obj/item/grenade/chem_grenade,
+		/obj/item/holosign_creator,
+		/obj/item/key/janitor,
+
+		// Wiz
+		/obj/item/teleportation_scroll,
+		/obj/item/highfrequencyblade/wizard,
+		/obj/item/spellbook,
+
+		// Cult/Heretic
+		/obj/item/tome,
+		/obj/item/melee/cultblade,
+		/obj/item/melee/sickly_blade,
+
+		// Clown, the greatest antag of them all
+		/obj/item/megaphone/clown,
+		/obj/item/soap,
+		/obj/item/food/pie/cream,
+		/obj/item/bikehorn,
+		/obj/item/bikehorn/golden,
+		/obj/item/bikehorn/airhorn,
+		/obj/item/instrument/bikehorn,
+		/obj/item/reagent_containers/cup/soda_cans/canned_laughter,
+		/obj/item/toy/crayon,
+		/obj/item/toy/crayon/spraycan,
+		/obj/item/toy/crayon/spraycan/lubecan,
+		/obj/item/grown/bananapeel,
+		/obj/item/food/grown/banana
+	)
 
 /obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()

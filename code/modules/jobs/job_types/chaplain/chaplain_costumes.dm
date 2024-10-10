@@ -1,13 +1,9 @@
 //Chaplain Suit Subtypes
 //If any new staple chaplain items get added, put them in these lists
 /obj/item/clothing/suit/chaplainsuit
-	allowed = null
+	//allowed = null
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
-
-/obj/item/clothing/suit/chaplainsuit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
 
 /obj/item/clothing/suit/chaplainsuit/armor
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -25,13 +21,6 @@
 	fire = 80
 	acid = 80
 	wound = 20
-
-/obj/item/clothing/suit/hooded/chaplainsuit
-	allowed = null
-
-/obj/item/clothing/suit/hooded/chaplainsuit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
 
 //Suits
 /obj/item/clothing/suit/chaplainsuit/holidaypriest
@@ -123,7 +112,6 @@
 	inhand_icon_state = "clownpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
-	allowed = list(/obj/item/megaphone/clown, /obj/item/soap, /obj/item/food/pie/cream, /obj/item/bikehorn, /obj/item/bikehorn/golden, /obj/item/bikehorn/airhorn, /obj/item/instrument/bikehorn, /obj/item/reagent_containers/cup/soda_cans/canned_laughter, /obj/item/toy/crayon, /obj/item/toy/crayon/spraycan, /obj/item/toy/crayon/spraycan/lubecan, /obj/item/grown/bananapeel, /obj/item/food/grown/banana)
 
 /obj/item/clothing/head/helmet/chaplain/clock
 	name = "forgotten helmet"
@@ -253,12 +241,7 @@
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = null
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
-
-/obj/item/clothing/suit/hooded/chaplain_hoodie/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.chaplain_suit_allowed
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"

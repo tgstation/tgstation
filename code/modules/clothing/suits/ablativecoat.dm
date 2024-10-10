@@ -37,10 +37,6 @@
 	equip_delay_other = 40
 	var/hit_reflect_chance = 50
 
-/obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_vest_allowed
-
 /obj/item/clothing/suit/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE

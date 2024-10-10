@@ -27,4 +27,5 @@
 	inhand_icon_state = "santa"
 	slowdown = 0
 	allowed = list(/obj/item) //for stuffing exta special presents
+	// obviously leaving this in, go santa
 	fishing_modifier = 0

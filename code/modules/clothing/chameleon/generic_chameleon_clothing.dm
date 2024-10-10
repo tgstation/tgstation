@@ -57,10 +57,6 @@ do { \
 	armor_type = /datum/armor/suit_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/suit)
 
-/obj/item/clothing/suit/chameleon/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_vest_allowed //should at least act like a vest
-
 /obj/item/clothing/suit/chameleon/broken
 
 /obj/item/clothing/suit/chameleon/broken/Initialize(mapload)

@@ -12,21 +12,6 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(
-		/obj/item/cultivator,
-		/obj/item/geneshears,
-		/obj/item/graft,
-		/obj/item/hatchet,
-		/obj/item/plant_analyzer,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/secateurs,
-		/obj/item/seeds,
-		/obj/item/storage/bag/plants,
-	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
 
@@ -63,20 +48,6 @@
 	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(
-		/obj/item/assembly/flash/handheld,
-		/obj/item/cigarette,
-		/obj/item/disk,
-		/obj/item/lighter,
-		/obj/item/melee,
-		/obj/item/reagent_containers/cup/glass/flask,
-		/obj/item/stamp,
-		/obj/item/storage/box/matches,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/lockbox/medal,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-	)
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
@@ -88,11 +59,6 @@
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	armor_type = /datum/armor/toggle_chef
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(
-		/obj/item/kitchen,
-		/obj/item/knife/kitchen,
-		/obj/item/storage/bag/tray,
-	)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
@@ -107,11 +73,6 @@
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(
-		/obj/item/kitchen,
-		/obj/item/knife/kitchen,
-		/obj/item/storage/bag/tray,
-	)
 
 //Detective
 /obj/item/clothing/suit/jacket/det_suit
@@ -132,10 +93,6 @@
 	laser = 25
 	energy = 35
 	acid = 45
-
-/obj/item/clothing/suit/jacket/det_suit/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.detective_vest_allowed
 
 /obj/item/clothing/suit/jacket/det_suit/dark
 	name = "noir trenchcoat"
@@ -176,18 +133,6 @@
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	inhand_icon_state = null
 	blood_overlay_type = "armor"
-	allowed = list(
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/flashlight,
-		/obj/item/radio,
-		/obj/item/storage/bag/construction,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/t_scanner,
-		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
-		/obj/item/storage/bag/rebar_quiver,
-		/obj/item/gun/ballistic/rifle/rebarxbow,
-	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
@@ -234,15 +179,6 @@
 	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/boxcutter,
-		/obj/item/dest_tagger,
-		/obj/item/stamp,
-		/obj/item/storage/bag/mail,
-		/obj/item/universal_scanner,
-	)
 
 // Quartermaster
 
@@ -252,15 +188,6 @@
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-
-/obj/item/clothing/suit/jacket/quartermaster/Initialize(mapload)
-	. = ..()
-	allowed += list(
-		/obj/item/stamp,
-		/obj/item/storage/bag/mail,
-		/obj/item/universal_scanner,
-		/obj/item/melee/baton/telescopic,
-	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
@@ -335,24 +262,6 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
-	allowed = list(
-		/obj/item/bonesetter,
-		/obj/item/cautery,
-		/obj/item/flashlight/pen,
-		/obj/item/healthanalyzer,
-		/obj/item/hemostat,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/retractor,
-		/obj/item/scalpel,
-		/obj/item/surgical_drapes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/tank/internals/emergency_oxygen,
-	)
 
 /obj/item/clothing/suit/apron/surgical/Initialize(mapload)
 	. = ..()
@@ -366,11 +275,6 @@
 	inhand_icon_state = null
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(
-		/obj/item/melee/curator_whip,
-		/obj/item/storage/bag/books,
-		/obj/item/tank/internals,
-	)
 	armor_type = /datum/armor/jacket_curator
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
@@ -415,20 +319,6 @@
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/atmos_overalls
 	species_exception = list(/datum/species/golem)
-	allowed = list(
-		/obj/item/analyzer,
-		/obj/item/construction/rcd,
-		/obj/item/fireaxe/metal_h2_axe,
-		/obj/item/pipe_dispenser,
-		/obj/item/storage/bag/construction,
-		/obj/item/t_scanner,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/tank/internals/plasmaman,
-		/obj/item/extinguisher,
-		/obj/item/construction/rtd,
-		/obj/item/gun/ballistic/rifle/rebarxbow,
-		/obj/item/storage/bag/rebar_quiver,
-	)
 
 /datum/armor/atmos_overalls
 	fire = 100
