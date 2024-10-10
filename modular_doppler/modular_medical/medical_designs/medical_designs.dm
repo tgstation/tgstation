@@ -80,6 +80,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_CARGO
 
+/datum/techweb_node/mining_adv/New() //Here for the integrated drill augments.
+	design_ids = list(
+		"ci-drill-diamond"
+	)
+	return ..()
+
 /datum/design/cyberimp_claws
 	name = "Razor Claws Implant"
 	desc = "Long, sharp, double-edged razors installed within the fingers, functional for cutting. All kinds of cutting."
