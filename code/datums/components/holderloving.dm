@@ -81,5 +81,12 @@
 /datum/component/holderloving/proc/no_unequip(obj/item/I, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	if(!isturf(newloc) && invdrop)
-		return COMPONENT_ITEM_BLOCK_UNEQUIP
+	// just allow it
+	if(force)
+		return NONE
+	// dropping onto a turf just forcemoves it back to the holder. let it happen, it's intuitive
+	// no_move says it's just going to be moved a second time. so let it happen, it'll just be moved back if it's invalid anyway
+	if(isturf(newloc) || no_move)
+		return NONE
+	// the item is being unequipped to somewhere invalid. stop it
+	return COMPONENT_ITEM_BLOCK_UNEQUIP

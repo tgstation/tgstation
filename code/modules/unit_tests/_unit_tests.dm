@@ -118,6 +118,7 @@
 #include "circuit_component_category.dm"
 #include "client_colours.dm"
 #include "closets.dm"
+#include "clothing_drops_items.dm"
 #include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
 #include "combat_stamina.dm"
