@@ -44,9 +44,9 @@
 	speed /= segments
 
 	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loop = loops, flags = ANIMATION_PARALLEL)
+		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
 	else
-		animate(src, transform = matrices[1], time = speed, loop = loops)
+		animate(src, transform = matrices[1], time = speed, loops)
 	for(var/i in 2 to segments) //2 because 1 is covered above
 		animate(transform = matrices[i], time = speed)
 		//doesn't have an object argument because this is "Stacking" with the animate call above
@@ -80,10 +80,6 @@
  * * parallel: whether the animation calls have the ANIMATION_PARALLEL flag, necessary for it to run alongside concurrent animations.
  */
 /atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = TRUE, segments = 3, parallel = TRUE)
-	// this is most commonly used with the 'flip' emote, so we are just calling it that
-	if(loops != INFINITE)
-		ADD_TRAIT(src, TRAIT_FLIPPING, REF(src))
-		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_FLIPPING, REF(src)), speed * loops)
 	if(!segments)
 		return
 	var/segment = 360/segments

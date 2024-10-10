@@ -83,7 +83,9 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FLIPPING, REF(src))
 	user.SpinAnimation(FLIP_EMOTE_DURATION, 1)
+	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_FLIPPING, REF(src)), FLIP_EMOTE_DURATION)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()
