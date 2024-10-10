@@ -18,13 +18,17 @@
 	var/default_value = FALSE
 
 ///This proc loads the achievement data from the hub.
-/datum/award/proc/load(key)
+/datum/award/proc/load(datum/achievement_data/holder)
 	if(!SSdbcore.Connect())
 		return default_value
-	if(!key || !database_id || !name)
+	if(!holder.owner_ckey || !database_id || !name)
 		return default_value
-	var/raw_value = get_raw_value(key)
-	return parse_value(raw_value)
+	var/value = parse_value(get_raw_value(holder.owner_ckey))
+	holder.original_cached_data[type] = holder.data[type] = value
+	return value
+
+/datum/award/proc/unlock(mob/user, datum/achievement_data/holder, value = 1)
+	return
 
 /datum/award/proc/on_achievement_data_init(datum/achievement_data/holder, database_value)
 	holder.original_cached_data[type] = holder.data[type] = parse_value(database_value)
@@ -72,7 +76,7 @@
 	return
 
 ///returns additional ui data for the Check Achievements menu
-/datum/award/proc/get_ui_data()
+/datum/award/proc/get_ui_data(list/award_data, datum/achievement_data/holder)
 	return list(
 		"score" = FALSE,
 		"achieve_info" = null,
@@ -86,11 +90,17 @@
 	///How many players have earned this achievement
 	var/times_achieved = 0
 
+/datum/award/achievement/unlock(mob/user, datum/achievement_data/holder, value = 1)
+	if(holder.data[type]) //You already unlocked it so don't bother running the unlock proc
+		return
+	holder.data[type] = TRUE
+	on_unlock(user)
+
 /datum/award/achievement/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "achievement"
 
-/datum/award/achievement/get_ui_data()
+/datum/award/achievement/get_ui_data(list/award_data, datum/achievement_data/holder)
 	. = ..()
 	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
 	if(!SSachievements.most_unlocked_achievement)
@@ -147,7 +157,10 @@
 	. = ..()
 	.["achievement_type"] = "score"
 
-/datum/award/score/get_ui_data()
+/datum/award/score/unlock(mob/user, datum/achievement_data/holder, value = 1)
+	holder.data[type] += value
+
+/datum/award/score/get_ui_data(list/award_data, datum/achievement_data/holder)
 	. = ..()
 	.["score"] = TRUE
 
@@ -163,7 +176,7 @@
 		while(Q.NextRow())
 			var/key = Q.item[1]
 			var/score = text2num(Q.item[2])
-			high_scores[key] = score
+			high_scores += list(list("ckey" = key, "value" = score))
 		qdel(Q)
 
 /datum/award/score/parse_value(raw_value)
@@ -176,11 +189,11 @@
 	icon_state = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
 
-/datum/award/score/achievements_score/get_ui_data(key)
+/datum/award/score/achievements_score/get_ui_data(list/award_data, datum/achievement_data/holder)
 	. = ..()
 	var/datum/db_query/get_unlocked_count = SSdbcore.NewQuery(
 		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
-		list("ckey" = key)
+		list("ckey" = holder.owner_ckey)
 	)
 	if(!get_unlocked_count.Execute(async = TRUE))
 		qdel(get_unlocked_count)
@@ -202,7 +215,7 @@
 		while(get_unlocked_highscore.NextRow())
 			var/key = get_unlocked_highscore.item[1]
 			var/score = text2num(get_unlocked_highscore.item[2])
-			high_scores[key] = score
+			high_scores += list(list("ckey" = key, "value" = score))
 		qdel(get_unlocked_highscore)
 
 /datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value)
@@ -217,3 +230,85 @@
 		holder.data[type] = text2num(get_unlocked_load.item[1]) || 0
 		holder.original_cached_data[type] = 0
 	qdel(get_unlocked_load)
+
+///A subtype of score that uses the length of the content of a list as score value.
+/datum/award/score/progress
+	default_value = list()
+	///A delimiter used to join and detach entries when saving and loading to and from the database
+	var/delimiter = "-"
+
+/datum/award/score/progress/unlock(mob/user, datum/achievement_data/holder, value)
+	var/list/old_list = holder.data[type]
+	if(value in old_list)
+		return
+	var/list/new_list = old_list?.Copy() || list() //This ensures the original data and the new data aren't the same list.
+	new_list |= value
+	holder.data[type] = new_list
+
+/datum/award/score/progress/load(datum/achievement_data/holder)
+	var/list/result = ..()
+	if(!length(result))
+		return result
+	///This list will be populated on validate_entries()
+	var/list/validated_results = list()
+	holder.original_cached_data[type] = holder.data[type] = validated_results
+	if(!validate_entries(result, validated_results))
+		holder.original_cached_data[type] = list()
+	return result
+
+/datum/award/score/progress/on_achievement_data_init(datum/achievement_data/holder, database_value)
+	var/list/result = parse_value(get_raw_value(holder.owner_ckey))
+	///This list will be populated on validate_entries()
+	var/list/validated_results = list()
+	holder.original_cached_data[type] = holder.data[type] = validated_results
+	if(!validate_entries(result, validated_results))
+		holder.original_cached_data[type] = list()
+
+///This saves the changed data to the hub.
+/datum/award/score/progress/get_changed_rows(key, value)
+	if(!database_id || !key || !name)
+		return
+	var/list/entries = value
+	return list(
+		"ckey" = key,
+		"achievement_key" = database_id,
+		"value" = length(entries),
+		"entries" = entries?.Join(delimiter),
+	)
+
+/datum/award/score/progress/core/get_ui_data(list/award_data, datum/achievement_data/holder)
+	. = ..()
+	award_data["value"] = length(holder.data[type])
+
+///We don't care much about the default value, which is only used for high scores. Instead, we get the entries string from the db.
+/datum/award/score/progress/get_raw_value(key)
+	var/datum/db_query/get_entries_load = SSdbcore.NewQuery(
+		"SELECT entries FROM [format_table_name("achievements")] WHERE ckey = :ckey AND achievement_key = :achievement_key",
+		list("achievement_key" = database_id, "ckey" = key)
+	)
+	if(!get_entries_load.Execute(async = TRUE))
+		qdel(get_entries_load)
+		return
+	var/list/entries
+	if(get_entries_load.NextRow())
+		entries = splittext(get_entries_load.item[1], delimiter)
+	qdel(get_entries_load)
+	return entries
+
+/**
+ * Validates the list of entries after it's parsed.
+ * If TRUE is returned (entries list is valid), entries will be stored in both
+ * original_cached_data[type] and data[type] of the holder.
+ * Otherwise original_cached_data[type] will be an empty list, meaning the original data and the new data aren't the same,
+ * and at end of the round, the changes will be inserted in the DB
+ */
+/datum/award/score/progress/proc/validate_entries(list/entries, list/safety)
+	safety += unique_list(entries)
+	return length(safety) == length(entries)
+
+/datum/award/score/progress/parse_value(raw_value)
+	return islist(raw_value) ? raw_value : list()
+
+////Returns a list of data that we can use to make an index of contents that progress this award/score.
+/datum/award/score/progress/proc/get_progress(datum/achievement_data/holder)
+	CRASH("get_progress() undefined for [type]")

@@ -68,7 +68,7 @@
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
 /obj/item/fish/slimefish
-	name = "acquatic slime"
+	name = "aquatic slime"
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
