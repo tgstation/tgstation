@@ -283,6 +283,10 @@
 	acid = 100
 	wound = 10
 
+/obj/item/clothing/suit/hooded/cloak/godslayer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+
 /obj/item/clothing/head/hooded/cloakhood/godslayer
 	name = "godslayer helm"
 	icon = 'icons/obj/clothing/head/helmet.dmi'

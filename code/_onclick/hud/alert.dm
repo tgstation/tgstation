@@ -183,6 +183,11 @@
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
+/atom/movable/screen/alert/not_enough_water
+	name = "Choking (No H2O)"
+	desc = "You're not getting enough water. Drench yourself in some water (e.g. showers) or get some water vapor before you pass out!"
+	icon_state = ALERT_NOT_ENOUGH_WATER
+
 //End gas alerts
 
 /atom/movable/screen/alert/gross

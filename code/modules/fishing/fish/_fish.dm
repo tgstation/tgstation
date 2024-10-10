@@ -181,7 +181,6 @@
 		apply_traits() //Make sure traits are applied before size and weight.
 		update_size_and_weight()
 
-	register_evolutions()
 	register_context()
 	register_item_context()
 
@@ -687,11 +686,6 @@
 		var/datum/fish_trait/trait = GLOB.fish_traits[fish_trait_type]
 		trait.apply_to_fish(src)
 
-/obj/item/fish/proc/register_evolutions()
-	for(var/evolution_type in evolution_types)
-		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-		evolution.register_fish(src)
-
 /obj/item/fish/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	check_flopping()
@@ -720,17 +714,28 @@
 /obj/item/fish/proc/feed(datum/reagents/fed_reagents)
 	if(status != FISH_ALIVE)
 		return
-	var/fed_reagent_type
-	if(fed_reagents.remove_reagent(food, 0.1))
-		fed_reagent_type = food
+
+	///If one of the reagent with fish effects is also our food reagent this is set to TRUE
+	var/already_fed = FALSE
+	for(var/datum/reagent/reagent as anything in fed_reagents.reagent_list)
+		if(!fed_reagents.has_reagent(reagent.type, 0.1) || !reagent.used_on_fish(src))
+			continue
+		fed_reagents.remove_reagent(reagent.type, 0.1)
+		if(reagent.type == food)
+			already_fed = TRUE
+
+	if(already_fed)
 		sate_hunger()
-	else
-		var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
-		if(!wrong_reagent)
-			return
-		fed_reagent_type = wrong_reagent.type
-		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
-	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
+		return
+
+	if(fed_reagents.remove_reagent(food, 0.1))
+		sate_hunger()
+		return
+
+	var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
+	if(!wrong_reagent)
+		return
+	fed_reagents.remove_reagent(wrong_reagent.type, 0.1)
 
 /**
  * Base multiplier of the difference between current size and weight and their maximum value
@@ -761,11 +766,14 @@
 		hunger_mult = 1 - (hunger - FISH_GROWTH_PEAK) * 4
 		if(hunger_mult <= 0)
 			return
+	var/base_mult = FISH_GROWTH_MULT
+	if(HAS_TRAIT(src, TRAIT_FISH_QUICK_GROWTH))
+		base_mult *= 2.5
 	if(size < maximum_size)
-		new_size += CEILING((maximum_size - size) * FISH_GROWTH_MULT / (w_class * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
+		new_size += CEILING((maximum_size - size) * base_mult / (w_class * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
 		new_size = min(new_size, maximum_size)
 	if(weight < maximum_weight)
-		new_weight += CEILING((maximum_weight - weight) * FISH_GROWTH_MULT / (get_weight_rank() * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
+		new_weight += CEILING((maximum_weight - weight) * base_mult / (get_weight_rank() * FISH_SIZE_WEIGHT_GROWTH_MALUS) * hunger_mult, 1)
 		new_weight = min(new_weight, maximum_weight)
 	if(new_size != size || new_weight != weight)
 		update_size_and_weight(new_size, new_weight)
@@ -1014,6 +1022,9 @@
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
+	if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
+		health_change_per_second -= 0.65 //This becomes - 0.15 if safe and not starving.
+
 	adjust_health(health + health_change_per_second * seconds_per_tick)
 
 /obj/item/fish/proc/adjust_health(amount)
@@ -1223,6 +1234,8 @@
 	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
 		fish_zap_range = 5
 		fish_zap_power = GET_FISH_ELECTROGENESIS(src)
+		if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
+			fish_zap_power *= 0.5
 		fish_zap_flags |= (ZAP_GENERATES_POWER | ZAP_MOB_STUN)
 	tesla_zap(source = get_turf(src), zap_range = fish_zap_range, power = fish_zap_power, cutoff = 1 MEGA JOULES, zap_flags = fish_zap_flags)
 
@@ -1307,6 +1320,24 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
+
+/obj/item/fish/get_infusion_entry()
+	var/amphibious = required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS)
+	var/list/possible_infusions = list()
+	for(var/type in fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[type]
+		if(!trait.infusion_entry)
+			continue
+		possible_infusions |= trait.infusion_entry
+	if(!length(possible_infusions) && !amphibious)
+		return GLOB.infuser_entries[/datum/infuser_entry/fish]
+	var/datum/infuser_entry/fish/entry = new
+	if(amphibious)
+		entry.output_organs -= /obj/item/organ/internal/lungs/fish
+	for(var/key in possible_infusions)
+		var/datum/infuser_entry/infusion = GLOB.infuser_entries[key]
+		entry.output_organs |= infusion.output_organs
+	return entry
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

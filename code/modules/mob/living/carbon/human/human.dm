@@ -105,7 +105,7 @@
 		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
-		if(get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway
+		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
 			to_chat(viewer, span_notice("You can't make out that ID from here."))
 			return
 
