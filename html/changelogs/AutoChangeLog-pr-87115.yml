@@ -1,0 +1,4 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - bugfix: "Space Phase now makes the Heretic Space proof."
