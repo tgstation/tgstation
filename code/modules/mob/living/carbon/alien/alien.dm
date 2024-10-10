@@ -1,5 +1,6 @@
 /mob/living/carbon/alien
 	name = "alien"
+	RU_NAMES_LIST_INIT("alien", "чужой", "чужого", "чужому", "чужого", "чужим", "чужом")
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
@@ -163,6 +164,7 @@ Des: Removes all infected images from the alien.
 	if(old_number != 0)
 		numba = old_number
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
+		RU_NAMES_LIST_INIT("[name]", "[initial(ru_name_nominative) || initial(name)]", "[initial(ru_name_genitive) || initial(name)]", "[initial(ru_name_dative) || initial(name)]", "[initial(ru_name_accusative) || initial(name)]", "[initial(ru_name_instrumental) || initial(name)]", "[initial(ru_name_prepositional) || initial(name)]")
 
 	set_name()
 

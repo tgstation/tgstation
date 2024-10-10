@@ -35,6 +35,7 @@
 
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
+	RU_NAMES_LIST_INIT("alien queen", "королева Чужих", "королевы Чужих", "королеве Чужих", "королеву Чужих", "королевой Чужих", "королеве Чужих")
 	caste = "q"
 	maxHealth = 500
 	health = 500
@@ -51,10 +52,12 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
+			var/number = rand(1, 999) // BANDASTATION EDIT
+			name = "alien princess ([number])" //if this is too cutesy feel free to change it/remove it.
+			RU_NAMES_LIST_INIT("[name]", "принцесса Чужих ([number])", "принцессы Чужих ([number])", "принцессе Чужих ([number])", "принцессу Чужих ([number])", "принцессой Чужих ([number])", "принцессе Чужих ([number])")
 			break
 
-	real_name = src.name
+	real_name = declent_ru(NOMINATIVE)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
