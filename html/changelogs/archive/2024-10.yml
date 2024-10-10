@@ -273,3 +273,15 @@
   - rscadd: Fundamentally Evil quirk. You might act normal, but you know deep down
       that you totally don't give a shit about anyone but yourself. Empaths better
       watch out.
+2024-10-10:
+  Ghommie:
+  - bugfix: The fishing portal generator (fish-porter 3000) now correctly links with
+      lava turfs from lavaland.
+  Jewelry-x:
+  - bugfix: fixed reagents not being applied correctly by venomous mobs
+  - bugfix: dead borgs no longer become invisible upon changing z level
+  SmArtKar:
+  - rscadd: New station trait "Spiked Drinks" that will add booze to most sodas has
+      been added to rotation.
+  StrangeWeirdKitten:
+  - admin: The Law Panel now properly logs and communicates law edits.
