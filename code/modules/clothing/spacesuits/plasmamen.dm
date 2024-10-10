@@ -25,12 +25,12 @@
 /obj/item/clothing/suit/space/eva/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_OCLOTHING)
-		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED), PROC_REF(check_fire_state))
+		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)), PROC_REF(check_fire_state))
 		check_fire_state()
 
 /obj/item/clothing/suit/space/eva/plasmaman/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED))
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)))
 
 /obj/item/clothing/suit/space/eva/plasmaman/proc/check_fire_state(datum/source)
 	SIGNAL_HANDLER

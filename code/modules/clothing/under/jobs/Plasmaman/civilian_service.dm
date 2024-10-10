@@ -27,12 +27,12 @@
 /obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_ICLOTHING)
-		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED), PROC_REF(check_fire_state))
+		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)), PROC_REF(check_fire_state))
 		check_fire_state()
 
 /obj/item/clothing/under/plasmaman/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED))
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)))
 
 /obj/item/clothing/under/plasmaman/proc/check_fire_state(datum/source)
 	SIGNAL_HANDLER
@@ -155,7 +155,7 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/plasmaman/clown/on_ignition(datum/source, datum/status_effect/fire_handler/status_effect)
+/obj/item/clothing/under/plasmaman/clown/check_fire_state(datum/source, datum/status_effect/fire_handler/status_effect)
 	if (!ishuman(loc))
 		return
 
@@ -171,7 +171,7 @@
 	extinguishes_left -= 1
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
-	addtimer(CALLBACK(src, PROC_REF(on_ignition)), extinguish_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
 	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
 	owner.extinguish_mob()
 	var/datum/effect_system/fluid_spread/foam/foam = new
