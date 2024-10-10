@@ -70,7 +70,8 @@
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(chest_owner.loc)
+		if(chest_owner.loc)
+			organ.forceMove(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
