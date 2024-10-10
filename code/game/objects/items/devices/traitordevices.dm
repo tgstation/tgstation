@@ -329,7 +329,7 @@ effective or pretty fucking useless.
 
 /obj/item/jammer
 	name = "radio jammer"
-	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all listening devices nearby."
+	desc = "Device used to disrupt nearby radio communication. Alternate function creates a powerful distruptor wave which disables all nearby listening devices."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
