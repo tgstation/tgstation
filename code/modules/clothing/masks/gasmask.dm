@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "But I am a gamer, and no man; A reproach of men, and despised by the people."
 	clothing_flags = MASKINTERNALS
 	icon_state = "jonkler"
-	inhand_icon_state = "jonkler"
+	inhand_icon_state = NULL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
