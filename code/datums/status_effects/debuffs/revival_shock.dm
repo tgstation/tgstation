@@ -1,7 +1,7 @@
 /datum/status_effect/revival_shock
 	id = "revival_shock"
 	alert_type = /atom/movable/screen/alert/status_effect/revival_shock
-	duration = 5 MINUTES
+	duration = 10 MINUTES
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/revival_shock/on_apply()
