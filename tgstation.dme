@@ -423,6 +423,7 @@
 #include "code\__DEFINES\~doppler_defines\obj_flags_doppler.dm"
 #include "code\__DEFINES\~doppler_defines\organ_slots.dm"
 #include "code\__DEFINES\~doppler_defines\preferences.dm"
+#include "code\__DEFINES\~doppler_defines\quirks.dm"
 #include "code\__DEFINES\~doppler_defines\reagent_forging_tools.dm"
 #include "code\__DEFINES\~doppler_defines\reagents.dm"
 #include "code\__DEFINES\~doppler_defines\reskin_defines.dm"
