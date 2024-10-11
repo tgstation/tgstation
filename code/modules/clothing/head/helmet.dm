@@ -33,6 +33,7 @@
 
 /obj/item/clothing/head/helmet/sec
 	var/flipped_visor = FALSE
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -86,6 +87,7 @@
 	name = "press helmet"
 	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "helmet_press"
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -102,6 +104,7 @@
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -131,6 +134,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -177,6 +181,7 @@
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
 	tint = 2
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -187,6 +192,7 @@
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -222,6 +228,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -268,6 +275,7 @@
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -315,6 +323,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -428,6 +437,7 @@
 	// Offer about the same protection as a hardhat.
 	armor_type = /datum/armor/helmet_taghelm
 	dog_fashion = null
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -519,6 +529,7 @@
 	icon_state = "rus_helmet"
 	inhand_icon_state = "rus_helmet"
 	armor_type = /datum/armor/helmet_rus_helmet
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
@@ -590,6 +601,7 @@
 	strip_delay = 80
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
+	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
