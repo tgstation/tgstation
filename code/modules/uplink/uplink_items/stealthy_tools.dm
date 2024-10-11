@@ -96,7 +96,7 @@
 /datum/uplink_item/stealthy_tools/mail_counterfeit
 	name = "GLA Brand Mail Counterfeit Device"
 	desc = "A device capable of counterfeiting NT's mail. Can be used to store items within as an easy means of smuggling contraband. \
-			Additionally, you may choose to \"arm\" the item inside, causing the item to be used as if the person had just used it in hand. \
+			Additionally, you may choose to \"arm\" the item inside, causing the item to be used the moment the mail is opened as if the person had just used it in hand. \
 			The most common usage of this feature is with grenades, as it forces the grenade to prime. Bonus points if the grenade is set to instantly detonate. \
 			Comes with an integrated micro-computer for configuration purposes."
 	item = /obj/item/storage/mail_counterfeit_device
