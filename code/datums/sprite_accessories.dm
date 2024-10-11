@@ -1805,9 +1805,6 @@
 /datum/sprite_accessory/tails/fox/default
 	icon_state = "default"
 
-/datum/sprite_accessory/tails/fox/dark
-	icon_state = "dark"
-
 /datum/sprite_accessory/tails/monkey
 
 /datum/sprite_accessory/tails/monkey/none

@@ -6,7 +6,11 @@
 	visual = TRUE
 	damage_multiplier = 2
 
+	dna_block = DNA_EARS_BLOCK
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/fox
 	sprite_accessory_override = /datum/sprite_accessory/ears/fox
+
+/datum/bodypart_overlay/mutant/cat_ears/fox
 
 /obj/item/organ/external/tail/fox
 	name = "fox tail"
