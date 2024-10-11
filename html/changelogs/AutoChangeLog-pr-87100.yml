@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes:
+  - bugfix: "Fixed chameleon clothing sometimes making you bald or hiding other parts of your sprite."

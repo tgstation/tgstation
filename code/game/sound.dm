@@ -558,4 +558,25 @@
 				'sound/creatures/cat/cat_purr3.ogg',
 				'sound/creatures/cat/cat_purr4.ogg',
 			)
+		if(SFX_DEFAULT_LIQUID_SLOSH)
+			soundin = pick(
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh1.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh2.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh3.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh4.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh5.ogg',
+			)
+		if(SFX_PLASTIC_BOTTLE_LIQUID_SLOSH)
+			soundin = pick(
+				'sound/items/handling/reagent_containers/plastic_bottle/plastic_bottle_liquid_slosh1.ogg',
+				'sound/items/handling/reagent_containers/plastic_bottle/plastic_bottle_liquid_slosh2.ogg',
+			)
+		if(SFX_PLATE_ARMOR_RUSTLE)
+			soundin = pick_weight(list(
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle1.ogg' = 8, //longest sound is rarer.
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle2.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle3.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle4.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle5.ogg' = 23,
+			))
 	return soundin

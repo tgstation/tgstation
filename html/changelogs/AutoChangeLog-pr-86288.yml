@@ -1,0 +1,9 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - balance: "[TGC] Rebalances nearly every card in the game."
+  - balance: "[TGC] Several keywords had their effects modified."
+  - bugfix: "[TGC] Black Gaia is no longer an \"Artifact\", Fryer no longer mentions tapping it."
+  - spellcheck: "[TGC] Replaced \"Tap this card:\" with just \"Tap:\" alongside other wording improvements"
+  - spellcheck: "[TGC] Mana has been replaced with Plasma. This is a completely cosmetic change."
+  - refactor: "[TGC] Merged many, many redudant card subtypes (the mechanic, not the byond code stuff) into more comprehensive ones."
