@@ -18,6 +18,8 @@
 	var/gulp_size = 5
 	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
+	///The sound this cup makes when picked up, dropped if there is liquid inside.
+	var/reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
 
 /obj/item/reagent_containers/cup/dropped(mob/user)
 	. = ..()
