@@ -1360,6 +1360,11 @@
 	toysay = "EI NATH!"
 	toysound = 'sound/effects/magic/disintegrate.ogg'
 
+/obj/item/toy/figure/wizard/special
+	name = "\improper Wizard action figure special edition"
+	toysay = "CLANG!";
+	toysound = 'sound/effects/clang.ogg'
+
 /obj/item/toy/figure/rd
 	name = "\improper Research Director action figure"
 	icon_state = "rd"
