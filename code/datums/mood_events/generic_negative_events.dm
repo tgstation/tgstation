@@ -506,3 +506,9 @@
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
 	mood_change = -4
 	timeout = 1 MINUTES
+
+/datum/mood_event/revival_shock
+	description = "No no no, not again! I don't want to die ever again!"
+	mood_change = -15
+	timeout = 10 MINUTES
+	special_screen_obj = "mood_happiness_bad"

@@ -887,6 +887,15 @@
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
 
+// If we have mood, applies a long-lasting mood debuff, majorly decreases our sanity and making us easier to injure. Does not affect changelings (duh)
+/mob/living/proc/revival_shock()
+	if (isnull(mob_mood) || IS_CHANGELING(src))
+		return
+
+	apply_status_effect(/datum/status_effect/revival_shock)
+	add_mood_event("revival", /datum/mood_event/revival_shock)
+	mob_mood.sanity_level = SANITY_CRAZY
+
 /**
  * Heals up the mob up to [heal_to] of the main damage types.
  * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)

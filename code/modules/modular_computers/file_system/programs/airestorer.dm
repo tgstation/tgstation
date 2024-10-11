@@ -37,22 +37,24 @@
 	if(!restoring) //Put the check here so we don't check for an ai all the time
 		return
 
-	var/mob/living/silicon/ai/A = stored_card.AI
+	var/mob/living/silicon/ai/card_ai = stored_card.AI
 	if(stored_card.flush)
 		restoring = FALSE
 		return
-	A.adjustOxyLoss(-5, FALSE)
-	A.adjustFireLoss(-5, FALSE)
-	A.adjustBruteLoss(-5, FALSE)
+
+	card_ai.adjustOxyLoss(-5, FALSE)
+	card_ai.adjustFireLoss(-5, FALSE)
+	card_ai.adjustBruteLoss(-5, FALSE)
 
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
-	A.updatehealth()
-	if(A.health >= 0 && A.stat == DEAD)
-		A.revive()
+	card_ai.updatehealth()
+
+	if(card_ai.health >= 0 && card_ai.stat == DEAD)
+		card_ai.revive()
 		stored_card.update_appearance()
 
 	// Finished restoring
-	if(A.health >= 100)
+	if(card_ai.health >= 100)
 		restoring = FALSE
 
 	return TRUE
