@@ -1,5 +1,3 @@
-#define EAT_FOOD_COOLDOWN 45 SECONDS
-
 /// similar to finding a target but looks for food types in the // the what?
 /datum/ai_planning_subtree/find_food
 	///behavior we use to find the food
@@ -12,8 +10,7 @@
 	var/emotes_blackboard_list = BB_EAT_EMOTES
 
 /datum/ai_planning_subtree/find_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/food_hunger_cooldown = controller.blackboard[BB_EAT_FOOD_COOLDOWN] || EAT_FOOD_COOLDOWN
-	if(controller.blackboard[BB_FOOD_LAST_EATEN] + food_hunger_cooldown > world.time)
+	if(controller.blackboard[BB_NEXT_FOOD_EAT] > world.time)
 		return
 	if(!controller.blackboard_key_exists(found_food_key))
 		controller.queue_behavior(finding_behavior, found_food_key, controller.blackboard[food_list_key])
@@ -37,5 +34,3 @@
 		return
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.manual_emote(pick(emotes_to_pick))
-
-#undef EAT_FOOD_COOLDOWN

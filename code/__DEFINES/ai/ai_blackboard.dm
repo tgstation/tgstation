@@ -129,8 +129,8 @@
 ///key holding emotes we play after eating
 #define BB_EAT_EMOTES "BB_eat_emotes"
 
-///key holding the last time we ate
-#define BB_FOOD_LAST_EATEN "BB_food_last_eaten"
+///key holding the next time we eat
+#define BB_NEXT_FOOD_EAT "BB_next_food_eat"
 
 ///key holding our eating cooldown
 #define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
@@ -180,5 +180,4 @@
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
 
-///mothroach next meal key!
-#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+

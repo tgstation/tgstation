@@ -95,4 +95,3 @@
 		final_target = food_stack.split_stack(eater, 1)
 	eater.log_message("has eaten [target]!", LOG_ATTACK)
 	qdel(final_target)
-	eater.ai_controller?.set_blackboard_key(BB_FOOD_LAST_EATEN, world.time)
