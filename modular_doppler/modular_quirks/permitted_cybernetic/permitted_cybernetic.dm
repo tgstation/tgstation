@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 	if(human_holder.dna.species.type in GLOB.species_blacklist_no_humanoid)
 		to_chat(human_holder, span_warning("Due to your species type, the [name] quirk has been disabled."))
 		return
-	if(human_holder.mind.assigned_role.job_flags & JOB_PRISONER)
+	if(human_holder.mind?.assigned_role.job_flags & JOB_PRISONER)
 		to_chat(human_holder, span_warning("Due to your job, the [name] quirk has been disabled."))
 		return
 
