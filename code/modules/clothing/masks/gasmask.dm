@@ -346,6 +346,16 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_fov = FALSE
 	fishing_modifier = 0
 
+/obj/item/clothing/mask/gas/jonkler
+	name = "gamer's wig and mask"
+	desc = "But I am a gamer, and no man; A reproach of men, and despised by the people."
+	clothing_flags = MASKINTERNALS
+	icon_state = "jonkler"
+	inhand_icon_state = "jonkler"
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
