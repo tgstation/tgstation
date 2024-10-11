@@ -1,7 +1,7 @@
 // Code for handling declents for bodyparts
 
 /obj/item/bodypart
-	var/list/ru_plaintext_zone
+	var/list/ru_plaintext_zone = list()
 
 /obj/item/bodypart/head
 	ru_plaintext_zone = RU_NAMES_LIST("head", "голова", "головы", "голове", "голову", "головой", "голове")
