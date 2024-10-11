@@ -669,6 +669,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
 	if(!handle_modifications)
 		return TRUE
+	ru_names_rename(RU_NAMES_LIST("sawn-off [src.name]", "обрез [declent_ru(GENITIVE)]", "обреза [declent_ru(GENITIVE)]", "обрезу [declent_ru(GENITIVE)]", "обрез [declent_ru(GENITIVE)]", "обрезом [declent_ru(GENITIVE)]", "обрезе [declent_ru(GENITIVE)]"))
 	name = "sawn-off [src.name]"
 	desc = sawn_desc
 	update_weight_class(WEIGHT_CLASS_NORMAL)

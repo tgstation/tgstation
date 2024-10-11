@@ -1,3 +1,5 @@
+#define RU_NAMES_LENGTH 7 // 6 падежей, 1 base
+
 /atom
 	// code\__DEFINES\bandastation\pronouns.dm for more info
 	/// RU_NAMES_LIST_INIT("name", "именительный", "родительный", "дательный", "винительный", "творительный", "предложный")
@@ -9,9 +11,10 @@
 	var/ru_name_instrumental
 	var/ru_name_prepositional
 
-/atom/proc/ru_names_rename(var/list/new_list)
-	if(!length(new_list) || length(ru_names) != length(new_list))
-		return
+/// Необходимо использовать ПЕРЕД изменением var/name, и использовать только этот прок для изменения в рантайме склонений
+/atom/proc/ru_names_rename(list/new_list)
+	if(length(new_list) != RU_NAMES_LENGTH)
+		CRASH("proc/ru_names_rename() received incorrect list!")
 	RU_NAMES_LIST_INIT(new_list["base"], new_list[NOMINATIVE], new_list[GENITIVE], new_list[DATIVE], new_list[ACCUSATIVE], new_list[INSTRUMENTAL], new_list[PREPOSITIONAL])
 
 /**
@@ -320,3 +323,5 @@
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
+
+#undef RU_NAMES_LENGTH
