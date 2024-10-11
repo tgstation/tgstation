@@ -65,6 +65,7 @@
 
 	extinguishes_left = 5
 	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	check_fire_state()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 
