@@ -29,8 +29,10 @@
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
-///Fires a signal to snap shut the springlock when called
+///Registers the signal COMSIG_MOD_Activate and calls the proc snap_shut() after a timer
 /obj/item/mod/module/springlock/proc/snap_signal()
+	if(set_off || mod.wearer.stat == DEAD)
+		return
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
@@ -41,16 +43,17 @@
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 
-	if(!(methods & (VAPOR|PATCH|TOUCH)) || set_off || mod.wearer.stat == DEAD)
+	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	snap_signal()
 
 ///Calls snap_signal() when exposed to water vapor
 /obj/item/mod/module/springlock/proc/on_wearer_exposed_gas()
 	SIGNAL_HANDLER
-	var/turf/t = loc.loc
-	var/datum/gas_mixture/air = t.return_air()
-	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5) || set_off || mod.wearer.stat == DEAD)
+
+	var/turf/wearer_turf = get_turf(src)
+	var/datum/gas_mixture/air = wearer_turf.return_air()
+	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5))
 		return //return if there aren't more than 5 Moles of Water Vapor in the air
 	snap_signal()
 
