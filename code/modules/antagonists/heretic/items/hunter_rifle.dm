@@ -134,6 +134,33 @@
 	damage = 30
 	stamina = 30
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	///The mob that is currently inside the bullet
+	var/mob/stored_mob
+
+/obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
+	. = ..()
+	if(IS_HERETIC(firer))
+		firer.forceMove(src)
+		stored_mob = firer
+
+/obj/projectile/bullet/strilka310/lionhunter/Destroy()
+	if(stored_mob)
+		stored_mob.forceMove(loc)
+	return ..()
+
+/obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return BULLET_ACT_HIT
+	var/mob/living/victim = target
+	var/mob/firing_mob = firer
+	if(IS_HERETIC_OR_MONSTER(victim) || !IS_HERETIC(firing_mob))
+		return BULLET_ACT_HIT
+
+	if(!victim.has_status_effect(/datum/status_effect/eldritch))
+		SEND_SIGNAL(firer, COMSIG_LIONHUNTER_ON_HIT, victim)
+
+	return BULLET_ACT_HIT
 
 // Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/strilka310/lionhunter
