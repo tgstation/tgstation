@@ -37,7 +37,7 @@
 
 /mob/living/basic/mad_piano/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/effect/gibspawner/robot)
+	var/list/death_loot = list(/obj/effect/gibspawner/robot)
 	AddElement(/datum/element/death_drops, death_loot)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(aggro_tantrum))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
