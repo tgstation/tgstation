@@ -549,37 +549,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			log_game("BYOND membership lookup for [parent.ckey] failed due to a connection error but succeeded after retry.")
 
-	if(!byond_member)
-		var/url_lookup = url_membership_lookup()
-		if(url_lookup)
-			if(isnull(byond_member))
-				log_game("Normal BYOND membership lookup for [parent.ckey] had a connection failure but url lookup succeeded.")
-			else
-				log_game("Normal BYOND membership lookup for [parent.ckey] indicated they were not a member but url lookup said they are.")
-		byond_member = url_lookup
-
 	if(isnull(byond_member))
 		to_chat(parent, span_warning("There's been a connection failure while trying to check the status of your BYOND membership. Reconnecting may fix the issue, or BYOND could be experiencing downtime."))
 
 	unlock_content = !!byond_member
 	if(unlock_content)
 		max_save_slots = 8
-
-/datum/preferences/proc/url_membership_lookup()
-	var/uri = "https://www.byond.com/members/[html_encode(parent.ckey)]?format=text"
-	var/outfile = "tmp/[parent.ckey].txt"
-	switch(world.system_type)
-		if(MS_WINDOWS)
-			world.shelleo("powershell Invoke-WebRequest -Uri '[uri]' -OutFile '[outfile]'")
-		if(UNIX)
-			world.shelleo("curl -o '[outfile]' '[uri]'")
-	if(!fexists(outfile))
-		CRASH("No file downloaded from url membership lookup.")
-	var/savefile/data = new
-	data.ImportText("/", file(outfile))
-	if(!data.dir.Find("general"))
-		CRASH("File downloaded from url membership lookup was malformed.")
-	data.cd = "general"
-	var/url_membership
-	data["is_member"] >> url_membership
-	return !!url_membership
