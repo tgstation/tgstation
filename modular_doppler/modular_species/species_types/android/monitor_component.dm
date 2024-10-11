@@ -77,9 +77,9 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 
 	if(!display_overlay)
 		display_overlay = new /datum/bodypart_overlay/simple/monitor_head
+		monitor_head.add_bodypart_overlay(display_overlay)
 
-	display_overlay.icon_state = "[GLOB.monitor_head_displays[new_display]]"
-	monitor_head.add_bodypart_overlay(display_overlay)
+	change_screen(wearer, "[GLOB.monitor_head_displays[new_display]]")
 	wearer.update_body_parts()
 
 /datum/action/innate/monitor_head/Remove(mob/remove_from)
@@ -89,6 +89,10 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 		monitor_head.remove_bodypart_overlay(display_overlay)
 		wearer.update_body_parts()
 	return ..()
+
+/datum/action/innate/monitor_head/proc/change_screen(mob/living/target, screen)
+	playsound(target, 'modular_doppler/modular_sounds/sound/mobs/humanoids/android/monitor_switch3.ogg', 100, TRUE)
+	display_overlay.icon_state = screen
 
 /datum/action/innate/monitor_head/update_status_on_signal(mob/living/carbon/wearer, new_stat, old_stat)
 	. = ..()
@@ -100,13 +104,13 @@ GLOBAL_LIST_INIT(monitor_head_displays, list(
 
 	switch(new_stat)
 		if(SOFT_CRIT)
-			display_overlay.icon_state = "bsod"
+			change_screen(wearer, "bsod")
 		if(HARD_CRIT)
-			display_overlay.icon_state = "static3"
+			change_screen(wearer, "static3")
 		if(UNCONSCIOUS)
-			display_overlay.icon_state = "none"
+			change_screen(wearer, "none")
 		if(DEAD)
-			display_overlay.icon_state = "none"
+			change_screen(wearer, "none")
 
 	wearer.update_body_parts()
 

@@ -127,8 +127,8 @@
 
 		energy_holder.core_energy += energy_delivered
 
-		playsound(user, 'modular_doppler/modular_sounds/sound/machines/drain.wav', 20, FALSE)
-		if(prob(10))
+		playsound(user, 'modular_doppler/modular_sounds/sound/mobs/humanoids/android/drain.wav', 25, FALSE)
+		if(prob(8))
 			do_sparks(3, FALSE, target_cell.loc)
 		if(energy_holder.core_energy >= POWER_CORD_CHARGE_MAX)
 			user.balloon_alert(user, "fully charged")
