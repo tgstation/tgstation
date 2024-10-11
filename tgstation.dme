@@ -6611,6 +6611,8 @@
 #include "modular_doppler\hearthkin\tribal_extended\code\weapons\bow.dm"
 #include "modular_doppler\hearthkin\tribal_extended\code\weapons\shield.dm"
 #include "modular_doppler\hearthkin\tribal_extended\code\weapons\sword.dm"
+#include "modular_doppler\height_scaling\code\icons.dm"
+#include "modular_doppler\height_scaling\code\preferences.dm"
 #include "modular_doppler\icspawn\cconsultant_items.dm"
 #include "modular_doppler\icspawn\observer_spawn.dm"
 #include "modular_doppler\icspawn\spell.dm"
