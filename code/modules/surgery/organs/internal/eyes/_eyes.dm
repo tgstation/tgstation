@@ -13,12 +13,12 @@
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD //threshold at 30
 	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD //threshold at 20
 
-	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
-	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
-	now_failing = "<span class='warning'>Darkness envelopes you, as your eyes go blind!</span>"
-	now_fixed = "<span class='info'>Color and shapes are once again perceivable.</span>"
-	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
-	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
+	low_threshold_passed = span_info("Distant objects become somewhat less tangible.")
+	high_threshold_passed = span_info("Everything starts to look a lot less clear.")
+	now_failing = span_warning("Darkness envelopes you, as your eyes go blind!")
+	now_fixed = span_info("Color and shapes are once again perceivable.")
+	high_threshold_cleared = span_info("Your vision functions passably once more.")
+	low_threshold_cleared = span_info("Your vision is cleared of any ailment.")
 
 	/// Sight flags this eye pair imparts on its user.
 	var/sight_flags = NONE
@@ -121,6 +121,36 @@
 #define OFFSET_X 1
 #define OFFSET_Y 2
 
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/internal/eyes/get_status_appendix(advanced, add_tooltips)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
+		return
+	if(owner.is_blind())
+		if(advanced)
+			if(owner.is_blind_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+			if(owner.is_blind_from(TRAUMA_TRAIT))
+				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
+			if(owner.is_blind_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically blind.", "Use medication such as [/datum/reagent/medicine/mutadone::name].", add_tooltips)
+			if(owner.is_blind_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
+		return "Subject is blind."
+	if(owner.is_nearsighted())
+		if(advanced)
+			if(owner.is_nearsighted_from(QUIRK_TRAIT))
+				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(GENETIC_MUTATION))
+				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(EYE_DAMAGE))
+				return conditional_tooltip("Subject is nearsighted from eye damage.", "Repair surgically or use medication such as [/datum/reagent/medicine/oculine::name]. Prescription glasses will assuage the effects.", add_tooltips)
+		return "Subject is nearsighted."
+	return ""
+
+/obj/item/organ/internal/eyes/show_on_condensed_scans()
+	// Always show if we have an appendix
+	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+
 /// This proc generates a list of overlays that the eye should be displayed using for the given parent
 /obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent)
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
@@ -140,8 +170,19 @@
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+			if(IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || (parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT)))
+				// show the eyes as open
+				eye_right.color = eye_color_right
+				eye_left.color = eye_color_left
+			else
+				// show the eyes as closed, and as such color them like eyelids wound be colored
+				var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
+				base_color[2] *= 0.85
+				base_color[3] *= 0.85
+				var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
+				eye_right.color = eyelid_color
+				eye_left.color = eyelid_color
+
 		if(my_head.worn_face_offset)
 			my_head.worn_face_offset.apply_offset(eye_left)
 			my_head.worn_face_offset.apply_offset(eye_right)

@@ -81,7 +81,7 @@
 	target_slime.applied_crossbreed_amount++
 	qdel(src)
 	to_chat(user, span_notice("You feed the slime [src], [target_slime.applied_crossbreed_amount == 1 ? "starting to mutate its core." : "further mutating its core."]"))
-	playsound(target_slime, 'sound/effects/attackblob.ogg', 50, TRUE)
+	playsound(target_slime, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 	if(target_slime.applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		target_slime.spawn_corecross()
@@ -508,7 +508,7 @@
 			to_chat(user, span_warning("You feel your body vibrating..."))
 			if(do_after(user, 2.5 SECONDS, target = user))
 				to_chat(user, span_warning("You teleport!"))
-				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+				do_teleport(user, get_turf(user), 6, asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -524,7 +524,7 @@
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 					to_chat(user, span_notice("You snap back to your anchor point!"))
-					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+					do_teleport(user, T,  asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
 
@@ -700,7 +700,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
-	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, multiline = TRUE)
+	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)

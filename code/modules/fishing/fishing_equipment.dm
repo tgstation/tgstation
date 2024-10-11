@@ -99,7 +99,7 @@
 	if(!movable_target.safe_throw_at(destination, source.cast_range, 2, callback = throw_callback, gentle = please_be_gentle))
 		UnregisterSignal(movable_target, COMSIG_ATOM_PREHITBY)
 	else
-		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 
 /obj/item/fishing_line/auto_reel/proc/catch_it_chucklenut(obj/item/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -288,6 +288,8 @@
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
 	custom_price = PAYCHECK_CREW * 3
+	///How much holding this affects fishing difficulty
+	var/fishing_modifier = -2
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -296,6 +298,7 @@
 		/obj/item/fishing_rod,
 	))
 	atom_storage.exception_hold = exception_cache
+	AddComponent(/datum/component/adjust_fishing_difficulty, -2, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
@@ -326,6 +329,7 @@
 	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
+	fishing_modifier = -7
 
 /obj/item/storage/toolbox/fishing/master/PopulateContents()
 	new /obj/item/fishing_rod/telescopic/master(src)
@@ -383,7 +387,7 @@
 	name = "fishing tip"
 	desc = "A slip of paper containing a pearl of wisdom about fishing within it, though you wish it were an actual pearl."
 
-/obj/item/paper/paperslip/fortune/Initialize(mapload)
+/obj/item/paper/paperslip/fishing_tip/Initialize(mapload)
 	default_raw_text = pick(GLOB.fishing_tips)
 	return ..()
 

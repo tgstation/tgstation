@@ -10,8 +10,8 @@
 	allow_dense = TRUE
 	dense_when_open = TRUE
 	delivery_icon = "deliverycrate"
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
@@ -121,7 +121,7 @@
 		if(elevation_open)
 			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
 	if(!QDELETED(manifest))
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
@@ -148,7 +148,7 @@
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
+	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
 	if(ishuman(user))
@@ -169,8 +169,8 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
-	open_sound = 'sound/machines/wooden_closet_open.ogg'
-	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
 	can_install_electronics = FALSE
@@ -301,22 +301,16 @@
 	base_icon_state = "food"
 
 /obj/structure/closet/crate/freezer/donk
-	name = "donk co. fridge"
-	desc = "A Donk Co. brand fridge, keeps your donkpcokets and foam ammunition fresh!"
+	name = "\improper Donk Co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpockets and foam ammunition fresh!"
 	icon_state = "donkcocrate"
 	base_icon_state = "donkcocrate"
 
-/obj/structure/closet/crate/freezer/interdyne
-	name = "interdyne freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Might or might not contain cold steel, or fresh organs."
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
-
-/obj/structure/closet/crate/freezer/blood/interdyne
-	name = "interdyne blood freezer"
-	desc = "Interdyne Pharmauceutics branded freezer. Only freshly harvested- I mean, freshly kept blood inside!"
-	icon_state = "interdynefreezer"
-	base_icon_state = "interdynefreezer"
+/obj/structure/closet/crate/self
+	name = "\improper S.E.L.F. crate"
+	desc = "A robust-looking crate with a seemingly decorative holographic display. The front of the crate proudly declares its allegiance to the notorious terrorist group 'S.E.L.F'."
+	icon_state = "selfcrate"
+	base_icon_state = "selfcrate"
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

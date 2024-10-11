@@ -235,7 +235,7 @@
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(!character.mind)
 		return
 	if(!GLOB.announcement_systems.len)
@@ -302,7 +302,7 @@
  * Tips that starts with the @ character won't be html encoded. That's necessary for any tip containing markup tags,
  * just make sure they don't also have html characters like <, > and ' which will be garbled.
  */
-/proc/send_tip_of_the_round(target, selected_tip)
+/proc/send_tip_of_the_round(target, selected_tip, source = "Tip of the round")
 	var/message
 	if(selected_tip)
 		message = selected_tip
@@ -320,4 +320,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))
+	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>[source]: </b>[message]</span>")))

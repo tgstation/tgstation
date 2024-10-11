@@ -47,7 +47,7 @@
 /datum/status_effect/eldritch/proc/on_effect()
 	SHOULD_CALL_PARENT(TRUE)
 
-	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
+	playsound(owner, 'sound/effects/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 //Each mark has different effects when it is destroyed that combine with the mansus grasp effect.

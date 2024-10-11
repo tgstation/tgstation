@@ -96,7 +96,7 @@
 
 /obj/item/bee_smoker/proc/alter_state()
 	activated = !activated
-	playsound(src, 'sound/items/welderdeactivate.ogg', 50, TRUE)
+	playsound(src, 'sound/items/tools/welderdeactivate.ogg', 50, TRUE)
 
 	if(!activated)
 		beesmoke_loop.stop()

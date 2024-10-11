@@ -54,8 +54,6 @@
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
 
-	return .
-
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
 	switch(key)
 		if("mode")
@@ -160,7 +158,7 @@
 		organ_list += organ
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
@@ -169,15 +167,15 @@
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
 	projectile.preparePixelProjectile(target, mod.wearer)
 	projectile.firer = mod.wearer
-	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	hitsound = 'sound/effects/attackblob.ogg'
-	hitsound_wall = 'sound/effects/attackblob.ogg'
+	hitsound = 'sound/effects/blob/attackblob.ogg'
+	hitsound_wall = 'sound/effects/blob/attackblob.ogg'
 	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
@@ -195,7 +193,7 @@
 
 /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!ishuman(target))
+	if(!isliving(target))
 		organ.forceMove(drop_location())
 		organ = null
 		return
@@ -338,7 +336,7 @@
 		balloon_alert(mod.wearer, "already ripped!")
 		return
 	balloon_alert(mod.wearer, "ripping clothing...")
-	playsound(src, 'sound/items/zip.ogg', 25, TRUE, frequency = -1)
+	playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE, frequency = -1)
 	if(!do_after(mod.wearer, 1.5 SECONDS, target = carbon_target))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
@@ -369,7 +367,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 		ripped_clothing -= clothing
 	if(zipped)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
 /obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
@@ -382,7 +380,7 @@
 		clothing.body_parts_covered |= ripped_clothing[clothing]
 	ripped_clothing = list()
 	if(!deleting)
-		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor

@@ -69,6 +69,11 @@
 
 	update_appearance()
 
+	//Bane effect that make it extra-effective against mobs with water adaptation (read: fish infusion)
+	AddElement(/datum/element/bane, target_type = /mob/living, damage_multiplier = 1.25)
+	RegisterSignal(src, COMSIG_OBJECT_PRE_BANING, PROC_REF(attempt_bane))
+	RegisterSignal(src, COMSIG_OBJECT_ON_BANING, PROC_REF(bane_effects))
+
 /obj/item/fishing_rod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(src == held_item)
 		if(currently_hooked)
@@ -79,7 +84,7 @@
 
 /obj/item/fishing_rod/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
-	var/gone_fishing = HAS_TRAIT(user, TRAIT_GONE_FISHING)
+	var/gone_fishing = GLOB.fishing_challenges_by_user[user]
 	if(currently_hooked || gone_fishing)
 		context[SCREENTIP_CONTEXT_LMB] = (gone_fishing && spin_frequency) ? "Spin" : "Reel in"
 		if(!gone_fishing)
@@ -135,6 +140,19 @@
 	QDEL_NULL(bait)
 	update_icon()
 
+///Fishing rodss should only bane fish DNA-infused spessman
+/obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
+	SIGNAL_HANDLER
+	if(!force || !HAS_TRAIT(fish, TRAIT_WATER_ADAPTATION))
+		return COMPONENT_CANCEL_BANING
+
+///Fishing rods should hard-counter fish DNA-infused spessman
+/obj/item/fishing_rod/proc/bane_effects(datum/source, mob/living/fish)
+	SIGNAL_HANDLER
+	fish.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
+	fish.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+	fish.adjust_wet_stacks(-4)
+
 /obj/item/fishing_rod/interact(mob/user)
 	if(currently_hooked)
 		reel(user)
@@ -142,12 +160,19 @@
 /obj/item/fishing_rod/proc/reel(mob/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
+
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	if(!do_after(user, 0.8 SECONDS, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
+	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
+	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
+
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
 		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
 		return
+
+	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
+	user.mind?.adjust_experience(/datum/skill/fishing, time * 0.13)
+
 	//Try to move it 'till it's under the user's feet, then try to pick it up
 	if(isitem(currently_hooked))
 		var/obj/item/item = currently_hooked
@@ -195,6 +220,15 @@
 	fishing_line = null
 	currently_hooked = null
 
+/obj/item/fishing_rod/proc/get_cast_range(mob/living/user)
+	. = cast_range
+	if(!user && !isliving(loc))
+		return
+	user = loc
+	if(!user.is_holding(src) || !user.mind)
+		return
+	. += round(user.mind.get_skill_level(/datum/skill/fishing) * 0.3)
+
 /obj/item/fishing_rod/dropped(mob/user, silent)
 	. = ..()
 	QDEL_NULL(fishing_line)
@@ -215,7 +249,7 @@
 	SIGNAL_HANDLER
 	. = NONE
 
-	if(!CheckToolReach(src, source.target, cast_range))
+	if(!CheckToolReach(src, source.target, get_cast_range()))
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
@@ -260,7 +294,7 @@
 		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
-	cast_projectile.range = cast_range
+	cast_projectile.range = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
@@ -411,7 +445,7 @@
 
 /// Ideally this will be replaced with generic slotted storage datum + display
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
-	if(fishing_line || HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
 	var/obj/item/current_item
 	switch(slot)
@@ -545,7 +579,7 @@
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return
 	//the fishing minigame uses the attack_self signal to let the user end it early without having to drop the rod.
-	if(HAS_TRAIT(user, TRAIT_GONE_FISHING))
+	if(GLOB.fishing_challenges_by_user[user])
 		return COMPONENT_BLOCK_TRANSFORM
 
 ///Gives feedback to the user, makes it show up inhand, toggles whether it can be used for fishing.
@@ -555,7 +589,7 @@
 	inhand_icon_state = active ? "rod" : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	update_appearance()
 	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE

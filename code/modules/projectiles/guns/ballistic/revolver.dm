@@ -3,11 +3,11 @@
 	desc = "A suspicious revolver. Uses .357 ammo."
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
-	load_sound = 'sound/weapons/gun/revolver/load_bullet.ogg'
-	eject_sound = 'sound/weapons/gun/revolver/empty.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
+	load_sound = 'sound/items/weapons/gun/revolver/load_bullet.ogg'
+	eject_sound = 'sound/items/weapons/gun/revolver/empty.ogg'
 	fire_sound_volume = 90
-	dry_fire_sound = 'sound/weapons/gun/revolver/dry_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/revolver/dry_fire.ogg'
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -48,11 +48,11 @@
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(play_click)
-			playsound(src, 'sound/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 
 /obj/item/gun/ballistic/revolver/verb/spin()
@@ -107,7 +107,7 @@
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"
@@ -115,9 +115,9 @@
 
 	can_modify_ammo = TRUE
 	initial_caliber = CALIBER_38
-	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	initial_fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	alternative_caliber = CALIBER_357
-	alternative_fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	alternative_fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
@@ -135,20 +135,20 @@
 		"Black Panther" = "c38_panther"
 	)
 
-/obj/item/gun/ballistic/revolver/syndicate
-	name = "\improper Syndicate Revolver"
-	desc = "A modernized 7 round revolver manufactured by Waffle Corp. Uses .357 ammo."
+/obj/item/gun/ballistic/revolver/badass
+	name = "\improper Badass Revolver"
+	desc = "A 7-chamber revolver manufactured by Waffle Corp to make their operatives feel Badass. Offers no tactical advantage whatsoever. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
-/obj/item/gun/ballistic/revolver/syndicate/nuclear
+/obj/item/gun/ballistic/revolver/badass/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
-/obj/item/gun/ballistic/revolver/syndicate/cowboy
+/obj/item/gun/ballistic/revolver/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
 	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
-/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear
+/obj/item/gun/ballistic/revolver/cowboy/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/revolver/mateba
@@ -160,7 +160,7 @@
 	name = "\improper Golden revolver"
 	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
 	icon_state = "goldrevolver"
-	fire_sound = 'sound/weapons/resonator_blast.ogg'
+	fire_sound = 'sound/items/weapons/resonator_blast.ogg'
 	recoil = 8
 	pin = /obj/item/firing_pin
 
@@ -296,10 +296,7 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	name = /obj/item/gun/ballistic/revolver/syndicate::name
-	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
 	clumsy_check = FALSE
-	icon_state = "revolversyndie"
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)

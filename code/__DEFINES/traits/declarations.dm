@@ -185,6 +185,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISGUISED "disguised"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
+/// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
+#define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -239,12 +241,24 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_DEEPER_FISH "examine_deeper_fish"
 ///Trait given to turfs or objects that can be fished from
 #define TRAIT_FISHING_SPOT "fishing_spot"
+///This trait prevents the fishing spot from being linked to the fish-porter when a multitool is being used.
+#define TRAIT_UNLINKABLE_FISHING_SPOT "unlinkable_fishing_spot"
 ///Trait given to mobs that can fish without a rod
 #define TRAIT_PROFOUND_FISHER "profound_fisher"
 /// If an atom has this trait, then you can toss a bottle with a message in it.
 #define TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION "message_in_a_bottle_location"
 /// Stops other objects of the same type from being inserted inside the same aquarium it's in.
 #define TRAIT_UNIQUE_AQUARIUM_CONTENT "unique_aquarium_content"
+/// Mobs that hate showers, being sprayed with water etc.
+#define TRAIT_WATER_HATER "water_hater"
+/// Improved boons from showers and some features centered around water, should also suppress TRAIT_WATER_HATER
+#define TRAIT_WATER_ADAPTATION "water_adaptation"
+/// Tells us that the mob urrently has the fire_handler/wet_stacks status effect
+#define TRAIT_IS_WET "is_wet"
+/// Mobs with this trait stay wet for longer and resist fire decaying wetness
+#define TRAIT_WET_FOR_LONGER "wet_for_longer"
+/// Mobs with this trait will be immune to slipping while also being slippery themselves when lying on the floor
+#define TRAIT_SLIPPERY_WHEN_WET "slippery_when_wet"
 /// This trait lets you evaluate someone's fitness level against your own
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 /// These mobs have particularly hygienic tongues
@@ -722,6 +736,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HONKSPAMMING "trait_honkspamming"
 /// Required by the waddling element since there are multiple sources of it.
 #define TRAIT_WADDLING "trait_waddling"
+/// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
+#define TRAIT_FLOPPING "trait_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
@@ -834,8 +850,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUSICIAN "musician"
 #define TRAIT_LIGHT_DRINKER "light_drinker"
 #define TRAIT_EMPATH "empath"
+#define TRAIT_EVIL "evil"
 #define TRAIT_FRIENDLY "friendly"
 #define TRAIT_GRABWEAKNESS "grab_weakness"
+#define TRAIT_GRABRESISTANCE "grab_resistance"
 #define TRAIT_SNOB "snob"
 #define TRAIT_BALD "bald"
 #define TRAIT_SHAVED "shaved"
@@ -961,6 +979,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
 #define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
 
+/// Stops a movable from being removed from the mob it's in by the content_barfer component.
+#define TRAIT_NOT_BARFABLE "not_barfable"
+
 ///fish traits
 #define TRAIT_FISH_STASIS "fish_stasis"
 #define TRAIT_FISH_FLOPPING "fish_flopping"
@@ -986,7 +1007,18 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///This fish is currently on cooldown and cannot splash ink unto people's faces
 #define TRAIT_FISH_INK_ON_COOLDOWN "fish_ink_on_cooldown"
 ///This fish requires two hands to carry even if smaller than FISH_SIZE_TWO_HANDS_REQUIRED, as long as it's bulky-sized.
-#define TRAIT_FISH_SHOULD_TWOHANDED "should_twohanded"
+#define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
+///This fish won't be killed when cooked.
+#define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
+/**
+ * This fish has been fed teslium without the electrogenesis having trait.
+ * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
+ */
+#define TRAIT_FISH_ON_TESLIUM "fish_on_teslium"
+/// This fish has been fed growth serum or something and will grow 5 times faster, up to 50% weight and size gain when fed.
+#define TRAIT_FISH_QUICK_GROWTH "fish_quick_growth"
+/// This fish has been fed mutagen or something. Evolutions will have more than twice the probability
+#define TRAIT_FISH_MUTAGENIC "fish_mutagenic"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1063,6 +1095,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
+#define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 
 ///Deathmatch traits
 #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
@@ -1133,11 +1166,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// this object has been frozen
 #define TRAIT_FROZEN "frozen"
-
-/// Currently fishing
-#define TRAIT_GONE_FISHING "fishing"
-/// Currently fishing, and it's the active minigame phase
-#define TRAIT_ACTIVELY_FISHING "actively_fishing"
 
 /// Makes a character be better/worse at tackling depending on their wing's status
 #define TRAIT_TACKLING_WINGED_ATTACKER "tacking_winged_attacker"
@@ -1281,6 +1309,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a turf that should not be allowed to be terraformed, such as turfs holding ore vents.
 #define TRAIT_NO_TERRAFORM "no_terraform"
 
+///Trait that prevents mobs from stopping by grabbing objects
+#define TRAIT_NOGRAV_ALWAYS_DRIFT "nograv_always_drift"
+
 ///Mobs with these trait do not get italicized/quiet speech when speaking in low pressure
 #define TRAIT_SPEECH_BOOSTER "speech_booster"
 
@@ -1289,6 +1320,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
+
+///Trait which silences all chemical reactions in its container
+#define TRAIT_SILENT_REACTIONS "silent_reactions"
 
 /**
  *

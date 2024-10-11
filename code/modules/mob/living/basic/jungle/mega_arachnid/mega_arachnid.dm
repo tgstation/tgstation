@@ -29,7 +29,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	speak_emote = list("chitters")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/mega_arachnid
 	alpha = 40

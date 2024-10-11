@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
+	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
 /obj/structure/fluff/fake_camera
@@ -199,6 +199,6 @@
 	var/obj/structure/toilet/destination = pick(partners)
 	forceMove(destination)
 	destination.w_items += w_class
-	destination.contents += src
+	LAZYADD(destination.cistern_items, src)
 
 #undef CAFE_KEYCARD_TOILETS

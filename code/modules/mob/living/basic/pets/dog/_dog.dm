@@ -31,7 +31,7 @@
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 0.8 SECONDS
 	/// Instructions you can give to dogs
@@ -40,6 +40,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/good_boy/dog,
 		/datum/pet_command/follow/dog,
+		/datum/pet_command/perform_trick_sequence,
 		/datum/pet_command/point_targeting/attack/dog,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,

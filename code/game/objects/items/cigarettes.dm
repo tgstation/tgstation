@@ -47,7 +47,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_lit"
 	damtype = BURN
 	force = 3
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	inhand_icon_state = "cigon"
 	name = "lit [initial(name)]"
 	desc = "A [initial(name)]. This one is lit."
@@ -132,6 +132,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "cigarette"
 	desc = "A roll of tobacco and nicotine. It is not food."
 	icon = 'icons/obj/cigarettes.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cigoff"
 	inhand_icon_state = "cigon" //gets overriden during intialize(), just have it for unit test sanity.
 	throw_speed = 0.5
@@ -346,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
-	playsound(src.loc, 'sound/items/cig_light.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -354,7 +355,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
@@ -395,7 +396,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
-	playsound(src.loc, 'sound/items/cig_snuff.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
@@ -675,6 +676,27 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+
+/obj/item/cigarette/dart
+	name = "fat dart"
+	desc = "Chuff back this fat dart"
+	icon_state = "bigon"
+	icon_on = "bigon"
+	icon_off = "bigoff"
+	w_class = WEIGHT_CLASS_BULKY
+	smoketime = 18 MINUTES
+	chem_volume = 65
+	list_reagents = list(/datum/reagent/drug/nicotine = 45)
+	choke_time_max = 40 SECONDS
+	lung_harm = 2
+
+/obj/item/cigarette/dart/Initialize(mapload)
+	. = ..()
+	//the compiled icon state is how it appears when it's on.
+	//That's how we want it to show on orbies (little virtual PDA pets).
+	//However we should reset their appearance on runtime.
+	update_appearance(UPDATE_ICON_STATE)
 
 
 ////////////

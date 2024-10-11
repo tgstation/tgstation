@@ -12,5 +12,19 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		}
+	],
+	"kitsune_up": [
+		{
+			"type": "icon_state",
+			"icon_state": "kitsune_base_up",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "kitsune_stripe_up",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
 	]
 }

@@ -207,7 +207,7 @@
 			continue
 
 		yeeted_person.adjustBruteLoss(step*0.5)
-		playsound(collateral_mob,'sound/weapons/punch1.ogg',50,TRUE)
+		playsound(collateral_mob,'sound/items/weapons/punch1.ogg',50,TRUE)
 		log_combat(the_hulk, collateral_mob, "has smacked with tail swing victim")
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
