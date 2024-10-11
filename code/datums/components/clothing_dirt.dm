@@ -1,9 +1,6 @@
 /// This component applies tint to clothing when its exposed to pepperspray, used in /obj/item/clothing/mask/gas.
 
 /datum/component/clothing_dirt
-	/// Mob wearing the clothing
-	var/mob/living/carbon/wearer
-
 	/// Amount of dirt stacks on the clothing
 	var/dirtiness = 0
 
@@ -16,16 +13,15 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose), TRUE)
 
 /datum/component/clothing_dirt/UnregisterFromParent()
 	var/obj/item/clothing/clothing = parent
 	clothing.tint -= dirtiness
-	clothing = null
-	if (!isnull(wearer))
+	if(iscarbon(clothing.loc))
+		var/mob/living/carbon/wearer = clothing.loc
 		wearer.update_tint()
 		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
-		wearer = null
 	else
 		UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
 	UnregisterSignal(parent, list(
@@ -42,15 +38,12 @@
 	if (!(slot & clothing.slot_flags))
 		return
 	UnregisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS)
-	wearer = user
-	RegisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
+	RegisterSignal(user, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose), TRUE)
 
-/datum/component/clothing_dirt/proc/on_drop()
+/datum/component/clothing_dirt/proc/on_drop(datum/source, mob/holder)
 	SIGNAL_HANDLER
-	if(!isnull(wearer))
-		UnregisterSignal(wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
-		wearer = null
-		RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose))
+	UnregisterSignal(holder, COMSIG_ATOM_EXPOSE_REAGENTS)
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_expose), TRUE)
 
 /datum/component/clothing_dirt/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -60,8 +53,10 @@
 /datum/component/clothing_dirt/proc/on_expose(atom/target, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
 
-	if(!isnull(wearer))
-		if(QDELETED(wearer) || is_protected())
+	var/mob/living/carbon/wearer
+	if(iscarbon(target))
+		wearer = target
+		if(is_protected(wearer))
 			return
 
 	var/datum/reagent/consumable/condensedcapsaicin/pepper = locate() in reagents
@@ -76,12 +71,16 @@
 		if(!isnull(wearer))
 			wearer.update_tint()
 
-/datum/component/clothing_dirt/proc/is_protected()
+/datum/component/clothing_dirt/proc/is_protected(mob/living/carbon/wearer)
 	return wearer.head && (wearer.head.flags_cover & PEPPERPROOF)
 
 /datum/component/clothing_dirt/proc/on_clean(datum/target, clean_types)
 	SIGNAL_HANDLER
 	var/obj/item/clothing/clothing = parent
+	var/mob/living/carbon/wearer
+	if(iscarbon(clothing.loc))
+		wearer = clothing.loc
+
 	if (clean_types & (CLEAN_WASH|CLEAN_SCRUB))
 		clothing.tint -= dirtiness
 		dirtiness = 0
