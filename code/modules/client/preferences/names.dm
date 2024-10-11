@@ -12,7 +12,7 @@
 	var/group
 
 	/// Whether or not to allow numbers in the person's name
-	var/allow_numbers = FALSE
+	var/allow_numbers = TRUE //DOPPLER EDIT - For clones and robots and shiz.
 
 	/// If the highest priority job matches this, will prioritize this name in the UI
 	var/relevant_job
@@ -24,17 +24,17 @@
 
 
 /datum/preference/name/deserialize(input, datum/preferences/preferences)
-	return reject_bad_name("[input]", allow_numbers)
+	return permissive_sanitize_name("[input]", allow_numbers) // DOPPLER EDIT CHANGE - ORIGINAL: return reject_bad_name
 
 
 /datum/preference/name/serialize(input)
 	// `is_valid` should always be run before `serialize`, so it should not
 	// be possible for this to return `null`.
-	return reject_bad_name(input, allow_numbers)
+	return permissive_sanitize_name(input, allow_numbers) // DOPPLER EDIT CHANGE - ORIGINAL: return reject_bad_name
 
 
 /datum/preference/name/is_valid(value)
-	return istext(value) && !isnull(reject_bad_name(value, allow_numbers))
+	return istext(value) && !isnull(permissive_sanitize_name(value, allow_numbers)) // DOPPLER EDIT CHANGE - ORIGINAL: !isnull(reject_bad_name(value, allow_numbers))
 
 
 /// A character's real name
@@ -68,7 +68,7 @@
 		else if(first_space == length(input))
 			input += "[pick(GLOB.last_names)]"
 
-	return reject_bad_name(input, allow_numbers)
+	return permissive_sanitize_name(input, allow_numbers) //DOPPLER EDIT CHANGE- Original: return reject_bad_name(input, allow_numbers)
 
 /// The name for a backup human, when nonhumans are made into head of staff
 /datum/preference/name/backup_human
