@@ -149,6 +149,6 @@
 /obj/item/paper/fluff/radiation_nebula_virologist
 	name = "radioactive resonance"
 	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
-		During routine blood screening on employees working in the nebula, we have found no traces of the symptom called 'Radioactive Resonance'. <br>
+		During routine blood screening on employees working within the nebula, we have found no traces of the symptom called 'Radioactive Resonance'. <br>
 		Something inside the nebula is interfering with it; be wary of a more shallow viral genepool.
 	"}
