@@ -540,7 +540,7 @@
 				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
-				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male4.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male5.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_mimimi2.ogg' = 1,
 			))
