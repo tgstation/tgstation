@@ -89,10 +89,12 @@
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
 	qdel(manipulator_hand)
-	if(isnull(containment_obj))
-		return
-	var/obj/obj_resolve = containment_obj?.resolve()
-	obj_resolve?.forceMove(get_turf(obj_resolve))
+	if(!isnull(containment_obj))
+		var/obj/containment_resolve = containment_obj?.resolve()
+		containment_resolve?.forceMove(get_turf(containment_resolve))
+	if(!isnull(filter_obj))
+		var/obj/filter_resolve = filter_obj?.resolve()
+		filter_resolve?.forceMove(get_turf(filter_resolve))
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -580,7 +582,9 @@
 	greyscale_config = /datum/greyscale_config/manipulator_hand
 	pixel_x = -32
 	pixel_y = -32
+	/// We get item from big manipulator and takes its icon to create overlay.
 	var/datum/weakref/item_in_my_claw
+	/// Var to icon that used as overlay on manipulator claw to show what item it grabs.
 	var/mutable_appearance/icon_overlay
 
 /obj/effect/big_manipulator_hand/update_overlays()
@@ -593,7 +597,7 @@
 	icon_overlay.color = item_data.color
 	icon_overlay.appearance = item_data.appearance
 	icon_overlay.appearance_flags = appearance_flags
-	icon_overlay.plane = plane
+	icon_overlay.plane = ABOVE_MOB_LAYER
 	icon_overlay.pixel_x = 32 + calculate_item_offset("x")
 	icon_overlay.pixel_y = 32 + calculate_item_offset("y")
 	. += icon_overlay
