@@ -140,7 +140,7 @@
 /obj/item/paper/fluff/radiation_nebula
 	name = "radioactive nebula shielding"
 	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
-		Set up these radioactive nebula shielding units before the gravity generators native shielding is overwhelmed! <br>
+		Set up these radioactive nebula shielding units before the gravity generator's native shielding is overwhelmed! <br>
 		Shielding units passively generate tritium, so make sure to properly ventilate/isolate the area before setting up a shielding unit!
 		More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
 	"}
