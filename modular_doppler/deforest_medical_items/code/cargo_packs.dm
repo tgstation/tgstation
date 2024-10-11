@@ -87,7 +87,7 @@
 	name = "Synthetic Treatment Kits"
 	desc = "Contains a treatment kit for synthetic lifeforms, filled with everything you need to treat an inorganic wound!"
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/storage/backpack/duffelbag/synth_treatment_kit = 1)
+	contains = list(/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit = 1)
 	crate_name = "synthetic treatment kits crate"
 
 	access_view = FALSE

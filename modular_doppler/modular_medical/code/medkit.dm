@@ -1,10 +1,8 @@
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit
 	name = "synthetic treatment kit"
 	desc = "A \"surgical\" duffel bag containing everything you need to treat the worst and <i>best</i> of inorganic wounds."
-	icon_state = "duffel-science"
-	inhand_icon_state = "duffel-science"
 
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/PopulateContents() // yes, this is all within the storage capacity
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/PopulateContents() // yes, this is all within the storage capacity
 	// Slash/Pierce wound tools - can reduce intensity of electrical damage (wires can fix generic burn damage)
 	new /obj/item/stack/cable_coil(src)
 	new /obj/item/stack/cable_coil(src)
@@ -29,7 +27,7 @@
 	new /obj/item/plunger(src) // Can be used to mold heated metal at T3
 
 // a treatment kit with extra space and more tools/upgraded tools, like a crowbar, insuls, a reinforced plunger, a crowbar and wrench
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/trauma
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/trauma
 	name = "synthetic trauma kit"
 	desc = "A \"surgical\" duffel bag containing everything you need to treat the worst and <i>best</i> of inorganic wounds. This one has extra tools and space \
 	for treatment of the WORST of the worst! However, it's highly specialized interior means it can ONLY hold synthetic repair tools."
@@ -98,7 +96,7 @@
 	//...So we can run this without it generating a line for every subtype.
 	can_hold_description = generate_hold_desc(can_hold_list)
 
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/trauma/PopulateContents() // yes, this is all within the storage capacity
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/trauma/PopulateContents() // yes, this is all within the storage capacity
 	// Slash/Pierce wound tools - can reduce intensity of electrical damage (wires can fix generic burn damage)
 	new /obj/item/stack/cable_coil(src)
 	new /obj/item/stack/cable_coil(src)
@@ -127,7 +125,7 @@
 	new /obj/item/plunger/reinforced(src) // Can be used to mold heated metal at T3
 
 // advanced tools, an RCD, chems, etc etc. dont give this one to the crew early in the round
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/trauma/advanced
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/trauma/advanced
 	name = "advanced synth trauma kit"
 	desc = "An \"advanced\" \"surgical\" duffel bag containing <i>absolutely</i> everything you need to treat the worst and <i>best</i> of inorganic wounds. \
 	This one has extra tools and space for treatment of the ones even <i>worse</i> than the WORST of the worst! However, its highly specialized interior \
@@ -140,7 +138,7 @@
 	max_slots = 33
 	max_total_storage = 50
 
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/trauma/advanced/PopulateContents() // yes, this is all within the storage capacity
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/trauma/advanced/PopulateContents() // yes, this is all within the storage capacity
 	// Slash/Pierce wound tools - can reduce intensity of electrical damage (wires can fix generic burn damage)
 	new /obj/item/stack/cable_coil(src)
 	new /obj/item/stack/cable_coil(src)
@@ -172,7 +170,7 @@
 	new /obj/item/stack/medical/bone_gel(src) // Ghetto T2/3 option for securing internals
 	new /obj/item/plunger/reinforced(src) // Can be used to mold heated metal at T3 blunt
 
-/obj/item/storage/backpack/duffelbag/synth_treatment_kit/trauma/advanced/unzipped
+/obj/item/storage/backpack/duffelbag/science/synth_treatment_kit/trauma/advanced/unzipped
 	zipped_up = FALSE
 
 // basetype, do not use
