@@ -9,10 +9,12 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(flags_1 & HOLOGRAM_1)
 		return
 	// DOPPLER ADDITION START
-	if(hasblueblood(src))
-		new /obj/effect/gibspawner/human/blue(drop_location(), src, get_static_viruses())
+	if(isandroid(src))
+		new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
+		return
 	if(hasgreenblood(src))
-		new /obj/effect/gibspawner/human/green(drop_location(), src, get_static_viruses())
+		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src, get_static_viruses())
+		return
 	// DOPPLER ADDITION END
 	if(drop_bitflags & DROP_BODYPARTS)
 		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())

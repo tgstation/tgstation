@@ -9,11 +9,9 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 
 /datum/quirk/permitted_cybernetic
 	name = "Permitted Cybernetic"
-	desc = "test"
+	desc = "You're allowed a cybernetic implant aboard the station, though this is information is available for security."
 	value = 8
 	mob_trait = TRAIT_PERMITTED_CYBERNETIC
-	gain_text = span_notice("test")
-	lose_text = span_danger("test")
 	icon = FA_ICON_WRENCH
 
 /datum/quirk_constant_data/implanted
@@ -31,6 +29,10 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 			desired_implant = text2path("[desired_implant]/l")
 
 	if(human_holder.dna.species.type in GLOB.species_blacklist_no_humanoid)
+		to_chat(human_holder, span_warning("Due to your species type, the [name] quirk has been disabled."))
+		return
+	if(human_holder.mind.assigned_role.job_flags & JOB_PRISONER)
+		to_chat(human_holder, span_warning("Due to your job, the [name] quirk has been disabled."))
 		return
 
 	var/obj/item/organ/internal/cybernetic = new desired_implant()

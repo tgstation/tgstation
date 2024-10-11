@@ -92,31 +92,6 @@
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	beauty = -100
 
-//// gibs
-// green
-/obj/effect/gibspawner/human/green
-	gibtypes = list(
-		/obj/effect/decal/cleanable/blood/gibs/up,
-		/obj/effect/decal/cleanable/blood/gibs/down,
-		/obj/effect/decal/cleanable/blood/gibs,
-		/obj/effect/decal/cleanable/blood/gibs,
-		/obj/effect/decal/cleanable/blood/gibs/body,
-		/obj/effect/decal/cleanable/blood/gibs/limb,
-		/obj/effect/decal/cleanable/blood/gibs/core,
-		)
-
-// blue
-/obj/effect/gibspawner/human/blue
-	gibtypes = list(
-		/obj/effect/decal/cleanable/blood/gibs/up,
-		/obj/effect/decal/cleanable/blood/gibs/down,
-		/obj/effect/decal/cleanable/blood/gibs,
-		/obj/effect/decal/cleanable/blood/gibs,
-		/obj/effect/decal/cleanable/blood/gibs/body,
-		/obj/effect/decal/cleanable/blood/gibs/limb,
-		/obj/effect/decal/cleanable/blood/gibs/core,
-		)
-
 //getTrail overwrite
 /mob/living/carbon/human/getTrail()
 	if((hasgreenblood(src)))
