@@ -29,7 +29,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
-///Registers the signal COMSIG_MOD_Activate and calls the proc snap_shut() after a timer
+///Registers the signal COMSIG_MOD_ACTIVATE and calls the proc snap_shut() after a timer
 /obj/item/mod/module/springlock/proc/snap_signal()
 	if(set_off || mod.wearer.stat == DEAD)
 		return
