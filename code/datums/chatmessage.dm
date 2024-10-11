@@ -159,8 +159,8 @@
 
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != chat_color_name_to_use)
-		target.chat_color = colorize_string(chat_color_name_to_use)
-		target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.85)
+		target.chat_color = get_chat_color_string(chat_color_name_to_use) // DOPPLER EDIT CHANGE - ORIGINAL: target.chat_color = colorize_string(chat_color_name_to_use)
+		target.chat_color_darkened = get_chat_color_string(chat_color_name_to_use, darkened = TRUE) // DOPPLER EDIT CHANGE - ORIGINAL: target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.85)
 		target.chat_color_name = chat_color_name_to_use
 
 	// Append language icon if the language uses one
