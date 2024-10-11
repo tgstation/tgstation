@@ -82,8 +82,8 @@
 					/obj/item/gun/energy/laser/bluetag = 3,
 					/obj/item/clothing/suit/redtag = 3,
 					/obj/item/clothing/suit/bluetag = 3,
-					/obj/item/clothing/head/helmet/taghelm/taghelm = 3,
-					/obj/item/clothing/head/helmet/taghelm/taghelm = 3,
+					/obj/item/clothing/head/helmet/taghelm/blue = 3,
+					/obj/item/clothing/head/helmet/taghelm/red = 3,
 				)
 	crate_name = "laser tag crate"
 
