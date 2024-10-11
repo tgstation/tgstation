@@ -123,6 +123,18 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
+///key holding any food we've found
+#define BB_TARGET_FOOD "BB_TARGET_FOOD"
+
+///key holding emotes we play after eating
+#define BB_EAT_EMOTES "BB_eat_emotes"
+
+///key holding the last time we ate
+#define BB_FOOD_LAST_EATEN "BB_food_last_eaten"
+
+///key holding our eating cooldown
+#define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
+
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
 
