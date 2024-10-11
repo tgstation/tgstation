@@ -74,8 +74,8 @@
 	owner.remove_filter(id)
 
 /datum/status_effect/realignment/tick(seconds_between_ticks)
-	owner.adjustStaminaLoss(-15)
-	owner.AdjustAllImmobility(-1.5 SECONDS)
+	owner.adjustStaminaLoss(-10)
+	owner.AdjustAllImmobility(-1 SECONDS)
 
 /atom/movable/screen/alert/status_effect/realignment
 	name = "Realignment"

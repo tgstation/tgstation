@@ -73,12 +73,11 @@
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"
 	desc = "Allows you to transmute 3 ballistic ammo casings (used or unused) of any caliber, \
-		including shotgun shot, with any animal hide to create an extra clip of ammunition for the Lionhunter Rifle."
+		including shotgun shot to create an extra clip of ammunition for the Lionhunter Rifle."
 	gain_text = "The weapon came with three rough iron balls, intended to be used as ammunition. \
 		They were very effective, for simple iron, but used up quickly. I soon ran out. \
 		No replacement munitions worked in their stead. It was peculiar in what it wanted."
 	required_atoms = list(
-		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/ammo_casing = 3,
 	)
 	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)

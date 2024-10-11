@@ -68,10 +68,15 @@
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
 	if(isliving(target))
 		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
+	else
+		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK_NON_LIVING, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
 		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
+		return ITEM_INTERACT_BLOCKING
+	else
+		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK_NON_LIVING, interacting_with, src)
 		return ITEM_INTERACT_BLOCKING
 
 // Path of Rust's blade
@@ -147,14 +152,28 @@
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
 		return
+
+	//Apply our heretic mark
 	var/datum/heretic_knowledge/mark/blade_mark/mark_to_apply = heretic_datum.get_knowledge(/datum/heretic_knowledge/mark/blade_mark)
 	if(!mark_to_apply)
 		return
 	mark_to_apply.create_mark(user, target)
+
+	//Remove the infusion from any blades we own (and update their sprite)
 	for(var/obj/item/melee/sickly_blade/dark/to_infuse in user.get_all_contents_type(/obj/item/melee/sickly_blade/dark))
 		to_infuse.infused = FALSE
 		to_infuse.update_appearance(UPDATE_ICON)
 	user.update_held_items()
+
+	if(!check_behind(user, target) || !isliving(target))
+		return
+
+	// We're officially behind them, apply effects
+	var/mob/living/living_target = target
+	living_target.AdjustParalyzed(1.5 SECONDS)
+	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
+	living_target.balloon_alert(user, "backstab!")
+	playsound(get_turf(living_target), 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 /obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
 	. = ..()

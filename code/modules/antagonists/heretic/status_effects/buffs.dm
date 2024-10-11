@@ -4,7 +4,7 @@
 /datum/status_effect/crucible_soul
 	id = "Blessing of Crucible Soul"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 15 SECONDS
+	duration = 40 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
 	show_duration = TRUE
 	///Stores the location where the mob drank the potion, used to teleport the drinker back to the spot after expiration
@@ -83,6 +83,9 @@
 	for(var/obj/item/bodypart/potentially_wounded in drinker.bodyparts)
 		for(var/datum/wound/found_wound in potentially_wounded.wounds)
 			found_wound.remove_wound()
+	if(length(drinker.get_missing_limbs()) >= 1)
+		drinker.regenerate_limbs()
+		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
 
 /datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
@@ -188,7 +191,8 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	var/obj/effect/floating_blade/blade = new blade_type(get_turf(owner))
+	var/obj/effect/floating_blade/blade
+	blade = new blade_type(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))

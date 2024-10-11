@@ -11,13 +11,13 @@
 	anchored = TRUE
 	density = TRUE
 	///How much mass this currently holds
-	var/current_mass = 2
+	var/current_mass = 3
 	///Maximum amount of mass
-	var/max_mass = 2
+	var/max_mass = 3
 	///Last time the crucible created mass on its own
 	var/last_refill
 	///How long until the crucible creates mass
-	var/refill_cooldown = 45 SECONDS
+	var/refill_cooldown = 30 SECONDS
 	///Check to see if it is currently being used.
 	var/in_use = FALSE
 

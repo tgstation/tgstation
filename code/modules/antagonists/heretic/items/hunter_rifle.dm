@@ -134,6 +134,19 @@
 	damage = 30
 	stamina = 30
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+	///The mob that is currently inside the bullet
+	var/mob/stored_mob
+
+/obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
+	. = ..()
+	if(IS_HERETIC(firer))
+		firer.forceMove(src)
+		stored_mob = firer
+
+/obj/projectile/bullet/strilka310/lionhunter/Destroy()
+	if(stored_mob)
+		stored_mob.forceMove(loc)
+	return ..()
 
 /obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
