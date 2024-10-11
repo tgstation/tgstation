@@ -115,14 +115,13 @@
 	// BUT, if we're at a decent range and the target's a living mob,
 	// the projectile's been channel fired. It has full effects and homes in.
 	if(distance > min_distance && isliving(target) && iscarbon(user))
-		loaded_projectile.damage *= 2
 		loaded_projectile.stamina *= 2
 		loaded_projectile.knockdown = 0.5 SECONDS
 		loaded_projectile.stutter = 6 SECONDS
 		loaded_projectile.projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 		loaded_projectile.homing = TRUE
-		loaded_projectile.homing_turn_speed = 80
+		loaded_projectile.homing_turn_speed = 150
 		loaded_projectile.set_homing_target(target)
 
 	return ..()
@@ -139,9 +138,11 @@
 
 /obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
 	. = ..()
-	if(IS_HERETIC(firer))
-		firer.forceMove(src)
-		stored_mob = firer
+	if(isliving(firer))
+		var/mob/living/living_firer = firer
+		if(IS_HERETIC(living_firer))
+			living_firer.forceMove(src)
+			stored_mob = living_firer
 
 /obj/projectile/bullet/strilka310/lionhunter/Destroy()
 	if(stored_mob)

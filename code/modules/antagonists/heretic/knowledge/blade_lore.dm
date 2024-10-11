@@ -32,8 +32,8 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the Path of Blades to you. \
-		Allows you to transmute a knife with two bars of silver or titanium to create a Sundered Blade. \
-		You can create up to five at a time."
+		Allows you to transmute a knife with one bar of silver or titanium to create a Sundered Blade. \
+		You can create up to four at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
