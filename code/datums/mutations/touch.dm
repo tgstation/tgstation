@@ -114,7 +114,8 @@
 
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
-	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself."
+	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself. \
+		For some reason, this power does not play nicely with the undead or people of particularly uncouth moral opinions."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
 	sound = 'sound/effects/magic/staff_healing.ogg'
@@ -158,6 +159,13 @@
 
 	// Message to show on a successful heal if the healer has a special pacifism interaction with the mutation.
 	var/peaceful_message = null
+
+	if (hurtguy.mob_biotypes & MOB_UNDEAD && HAS_TRAIT(mendicant, TRAIT_PACIFISM)) //Returns if our target is undead and we're a pacifist.
+		mendicant.balloon_alert(mendicant, "[hurtguy] is undead!")
+		return FALSE
+
+	else if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_PACIFISM) || HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_PACIFISM)) //if our target is undead or evil, we do not heal them, but instead hurt them.
+		return by_gods_light_i_smite_you(mendicant, hurtguy, heal_multiplier)
 
 	// Heal more, hurt a bit more.
 	// If you crunch the numbers it sounds crazy good,
@@ -337,6 +345,34 @@
 			to_chat(mendicant, span_notice("Your veins swell and itch!"))
 		else
 			to_chat(mendicant, span_notice("Your veins swell!"))
+
+///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
+
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/paladin, mob/living/evil_motherfucker, smite_multiplier)
+	var/our_smite_multiplier = smite_multiplier
+
+	if(paladin.mind?.holy_role >= HOLY_ROLE_PRIEST)
+		var/possible_deity = GLOB.deity
+		var/mob/living/carbon/human/human_paladin = paladin //wow so original, dude
+		if(ishuman(human_paladin))
+			human_paladin.force_say()
+			human_paladin.say("By [possible_deity ? "[possible_deity]'s" : "God's"] might I smite you!!!", forced = "compelled by the power of their deity")
+		our_smite_multiplier *= 5 //good luck surviving this
+
+	evil_motherfucker.apply_damage(10 * our_smite_multiplier, BURN, wound_bonus = 5 * our_smite_multiplier)
+	evil_motherfucker.adjust_fire_stacks(3 * our_smite_multiplier)
+	evil_motherfucker.ignite_mob()
+
+	paladin.Beam(evil_motherfucker, icon_state = beam_icon, time = 0.5 SECONDS)
+	beam_icon = initial(beam_icon)
+	evil_motherfucker.update_damage_overlays()
+
+
+	evil_motherfucker.visible_message(span_warning("[paladin] lays hands on [evil_motherfucker], but it shears [evil_motherfucker.p_them()] with a brilliant energy!"))
+	to_chat(evil_motherfucker, span_bolddanger("[paladin] lays hands on you, hurting you!"))
+	evil_motherfucker.emote("scream")
+	new /obj/effect/temp_visual/heal(get_turf(evil_motherfucker), LIGHT_COLOR_HOLY_MAGIC)
+	. = TRUE
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"
