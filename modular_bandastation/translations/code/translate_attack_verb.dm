@@ -435,6 +435,8 @@ GLOBAL_LIST_INIT(ru_attack_verbs, list(
 	"barrels into" = "перекатывается в",
 	"pulverize" = "пульверизируете",
 	"pulverizes" = "пульверизирует",
+	"pulverise" = "пульверизируете",
+	"pulverises" = "пульверизирует",
 	"weakly tackle" = "слабо обхватываете",
 	"weakly tackles" = "слабо обхватывает",
 	"lash out at" = "набрасываетесь на",
@@ -640,7 +642,10 @@ GLOBAL_LIST_INIT(ru_attack_verbs, list(
 	"stare down" = "пристально смотрите на",
 	"stares down" = "пристально смотрит на",
 	"growl at" = "рычите на",
-	"growls at" = "рычит",
+	"growls at" = "рычит на",
+	// MARK: Obj
+	"ineffectively pierce" = "неэффективно пробиваете",
+	"ineffectively pierces" = "неэффективно пробивает",
 ))
 
 /proc/ru_attack_verb(attack_verb, var/list/attack_type = GLOB.ru_attack_verbs)
