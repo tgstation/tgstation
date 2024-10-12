@@ -783,7 +783,7 @@
 	icon_static = ANDROID_BODYPARTS_DMI
 	icon = ANDROID_BODYPARTS_DMI
 	icon_greyscale = ANDROID_BODYPARTS_DMI
-	icon_state = "synth_lizard_chest"
+	icon_state = "synth_lizard_chest_f"
 	limb_id = "synth_lizard"
 
 /obj/item/bodypart/arm/right/robot/android/synth_lizard
