@@ -200,6 +200,22 @@
 			name = "matthew-fish"
 			sprite_width = 6
 
+/obj/item/fish/fryish/fritterish/update_name()
+	switch(icon_state)
+		if("bernardfish")
+			name = "bernard-fish"
+		if("matthewfish")
+			name = "matthew-fish"
+	return ..()
+
+/obj/item/fish/fryish/fritterish/update_desc()
+	switch(icon_state)
+		if("bernardfish")
+			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
+		if("matthewfish")
+			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
+	return ..()
+
 /obj/item/fish/fryish/nessie
 	name = "nessie-fish"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
