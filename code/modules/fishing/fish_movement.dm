@@ -96,7 +96,6 @@
 		target_position = round(new_target)
 		current_velocity_limit = long_jump_velocity_limit
 
-	target_acceleration
 	// Move towards target
 	if(!isnull(target_position))
 		var/distance = target_position - master.fish_position

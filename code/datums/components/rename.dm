@@ -26,7 +26,7 @@
 	src.custom_name = custom_name
 	src.custom_desc = custom_desc
 	apply_rename()
-	ADD_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, type)
+	ADD_TRAIT(parent, TRAIT_WAS_RENAMED, type)
 
 /**
 	This proc will fire after the parent's name or desc is changed with a pen, which is trying to apply another rename component.
@@ -63,5 +63,5 @@
 
 /datum/component/rename/Destroy()
 	revert_rename()
-	REMOVE_TRAIT(renamed_obj, TRAIT_WAS_RENAMED, type)
+	REMOVE_TRAIT(parent, TRAIT_WAS_RENAMED, type)
 	return ..()

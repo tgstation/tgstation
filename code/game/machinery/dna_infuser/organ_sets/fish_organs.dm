@@ -224,7 +224,7 @@
 
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not suffocating.
-	var/safe_water_level = safe_oxygen_min::safe_oxygen_min
+	var/safe_water_level = parent_type::safe_oxygen_min
 
 	/// Bodypart overlay applied to the chest where the lungs are in
 	var/datum/bodypart_overlay/simple/gills/gills
