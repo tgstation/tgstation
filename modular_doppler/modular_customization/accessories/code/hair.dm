@@ -651,6 +651,10 @@
 	name = "Long Dreadlocks"
 	icon_state = "hair_dreadlocks_long"
 
+/datum/sprite_accessory/hair/modular/inari
+	name = "Inari"
+	icon_state = "inari"
+
 // Facial hair
 
 /datum/sprite_accessory/facial_hair/modular
