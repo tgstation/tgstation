@@ -187,6 +187,8 @@ SUBSYSTEM_DEF(ticker)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
+			if(timeLeft <= 100)
+				SEND_SOUND(world, 'sound/misc/menu/10_seconds_left.ogg')
 			if(timeLeft <= 0)
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 				current_state = GAME_STATE_SETTING_UP

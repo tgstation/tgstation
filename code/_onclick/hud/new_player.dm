@@ -135,6 +135,7 @@
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
+	SEND_SOUND(hud.mymob, 'sound/misc/menu/select.ogg')
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
@@ -147,6 +148,7 @@
 
 	. = ..()
 	highlighted = TRUE
+	SEND_SOUND(hud.mymob, 'sound/misc/menu/hover.ogg')
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
@@ -236,9 +238,11 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	ready = !ready
 	if(ready)
+		SEND_SOUND(new_player.client, 'sound/misc/menu/ready_up.ogg')
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
 	else
+		SEND_SOUND(new_player.client, 'sound/misc/menu/unready.ogg')
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
 	update_appearance(UPDATE_ICON)
