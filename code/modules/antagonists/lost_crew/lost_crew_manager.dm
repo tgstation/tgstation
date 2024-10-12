@@ -52,8 +52,6 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 			/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
 		)
 
-	QDEL_LIST(recovered_items) //debug
-
 	return new_body
 
 /// Set a timer for awarding succes and drop some awesome deathlore
