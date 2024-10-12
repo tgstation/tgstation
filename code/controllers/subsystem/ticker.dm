@@ -32,6 +32,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/tipped = FALSE //Did we broadcast the tip of the day yet?
 	var/selected_tip // What will be the tip of the day?
+	///Have we started the ten second warning sound?
+	var/ten_second_warning = FALSE
 
 	var/timeLeft //pregame timer
 	var/start_at
@@ -187,7 +189,8 @@ SUBSYSTEM_DEF(ticker)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
-			if(timeLeft <= 100)
+			if(timeLeft <= 100 && !ten_second_warning)
+				ten_second_warning = TRUE
 				SEND_SOUND(world, 'sound/misc/menu/10_seconds_left.ogg')
 			if(timeLeft <= 0)
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
