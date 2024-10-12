@@ -47,6 +47,10 @@
 #define DIAG_CAMERA_HUD "22"
 /// Steady Hacked APC effect, visible only to Malf AIs
 #define MALF_APC_HUD "23"
+// DOPPLER ADDITION BEGIN
+/// If they have the implanted quirk
+#define SEC_IMPLANT_HUD "25"
+// DOPPLER ADDITION END
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

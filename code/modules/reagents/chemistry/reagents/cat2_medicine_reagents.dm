@@ -220,6 +220,7 @@
 	inverse_chem = /datum/reagent/inverse/hercuri
 	inverse_chem_val = 0.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC // DOPPLER EDIT - Lets hercuri process in synths
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

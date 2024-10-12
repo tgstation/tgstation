@@ -978,7 +978,7 @@
 		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
 		return ITEM_INTERACT_BLOCKING
-
+	/* DOPPLER EDIT REMOVAL START
 	if(isbodypart(interacting_with) && actually_paints)
 		var/obj/item/bodypart/limb = interacting_with
 		if(!IS_ORGANIC_LIMB(limb))
@@ -994,6 +994,7 @@
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return ITEM_INTERACT_SUCCESS
+		DOPPLER EDIT REMOVAL END */
 	if(interacting_with.color)
 		paint_color = interacting_with.color
 		balloon_alert(user, "matched colour of target")

@@ -115,10 +115,10 @@ export const caps_color: Feature<string[]> = {
 };
 
 export const has_markings: FeatureToggle = {
-  name: 'Add Part: Basic Markings',
+  name: 'Add Part: Markings',
   category: 'GAMEPLAY',
   description: `
-    When toggled, adds basic bodymarkings to your character.
+    When toggled, adds bodymarkings to your character.
   `,
   component: CheckboxInput,
 };
@@ -166,10 +166,10 @@ export const has_moth_wings: FeatureToggle = {
 };
 
 export const has_antennae: FeatureToggle = {
-  name: 'Add Part: Antennae',
+  name: 'Add Part: Moth Antennae',
   category: 'GAMEPLAY',
   description: `
-    When toggled, adds antennae to your character.
+    When toggled, adds moff antennae to your character.
   `,
   component: CheckboxInput,
 };

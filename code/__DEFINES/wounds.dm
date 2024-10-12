@@ -128,11 +128,15 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 /// Cranial fissure wound.
 #define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 
-// NOVA EDIT ADDITION BEGIN - MUSCLE AND SYNTH WOUNDS
+// DOPPLER ADDITION BEGIN - synth wounds
 // Have to put it here so I can use it in the global list of wound series
 /// See muscle.dm and robotic_blunt.dm
 #define WOUND_SERIES_MUSCLE_DAMAGE "nova_wound_series_muscle_damage"
-
+#define WOUND_SERIES_METAL_BLUNT_BASIC "wound_series_metal_blunt_basic"
+#define WOUND_SERIES_METAL_BURN_OVERHEAT "wound_series_metal_burn_basic"
+#define WOUND_SERIES_WIRE_SLASH_ELECTRICAL_DAMAGE "wound_series_metal_slash_electrical_damage_basic"
+#define WOUND_SERIES_WIRE_PIERCE_ELECTRICAL_DAMAGE "wound_series_metal_pierce_electrical_damage_basic"
+// DOPPLER ADDITION END
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
 
@@ -284,7 +288,8 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 /// Assoc list of biotype -> ideal scar file to be used and grab stuff from.
 GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 	"[BIO_FLESH]" = FLESH_SCAR_FILE,
-	"[BIO_BONE]" = BONE_SCAR_FILE
+	"[BIO_BONE]" = BONE_SCAR_FILE,
+	"[BIO_METAL]" = METAL_SCAR_FILE // DOPPLER EDIT ADDITION - METAL SCARS (see robotic_blunt.dm)
 ))
 
 // ~burn wound infection defines

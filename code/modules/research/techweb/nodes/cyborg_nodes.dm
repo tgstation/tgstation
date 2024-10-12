@@ -19,6 +19,14 @@
 		"cybernetic_stomach",
 		"cybernetic_liver",
 		"cybernetic_heart",
+		// DOPPLER ADDITION START
+		"android_chest",
+		"android_head",
+		"android_l_arm",
+		"android_l_leg",
+		"android_r_arm",
+		"android_r_leg",
+		// DOPPLER ADDITION END
 	)
 	experiments_to_unlock = list(
 		/datum/experiment/scanning/people/android,
@@ -193,6 +201,12 @@
 		"ci-nutrimentplus",
 		"ci-toolset",
 		"ci-surgery",
+		// DOPPLER ADDITION START
+		"ci-botany",
+		"ci-janitor",
+		"ci-razor",
+		"ci-drill",
+		// DOPPLER ADDITION END
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)

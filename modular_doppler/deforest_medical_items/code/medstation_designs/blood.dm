@@ -107,3 +107,25 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_DEFOREST_BLOOD,
 	)
+
+/datum/design/organic_bloodbag_robot
+	name = "R Blood Pack"
+	id = "organic_bloodbag_robot"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/reagent_containers/blood/robot
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_BLOOD,
+	)
+
+/datum/design/organic_bloodbag_bug
+	name = "I Blood Pack"
+	id = "organic_bloodbag_bug"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 100)
+	build_path = /obj/item/reagent_containers/blood/bug
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_DEFOREST_BLOOD,
+	)
