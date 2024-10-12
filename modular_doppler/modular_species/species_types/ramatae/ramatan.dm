@@ -13,6 +13,7 @@
 
 /mob/living/carbon/human/species/ramatan
 	race = /datum/species/ramatan
+
 /datum/species/ramatan
 	// The Ramatae of Aadia III - The Origin
 	name = "\improper Ramatan"
