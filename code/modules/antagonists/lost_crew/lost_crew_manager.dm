@@ -64,6 +64,8 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	bank_account.replaceable = FALSE
 	owner.add_mob_memory(/datum/memory/key/account, remembered_id = owner.account_id)
 
+	death_lore += "My account number was [owner.account_id]."
+
 	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
 		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), owner, span_boldnotice(death_lore[i])), 10 SECONDS + 2 SECONDS * i)
