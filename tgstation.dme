@@ -6712,6 +6712,7 @@
 #include "modular_doppler\modular_customization\accessories\code\aquatic_accessories\aquatic_ears.dm"
 #include "modular_doppler\modular_customization\accessories\code\aquatic_accessories\aquatic_snout.dm"
 #include "modular_doppler\modular_customization\accessories\code\aquatic_accessories\aquatic_tail.dm"
+#include "modular_doppler\modular_customization\accessories\code\cybernetic_accessories\synth_body_markings.dm"
 #include "modular_doppler\modular_customization\accessories\code\cybernetic_accessories\synth_ears.dm"
 #include "modular_doppler\modular_customization\accessories\code\cybernetic_accessories\synth_horns.dm"
 #include "modular_doppler\modular_customization\accessories\code\cybernetic_accessories\synth_tail.dm"
