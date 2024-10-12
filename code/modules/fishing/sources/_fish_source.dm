@@ -423,8 +423,6 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		var/obj/item/fish/prototype = reward
 		if(!(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
-		var/weight = fish_table[reward]
-		total_weight += weight
 		rodless_weights[reward] = weight
 		if(rod)
 			var/mult = rod.bait ? rod.bait.check_bait(prototype) : 1
@@ -456,7 +454,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	if(rod)
 		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
-	examine_text += span_info("[info]: [english_list(known_fishes)].")
+	examine_text += examine_block(span_info("[info]: [english_list(known_fishes)]."))
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)
