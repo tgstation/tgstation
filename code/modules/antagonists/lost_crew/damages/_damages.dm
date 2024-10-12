@@ -33,8 +33,9 @@
 	character.apply_character(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
 
 	var/datum/corpse_assignment/assignment = pick_weight(possible_character_assignments)
-	assignment = new assignment()
-	assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
+	if(assignment)
+		assignment = new assignment()
+		assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
 
 	death_lore += assignment.job_lore
 
