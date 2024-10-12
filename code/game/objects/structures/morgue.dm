@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
-	open()
 	if(connected)
 		QDEL_NULL(connected)
 	return ..()
