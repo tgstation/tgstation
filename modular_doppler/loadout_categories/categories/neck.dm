@@ -18,7 +18,7 @@
 	name = "Ranger Poncho"
 	item_path = /obj/item/clothing/neck/ranger_poncho
 
-/obj/item/clothing/neck/face_scarf
+/datum/loadout_item/neck/face_scarf
 	name = "Face Scarf"
 	item_path = /obj/item/clothing/neck/face_scarf
 
