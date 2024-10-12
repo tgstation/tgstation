@@ -311,6 +311,10 @@
 	name = "Messy Ian Shirt"
 	item_path = /obj/item/clothing/suit/costume/wellworn_shirt/messy/graphic/ian
 
+/datum/loadout_item/suit/dagger_mantle
+	name = "'Dagger' Designer Mantle"
+	item_path = /obj/item/clothing/suit/dagger_mantle
+
 /*
 *	HAWAIIAN
 */
