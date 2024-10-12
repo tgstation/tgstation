@@ -22,6 +22,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
  */
 /datum/lost_crew_manager/proc/create_lost_crew(revivable = TRUE, datum/corpse_damage_class/forced_class, list/recovered_items, list/protected_items, list/body_data = list())
 	var/mob/living/carbon/human/new_body = new(null)
+	new_body.death()
 
 	var/static/list/scenarios = list()
 	if(!scenarios.len)
@@ -37,8 +38,6 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	scenario.apply_character(new_body, protected_items, on_revive_and_player_occupancy, body_data)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
-
-	new_body.death()
 
 	// so bodies can also be used for runes, morgue, etc
 	if(revivable)
