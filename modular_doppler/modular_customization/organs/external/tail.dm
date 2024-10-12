@@ -179,7 +179,6 @@
 	preference = "feature_synth_tail"
 	dna_block = null
 	organ_flags = ORGAN_ROBOTIC
-	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/synthetic
 
 /datum/bodypart_overlay/mutant/tail/synthetic
