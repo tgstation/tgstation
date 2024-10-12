@@ -37,7 +37,7 @@
 		assignment = new assignment()
 		assignment.apply_assignment(fashion_corpse, protected_objects, on_revive_and_player_occupancy)
 
-	death_lore += assignment.job_lore
+	death_lore += assignment?.job_lore
 
 	body_data += character.type
 	body_data += assignment?.type
