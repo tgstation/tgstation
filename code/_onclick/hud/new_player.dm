@@ -122,6 +122,8 @@
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
+	///Should this button play the select sound?
+	var/select_sound_play = TRUE
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
 	if(usr != get_mob())
@@ -135,7 +137,8 @@
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
-	SEND_SOUND(hud.mymob, 'sound/misc/menu/select.ogg')
+	if(select_sound_play)
+		SEND_SOUND(hud.mymob, 'sound/misc/menu/select.ogg')
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
@@ -206,6 +209,8 @@
 	base_icon_state = "not_ready"
 	///Whether we are readied up for the round or not
 	var/ready = FALSE
+	///This button has a unique click sound
+	select_sound_play = FALSE
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
