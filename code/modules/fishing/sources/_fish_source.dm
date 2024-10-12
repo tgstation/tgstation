@@ -408,8 +408,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/known_fishes = list()
 
 	var/obj/item/fishing_rod/rod = user.get_active_held_item()
-	if(!istype(rod))
+	var/list/final_table
+	if(!istype(rod) || !rod.hook)
 		rod = null
+	else
+		final_table = get_modified_fish_table(rod, user, location)
 
 	var/total_weight = 0
 	var/list/rodless_weights = list()
@@ -417,18 +420,19 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/rod_weights = list()
 	for(var/reward in fish_table)
 		var/weight = fish_table[reward]
-		total_weight += weight
+		var/final_weight
+		if(rod)
+			total_weight += weight
+			final_weight = final_table[reward]
+			total_rod_weight += final_weight
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
 		if(!(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
 			continue
-		rodless_weights[reward] = weight
 		if(rod)
-			var/mult = rod.bait ? rod.bait.check_bait(prototype) : 1
-			var/rod_weight = get_fish_trait_catch_mods(mult, reward, rod, user, location)
-			total_rod_weight += rod_weight
-			rod_weights[reward] = rod_weight
+			rodless_weights[reward] = weight
+			rod_weights[reward] = final_weight
 		else
 			known_fishes += initial(prototype.name)
 
