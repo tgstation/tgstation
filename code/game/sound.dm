@@ -540,7 +540,7 @@
 				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
-				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male4.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male5.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_mimimi2.ogg' = 1,
 			))
@@ -579,6 +579,11 @@
 				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle4.ogg' = 23,
 				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle5.ogg' = 23,
 			))
+		if(SFX_PIG_OINK)
+			soundin = pick(
+				'sound/mobs/non-humanoids/pig/pig1.ogg',
+				'sound/mobs/non-humanoids/pig/pig2.ogg',
+			)
 		if(SFX_VISOR_DOWN)
 			soundin = pick(
 				'sound/items/handling/helmet/visor_down1.ogg',

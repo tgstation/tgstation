@@ -809,6 +809,6 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
 	burn_clothing(seconds_per_tick, fire_handler.stacks)
 	var/no_protection = FALSE
-	if(dna && dna.species)
-		no_protection = dna.species.handle_fire(src, seconds_per_tick, no_protection)
+	if (HAS_TRAIT(src, TRAIT_IGNORE_FIRE_PROTECTION))
+		no_protection = TRUE
 	fire_handler.harm_human(seconds_per_tick, no_protection)
