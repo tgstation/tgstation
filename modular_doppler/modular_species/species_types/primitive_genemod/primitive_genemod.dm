@@ -3,12 +3,12 @@
 
 /datum/language_holder/primitive_genemod
 	understood_languages = list(
-		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
-		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 		/datum/language/uncommon = list(LANGUAGE_ATOM),
+		/datum/language/primitive_genemod = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/primitive_genemod
 
