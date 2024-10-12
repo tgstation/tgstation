@@ -1,2 +1,0 @@
-gas_analyzer handling sounds made by sadboysuss
-license: CC-BY-SA
