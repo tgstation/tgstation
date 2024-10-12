@@ -889,12 +889,9 @@
 
 // If we have mood, applies a long-lasting mood debuff, majorly decreases our sanity and making us easier to injure. Does not affect changelings (duh)
 /mob/living/proc/revival_shock()
-	if (isnull(mob_mood) || IS_CHANGELING(src))
+	if (IS_CHANGELING(src))
 		return
-
 	apply_status_effect(/datum/status_effect/revival_shock)
-	add_mood_event("revival", /datum/mood_event/revival_shock)
-	mob_mood.sanity_level = SANITY_CRAZY
 
 /**
  * Heals up the mob up to [heal_to] of the main damage types.
