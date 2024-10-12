@@ -2002,7 +2002,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *
  * Returns a color string or null.
  */
-/datum/species/proc/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+/datum/species/proc/get_fixed_hair_color(mob/living/carbon/for_mob)
 	ASSERT(!isnull(for_mob))
 	switch(hair_color_mode)
 		if(USE_MUTANT_COLOR)

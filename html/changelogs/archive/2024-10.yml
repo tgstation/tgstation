@@ -257,3 +257,91 @@
   wonderinghost:
   - rscadd: Adds a few lights
   - bugfix: removes the darkspot in wawa med
+2024-10-09:
+  Ghommie:
+  - rscadd: 'Added a new infusion to the game: Fish. Its main gimmick revolves around
+      being stronger and slippery when wet while weaker when dry.'
+  - balance: Buffed tetrodotoxin a little against liver tolerance and purging reagents.
+  Iajret:
+  - bugfix: health analyzers will show if your heart is missing once again
+  SmArtKar:
+  - image: Carp infusion now changes how your skin looks to reflect your fishy nature
+  SyncIt21:
+  - bugfix: you can drop/put drone tools back in the toolbox
+  - bugfix: you cannot dump the contents of the drone toolbox
+  necromanceranne:
+  - rscadd: Fundamentally Evil quirk. You might act normal, but you know deep down
+      that you totally don't give a shit about anyone but yourself. Empaths better
+      watch out.
+2024-10-10:
+  Ghommie:
+  - bugfix: The fishing portal generator (fish-porter 3000) now correctly links with
+      lava turfs from lavaland.
+  Jewelry-x:
+  - bugfix: fixed reagents not being applied correctly by venomous mobs
+  - bugfix: dead borgs no longer become invisible upon changing z level
+  SmArtKar:
+  - rscadd: New station trait "Spiked Drinks" that will add booze to most sodas has
+      been added to rotation.
+  StrangeWeirdKitten:
+  - admin: The Law Panel now properly logs and communicates law edits.
+2024-10-11:
+  Absolucy:
+  - bugfix: Allow dot radio prefixes to also work with the tgui-say radio prefix display.
+  DATA-xPUNGED:
+  - bugfix: Xeno queens can once again promote Drones to Praetorians
+  - bugfix: They can also once again do hand emotes
+  - bugfix: Ghosts can now see the details of an ID from any distance
+  - bugfix: Server Hopping should fade your screen into black, as it should.
+  EnterTheJake:
+  - bugfix: Dark matter singularity no longer gets stuck on other z levels when summoned.
+  - bugfix: Space Phase now makes the Heretic Space proof.
+  Ghommie:
+  - rscadd: The fishing skillchip now grants an action that dispenses fishing tips.
+  - bugfix: fixed fish infusion. Whoopsies.
+  - rscadd: Feeding fish certain reagents may have some effects. Mutagen for increased
+      evolution probability. Growth serum for faster growth. Teslium for electrogenesis.
+  KazooBard:
+  - rscadd: More cardboard cutout icons (Pirate, ninja, changeling, heretic, abductor)
+  Melbert:
+  - bugfix: Fixed medipens injecting 2x their contents
+  - bugfix: Fixes stuff staying on your body after removing your clothes
+  Qwertytoforty:
+  - bugfix: Anomalies no longer spawn in objects or mobs from the supermatter.
+  grungussuss:
+  - sound: plate armor now makes sound when moving around in it
+  - sound: reagent containers now make sounds if there is liquid in them when picked
+      up or dropped
+  - sound: fire extinguishers now make sounds when dropped or picked up
+  - bugfix: removed a few var edits from maps
+  junkgle01:
+  - image: resprited surplus limbs
+  unit0016:
+  - bugfix: Shuttles that land next to plasma turfs no longer ruin the mass hallucination
+      that is Icebox having Plasma and not just super-deadly; spiky basalt deltas.
+      You're welcome; unreality fans.
+2024-10-12:
+  Cruix:
+  - bugfix: Fixed chameleon clothing sometimes making you bald or hiding other parts
+      of your sprite.
+  EEASAS:
+  - bugfix: adds plasma to wawastation's xenobio
+  EuSouAFazer:
+  - balance: '[TGC] Rebalances nearly every card in the game.'
+  - balance: '[TGC] Several keywords had their effects modified.'
+  - bugfix: '[TGC] Black Gaia is no longer an "Artifact", Fryer no longer mentions
+      tapping it.'
+  - spellcheck: '[TGC] Replaced "Tap this card:" with just "Tap:" alongside other
+      wording improvements'
+  - spellcheck: '[TGC] Mana has been replaced with Plasma. This is a completely cosmetic
+      change.'
+  - refactor: '[TGC] Merged many, many redudant card subtypes (the mechanic, not the
+      byond code stuff) into more comprehensive ones.'
+  FlufflesTheDog:
+  - bugfix: Mops and similar work properly on multi-z stations
+  Melbert:
+  - bugfix: Dead bees maintain their color and reagents
+  SmArtKar:
+  - qol: Jetpack movement near walls should be much smoother
+  grungussuss:
+  - bugfix: a lot of items that shouldn't slosh when picked up will no longer slosh

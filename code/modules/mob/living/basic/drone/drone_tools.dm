@@ -3,31 +3,14 @@
 	desc = "Access your built-in tools."
 	icon = 'icons/hud/screen_drone.dmi'
 	icon_state = "tool_storage"
+	storage_type = /datum/storage/drone
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
+
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
-	var/static/list/drone_builtins = list(
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-		/obj/item/multitool/drone,
-		/obj/item/pipe_dispenser/drone,
-		/obj/item/t_scanner/drone,
-		/obj/item/analyzer/drone,
-		/obj/item/soap/drone,
-	)
-	atom_storage.max_total_storage = 40
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 10
-	atom_storage.do_rustle = FALSE
-	atom_storage.set_holdable(drone_builtins)
-
 
 /obj/item/storage/drone_tools/PopulateContents()
 	var/list/builtintools = list()
@@ -44,8 +27,6 @@
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
-		ADD_TRAIT(tool, TRAIT_NODROP, REF(src))
-
 
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
