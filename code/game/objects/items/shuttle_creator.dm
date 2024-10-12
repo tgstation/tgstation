@@ -36,11 +36,13 @@ GLOBAL_VAR_INIT(custom_shuttle_count, 0)		//The amount of custom shuttles create
 	var/datum/shuttle_creator_overlay_holder/overlay_holder
 	//After designation
 	var/linkedShuttleId
-	var/shuttle_limit = CONFIG_GET(number/max_shuttle_count)
-	var/max_shuttle_size = CONFIG_GET(number/max_shuttle_size)
+	var/shuttle_limit
+	var/max_shuttle_size
 
 /obj/item/shuttle_creator/Initialize(mapload)
 	. = ..()
+	shuttle_limit = CONFIG_GET(number/max_shuttle_count)
+	max_shuttle_size = CONFIG_GET(number/max_shuttle_size)
 	internal_shuttle_creator = new()
 	internal_shuttle_creator.owner_rsd = src
 	overlay_holder = new()
