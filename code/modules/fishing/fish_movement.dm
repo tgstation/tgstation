@@ -120,8 +120,8 @@
 					var/power = min(halved_ratio + 0.5, 1)
 					target_acceleration *= 1 - (halved_ratio^power)
 				/**
-				 * Otherwise we add the idle velocity (which we know is of opposite sign between
-				 * with absolute value between 0.ε and 0.5) to the target velocity
+				 * Otherwise we add the idle velocity (which we know is of opposite sign and
+				 * has an absolute value between 0.ε and 0.5) to the target velocity
 				 */
 				else
 					target_acceleration += idle_velocity
