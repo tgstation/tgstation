@@ -3852,6 +3852,7 @@
 #include "code\modules\client\preferences\middleware\tts.dm"
 #include "code\modules\client\preferences\migrations\body_type_migration.dm"
 #include "code\modules\client\preferences\migrations\convert_to_json_savefile.dm"
+#include "code\modules\client\preferences\migrations\enable_recovered_crew.dm"
 #include "code\modules\client\preferences\migrations\legacy_sound_toggles_migration.dm"
 #include "code\modules\client\preferences\migrations\quirk_loadout_migration.dm"
 #include "code\modules\client\preferences\migrations\tgui_prefs_migration.dm"

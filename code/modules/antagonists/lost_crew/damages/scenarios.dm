@@ -43,3 +43,4 @@
 /datum/corpse_damage_class/station/morgue
 	weight = 0
 	possible_character_types = list(/datum/corpse_character/morgue = 1)
+	possible_character_assignments = list()
