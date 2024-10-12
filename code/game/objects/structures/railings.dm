@@ -8,8 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
-	layer = ABOVE_TREE_LAYER
-	plane = ABOVE_GAME_PLANE
+	layer = ABOVE_MOB_LAYER
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
@@ -24,29 +23,6 @@
 	laser = 50
 	energy = 100
 	bomb = 10
-
-/obj/structure/railing/unbreakable
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
-	icon_state = "railing_corner"
-	density = FALSE
-	climbable = FALSE
-
-/obj/structure/railing/corner/unbreakable
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/structure/railing/corner/end //end of a segment of railing without making a loop
-	icon_state = "railing_end"
-
-/obj/structure/railing/corner/end/unbreakable
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/structure/railing/corner/end/flip //same as above but flipped around
-	icon_state = "railing_end_flip"
-
-/obj/structure/railing/corner/end/flip/unbreakable
-	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
@@ -73,6 +49,16 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_layer))
+	adjust_dir_layer(dir)
+
+/obj/structure/railing/proc/on_change_layer(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	adjust_dir_layer(new_dir)
+
+/obj/structure/railing/proc/adjust_dir_layer(direction)
+	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
 
 /obj/structure/railing/examine(mob/user)
 	. = ..()
@@ -163,6 +149,28 @@
 	if(anchored == checked_anchored)
 		return TRUE
 
+/obj/structure/railing/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
+	icon_state = "railing_corner"
+	density = FALSE
+	climbable = FALSE
+
+/obj/structure/railing/corner/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end //end of a segment of railing without making a loop
+	icon_state = "railing_end"
+
+/obj/structure/railing/corner/end/unbreakable
+	resistance_flags = INDESTRUCTIBLE
+
+/obj/structure/railing/corner/end/flip //same as above but flipped around
+	icon_state = "railing_end_flip"
+
+/obj/structure/railing/corner/end/flip/unbreakable
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/railing/wooden_fence
 	name = "wooden fence"
@@ -171,20 +179,6 @@
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE
-
-/obj/structure/railing/wooden_fence/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_layer))
-	adjust_dir_layer(dir)
-
-/obj/structure/railing/wooden_fence/proc/on_change_layer(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-	adjust_dir_layer(new_dir)
-
-/obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
-	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
-
 
 /obj/structure/railing/corner/end/wooden_fence
 	icon = 'icons/obj/structures.dmi'
