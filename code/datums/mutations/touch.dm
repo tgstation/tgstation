@@ -354,7 +354,10 @@
 	var/hurt_this_guy = FALSE
 
 	if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
-		return FALSE //always return false for this if we're pacifist
+		return FALSE //always return false if we're pacifist
+
+	if(hurtguy.mob_biotypes & MOB_UNDEAD && mendicant.mob_biotypes & MOB_UNDEAD)
+		return FALSE //always return false if we're both undead //undead solidarity
 
 	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the mob undead and we're not evil? If so, hurt.
 		hurt_this_guy = TRUE
