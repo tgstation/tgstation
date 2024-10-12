@@ -30,7 +30,3 @@
 /datum/loadout_item/inhand/slimpack
 	name = "Custom Flatpack"
 	item_path = /obj/item/storage/backpack/satchel/flat/empty/custom
-
-/datum/loadout_item/inhand/translationgloves
-	name = "Translation Gloves"
-	item_path = /obj/item/clothing/gloves/radio
