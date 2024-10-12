@@ -4,7 +4,7 @@
 	uniform = /obj/item/clothing/under/plasmaman
 	gloves = /obj/item/clothing/gloves/color/plasmaman
 	head = /obj/item/clothing/head/helmet/space/plasmaman
-	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	internals_slot = ITEM_SLOT_HANDS
 
 /datum/outfit/plasmaman/security

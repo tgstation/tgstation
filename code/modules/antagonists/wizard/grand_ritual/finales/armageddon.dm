@@ -38,7 +38,7 @@
 	var/static/list/doom_options = list()
 	if (!length(doom_options))
 		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA)
-		if (!SSmapping.config.planetary)
+		if (!SSmapping.is_planetary())
 			doom_options += DOOM_METEORS
 
 	switch(pick(doom_options))

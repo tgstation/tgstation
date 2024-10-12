@@ -6,7 +6,6 @@
 	var/list/tails_list_mouse
 	var/list/tails_list_bird
 	var/list/tails_list_deer
-	var/list/tails_list_fish
 	var/list/tails_list_bug
 	var/list/tails_list_synth
 	var/list/tails_list_humanoid
@@ -20,7 +19,6 @@
 	tails_list_mouse = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mouse)["default_sprites"]
 	tails_list_bird = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bird)["default_sprites"]
 	tails_list_deer = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/deer)["default_sprites"]
-	tails_list_fish = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/fish)["default_sprites"]
 	tails_list_bug = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/bug)["default_sprites"]
 	tails_list_synth = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/cybernetic)["default_sprites"]
 	tails_list_humanoid = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/humanoid)["default_sprites"]
@@ -162,7 +160,7 @@
 	target.dna.features["tail_cat"] = value
 
 /datum/preference/choiced/tail_human/icon_for(value)
-	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_human[value]
+	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_felinid[value]
 	return generate_back_icon(chosen_tail, "tail")
 
 //	Dog
