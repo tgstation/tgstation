@@ -320,3 +320,28 @@
   - bugfix: Shuttles that land next to plasma turfs no longer ruin the mass hallucination
       that is Icebox having Plasma and not just super-deadly; spiky basalt deltas.
       You're welcome; unreality fans.
+2024-10-12:
+  Cruix:
+  - bugfix: Fixed chameleon clothing sometimes making you bald or hiding other parts
+      of your sprite.
+  EEASAS:
+  - bugfix: adds plasma to wawastation's xenobio
+  EuSouAFazer:
+  - balance: '[TGC] Rebalances nearly every card in the game.'
+  - balance: '[TGC] Several keywords had their effects modified.'
+  - bugfix: '[TGC] Black Gaia is no longer an "Artifact", Fryer no longer mentions
+      tapping it.'
+  - spellcheck: '[TGC] Replaced "Tap this card:" with just "Tap:" alongside other
+      wording improvements'
+  - spellcheck: '[TGC] Mana has been replaced with Plasma. This is a completely cosmetic
+      change.'
+  - refactor: '[TGC] Merged many, many redudant card subtypes (the mechanic, not the
+      byond code stuff) into more comprehensive ones.'
+  FlufflesTheDog:
+  - bugfix: Mops and similar work properly on multi-z stations
+  Melbert:
+  - bugfix: Dead bees maintain their color and reagents
+  SmArtKar:
+  - qol: Jetpack movement near walls should be much smoother
+  grungussuss:
+  - bugfix: a lot of items that shouldn't slosh when picked up will no longer slosh
