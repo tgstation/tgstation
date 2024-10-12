@@ -1,3 +1,5 @@
+#define SPACE_PHASING "space-phasing"
+
 /**
  * ### Space Crawl
  *
@@ -16,6 +18,8 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	///List of traits that are added to the heretic while in space phase jaunt
+	var/static/list/jaunting_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD, TRAIT_NOBREATH)
 
 /datum/action/cooldown/spell/jaunt/space_crawl/Grant(mob/grant_to)
 	. = ..()
@@ -82,6 +86,7 @@
 		jaunter.put_in_hands(left_hand)
 		jaunter.put_in_hands(right_hand)
 
+	jaunter.add_traits(jaunting_traits, SPACE_PHASING)
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	playsound(our_turf, 'sound/effects/magic/cosmic_energy.ogg', 50, TRUE, -1)
 	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
@@ -101,6 +106,7 @@
 
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
+	jaunter.remove_traits(jaunting_traits, SPACE_PHASING)
 	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 
@@ -131,3 +137,5 @@
 /obj/item/space_crawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+#undef SPACE_PHASING

@@ -73,6 +73,8 @@
 		guilty(attacked_mob, "for blasphemous magicks!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_EVIL))
+		guilty(attacked_mob, "an almost fanatical commitment to EEEEVIL!")
 	if(attacked_mob.mind)
 		var/datum/mind/guilty_conscience = attacked_mob.mind
 		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))

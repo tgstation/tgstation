@@ -1204,8 +1204,11 @@
 		var/altered_grab_state = pulledby.grab_state
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
-		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
+			altered_grab_state--
+		// see defines/combat.dm, this should be baseline 60%
+		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		var/resist_chance = altered_grab_state ? (BASE_GRAB_RESIST_CHANCE / altered_grab_state) : 100
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -2163,6 +2166,19 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/start_look_up()
 	SIGNAL_HANDLER
+
+	looking_vertically = TRUE
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf above exists
+	if(!above_turf)
+		to_chat(src, span_warning("There's nothing interesting above."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		if (prob(0.1))
@@ -2183,7 +2199,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			to_chat(src, span_warning("You can't see through the floor above you."))
 			return
 
-	looking_vertically = TRUE
 	reset_perspective(ceiling)
 
 /mob/living/proc/stop_look_up()
@@ -2214,6 +2229,19 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/start_look_down()
 	SIGNAL_HANDLER
+
+	looking_vertically = TRUE
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
+		to_chat(src, span_warning("There's nothing interesting below."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
 	var/turf/floor = get_turf(src)
 	var/turf/lower_level = get_step_multiz(floor, DOWN)
 	if(!lower_level) //We are at the lowest z-level.
@@ -2235,7 +2263,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			to_chat(src, span_warning("You can't see through the floor below you."))
 			return
 
-	looking_vertically = TRUE
 	reset_perspective(lower_level)
 
 /mob/living/proc/stop_look_down()
@@ -2765,18 +2792,40 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	set category = "IC"
 
 	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
 		end_look_up()
-	else
-		look_up()
+		return
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf above exists
+	if(!above_turf)
+		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
+		return
+
+	to_chat(src, "You tilt your head upwards.")
+	look_up()
 
 /mob/living/verb/lookdown()
 	set name = "Look Down"
 	set category = "IC"
 
 	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
 		end_look_down()
-	else
-		look_down()
+		return
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
+		to_chat(src, span_warning("There's nothing interesting below. Better keep your eyes ahead."))
+		return
+
+	to_chat(src, "You tilt your head downwards.")
+	look_down()
 
 /**
  * Totals the physical cash on the mob and returns the total.
