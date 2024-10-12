@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "fixed reagents not being applied correctly by venomous mobs"
