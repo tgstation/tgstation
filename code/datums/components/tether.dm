@@ -143,6 +143,8 @@
 
 /datum/component/tether/proc/process_beam_click(atom/source, atom/location, params, mob/user)
 	var/list/modifiers = params2list(params)
+	if (!location.can_interact(user))
+		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")
 		if (!do_after(user, 1 SECONDS, user))
