@@ -115,7 +115,7 @@
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself. \
-		For some reason, this power does not play nicely with the undead or people of particularly uncouth moral opinions."
+		For some reason, this power does not play nicely with the undead or people with strange ideas about morality."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
 	sound = 'sound/effects/magic/staff_healing.ogg'
@@ -160,11 +160,15 @@
 	// Message to show on a successful heal if the healer has a special pacifism interaction with the mutation.
 	var/peaceful_message = null
 
+	var/success
+
 	if (hurtguy.mob_biotypes & MOB_UNDEAD && HAS_TRAIT(mendicant, TRAIT_PACIFISM)) //Returns if our target is undead and we're a pacifist.
 		mendicant.balloon_alert(mendicant, "[hurtguy] is undead!")
 		return FALSE
 
-	else if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_PACIFISM) || HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_PACIFISM)) //if our target is undead or evil, we do not heal them, but instead hurt them.
+	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
+
+	if(hurt_this_guy)
 		return by_gods_light_i_smite_you(mendicant, hurtguy, heal_multiplier)
 
 	// Heal more, hurt a bit more.
@@ -185,7 +189,6 @@
 		heal_multiplier *= 1.75
 		peaceful_message = span_boldnotice("Your peaceful nature helps you guide all the pain to yourself.")
 
-	var/success
 	if(iscarbon(hurtguy))
 		success = do_complicated_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
 	else
@@ -345,6 +348,24 @@
 			to_chat(mendicant, span_notice("Your veins swell and itch!"))
 		else
 			to_chat(mendicant, span_notice("Your veins swell!"))
+
+
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
+	var/hurt_this_guy = FALSE
+
+	if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
+		return FALSE //always return false for this if we're pacifist
+
+	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the mob undead and we're not evil? If so, hurt.
+		hurt_this_guy = TRUE
+
+	else if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
+		hurt_this_guy = TRUE
+
+	else if(!(hurtguy.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(hurtguy, TRAIT_EMPATH) && HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy not undead, they're an empath and we're evil? If so, hurt.
+		hurt_this_guy = TRUE
+
+	return hurt_this_guy
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
 
