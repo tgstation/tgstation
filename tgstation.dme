@@ -6863,6 +6863,7 @@
 #include "modular_doppler\modular_mood\code\mood_events\hotspring.dm"
 #include "modular_doppler\modular_mood\code\mood_events\race_drink.dm"
 #include "modular_doppler\modular_quirks\excitable\excitable.dm"
+#include "modular_doppler\modular_quirks\hardened_soles\hardened_soles.dm"
 #include "modular_doppler\modular_quirks\left_handed\left_handed.dm"
 #include "modular_doppler\modular_quirks\linguist\linguist.dm"
 #include "modular_doppler\modular_quirks\night_vision\night_vision.dm"
