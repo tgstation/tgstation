@@ -124,6 +124,10 @@
 /datum/proc/ru_p_themselves(capitalized, temp_gender)
 	. = "само"
 
+/// Применяет одно из "них", "него", "него", или "нее" в зависимости от пола. Установите TRUE для заглавной буквы.
+/datum/proc/ru_p_theirs(capitalized, temp_gender)
+	. = "него"
+
 /// Применяет "имеет" для единственного числа и "имеют" для множественного ("она имеет" / "они имеют").
 /datum/proc/ru_p_have(temp_gender)
 	. = "имеет"
@@ -178,6 +182,21 @@
 			. = "само"
 		if(PLURAL)
 			. = "сами"
+	if(capitalized)
+		. = capitalize(.)
+
+/client/ru_p_theirs(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(MALE)
+			. = "него"
+		if(FEMALE)
+			. = "нее"
+		if(NEUTER)
+			. = "него"
+		if(PLURAL)
+			. = "них"
 	if(capitalized)
 		. = capitalize(.)
 
@@ -252,6 +271,21 @@
 	if(capitalized)
 		. = capitalize(.)
 
+/mob/ru_p_theirs(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(MALE)
+			. = "него"
+		if(FEMALE)
+			. = "нее"
+		if(NEUTER)
+			. = "него"
+		if(PLURAL)
+			. = "них"
+	if(capitalized)
+		. = capitalize(.)
+
 /mob/ru_p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
@@ -297,6 +331,13 @@
 	return ..()
 
 /mob/living/carbon/human/ru_p_themselves(temp_gender)
+	var/obscured = check_obscured_slots()
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
+		temp_gender = PLURAL
+	return ..()
+
+/mob/living/carbon/human/ru_p_theirs(temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
