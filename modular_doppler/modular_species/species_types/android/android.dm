@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/android_preview
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_NOBREATH,
@@ -33,6 +34,7 @@
 		TRAIT_STABLELIVER,
 	)
 	reagent_flags = PROCESS_SYNTHETIC
+	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
 	mutantheart = /obj/item/organ/internal/heart/cybernetic/tier2
 	mutantstomach = /obj/item/organ/internal/stomach/cybernetic/tier2
 	mutantliver = /obj/item/organ/internal/liver/cybernetic/tier2

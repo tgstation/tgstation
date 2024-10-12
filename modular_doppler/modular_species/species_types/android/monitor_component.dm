@@ -47,9 +47,9 @@ GLOBAL_LIST_INIT(monitor_displays, list(
 
 GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	"Disabled" = "none",
-	"Eyes" = "eyes",
-	"Question" = "question",
-	"Exclaim" = "exclaim",
+	"Eyes" = "liz_eyes",
+	"Question" = "liz_question",
+	"Exclaim" = "liz_exclaim",
 	))
 
 // the overlay
@@ -115,24 +115,33 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 
 /datum/action/innate/monitor_head/proc/check_emote(mob/living/carbon/wearer, datum/emote/emote)
 	SIGNAL_HANDLER
+	/// a list of the 'key' variable of emotes that have a screen update effect
+	var/static/list/screen_emotes = list(
+		"tunesing",
+		"exclaim",
+		"question",
+	)
+	// early return
+	if(!(emote.key in screen_emotes))
+		return
 
 	if(!display_overlay)
 		create_screen(wearer)
 
 	var/old_screen = display_overlay.icon_state
 
-	if(head_type == MONITOR_HEAD)
+	if(head_type & MONITOR_HEAD)
 		switch(emote.key)
 			if("tunesing")
 				change_screen(wearer, "music")
 
-	if(head_type == MONITOR_HEAD_LIZARD)
+	if(head_type & MONITOR_HEAD_LIZARD)
 		switch(emote.key)
 			if("exclaim")
-				change_screen(wearer, "exclaim")
+				change_screen(wearer, "liz_exclaim")
 			if("question")
-				change_screen(wearer, "question")
-
+				change_screen(wearer, "liz_question")
+	// this timer is 5 seconds just like the emote overlays, so they are synchronized
 	addtimer(CALLBACK(src, PROC_REF(change_screen), wearer, old_screen), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/action/innate/monitor_head/update_status_on_signal(mob/living/carbon/wearer, new_stat, old_stat)
@@ -141,7 +150,7 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	if(!display_overlay)
 		create_screen(wearer)
 
-	if(head_type == MONITOR_HEAD)
+	if(head_type & MONITOR_HEAD)
 		switch(new_stat)
 			if(SOFT_CRIT)
 				change_screen(wearer, "bsod")
@@ -152,7 +161,7 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 			if(DEAD)
 				change_screen(wearer, "none")
 
-	if(head_type == MONITOR_HEAD_LIZARD)
+	if(head_type & MONITOR_HEAD_LIZARD)
 		switch(new_stat)
 			if(UNCONSCIOUS)
 				change_screen(wearer, "none")
@@ -163,7 +172,7 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	var/obj/item/bodypart/head/monitor_head = wearer.get_bodypart(BODY_ZONE_HEAD)
 	display_overlay = new /datum/bodypart_overlay/simple/monitor_head
 
-	if(head_type == MONITOR_HEAD_LIZARD)
+	if(head_type & MONITOR_HEAD_LIZARD)
 		var/mob/living/carbon/human/human_wearer = wearer
 		display_overlay.draw_color = human_wearer.eye_color_left
 

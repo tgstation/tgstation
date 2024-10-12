@@ -756,6 +756,70 @@
 	icon_state = "zhp_r_leg"
 	limb_id = "zhp"
 
+///
+// Synthetic Lizard
+///
+/obj/item/bodypart/head/robot/android/synth_lizard
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_SNOUTED
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_head"
+	limb_id = "synth_lizard"
+	head_flags = HEAD_MONITOR_FACE
+
+/obj/item/bodypart/head/robot/android/synth_lizard/on_adding(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.AddComponent(/datum/component/monitor_head/lizard)
+
+/obj/item/bodypart/head/robot/android/synth_lizard/on_removal(mob/living/carbon/old_owner)
+	. = ..()
+	qdel(old_owner.GetComponent(/datum/component/monitor_head/lizard))
+
+/obj/item/bodypart/chest/robot/android/synth_lizard
+	is_dimorphic = TRUE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_chest"
+	limb_id = "synth_lizard"
+
+/obj/item/bodypart/arm/right/robot/android/synth_lizard
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_r_arm"
+	limb_id = "synth_lizard"
+
+/obj/item/bodypart/arm/left/robot/android/synth_lizard
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_l_arm"
+	limb_id = "synth_lizard"
+
+/obj/item/bodypart/leg/right/robot/android/synth_lizard
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_r_leg"
+	limb_id = "synth_lizard"
+
+/obj/item/bodypart/leg/left/robot/android/synth_lizard
+	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
+	should_draw_greyscale = TRUE
+	icon_static = ANDROID_BODYPARTS_DMI
+	icon = ANDROID_BODYPARTS_DMI
+	icon_greyscale = ANDROID_BODYPARTS_DMI
+	icon_state = "synth_lizard_r_leg"
+	limb_id = "synth_lizard"
+
 #undef HEAD_MONITOR_FACE
 #undef ANDROID_BODYPARTS_DMI
 
