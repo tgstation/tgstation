@@ -73,6 +73,7 @@
  * returns TRUE if we can scan the object, and outputs the message to the USER.
  */
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(istype(scan_target, /obj/machinery/hydroponics))
 		to_chat(user, examine_block(scan_tray_stats(scan_target)))
 		return TRUE

@@ -584,4 +584,10 @@
 				'sound/mobs/non-humanoids/pig/pig1.ogg',
 				'sound/mobs/non-humanoids/pig/pig2.ogg',
 			)
+		if(SFX_INDUSTRIAL_SCAN)
+			soundin = pick(
+				'sound/effects/industrial_scan/industrial_scan1.ogg',
+				'sound/effects/industrial_scan/industrial_scan2.ogg',
+				'sound/effects/industrial_scan/industrial_scan3.ogg',
+			)
 	return soundin
