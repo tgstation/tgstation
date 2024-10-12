@@ -148,7 +148,6 @@
 
 	. = ..()
 	highlighted = TRUE
-	SEND_SOUND(hud.mymob, 'sound/misc/menu/hover.ogg')
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
