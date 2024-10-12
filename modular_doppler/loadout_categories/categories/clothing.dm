@@ -324,6 +324,14 @@
 	item_path = /obj/item/clothing/suit/costume/hawaiian
 
 /*
+*   MAID OUT WITH THE FIT
+*/
+
+/datum/loadout_item/suit/maid_costume
+	name = "Maid Costume"
+	item_path = /obj/item/clothing/under/costume/maid
+
+/*
 *	MISC
 */
 
