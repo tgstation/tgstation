@@ -47,6 +47,10 @@
 		var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/tail/monkey)
 		replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		return .
+	else if(target.dna.features["tail_fish"] != /datum/sprite_accessory/tails/fish/none::name && !(type in GLOB.species_blacklist_no_mutant) && target.dna.features["tail_fish"] != /datum/sprite_accessory/blank::name)
+		var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/tail/fish)
+		replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		return .
 	else if((target.dna.features["tail_other"] != /datum/sprite_accessory/tails/lizard/none::name && !(type in GLOB.species_blacklist_no_mutant) && target.dna.features["tail_other"] != /datum/sprite_accessory/blank::name) && (target.dna.tail_type != NO_VARIATION))
 		var/obj/item/organ/organ_path = text2path("/obj/item/organ/external/tail/[target.dna.tail_type]")
 		var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
@@ -415,7 +419,7 @@
 
 /datum/preference/choiced/fish_tail/apply_to_human(mob/living/carbon/human/target, value)
 	if(target.dna.tail_type == FISH)
-		target.dna.features["tail_other"] = value
+		target.dna.features["tail_fish"] = value
 
 /datum/preference/choiced/fish_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fish[value]
