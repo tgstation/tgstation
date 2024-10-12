@@ -4,6 +4,7 @@
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
+	base_icon_state = "chainsaw"
 	icon_state = "chainsaw_off"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
@@ -26,6 +27,8 @@
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
+	/// The amount of force recived from sharpening the item
+	var/sharpened_increase = 0
 
 /obj/item/chainsaw/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -43,6 +46,7 @@
 	. = ..()
 	chainsaw_loop = new(src)
 	apply_components()
+	RegisterSignal(src, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(block_sharpening))
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -59,9 +63,9 @@
 /obj/item/chainsaw/attack_self(mob/user)
 	on = !on
 	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
-	force = on ? force_on : initial(force)
-	throwforce = on ? force_on : initial(force)
-	icon_state = "chainsaw_[on ? "on" : "off"]"
+	force = (on ? force_on : initial(force)) + sharpened_increase
+	throwforce = (on ? force_on : initial(force)) + sharpened_increase
+	icon_state = "[base_icon_state]_[on ? "on" : "off"]"
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = on
 
@@ -92,6 +96,14 @@
 		disabled = TRUE, \
 	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/obj/item/chainsaw/proc/block_sharpening(datum/source, increment, max)
+	SIGNAL_HANDLER
+	if (sharpened_increase)
+		return COMPONENT_BLOCK_SHARPEN_ALREADY
+	if (force_on > max)
+		return COMPONENT_BLOCK_SHARPEN_MAXED
+	sharpened_increase = clamp(force_on + increment, 0, max) - force_on
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
