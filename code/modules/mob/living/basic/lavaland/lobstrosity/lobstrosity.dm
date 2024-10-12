@@ -166,6 +166,7 @@
 	key_third_person = "chitters"
 	message = "chitters pleasantly!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
