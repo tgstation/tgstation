@@ -36,6 +36,7 @@
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
 #define EQUIP_SOUND_VOLUME 30
+#define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
@@ -193,3 +194,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_LIQUID_POUR "liquid_pour"
 #define SFX_SNORE_FEMALE "snore_female"
 #define SFX_SNORE_MALE "snore_male"
+#define SFX_PLASTIC_BOTTLE_LIQUID_SLOSH "plastic_bottle_liquid_slosh"
+#define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"

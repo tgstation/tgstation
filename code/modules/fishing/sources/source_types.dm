@@ -354,9 +354,6 @@
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
-	var/turf/approx = get_turf(fisherman) //todo pass the parent
-	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
-		return "There doesn't seem to be anything to catch here."
 	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
 		return "You'll need reinforced fishing line to fish in there"
 
