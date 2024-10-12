@@ -63,8 +63,9 @@
 	var/soul_eyes
 	var/obj/item/bodypart/head
 	// adds soulful SOUL PENDING eyes to indicate what's happening to observers
+	var/mob/living/carbon/human/hewmon
 	if(ishuman(aliver))
-		var/mob/living/carbon/human/hewmon = aliver
+		hewmon = aliver
 		head = hewmon.get_bodypart(BODY_ZONE_HEAD)
 		soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes ()
 		head?.add_bodypart_overlay(soul_eyes)
@@ -73,15 +74,16 @@
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
 		role = ROLE_RECOVERED_CREW,
-		check_jobban = null,
+		check_jobban = ROLE_RECOVERED_CREW,
 		poll_time = 15 SECONDS,
 		checked_target = aliver,
 		ignore_category = POLL_IGNORE_RECOVERED_CREW,
 		alert_pic = aliver,
 		role_name_text = "recovered crew",
 	)
-
-	head?.remove_bodypart_overlay(soul_eyes)
+	if(hewmon)
+		head?.remove_bodypart_overlay(soul_eyes)
+		hewmon.update_body_parts()
 
 	if(!isobserver(chosen_one))
 		if(refuse_revival_if_failed)

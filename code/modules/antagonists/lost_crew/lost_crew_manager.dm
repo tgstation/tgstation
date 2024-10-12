@@ -4,9 +4,11 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 /// Handles procs and timers for the lost crew bodies
 /datum/lost_crew_manager
 	/// How many credits we reward the medical budget on a succesful revive
-	var/credits_on_succes = CARGO_CRATE_VALUE * 10
+	var/credits_on_succes = /datum/supply_pack/medical/lost_crew::cost + CARGO_CRATE_VALUE * 2
 	/// How long after succesful revival we check to see if theyre still alive, and give rewards
 	var/succes_check_time = 3 MINUTES
+	/// How much the revived crew start with on their cards
+	var/starting_funds = 100
 
 /**
  * Creates a body with random background and injuries
@@ -53,8 +55,14 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
 /datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
-	var/mob/living/carbon/owner = brain.owner
+	var/mob/living/carbon/human/owner = brain.owner
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew)
+
+	var/datum/bank_account/bank_account = new(owner.real_name, owner.mind.assigned_role, owner.dna.species.payday_modifier)
+	bank_account.adjust_money(starting_funds, "[starting_funds]cr given to [owner.name] as starting fund.")
+	owner.account_id = bank_account.account_id
+	bank_account.replaceable = FALSE
+	owner.add_mob_memory(/datum/memory/key/account, remembered_id = owner.account_id)
 
 	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
