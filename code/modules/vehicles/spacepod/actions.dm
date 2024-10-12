@@ -25,7 +25,7 @@
 		vehicle_entered_target.balloon_alert(owner, "nobody else!")
 		return
 	var/mob/living/to_kick = length(occupants) == 1 ? occupants[1] : tgui_input_list(owner, "Kick whom?", "Kick whom?", occupants)
-	if(!to_kick || owner.loc != vehicle_entered_target) //kicked out before them get lost buddy
+	if(!to_kick || to_kick.loc != vehicle_entered_target || owner.loc != vehicle_entered_target) //kicked out before them get lost buddy
 		return
 	to_kick.Knockdown(1 SECONDS)
 	vehicle_entered_target.mob_exit(to_kick, randomstep = TRUE)
