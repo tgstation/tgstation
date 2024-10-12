@@ -23,10 +23,20 @@
 	if(isnull(chosen_one))
 		return NOT_ENOUGH_PLAYERS
 	//spawn the ninja and assign the candidate
+	// DOPPLER ADDITION START - Preference Ninjas
+	var/loadme = tgui_alert(chosen_one, "Do you wish to load your character slot?", "Load Character?", list("Yes!", "No, I want to be random!"), timeout = 60 SECONDS)
+	// DOPPLER ADDITION END
 	var/mob/living/carbon/human/ninja = create_space_ninja(spawn_location)
 	ninja.key = chosen_one.key
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
+	// DOPPLER ADDITION START - Preference Ninjas
+	if(loadme == "Yes!")
+		ninja.client?.prefs?.safe_transfer_prefs_to(ninja)
+		ninja.dna.update_dna_identity()
+
+		SSquirks.AssignQuirks(ninja, ninja.client)
+	// DOPPLER ADDITION END
 	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")
 	ninja.log_message("was spawned as a ninja by an event.", LOG_GAME)
 

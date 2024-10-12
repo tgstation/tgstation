@@ -1,7 +1,7 @@
 // Hairstyles
 
 /datum/sprite_accessory/hair/modular
-	icon = 'modular_doppler/sprite_accessories/icons/hair.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/hair.dmi'
 
 /datum/sprite_accessory/hair/modular/pigtails4
 	name = "Pigtails 4"
@@ -651,10 +651,14 @@
 	name = "Long Dreadlocks"
 	icon_state = "hair_dreadlocks_long"
 
+/datum/sprite_accessory/hair/modular/inari
+	name = "Inari"
+	icon_state = "inari"
+
 // Facial hair
 
 /datum/sprite_accessory/facial_hair/modular
-	icon = 'modular_doppler/sprite_accessories/icons/facialhair.dmi'
+	icon = 'modular_doppler/modular_customization/accessories/icons/facialhair.dmi'
 
 /datum/sprite_accessory/facial_hair/modular/sideburns
 	name = "Sideburns"
