@@ -63,6 +63,7 @@
 	var/soul_eyes
 	var/obj/item/bodypart/head
 	// adds soulful SOUL PENDING eyes to indicate what's happening to observers
+
 	var/mob/living/carbon/human/hewmon
 	if(ishuman(aliver))
 		hewmon = aliver
@@ -73,7 +74,7 @@
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
-		role = ROLE_RECOVERED_CREW,
+		role = null,
 		check_jobban = ROLE_RECOVERED_CREW,
 		poll_time = 15 SECONDS,
 		checked_target = aliver,

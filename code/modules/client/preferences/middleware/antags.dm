@@ -4,7 +4,6 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
-		ROLE_RECOVERED_CREW = /datum/antagonist/recovered_crew,
 	))
 
 /datum/preference_middleware/antags
