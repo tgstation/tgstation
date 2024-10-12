@@ -889,8 +889,6 @@
 
 // If we have mood, applies a long-lasting mood debuff, majorly decreases our sanity and making us easier to injure. Does not affect changelings (duh)
 /mob/living/proc/revival_shock()
-	if (IS_CHANGELING(src))
-		return
 	apply_status_effect(/datum/status_effect/revival_shock)
 
 /**
