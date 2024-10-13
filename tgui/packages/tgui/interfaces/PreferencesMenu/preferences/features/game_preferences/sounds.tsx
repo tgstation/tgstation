@@ -7,7 +7,7 @@ import {
 } from '../base';
 import { FeatureDropdownInput } from '../dropdowns';
 
-export const sound_ambience: Feature<number> = {
+export const sound_ambience_volume: Feature<number> = {
   name: 'Ambience volume',
   category: 'SOUND',
   description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
@@ -73,7 +73,7 @@ export const sound_jukebox: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_lobby: Feature<number> = {
+export const sound_lobby_volume: Feature<number> = {
   name: 'Lobby music volume',
   category: 'SOUND',
   component: FeatureSliderInput,
@@ -86,7 +86,7 @@ export const sound_midi: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_ship_ambience: Feature<number> = {
+export const sound_ship_ambience_volume: Feature<number> = {
   name: 'Ship ambience volume',
   category: 'SOUND',
   description: `Ship ambience refers to the low ambient buzz that plays on loop.`,

@@ -351,7 +351,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_ambience))
+		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier)
 			SEND_SOUND(talking_living, sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
 
@@ -430,7 +430,7 @@
 		return
 
 	var/mob/living/holder = loc
-	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/sound_ambience))
+	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 		return
 	var/list/spans = data["spans"]

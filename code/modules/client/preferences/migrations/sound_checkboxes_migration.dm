@@ -9,12 +9,12 @@
  */
 
 /datum/preferences/proc/migrate_boolean_sound_prefs_to_default_volume()
-	var/ambience_pref = savefile.get_entry("sound_ambience")
-	var/ship_ambience_pref = savefile.get_entry("sound_ship_ambience")
-	var/lobby_music_pref = savefile.get_entry("sound_lobby")
+	var/ambience_pref = savefile.get_entry("sound_ambience_volume")
+	var/ship_ambience_pref = savefile.get_entry("sound_ship_ambience_volume")
+	var/lobby_music_pref = savefile.get_entry("sound_lobby_volume")
 	var/radio_noise_pref = savefile.get_entry("sound_radio_noise")
-	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ambience], ambience_pref*100)
-	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ship_ambience], ship_ambience_pref*100)
-	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_lobby], lobby_music_pref*100)
+	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ambience_volume], ambience_pref*100)
+	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ship_ambience_volume], ship_ambience_pref*100)
+	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_lobby_volume], lobby_music_pref*100)
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_radio_noise], radio_noise_pref*100)
 	return
