@@ -30,7 +30,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	if(!ignore_typecache)
+	if(isnull(ignore_typecache))
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
 			/mob/dead,
