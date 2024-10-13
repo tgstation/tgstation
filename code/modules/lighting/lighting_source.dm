@@ -1,5 +1,4 @@
-
-/// Cached global list of generated sheets. See: datum/light_source/proc/get_sheet()
+/// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
 GLOBAL_LIST_EMPTY(lighting_sheets)
 
 // This is where the fun begins.
