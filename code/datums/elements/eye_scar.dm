@@ -12,6 +12,7 @@
 
 	src.right_side = right_side
 	var/obj/item/organ/internal/eyes/eyeballs = target
+	eyeballs.maxHealth -= 10
 	ADD_TRAIT(eyeballs, right_side ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR, REF(src))
 	RegisterSignal(eyeballs, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(organ_overlays))
 	RegisterSignal(eyeballs, COMSIG_ORGAN_EYE_OVERLAY, PROC_REF(eye_overlays))
@@ -24,6 +25,10 @@
 
 /datum/element/eye_scar/Detach(obj/item/organ/internal/eyes/source, ...)
 	. = ..()
+	eyeballs.maxHealth += 10
+	if (!isnull(source.owner))
+		on_removed(source, source.owner)
+		source.owner.update_body()
 	UnregisterSignal(source, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ORGAN_EYE_OVERLAY, COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	REMOVE_TRAIT(source, right_side ? TRAIT_LEFT_EYE_SCAR : TRAIT_RIGHT_EYE_SCAR, REF(src))
 
