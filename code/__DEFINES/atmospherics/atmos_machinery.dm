@@ -102,7 +102,7 @@
 /// The heat capacity needed to cause the telecomms turf to overheat
 #define TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL (6000)
 /// The amount of messsages per minute we can send before TCOMM equipment starts to overheat/clog
-#define TCOMM_MESSAGES_PER_MINUTE (100)
+#define TCOMM_MESSAGES_PER_MINUTE (150)
 /// The heat capacity telecomms equipment generates while active
 #define TCOMMS_EQUIPMENT_HEAT_CAPACITY (TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL / TCOMM_MESSAGES_PER_MINUTE)
 
