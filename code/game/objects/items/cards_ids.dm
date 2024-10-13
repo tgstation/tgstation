@@ -810,7 +810,7 @@
 		if(registered_account.replaceable)
 			. += span_info("Alt-Right-Click the ID to change the linked bank account.")
 		if(registered_account.civilian_bounty)
-			. += "<span class='info'><b>There is an active civilian bounty.</b>"
+			. += span_info("<b>There is an active civilian bounty.</b>")
 			. += span_info("<i>[registered_account.bounty_text()]</i>")
 			. += span_info("Quantity: [registered_account.bounty_num()]")
 			. += span_info("Reward: [registered_account.bounty_value()]")

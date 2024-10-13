@@ -25,6 +25,7 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10)
 	var/spray_sound = 'sound/effects/spray2.ogg'
+	reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
 
 /obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -69,7 +70,7 @@
 
 	playsound(src, spray_sound, 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE * 2)
-	user.newtonian_move(get_dir(target, user))
+	user.newtonian_move(get_angle(target, user))
 	return TRUE
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.

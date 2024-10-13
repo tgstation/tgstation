@@ -55,25 +55,25 @@
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
 	button_icon_state = "legionnaire_charge"
-	chosen_message = "<span class='boldwarning'>You will attempt to grab your opponent and throw them.</span>"
+	chosen_message = span_boldwarning("You will attempt to grab your opponent and throw them.")
 	chosen_attack_num = LEGIONNAIRE_CHARGE
 
 /datum/action/innate/elite_attack/head_detach
 	name = "Release Head"
 	button_icon_state = "head_detach"
-	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
+	chosen_message = span_boldwarning("You will now detach your head or kill it if it is already released.")
 	chosen_attack_num = HEAD_DETACH
 
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
-	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
+	chosen_message = span_boldwarning("You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.")
 	chosen_attack_num = BONFIRE_TELEPORT
 
 /datum/action/innate/elite_attack/spew_smoke
 	name = "Spew Smoke"
 	button_icon_state = "spew_smoke"
-	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
+	chosen_message = span_boldwarning("Your head will spew smoke in an area, wherever it may be.")
 	chosen_attack_num = SPEW_SMOKE
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()

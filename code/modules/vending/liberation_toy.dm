@@ -8,31 +8,34 @@
 	vend_reply = "Come back for more!"
 	circuit = /obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
 	products = list(
-		/obj/item/gun/ballistic/automatic/toy/unrestricted = 10,
-		/obj/item/gun/ballistic/automatic/pistol/toy = 10,
-		/obj/item/gun/ballistic/shotgun/toy/unrestricted = 10,
-		/obj/item/toy/sword = 10,
+		/obj/item/card/emagfake = 4,
+		/obj/item/hot_potato/harmless/toy = 4,
+		/obj/item/toy/sword = 12,
+		/obj/item/dualsaber/toy = 12,
+		/obj/item/toy/foamblade = 12,
+		/obj/item/gun/ballistic/automatic/pistol/toy/riot = 8,
+		/obj/item/gun/ballistic/automatic/toy/riot = 8,
+		/obj/item/gun/ballistic/shotgun/toy/riot = 8,
 		/obj/item/ammo_box/foambox = 20,
-		/obj/item/toy/foamblade = 10,
-		/obj/item/toy/balloon/syndicate = 10,
-		/obj/item/clothing/suit/syndicatefake = 5,
-		/obj/item/clothing/head/syndicatefake = 5, //OPS IN DORMS oh wait it's just an assistant
 	)
 	contraband = list(
-		/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,   //Congrats, you unlocked the +18 setting!
-		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot = 10,
-		/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot = 10,
+		/obj/item/toy/balloon/syndicate = 1,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow/riot = 8,
+		/obj/item/toy/katana = 12,
+	)
+	premium = list(
+		/obj/item/toy/cards/deck/syndicate = 12,
+		/obj/item/storage/box/fakesyndiesuit = 4,
+		/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot = 4,
+		/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot = 4,
 		/obj/item/ammo_box/foambox/riot = 20,
-		/obj/item/toy/katana = 10,
-		/obj/item/dualsaber/toy = 5,
-		/obj/item/toy/cards/deck/syndicate = 10, //Gambling and it hurts, making it a +18 item
 	)
 	armor_type = /datum/armor/vending_toyliberationstation
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
-	default_price = PAYCHECK_COMMAND
+	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND
-	payment_department = ACCOUNT_SRV
+	payment_department = NO_FREEBIES
 	light_mask = "donksoft-light-mask"
 
 /datum/armor/vending_toyliberationstation

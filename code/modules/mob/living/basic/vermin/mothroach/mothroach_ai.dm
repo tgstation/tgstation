@@ -3,6 +3,7 @@
 /datum/ai_controller/basic_controller/mothroach
 	blackboard = list(
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 	)
 
@@ -10,6 +11,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_food/mothroach,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,

@@ -486,6 +486,15 @@
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
 
+/turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(!main_material.turf_sound_override)
+		return
+	footstep = main_material.turf_sound_override
+	barefootstep = main_material.turf_sound_override + "barefoot"
+	clawfootstep = main_material.turf_sound_override + "claw"
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 /// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
 /turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
 	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)

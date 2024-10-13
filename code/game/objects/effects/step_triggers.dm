@@ -220,3 +220,9 @@
 
 	if(happens_once)
 		qdel(src)
+
+/obj/effect/step_trigger/sound_effect/lavaland_cult_altar
+	happens_once = 1
+	name = "a grave mistake";
+	sound = 'sound/effects/hallucinations/i_see_you1.ogg'
+	triggerer_only = 1

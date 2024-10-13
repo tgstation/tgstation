@@ -167,7 +167,7 @@
 		return
 	to_chat(source, span_warning("You shoot with your laser eyes!"))
 	source.changeNext_move(CLICK_CD_RANGE)
-	source.newtonian_move(get_dir(target, source))
+	source.newtonian_move(get_angle(source, target))
 	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)

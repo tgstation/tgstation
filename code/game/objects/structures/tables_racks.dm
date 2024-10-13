@@ -309,8 +309,8 @@
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
 		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size*0.5), world.icon_size*0.5)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -361,13 +361,10 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
-/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+/obj/structure/table/greyscale/finalize_material_effects(list/materials)
 	. = ..()
-	var/list/materials_list = list()
-	for(var/custom_material in custom_materials)
-		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
-		materials_list += "[current_material.name]"
-	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
+	var/english_list = get_material_english_list(materials)
+	desc = "A square [(length(materials) > 1) ? "amalgamation" : "piece"] of [english_list] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
@@ -664,6 +661,9 @@
 
 /obj/structure/table/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.tool_start_check(user, amount = 0))
+		if(attempt_electrocution(user))
+			return ITEM_INTERACT_BLOCKING
+
 		if(deconstruction_ready)
 			to_chat(user, span_notice("You start strengthening the reinforced table..."))
 			if (tool.use_tool(src, user, 50, volume = 50))
@@ -683,6 +683,40 @@
 		return NONE
 
 	return ..()
+
+/obj/structure/table/reinforced/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(deconstruction_ready && attempt_electrocution(user))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+/obj/structure/table/reinforced/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(deconstruction_ready && attempt_electrocution(user))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+/// Attempts to shock the user, given the table is hooked up and they're within range.
+/// Returns TRUE on successful electrocution, FALSE otherwise.
+/obj/structure/table/reinforced/proc/attempt_electrocution(mob/user)
+	if(!anchored) // If for whatever reason it's not anchored, it can't be shocked either.
+		return FALSE
+	if(!in_range(src, user)) // To prevent TK and mech users from getting shocked.
+		return FALSE
+
+	var/turf/our_turf = get_turf(src)
+	if(our_turf.overfloor_placed) // Can't have a floor in the way.
+		return FALSE
+
+	var/obj/structure/cable/cable_node = our_turf.get_cable_node()
+	if(isnull(cable_node))
+		return FALSE
+	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
+		return FALSE
+
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, TRUE, src)
+	sparks.start()
+
+	return TRUE
 
 /obj/structure/table/bronze
 	name = "bronze table"
@@ -976,8 +1010,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))
-		user.visible_message("<span class='notice'>[user] assembles \a [R].\
-			</span>", span_notice("You assemble \a [R]."))
+		user.visible_message(span_notice("[user] assembles \a [R]."), span_notice("You assemble \a [R]."))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

@@ -76,6 +76,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	var/static/list/edibles = list(
 		/obj/item/food/cracker,
 	)
+	///list of commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
 
 	/// Tracks the times when we send a phrase through either being pet or attack to ensure it's not abused to flood
 	COOLDOWN_DECLARE(forced_speech_cooldown)
@@ -92,7 +99,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/listen_and_repeat, desired_phrases = get_static_list_of_phrases(), blackboard_key = BB_PARROT_REPEAT_STRING)
 	AddComponent(/datum/component/tameable, food_types = edibles, tame_chance = 100, bonus_tame_chance = 0)
-
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attacking))
 	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(on_attacked)) // this means we could have a peaceful interaction, like getting a cracker
@@ -151,11 +158,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/basic/parrot/get_status_tab_items()
 	. = ..()
 	. += "Held Item: [held_item]"
-
-/mob/living/basic/parrot/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(stat != DEAD) // parrots have evolved to let them fly in space because fucking uhhhhhhhhhh
-		return TRUE
-	return ..()
 
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()

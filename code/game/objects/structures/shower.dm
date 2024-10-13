@@ -90,6 +90,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -233,18 +234,33 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		qdel(mist)
 
 
-/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
+/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/enterer)
 	SIGNAL_HANDLER
+
 	if(actually_on && reagents.total_volume)
-		wash_atom(AM)
+		wash_atom(enterer)
+
+/obj/machinery/shower/proc/on_exited(datum/source, atom/movable/exiter)
+	SIGNAL_HANDLER
+
+	if(!isliving(exiter))
+		return
+
+	var/obj/machinery/shower/locate_new_shower = locate() in get_turf(exiter)
+	if(locate_new_shower && isturf(exiter.loc))
+		return
+	var/mob/living/take_his_status_effect = exiter
+	take_his_status_effect.remove_status_effect(/datum/status_effect/shower_regen)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
-	if(isliving(target))
-		var/mob/living/living_target = target
-		check_heat(living_target)
-		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	check_heat(living_target)
+	living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+	living_target.apply_status_effect(/datum/status_effect/shower_regen)
 
 /**
  * Toggle whether shower is actually on and outputting water.
