@@ -4144,6 +4144,9 @@
 	cycle_id = "antesat"
 	},
 /obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "bxs" = (
