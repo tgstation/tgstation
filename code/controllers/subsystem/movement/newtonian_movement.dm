@@ -1,6 +1,7 @@
 /// The subsystem is intended to tick things related to space/newtonian movement, such as constant sources of inertia
 MOVEMENT_SUBSYSTEM_DEF(newtonian_movement)
 	name = "Newtonian Movement"
+	priority = FIRE_PRIORITY_SPACEDRIFT
 	flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
