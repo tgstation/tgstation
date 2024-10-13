@@ -406,7 +406,7 @@
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BRUTE, wound_bonus = 5 * our_smite_multiplier)
 		motherfucker_to_hurt.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 10 SECONDS)
 		smiter.emote("snap")
-		smite_text_to_target = "crushes you psychically with a snap of [smiter.p_their()] fingers "
+		smite_text_to_target = "crushes you psychically with a snap of [smiter.p_their()] fingers"
 	else
 		motherfucker_to_hurt.visible_message(span_warning("[smiter] lays hands on [motherfucker_to_hurt], but it shears [motherfucker_to_hurt.p_them()] with a brilliant energy!"))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BURN, wound_bonus = 5 * our_smite_multiplier)
