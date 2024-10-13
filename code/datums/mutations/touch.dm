@@ -162,11 +162,11 @@
 
 	var/success
 
-	if (hurtguy.mob_biotypes & MOB_UNDEAD && HAS_TRAIT(mendicant, TRAIT_PACIFISM)) //Returns if our target is undead and we're a pacifist.
-		mendicant.balloon_alert(mendicant, "[hurtguy] is undead!")
-		return FALSE
-
 	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
+
+	if (hurtguy.mob_biotypes & MOB_UNDEAD && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !mendicant.combat_mode) //Returns if our target is undead and we're a pacifist.
+		mendicant.balloon_alert(mendicant, "[hurtguy] would be hurt!")
+		return FALSE
 
 	if(hurt_this_guy)
 		return by_gods_light_i_smite_you(mendicant, hurtguy, heal_multiplier)
@@ -372,30 +372,36 @@
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
 
-/datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/paladin, mob/living/evil_motherfucker, smite_multiplier)
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/smiter, mob/living/motherfucker_to_hurt, smite_multiplier)
 	var/our_smite_multiplier = smite_multiplier
-
-	if(paladin.mind?.holy_role >= HOLY_ROLE_PRIEST)
+	var/evil_smite = HAS_TRAIT(smiter, TRAIT_EVIL) ? TRUE : FALSE
+	if(smiter.mind?.holy_role >= HOLY_ROLE_PRIEST)
 		var/possible_deity = GLOB.deity
-		var/mob/living/carbon/human/human_paladin = paladin //wow so original, dude
-		if(ishuman(human_paladin))
-			human_paladin.force_say()
-			human_paladin.say("By [possible_deity ? "[possible_deity]'s" : "God's"] might I smite you!!!", forced = "compelled by the power of their deity")
+		var/mob/living/carbon/human/human_smiter = smiter //wow so original, dude
+		if(ishuman(human_smiter))
+			human_smiter.force_say()
+			if(evil_smite)
+				human_smiter.say("in [possible_deity ? "[possible_deity]'s" : "God's"] dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
+			else
+				human_smiter.say("By [possible_deity ? "[possible_deity]'s" : "God's"] might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
 		our_smite_multiplier *= 5 //good luck surviving this
 
-	evil_motherfucker.apply_damage(10 * our_smite_multiplier, BURN, wound_bonus = 5 * our_smite_multiplier)
-	evil_motherfucker.adjust_fire_stacks(3 * our_smite_multiplier)
-	evil_motherfucker.ignite_mob()
+	if(evil_smite)
+		motherfucker_to_hurt.visible_message(span_warning("[smiter] snaps [motherfucker_to_hurt.p_their()] fingers in front of [motherfucker_to_hurt]'s face, and [motherfucker_to_hurt]'s body twists painfully from an unseen force!"))
+		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BRUTE, wound_bonus = 5 * our_smite_multiplier)
+		motherfucker_to_hurt.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 10 SECONDS)
+		smiter.emote("snap")
+	else
+		motherfucker_to_hurt.visible_message(span_warning("[smiter] lays hands on [motherfucker_to_hurt], but it shears [motherfucker_to_hurt.p_them()] with a brilliant energy!"))
+		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BURN, wound_bonus = 5 * our_smite_multiplier)
+		motherfucker_to_hurt.adjust_fire_stacks(3 * our_smite_multiplier)
+		motherfucker_to_hurt.ignite_mob()
 
-	paladin.Beam(evil_motherfucker, icon_state = beam_icon, time = 0.5 SECONDS)
-	beam_icon = initial(beam_icon)
-	evil_motherfucker.update_damage_overlays()
+	motherfucker_to_hurt.update_damage_overlays()
 
-
-	evil_motherfucker.visible_message(span_warning("[paladin] lays hands on [evil_motherfucker], but it shears [evil_motherfucker.p_them()] with a brilliant energy!"))
-	to_chat(evil_motherfucker, span_bolddanger("[paladin] lays hands on you, hurting you!"))
-	evil_motherfucker.emote("scream")
-	new /obj/effect/temp_visual/heal(get_turf(evil_motherfucker), LIGHT_COLOR_HOLY_MAGIC)
+	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] lays hands on you, hurting you!"))
+	motherfucker_to_hurt.emote("scream")
+	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE
 
 /obj/item/melee/touch_attack/lay_on_hands
