@@ -275,7 +275,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// This is pretty much meant for players, AI will use the task-specific procs instead.
 /mob/living/basic/parrot/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-
 	if(!.)
 		return FALSE
 
