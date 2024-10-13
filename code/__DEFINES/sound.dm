@@ -194,6 +194,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
 #define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
 #define SFX_PIG_OINK "pig_oink"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
 #define SFX_SIZZLE "sizzle"
 #define SFX_GROWL "growl"
 #define SFX_POLAROID "polaroid"
@@ -203,3 +205,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_HALLUCINATION_I_M_HERE "hallucination_i_m_here"
 #define SFX_VOID_DEFLECT "void_deflect"
 #define SFX_LOW_HISS "low_hiss"
+
