@@ -38,13 +38,10 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(Slip),
 	)
 
-	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
-	var/static/list/holder_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(Slip_on_wearer),
+	///what we give to connect_loc if we're an item and get equipped by a mob, or if we're a mob. makes slippable mobs moving over the mob slip
+	var/static/list/mob_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(slip_on_mob),
 	)
-
-	/// The connect_loc_behalf component for the holder_connections list.
-	var/datum/weakref/holder_connect_loc_behalf
 
 /**
  * Initialize the slippery component behaviour
@@ -79,14 +76,14 @@
 		src.slot_whitelist = slot_whitelist
 
 	add_connect_loc_behalf_to_parent()
-	if(ismovable(parent))
-		if(isitem(parent))
-			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
-			RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-			RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
-			RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
-	else
+	if(!ismovable(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
+	else if(isitem(parent))
+		src.lube_flags |= SLIPPERY_WHEN_LYING_DOWN
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
+		RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
 
 /datum/component/slippery/Destroy(force)
 	can_slip_callback = null
@@ -114,8 +111,13 @@
 		lube_flags = previous_lube_flags
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
-	if(ismovable(parent))
-		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
+	var/list/connections_to_use
+	if(isliving(parent))
+		connections_to_use = mob_connections
+	else if(ismovable(parent))
+		connections_to_use = default_connections
+	if(connections_to_use)
+		AddComponent(/datum/component/connect_loc_behalf, parent, connections_to_use)
 
 /datum/component/slippery/InheritComponent(
 	datum/component/slippery/component,
@@ -184,7 +186,7 @@
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
-		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+		AddComponent(/datum/component/connect_loc_behalf, holder, mob_connections)
 		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
 
 /**
@@ -227,10 +229,11 @@
  * * source - the source of the signal
  * * arrived - the atom/movable that slipped on us.
  */
-/datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/slippery/proc/slip_on_mob(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(holder.body_position == LYING_DOWN && !holder.buckled)
+	var/mob/living/living = holder || parent
+	if(!(lube_flags & SLIPPERY_WHEN_LYING_DOWN) || (living.body_position == LYING_DOWN && !living.buckled))
 		Slip(source, arrived)
 
 /datum/component/slippery/UnregisterFromParent()

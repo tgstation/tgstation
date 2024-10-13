@@ -4135,20 +4135,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"bxn" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Telecomms Server Room"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "antesat"
-	},
-/obj/structure/cable/layer3,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/telecomms,
-/area/station/tcommsat/server)
 "bxs" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/landmark/start/prisoner,
@@ -4945,12 +4931,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
-"bLI" = (
-/obj/machinery/processor/slime,
-/obj/effect/turf_decal/bot_red,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "bLS" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/structure/cable/multilayer/multiz,
@@ -13429,6 +13409,20 @@
 "eKR" = (
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
+"eKZ" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "antesat"
+	},
+/obj/structure/cable/layer3,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "eLe" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -21697,6 +21691,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse/upper)
+"hGz" = (
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/processor/slime,
+/turf/open/floor/iron/white/textured_large,
+/area/station/science/xenobiology)
 "hGB" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -46919,16 +46921,6 @@
 /obj/structure/chair/sofa/bench,
 /turf/open/floor/iron/white,
 /area/station/medical/exam_room)
-"qGD" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "qGN" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/deck,
@@ -47591,14 +47583,6 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
-"qUi" = (
-/obj/machinery/processor/slime,
-/obj/effect/turf_decal/bot_red,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "qUl" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table,
@@ -48528,6 +48512,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
+"riN" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron/white/textured_large,
+/area/station/science/xenobiology)
 "riQ" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
@@ -48818,14 +48813,6 @@
 /obj/structure/railing/corner,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
-"rmi" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "rms" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -55425,6 +55412,15 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/research)
+"tyN" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron/white/textured_large,
+/area/station/science/xenobiology)
 "tyQ" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
@@ -64382,6 +64378,12 @@
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/textured_large,
+/area/station/science/xenobiology)
+"wFx" = (
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/processor/slime,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "wFy" = (
@@ -104205,7 +104207,7 @@ woJ
 dZy
 dZy
 wZz
-bxn
+eKZ
 wZz
 kYu
 kYu
@@ -186232,13 +186234,13 @@ cVs
 cUf
 qXj
 lKY
-qUi
+hGz
 wmO
 ybO
 ybO
 ybO
 wmO
-rmi
+tyN
 lKY
 dzL
 tsm
@@ -186746,13 +186748,13 @@ jQS
 qZX
 qXj
 lKY
-qGD
+riN
 wmO
 ybO
 ybO
 ybO
 wmO
-bLI
+wFx
 lKY
 vUJ
 gDl
