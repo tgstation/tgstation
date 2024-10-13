@@ -115,7 +115,7 @@
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself. \
-		For some reason, this power does not play nicely with the undead or people with strange ideas about morality."
+		For some reason, this power does not play nicely with the undead, or people with strange ideas about morality."
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "mending_touch"
 	sound = 'sound/effects/magic/staff_healing.ogg'
