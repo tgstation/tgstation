@@ -25,7 +25,7 @@
 
 /datum/element/eye_scar/Detach(obj/item/organ/internal/eyes/source, ...)
 	. = ..()
-	eyeballs.maxHealth += 10
+	source.maxHealth += 10
 	if (!isnull(source.owner))
 		on_removed(source, source.owner)
 		source.owner.update_body()
