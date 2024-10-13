@@ -1,0 +1,6 @@
+/area/shuttle/arrival/on_joining_game(mob/living/boarder)
+	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
+		var/atom/movable/screen/splash/Spl = new(null, boarder.client, TRUE)
+		Spl.Fade(TRUE)
+		boarder.playsound_local(get_turf(boarder), 'modular_doppler/announcer/sound/misc/arrival.ogg', 25)
+	boarder.update_parallax_teleport()
