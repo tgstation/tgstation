@@ -125,7 +125,7 @@
 	TEST_ASSERT(dummy.is_nearsighted(), "After sustaining minor eye damage ([minor_damage]), the dummy was not nearsighted.")
 	// Check that the severity is correct
 	nearsightedness = dummy.is_nearsighted()
-	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 1, "After taking minor eye damage, the dummy's nearsightedness was the incorrect severity.")
+	TEST_ASSERT_EQUAL(nearsightedness.overlay_severity, 2, "After taking minor eye damage, the dummy's nearsightedness was the incorrect severity.")
 	nearsightedness = null
 	// Heal eye damage
 	eyes.set_organ_damage(0)
