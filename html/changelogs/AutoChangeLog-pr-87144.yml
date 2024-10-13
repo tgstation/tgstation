@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Pyrokinesis/Cryokinesis cast range matches its projectile range."
-  - code_imp: "Pyrokinesis and Cindikinesis are now their own types and not subtypes of Cryokinesis and Geladikinesis. This allows you to not have to mutate yourself in a specific order to not lock yourself out of the other mutation."

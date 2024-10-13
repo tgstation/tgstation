@@ -1,6 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - rscadd: "a lot of basic mobs and pets got new emotes"
-  - refactor: "emotes triggered by petting pets work differently now, please report any oddities with these behaviors."
-  - sound: "new emotes for basic mobs got sounds"

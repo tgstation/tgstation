@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "You can buy a fishing rod pre-equipped with a rescue hook from the mining order console."
-  - balance: "Paramedics can get a rescue fishing hook as a heirloom."
