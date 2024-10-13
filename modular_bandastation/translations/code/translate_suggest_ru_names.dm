@@ -21,7 +21,7 @@
 		if(!ru_name_suggest[declent])
 			to_chat(src, span_notice("Вы отменили предложение перевода."))
 			return TRUE
-	var/message = "suggests RU_NAMES_INIT_LIST(\"[atom_type::name]\", \"[ru_name_suggest[NOMINATIVE]]\", \"[ru_name_suggest[GENITIVE]]\", \"[ru_name_suggest[DATIVE]]\", \"[ru_name_suggest[ACCUSATIVE]]\", \"[ru_name_suggest[INSTRUMENTAL]]\", \"[ru_name_suggest[PREPOSITIONAL]]\") for [atom_type::type]"
+	var/message = "suggests RU_NAMES_LIST_INIT(\"[atom_type::name]\", \"[ru_name_suggest[NOMINATIVE]]\", \"[ru_name_suggest[GENITIVE]]\", \"[ru_name_suggest[DATIVE]]\", \"[ru_name_suggest[ACCUSATIVE]]\", \"[ru_name_suggest[INSTRUMENTAL]]\", \"[ru_name_suggest[PREPOSITIONAL]]\") for [atom_type::type]"
 	var/log_text = "[key_name_and_tag(src)] [message]"
 	logger.Log(LOG_CATEGORY_RU_NAMES_SUGGEST, log_text)
 	to_chat(src, span_notice("Ваше предложение перевода успешно записано."))

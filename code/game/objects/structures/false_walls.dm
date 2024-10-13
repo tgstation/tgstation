@@ -3,6 +3,7 @@
  */
 /obj/structure/falsewall
 	name = "wall"
+	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A huge chunk of metal used to separate rooms."
 	anchored = TRUE
 	icon = 'icons/turf/walls/false_walls.dmi'
@@ -351,6 +352,7 @@
 
 /obj/structure/falsewall/titanium
 	name = "wall"
+	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A light-weight titanium wall used in shuttles."
 	fake_icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle_wall-open"
@@ -363,6 +365,7 @@
 
 /obj/structure/falsewall/plastitanium
 	name = "wall"
+	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "An evil wall of plasma and titanium."
 	fake_icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-open"
@@ -375,6 +378,7 @@
 
 /obj/structure/falsewall/material
 	name = "wall"
+	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A huge chunk of material used to separate rooms."
 	fake_icon = 'icons/turf/walls/material_wall.dmi'
 	icon_state = "material_wall-open"
