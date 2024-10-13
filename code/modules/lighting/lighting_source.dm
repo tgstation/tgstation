@@ -1,6 +1,6 @@
 
 /// Cached global list of generated sheets. See: datum/light_source/proc/get_sheet()
-GLOBAL_LIST_EMPTY(light_source_sheets)
+GLOBAL_LIST_EMPTY(lighting_sheets)
 
 // This is where the fun begins.
 // These are the main datums that emit light.
@@ -229,13 +229,13 @@ GLOBAL_LIST_EMPTY(light_source_sheets)
 /datum/light_source/proc/get_sheet(multiz = FALSE)
 	var/range = max(1, light_range);
 	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]"
-	var/list/hand_back = GLOB.light_source_sheets[key]
+	var/list/hand_back = GLOB.lighting_sheets[key]
 	if(!hand_back)
 		if(multiz)
 			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
 		else
 			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
-		GLOB.light_source_sheets[key] = hand_back
+		GLOB.lighting_sheets[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source
