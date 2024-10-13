@@ -72,7 +72,7 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/kirbyplants/proc/generate_states()
-	var/plant_states = list()
+	var/list/plant_states = list()
 	for(var/i in 1 to 24)
 		var/number
 		if(i < 10)
