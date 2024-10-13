@@ -13,10 +13,10 @@
 	screen_loc = UI_BLOOD_DISPLAY
 
 /atom/movable/screen/hemophage/blood/proc/update_blood_hud(blood_volume)
-	maptext = FORMAT_HEMOPHAGE_HUD_TEXT(hud_text_color(), blood_volume)
+	maptext = FORMAT_HEMOPHAGE_HUD_TEXT(hud_text_color(blood_volume), blood_volume)
 
 /atom/movable/screen/hemophage/blood/proc/hud_text_color(blood_volume)
-	return blood_volume > BLOOD_VOLUME_SAFE ? "#FFDDDD" : "#FFAAAA"
+	return blood_volume > BLOOD_VOLUME_SAFE ? "#FFDDDD" : "#b16565"
 
 #undef UI_BLOOD_DISPLAY
 #undef FORMAT_HEMOPHAGE_HUD_TEXT

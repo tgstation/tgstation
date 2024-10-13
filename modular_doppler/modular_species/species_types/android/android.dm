@@ -1,7 +1,7 @@
 /// The starter amount for the android's core
-#define ENERGY_START_AMT 10 MEGA JOULES
+#define ENERGY_START_AMT 5 MEGA JOULES
 /// The amount at which mob energy decreases
-#define ENERGY_DRAIN_AMT 10 KILO JOULES
+#define ENERGY_DRAIN_AMT 5 KILO JOULES
 
 /datum/species/android
 	name = "Android"
@@ -88,6 +88,12 @@
 		return
 	if(core_energy > 0)
 		core_energy -= ENERGY_DRAIN_AMT
+	// alerts
+	if(core_energy <= 0.75 MEGA JOULES)
+		if(prob(10))
+			target.balloon_alert_to_viewers("power low!")
+			playsound(target, 'sound/machines/beep/triple_beep.ogg', 50, FALSE)
+	// alerts end, death begins
 	if(core_energy <= 0)
 		target.death() // You can do a lot in a day.
 
