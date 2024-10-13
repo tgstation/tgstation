@@ -162,6 +162,8 @@
 				// DOPPLER EDIT ADDITION BEGIN - Green blood color
 				if(hasgreenblood(victim))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(victim.loc, victim.dir)
+				if(hasblueblood(victim))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(victim.loc, victim.dir)
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				// DOPPLER EDIT ADDITION END
@@ -176,6 +178,8 @@
 				// DOPPLER EDIT ADDITION BEGIN - Green blood color
 				if(hasgreenblood(victim))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(victim.loc, victim.dir)
+				if(hasblueblood(victim))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(victim.loc, victim.dir)
 				else
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				// DOPPLER EDIT ADDITION END

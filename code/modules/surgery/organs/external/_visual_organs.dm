@@ -120,7 +120,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = "horns"
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
+	if((human.head?.flags_inv & HIDEHORNS) || (human.wear_mask?.flags_inv & HIDEHORNS)) // DOPPLER EDIT, old code: if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
 
 	return TRUE

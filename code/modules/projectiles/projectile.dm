@@ -330,13 +330,17 @@
 				var/splatter_dir = dir
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
-				if(isalien(living_target) || hasgreenblood(living_target)) // DOPPLER EDIT CHANGE - Green blood color - Original line: if(isalien(living_target))
-					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(target_turf, splatter_dir) // DOPPLER EDIT CHANGE - Green blood color - Original line: new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
-				else
+				// DOPPLER ADDITION START
+				if(hasblueblood(living_target))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(target_turf, splatter_dir)
+				if(hasgreenblood(living_target))
+					new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(target_turf, splatter_dir)
+				if(!hasblueblood(living_target) && !hasgreenblood(living_target))
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
+				// DOPPLER ADDITION END
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
-			else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
+			if (hit_bodypart?.biological_state & (BIO_ROBOTIC)) // DOPPLER EDIT - old code: else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
 				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 

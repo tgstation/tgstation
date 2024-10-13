@@ -173,18 +173,18 @@
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
 
-/// Synth tail
+/// Cybernetic tail
 //
-/obj/item/organ/external/tail/synthetic
+/obj/item/organ/external/tail/cybernetic
 	preference = "feature_synth_tail"
 	dna_block = null
 	organ_flags = ORGAN_ROBOTIC
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/synthetic
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cybernetic
 
-/datum/bodypart_overlay/mutant/tail/synthetic
+/datum/bodypart_overlay/mutant/tail/cybernetic
 	feature_key = "tail_other"
 
-/datum/bodypart_overlay/mutant/tail/synthetic/get_global_feature_list()
+/datum/bodypart_overlay/mutant/tail/cybernetic/get_global_feature_list()
 	return SSaccessories.tails_list_synth
 
 
@@ -193,6 +193,7 @@
 /obj/item/organ/external/tail/humanoid
 	preference = "feature_humanoid_tail"
 	dna_block = null
+	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/humanoid
 
 /datum/bodypart_overlay/mutant/tail/humanoid
@@ -207,6 +208,7 @@
 /obj/item/organ/external/tail/alien
 	preference = "feature_alien_tail"
 	dna_block = null
+	wag_flags = WAG_ABLE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/alien
 
 /datum/bodypart_overlay/mutant/tail/alien

@@ -153,7 +153,7 @@
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
+	if(human.wear_suit && (human.wear_suit.flags_inv & HIDETAIL)) // DOPPLER EDIT, old code: if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
 	return TRUE
 

@@ -49,7 +49,7 @@
 	hud_icons = list(ID_HUD)
 
 /datum/atom_hud/data/human/security/advanced
-	hud_icons = list(ID_HUD, IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD, WANTED_HUD)
+	hud_icons = list(ID_HUD, IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD, WANTED_HUD, SEC_IMPLANT_HUD) // DOPPLER EDIT, old code: hud_icons = list(ID_HUD, IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/human/fan_hud
 	hud_icons = list(FAN_HUD)

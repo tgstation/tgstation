@@ -18,7 +18,13 @@
 /datum/loadout_item/undersuit/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE, override_items = LOADOUT_OVERRIDE_BACKPACK)
 	if(override_items == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
 		if(outfit.uniform)
-			LAZYADD(outfit.backpack_contents, outfit.uniform)
+			if(equipper.jumpsuit_style == PREF_SKIRT)
+				outfit.uniform = "[outfit.uniform]/skirt"
+				if(!text2path(outfit.uniform))
+					outfit.uniform = initial(outfit.uniform)
+				LAZYADD(outfit.backpack_contents, outfit.uniform)
+			else
+				LAZYADD(outfit.backpack_contents, outfit.uniform)
 		outfit.uniform = item_path
 	else
 		outfit.uniform = item_path

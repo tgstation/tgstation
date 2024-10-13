@@ -104,14 +104,13 @@
 /datum/bodypart_overlay/mutant/ears/humanoid_ears/get_global_feature_list()
 	return SSaccessories.ears_list_humanoid
 
-/// Synthetic ears
+/// Cybernetic ears
 //
-/obj/item/organ/internal/ears/synthetic
+/obj/item/organ/internal/ears/cybernetic
 	preference = "feature_synth_ears"
-	organ_flags = ORGAN_ROBOTIC
-	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/synthetic_ears
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/cybernetic
 
-/datum/bodypart_overlay/mutant/ears/synthetic_ears/get_global_feature_list()
+/datum/bodypart_overlay/mutant/ears/cybernetic/get_global_feature_list()
 	return SSaccessories.ears_list_synthetic
 
 /// Alien ears

@@ -22,12 +22,20 @@
 		blood_type = new_reagent.data["blood_type"]
 	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
 		blood_type = "LE"
+	/* DOPPLER REMOVAL START
 	else if(holder.has_reagent(/datum/reagent/lube))
 		blood_type = "S"
+	DOPPLER REMOVAL END */
 	else if(holder.has_reagent(/datum/reagent/water))
 		blood_type = "H2O"
 	else if(holder.has_reagent(/datum/reagent/toxin/slimejelly))
 		blood_type = "TOX"
+	// DOPPLER ADDITION START
+	else if(holder.has_reagent(/datum/reagent/synth_blood))
+		blood_type = "R"
+	else if(holder.has_reagent(/datum/reagent/bug_blood))
+		blood_type = "I"
+	// DOPPLER ADDITION END
 	else
 		blood_type = null
 	return ..()
@@ -43,7 +51,7 @@
 
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "LE", "R", "I") // DOPPLER EDIT, old code: blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
@@ -71,6 +79,7 @@
 	blood_type = "LE"
 	unique_blood = /datum/reagent/consumable/liquidelectricity
 
+/* 	DOPPLER REMOVAL START
 /obj/item/reagent_containers/blood/snail
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
@@ -78,6 +87,7 @@
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
+	DOPPLER REMOVAL END */
 
 /obj/item/reagent_containers/blood/podperson
 	blood_type = "H2O"

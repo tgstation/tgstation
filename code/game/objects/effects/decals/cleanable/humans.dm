@@ -442,6 +442,8 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 			var/obj/effect/decal/cleanable/final_splatter
 			if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/green))
 				final_splatter = new /obj/effect/decal/cleanable/blood/green/splatter/over_window(prev_loc)
+			if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/blue))
+				final_splatter = new /obj/effect/decal/cleanable/blood/blue/splatter/over_window(prev_loc)
 			else
 				final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc)
 			// DOPPLER EDIT CHANGE END
@@ -459,6 +461,8 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	var/obj/effect/decal/cleanable/final_splatter
 	if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/green))
 		final_splatter = new /obj/effect/decal/cleanable/blood/green/splatter/over_window(prev_loc)
+	if(istype(src, /obj/effect/decal/cleanable/blood/hitsplatter/blue))
+		final_splatter = new /obj/effect/decal/cleanable/blood/blue/splatter/over_window(prev_loc)
 	else
 		final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc)
 	// DOPPLER EDIT CHANGE END

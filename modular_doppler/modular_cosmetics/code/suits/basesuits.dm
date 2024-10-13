@@ -43,12 +43,33 @@
 
 
 
+/// SPACESUITS
+/obj/item/clothing/head/helmet/space
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/head/spacehelm.dmi',
+		BODYSHAPE_SNOUTED_T = 'modular_doppler/modular_cosmetics/icons/mob/head/spacehelm_muzzled.dmi')
+
 /obj/item/clothing/suit/space
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
 	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/spacesuit.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/spacesuit_digi.dmi')
 
+/// RADSUITS
+/obj/item/clothing/head/utility/radiation
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_SNOUTED)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/head/utility.dmi',
+		BODYSHAPE_SNOUTED_T = 'modular_doppler/modular_cosmetics/icons/mob/head/basehead_muzzled.dmi')
+
+/obj/item/clothing/suit/utility/radiation
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/utility.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/suit_digi.dmi')
+
+
+
+/// FLAKY SUITS
 /obj/item/clothing/suit/chaplainsuit
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)

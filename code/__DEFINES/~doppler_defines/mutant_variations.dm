@@ -12,7 +12,7 @@
 #define MONKEY "monkey"
 #define DEER "deer"
 #define BUG "bug"
-#define SYNTHETIC "synthetic"
+#define CYBERNETIC "cybernetic"
 #define HUMANOID "humanoid"
 #define ALIEN "alien"
 
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(mutant_variations, list(
 	LIZARD,
 	MONKEY,
 	MOUSE,
-	SYNTHETIC,
+	CYBERNETIC,
 	ALIEN,
 ))
 
