@@ -121,6 +121,10 @@
 			return FALSE
 		switch(type)
 			if("feet")
+				// DOPPLER ADDITION START - Hardened soles
+				if(HAS_TRAIT(victim, TRAIT_HARD_SOLES))
+					to_chat(victim, span_notice("[src] snaps onto your foot, then falls off uselessly."))
+				// DOPPLER ADDITION END
 				if(!victim.shoes)
 					affecting = victim.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 					victim.Paralyze(60)

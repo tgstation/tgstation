@@ -803,6 +803,8 @@
 	limb_id = "synth_lizard"
 
 /obj/item/bodypart/leg/right/robot/android/synth_lizard
+	bodypart_traits = list(TRAIT_HARD_SOLES)
+	bodypart_trait_source = RIGHT_LEG_TRAIT
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	should_draw_greyscale = TRUE
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -812,6 +814,8 @@
 	limb_id = "synth_lizard"
 
 /obj/item/bodypart/leg/left/robot/android/synth_lizard
+	bodypart_traits = list(TRAIT_HARD_SOLES)
+	bodypart_trait_source = RIGHT_LEG_TRAIT
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	should_draw_greyscale = TRUE
 	icon_static = ANDROID_BODYPARTS_DMI

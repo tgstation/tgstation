@@ -1,4 +1,3 @@
-
 /datum/quirk/hard_soles
 	name = "Hardened Soles"
 	desc = "You're used to walking barefoot, and won't receive the negative effects of doing so."

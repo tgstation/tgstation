@@ -6840,6 +6840,7 @@
 #include "modular_doppler\modular_medical\reagents\reagents.dm"
 #include "modular_doppler\modular_medical\reagents\sprays.dm"
 #include "modular_doppler\modular_medical\reagents\synth_blood.dm"
+#include "modular_doppler\modular_medical\surgery\_bodyparts.dm"
 #include "modular_doppler\modular_medical\surgery\revival.dm"
 #include "modular_doppler\modular_medical\surgery\organs\internal\cyberimp.dm"
 #include "modular_doppler\modular_medical\wounds\_wounds.dm"
