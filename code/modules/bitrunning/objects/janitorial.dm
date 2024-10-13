@@ -126,7 +126,6 @@ GLOBAL_LIST_EMPTY(janitorial_scanners)
 	icon_state = "exit_portal"
 	flags_1 = INDESTRUCTIBLE
 
-
 /obj/effect/bitrunner_exit_portal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	SEND_SIGNAL(user, COMSIG_BITRUNNER_ALERT_SEVER)

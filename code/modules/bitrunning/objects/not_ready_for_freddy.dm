@@ -307,6 +307,7 @@
 	)
 	var/list/animatronics = list()
 	var/list/pathfinding_nodes = list()
+	var/you_failed = FALSE
 	var/security_attacks = 0
 	var/minutes_passed = 0
 	var/movement_process_timer
@@ -356,6 +357,7 @@
 		robot.setDir(robot.starting_node.dir)
 		robot.current_node = robot.starting_node
 		robot.set_light_on(FALSE)
+	you_failed = FALSE
 	for(var/obj/machinery/light/lightbulb in range(10, src))
 		if(lightbulb == left_light || lightbulb == right_light)
 			continue
@@ -548,6 +550,9 @@
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted/security(get_turf(src))
 
 /obj/bitrunning/animatronic_controller/proc/you_failed(obj/bitrunning/animatronic/killer_robot)
+	if(you_failed)
+		return
+	you_failed = TRUE
 	deltimer(movement_process_timer)
 	deltimer(six_minute_timer)
 	deltimer(power_drain_timer)
