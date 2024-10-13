@@ -289,3 +289,4 @@ You don't need to destroy a Spacecoin machine to make your funds stop draining. 
 As a Bitrunner, upgrading your quantum server will increase rewards and reduce downtime.
 As a Bitrunner, your avatar has a domain info ability which will give you clues to help complete virtual domains.
 Bitrunning is a crime.
+You can increase your throwing strength by performing a tactical flip or spin during the action, but this tires you out somewhat.
