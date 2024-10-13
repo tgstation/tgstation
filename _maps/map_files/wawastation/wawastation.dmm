@@ -4943,9 +4943,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "bLI" = (
-/obj/machinery/processor/slime,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/processor/slime,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "bLS" = (
@@ -46924,6 +46924,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "qGN" = (
@@ -47589,11 +47590,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "qUi" = (
-/obj/machinery/processor/slime,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/processor/slime,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "qUl" = (
@@ -48821,6 +48822,7 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "rms" = (

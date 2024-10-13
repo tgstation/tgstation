@@ -37,13 +37,22 @@
 		/datum/pet_command/perform_trick_sequence,
 	)
 
+/datum/emote/fox
+	mob_type_allowed_typecache = /mob/living/basic/pet/fox
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/fox/yap
+	key = "yap"
+	key_third_person = "yaps"
+	message = "yaps happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /mob/living/basic/pet/fox/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/cultist_pet)
 	AddElement(/datum/element/wears_collar)
-	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
+	AddElement(/datum/element/pet_bonus, "yap")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_SMALL)
 	AddElement(/datum/element/ai_retaliate)
