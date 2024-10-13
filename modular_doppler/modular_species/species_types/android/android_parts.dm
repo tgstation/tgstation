@@ -37,6 +37,17 @@
 // head
 /obj/item/bodypart/head/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	// var for monitor heads and their emissive states
+	var/monitor_state
+
+/obj/item/bodypart/head/robot/android/get_limb_icon(dropped)
+	. = ..()
+	// emissive handling
+	if(!monitor_state || monitor_state == "none")
+		return .
+	var/monitor_type = istype(src, /obj/item/bodypart/head/robot/android/synth_lizard) ? "lizard_em" : "monitor_em"
+	. += emissive_appearance('modular_doppler/modular_customization/accessories/icons/cybernetic/synth_screens.dmi', monitor_type, owner, alpha = owner.alpha)
+	return
 
 /obj/item/bodypart/head/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

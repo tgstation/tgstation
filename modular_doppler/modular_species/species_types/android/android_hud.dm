@@ -13,10 +13,10 @@
 	screen_loc = UI_ENERGY_DISPLAY
 
 /atom/movable/screen/android/energy/proc/update_energy_hud(core_energy)
-	maptext = FORMAT_ANDROID_HUD_TEXT(hud_text_color(), core_energy)
+	maptext = FORMAT_ANDROID_HUD_TEXT(hud_text_color(core_energy), core_energy)
 
 /atom/movable/screen/android/energy/proc/hud_text_color(core_energy)
-	return core_energy < 2.5 MEGA JOULES ? "#ffffff" : "#FFAAAA"
+	return core_energy > 1.5 MEGA JOULES ? "#ffffff" : "#b64b4b"
 
 #undef UI_ENERGY_DISPLAY
 #undef FORMAT_ANDROID_HUD_TEXT
