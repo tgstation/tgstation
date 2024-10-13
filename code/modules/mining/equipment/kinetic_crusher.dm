@@ -546,7 +546,7 @@
 	retool_inhand_icon = "crusher_harpoon"
 	retool_projectile_icon = "pulse_harpoon"
 
-/obj/item/crusher_trophy/retool_kit/effect_desc()
+/obj/item/crusher_trophy/retool_kit/harpoon/effect_desc()
 	return "the crusher to have the appearance of a harpoon"
 
 /obj/item/crusher_trophy/retool_kit/dagger
@@ -558,7 +558,7 @@
 	retool_icon = "crusher_dagger"
 	retool_inhand_icon = "crusher_dagger"
 
-/obj/item/crusher_trophy/retool_kit/effect_desc()
+/obj/item/crusher_trophy/retool_kit/dagger/effect_desc()
 	return "the crusher to have the appearance of a dual dagger and blaster"
 
 /obj/item/crusher_trophy/retool_kit/ashenskull
@@ -571,5 +571,5 @@
 	retool_inhand_icon = "crusher_skull"
 	retool_projectile_icon = "pulse_skull"
 
-/obj/item/crusher_trophy/retool_kit/effect_desc()
+/obj/item/crusher_trophy/retool_kit/ashenskull/effect_desc()
 	return "the crusher to appear corrupted by infernal powers"
