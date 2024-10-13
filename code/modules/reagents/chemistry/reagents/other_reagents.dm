@@ -284,7 +284,7 @@
 		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
-		exposed_mob.adjust_wet_stacks(0.3 * reac_volume)
+		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
 
 #undef WATER_TO_WET_STACKS_FACTOR_TOUCH
 #undef WATER_TO_WET_STACKS_FACTOR_VAPOR
