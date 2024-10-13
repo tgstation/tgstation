@@ -42185,7 +42185,6 @@
 /area/station/security/office)
 "nPy" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "nPM" = (
@@ -52304,7 +52303,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "run" = (
