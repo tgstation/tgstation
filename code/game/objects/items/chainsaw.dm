@@ -26,6 +26,8 @@
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
+	///how long it takes to behead someone with this chainsaw.
+	var/behead_time = 15 SECONDS
 
 /obj/item/chainsaw/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -98,8 +100,9 @@
 	desc = span_warning("VRRRRRRR!!!")
 	armour_penetration = 100
 	force_on = 30
+	behead_time = 2 SECONDS
 
-/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, params)
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -113,7 +116,7 @@
 	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
 
 	target_mob.balloon_alert(user, "cutting off head...")
-	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
+	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	head.dismember(silent = FALSE)
@@ -128,7 +131,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+/obj/item/chainsaw/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
 	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
