@@ -1,11 +1,10 @@
 /obj/item/organ/internal/tongue/get_possible_languages()
-    var/list/langs = ..()
-    langs += /datum/language/konjin
-    langs += /datum/language/movespeak
-    langs += /datum/language/primitive_genemod
-    return langs
-
-
+	var/list/langs = ..()
+	langs += /datum/language/konjin
+	langs += /datum/language/gutter
+	langs += /datum/language/movespeak
+	langs += /datum/language/primitive_genemod
+	return langs
 
 /// ACTUAL LANGUAGES BEGIN HERE
 /datum/language/konjin

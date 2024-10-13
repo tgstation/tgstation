@@ -8,7 +8,7 @@ import {
 export const age_chronological: Feature<number> = {
   name: 'Age (Chronological)',
   description:
-    "The actual, physical age of your character. Applicable mostly in instances of prolonged cryogenic stasis or for lifeforms that mature or metabolize at much slower rates compared to 'standard' sector races.",
+    'The amount of time the character has existed in this world, in years.  This includes time spent in any kind of stasis, however other methods of spacetime manipulation (such as timeskips) may not necessarily apply.',
   component: FeatureNumberInput,
 };
 
