@@ -858,6 +858,9 @@
 	for(var/obj/item/stock_parts/part in component_parts)
 		parts_energy_rating += part.energy_rating
 
+	if(processing_flags & ATMOS_SENSITIVE)
+		heat_capacity_while_active = initial(heat_capacity_while_active) * (component_parts.len / parts_energy_rating)
+
 	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
