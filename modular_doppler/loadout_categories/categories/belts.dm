@@ -121,9 +121,13 @@
 	name = "Satchel Med-kit"
 	item_path = /obj/item/storage/backpack/duffelbag/deforest_medkit
 
+/datum/loadout_item/belts/synth_repair
+	name = "Android Repair Kit"
+	item_path = /obj/item/storage/medkit/robotic_repair/stocked
+
 /datum/loadout_item/belts/frontier_med
 	name = "Frontier Med-kit"
-	item_path = /obj/item/storage/medkit/frontier
+	item_path = /obj/item/storage/medkit/frontier/stocked
 
 /datum/loadout_item/belts/deforest_paramed
 	name = "Satchel Tech-kit"
