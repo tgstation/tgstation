@@ -88,6 +88,7 @@
 		/obj/item/organ/external/frills,
 		/obj/item/organ/external/snout,
 		/obj/item/organ/external/tail/lizard,
+		/obj/item/organ/internal/tongue/lizard,
 	)
 	infusion_desc = "scaly"
 	tier = DNA_MUTANT_TIER_ZERO
