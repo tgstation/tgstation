@@ -15,7 +15,10 @@
 	customization_options = list(/datum/preference/choiced/scarred_eye)
 
 /datum/quirk/item_quirk/scarred_eye/add_unique(client/client_source)
-	give_item_to_holder(new /obj/item/clothing/glasses/eyepatch(get_turf(quirk_holder)), list(
+	var/obj/item/clothing/glasses/eyepatch/eyepatch = new(get_turf(quirk_holder))
+	if (HAS_TRAIT(quirk_holder, TRAIT_LEFT_EYE_SCAR))
+		eyepatch.attack_self(quirk_holder)
+	give_item_to_holder(eyepatch, list(
 		LOCATION_EYES = ITEM_SLOT_EYES,
 		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
 		LOCATION_HANDS = ITEM_SLOT_HANDS,
