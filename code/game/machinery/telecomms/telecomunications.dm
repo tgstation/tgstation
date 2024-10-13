@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	set_machine_stat(machine_stat & ~BAD_TEMP)
 	update_power()
 	if(atmos_heat_counter)
-		generate_heat(temperature_while_active, atmos_heat_counter * heat_capacity_while_active)
+		generate_heat(temperature_while_active, min(atmos_heat_counter, 5) * heat_capacity_while_active)
 		atmos_heat_counter = 0
 
 /obj/machinery/telecomms/emp_act(severity)
