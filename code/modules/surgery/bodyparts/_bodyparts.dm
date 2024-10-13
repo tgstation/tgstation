@@ -108,7 +108,7 @@
 	///Limbs need this information as a back-up incase they are generated outside of a carbon (limbgrower)
 	var/should_draw_greyscale = TRUE
 	/// An assoc list of priority (as a string because byond) -> color, used to override draw_color.
-	var/color_overrides
+	var/list/color_overrides
 
 	var/px_x = 0
 	var/px_y = 0
