@@ -102,7 +102,7 @@
 /// The heat capacity needed to cause the telecomms turf to overheat
 #define TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL (6000)
 /// The amount of messsages per minute we can send before TCOMM equipment starts to overheat/clog
-#define TCOMM_MESSAGES_PER_MINUTE (70)
+#define TCOMM_MESSAGES_PER_MINUTE (100)
 /// The heat capacity telecomms equipment generates while active
 #define TCOMMS_EQUIPMENT_HEAT_CAPACITY (TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL / TCOMM_MESSAGES_PER_MINUTE)
 
@@ -122,10 +122,11 @@ Radio Frequency Observations:
 - Average pop at ~50 players emit rougly 10-20 TCOMM messages a minute, 30 at peak volume from eyeballing logs (+30)
 - Poly spams ~5 TCOMM messages a minute (+10)
 - Radio spam from air alarms will emit a message about once every ~10 seconds if intercom on and nearby (+10)
+- Radio spam from a bunch of machinery cryo tubes, beepsky, medibot, cargo shipments, arrivals announcment, etc. (+30)
 - PDA messages are relayed to TCOMMs equipment which also generate heat per message (+10)
 - We also want to account for people trying to spam using multiple radios (+10)
 
-So aiming for 70 TCOMM messages a minute gives us wiggle room with redundancies
+So aiming for 100 TCOMM messages a minute gives us wiggle room with redundancies
 **/
 
 /// The minimum temperature RD servers can operate in (140K)
