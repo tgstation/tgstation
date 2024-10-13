@@ -164,7 +164,7 @@
 
 	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
 
-	if (hurtguy.mob_biotypes & MOB_UNDEAD && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !mendicant.combat_mode) //Returns if our target is undead and we're a pacifist.
+	if (hurt_this_guy && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !mendicant.combat_mode) //Returns if we're a pacifist and we'd hurt them, or we're not in combat mode and we'll hurt them
 		mendicant.balloon_alert(mendicant, "[hurtguy] would be hurt!")
 		return FALSE
 
@@ -375,22 +375,38 @@
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/smiter, mob/living/motherfucker_to_hurt, smite_multiplier)
 	var/our_smite_multiplier = smite_multiplier
 	var/evil_smite = HAS_TRAIT(smiter, TRAIT_EVIL) ? TRUE : FALSE
-	if(smiter.mind?.holy_role >= HOLY_ROLE_PRIEST)
-		var/possible_deity = GLOB.deity
-		var/mob/living/carbon/human/human_smiter = smiter //wow so original, dude
+	var/divine_champion = smiter.mind?.holy_role >= HOLY_ROLE_PRIEST ? TRUE : FALSE
+	var/smite_text_to_target = "lays hands on you"
+
+	if(divine_champion || HAS_TRAIT(smiter, TRAIT_SPIRITUAL))
+
+		// Defaults for possible deity. You know, just in case.
+		var/possible_deity = evil_smite ? "Satan" : "God"
+
+		var/mob/living/carbon/human/human_smiter = smiter
+
+		// If we have a client, check their deity pref and use that instead of our chaps god if our smiter is a spiritualist
+		var/client/smiter_client = smiter.client
+
+		if(smiter_client && HAS_TRAIT(smiter, TRAIT_SPIRITUAL))
+			possible_deity = smiter_client.prefs?.read_preference(/datum/preference/name/deity)
+		else if (GLOB.deity)
+			possible_deity = GLOB.deity
+
 		if(ishuman(human_smiter))
 			human_smiter.force_say()
 			if(evil_smite)
-				human_smiter.say("in [possible_deity ? "[possible_deity]'s" : "God's"] dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
+				human_smiter.say("in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
 			else
-				human_smiter.say("By [possible_deity ? "[possible_deity]'s" : "God's"] might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
-		our_smite_multiplier *= 5 //good luck surviving this
+				human_smiter.say("By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
+		our_smite_multiplier *= divine_champion ? 5 : 1 //good luck surviving this if they're a chap
 
 	if(evil_smite)
-		motherfucker_to_hurt.visible_message(span_warning("[smiter] snaps [motherfucker_to_hurt.p_their()] fingers in front of [motherfucker_to_hurt]'s face, and [motherfucker_to_hurt]'s body twists painfully from an unseen force!"))
+		motherfucker_to_hurt.visible_message(span_warning("[smiter] snaps [smiter.p_their()] fingers in front of [motherfucker_to_hurt]'s face, and [motherfucker_to_hurt]'s body twists violently from an unseen force!"))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BRUTE, wound_bonus = 5 * our_smite_multiplier)
 		motherfucker_to_hurt.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 10 SECONDS)
 		smiter.emote("snap")
+		smite_text_to_target = "crushes you psychically with a snap of [smiter.p_their()] fingers "
 	else
 		motherfucker_to_hurt.visible_message(span_warning("[smiter] lays hands on [motherfucker_to_hurt], but it shears [motherfucker_to_hurt.p_them()] with a brilliant energy!"))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BURN, wound_bonus = 5 * our_smite_multiplier)
@@ -399,7 +415,7 @@
 
 	motherfucker_to_hurt.update_damage_overlays()
 
-	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] lays hands on you, hurting you!"))
+	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
 	motherfucker_to_hurt.emote("scream")
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE
