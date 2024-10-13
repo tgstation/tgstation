@@ -4889,10 +4889,10 @@
 /area/ruin/space/ks13/science/ordnance)
 "HL" = (
 /obj/machinery/power/supermatter_crystal/shard,
-/obj/machinery/door/window{
-	dir = 8
-	},
 /obj/structure/closet/crate/radiation,
+/obj/machinery/door/window/right/directional/west{
+	name = "Spare Crystal"
+	},
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "HO" = (
@@ -12227,7 +12227,7 @@ zv
 zv
 EK
 GN
-tU
+Ex
 CM
 sU
 sU
