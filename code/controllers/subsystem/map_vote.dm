@@ -81,7 +81,6 @@ SUBSYSTEM_DEF(map_vote)
 
 	var/winner
 	var/winner_amount = 0
-	var/list/valid_maps = filter_cache_to_valid_maps()
 	for(var/map in valid_maps)
 		if(!winner_amount)
 			winner = map
