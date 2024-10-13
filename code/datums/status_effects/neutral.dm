@@ -639,8 +639,8 @@
 	var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
 	if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
 		owner.adjustOxyLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		owner.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		owner.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		owner.adjustBruteLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		owner.adjustFireLoss(-0.8 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		owner.adjustToxLoss(-0.8 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		owner.adjustBruteLoss(-0.8 * seconds_between_ticks, required_bodytype = BODYTYPE_ORGANIC)
 		heal_or_deal *= 1.5
 	owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks)
