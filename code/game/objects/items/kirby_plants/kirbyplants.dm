@@ -18,7 +18,7 @@
 	var/dead = FALSE
 	///If it's a special named plant, set this to true to prevent dead-name overriding.
 	var/custom_plant_name = FALSE
-	var/list/static/random_plant_states
+	var/static/list/random_plant_states
 
 /obj/item/kirbyplants/Initialize(mapload)
 	. = ..()

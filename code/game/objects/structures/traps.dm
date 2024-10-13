@@ -12,7 +12,7 @@
 	var/charges = INFINITY
 	var/antimagic_flags = MAGIC_RESISTANCE
 
-	var/list/static/ignore_typecache
+	var/static/list/ignore_typecache
 	var/list/mob/immune_minds = list()
 
 	var/sparks = TRUE
