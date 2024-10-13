@@ -238,7 +238,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 	if(has_gills)
 		gills = new()
-		AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
+		AddElement(/datum/element/noticable_organ, "%PRONOUN_They have a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
 
 /obj/item/organ/internal/lungs/fish/Destroy()
