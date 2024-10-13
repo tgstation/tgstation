@@ -6,3 +6,4 @@
 #include "code/restaurant_customer.dm"
 #include "code/translate_attack_verb.dm"
 #include "code/translate_say.dm"
+#include "code/translate_suggest_ru_names.dm"
