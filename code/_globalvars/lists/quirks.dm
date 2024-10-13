@@ -98,3 +98,10 @@ GLOBAL_LIST_INIT(paraplegic_choice, list(
 	"Default" = FALSE,
 	"Amputee" = TRUE,
 ))
+
+///Scarred Eye Quirk
+GLOBAL_LIST_INIT(scarred_eye_choice, list(
+	"Random",
+	"Left Eye",
+	"Right Eye"
+))

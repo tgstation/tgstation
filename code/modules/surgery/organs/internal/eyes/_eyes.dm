@@ -64,6 +64,7 @@
 	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
 	refresh(receiver, call_update = TRUE)
+	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
@@ -117,6 +118,30 @@
 
 	organ_owner.update_tint()
 	organ_owner.update_sight()
+	UnregisterSignal(organ_owner, COMSIG_ATOM_BULLET_ACT)
+
+/obj/item/organ/internal/eyes/proc/on_bullet_act(datum/source, obj/projectile/proj)
+	SIGNAL_HANDLER
+
+	// Once-a-dozen-rounds level of rare
+	if (!prob(proj.damage * 0.1) || !(proj.damage_type == BRUTE || proj.damage_type == BURN))
+		return
+
+	var/valid_sides = list()
+	if (!HAS_TRAIT(src, TRAIT_RIGHT_EYE_SCAR))
+		valid_sides += TRUE
+	if (!HAS_TRAIT(src, TRAIT_LEFT_EYE_SCAR))
+		valid_sides += FALSE
+	if (!length(valid_sides))
+		return
+
+	var/picked_side = pick(valid_sides)
+	to_chat(owner, span_userdanger("You feel searing pain shoot though your [picked_side ? "right" : "left"] eye!"))
+	// oof ouch my eyes
+	apply_organ_damage(rand((maxHealth - high_threshold) * 0.5, maxHealth - low_threshold))
+	var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
+	eye_puncture.apply_wound(bodypart_owner, wound_source = "bullet impact", right_side = picked_side)
+	AddElement(/datum/element/eye_scar, picked_side)
 
 #define OFFSET_X 1
 #define OFFSET_Y 2
@@ -129,6 +154,8 @@
 		if(advanced)
 			if(owner.is_blind_from(QUIRK_TRAIT))
 				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
+			if(owner.is_blind_from(EYE_SCARRING_TRAIT))
+				return conditional_tooltip("Subject is blind from widespread ocular scarring.", "Surgically replace eyes, irreparable otherwise.", add_tooltips)
 			if(owner.is_blind_from(TRAUMA_TRAIT))
 				return conditional_tooltip("Subject is blind from mental trauma.", "Repair via treatment of associated trauma.", add_tooltips)
 			if(owner.is_blind_from(GENETIC_MUTATION))
@@ -140,6 +167,8 @@
 		if(advanced)
 			if(owner.is_nearsighted_from(QUIRK_TRAIT))
 				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
+			if(owner.is_nearsighted_from(TRAIT_RIGHT_EYE_SCAR) || owner.is_nearsighted_from(TRAIT_LEFT_EYE_SCAR))
+				return conditional_tooltip("Subject is nearsighted from severe ocular scarring.", "Surgically replace eyes, irreparable otherwise.", add_tooltips)
 			if(owner.is_nearsighted_from(GENETIC_MUTATION))
 				return conditional_tooltip("Subject is genetically nearsighted.", "Use medication such as [/datum/reagent/medicine/mutadone::name]. Prescription glasses will assuage the effects.", add_tooltips)
 			if(owner.is_nearsighted_from(EYE_DAMAGE))
@@ -186,7 +215,7 @@
 		if(my_head.worn_face_offset)
 			my_head.worn_face_offset.apply_offset(eye_left)
 			my_head.worn_face_offset.apply_offset(eye_right)
-
+	SEND_SIGNAL(src, COMSIG_ORGAN_EYE_OVERLAY, parent, overlays)
 	return overlays
 
 #undef OFFSET_X
@@ -233,7 +262,7 @@
 		owner.become_nearsighted(EYE_DAMAGE)
 		// update the severity of our nearsightedness based on our eye damage
 		var/datum/status_effect/grouped/nearsighted/nearsightedness = owner.is_nearsighted()
-		nearsightedness.set_nearsighted_severity(damage > high_threshold ? 2 : 1)
+		nearsightedness.set_nearsighted_severity(damage > high_threshold ? 3 : 2)
 
 	damaged = TRUE
 

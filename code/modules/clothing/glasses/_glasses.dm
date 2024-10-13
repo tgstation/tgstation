@@ -182,11 +182,36 @@
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
 	dog_fashion = /datum/dog_fashion/head/eyepatch
+	var/flipped = FALSE
 
-/obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
+/obj/item/clothing/glasses/eyepatch/click_alt(mob/user)
 	. = ..()
-	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	attack_self(user)
+
+/obj/item/clothing/glasses/eyepatch/attack_self(mob/user)
+	. = ..()
+	flipped = !flipped
+	icon_state = flipped ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
+	if (HAS_TRAIT(user, flipped ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR))
+		tint = INFINITY
+	else
+		tint = initial(tint)
+	if (iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.update_tint()
+
+/obj/item/clothing/glasses/eyepatch/equipped(mob/living/user, slot)
+	// lol lmao
+	if (HAS_TRAIT(user, flipped ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR))
+		tint = INFINITY
+	else
+		tint = initial(tint)
+	return ..()
+
+/obj/item/clothing/glasses/eyepatch/dropped(mob/living/user)
+	. = ..()
+	tint = initial(tint)
 
 /obj/item/clothing/glasses/eyepatch/medical
 	name = "medical eyepatch"
