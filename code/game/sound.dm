@@ -708,4 +708,14 @@
 				'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
 				'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
 				)
+		if(SFX_HALLUCINATION_I_M_HERE)
+			soundin = pick(
+				'sound/effects/hallucinations/im_here1.ogg',
+				'sound/effects/hallucinations/im_here2.ogg',
+				)
+		if(SFX_HALLUCINATION_OVER_HERE)
+			soundin = pick(
+				'sound/effects/hallucinations/over_here2.ogg',
+				'sound/effects/hallucinations/over_here3.ogg',
+				)
 	return soundin
