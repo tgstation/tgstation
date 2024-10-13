@@ -284,7 +284,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(iscarbon(target) && steal_from_mob(target))
 		return FALSE
 
-
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_ground(obj/item/target)
 	if(!isnull(held_item))
