@@ -441,6 +441,7 @@
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
+	balloon_alert_to_viewers("offers something")
 	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
 					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
 
