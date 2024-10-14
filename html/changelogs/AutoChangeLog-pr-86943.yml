@@ -1,5 +1,0 @@
-author: "antropod"
-delete-after: True
-changes:
-  - rscadd: "You can now link to multiple trapdoors with one remote"
-  - rscadd: "Trapdoor will automatically close in 5 seconds (ctrl-clicking on a remote will toggle autoclose)"

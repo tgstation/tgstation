@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Unusable inventory slots (as according to your bodyparts or equipment) will now be dimmed (similarly to how unusable inventory slots are dimmed for certain species like Golems)."

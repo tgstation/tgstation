@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Items now have a header in VV allowing for quicker editing of combat properties"
