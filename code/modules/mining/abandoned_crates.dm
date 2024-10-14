@@ -246,7 +246,7 @@
 				new /obj/item/clothing/mask/balaclava(src)
 			new /obj/item/gun/ballistic/shotgun/toy(src)
 			new /obj/item/gun/ballistic/automatic/pistol/toy(src)
-			new /obj/item/gun/ballistic/automatic/toy/unrestricted(src)
+			new /obj/item/gun/ballistic/automatic/toy(src)
 			new /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted(src)
 			new /obj/item/ammo_box/foambox(src)
 		if(98)

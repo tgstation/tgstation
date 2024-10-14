@@ -254,13 +254,13 @@
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
-	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	animate(owner, alpha = 45,time = 0.5 SECONDS)
 	owner.density = FALSE
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
+	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
@@ -288,7 +288,7 @@
 /datum/status_effect/caretaker_refuge/proc/on_focus_lost()
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
-	owner.remove_status_effect(type)
+	qdel(src)
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER

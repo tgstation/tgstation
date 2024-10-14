@@ -143,7 +143,7 @@
 				trend_string = "down"
 
 		//get mat color
-		var/initial_colors = initial(traded_mat.greyscale_colors)
+		var/initial_colors = initial(traded_mat.greyscale_color) || initial(traded_mat.color)
 		if(initial_colors)
 			color_string = splicetext(initial_colors, 7, length(initial_colors), "") //slice it to a standard 6 char hex
 		else
