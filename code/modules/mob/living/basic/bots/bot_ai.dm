@@ -28,7 +28,7 @@
 	)
 
 /datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
-	var/datum/ai_controller/my_controller = living_mob.ai_controller
+	var/datum/ai_controller/basic_controller/bot/my_controller = living_mob.ai_controller
 	if(isnull(my_controller))
 		return FALSE
 	if(!ishuman(the_target) || LAZYACCESS(my_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], the_target))
@@ -38,7 +38,7 @@
 		return FALSE
 	if(get_turf(living_mob) == get_turf(living_target))
 		return ..()
-	var/list/path = get_path_to(living_mob, living_target, mintargetdist = minimum_distance, max_distance = 10, access = my_controller.get_access())
+	var/list/path = get_path_to(living_mob, living_target, mintargetdist = my_controller.minimum_distance, max_distance = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
 		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
 		return FALSE
