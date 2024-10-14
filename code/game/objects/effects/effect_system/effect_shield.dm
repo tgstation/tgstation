@@ -21,6 +21,6 @@
 /obj/effect/shield/singularity_act()
 	return
 
-/obj/effect/shield/singularity_pull(obj/singularity/singularity, current_size)
+/obj/effect/shield/singularity_pull(atom/singularity, current_size)
 	return
 

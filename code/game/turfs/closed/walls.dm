@@ -296,7 +296,7 @@
 
 	return FALSE
 
-/turf/closed/wall/singularity_pull(obj/singularity/singularity, current_size)
+/turf/closed/wall/singularity_pull(atom/singularity, current_size)
 	..()
 	wall_singularity_pull(current_size)
 

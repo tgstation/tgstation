@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
-/obj/singularity_pull(obj/singularity/singularity, current_size)
+/obj/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return

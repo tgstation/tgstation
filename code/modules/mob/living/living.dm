@@ -1282,7 +1282,7 @@
 		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
 		base_pixel_y -= 4
 
-/mob/living/singularity_pull(obj/singularity/singularity, current_size)
+/mob/living/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return

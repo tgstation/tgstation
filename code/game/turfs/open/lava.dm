@@ -175,7 +175,7 @@
 /turf/open/lava/singularity_act()
 	return
 
-/turf/open/lava/singularity_pull(obj/singularity/singularity, current_size)
+/turf/open/lava/singularity_pull(atom/singularity, current_size)
 	return
 
 /turf/open/lava/GetHeatCapacity()

@@ -831,7 +831,7 @@
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
-/obj/item/singularity_pull(obj/singularity/singularity, current_size)
+/obj/item/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FOUR)
 		throw_at(singularity, 14, 3, spin=0)
