@@ -1352,14 +1352,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
-
-//////////
-// FIRE //
-//////////
-
-/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
-	return no_protection
-
 ////////////
 //  Stun  //
 ////////////

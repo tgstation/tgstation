@@ -142,6 +142,8 @@
 	INVOKE_ASYNC(src, PROC_REF(process_beam_click), source, location, params, user)
 
 /datum/component/tether/proc/process_beam_click(atom/source, atom/location, params, mob/user)
+	if (!location.can_interact(user))
+		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		location.balloon_alert(user, "cutting the tether...")

@@ -41,6 +41,16 @@
 		/datum/pet_command/perform_trick_sequence,
 	)
 
+/datum/emote/mothroach
+	mob_type_allowed_typecache = /mob/living/basic/mothroach
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/mothroach/squeaks
+	key = "squeaks"
+	key_third_person = "squeaks"
+	message = "squeaks!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
 	var/static/list/food_types = list(/obj/item/clothing)
@@ -48,7 +58,7 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "squeaks happily!")
+	AddElement(/datum/element/pet_bonus, "squeak")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
