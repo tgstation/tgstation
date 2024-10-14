@@ -8,3 +8,6 @@
 
 /obj/item/gun/energy/floragun
 	item_flags = NONE
+
+/obj/item/gun/syringe
+	item_flags = NONE
