@@ -1,3 +1,16 @@
+///Check that input types that aren't living mobs have the TRAIT_VALID_DNA_INFUSION trait
+/datum/unit_test/valid_dna_infusion
+
+/datum/unit_test/valid_dna_infusion/Run()
+	for(var/datum/infuser_entry/infuser_entry as anything in flatten_list(GLOB.infuser_entries))
+		for(var/input_type as anything in infuser_entry.input_obj_or_mob)
+			if(ispath(input_type, /mob/living))
+				continue
+			var/atom/movable/movable = allocate(input_type)
+			if(!HAS_TRAIT(movable, TRAIT_VALID_DNA_INFUSION))
+				//TEST_FAIL() doesn't early return the unit test so we can keep checking.
+				TEST_FAIL("[input_type] is in the 'input_obj_or_mob' list for [infuser_entry.type] but doesn't have TRAIT_VALID_DNA_INFUSION.")
+
 /// Checks that all "organ_set_bonus" status effects have unique "id" vars.
 /// Required to ensure that the status effects are treated as "unique".
 /datum/unit_test/organ_set_bonus_id

@@ -540,23 +540,23 @@
 				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
-				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male4.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_male5.ogg' = 20,
 				'sound/mobs/humanoids/human/snore/snore_mimimi2.ogg' = 1,
 			))
 		if(SFX_CAT_MEOW)
 			soundin = pick_weight(list(
-				'sound/creatures/cat/cat_meow1.ogg' = 33,
-				'sound/creatures/cat/cat_meow2.ogg' = 33,
-				'sound/creatures/cat/cat_meow3.ogg' = 33,
-				'sound/creatures/cat/oranges_meow1.ogg' = 1,
+				'sound/mobs/non-humanoids/cat/cat_meow1.ogg' = 33,
+				'sound/mobs/non-humanoids/cat/cat_meow2.ogg' = 33,
+				'sound/mobs/non-humanoids/cat/cat_meow3.ogg' = 33,
+				'sound/mobs/non-humanoids/cat/oranges_meow1.ogg' = 1,
 			))
 		if(SFX_CAT_PURR)
 			soundin = pick(
-				'sound/creatures/cat/cat_purr1.ogg',
-				'sound/creatures/cat/cat_purr2.ogg',
-				'sound/creatures/cat/cat_purr3.ogg',
-				'sound/creatures/cat/cat_purr4.ogg',
+				'sound/mobs/non-humanoids/cat/cat_purr1.ogg',
+				'sound/mobs/non-humanoids/cat/cat_purr2.ogg',
+				'sound/mobs/non-humanoids/cat/cat_purr3.ogg',
+				'sound/mobs/non-humanoids/cat/cat_purr4.ogg',
 			)
 		if(SFX_DEFAULT_LIQUID_SLOSH)
 			soundin = pick(
@@ -579,4 +579,20 @@
 				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle4.ogg' = 23,
 				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle5.ogg' = 23,
 			))
+		if(SFX_PIG_OINK)
+			soundin = pick(
+				'sound/mobs/non-humanoids/pig/pig1.ogg',
+				'sound/mobs/non-humanoids/pig/pig2.ogg',
+			)
+		if(SFX_VISOR_DOWN)
+			soundin = pick(
+				'sound/items/handling/helmet/visor_down1.ogg',
+				'sound/items/handling/helmet/visor_down2.ogg',
+				'sound/items/handling/helmet/visor_down3.ogg',
+			)
+		if(SFX_VISOR_UP)
+			soundin = pick(
+				'sound/items/handling/helmet/visor_up1.ogg',
+				'sound/items/handling/helmet/visor_up2.ogg',
+			)
 	return soundin

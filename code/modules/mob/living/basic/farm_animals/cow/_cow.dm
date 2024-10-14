@@ -36,13 +36,25 @@
 	/// What kind of juice do we produce?
 	var/milked_reagent = /datum/reagent/consumable/milk
 
+/datum/emote/cow
+	mob_type_allowed_typecache = /mob/living/basic/cow
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/cow/moo
+	key = "moo"
+	key_third_person = "moos"
+	message = "moos happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/cow/cow.ogg'
+
 /mob/living/basic/cow/Initialize(mapload)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 0.5 SECONDS, \
 		untip_time = 0.5 SECONDS, \
 		self_right_time = rand(25 SECONDS, 50 SECONDS), \
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_cow_tipped)))
-	AddElement(/datum/element/pet_bonus, "moos happily!")
+	AddElement(/datum/element/pet_bonus, "moo")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	setup_udder()
 	setup_eating()

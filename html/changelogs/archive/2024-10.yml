@@ -345,3 +345,50 @@
   - qol: Jetpack movement near walls should be much smoother
   grungussuss:
   - bugfix: a lot of items that shouldn't slosh when picked up will no longer slosh
+2024-10-13:
+  Ben10Omintrix:
+  - bugfix: fixes ashdrake arena attack not clearing out lavaland walls
+  Ghommie:
+  - bugfix: Fish like slimefish, unmarine bonemass and deepfryer fish can now be used
+      for DNA infusions.
+  - rscadd: You can buy a fishing rod pre-equipped with a rescue hook from the mining
+      order console.
+  - balance: Paramedics can get a rescue fishing hook as a heirloom.
+  Jewelry-x:
+  - bugfix: the ghost "t-ray view" no longer requires a double press to activate a
+      second time.
+  - qol: renamed "t-ray view" to "t-ray scan" for clarity.
+  SmArtKar:
+  - bugfix: Untie shoes should have its cooldown increased correctly when casting
+      it from a long distance
+  - bugfix: Plasmaman space suit internal extinguisher works and can be refilled now
+  - refactor: Refactored plasmamen self-ignition to be limb-side instead of being
+      handled by their species
+  Striders13:
+  - balance: replaced gas mask fov with pepperspray applying tint to gas masks, making
+      the wearer blind until washed off.
+  YakumoChen:
+  - spellcheck: Proofreads some faxes sent during radioactive nebulae
+  grungussuss:
+  - balance: all chainsaws can now behead people
+  - rscadd: a lot of basic mobs and pets got new emotes
+  - refactor: emotes triggered by petting pets work differently now, please report
+      any oddities with these behaviors.
+  - sound: new emotes for basic mobs got sounds
+  - bugfix: snore emote works properly now
+  necromanceranne:
+  - bugfix: Pyrokinesis/Cryokinesis cast range matches its projectile range.
+  - code_imp: Pyrokinesis and Cindikinesis are now their own types and not subtypes
+      of Cryokinesis and Geladikinesis. This allows you to not have to mutate yourself
+      in a specific order to not lock yourself out of the other mutation.
+2024-10-14:
+  SmArtKar:
+  - spellcheck: Fixed a typo in multiple lives component
+  - bugfix: Ghosts can no longer cut people's tethers
+  carlarctg:
+  - rscadd: you can use lizards to get lizard organs in the dna infuser
+  grungussuss:
+  - sound: helmets and their visors make sounds now
+  - code_imp: cleaned up laser tag helmet code a bit
+  - sound: gas analyzer now has handling sounds
+  - qol: offering an item displays a balloon alert

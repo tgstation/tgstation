@@ -71,8 +71,6 @@
 /obj/effect/gibspawner/generic/animal
 	gib_mob_type = /mob/living/basic/pet
 
-
-
 /obj/effect/gibspawner/human
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/up, /obj/effect/decal/cleanable/blood/gibs/down, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/body, /obj/effect/decal/cleanable/blood/gibs/limb, /obj/effect/decal/cleanable/blood/gibs/core)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
