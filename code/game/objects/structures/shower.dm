@@ -258,12 +258,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
+	check_heat(living_target)
 	living_target.apply_status_effect(/datum/status_effect/shower_regen)
 	if(!isfelinid(target))
-		check_heat(living_target)
 		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
 	else
-		living_target.add_mood_event("shower_felinid", /datum/mood_event/shower_hater)
+		living_target.add_mood_event("shower", /datum/mood_event/shower_hater)
 
 /**
  * Toggle whether shower is actually on and outputting water.
