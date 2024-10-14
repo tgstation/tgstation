@@ -496,6 +496,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
+"eU" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/supermatter)
 "eV" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -2230,8 +2234,7 @@
 /area/ruin/space/ks13/hallway/central)
 "tU" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
-/obj/structure/cable,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "tV" = (
@@ -2624,6 +2627,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"wr" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/stack/sheet/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/supermatter)
 "wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/chaplain/bishopmitre,
@@ -4121,6 +4129,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/clothing/suit/space/eva,
+/obj/item/stack/sheet/plasteel,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "DY" = (
@@ -5021,6 +5030,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
+"IH" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/supermatter)
 "II" = (
 /obj/item/shard,
 /obj/structure/grille/broken,
@@ -5831,6 +5845,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_storage)
+"MZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/stack/sheet/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/supermatter)
 "Na" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
@@ -6861,6 +6881,7 @@
 "So" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/table_frame,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "Sp" = (
@@ -7900,6 +7921,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
+"Xp" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/stack/sheet/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/supermatter)
 "Xr" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/science/genetics)
@@ -11760,8 +11786,8 @@ aj
 CX
 Jc
 Ex
-PI
-PI
+tU
+Xp
 PI
 Ex
 PI
@@ -11873,7 +11899,7 @@ WO
 CX
 PI
 ej
-PI
+Xp
 Wk
 sU
 Vh
@@ -11882,7 +11908,7 @@ EK
 UY
 BI
 sU
-zv
+wr
 Wk
 PI
 Sn
@@ -11988,7 +12014,7 @@ xy
 Ex
 Wk
 zv
-zv
+IH
 te
 RI
 Tg
@@ -12001,7 +12027,7 @@ GG
 bC
 Ck
 PI
-HO
+eU
 sU
 Ed
 Ed
@@ -12342,7 +12368,7 @@ sU
 Jc
 Jv
 ta
-PI
+tU
 sU
 sU
 Xr
@@ -12793,7 +12819,7 @@ te
 sU
 Jc
 Jc
-tU
+px
 Km
 sU
 sU
@@ -13231,7 +13257,7 @@ DJ
 Jc
 PI
 Wk
-PI
+Xp
 sJ
 Wk
 BI
@@ -13241,7 +13267,7 @@ Wk
 BI
 Ck
 cE
-zv
+IH
 Wk
 Wk
 zv
@@ -13341,9 +13367,9 @@ Wk
 HO
 fg
 PI
+Xp
 PI
-PI
-Jc
+MZ
 PI
 PI
 PI
