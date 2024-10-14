@@ -136,13 +136,11 @@
 				break
 
 	//if we're not facing the way we're going rotate us
-	if(dir != direction)
-		// if we're not strafing or if we are forced to rotate or if we are holding down the key
-		if (!strafe || forcerotate || keyheld)
-			setDir(direction)
-
-			if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
-				return TRUE
+	// if we're not strafing or if we are forced to rotate or if we are holding down the key
+	if(dir != direction && (!strafe || forcerotate || keyheld))
+		setDir(direction)
+		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
+			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
