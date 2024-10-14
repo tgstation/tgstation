@@ -15,7 +15,7 @@
 /obj/effect/cult_turf/singularity_act()
 	return
 
-/obj/effect/cult_turf/singularity_pull()
+/obj/effect/cult_turf/singularity_pull(obj/singularity/singularity, current_size)
 	return
 
 /obj/effect/cult_turf/Destroy()

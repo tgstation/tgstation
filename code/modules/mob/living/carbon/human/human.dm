@@ -486,7 +486,7 @@
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
-/mob/living/carbon/human/singularity_pull(S, current_size)
+/mob/living/carbon/human/singularity_pull(obj/singularity/singularity, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)

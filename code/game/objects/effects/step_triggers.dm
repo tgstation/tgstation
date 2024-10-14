@@ -31,7 +31,7 @@
 /obj/effect/step_trigger/singularity_act()
 	return
 
-/obj/effect/step_trigger/singularity_pull()
+/obj/effect/step_trigger/singularity_pull(obj/singularity/singularity, current_size)
 	return
 
 /* Sends a message to mob when triggered*/
