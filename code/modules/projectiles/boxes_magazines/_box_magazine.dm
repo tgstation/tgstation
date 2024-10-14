@@ -244,7 +244,8 @@
 /obj/item/ammo_box/magazine/proc/ammo_list()
 	for (var/i in 1 to length(stored_ammo))
 		if (ispath(stored_ammo[i]))
-			stored_ammo[i] = new stored_ammo[i](src)
+			var/casing_type = stored_ammo[i]
+			stored_ammo[i] = new casing_type(src)
 	return stored_ammo.Copy()
 
 ///drops the entire contents of the magazine on the floor
