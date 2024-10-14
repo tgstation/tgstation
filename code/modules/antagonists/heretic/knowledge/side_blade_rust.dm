@@ -44,12 +44,12 @@
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
-	desc = "Allows you to transmute any ballistic weapon, such as a pipegun, with hide \
+	desc = "Allows you to transmute a piece of wood, with hide \
 		from any animal,and a camera to create the Lionhunter's rifle. \
 		The Lionhunter's Rifle is a long ranged ballistic weapon with three shots. \
 		These shots function as normal, albeit weak high-caliber munitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \
-		causing the shot to deal massively increased damage and hone in on them."
+		causing the shot to mark your victim with your grasp and teleport you directly to them."
 	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	next_knowledge = list(
@@ -58,7 +58,7 @@
 		/datum/heretic_knowledge/rifle_ammo,
 	)
 	required_atoms = list(
-		/obj/item/gun/ballistic = 1,
+		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/camera = 1,
 	)
