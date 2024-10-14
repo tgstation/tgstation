@@ -176,7 +176,7 @@
 	research_tree_icon_state = "blade_upgrade_void"
 
 /datum/heretic_knowledge/blade_upgrade/void/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
 	target.apply_status_effect(/datum/status_effect/void_chill, 2)

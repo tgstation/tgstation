@@ -32,7 +32,7 @@
 	/// Whether we're currently aiming this casing at something
 	var/currently_aiming = FALSE
 	/// How many seconds it takes to aim per tile of distance between the target
-	var/seconds_per_distance = 0.5 SECONDS
+	var/seconds_per_distance = 0.2 SECONDS
 	/// The minimum distance required to gain a damage bonus from aiming
 	var/min_distance = 4
 
@@ -138,18 +138,25 @@
 
 /obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
 	. = ..()
-	if(isliving(firer))
-		var/mob/living/living_firer = firer
-		if(IS_HERETIC(living_firer))
-			living_firer.forceMove(src)
-			stored_mob = living_firer
+	if(!isliving(firer) || !isliving(original))
+		return
+	var/mob/living/living_firer = firer
+	if(IS_HERETIC(living_firer))
+		living_firer.swap_hand() //Forcibly unscope
+		living_firer.swap_hand()
+		living_firer.forceMove(src)
+		stored_mob = living_firer
 
-/obj/projectile/bullet/strilka310/lionhunter/Destroy()
+/obj/projectile/bullet/strilka310/lionhunter/on_range()
 	if(stored_mob)
 		stored_mob.forceMove(loc)
+		stored_mob = null
 	return ..()
 
 /obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
+	if(stored_mob) //Pretty important to get our mob out of the bullet
+		stored_mob.forceMove(loc)
+		stored_mob = null
 	. = ..()
 	if(!isliving(target))
 		return BULLET_ACT_HIT
@@ -158,10 +165,14 @@
 	if(IS_HERETIC_OR_MONSTER(victim) || !IS_HERETIC(firing_mob))
 		return BULLET_ACT_HIT
 
-	if(!victim.has_status_effect(/datum/status_effect/eldritch))
-		SEND_SIGNAL(firer, COMSIG_LIONHUNTER_ON_HIT, victim)
-
+	SEND_SIGNAL(firer, COMSIG_LIONHUNTER_ON_HIT, victim)
 	return BULLET_ACT_HIT
+
+/obj/projectile/bullet/strilka310/lionhunter/Destroy()
+	if(stored_mob)
+		stack_trace("Lionhunter bullet qdel'd with its firer still inside!")
+		stored_mob.forceMove(loc)
+	return ..()
 
 // Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/strilka310/lionhunter

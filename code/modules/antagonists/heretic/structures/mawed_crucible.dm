@@ -14,12 +14,10 @@
 	var/current_mass = 3
 	///Maximum amount of mass
 	var/max_mass = 3
-	///Last time the crucible created mass on its own
-	var/last_refill
-	///How long until the crucible creates mass
-	var/refill_cooldown = 30 SECONDS
 	///Check to see if it is currently being used.
 	var/in_use = FALSE
+	///Cooldown for the crucible to create mass from the eldritch
+	COOLDOWN_DECLARE(refill_cooldown)
 
 /obj/structure/destructible/eldritch_crucible/Initialize(mapload)
 	. = ..()
@@ -27,9 +25,9 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
-	if(world.time < last_refill + refill_cooldown || current_mass >= max_mass)
+	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
 		return
-	last_refill = world.time
+	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
 	current_mass++
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	update_appearance(UPDATE_ICON_STATE)
@@ -116,9 +114,12 @@
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
 		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
+		if(current_mass < max_mass)
+			balloon_alert(user, "not full enough!")
+			return ITEM_INTERACT_SUCCESS
 		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
 		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
-			balloon_alert(user, "flask too full")
+			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
 		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
 		do_item_attack_animation(src, used_item = tool)
@@ -299,7 +300,7 @@
 	desc = "A glass bottle contianing a dull yellow liquid. It seems to fade in and out with regularity."
 	icon_state = "clarity"
 	status_effect = /datum/status_effect/duskndawn
-	crucible_tip = "Allows you to see through walls and objects. Lasts 3 minutes."
+	crucible_tip = "Allows you to see through walls and objects. Lasts 90 seconds."
 
 /obj/item/eldritch_potion/wounded
 	name = "brew of the wounded soldier"

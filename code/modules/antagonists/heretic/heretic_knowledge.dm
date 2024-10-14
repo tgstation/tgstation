@@ -327,6 +327,8 @@
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
 	trigger_mark(source, target)
 
 /**

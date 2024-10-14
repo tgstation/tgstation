@@ -70,7 +70,6 @@
 
 /datum/status_effect/realignment/on_remove()
 	owner.remove_traits(realignment_traits, id)
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 	owner.remove_filter(id)
 
 /datum/status_effect/realignment/tick(seconds_between_ticks)

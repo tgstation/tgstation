@@ -9,15 +9,13 @@
 	show_duration = TRUE
 	///Stores the location where the mob drank the potion, used to teleport the drinker back to the spot after expiration
 	var/turf/location
-	///Action button to cancel the effect early
-	var/datum/action/cancel_crucible_soul/cancel_button
 
 /datum/status_effect/crucible_soul/on_apply()
 	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
 	owner.alpha = 180
 	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
-	cancel_button = new()
+	var/datum/action/cancel_crucible_soul/cancel_button = new(src)
 	cancel_button.Grant(owner)
 	return TRUE
 
@@ -27,7 +25,6 @@
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
 	location = null
-	cancel_button.Remove(owner)
 
 /datum/status_effect/crucible_soul/get_examine_text()
 	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
@@ -43,13 +40,14 @@
 	if(!.)
 		return
 	var/datum/status_effect/active_effect = owner.has_status_effect(/datum/status_effect/crucible_soul)
-	active_effect.Destroy()
+	target = active_effect
+	qdel(target)
 
 // DUSK AND DAWN
 /datum/status_effect/duskndawn
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 3 MINUTES
+	duration = 90 SECONDS
 	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
@@ -86,6 +84,7 @@
 	if(length(drinker.get_missing_limbs()) >= 1)
 		drinker.regenerate_limbs()
 		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
+	playsound(drinker, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
 
 /datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))

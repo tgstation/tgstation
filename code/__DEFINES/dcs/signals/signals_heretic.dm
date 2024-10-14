@@ -11,9 +11,5 @@
 
 /// From /obj/item/melee/sickly_blade/afterattack : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_BLADE_ATTACK "blade_attack"
-/// From /obj/item/melee/sickly_blade/afterattack : (mob/source, atom/target)
-#define COMSIG_HERETIC_BLADE_ATTACK_NON_LIVING "blade_attack_non_living"
 /// From /obj/item/melee/sickly_blade/ranged_interact_with_atom (without proximity) : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_RANGED_BLADE_ATTACK "ranged_blade_attack"
-/// From /obj/item/melee/sickly_blade/ranged_interact_with_atom (without proximity) : (mob/source, atom/target)
-#define COMSIG_HERETIC_RANGED_BLADE_ATTACK_NON_LIVING "ranged_blade_attack_non_living"

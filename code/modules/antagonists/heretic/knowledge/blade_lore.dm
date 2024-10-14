@@ -74,7 +74,7 @@
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
-	playsound(get_turf(target), 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 ///Checks to see if `atom/source` is behind `atom/target`
 /proc/check_behind(atom/source, atom/target)
@@ -84,29 +84,26 @@
 	// x > .
 	// x . .
 
-	var/are_we_behind = FALSE
 	// No tactical spinning allowed
 	if(HAS_TRAIT(target, TRAIT_SPINNING))
-		are_we_behind = TRUE
+		return TRUE
 
 	// We'll take "same tile" as "behind" for ease
 	if(target.loc == source.loc)
-		are_we_behind = TRUE
+		return TRUE
 
 	// We'll also assume lying down is behind, as mob directions when lying are unclear
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.body_position == LYING_DOWN)
-			are_we_behind = TRUE
+			return TRUE
 
 	// Exceptions aside, let's actually check if they're, yknow, behind
 	var/dir_target_to_source = get_dir(target, source)
 	if(target.dir & REVERSE_DIR(dir_target_to_source))
-		are_we_behind = TRUE
+		return TRUE
 
-	if(!are_we_behind)
-		return FALSE
-	return TRUE
+	return FALSE
 
 /// The cooldown duration between triggers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
@@ -343,11 +340,11 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK_NON_LIVING, PROC_REF(do_melee_effects))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(do_melee_effects))
 
 /datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK_NON_LIVING))
+	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK))
 
 ///Tries to infuse our held blade with our mansus grasp
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_grasp_cast(mob/living/carbon/cast_on)
@@ -357,7 +354,7 @@
 	if(!istype(held_item, /obj/item/melee/sickly_blade/dark))
 		return NONE
 	var/obj/item/melee/sickly_blade/dark/held_blade = held_item
-	if(held_blade.infused == TRUE)
+	if(held_blade.infused)
 		return NONE
 	held_blade.infused = TRUE
 	held_blade.update_appearance(UPDATE_ICON)
