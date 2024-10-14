@@ -381,3 +381,14 @@
   - code_imp: Pyrokinesis and Cindikinesis are now their own types and not subtypes
       of Cryokinesis and Geladikinesis. This allows you to not have to mutate yourself
       in a specific order to not lock yourself out of the other mutation.
+2024-10-14:
+  SmArtKar:
+  - spellcheck: Fixed a typo in multiple lives component
+  - bugfix: Ghosts can no longer cut people's tethers
+  carlarctg:
+  - rscadd: you can use lizards to get lizard organs in the dna infuser
+  grungussuss:
+  - sound: helmets and their visors make sounds now
+  - code_imp: cleaned up laser tag helmet code a bit
+  - sound: gas analyzer now has handling sounds
+  - qol: offering an item displays a balloon alert
