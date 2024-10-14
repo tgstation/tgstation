@@ -17,13 +17,15 @@
 		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
+	can_idle = FALSE
+	///minimum distance we need to be from our target in path calculations
+	var/minimum_distance = 0
 	///keys to be reset when the bot is reseted
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	can_idle = FALSE
 
 /datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/my_controller = living_mob.ai_controller
@@ -36,7 +38,7 @@
 		return FALSE
 	if(get_turf(living_mob) == get_turf(living_target))
 		return ..()
-	var/list/path = get_path_to(living_mob, living_target, mintargetdist = 1, max_distance = 10, access = my_controller.get_access())
+	var/list/path = get_path_to(living_mob, living_target, mintargetdist = minimum_distance, max_distance = 10, access = my_controller.get_access())
 	if(!length(path) || QDELETED(living_mob))
 		my_controller?.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, living_target, TRUE)
 		return FALSE
@@ -101,7 +103,7 @@
 		return TRUE
 	if(get_turf(pawn) == get_turf(target))
 		return TRUE
-	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = 1, max_distance = distance, access = get_access())
+	var/list/path = get_path_to(pawn, target, simulated_only = !HAS_TRAIT(pawn, TRAIT_SPACEWALK), mintargetdist = minimum_distance, max_distance = distance, access = get_access())
 	if(!length(path))
 		return FALSE
 	return TRUE
