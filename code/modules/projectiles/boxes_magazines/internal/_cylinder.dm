@@ -13,9 +13,14 @@
 			update_appearance()
 			return
 
-/obj/item/ammo_box/magazine/internal/cylinder/get_round()
-	rotate()
-	return stored_ammo[1]
+/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = FALSE)
+	if (!keep)
+		rotate()
+	var/casing = stored_ammo[1]
+	if (ispath(casing))
+		casing = new casing(src)
+		stored_ammo[1] = casing
+	return casing
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]
@@ -37,14 +42,17 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if(!bullet || !bullet.loaded_projectile) // found a spent ammo
-			stored_ammo[i] = R
-			R.forceMove(src)
+		if (ispath(bullet))
+			continue
+		if(istype(bullet) && bullet.loaded_projectile)
+			continue
+		// found a spent ammo
+		stored_ammo[i] = R
+		R.forceMove(src)
 
-			if(bullet)
-				bullet.forceMove(drop_location())
-			return TRUE
-
+		if(bullet)
+			bullet.forceMove(drop_location())
+		return TRUE
 	return FALSE
 
 /obj/item/ammo_box/magazine/internal/cylinder/top_off(load_type, starting=FALSE)
