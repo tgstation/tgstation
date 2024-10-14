@@ -97,7 +97,7 @@
 
 
 /datum/crafting_recipe/sm_small
-	name = "Small Supermatter Shard"
+	name = "Small Supermatter Crystal"
 	result = /obj/machinery/power/supermatter_crystal/small
 	reqs = list(
 		/obj/item/gun/magic/wand/shrink = 1,
