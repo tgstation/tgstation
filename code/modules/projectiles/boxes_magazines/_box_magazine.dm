@@ -49,7 +49,10 @@
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
-	QDEL_LIST(stored_ammo)
+	for (var/casing in stored_ammo)
+		if (!ispath(casing))
+			qdel(casing)
+	stored_ammo = null
 	return ..()
 
 /obj/item/ammo_box/Exited(atom/movable/gone, direction)
