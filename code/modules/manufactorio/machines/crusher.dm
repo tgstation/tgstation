@@ -28,7 +28,7 @@
 /obj/machinery/power/manufacturing/crusher/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(istype(receiving, /obj/item/stack/ore) || receiving.resistance_flags & INDESTRUCTIBLE || !isitem(receiving) || surplus() < crush_cost  || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	if(!may_merge_in_contents(receiving) && length(contents - circuit) >= capacity)
+	if(length(contents - circuit) >= capacity && may_merge_in_contents_and_do_so(receiving))
 		return MANUFACTURING_FAIL_FULL
 	receiving.Move(src, get_dir(receiving, src))
 	START_PROCESSING(SSmanufacturing, src)
