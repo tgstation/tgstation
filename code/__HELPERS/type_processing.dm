@@ -2,7 +2,7 @@
 	if (ispath(types))
 		types = list(types)
 	var/static/list/types_to_replacement
-	var/static/list/replacement_to_text
+	var/list/static/replacement_to_text
 	if(!types_to_replacement)
 		// Longer paths come after shorter ones, try and keep the structure
 		var/list/work_from = list(
