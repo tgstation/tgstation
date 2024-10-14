@@ -2,7 +2,7 @@
 /// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
 #define ETHEREAL_APC_DRAIN_TIME (3 SECONDS)
 /// How much power ethereals gain/drain from APCs.
-#define ETHEREAL_APC_POWER_GAIN (0.1 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_APC_POWER_GAIN (10 * STANDARD_CELL_CHARGE)
 
 /obj/machinery/power/apc/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
