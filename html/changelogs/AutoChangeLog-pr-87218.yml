@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - qol: "map votes are now winner take all instead of weighted."

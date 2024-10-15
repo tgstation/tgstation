@@ -392,3 +392,25 @@
   - code_imp: cleaned up laser tag helmet code a bit
   - sound: gas analyzer now has handling sounds
   - qol: offering an item displays a balloon alert
+2024-10-15:
+  Hardly3D:
+  - spellcheck: fixes a small error in text when adjusting kitsune masks
+  Jewelry-x:
+  - bugfix: fixed mech step sound playing twice diagonally
+  - bugfix: fixed turn sound playing every time you move diagonally, now only plays
+      when the sprite turns
+  ZephyrTFA:
+  - qol: map votes are now winner take all instead of weighted.
+  carlarctg:
+  - rscadd: Added the FOSBURY skillchip, found in hacked toy vendors. This skillchip
+      allows you to bypass the emote cooldown when flipping or spinning. However,
+      if used too often, it will lower the chip's integrity and cause malfunctions.
+  - rscadd: Added the Chipped quirk. It allows you to spawn with one base skillchip.
+      (not the one above)
+  - rscadd: Added the Chip Connector quirk. It contains a new implant, the chip connector,
+      which allows you to install and take out skillchips at any time.
+  - code_imp: Renamed the organ slots for brain implants and made the connector implant
+      take the CNS slot.
+  grungussuss:
+  - sound: medical, jani, soulstone, grenade belts got sounds
+  - sound: cards have new handling sounds
