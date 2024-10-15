@@ -45,6 +45,7 @@
 /obj/machinery/camera/motion
 	start_active = TRUE
 	name = "motion-sensitive security camera"
+	RU_NAMES_LIST_INIT("motion-sensitive security camera", "камера наблюдения с датчиком движения", "камеры наблюдения с датчиком движения", "камере наблюдения с датчиком движения", "камеру наблюдения с датчиком движения", "камерой наблюдения с датчиком движения", "камере наблюдения с датчиком движения")
 
 /obj/machinery/camera/motion/Initialize(mapload)
 	. = ..()
@@ -87,6 +88,7 @@
 /obj/machinery/camera/autoname/motion
 	start_active = TRUE
 	name = "motion-sensitive security camera"
+	RU_NAMES_LIST_INIT("motion-sensitive security camera", "камера наблюдения с датчиком движения", "камеры наблюдения с датчиком движения", "камере наблюдения с датчиком движения", "камеру наблюдения с датчиком движения", "камерой наблюдения с датчиком движения", "камере наблюдения с датчиком движения")
 
 /obj/machinery/camera/autoname/motion/Initialize(mapload)
 	. = ..()
@@ -198,6 +200,7 @@
 		return
 
 	if(name == initial(name))
+		ru_names_rename(RU_NAMES_LIST("motion-sensitive security camera", "камера наблюдения с датчиком движения", "камеры наблюдения с датчиком движения", "камере наблюдения с датчиком движения", "камеру наблюдения с датчиком движения", "камерой наблюдения с датчиком движения", "камере наблюдения с датчиком движения"))
 		name = "motion-sensitive security camera"
 	if(!proximity_monitor)
 		proximity_monitor = new(src)
@@ -206,6 +209,7 @@
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
+		ru_names_rename(RU_NAMES_LIST("security camera", "камера наблюдения", "камеры наблюдения", "камере наблюдения", "камеру наблюдения", "камерой наблюдения", "камере наблюдения"))
 		name = "security camera"
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_MOTION
 	if(!area_motion)
