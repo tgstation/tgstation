@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	"The Madman" = "joker",
 	"The Rainbow Color" = "rainbow",
 	"The Jester" = "chaos",
+	"The Dealer" = "cards"
 ))
 
 /obj/item/clothing/mask/gas
@@ -306,7 +307,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		"The Coquette" = image(icon = src.icon, icon_state = "sexyclown"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
-		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
+		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
+		"The Dealer" = image(icon = src.icon, icon_state = "cards"),
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
@@ -337,6 +339,16 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	fishing_modifier = 0
+
+/obj/item/clothing/mask/gas/jonkler
+	name = "gamer's wig and mask"
+	desc = "But I am a gamer, and no man; A reproach of men, and despised by the people."
+	clothing_flags = MASKINTERNALS
+	icon_state = "jonkler"
+	inhand_icon_state = null
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
