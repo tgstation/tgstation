@@ -266,15 +266,21 @@
 			candidates.Remove(candidate_player)
 			continue
 
-		if(candidate_player.mind.special_role) // We really don't want to give antag to an antag.
-			candidates.Remove(candidate_player)
-			continue
-
 		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
 			candidates.Remove(candidate_player)
 			continue
 
 		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
+
+		/*
+		What the prob(1 * x) does here is make it so that there's a very small chance that someone who already has a special role,
+		is merely placed IN the candidate pool for another, thus allowing a small chance at rare, yet exciting, antagonist combinations.
+		This tiny chance is multiplied by the current amount of threat, making it much rarer on low-threat shifts.
+		On a 20 threat shift, it's a 2% chance for an antagonist to join the pool of antagonists of this ruleset. On a 100 threat shift, it's 10%.
+		*/
+		if(candidate_player.mind.special_role && !(prob(CONFIG_GET(number/base_stacked_antag_candidacy_per_threat_chance) * SSdynamic.initial_round_start_budget))) // We really don't want to give antag to an antag. Usually.
 			candidates.Remove(candidate_player)
 			continue
 

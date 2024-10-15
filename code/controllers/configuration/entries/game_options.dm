@@ -112,6 +112,12 @@
 
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
+/datum/config_entry/number/base_stacked_antag_candidacy_per_threat_chance
+	default = 0.1
+	integer = FALSE
+	min_val = 0
+	max_val = 1000
+
 /datum/config_entry/number/shuttle_refuel_delay
 	default = 12000
 	integer = FALSE
