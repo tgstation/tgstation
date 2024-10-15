@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - bugfix: "Byond membership lookup should now warn you when it fails due to a connection failure."
