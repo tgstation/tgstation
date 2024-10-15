@@ -50,7 +50,6 @@
 			bodypart_overlay.draw_color = color
 		my_head.add_bodypart_overlay(bodypart_overlay)
 		RegisterSignals(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(lost_head))
-		carbon_parent.update_body_parts()
 	else
 		normal_overlay = get_normal_overlay()
 		normal_overlay.color = color
@@ -79,14 +78,9 @@
 	if(my_head)
 		if(bodypart_overlay)
 			my_head.remove_bodypart_overlay(bodypart_overlay)
-			if(!my_head.owner)
-				my_head.update_icon_dropped()
 			QDEL_NULL(bodypart_overlay)
 		UnregisterSignal(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
 		my_head = null
-	if(iscarbon(parent))
-		var/mob/living/carbon/carbon_parent = parent
-		carbon_parent.update_body_parts()
 	if(normal_overlay)
 		var/atom/atom_parent = parent
 		UnregisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS)
