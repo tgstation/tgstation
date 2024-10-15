@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	maximum_survivable_temperature = INFINITY
 	attack_verb_continuous = "pecks"
-	attack_verb_simple = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	faction = list(FACTION_RAPTOR, FACTION_NEUTRAL)
 	speak_emote = list("screeches")
