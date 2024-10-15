@@ -81,7 +81,7 @@
 	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.bodyparts)
 		for(var/datum/wound/found_wound in potentially_wounded.wounds)
 			found_wound.remove_wound()
-	if(length(drinker.get_missing_limbs()) >= 1)
+	if(length(drinker.get_missing_limbs()))
 		drinker.regenerate_limbs()
 		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
 	playsound(drinker, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
