@@ -1,7 +1,7 @@
 <!-- Merci d'écrire **SOUS** les titres et **AU-DESSUS** des commentaires pour que tout s'affiche correctement. -->
 <!-- Write **BELOW** The Headers and **ABOVE** The comments else it may not be viewable. -->
 
-## Description des modifications apportées / About The Pull Request
+## Contenu des modifications apportées / About The Pull Request
 
 <!-- Décrivez ce que vous allez changer. Documentez-le de façon claire et complète pour faciliter la relecture et les tests. -->
 <!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
