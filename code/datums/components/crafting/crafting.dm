@@ -451,6 +451,15 @@
 	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
+	var/fueled_welder_count = 0
+	for (var/obj/item/weldingtool/welder in surroundings["instances"][/obj/item/weldingtool])
+		fueled_welder_count++
+		if (welder.reagents.get_reagent_amount(/datum/reagent/fuel) == 0)
+			fueled_welder_count--
+
+	if(fueled_welder_count == 0)
+		surroundings["tool_behaviour"] -= "welder"
+
 	var/list/craftability = list()
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
