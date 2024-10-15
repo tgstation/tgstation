@@ -162,6 +162,7 @@
 		"ci-nutriment",
 		"ci-thrusters",
 		"ci-herculean",
+		"ci-connector",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
