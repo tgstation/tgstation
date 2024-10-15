@@ -1,0 +1,4 @@
+author: "junkgle01"
+delete-after: True
+changes:
+  - bugfix: "fixed up Metastation's cargo delivery office."
