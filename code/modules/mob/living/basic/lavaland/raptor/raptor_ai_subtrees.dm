@@ -56,7 +56,7 @@
 	hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/raptor_trough/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(world.time < controller.blackboard[BB_RAPTOR_EAT_COOLDOWN])
+	if(world.time < controller.blackboard[BB_NEXT_FOOD_EAT])
 		return
 	return ..()
 

@@ -3,7 +3,7 @@
 
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
