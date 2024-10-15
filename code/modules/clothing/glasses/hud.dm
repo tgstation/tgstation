@@ -166,21 +166,8 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
-	glass_colour_type = /datum/client_colour/glass_colour/red //DOPPLER EDIT CHANGE - Original: darkred
-	uses_advanced_reskins = TRUE //DOPPLER EDIT ADDITION - Begin
-	unique_reskin = list(
-		"Regular" = list(
-			RESKIN_ICON_STATE = "sunhudsec",
-			RESKIN_WORN_ICON_STATE = "sunhudsec"
-		),
-		"Viper" = list(
-			RESKIN_ICON = 'modular_doppler/modular_cosmetics/icons/obj/face/glasses.dmi',
-			RESKIN_ICON_STATE = "viperhudsec",
-			RESKIN_WORN_ICON = 'modular_doppler/modular_cosmetics/icons/mob/face/glasses.dmi',
-			RESKIN_WORN_ICON_STATE = "viperhudsec"
-		)
-	)
- //DOPPLER EDIT ADDITION - End
+	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsecremoval)
