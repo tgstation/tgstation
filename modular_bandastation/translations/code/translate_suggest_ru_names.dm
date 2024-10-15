@@ -1,7 +1,189 @@
 #define LOG_CATEGORY_RU_NAMES_SUGGEST "ru_names_suggest"
+#define FILE_NAME "ru_names_suggest.json"
+#define FILE_PATH_TO_RU_NAMES_SUGGEST "data/[FILE_NAME]"
+
+GLOBAL_DATUM_INIT(ru_names_review_panel, /datum/ru_names_review_panel, new)
+
+ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-suggested values for ru-names", ADMIN_CATEGORY_MAIN)
+	GLOB.ru_names_review_panel.ui_interact(user.mob)
 
 /datum/log_category/ru_names_suggest
 	category = LOG_CATEGORY_RU_NAMES_SUGGEST
+
+// MARK: Review
+/datum/ru_names_review_panel
+	var/list/json_data = list()
+
+/datum/ru_names_review_panel/New()
+	load_data()
+
+/datum/ru_names_review_panel/ui_state(mob/user)
+	return GLOB.admin_state
+
+/datum/ru_names_review_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RuNamesReviewPanel")
+		ui.open()
+
+/datum/ru_names_review_panel/ui_data(mob/user)
+	. = list()
+	.["json_data"] = list()
+	for(var/entry_id in json_data)
+		.["json_data"] += list(json_data["[entry_id]"])
+
+/datum/ru_names_review_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("approve")
+			approve_entry(params["entry_id"])
+		if("deny")
+			deny_entry(params["entry_id"])
+		if("update")
+			load_data()
+	. = TRUE
+
+/datum/ru_names_review_panel/proc/load_data()
+	var/json_file = file(FILE_PATH_TO_RU_NAMES_SUGGEST)
+	if(!fexists(json_file))
+		return
+	json_data = json_decode(file2text(json_file))
+
+/datum/ru_names_review_panel/proc/write_data()
+	rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), FILE_PATH_TO_RU_NAMES_SUGGEST)
+
+/datum/ru_names_review_panel/proc/approve_entry(entry_id)
+	load_data()
+	if(!length(json_data))
+		return
+	if(!json_data[entry_id])
+		to_chat(usr, span_notice("Couldn't find entry [entry_id]. Perhaps it was already approved or disapproved"))
+		return
+	var/list/data = json_data[entry_id]
+	var/suggested_list = "RU_NAMES_LIST_INIT(\"[data["suggested_list"]["base"]]\", \"[data["suggested_list"][NOMINATIVE]]\", \"[data["suggested_list"][GENITIVE]]\", \"[data["suggested_list"][DATIVE]]\", \"[data["suggested_list"][ACCUSATIVE]]\", \"[data["suggested_list"][INSTRUMENTAL]]\", \"[data["suggested_list"][PREPOSITIONAL]]\")"
+	var/message = "approves [suggested_list] for [data["atom_path"]]"
+	// Here we send message to discord
+	var/webhook_message = "[usr.ckey] [message] by [data["ckey"]]"
+	send2translate_webhook(webhook_message)
+	json_data.Remove(entry_id)
+	// Logging
+	write_data()
+	var/log_text = "[key_name_and_tag(usr)] [message]"
+	logger.Log(LOG_CATEGORY_RU_NAMES_SUGGEST, log_text)
+	to_chat(usr, span_notice("Entry [entry_id] approved."))
+
+/datum/ru_names_review_panel/proc/deny_entry(entry_id)
+	load_data()
+	if(!length(json_data))
+		return
+	if(!json_data[entry_id])
+		to_chat(usr, "Couldn't find entry [entry_id]. Perhaps it was already approved or disapproved")
+		return
+	var/list/data = json_data[entry_id]
+	var/suggested_list = "RU_NAMES_LIST_INIT(\"[data["suggested_list"]["base"]]\", \"[data["suggested_list"][NOMINATIVE]]\", \"[data["suggested_list"][GENITIVE]]\", \"[data["suggested_list"][DATIVE]]\", \"[data["suggested_list"][ACCUSATIVE]]\", \"[data["suggested_list"][INSTRUMENTAL]]\", \"[data["suggested_list"][PREPOSITIONAL]]\")"
+	var/message = "denies [suggested_list] for [data["atom_path"]]"
+	json_data.Remove(entry_id)
+	write_data()
+	var/log_text = "[key_name_and_tag(usr)] [message]"
+	logger.Log(LOG_CATEGORY_RU_NAMES_SUGGEST, log_text)
+	to_chat(usr, span_notice("Entry [entry_id] denied."))
+
+/datum/ru_names_review_panel/proc/add_entry(data)
+	json_data["[data["ckey"]]-[data["atom_path"]]"] = data
+	rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), FILE_PATH_TO_RU_NAMES_SUGGEST)
+
+	var/suggested_list = "RU_NAMES_LIST_INIT(\"[data["suggested_list"]["base"]]\", \"[data["suggested_list"][NOMINATIVE]]\", \"[data["suggested_list"][GENITIVE]]\", \"[data["suggested_list"][DATIVE]]\", \"[data["suggested_list"][ACCUSATIVE]]\", \"[data["suggested_list"][INSTRUMENTAL]]\", \"[data["suggested_list"][PREPOSITIONAL]]\")"
+	var/message = "suggests [suggested_list] for [data["atom_path"]]"
+	var/log_text = "[key_name_and_tag(usr)] [message]"
+	logger.Log(LOG_CATEGORY_RU_NAMES_SUGGEST, log_text)
+
+	to_chat(usr, span_notice("Ваше предложение перевода успешно записано."))
+
+// MARK: Webhook
+/datum/config_entry/string/translate_suggest_webhook_url
+
+/datum/config_entry/string/translate_suggest_webhook_pfp
+
+/datum/config_entry/string/translate_suggest_webhook_name
+
+/proc/send2translate_webhook(message)
+	var/webhook = CONFIG_GET(string/translate_suggest_webhook_url)
+	if(!webhook || !message)
+		return
+	var/list/webhook_info = list()
+	message = GLOB.has_discord_embeddable_links.Replace_char(replacetext_char(message, "`", ""), " ```$1``` ")
+	webhook_info["content"] = message
+	if(CONFIG_GET(string/translate_suggest_webhook_name))
+		webhook_info["username"] = CONFIG_GET(string/translate_suggest_webhook_name)
+	if(CONFIG_GET(string/translate_suggest_webhook_pfp))
+		webhook_info["avatar_url"] = CONFIG_GET(string/translate_suggest_webhook_pfp)
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
+	request.begin_async()
+
+// MARK: Suggest
+/datum/ru_name_suggest_panel
+	var/list/ru_name_data = list()
+
+/datum/ru_name_suggest_panel/New(new_data)
+	if(!length(new_data))
+		CRASH("Ru Name Suggest panel was created with no data!")
+	ru_name_data = list(
+		"ckey" = new_data["ckey"],
+		"atom_path" = new_data["atom_path"],
+		"visible_name" = new_data["visible_name"],
+		"suggested_list" = list(
+			"base" = new_data["suggested_list"]["base"],
+			NOMINATIVE = "",
+			GENITIVE = "",
+			DATIVE = "",
+			ACCUSATIVE = "",
+			INSTRUMENTAL = "",
+			PREPOSITIONAL = "",
+		)
+	)
+
+/datum/ru_name_suggest_panel/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/ru_name_suggest_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RuNamesSuggestPanel")
+		ui.open()
+
+/datum/ru_name_suggest_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("send")
+			send_suggestion(params["entries"])
+	. = TRUE
+
+/datum/ru_name_suggest_panel/ui_data(mob/user)
+	. = list()
+	.["visible_name"] = ru_name_data["visible_name"]
+
+/datum/ru_name_suggest_panel/ui_close(mob/user)
+	. = ..()
+	qdel(src)
+
+/datum/ru_name_suggest_panel/proc/send_suggestion(list/entries)
+	var/list/declents = list(NOMINATIVE, GENITIVE, DATIVE, ACCUSATIVE, INSTRUMENTAL, PREPOSITIONAL)
+	if(length(entries) != length(declents))
+		to_chat(usr, span_warning("Ошибка! Пожалуйста, заполните все строки перед отправкой."))
+		return
+	for(var/declent in declents)
+		var/sanitized_input = trim(copytext_char(sanitize(entries[1]), 1, MAX_MESSAGE_LEN))
+		ru_name_data["suggested_list"]["[declent]"] = sanitized_input
+		entries -= entries[1]
+	GLOB.ru_names_review_panel.add_entry(ru_name_data)
+	qdel(src)
 
 /mob/verb/suggest_ru_name(atom/A as mob|obj|turf in view())
 	set name = "Предложить перевод"
@@ -11,20 +193,14 @@
 /mob/proc/_suggested_ru_name(atom/suggested_atom)
 	if(!client)
 		return FALSE
-	var/atom_name = suggested_atom.name
-	var/atom/atom_type = suggested_atom.type
-
-	var/static/list/declents = list(NOMINATIVE, GENITIVE, DATIVE, ACCUSATIVE, INSTRUMENTAL, PREPOSITIONAL)
-	var/list/ru_name_suggest = list()
-	for(var/declent in declents)
-		ru_name_suggest[declent] = tgui_input_text(src, "Введите [declent] падеж", "Предложение перевода для [atom_name]", atom_name)
-		if(!ru_name_suggest[declent])
-			to_chat(src, span_notice("Вы отменили предложение перевода."))
-			return TRUE
-	var/message = "suggests RU_NAMES_LIST_INIT(\"[atom_type::name]\", \"[ru_name_suggest[NOMINATIVE]]\", \"[ru_name_suggest[GENITIVE]]\", \"[ru_name_suggest[DATIVE]]\", \"[ru_name_suggest[ACCUSATIVE]]\", \"[ru_name_suggest[INSTRUMENTAL]]\", \"[ru_name_suggest[PREPOSITIONAL]]\") for [atom_type::type]"
-	var/log_text = "[key_name_and_tag(src)] [message]"
-	logger.Log(LOG_CATEGORY_RU_NAMES_SUGGEST, log_text)
-	to_chat(src, span_notice("Ваше предложение перевода успешно записано."))
+	var/list/data = list()
+	data["ckey"] = usr.ckey
+	data["suggested_list"] += list("base" = suggested_atom::name)
+	data["atom_path"] = suggested_atom::type
+	data["visible_name"] = suggested_atom.name
+	var/datum/ru_name_suggest_panel/ru_name_suggest_panel = new(data)
+	ru_name_suggest_panel.ui_interact(src)
 	return TRUE
 
 #undef LOG_CATEGORY_RU_NAMES_SUGGEST
+#undef FILE_PATH_TO_RU_NAMES_SUGGEST
