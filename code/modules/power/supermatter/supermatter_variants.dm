@@ -73,7 +73,7 @@
 /obj/machinery/power/supermatter_crystal/small/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Adamantium Signal")
-	priority_announce("Anomalous crystal detected onboard.", "Nanotrasen Anomaly Department Announcement")
+	priority_announce("Anomalous crystal detected onboard. Location is marked on every GPS device.", "Nanotrasen Anomaly Department Announcement")
 
 /obj/item/adamantine_pedestal
 	name = "adamantine pedestal"
