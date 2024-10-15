@@ -76,6 +76,11 @@
 	mood_change = 4
 	timeout = 5 MINUTES
 
+/datum/mood_event/shower_hater
+	description = "I hate being wet!"
+	mood_change = -2
+	timeout = 3 MINUTES
+
 /datum/mood_event/fresh_laundry
 	description = "There's nothing like the feeling of a freshly laundered jumpsuit."
 	mood_change = 2
