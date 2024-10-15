@@ -223,8 +223,8 @@
 	icon_state = "gills"
 
 	safe_oxygen_min = 0 //We don't breathe this
-	///The required partial pressure of water_vapor for not drowing
-	var/safe_water_level = 29
+	///The required partial pressure of water_vapor for not suffocating.
+	var/safe_water_level = parent_type::safe_oxygen_min
 
 	/// Bodypart overlay applied to the chest where the lungs are in
 	var/datum/bodypart_overlay/simple/gills/gills
@@ -301,7 +301,6 @@
 	name = "mutated semi-aquatic lungs"
 	desc = "DNA from an amphibious or semi-aquatic creature infused on a pair lungs. Enjoy breathing underwater without drowning outside water."
 	safe_oxygen_min = /obj/item/organ/internal/lungs::safe_oxygen_min
-	safe_water_level = 19
 	has_gills = FALSE
 	/**
 	 * If false, we don't breathe air since we've got water instead.

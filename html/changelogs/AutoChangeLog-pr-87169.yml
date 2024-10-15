@@ -1,0 +1,4 @@
+author: "Soupfgc"
+delete-after: True
+changes:
+  - bugfix: "Springlock MOD module properly interacts with Water Vapor"
