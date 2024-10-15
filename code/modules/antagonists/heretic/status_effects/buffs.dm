@@ -79,7 +79,7 @@
 		return
 	var/mob/living/carbon/drinker = owner
 	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.bodyparts)
-		for(var/datum/wound/found_wound in potentially_wounded.wounds)
+		for(var/datum/wound/found_wound as anything in potentially_wounded.wounds)
 			found_wound.remove_wound()
 	if(length(drinker.get_missing_limbs()))
 		drinker.regenerate_limbs()
