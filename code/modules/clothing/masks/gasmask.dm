@@ -348,7 +348,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
