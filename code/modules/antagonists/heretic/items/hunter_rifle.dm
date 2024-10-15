@@ -148,16 +148,18 @@
 		living_firer.forceMove(src)
 		stored_mob = living_firer
 
-/obj/projectile/bullet/strilka310/lionhunter/on_range()
-	if(stored_mob)
-		stored_mob.forceMove(loc)
+
+/obj/projectile/bullet/Exited(atom/movable/gone)
+	if(gone == stored_mob)
 		stored_mob = null
 	return ..()
 
+/obj/projectile/bullet/strilka310/lionhunter/on_range()
+	stored_mob?.forceMove(loc)
+	return ..()
+
 /obj/projectile/bullet/strilka310/lionhunter/on_hit(atom/target, blocked, pierce_hit)
-	if(stored_mob) //Pretty important to get our mob out of the bullet
-		stored_mob.forceMove(loc)
-		stored_mob = null
+	stored_mob?.forceMove(loc) //Pretty important to get our mob out of the bullet
 	. = ..()
 	if(!isliving(target))
 		return BULLET_ACT_HIT
