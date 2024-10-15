@@ -4,6 +4,7 @@
 	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	possible_fuse_time = list("3", "4", "5")
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
 /obj/item/grenade/flashbang/apply_grenade_fantasy_bonuses(quality)
@@ -22,7 +23,7 @@
 	if(!flashbang_turf)
 		return
 	do_sparks(rand(5, 9), FALSE, src)
-	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
+	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, COLOR_WHITE, 2)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(living_mob), living_mob)
@@ -90,7 +91,7 @@
 	if(!flashbang_turf)
 		return
 	do_sparks(rand(5, 9), FALSE, src)
-	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 50, TRUE, 8, 0.9)
+	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 50, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 2, COLOR_WHITE, 1)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
 		pop(get_turf(living_mob), living_mob)

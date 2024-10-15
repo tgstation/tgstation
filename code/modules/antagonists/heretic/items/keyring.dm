@@ -185,7 +185,7 @@
 
 	if(reference_resolved)
 		make_portal(user, reference_resolved, target)
-		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
+		to_chat(user, span_notice("You use [src], to link [reference_resolved] and [target] together."))
 		link = null
 		balloon_alert(user, "link 2/2")
 	else

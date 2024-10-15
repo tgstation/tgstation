@@ -26,6 +26,8 @@
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
+	///how long it takes to behead someone with this chainsaw.
+	var/behead_time = 15 SECONDS
 
 /obj/item/chainsaw/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -47,13 +49,13 @@
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/weapons/genhit1.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)
@@ -66,7 +68,7 @@
 	butchering.butchering_enabled = on
 
 	if(on)
-		hitsound = 'sound/weapons/chainsawhit.ogg'
+		hitsound = 'sound/items/weapons/chainsawhit.ogg'
 		chainsaw_loop.start()
 	else
 		hitsound = SFX_SWING_HIT
@@ -80,7 +82,7 @@
 /**
  * Handles adding components to the chainsaw. Added in Initialize()
  *
- * Applies components to the chainsaw. Added as a seperate proc to allow for
+ * Applies components to the chainsaw. Added as a separate proc to allow for
  * variance between subtypes
  */
 /obj/item/chainsaw/proc/apply_components()
@@ -88,18 +90,19 @@
 		speed = 3 SECONDS, \
 		effectiveness = 100, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
-	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	desc = span_warning("VRRRRRRR!!!")
 	armour_penetration = 100
 	force_on = 30
+	behead_time = 2 SECONDS
 
-/obj/item/chainsaw/doomslayer/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, params)
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -110,10 +113,10 @@
 	if (isnull(head))
 		return ..()
 
-	playsound(user, 'sound/weapons/slice.ogg', vol = 80, vary = TRUE)
+	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
 
 	target_mob.balloon_alert(user, "cutting off head...")
-	if (!do_after(user, 2 SECONDS, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
+	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	head.dismember(silent = FALSE)
@@ -124,11 +127,11 @@
 /obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+		playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
 	return FALSE
 
-/obj/item/chainsaw/doomslayer/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
+/obj/item/chainsaw/proc/has_same_head(mob/living/target_mob, obj/item/bodypart/head)
 	return target_mob.get_bodypart(BODY_ZONE_HEAD) == head
 
 /obj/item/chainsaw/mounted_chainsaw
@@ -162,7 +165,7 @@
 		speed = 3 SECONDS, \
 		effectiveness = 100, \
 		bonus_modifier = 0, \
-		butcher_sound = 'sound/weapons/chainsawhit.ogg', \
+		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
 

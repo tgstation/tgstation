@@ -12,6 +12,9 @@
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 	matter = 200
 	max_matter = 200
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	///category of design selected
 	var/selected_category
@@ -38,7 +41,6 @@
 			/obj/machinery/plumbing/synthesizer = 15,
 			/obj/machinery/plumbing/reaction_chamber/chem = 15,
 			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/growing_vat = 20,
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
@@ -154,6 +156,8 @@
 	return data
 
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+
 	switch(action)
 		if("color")
 			var/color = params["paint_color"]
@@ -178,8 +182,6 @@
 				return FALSE
 			blueprint = design
 			blueprint_changed = TRUE
-
-			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
 	return TRUE
 
@@ -286,7 +288,7 @@
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(source, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(delta_y == 0)
 		return
@@ -302,44 +304,6 @@
 			current_loc = GLOB.plumbing_layers.len
 		current_layer = GLOB.plumbing_layers[current_loc]
 	to_chat(source, span_notice("You set the layer to [current_layer]."))
-
-/obj/item/construction/plumbing/research
-	name = "research plumbing constructor"
-	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
-	icon_state = "plumberer_sci"
-	inhand_icon_state = "plumberer_sci"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	///Design types for research plumbing constructor
-	var/list/static/research_design_types = list(
-		//Category 1 Synthesizers
-		"Synthesizers" = list(
-			/obj/machinery/plumbing/reaction_chamber = 15,
-			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/growing_vat = 20,
-		),
-
-		//Category 2 Distributors
-		"Distributors" = list(
-			/obj/machinery/duct = 1,
-			/obj/machinery/plumbing/input = 5,
-			/obj/machinery/plumbing/filter = 5,
-			/obj/machinery/plumbing/splitter = 5,
-			/obj/machinery/plumbing/output = 5,
-		),
-
-		//Category 3 storage
-		"Storage" = list(
-			/obj/machinery/plumbing/tank = 20,
-			/obj/machinery/plumbing/acclimator = 10,
-		),
-	)
-
-/obj/item/construction/plumbing/research/Initialize(mapload)
-	plumbing_design_types = research_design_types
-
-	. = ..()
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"

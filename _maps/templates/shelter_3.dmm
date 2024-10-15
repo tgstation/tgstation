@@ -35,9 +35,7 @@
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "h" = (
-/obj/machinery/vending/boozeomat/all_access{
-	onstation = 0
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "i" = (
@@ -146,9 +144,7 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "z" = (
-/obj/machinery/vending/cigarette{
-	onstation = 0
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "A" = (
@@ -226,10 +222,7 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "L" = (
-/obj/machinery/vending/snack/blue{
-	req_access = null;
-	onstation = 0
-	},
+/obj/machinery/vending/snack/blue,
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "M" = (

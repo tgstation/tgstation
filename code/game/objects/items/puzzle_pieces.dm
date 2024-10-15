@@ -86,6 +86,18 @@
 	puzzle_id = null //honestly these cant be closed anyway and im not fucking around with door code anymore
 	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), null)
 
+/obj/machinery/door/puzzle/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.0 SECONDS
+
+/obj/machinery/door/puzzle/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.8 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.0 SECONDS
+
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
 
@@ -157,7 +169,7 @@
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
 	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
-	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on it's own default channel however.
+	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10
 	protected = TRUE
@@ -293,7 +305,7 @@
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
-	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 100, TRUE)
 
 //
 // literally just buttons
@@ -351,7 +363,7 @@
 	used = single_use
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
@@ -374,7 +386,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 		return
 	used = TRUE
 	update_icon_state()
-	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
@@ -407,11 +419,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
 	if(!correct)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 45, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 45, TRUE)
 		return
 	used = single_use
 	update_icon_state()
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
@@ -558,6 +570,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	desc = "A board filled with colored dots. What could this mean?"
 	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "puzzle_dots"
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE //visible over walls
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | LAVA_PROOF
 	flags_1 = UNPAINTABLE_1

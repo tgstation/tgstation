@@ -13,12 +13,13 @@
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
 	AddComponent(/datum/component/martial_art_giver, style_to_give)
+	AddComponent(/datum/component/adjust_fishing_difficulty, 19)
 
 /obj/item/clothing/gloves/boxing/evil
 	name = "evil boxing gloves"

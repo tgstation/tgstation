@@ -34,9 +34,9 @@
 		/obj/item/stack/sheet/plastic = 100,
 		/obj/item/stack/sheet/meat = 100)
 	time = 3.2 SECONDS
-	preop_sound = 'sound/effects/blobattack.ogg'
-	success_sound = 'sound/effects/attackblob.ogg'
-	failure_sound = 'sound/effects/blobattack.ogg'
+	preop_sound = 'sound/effects/blob/blobattack.ogg'
+	success_sound = 'sound/effects/blob/attackblob.ogg'
+	failure_sound = 'sound/effects/blob/blobattack.ogg'
 
 /datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery)
 	display_results(

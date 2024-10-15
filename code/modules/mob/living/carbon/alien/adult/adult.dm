@@ -14,7 +14,7 @@
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 30
-	death_sound = 'sound/voice/hiss6.ogg'
+	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	bodyparts = list(
 		/obj/item/bodypart/chest/alien,
 		/obj/item/bodypart/head/alien,
@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
-	playsound(src, 'sound/voice/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
+	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
 	..(I, cuff_break = INSTANT_CUFFBREAK)
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
 	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_SNEAK))
-		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
+		playsound(get_turf(src), pick('sound/mobs/non-humanoids/hiss/lowHiss2.ogg', 'sound/mobs/non-humanoids/hiss/lowHiss3.ogg', 'sound/mobs/non-humanoids/hiss/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
 /mob/living/carbon/alien/adult/setGrabState(newstate)
@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	update_incapacitated()
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
 			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
@@ -101,7 +102,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 /mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
-	if(incapacitated() || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(incapacitated || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
 		return FALSE
 	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
 		return FALSE
@@ -120,7 +121,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.visible_message(span_danger("[src] is attempting to devour [lucky_winner]!"), \
 			span_userdanger("[src] is attempting to devour you!"))
 
-	playsound(lucky_winner, 'sound/creatures/alien_eat.ogg', 100)
+	playsound(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg', 100)
 	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))

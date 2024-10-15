@@ -1,6 +1,3 @@
-import { round, toFixed } from '../../common/math';
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -12,7 +9,11 @@ import {
   RoundGauge,
   Section,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+
+import { round, toFixed } from '../../common/math';
+import { BooleanLike } from '../../common/react';
+import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';

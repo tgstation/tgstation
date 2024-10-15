@@ -171,3 +171,33 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/singulo_hammer
+	name = "Singularity Hammer"
+	result = /obj/item/singularityhammer
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/pyro = 1,
+		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = 1,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = 1,
+		/obj/item/assembly/signaler/anomaly/hallucination = 1,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = 1,
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/bambostaff
+	name = "Bamboo Bo Staff"
+	result = /obj/item/bambostaff
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 4,
+		/obj/item/grown/log/steel = 2,
+	)
+	time = 8 SECONDS
+	category = CAT_WEAPON_MELEE

@@ -17,20 +17,25 @@
 	/// If the highest priority job matches this, will prioritize this name in the UI
 	var/relevant_job
 
+
 /datum/preference/name/apply_to_human(mob/living/carbon/human/target, value)
 	// Only real_name applies directly, everything else is applied by something else
 	return
 
+
 /datum/preference/name/deserialize(input, datum/preferences/preferences)
 	return reject_bad_name("[input]", allow_numbers)
+
 
 /datum/preference/name/serialize(input)
 	// `is_valid` should always be run before `serialize`, so it should not
 	// be possible for this to return `null`.
 	return reject_bad_name(input, allow_numbers)
 
+
 /datum/preference/name/is_valid(value)
 	return istext(value) && !isnull(reject_bad_name(value, allow_numbers))
+
 
 /// A character's real name
 /datum/preference/name/real_name
@@ -181,8 +186,21 @@
 	explanation = "Hacker alias"
 	group = "bitrunning"
 	savefile_key = "hacker_alias"
-	allow_numbers = TRUE
 	relevant_job = /datum/job/bitrunner
+
 
 /datum/preference/name/hacker_alias/create_default_value()
 	return pick(GLOB.hacker_aliases)
+
+
+/datum/preference/name/hacker_alias/is_valid(value)
+	return !isnull(permissive_sanitize_name(value))
+
+
+/datum/preference/name/hacker_alias/deserialize(input, datum/preferences/preferences)
+	return permissive_sanitize_name(input)
+
+
+/datum/preference/name/hacker_alias/serialize(input)
+	return permissive_sanitize_name(input)
+

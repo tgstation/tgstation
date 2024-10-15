@@ -70,6 +70,15 @@
 	for(var/spell in user.actions)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
 			return FALSE
+	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	if(!wizard_datum)
+		return TRUE
+	for(var/perks in wizard_datum.perks)
+		if(is_type_in_typecache(perks, no_coexistance_typecache))
+			return FALSE
+	if(is_type_in_list(src, wizard_datum.perks))
+		to_chat(user, span_warning("This perk already learned!"))
+		return FALSE
 	return TRUE
 
 /**
@@ -137,6 +146,9 @@
  * Return TRUE if it can refunded, FALSE otherwise
  */
 /datum/spellbook_entry/proc/can_refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
+		to_chat(user, span_notice("No refund."))
+		return FALSE
 	if(!refundable)
 		return FALSE
 	if(!book.refunds_allowed)
@@ -203,6 +215,11 @@
 		log_spellbook("[key_name(user)] bought [src] for [cost] points")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
+
+	ADD_TRAIT(spawned_path, TRAIT_CONTRABAND, INNATE_TRAIT)
+	for(var/obj/contained as anything in spawned_path.contents)
+		ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 	try_equip_item(user, spawned_path)
 	return spawned_path
 

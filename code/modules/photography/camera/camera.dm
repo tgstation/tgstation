@@ -30,7 +30,6 @@
 	var/blending = FALSE //lets not take pictures while the previous is still processing!
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
-	var/sound/custom_sound
 	var/silent = FALSE
 	var/picture_size_x = 2
 	var/picture_size_y = 2
@@ -118,7 +117,7 @@
 			return FALSE
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
-		else if(!(get_turf(target) in get_hear(world.view, user)))
+		else if(!(get_turf(target) in get_hear(CONFIG_GET(string/default_view), user)))
 			return FALSE
 	else if(isliving(loc))
 		if(!(get_turf(target) in view(world.view, loc)))
@@ -129,6 +128,10 @@
 	return TRUE
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Always skip on storage and tables
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -223,8 +226,8 @@
 			dead_spotted += mob
 		desc += mob.get_photo_description(src)
 
-	var/psize_x = (size_x * 2 + 1) * world.icon_size
-	var/psize_y = (size_y * 2 + 1) * world.icon_size
+	var/psize_x = (size_x * 2 + 1) * ICON_SIZE_X
+	var/psize_y = (size_y * 2 + 1) * ICON_SIZE_Y
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
@@ -247,6 +250,9 @@
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
 	if(print_picture_on_snap)
 		printpicture(user, picture)
+
+	if(!silent)
+		playsound(loc, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg'), 75, TRUE, -3)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

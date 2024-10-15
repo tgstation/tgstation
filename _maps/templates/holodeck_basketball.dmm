@@ -9,8 +9,7 @@
 /area/template_noop)
 "b" = (
 /obj/structure/hoop{
-	dir = 1;
-	layer = 4.1
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,
@@ -44,9 +43,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "k" = (
-/obj/structure/hoop{
-	layer = 3.9
-	},
+/obj/structure/hoop,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},

@@ -1,13 +1,13 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   LabeledList,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo/CargoCatalog';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
@@ -15,7 +15,7 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 type Data = {
   locked: BooleanLike;
   points: number;
-  usingBeacon: BooleanLike;
+  using_beacon: BooleanLike;
   beaconzone: string;
   beaconName: string;
   canBuyBeacon: BooleanLike;
@@ -44,7 +44,7 @@ function CargoExpressContent(props) {
     hasBeacon,
     message,
     points,
-    usingBeacon,
+    using_beacon,
     beaconzone,
     beaconName,
     canBuyBeacon,
@@ -64,11 +64,11 @@ function CargoExpressContent(props) {
       >
         <LabeledList>
           <LabeledList.Item label="Landing Location">
-            <Button selected={!usingBeacon} onClick={() => act('LZCargo')}>
+            <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
               Cargo Bay
             </Button>
             <Button
-              selected={usingBeacon}
+              selected={using_beacon}
               disabled={!hasBeacon}
               onClick={() => act('LZBeacon')}
             >

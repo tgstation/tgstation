@@ -16,10 +16,10 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
-	hitsound = 'sound/weapons/smash.ogg'
-	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
+	hitsound = 'sound/items/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
+	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
@@ -33,7 +33,8 @@
 			if(prob(1))
 				latches = "triple_latch"
 	update_appearance()
-
+	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
+	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/storage/toolbox/update_overlays()
@@ -348,6 +349,11 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/c20r
 	extra_to_spawn = /obj/item/ammo_box/magazine/smgm45
 
+/obj/item/storage/toolbox/guncase/smartgun
+	name = "adielle smartgun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/smartgun
+	extra_to_spawn = /obj/item/ammo_box/magazine/smartgun
+
 /obj/item/storage/toolbox/guncase/clandestine
 	name = "clandestine gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/clandestine
@@ -375,7 +381,7 @@
 
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate/nuclear
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
 	extra_to_spawn = /obj/item/ammo_box/a357
 
 /obj/item/storage/toolbox/guncase/sword_and_board
@@ -404,6 +410,7 @@
 	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
 	icon_state = "snake_eater"
 	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"
@@ -441,12 +448,6 @@
 	inhand_icon_state = "sakhno_case"
 	weapon_to_spawn = /obj/effect/spawner/random/sakhno
 	extra_to_spawn = /obj/effect/spawner/random/sakhno/ammo
-
-/obj/item/storage/toolbox/guncase/soviet/plastikov
-	name = "ancient surplus gun case"
-	desc = "A gun case. Has the symbol of the Third Soviet Union stamped on the side."
-	weapon_to_spawn = /obj/item/gun/ballistic/automatic/plastikov
-	extra_to_spawn = /obj/item/food/rationpack //sorry comrade, cannot get you more ammo, here, have lunch
 
 /obj/item/storage/toolbox/guncase/monkeycase
 	name = "monkey gun case"

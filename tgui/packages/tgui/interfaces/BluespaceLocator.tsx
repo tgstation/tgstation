@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Icon, ProgressBar, Tabs } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Icon, ProgressBar, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

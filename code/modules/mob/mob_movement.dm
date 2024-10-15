@@ -93,6 +93,7 @@
 		return loc_atom.relaymove(mob, direct)
 
 	if(!mob.Process_Spacemove(direct))
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_NOGRAV, args)
 		return FALSE
 
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
@@ -264,19 +265,29 @@
 	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
 		return TRUE
 
-	// FUCK OFF
 	if(buckled)
 		return TRUE
+
+	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
+		return TRUE
+
+	if (HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
+		return FALSE
 
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
 		return FALSE
+
+	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
+		return FALSE
+
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
 		return TRUE
+
 	// last pushoff exists for one reason
 	// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
 	last_pushoff = world.time
-	if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE)) //You're pushing off something movable, so it moves
+	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) //You're pushing off something movable, so it moves
 		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
 		backup.last_pushoff = world.time
 		to_chat(src, span_info("You push off of [backup] to propel yourself."))
@@ -287,6 +298,8 @@
  * Takes the intended movement direction as input, alongside if the context is checking if we're allowed to continue drifting
  */
 /mob/get_spacemove_backup(moving_direction, continuous_move)
+	var/atom/secondary_backup
+	var/list/priority_dirs = (moving_direction in GLOB.cardinals) ? GLOB.cardinals : GLOB.diagonals
 	for(var/atom/pushover as anything in range(1, get_turf(src)))
 		if(pushover == src)
 			continue
@@ -298,7 +311,10 @@
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue
-			return pushover
+			if (get_dir(src, pushover) in priority_dirs)
+				return pushover
+			secondary_backup = pushover
+			continue
 
 		var/atom/movable/rebound = pushover
 		if(rebound == buckled)
@@ -315,7 +331,7 @@
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
-			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSspacedrift)
+			var/datum/move_loop/move/rebound_engine = GLOB.move_manager.processing_on(rebound, SSnewtonian_movement)
 			// If you're moving toward it and you're both going the same direction, stop
 			if(moving_direction == get_dir(src, pushover) && rebound_engine && moving_direction == rebound_engine.direction)
 				continue
@@ -323,10 +339,16 @@
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into
 				continue
 		if(rebound.anchored)
-			return rebound
+			if (get_dir(src, rebound) in priority_dirs)
+				return rebound
+			secondary_backup = rebound
+			continue
 		if(pulling == rebound)
 			continue
-		return rebound
+		if (get_dir(src, rebound) in priority_dirs)
+			return rebound
+		secondary_backup = rebound
+	return secondary_backup
 
 /mob/has_gravity(turf/gravity_turf)
 	return mob_negates_gravity() || ..()
@@ -521,28 +543,22 @@
 		return remote_control.relaymove(src, UP)
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
-
-	if(!above_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	var/obj/structure/ladder/current_ladder = locate() in current_turf
+	if(current_ladder)
+		current_ladder.use(src, TRUE)
+		return
 
-	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
-		if(buckled)
-			to_chat(src, span_warning("[buckled] is is not capable of flight."))
-		else
-			to_chat(src, span_warning("You are not Superman."))
+	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving up...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
-	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
+	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
@@ -554,21 +570,22 @@
 		return remote_control.relaymove(src, DOWN)
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = GET_TURF_BELOW(current_turf)
-
-	if(!below_turf)
-		to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	var/obj/structure/ladder/current_ladder = locate() in current_turf
+	if(current_ladder)
+		current_ladder.use(src, FALSE)
+		return
+
+	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+		return
 	balloon_alert(src, "moving down...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
-	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
+	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 	return FALSE
 

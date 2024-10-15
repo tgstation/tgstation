@@ -39,7 +39,7 @@ Assistant
 
 /datum/job/assistant/get_outfit(consistent)
 	if(consistent)
-		return /datum/outfit/job/assistant/consistent
+		return /datum/outfit/job/assistant/preview
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
 		return ..()
 
@@ -96,3 +96,12 @@ Assistant
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
 		H.update_worn_undersuit()
+
+/datum/outfit/job/assistant/preview
+	name = "Assistant - Preview"
+
+/datum/outfit/job/assistant/preview/give_jumpsuit(mob/living/carbon/human/target)
+	if (target.jumpsuit_style == PREF_SUIT)
+		uniform = /obj/item/clothing/under/color/grey
+	else
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey

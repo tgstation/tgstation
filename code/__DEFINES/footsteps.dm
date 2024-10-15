@@ -84,10 +84,10 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -134,10 +134,10 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -178,10 +178,10 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -196,10 +196,10 @@ GLOBAL_LIST_INIT(heavyfootstep, list(
 		'sound/effects/footstep/heavy1.ogg',
 		'sound/effects/footstep/heavy2.ogg'), 100, 2),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 2),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 2),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',

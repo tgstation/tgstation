@@ -1,6 +1,7 @@
+import { Box, Button, Flex, Section, Stack } from 'tgui-core/components';
+
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type CTFPanelData =

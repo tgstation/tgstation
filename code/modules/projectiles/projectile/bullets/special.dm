@@ -9,7 +9,7 @@
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 
 /obj/projectile/bullet/honker/Initialize(mapload)

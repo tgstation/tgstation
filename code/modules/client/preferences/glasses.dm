@@ -4,6 +4,9 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_generate_icons = TRUE
 
+/datum/preference/choiced/glasses/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/glasses/init_possible_values()
 	return assoc_to_keys(GLOB.nearsighted_glasses) + "Random"
 

@@ -32,7 +32,7 @@ HOW IT UPDATES
 The camera network uses a streaming method in order to effeciently update chunks. Since the server will have doors opening, doors closing,
 turf being destroyed and other lag inducing stuff, we want to update it under certain conditions and not every tick.
 
-The chunks are not created straight away, only when an AI eye moves into it's area is when it gets created.
+The chunks are not created straight away, only when an AI eye moves into its area is when it gets created.
 One a chunk is created, when a non glass door opens/closes or an opacity turf is destroyed, we check to see if an AI Eye is looking in the area.
 We do this with the "seenby" list, which updates everytime an AI is near a chunk. If there is an AI eye inside the area, we update the chunk
 that the changed atom is inside and all surrounding chunks, since a camera's vision could leak onto another chunk. If there is no AI Eye, we instead

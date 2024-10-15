@@ -1,82 +1,82 @@
 {
 	"startings": [
-	  "Ah,",
-	  "Alas,",
-	  "Avast,",
-	  "By my faith,",
-	  "By my trowth,",
-	  "By my word,",
-	  "Come,",
-	  "Forsooth, I say,",
-	  "Forsooth, say I,",
-	  "Forsooth, sayeth I,",
-	  "Forsooth,",
-	  "Hark,",
-	  "Harketh,",
-	  "Hear me,",
-	  "Heigh-ho,",
-	  "I pray you,",
-	  "I say,",
-	  "I sayeth,",
-	  "I warrant",
-	  "If it pleases you,",
-	  "In short,",
-	  "In sooth,",
-	  "In truth,",
-	  "Kind sire,",
-	  "Listen thee,",
-	  "Listen,",
-	  "Now hear me,",
-	  "Perchance,",
-	  "Pray pardon,",
-	  "Pray tell,",
-	  "Pray,",
-	  "Prithee,",
-	  "Quoth I,",
-	  "S'wounds,",
-	  "Sire,",
-	  "Surely",
-	  "There is much in what you say, and yet,",
-	  "What hey,",
-	  "What ho,",
-	  "Z'wounds,",
-	  "Zounds,"
+		"Ah,",
+		"Alas,",
+		"Avast,",
+		"By my faith,",
+		"By my trowth,",
+		"By my word,",
+		"Come,",
+		"Forsooth, I say,",
+		"Forsooth, say I,",
+		"Forsooth, sayeth I,",
+		"Forsooth,",
+		"Hark,",
+		"Harketh,",
+		"Hear me,",
+		"Heigh-ho,",
+		"I pray you,",
+		"I say,",
+		"I sayeth,",
+		"I warrant",
+		"If it pleases you,",
+		"In short,",
+		"In sooth,",
+		"In truth,",
+		"Kind sire,",
+		"Listen thee,",
+		"Listen,",
+		"Now hear me,",
+		"Perchance,",
+		"Pray pardon,",
+		"Pray tell,",
+		"Pray,",
+		"Prithee,",
+		"Quoth I,",
+		"S'wounds,",
+		"Sire,",
+		"Surely",
+		"There is much in what you say, and yet,",
+		"What hey,",
+		"What ho,",
+		"Z'wounds,",
+		"Zounds,"
 	],
 	"medieval": {
-	  "in the": "i' the",
-	  "it is": "'tis",
-	  "it was": "'twas",
-	  "it were": "'twere",
-	  "it will": "'twould",
-	  "it's": "'tis",
-	  "over there": "yonder",
-	  "shall not": "shan't",
-	  "there": "thither",
-	  "will not": "shan't",
-	  "thank you": [
+		"in the": "i' the",
+		"it is": "'tis",
+		"it was": "'twas",
+		"it were": "'twere",
+		"it will": "'twould",
+		"it's": "'tis",
+		"over there": "yonder",
+		"shall not": "shan't",
+		"there": "thither",
+		"will not": "shan't",
+		"thank you": [
 		"grammercy to you",
 		"kindly thanks to you",
 		"many good thanks to you",
 		"thankee"
-	  ],
-	  "thanks": [
+		],
+		"thanks": [
 		"grammercy to you",
 		"kindly thanks to you",
 		"many good thanks to you",
 		"thankee"
-	  ],
-	  "you": [
+		],
+		"you": [
 		"thou",
 		"thee",
 		"ye"
-	  ],
-	  "your": [
+		],
+		"your": [
 		"thine",
 		"thy",
 		"thyne"
-	  ],
-	  "are": "art",
-	  "killed": [
+		],
+		"are": "art",
+		"killed": [
 		"bested",
 		"brung low",
 		"conquered",
@@ -86,8 +86,8 @@
 		"slain",
 		"subjugated",
 		"vanquished"
-	  ],
-	  "kill": [
+		],
+		"kill": [
 		"best",
 		"bring low",
 		"conquer",
@@ -97,8 +97,8 @@
 		"slay",
 		"subjugate",
 		"vanquish"
-	  ],
-	  "goodbye": [
+		],
+		"goodbye": [
 		"adieu",
 		"begone",
 		"by your leave",
@@ -111,8 +111,8 @@
 		"I bid thee farewell",
 		"I bid thee good day",
 		"pleasant journey"
-	  ],
-	  "bye": [
+		],
+		"bye": [
 		"adieu",
 		"begone",
 		"by your leave",
@@ -125,74 +125,74 @@
 		"I bid thee farewell",
 		"I bid thee good day",
 		"pleasant journey"
-	  ],
-	  "yes": [
+		],
+		"yes": [
 		"aye",
 		"yea",
 		"yea verily"
-	  ],
-	  "no": [
+		],
+		"no": [
 		"nay",
 		"nayeth"
-	  ],
-	  "hello": [
+		],
+		"hello": [
 		"ave",
 		"good day",
 		"hail",
 		"tally ho",
 		"well met",
 		"well meteth"
-	  ],
-	  "hi": [
+		],
+		"hi": [
 		"ave",
 		"good day",
 		"hail",
 		"tally ho",
 		"well met",
 		"well meteth"
-	  ],
-	  "does": [
+		],
+		"does": [
 		"doeseth",
 		"dost",
 		"doth"
-	  ],
-	  "cap": "king",
-	  "captain": "king",
-	  "in": "within",
-	  "my": "mine",
-	  "nuke disk": "plate of holy fire",
-	  "food": [
+		],
+		"cap": "king",
+		"captain": "king",
+		"in": "within",
+		"my": "mine",
+		"nuke disk": "plate of holy fire",
+		"food": [
 		"bellytimber",
 		"cake",
 		"game"
-	  ],
-	  "bet": "warrant",
-	  "go": "a-walk",
-	  "going": "a-walkin'",
-	  "the": "yon",
-	  "kidding": [
+		],
+		"bet": "warrant",
+		"go": "a-walk",
+		"going": "a-walkin'",
+		"the": "yon",
+		"kidding": [
 		"but pulling a jest",
 		"but pulling a jape"
-	  ],
-	  "joke": [
+		],
+		"joke": [
 		"jest",
 		"jape"
-	  ],
-	  "station": "castle",
-	  "please": [
+		],
+		"station": "castle",
+		"please": [
 		"I pray you",
 		"prithee",
 		"pray"
-	  ],
-	  "ok": [
+		],
+		"ok": [
 		"as you will",
 		"agreed",
 		"well said",
 		"just so"
-	  ],
-	  "is": "be",
-	  "never": "ne'er",
-	  "haha": [
+		],
+		"is": "be",
+		"never": "ne'er",
+		"haha": [
 		"and there was much chuckling!",
 		"and there was much guffawing!",
 		"and there was much mirth!",
@@ -209,8 +209,8 @@
 		"snort!",
 		"titter!",
 		"zounds!"
-	  ],
-	  "hehe": [
+		],
+		"hehe": [
 		"and there was much chuckling!",
 		"and there was much guffawing!",
 		"and there was much mirth!",
@@ -227,8 +227,8 @@
 		"snort!",
 		"titter!",
 		"zounds!"
-	  ],
-	  "hah": [
+		],
+		"hah": [
 		"and there was much chuckling!",
 		"and there was much guffawing!",
 		"and there was much mirth!",
@@ -245,8 +245,8 @@
 		"snort!",
 		"titter!",
 		"zounds!"
-	  ],
-	  "heh": [
+		],
+		"heh": [
 		"and there was much chuckling!",
 		"and there was much guffawing!",
 		"and there was much mirth!",
@@ -263,26 +263,26 @@
 		"snort!",
 		"titter!",
 		"zounds!"
-	  ],
-	  "help": [
+		],
+		"help": [
 		"aid",
 		"aideth",
 		"assistance",
 		"saveth",
 		"succor"
-	  ],
-	  "could": "couldst",
-	  "would": "wouldst",
-	  "sure": "shore",
-	  "maybe": [
+		],
+		"could": "couldst",
+		"would": "wouldst",
+		"sure": "shore",
+		"maybe": [
 		"mayhaps",
 		"perchance"
-	  ],
-	  "probably": [
+		],
+		"probably": [
 		"mayhaps",
 		"perchance"
-	  ],
-	  "girl": [
+		],
+		"girl": [
 		"lady",
 		"lass",
 		"madame",
@@ -290,34 +290,34 @@
 		"maiden",
 		"mistress",
 		"waif"
-	  ],
-	  "cat": "beast",
-	  "felinid": "catbeast",
-	  "later": "anon",
-	  "lizard": "beast",
-	  "lizardperson": "moat creature",
-	  "moth": "gnat",
-	  "mothperson": "gnat critter",
-	  "often": "oft",
-	  "plasmaman": "fire spirit",
-	  "plasmamen": "fire spirits",
-	  "soon": "anon",
-	  "really": [
+		],
+		"cat": "beast",
+		"felinid": "catbeast",
+		"later": "anon",
+		"lizard": "beast",
+		"lizardperson": "moat creature",
+		"moth": "gnat",
+		"mothperson": "gnat critter",
+		"often": "oft",
+		"plasmaman": "fire spirit",
+		"plasmamen": "fire spirits",
+		"soon": "anon",
+		"really": [
 		"indeed",
 		"in truth"
-	  ],
-	  "away": "aroint",
-	  "being": "bein",
-	  "enough": "ynogh",
-	  "fuck": "flummery",
-	  "here": "hither",
-	  "of": "o'",
-	  "shit": "nightsoil",
-	  "those": "yon",
-	  "why": "wherefore",
-	  "based": [
+		],
+		"away": "aroint",
+		"being": "bein",
+		"enough": "ynogh",
+		"fuck": "flummery",
+		"here": "hither",
+		"of": "o'",
+		"shit": "nightsoil",
+		"those": "yon",
+		"why": "wherefore",
+		"based": [
 		"joly",
 		"jolyf"
-	  ]
+		]
 	}
-  }
+}

@@ -21,6 +21,8 @@
 	var/display_craftable_only = FALSE
 	var/display_compact = FALSE
 	var/forced_mode = FALSE
+	/// crafting flags we ignore when considering a recipe
+	var/ignored_flags = NONE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -75,8 +77,14 @@
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
 
+	var/mech_found = FALSE
 	for(var/machinery_path in R.machinery)
-		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
+		mech_found = FALSE
+		for(var/obj/machinery/machine as anything in machines)
+			if(ispath(machine, machinery_path))//We don't care for volume with machines, just if one is there or not
+				mech_found = TRUE
+				break
+		if(!mech_found)
 			return FALSE
 
 	for(var/required_structure_path in R.structures)
@@ -199,16 +207,16 @@
 	if(!check_tools(crafter, recipe, contents))
 		return ", missing tool."
 
+	var/considered_flags = recipe.crafting_flags & ~(ignored_flags)
 
-
-	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
+	if((considered_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result) in dest_turf))
 		return ", already one here!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
-		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
+	if(considered_flags & CRAFT_CHECK_DIRECTION)
+		if(!valid_build_direction(dest_turf, crafter.dir, is_fulltile = (considered_flags & CRAFT_IS_FULLTILE)))
 			return ", won't fit here!"
 
-	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
+	if(considered_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
 			return ", cannot be made on a wall!"
 
@@ -216,7 +224,7 @@
 			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
 				return ", must be made on solid ground!"
 
-	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
+	if(considered_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				return ", something is in the way!"
@@ -262,9 +270,11 @@
 				qdel(thing)
 	var/datum/reagents/holder = locate() in parts
 	if(holder) //transfer reagents from ingredients to result
-		if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
-			result.reagents.clear_reagents()
-			holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+		if(!ispath(recipe.result, /obj/item/reagent_containers) && result.reagents)
+			if(recipe.crafting_flags & CRAFT_CLEARS_REAGENTS)
+				result.reagents.clear_reagents()
+			if(recipe.crafting_flags & CRAFT_TRANSFERS_REAGENTS)
+				holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 		parts -= holder
 		qdel(holder)
 	result.CheckParts(parts, recipe)
@@ -302,7 +312,6 @@
 	var/datum/reagents/holder
 	var/list/surroundings
 	var/list/Deletion = list()
-	var/data
 	var/amt
 	var/list/requirements = list()
 	if(R.reqs)
@@ -339,7 +348,6 @@
 							RC.reagents.trans_to(holder, reagent_volume, target_id = path_key, no_react = TRUE)
 							surroundings -= RC
 							amt -= reagent_volume
-						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
 					RC.update_appearance(UPDATE_ICON)
@@ -353,7 +361,7 @@
 							SD = new S.type()
 							Deletion += SD
 						S.use(amt)
-						SD = locate(S.type) in Deletion
+						SD = SD || locate(S.type) in Deletion // SD might be already set here, no sense in searching for it again
 						SD.amount += amt
 						continue main_loop
 					else
@@ -361,9 +369,9 @@
 						if(!locate(S.type) in Deletion)
 							Deletion += S
 						else
-							data = S.amount
-							S = locate(S.type) in Deletion
-							S.add(data)
+							SD = SD || locate(S.type) in Deletion
+							SD.add(S.amount) // add the amount to our tally stack, SD
+							qdel(S) // We can just delete it straight away as it's going to be fully consumed anyway, saving some overhead from calling use()
 						surroundings -= S
 			else
 				var/atom/movable/I
@@ -484,11 +492,25 @@
 	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	// Prepare atom data
+
+	//load sprite sheets and select the correct one based on the mode
+	var/static/list/sprite_sheets
+	if(isnull(sprite_sheets))
+		sprite_sheets = ui_assets()
+	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
+
+	data["icon_data"] = list()
 	for(var/atom/atom as anything in atoms)
+		var/atom_id = atoms.Find(atom)
+
 		data["atom_data"] += list(list(
 			"name" = initial(atom.name),
-			"is_reagent" = ispath(atom, /datum/reagent/)
+			"is_reagent" = ispath(atom, /datum/reagent/),
 		))
+
+		var/icon_size = sheet.icon_size_id("a[atom_id]")
+		if(!endswith(icon_size, "32x32"))
+			data["icon_data"]["[atom_id]"] = "[icon_size] a[atom_id]"
 
 	// Prepare materials data
 	for(var/atom/atom as anything in material_occurences)
@@ -517,7 +539,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/ui_act(action, params)
+/datum/component/personal_crafting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -563,16 +585,7 @@
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
 
-	//load sprite sheets and select the correct one based on the mode
-	var/static/list/sprite_sheets
-	if(isnull(sprite_sheets))
-		sprite_sheets = ui_assets()
-	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
-
-	//infer icon size of this atom
-	var/atom_id = atoms.Find(atom)
-	var/icon_size = sheet.icon_size_id("a[atom_id]")
-	data["icon"] = "[icon_size] a[atom_id]"
+	data["id"] = atoms.Find(atom)
 
 	var/recipe_data = recipe.crafting_ui_data()
 	for(var/new_data in recipe_data)
@@ -600,6 +613,9 @@
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
 		data["desc"] = recipe.desc || initial(atom.desc)
 
+	if(ispath(recipe.result, /obj/item/food))
+		var/obj/item/food/food = recipe.result
+		data["has_food_effect"] = !!food.crafted_food_buff
 
 	// Crafting
 	if(recipe.non_craftable)
@@ -689,3 +705,20 @@
 		if(recipe == potential_recipe)
 			return TRUE
 	return FALSE
+
+/datum/component/personal_crafting/machine
+	ignored_flags = CRAFT_CHECK_DENSITY
+
+/datum/component/personal_crafting/machine/get_environment(atom/crafter, list/blacklist = null, radius_range = 1)
+	. = list()
+	for(var/atom/movable/content in crafter.contents)
+		if((content.flags_1 & HOLOGRAM_1) || (blacklist && (content.type in blacklist)))
+			continue
+		if(isitem(content))
+			var/obj/item/item = content
+			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
+				continue
+		. += content
+
+/datum/component/personal_crafting/machine/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
+	return TRUE

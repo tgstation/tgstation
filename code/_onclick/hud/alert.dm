@@ -183,6 +183,11 @@
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
+/atom/movable/screen/alert/not_enough_water
+	name = "Choking (No H2O)"
+	desc = "You're not getting enough water. Drench yourself in some water (e.g. showers) or get some water vapor before you pass out!"
+	icon_state = ALERT_NOT_ENOUGH_WATER
+
 //End gas alerts
 
 /atom/movable/screen/alert/gross
@@ -435,7 +440,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!QDELETED(rube) && !QDELETED(offerer))
 		offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
 		to_chat(rube, span_userdanger("[uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")]"))
-		playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+		playsound(offerer, 'sound/items/weapons/thudswoosh.ogg', 100, TRUE, 1)
 		rube.Knockdown(1 SECONDS)
 		offerer.add_mood_event("high_five", /datum/mood_event/down_low)
 		rube.add_mood_event("high_five", /datum/mood_event/too_slow)
@@ -549,9 +554,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		construct_owner = null
 
 	// construct track
-	if(construct_owner?.seeking && construct_owner.master)
-		blood_target = construct_owner.master
-		desc = "Your blood sense is leading you to [construct_owner.master]"
+	if(construct_owner?.seeking && construct_owner.construct_master)
+		blood_target = construct_owner.construct_master
+		desc = "Your blood sense is leading you to [construct_owner.construct_master]"
 
 	// cult track
 	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)

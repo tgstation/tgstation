@@ -29,7 +29,7 @@ We can't embed components that haven't been prewhitelisted.
 This isn't because of security concerns or anything, we just can't lookup components by their name without creating a lookup table.
 You can find that in [tgui chat's renderer](../packages/tgui-panel/chat/renderer.js) under the name `TGUI_CHAT_COMPONENTS`
 
-Adding a new component is simple, just add it's name to the dictionary, and import it into the file.
+Adding a new component is simple, just add its name to the dictionary, and import it into the file.
 
 ### Sending props
 
@@ -38,7 +38,7 @@ Ok, so we know how to render a component, but that's nearly useless unless we al
 So how's that work?
 
 The syntax is similar to sending a component, but has a bit more caveats.
-We have two bits of info to contend with. The name of the prop, and it's value.
+We have two bits of info to contend with. The name of the prop, and its value.
 First then, how do you send the name of a prop?
 
 #### Sending a prop's name
