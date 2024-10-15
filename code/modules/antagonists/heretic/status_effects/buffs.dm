@@ -78,7 +78,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/drinker = owner
-	for(var/obj/item/bodypart/potentially_wounded in drinker.bodyparts)
+	for(var/obj/item/bodypart/potentially_wounded as anything in drinker.bodyparts)
 		for(var/datum/wound/found_wound in potentially_wounded.wounds)
 			found_wound.remove_wound()
 	if(length(drinker.get_missing_limbs()) >= 1)
