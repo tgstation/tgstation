@@ -38,7 +38,7 @@
 	last_dopplerboop = world.time
 	INVOKE_ASYNC(src, PROC_REF(handle_booping), dopplerbooper, speech_args, speech_spans, speech_mods)
 
-/datum/component/dopplerboop/proc/handle_booping(mob/living/dopplerbooper, list/speech_args, list/speech_spans, list/speech_mods)
+/datum/component/dopplerboop/proc/handle_booping(mob/living/carbon/human/dopplerbooper, list/speech_args, list/speech_spans, list/speech_mods)
 	chosen_boop = dopplerbooper?.voice_type || random_voice_type() // Uses the boop chosen by the player. If it's null for whatever unholy reason, it should chose a completely random voice for every single phonetic which should be funny.
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/initial_dopplerboop_time = last_dopplerboop
