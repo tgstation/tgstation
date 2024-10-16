@@ -134,8 +134,8 @@ There are several things that need to be remembered:
 		my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
-	update_body_parts()
 	apply_overlay(UNIFORM_LAYER)
+	check_body_shape(BODYSHAPE_DIGITIGRADE)
 
 /mob/living/carbon/human/update_worn_id(update_obscured = TRUE)
 	remove_overlay(ID_LAYER)
@@ -350,9 +350,7 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
-
-	update_body_parts()
-
+	check_body_shape(BODYSHAPE_DIGITIGRADE)
 
 /mob/living/carbon/human/update_suit_storage(update_obscured = TRUE)
 	remove_overlay(SUIT_STORE_LAYER)
@@ -401,6 +399,7 @@ There are several things that need to be remembered:
 		overlays_standing[HEAD_LAYER] = head_overlay
 
 	apply_overlay(HEAD_LAYER)
+	check_body_shape(BODYSHAPE_SNOUTED)
 
 /mob/living/carbon/human/update_worn_belt(update_obscured = TRUE)
 	remove_overlay(BELT_LAYER)
@@ -449,8 +448,8 @@ There are several things that need to be remembered:
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 
-	update_body_parts()
 	apply_overlay(SUIT_LAYER)
+	check_body_shape(BODYSHAPE_DIGITIGRADE)
 
 /mob/living/carbon/human/update_pockets()
 	if(client && hud_used)
@@ -501,7 +500,7 @@ There are several things that need to be remembered:
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
-	update_body_parts() //e.g. upgate needed because mask now hides lizard snout
+	check_body_shape(BODYSHAPE_SNOUTED)
 
 /mob/living/carbon/human/update_worn_back(update_obscured = TRUE)
 	remove_overlay(BACK_LAYER)
@@ -858,6 +857,27 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(my_head.get_limb_icon())
 	update_worn_head()
 	update_worn_mask()
+
+/**
+ * Used to perform regular updates to the limbs of humans with special bodyshapes
+ *
+ * * check_shapes: The bodyshapes to check for. Any limbs or organs which share this shape, will be updated.
+ */
+/mob/living/carbon/human/proc/check_body_shape(check_shapes = BODYSHAPE_DIGITIGRADE|BODYSHAPE_SNOUTED)
+	if(!(bodyshape & check_shapes))
+		// optimization - none of our limbs or organs have the desired shape
+		return
+
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		var/checked_bodyshape = limb.bodyshape
+		// accounts for stuff like snouts
+		for(var/obj/item/organ/organ in limb)
+			checked_bodyshape |= organ.external_bodyshapes
+
+		// any limb needs to be updated, so stop here and do it
+		if(checked_bodyshape & check_shapes)
+			update_body_parts()
+			return
 
 // Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
 // Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
