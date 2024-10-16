@@ -597,11 +597,9 @@
 		icon_overlay = null
 		return
 	var/atom/movable/item_data = item_in_my_claw.resolve()
-	icon_overlay = mutable_appearance(item_data.icon, item_data.icon_state, item_data.layer, src, appearance_flags = KEEP_TOGETHER)
+	icon_overlay = mutable_appearance(item_data.icon, item_data.icon_state, item_data.layer, src, item_data.appearance_flags)
 	icon_overlay.color = item_data.color
 	icon_overlay.appearance = item_data.appearance
-	icon_overlay.appearance_flags = appearance_flags
-	icon_overlay.plane = ABOVE_MOB_LAYER
 	icon_overlay.pixel_x = 32 + calculate_item_offset(is_x = TRUE)
 	icon_overlay.pixel_y = 32 + calculate_item_offset(is_x = FALSE)
 	. += icon_overlay
@@ -632,7 +630,7 @@
 	/// What type carries this priority.
 	var/what_type
 	/**
-	 * Place in the priority queue. The lower the number, the more important the priority.
+	* Place in the priority queue. The lower the number, the more important the priority.
 	* Doesn’t really matter what number you enter, user can set priority for themselves,
 	* BUT!!!
 	* Don't write the same numbers in the same parent otherwise something may go wrong.
