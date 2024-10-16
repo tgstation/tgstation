@@ -143,13 +143,13 @@
 		return
 	var/mob/living/living_firer = firer
 	if(IS_HERETIC(living_firer))
-		living_firer.swap_hand() //Forcibly unscope
-		living_firer.swap_hand()
+		//living_firer.swap_hand() //Forcibly unscope
+		//living_firer.swap_hand()
 		living_firer.forceMove(src)
 		stored_mob = living_firer
 
 
-/obj/projectile/bullet/Exited(atom/movable/gone)
+/obj/projectile/bullet/strilka310/lionhunter/Exited(atom/movable/gone)
 	if(gone == stored_mob)
 		stored_mob = null
 	return ..()
