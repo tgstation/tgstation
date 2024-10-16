@@ -322,7 +322,7 @@
 	if(isnull(type_to_use))
 		check_end_of_use(im_item, target, item_was_used = FALSE)
 		return
-	var/mob/living/carbon/human/living_manipulator_lmfao = create_abstract_living()
+	var/mob/living/carbon/human/dummy/living_manipulator_lmfao = create_abstract_living()
 	living_manipulator_lmfao.put_in_active_hand(im_item)
 	if(!type_to_use.attackby(im_item, living_manipulator_lmfao))
 		im_item.melee_attack_chain(living_manipulator_lmfao, type_to_use)
@@ -336,7 +336,7 @@
 	check_end_of_use(im_item, item_was_used = TRUE)
 
 /// Wait whan manipulator finish do_after and kill em.
-/obj/machinery/big_manipulator/proc/manipulator_finish_do_after(mob/living/carbon/human/abstract_manipulator)
+/obj/machinery/big_manipulator/proc/manipulator_finish_do_after(mob/living/carbon/human/dummy/abstract_manipulator)
 	SIGNAL_HANDLER
 
 	var/obj/item/my_item = abstract_manipulator.get_active_held_item()
@@ -402,7 +402,7 @@
 
 /// Create dummy to force him use our item and then delete him.
 /obj/machinery/big_manipulator/proc/create_abstract_living()
-	var/mob/living/carbon/human/abstract_living = new /mob/living/carbon/human(get_turf(src))
+	var/mob/living/carbon/human/dummy/abstract_living = new /mob/living/carbon/human/dummy(get_turf(src))
 	abstract_living.alpha = 0
 	abstract_living.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	ADD_TRAIT(abstract_living, TRAIT_UNDENSE, INNATE_TRAIT)
