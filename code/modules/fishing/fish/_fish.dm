@@ -173,6 +173,9 @@
 		ADD_TRAIT(src, TRAIT_UNCOMPOSTABLE, REF(src)) //Composting a food that is not real food wouldn't work anyway.
 		START_PROCESSING(SSobj, src)
 
+	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
+	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
+
 	//stops new fish from being able to reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
 	last_feeding = world.time - (feeding_frequency * NEW_FISH_LAST_FEEDING_MULT)

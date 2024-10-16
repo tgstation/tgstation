@@ -170,6 +170,10 @@
 	)
 	return return_list
 
+#define FISH_FRITTERISH "fritterish"
+#define FISH_BERNARD "bernard"
+#define FISH_MATTHEW "matthew"
+
 /obj/item/fish/fryish/fritterish
 	name = "fritterish"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one looks like a taiyaki."
@@ -185,20 +189,44 @@
 	is_bait = FALSE
 	next_type = /datum/fish_evolution/nessie
 	growth_time = 8 MINUTES
+	///fritterish can have different forms assigned to them on init. These are purely visual.
+	var/variant = FISH_FRITTERISH
 
 /obj/item/fish/fryish/fritterish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	base_icon_state = icon_state = pick("fritterish", "bernardfish", "matthewfish")
-	switch(icon_state)
-		if("bernardfish")
+	variant = pick(FISH_FRITTERISH, FISH_BERNARD, FISH_MATTHEW)
+	switch(variant)
+		if(FISH_BERNARD)
 			name = "bernard-fish"
 			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
+			base_icon_state = icon_state = "bernardfish"
 			sprite_width = 4
 			sprite_height = 6
-		if("matthewfish")
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
+		if(FISH_MATTHEW)
 			name = "matthew-fish"
+			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
+			base_icon_state = icon_state = "matthewfish"
 			sprite_width = 6
+
+/obj/item/fish/fryish/fritterish/update_name()
+	switch(variant)
+		if(FISH_BERNARD)
+			name = "bernard-fish"
+		if(FISH_MATTHEW)
+			name = "matthew-fish"
+	return ..()
+
+/obj/item/fish/fryish/fritterish/update_desc()
+	switch(variant)
+		if(FISH_BERNARD)
+			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
+		if(FISH_MATTHEW)
+			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
+	return ..()
+
+#undef FISH_FRITTERISH
+#undef FISH_BERNARD
+#undef FISH_MATTHEW
 
 /obj/item/fish/fryish/nessie
 	name = "nessie-fish"

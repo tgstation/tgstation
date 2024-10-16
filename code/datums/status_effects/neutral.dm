@@ -618,7 +618,7 @@
 /atom/movable/screen/alert/status_effect/shower_regen/hater
 	name = "Washing"
 	desc = "Waaater... Fuck this WATER!!"
-	icon_state = "shower_regen_hater"
+	icon_state = "shower_regen_catgirl"
 
 /datum/status_effect/shower_regen
 	id = "shower_regen"

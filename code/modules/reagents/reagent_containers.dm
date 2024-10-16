@@ -38,7 +38,7 @@
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	///The sound this container makes when picked up, dropped if there is liquid inside.
-	var/reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
+	var/reagent_container_liquid_sound = null
 
 /obj/item/reagent_containers/apply_fantasy_bonuses(bonus)
 	. = ..()
