@@ -293,11 +293,15 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
-/// Trait when something was labelled by the /datum/element/tool_renaming element.
-#define RENAMING_TOOL_LABEL_TRAIT "renaming_tool_label"
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
 
+/// Trait given by a jetpack
+#define JETPACK_TRAIT "jetpack_trait"
+
 /// Trait added by style component
 #define STYLE_TRAIT "style"
+
+/// Trait from an engraving
+#define ENGRAVED_TRAIT "engraved"

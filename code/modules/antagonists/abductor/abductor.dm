@@ -7,7 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
-	stinger_sound = 'sound/ambience/antag/ayylien.ogg'
+	stinger_sound = 'sound/music/antag/ayylien.ogg'
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -171,7 +171,7 @@
 	else
 		result += "<span class='redtext big'>[name] team failed its mission.</span>"
 
-	result += "<span class='header'>The abductors of [name] were:</span>"
+	result += span_header("The abductors of [name] were:")
 	for(var/datum/mind/abductor_mind in members)
 		result += printplayer(abductor_mind)
 	result += printobjectives(objectives)

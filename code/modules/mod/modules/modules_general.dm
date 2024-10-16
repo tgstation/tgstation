@@ -112,6 +112,10 @@
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback
+	/// How much force this module can apply per tick
+	var/drift_force = 1.5 NEWTONS
+	/// How much force this module's stabilizier can put out
+	var/stabilizer_force = 1.2 NEWTONS
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -134,12 +138,20 @@
 	AddComponent( \
 		/datum/component/jetpack, \
 		src.stabilize, \
+		drift_force, \
+		stabilizer_force, \
 		COMSIG_MODULE_TRIGGERED, \
 		COMSIG_MODULE_DEACTIVATED, \
 		MOD_ABORT_USE, \
 		thrust_callback, \
-		/datum/effect_system/trail_follow/ion/grav_allowed \
+		/datum/effect_system/trail_follow/ion/grav_allowed, \
 	)
+
+	if (!isnull(mod) && !isnull(mod.wearer) && mod.wearer.get_item_by_slot(slot_flags) == src)
+		if (!stabilize)
+			ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+		else
+			REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
@@ -156,6 +168,25 @@
 	if(!drain_power(use_energy_cost))
 		return FALSE
 	return TRUE
+
+/obj/item/mod/module/jetpack/on_activation()
+	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	if (!stabilize)
+		ADD_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOGRAV_ALWAYS_DRIFT, MOD_TRAIT)
+
+/obj/item/mod/module/jetpack/advanced
+	name = "MOD advanced ion jetpack module"
+	desc = "An improvement on the previous model of electric thrusters. This one achieves higher precision \
+		and spartial stability through mounting of more jets and application of red paint."
+	icon_state = "jetpack_advanced"
+	overlay_state_inactive = "module_jetpackadv"
+	overlay_state_active = "module_jetpackadv_on"
+	drift_force = 2 NEWTONS
+	stabilizer_force = 2 NEWTONS
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
@@ -644,10 +675,10 @@
 	return ..()
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, MOD_TRAIT)
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
@@ -920,7 +951,7 @@
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 		return
 	balloon_alert(mod.wearer, "not enough material")
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 
 /obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets, atom/context)
 	SIGNAL_HANDLER
@@ -949,7 +980,7 @@
 /obj/item/mod/module/recycler/donk/dispense(atom/target)
 	if(!container.use_amount_mat(required_amount, /datum/material/iron))
 		balloon_alert(mod.wearer, "not enough material")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/obj/item/ammo_box/product = new ammobox_type(target)
 	attempt_insert_storage(product)
@@ -958,7 +989,7 @@
 
 /obj/item/mod/module/fishing_glove
 	name = "MOD fishing glove module"
-	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one."
+	desc = "A MOD module that takes in an external fishing rod to enable the user to fish without having to hold one, while also making it slightly easier."
 	icon_state = "fishing_glove"
 	complexity = 1
 	overlay_state_inactive = "fishing_glove"
@@ -1013,17 +1044,20 @@
 		var/obj/item/gloves = mod?.get_part_from_slot(ITEM_SLOT_GLOVES)
 		if(gloves && !QDELETED(mod))
 			qdel(gloves.GetComponent(/datum/component/profound_fisher))
+	return ..()
 
 /obj/item/mod/module/fishing_glove/on_suit_activation()
-	if(!equipped)
-		return
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
-	if(gloves)
+	if(!gloves)
+		return
+	gloves.AddComponent(/datum/component/adjust_fishing_difficulty, 5)
+	if(equipped)
 		gloves.AddComponent(/datum/component/profound_fisher, equipped)
 
 /obj/item/mod/module/fishing_glove/on_suit_deactivation(deleting = FALSE)
 	var/obj/item/gloves = mod.get_part_from_slot(ITEM_SLOT_GLOVES)
 	if(gloves && !deleting)
+		qdel(gloves.GetComponent(/datum/component/adjust_fishing_difficulty))
 		qdel(gloves.GetComponent(/datum/component/profound_fisher))
 
 /obj/item/mod/module/shock_absorber

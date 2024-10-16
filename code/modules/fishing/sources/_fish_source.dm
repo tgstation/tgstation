@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/stingray = FISH_ICON_WEAPON,
 		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
 		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/knife/carp = FISH_ICON_WEAPON,
 		/obj/item/seeds/grass = FISH_ICON_SEED,
 		/obj/item/seeds/random = FISH_ICON_SEED,
 		/obj/item/storage/wallet = FISH_ICON_COIN,
@@ -82,6 +83,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/explosive_malus = FALSE
 	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
+	///When linked to a fishing portal, this will be the icon_state of this option in the radial menu
+	var/radial_state = "default"
+	///When selected by the fishing portal, this will be the icon_state of the overlay shown on the machine.
+	var/overlay_state = "portal_aquarium"
 	/// Mindless mobs that can fish will never pull up items on this list
 	var/static/list/profound_fisher_blacklist = typecacheof(list(
 		/mob/living/basic/mining/lobstrosity,
@@ -222,21 +227,21 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, reason)
 
 /**
- * Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
+ * Proc called when the COMSIG_MOB_COMPLETE_FISHING signal is sent.
  * Check if we've succeeded. If so, write into memory and dispense the reward.
  */
-/datum/fish_source/proc/on_challenge_completed(datum/fishing_challenge/source, mob/user, success)
+/datum/fish_source/proc/on_challenge_completed(mob/user, datum/fishing_challenge/challenge, success)
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(user, COMSIG_MOB_COMPLETE_FISHING)
 	if(!success)
 		return
-	var/obj/item/fish/caught = source.reward_path
-	user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-	var/turf/fishing_spot = get_turf(source.float)
-	var/atom/movable/reward = dispense_reward(source.reward_path, user, fishing_spot)
-	if(source.used_rod)
-		SEND_SIGNAL(source.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
-		source.used_rod.consume_bait(reward)
+	var/turf/fishing_spot = get_turf(challenge.float)
+	var/atom/movable/reward = dispense_reward(challenge.reward_path, user, fishing_spot)
+	if(reward)
+		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
+	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
+	challenge.used_rod.consume_bait(reward)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
@@ -259,7 +264,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /datum/fish_source/proc/simple_dispense_reward(reward_path, atom/spawn_location, turf/fishing_spot)
 	if(isnull(reward_path))
 		return null
-	if(!isnull(fish_counts[reward_path])) // This is limited count result
+	var/area/area = get_area(fishing_spot)
+	if(!(area.area_flags & UNLIMITED_FISHING) && !isnull(fish_counts[reward_path])) // This is limited count result
 		//Somehow, we're trying to spawn an expended reward.
 		if(fish_counts[reward_path] <= 0)
 			return null
@@ -274,13 +280,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SEND_SIGNAL(src, COMSIG_FISH_SOURCE_REWARD_DISPENSED, reward)
 	return reward
 
-/datum/fish_source/proc/regen_count(reward_path, regen_time)
+/datum/fish_source/proc/regen_count(reward_path)
+	if(!LAZYACCESS(currently_on_regen, reward_path))
+		return
 	fish_counts[reward_path] += 1
 	currently_on_regen[reward_path] -= 1
-	if(!currently_on_regen[reward_path])
+	if(currently_on_regen[reward_path] <= 0)
 		LAZYREMOVE(currently_on_regen, reward_path)
-	else
-		addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
+		return
+	var/regen_time = fish_count_regen[reward_path]
+	addtimer(CALLBACK(src, PROC_REF(regen_count), reward_path), regen_time)
 
 /// Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.
 /datum/fish_source/proc/spawn_reward(reward_path, atom/spawn_location, turf/fishing_spot)
@@ -319,7 +328,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		for(var/trait in weight_result_multiplier)
 			if(HAS_TRAIT(bait, trait))
 				result_multiplier = weight_result_multiplier[trait]
-				weight_leveling_exponents = weight_leveling_exponents[trait]
+				leveling_exponent = weight_leveling_exponents[trait]
 				break
 
 
@@ -330,8 +339,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
 		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
-		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
-		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
+		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
+		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
 		if(ispath(result, /obj/item/fish))
 			if(bait)
@@ -390,7 +399,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
+		if(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			return TRUE
 	return FALSE
 
@@ -399,25 +408,47 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/known_fishes = list()
 
 	var/obj/item/fishing_rod/rod = user.get_active_held_item()
-	if(!istype(rod))
+	var/list/final_table
+	if(!istype(rod) || !rod.hook)
 		rod = null
+	else
+		final_table = get_modified_fish_table(rod, user, location)
 
+	var/total_weight = 0
+	var/list/rodless_weights = list()
+	var/total_rod_weight = 0
+	var/list/rod_weights = list()
 	for(var/reward in fish_table)
+		var/weight = fish_table[reward]
+		var/final_weight
+		if(rod)
+			total_weight += weight
+			final_weight = final_table[reward]
+			total_rod_weight += final_weight
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.show_in_catalog))
+		if(!(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
+			continue
+		if(rod)
+			rodless_weights[reward] = weight
+			rod_weights[reward] = final_weight
+		else
+			known_fishes += initial(prototype.name)
+
+	if(rod)
+		for(var/reward in rodless_weights)
+			var/percent_weight = rodless_weights[reward] / total_weight
+			var/percent_rod_weight = rod_weights[reward] / total_rod_weight
+			var/obj/item/fish/prototype = reward
 			var/init_name = initial(prototype.name)
-			if(rod)
-				var/init_weight = fish_table[reward]
-				var/weight = (rod.bait ? rod.bait.check_bait(prototype) : 1)
-				weight = get_fish_trait_catch_mods(weight, reward, rod, user, location)
-				if(weight > init_weight)
-					init_name = span_bold(init_name)
-					if(weight/init_weight >= 3.5)
-						init_name = "<u>init_name</u>"
-				else if(weight < init_weight)
-					init_name = span_small(reward)
+			var/ratio = percent_weight/percent_rod_weight
+			if(ratio < 0.9)
+				init_name = span_bold(init_name)
+				if(ratio < 0.3)
+					init_name = "<u>[init_name]</u>"
+			else if(ratio > 1.1)
+				init_name = span_small(init_name)
 			known_fishes += init_name
 
 	if(!length(known_fishes))
@@ -427,7 +458,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	if(rod)
 		info = span_tooltip("boldened are the fish you're more likely to catch with your current setup. The opposite is true for smaller names", info)
-	examine_text += span_info("[info]: [english_list(known_fishes)].")
+	examine_text += examine_block(span_info("[info]: [english_list(known_fishes)]."))
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!explosive_malus)
@@ -463,6 +494,24 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		if(severity >= EXPLODE_DEVASTATE)
 			reward.ex_act(EXPLODE_LIGHT)
 
+///Called when releasing a fish in a fishing spot with the TRAIT_CATCH_AND_RELEASE trait.
+/datum/fish_source/proc/readd_fish(obj/item/fish/fish, mob/living/releaser)
+	var/is_morbid = HAS_MIND_TRAIT(releaser, TRAIT_MORBID)
+	var/is_naive = HAS_MIND_TRAIT(releaser, TRAIT_NAIVE)
+	if(fish.status == FISH_DEAD) //ded fish won't repopulate the sea.
+		if(is_naive || is_morbid)
+			releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+		return
+	if(((fish.type in fish_table) != is_morbid) || is_naive)
+		releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+	if(isnull(fish_counts[fish.type])) //This fish can be caught indefinitely so it won't matter.
+		return
+	//If this fish population isn't recovering from recent losses, we just increase it.
+	if(!LAZYACCESS(currently_on_regen, fish.type))
+		fish_counts[fish.type] += 1
+	else
+		regen_count(fish.type)
+
 /**
  * Called by /datum/autowiki/fish_sources unless the catalog entry for this fish source is null.
  * It should Return a list of entries with keys named "name", "icon", "weight" and "notes"
@@ -488,7 +537,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			total_weight_without_bait += weight
 			total_weight_no_fish += weight
 			continue
-		if(initial(fish.show_in_catalog))
+		if(initial(fish.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
 			only_fish += fish
 		total_weight_without_bait += round(fish_table[fish] * FISH_WEIGHT_MULT_WITHOUT_BAIT, 1)
 

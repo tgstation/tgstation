@@ -67,7 +67,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
-	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)
 	if (!isliving(target))
 		return
 	switch(target.mob_mood.sanity)
@@ -94,7 +94,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -111,7 +111,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
@@ -120,7 +120,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
@@ -332,7 +332,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_held_items()
 
 	name = new_name
-	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(user, 'sound/items/tools/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -363,11 +363,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_katana
@@ -447,7 +447,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6)
-	hitsound = 'sound/weapons/genhit.ogg'
+	hitsound = 'sound/items/weapons/genhit.ogg'
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
@@ -472,7 +472,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		throwforce_on = 23, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
-		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		hitsound_on = 'sound/items/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
@@ -504,7 +504,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("calls", "rings")
 	attack_verb_simple = list("call", "ring")
-	hitsound = 'sound/weapons/ring.ogg'
+	hitsound = 'sound/items/weapons/ring.ogg'
 
 /obj/item/phone/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
@@ -518,7 +518,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A long bamboo-made staff with steel-capped ends. It is rumoured that initiates of Spider Clan train with such before getting to learn how to use a katana."
 	force = 10
 	block_chance = 45
-	block_sound = 'sound/weapons/genhit.ogg'
+	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	hitsound = SFX_SWING_HIT
@@ -675,7 +675,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/staff
@@ -892,7 +892,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_warning("You're already ready to do a home run!"))
 		return ..()
 	to_chat(user, span_warning("You begin gathering strength..."))
-	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, TRUE)
+	playsound(get_turf(src), 'sound/effects/magic/lightning_chargeup.ogg', 65, TRUE)
 	if(do_after(user, 9 SECONDS, target = src))
 		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
 		homerun_ready = TRUE
@@ -910,7 +910,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(!QDELETED(target))
 			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target
-		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, TRUE)
+		playsound(get_turf(src), 'sound/items/weapons/homerun.ogg', 100, TRUE)
 		homerun_ready = FALSE
 		return
 	else if(!QDELETED(target) && !target.anchored)
@@ -963,7 +963,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return TRUE
 
 /obj/item/melee/baseball_bat/proc/launch_back(atom/movable/target, mob/living/user, turf/target_turf, datum_throw_speed)
-	playsound(target, 'sound/magic/tail_swing.ogg', 50, TRUE)
+	playsound(target, 'sound/effects/magic/tail_swing.ogg', 50, TRUE)
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
 	target.mouse_opacity = initial(target.mouse_opacity)
 	target.add_filter("baseball_launch", 3, motion_blur_filter(1, 3))
@@ -994,7 +994,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 20
 	throwforce = 20
 	mob_thrower = TRUE
-	block_sound = 'sound/weapons/effects/batreflect.ogg'
+	block_sound = 'sound/items/weapons/effects/batreflect.ogg'
 
 /obj/item/melee/baseball_bat/ablative/IsReflect()//some day this will reflect thrown items instead of lasers
 	return TRUE
@@ -1110,11 +1110,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	force = 14
 	throwforce = 12
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -1137,7 +1137,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_speed = CLICK_CD_HYPER_RAPID
 	embed_type = /datum/embed_data/hfr_blade
 	block_chance = 25
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -1169,7 +1169,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+			playsound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
@@ -1200,8 +1200,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.do_attack_animation(target, "nothing")
 	var/list/modifiers = params2list(params)
 	var/damage_mod = 1
-	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
-	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
+	var/x_slashed = text2num(modifiers[ICON_X]) || ICON_SIZE_X/2 //in case we arent called by a client
+	var/y_slashed = text2num(modifiers[ICON_Y]) || ICON_SIZE_Y/2 //in case we arent called by a client
 	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, slash_color)
 	if(target == previous_target?.resolve()) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
@@ -1210,8 +1210,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_target = WEAKREF(target)
 	previous_x = x_slashed
 	previous_y = y_slashed
-	playsound(src, 'sound/weapons/bladeslice.ogg', 100, vary = TRUE)
-	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
+	playsound(src, 'sound/items/weapons/bladeslice.ogg', 100, vary = TRUE)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)
@@ -1249,7 +1249,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/matrix/new_transform = matrix()
 	new_transform.Turn(rand(1, 360)) // Random slash angle
 	var/datum/decompose_matrix/decomp = target.transform.decompose()
-	new_transform.Translate((x_slashed - world.icon_size/2) * decomp.scale_x, (y_slashed - world.icon_size/2) * decomp.scale_y) // Move to where we clicked
+	new_transform.Translate((x_slashed - ICON_SIZE_X/2) * decomp.scale_x, (y_slashed - ICON_SIZE_Y/2) * decomp.scale_y) // Move to where we clicked
 	//Follow target's transform while ignoring scaling
 	new_transform.Turn(decomp.rotation)
 	new_transform.Translate(decomp.shift_x, decomp.shift_y)

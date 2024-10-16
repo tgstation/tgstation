@@ -12,6 +12,8 @@
 	var/toxpwr = 1.5
 	///The amount to multiply the liver damage this toxin does by (Handled solely in liver code)
 	var/liver_damage_multiplier = 1
+	///The multiplier of the liver toxin tolerance, below which any amount toxin will be simply metabolized out with no effect.
+	var/liver_tolerance_multiplier = 1
 	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
 	var/silent_toxin = FALSE
 	///The afflicted must be above this health value in order for the toxin to deal damage
@@ -70,6 +72,11 @@
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
+
+/datum/reagent/mutagen/used_on_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
+	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_MUTAGENIC, type), fish.feeding_frequency * 0.8, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return TRUE
 
 #define LIQUID_PLASMA_BP (50+T0C)
 #define LIQUID_PLASMA_IG (325+T0C)
@@ -325,6 +332,19 @@
 	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
 		affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+
+/datum/reagent/toxin/mindbreaker/fish
+	name = "Jellyfish Hallucinogen"
+	description = "A hallucinogen structurally similar to the mindbreaker toxin, but with weaker molecular bonds, making it easily degradeable by heat."
+
+/datum/reagent/toxin/mindbreaker/fish/on_new(data)
+	. = ..()
+	if(holder?.my_atom)
+		RegisterSignals(holder.my_atom, list(COMSIG_ITEM_FRIED, COMSIG_ITEM_BARBEQUE_GRILLED), PROC_REF(on_atom_cooked))
+
+/datum/reagent/toxin/mindbreaker/fish/proc/on_atom_cooked(datum/source, cooking_time)
+	SIGNAL_HANDLER
+	holder.del_reagent(type)
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -943,9 +963,9 @@
 		if(prob(50))
 			constructed_flags |= MOB_VOMIT_STUN
 		affected_mob.vomit(vomit_flags = constructed_flags, distance = rand(0,4))
-		for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
-			if(R != src)
-				affected_mob.reagents.remove_reagent(R.type, 1)
+		for(var/datum/reagent/toxin/reagent in affected_mob.reagents.reagent_list)
+			if(reagent != src)
+				affected_mob.reagents.remove_reagent(reagent.type, 1 * reagent.purge_multiplier * REM * seconds_per_tick)
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1038,8 +1058,8 @@
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	. = ..()
-	for(var/datum/reagent/medicine/R in affected_mob.reagents.reagent_list)
-		affected_mob.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * seconds_per_tick)
+	for(var/datum/reagent/medicine/reagent in affected_mob.reagents.reagent_list)
+		affected_mob.reagents.remove_reagent(reagent.type, remove_amt * reagent.purge_multiplier * REM * normalise_creation_purity() * seconds_per_tick)
 
 //ACID
 
@@ -1280,6 +1300,9 @@
 	reagent_state = SOLID
 	color = COLOR_VERY_LIGHT_GRAY
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	liver_tolerance_multiplier = 0.1
+	liver_damage_multiplier = 1.25
+	purge_multiplier = 0.15
 	toxpwr = 0
 	taste_mult = 0
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE|REAGENT_CAN_BE_SYNTHESIZED
@@ -1292,9 +1315,22 @@
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+	var/need_mob_update
+	if(HAS_TRAIT(affected_mob, TRAIT_TETRODOTOXIN_HEALING))
+		toxpwr = 0
+		liver_tolerance_multiplier = 0
+		silent_toxin = TRUE
+		remove_paralysis()
+		need_mob_update += affected_mob.adjustOxyLoss(-0.7 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update = affected_mob.adjustToxLoss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustBruteLoss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustFireLoss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		return need_mob_update ? UPDATE_MOB_HEALTH : .
+
+	liver_tolerance_multiplier = initial(liver_tolerance_multiplier)
+
 	//be ready for a cocktail of symptoms, including:
 	//numbness, nausea, vomit, breath loss, weakness, paralysis and nerve damage/impairment and eventually a heart attack if enough time passes.
-	var/need_mob_update
 	switch(current_cycle)
 		if(7 to 13)
 			if(SPT_PROB(20, seconds_per_tick))
@@ -1325,6 +1361,7 @@
 		if(21 to 29)
 			toxpwr = 1
 			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
+			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.7)
 			if(SPT_PROB(40, seconds_per_tick))
 				affected_mob.losebreath += 2 * REM * seconds_per_tick
 				need_mob_update = TRUE
@@ -1341,13 +1378,14 @@
 		if(29 to INFINITY)
 			toxpwr = 1.5
 			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
+			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1.4)
 			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
 			need_mob_update += affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, updating_stamina = FALSE)
 			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
-			if(SPT_PROB(10, seconds_per_tick))
+			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
 
 	if(current_cycle > 38 && !length(traits_not_applied) && SPT_PROB(5, seconds_per_tick) && !affected_mob.undergoing_cardiac_arrest())
@@ -1363,6 +1401,11 @@
 	var/added_trait = pick_n_take(traits_not_applied)
 	ADD_TRAIT(affected_mob, added_trait, REF(src))
 
+/datum/reagent/toxin/tetrodotoxin/on_mob_add(mob/living/affected_mob)
+	. = ..()
+	if(HAS_TRAIT(affected_mob, TRAIT_TETRODOTOXIN_HEALING))
+		liver_tolerance_multiplier = 0
+
 /datum/reagent/toxin/tetrodotoxin/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 	RegisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
@@ -1370,6 +1413,9 @@
 /datum/reagent/toxin/tetrodotoxin/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	UnregisterSignal(affected_mob, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
+	remove_paralysis(affected_mob)
+
+/datum/reagent/toxin/tetrodotoxin/proc/remove_paralysis(mob/living/affected_mob)
 	// the initial() proc doesn't work for lists.
 	var/list/initial_list = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
@@ -1382,5 +1428,5 @@
 
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	if(current_cycle > 28)
+	if(current_cycle > 28 && !HAS_TRAIT(source, TRAIT_TETRODOTOXIN_HEALING))
 		return COMSIG_CARBON_BLOCK_BREATH

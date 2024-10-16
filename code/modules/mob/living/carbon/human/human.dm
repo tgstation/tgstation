@@ -15,7 +15,9 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
-	set_species(dna.species.type)
+	set_species(dna.species.type, icon_update = FALSE) //carbon/Initialize will call update_body()
+	//set species enables and disables the flag. Just to be sure, we re-enable it now until it's removed by the parent call.
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -105,7 +107,7 @@
 		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
-		if(get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway
+		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
 			to_chat(viewer, span_notice("You can't make out that ID from here."))
 			return
 
@@ -322,7 +324,7 @@
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
 				if(href_list["add_citation"])
 					var/max_fine = CONFIG_GET(number/maxfine)
-					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD")
+					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD", max_length = MAX_MESSAGE_LEN)
 					var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, max_fine, 5)
 					if(!fine || !target_record || !citation_name || !allowed_access || !isnum(fine) || fine > max_fine || fine <= 0 || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
@@ -337,7 +339,7 @@
 					return
 
 				if(href_list["add_crime"])
-					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD")
+					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_MESSAGE_LEN)
 					if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -350,7 +352,7 @@
 					return
 
 				if(href_list["add_note"])
-					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", multiline = TRUE)
+					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 					if(!target_record || !new_note || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -705,46 +707,10 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-
 	// Updates the health bar, also sends signal
 	. = ..()
-
-	// Updates the health doll
-	if(!hud_used.healthdoll)
-		return
-
-	hud_used.healthdoll.cut_overlays()
-	if(stat == DEAD)
-		hud_used.healthdoll.icon_state = "healthdoll_DEAD"
-		return
-
-	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-	for(var/obj/item/bodypart/body_part as anything in bodyparts)
-		var/icon_num = 0
-
-		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
-			continue
-
-		var/damage = body_part.burn_dam + body_part.brute_dam
-		var/comparison = (body_part.max_damage/5)
-		if(damage)
-			icon_num = 1
-		if(damage > (comparison))
-			icon_num = 2
-		if(damage > (comparison*2))
-			icon_num = 3
-		if(damage > (comparison*3))
-			icon_num = 4
-		if(damage > (comparison*4))
-			icon_num = 5
-		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
-			icon_num = 0
-		if(icon_num)
-			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-	for(var/t in get_missing_limbs()) //Missing limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-	for(var/t in get_disabled_limbs()) //Disabled limbs
-		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
+	// Handles changing limb colors and stuff
+	hud_used.healthdoll?.update_appearance()
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
@@ -1074,16 +1040,38 @@
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
 
-///Proc used to prevent syndicate monkeys and player-selectable Pun Pun able to use objects while stuck in monkey mode.
-/mob/living/carbon/human/proc/make_clever_and_no_dna_scramble()
+///Proc used to make monkey roles able to function like crew, but not be able to shift into humans easily.
+/mob/living/carbon/human/proc/crewlike_monkify()
+	if(!ismonkey(src))
+		set_species(/datum/species/monkey)
 	dna.add_mutation(/datum/mutation/human/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
 	for(var/datum/mutation/human/mutation as anything in dna.mutations)
 		mutation.mutadone_proof = TRUE
 		mutation.instability = 0
+		mutation.class = MUT_OTHER
 
-	// Extra backup!
-	ADD_TRAIT(src, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
+	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
+
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, ignore_chest_pressureprot = FALSE)
+	var/chest_covered = FALSE
+	var/head_covered = FALSE
+	var/hands_covered = FALSE
+	for (var/obj/item/clothing/equipped in get_equipped_items())
+		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
+		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
+			hands_covered = TRUE
+		if (!isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
+			continue
+		if ((ignore_chest_pressureprot || (equipped.clothing_flags & STOPSPRESSUREDAMAGE)) && (equipped.body_parts_covered & CHEST))
+			chest_covered = TRUE
+		if ((equipped.clothing_flags & STOPSPRESSUREDAMAGE) && (equipped.body_parts_covered & HEAD))
+			head_covered = TRUE
+	if (!chest_covered)
+		return FALSE
+	if (!hands_covered && check_hands)
+		return FALSE
+	return head_covered || HAS_TRAIT(src, TRAIT_HEAD_ATMOS_SEALED)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

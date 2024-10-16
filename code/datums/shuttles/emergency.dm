@@ -31,13 +31,13 @@
 		mobile.event_list.Cut()
 	if(use_all_events)
 		for(var/path in events)
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 			events -= path
 	else
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
 			events -= path
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
@@ -90,7 +90,7 @@
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
 	description = "Features include sentient bar staff (a Bardrone and a Barmaid), bathroom, a quality lounge for the heads, and a large gathering table."
-	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
+	admin_notes = "Bardrone and Barmaid have TRAIT_GODMODE (basically invincibility), will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "30"

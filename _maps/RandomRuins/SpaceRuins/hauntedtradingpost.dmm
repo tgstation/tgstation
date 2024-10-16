@@ -5468,11 +5468,9 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "Vl" = (
 /obj/structure/table/wood,
-/obj/item/toy/figure/wizard{
+/obj/item/toy/figure/wizard/special{
 	pixel_y = 9;
 	pixel_x = -4;
-	toysay = "CLANG!";
-	toysound = 'sound/effects/clang.ogg'
 	},
 /obj/item/toy/figure/warden{
 	name = "\improper Knight action figure";

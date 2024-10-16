@@ -135,7 +135,7 @@ Doesn't work on other aliens/AI.*/
 	if(!chosen_recipient)
 		return FALSE
 
-	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper")
+	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || !to_whisper)
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
@@ -299,7 +299,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target, caller))
+	caller.newtonian_move(get_angle(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
@@ -379,7 +379,7 @@ Doesn't work on other aliens/AI.*/
 	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
 	var/dir_angle = dir2angle(owner.dir)
 
-	playsound(owner, 'sound/creatures/alien_york.ogg', 100)
+	playsound(owner, 'sound/mobs/non-humanoids/alien/alien_york.ogg', 100)
 	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one

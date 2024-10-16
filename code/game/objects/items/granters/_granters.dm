@@ -18,9 +18,9 @@
 	var/reading_time = 5 SECONDS
 	/// The sounds played as the user's reading the book.
 	var/list/book_sounds = list(
-		'sound/effects/pageturn1.ogg',
-		'sound/effects/pageturn2.ogg',
-		'sound/effects/pageturn3.ogg',
+		'sound/effects/page_turn/pageturn1.ogg',
+		'sound/effects/page_turn/pageturn2.ogg',
+		'sound/effects/page_turn/pageturn3.ogg',
 	)
 
 /obj/item/book/granter/attack_self(mob/living/user)

@@ -39,6 +39,7 @@
 		COMSIG_ATOM_EXITED,
 		COMSIG_ITEM_STORED,
 	), PROC_REF(check_my_loc))
+	RegisterSignal(parent, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(no_unequip))
 
 /datum/component/holderloving/UnregisterFromParent()
 	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
@@ -48,6 +49,7 @@
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ITEM_STORED,
+		COMSIG_ITEM_PRE_UNEQUIP,
 	))
 
 /datum/component/holderloving/PostTransfer()
@@ -63,6 +65,7 @@
 
 /datum/component/holderloving/proc/holder_deleting(datum/source, force)
 	SIGNAL_HANDLER
+
 	if(del_parent_with_holder)
 		qdel(parent)
 	else
@@ -70,6 +73,20 @@
 
 /datum/component/holderloving/proc/check_my_loc(datum/source)
 	SIGNAL_HANDLER
+
 	var/obj/item/item_parent = parent
 	if(!check_valid_loc(item_parent.loc))
 		item_parent.forceMove(holder)
+
+/datum/component/holderloving/proc/no_unequip(obj/item/I, force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
+	// just allow it
+	if(force)
+		return NONE
+	// dropping onto a turf just forcemoves it back to the holder. let it happen, it's intuitive
+	// no_move says it's just going to be moved a second time. so let it happen, it'll just be moved back if it's invalid anyway
+	if(isturf(newloc) || no_move)
+		return NONE
+	// the item is being unequipped to somewhere invalid. stop it
+	return COMPONENT_ITEM_BLOCK_UNEQUIP

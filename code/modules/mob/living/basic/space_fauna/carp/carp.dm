@@ -27,7 +27,7 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -81,6 +81,16 @@
 		/obj/structure/window,
 	))
 
+/datum/emote/carp
+	mob_type_allowed_typecache = /mob/living/basic/carp
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/carp/bloop
+	key = "bloop"
+	key_third_person = "bloops"
+	message = "bloops!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
@@ -96,6 +106,7 @@
 
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	AddComponent(/datum/component/profound_fisher)
 	if (tamer)
 		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
@@ -185,7 +196,7 @@
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 
 /**
  * Lia - Sometimes the pet of the Head of Security.
@@ -290,7 +301,7 @@
 /mob/living/basic/carp/passive/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked)))
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 
 /// If someone slaps one of the school, scatter

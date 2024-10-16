@@ -151,6 +151,9 @@
 	))
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return
@@ -460,7 +463,7 @@
 		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
 		if (isnull(bci_organ) && isnull(bci_to_implant))
 			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return FALSE
 
 	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)

@@ -6,7 +6,7 @@
 	show_in_antagpanel = FALSE
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
-	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
+	stinger_sound = 'sound/music/antag/blobalert.ogg'
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
@@ -133,13 +133,13 @@
 	owner.mind.transfer_to(blob_cam)
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
-	playsound(get_turf(blob_cam), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
+	playsound(get_turf(blob_cam), 'sound/music/antag/blobalert.ogg', 50, FALSE)
 	blobtag.has_already_popped = TRUE
 
 	notify_ghosts(
 		"A Blob host has burst in [get_area_name(blob_cam.blob_core)]",
 		source = blob_cam.blob_core,
-		ghost_sound = 'sound/ambience/antag/blobalert.ogg',
+		ghost_sound = 'sound/music/antag/blobalert.ogg',
 		header = "Blob Awakening!",
 		notify_volume = 75,
 	)

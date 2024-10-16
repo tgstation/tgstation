@@ -6,6 +6,7 @@
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
 	var/menu_hud_status = TRUE
+	var/list/shown_station_trait_buttons
 
 /datum/hud/new_player/New(mob/owner)
 	. = ..()
@@ -26,31 +27,58 @@
 		if (!lobbyscreen.always_shown)
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
-		if (istype(lobbyscreen, /atom/movable/screen/lobby/button))
-			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
-			lobby_button.owner = REF(owner)
-	add_station_trait_buttons()
 
-/// Display buttons for relevant station traits
-/datum/hud/new_player/proc/add_station_trait_buttons()
+/// Load and then display the buttons for relevant station traits
+/datum/hud/new_player/proc/show_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
-	var/buttons_created = 0
-	var/y_offset = 397
-	var/y_button_offset = 27
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
-		if (!trait.can_display_lobby_button(mymob.client))
+		if (QDELETED(trait) || !trait.can_display_lobby_button(mymob.client))
+			remove_station_trait_button(trait)
+			continue
+		if(LAZYACCESS(shown_station_trait_buttons, trait))
 			continue
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
-		sign_up_button.SlowInit()
-		sign_up_button.owner = REF(mymob)
-		sign_up_button.screen_loc = offset_to_screen_loc(233, y_offset, mymob.client.view)
-		y_offset += y_button_offset
-		static_inventory += sign_up_button
 		trait.setup_lobby_button(sign_up_button)
-		buttons_created++
-		if (buttons_created >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
-			return
+		static_inventory |= sign_up_button
+		LAZYSET(shown_station_trait_buttons, trait, sign_up_button)
+		RegisterSignal(trait, COMSIG_QDELETING, PROC_REF(remove_station_trait_button))
+
+	place_station_trait_buttons()
+
+/// Display the buttosn for relevant station traits.
+/datum/hud/new_player/proc/place_station_trait_buttons()
+	if(hud_version != HUD_STYLE_STANDARD || !mymob?.client)
+		return
+
+	var/y_offset = 397
+	var/x_offset = 233
+	var/y_button_offset = 27
+	var/x_button_offset = -27
+	var/iteration = 0
+	for(var/trait in shown_station_trait_buttons)
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = shown_station_trait_buttons[trait]
+		iteration++
+		sign_up_button.screen_loc = offset_to_screen_loc(x_offset, y_offset, mymob.client.view)
+		mymob.client.screen |= sign_up_button
+		if (iteration >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
+			iteration = 0
+			y_offset = 397
+			x_offset += x_button_offset
+		else
+			y_offset += y_button_offset
+
+/// Remove a station trait button, then re-order the rest.
+/datum/hud/new_player/proc/remove_station_trait_button(datum/station_trait/trait)
+	SIGNAL_HANDLER
+	var/atom/movable/screen/lobby/button/sign_up/button = LAZYACCESS(shown_station_trait_buttons, trait)
+	if(!button)
+		return
+	LAZYREMOVE(shown_station_trait_buttons, trait)
+	UnregisterSignal(trait, COMSIG_QDELETING)
+	static_inventory -= button
+	qdel(button)
+	place_station_trait_buttons()
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -94,11 +122,9 @@
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
-	/// The ref of the mob that owns this button. Only the owner can click on it.
-	var/owner
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
-	if(owner != REF(usr))
+	if(usr != get_mob())
 		return
 
 	if(!usr.client || usr.client.interviewee)
@@ -113,7 +139,7 @@
 	return TRUE
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
-	if(owner != REF(usr))
+	if(usr != get_mob())
 		return
 
 	if(!usr.client || usr.client.interviewee)
@@ -124,7 +150,7 @@
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
-	if(owner != REF(usr))
+	if(usr != get_mob())
 		return
 
 	if(!usr.client || usr.client.interviewee)

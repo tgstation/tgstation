@@ -1744,6 +1744,23 @@
 	/// Describes which tail spine sprites to use, if any.
 	var/spine_key = NONE
 
+///Used for fish-infused tails, which come in different flavors.
+/datum/sprite_accessory/tails/fish
+	icon = 'icons/mob/human/fish_features.dmi'
+	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/tails/fish/default
+	name = "Fish"
+	icon_state = "fish"
+
+/datum/sprite_accessory/tails/fish/shark
+	name = "Shark"
+	icon_state = "shark"
+
+/datum/sprite_accessory/tails/fish/orca
+	name = "Orca"
+	icon_state = "orca"
+
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
 	spine_key = SPINE_KEY_LIZARD
@@ -1774,7 +1791,7 @@
 	icon_state = "short"
 	spine_key = NONE
 
-/datum/sprite_accessory/tails/human/cat
+/datum/sprite_accessory/tails/felinid/cat
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
