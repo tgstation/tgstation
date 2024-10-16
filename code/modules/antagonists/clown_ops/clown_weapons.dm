@@ -207,10 +207,10 @@
 
 /obj/item/food/grown/banana/bombanana/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(on_eaten))
+	RegisterSignal(src, COMSIG_FOOD_CONSUMED, PROC_REF(on_consumed))
 
 /// Log whenever someone eats this with an explicit message since it willspawn a live bomb.
-/obj/item/food/grown/banana/bombanana/proc/on_eaten(datum/source, mob/living/eater, mob/feeder, bitecount, bitesize)
+/obj/item/food/grown/banana/bombanana/proc/on_consumed(datum/source, mob/living/eater, mob/feeder, bitecount, bitesize)
 	SIGNAL_HANDLER
 	var/list/concatable = list("[key_name_and_tag(eater)] has eaten a bombanana!")
 	if(feeder != eater)
@@ -240,7 +240,7 @@
 	var/potential_user = null
 	if(iscarbon(loc))
 		to_chat(loc, span_danger("[src] begins to beep."))
-		potential_user = loc // just for fingerprint diagnosis in explosion logging, the on_eaten proc will have provided the necessary context already
+		potential_user = loc // just for fingerprint diagnosis in explosion logging, the on_consumed proc will have provided the necessary context already
 
 	bomb.arm_grenade(potential_user, msg = FALSE)
 
