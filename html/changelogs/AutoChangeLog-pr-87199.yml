@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed gills not managing to breathe water vapor through internals."
-  - bugfix: "Fixed some inconsistencies with examining fishing spots with the appropriate level and fishing rod."

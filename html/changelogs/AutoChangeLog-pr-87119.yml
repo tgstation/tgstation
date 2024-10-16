@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Cyborgs are now slowed down when hit with any melee weapons, rather than ONLY when they are hit by THROWN melee weapons. The stronger the weapon, the stronger the slowdown. Thrown weapons are still more effective at slowing than just hitting them directly, however."

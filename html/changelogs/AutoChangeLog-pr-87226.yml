@@ -1,5 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - spellcheck: "Correct message is shown when YOU get devoured by an alien"
-  - spellcheck: "Fixed a few typos on some simple attack verbs being continuous"
