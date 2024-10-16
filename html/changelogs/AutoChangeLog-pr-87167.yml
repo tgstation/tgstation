@@ -1,0 +1,13 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "Sundered Blades now require 1 Titanium or Silver bar to craft and their capacity has been reduced to 4."
+  - balance: "Realignment pulls you out of stuns a bit faster and grants baton resist while active."
+  - balance: "Blade Heretic dual wielding now let's you infuse Your Dark Blades with a weaker mansus grasp and grants an increase in demolition modifier."
+  - bugfix: "Malestrom of Silver grants the ring of protective blades once again."
+  - balance: "Mawed Crucible requires 3 organs to brew one potion, passively refills overtime and can be used to refill the Eldritch Flask"
+  - balance: "Brew of Crucible soul effect bumped to 40 seconds and can be ended early."
+  - balance: "Brew Of Dusk and Dawn effect bumped to 3 minutes."
+  - balance: "Brew of the  wounded soldier now offers a very minor passive heal and fully heals your wounds and limbs upon expiring."
+  - balance: "Cursed Curio shield now recharges faster."
+  - balance: "Lionhunter's rifle has been reworked, it now fits on the eldritch robes vest slots, it's cheaper to craft it and its ammunition and works as an initiation tool."

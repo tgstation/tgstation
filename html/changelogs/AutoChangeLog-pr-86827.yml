@@ -1,0 +1,8 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - rscadd: "Manipulator now shows what objects he is dragging."
+  - rscadd: "Manipulator now can take more then just items."
+  - rscadd: "Manipulator now have 3 modes to choice: drop/use/throw."
+  - rscadd: "Manipulator now have priorities."
+  - rscadd: "Manipulator now can be emaged."

@@ -345,3 +345,117 @@
   - qol: Jetpack movement near walls should be much smoother
   grungussuss:
   - bugfix: a lot of items that shouldn't slosh when picked up will no longer slosh
+2024-10-13:
+  Ben10Omintrix:
+  - bugfix: fixes ashdrake arena attack not clearing out lavaland walls
+  Ghommie:
+  - bugfix: Fish like slimefish, unmarine bonemass and deepfryer fish can now be used
+      for DNA infusions.
+  - rscadd: You can buy a fishing rod pre-equipped with a rescue hook from the mining
+      order console.
+  - balance: Paramedics can get a rescue fishing hook as a heirloom.
+  Jewelry-x:
+  - bugfix: the ghost "t-ray view" no longer requires a double press to activate a
+      second time.
+  - qol: renamed "t-ray view" to "t-ray scan" for clarity.
+  SmArtKar:
+  - bugfix: Untie shoes should have its cooldown increased correctly when casting
+      it from a long distance
+  - bugfix: Plasmaman space suit internal extinguisher works and can be refilled now
+  - refactor: Refactored plasmamen self-ignition to be limb-side instead of being
+      handled by their species
+  Striders13:
+  - balance: replaced gas mask fov with pepperspray applying tint to gas masks, making
+      the wearer blind until washed off.
+  YakumoChen:
+  - spellcheck: Proofreads some faxes sent during radioactive nebulae
+  grungussuss:
+  - balance: all chainsaws can now behead people
+  - rscadd: a lot of basic mobs and pets got new emotes
+  - refactor: emotes triggered by petting pets work differently now, please report
+      any oddities with these behaviors.
+  - sound: new emotes for basic mobs got sounds
+  - bugfix: snore emote works properly now
+  necromanceranne:
+  - bugfix: Pyrokinesis/Cryokinesis cast range matches its projectile range.
+  - code_imp: Pyrokinesis and Cindikinesis are now their own types and not subtypes
+      of Cryokinesis and Geladikinesis. This allows you to not have to mutate yourself
+      in a specific order to not lock yourself out of the other mutation.
+2024-10-14:
+  SmArtKar:
+  - spellcheck: Fixed a typo in multiple lives component
+  - bugfix: Ghosts can no longer cut people's tethers
+  carlarctg:
+  - rscadd: you can use lizards to get lizard organs in the dna infuser
+  grungussuss:
+  - sound: helmets and their visors make sounds now
+  - code_imp: cleaned up laser tag helmet code a bit
+  - sound: gas analyzer now has handling sounds
+  - qol: offering an item displays a balloon alert
+2024-10-15:
+  Hardly3D:
+  - spellcheck: fixes a small error in text when adjusting kitsune masks
+  Jewelry-x:
+  - bugfix: fixed mech step sound playing twice diagonally
+  - bugfix: fixed turn sound playing every time you move diagonally, now only plays
+      when the sprite turns
+  ZephyrTFA:
+  - qol: map votes are now winner take all instead of weighted.
+  carlarctg:
+  - rscadd: Added the FOSBURY skillchip, found in hacked toy vendors. This skillchip
+      allows you to bypass the emote cooldown when flipping or spinning. However,
+      if used too often, it will lower the chip's integrity and cause malfunctions.
+  - rscadd: Added the Chipped quirk. It allows you to spawn with one base skillchip.
+      (not the one above)
+  - rscadd: Added the Chip Connector quirk. It contains a new implant, the chip connector,
+      which allows you to install and take out skillchips at any time.
+  - code_imp: Renamed the organ slots for brain implants and made the connector implant
+      take the CNS slot.
+  grungussuss:
+  - sound: medical, jani, soulstone, grenade belts got sounds
+  - sound: cards have new handling sounds
+2024-10-16:
+  Ben10Omintrix:
+  - code_imp: animals' food hunting behavior has been refactored, please report any
+      bugs
+  DATA-xPUNGED:
+  - bugfix: ACTUALLY fixes server hop fade in
+  Ghommie:
+  - bugfix: Fixed gills not managing to breathe water vapor through internals.
+  - bugfix: Fixed some inconsistencies with examining fishing spots with the appropriate
+      level and fishing rod.
+  GremlinSeeker:
+  - map: New Icebox  Ruin "Syndicate Biodome" added.
+  Mamaii:
+  - rscadd: shower will give felinids negative mood effect
+  - bugfix: fixed shower hater status effect alert not showing
+  Melbert:
+  - balance: Cyborgs are now slowed down when hit with any melee weapons, rather than
+      ONLY when they are hit by THROWN melee weapons. The stronger the weapon, the
+      stronger the slowdown. Thrown weapons are still more effective at slowing than
+      just hitting them directly, however.
+  SmArtKar:
+  - bugfix: Losing hulk after becoming a carp no longer turns you black
+  Soupfgc:
+  - bugfix: Springlock MOD module properly interacts with Water Vapor
+  hyperjll:
+  - qol: The GLA Brand Mail Counterfeit Device's description has been updated by a
+      native english speaker and has been made more descriptive.
+  junkgle01:
+  - rscadd: the Honkmother has decided to bless Her children with a new form!
+  - image: resprited the optional clown mask styles
+  - bugfix: fixed up Metastation's cargo delivery office.
+  kittysmooch:
+  - bugfix: 'fixed east facing female human heads having an extra neck pixel
+
+      :cl:'
+  larentoun:
+  - spellcheck: Correct message is shown when YOU get devoured by an alien
+  - spellcheck: Fixed a few typos on some simple attack verbs being continuous
+  mc-oofert:
+  - bugfix: you may no longer roll appendicitis in deathmatch or as a bitrunner avatar
+  ninjanomnom:
+  - bugfix: Byond membership lookup should now warn you when it fails due to a connection
+      failure.
+  vinylspiders:
+  - bugfix: fixes a bunch of improper static list declarations
