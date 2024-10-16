@@ -1,6 +1,6 @@
-/// Middleware gamejacked fromfrom TTS preview.
+/// Middleware gamejacked from TTS preview.
 /datum/preference_middleware/dopplerboop
-	/// Cooldown on requesting a TTS preview.
+	/// Cooldown on requesting a dopplerboop preview.
 	COOLDOWN_DECLARE(dopplerboop_cooldown)
 
 	action_delegations = list(

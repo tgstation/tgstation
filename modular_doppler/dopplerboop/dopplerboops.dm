@@ -5,7 +5,7 @@
  * Currently the sound file must be passed as a sound datum. This was initially with the intention of using BYOND's in-built pitch on sound datums, but that sucks and has a bunch of weird issues. It does have the added benefit
  * of giving a check to make sure we're actually passing a real sound file through to playsound_local, though.
  *
- * File format is as follows: [voice name]/[letter]_[variation].wav.
+ * File format is as follows: [voice name]/[letter][variation].wav.
  * Each vowel has twenty variations, while each consonant has six.
  * An Audacity macro to make the sounds less irritating on the ear was made and used to process each voice. It can be found in the initial PR related to this system.
  */
@@ -70,7 +70,6 @@
 
 	for(var/i in 1 to min(length(all_boops), MAX_DOPPLERBOOP_CHARACTERS))
 		var/volume = initial_volume
-		var/falloff_exponent = initial_falloff
 		var/current_delay = initial_delay
 		if(!all_boops[i] || all_boops[i] == " ")
 			continue
@@ -91,7 +90,7 @@
 				variation = rand(1, 5)
 			final_boop = sound("modular_doppler/dopplerboop/voices/[chosen_boop]/[boop_letter][variation].wav")
 
-		addtimer(CALLBACK(src, PROC_REF(play_dopplerboop), hearers, dopplerbooper, final_boop, volume, initial_dopplerboop_time, falloff_exponent, frequency), dopplerboop_delay_cumulative + current_delay)
+		addtimer(CALLBACK(src, PROC_REF(play_dopplerboop), hearers, dopplerbooper, final_boop, volume, initial_dopplerboop_time, initial_falloff, frequency), dopplerboop_delay_cumulative + current_delay)
 		dopplerboop_delay_cumulative += current_delay
 
 /datum/component/dopplerboop/proc/play_dopplerboop(list/hearers, mob/dopplerbooper, final_boop, volume, initial_dopplerboop_time, falloff_exponent, freq)

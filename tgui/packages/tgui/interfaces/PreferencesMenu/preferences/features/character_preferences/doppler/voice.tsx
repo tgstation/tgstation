@@ -1,14 +1,8 @@
 import { Button, Stack } from '../../../../../../components';
-import {
-  FeatureChoiced,
-  FeatureChoicedServerData,
-  FeatureValueProps,
-} from '../../base';
+import { FeatureChoiced, FeatureValueProps } from '../../base';
 import { FeatureDropdownInput } from '../../dropdowns';
 
-const FeatureBoopDropdownInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-) => {
+const FeatureBoopDropdownInput = (props: FeatureValueProps<string>) => {
   return (
     <Stack>
       <Stack.Item grow>
