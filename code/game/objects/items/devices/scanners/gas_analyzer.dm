@@ -1,6 +1,7 @@
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
+	RU_NAMES_LIST_INIT("gas analyzer", "газоанализатор", "газоанализатора", "газоанализатору", "газоанализатор", "газоанализатором", "газоанализаторе")
 	custom_price = PAYCHECK_LOWER * 0.9
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "analyzer"
