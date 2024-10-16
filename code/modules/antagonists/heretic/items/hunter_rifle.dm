@@ -143,8 +143,6 @@
 		return
 	var/mob/living/living_firer = firer
 	if(IS_HERETIC(living_firer))
-		//living_firer.swap_hand() //Forcibly unscope
-		//living_firer.swap_hand()
 		living_firer.forceMove(src)
 		stored_mob = living_firer
 
