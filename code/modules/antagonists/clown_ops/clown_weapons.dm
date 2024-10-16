@@ -210,7 +210,7 @@
 	RegisterSignal(src, COMSIG_FOOD_CONSUMED, PROC_REF(on_consumed))
 
 /// Log whenever someone eats this with an explicit message since it willspawn a live bomb.
-/obj/item/food/grown/banana/bombanana/proc/on_consumed(datum/source, mob/living/eater, mob/feeder, bitecount, bitesize)
+/obj/item/food/grown/banana/bombanana/proc/on_consumed(datum/source, mob/living/eater, mob/feeder)
 	SIGNAL_HANDLER
 	var/list/concatable = list("[key_name_and_tag(eater)] has eaten a bombanana!")
 	if(feeder != eater)
