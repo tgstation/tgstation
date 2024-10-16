@@ -223,7 +223,7 @@
 	return NONE
 
 /obj/item/grown/bananapeel/bombanana
-	desc = parent_type::desc + "Why is it beeping?"
+	desc = parent_type::desc + " Why is it beeping?"
 	seed = /obj/item/seeds/banana/bombanana
 	/// How long we have until we explode.
 	var/det_time = 5 SECONDS
