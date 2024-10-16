@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Chainsaws can now be sharpened"
+  - code_imp: "Chainsaws have received a minor code refactor"
