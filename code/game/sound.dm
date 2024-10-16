@@ -594,7 +594,7 @@
 			soundin = pick(
 				'sound/items/handling/helmet/visor_up1.ogg',
 				'sound/items/handling/helmet/visor_up2.ogg',
-      (
+			(
 		if(SFX_INDUSTRIAL_SCAN)
 			soundin = pick(
 				'sound/effects/industrial_scan/industrial_scan1.ogg',
