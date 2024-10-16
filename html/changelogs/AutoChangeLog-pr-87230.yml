@@ -1,5 +1,0 @@
-author: "Mamaii"
-delete-after: True
-changes:
-  - rscadd: "shower will give felinids negative mood effect"
-  - bugfix: "fixed shower hater status effect alert not showing"

@@ -53,7 +53,6 @@
 	health = maxHealth
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
@@ -94,20 +93,17 @@
 		recover(attack_target)
 		return TRUE
 
-/mob/living/basic/mushroom/proc/on_attacked_target(mob/living/basic/attacker, atom/target)
-	SIGNAL_HANDLER
-
-	if(!istype(target, /mob/living/basic/mushroom))
+/mob/living/basic/mushroom/melee_attack(mob/living/basic/mushroom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target) || target.stat != DEAD)
 		return
-	var/mob/living/basic/mushroom/victim = target
-	if(victim.stat != DEAD)
+	if(target.faint_ticker >= 3)
+		consume_mushroom(target)
 		return
-	if(victim.faint_ticker >= 3)
-		consume_mushroom(victim)
-		return
-
-	victim.faint_ticker++
-	visible_message(span_notice("[src] chews a bit on [victim]."))
+	target.faint_ticker++
+	visible_message(span_notice("[src] chews a bit on [target]."))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
 	visible_message(span_warning("[src] devours [consumed]!"))
