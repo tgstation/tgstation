@@ -111,7 +111,7 @@
 		return FALSE
 	balloon_alert(user, "overloaded functions installed")
 	obj_flags |= EMAGGED
-	allowed_types_to_pick_up += /mob
+	allowed_types_to_pick_up += /mob/living
 	return TRUE
 
 /obj/machinery/big_manipulator/wrench_act(mob/living/user, obj/item/tool)
@@ -403,9 +403,13 @@
 /// Create dummy to force him use our item and then delete him.
 /obj/machinery/big_manipulator/proc/create_abstract_living()
 	var/mob/living/carbon/human/abstract_living = new /mob/living/carbon/human(get_turf(src))
-	abstract_living.icon_state = "blank"
 	abstract_living.alpha = 0
-	abstract_living.name = name
+	abstract_living.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	ADD_TRAIT(abstract_living, TRAIT_UNDENSE, INNATE_TRAIT)
+	abstract_living.move_resist = INFINITY
+	abstract_living.invisibility = INVISIBILITY_ABSTRACT
+	abstract_living.real_name = abstract_living.name = name
+	abstract_living.mind_initialize()
 	return abstract_living
 
 /// Proc called when we changing item interaction mode.
@@ -598,8 +602,8 @@
 	icon_overlay.appearance = item_data.appearance
 	icon_overlay.appearance_flags = appearance_flags
 	icon_overlay.plane = ABOVE_MOB_LAYER
-	icon_overlay.pixel_x = 32 + calculate_item_offset("x")
-	icon_overlay.pixel_y = 32 + calculate_item_offset("y")
+	icon_overlay.pixel_x = 32 + calculate_item_offset(is_x = TRUE)
+	icon_overlay.pixel_y = 32 + calculate_item_offset(is_x = FALSE)
 	. += icon_overlay
 
 /// Updates item that is in the claw.
@@ -608,18 +612,17 @@
 	update_appearance()
 
 /// Calculate x and y coordinates so that the item icon appears in the claw and not somewhere in the corner.
-/obj/effect/big_manipulator_hand/proc/calculate_item_offset(coordinate)
+/obj/effect/big_manipulator_hand/proc/calculate_item_offset(is_x = TRUE)
 	var/offset
-	var/is_x_or = coordinate == "x"
 	switch(dir)
 		if(NORTH)
-			offset = is_x_or ? 0 : 32
+			offset = is_x ? 0 : 32
 		if(SOUTH)
-			offset = is_x_or ? 0 : -32
+			offset = is_x ? 0 : -32
 		if(EAST)
-			offset = is_x_or ? 32 : 0
+			offset = is_x ? 32 : 0
 		if(WEST)
-			offset = is_x_or ? -32 : 0
+			offset = is_x ? -32 : 0
 	return offset
 
 /// Priorities that manipulator use to choose to work on item with type same with what_type.
@@ -628,10 +631,12 @@
 	var/name
 	/// What type carries this priority.
 	var/what_type
-	/// Place in the priority queue. The lower the number, the more important the priority.
-	/// Doesn’t really matter what number you enter, user can set priority for themselves,
-	/// BUT!!!
-	/// Don't write the same numbers in the same parent otherwise something may go wrong.
+	/**
+	 * Place in the priority queue. The lower the number, the more important the priority.
+	* Doesn’t really matter what number you enter, user can set priority for themselves,
+	* BUT!!!
+	* Don't write the same numbers in the same parent otherwise something may go wrong.
+	*/
 	var/number
 
 /datum/manipulator_priority/for_drop/on_floor
