@@ -89,6 +89,27 @@
 /obj/item/food/pie/cream/nostun
 	stunning = FALSE
 
+/obj/item/food/pie/energypie
+	name = "energy pie"
+	desc = "Clown's second favorite pie."
+	icon_state = "energy_pie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/consumable/liquidelectricity/enriched = 4,
+	)
+	tastes = list("pure electricity" = 3, "pie" = 1)
+	foodtypes = GRAIN | TOXIC
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/pie/energypie/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/splat, hit_callback = CALLBACK(src, PROC_REF(shock)))
+
+/obj/item/food/pie/energypie/proc/shock(mob/living/victim, can_splat_on)
+	if(can_splat_on)
+		victim.electrocute_act(10, src)
+	playsound(victim, SFX_DESECRATION, 50, TRUE)
+
 /obj/item/food/pie/berryclafoutis
 	name = "berry clafoutis"
 	desc = "No black birds, this is a good sign."

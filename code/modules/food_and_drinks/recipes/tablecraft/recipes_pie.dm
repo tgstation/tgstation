@@ -13,6 +13,15 @@
 	result = /obj/item/food/pie/cream
 	category = CAT_PIE
 
+/datum/crafting_recipe/food/energybarpie
+	name = "Energy pie"
+	reqs = list(
+		/obj/item/food/pie/plain = 1,
+		/obj/item/food/energybar = 1
+	)
+	result = /obj/item/food/pie/energypie
+	category = CAT_PIE
+
 /datum/crafting_recipe/food/meatpie
 	name = "Meat pie"
 	reqs = list(
