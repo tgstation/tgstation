@@ -216,7 +216,7 @@
 	if(feeder != eater)
 		concatable += "This person was fed this by [key_name_and_tag(feeder)]."
 
-	concatable += "As a result of this, a bombanana peel will be spawned at [AREACOORD(drop_location(src))]."
+	concatable += "As a result of this, a bombanana peel will be spawned at [AREACOORD(src)]."
 
 	var/final_string = jointext(concatable, " ")
 	log_bomber(details = final_string) // sorta wacks out the traditional "log_bomber" format but it gets the point across better
