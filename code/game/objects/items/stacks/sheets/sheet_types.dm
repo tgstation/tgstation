@@ -153,6 +153,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron
 	name = "iron"
+	RU_NAMES_LIST_INIT("iron", "железо", "железа", "железу", "железо", "железом", "железе")
 	desc = "Sheets made out of iron."
 	singular_name = "iron sheet"
 	icon_state = "sheet-metal"

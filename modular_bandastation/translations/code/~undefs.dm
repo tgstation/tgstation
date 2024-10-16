@@ -1,0 +1,1 @@
+#undef RU_NAMES_LENGTH

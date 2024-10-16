@@ -1,5 +1,7 @@
 #include "_translations.dm"
 
+#include "code/defines.dm"
+
 #include "code/bodyparts.dm"
 #include "code/design.dm"
 #include "code/moustache.dm"
@@ -8,3 +10,7 @@
 #include "code/translate_attack_verb.dm"
 #include "code/translate_say.dm"
 #include "code/translate_suggest_ru_names.dm"
+#include "code/ru_names/ru_name_base.dm"
+#include "code/ru_names/ru_name_materials.dm"
+
+#include "code/~undefs.dm"
