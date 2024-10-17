@@ -155,7 +155,7 @@
 	preference = "feature_human_tail"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
-
+	organ_traits = list(TRAIT_HATED_BY_DOGS) // felinids are innately hateable, but anyone can become hated by getting a tail themselves
 	wag_flags = WAG_ABLE
 
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
