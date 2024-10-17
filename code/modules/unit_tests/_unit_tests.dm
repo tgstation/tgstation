@@ -160,6 +160,7 @@
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "high_five.dm"
+#include "holder_loving.dm"
 #include "holidays.dm"
 #include "hulk.dm"
 #include "human_through_recycler.dm"
