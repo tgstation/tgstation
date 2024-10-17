@@ -2454,6 +2454,12 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"aVK" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "aVT" = (
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -4842,12 +4848,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/tram,
 /area/station/maintenance/port/aft)
-"bSe" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "bSk" = (
 /obj/machinery/air_sensor/engine_chamber,
 /turf/open/floor/engine,
@@ -113099,7 +113099,7 @@ tjj
 blb
 blb
 ssz
-bSe
+aVK
 sPO
 ssz
 aSy
@@ -131102,7 +131102,7 @@ tiN
 aCM
 bDq
 eUF
-cgM
+fcq
 mMr
 fPR
 ylD
