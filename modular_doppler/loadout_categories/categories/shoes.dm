@@ -99,6 +99,10 @@
 	name = "Colonial Half-boots"
 	item_path = /obj/item/clothing/shoes/jackboots/colonial
 
+/datum/loadout_item/shoes/colonial_boots/greyscale
+	name = "Custom Colonial Half-boots"
+	item_path = /obj/item/clothing/shoes/jackboots/colonial/greyscale
+
 /datum/loadout_item/shoes/frontier_boots
 	name = "Heavy Boots"
 	item_path = /obj/item/clothing/shoes/jackboots/frontier_colonist

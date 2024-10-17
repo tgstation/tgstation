@@ -7,7 +7,7 @@
 			"color_ids": [ 1 ]
 		}
 	],
-	"laceup": [
+	"laceups": [
 		{
 			"type": "icon_state",
 			"icon_state": "laceup",

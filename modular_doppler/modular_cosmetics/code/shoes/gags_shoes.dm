@@ -73,3 +73,19 @@
 	name = "cloth leg wraps"
 	desc = "Simple cloth legwraps, for when socks aren't good enough."
 	icon_state = "legwrap"
+
+/obj/item/clothing/shoes/jackboots/colonial/greyscale
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/shoes/casual.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/shoes/casual.dmi'
+	icon_state = "boots_colonial"
+	greyscale_colors = "#2b2b2b"
+	greyscale_config = /datum/greyscale_config/boots
+	greyscale_config_worn = /datum/greyscale_config/boots/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/jackboots/colonial/greyscale/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/boots/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/boots/worn/digi
+	set_greyscale(colors = greyscale_colors)

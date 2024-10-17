@@ -6,5 +6,13 @@
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
+	],
+	"boots_colonial": [
+		{
+			"type": "icon_state",
+			"icon_state": "boots_colonial",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
 	]
 }
