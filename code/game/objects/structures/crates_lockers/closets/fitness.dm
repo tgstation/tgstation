@@ -50,7 +50,7 @@
 		new /obj/item/gun/energy/laser/redtag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/head/helmet/redtaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/red(src)
 
 
 /obj/structure/closet/lasertag/blue
@@ -65,4 +65,4 @@
 		new /obj/item/gun/energy/laser/bluetag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/clothing/head/helmet/bluetaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/blue(src)
