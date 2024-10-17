@@ -23,7 +23,7 @@
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 1
 	///How much these gloves affect fishing difficulty
-	var/fishing_modifier = -5
+	var/fishing_modifier = -7
 
 /obj/item/clothing/gloves/tackler/Initialize(mapload)
 	. = ..()
@@ -61,7 +61,7 @@
 	tackle_speed = 2
 	min_distance = 2
 	skill_mod = -2
-	fishing_modifier = -8
+	fishing_modifier = -10
 
 /obj/item/clothing/gloves/tackler/combat
 	name = "gorilla gloves"
@@ -113,11 +113,11 @@
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
 	skill_mod = -1
-	fishing_modifier = -3
+	fishing_modifier = -5
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"
 	desc = "Gloves for football players! Teaches them how to tackle like a pro."
 	icon_state = "tackle_gloves"
 	inhand_icon_state = null
-	fishing_modifier = -3
+	fishing_modifier = -4
