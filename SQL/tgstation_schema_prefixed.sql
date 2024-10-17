@@ -576,6 +576,7 @@ CREATE TABLE `SS13_achievements` (
 	`ckey` VARCHAR(32) NOT NULL,
 	`achievement_key` VARCHAR(32) NOT NULL,
 	`value` INT NULL,
+	`entries` TEXT(8192) NULL,
 	`last_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`ckey`,`achievement_key`)
 ) ENGINE=InnoDB;

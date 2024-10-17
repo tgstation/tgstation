@@ -242,6 +242,14 @@
 /proc/reciprocal_add(x, y)
 	return 1/((1/x)+y)
 
+/// Returns a text string containing N prefixed with a series of zeros with length equal to max_zeros minus log(10, N), rounded down.
+/proc/prefix_zeros_to_number(number, max_zeros)
+	var/zeros = ""
+	var/how_many_zeros = max_zeros - round(log(10, number))
+	for(var/zero in 1 to how_many_zeros)
+		zeros += "0"
+	return "[zeros][number]"
+
 /// 180s an angle
 /proc/reverse_angle(angle)
 	return (angle + 180) % 360
