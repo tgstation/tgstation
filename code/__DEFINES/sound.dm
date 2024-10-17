@@ -196,3 +196,9 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_PIG_OINK "pig_oink"
 #define SFX_VISOR_UP "visor_up"
 #define SFX_VISOR_DOWN "visor_down"
+
+// Default is 45kbps
+#define MIN_EMOTE_PITCH 42000
+#define MAX_EMOTE_PITCH 50000
+// ~0.6 - 1.4 at 0.12
+#define EMOTE_TTS_PITCH_MULTIPLIER 0.12
