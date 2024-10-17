@@ -73,6 +73,14 @@
 	name = "Shorts"
 	item_path = /obj/item/clothing/under/shorts
 
+/datum/loadout_item/undersuit/pants/shorts/shorter
+	name = "Short Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter
+
+/datum/loadout_item/undersuit/pants/shorts/shorter/shortest
+	name = "Shortest Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/shortest
+
 /datum/loadout_item/undersuit/pants/slacks
 	name = "Slacks"
 	item_path = /obj/item/clothing/under/pants/slacks
@@ -85,6 +93,14 @@
 	name = "Jean Shorts"
 	item_path = /obj/item/clothing/under/shorts/jeanshorts
 
+/datum/loadout_item/undersuit/pants/jeans/shorts/shorter
+	name = "Short Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/jeans
+
+/datum/loadout_item/undersuit/pants/jeans/shorts/shorter/shortest
+	name = "Shortest Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/jeans/shortest
+
 /datum/loadout_item/undersuit/pants/track
 	name = "Track Pants"
 	item_path = /obj/item/clothing/under/pants/track
@@ -96,6 +112,10 @@
 /datum/loadout_item/undersuit/pants/big_pants
 	name = "JUNCO megacargo pants"
 	item_path = /obj/item/clothing/under/pants/big_pants
+
+/datum/loadout_item/undersuit/pants/skirt
+	name = "Simple Skirt"
+	item_path = /obj/item/clothing/under/shorts/shorter/skirt
 
 /*
 *	BUTTONDOWNS

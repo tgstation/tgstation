@@ -73,3 +73,38 @@
 	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/jeanshorts/worn
 	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/jeanshorts/worn/digi
 	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/shorts/shorter
+	name = "short shorts"
+	desc = "A pair of comfy shorts, cut down slim."
+	icon_state = "shortshorts"
+	greyscale_config = /datum/greyscale_config/skimpypants
+	greyscale_config_worn = /datum/greyscale_config/skimpypants/worn
+
+/obj/item/clothing/under/shorts/shorter/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/skimpypants/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/skimpypants/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/shorts/shorter/shortest
+	name = "shortest shorts"
+	desc = "A pair of comfy shorts, cut down to near nonexistence by some barbarian."
+	icon_state = "shortestshorts"
+
+/obj/item/clothing/under/shorts/shorter/jeans
+	name = "short jean shorts"
+	desc = "A nondescript pair of tough jean shorts, cut down slim."
+	icon_state = "jeanshortshorts"
+	greyscale_colors = "#787878#723E0E#4D7EAC"
+
+/obj/item/clothing/under/shorts/shorter/jeans/shortest
+	name = "shortest jean shorts"
+	desc = "A nondescript pair of tough jean shorts, cut down to near nonexistence by some barbarian."
+	icon_state = "jeanshortestshorts"
+
+/obj/item/clothing/under/shorts/shorter/skirt
+	name = "simple skirt"
+	desc = "A lone skirt, suitable to combo with your favorite getup."
+	icon_state = "skirt"

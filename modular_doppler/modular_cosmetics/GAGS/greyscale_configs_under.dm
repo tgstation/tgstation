@@ -269,3 +269,16 @@
 /datum/greyscale_config/track_pants/worn/digi
 	name = "Track Pants (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/skimpypants
+	name = "Skimpy Pants"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/skimpypants.json'
+
+/datum/greyscale_config/skimpypants/worn
+	name = "Skimpy Pants (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/skimpypants/worn/digi
+	name = "Skimpy Pants (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
