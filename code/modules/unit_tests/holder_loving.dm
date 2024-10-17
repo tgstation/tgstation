@@ -15,8 +15,9 @@
 	person.putItemFromInventoryInHandIfPossible(tool, 1)
 	TEST_ASSERT_EQUAL(person.get_item_for_held_index(1), tool, "Holder loving component blocked equiping wrench from storage into hand!")
 
-	//Test 2: Should be able to put the item in the other hand
-	person.put_in_hand(tool, 2)
+	//Test 2: Should be able to swap the item between hands
+	person.swap_hand(2, silent = TRUE)
+	tool.attempt_pickup(person)
 	TEST_ASSERT_EQUAL(person.get_item_for_held_index(2), tool, "Holder loving component blocked swapping the wrench into the other hand!")
 
 	//Test 3: Upon dropping the item onto the ground it should move back into the bag
