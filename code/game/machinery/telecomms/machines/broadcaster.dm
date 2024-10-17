@@ -57,6 +57,7 @@ GLOBAL_VAR_INIT(message_delay, FALSE)
 	flick("broadcaster_send", src)
 
 	use_energy(idle_power_usage)
+	atmos_heat_counter++
 
 /**
  * Simply resets the message delay and the recent messages list, to ensure that
@@ -88,5 +89,3 @@ GLOBAL_VAR_INIT(message_delay, FALSE)
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
 
-/obj/machinery/telecomms/broadcaster/preset_left/birdstation
-	name = "Broadcaster"

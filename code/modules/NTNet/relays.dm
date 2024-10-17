@@ -17,6 +17,9 @@
 	icon_state = "bus"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
+	processing_flags = START_PROCESSING_ON_INIT|ATMOS_SENSITIVE
+	temperature_tolerance_min = TCOMMS_EQUIPMENT_TEMP_MIN
+	temperature_tolerance_max = TCOMMS_EQUIPMENT_TEMP_MAX
 
 	///On / off status for the relay machine, toggleable by the user.
 	var/relay_enabled = TRUE
@@ -53,7 +56,7 @@
 	relay_enabled = new_value
 	if(.) //Turned off
 		set_is_operational(FALSE)
-	else if(!dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //Turned on
+	else if(!dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP))) //Turned on
 		set_is_operational(TRUE)
 
 ///Proc called to change the value of the `dos_failure` variable and append behavior related to its change.
@@ -63,16 +66,16 @@
 	. = dos_failure
 	dos_failure = new_value
 	if(.) //Failure ended
-		if(relay_enabled && !(machine_stat & (NOPOWER|BROKEN|MAINT)))
+		if(relay_enabled && !(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP)))
 			set_is_operational(TRUE)
 	else //Failure started
 		set_is_operational(FALSE)
 
 /obj/machinery/ntnet_relay/on_set_machine_stat(old_value)
-	if(old_value & (NOPOWER|BROKEN|MAINT))
-		if(relay_enabled && !dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //From off to on.
+	if(old_value & (NOPOWER|BROKEN|MAINT|BAD_TEMP))
+		if(relay_enabled && !dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP))) //From off to on.
 			set_is_operational(TRUE)
-	else if(machine_stat & (NOPOWER|BROKEN|MAINT)) //From on to off.
+	else if(machine_stat & (NOPOWER|BROKEN|MAINT|BAD_TEMP)) //From on to off.
 		set_is_operational(FALSE)
 
 /obj/machinery/ntnet_relay/update_icon_state()
@@ -98,6 +101,21 @@
 		update_appearance()
 		SSmodular_computers.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	return TRUE
+
+/obj/machinery/ntnet_relay/process_atmos()
+	var/turf/local_turf = loc
+	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
+		set_machine_stat(machine_stat | BAD_TEMP)
+		return
+
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	// the machine is either overheating or freezing
+	if(enviroment.temperature < temperature_tolerance_min || enviroment.temperature > temperature_tolerance_max)
+		set_machine_stat(machine_stat | BAD_TEMP)
+		return
+
+	set_machine_stat(machine_stat & ~BAD_TEMP)
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

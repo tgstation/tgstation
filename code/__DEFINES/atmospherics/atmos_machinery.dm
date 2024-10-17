@@ -89,3 +89,51 @@
 #define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Min allowed pressure for canisters to release air per tick
 #define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE * 0.1)
+
+/// The heat capacity used by T1 thermomachines
+#define THERMOMACHINE_HEAT_CAPACITY (5000)
+
+/// The minimum temperature telecomms equipment can operate in (40K)
+#define TCOMMS_EQUIPMENT_TEMP_MIN (TCOMMS_ROOM_TEMP - 40)
+/// The maximum temperature telecomms equipment can operate in (120K)
+#define TCOMMS_EQUIPMENT_TEMP_MAX (TCOMMS_ROOM_TEMP + 40)
+/// The temperature telecomms equipment generates while active (480K)
+#define TCOMMS_EQUIPMENT_TEMP_HEAT (TCOMMS_ROOM_TEMP + 400)
+/// The heat capacity needed to cause the telecomms turf to overheat
+#define TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL (6000)
+/// The amount of messsages per minute we can send before TCOMM equipment starts to overheat/clog
+#define TCOMM_MESSAGES_PER_MINUTE (150)
+/// The heat capacity telecomms equipment generates while active
+#define TCOMMS_EQUIPMENT_HEAT_CAPACITY (TCOMMS_EQUIPMENT_HEAT_CAPACITY_TOTAL / TCOMM_MESSAGES_PER_MINUTE)
+
+/**
+Factors:
+- There are 24 TCOMM machines in a telecomms area used to process signals and data
+- Sending one radio message will activate ~5 machines that will generate heat
+- There are 20-100 empty turfs in the telecomms room depending on the map
+- Empty turfs in TCOMMs area affect how long it takes to heat or cool the equipment since the air gets spread around
+- TCOMM machines won't emit heat at the same time (ex. command bus machine needs the :C freq to activate)
+- Thermomachine start at 73K but heat exchange pipes slowly reverts temperature to 93K (20K efficency loss)
+- The heat exchange pipes at roundstart have room temp air and it takes a few minutes before they reach 73K
+
+TCOMM_MESSAGES_PER_MINUTE is the amount of messages we want TCOMMs to handle before it clogs due to heat.
+
+Radio Frequency Observations:
+- Average pop at ~50 players emit rougly 10-20 TCOMM messages a minute, 30 at peak volume from eyeballing logs (+30)
+- Poly spams ~5 TCOMM messages a minute (+10)
+- Radio spam from air alarms will emit a message about once every ~10 seconds if intercom on and nearby (+10)
+- Radio spam from a bunch of machinery cryo tubes, beepsky, medibot, cargo shipments, arrivals announcment, etc. (+30)
+- PDA messages are relayed to TCOMMs equipment which also generate heat per message (+10)
+- We also want to account for people trying to spam using multiple radios (+10)
+
+So aiming for 100 TCOMM messages a minute gives us wiggle room with redundancies
+**/
+
+/// The minimum temperature RD servers can operate in (140K)
+#define RD_SERVER_TEMP_MIN (ICEBOX_MIN_TEMPERATURE - 40)
+/// The maximum temperature RD servers can operate in (220K)
+#define RD_SERVER_TEMP_MAX (ICEBOX_MIN_TEMPERATURE + 40)
+/// The temperature RD servers generates while active (260K)
+#define RD_SERVER_TEMP_HEAT (RD_SERVER_TEMP_MAX + 40)
+/// The heat capacity RD servers generates while active
+#define RD_SERVER_HEAT_CAPACITY (5)
