@@ -361,11 +361,9 @@
 
 	if(harm)
 		weapon.attack(current_target, src)
-	if(ishuman(current_target))
-		current_target.set_stutter(10 SECONDS)
-		current_target.Paralyze(100)
-		var/mob/living/carbon/human/human_target = current_target
-		threat = human_target.assess_threat(judgement_criteria)
+	if(HAS_TRAIT(current_target, TRAIT_BATON_RESISTANCE) && !current_target.is_staggered())
+		current_target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
+		current_target.set_stutter(2 SECONDS)
 	else
 		current_target.Paralyze(100)
 		current_target.set_stutter(10 SECONDS)
