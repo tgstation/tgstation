@@ -4842,6 +4842,12 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/tram,
 /area/station/maintenance/port/aft)
+"bSe" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "bSk" = (
 /obj/machinery/air_sensor/engine_chamber,
 /turf/open/floor/engine,
@@ -15014,12 +15020,6 @@
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating/rust,
 /area/station/ai_monitored/turret_protected/aisat/maint)
-"fzC" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "fzI" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin3";
@@ -26327,8 +26327,8 @@
 /area/station/maintenance/port/greater)
 "jar" = (
 /obj/machinery/drone_dispenser,
-/turf/open/misc/asteroid,
-/area/station/maintenance/starboard/greater)
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "jat" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
@@ -47691,10 +47691,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/miningfoundry)
-"qrT" = (
-/obj/machinery/drone_dispenser,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "qrW" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
@@ -112846,7 +112842,7 @@ tjj
 tjj
 blb
 ssz
-qrT
+jar
 qRO
 ssz
 vLv
@@ -113103,7 +113099,7 @@ tjj
 blb
 blb
 ssz
-fzC
+bSe
 sPO
 ssz
 aSy
@@ -131106,7 +131102,7 @@ tiN
 aCM
 bDq
 eUF
-jar
+cgM
 mMr
 fPR
 ylD
