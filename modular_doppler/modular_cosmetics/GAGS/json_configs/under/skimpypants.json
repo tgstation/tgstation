@@ -54,7 +54,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "shortshorts",
+			"icon_state": "jeanshortshorts",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		}
@@ -74,7 +74,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "shortshorts",
+			"icon_state": "shortestshorts",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		}
@@ -94,7 +94,7 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "shortshorts",
+			"icon_state": "jeanshortestshorts",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		}
