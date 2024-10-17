@@ -11,7 +11,9 @@
 
 // Unable to compile this version thanks to mutable appearance changes
 #if (DM_VERSION == 515 && DM_BUILD == 1643)
-#error This version of BYOND cannot compile this project. Visit www.byond.com/download/build to download an older version or update (if possible).
+#error This specific version of BYOND (515.1643) cannot compile this project.
+#error If 515.1643 IS NOT the latest version of BYOND, then you should simply update as normal.
+#error But if 515.1643 IS the latest version of BYOND, i.e. you can't update, then you MUST visit www.byond.com/download/build and downgrade to 515.1642.
 #endif
 
 // Keep savefile compatibilty at minimum supported level

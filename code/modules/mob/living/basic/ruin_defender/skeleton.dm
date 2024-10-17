@@ -162,7 +162,7 @@
 /// Skeletons mostly just beat people to death, but they'll also find and drink milk.
 /datum/ai_controller/basic_controller/skeleton
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_EMOTE_KEY = "rattles",
 		BB_EMOTE_CHANCE = 20,

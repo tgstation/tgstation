@@ -150,7 +150,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				target_pressure = clamp(pressure, PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
