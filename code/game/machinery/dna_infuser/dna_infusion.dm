@@ -47,8 +47,6 @@
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
 	new_organ.replace_into(src)
-	//make sure bodypart overlays are correctly displayed.
-	update_body_parts()
 	return TRUE
 
 /// Picks a random mutated organ from the given infuser entry which is also compatible with this human.

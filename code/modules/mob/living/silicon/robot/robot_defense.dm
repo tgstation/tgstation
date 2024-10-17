@@ -477,8 +477,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	spark_system.start()
 
-/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	. = ..()
-	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
-		return
-	apply_status_effect(/datum/status_effect/borg_throw_slow)
+/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .
