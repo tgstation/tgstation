@@ -537,7 +537,7 @@
 	target.set_jitter_if_lower(100 SECONDS)
 	target.apply_status_effect(/datum/status_effect/convulsing)
 	playsound(src,  'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
-	if(HAS_TRAIT(target, MOB_ORGANIC))
+	if(target.mob_biotypes & MOB_ORGANIC)
 		target.emote("gasp")
 	log_combat(user, target, "zapped", src)
 	do_success()
@@ -570,7 +570,7 @@
 		do_cancel()
 		return
 
-	if(target && target.stat == DEAD)
+	if(target.stat == DEAD)
 		to_chat(user, span_warning("[target] is dead."))
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 		do_cancel()
