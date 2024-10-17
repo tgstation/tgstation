@@ -40,8 +40,8 @@
 	var/charge_time = 1.5 SECONDS
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
-	var/current_inhand_icon_state = "crusher"
-	var/projectile_icon = "pulse1"
+	var/current_inhand_icon_state = "crusher" //variable used by retool kits when changing the crusher's appearance
+	var/projectile_icon = "pulse1" //variable used by retool kits when changing the crusher's projectile sprite
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -328,15 +328,15 @@
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
 
-/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/PKC, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		PKC.charge_time -= bonus_value
+		pkc.charge_time -= bonus_value
 
-/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/PKC, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		PKC.charge_time += bonus_value
+		pkc.charge_time += bonus_value
 
 //blood-drunk hunter
 /obj/item/crusher_trophy/miner_eye
@@ -386,18 +386,18 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/PKC, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		PKC.force += bonus_value * 0.2
-		PKC.detonation_damage += bonus_value * 0.8
+		pkc.force += bonus_value * 0.2
+		pkc.detonation_damage += bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/PKC, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		PKC.force -= bonus_value * 0.2
-		PKC.detonation_damage -= bonus_value * 0.8
+		pkc.force -= bonus_value * 0.2
+		pkc.detonation_damage -= bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
@@ -513,27 +513,25 @@
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
 
-/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/PKC, mob/user)
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
 	. = ..()
 	if(.)
-		PKC.icon_state = retool_icon
-		PKC.current_inhand_icon_state = retool_inhand_icon
-		PKC.projectile_icon = retool_projectile_icon
-		PKC.inhand_icon_state = "[PKC.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
-		if(iscarbon(PKC.loc))
-			var/mob/living/carbon/holder = PKC.loc
+		pkc.icon_state = retool_icon
+		pkc.current_inhand_icon_state = retool_inhand_icon
+		pkc.projectile_icon = retool_projectile_icon
+		if(iscarbon(pkc.loc))
+			var/mob/living/carbon/holder = pkc.loc
 			holder.update_held_items()
-		PKC.update_appearance()
+		pkc.update_appearance()
 
-/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/PKC)
-	PKC.icon_state = initial(PKC.icon_state)
-	PKC.current_inhand_icon_state = initial(PKC.current_inhand_icon_state)
-	PKC.projectile_icon = initial(PKC.projectile_icon)
-	PKC.inhand_icon_state = "[PKC.current_inhand_icon_state]0"
-	if(iscarbon(PKC.loc))
-		var/mob/living/carbon/holder = PKC.loc
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
+	pkc.icon_state = initial(pkc.icon_state)
+	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
+	pkc.projectile_icon = initial(pkc.projectile_icon)
+	if(iscarbon(pkc.loc))
+		var/mob/living/carbon/holder = pkc.loc
 		holder.update_held_items()
-	PKC.update_appearance()
+	pkc.update_appearance()
 	..()
 
 /obj/item/crusher_trophy/retool_kit/harpoon
