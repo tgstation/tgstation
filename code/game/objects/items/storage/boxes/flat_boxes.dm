@@ -6,7 +6,7 @@
 
 /obj/item/storage/box/flat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE, tilt_tile = TRUE)
 	atom_storage.max_slots = 3
 
 /obj/item/storage/box/proc/flatten_box()
