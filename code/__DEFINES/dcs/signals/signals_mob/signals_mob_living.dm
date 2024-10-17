@@ -14,8 +14,6 @@
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
-/// Called from obj/item/organ/internal/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent): (mob/living/carbon/human/parent, list/overlays)
-#define COMSIG_ORGAN_EYE_OVERLAY "organ_eye_overlay"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"

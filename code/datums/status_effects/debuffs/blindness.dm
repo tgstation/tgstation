@@ -33,7 +33,11 @@
 
 /// Checks if we should be nearsighted currently, or if we should clear the overlay
 /datum/status_effect/grouped/nearsighted/proc/should_be_nearsighted()
-	return !HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED) || HAS_TRAIT(owner, TRAIT_RIGHT_EYE_SCAR) || HAS_TRAIT(owner, TRAIT_LEFT_EYE_SCAR)
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if (human_owner.get_eye_scars())
+			return TRUE
+	return !HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED)
 
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()

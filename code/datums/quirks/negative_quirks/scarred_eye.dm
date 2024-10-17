@@ -23,9 +23,10 @@
 		))
 		return
 
+	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/clothing/glasses/eyepatch/eyepatch = new(get_turf(quirk_holder))
-	if (HAS_TRAIT(quirk_holder, TRAIT_LEFT_EYE_SCAR))
-		eyepatch.attack_self(quirk_holder)
+	if (human_holder.get_eye_scars() & LEFT_EYE_SCAR)
+		eyepatch.flip_eyepatch()
 	give_item_to_holder(eyepatch, list(
 		LOCATION_EYES = ITEM_SLOT_EYES,
 		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
@@ -41,21 +42,22 @@
 	var/eye_side = client_source?.prefs.read_preference(/datum/preference/choiced/scarred_eye) || "Random"
 
 	if (eye_side == "Double")
-		eyes.AddElement(/datum/element/eye_scar, TRUE)
-		eyes.AddElement(/datum/element/eye_scar, FALSE)
+		eyes.apply_scar(RIGHT_EYE_SCAR)
+		eyes.apply_scar(LEFT_EYE_SCAR)
 		return
 
 	switch (eye_side)
 		if ("Random")
-			eye_side = pick(TRUE, FALSE)
+			eye_side = pick(RIGHT_EYE_SCAR, LEFT_EYE_SCAR)
 		if ("Right Eye")
-			eye_side = TRUE
+			eye_side = RIGHT_EYE_SCAR
 		if ("Left Eye")
-			eye_side = FALSE
-	eyes.AddElement(/datum/element/eye_scar, eye_side)
+			eye_side = LEFT_EYE_SCAR
+	eyes.apply_scar(eye_side)
 
 /datum/quirk/item_quirk/scarred_eye/remove()
 	var/mob/living/carbon/human/human_owner = quirk_holder
 	var/obj/item/organ/internal/eyes/eyes = human_owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!isnull(eyes))
-		eyes.RemoveElement(/datum/element/eye_scar)
+		eyes.fix_scar(RIGHT_EYE_SCAR)
+		eyes.fix_scar(LEFT_EYE_SCAR)

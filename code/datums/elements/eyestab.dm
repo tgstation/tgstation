@@ -108,17 +108,17 @@
 	// A solid chance of getting a permanent scar over one of your eyes, if you have at least one unscarred eyeball
 	if (prob(eyes.damage - EYESTAB_BLEEDING_THRESHOLD + 1))
 		var/valid_sides = list()
-		if (!HAS_TRAIT(eyes, TRAIT_RIGHT_EYE_SCAR))
-			valid_sides += TRUE
-		if (!HAS_TRAIT(eyes, TRAIT_LEFT_EYE_SCAR))
-			valid_sides += FALSE
+		if (!(eyes.scarring & RIGHT_EYE_SCAR))
+			valid_sides += RIGHT_EYE_SCAR
+		if (!(eyes.scarring & LEFT_EYE_SCAR))
+			valid_sides += LEFT_EYE_SCAR
 		if (length(valid_sides))
 			var/picked_side = pick(valid_sides)
-			to_chat(target, span_userdanger("You feel searing pain shoot though your [picked_side ? "right" : "left"] eye!"))
+			to_chat(target, span_userdanger("You feel searing pain shoot though your [picked_side == RIGHT_EYE_SCAR ? "right" : "left"] eye!"))
 			// oof ouch my eyes
 			var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
 			eye_puncture.apply_wound(eyes.bodypart_owner, wound_source = "eye stab", right_side = picked_side)
-			eyes.AddElement(/datum/element/eye_scar, picked_side)
+			eyes.apply_scar(picked_side)
 
 	if (eyes.damage < EYESTAB_BLINDING_THRESHOLD)
 		return
