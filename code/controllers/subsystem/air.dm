@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(air)
 	msg += "RB:[rebuild_queue.len]|"
 	msg += "EP:[expansion_queue.len]|"
 	msg += "AJ:[adjacent_rebuild.len]|"
-	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]|"
 	return ..()
 
 
@@ -222,6 +222,7 @@ SUBSYSTEM_DEF(air)
 		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 
+
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
@@ -352,6 +353,7 @@ SUBSYSTEM_DEF(air)
 			hotspots -= H
 		if(MC_TICK_CHECK)
 			return
+
 
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
