@@ -48,22 +48,28 @@
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 6)
 
-	// turn for the last few tests. so we can get even more coverage
-	dummy.setDir(EAST)
 
 	// screenshot test of putting the EVA suit back on.
 	// you'd think this is unnecessary but this is here to cover a bug where the suit works the first equip, but not the second
+	dummy.temporarilyRemoveItemFromInventory(suit)
 	dummy.equip_to_appropriate_slot(suit)
 	TEST_ASSERT_EQUAL(dummy.wear_suit, suit, "Dummy (Ashwalker) should be wearing the EVA suit again!")
 	finished_icon = icon(finished_icon)
 	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 7)
 
-	// finally, screenshot test of taking jumpsuit off
+	// screenshot test of taking the EVA suit off
+	// should show the autogen'd legs once more
+	qdel(suit)
+	TEST_ASSERT_NULL(dummy.wear_suit, "Dummy (Ashwalker) should not be wearing the EVA suit!")
+	finished_icon = icon(finished_icon)
+	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 8)
+
+	// finally, screenshot test of taking jumpsuit (everything) off
 	// which should test that the autogen legs disappear (here to cover a bug in which it does not disappear)
 	dummy.delete_equipment()
 	TEST_ASSERT_EQUAL(length(dummy.get_equipped_items()), 0, "Dummy (Ashwalker) should have no equipment!")
 	finished_icon = icon(finished_icon)
-	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 8)
+	finished_icon.Insert(getFlatIcon(dummy, no_anim = TRUE), dir = SOUTH, frame = 9)
 
 	// and upload
 	test_screenshot("leg_test", finished_icon)

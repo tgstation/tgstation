@@ -134,7 +134,7 @@ There are several things that need to be remembered:
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	apply_overlay(UNIFORM_LAYER)
-	check_body_shape(BODYSHAPE_DIGITIGRADE)
+	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_ICLOTHING)
 
 /mob/living/carbon/human/update_worn_id(update_obscured = TRUE)
 	remove_overlay(ID_LAYER)
@@ -349,7 +349,7 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
-	check_body_shape(BODYSHAPE_DIGITIGRADE)
+	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_FEET)
 
 /mob/living/carbon/human/update_suit_storage(update_obscured = TRUE)
 	remove_overlay(SUIT_STORE_LAYER)
@@ -398,7 +398,7 @@ There are several things that need to be remembered:
 		overlays_standing[HEAD_LAYER] = head_overlay
 
 	apply_overlay(HEAD_LAYER)
-	check_body_shape(BODYSHAPE_SNOUTED)
+	check_body_shape(BODYSHAPE_SNOUTED, ITEM_SLOT_HEAD)
 
 /mob/living/carbon/human/update_worn_belt(update_obscured = TRUE)
 	remove_overlay(BELT_LAYER)
@@ -448,7 +448,7 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_LAYER] = suit_overlay
 
 	apply_overlay(SUIT_LAYER)
-	check_body_shape(BODYSHAPE_DIGITIGRADE)
+	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_OCLOTHING)
 
 /mob/living/carbon/human/update_pockets()
 	if(client && hud_used)
@@ -499,7 +499,7 @@ There are several things that need to be remembered:
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
 	apply_overlay(FACEMASK_LAYER)
-	check_body_shape(BODYSHAPE_SNOUTED)
+	check_body_shape(BODYSHAPE_SNOUTED, ITEM_SLOT_MASK)
 
 /mob/living/carbon/human/update_worn_back(update_obscured = TRUE)
 	remove_overlay(BACK_LAYER)
@@ -860,12 +860,18 @@ generate/load female uniform sprites matching all previously decided variables
 /**
  * Used to perform regular updates to the limbs of humans with special bodyshapes
  *
- * * check_shapes: The bodyshapes to check for. Any limbs or organs which share this shape, will be updated.
+ * * check_shapes: The bodyshapes to check for.
+ * Any limbs or organs which share this shape, will be updated.
+ * * ignore_slots: The slots to ignore when updating the limbs.
+ * This is useful for things like digitigrade legs, where we can skip some slots that we're already updating.
+ *
+ * return an integer, the number of limbs updated
  */
-/mob/living/carbon/human/proc/check_body_shape(check_shapes = BODYSHAPE_DIGITIGRADE|BODYSHAPE_SNOUTED)
+/mob/living/carbon/human/proc/check_body_shape(check_shapes = BODYSHAPE_DIGITIGRADE|BODYSHAPE_SNOUTED, ignore_slots = NONE)
+	. = 0
 	if(!(bodyshape & check_shapes))
 		// optimization - none of our limbs or organs have the desired shape
-		return
+		return .
 
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		var/checked_bodyshape = limb.bodyshape
@@ -875,8 +881,19 @@ generate/load female uniform sprites matching all previously decided variables
 
 		// any limb needs to be updated, so stop here and do it
 		if(checked_bodyshape & check_shapes)
-			update_body_parts()
-			return
+			. = update_body_parts()
+			break
+
+	if(!.)
+		return
+	// hardcoding this here until bodypart updating is more sane
+	// we need to update clothing items that may have been affected by bodyshape updates
+	if(check_shapes & BODYSHAPE_DIGITIGRADE)
+		for(var/obj/item/thing as anything in get_equipped_items())
+			if(thing.slot_flags & ignore_slots)
+				continue
+			if(thing.supports_variations_flags & DIGITIGRADE_VARIATIONS)
+				thing.update_slot_icon()
 
 // Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
 // Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
