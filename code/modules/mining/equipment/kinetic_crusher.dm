@@ -328,15 +328,15 @@
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
 
-/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/PKC, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time -= bonus_value
+		PKC.charge_time -= bonus_value
 
-/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/PKC, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time += bonus_value
+		PKC.charge_time += bonus_value
 
 //blood-drunk hunter
 /obj/item/crusher_trophy/miner_eye
@@ -386,18 +386,18 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/PKC, mob/living/user)
 	. = ..()
 	if(.)
-		H.force += bonus_value * 0.2
-		H.detonation_damage += bonus_value * 0.8
+		PKC.force += bonus_value * 0.2
+		PKC.detonation_damage += bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/PKC, mob/living/user)
 	. = ..()
 	if(.)
-		H.force -= bonus_value * 0.2
-		H.detonation_damage -= bonus_value * 0.8
+		PKC.force -= bonus_value * 0.2
+		PKC.detonation_damage -= bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
@@ -513,27 +513,27 @@
 /obj/item/crusher_trophy/retool_kit/effect_desc()
 	return "the crusher to have the appearance of a sword"
 
-/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/H, mob/user)
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/PKC, mob/user)
 	. = ..()
 	if(.)
-		H.icon_state = retool_icon
-		H.current_inhand_icon_state = retool_inhand_icon
-		H.projectile_icon = retool_projectile_icon
-		H.inhand_icon_state = "[H.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
-		if(iscarbon(H.loc))
-			var/mob/living/carbon/holder = H.loc
+		PKC.icon_state = retool_icon
+		PKC.current_inhand_icon_state = retool_inhand_icon
+		PKC.projectile_icon = retool_projectile_icon
+		PKC.inhand_icon_state = "[PKC.current_inhand_icon_state]0" //it's pretty safe to assume it's not being wielded
+		if(iscarbon(PKC.loc))
+			var/mob/living/carbon/holder = PKC.loc
 			holder.update_held_items()
-		H.update_appearance()
+		PKC.update_appearance()
 
-/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/H)
-	H.icon_state = initial(H.icon_state)
-	H.current_inhand_icon_state = initial(H.current_inhand_icon_state)
-	H.projectile_icon = initial(H.projectile_icon)
-	H.inhand_icon_state = "[H.current_inhand_icon_state]0"
-	if(iscarbon(H.loc))
-		var/mob/living/carbon/holder = H.loc
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/PKC)
+	PKC.icon_state = initial(PKC.icon_state)
+	PKC.current_inhand_icon_state = initial(PKC.current_inhand_icon_state)
+	PKC.projectile_icon = initial(PKC.projectile_icon)
+	PKC.inhand_icon_state = "[PKC.current_inhand_icon_state]0"
+	if(iscarbon(PKC.loc))
+		var/mob/living/carbon/holder = PKC.loc
 		holder.update_held_items()
-	H.update_appearance()
+	PKC.update_appearance()
 	..()
 
 /obj/item/crusher_trophy/retool_kit/harpoon
