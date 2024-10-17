@@ -9,13 +9,24 @@
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
+	/// Whether the overlay blocks emissive light
+	var/blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 ///Wrapper for getting the proper image, colored and everything
 /datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
 	layer = bitflag_to_layer(layer)
-	. = get_image(layer, limb)
-	color_image(., layer, limb)
+	var/image/main_image = get_image(layer, limb)
+	color_image(main_image, layer, limb)
+	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
+		return main_image
 
-///Generate the image. Needs to be overriden
+	var/list/all_images = list(
+		main_image,
+		emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+	)
+	return all_images
+
+///Generate the image. Needs to be overridden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")
 
@@ -31,7 +42,7 @@
 /datum/bodypart_overlay/proc/removed_from_limb(obj/item/bodypart/limb)
 	return
 
-///Use this to change the appearance (and yes you must overwrite hahahahahah) (or dont use this, I just dont want people directly changing the image)
+///Use this to change the appearance (and yes you must overwrite hahahahahah) (or don't use this, I just don't want people directly changing the image)
 /datum/bodypart_overlay/proc/set_appearance()
 	CRASH("Update appearance needs to be overridden")
 
@@ -68,3 +79,7 @@
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache
 /datum/bodypart_overlay/proc/generate_icon_cache()
 	return list()
+
+/// Additionally color or texture the limb
+/datum/bodypart_overlay/proc/modify_bodypart_appearance(datum/appearance)
+	return

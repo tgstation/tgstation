@@ -39,6 +39,7 @@
 	illustration = null
 	/// Which type of cube are we spawning in this box?
 	var/cube_type = /obj/item/food/monkeycube
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/box/monkeycubes/Initialize(mapload)
 	. = ..()
@@ -50,12 +51,12 @@
 		new cube_type(src)
 
 /obj/item/storage/box/monkeycubes/syndicate
-	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
 	cube_type = /obj/item/food/monkeycube/syndicate
 
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
-	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	desc = "Waffle Corp. brand gorilla cubes. Do not taunt."
 	icon_state = "monkeycubebox"
 	illustration = null
 

@@ -111,36 +111,37 @@
 	var/module_index = 0
 	for(var/category in max_equip_by_category)
 		var/max_per_category = max_equip_by_category[category]
-		for(var/i = 1 to max_per_category)
-			var/equipment = equip_by_category[category]
-			var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
-			if(is_slot_free)
-				data += list(list(
-					"slot" = category
-				))
-				if(ui_selected_module_index == module_index)
-					ui_selected_module_index = null
-			else
-				var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
-				data += list(list(
-					"slot" = category,
-					"icon" = module.icon_state,
-					"name" = module.name,
-					"desc" = module.desc,
-					"detachable" = module.detachable,
-					"integrity" = (module.get_integrity()/module.max_integrity),
-					"can_be_toggled" = module.can_be_toggled,
-					"can_be_triggered" = module.can_be_triggered,
-					"active" = module.active,
-					"active_label" = module.active_label,
-					"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
-					"energy_per_use" = module.energy_drain,
-					"snowflake" = module.get_snowflake_data(),
-					"ref" = REF(module),
-				))
-				if(isnull(ui_selected_module_index))
-					ui_selected_module_index = module_index
-			module_index++
+		if(max_per_category)
+			for(var/i = 1 to max_per_category)
+				var/equipment = equip_by_category[category]
+				var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
+				if(is_slot_free)
+					data += list(list(
+						"slot" = category
+					))
+					if(ui_selected_module_index == module_index)
+						ui_selected_module_index = null
+				else
+					var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
+					data += list(list(
+						"slot" = category,
+						"icon" = module.icon_state,
+						"name" = module.name,
+						"desc" = module.desc,
+						"detachable" = module.detachable,
+						"integrity" = (module.get_integrity()/module.max_integrity),
+						"can_be_toggled" = module.can_be_toggled,
+						"can_be_triggered" = module.can_be_triggered,
+						"active" = module.active,
+						"active_label" = module.active_label,
+						"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
+						"energy_per_use" = module.energy_drain,
+						"snowflake" = module.get_snowflake_data(),
+						"ref" = REF(module),
+					))
+					if(isnull(ui_selected_module_index))
+						ui_selected_module_index = module_index
+				module_index++
 	return data
 
 /obj/vehicle/sealed/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

@@ -450,7 +450,7 @@
 	virus_suspectibility = 0.5
 	resulting_atom = /mob/living/simple_animal/hostile/vatbeast
 
-/datum/micro_organism/cell_line/vat_beast/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/vat_beast/succeed_growing(obj/machinery/vatgrower/vat)
 	. = ..()
 	qdel(vat)
 
@@ -476,11 +476,11 @@
 
 	virus_suspectibility = 0
 
-/datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/vatgrower/vat)
 	resulting_atom = pick(/mob/living/basic/creature, /mob/living/basic/migo, /mob/living/basic/blankbody) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
 	return ..()
 
-/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
+/datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
 	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
@@ -656,7 +656,7 @@
 	virus_suspectibility = 0
 	resulting_atom = /obj/item/queen_bee/bought
 
-/datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
+/datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/vatgrower/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
 	for(var/i in 1 to 5)
 		new /mob/living/basic/bee(get_turf(vat))

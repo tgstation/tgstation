@@ -42,6 +42,7 @@
 		"super_cell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/parts_adv
 	id = TECHWEB_NODE_PARTS_ADV
@@ -59,6 +60,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_any)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 
 /datum/techweb_node/parts_bluespace
@@ -78,6 +80,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_any = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/telecomms
 	id = TECHWEB_NODE_TELECOMS
@@ -88,6 +91,7 @@
 		"comm_monitor",
 		"comm_server",
 		"message_monitor",
+		"ntnet_relay",
 		"s_hub",
 		"s_messaging",
 		"s_server",
@@ -103,7 +107,6 @@
 		"s_filter",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
@@ -126,6 +129,7 @@
 		"firelock_board",
 		"trapdoor_electronics",
 		"blast",
+		"big_manipulator",
 		"tile_sprayer",
 		"airlock_painter",
 		"decal_painter",
@@ -142,18 +146,15 @@
 		"wirecutters",
 		"light_bulb",
 		"light_tube",
-		"intercom_frame",
-		"newscaster_frame",
-		"status_display_frame",
-		"circuit",
-		"circuitgreen",
-		"circuitred",
-		"tram_floor_dark",
-		"tram_floor_light",
-		"tram_controller",
-		"tram_display",
 		"crossing_signal",
 		"guideway_sensor",
+		"manuunloader",
+		"manusmelter",
+		"manucrusher",
+		"manucrafter",
+		"manulathe",
+		"manusorter",
+		"manurouter",
 	)
 
 /datum/techweb_node/energy_manipulation
@@ -165,6 +166,8 @@
 		"apc_control",
 		"powermonitor",
 		"smes",
+		"portable_smes",
+		"power_connector",
 		"emitter",
 		"grounding_rod",
 		"tesla_coil",
@@ -176,6 +179,7 @@
 		"tray_goggles",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/holographics
 	id = TECHWEB_NODE_HOLOGRAPHICS
@@ -220,6 +224,7 @@
 		"ci-sechud",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/night_vision
 	id = TECHWEB_NODE_NIGHT_VISION
@@ -235,3 +240,4 @@
 		"security_hud_night",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	announce_channels = list(RADIO_CHANNEL_ENGINEERING, RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)

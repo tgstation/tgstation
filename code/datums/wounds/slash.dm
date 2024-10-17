@@ -5,7 +5,7 @@
 
 /datum/wound/slash
 	name = "Slashing (Cut) Wound"
-	sound_effect = 'sound/weapons/slice.ogg'
+	sound_effect = 'sound/items/weapons/slice.ogg'
 
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
@@ -122,7 +122,7 @@
 	return bleed_amt
 
 /datum/wound/slash/flesh/get_bleed_rate_of_change()
-	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
+	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
@@ -137,7 +137,7 @@
 	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
-	// in case the victim has the NOBLOOD trait, the wound will simply not clot on it's own
+	// in case the victim has the NOBLOOD trait, the wound will simply not clot on its own
 	if(limb.can_bleed())
 		set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
@@ -321,7 +321,9 @@
 /datum/wound/slash/flesh/moderate
 	name = "Rough Abrasion"
 	desc = "Patient's skin has been badly scraped, generating moderate blood loss."
-	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
+	treat_text = "Apply bandaging or suturing to the wound. \
+		Follow up with food and a rest period."
+	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has an open cut"
 	occur_text = "is cut open, slowly leaking blood"
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
@@ -350,7 +352,10 @@
 /datum/wound/slash/flesh/severe
 	name = "Open Laceration"
 	desc = "Patient's skin is ripped clean open, allowing significant blood loss."
-	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
+	treat_text = "Swiftly apply bandaging or suturing to the wound, \
+		or make use of blood clotting agents or cauterization. \
+		Follow up with iron supplements or saline-glucose and a rest period."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
@@ -380,7 +385,10 @@
 /datum/wound/slash/flesh/critical
 	name = "Weeping Avulsion"
 	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
-	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
+	treat_text = "Immediately apply bandaging or suturing to the wound, \
+		or make use of blood clotting agents or cauterization. \
+		Follow up supervised resanguination."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is carved down to the bone, spraying blood wildly"
 	occur_text = "is torn open, spraying blood wildly"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'

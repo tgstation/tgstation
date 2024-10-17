@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "cigarettes and vapes are no longer treated as clothing (eg. They no longer get shredded and need to be repaired with... cloth)."

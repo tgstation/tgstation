@@ -18,7 +18,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	melee_damage_lower = 1
 	melee_damage_upper = 2
@@ -28,9 +28,20 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
+/datum/emote/pig
+	mob_type_allowed_typecache = /mob/living/basic/pig
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/pig/oink
+	key = "oink"
+	key_third_person = "oinks"
+	message = "oinks!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = SFX_PIG_OINK
 /mob/living/basic/pig/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "oinks!")
+	AddElement(/datum/element/pet_bonus, "oink")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()

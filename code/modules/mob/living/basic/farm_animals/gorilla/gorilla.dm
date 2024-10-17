@@ -31,7 +31,7 @@
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	unique_name = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
@@ -146,10 +146,7 @@
 	obj_damage = 15
 	ai_controller = /datum/ai_controller/basic_controller/gorilla/lesser
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
-
-/mob/living/basic/gorilla/lesser/Initialize(mapload)
-	. = ..()
-	transform *= 0.75
+	current_size = 0.75
 
 /// Cargo's wonderful mascot, the tranquil box-carrying ape
 /mob/living/basic/gorilla/cargorilla
@@ -166,5 +163,22 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
+
+/// A version of the gorilla achieved by reaching enough genetic damage as a monkey
+/mob/living/basic/gorilla/genetics
+	name = "Lab Gorilla"
+	maxHealth = 180
+	health = 180
+	desc = "A gorilla created via \"advanced genetic science\". While not quite as strong as their wildborne brethren, this simian still packs a punch."
+	melee_damage_lower = 15
+	melee_damage_upper = 18
+	obj_damage = 25
+	speed = 0.1
+	paralyze_chance = 0
+	current_size = 0.9
+
+/mob/living/basic/gorilla/genetics/Initialize(mapload)
+	. = ..()
+	qdel(GetComponent(/datum/component/amputating_limbs))
 
 #undef GORILLA_HANDS_LAYER

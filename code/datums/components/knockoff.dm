@@ -23,6 +23,10 @@
 /datum/component/knockoff/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+	var/atom/movable/atom_parent = parent
+	var/mob/living/as_mob = atom_parent.loc
+	if(ismob(as_mob))
+		on_equipped(atom_parent, as_mob, as_mob.get_slot_by_item(atom_parent)) // lie a little
 
 /datum/component/knockoff/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))

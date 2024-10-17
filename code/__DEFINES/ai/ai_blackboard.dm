@@ -8,7 +8,7 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
-///are we hungry? determined by the udder compnent
+///are we hungry? determined by the udder component
 #define BB_CHECK_HUNGRY "BB_check_hungry"
 ///are we ready to breed?
 #define BB_BREED_READY "BB_breed_ready"
@@ -24,6 +24,8 @@
 ///the list of interactions we can have with the owner
 #define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
 
+///The trait checked by ai_behavior/find_potential_targets/prioritize_trait to return a target with a trait over the rest.
+#define BB_TARGET_PRIORITY_TRAIT "target_priority_trait"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
@@ -45,7 +47,7 @@
 
 ///bane ai used by example script
 #define BB_BANE_BATMAN "BB_bane_batman"
-//yep thats it
+//yep that's it
 
 ///Hunting BB keys
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -91,7 +93,7 @@
 #define BB_TARGETLESS_TIME "BB_targetless_time"
 
 ///Tipped blackboards
-///Bool that means a basic mob will start reacting to being tipped in it's planning
+///Bool that means a basic mob will start reacting to being tipped in its planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
 ///the motherfucker who tipped us
 #define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
@@ -121,6 +123,18 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
+///key holding any food we've found
+#define BB_TARGET_FOOD "BB_TARGET_FOOD"
+
+///key holding emotes we play after eating
+#define BB_EAT_EMOTES "BB_eat_emotes"
+
+///key holding the next time we eat
+#define BB_NEXT_FOOD_EAT "BB_next_food_eat"
+
+///key holding our eating cooldown
+#define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
+
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
 
@@ -130,6 +144,9 @@
 #define BB_MOD_IMPLANT "BB_mod_implant"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
+
+///Only target mobs with these traits
+#define BB_TARGET_ONLY_WITH_TRAITS "BB_target_only_with_traits"
 
 ///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
@@ -163,5 +180,4 @@
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
 
-///mothroach next meal key!
-#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+

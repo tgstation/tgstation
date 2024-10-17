@@ -16,6 +16,7 @@
 	return ..()
 
 /datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user)
+	var/area/bag_area = get_area(user)
 	var/safety = tgui_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [to_insert.name]?", list("Proceed", "Abort"))
 	if(safety != "Proceed" \
 		|| QDELETED(to_insert) \
@@ -24,6 +25,7 @@
 		|| QDELETED(user) \
 		|| !user.can_perform_action(parent, NEED_DEXTERITY) \
 		|| !can_insert(to_insert, user) \
+		|| (bag_area.area_flags & NO_BOH) \
 	)
 		return
 

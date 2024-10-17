@@ -23,7 +23,7 @@
 	throw_speed = 4
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.15, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT*2.075)
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
@@ -49,7 +49,6 @@
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -105,15 +104,9 @@
 		crusher_trophy.on_melee_hit(target, user)
 	if(QDELETED(target))
 		return
-	// Clear existing marks
-	var/valid_crusher_attack = FALSE
-	for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-		//this will erase ALL crusher marks, not only ones by you.
-		if(crusher_mark_effect.hammer_synced != src || !target.remove_status_effect(/datum/status_effect/crusher_mark, src))
-			continue
-		valid_crusher_attack = TRUE
-		break
-	if(!valid_crusher_attack)
+	var/datum/status_effect/crusher_mark/mark = target.has_status_effect(/datum/status_effect/crusher_mark)
+	var/boosted_mark = mark?.boosted
+	if(!target.remove_status_effect(mark))
 		return
 	// Detonation effect
 	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
@@ -130,10 +123,10 @@
 	var/backstab_dir = get_dir(user, target)
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
-	if((user.dir & backstab_dir) && (target.dir & backstab_dir))
+	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
@@ -164,8 +157,7 @@
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	destabilizer.hammer_synced = src
-	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -175,17 +167,18 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/weapons/kinetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 
-/obj/item/kinetic_crusher/proc/on_saboteur(datum/source, disrupt_duration)
+/obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/weapons/empty.ogg', 100, TRUE)
-	return COMSIG_SABOTEUR_SUCCESS
+	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
 	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
@@ -211,24 +204,24 @@
 	armor_flag = BOMB
 	range = 6
 	log_override = TRUE
-	///The crusher that's firing this projectile.
-	var/obj/item/kinetic_crusher/hammer_synced
+	/// Has this projectile been boosted
+	var/boosted = FALSE
 
-/obj/projectile/destabilizer/Destroy()
-	hammer_synced = null
-	return ..()
+/obj/projectile/destabilizer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
+/obj/projectile/destabilizer/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+	boosted = TRUE
+	// Get a bit of a damage/range boost after being parried
+	damage = 10
+	range = 9
 
 /obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
 		var/mob/living/living_target = target
-		var/has_mark_from_this_crusher = FALSE
-		for(var/datum/status_effect/crusher_mark/crusher_mark_effect as anything in living_target.get_all_status_effect_of_id(/datum/status_effect/crusher_mark))
-			if(crusher_mark_effect.hammer_synced != hammer_synced)
-				continue
-			has_mark_from_this_crusher = TRUE
-			break
-		if(!has_mark_from_this_crusher)
-			living_target.apply_status_effect(/datum/status_effect/crusher_mark, hammer_synced)
+		living_target.apply_status_effect(/datum/status_effect/crusher_mark, boosted)
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/hit_mineral = target_turf
@@ -369,7 +362,7 @@
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(living_target, 'sound/magic/fireball.ogg', 20, TRUE)
+		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
 		living_target.adjustFireLoss(bonus_value, forced = TRUE)

@@ -47,21 +47,21 @@
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
 			color_cutoffs = list(15, 12, 0)
-			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
+			change_glass_color(/datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
 			color_cutoffs = null
-			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
+			change_glass_color(/datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_PIPE_CONNECTABLE)
-			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
+			change_glass_color(/datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_SHUTTLE)
-			change_glass_color(user, /datum/client_colour/glass_colour/red)
+			change_glass_color(/datum/client_colour/glass_colour/red)
 
 		if(MODE_NONE)
-			change_glass_color(user, initial(glass_colour_type))
+			change_glass_color(initial(glass_colour_type))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

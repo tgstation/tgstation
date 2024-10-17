@@ -52,7 +52,7 @@
 	kill.update_explanation_text()
 	objectives += kill
 
-	owner.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in owner.current
@@ -73,7 +73,7 @@
 	original_mind.quick_copy_all_memories(owner)
 
 /datum/antagonist/paradox_clone/roundend_report_header()
-	return "<span class='header'>A paradox clone appeared on the station!</span><br>"
+	return span_header("A paradox clone appeared on the station!<br>")
 
 /datum/outfit/paradox_clone
 	name = "Paradox Clone (Preview only)"

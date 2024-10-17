@@ -3,6 +3,12 @@
 /obj/structure/plaque/static_plaque
 	engraved = TRUE
 
+/obj/structure/plaque/static_plaque/Initialize(mapload)
+	. = ..()
+	if(isopenturf(loc) && !isProbablyWallMounted(src))
+		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
+		layer = HIGH_TURF_LAYER
+
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
