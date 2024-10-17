@@ -55,6 +55,8 @@
 	charge = new charge_type(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
+	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
