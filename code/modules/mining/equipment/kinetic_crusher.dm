@@ -506,8 +506,11 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "retool_kit"
 	denied_type = /obj/item/crusher_trophy/retool_kit
+	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
 	var/retool_icon = "crusher_sword"
+	///Specifies the icon state for the crusher's appearance in hand. Should appear in both icons/mob/inhands/weapons/hammers_lefthand.dmi and icons/mob/inhands/weapons/hammers_righthand.dmi
 	var/retool_inhand_icon = "crusher_sword"
+	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi
 	var/retool_projectile_icon = "pulse1"
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
