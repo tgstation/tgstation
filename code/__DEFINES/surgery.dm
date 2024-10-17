@@ -31,6 +31,11 @@
 /// An organ that is ostensibly dangerous when inside a body
 #define ORGAN_HAZARDOUS (1<<12)
 
+/// Scarring on the right eye
+#define RIGHT_EYE_SCAR (1<<0)
+/// Scarring on the left eye
+#define LEFT_EYE_SCAR (1<<1)
+
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
 /// Helper to figure out if a limb is robotic

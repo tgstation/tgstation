@@ -99,6 +99,14 @@ GLOBAL_LIST_INIT(paraplegic_choice, list(
 	"Amputee" = TRUE,
 ))
 
+///Scarred Eye Quirk
+GLOBAL_LIST_INIT(scarred_eye_choice, list(
+	"Random",
+	"Left Eye",
+	"Right Eye",
+	"Double",
+))
+
 ///chipped Quirk
 GLOBAL_LIST_INIT(quirk_chipped_choice, list(
 	"Basketsoft 3000" = /obj/item/skillchip/basketweaving,
