@@ -1,6 +1,6 @@
 /obj/machinery/fishing_portal_generator
 	name = "fish-porter 3000"
-	desc = "Fishing anywhere, anytime... anyway what was I talking about?"
+	desc = "fishing anywhere, anytime, anyway what was I talking about"
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "portal"
 	idle_power_usage = 0
