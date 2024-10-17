@@ -136,6 +136,7 @@
 	icon_state = "kitty"
 	visual = TRUE
 	damage_multiplier = 2
+	organ_traits = list(TRAIT_HATED_BY_DOGS) // felinids are innately hateable, but anyone can become hated by getting ears themselves
 	// Keeps track of which cat ears sprite is associated with this.
 	var/variant = "Cat"
 
