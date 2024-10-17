@@ -15014,6 +15014,12 @@
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating/rust,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"fzC" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "fzI" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin3";
@@ -47685,6 +47691,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/miningfoundry)
+"qrT" = (
+/obj/machinery/drone_dispenser,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "qrW" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
@@ -112836,7 +112846,7 @@ tjj
 tjj
 blb
 ssz
-xQI
+qrT
 qRO
 ssz
 vLv
@@ -113093,7 +113103,7 @@ tjj
 blb
 blb
 ssz
-roz
+fzC
 sPO
 ssz
 aSy
@@ -113350,8 +113360,8 @@ blb
 blb
 ssz
 ssz
+xQI
 roz
-ssz
 ssz
 pus
 cYG
@@ -113607,7 +113617,7 @@ ssz
 ssz
 ssz
 xQI
-roz
+xQI
 roz
 ssz
 iWZ
