@@ -692,41 +692,41 @@
 			soundin = pick(
 				'sound/mobs/non-humanoids/dog/growl1.ogg',
 				'sound/mobs/non-humanoids/dog/growl2.ogg',
-				)
+			)
 		if(SFX_GROWL)
 			soundin = pick(
 				'sound/effects/wounds/sizzle1.ogg',
 				'sound/effects/wounds/sizzle2.ogg',
-				)
+			)
 		if(SFX_POLAROID)
 			soundin = pick(
 				'sound/items/polaroid/polaroid1.ogg',
 				'sound/items/polaroid/polaroid2.ogg',
-				)
+			)
 		if(SFX_HALLUCINATION_TURN_AROUND)
 			soundin = pick(
 				'sound/effects/hallucinations/turn_around1.ogg',
 				'sound/effects/hallucinations/turn_around2.ogg',
-				)
-		if(SFX_HALLUCINATION_I_SEE_YOU
+			)
+		if(SFX_HALLUCINATION_I_SEE_YOU)
 			soundin = pick(
 				'sound/effects/hallucinations/i_see_you1.ogg',
 				'sound/effects/hallucinations/i_see_you2.ogg',
-				))
+			)
 		if(SFX_LOW_HISS)
 			soundin = pick(
 				'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
 				'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
 				'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
-				)
+			)
 		if(SFX_HALLUCINATION_I_M_HERE)
 			soundin = pick(
 				'sound/effects/hallucinations/im_here1.ogg',
 				'sound/effects/hallucinations/im_here2.ogg',
-				)
+			)
 		if(SFX_HALLUCINATION_OVER_HERE)
 			soundin = pick(
 				'sound/effects/hallucinations/over_here2.ogg',
 				'sound/effects/hallucinations/over_here3.ogg',
-				)
+			)
 	return soundin

@@ -308,7 +308,7 @@
 			'sound/items/tools/jaws_cut.ogg',
 			'sound/items/tools/jaws_pry.ogg',
 			'sound/items/tools/welder.ogg',
-			'sound/items/tools/ratchet.ogg'
+			'sound/items/tools/ratchet.ogg',
 			), 80, TRUE, -1)
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
