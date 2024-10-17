@@ -206,3 +206,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_VOID_DEFLECT "void_deflect"
 #define SFX_LOW_HISS "low_hiss"
 
+#define SFX_INDUSTRIAL_SCAN "industrial_scan"

@@ -729,4 +729,10 @@
 				'sound/effects/hallucinations/over_here2.ogg',
 				'sound/effects/hallucinations/over_here3.ogg',
 			)
+		if(SFX_INDUSTRIAL_SCAN)
+			soundin = pick(
+				'sound/effects/industrial_scan/industrial_scan1.ogg',
+				'sound/effects/industrial_scan/industrial_scan2.ogg',
+				'sound/effects/industrial_scan/industrial_scan3.ogg',
+			)
 	return soundin
