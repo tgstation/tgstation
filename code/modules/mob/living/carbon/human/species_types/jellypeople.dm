@@ -257,6 +257,9 @@
 		if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION)
 			H.adjust_nutrition(-1.25 * seconds_per_tick)
 
+	// check life tick if we're splittable or not after updating other things
+	slime_split?.build_all_button_icons()
+
 /datum/action/innate/split_body
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
