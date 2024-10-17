@@ -555,7 +555,7 @@
 	playsound(src, sound, 50, TRUE)
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
-/obj/item/modular_computer/proc/ring(ringtone) // bring bring
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -565,7 +565,10 @@
 			), 50, TRUE)
 	else
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
-	audible_message("*[ringtone]*")
+	ringtone = "*[ringtone]*"
+	audible_message(ringtone)
+	for(var/mob/living/alertee in balloon_alertees)
+		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
 	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)

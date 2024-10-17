@@ -714,12 +714,11 @@
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
 		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
-		messaged_mob.balloon_alert(messaged_mob, "new PDA message")
 
 		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, sender_title, inbound_message, photo_message)
 
 	if (alert_able && (!alert_silenced || is_rigged))
-		computer.ring(ringtone)
+		computer.ring(ringtone, receievers)
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
