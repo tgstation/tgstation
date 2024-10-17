@@ -17,3 +17,5 @@
 #define COMSIG_STOMACH_AFTER_EAT "stomach_after_eat"
 /// Whenever a baton successfully executes its nonlethal attack. WARNING wonderful FUCKING CODE by niko THIS IS peak AAAAAAAAAAAAH
 #define COMSIG_PRE_BATON_FINALIZE_ATTACK "pre_baton_finalize_attack"
+// For after a user has sent a say message
+#define COMSIG_MOB_POST_SAY "mob_post_say"
