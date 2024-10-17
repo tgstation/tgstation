@@ -76,16 +76,13 @@
 /obj/item/fishing_lure/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD, TRAIT_OMNI_BAIT, TRAIT_BAIT_UNCONSUMABLE), INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(lure_equipped))
 
-/obj/item/fishing_lure/proc/lure_equipped(datum/source, obj/item/fishing_rod/rod)
-	SIGNAL_HANDLER
+/obj/item/fishing_lure/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
 	rod.spin_frequency = spin_frequency
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_lure/proc/on_removed(atom/movable/source, obj/item/fishing_rod/rod, dir, forced)
-	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+/obj/item/fishing_lure/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
 	rod.spin_frequency = null
 
 ///Called for every fish subtype by the fishing subsystem when initializing, to populate the list of fish that can be catched with this lure.
@@ -203,12 +200,19 @@
 
 /obj/item/fishing_lure/led/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_BAIT_IGNORE_ENVIRONMENT, INNATE_TRAIT)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/fishing_lure/led/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "led_emissive", src)
+
+/obj/item/fishing_lure/led/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT, type)
+
+/obj/item/fishing_lure/led/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT, type)
 
 /obj/item/fishing_lure/led/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
@@ -221,6 +225,14 @@
 	desc = "A faux-gold lure used to attract shiny-loving fish."
 	icon_state = "lucky_coin"
 	spin_frequency = list(1.5 SECONDS, 2.7 SECONDS)
+
+/obj/item/fishing_lure/lucky_coin/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
+
+/obj/item/fishing_lure/lucky_coin/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
+	. = ..()
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
 
 /obj/item/fishing_lure/lucky_coin/is_catchable_fish(obj/item/fish/fish_type, list/fish_properties)
 	var/list/fish_traits = fish_properties[FISH_PROPERTIES_TRAITS]
