@@ -1,0 +1,4 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "Fixes canisters and portable pumps from not considering decimals when transferring input to setting release pressure."

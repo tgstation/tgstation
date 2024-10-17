@@ -38,7 +38,7 @@
 	. = ..()
 
 	/// Static list of all minerals to populate gulag boulders with.
-	var/list/static/gulag_minerals = list(
+	var/static/list/gulag_minerals = list(
 		/datum/material/diamond = 1,
 		/datum/material/gold = 8,
 		/datum/material/iron = 95,
@@ -59,7 +59,7 @@
 	. = ..()
 
 	/// Static list of all minerals to populate gulag boulders with, but with bluespace added where safe.
-	var/list/static/expanded_gulag_minerals = list(
+	var/static/list/expanded_gulag_minerals = list(
 		/datum/material/bluespace = 1,
 		/datum/material/diamond = 1,
 		/datum/material/gold = 8,

@@ -410,7 +410,7 @@
 	damtype = BRUTE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	attack_verb_continuous = list("smacks", "clubs", "wacks")
-	attack_verb_simple = list("smack", "club", "wacks")
+	attack_verb_simple = list("smack", "club", "wack")
 
 	/// Range cap on where you can summon vendors.
 	var/max_summon_range = RUNIC_SCEPTER_MAX_RANGE
