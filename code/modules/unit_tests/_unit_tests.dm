@@ -166,6 +166,7 @@
 #include "hunger_curse.dm"
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_harvest.dm"
+#include "holder_loving.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
 #include "inhands.dm"
