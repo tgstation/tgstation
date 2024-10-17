@@ -159,27 +159,12 @@
 	if(!isliving(user))
 		return
 	for(var/obj/item/storage/box/squeeze_box in get_turf(user))
-		if(squeeze_box.type != /obj/item/storage/box)
-			continue
-		if(istype(squeeze_box.loc, /obj/item/storage))
-			continue
-		if(squeeze_box.contents.len)
-			continue
-		flatten_box(squeeze_box)
+		squeeze_box.flatten_box()
 
 /datum/emote/jump/proc/jump_animation(mob/user)
 	var/original_transform = user.transform
 	animate(user, transform = user.transform.Translate(0, 4), time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
 	animate(transform = original_transform, time = 0.1 SECONDS)
-
-/datum/emote/jump/proc/flatten_box(obj/item/storage/box/squeeze_box)
-	var/obj/flat_box = new /obj/item/storage/box/flat(squeeze_box.drop_location())
-	playsound(squeeze_box, 'sound/items/handling/materials/cardboard_drop.ogg', 50, TRUE)
-
-	flat_box.pixel_x = squeeze_box.pixel_x
-	flat_box.pixel_y = squeeze_box.pixel_y
-
-	qdel(squeeze_box)
 
 /datum/emote/jump/get_sound(mob/user)
 	return 'sound/items/weapons/thudswoosh.ogg'
