@@ -6661,6 +6661,7 @@
 #include "modular_doppler\loadout_categories\categories\shoes.dm"
 #include "modular_doppler\loadout_categories\categories\toys.dm"
 #include "modular_doppler\loadout_categories\categories\undersuit.dm"
+#include "modular_doppler\loud_asay\code\loud_asay.dm"
 #include "modular_doppler\modular_antagonists\_dynamic_rulesets.dm"
 #include "modular_doppler\modular_antagonists\changeling\changeling.dm"
 #include "modular_doppler\modular_antagonists\datums\antag_recipes.dm"
