@@ -19,7 +19,7 @@
 	person.put_in_hand(tool, 2)
 	TEST_ASSERT_EQUAL(person.get_item_for_held_index(2), tool, "Holder loving component blocked swapping the wrench into the other hand!")
 
-	//Test 3: Upon dropping the item ontto the ground it should move back into the bag
+	//Test 3: Upon dropping the item onto the ground it should move back into the bag
 	person.dropItemToGround(tool, silent = TRUE)
 	TEST_ASSERT_NOTNULL(locate(/obj/item/wrench) in bag, "Holder loving component did not move the wrench back into storage upon dropping!")
 
