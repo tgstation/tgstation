@@ -30,6 +30,7 @@
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,*/
+		TRAIT_UNHUSKABLE,
 		TRAIT_STABLEHEART,
 		TRAIT_STABLELIVER,
 	)
@@ -84,6 +85,8 @@
 			to_chat(target, span_warning("Alert: Critical damage taken! Cooling systems failing!"))
 			do_sparks(3, FALSE, target)
 
+	if(target.stat == DEAD)
+		return
 	if(HAS_TRAIT(target, TRAIT_CHARGING))
 		return
 	if(core_energy > 0)

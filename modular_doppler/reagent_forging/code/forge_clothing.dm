@@ -79,7 +79,7 @@
 	icon = 'modular_doppler/reagent_forging/icons/obj/forge_clothing.dmi'
 	worn_icon = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/food_replicator/icons/clothing_worn.dmi',
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing_digi.dmi')
 	icon_state = "plate_boots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
