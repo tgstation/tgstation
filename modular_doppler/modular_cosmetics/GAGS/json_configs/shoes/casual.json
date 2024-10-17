@@ -10,7 +10,7 @@
 	"laceups": [
 		{
 			"type": "icon_state",
-			"icon_state": "laceup",
+			"icon_state": "laceups",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		}
