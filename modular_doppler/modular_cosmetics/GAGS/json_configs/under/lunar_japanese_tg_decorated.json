@@ -1,0 +1,54 @@
+{
+	"yukata2": [
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_neck",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_sash",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_petals",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	],
+	"yukata3": [
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_neck",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_sash",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "yukata_alt_flakes",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

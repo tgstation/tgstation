@@ -36,3 +36,155 @@
 	name = "pink tutu"
 	desc = "A fluffy pink tutu."
 	icon_state = "pinktutu"
+
+
+
+/*
+*	LUNAR AND JAPANESE CLOTHES
+*/
+
+/obj/item/clothing/under/dress/doppler/qipao
+	name = "qipao"
+	desc = "A qipao, traditionally worn in ancient Earth China by women during social events and lunar new years."
+	icon_state = "qipao"
+	body_parts_covered = CHEST|GROIN|LEGS
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	greyscale_colors = "#2b2b2b"
+	greyscale_config = /datum/greyscale_config/lunar_japanese
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/under/dress/doppler/qipao/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/dress/doppler/qipao/customtrim
+	greyscale_colors = "#2b2b2b#ffce5b"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/bicol
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/bicol/worn
+
+/obj/item/clothing/under/dress/doppler/qipao/customtrim/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/bicol/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/bicol/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/dress/doppler/cheongsam
+	name = "cheongsam"
+	desc = "A cheongsam, traditionally worn in ancient Earth China by men during social events and lunar new years."
+	icon_state = "cheongsam"
+	body_parts_covered = CHEST|GROIN|LEGS
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	greyscale_colors = "#2b2b2b#353535"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/bicol
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/bicol/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/under/dress/doppler/cheongsam/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/bicol/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/bicol/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/dress/doppler/cheongsam/customtrim
+	greyscale_colors = "#2b2b2b#ffce5b#353535"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/tricol
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/tricol/worn
+
+/obj/item/clothing/under/dress/doppler/cheongsam/customtrim/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/tricol/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/tricol/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/dress/doppler/yukata
+	name = "yukata"
+	desc = "A traditional ancient Earth Japanese yukata, typically worn in casual settings."
+	icon_state = "yukata"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	greyscale_colors = "#2b2b2b#666666"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/bicol
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/bicol/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/under/dress/doppler/yukata/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/bicol/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/bicol/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/// GAGS-IFIED TG LUNAR/JAPANESE CLOTHES
+
+/obj/item/clothing/under/costume/yukata
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/under/costume.dmi',
+	BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi')
+
+/obj/item/clothing/under/costume/yukata/greyscale
+	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_colors = "#333333#AAAAAA#AA0000"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/tg
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/tg/worn
+
+/obj/item/clothing/under/costume/yukata/greyscale/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/tg/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/tg/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/costume/yukata/green/greyscale
+	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_colors = "#333333#AAAAAA#AA0000#AA0000"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/tg/decorated
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/tg/decorated/worn
+
+/obj/item/clothing/under/costume/yukata/green/greyscale/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/tg/decorated/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/tg/decorated/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/costume/yukata/white/greyscale
+	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_colors = "#AAAAAA#0066AA#0066AA#00AAFF"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/tg/decorated
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/tg/decorated/worn
+
+/obj/item/clothing/under/costume/yukata/white/greyscale/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/tg/decorated/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/tg/decorated/worn/digi
+	set_greyscale(colors = greyscale_colors)
+
+/obj/item/clothing/under/costume/kimono
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/under/costume.dmi',
+	BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi')
+
+/obj/item/clothing/under/costume/kimono/greyscale
+	flags_1 = IS_PLAYER_COLORABLE_1
+	greyscale_colors = "#333333#AAAAAA#AA0000"
+	greyscale_config = /datum/greyscale_config/lunar_japanese/tg
+	greyscale_config_worn = /datum/greyscale_config/lunar_japanese/tg/worn
+
+/obj/item/clothing/under/costume/kimono/greyscale/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/lunar_japanese/tg/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/lunar_japanese/tg/worn/digi
+	set_greyscale(colors = greyscale_colors)

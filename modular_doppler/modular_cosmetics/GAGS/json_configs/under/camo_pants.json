@@ -1,0 +1,27 @@
+{
+	"camopants": [
+		{
+			"type": "icon_state",
+			"icon_state": "camopants_camo1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "camopants_camo2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "camopants_camo3",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "camopants_buckle",
+			"blend_mode": "overlay"
+		}
+	]
+}
