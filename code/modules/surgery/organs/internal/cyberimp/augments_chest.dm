@@ -121,7 +121,7 @@
 	owner.set_heartattack(FALSE)
 	if (!owner.revive())
 		return
-	owner.revival_shock()
+	owner.apply_revival_shock()
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)

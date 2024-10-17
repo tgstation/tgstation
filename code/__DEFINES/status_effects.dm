@@ -180,4 +180,4 @@
 #define set_static_vision_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision, TRUE)
 
 /// If we have mood, applies a long-lasting mood debuff, majorly decreases our sanity and making us easier to injure. Does not affect changelings (duh)
-#define revival_shock(...) apply_status_effect(/datum/status_effect/revival_shock)
+#define apply_revival_shock(...) apply_status_effect(/datum/status_effect/revival_shock)

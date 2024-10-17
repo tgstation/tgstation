@@ -702,7 +702,7 @@
 	if (!target.revive())
 		do_cancel()
 		return
-	target.revival_shock()
+	target.apply_revival_shock()
 	target.emote("gasp")
 	target.set_jitter_if_lower(200 SECONDS)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
