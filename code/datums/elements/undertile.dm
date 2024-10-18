@@ -60,7 +60,7 @@
 
 		if(tilt_tile)
 			T.transform = T.transform.Turn(2)
-			T.layer = (LOW_FLOOR_LAYER + 0.1) // prettier
+			T.layer = (T.layer + 0.1) // prettier
 			T.appearance_flags |= PIXEL_SCALE
 
 		if(use_anchor)
