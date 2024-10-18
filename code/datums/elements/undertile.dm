@@ -59,7 +59,8 @@
 			T.add_overlay(tile_overlay)
 
 		if(tilt_tile)
-			T.transform = T.transform.Turn(rand(0, 1) ? -2 : 2)
+			T.transform = T.transform.Turn(2)
+			T.layer = (LOW_FLOOR_LAYER + 0.1) // prettier
 			T.appearance_flags |= PIXEL_SCALE
 
 		if(use_anchor)
@@ -85,6 +86,7 @@
 
 		if(tilt_tile)
 			T.transform = matrix()
+			T.layer = initial(T.layer)
 			T.appearance_flags &= PIXEL_SCALE
 
 		if(use_alpha)
