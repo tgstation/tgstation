@@ -392,3 +392,100 @@
   - code_imp: cleaned up laser tag helmet code a bit
   - sound: gas analyzer now has handling sounds
   - qol: offering an item displays a balloon alert
+2024-10-15:
+  Hardly3D:
+  - spellcheck: fixes a small error in text when adjusting kitsune masks
+  Jewelry-x:
+  - bugfix: fixed mech step sound playing twice diagonally
+  - bugfix: fixed turn sound playing every time you move diagonally, now only plays
+      when the sprite turns
+  ZephyrTFA:
+  - qol: map votes are now winner take all instead of weighted.
+  carlarctg:
+  - rscadd: Added the FOSBURY skillchip, found in hacked toy vendors. This skillchip
+      allows you to bypass the emote cooldown when flipping or spinning. However,
+      if used too often, it will lower the chip's integrity and cause malfunctions.
+  - rscadd: Added the Chipped quirk. It allows you to spawn with one base skillchip.
+      (not the one above)
+  - rscadd: Added the Chip Connector quirk. It contains a new implant, the chip connector,
+      which allows you to install and take out skillchips at any time.
+  - code_imp: Renamed the organ slots for brain implants and made the connector implant
+      take the CNS slot.
+  grungussuss:
+  - sound: medical, jani, soulstone, grenade belts got sounds
+  - sound: cards have new handling sounds
+2024-10-16:
+  Ben10Omintrix:
+  - code_imp: animals' food hunting behavior has been refactored, please report any
+      bugs
+  DATA-xPUNGED:
+  - bugfix: ACTUALLY fixes server hop fade in
+  Ghommie:
+  - bugfix: Fixed gills not managing to breathe water vapor through internals.
+  - bugfix: Fixed some inconsistencies with examining fishing spots with the appropriate
+      level and fishing rod.
+  GremlinSeeker:
+  - map: New Icebox  Ruin "Syndicate Biodome" added.
+  Mamaii:
+  - rscadd: shower will give felinids negative mood effect
+  - bugfix: fixed shower hater status effect alert not showing
+  Melbert:
+  - balance: Cyborgs are now slowed down when hit with any melee weapons, rather than
+      ONLY when they are hit by THROWN melee weapons. The stronger the weapon, the
+      stronger the slowdown. Thrown weapons are still more effective at slowing than
+      just hitting them directly, however.
+  SmArtKar:
+  - bugfix: Losing hulk after becoming a carp no longer turns you black
+  Soupfgc:
+  - bugfix: Springlock MOD module properly interacts with Water Vapor
+  hyperjll:
+  - qol: The GLA Brand Mail Counterfeit Device's description has been updated by a
+      native english speaker and has been made more descriptive.
+  junkgle01:
+  - rscadd: the Honkmother has decided to bless Her children with a new form!
+  - image: resprited the optional clown mask styles
+  - bugfix: fixed up Metastation's cargo delivery office.
+  kittysmooch:
+  - bugfix: 'fixed east facing female human heads having an extra neck pixel
+
+      :cl:'
+  larentoun:
+  - spellcheck: Correct message is shown when YOU get devoured by an alien
+  - spellcheck: Fixed a few typos on some simple attack verbs being continuous
+  mc-oofert:
+  - bugfix: you may no longer roll appendicitis in deathmatch or as a bitrunner avatar
+  ninjanomnom:
+  - bugfix: Byond membership lookup should now warn you when it fails due to a connection
+      failure.
+  vinylspiders:
+  - bugfix: fixes a bunch of improper static list declarations
+2024-10-17:
+  EnterTheJake:
+  - balance: Sundered Blades now require 1 Titanium or Silver bar to craft and their
+      capacity has been reduced to 4.
+  - balance: Realignment pulls you out of stuns a bit faster and grants baton resist
+      while active.
+  - balance: Blade Heretic dual wielding now let's you infuse Your Dark Blades with
+      a weaker mansus grasp and grants an increase in demolition modifier.
+  - bugfix: Malestrom of Silver grants the ring of protective blades once again.
+  - balance: Mawed Crucible requires 3 organs to brew one potion, passively refills
+      overtime and can be used to refill the Eldritch Flask
+  - balance: Brew of Crucible soul effect bumped to 40 seconds and can be ended early.
+  - balance: Brew Of Dusk and Dawn effect bumped to 3 minutes.
+  - balance: Brew of the  wounded soldier now offers a very minor passive heal and
+      fully heals your wounds and limbs upon expiring.
+  - balance: Cursed Curio shield now recharges faster.
+  - balance: Lionhunter's rifle has been reworked, it now fits on the eldritch robes
+      vest slots, it's cheaper to craft it and its ammunition and works as an initiation
+      tool.
+  SmArtKar:
+  - bugfix: Chainsaws can now be sharpened
+  - code_imp: Chainsaws have received a minor code refactor
+  Xackii:
+  - rscadd: Manipulator now shows what objects he is dragging.
+  - rscadd: Manipulator now can take more then just items.
+  - rscadd: 'Manipulator now have 3 modes to choice: drop/use/throw.'
+  - rscadd: Manipulator now have priorities.
+  - rscadd: Manipulator now can be emaged.
+  Y0SH1M4S73R:
+  - bugfix: Syndicate Sleeper Agents can once again forge custom objectives

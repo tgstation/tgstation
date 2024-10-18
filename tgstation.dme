@@ -903,6 +903,7 @@
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\climb_tree.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\emote_with_target.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\find_parent.dm"
+#include "code\datums\ai\basic_mobs\basic_ai_behaviors\interact_with_target.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\nearest_targeting.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\pick_up_item.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\pull_target.dm"
