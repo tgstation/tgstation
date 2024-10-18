@@ -156,6 +156,7 @@
 				)
 
 		item_target.flags_inv = initial(picked_item.flags_inv)
+		item_target.hair_mask = initial(picked_item.hair_mask)
 		item_target.transparent_protection = initial(picked_item.transparent_protection)
 		if(isclothing(item_target) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
