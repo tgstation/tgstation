@@ -336,6 +336,9 @@
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
+	if(iscarbon(owner.current) && deconverter)
+		var/mob/living/carbon/C = owner.current
+		C.Unconscious(100)
 	deconversion_source = deconverter
 	owner.remove_antag_datum(type)
 
