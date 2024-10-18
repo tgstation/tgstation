@@ -459,3 +459,78 @@
       failure.
   vinylspiders:
   - bugfix: fixes a bunch of improper static list declarations
+2024-10-17:
+  EnterTheJake:
+  - balance: Sundered Blades now require 1 Titanium or Silver bar to craft and their
+      capacity has been reduced to 4.
+  - balance: Realignment pulls you out of stuns a bit faster and grants baton resist
+      while active.
+  - balance: Blade Heretic dual wielding now let's you infuse Your Dark Blades with
+      a weaker mansus grasp and grants an increase in demolition modifier.
+  - bugfix: Malestrom of Silver grants the ring of protective blades once again.
+  - balance: Mawed Crucible requires 3 organs to brew one potion, passively refills
+      overtime and can be used to refill the Eldritch Flask
+  - balance: Brew of Crucible soul effect bumped to 40 seconds and can be ended early.
+  - balance: Brew Of Dusk and Dawn effect bumped to 3 minutes.
+  - balance: Brew of the  wounded soldier now offers a very minor passive heal and
+      fully heals your wounds and limbs upon expiring.
+  - balance: Cursed Curio shield now recharges faster.
+  - balance: Lionhunter's rifle has been reworked, it now fits on the eldritch robes
+      vest slots, it's cheaper to craft it and its ammunition and works as an initiation
+      tool.
+  SmArtKar:
+  - bugfix: Chainsaws can now be sharpened
+  - code_imp: Chainsaws have received a minor code refactor
+  Xackii:
+  - rscadd: Manipulator now shows what objects he is dragging.
+  - rscadd: Manipulator now can take more then just items.
+  - rscadd: 'Manipulator now have 3 modes to choice: drop/use/throw.'
+  - rscadd: Manipulator now have priorities.
+  - rscadd: Manipulator now can be emaged.
+  Y0SH1M4S73R:
+  - bugfix: Syndicate Sleeper Agents can once again forge custom objectives
+2024-10-18:
+  Ghommie:
+  - map: Added a premapped fishing portal generator to every map.
+  - balance: Lowered the requirements for fish scanning experiment. Swapped the rewards
+      of the second and third experiments.
+  - balance: Buffed fishing difficulty modifiers for several items and chairs.
+  - balance: Fishing skill now affects completion speed of the minigame more actively.
+  - balance: Mild fish infusion tweaks. Crawling is a smidge slower, but healing from
+      showers and drank water is a bit better.
+  - qol: Fishing rods and fish cases can now be printed by cargo and science lathes.
+  - rscadd: Gills now give the fish puns speech modifier.
+  Hatterhat:
+  - bugfix: Portable SMESes should no longer turn invisible when unscrewed.
+  Melbert:
+  - bugfix: Fixed digitigrade pants sprite not updating in accordance to some leg
+      updates
+  Pickle-Coding:
+  - bugfix: Fixes canisters and portable pumps from not considering decimals when
+      transferring input to setting release pressure.
+  SmArtKar:
+  - bugfix: Bronze chairs will automatically spin once more
+  - bugfix: Hotswapping tanks in pumps and scrubbers now properly plays both sounds
+      instead of runtiming
+  grungussuss:
+  - sound: added new scanning sound
+  - code_imp: organized playsound code a bit
+  - sound: along with the shared emote cooldown, specific emote audio cooldown has
+      returned.
+  mc-oofert:
+  - code_imp: Movement Subsystem no longer is a background subsystem. This means that
+      you should no longer get stuck after slipping on oil during instances of high
+      usage.
+  - bugfix: input output overlays for manufacturing machines actually update properly
+      when rotated
+  - qol: you may dump materials of a manulathe via CTRL SHIFT LMB
+  - balance: manulathes may not receive ore (not intentional)
+  - balance: 'manulathes now use a matter bin in their construction, which now affects
+      their material holding capacity: 50 sheets per tier'
+  r3dj4ck0424:
+  - rscadd: Nanotrasen High Command is pleased to announce that retool kits, for giving
+      your protokinetic crushers a fancy new look, are now available at the mining
+      vendor! The company reminds staff that rumors of a similarly-functioning lavaland
+      trinket are to be ignored.
+  san7890:
+  - admin: Logging of Bombanana Peel explosions should be far better now.

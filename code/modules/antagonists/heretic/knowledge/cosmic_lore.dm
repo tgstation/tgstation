@@ -172,7 +172,7 @@
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_BRAIN
 	)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 	if(combo_timer)
 		deltimer(combo_timer)
