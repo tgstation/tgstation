@@ -26,7 +26,7 @@
 	builtintools += new /obj/item/soap/drone(src)
 
 	for(var/obj/item/tool as anything in builtintools)
-		tool.AddComponent(/datum/component/holderloving, src, TRUE)
+		tool.AddComponent(/datum/component/holderloving, src)
 
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
