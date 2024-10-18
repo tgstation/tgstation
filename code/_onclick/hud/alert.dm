@@ -51,7 +51,6 @@
 	thealert.owner = src
 
 	if(new_master)
-		// This should be made into a generic helper proc later tbh
 		var/mutable_appearance/master_appearance = new(new_master)
 		master_appearance.appearance_flags = KEEP_TOGETHER
 		master_appearance.layer = FLOAT_LAYER
