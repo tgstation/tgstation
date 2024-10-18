@@ -25,6 +25,10 @@
 	resistance_flags = NONE
 	dog_fashion = null
 	slowdown = 0.5
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	///How much this helmet affects fishing difficulty
 	var/fishing_modifier = 3
 

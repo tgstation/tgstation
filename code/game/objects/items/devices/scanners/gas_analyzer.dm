@@ -18,6 +18,8 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	pickup_sound = 'sound/items/handling/gas_analyzer/gas_analyzer_pickup.ogg'
+	drop_sound = 'sound/items/handling/gas_analyzer/gas_analyzer_drop.ogg'
 	/// Boolean whether this has a CD
 	var/cooldown = FALSE
 	/// The time in deciseconds
@@ -181,6 +183,7 @@
 
 	var/icon = target
 	var/message = list()
+	playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	if(!silent && isliving(user))
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")

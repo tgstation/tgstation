@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Lionhunter rifle can no longer be used to teleport to the debug room"

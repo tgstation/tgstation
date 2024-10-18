@@ -31,7 +31,7 @@
 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
 
 		if(clear_below)
-			var/list/static/clear_below_typecache = typecacheof(list(
+			var/static/list/clear_below_typecache = typecacheof(list(
 				/obj/structure/spawner,
 				/mob/living/simple_animal,
 				/obj/structure/flora
