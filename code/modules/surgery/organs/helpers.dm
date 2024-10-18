@@ -4,7 +4,7 @@
  * Arguments:
  * * typepath The typepath of the organ to get
  */
-/mob/proc/get_organ_by_type(typepath)
+/mob/proc/get_organ_by_type(typepath) as /obj/item/organ
 	return
 
 /**
