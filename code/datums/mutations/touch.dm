@@ -1,6 +1,6 @@
 /datum/mutation/human/shock
 	name = "Shock Touch"
-	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others."
+	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others. Mostly harmless! Mostly... "
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
@@ -19,30 +19,23 @@
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
-		to_modify.chain = initial(to_modify.chain)
+		to_modify.stagger = initial(to_modify.stagger)
 		return
 
-	to_modify.chain = TRUE
+	to_modify.stagger = TRUE
 
 /datum/action/cooldown/spell/touch/shock
 	name = "Shock Touch"
-	desc = "Channel electricity to your hand to shock people with."
+	desc = "Channel electricity to your hand to shock people with. Mostly harmless! Mostly... "
 	button_icon_state = "zap"
 	sound = 'sound/items/weapons/zapbang.ogg'
-	cooldown_time = 12 SECONDS
+	cooldown_time = 7 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	antimagic_flags = NONE
 
-	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
-	///This var decides if the spell should chain, dictated by presence of power chromosome
-	var/chain = FALSE
-	///Affects damage, should do about 1 per limb
-	var/zap_power = 7.5 KILO JOULES
-	///Range of tesla shock bounces
-	var/zap_range = 7
-	///flags that dictate what the tesla shock can interact with, Can only damage mobs, Cannot damage machines or generate energy
-	var/zap_flags = ZAP_MOB_DAMAGE
+	///This var decides if the spell should stagger, dictated by presence of power chromosome
+	var/stagger = FALSE
 
 	hand_path = /obj/item/melee/touch_attack/shock
 	draw_message = span_notice("You channel electricity into your hand.")
@@ -51,7 +44,12 @@
 /datum/action/cooldown/spell/touch/shock/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(carbon_victim.electrocute_act(15, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesn't stun. never let this stun
+		if(carbon_victim.electrocute_act(5, caster, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesn't stun. never let this stun
+
+			var/obj/item/bodypart/affecting = carbon_victim.get_bodypart(carbon_victim.get_random_valid_zone(caster.zone_selected))
+			var/armor_block = carbon_victim.run_armor_check(affecting, ENERGY)
+			carbon_victim.apply_damage(20, STAMINA, def_zone = affecting, blocked = armor_block)
+
 			carbon_victim.dropItemToGround(carbon_victim.get_active_held_item())
 			carbon_victim.dropItemToGround(carbon_victim.get_inactive_held_item())
 			carbon_victim.adjust_confusion(15 SECONDS)
@@ -59,21 +57,19 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(chain)
-				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
-				carbon_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
+			if(stagger)
+				carbon_victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			return TRUE
 
 	else if(isliving(victim))
 		var/mob/living/living_victim = victim
-		if(living_victim.electrocute_act(15, caster, 1, SHOCK_NOSTUN))
+		if(living_victim.electrocute_act(15, caster, 1, SHOCK_NOSTUN)) //We do damage here because non-carbon mobs typically ignore stamina damage.
 			living_victim.visible_message(
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(chain)
-				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
-				living_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
+			if(stagger)
+				living_victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			return TRUE
 
 	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
