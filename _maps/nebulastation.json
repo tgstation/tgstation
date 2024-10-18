@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"map_name": "NebulaStation",
+	"map_path": "map_files/NebulaStation",
+	"map_file": "NebulaStation.dmm",
+	"shuttles": {
+		"cargo": "cargo_nebula",
+		"ferry": "ferry_nebula",
+		"whiteship": "whiteship_tram",
+		"emergency": "emergency_nebula"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	]
+}
