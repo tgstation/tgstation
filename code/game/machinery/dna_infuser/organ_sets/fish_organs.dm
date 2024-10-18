@@ -201,7 +201,7 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
 	color_source = ORGAN_COLOR_HAIR
-/*	DOPPLER EDIT REMOVAL START - makes your fishy tail be random :(
+
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
@@ -210,7 +210,7 @@
 		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
 
 	return ..()
-	DOPPLER EDIT REMOVAL END */
+
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
 

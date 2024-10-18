@@ -47,7 +47,7 @@
 		var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/tail/monkey)
 		replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		return .
-	else if(target.dna.features["tail_fish"] != /datum/sprite_accessory/tails/fish/none::name && !(type in GLOB.species_blacklist_no_mutant) && target.dna.features["tail_fish"] != /datum/sprite_accessory/blank::name)
+	else if(target.dna.features["fish_tail"] != /datum/sprite_accessory/tails/fish/none::name && !(type in GLOB.species_blacklist_no_mutant) && target.dna.features["fish_tail"] != /datum/sprite_accessory/blank::name)
 		var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/tail/fish)
 		replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		return .
@@ -94,22 +94,22 @@
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
-			target.dna.features["tail_fish"] = /datum/sprite_accessory/tails/fish/none::name
+			target.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
 		if(LIZARD)
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
-			target.dna.features["tail_fish"] = /datum/sprite_accessory/tails/fish/none::name
+			target.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
 		if(CAT)
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
-			target.dna.features["tail_fish"] = /datum/sprite_accessory/tails/fish/none::name
+			target.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
 		if(MONKEY)
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
-			target.dna.features["tail_fish"] = /datum/sprite_accessory/tails/fish/none::name
+			target.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/none::name
 			target.dna.features["tail_other"] = /datum/sprite_accessory/tails/none::name
 		if(FISH)
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
@@ -120,7 +120,7 @@
 			target.dna.features["tail_lizard"] = /datum/sprite_accessory/tails/lizard/none::name
 			target.dna.features["tail_cat"] = /datum/sprite_accessory/tails/human/none::name
 			target.dna.features["tail_monkey"] = /datum/sprite_accessory/tails/monkey/none::name
-			target.dna.features["tail_fish"] = /datum/sprite_accessory/tails/fish/none::name
+			target.dna.features["fish_tail"] = /datum/sprite_accessory/tails/fish/none::name
 
 ///	All current tail types to choose from
 //	Lizard
@@ -429,7 +429,7 @@
 
 /datum/preference/choiced/fish_tail/apply_to_human(mob/living/carbon/human/target, value)
 	if(target.dna.tail_type == FISH)
-		target.dna.features["tail_fish"] = value
+		target.dna.features["fish_tail"] = value
 
 /datum/preference/choiced/fish_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fish[value]
