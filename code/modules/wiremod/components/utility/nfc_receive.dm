@@ -1,6 +1,14 @@
+/**
+ * # NFC Receiver Component
+ *
+ * Sends a data package through NFC directly to a shell
+ * if we ever get more shells like BCI's that are nested, keep in mind this may not work correctly unless adjusted
+ */
+
+
 /obj/item/circuit_component/nfc_receive
 	display_name = "NFC Receiver"
-	desc = "Receives data packages through NTNet. If Encryption Key is set then only signals with the same Encryption Key will be received."
+	desc = "Receives data packages through NFC. If Encryption Key is set then only signals with the same Encryption Key will be received."
 	category = "Utility"
 
 	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL //trigger_output
