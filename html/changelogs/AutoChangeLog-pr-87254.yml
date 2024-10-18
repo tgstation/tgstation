@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed digitigrade pants sprite not updating in accordance to some leg updates"
