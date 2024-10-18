@@ -53,5 +53,5 @@
 		return
 	living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [target]!")
 	if(!SPT_PROB(40, seconds_per_tick))
-		MULEBOT_RETURN_MODE
+		return MULEBOT_RETURN_MODE
 	create_sound(living_pawn, SFX_GROWL).vary(TRUE).play()
