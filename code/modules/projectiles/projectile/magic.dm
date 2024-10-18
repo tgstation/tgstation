@@ -376,13 +376,9 @@
 		return
 	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
-		var/oldkey = target.key
-		target.ghostize(FALSE)
+		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
 		target.key = chosen_one.key
-		trauma.friend.key = oldkey
-		trauma.friend.reset_perspective(null)
-		trauma.friend.Show()
-		trauma.friend_initialized = TRUE
+		trauma.add_friend(ghosted_target)
 	else
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
