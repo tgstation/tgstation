@@ -52,15 +52,14 @@
 
 	if(new_master)
 		// This should be made into a generic helper proc later tbh
-		var/mutable_appearance/master_appearance = new
-		master_appearance.appearance = new_master.appearance
+		var/mutable_appearance/master_appearance = new(new_master)
 		master_appearance.appearance_flags = KEEP_TOGETHER
 		master_appearance.layer = FLOAT_LAYER
 		master_appearance.plane = FLOAT_PLANE
 		master_appearance.dir = SOUTH
-		master_appearance.pixel_x = 0
-		master_appearance.pixel_y = 0
-		master_appearance.pixel_z = 0
+		master_appearance.pixel_x = new_master.base_pixel_x
+		master_appearance.pixel_y = new_master.base_pixel_y
+		master_appearance.pixel_z = new_master.base_pixel_z
 		thealert.add_overlay(master_appearance)
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
