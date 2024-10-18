@@ -160,7 +160,7 @@
 		step_towards(movable_atom,center)
 
 /proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
-	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
+	var/turf/local_turf = pick(RANGE_TURFS(anomalyrange, anomalycenter))
 	if(!local_turf)
 		return
 	switch(type)

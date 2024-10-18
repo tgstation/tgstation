@@ -226,6 +226,7 @@
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
+	reagent_container_liquid_sound = SFX_PLASTIC_BOTTLE_LIQUID_SLOSH
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)

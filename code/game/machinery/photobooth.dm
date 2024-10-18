@@ -130,7 +130,7 @@
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
 		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
-			create_sound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg')).volume(75).vary(TRUE).play()
+			create_sound(src, SFX_POLAROID).volume(75).vary(TRUE).play()
 			if(carbon_occupant)
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)

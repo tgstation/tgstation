@@ -344,7 +344,6 @@
 /obj/item/clothing/glasses/sunglasses/Initialize(mapload)
 	. = ..()
 	add_glasses_slapcraft_component()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -1)
 
 /obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
@@ -518,10 +517,6 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/red
-
-/obj/item/clothing/glasses/thermal/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()

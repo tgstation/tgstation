@@ -1,7 +1,9 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_carbon_reagents()
-	update_body_parts() //to update the carbon's new bodyparts appearance
+	update_body(is_creating = TRUE) //to update the carbon's new bodyparts appearance
+	living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
 	register_context()
 
 	GLOB.carbon_list += src
@@ -11,6 +13,8 @@
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
+
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)

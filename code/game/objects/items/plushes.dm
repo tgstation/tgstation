@@ -544,7 +544,7 @@
 	greyscale_config = /datum/greyscale_config/plush_spacelizard
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
-	attack_verb_simple = list("claw", "hiss", "bops")
+	attack_verb_simple = list("claw", "hiss", "bop")
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."

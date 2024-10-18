@@ -1169,7 +1169,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			create_sound(src, pick('sound/items/weapons/bulletflyby.ogg', 'sound/items/weapons/bulletflyby2.ogg', 'sound/items/weapons/bulletflyby3.ogg')).volume(75).vary(TRUE).play()
+			create_sound(src, SFX_BULLET_MISS).volume(75).vary(TRUE).play()
 			return TRUE
 		return FALSE
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))

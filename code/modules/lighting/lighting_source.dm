@@ -1,3 +1,6 @@
+/// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
+GLOBAL_LIST_EMPTY(lighting_sheets)
+
 // This is where the fun begins.
 // These are the main datums that emit light.
 
@@ -223,16 +226,15 @@
 /// If the requested sheet is multiz, this will be 3 lists deep, first handling z level then x and y
 /// otherwise it's just two, x then y
 /datum/light_source/proc/get_sheet(multiz = FALSE)
-	var/list/static/key_to_sheet = list()
 	var/range = max(1, light_range);
 	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]"
-	var/list/hand_back = key_to_sheet[key]
+	var/list/hand_back = GLOB.lighting_sheets[key]
 	if(!hand_back)
 		if(multiz)
 			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
 		else
 			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
-		key_to_sheet[key] = hand_back
+		GLOB.lighting_sheets[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source

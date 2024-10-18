@@ -183,7 +183,7 @@
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, seconds_per_tick)
 
-	if(length(mix_message)) //This is only at the end
+	if(length(mix_message) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS)) //This is only at the end
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 
 	if(!LAZYLEN(reaction_list))
@@ -209,10 +209,11 @@
 	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
-
-	var/reaction_message = equilibrium.reaction.mix_message
-	if(equilibrium.reaction.mix_sound)
-		create_sound(get_turf(my_atom), equilibrium.reaction.mix_sound).volume(80).vary(TRUE).play()
+	var/reaction_message = null
+	if (!HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
+		reaction_message = equilibrium.reaction.mix_message
+		if(equilibrium.reaction.mix_sound)
+			create_sound(get_turf(my_atom), equilibrium.reaction.mix_sound).volume(80).vary(TRUE).play()
 	qdel(equilibrium)
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
@@ -256,7 +257,7 @@
 			if(result == reagent.type)
 				mix_message += end_reaction(equilibrium)
 				any_stopped = TRUE
-	if(length(mix_message))
+	if(length(mix_message) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS))
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))][mix_message.Join()]"))
 	return any_stopped
 
@@ -326,7 +327,7 @@
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
-		if(!ismob(cached_my_atom)) // No bubbling mobs
+		if(!ismob(cached_my_atom) && !HAS_TRAIT(my_atom, TRAIT_SILENT_REACTIONS)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				create_sound(get_turf(cached_my_atom), selected_reaction.mix_sound).volume(80).vary(TRUE).play()
 			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))

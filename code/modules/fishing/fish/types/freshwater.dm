@@ -175,7 +175,7 @@
 
 /obj/item/fish/tadpole/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2.5, 3 MINUTES))
+	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2 MINUTES, 3 MINUTES))
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 

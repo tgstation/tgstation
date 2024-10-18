@@ -205,20 +205,44 @@
 	tastes = list("explosives" = 10)
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 
+/obj/item/food/grown/banana/bombanana/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_CONSUMED, PROC_REF(on_consumed))
+
+/// Log whenever someone eats this with an explicit message since it willspawn a live bomb.
+/obj/item/food/grown/banana/bombanana/proc/on_consumed(datum/source, mob/living/eater, mob/feeder)
+	SIGNAL_HANDLER
+	var/list/concatable = list("[key_name_and_tag(eater)] has eaten a bombanana!")
+	if(feeder != eater)
+		concatable += "This person was fed this by [key_name_and_tag(feeder)]."
+
+	concatable += "As a result of this, a bombanana peel will be spawned at [AREACOORD(src)]."
+
+	var/final_string = jointext(concatable, " ")
+	log_bomber(details = final_string) // sorta wacks out the traditional "log_bomber" format but it gets the point across better
+	return NONE
+
 /obj/item/grown/bananapeel/bombanana
-	desc = "A peel from a banana. Why is it beeping?"
+	desc = parent_type::desc + " Why is it beeping?"
 	seed = /obj/item/seeds/banana/bombanana
-	var/det_time = 50
+	/// How long we have until we explode.
+	var/det_time = 5 SECONDS
+	/// Ref to the bomb we spawn when we explode.
 	var/obj/item/grenade/syndieminibomb/bomb
 
 /obj/item/grown/bananapeel/bombanana/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/slippery, det_time)
 	bomb = new /obj/item/grenade/syndieminibomb(src)
+	bomb.name = "bombanana peel"
 	bomb.det_time = det_time
+
+	var/potential_user = null
 	if(iscarbon(loc))
 		to_chat(loc, span_danger("[src] begins to beep."))
-	bomb.arm_grenade(loc, null, FALSE)
+		potential_user = loc // just for fingerprint diagnosis in explosion logging, the on_consumed proc will have provided the necessary context already
+
+	bomb.arm_grenade(potential_user, msg = FALSE)
 
 /obj/item/grown/bananapeel/bombanana/Destroy()
 	. = ..()

@@ -6,7 +6,7 @@
 	var/number = length(stored)
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	create_sound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg')).volume(75).vary(TRUE).extra_range(-3).play()
+	create_sound(src, SFX_POLAROID).volume(75).vary(TRUE).extra_range(-3).play()
 	balloon_alert(user, "image recorded")
 
 /**

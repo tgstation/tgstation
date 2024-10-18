@@ -18,7 +18,7 @@
 	mob_insert(receiver, special, movement_flags)
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
-	if(!special)
+	if(!special && !(receiver.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		receiver.update_body_parts()
 
 /*
@@ -33,7 +33,7 @@
 	mob_remove(organ_owner, special, movement_flags)
 	bodypart_remove(limb_owner = organ_owner, movement_flags = movement_flags)
 
-	if(!special)
+	if(!special && !(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		organ_owner.update_body_parts()
 
 /*
@@ -239,6 +239,15 @@
 		update_appearance(UPDATE_OVERLAYS)
 
 	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+	if(greyscale_config)
+		get_greyscale_color_from_draw_color()
+	else
+		color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+///Here we define how draw_color from the bodypart overlay sets the greyscale colors of organs that use GAGS
+/obj/item/organ/proc/get_greyscale_color_from_draw_color()
+	color = bodypart_overlay.draw_color //Defaults to the legacy behaviour of applying the color to the item.
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()

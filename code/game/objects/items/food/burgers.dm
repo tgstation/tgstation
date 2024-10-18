@@ -255,7 +255,7 @@
 			var/obj/machinery/light/light = locate(/obj/machinery/light) in view(4, src)
 			light?.flicker()
 		if(62 to 64)
-			create_sound(loc, pick('sound/effects/hallucinations/i_see_you1.ogg', 'sound/effects/hallucinations/i_see_you2.ogg')).vary(TRUE).play()
+			create_sound(loc, SFX_HALLUCINATION_I_SEE_YOU).vary(TRUE).play()
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)

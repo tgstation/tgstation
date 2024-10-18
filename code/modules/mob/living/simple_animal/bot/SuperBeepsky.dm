@@ -124,8 +124,12 @@
 		target = C
 		oldtarget_name = C.name
 		speak("Level [threatlevel] infraction alert!")
-		create_sound(src, pick('sound/mobs/non-humanoids/beepsky/criminal.ogg', 'sound/mobs/non-humanoids/beepsky/justice.ogg', 'sound/mobs/non-humanoids/beepsky/freeze.ogg')).play()
-
+		create_sound(src, pick(
+			'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+			'sound/mobs/non-humanoids/beepsky/justice.ogg',
+			'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		)).play()
+		create_sound(src, 'sound/items/weapons/saberon.ogg').vary(TRUE).extra_range(-1).play()
 		visible_message(span_warning("[src] ignites his energy swords!"))
 		icon_state = "grievous-c"
 		visible_message("<b>[src]</b> points at [C.name]!")

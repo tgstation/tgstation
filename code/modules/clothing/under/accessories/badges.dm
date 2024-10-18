@@ -4,6 +4,10 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 
+/obj/item/clothing/accessory/lawyers_badge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bubble_icon_override, "lawyer", BUBBLE_ICON_PRIORITY_ACCESSORY)
+
 /obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
 	. = ..()
 	if(prob(1))
@@ -12,11 +16,9 @@
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
-	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
-	user.bubble_icon = initial(user.bubble_icon)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER

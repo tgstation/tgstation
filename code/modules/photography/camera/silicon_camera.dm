@@ -80,7 +80,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	balloon_alert(user, "image recorded")
-	create_sound(user, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg')).vary(TRUE).extra_range(-3).direct_listeners(user).play()
+	create_sound(user, SFX_POLAROID).vary(TRUE).extra_range(-3).direct_listeners(user).play()
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -102,7 +102,7 @@
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
 		balloon_alert(user, "image recorded and saved locally")
-	create_sound(src, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).extra_range(-3).play()
+	create_sound(src, SFX_POLAROID).volume(75).vary(TRUE).extra_range(-3).play()
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
 	if(istype(user) && user.connected_ai)

@@ -13,6 +13,7 @@
 		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
+		TRAIT_WATER_HATER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid

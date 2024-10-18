@@ -34,4 +34,4 @@
 
 /obj/item/camera/detective/after_picture(mob/user, datum/picture/picture)
 	. = ..()
-	create_sound(src, pick('sound/items/polaroid/polaroid1.ogg', 'sound/items/polaroid/polaroid2.ogg')).volume(35).vary(TRUE).direct_listeners(user).play()
+	create_sound(src, SFX_POLAROID).volume(35).vary(TRUE).direct_listeners(user).play()

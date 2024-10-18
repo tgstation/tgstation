@@ -303,7 +303,13 @@
 	cyborg.logevent("Chassis model has been set to [name].")
 	sleep(0.1 SECONDS)
 	for(var/i in 1 to 4)
-		create_sound(cyborg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg')).volume(80).vary(TRUE).extra_range(-1).play()
+		create_sound(cyborg, pick(
+			'sound/items/tools/drill_use.ogg',
+			'sound/items/tools/jaws_cut.ogg',
+			'sound/items/tools/jaws_pry.ogg',
+			'sound/items/tools/welder.ogg',
+			'sound/items/tools/ratchet.ogg',
+		)).volume(80).vary(TRUE).extra_range(-1).play()
 		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
 	cyborg.ai_lockdown = FALSE

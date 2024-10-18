@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - admin: "Organize admin verbs for shuttle events into shuttle category"
