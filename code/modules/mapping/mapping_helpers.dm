@@ -308,6 +308,10 @@
 
 	if(target.tlv_cold_room)
 		target.set_tlv_cold_room()
+	if(target.tlv_tcomms_room)
+		target.set_tlv_tcomms_room()
+	if(target.tlv_rd_server_room)
+		target.set_tlv_rd_server_room()
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
 	if(target.tlv_no_checks && target.tlv_cold_room)
@@ -401,6 +405,26 @@
 		var/area/area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
 	target.tlv_cold_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room
+	name = "airalarm tcomms room tlv helper"
+	icon_state = "airalarm_tlv_cold_room_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_tcomms_room/payload(obj/machinery/airalarm/target)
+	if(target.tlv_tcomms_room)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to tcomms_room but it's already changed!")
+	target.tlv_tcomms_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room
+	name = "airalarm rd server room tlv helper"
+	icon_state = "airalarm_tlv_cold_room_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_rd_server_room/payload(obj/machinery/airalarm/target)
+	if(target.tlv_rd_server_room)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to rd_server_room but it's already changed!")
+	target.tlv_rd_server_room = TRUE
 
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks
 	name = "airalarm no checks tlv helper"

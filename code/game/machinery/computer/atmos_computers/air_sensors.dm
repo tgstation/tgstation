@@ -101,3 +101,7 @@
 /obj/machinery/air_sensor/engine_chamber
 	name = "supermatter engine chamber gas sensor"
 	chamber_id = ATMOS_GAS_MONITOR_ENGINE
+
+/obj/machinery/air_sensor/tcomms_chamber
+	name = "telecomms chamber gas sensor"
+	chamber_id = ATMOS_GAS_MONITOR_TCOMMS

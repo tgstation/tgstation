@@ -7269,9 +7269,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "Os" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/rnd/server{
-	req_access = null
-	},
+/obj/machinery/rnd/server/off_station,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/circuit/telecomms/server,

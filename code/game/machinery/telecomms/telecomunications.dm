@@ -9,6 +9,12 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
 	critical_machine = TRUE
+	processing_flags = START_PROCESSING_ON_INIT|ATMOS_SENSITIVE
+	temperature_tolerance_min = TCOMMS_EQUIPMENT_TEMP_MIN
+	temperature_tolerance_max = TCOMMS_EQUIPMENT_TEMP_MAX
+	temperature_while_active = TCOMMS_EQUIPMENT_TEMP_HEAT
+	heat_capacity_while_active = TCOMMS_EQUIPMENT_HEAT_CAPACITY
+
 	/// list of machines this machine is linked to
 	var/list/links = list()
 	/**
@@ -40,6 +46,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/long_range_link = FALSE
 	/// Is it a hidden machine?
 	var/hide = FALSE
+
+	/// A counter that increases each time machine used. Processed during the atmos tick to generate heat and then reset to zero
+	var/atmos_heat_counter = 0
 
 	/// Looping sounds for any servers
 	var/datum/looping_sound/server/soundloop
@@ -102,6 +111,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
 	GLOB.telecomms_list += src
+
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
@@ -147,7 +157,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 	var/old_on = on
 	if(toggled)
-		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		if(machine_stat & (BROKEN|NOPOWER|EMPED|BAD_TEMP)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
 		else
 			on = TRUE
@@ -162,6 +172,27 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(traffic > 0)
 		traffic -= netspeed * seconds_per_tick
 
+/obj/machinery/telecomms/process_atmos()
+	var/turf/local_turf = loc
+	if(!istype(local_turf)) // in a crate or somewhere that isn't turf
+		set_machine_stat(machine_stat | BAD_TEMP)
+		update_power()
+		return
+
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	// the machine is either overheating or freezing
+	if(enviroment.temperature < temperature_tolerance_min || enviroment.temperature > temperature_tolerance_max)
+		set_machine_stat(machine_stat | BAD_TEMP)
+		update_power()
+		return
+
+	set_machine_stat(machine_stat & ~BAD_TEMP)
+	update_power()
+	if(atmos_heat_counter)
+		generate_heat(temperature_while_active, min(atmos_heat_counter, 5) * heat_capacity_while_active)
+		atmos_heat_counter = 0
+
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -174,3 +205,4 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /// Handles the machine stopping being affected by an EMP.
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)
+

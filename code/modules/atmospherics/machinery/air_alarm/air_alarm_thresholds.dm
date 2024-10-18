@@ -109,3 +109,15 @@
 	hazard_min = COLD_ROOM_TEMP - 40
 	warning_max = COLD_ROOM_TEMP + 20
 	hazard_max = COLD_ROOM_TEMP + 40
+
+/datum/tlv/tcomms_room_temperature
+	warning_min = TCOMMS_EQUIPMENT_TEMP_MIN + 20
+	hazard_min = TCOMMS_EQUIPMENT_TEMP_MIN + 5
+	warning_max = TCOMMS_EQUIPMENT_TEMP_MAX - 20
+	hazard_max = TCOMMS_EQUIPMENT_TEMP_MAX - 5
+
+/datum/tlv/rd_server_room_temperature
+	warning_min = RD_SERVER_TEMP_MIN + 20
+	hazard_min = RD_SERVER_TEMP_MIN + 5
+	warning_max = RD_SERVER_TEMP_MAX - 20
+	hazard_max = RD_SERVER_TEMP_MAX - 5

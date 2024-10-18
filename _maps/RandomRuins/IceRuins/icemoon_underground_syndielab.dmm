@@ -619,7 +619,7 @@
 	shock_range = 2;
 	machine_overload_damage = 160
 	},
-/obj/machinery/telecomms/hub,
+/obj/machinery/telecomms/hub/fluff,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
 "JF" = (
