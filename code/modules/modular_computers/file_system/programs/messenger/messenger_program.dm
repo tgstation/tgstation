@@ -718,7 +718,7 @@
 		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, sender_title, inbound_message, photo_message)
 
 	if (alert_able && (!alert_silenced || is_rigged))
-		computer.ring(ringtone)
+		computer.ring(ringtone, receievers)
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
