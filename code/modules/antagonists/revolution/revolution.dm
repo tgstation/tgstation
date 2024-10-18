@@ -338,7 +338,7 @@
 	owner.special_role = null
 	if(iscarbon(owner.current) && deconverter)
 		var/mob/living/carbon/C = owner.current
-		C.Unconscious(100)
+		C.Unconscious(10 SECONDS)
 	deconversion_source = deconverter
 	owner.remove_antag_datum(type)
 
