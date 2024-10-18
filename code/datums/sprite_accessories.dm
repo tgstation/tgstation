@@ -1768,6 +1768,7 @@
 /datum/sprite_accessory/tails/fish/chonky
 	name = "Chonky"
 	icon_state = "chonky"
+	center = TRUE
 	dimension_x = 34
 
 /datum/sprite_accessory/tails/lizard
