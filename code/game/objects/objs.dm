@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		flags_1 |= IGNORE_TURF_PIXEL_OFFSET_1 //to prevent things from being inaccessible when an atom with PREVENT_CLICK_UNDER_1 is visually obscuring the sprite (eg windows)
 	else
 		pixel_z = initial(pixel_z)
-		flags_1 &= IGNORE_TURF_PIXEL_OFFSET_1
+		flags_1 &= ~IGNORE_TURF_PIXEL_OFFSET_1
 
 /obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
