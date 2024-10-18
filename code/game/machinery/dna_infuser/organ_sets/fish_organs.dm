@@ -216,7 +216,7 @@
 	if(!bodypart_owner.owner || HAS_TRAIT(bodypart_owner.owner, TRAIT_MUTANT_COLORS))
 		return bodypart_owner.draw_color
 	else //otherwise get one from a set of faded out blue and some greys colors.
-		return pick("#B4B8E4", "#85C7DA", "#67BBF0", "#2F4450", "#55CCBB", "#999FDD", "#345066", "585B69", "#7381AB", "#B6DDE9", "#4E4E4E")
+		return pick("#B4B8E4", "#85C7DA", "#67BBF0", "#2F4450", "#55CCBB", "#999FDD", "#345066", "#585B69", "#7381AB", "#B6DDE9", "#4E4E4E")
 
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
