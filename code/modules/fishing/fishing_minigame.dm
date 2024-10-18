@@ -9,8 +9,6 @@
 #define FISH_ON_BAIT_ACCELERATION_MULT 0.6
 /// The minimum velocity required for the bait to bounce
 #define BAIT_MIN_VELOCITY_BOUNCE 150
-/// The extra deceleration of velocity that happens when the bait switches direction
-#define BAIT_DECELERATION_MULT 1.8
 
 /// Reduce initial completion rate depending on difficulty
 #define MAX_FISH_COMPLETION_MALUS 15
@@ -107,6 +105,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/reeling_velocity = 1200
 	/// By how much the bait recoils back when hitting the bounds of the slider while idle
 	var/bait_bounce_mult = 0.6
+	/// The multiplier of deceleration of velocity that happens when the bait switches direction
+	var/deceleration_mult = 1.8
 
 	///The background as shown in the minigame, and the holder of the other visual overlays
 	var/atom/movable/screen/fishing_hud/fishing_hud
@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	comp.fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
 	SEND_SIGNAL(user, COMSIG_MOB_BEGIN_FISHING, src)
+	SEND_SIGNAL(rod, COMSIG_ROD_BEGIN_FISHING, src, comp)
 	GLOB.fishing_challenges_by_user[user] = src
 
 	/// Enable special parameters
@@ -152,6 +153,12 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	//Finish the minigame faster at higher skill. The value modifiers for fishing are negative values btw.
 	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
 	completion_gain -= user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/7.5
+
+	reeling_velocity *= rod.bait_speed_mult
+	completion_gain *= rod.completion_speed_mult
+	bait_bounce_mult *= rod.bounciness_mult
+	deceleration_mult *= rod.deceleration_mult
+	gravity_velocity *= rod.gravity_mult
 
 /datum/fishing_challenge/Destroy(force)
 	GLOB.fishing_challenges_by_user -= user
@@ -321,6 +328,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		var/extra_exp_malus = user.mind.get_skill_level(/datum/skill/fishing) - difficulty * 0.1
 		if(extra_exp_malus > 0)
 			experience_multiplier /= (1 + extra_exp_malus * EXPERIENCE_MALUS_MULT)
+		experience_multiplier *= used_rod.experience_multiplier
 		user.mind.adjust_experience(/datum/skill/fishing, round(seconds_spent * FISHING_SKILL_EXP_PER_SECOND * experience_multiplier))
 		if(user.mind.get_skill_level(/datum/skill/fishing) >= SKILL_LEVEL_LEGENDARY)
 			user.client?.give_award(/datum/award/achievement/skill/legendary_fisher, user)
@@ -663,9 +671,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	 * have different directions, making the bait less slippery, thus easier to control
 	 */
 	if(bait_velocity > 0 && velocity_change < 0)
-		bait_velocity += max(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
+		bait_velocity += max(-bait_velocity, velocity_change * deceleration_mult)
 	else if(bait_velocity < 0 && velocity_change > 0)
-		bait_velocity += min(-bait_velocity, velocity_change * BAIT_DECELERATION_MULT)
+		bait_velocity += min(-bait_velocity, velocity_change * deceleration_mult)
 
 	///bidirectional baits stay bouyant while idle
 	if(bidirectional && reeling_state == REELING_STATE_IDLE)
@@ -832,7 +840,6 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 #undef FISH_ON_BAIT_ACCELERATION_MULT
 #undef BAIT_MIN_VELOCITY_BOUNCE
-#undef BAIT_DECELERATION_MULT
 
 #undef MAX_FISH_COMPLETION_MALUS
 #undef BITING_TIME_WINDOW

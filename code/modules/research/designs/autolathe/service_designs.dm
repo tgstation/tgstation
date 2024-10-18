@@ -531,13 +531,24 @@
 	name = "Fishing Rod"
 	id = "fishing_rod"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/fishing_rod
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/fishing_rod_material
+	name = "Material Fishing Rod"
+	id = "fishing_rod_material"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_ITEM_MATERIAL = SMALL_MATERIAL_AMOUNT * 4)
+	build_path = /obj/item/fishing_rod/material
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
+	)
 
 /datum/design/fish_case
 	name = "Stasis Fish Case"
