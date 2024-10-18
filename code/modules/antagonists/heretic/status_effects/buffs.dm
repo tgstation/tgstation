@@ -84,7 +84,7 @@
 	if(length(drinker.get_missing_limbs()))
 		drinker.regenerate_limbs()
 		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
-	playsound(drinker, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
+	create_sound(drinker, 'sound/effects/chemistry/ahaha.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.5).play()
 
 /datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))

@@ -146,7 +146,7 @@
 
 	//dir and olddir are the current direction of the sprite and the old direction of the sprite respectively
 	if (dir != olddir && !(mecha_flags & QUIET_TURNS))
-		playsound(src, turnsound, 40, TRUE)
+		create_sound(src, turnsound).volume(40).vary(TRUE).play()
 
 	if(phasing)
 		use_energy(phasing_energy_drain)

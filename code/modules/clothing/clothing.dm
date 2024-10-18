@@ -539,9 +539,9 @@ BLIND     // can't see anything
 
 	//play sounds when toggling the visor up or down (if there is any)
 	if(visor_toggle_up_sound && up)
-		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+		create_sound(src, visor_toggle_up_sound).volume(20).vary(TRUE).extra_range(-1).play()
 	if(visor_toggle_down_sound && !up)
-		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
+		create_sound(src, visor_toggle_down_sound).volume(20).vary(TRUE).extra_range(-1).play()
 
 	update_item_action_buttons()
 

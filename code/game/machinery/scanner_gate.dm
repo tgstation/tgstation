@@ -177,7 +177,7 @@
 	var/beep = FALSE
 	var/color = null
 	var/detected_thing = null
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return

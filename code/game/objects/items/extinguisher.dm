@@ -74,13 +74,12 @@
 /obj/item/extinguisher/dropped(mob/user, silent)
 	. = ..()
 	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
-		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+		create_sound(src, fire_extinguisher_reagent_sloshing_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
 
 /obj/item/extinguisher/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	if((slot & ITEM_SLOT_HANDS) && fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
-		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
-
+		create_sound(src, fire_extinguisher_reagent_sloshing_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
 
 /obj/item/extinguisher/empty
 	starting_water = FALSE

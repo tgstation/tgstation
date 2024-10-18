@@ -166,7 +166,7 @@
 	living_target.AdjustParalyzed(1.5 SECONDS)
 	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	living_target.balloon_alert(user, "backstab!")
-	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+	create_sound(living_target, 'sound/items/weapons/guillotine.ogg').volume(100).vary(TRUE).play()
 
 /obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
 	. = ..()
