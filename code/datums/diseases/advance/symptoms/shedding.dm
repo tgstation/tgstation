@@ -46,7 +46,6 @@
 /datum/symptom/shedding/proc/baldify(mob/living/carbon/human/baldie, fully_bald)
 	if(fully_bald)
 		baldie.set_facial_hairstyle("Shaved", update = FALSE)
-		baldie.set_hairstyle("Bald", update = FALSE)
+		baldie.set_hairstyle("Bald") //this will call update_body_parts()
 	else
-		baldie.set_hairstyle("Balding Hair", update = FALSE)
-	baldie.update_body_parts()
+		baldie.set_hairstyle("Balding Hair")
