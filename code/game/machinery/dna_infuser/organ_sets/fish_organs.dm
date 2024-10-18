@@ -171,7 +171,7 @@
 
 /obj/item/organ/external/tail/fish/on_mob_insert(mob/living/carbon/owner)
 	. = ..()
-	owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling)
+	owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling/flopping_only) // DOPPLER EDIT, old code: owner.AddElementTrait(TRAIT_WADDLING, type, /datum/element/waddling)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_location))
 	check_location(owner, null)
 
@@ -201,7 +201,7 @@
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
 	color_source = ORGAN_COLOR_HAIR
-
+/*	DOPPLER EDIT REMOVAL START - makes your fishy tail be random :(
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
@@ -210,7 +210,7 @@
 		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
 
 	return ..()
-
+	DOPPLER EDIT REMOVAL END */
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish
 

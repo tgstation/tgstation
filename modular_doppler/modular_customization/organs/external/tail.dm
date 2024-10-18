@@ -163,6 +163,7 @@
 //
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
+	dna_block = null
 
 /// Cybernetic tail
 //
