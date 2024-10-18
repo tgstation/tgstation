@@ -6,7 +6,7 @@
 
 /obj/item/food/egg/raptor_egg/Initialize(mapload)
 	. = ..()
-	if(SSmapping.config.minetype == "iceland" || SSmapping.is_planetary()) // DOPPLER STATION EDIT, old code: if(SSmapping.is_planetary())
+	if(SSmapping.current_map.minetype == "iceland" || SSmapping.is_planetary()) // DOPPLER STATION EDIT, old code: if(SSmapping.is_planetary())
 		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
 
 /obj/item/food/egg/raptor_egg/proc/determine_growth_path(mob/living/basic/raptor/dad, mob/living/basic/raptor/mom)

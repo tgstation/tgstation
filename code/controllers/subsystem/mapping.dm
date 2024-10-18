@@ -8,8 +8,9 @@ SUBSYSTEM_DEF(mapping)
 
 	/// The current map config the server loaded at round start.
 	var/datum/map_config/current_map
-	var/datum/map_config/config
-	var/datum/map_config/next_map_config
+	/// DOPPLER SHIFT ADDITION BEGIN
+	var/datum/map_config/config_mining
+	/// DOPPLER SHIFT ADDITION END
 
 	var/list/map_templates = list()
 
@@ -94,10 +95,10 @@ SUBSYSTEM_DEF(mapping)
 #else
 	current_map = load_map_config(error_if_missing = FALSE)
 	/// DOPPLER SHIFT ADDITION BEGIN
-	world.log << "Config loaded for map [config.map_name]"
-	if (!isnull(config.minetype) && config.minetype != "none" && config.minetype != "lavaland")
-		world.log << "Minetype requested: [config.minetype]"
-		current_map = load_map_config(filename = "mining_configs/[config.minetype]", directory = MAP_DIRECTORY_MAPS, error_if_missing = TRUE)
+	world.log << "Config loaded for map [current_map.map_name]"
+	if (!isnull(current_map.minetype) && current_map.minetype != "none" && current_map.minetype != "lavaland")
+		world.log << "Minetype requested: [current_map.minetype]"
+		config_mining = load_map_config(filename = "mining_configs/[current_map.minetype]", directory = MAP_DIRECTORY_MAPS, error_if_missing = TRUE)
 	/// DOPPLER SHIFT ADDITION END
 #endif
 
@@ -459,28 +460,25 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
-
-	if(current_map.minetype == "lavaland")
 	/// DOPPLER SHIFT REMOVAL BEGIN
-	/*if(config.minetype == "lavaland")
+	/*if(current_map.minetype == "lavaland")
+	if(current_map.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
-	else if (!isnull(config.minetype) && config.minetype != "none")
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")*/
+		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")*/
 	/// DOPPLER SHIFT REMOVAL BEGIN, ADDITION BEGIN
-	INIT_ANNOUNCE("Trying to setup mining Z for [config.map_name]: [config.minetype]")
+	INIT_ANNOUNCE("Trying to setup mining Z for [current_map.map_name]: [current_map.minetype]")
 	if(!isnull(config_mining))
 		INIT_ANNOUNCE("Loading custom mining planet [config_mining.map_name] in [config_mining.map_path]/[config_mining.map_file] with expected traits [config_mining.traits]")
 		world.log << "Fallback - loading custom mining planet [config_mining.map_name] in [config_mining.map_path]/[config_mining.map_file] with expected traits [config_mining.traits]"
 		LoadGroup(FailedZs, "Mining Planet", config_mining.map_path, config_mining.map_file, config_mining.traits, ZTRAITS_CUSTOM_MINING)
-	else if(config.minetype == "lavaland")
+	else if(current_map.minetype == "lavaland")
 		INIT_ANNOUNCE("Loading Lavaland...")
 		world.log << "Fallback - loading Lavaland..."
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(config.minetype) && config.minetype != "none")
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set, and we couldn't load a map json for it!  Update the maploader or check your filepath - expected to be _maps/[config.minetype].json")
-		world.log << "Fallback warning - an unknown minetype [config.minetype] was set, and we couldn't load a config for it!"
+	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
+		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set, and we couldn't load a map json for it!  Update the maploader or check your filepath - expected to be _maps/[current_map.minetype].json")
+		world.log << "Fallback warning - an unknown minetype [current_map.minetype] was set, and we couldn't load a config for it!"
 	/// DOPPLER SHIFT ADDITION END
 #endif
 
