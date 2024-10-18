@@ -16,7 +16,7 @@
 
 	cast_range = 6
 	active_msg = "You ready yourself to attempt to leap!"
-	var/obj/item/flinged_sword
+	var/obj/item/melee/cultblade/haunted/flinged_sword
 
 /datum/action/cooldown/spell/pointed/sword_fling/New(Target, to_fling)
 	. = ..()
@@ -26,6 +26,11 @@
 	flinged_sword = null
 	. = ..()
 
+/datum/action/cooldown/spell/pointed/sword_fling/IsAvailable(feedback)
+	if(flinged_sword.bound)
+		return FALSE
+	return ..()
+
 /datum/action/cooldown/spell/pointed/sword_fling/is_valid_target(atom/cast_on)
 	return isatom(cast_on)
 
@@ -34,23 +39,23 @@
 	var/atom/sword_loc = flinged_sword.loc
 	if(ismob(sword_loc))
 		var/mob/loccer = sword_loc
-		var/resist_chance = 25
+		var/resist_chance = 20
 		var/fail_text = "You struggle, but [loccer] keeps [loccer.p_their()] grip on you!"
 		var/particle_to_spawn = null
 		if(IS_CULTIST_OR_CULTIST_MOB(loccer))
-			resist_chance = 10 // your mastahs
+			resist_chance = 5 // your mastahs
 			fail_text = "You struggle, but [loccer]'s grip is unnaturally hard to resist!"
 			particle_to_spawn = /obj/effect/temp_visual/cult/sparks
 		if(IS_HERETIC_OR_MONSTER(loccer) || IS_LUNATIC(loccer))
-			resist_chance = 15
+			resist_chance = 10
 			fail_text = "You struggle, but [loccer] deftly handles the grip movement."
 			particle_to_spawn = /obj/effect/temp_visual/eldritch_sparks
 		if(loccer.mind?.holy_role) // IS_PRIEST()
-			resist_chance = 12
+			resist_chance = 6
 			fail_text = "You struggle, but [loccer]'s holy grip holds tight against your thrashing."
 			particle_to_spawn = /obj/effect/temp_visual/blessed
 		if(IS_WIZARD(loccer))
-			resist_chance = 5 // magic master
+			resist_chance = 3 // magic master
 			fail_text = "You struggle, but [loccer]'s handle on magic easily neutralizes your movement."
 			particle_to_spawn = /obj/effect/particle_effect/sparks/electricity
 
