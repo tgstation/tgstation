@@ -76,7 +76,7 @@
 	else
 		user.visible_message(span_notice("[user] dispenses a treat."), span_notice("You dispense a treat."), span_hear("You hear a click."))
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	return TRUE
 
 /// Shoot a lollipop
@@ -93,7 +93,7 @@
 	else
 		lollipop = new /obj/item/ammo_casing/lollipop(src)
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	lollipop.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message(span_warning("[user] blasts a flying lollipop at [target]!"))
 	check_amount()
@@ -112,7 +112,7 @@
 		gumball = new /obj/item/ammo_casing/gumball(src)
 
 	gumball.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	playsound(src.loc, 'sound/items/weapons/bulletflyby3.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/items/weapons/bulletflyby3.ogg').vary(TRUE).play()
 	gumball.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message(span_warning("[user] shoots a high-velocity gumball at [target]!"))
 	check_amount()

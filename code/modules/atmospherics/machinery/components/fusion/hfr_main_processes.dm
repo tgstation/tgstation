@@ -493,7 +493,7 @@
 			zaps_aspect = OVER_9000_ZAP_ICON_STATE
 			flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
 
-	playsound(loc, 'sound/items/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+	create_sound(loc, 'sound/items/weapons/emitter2.ogg').volume(100).vary(TRUE).extra_range(0).play()
 	for(var/i in 1 to zap_number)
 		supermatter_zap(src, 5, power_level * 2.4e5, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 

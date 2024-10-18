@@ -45,7 +45,7 @@
 		return
 
 	. = ..()
-	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
+	create_sound(cast_on, 'sound/effects/pope_entry.ogg').volume(100).play()
 
 	to_chat(cast_on, span_green("You begin to focus your very being into [marked_item]..."))
 	if(!do_after(cast_on, 5 SECONDS, target = marked_item, timed_action_flags = IGNORE_HELD_ITEM))

@@ -49,7 +49,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, airlock))
 		return
 	user.balloon_alert_to_viewers("fumbles with keys...", "finding key...")
-	user.playsound_local(src, 'sound/items/rattling_keys.ogg', 25, TRUE)
+	create_sound(src, 'sound/items/rattling_keys.ogg').volume(25).vary(TRUE).direct_listeners(user).play()
 	if(!do_after(user, 3 SECONDS, airlock))
 		return FALSE
 	if(!department_access || !airlock.check_access_list(SSid_access.accesses_by_region[department_access]))
@@ -68,7 +68,7 @@
 	SIGNAL_HANDLER
 	department_access = region_access[1]
 	say("Access granted to [department_access] area.")
-	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+	create_sound(src, 'sound/machines/ding.ogg').volume(25).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(clear_access)), ACCESS_TIMER_LIMIT, TIMER_UNIQUE|TIMER_OVERRIDE)
 	log_game("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]")
 	investigate_log("Access to the [department_access] department was given to [src] [(ismob(loc)) ? "held by [loc]" : "which is not being held"]", INVESTIGATE_ACCESSCHANGES)
@@ -82,6 +82,6 @@
 	investigate_log("Access to the [department_access] department on [src] has expired.]", INVESTIGATE_ACCESSCHANGES)
 	department_access = null
 	say("Access revoked, time ran out.")
-	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE)
+	create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).play()
 
 #undef ACCESS_TIMER_LIMIT

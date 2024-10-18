@@ -140,7 +140,7 @@
 		return
 
 	victim.apply_damage(DAMAGE_ON_IMPACT)
-	playsound(victim, 'sound/effects/hit_kick.ogg', 50)
+	create_sound(victim, 'sound/effects/hit_kick.ogg').play()
 	var/turf/target_turf = get_ranged_target_turf(victim, source.dir, 3)
 	if(isnull(target_turf))
 		return

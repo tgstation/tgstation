@@ -471,7 +471,7 @@ Behavior that's still missing from this component that original food items had t
 		return FALSE
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
-	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	create_sound(eater, 'sound/items/eatfood.ogg').volume(rand(10,50)).vary(TRUE).play()
 	if(!owner.reagents.total_volume)
 		return
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
@@ -726,6 +726,6 @@ Behavior that's still missing from this component that original food items had t
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
 		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
-		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
+		create_sound(eater, 'sound/items/eatfood.ogg').volume(rand(30,50)).vary(TRUE).play()
 		qdel(food)
 		return COMPONENT_ATOM_EATEN

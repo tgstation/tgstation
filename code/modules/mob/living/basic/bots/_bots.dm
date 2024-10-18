@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		log_combat(user, src, "ejected from [initial(src.name)] control.")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 	speak("Personality matrix reset!")
 	key = null
 
@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Fired after something takes control of this mob
 /mob/living/basic/bot/proc/post_possession()
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 	speak("New personality installed successfully!")
 	rename(src)
 

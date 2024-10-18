@@ -44,7 +44,7 @@
 
 	icon_screen = "slots_screen_working"
 	update_appearance()
-	playsound(src, 'sound/machines/lavaland/cursed_slot_machine.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/lavaland/cursed_slot_machine.ogg').play()
 	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 5 SECONDS)
 
 /obj/structure/cursed_slot_machine/update_overlays()
@@ -84,11 +84,11 @@
 			user.apply_status_effect(/datum/status_effect/grouped/cursed)
 
 		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		balloon_alert_to_viewers("you lost!")
 		return
 
-	playsound(src, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg').play()
 	new prize(get_turf(src))
 	if(user)
 		to_chat(user, span_boldwarning("You've hit the jackpot!!! Laughter echoes around you as your reward appears in the machine's place."))

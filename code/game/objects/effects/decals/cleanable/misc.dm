@@ -190,7 +190,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
-			playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
+			create_sound(get_turf(src), 'sound/items/drink.ogg').vary(TRUE).play() //slurp
 			H.visible_message(span_alert("[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
 			reagents.trans_to(H, reagents.total_volume, transferred_by = user, methods = INGEST)
 			qdel(src)

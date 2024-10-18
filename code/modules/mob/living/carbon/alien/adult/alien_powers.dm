@@ -379,7 +379,7 @@ Doesn't work on other aliens/AI.*/
 	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
 	var/dir_angle = dir2angle(owner.dir)
 
-	playsound(owner, 'sound/mobs/non-humanoids/alien/alien_york.ogg', 100)
+	create_sound(owner, 'sound/mobs/non-humanoids/alien/alien_york.ogg').volume(100).play()
 	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one

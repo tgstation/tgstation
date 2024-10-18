@@ -31,7 +31,7 @@
 /datum/component/sound_player/proc/play_sound()
 	SIGNAL_HANDLER
 
-	playsound(parent, pick(sounds), volume, TRUE)
+	create_sound(parent, pick(sounds)).volume(volume).vary(TRUE).play()
 	if(uses <= -1)
 		return
 	uses--

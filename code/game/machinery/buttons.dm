@@ -189,7 +189,7 @@
 	to_chat(user, span_notice("You start unsecuring the button frame..."))
 	if(tool.use_tool(src, user, 40, volume=50))
 		to_chat(user, span_notice("You unsecure the button frame."))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
@@ -209,7 +209,7 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	obj_flags |= EMAGGED
 
 	// The device inside can be emagged by swiping the button

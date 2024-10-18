@@ -52,7 +52,7 @@
 		if(crushes_people)
 			poor_target.Knockdown(0.25 SECONDS * fall_damage) // For a piano, that would be 15 seconds
 
-		playsound(poor_target, 'sound/items/weapons/parry.ogg', 50, TRUE) // You PARRIED the falling object with your EPIC hardhat
+		create_sound(poor_target, 'sound/items/weapons/parry.ogg').vary(TRUE).play() // You PARRIED the falling object with your EPIC hardhat
 		return
 
 	var/obj/item/bodypart/target_head = poor_target.get_bodypart(BODY_ZONE_HEAD)
@@ -69,7 +69,7 @@
 		span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
 	)
 
-	playsound(poor_target, impact_sound, 50, TRUE)
+	create_sound(poor_target, impact_sound).vary(TRUE).play()
 
 	if(!crushes_people)
 		return

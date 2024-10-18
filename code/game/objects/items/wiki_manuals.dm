@@ -158,7 +158,7 @@
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message(span_suicide("[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	create_sound(loc, 'sound/effects/spray.ogg').volume(10).vary(TRUE).extra_range(-3).play()
 	if (!QDELETED(H))
 		H.emote("spin")
 		sleep(2 SECONDS)

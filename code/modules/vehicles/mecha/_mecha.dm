@@ -638,7 +638,7 @@
 	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))
 		mecha_flags &= ~LIGHTS_ON
 		set_light_on(mecha_flags & LIGHTS_ON)
-		playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
+		create_sound(src, 'sound/machines/clockcult/brass_skewer.ogg').volume(40).vary(TRUE).play()
 		log_message("Toggled lights off due to the lack of power.", LOG_MECHA)
 
 ///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
@@ -821,7 +821,7 @@
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
-	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/airlock/airlock.ogg').vary(TRUE).play()
 
 /// Special light eater handling
 /obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
@@ -908,7 +908,7 @@
 		return
 	mecha_flags ^= LIGHTS_ON
 	set_light_on(mecha_flags & LIGHTS_ON)
-	playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
+	create_sound(src, 'sound/machines/clockcult/brass_skewer.ogg').volume(40).vary(TRUE).play()
 	log_message("Toggled lights [(mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	for(var/mob/occupant as anything in occupants)
 		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/mech_toggle_lights) in occupant.actions

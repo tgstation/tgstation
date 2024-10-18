@@ -238,7 +238,7 @@
 			if(istype(loc, /obj/item/robot_model))
 				var/obj/item/robot_model/container_model = loc
 				cyborg = container_model.robot
-			playsound(cyborg, 'sound/effects/pop.ogg', 50, FALSE)
+			create_sound(cyborg, 'sound/effects/pop.ogg').play()
 			balloon_alert(cyborg, "dispensing [selected_reagent.name]")
 			break
 

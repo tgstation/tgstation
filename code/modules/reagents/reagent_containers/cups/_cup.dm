@@ -88,7 +88,7 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
-	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	create_sound(target_mob.loc,'sound/items/drink.ogg').volume(rand(10,50)).vary(TRUE).play()
 	if(!iscarbon(target_mob))
 		return
 	var/mob/living/carbon/carbon_drinker = target_mob
@@ -118,7 +118,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		create_sound(target.loc, SFX_LIQUID_POUR).vary(TRUE).play()
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
@@ -134,7 +134,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		create_sound(target.loc, SFX_LIQUID_POUR).vary(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -160,7 +160,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+		create_sound(target.loc, SFX_LIQUID_POUR).vary(TRUE).play()
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 		target.update_appearance()
@@ -186,7 +186,7 @@
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		create_sound(loc, 'sound/effects/extinguish.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 		extinguisher.reagents.remove_all(1)
 		return TRUE
 
@@ -408,7 +408,7 @@
 		else
 			reagents.trans_to(O, 5, transferred_by = user)
 			user.balloon_alert(user, "doused [O]")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+			create_sound(loc, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 		return
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))

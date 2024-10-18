@@ -145,7 +145,7 @@
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src && !user.has_status_effect(/datum/status_effect/choke) && prob(20))
 		user.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-		playsound(user, 'sound/items/weapons/slice.ogg', 50, TRUE)
+		create_sound(user, 'sound/items/weapons/slice.ogg').vary(TRUE).play()
 		user.visible_message(span_danger("[user] accidentally cuts [user.p_them()]self while pulling [src] out of [user.p_them()] teeth! What a doofus!"), span_userdanger("You accidentally cut your mouth with [src]!"))
 
 /obj/item/knife/combat/equipped(mob/living/user, slot, initial = FALSE)
@@ -154,7 +154,7 @@
 		if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			user.apply_status_effect(/datum/status_effect/choke, src)
 			user.visible_message(span_danger("[user] accidentally swallows [src]!"))
-			playsound(user, 'sound/items/eatfood.ogg', 100, TRUE)
+			create_sound(user, 'sound/items/eatfood.ogg').volume(100).vary(TRUE).play()
 
 /obj/item/knife/combat/survival
 	name = "survival knife"

@@ -34,7 +34,7 @@
 	if(set_off || mod.wearer.stat == DEAD)
 		return
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/springlock.ogg').volume(75).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_spring_block))
 	set_off = TRUE
@@ -70,8 +70,8 @@
 		return
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
-	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
-	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	create_sound(mod.wearer, 'sound/effects/snap.ogg').volume(75).vary(TRUE).frequency(0.5).play()
+	create_sound(mod.wearer, 'sound/effects/splat.ogg').vary(TRUE).frequency(0.5).play()
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
@@ -173,7 +173,7 @@
 	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /obj/item/mod/module/tanner/on_use()
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/microwave/microwave-end.ogg').vary(TRUE).play()
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
@@ -200,7 +200,7 @@
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(oxygen_damage)
-	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/modsuit/inflate_bloon.ogg').vary(TRUE).play()
 	var/obj/item/balloon = new balloon_path(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_energy_cost)
@@ -228,7 +228,7 @@
 	crisp_paper.desc = "It's crisp and warm to the touch. Must be fresh."
 
 	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
-	playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(get_turf(src), 'sound/machines/click.ogg').vary(TRUE).play()
 	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
 
 	mod.wearer.put_in_hands(crisp_paper)
@@ -291,7 +291,7 @@
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
-	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
+	create_sound(src, 'sound/effects/curse/curseattack.ogg').play()
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
@@ -307,7 +307,7 @@
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
+		create_sound(src, 'sound/effects/curse/curseattack.ogg').play()
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
@@ -330,14 +330,14 @@
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, PROC_REF(fly_away))
 	else if(!(step_count % 2))
-		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
+		create_sound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg').play()
 	step_count++
 
 #define FLY_TIME (5 SECONDS)
 
 /obj/item/mod/module/atrocinator/proc/fly_away()
 	you_fucked_up = TRUE
-	playsound(src, 'sound/effects/whirthunk.ogg', 75)
+	create_sound(src, 'sound/effects/whirthunk.ogg').volume(75).play()
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
 	investigate_log("has flown off into space due to the [src].", INVESTIGATE_DEATHS)
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)

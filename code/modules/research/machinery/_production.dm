@@ -123,7 +123,7 @@
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/beep/twobeep_high.ogg').vary(TRUE).play()
 
 	update_static_data_for_all_viewers()
 

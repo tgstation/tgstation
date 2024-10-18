@@ -343,7 +343,7 @@ Moving interrupts
 /// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
 	user.balloon_alert(user, "sculpting block...")
-	playsound(src, pick(usesound), 75, TRUE)
+	create_sound(src, pick(usesound)).volume(75).vary(TRUE).play()
 	sculpting = TRUE
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
@@ -357,7 +357,7 @@ Moving interrupts
 		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
 			var/time_delay = !(remaining_time % SCULPT_SOUND_INCREMENT)
 			if(time_delay)
-				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+				create_sound(src, 'sound/effects/break_stone.ogg').vary(TRUE).play()
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)

@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 		give_madness(to_curse, message)
 
 /proc/give_madness(mob/living/carbon/human/to_curse, message)
-	to_curse.playsound_local(get_turf(to_curse), 'sound/effects/magic/curse.ogg', 40, 1)
+	create_sound(to_curse, 'sound/effects/magic/curse.ogg').volume(40).vary(TRUE).direct_listeners(to_curse).play()
 	to_chat(to_curse, span_reallybig(span_hypnophrase(message)))
 	to_chat(to_curse, span_warning("Your mind shatters!"))
 	switch(rand(1, 10))

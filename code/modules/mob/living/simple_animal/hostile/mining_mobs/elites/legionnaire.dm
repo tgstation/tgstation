@@ -121,7 +121,7 @@
 	for(var/i in 1 to 6)
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
-	playsound(src,'sound/effects/magic/demon_attack1.ogg', 200, 1)
+	create_sound(src, 'sound/effects/magic/demon_attack1.ogg').volume(200).vary(TRUE).play()
 	visible_message(span_boldwarning("[src] prepares to charge!"))
 	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 0.4 SECONDS)
 
@@ -144,7 +144,7 @@
 			charging = FALSE
 			return
 	forceMove(T)
-	playsound(src,'sound/effects/bang.ogg', 200, 1)
+	create_sound(src, 'sound/effects/bang.ogg').volume(200).vary(TRUE).play()
 	var/list/hit_things = list()
 	var/throwtarget = get_edge_target_turf(src, move_dir)
 	for(var/mob/living/trample_target in T.contents - hit_things - src)
@@ -200,7 +200,7 @@
 		var/obj/structure/legionnaire_bonfire/newpile = new /obj/structure/legionnaire_bonfire(loc)
 		mypile = newpile
 		mypile.myowner = src
-		playsound(get_turf(src),'sound/items/fulton/fultext_deploy.ogg', 200, 1)
+		create_sound(get_turf(src), 'sound/items/fulton/fultext_deploy.ogg').volume(200).vary(TRUE).play()
 		visible_message(span_boldwarning("[src] summons a bonfire on [get_turf(src)]!"))
 		return
 	else
@@ -210,8 +210,8 @@
 			mypile.take_damage(100)
 			mypile = null
 			return
-		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
-		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
+		create_sound(pileturf, 'sound/items/fulton/fultext_deploy.ogg').volume(200).vary(TRUE).play()
+		create_sound(legionturf, 'sound/items/fulton/fultext_deploy.ogg').volume(200).vary(TRUE).play()
 		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
 		forceMove(pileturf)
 		visible_message(span_boldwarning("[src] forms from the bonfire!"))

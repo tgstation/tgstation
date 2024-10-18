@@ -189,7 +189,7 @@
 /obj/item/organ/internal/cyberimp/brain/connector/ui_action_click()
 
 	to_chat(owner, span_warning("You start fiddling around with [src]..."))
-	playsound(owner, 'sound/items/taperecorder/tape_flip.ogg', 20, vary = TRUE) // asmr
+	create_sound(owner, 'sound/items/taperecorder/tape_flip.ogg').volume(20).vary(TRUE).play()
 
 	if(!do_after(owner, 1.5 SECONDS, owner)) // othwerwise it doesnt appear
 		to_chat(owner, span_warning("You were interrupted!"))
@@ -217,17 +217,17 @@
 	var/fail_string = owner.implant_skillchip(skillchip, force = FALSE)
 	if(fail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz/buzz-sigh.ogg', 10, vary = TRUE)
+		create_sound(owner, 'sound/machines/buzz/buzz-sigh.ogg').volume(10).vary(TRUE).play()
 		return
 
 	var/refail_string = skillchip.try_activate_skillchip(silent = FALSE, force = FALSE)
 	if(refail_string)
 		to_chat(owner, span_warning(fail_string))
-		playsound(owner, 'sound/machines/buzz/buzz-two.ogg', 10, vary = TRUE)
+		create_sound(owner, 'sound/machines/buzz/buzz-two.ogg').volume(10).vary(TRUE).play()
 		return
 
 	// success!
-	playsound(owner, 'sound/machines/chime.ogg', 10, vary = TRUE)
+	create_sound(owner, 'sound/machines/chime.ogg').volume(10).vary(TRUE).play()
 
 /obj/item/organ/internal/cyberimp/brain/connector/proc/remove_skillchip(obj/item/organ/internal/brain/chippy_brain)
 	var/obj/item/skillchip/skillchip = show_radial_menu(owner, owner, chippy_brain.skillchips)
@@ -235,7 +235,7 @@
 		owner.remove_skillchip(skillchip, silent = FALSE)
 		skillchip.forceMove(owner.drop_location())
 		owner.put_in_hands(skillchip, del_on_fail = FALSE)
-		playsound(owner, 'sound/machines/click.ogg', 10, vary = TRUE)
+		create_sound(owner, 'sound/machines/click.ogg').volume(10).vary(TRUE).play()
 		to_chat(owner, span_warning("You take [skillchip] out of [src]."))
 		return
 
@@ -258,13 +258,13 @@
 		if(skillchip)
 			owner.remove_skillchip(skillchip, silent = TRUE)
 			skillchip.forceMove(owner.drop_location())
-			playsound(owner, 'sound/machines/terminal/terminal_eject.ogg', 25, TRUE)
+			create_sound(owner, 'sound/machines/terminal/terminal_eject.ogg').volume(25).vary(TRUE).play()
 		else
 			remove_brain()
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/internal/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/internal/brain/chippy_brain, severity = 1)
-	playsound(owner, 'sound/effects/meatslap.ogg', 25, TRUE)
+	create_sound(owner, 'sound/effects/meatslap.ogg').volume(25).vary(TRUE).play()
 	if(!chippy_brain)
 		return
 	chippy_brain.apply_organ_damage(20 * severity)

@@ -51,7 +51,7 @@
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/bikehorn.ogg').vary(TRUE).extra_range(-1).play()
 	sleep(2.5 SECONDS)
 	if(!user)
 		return OXYLOSS
@@ -86,7 +86,7 @@
 
 /obj/item/grown/bananapeel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/misc/slip.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 // Mimana - invisible sprites are totally a feature!
@@ -175,7 +175,7 @@
 /obj/item/food/grown/banana/bunch/proc/start_ripening()
 	if(is_ripening)
 		return
-	playsound(src, 'sound/effects/fuse.ogg', 80)
+	create_sound(src, 'sound/effects/fuse.ogg').volume(80).play()
 
 	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
 	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)

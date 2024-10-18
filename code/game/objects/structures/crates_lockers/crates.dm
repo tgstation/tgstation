@@ -121,7 +121,7 @@
 		if(elevation_open)
 			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
 	if(!QDELETED(manifest))
-		playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
+		create_sound(src, 'sound/items/poster/poster_ripped.ogg').volume(75).vary(TRUE).play()
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_appearance()
@@ -148,7 +148,7 @@
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
-	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/poster/poster_ripped.ogg').volume(75).vary(TRUE).play()
 
 	manifest.forceMove(loc)
 	if(ishuman(user))

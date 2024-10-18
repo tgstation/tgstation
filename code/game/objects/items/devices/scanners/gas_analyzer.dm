@@ -70,7 +70,7 @@
 	if(!T)
 		return CLICK_ACTION_BLOCKING
 
-	playsound(src, 'sound/effects/pop.ogg', 100)
+	create_sound(src, 'sound/effects/pop.ogg').volume(100).play()
 	var/area/user_area = T.loc
 	var/datum/weather/ongoing_weather = null
 
@@ -107,7 +107,7 @@
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, span_notice("[src]'s barometer function is ready!"))
-	playsound(src, 'sound/machines/click.ogg', 100)
+	create_sound(src, 'sound/machines/click.ogg').volume(100).play()
 	cooldown = FALSE
 
 /// Applies the barometer inaccuracy to the gas reading.
@@ -183,7 +183,7 @@
 
 	var/icon = target
 	var/message = list()
-	playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	create_sound(user, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 	if(!silent && isliving(user))
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")

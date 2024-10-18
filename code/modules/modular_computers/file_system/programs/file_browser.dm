@@ -35,7 +35,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
+				create_sound(computer, 'sound/machines/terminal/terminal_error.ogg').volume(25).play()
 				return
 			file.filename = newname
 			return TRUE
@@ -47,7 +47,7 @@
 				return
 			var/newname = reject_bad_name(params["new_name"])
 			if(!newname || newname != params["new_name"])
-				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
+				create_sound(computer, 'sound/machines/terminal/terminal_error.ogg').volume(25).play()
 				return
 			file.filename = newname
 			return TRUE

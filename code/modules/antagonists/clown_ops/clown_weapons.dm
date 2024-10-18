@@ -137,7 +137,7 @@
 	if(COOLDOWN_FINISHED(src, next_trombone_allowed) && istype(weapon, /obj/item/melee/energy/sword/bananium))
 		COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
 		to_chat(user, span_warning("You slap the two swords together. Sadly, they do not seem to fit!"))
-		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+		create_sound(src, 'sound/misc/sadtrombone.ogg').play()
 		return TRUE
 	return ..()
 
@@ -250,7 +250,7 @@
 
 /obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
-	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/misc/slip.ogg').vary(TRUE).extra_range(-1).play()
 	bomb.arm_grenade(user, 0, FALSE)
 	return BRUTELOSS
 

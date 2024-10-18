@@ -181,7 +181,7 @@
 			return
 		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
 
-	playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	create_sound(src, 'sound/effects/sparks/sparks4.ogg').volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	has_sensor = HAS_SENSORS
 	update_wearer_status()
 
@@ -229,7 +229,7 @@
 
 	else
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		playsound(source = src, soundin = 'sound/effects/sparks/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		create_sound(src, 'sound/effects/sparks/sparks3.ogg').volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		visible_message(span_warning("The [src]'s medical sensors flash and change rapidly!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 	update_wearer_status()

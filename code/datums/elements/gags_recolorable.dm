@@ -57,6 +57,6 @@
 	can.use_charges()
 	if(can.pre_noise)
 		target.audible_message(span_hear("You hear spraying."))
-		playsound(target.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+
 
 	target.set_greyscale(menu.split_colors)

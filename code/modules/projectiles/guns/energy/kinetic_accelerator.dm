@@ -56,7 +56,7 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/shoot_with_empty_chamber(mob/living/user)
-	playsound(src, dry_fire_sound, 30, TRUE) //click sound but no to_chat message to cut on spam
+	create_sound(src, dry_fire_sound).volume(30).vary(TRUE).play() //click sound but no to_chat message to cut on spam
 	return
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_seclight_point()
@@ -316,7 +316,7 @@
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, span_notice("You install the modkit."))
-			playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
+			create_sound(loc, 'sound/items/tools/screwdriver.ogg').volume(100).vary(TRUE).play()
 			KA.modkits |= src
 		else
 			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))

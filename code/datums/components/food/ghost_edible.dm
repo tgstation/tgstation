@@ -50,7 +50,7 @@
 			break
 	if (!prob(munch_chance))
 		return
-	playsound(atom_parent.loc,'sound/items/eatfood.ogg', vol = rand(10,50), vary = TRUE)
+	create_sound(atom_parent, 'sound/items/eatfood.ogg').volume(rand(10,50)).vary(TRUE).play()
 	atom_parent.reagents.remove_all(bite_consumption)
 	if (atom_parent.reagents.total_volume <= 0)
 		atom_parent.visible_message(span_notice("[atom_parent] disappears completely!"))

@@ -63,7 +63,7 @@
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
 	to_chat(user, span_notice("You begin to butcher [M]..."))
-	playsound(M.loc, butcher_sound, 50, TRUE, -1)
+	create_sound(M.loc, butcher_sound).vary(TRUE).extra_range(-1).play()
 	if(do_after(user, speed, M) && M.Adjacent(source))
 		on_butchering(user, M)
 
@@ -79,7 +79,7 @@
 					span_userdanger("Something is cutting into your neck!"), NONE)
 	log_combat(user, H, "attempted throat slitting", source)
 
-	playsound(H.loc, butcher_sound, 50, TRUE, -1)
+	create_sound(H.loc, butcher_sound).vary(TRUE).extra_range(-1).play()
 	if(do_after(user, clamp(500 / source.force, 30, 100), H) && H.Adjacent(source))
 		if(H.has_status_effect(/datum/status_effect/neck_slice))
 			user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \

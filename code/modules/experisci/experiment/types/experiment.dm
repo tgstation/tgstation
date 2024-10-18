@@ -78,7 +78,7 @@
  */
 /datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
 	var/action_succesful = perform_experiment_actions(arglist(args))
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 	if(is_complete())
 		finish_experiment(experiment_handler)
 	return action_succesful

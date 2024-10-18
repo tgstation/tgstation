@@ -148,7 +148,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			var/shuttle_error = SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1)
 			if(launch_warning)
 				say("Launch sequence activated! Prepare for drop!!", spans = list("danger"))
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, FALSE)
+				create_sound(loc, 'sound/machines/warning-buzzer.ogg').volume(70).play()
 				launch_warning = FALSE
 				blind_drop_ready = FALSE
 				log_shuttle("[key_name(usr)] has launched the auxiliary base.")
@@ -431,7 +431,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	to_chat(user, span_notice("Mining shuttle calibration successful! Shuttle interface available at base console."))
 	set_anchored(TRUE) //Locks in place to mark the landing zone.
-	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
+	create_sound(loc, 'sound/machines/ping.ogg').play()
 	log_shuttle("[key_name(usr)] has registered the mining shuttle beacon at [COORD(landing_spot)].")
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()

@@ -97,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 			return
 		user.visible_message(span_notice("[user] hooks up [I] to [src]!"), \
 		span_notice("You press [I] into the mount, and it clicks into place."))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').vary(TRUE).play()
 		// Make sure the defib is set before processing begins.
 		defib = I
 		begin_processing()
@@ -130,12 +130,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return TRUE
 	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
 	span_notice("You begin overriding the clamps on [src]..."))
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').vary(TRUE).play()
 	if(!do_after(user, 10 SECONDS, target = src) || !clamps_locked)
 		return
 	user.visible_message(span_notice("[user] pulses [multitool], and [src]'s clamps slide up."), \
 	span_notice("You override the locking clamps on [src]!"))
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/locktoggle.ogg').vary(TRUE).play()
 	clamps_locked = FALSE
 	update_appearance()
 	return TRUE
@@ -169,7 +169,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	else
 		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/defibrillator_mount/charging
@@ -241,7 +241,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	balloon_alert(user, "deconstructing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 5 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		deconstruct()
 	return TRUE
 

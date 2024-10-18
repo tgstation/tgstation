@@ -210,7 +210,7 @@
 		var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
 		if(!the_head)
 			return
-		playsound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+		create_sound(get_turf(our_guy), 'sound/effects/tableheadsmash.ogg').volume(90).vary(TRUE).play()
 		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
 		the_head.receive_damage(75 * damage_mod, damage_source = "slipping")
 		our_guy.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 * damage_mod)
@@ -228,7 +228,7 @@
 	if(!("blessing" in our_guy.mob_mood.mood_events))
 		return
 
-	playsound(our_guy, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
+	create_sound(our_guy, 'sound/effects/pray_chaplain.ogg').volume(40).vary(TRUE).play()
 	to_chat(our_guy, span_green("You feel fantastic!"))
 
 	qdel(src)

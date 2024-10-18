@@ -56,7 +56,7 @@
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(item, ITEM_SLOT_SUITSTORE, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
-	playsound(src, 'sound/items/modsuit/magnetic_harness.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/modsuit/magnetic_harness.ogg').vary(TRUE).play()
 	balloon_alert(mod.wearer, "[item] reattached")
 	drain_power(use_energy_cost)
 
@@ -81,7 +81,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
-	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	create_sound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).extra_range(-6).play()
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
@@ -128,10 +128,10 @@
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
-			playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/weapons/gun/revolver/empty.ogg').volume(100).vary(TRUE).play()
 	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
-		playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
+		create_sound(src, 'sound/items/weapons/gun/revolver/empty.ogg').volume(100).vary(TRUE).play()
 	else
 		balloon_alert(mod.wearer, "holster full!")
 
@@ -214,7 +214,7 @@
 	if(!mod.wearer.Adjacent(target))
 		return
 	if(target == linked_bodybag)
-		playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+		create_sound(src, 'sound/machines/ding.ogg').volume(25).vary(TRUE).play()
 		if(!do_after(mod.wearer, packup_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 		packup()
@@ -224,7 +224,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		return
-	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+	create_sound(src, 'sound/machines/ding.ogg').volume(25).vary(TRUE).play()
 	if(!do_after(mod.wearer, capture_time, target = target))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
@@ -232,14 +232,14 @@
 		return
 	linked_bodybag = new bodybag_type(target_turf)
 	linked_bodybag.take_contents()
-	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+	create_sound(linked_bodybag, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()
 	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/mod/module/criminalcapture/proc/packup()
 	if(!linked_bodybag)
 		return
-	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+	create_sound(linked_bodybag, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()
 	apply_wibbly_filters(linked_bodybag)
 	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(delete_bag), linked_bodybag), 0.5 SECONDS)
@@ -452,10 +452,10 @@
 
 /obj/item/mod/module/active_sonar/on_use()
 	balloon_alert(mod.wearer, "readying sonar...")
-	playsound(mod.wearer, 'sound/vehicles/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
-	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
+
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [detect_living_creatures()] living beings nearby!"))
 	for(var/mob/living/creature as anything in keyed_creatures)
 		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
@@ -503,7 +503,7 @@
 		return
 	if(new_mode != SHOOTING_ASSISTANT_OFF && !mod.get_charge())
 		balloon_alert(mod.wearer, "no charge!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return
 
 	//Remove the effects of the previously selected mode

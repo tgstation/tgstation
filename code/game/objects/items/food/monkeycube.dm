@@ -62,7 +62,7 @@
 		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
 		,span_warning("Your body won't activate [src]..."))
 		return SHAME
-	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
+	create_sound(user, 'sound/items/eatfood.ogg').volume(rand(10, 50)).vary(TRUE).play()
 	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
 	addtimer(CALLBACK(src, PROC_REF(finish_suicide), user), 15) //you've eaten it, you can run now
 	return MANUAL_SUICIDE

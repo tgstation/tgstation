@@ -77,7 +77,7 @@
 			return
 		else
 			to_chat(user, span_notice("You start adding [I] to [src]..."))
-			playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
+			create_sound(src, 'sound/items/hammering_wood.ogg').vary(TRUE).play()
 			if(do_after(user, 5 SECONDS, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)

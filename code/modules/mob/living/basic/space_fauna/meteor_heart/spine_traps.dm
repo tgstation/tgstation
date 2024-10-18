@@ -17,7 +17,7 @@
 /datum/action/cooldown/mob_cooldown/spine_traps/Activate(atom/target)
 	. = ..()
 
-	playsound(owner, 'sound/effects/magic/demon_consume.ogg', vol = 100, falloff_exponent = 2, vary = TRUE, pressure_affected = FALSE)
+	create_sound(owner, 'sound/effects/magic/demon_consume.ogg').volume(100).vary(TRUE).falloff_exponent(2).play()
 	var/list/valid_turfs = list()
 	var/turf/our_turf = get_turf(owner)
 	for (var/turf/zone_turf in orange(range, our_turf))
@@ -92,7 +92,7 @@
 		return
 
 	COOLDOWN_START(src, thrust_delay, 0.7 SECONDS)
-	playsound(src, 'sound/items/weapons/pierce.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	create_sound(src, 'sound/items/weapons/pierce.ogg').vary(TRUE).play()
 	var/mob/living/victim = arrived
 	flick("spikes_stabbing", src)
 	var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)

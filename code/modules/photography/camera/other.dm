@@ -34,4 +34,4 @@
 
 /obj/item/camera/detective/after_picture(mob/user, datum/picture/picture)
 	. = ..()
-	user.playsound_local(get_turf(src), SFX_POLAROID, 35, TRUE)
+	create_sound(src, SFX_POLAROID).volume(35).vary(TRUE).direct_listeners(user).play()

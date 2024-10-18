@@ -156,7 +156,7 @@
 	return data
 
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	create_sound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	switch(action)
 		if("color")
@@ -215,7 +215,7 @@
 	if(!useResource(cost, user))
 		return FALSE
 	activate()
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	if(ispath(blueprint, /obj/machinery/duct))
 		var/is_omni = current_color == DUCT_COLOR_OMNI
 		new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
@@ -261,7 +261,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(do_after(user, 2 SECONDS, target = interacting_with))
 				machine_target.deconstruct() //Let's not substract matter
-				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+				create_sound(src, 'sound/machines/click.ogg').vary(TRUE).play() //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
 	if(!isopenturf(interacting_with))

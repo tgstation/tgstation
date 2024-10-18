@@ -61,7 +61,7 @@
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	mod.wearer.AddElement(/datum/element/forced_gravity, 0)
-	playsound(src, 'sound/effects/gravhit.ogg', 50)
+	create_sound(src, 'sound/effects/gravhit.ogg').play()
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE, deleting = FALSE)
 	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
@@ -69,7 +69,7 @@
 		return
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	playsound(src, 'sound/effects/gravhit.ogg', 50)
+	create_sound(src, 'sound/effects/gravhit.ogg').play()
 
 /obj/item/mod/module/anomaly_locked/antigrav/prebuilt
 	prebuilt = TRUE

@@ -234,7 +234,7 @@
 
 	active = TRUE
 	update_icon_state()
-	playsound(src, 'sound/items/weapons/armbomb.ogg', volume, TRUE)
+
 	if(landminemode)
 		landminemode.activate()
 		return

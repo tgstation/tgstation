@@ -53,7 +53,7 @@
 		var/atom/movable/picked_crate = target
 		if(!check_crate_pickup(picked_crate))
 			return
-		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
+		create_sound(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary(TRUE).play()
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
@@ -67,7 +67,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
-		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
+		create_sound(src, 'sound/vehicles/mecha/hydraulic.ogg').volume(25).vary(TRUE).play()
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
@@ -154,7 +154,7 @@
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
 	if(istype(giberal_turf) && giberal_turf.stage != GIBTONITE_UNSTRUCK)
-		playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(bumper, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
 		on_deactivation()
 		return
@@ -189,7 +189,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, PROC_REF(move_ore), ore)
-		playsound(src, SFX_RUSTLE, 50, TRUE)
+		create_sound(src, SFX_RUSTLE).vary(TRUE).play()
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)
@@ -237,7 +237,7 @@
 	var/current_time = world.time
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
 		blind_message = span_hear("You hear a whirring sound."))
-	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/loader_charge.ogg').volume(75).vary(TRUE).play()
 	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = LOW_MOB_LAYER)
 	mod.wearer.add_overlay(lightning)
 	balloon_alert(mod.wearer, "you start charging...")
@@ -247,7 +247,7 @@
 		animate(game_renderer)
 	drain_power(use_energy_cost)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/loader_launch.ogg').volume(75).vary(TRUE).play()
 	game_renderer.transform = game_renderer.transform.Scale(0.8, 0.8)
 	mod.wearer.cut_overlay(lightning)
 	var/angle = get_angle(mod.wearer, target)
@@ -317,7 +317,7 @@
 		return
 	if(istype(mod.wearer.pulling, /obj/structure/closet))
 		var/obj/structure/closet/locker = mod.wearer.pulling
-		playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
+		create_sound(locker, 'sound/effects/gravhit.ogg').volume(75).vary(TRUE).play()
 		locker.forceMove(mod.wearer.loc)
 		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
@@ -329,7 +329,7 @@
 		balloon_alert(mod.wearer, "target anchored!")
 		return
 	new /obj/effect/temp_visual/mook_dust(get_turf(locker))
-	playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
+	create_sound(locker, 'sound/effects/gravhit.ogg').volume(75).vary(TRUE).play()
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, PROC_REF(check_locker), locker))
 
@@ -442,7 +442,7 @@
 			balloon_alert(mod.wearer, "fully ash covered")
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
-			playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
+			create_sound(src, 'sound/effects/sparks/sparks1.ogg').volume(100).vary(TRUE).play()
 			actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 			mod.slowdown -= actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
@@ -489,7 +489,7 @@
 	return ..()
 
 /obj/item/mod/module/sphere_transform/on_activation()
-	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/modsuit/ballin.ogg').volume(100).vary(TRUE).play()
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
@@ -505,7 +505,7 @@
 
 /obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
+		create_sound(src, 'sound/items/modsuit/ballin.ogg').volume(100).vary(TRUE).frequency(-1).play()
 	mod.wearer.base_pixel_y += 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -519,7 +519,7 @@
 /obj/item/mod/module/sphere_transform/used()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
 		balloon_alert(mod.wearer, "too much pressure!")
-		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		create_sound(src, 'sound/items/weapons/gun/general/dry_fire.ogg').volume(25).vary(TRUE).play()
 		return FALSE
 	return ..()
 
@@ -530,7 +530,7 @@
 	var/obj/projectile/bomb = new /obj/projectile/bullet/mining_bomb(mod.wearer.loc)
 	bomb.preparePixelProjectile(target, mod.wearer)
 	bomb.firer = mod.wearer
-	playsound(src, 'sound/items/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/weapons/gun/general/grenade_launch.ogg').volume(75).vary(TRUE).play()
 	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -617,7 +617,7 @@
 
 /obj/structure/mining_bomb/proc/boom(atom/movable/firer)
 	visible_message(span_danger("[src] explodes!"))
-	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
+	create_sound(src, 'sound/effects/magic/magic_missile.ogg').volume(200).vary(TRUE).play()
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
 	for(var/mob/living/mob in range(1, src))

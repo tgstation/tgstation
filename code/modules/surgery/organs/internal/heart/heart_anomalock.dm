@@ -33,7 +33,7 @@
 	if(!core)
 		return
 	add_lightning_overlay(30 SECONDS)
-	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
+	create_sound(organ_owner, 'sound/items/eshield_recharge.ogg').volume(40).play()
 	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 	organ_owner.apply_status_effect(/datum/status_effect/stabilized/yellow, src)
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
@@ -59,7 +59,7 @@
 	to_chat(user, span_userdanger("Black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 	if(!do_after(user, 5 SECONDS, interaction_key = DOAFTER_IMPLANTING_HEART))
 		return ..()
-	playsound(target_mob, 'sound/items/weapons/slice.ogg', 100, TRUE)
+	create_sound(target_mob, 'sound/items/weapons/slice.ogg').volume(100).vary(TRUE).play()
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 	user.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
@@ -110,7 +110,7 @@
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
 	balloon_alert(organ_owner, "your heart strenghtens")
-	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
+	create_sound(organ_owner, 'sound/items/eshield_recharge.ogg').volume(40).play()
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/get_held_mob()
@@ -126,7 +126,7 @@
 		return ITEM_INTERACT_BLOCKING
 	core = tool
 	balloon_alert(user, "core installed")
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS

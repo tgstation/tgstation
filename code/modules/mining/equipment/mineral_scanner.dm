@@ -72,7 +72,6 @@
 /proc/mineral_scan_pulse(turf/T, range = world.view, obj/item/scanner)
 	var/list/minerals = list()
 	var/vents_nearby = FALSE
-	var/undiscovered = FALSE
 	var/radar_volume = 30
 	for(var/turf/closed/mineral/mineral in  RANGE_TURFS(range, T))
 		if(mineral.scan_state)
@@ -80,8 +79,6 @@
 	for(var/obj/structure/ore_vent/vent in range(range, T))
 		if(!vents_nearby && (!vent.discovered || !vent.tapped))
 			vents_nearby = TRUE
-			if(vent.discovered)
-				undiscovered = TRUE
 		var/potential_volume = 80 - (get_dist(scanner, vent) * 10)
 		radar_volume = max(potential_volume, radar_volume)
 		vent.add_mineral_overlays()
@@ -95,10 +92,6 @@
 			C.icon_state = M.scan_state
 
 	if(vents_nearby && scanner)
-		if(undiscovered)
-			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
-		else
-			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
 		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 

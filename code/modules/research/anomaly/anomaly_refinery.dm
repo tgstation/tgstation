@@ -132,7 +132,7 @@
 		return
 
 	obj_flags |= EMAGGED
-	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, vary = FALSE)
+	create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').play()
 	say("ERROR: Unauthorized firmware access.")
 	return TRUE
 
@@ -158,7 +158,7 @@
 
 	if (obj_flags & EMAGGED)
 		say("ERROR: An firmware issue was detected while starting a process. Running autopatcher.")
-		playsound(src, 'sound/machines/ding.ogg', 50, vary = TRUE)
+		create_sound(src, 'sound/machines/ding.ogg').vary(TRUE).play()
 		addtimer(CALLBACK(src, PROC_REF(error_test)), 2 SECONDS, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_NO_HASH_WAIT) // Synced with the sound.
 		return
 

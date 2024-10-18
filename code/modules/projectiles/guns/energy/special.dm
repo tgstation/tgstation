@@ -210,7 +210,7 @@
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
 		to_chat(user, span_notice("You insert [C] into the wormhole projector and the weapon gently hums to life."))
 		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 		qdel(C)
 		return
 
@@ -288,7 +288,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
-	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(new_portal, SFX_PORTAL_CREATED).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
@@ -350,7 +350,7 @@
 	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
 		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
 		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 		qdel(C)
 		return
 	return ..()
@@ -409,7 +409,7 @@
 	if(COOLDOWN_FINISHED(src, coin_regen_cd))
 		if(ismob(loc))
 			var/mob/owner = loc
-			owner.playsound_local(owner, 'sound/machines/ding.ogg', 20)
+			create_sound(owner, 'sound/machines/ding.ogg').volume(20).direct_listeners(owner).play()
 		coin_count++
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
@@ -428,7 +428,7 @@
 		coin_count = max(0, coin_count - 1)
 
 	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
-	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
+	create_sound(user.loc, 'sound/effects/coin2.ogg').vary(TRUE).play()
 	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.preparePixelProjectile(target_turf, user)

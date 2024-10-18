@@ -899,7 +899,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + (user.getFireLoss()*0.5 + user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
 
 	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
-		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
+		create_sound(target.loc, attacking_bodypart.unarmed_miss_sound).volume(25).vary(TRUE).extra_range(-1).play()
 		target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
 						span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
@@ -922,7 +922,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		armor_block *= 0.5
 		target.adjust_disgust(5)
 
-	playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
+	create_sound(target.loc, attacking_bodypart.unarmed_attack_sound).volume(25).vary(TRUE).extra_range(-1).play()
 
 	if(grappled && attacking_bodypart.grappled_attack_verb)
 		atk_verb = attacking_bodypart.grappled_attack_verb

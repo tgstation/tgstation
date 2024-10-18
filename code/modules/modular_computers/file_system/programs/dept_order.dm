@@ -156,10 +156,10 @@
 		var/new_dept_type = find_department_to_link(computer.computer_id_slot)
 		if(isnull(new_dept_type))
 			computer.physical.balloon_alert(orderer, "no department found!")
-			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+			create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		else
 			computer.physical.balloon_alert(orderer, "linked")
-			playsound(computer, 'sound/machines/ping.ogg', 30, TRUE)
+			create_sound(computer, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 			set_linked_department(new_dept_type)
 		return TRUE
 
@@ -171,7 +171,7 @@
 
 	if(length(use_access & id_card_access) <= 0)
 		computer.physical.balloon_alert(orderer, "access denied!")
-		playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+		create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 		return TRUE
 
 	if(action == "override_order")
@@ -179,7 +179,7 @@
 			return TRUE
 		if(length(download_access & id_card_access) <= 0)
 			computer.physical.balloon_alert(orderer, "requires head of staff access!")
-			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+			create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 			return TRUE
 
 		department_cooldowns[linked_department] = 0
@@ -222,7 +222,7 @@
 			break
 
 	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
-		playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+		create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').play()
 		computer.physical.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
 		return
 

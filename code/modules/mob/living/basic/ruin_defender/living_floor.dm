@@ -84,7 +84,7 @@
 	if(weapon.tool_behaviour != TOOL_CROWBAR)
 		return ..()
 	balloon_alert(user, "prying...")
-	playsound(src, 'sound/items/tools/crowbar.ogg', 45, TRUE)
+	create_sound(src, 'sound/items/tools/crowbar.ogg').volume(45).vary(TRUE).play()
 	if(!do_after(user, 5 SECONDS, src))
 		return
 	new /obj/effect/gibspawner/generic(loc)

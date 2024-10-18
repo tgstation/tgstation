@@ -53,7 +53,7 @@
 	if(istype(hand_item, weapon_type))
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
-			playsound(user, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+			create_sound(user, 'sound/effects/blob/blobattack.ogg').volume(30).vary(TRUE).play()
 			user.visible_message(span_warning("With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!"), span_notice("We assimilate the [weapon_name_simple] back into our body."), span_italics("You hear organic matter ripping and tearing!"))
 		user.update_held_items()
 		return TRUE
@@ -81,7 +81,7 @@
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
 	if(!silent)
-		playsound(user, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+		create_sound(user, 'sound/effects/blob/blobattack.ogg').volume(30).vary(TRUE).play()
 	return W
 
 
@@ -142,7 +142,7 @@
 
 		if(blood_on_castoff)
 			H.add_splatter_floor()
-			playsound(H.loc, 'sound/effects/splat.ogg', 50, TRUE) //So real sounds
+			create_sound(H.loc, 'sound/effects/splat.ogg').vary(TRUE).play() //So real sounds
 
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
@@ -238,7 +238,7 @@
 		if(opening.hasPower())
 			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
 			span_hear("You hear a metal screeching sound."))
-			playsound(opening, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
+			create_sound(opening, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(100).vary(TRUE).play()
 			if(!do_after(user, 10 SECONDS, target = opening))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
@@ -374,7 +374,7 @@
 				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST, attacking_item = I)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
-				playsound(get_turf(H),I.hitsound,75,TRUE)
+				create_sound(get_turf(H), I.hitsound).volume(75).vary(TRUE).play()
 				return
 
 /obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
@@ -636,7 +636,7 @@
 		return
 	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
 	var/mob/living/carbon/wearer = loc
-	playsound(wearer, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
+	create_sound(wearer, 'sound/effects/blob/attackblob.ogg').volume(60).vary(TRUE).play()
 	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
 	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
 	qdel(attacking_item)
@@ -675,7 +675,7 @@
 ///Our tell that we're using this ability. Usually a sound and a visible message.area
 /datum/action/cooldown/hivehead_spawn_minions/proc/do_tell()
 	owner.visible_message(span_warning("[owner]'s head begins to buzz as bees begin to pour out!"), span_warning("We release the bees."), span_hear("You hear a loud buzzing sound!"))
-	playsound(owner, 'sound/mobs/non-humanoids/bee/bee_swarm.ogg', 60, TRUE)
+	create_sound(owner, 'sound/mobs/non-humanoids/bee/bee_swarm.ogg').volume(60).vary(TRUE).play()
 
 ///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
 /datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
@@ -702,7 +702,7 @@
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/do_tell()
 	owner.visible_message(span_warning("[owner]'s head begins to shake as legion begin to pour out!"), span_warning("We release the legion."), span_hear("You hear a loud squishing sound!"))
-	playsound(owner, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
+	create_sound(owner, 'sound/effects/blob/attackblob.ogg').volume(60).vary(TRUE).play()
 
 /datum/action/cooldown/hivehead_spawn_minions/legion/minion_additional_changes(mob/living/basic/minion)
 	var/mob/living/basic/legion_brood/brood = minion

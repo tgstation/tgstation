@@ -60,7 +60,7 @@
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
 		return TRUE
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
 	knock_down(user)
@@ -227,7 +227,7 @@
 		placed_sign.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach the sign to [target_turf]."))
-	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(target_turf, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
 	placed_sign.find_and_hang_on_wall(TRUE, placed_sign.knock_down_callback)

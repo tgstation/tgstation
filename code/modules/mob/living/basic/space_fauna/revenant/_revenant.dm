@@ -318,7 +318,7 @@
 
 	SetInvisibility(INVISIBILITY_NONE, id=type)
 	icon_state = "revenant_draining"
-	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/screech.ogg').volume(100).vary(TRUE).play()
 
 	animate(src, alpha = 0, time = 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(move_to_ectoplasm)), 3 SECONDS)

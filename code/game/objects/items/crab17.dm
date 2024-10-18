@@ -79,7 +79,7 @@
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-		playsound(get_turf(src),'sound/effects/magic/repulse.ogg', 100, TRUE)
+		create_sound(get_turf(src), 'sound/effects/magic/repulse.ogg').volume(100).vary(TRUE).play()
 
 		return
 
@@ -116,17 +116,17 @@
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
+	create_sound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 	cut_overlay("flaps")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
+	create_sound(src, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 	cut_overlay("hatch")
 	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
+	create_sound(src, 'sound/machines/beep/twobeep.ogg').play()
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
 	hologram.pixel_y = 16
 	add_overlay(hologram)
@@ -158,7 +158,7 @@
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
+	create_sound(src, 'sound/machines/beep/triple_beep.ogg').play()
 	add_overlay("text")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
@@ -239,7 +239,7 @@
 	. = ..()
 	bogdanoff = user
 	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
-	sound_to_playing_players('sound/items/dump_it.ogg', 20)
+	create_sound(GLOBAL_SOUND, 'sound/items/dump_it.ogg').volume(20).play()
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/effect/dumpeet_target/proc/startLaunch()
@@ -247,13 +247,13 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
+	create_sound(GLOBAL_SOUND, 'sound/items/weapons/mortar_whistle.ogg').volume(70).vary(TRUE).extra_range(6).play()
 	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 
 
 /obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
-	playsound(src, SFX_EXPLOSION, 80, TRUE)
+	create_sound(src, SFX_EXPLOSION).volume(80).vary(TRUE).play()
 	dump.forceMove(get_turf(src))
 	qdel(src) //The target's purpose is complete. It can rest easy now

@@ -18,15 +18,13 @@
 
 /// Actually plays the fake sound.
 /datum/hallucination/fake_sound/proc/play_fake_sound(turf/source, sound_to_play = sound_type)
-	hallucinator.playsound_local(source, sound_to_play, volume, sound_vary)
+	create_sound(source, sound_to_play).volume(volume).vary(sound_vary).direct_listeners(hallucinator).play()
 
 /// Used to queue additional, delayed fake sounds via a callback.
 /datum/hallucination/fake_sound/proc/queue_fake_sound(turf/source, sound_to_play, volume_override, vary_override, delay)
 	if(!delay)
 		CRASH("[type] queued a fake sound without a timer.")
-
-	// Queue the sound to be played with a timer on the mob, not the datum, because we'll probably get qdel'd
-	addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob, playsound_local), source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
+	create_sound(source, sound_to_play).volume(volume_override || volume).vary(vary_override || sound_vary).direct_listeners(hallucinator).wait(delay).play()
 
 /datum/hallucination/fake_sound/normal
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/normal

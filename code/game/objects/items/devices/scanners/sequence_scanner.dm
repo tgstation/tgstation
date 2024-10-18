@@ -48,7 +48,7 @@
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
 		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
 		balloon_alert(user, "sequence analyzed")
-		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
+		create_sound(user, 'sound/items/healthanalyzer.ogg').play() // close enough
 		gene_scan(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 

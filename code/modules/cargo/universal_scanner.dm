@@ -56,7 +56,7 @@
 		if("sales tagger")
 			scanning_mode = SCAN_SALES_TAG
 	icon_state = "[choice]"
-	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(40).vary(TRUE).play()
 
 /obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
@@ -79,7 +79,7 @@
 				return
 			else
 				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+				create_sound(src, 'sound/machines/ping.ogg').volume(40).vary(TRUE).play()
 				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
 		else if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
@@ -106,7 +106,7 @@
 			to_chat(user, span_warning("You need to swipe [src] with an ID card first."))
 			return
 		paper_count--
-		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').volume(40).vary(TRUE).play()
 		to_chat(user, span_notice("You print a new barcode."))
 		var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 		new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
@@ -200,7 +200,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		playsound(src, 'sound/machines/terminal/terminal_select.ogg', 50, vary = TRUE)
+		create_sound(src, 'sound/machines/terminal/terminal_select.ogg').vary(TRUE).play()
 
 	if(istype(target, /obj/item/delivery))
 		var/obj/item/delivery/parcel = target

@@ -124,7 +124,7 @@
 
 	var/atom/atom_target = parent
 	atom_target.visible_message(span_warning("[atom_target]'s [tether_name] snaps!"), span_userdanger("Your [tether_name] snaps!"), span_hear("You hear a cable snapping."))
-	playsound(atom_target, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(atom_target, 'sound/effects/snap.ogg').vary(TRUE).play()
 	qdel(src)
 
 /datum/component/tether/proc/on_delete()

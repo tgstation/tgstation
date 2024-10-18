@@ -156,7 +156,7 @@
 		return
 	to_chat(user, span_notice("You start to harvest [produced_item_desc] from [parent]..."))
 	if(do_after(user, item_harvest_time, target = parent))
-		playsound(parent, item_harvest_sound, 20, TRUE)
+		create_sound(parent, item_harvest_sound).volume(20).vary(TRUE).play()
 		to_chat(user, span_notice("You harvest some [produced_item_desc] from [parent]."))
 		amount_ready--
 		if(!iscarbon(parent))

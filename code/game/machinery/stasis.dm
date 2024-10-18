@@ -34,9 +34,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			create_sound(src, 'sound/machines/synth/synth_yes.ogg').vary(TRUE).frequency(sound_freq).play()
 		else
-			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			create_sound(src, 'sound/machines/synth/synth_no.ogg').vary(TRUE).frequency(sound_freq).play()
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)
@@ -44,7 +44,7 @@
 		return CLICK_ACTION_BLOCKING
 	stasis_enabled = !stasis_enabled
 	stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 	user.visible_message(span_notice("\The [src] [stasis_enabled ? "powers on" : "shuts down"]."), \
 				span_notice("You [stasis_enabled ? "power on" : "shut down"] \the [src]."), \
 				span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))
@@ -117,7 +117,7 @@
 	if(target != occupant)
 		return
 	var/freq = rand(24750, 26550)
-	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
+	create_sound(src, 'sound/effects/spray.ogg').volume(5).vary(TRUE).extra_range(2).frequency(freq).play()
 	target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_MACHINE_EFFECT)
 	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
 	target.extinguish_mob()

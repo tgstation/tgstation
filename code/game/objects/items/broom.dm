@@ -102,7 +102,7 @@
 	for (var/obj/item/garbage in items_to_sweep)
 		garbage.Move(new_item_loc, sweep_dir)
 
-	playsound(current_item_loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	create_sound(current_item_loc, 'sound/items/weapons/thudswoosh.ogg').volume(30).vary(TRUE).extra_range(-1).play()
 
 /obj/item/pushbroom/cyborg
 	name = "cyborg push broom"

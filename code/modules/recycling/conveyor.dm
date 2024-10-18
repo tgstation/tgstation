@@ -495,7 +495,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
 /obj/machinery/conveyor_switch/proc/update_position(direction)
 	if(position == CONVEYOR_OFF)
-		playsound(src, 'sound/machines/lever/lever_start.ogg', 40, TRUE)
+		create_sound(src, 'sound/machines/lever/lever_start.ogg').volume(40).vary(TRUE).play()
 
 		if(oneway)   //is it a oneway switch
 			position = oneway
@@ -505,7 +505,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			else
 				position = CONVEYOR_BACKWARDS
 	else
-		playsound(src, 'sound/machines/lever/lever_stop.ogg', 40, TRUE)
+		create_sound(src, 'sound/machines/lever/lever_stop.ogg').volume(40).vary(TRUE).play()
 		position = CONVEYOR_OFF
 
 /obj/machinery/conveyor_switch/proc/on_user_activation(mob/user, direction)
@@ -667,7 +667,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/use(used, transfer, check)
 	. = ..()
-	playsound(src, 'sound/items/weapons/genhit.ogg', 30, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit.ogg').volume(30).vary(TRUE).play()
 
 /obj/item/stack/conveyor/thirty
 	amount = 30

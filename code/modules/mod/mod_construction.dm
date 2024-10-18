@@ -164,7 +164,7 @@
 			if(!user.transferItemToLoc(part, src))
 				balloon_alert(user, "core stuck to your hand!")
 				return
-			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 			balloon_alert(user, "core inserted")
 			core = part
 			step = CORE_STEP
@@ -183,7 +183,7 @@
 				if(!user.transferItemToLoc(part, src))
 					balloon_alert(user, "helmet stuck to your hand!")
 					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 				balloon_alert(user, "helmet added")
 				helmet = part
 				step = HELMET_STEP
@@ -196,7 +196,7 @@
 				if(!user.transferItemToLoc(part, src))
 					balloon_alert(user, "chestplate stuck to your hand!")
 					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 				balloon_alert(user, "chestplate added")
 				chestplate = part
 				step = CHESTPLATE_STEP
@@ -211,7 +211,7 @@
 				if(!user.transferItemToLoc(part, src))
 					balloon_alert(user, "gauntlets stuck to your hand!")
 					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 				balloon_alert(user, "gauntlets added")
 				gauntlets = part
 				step = GAUNTLETS_STEP
@@ -226,7 +226,7 @@
 				if(!user.transferItemToLoc(part, src))
 					balloon_alert(user, "boots added")
 					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 				balloon_alert(user, "fit [part.name]")
 				boots = part
 				step = BOOTS_STEP
@@ -261,7 +261,7 @@
 				var/obj/item/mod/construction/plating/external_plating = part
 				if(!user.transferItemToLoc(part, src))
 					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)

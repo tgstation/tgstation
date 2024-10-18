@@ -279,7 +279,7 @@
 			usesound = 'sound/effects/pickaxe/picaxe1.ogg'
 			attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
 			attack_verb_simple = list("hit", "pierce", "slice", "attack")
-	playsound(src, 'sound/items/tools/ratchet.ogg', 50, vary = TRUE)
+	create_sound(src, 'sound/items/tools/ratchet.ogg').vary(TRUE).play()
 	update_appearance(UPDATE_ICON)
 
 /obj/item/trench_tool/proc/check_menu(mob/user)
@@ -363,7 +363,7 @@
 	armour_penetration = (active ? 30 : initial(armour_penetration))
 	if(user)
 		balloon_alert(user, "folded Big Slappy [active ? "open" : "closed"]")
-	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/tools/ratchet.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shovel/giant_wrench/attack(mob/living/target_mob, mob/living/user)

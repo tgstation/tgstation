@@ -45,7 +45,7 @@
 
 ///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)
-	playsound(src, 'sound/items/frog_statue_release.ogg', 20)
+	create_sound(src, 'sound/items/frog_statue_release.ogg').volume(20).play()
 	user.Beam(contained_frog, icon_state = "lichbeam", time = RECALL_DURATION)
 	animate(contained_frog, transform = matrix().Scale(0.3, 0.3), time = RECALL_DURATION)
 	addtimer(CALLBACK(contained_frog, TYPE_PROC_REF(/atom/movable, forceMove), src), RECALL_DURATION)
@@ -57,7 +57,7 @@
 		if(possible_turf.is_blocked_turf() || isopenspaceturf(possible_turf))
 			continue
 		possible_turfs += possible_turf
-	playsound(src, 'sound/items/frog_statue_release.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/frog_statue_release.ogg').vary(TRUE).play()
 	var/turf/final_turf = length(possible_turfs) ? pick(possible_turfs) : get_turf(src)
 	user.Beam(final_turf, icon_state = "lichbeam", time = RECALL_DURATION)
 	contained_frog.forceMove(final_turf)
@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	contained_frog = null
-	playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/demon_dies.ogg').vary(TRUE).play()
 	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

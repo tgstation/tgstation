@@ -36,7 +36,7 @@
 	set_light(l_range = 2, l_power = 2)
 	damtype = BURN
 	START_PROCESSING(SSobj, src)
-	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
+	create_sound(src, 'sound/effects/fuse.ogg').volume(20).vary(TRUE).play()
 	update_appearance()
 
 /obj/item/sparkler/process(seconds_per_tick)
@@ -92,7 +92,7 @@
 	if(det_time)
 		det_time -= 10
 		to_chat(user, span_notice("You shorten the fuse of [src] with [item]."))
-		playsound(src, 'sound/items/tools/wirecutter.ogg', 20, TRUE)
+		create_sound(src, 'sound/items/tools/wirecutter.ogg').volume(20).vary(TRUE).play()
 		icon_state = initial(icon_state) + "_[det_time]"
 		update_appearance()
 	else
@@ -104,7 +104,7 @@
 		add_fingerprint(user)
 		if(msg)
 			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
-	playsound(src, 'sound/effects/fuse.ogg', volume, TRUE)
+
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, PROC_REF(detonate)), isnull(delayoverride)? det_time : delayoverride)

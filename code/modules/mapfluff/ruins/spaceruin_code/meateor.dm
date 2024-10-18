@@ -56,11 +56,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+				create_sound(loc, 'sound/effects/blob/attackblob.ogg').vary(TRUE).play()
 			else
-				playsound(loc, 'sound/effects/meatslap.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+				create_sound(loc, 'sound/effects/meatslap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/effects/wounds/sizzle1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+			create_sound(loc, 'sound/effects/wounds/sizzle1.ogg').volume(100).vary(TRUE).play()
 
 /// A sort of loot box for organs, cut it open and find a prize
 /obj/structure/meateor_fluff/flesh_pod
@@ -117,7 +117,7 @@
 	new stored_organ(loc)
 	new /obj/effect/decal/cleanable/blood(loc)
 	new /obj/structure/meateor_fluff/flesh_pod_open(loc)
-	playsound(loc, 'sound/effects/wounds/blood3.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	create_sound(loc, 'sound/effects/wounds/blood3.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/structure/meateor_fluff/flesh_pod_open
@@ -139,5 +139,5 @@
 
 /obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/xenoblood(loc)
-	playsound(loc, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+	create_sound(loc, 'sound/effects/footstep/gib_step.ogg').vary(TRUE).play()
 	return ..()

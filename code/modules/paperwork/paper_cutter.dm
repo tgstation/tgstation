@@ -86,11 +86,11 @@
 			return SHAME
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		user_head.drop_limb()
-		playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
+		create_sound(loc, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
 	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/gavel.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/papercutter/update_overlays()
@@ -123,7 +123,7 @@
 			return
 		if(!user.transferItemToLoc(inserted_item, src))
 			return
-		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
+		create_sound(loc, SFX_PAGE_TURN).volume(60).vary(TRUE).play()
 		balloon_alert(user, "paper inserted")
 		stored_paper = inserted_item
 
@@ -163,7 +163,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	playsound(src.loc, 'sound/items/weapons/slash.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/items/weapons/slash.ogg').vary(TRUE).play()
 	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)

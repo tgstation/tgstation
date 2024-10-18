@@ -59,7 +59,7 @@
 		return ..()
 	reagent_flags |= OPENCONTAINER
 	spillable = TRUE
-	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
+	create_sound(src, 'sound/items/ampoule_snap.ogg').volume(40).play()
 	update_appearance()
 
 /obj/item/reagent_containers/cup/blastoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -69,7 +69,7 @@
 	if(QDELING(src) || !hit_atom)	//Invalid loc
 		return
 	var/obj/item/shard/ampoule_shard = new(drop_location())
-	playsound(src, SFX_SHATTER, 40, TRUE)
+	create_sound(src, SFX_SHATTER).volume(40).vary(TRUE).play()
 	transfer_fingerprints_to(ampoule_shard)
 	spillable = TRUE
 	SplashReagents(hit_atom, TRUE)

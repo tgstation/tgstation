@@ -180,7 +180,7 @@
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 6 SECONDS)
-		playsound(src, 'sound/machines/defib/defib_zap.ogg', 50)
+		create_sound(src, 'sound/machines/defib/defib_zap.ogg').play()
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
 /mob/living/simple_animal/bot/secbot/Exited(atom/movable/gone, direction)
@@ -289,7 +289,7 @@
 
 	if(bot_type == HONK_BOT)
 		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+		create_sound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg').volume(75).vary(TRUE).extra_range(-1).play() // evil laughter
 	else
 		audible_message(span_danger("[src] buzzes oddly!"))
 
@@ -334,7 +334,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
-	playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
+	create_sound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
 	addtimer(CALLBACK(src, PROC_REF(handcuff_target), current_target), 6 SECONDS)
@@ -349,12 +349,12 @@
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
-		playsound(src, SFX_LAW, 50, FALSE)
+		create_sound(src, SFX_LAW).play()
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
-	playsound(src, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
+	create_sound(src, 'sound/items/weapons/egloves.ogg').vary(TRUE).extra_range(-1).play()
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	var/threat = 5
@@ -509,11 +509,11 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick(
+	create_sound(src, pick(
 		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
 		'sound/mobs/non-humanoids/beepsky/justice.ogg',
 		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
-		), 50, FALSE)
+	)).play()
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()

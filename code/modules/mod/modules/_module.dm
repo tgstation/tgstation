@@ -438,7 +438,7 @@
 			return
 		core = item
 		balloon_alert(user, "core installed")
-		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 		update_icon_state()
 	else
 		return ..()

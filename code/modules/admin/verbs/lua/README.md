@@ -278,7 +278,7 @@ The following example defines a function which will register a signal that makes
 ```lua
 function honk(target)
 	SS13.register_signal(target, "movable_moved", function(source)
-		dm.global_procs.playsound(target, "sound/items/bikehorn.ogg", 100, true)
+		dm.global_procs.create_sound(target, "sound/items/bikehorn.ogg", 100, true)
 	end)
 end
 ```

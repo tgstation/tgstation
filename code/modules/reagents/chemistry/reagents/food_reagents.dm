@@ -183,7 +183,7 @@
 		span_userdanger("You're covered in boiling oil!"))
 		if(FryLoss)
 			exposed_mob.emote("scream")
-		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+		create_sound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg').volume(25).vary(TRUE).play()
 		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
 	if(FryLoss)
@@ -957,7 +957,7 @@
 		affected_mob.blood_volume += 1 * seconds_per_tick
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		affected_mob.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
-		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(affected_mob, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"

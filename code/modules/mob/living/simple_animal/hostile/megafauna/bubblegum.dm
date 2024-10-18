@@ -204,7 +204,7 @@ Difficulty: Hard
 	for(var/mob/living/L in T)
 		if(!faction_check_atom(L))
 			to_chat(L, span_userdanger("[src] rends you!"))
-			playsound(T, attack_sound, 100, TRUE, -1)
+			create_sound(T, attack_sound).volume(100).vary(TRUE).extra_range(-1).play()
 			var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, MELEE, null, null, armour_penetration), wound_bonus = CANT_WOUND)
 	SLEEP_CHECK_DEATH(3, src)
@@ -221,10 +221,10 @@ Difficulty: Hard
 		if(!faction_check_atom(L))
 			if(L.stat != CONSCIOUS)
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
-				playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
+				create_sound(T, 'sound/effects/magic/enter_blood.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 				var/turf/targetturf = get_step(src, dir)
 				L.forceMove(targetturf)
-				playsound(targetturf, 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
+				create_sound(targetturf, 'sound/effects/magic/exit_blood.ogg').volume(100).vary(TRUE).extra_range(-1).play()
 				addtimer(CALLBACK(src, PROC_REF(devour), L), 0.2 SECONDS)
 	SLEEP_CHECK_DEATH(1, src)
 
@@ -300,7 +300,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
 	if(BUBBLEGUM_IS_ENRAGED)
 		visible_message(span_danger("[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
-		playsound(src, SFX_BULLET_MISS, 300, TRUE)
+		create_sound(src, SFX_BULLET_MISS).volume(300).vary(TRUE).play()
 		return BULLET_ACT_BLOCK
 	return ..()
 

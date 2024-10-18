@@ -866,7 +866,7 @@
 				visi_msg="[user] injects [target] with [syr]"
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
-				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+				create_sound(loc, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 				var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash_hydroponics")
 				splash_animation.color = mix_color_from_reagents(reagent_source.reagents.reagent_list)
 				flick_overlay_view(splash_animation, 1.1 SECONDS)

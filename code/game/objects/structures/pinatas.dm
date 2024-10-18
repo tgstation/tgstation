@@ -35,11 +35,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/items/weapons/slash.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/slash.ogg').vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/pinata/atom_deconstruct(disassembled)
 	new debris(get_turf(src))

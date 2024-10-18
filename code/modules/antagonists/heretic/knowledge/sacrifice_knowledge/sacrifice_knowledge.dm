@@ -249,7 +249,7 @@
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
 	to_chat(user, span_hierophant("Your patrons are rapturous!"))
-	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
+	create_sound(sacrifice, 'sound/effects/magic/disintegrate.ogg').volume(75).vary(TRUE).play()
 
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = sacrifice.unequip_everything()
@@ -281,7 +281,7 @@
 		return
 	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
-	playsound(loc, 'sound/effects/magic/repulse.ogg', 75, TRUE)
+	create_sound(loc, 'sound/effects/magic/repulse.ogg').volume(75).vary(TRUE).play()
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
@@ -403,7 +403,7 @@
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
-	playsound(sac_target, 'sound/music/antag/heretic/heretic_sacrifice.ogg', 50, FALSE) // play theme
+	create_sound(sac_target, 'sound/music/antag/heretic/heretic_sacrifice.ogg').play() // play theme
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame

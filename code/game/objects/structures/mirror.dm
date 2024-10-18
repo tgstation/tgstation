@@ -264,7 +264,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
@@ -298,9 +298,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+			create_sound(src, 'sound/effects/hit_on_shattered_glass.ogg').volume(70).vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+			create_sound(src, 'sound/effects/hit_on_shattered_glass.ogg').volume(70).vary(TRUE).play()
 
 /obj/item/wallframe/mirror
 	name = "mirror"

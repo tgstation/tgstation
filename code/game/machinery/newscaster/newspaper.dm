@@ -69,7 +69,7 @@
 	))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced = "newspaper suicide")
 	var/obj/item/reagent_containers/cup/glass/bottle/whiskey/last_drink = new(user.loc)
-	playsound(user, 'sound/items/drink.ogg', vol = rand(10, 50), vary = TRUE)
+	create_sound(user, 'sound/items/drink.ogg').volume(rand(10, 50)).vary(TRUE).play()
 	last_drink.reagents.trans_to(user, last_drink.reagents.total_volume, transferred_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [last_drink.name] in one gulp! Shoulda stuck to sudoku!"))
 	return TOXLOSS
@@ -170,7 +170,7 @@
 		else
 			return TRUE
 	SStgui.update_uis(src)
-	playsound(src, SFX_PAGE_TURN, 50, TRUE)
+	create_sound(src, SFX_PAGE_TURN).vary(TRUE).play()
 	return TRUE
 
 /obj/item/newspaper/ui_static_data(mob/user)

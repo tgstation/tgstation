@@ -212,7 +212,7 @@
 
 	if(item.force != 0 && !(item.item_flags & NOBLUDGEON))
 		user.do_attack_animation(src)
-		playsound(loc, 'sound/effects/meatslap.ogg', 50)
+		create_sound(loc, 'sound/effects/meatslap.ogg').play()
 		set_organ_damage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 		visible_message(span_danger("[user] hits [src] with [item]!"))
 		to_chat(user, span_danger("You hit [src] with [item]!"))

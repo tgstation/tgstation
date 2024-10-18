@@ -152,7 +152,7 @@
 	if(batch_processing)
 		balloon_alert(user, "batch still processing!")
 		return FALSE
-	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, MANUAL_TELEPORT_SOUND).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/brm/attack_ai(mob/user)
@@ -284,14 +284,14 @@
 	//no more boulders
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
-			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
+			create_sound(loc, 'sound/machines/synth/synth_no.ogg').volume(30).vary(TRUE).play()
 			balloon_alert_to_viewers("no boulders to collect!")
 		batch_processing = FALSE
 		return FALSE
 
 	//pick & spawn the boulder
 	flick("brm-flash", src)
-	playsound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, toggled_on ? AUTO_TELEPORT_SOUND : MANUAL_TELEPORT_SOUND).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
 	SSore_generation.available_boulders -= random_boulder
 	random_boulder.forceMove(drop_location())

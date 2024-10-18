@@ -155,7 +155,7 @@
 			span_userdanger("You feel drenched!"),
 		)
 
-	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+	create_sound(target, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
@@ -254,7 +254,7 @@
 		if(QDELETED(src))
 			return
 
-	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
+	create_sound(target, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 
 	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
@@ -297,9 +297,9 @@
 /obj/item/reagent_containers/dropped(mob/user, silent)
 	. = ..()
 	if(reagent_container_liquid_sound && reagents.total_volume > 0)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+		create_sound(src, reagent_container_liquid_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
 
 /obj/item/reagent_containers/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	if((slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
-		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+		create_sound(src, reagent_container_liquid_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()

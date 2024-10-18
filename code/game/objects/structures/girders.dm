@@ -44,7 +44,7 @@
 		platingmodifier = 0.7
 		if(next_beep <= world.time)
 			next_beep = world.time + 10
-			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+			create_sound(src, 'sound/machines/clockcult/integration_cog_install.ogg').vary(TRUE).play()
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))

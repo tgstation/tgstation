@@ -125,7 +125,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
-	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
+	create_sound(get_turf(user), 'sound/machines/click.ogg').volume(10).vary(TRUE).play()
 	register_machine(multitool.buffer)
 	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE

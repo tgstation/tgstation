@@ -121,7 +121,7 @@
 			digitigrade_fan.Knockdown(paralyze_duration)
 	if(!soundfile)
 		return
-	playsound(digitigrade_fan, soundfile, 15, TRUE, -3)
+	create_sound(digitigrade_fan, soundfile).volume(15).vary(TRUE).extra_range(-3).play()
 
 /datum/component/caltrop/UnregisterFromParent()
 	if(ismovable(parent))

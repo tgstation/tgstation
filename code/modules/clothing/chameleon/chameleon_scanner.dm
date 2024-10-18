@@ -110,7 +110,7 @@
 		scanned.balloon_alert(scanner, "nothing to scan!")
 		return
 
-	playsound(src, 'sound/machines/ping.ogg', vol = 30, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
+
 	COOLDOWN_START(src, scan_cooldown, 5 SECONDS)
 
 	var/datum/action/chameleon_outfit/outfit_action = locate() in scanner.actions

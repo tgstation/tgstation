@@ -110,10 +110,10 @@
 	var/mob/living/carbon/carbon_user = user
 	// For masks that give unique death sounds
 	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
-		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
+		create_sound(carbon_user, carbon_user.wear_mask.unique_death).volume(200).vary(TRUE).extra_range(TRUE).play()
 		return
 	if(user.death_sound)
-		playsound(user, user.death_sound, 200, TRUE, TRUE)
+		create_sound(user, user.death_sound).volume(200).vary(TRUE).extra_range(TRUE).play()
 
 /datum/emote/living/drool
 	key = "drool"

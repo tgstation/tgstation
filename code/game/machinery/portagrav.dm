@@ -156,7 +156,7 @@
 	if(user)
 		balloon_alert(user, "unsafe gravity unlocked")
 		user.log_message("emagged [src].", LOG_ATTACK)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/power/portagrav/proc/toggle_on(mob/user)
@@ -229,7 +229,7 @@
 	. = ..()
 	if(.)
 		return
-	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
+	create_sound(src, 'sound/machines/terminal/terminal_button07.ogg').volume(45).vary(TRUE).play()
 	switch(action)
 		if("adjust_grav")
 			var/adjustment = text2num(params["adjustment"])

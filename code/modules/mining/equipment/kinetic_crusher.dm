@@ -128,7 +128,7 @@
 	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		create_sound(user, 'sound/items/weapons/kinetic_accel.ogg').volume(100).vary(TRUE).play() //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
@@ -160,7 +160,7 @@
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
 	destabilizer.firer = user
-	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
+	create_sound(user, 'sound/items/weapons/plasma_cutter.ogg').volume(100).vary(TRUE).play()
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -170,17 +170,17 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
+		create_sound(src.loc, 'sound/items/weapons/kinetic_reload.ogg').volume(60).vary(TRUE).play()
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	create_sound(user, 'sound/items/weapons/empty.ogg').volume(100).vary(TRUE).play()
 	update_appearance()
 
 /obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/weapons/empty.ogg').volume(100).vary(TRUE).play()
 	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
@@ -364,7 +364,7 @@
 	for(var/mob/living/living_target in oview(2, user))
 		if(user.faction_check_atom(living_target) || living_target.stat == DEAD)
 			continue
-		playsound(living_target, 'sound/effects/magic/fireball.ogg', 20, TRUE)
+		create_sound(living_target, 'sound/effects/magic/fireball.ogg').volume(20).vary(TRUE).play()
 		new /obj/effect/temp_visual/fire(living_target.loc)
 		addtimer(CALLBACK(src, PROC_REF(pushback), living_target, user), 1) //no free backstabs, we push AFTER module stuff is done
 		living_target.adjustFireLoss(bonus_value, forced = TRUE)

@@ -118,7 +118,7 @@
 
 	user.visible_message(span_notice("[user.name] starts addding cables to the APC frame."))
 	balloon_alert(user, "adding cables...")
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
@@ -151,7 +151,7 @@
 
 	user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
 	balloon_alert(user, "inserting the board...")
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 
 	if(!do_after(user, 1 SECONDS, target = src) || has_electronics)
 		return ITEM_INTERACT_BLOCKING
@@ -448,7 +448,7 @@
 		return FALSE
 	else
 		flick("apc-spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		obj_flags |= EMAGGED
 		locked = FALSE
 		balloon_alert(user, "interface damaged")

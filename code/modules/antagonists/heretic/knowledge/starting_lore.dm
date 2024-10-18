@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// Make it the living heart
 	our_new_heart.AddComponent(/datum/component/living_heart)
 	to_chat(user, span_warning("You feel your [our_new_heart.name] begin pulse faster and faster as it awakens!"))
-	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	create_sound(user, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 	return TRUE
 
 /// Checks if the passed heart is a valid heart to become a living heart
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/obj/item/book/le_book = locate() in selected_atoms
 	if(!le_book)
 		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
-	playsound(body, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
+	create_sound(body, 'sound/items/poster/poster_ripped.ogg').volume(100).vary(TRUE).play()
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
@@ -329,10 +329,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	heretic_datum.feast_of_owls = TRUE
 	user.set_temp_blindness(reward * 1 SECONDS)
 	user.AdjustParalyzed(reward * 1 SECONDS)
-	user.playsound_local(get_turf(user), 'sound/music/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	create_sound(user, 'sound/music/antag/heretic/heretic_gain_intense.ogg').volume(100).direct_listeners(user).play()
 	for(var/i in 1 to reward)
 		user.emote("scream")
-		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
+		create_sound(loc, 'sound/items/eatfood.ogg').volume(100).vary(TRUE).play()
 		heretic_datum.knowledge_points++
 		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
 		user.do_jitter_animation()

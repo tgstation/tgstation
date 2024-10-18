@@ -550,7 +550,7 @@
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
-	playsound(target_turf, 'sound/items/weapons/resonator_blast.ogg', 100, FALSE)
+	create_sound(target_turf, 'sound/items/weapons/resonator_blast.ogg').volume(100).play()
 	new /obj/effect/temp_visual/cult/sac(target_turf)
 	for(var/obj/adjacent_object in range(1, src))
 		if(!adjacent_object.density)

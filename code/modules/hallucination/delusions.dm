@@ -94,7 +94,7 @@
 
 	if(play_wabbajack)
 		to_chat(hallucinator, span_hear("...wabbajack...wabbajack..."))
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/staff_change.ogg', 50, TRUE)
+		create_sound(get_turf(hallucinator), 'sound/effects/magic/staff_change.ogg').vary(TRUE).direct_listeners(hallucinator).play()
 
 	if(duration > 0)
 		QDEL_IN(src, duration)
@@ -191,7 +191,7 @@
 
 /datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()
-	hallucinator.playsound_local(get_turf(over_who), 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
+	create_sound(get_turf(over_who), 'sound/mobs/non-humanoids/cyborg/liveagain.ogg').volume(75).vary(TRUE).direct_listeners(hallucinator).play()
 
 /datum/hallucination/delusion/preset/ghost
 	delusion_icon_file = 'icons/mob/simple/mob.dmi'

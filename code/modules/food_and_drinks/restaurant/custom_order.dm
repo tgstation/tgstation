@@ -160,7 +160,7 @@
 		if(reagent.type == reagent_type)
 			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
-	playsound(customer_pawn, 'sound/items/drink.ogg', rand(10, 50), TRUE)
+	create_sound(customer_pawn, 'sound/items/drink.ogg').volume(rand(10, 50)).vary(TRUE).play()
 	order_item.reagents.clear_reagents()
 
 /datum/custom_order/reagent/is_correct_order(obj/item/object_used)

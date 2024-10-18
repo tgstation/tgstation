@@ -29,7 +29,7 @@
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
-	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/eatfood.ogg').vary(TRUE).play()
 	moveToNullspace()
 	suicider = user.mind
 	suicide_mob = REF(user)
@@ -46,7 +46,7 @@
 	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
-	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+
 	qdel(src)
 
 /obj/item/assembly/signaler/Initialize(mapload)
@@ -171,7 +171,7 @@
 	pulse()
 	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		create_sound(src, 'sound/machines/beep/triple_beep.ogg').volume(ASSEMBLY_BEEP_VOLUME).vary(TRUE).direct_listeners(hearing_mob).play()
 	return TRUE
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)

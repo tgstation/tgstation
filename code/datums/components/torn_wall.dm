@@ -41,7 +41,7 @@
 /// Play a fun animation and make our wall look damaged
 /datum/component/torn_wall/proc/apply_visuals()
 	var/atom/atom_parent = parent
-	playsound(atom_parent, 'sound/effects/bang.ogg', 50, vary = TRUE)
+	create_sound(atom_parent, 'sound/effects/bang.ogg').vary(TRUE).play()
 	atom_parent.update_appearance(UPDATE_ICON)
 	atom_parent.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
 
@@ -52,7 +52,7 @@
 		apply_visuals()
 		return
 	var/turf/closed/wall/attached_wall = parent
-	playsound(attached_wall, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE)
+	create_sound(attached_wall, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 
 	if(ismineralturf(attached_wall))
 		var/turf/closed/mineral/mineral_turf = attached_wall

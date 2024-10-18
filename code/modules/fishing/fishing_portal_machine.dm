@@ -125,16 +125,16 @@
 		var/datum/fish_source/stored = linked_fishing_spots[other_spot]
 		if(stored == source)
 			spot.balloon_alert(user, "already linked!")
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 			return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(spot, TRAIT_UNLINKABLE_FISHING_SPOT))
 		spot.balloon_alert(user, "unlinkable fishing spot!")
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 		return ITEM_INTERACT_BLOCKING
 	LAZYSET(linked_fishing_spots, spot, source)
 	RegisterSignal(spot, SIGNAL_REMOVETRAIT(TRAIT_FISHING_SPOT), PROC_REF(unlink_fishing_spot))
 	spot.balloon_alert(user, "fishing spot linked")
-	playsound(spot, 'sound/machines/ping.ogg', 15, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/fishing_portal_generator/proc/unlink_fishing_spot(atom/spot)
@@ -155,7 +155,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	balloon_alert(user, "syndicate setting loaded")
-	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/machinery/fishing_portal_generator/interact(mob/user)

@@ -13,4 +13,4 @@
 	if(break_message)
 		visible_message(break_message)
 	if(break_sound)
-		playsound(src, break_sound, 50, TRUE)
+		create_sound(src, break_sound).vary(TRUE).play()

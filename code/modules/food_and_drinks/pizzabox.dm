@@ -247,7 +247,7 @@
 
 /obj/item/pizzabox/process(seconds_per_tick)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
-		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
+		create_sound(loc, 'sound/items/timer.ogg').play()
 		bomb_timer -= seconds_per_tick
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)

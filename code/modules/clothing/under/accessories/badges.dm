@@ -277,12 +277,12 @@
 
 	var/mob/living/interacting_living = interacting_with
 	if(user.combat_mode)
-		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
+		create_sound(interacting_living, 'sound/items/weapons/throw.ogg').volume(30).play()
 		examine(interacting_living)
 		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
 		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
 	else
-		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
+		create_sound(interacting_living, 'sound/items/weapons/throwsoft.ogg').volume(20).play()
 		examine(interacting_living)
 		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
 		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

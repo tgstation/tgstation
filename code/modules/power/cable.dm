@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 	if(avail())
 		king.apply_damage(10)
-		playsound(king, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
+		create_sound(king, 'sound/effects/sparks/sparks2.ogg').volume(100).vary(TRUE).play()
 	deconstruct()
 
 	return COMPONENT_RAT_INTERACTED

@@ -662,7 +662,7 @@
 		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
 		var/owner_turf = get_turf(owner)
 		new block_effect(owner_turf, COLOR_YELLOW)
-		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
+		create_sound(src, block_sound).volume(BLOCK_SOUND_VOLUME).vary(TRUE).play()
 		return TRUE
 
 /**
@@ -695,8 +695,8 @@
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(!silent)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE)
+	if(!silent && drop_sound)
+		create_sound(src, drop_sound).volume(DROP_SOUND_VOLUME).vary(sound_vary).play()
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
@@ -760,9 +760,9 @@
 	item_flags |= IN_INVENTORY
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
-			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot & ITEM_SLOT_HANDS)
-			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
+			create_sound(src, equip_sound).volume(EQUIP_SOUND_VOLUME).vary(TRUE).play()
+		else if(pickup_sound && (slot & ITEM_SLOT_HANDS))
+			create_sound(src, pickup_sound).volume(PICKUP_SOUND_VOLUME).play()
 	user.update_equipment_speed_mods()
 
 /// Gives one of our item actions to a mob, when equipped to a certain slot
@@ -855,20 +855,20 @@
 	. = ..()
 	if(!isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		if(throw_drop_sound)
-			playsound(src, throw_drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+			create_sound(src, throw_drop_sound).volume(YEET_SOUND_VOLUME).vary(TRUE).play()
 			return
-		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
+		if(drop_sound)
+			create_sound(src, drop_sound).volume(YEET_SOUND_VOLUME).vary(sound_vary).play()
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		if (mob_throw_hit_sound)
-			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
+			create_sound(hit_atom, mob_throw_hit_sound).volume(volume).vary(TRUE).extra_range(-1).play()
 		else if(hitsound)
-			playsound(hit_atom, hitsound, volume, TRUE, -1)
-		else
-			playsound(hit_atom, 'sound/items/weapons/genhit.ogg',volume, TRUE, -1)
+			create_sound(hit_atom, hitsound).volume(volume).vary(TRUE).extra_range(-1).play()
+
 	else
-		playsound(hit_atom, 'sound/items/weapons/throwtap.ogg', 1, volume, -1)
+		create_sound(hit_atom, 'sound/items/weapons/throwtap.ogg').volume(1).vary(volume).extra_range(-1).play()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -1202,7 +1202,7 @@
 		if(islist(usesound))
 			played_sound = pick(usesound)
 
-		playsound(target, played_sound, volume, TRUE)
+		create_sound(target, played_sound).volume(volume).vary(TRUE).play()
 
 ///Play item's operating sound
 /obj/item/proc/play_tool_operating_sound(atom/target, volume=50)
@@ -1214,7 +1214,7 @@
 
 		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
 			return
-		playsound(target, played_sound, volume, TRUE)
+		create_sound(target, played_sound).volume(volume).vary(TRUE).play()
 		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) //based on our longest sound clip
 
 /// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
@@ -1373,12 +1373,12 @@
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(victim, SFX_SHATTER, 25, TRUE)
+				create_sound(victim, SFX_SHATTER).volume(25).vary(TRUE).play()
 				qdel(src)
 				if(QDELETED(source_item))
 					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(victim, SFX_SHATTER, 15, TRUE)
+				create_sound(victim, SFX_SHATTER).volume(15).vary(TRUE).play()
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)

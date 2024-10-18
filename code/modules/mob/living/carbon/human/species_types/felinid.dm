@@ -161,7 +161,7 @@
 
 	if(!silent)
 		to_chat(soon_to_be_felinid, span_boldnotice("Something is nya~t right."))
-		playsound(get_turf(soon_to_be_felinid), 'sound/effects/meow1.ogg', 50, TRUE, -1)
+
 
 /proc/purrbation_remove(mob/living/carbon/human/purrbated_human, silent = FALSE)
 	if(isfelinid(purrbated_human))

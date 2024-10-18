@@ -35,7 +35,7 @@
 
 	item_pawn.visible_message(span_warning("[item_pawn] hurls towards [throw_target]!"))
 	item_pawn.throw_at(throw_target, rand(4,5), 9)
-	playsound(item_pawn.loc, attack_sound, 100, TRUE)
+	create_sound(item_pawn.loc, attack_sound).volume(100).vary(TRUE).play()
 	controller.add_blackboard_key(throw_count_key, 1)
 	if(controller.blackboard[throw_count_key] >= max_attempts)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

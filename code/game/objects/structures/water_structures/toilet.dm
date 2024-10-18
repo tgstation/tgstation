@@ -83,7 +83,7 @@
 
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
-		playsound(src.loc, SFX_SWING_HIT, 25, TRUE)
+		create_sound(src.loc, SFX_SWING_HIT).volume(25).vary(TRUE).play()
 		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)
@@ -120,7 +120,7 @@
 				swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
 			swirlie = null
 		else
-			playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
+			create_sound(src.loc, 'sound/effects/bang.ogg').volume(25).vary(TRUE).play()
 			grabbed_mob.visible_message(span_danger("[user] slams [grabbed_mob.name] into [src]!"), span_userdanger("[user] slams you into [src]!"))
 			log_combat(user, grabbed_mob, "toilet slammed")
 			grabbed_mob.adjustBruteLoss(5)
@@ -159,7 +159,7 @@
 	if(flushing)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	flushing = TRUE
-	playsound(src, 'sound/machines/toilet_flush.ogg', cover_open ? 40 : 20, TRUE)
+	create_sound(src, 'sound/machines/toilet_flush.ogg').volume(cover_open ? 40 : 20).vary(TRUE).play()
 	if(cover_open && (dir & SOUTH))
 		update_appearance(UPDATE_OVERLAYS)
 		flick_overlay_view(mutable_appearance(icon, "[base_icon_state]-water-flick"), 3 SECONDS)
@@ -230,7 +230,7 @@
 
 /obj/structure/toilet/crowbar_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("You start to [cistern_open ? "replace the lid on" : "lift the lid off"] the cistern..."))
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
+	create_sound(loc, 'sound/effects/stonedoor_openclose.ogg').vary(TRUE).play()
 	if(tool.use_tool(src, user, 30))
 		user.visible_message(
 			span_notice("[user] [cistern_open ? "replaces the lid on" : "lifts the lid off"] the cistern!"),

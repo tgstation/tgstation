@@ -93,7 +93,7 @@
 		human_owner.physiology.oxy_mod *= 0.1
 		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
-	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
+	create_sound(get_turf(owner), 'sound/effects/singlebeat.ogg').volume(40).vary(TRUE).use_reverb(FALSE).direct_listeners(owner).play()
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
@@ -558,7 +558,7 @@
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	ADD_TRAIT(owner, TRAIT_FREE_HYPERSPACE_MOVEMENT, id)
-	owner.playsound_local(get_turf(owner), 'sound/effects/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
+	create_sound(owner, 'sound/effects/chemistry/ahaha.ogg').volume(100).vary(TRUE).direct_listeners(owner).play()
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()

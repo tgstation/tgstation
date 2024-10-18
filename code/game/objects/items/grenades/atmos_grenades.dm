@@ -17,7 +17,7 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
-	playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', volume, TRUE)
+
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	if(user)
 		SEND_SIGNAL(src, COMSIG_MOB_GRENADE_ARMED, user, src, det_time, delayoverride)
@@ -36,7 +36,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
 	var/datum/gas_mixture/base_mix = SSair.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
 	for(var/turf/open/turf_fix in connected_turfs)
@@ -62,7 +62,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/turf_loc in view(refill_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
@@ -86,7 +86,7 @@
 		return
 
 	update_mob()
-	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/turf_loc in view(fill_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
@@ -118,7 +118,7 @@
 
 	chem_splash(detonation_turf, null, breach_range, reactants)
 
-	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
 	update_mob()

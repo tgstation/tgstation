@@ -65,7 +65,7 @@
 		return
 	balloon_alert(user, "[drawn ? "string released" : "string drawn"]")
 	drawn = !drawn
-	playsound(src, 'sound/items/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
+	create_sound(src, 'sound/items/weapons/gun/bow/bow_draw.ogg').volume(25).vary(TRUE).play()
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/try_fire_gun(atom/target, mob/living/user, params)
@@ -87,7 +87,7 @@
 	if(slot != ITEM_SLOT_HANDS && chambered)
 		balloon_alert(user, "the arrow falls out!")
 		if(drawn)
-			playsound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
+			create_sound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg').volume(25).vary(TRUE).play()
 		drop_arrow()
 
 
@@ -99,7 +99,7 @@
 	if(ismob(loc) || !chambered)
 		return
 	if(drawn)
-		playsound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg', 25, TRUE)
+		create_sound(src, 'sound/items/weapons/gun/bow/bow_fire.ogg').volume(25).vary(TRUE).play()
 	drop_arrow()
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)

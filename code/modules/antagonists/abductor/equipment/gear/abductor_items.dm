@@ -393,7 +393,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	toggle(user)
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
-	playsound(src, on_stun_sound, 50, TRUE, -1)
+	create_sound(src, on_stun_sound).vary(TRUE).extra_range(-1).play()
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
@@ -422,7 +422,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/mob/living/carbon/carbon_victim = victim
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
-			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
+			create_sound(src, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
@@ -522,7 +522,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	..()
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
-	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50)
+	create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').play()
 	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
@@ -534,12 +534,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			if(thing.density || ismachinery(thing) || isstructure(thing))
 				viable = FALSE
 	if(viable)
-		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/phasein.ogg').vary(TRUE).play()
 		var/new_machine = new spawned_machine(loc)
 		visible_message(span_notice("[new_machine] warps on top of the beacon!"))
 		qdel(src)
 	else
-		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50)
+		create_sound(src, 'sound/machines/buzz/buzz-two.ogg').play()
 
 /obj/item/abductor_machine_beacon/chem_dispenser
 	name = "beacon - Reagent Synthesizer"
@@ -691,14 +691,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if("Welding Tool")
 			tool_behaviour = TOOL_WELDER
 
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers) //ADD SFX FOR USING THE TOOL
 	if(!user)
 		return
 
 	set_toolset(user)
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 
 /obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
 	if(!istype(user))

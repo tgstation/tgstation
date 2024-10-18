@@ -67,7 +67,7 @@
 
 	else
 		log_combat(user, M, "applied", src, reagents.get_reagent_log_string())
-		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+		create_sound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).extra_range(-6).play()
 		reagents.trans_to(M, amount_per_transfer_from_this, transferred_by = user, methods = apply_type)
 	return
 

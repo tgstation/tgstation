@@ -130,7 +130,7 @@
 	do_steam_effects(found_exit)
 	holder.reappearing = TRUE
 	if(exit_jaunt_sound)
-		playsound(found_exit, exit_jaunt_sound, 50, TRUE)
+		create_sound(found_exit, exit_jaunt_sound).vary(TRUE).play()
 
 	ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
 

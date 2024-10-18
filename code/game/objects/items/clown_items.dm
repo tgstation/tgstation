@@ -200,7 +200,7 @@
 
 /obj/item/bikehorn/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/bikehorn.ogg').vary(TRUE).play()
 	return BRUTELOSS
 
 //air horn

@@ -107,7 +107,7 @@
 
 	if(manual)
 		COOLDOWN_START(src, manual_scan_cd, SPOOK_COOLDOWN)
-		playsound(computer, 'sound/effects/ping_hit.ogg', vol = 40, vary = TRUE)
+
 
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_SPECTRE_SCAN, last_spook_value)
 

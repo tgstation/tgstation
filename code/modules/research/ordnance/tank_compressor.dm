@@ -199,9 +199,9 @@
 	record_data.possible_experiments = apply_experiments(record)
 
 	if(inserted_disk.add_file(record_data))
-		playsound(src, 'sound/machines/ping.ogg', 25)
+		create_sound(src, 'sound/machines/ping.ogg').volume(25).play()
 	else
-		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
+		create_sound(src, 'sound/machines/terminal/terminal_error.ogg').volume(25).play()
 
 /// Ejecting a tank. Also called on insertion to clear previous tanks.
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/eject_tank(mob/user)
@@ -225,7 +225,7 @@
 		user.put_in_hands(inserted_disk)
 	else
 		inserted_disk.forceMove(drop_location())
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	create_sound(src, 'sound/machines/card_slide.ogg').play()
 	return TRUE
 
 /// We rely on exited to clear references.

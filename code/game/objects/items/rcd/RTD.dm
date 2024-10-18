@@ -198,7 +198,7 @@
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	create_sound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
@@ -290,7 +290,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	create_sound(loc, 'sound/effects/light_flicker.ogg').play()
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -359,7 +359,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	create_sound(loc, 'sound/effects/light_flicker.ogg').play()
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)

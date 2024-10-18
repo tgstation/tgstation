@@ -399,7 +399,7 @@
 /obj/machinery/coffeemaker/proc/operate_for(time, silent = FALSE)
 	brewing = TRUE
 	if(!silent)
-		playsound(src, 'sound/machines/coffeemaker_brew.ogg', 20, vary = TRUE)
+		create_sound(src, 'sound/machines/coffeemaker_brew.ogg').volume(20).vary(TRUE).play()
 	toggle_steam()
 	use_energy(active_power_usage * time / (1 SECONDS)) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), time / speed)

@@ -88,7 +88,7 @@
 	if(transfer_blood_dna)
 		blood.add_blood_DNA(GET_ATOM_BLOOD_DNA(movable_source))
 	if(!isnull(sound_played))
-		playsound(movable_source, sound_played, sound_volume, TRUE, 2, TRUE)
+		create_sound(movable_source, sound_played).volume(sound_volume).vary(TRUE).extra_range(2).play()
 
 	blood_remaining = max(blood_remaining - 1, 0)
 	if(blood_remaining <= 0)

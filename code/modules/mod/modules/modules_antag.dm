@@ -49,7 +49,7 @@
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
@@ -68,7 +68,7 @@
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
@@ -310,7 +310,7 @@
 	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/fire(mod.wearer.loc)
 	flame.preparePixelProjectile(target, mod.wearer)
 	flame.firer = mod.wearer
-	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/flamethrower.ogg').volume(75).vary(TRUE).play()
 	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -338,7 +338,7 @@
 		return
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts charging a kick!"), \
 		blind_message = span_hear("You hear a charging sound."))
-	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/loader_charge.ogg').volume(75).vary(TRUE).play()
 	balloon_alert(mod.wearer, "you start charging...")
 	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_OUT)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/atom, SpinAnimation), 3, 2), 0.3 SECONDS)
@@ -347,7 +347,7 @@
 		return
 	animate(mod.wearer)
 	drain_power(use_energy_cost)
-	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/modsuit/loader_launch.ogg').volume(75).vary(TRUE).play()
 	var/angle = get_angle(mod.wearer, target) + 180
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))

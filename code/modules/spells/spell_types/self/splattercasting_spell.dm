@@ -23,7 +23,7 @@
 		to_chat(cast_on, span_warning("Your focus is broken, and the simmering slowly fades."))
 		return
 
-	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
+	create_sound(cast_on, 'sound/effects/pope_entry.ogg').volume(100).play()
 	to_chat(cast_on, span_danger("You feel your very essense binding to your magic! A stabbing pain within \
 		brings unimaginable momentary torment as your heart stops, and your skin grows cold. You are now \
 		merely a vessel for the arcane flow. Soon, all that is left is not pain, but hunger."))

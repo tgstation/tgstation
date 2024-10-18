@@ -56,7 +56,7 @@
 
 		if(hewmon.stat != DEAD)
 			hewmon.balloon_alert(user, "already voided!")
-			playsound(hewmon, SFX_SHATTER, 60)
+			create_sound(hewmon, SFX_SHATTER).volume(60).play()
 			new /obj/effect/spawner/random/glass_shards/mini (spawnloc)
 			hewmon.adjustBruteLoss(10) // BONUS DAMAGE
 		else
@@ -68,7 +68,7 @@
 					brain.Remove(hewmon)
 					brain.forceMove(spawnloc)
 					brain.balloon_alert(user, "shattered!")
-				playsound(hewmon, SFX_SHATTER, 100)
+				create_sound(hewmon, SFX_SHATTER).volume(100).play()
 				qdel(hewmon)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 

@@ -384,7 +384,7 @@
 	if(prob(5) && !HAS_TRAIT(holder.my_atom, TRAIT_SILENT_REACTIONS))
 		holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]"))
 		if(reaction.mix_sound)
-			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
+			create_sound(get_turf(holder.my_atom), reaction.mix_sound).volume(80).vary(TRUE).play()
 
 	//Used for UI output
 	reaction_quality = purity

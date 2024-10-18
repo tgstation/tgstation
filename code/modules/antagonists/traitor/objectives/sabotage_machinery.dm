@@ -184,7 +184,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 /// Called when applied trap has been defused, retrieve this item from nullspace
 /obj/item/traitor_machine_trapper/proc/on_defused(atom/machine, mob/defuser, obj/item/tool)
 	UnregisterSignal(machine, COMSIG_QDELETING)
-	playsound(machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+	create_sound(machine, 'sound/effects/structure_stress/pop3.ogg').volume(100).vary(TRUE).play()
 	forceMove(get_turf(machine))
 	visible_message(span_warning("A [src] falls out from the [machine]!"))
 

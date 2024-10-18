@@ -205,5 +205,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_HALLUCINATION_I_M_HERE "hallucination_i_m_here"
 #define SFX_VOID_DEFLECT "void_deflect"
 #define SFX_LOW_HISS "low_hiss"
-
 #define SFX_INDUSTRIAL_SCAN "industrial_scan"
+
+#define GLOBAL_SOUND null

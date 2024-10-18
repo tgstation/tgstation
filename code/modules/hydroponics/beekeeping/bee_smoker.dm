@@ -50,7 +50,7 @@
 		return .
 
 	current_herb_fuel -= single_use_cost
-	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/spray2.ogg').volume(100).vary(TRUE).play()
 	var/turf/target_turf = get_turf(interacting_with)
 	new /obj/effect/temp_visual/mook_dust(target_turf)
 	for(var/mob/living/basic/bee/friend in target_turf)
@@ -96,7 +96,7 @@
 
 /obj/item/bee_smoker/proc/alter_state()
 	activated = !activated
-	playsound(src, 'sound/items/tools/welderdeactivate.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/tools/welderdeactivate.ogg').vary(TRUE).play()
 
 	if(!activated)
 		beesmoke_loop.stop()

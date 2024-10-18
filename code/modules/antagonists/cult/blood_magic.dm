@@ -461,7 +461,7 @@
 		target.color = COLOR_HERETIC_GREEN
 		animate(target, color = old_color, time = 4 SECONDS, easing = EASE_IN)
 		target.mob_light(range = 1.5, power = 2.5, color = COLOR_HERETIC_GREEN, duration = 0.5 SECONDS)
-		playsound(target, 'sound/effects/magic/magic_block_mind.ogg', 150, TRUE) // insanely quiet
+		create_sound(target, 'sound/effects/magic/magic_block_mind.ogg').volume(150).vary(TRUE).play() // insanely quiet
 
 		to_chat(user, span_warning("An eldritch force intervenes as you touch [target], absorbing most of the effects!"))
 		to_chat(target, span_warning("As [user] touches you with vile magicks, the Mansus absorbs most of the effects!"))
@@ -534,8 +534,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
-		playsound(origin, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		playsound(dest, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(origin, SFX_PORTAL_ENTER).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+		create_sound(dest, SFX_PORTAL_ENTER).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	return ..()
 
 //Shackles
@@ -559,7 +559,7 @@
 
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
-		playsound(loc, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
+		create_sound(loc, 'sound/items/weapons/cablecuff.ogg').volume(30).vary(TRUE).extra_range(-2).play()
 		C.visible_message(span_danger("[user] begins restraining [C] with dark magic!"), \
 								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
 		if(do_after(user, 3 SECONDS, C))
@@ -642,7 +642,7 @@
 		if(candidate.mmi || candidate.shell)
 			channeling = TRUE
 			user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
-			playsound(T, 'sound/machines/airlock/airlock_alien_prying.ogg', 80, TRUE)
+			create_sound(T, 'sound/machines/airlock/airlock_alien_prying.ogg').volume(80).vary(TRUE).play()
 			var/prev_color = candidate.color
 			candidate.color = "black"
 			if(!do_after(user, 9 SECONDS, target = candidate))
@@ -673,7 +673,7 @@
 
 	if(istype(target,/obj/machinery/door/airlock))
 		channeling = TRUE
-		playsound(T, 'sound/machines/airlock/airlockforced.ogg', 50, TRUE)
+		create_sound(T, 'sound/machines/airlock/airlockforced.ogg').vary(TRUE).play()
 		do_sparks(5, TRUE, target)
 		if(!do_after(user, 5 SECONDS, target = user) && !QDELETED(target))
 			channeling = FALSE
@@ -790,7 +790,7 @@
 		construct_thing.adjust_health(-uses)
 		construct_thing.visible_message(span_warning("[construct_thing] is partially healed by [user]'s blood magic!"))
 		uses = 0
-	playsound(get_turf(construct_thing), 'sound/effects/magic/staff_healing.ogg', 25)
+	create_sound(get_turf(construct_thing), 'sound/effects/magic/staff_healing.ogg').volume(25).play()
 	user.Beam(construct_thing, icon_state="sendbeam", time = 1 SECONDS)
 	return TRUE
 
@@ -845,7 +845,7 @@
 	need_mob_update += human_bloodbag.adjustBruteLoss(damage_healed * (human_bloodbag.getBruteLoss() / overall_damage), updating_health = FALSE)
 	if(need_mob_update)
 		human_bloodbag.updatehealth()
-	playsound(get_turf(human_bloodbag), 'sound/effects/magic/staff_healing.ogg', 25)
+	create_sound(get_turf(human_bloodbag), 'sound/effects/magic/staff_healing.ogg').volume(25).play()
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
 	if (user != human_bloodbag) //Dont create beam from the user to the user
 		user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
@@ -866,7 +866,7 @@
 	human_bloodbag.blood_volume -= BLOOD_DRAIN_GAIN * USES_TO_BLOOD
 	uses += BLOOD_DRAIN_GAIN
 	user.Beam(human_bloodbag, icon_state="drainbeam", time = 1 SECONDS)
-	playsound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg', 50)
+	create_sound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg').play()
 	human_bloodbag.visible_message(span_danger("[user] drains some of [human_bloodbag]'s blood!"))
 	to_chat(user,span_cult_italic("Your blood rite gains 50 charges from draining [human_bloodbag]'s blood."))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
@@ -900,7 +900,7 @@
 		return
 	user.Beam(our_turf,icon_state="drainbeam", time = 15)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-	playsound(our_turf, 'sound/effects/magic/enter_blood.ogg', 50)
+	create_sound(our_turf, 'sound/effects/magic/enter_blood.ogg').play()
 	to_chat(user, span_cult_italic("Your blood rite has gained [round(blood_to_gain)] charge\s from blood sources around you!"))
 	uses += max(1, round(blood_to_gain))
 

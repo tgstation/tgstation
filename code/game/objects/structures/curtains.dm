@@ -69,7 +69,7 @@
 	. = ..()
 	if(.)
 		return
-	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
+	create_sound(loc, 'sound/effects/curtain.ogg').vary(TRUE).play()
 	toggle()
 
 /obj/structure/curtain/atom_deconstruct(disassembled = TRUE)
@@ -81,11 +81,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/items/weapons/slash.ogg', 80, TRUE)
+				create_sound(src.loc, 'sound/items/weapons/slash.ogg').volume(80).vary(TRUE).play()
 			else
-				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(loc, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/items/tools/welder.ogg', 80, TRUE)
+			create_sound(loc, 'sound/items/tools/welder.ogg').volume(80).vary(TRUE).play()
 
 /obj/structure/curtain/bounty
 	icon_type = "bounty"

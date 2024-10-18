@@ -134,7 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 			to_chat(user, span_warning("There is already has a water recycler installed."))
 			return
 
-		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		qdel(tool)
 		has_water_reclaimer = TRUE
 		begin_processing()
@@ -366,7 +366,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		qdel(tool)
 		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)
 		qdel(src)
-		playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(shower, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		return
 	return ..()
 

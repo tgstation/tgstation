@@ -56,7 +56,7 @@
 		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
-	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
+	create_sound(user, hit_sound).volume(80).play() //the basic 50 vol is barely audible
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
 	. = ..()
@@ -116,7 +116,7 @@
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
 	balloon_alert(user, "tag removed")
-	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
+
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

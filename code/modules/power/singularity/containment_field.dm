@@ -57,9 +57,9 @@
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+			create_sound(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 		if(BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+			create_sound(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -163,6 +163,6 @@
 	var/atom/target = get_edge_target_turf(considered_atom, get_dir(src, get_step_away(considered_atom, src)))
 	if(isliving(considered_atom))
 		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
-	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/gravhit.ogg').vary(TRUE).play()
 	considered_atom.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)

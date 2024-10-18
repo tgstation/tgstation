@@ -42,7 +42,7 @@
 			and [emag_card.p_they()] become stuck together!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, 'sound/effects/bang.ogg').volume(33).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
 	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
 	vis_contents += emag_card
@@ -106,15 +106,15 @@
 
 /obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(exploding)
-		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE, frequency = 2)
+		create_sound(src, 'sound/items/bikehorn.ogg').vary(TRUE).frequency(2).play()
 	else if(obj_flags & EMAGGED)
 		log_bomber(user, "triggered", src, "(rigged/emagged)")
 		visible_message(span_boldwarning("[src] begins to heat up!"))
-		playsound(src, 'sound/items/bikehorn.ogg', 100, TRUE, frequency = 0.25)
+		create_sound(src, 'sound/items/bikehorn.ogg').volume(100).vary(TRUE).frequency(0.25).play()
 		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
 		exploding = TRUE
 	else
-		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/bikehorn.ogg').vary(TRUE).play()
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
 /obj/item/card/emagfake/proc/blow_up()
@@ -125,7 +125,7 @@
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	playsound(src, SFX_SPARKS, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)
@@ -183,7 +183,7 @@
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
 	charges = min(charges+1, max_charges)
-	playsound(src,'sound/machines/beep/twobeep.ogg',10,TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	create_sound(src, 'sound/machines/beep/twobeep.ogg').volume(10).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 	charge_timers.Remove(charge_timers[1])
 
 /obj/item/card/emag/doorjack/examine(mob/user)

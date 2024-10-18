@@ -44,7 +44,7 @@
 	return FALSE
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/do_charge_indicator(atom/charger, atom/charge_target)
-	playsound(charger, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	create_sound(charger, 'sound/items/modsuit/loader_launch.ogg').volume(75).vary(TRUE).play()
 	var/obj/effect/temp_visual/decoy/decoy_flash = new /obj/effect/temp_visual/decoy(charger.loc, charger)
 	animate(decoy_flash, alpha = 0, color = COLOR_RED, transform = matrix() * 2, time = 3)
 

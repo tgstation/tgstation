@@ -145,19 +145,19 @@
 
 	START_PROCESSING(SSobj, src)
 	INVOKE_ASYNC(src, PROC_REF(make_ghost_swarm), candidate_list)
-	playsound(src, pick(spooky_noises), 100, TRUE)
+	create_sound(src, pick(spooky_noises)).volume(100).vary(TRUE).play()
 	QDEL_IN(WEAKREF(src), 2 MINUTES)
 
 /obj/structure/ghost_portal/process(seconds_per_tick)
 	. = ..()
 
 	if(prob(5))
-		playsound(src, pick(spooky_noises), 100)
+		create_sound(src, pick(spooky_noises)).volume(100).play()
 
 /obj/structure/ghost_portal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+	create_sound(loc, 'sound/effects/empulse.ogg').volume(75).vary(TRUE).play()
 	if(prob(40))
-		playsound(src, pick(spooky_noises), 50)
+		create_sound(src, pick(spooky_noises)).play()
 
 /obj/structure/ghost_portal/Destroy()
 	. = ..()
@@ -204,7 +204,7 @@
 /proc/cleanup_ghosts(list/delete_list)
 	for(var/mob/living/mob_to_delete as anything in delete_list)
 		mob_to_delete.visible_message(span_alert("The [mob_to_delete] wails as it is torn back into the void!"), span_alert("You let out one last wail as you are sucked back into the realm of the dead. Then suddenly, you're back in the comforting embrace of the afterlife."), span_hear("You hear ethereal wailing."))
-		playsound(mob_to_delete, pick(delete_list), 50)
+		create_sound(mob_to_delete, pick(delete_list)).play()
 		new /obj/effect/temp_visual/revenant/cracks(get_turf(mob_to_delete))
 		new /obj/effect/decal/cleanable/greenglow/ecto(get_turf(mob_to_delete))
 		mob_to_delete.ghostize(FALSE) //So we don't throw an alert for deleting a mob with a key inside.

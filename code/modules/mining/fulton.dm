@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, "too heavy!")
 		return .
 	balloon_alert_to_viewers("attaching...")
-	playsound(thing, 'sound/items/zip/zip.ogg', vol = 50, vary = TRUE)
+
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		if(creature.mind)
@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon2)
 	holder_obj.add_overlay(balloon)
-	playsound(holder_obj.loc, 'sound/items/fulton/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
+
 
 	animate(holder_obj, pixel_z = 10, time = 2 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	sleep(6 SECONDS)
 
-	playsound(holder_obj.loc, 'sound/items/fulton/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
+
 	animate(holder_obj, pixel_z = 1000, time = 3 SECONDS, flags = ANIMATION_RELATIVE)
 
 	if(ishuman(thing))
@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/fulton_core/attack_self(mob/user)
 	if(do_after(user, 1.5 SECONDS, target = user) && !QDELETED(src))
 		new /obj/structure/extraction_point(get_turf(user))
-		playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+
 		qdel(src)
 
 /obj/structure/extraction_point
@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	new /obj/item/fulton_core(drop_location())
-	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+
 	qdel(src)
 
 /obj/structure/extraction_point/update_overlays()

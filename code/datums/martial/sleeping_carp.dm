@@ -53,7 +53,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	create_sound(defender, 'sound/items/weapons/punch1.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	log_combat(attacker, defender, "strong punched (Sleeping Carp)")
 	defender.apply_damage(20, attacker.get_attack_type(), affecting)
 	return TRUE
@@ -68,7 +68,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	create_sound(attacker, 'sound/effects/hit_kick.ogg').vary(TRUE).extra_range(-1).play()
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 7, 4, attacker)
 	defender.apply_damage(15, attacker.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
@@ -78,7 +78,7 @@
 ///Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them. Knocks objects out of their hands if they're already on the ground.
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
-	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	create_sound(attacker, 'sound/effects/hit_kick.ogg').vary(TRUE).extra_range(-1).play()
 	if(defender.body_position == STANDING_UP)
 		defender.Knockdown(4 SECONDS)
 		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \
@@ -106,7 +106,7 @@
 
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	create_sound(defender, 'sound/items/weapons/punch1.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
@@ -126,7 +126,7 @@
 	)
 		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
 		if(!isnull(head))
-			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
+			create_sound(defender, 'sound/effects/wounds/crack1.ogg').volume(100).play()
 			defender.visible_message(
 				span_danger("[attacker] snaps the neck of [defender]!"),
 				span_userdanger("Your neck is snapped by [attacker]!"),
@@ -161,7 +161,7 @@
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 	defender.apply_damage(final_damage, attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	create_sound(defender, 'sound/items/weapons/punch1.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	log_combat(attacker, defender, "punched (Sleeping Carp)")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -176,7 +176,7 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
+	create_sound(defender, 'sound/items/weapons/punch1.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	defender.apply_damage(20, STAMINA)
 	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
 	return MARTIAL_ATTACK_INVALID // normal disarm
@@ -204,7 +204,7 @@
 		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
 		span_userdanger("You deflect [hitting_projectile]!"),
 	)
-	playsound(carp_user, SFX_BULLET_MISS, 75, TRUE)
+	create_sound(carp_user, SFX_BULLET_MISS).volume(75).vary(TRUE).play()
 	hitting_projectile.firer = carp_user
 	hitting_projectile.set_angle(rand(0, 360))//SHING
 	return COMPONENT_BULLET_PIERCED
@@ -299,7 +299,7 @@
 		H.visible_message(span_warning("[user] [pick(fluffmessages)]s [H] with [src]!"), \
 						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
-		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
+
 		H.adjustStaminaLoss(rand(13,20))
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \

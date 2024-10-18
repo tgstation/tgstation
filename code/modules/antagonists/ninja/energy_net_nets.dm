@@ -30,7 +30,7 @@
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)
-		playsound(src, 'sound/items/weapons/slash.ogg', 80, TRUE)
+		create_sound(src, 'sound/items/weapons/slash.ogg').volume(80).vary(TRUE).play()
 
 /obj/structure/energy_net/atom_destruction(damage_flag)
 	for(var/mob/recovered_mob as anything in buckled_mobs)

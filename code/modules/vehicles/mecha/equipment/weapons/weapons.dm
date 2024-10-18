@@ -75,7 +75,7 @@
 		projectile_obj.fire()
 		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
-		playsound(chassis, fire_sound, 50, TRUE)
+		create_sound(chassis, fire_sound).vary(TRUE).play()
 
 		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
 
@@ -200,7 +200,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
+	create_sound(chassis, 'sound/items/airhorn/airhorn.ogg').volume(100).vary(TRUE).play()
 	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(!M.can_hear())
@@ -383,7 +383,7 @@
 	chassis.use_energy(energy_drain)
 	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	var/obj/O = new projectile(chassis.loc)
-	playsound(chassis, fire_sound, 50, TRUE)
+	create_sound(chassis, fire_sound).vary(TRUE).play()
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O, source)
@@ -596,7 +596,7 @@
 			balloon_alert(source, "no room!")
 			return
 
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		create_sound(chassis, clampsound).extra_range(-6).play()
 		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
 		if(!do_after_cooldown(mobtarget, source))
 			return
@@ -613,7 +613,7 @@
 	if(istype(target, /obj/machinery/door))
 		. = ..()
 		var/obj/machinery/door/target_door = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		create_sound(chassis, clampsound).extra_range(-6).play()
 		target_door.try_to_crowbar(src, source)
 		return
 

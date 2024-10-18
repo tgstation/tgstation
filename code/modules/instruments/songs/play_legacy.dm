@@ -87,5 +87,5 @@
 			L.apply_status_effect(/datum/status_effect/good_music)
 		if(!(M?.client?.prefs.read_preference(/datum/preference/toggle/sound_instruments)))
 			continue
-		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, sound_to_use = music_played)
+		create_sound(source, music_played).volume(volume * using_instrument.volume_multiplier).direct_listeners(M).play()
 		// Could do environment and echo later but not for now

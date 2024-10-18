@@ -47,7 +47,7 @@
 		trigger()
 
 /obj/item/reverse_bear_trap/proc/trigger()
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	create_sound(src, 'sound/machines/microwave/microwave-end.ogg').volume(100).play()
 	soundloop.stop()
 	soundloop2.stop()
 	to_chat(loc, span_userdanger("*ding*"))
@@ -121,13 +121,13 @@
 	var/mob/living/carbon/human/victim = loc
 	if(!istype(victim) || victim.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		visible_message(span_warning("[src]'s jaws snap open with an ear-piercing crack!"))
-		playsound(src, 'sound/effects/snap.ogg', 75, TRUE)
+		create_sound(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).play()
 	else
 		var/mob/living/carbon/human/jill = loc
 		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_userdanger("[src] goes off!"))
 		jill.emote("scream")
-		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+		create_sound(src, 'sound/effects/snap.ogg').volume(75).vary(TRUE).frequency(0.5).play()
+		create_sound(src, 'sound/effects/splat.ogg').vary(TRUE).frequency(0.5).play()
 		jill.apply_damage(9999, BRUTE, BODY_ZONE_HEAD)
 		jill.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		jill.death() //just in case, for some reason, they're still alive

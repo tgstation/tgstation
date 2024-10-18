@@ -57,7 +57,7 @@
 	var/damage = weapon.throwforce
 	if(harmful)
 		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
-		playsound(victim,'sound/items/weapons/bladeslice.ogg', 40)
+		create_sound(victim, 'sound/items/weapons/bladeslice.ogg').volume(40).play()
 		if (limb.can_bleed())
 			weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * embed_data.impact_pain_mult
@@ -290,7 +290,7 @@
 	limb.receive_damage(brute = (1 - embed_data.pain_stam_pct) * damage * 1.5, sharpness = SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
 	victim.cause_wound_of_type_and_severity(WOUND_PIERCE, limb, WOUND_SEVERITY_MODERATE)
 	victim.adjustStaminaLoss(embed_data.pain_stam_pct * damage)
-	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
+	create_sound(get_turf(victim), 'sound/effects/wounds/blood2.ogg').vary(TRUE).play()
 
 	var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
 	if(dist < 7)

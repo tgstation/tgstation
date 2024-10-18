@@ -461,7 +461,7 @@
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
-			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+			create_sound(src, 'sound/items/handling/standard_stamp.ogg').vary(TRUE).play()
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
@@ -486,7 +486,7 @@
 		span_notice("[user] quickly stamps [src] with [tool] without looking."),
 		span_notice("You quickly stamp [src] with [tool] without looking."),
 	)
-	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+	create_sound(src, 'sound/items/handling/standard_stamp.ogg').vary(TRUE).play()
 
 	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
@@ -639,7 +639,7 @@
 
 			add_stamp(stamp_class, stamp_x, stamp_y, stamp_rotation, stamp_icon_state)
 			user.visible_message(span_notice("[user] stamps [src] with \the [holding.name]!"), span_notice("You stamp [src] with \the [holding.name]!"))
-			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+			create_sound(src, 'sound/items/handling/standard_stamp.ogg').vary(TRUE).play()
 
 			update_appearance()
 			update_static_data_for_all_viewers()

@@ -252,7 +252,7 @@
 		printpicture(user, picture)
 
 	if(!silent)
-		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
+		create_sound(loc, SFX_POLAROID).volume(75).vary(TRUE).extra_range(-3).play()
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	pictures_left--

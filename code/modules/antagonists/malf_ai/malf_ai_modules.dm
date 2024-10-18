@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	owner.playsound_local(owner, 'sound/announcer/alarm/bloblarm.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/announcer/alarm/bloblarm.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	to_chat(owner, span_userdanger("!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!"))
 	to_chat(owner, span_boldannounce("This is a class-3 security violation. This incident will be reported to Central Command."))
 	for(var/i in 1 to 3)
@@ -215,19 +215,19 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
-	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/items/timer.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/misc/server-ready.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
-	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/machines/compiler/compiler-stage1.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(2 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
-	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/machines/compiler/compiler-stage2.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(1 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
-	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/machines/compiler/compiler-stage2.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(1.4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
-	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
+	create_sound(owner, 'sound/misc/server-ready.ogg').use_reverb(FALSE).direct_listeners(owner).play()
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
+		create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
@@ -462,7 +462,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		to_chat(caller, span_warning("That machine can't be overridden!"))
 		return FALSE
 
-	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
+	create_sound(caller, 'sound/misc/interference.ogg').use_reverb(FALSE).direct_listeners(caller).play()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
 	addtimer(CALLBACK(src, PROC_REF(animate_machine), caller, clicked_machine), 5 SECONDS) //kabeep!
@@ -503,7 +503,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			var/obj/item/construction/rcd/RCD = I
 			RCD.detonate_pulse()
 	to_chat(owner, span_danger("RCD detonation pulse emitted."))
-	owner.playsound_local(owner, 'sound/machines/beep/twobeep.ogg', 50, 0)
+	create_sound(owner, 'sound/machines/beep/twobeep.ogg').direct_listeners(owner).play()
 
 /// Overload Machine: Allows the AI to overload a machine, detonating it after a delay. Two uses per purchase.
 /datum/ai_module/malf/destructive/overload_machine
@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		to_chat(caller, span_warning("You cannot overload that device!"))
 		return FALSE
 
-	caller.playsound_local(caller, SFX_SPARKS, 50, 0)
+	create_sound(caller, SFX_SPARKS).direct_listeners(caller).play()
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
@@ -593,7 +593,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		else
 			apc.overload++
 	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
-	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
+	create_sound(owner, SFX_SPARKS).direct_listeners(owner).play()
 	adjust_uses(-1)
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
@@ -622,7 +622,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
-		playsound(found_intercom, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
+		create_sound(found_intercom, 'sound/items/airhorn/airhorn.ogg').volume(100).vary(TRUE).play()
 		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
 			var/turf/victim_turf = get_turf(honk_victim)
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
@@ -667,7 +667,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/turf/T = get_turf(owner_AI.eyeobj)
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.master_ai = owner
-	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
+	create_sound(T, 'sound/effects/phasein.ogg').volume(100).vary(TRUE).play()
 	if(owner_AI.can_shunt) //prevent repeated messages
 		owner_AI.can_shunt = FALSE
 		to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
@@ -730,7 +730,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		AA.obj_flags |= EMAGGED
 	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use extremely dangerous environmental modes."))
-	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
+	create_sound(owner, 'sound/machines/terminal/terminal_off.ogg').direct_listeners(owner).play()
 
 /// Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
 /datum/ai_module/malf/utility/break_fire_alarms
@@ -761,7 +761,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		firelock.emag_act(owner_AI, src)
 	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
-	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
+	create_sound(owner, 'sound/machines/terminal/terminal_off.ogg').direct_listeners(owner).play()
 
 /// Disable Emergency Lights
 /datum/ai_module/malf/utility/emergency_lights
@@ -788,7 +788,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 		CHECK_TICK
 	to_chat(owner, span_notice("Emergency light connections severed."))
-	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	create_sound(owner, 'sound/effects/light_flicker.ogg').direct_listeners(owner).play()
 
 /// Reactivate Camera Network: Reactivates up to 30 cameras across the station.
 /datum/ai_module/malf/utility/reactivate_cameras
@@ -824,7 +824,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message
 	to_chat(owner, span_notice("Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>."))
-	owner.playsound_local(owner, 'sound/items/tools/wirecutter.ogg', 50, 0)
+	create_sound(owner, 'sound/items/tools/wirecutter.ogg').direct_listeners(owner).play()
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return

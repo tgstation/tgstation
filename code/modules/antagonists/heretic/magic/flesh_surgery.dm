@@ -96,7 +96,7 @@
 	var/organ_hp_to_heal = to_heal.maxHealth * organ_percent_healing
 	to_heal.set_organ_damage(max(0 , to_heal.damage - organ_hp_to_heal))
 	to_heal.balloon_alert(caster, "organ healed")
-	playsound(to_heal, 'sound/effects/magic/staff_healing.ogg', 30)
+	create_sound(to_heal, 'sound/effects/magic/staff_healing.ogg').volume(30).play()
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
 	caster.visible_message(
@@ -118,7 +118,7 @@
 	// while for human minions(ghouls), this will heal brute and burn like normal. So be careful adjusting to bigger numbers
 	to_heal.balloon_alert(caster, "[what_are_we] healed")
 	to_heal.heal_overall_damage(monster_brute_healing, monster_burn_healing)
-	playsound(to_heal, 'sound/effects/magic/staff_healing.ogg', 30)
+	create_sound(to_heal, 'sound/effects/magic/staff_healing.ogg').volume(30).play()
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	caster.visible_message(
 		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] [to_heal] to good condition!"),
@@ -181,7 +181,7 @@
 		)
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
-	playsound(victim, 'sound/items/weapons/slice.ogg', 50, TRUE)
+	create_sound(victim, 'sound/items/weapons/slice.ogg').vary(TRUE).play()
 	carbon_victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
 	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, PROC_REF(extraction_checks), picked_organ, hand, victim, caster)))
 		carbon_victim.balloon_alert(caster, "interrupted!")
@@ -205,7 +205,7 @@
 	picked_organ.Remove(carbon_victim)
 	carbon_victim.balloon_alert(caster, "[chosen_organ] removed")
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
-	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
+	create_sound(victim, 'sound/effects/dismember.ogg').vary(TRUE).play()
 	if(carbon_victim.stat == CONSCIOUS)
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")

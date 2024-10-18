@@ -132,7 +132,7 @@
 	if(effect_on_success)
 		new effect_on_success(get_turf(hit_atom))
 	if(sound_on_success)
-		playsound(hit_atom, sound_on_success, 50, TRUE)
+		create_sound(hit_atom, sound_on_success).vary(TRUE).play()
 
 	var/mob/living/living_target = hit_atom
 	living_target.apply_damage(damage_to_apply)

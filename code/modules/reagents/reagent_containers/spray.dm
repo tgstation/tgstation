@@ -68,7 +68,7 @@
 	else
 		spray(target, user)
 
-	playsound(src, spray_sound, 50, TRUE, -6)
+	create_sound(src, spray_sound).vary(TRUE).extra_range(-6).play()
 	user.changeNext_move(CLICK_CD_RANGE * 2)
 	user.newtonian_move(get_angle(target, user))
 	return TRUE
@@ -149,7 +149,7 @@
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [I]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		create_sound(loc, 'sound/effects/extinguish.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 		extinguisher.reagents.remove_all(1)
 
 	return ..()

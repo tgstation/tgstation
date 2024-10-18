@@ -61,9 +61,9 @@
 /obj/structure/holopay/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+			create_sound(loc, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()
 		if(BURN)
-			playsound(loc, 'sound/items/weapons/egloves.ogg', 80, TRUE)
+			create_sound(loc, 'sound/items/weapons/egloves.ogg').volume(80).vary(TRUE).play()
 
 /obj/structure/holopay/atom_deconstruct(dissambled = TRUE)
 	dissipate()
@@ -238,7 +238,7 @@
  * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissipate()
-	playsound(loc, 'sound/effects/empulse.ogg', 40, TRUE)
+	create_sound(loc, 'sound/effects/empulse.ogg').volume(40).vary(TRUE).play()
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
 
@@ -291,7 +291,7 @@
 	/// Make alerts
 	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")
-	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	create_sound(src, 'sound/effects/cashregister.ogg').volume(20).vary(TRUE).play()
 	/// Log the event
 	log_econ("[amount] credits were transferred from [payee]'s transaction to [linked_card.registered_account.account_holder]")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)

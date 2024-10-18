@@ -91,7 +91,7 @@
 
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
-	playsound(src,'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/bubbled)
@@ -100,7 +100,7 @@
 		return
 	var/mob/living/bubbled_mob = bubbled
 
-	playsound(src, 'sound/effects/snap.ogg',50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 	bubbled_mob.Paralyze(5 SECONDS)
 	if(iscarbon(bubbled_mob))
 		bubbled_mob.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
@@ -137,7 +137,7 @@
 	if(!length(possible_turfs))
 		return FALSE
 
-	playsound(owner, 'sound/effects/magic/fireball.ogg', 70, TRUE)
+	create_sound(owner, 'sound/effects/magic/fireball.ogg').volume(70).vary(TRUE).play()
 	new /obj/effect/temp_visual/blood_drop_rising(get_turf(owner))
 	addtimer(CALLBACK(src, PROC_REF(fire_droplets), possible_turfs), 1.5 SECONDS)
 	StartCooldown()
@@ -179,7 +179,7 @@
 	animate(src, pixel_y = 0, time = duration)
 
 /obj/effect/temp_visual/blood_drop_falling/proc/create_blood_structure()
-	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 	new /obj/structure/leaper_bubble(get_turf(src))
 
 /obj/effect/temp_visual/shadow_telegraph
@@ -210,7 +210,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/belly_flop/proc/flop_on_turf(turf/target, original_pixel_y)
-	playsound(get_turf(owner), 'sound/effects/meteorimpact.ogg', 200, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/meteorimpact.ogg').volume(200).vary(TRUE).play()
 	for(var/mob/living/victim in oview(1, owner))
 		if(victim in owner.buckled_mobs)
 			continue

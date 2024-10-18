@@ -167,7 +167,7 @@
 	var/dmg = HAS_TRAIT(parent, TRAIT_HEAD_INJURY_BLOCKED) ? rand(1,4) : rand(2,9)
 	parent.apply_damage(dmg, BRUTE, BODY_ZONE_HEAD)
 	parent.do_attack_animation(whacked_by, ATTACK_EFFECT_PUNCH)
-	playsound(whacked_by, 'sound/effects/bang.ogg', 10, TRUE)
+	create_sound(whacked_by, 'sound/effects/bang.ogg').volume(10).vary(TRUE).play()
 	parent.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 
 /datum/mutation/human/gigantism
@@ -474,7 +474,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30, 50), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
-			playsound(owner,'sound/items/weapons/sear.ogg', 50, TRUE)
+			create_sound(owner, 'sound/items/weapons/sear.ogg').vary(TRUE).play()
 
 /datum/mutation/human/spastic
 	name = "Spastic"

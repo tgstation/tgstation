@@ -611,7 +611,7 @@
 		var/datum/disease/D = new /datum/disease/heart_failure
 		affected_mob.ForceContractDisease(D)
 		to_chat(affected_mob, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-		affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, 0)
+		create_sound(affected_mob, 'sound/effects/singlebeat.ogg').volume(100).direct_listeners(affected_mob).play()
 
 	if(SPT_PROB(3.5 * (1 + (1-normalise_creation_purity())), seconds_per_tick))
 		to_chat(affected_mob, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))

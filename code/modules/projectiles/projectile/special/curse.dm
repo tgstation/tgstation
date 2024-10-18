@@ -44,7 +44,7 @@
 	if(arm)
 		QDEL_NULL(arm)
 	if((movement_type & PHASING))
-		playsound(src, 'sound/effects/curse/curse3.ogg', 25, TRUE, -1)
+		create_sound(src, 'sound/effects/curse/curse3.ogg').volume(25).vary(TRUE).extra_range(-1).play()
 	var/turf/T = get_step(src, dir)
 	var/obj/effect/temp_visual/dir_setting/curse/hand/leftover = new(T, dir)
 	leftover.icon_state = icon_state

@@ -46,7 +46,7 @@
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
-	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/eatfood.ogg').vary(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -123,7 +123,7 @@
 	. += " It's fitted with a [tool_behaviour] head."
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
+	create_sound(get_turf(user), 'sound/items/tools/change_drill.ogg').vary(TRUE).play()
 	if(tool_behaviour != TOOL_ROLLINGPIN)
 		tool_behaviour = TOOL_ROLLINGPIN
 		to_chat(user, span_notice("You attach the rolling pin bit to the [src]."))
@@ -261,7 +261,7 @@
 			span_notice("You scoop a spoonful into [target_mob]'s mouth.")
 		)
 
-	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
+	create_sound(target_mob, 'sound/items/drink.ogg').volume(rand(10,50)).vary(TRUE).play()
 	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
 	return TRUE
 

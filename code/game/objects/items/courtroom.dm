@@ -20,7 +20,7 @@
 
 /obj/item/gavelhammer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/gavel.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/gavelblock
@@ -35,7 +35,7 @@
 
 /obj/item/gavelblock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/gavelhammer))
-		playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
+		create_sound(loc, 'sound/items/gavel.ogg').volume(100).vary(TRUE).play()
 		user.visible_message(span_warning("[user] strikes [src] with [I]."))
 		user.changeNext_move(CLICK_CD_MELEE)
 	else
