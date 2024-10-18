@@ -1015,6 +1015,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
+	else if(istype(source, /obj/item/fish))
+		ADD_TRAIT(source, TRAIT_FISH_MADE_OF_BONE, REF(src))
 
 /datum/material/bone/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
 	SIGNAL_HANDLER
@@ -1039,6 +1041,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(istype(source, /obj/item/fishing_rod))
 		UnregisterSignal(source, COMSIG_ROD_BEGIN_FISHING)
+	else if(istype(source, /obj/item/fish))
+		REMOVE_TRAIT(source, TRAIT_FISH_MADE_OF_BONE, REF(src))
 
 /datum/material/bamboo
 	name = "bamboo"

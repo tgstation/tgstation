@@ -1019,6 +1019,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
 ///This fish won't be killed when cooked.
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
+///This fish is healed by milk and hurt by bone hurting juice
+#define TRAIT_FISH_MADE_OF_BONE "fish_made_of_bone"
 /**
  * This fish has been fed teslium without the electrogenesis having trait.
  * Gives the electrogenesis, but at halved output, and it hurts the fish over time.

@@ -782,12 +782,16 @@
 
 	///If one of the reagent with fish effects is also our food reagent this is set to TRUE
 	var/already_fed = FALSE
+	var/was_hungry = get_hunger()
 	for(var/datum/reagent/reagent as anything in fed_reagents.reagent_list)
 		if(!fed_reagents.has_reagent(reagent.type, 0.1) || !reagent.used_on_fish(src))
 			continue
 		fed_reagents.remove_reagent(reagent.type, 0.1)
 		if(reagent.type == food)
 			already_fed = TRUE
+
+	if(was_hungry && !get_hunger()) //one of the other reagents already sated its hunger.
+		return
 
 	if(already_fed)
 		sate_hunger()

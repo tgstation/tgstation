@@ -134,6 +134,10 @@
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
 
+/obj/item/fish/boned/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
+
 /obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.
 
