@@ -21,3 +21,48 @@
 	name = "Style Score"
 	desc = "You might not be a robot, but you were damn close."
 	database_id = STYLE_SCORE
+
+/datum/award/score/progress/fish
+	name = "Fish Species Caught"
+	desc = "How many different species of fish you've caught so far. Gotta fish 'em all."
+	database_id = FISH_SCORE
+
+/datum/award/score/progress/fish/validate_entries(list/entries, list/safety)
+	. = ..()
+	var/list/original_safety = safety.Copy()
+	safety.Cut()
+	for(var/text_type in original_safety)
+		var/fish_path = text2path(text_type)
+		if(ispath(fish_path, /obj/item/fish))
+			safety += fish_path
+		else
+			. = FALSE
+
+/datum/award/score/progress/fish/get_progress(datum/achievement_data/holder)
+	var/list/data = list(
+		"name" = "Fishdex",
+		"percent" = 0,
+		"value_text" = "Subsystems still initializing...",
+		"entries" = list(),
+	)
+	if(!SSfishing.initialized)
+		return data
+	var/list/catched_fish = holder.data[type]
+	var/catched_len = length(catched_fish)
+	var/catchable_len = length(SSfishing.catchable_fish)
+	data["percent"] = catched_len/catchable_len
+	data["value_text"] = "[catched_len] / [catchable_len]"
+	var/index = 1
+	var/max_zeros = round(log(10, catchable_len))
+	for(var/obj/item/fish/fish as anything in SSfishing.catchable_fish)
+		var/catched = (fish in catched_fish)
+		var/entry_name = "◦[prefix_zeros_to_number(index, max_zeros)]◦ [catched ? full_capitalize(initial(fish.name)) : "??????" ]"
+		var/list/icon_dimensions = get_icon_dimensions(initial(fish.icon))
+		data["entries"] += list(list(
+			"name" = entry_name,
+			"icon" = catched ? SSfishing.cached_fish_icons[fish] : SSfishing.cached_unknown_fish_icons[fish],
+			"height" = icon_dimensions["height"] * 2,
+			"width" = icon_dimensions["width"] * 2,
+		))
+		index++
+	return data
