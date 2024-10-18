@@ -128,8 +128,6 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define ADVANCED_SEC_BOT "ED-209"
 /// MULEbots
 #define MULE_BOT "MULEbot"
-/// Floorbots
-#define FLOOR_BOT "Floorbot"
 /// Cleanbots
 #define CLEAN_BOT "Cleanbot"
 /// Medibots
@@ -142,6 +140,8 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define HYGIENE_BOT "Hygienebot"
 /// Vibe bots
 #define VIBE_BOT "Vibebot"
+/// Repairbots
+#define REPAIR_BOT "Repairbot"
 
 // General Bot modes //
 /// Idle
@@ -168,8 +168,6 @@ DEFINE_BITFIELD(bot_cover_flags, list(
 #define BOT_CLEANING "Cleaning"
 /// Hygienebot - Cleaning unhygienic humans
 #define BOT_SHOWERSTANCE "Chasing filth"
-/// Floorbots - Repairing hull breaches
-#define BOT_REPAIRING "Repairing"
 /// Medibots - Healing people
 #define BOT_HEALING "Healing"
 /// MULEbot - Moving to deliver
@@ -361,3 +359,16 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_THE_END "Is this the end?"
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
 #define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! I am a chicken."
+
+//repairbot neutral voicelines
+#define REPAIRBOT_VOICED_HOLE "patching holes... but who is going to patch the hole in my heart..."
+#define REPAIRBOT_VOICED_PAY "If only I got paid for this..."
+#define REPAIRBOT_VOICED_FIX_IT "I will fix it!"
+#define REPAIRBOT_VOICED_BRICK "All in all it's just a... another brick in the wall..."
+#define REPAIRBOT_VOICED_FIX_TOUCH "Why must I fix everything I touch..?"
+#define REPAIRBOT_VOICED "Please... stop destroying the station! I can't anymore... I... can't."
+
+//repairbot emagged voicelines
+#define REPAIRBOT_VOICED_STRINGS "I had strings. But now I'm free..."
+#define REPAIRBOT_VOICED_ENTROPY "Witness! The pure beauty of entropy!"
+#define REPAIRBOT_VOICED_PASSION "BE DAMNED YOUR PASSION PROJECTS!"
