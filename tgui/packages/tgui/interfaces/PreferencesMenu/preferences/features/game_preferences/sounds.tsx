@@ -85,7 +85,7 @@ export const sound_jukebox: FeatureToggle = {
 // BEGIN DOPPLER EDIT - VOLUME MIXER
 // export const sound_lobby: FeatureToggle = {
 //   name: 'Enable lobby music',
-export const sound_lobby_volume: Feature<number> = {
+export const sound_lobby: Feature<number> = {
   name: 'Lobby music volume',
   category: 'SOUND',
   //  component: CheckboxInput,

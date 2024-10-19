@@ -12,7 +12,7 @@
 	var/ambience_pref = savefile.get_entry("sound_ambience_volume")
 	var/announcement_pref = savefile.get_entry("sound_announcements")
 	var/ship_ambience_pref = savefile.get_entry("sound_ship_ambience_volume")
-	var/lobby_music_pref = savefile.get_entry("sound_lobby_volume")
+	var/lobby_music_pref = savefile.get_entry("sound_lobby")
 	var/radio_noise_pref = savefile.get_entry("sound_radio_noise")
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ambience_volume], ambience_pref*100)
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_announcements], announcement_pref*100)
