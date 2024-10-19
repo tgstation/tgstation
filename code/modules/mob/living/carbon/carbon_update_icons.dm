@@ -581,8 +581,7 @@
 			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
 			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
 		if(LAZYLEN(hair_masks))
-			for(var/mask in hair_masks)
-				. += "-[mask]"
+			. += "-[jointext(hair_masks, "-")]"
 
 	return .
 
