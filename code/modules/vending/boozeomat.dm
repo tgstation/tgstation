@@ -58,7 +58,7 @@
 				/obj/item/reagent_containers/cup/soda_cans/melon_soda = 5,
 			),
 		),
-
+		/* DOPPLER EDIT REMOVAL START
 		list(
 			"name" = "Glassware",
 			"icon" = "wine-glass",
@@ -69,7 +69,7 @@
 				/obj/item/reagent_containers/cup/glass/bottle = 15,
 				/obj/item/reagent_containers/cup/glass/bottle/small = 15,
 			),
-		),
+		), DOPPLER EDIT REMOVAL END*/
 	)
 
 	contraband = list(
