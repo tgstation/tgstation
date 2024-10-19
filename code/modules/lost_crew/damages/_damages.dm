@@ -84,10 +84,13 @@
 
 /// Soulfully give a date of death for health analyzers
 /datum/corpse_damage_class/proc/set_death_date(mob/living/carbon/body)
-	var/current_space_time = world.realtime + 174709440000 //254 years in deciseconds. byond breaks if you do it manually :/
 	var/died_how_long_ago = rand(lore_death_time_min, lore_death_time_max)
-	body.timeofdeath = current_space_time - died_how_long_ago
-	body.station_timestamp_timeofdeath = time2text(body.timeofdeath, "DD Month YYYY")
+	body.timeofdeath = world.time - died_how_long_ago
+
+	var/death_real_time = world.realtime - died_how_long_ago
+	var/current_date = time2text(death_real_time, "DD Month")
+	var/current_year = text2num(time2text(death_real_time, "YYYY")) + STATION_YEAR_OFFSET
+	body.station_timestamp_timeofdeath = "[current_date] [current_year]"
 
 /// Main corpse damage type that's used to apply damages to a body
 /datum/corpse_damage
