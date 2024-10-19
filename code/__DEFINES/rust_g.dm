@@ -13,7 +13,8 @@
 #ifndef RUST_G
 // Default automatic RUST_G detection.
 // On Windows, looks in the standard places for `rust_g.dll`.
-// On Linux, looks in `.` and `$LD_LIBRARY_PATH`, and `~/.byond/bin` for `librust_g.so`.
+// On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
+// `librust_g.so` (preferred) or `rust_g` (old).
 // On OpenDream, `rust_g64.dll` / `librust_g64.so` are used instead.
 
 /* This comment bypasses grep checks */ /var/__rust_g
