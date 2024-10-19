@@ -630,7 +630,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(methods & INGEST || methods & INHALE)
+	if(methods & (INGEST | INHALE))
 		taste(source)
 
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
