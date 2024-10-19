@@ -6344,6 +6344,7 @@
 #include "code\modules\wiremod\components\utility\delay.dm"
 #include "code\modules\wiremod\components\utility\nfc_receive.dm"
 #include "code\modules\wiremod\components\utility\nfc_send.dm"
+#include "code\modules\wiremod\components\utility\nfc_send_literal.dm"
 #include "code\modules\wiremod\components\utility\router.dm"
 #include "code\modules\wiremod\components\utility\timepiece.dm"
 #include "code\modules\wiremod\components\utility\typecast.dm"
