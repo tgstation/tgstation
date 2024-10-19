@@ -2,8 +2,18 @@
 "aA" = (
 /turf/open/floor/iron/smooth,
 /area/virtual_domain/fullbright)
+"aO" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/computer{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
 "bb" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/virtual_domain/fullbright)
 "be" = (
@@ -12,6 +22,20 @@
 "bt" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"bD" = (
+/obj/structure/sign/warning/radiation/directional/south,
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/engine,
+/area/virtual_domain/fullbright)
+"cv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/bitrunning/customer_waiter/east/fast{
+	bumped_lines = list("Out of the way!","It's about to blow!","Make way!","Move!")
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/virtual_domain/fullbright)
 "cw" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -158,6 +182,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/power/apc/worn_out/directional/east,
+/obj/machinery/computer{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/virtual_domain/fullbright)
 "ra" = (
@@ -217,10 +244,7 @@
 /turf/open/floor/engine,
 /area/virtual_domain/fullbright)
 "ut" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/structure/sign/warning/radiation/directional/south,
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/engine,
 /area/virtual_domain/fullbright)
 "uC" = (
@@ -305,6 +329,9 @@
 "Au" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth,
 /area/virtual_domain/fullbright)
 "AH" = (
@@ -442,8 +469,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/power/apc/worn_out/directional/west,
-/obj/bitrunning/customer_waiter/east/fast{
-	bumped_lines = list("Out of the way!","It's about to blow!","Make way!","Move!")
+/obj/machinery/computer{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/virtual_domain/fullbright)
@@ -635,7 +662,7 @@ gX
 gX
 gX
 gX
-he
+gX
 he
 he
 he
@@ -666,8 +693,8 @@ un
 Yr
 gJ
 gJ
+ut
 gX
-he
 he
 he
 he
@@ -697,9 +724,9 @@ iM
 WG
 Xv
 un
-ut
+Yr
+bD
 gX
-he
 he
 he
 he
@@ -730,7 +757,7 @@ iM
 rw
 Yh
 rH
-gX
+ut
 gX
 gX
 gX
@@ -762,11 +789,11 @@ dP
 WQ
 Hz
 rH
-Hh
+gX
+gX
 CT
 fE
-fE
-tZ
+aO
 Nr
 bb
 gX
@@ -799,7 +826,7 @@ jh
 mc
 aA
 tZ
-fg
+cv
 aA
 so
 Ml
@@ -954,13 +981,13 @@ Hz
 WQ
 dP
 rH
-Hh
+gX
+gX
 gd
-BE
 BE
 Au
 pN
-aA
+BE
 gX
 gX
 gX
@@ -986,7 +1013,7 @@ UA
 BR
 dP
 rH
-gX
+ut
 gX
 gX
 gX
@@ -1018,8 +1045,8 @@ iM
 iM
 mb
 rH
+ut
 gX
-he
 he
 he
 he
@@ -1050,8 +1077,8 @@ Zh
 Zh
 Zh
 OV
+ut
 gX
-he
 he
 he
 he
@@ -1083,7 +1110,7 @@ gX
 gX
 gX
 gX
-he
+gX
 he
 he
 he
