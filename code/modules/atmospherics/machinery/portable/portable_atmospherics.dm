@@ -230,7 +230,8 @@
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
-		playsound(src, list(insert_sound,remove_sound), sound_vol)
+		playsound(src, insert_sound, sound_vol)
+		playsound(src, remove_sound, sound_vol)
 	else if(holding)//we remove a tank
 		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
 		to_chat(user, span_notice("You remove [holding] from [src]."))
