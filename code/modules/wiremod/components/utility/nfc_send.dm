@@ -2,7 +2,7 @@
  * # NFC Transmitter Component
  *
  * Sends a data package through NFC
- * Only the targeted shell will recieve the message
+ * Only the targeted shell will receive the message
  */
 
 /obj/item/circuit_component/nfc_send
