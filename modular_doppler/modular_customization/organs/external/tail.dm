@@ -159,6 +159,9 @@
 /datum/bodypart_overlay/mutant/tail/deer/get_global_feature_list()
 	return SSaccessories.tails_list_deer
 
+/obj/item/organ/external/tail/fish
+	preference = "feature_fish_tail"
+
 /// Cybernetic tail
 //
 /obj/item/organ/external/tail/cybernetic
