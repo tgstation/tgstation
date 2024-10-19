@@ -90,7 +90,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Remove hat"
 
 	if(istype(held_item, /obj/item/clothing/head))
-		context[SCREENTIP_CONTEXT_LMB] = "Attatch hat"
+		context[SCREENTIP_CONTEXT_LMB] = "Attach hat"
 
 	if(istype(held_item, /obj/item/toy/crayon))
 		context[SCREENTIP_CONTEXT_LMB] = "Vandalize"
