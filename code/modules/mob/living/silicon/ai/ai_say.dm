@@ -168,7 +168,10 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/player_mob as anything in GLOB.player_list)
-				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/toggle/sound_announcements)))
+///BEGIN DOPPLER EDIT
+///				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/toggle/sound_announcements)))
+				if(!player_mob.can_hear() || !(safe_read_pref(player_mob.client, /datum/preference/numeric/sound_announcements)))
+///END DOPPLER EDIT
 					continue
 
 				var/turf/player_turf = get_turf(player_mob)

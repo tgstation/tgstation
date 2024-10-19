@@ -6,7 +6,8 @@
 ///BEGIN DOPPLER EDIT - VOLUME MIXER
 ///	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_ambience], toggles & 1<<2)
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ambience_volume], toggles & 1<<2)
-	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_announcements], toggles & 1<<11)
+///	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_announcements], toggles & 1<<11)
+	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_announcements], toggles & 1<<11)
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_combatmode], toggles & 1<<22)
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_endofround], toggles & 1<<20)
 	write_preference(GLOB.preference_entries[/datum/preference/toggle/sound_instruments], toggles & 1<<7)

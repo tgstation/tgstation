@@ -25,10 +25,18 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing announcement sounds
-/datum/preference/toggle/sound_announcements
+///BEGIN DOPPLER EDIT - VOLUME MIXER
+////datum/preference/toggle/sound_announcements
+/datum/preference/numeric/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_announcements"
 	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 200
+
+/datum/preference/numeric/sound_announcements/create_default_value()
+	return maximum/2
+///END DOPPLER EDIT
 
 /// Controls hearing the combat mode toggle sound
 /datum/preference/toggle/sound_combatmode

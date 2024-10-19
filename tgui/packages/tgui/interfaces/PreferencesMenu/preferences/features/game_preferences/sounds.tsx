@@ -26,11 +26,15 @@ export const sound_breathing: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const sound_announcements: FeatureToggle = {
-  name: 'Enable announcement sounds',
+// BEGIN DOPPLER EDIT - VOLUME MIXER
+// export const sound_announcements: FeatureToggle = {
+//  name: 'Enable announcement sounds',
+export const sound_announcements: Feature<number> = {
+  name: 'Announcement volume',
   category: 'SOUND',
   description: 'When enabled, hear sounds for command reports, notices, etc.',
-  component: CheckboxInput,
+  //  component: CheckboxInput,
+  component: FeatureSliderInput,
 };
 
 export const sound_combatmode: FeatureToggle = {
