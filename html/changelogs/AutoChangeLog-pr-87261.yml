@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Portable gravity generators no longer turn into a floating pair of status lights when screwdrivered open."

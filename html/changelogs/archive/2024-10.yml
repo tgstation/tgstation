@@ -534,3 +534,18 @@
       trinket are to be ignored.
   san7890:
   - admin: Logging of Bombanana Peel explosions should be far better now.
+2024-10-19:
+  Hatterhat:
+  - bugfix: Portable gravity generators no longer turn into a floating pair of status
+      lights when screwdrivered open.
+  Melbert:
+  - spellcheck: Medical Kiosks no longer recommends improper treatments for hallucinations.
+      Now recommends "anti-psychotics" and provides examples.
+  - spellcheck: Health analyzers recommends example "anti-psychotics" for treating
+      hallucinations, rather than forcing you to figure it out.
+  - bugfix: Health analyzers don't report someone is hallucinating due to low sanity,
+      and thus won't suggest patients are "double hallucinating".
+  SmArtKar:
+  - bugfix: Plasmamen no longer self-immolate while in stasis
+  - bugfix: Lionhunter rifle can no longer be used to teleport to the debug room
+  - bugfix: Fixed electrified chair overlay layering
