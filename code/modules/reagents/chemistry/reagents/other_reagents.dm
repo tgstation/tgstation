@@ -1592,6 +1592,7 @@
 		exposed_mob.adjust_drowsiness(drowsiness_to_apply)
 	if(methods & INHALE)
 		exposed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * reac_volume, required_organ_flag = affected_organ_flags)
+		exposed_mob.adjust_hallucinations(10 SECONDS * reac_volume)
 
 /datum/reagent/nitrous_oxide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
