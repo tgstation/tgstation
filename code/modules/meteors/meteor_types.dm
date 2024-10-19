@@ -464,6 +464,6 @@
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = pick('sound/effects/hallucinations/im_here1.ogg','sound/effects/hallucinations/im_here2.ogg')
+	meteorsound = SFX_HALLUCINATION_I_M_HERE
 
 #undef DEFAULT_METEOR_LIFETIME
