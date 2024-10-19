@@ -154,7 +154,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Void
 		PATH_VOID = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/void_prison),
 			SWORD_PREFIX = "tenebrous",
 		),
 		// Blade
@@ -300,6 +300,10 @@ Striking a noncultist, however, will tear their flesh."}
 	var/holup = tgui_alert(user, "Are you sure you wish to unseal the spirit within?", "Sealed Evil In A Jar", list("I need the power!", "Maybe not..."))
 	if(holup != "I need the power!")
 		return
+	to_chat(user, span_cult_bold("You start focusing on the power of the blade, letting it guide your fingers along the inscribed runes..."))
+	if(!do_after(user, 5 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
 	visible_message(span_danger("[user] has unbound [src]!"))
 	bound = FALSE
 	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
@@ -407,6 +411,8 @@ Striking a noncultist, however, will tear their flesh."}
 			var/datum/action/cooldown/spell/instanced_spell = new wielder_spell(trapped_entity)
 			LAZYADD(path_wielder_actions, instanced_spell)
 			instanced_spell.overlay_icon_state = "bg_cult_border"
+
+	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
