@@ -159,8 +159,13 @@
 /datum/bodypart_overlay/mutant/tail/deer/get_global_feature_list()
 	return SSaccessories.tails_list_deer
 
+/// Fish tail
+//
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
+
+/datum/bodypart_overlay/mutant/tail/fish
+	color_source = ORGAN_COLOR_INHERIT // not haircolor because that breaks stuff
 
 /// Cybernetic tail
 //
