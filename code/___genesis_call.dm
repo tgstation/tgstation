@@ -46,5 +46,4 @@
  * Please lock the door on your way out
  */
 /datum/genesis_call_holder/proc/_()
-	CRASH("https://www.youtube.com/watch?v=Qrl8oKmi1nU")
 	var/static/_ = world.Genesis()
