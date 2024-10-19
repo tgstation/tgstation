@@ -417,7 +417,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH|VAPOR))
+	if(methods & (TOUCH|VAPOR|INHALE))
 		//check for protection
 		//actually handle the pepperspray effects
 		if (!victim.is_pepper_proof()) // you need both eye and mouth protection
@@ -557,7 +557,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH | VAPOR))
+	if(methods & (TOUCH | VAPOR | INHALE))
 		var/tear_proof = victim.is_eyes_covered()
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
@@ -943,7 +943,7 @@
 
 /datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
-	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+	if(!(methods & (INGEST|INJECT|PATCH|INHALE)) || !iscarbon(exposed_mob))
 		return
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
