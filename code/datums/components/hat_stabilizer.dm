@@ -5,11 +5,17 @@
 	/// Original cover flags for the helmet, before a hat is placed
 	var/former_flags
 	var/former_visor_flags
+	/// If true, add_overlay will use worn overlay instead of item appearance
+	var/use_worn_icon = TRUE
+	/// Pixel_y offset for the hat
+	var/pixel_y_offset
 
-/datum/component/hat_stabilizer/Initialize(add_overlay = FALSE)
+/datum/component/hat_stabilizer/Initialize(add_overlay = FALSE, use_worn_icon = TRUE, pixel_y_offset = 0)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	src.use_worn_icon = use_worn_icon
+	src.pixel_y_offset = pixel_y_offset
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_secondary_attack_hand))
@@ -36,11 +42,15 @@
 	if (isinhands)
 		return
 	if(attached_hat)
-		overlays += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		worn_overlay.pixel_y = pixel_y_offset
+		overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_update_overlays(atom/movable/source, list/overlays)
 	SIGNAL_HANDLER
-	overlays += mutable_appearance(attached_hat)
+	var/mutable_appearance/worn_overlay = use_worn_icon ? attached_hat.build_worn_icon(default_layer = ABOVE_OBJ_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi') : mutable_appearance(attached_hat, layer = ABOVE_OBJ_LAYER)
+	worn_overlay.pixel_y = pixel_y_offset
+	overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_attackby(datum/source, obj/item/hitting_item, mob/user)
 	SIGNAL_HANDLER
