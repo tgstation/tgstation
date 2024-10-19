@@ -107,16 +107,15 @@
 /// Controls hearing lobby music
 ///BEGIN DOPPLER EDIT - VOLUME MIXER
 ////datum/preference/toggle/sound_lobby
-/datum/preference/numeric/sound_lobby_volume
+/datum/preference/numeric/sound_lobby
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-///	savefile_key = "sound_lobby"
-	savefile_key = "sound_lobby_volume"
+	savefile_key = "sound_lobby"
 	savefile_identifier = PREFERENCE_PLAYER
 	minimum = 0
 	maximum = 200
 
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
-/datum/preference/numeric/sound_lobby_volume/create_default_value()
+/datum/preference/numeric/sound_lobby/create_default_value()
 	return maximum/2
 
 ////datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)

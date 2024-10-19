@@ -198,7 +198,7 @@
 ///BEGIN DOPPLER EDIT - VOLUME MIXER
 ///	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
 ///		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
-	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby_volume)
+	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby)
 	if((prefs && volume_modifier) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = volume_modifier, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 ///END DOPPLER EDIT
