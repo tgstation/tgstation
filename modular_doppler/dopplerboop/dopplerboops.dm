@@ -99,6 +99,6 @@
 	if(!volume || (last_dopplerboop != initial_dopplerboop_time) || !final_boop)
 		return
 	for(var/mob/hearer as anything in hearers)
-		var/user_volume = hearer.client.prefs.read_preference(/datum/preference/numeric/voice_volume)
+		var/user_volume = hearer.client?.prefs.read_preference(/datum/preference/numeric/voice_volume)
 		volume = volume*(user_volume / 10)
 		hearer.playsound_local(turf_source = get_turf(dopplerbooper), sound_to_use = final_boop, vol = volume, vary = TRUE, frequency = freq, falloff_distance = falloff_exponent, max_distance = 16)

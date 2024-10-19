@@ -13,7 +13,7 @@
 	var/boop_letter = null
 	var/dopplerboop_delay_cumulative = 0
 	var/sound/final_boop = null
-	var/user_volume = user.client.prefs.read_preference(/datum/preference/numeric/voice_volume)
+	var/user_volume = user.client?.prefs.read_preference(/datum/preference/numeric/voice_volume)
 
 	for(var/i in 1 to min(length(all_boops), MAX_DOPPLERBOOP_CHARACTERS))
 		var/volume = DOPPLERBOOP_DEFAULT_VOLUME
