@@ -4,13 +4,11 @@
 
 	There is nothing but naught about you.
 
-	You've come to the end of the world.
+	You've come to the beginning of the world.
 
 	You get a feeling that you really shouldn't be here.
 
 	Ever.
-
-	But with all ends come beginnings.
 
 	As you turn to leave, you spot it out of the corner of your eye.
 
@@ -25,10 +23,10 @@
  * THE GENESIS CALL
  *
  * THE VERY FIRST LINE OF DM CODE TO EXECUTE
- * Ong this must be done after !!!EVERYTHING!!! else
+ * Ong this must be done before !!!EVERYTHING!!! else
  * NO IFS ANDS OR BUTS
  * it's a hack, not an example of any sort, and DEFINITELY should NOT be emulated
- * IT JUST HAS TO BE LAST!!!!!!
+ * IT JUST HAS TO BE FIRST!!!!!!
  * If you want to do something in the initialization pipeline
  * FIRST RTFM IN /code/game/world.dm
  * AND THEN NEVER RETURN TO THIS PLACE
@@ -39,7 +37,7 @@
  * BYOND loves to tell you about its loving spouse /global
  * But it's actually having a sexy an affair with /static
  * Specifically statics in procs
- * Priority is given to these lines of code in REVERSE order of declaration in the .dme
+ * Priority is given to these lines of code in order of declaration in the .dme
  * Which is why this file has a funky name
  * So this is what we use to call world.Genesis()
  * It's a nameless, no-op function, because it does absolutely nothing
@@ -48,5 +46,8 @@
  * Painful right? Good, now you share my suffering
  * Please lock the door on your way out
  */
-/world/proc/_()
+/datum/genesis_call_holder/proc/_()
 	var/static/_ = world.Genesis()
+
+/datum/genesis_call_holder/New()
+	CRASH("https://www.youtube.com/watch?v=Qrl8oKmi1nU")
