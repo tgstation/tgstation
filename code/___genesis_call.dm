@@ -37,7 +37,7 @@
  * BYOND loves to tell you about its loving spouse /global
  * But it's actually having a sexy an affair with /static
  * Specifically statics in procs
- * Priority is given to these lines of code in order of declaration in the .dme
+ * Priority is given to static var initialization in order of the owning type's type declaration in the .dme
  * Which is why this file has a funky name
  * So this is what we use to call world.Genesis()
  * It's a nameless, no-op function, because it does absolutely nothing
