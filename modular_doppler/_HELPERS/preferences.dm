@@ -11,5 +11,6 @@ GLOBAL_LIST_INIT(dopplerboop_voice_types, sort_list(list(
 	"grumpy",
 	"jock",
 	"lazy",
-	"smug"
+	"smug",
+	"mute",
 )))

@@ -13,6 +13,7 @@
 	var/boop_letter = null
 	var/dopplerboop_delay_cumulative = 0
 	var/sound/final_boop = null
+	var/user_volume = user.client?.prefs.read_preference(/datum/preference/numeric/voice_volume)
 
 	for(var/i in 1 to min(length(all_boops), MAX_DOPPLERBOOP_CHARACTERS))
 		var/volume = DOPPLERBOOP_DEFAULT_VOLUME
@@ -35,6 +36,7 @@
 			else
 				variation = rand(1, 5)
 			final_boop = "modular_doppler/dopplerboop/voices/[chosen_boop]/[boop_letter][variation].wav"
+		volume = volume*(user_volume / 10)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, playsound_local), null, final_boop, volume), dopplerboop_delay_cumulative + current_delay)
 		dopplerboop_delay_cumulative += current_delay
 
@@ -43,5 +45,7 @@
 		return TRUE
 	COOLDOWN_START(src, dopplerboop_cooldown, 5 SECONDS)
 	var/chosen_boop = user?.client?.prefs.read_preference(/datum/preference/choiced/voice_type) || random_voice_type()
+	if(chosen_boop == "mute")
+		return
 	INVOKE_ASYNC(src, PROC_REF(debug_booping), user, chosen_boop)
 	return TRUE

@@ -40,6 +40,8 @@
 
 /datum/component/dopplerboop/proc/handle_booping(mob/living/carbon/human/dopplerbooper, list/speech_args, list/speech_spans, list/speech_mods)
 	chosen_boop = dopplerbooper?.voice_type || random_voice_type() // Uses the boop chosen by the player. If it's null for whatever unholy reason, it should chose a completely random voice for every single phonetic which should be funny.
+	if(chosen_boop == "mute")
+		return
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/initial_dopplerboop_time = last_dopplerboop
 	var/initial_volume = volume
@@ -97,4 +99,6 @@
 	if(!volume || (last_dopplerboop != initial_dopplerboop_time) || !final_boop)
 		return
 	for(var/mob/hearer as anything in hearers)
+		var/user_volume = hearer.client?.prefs.read_preference(/datum/preference/numeric/voice_volume)
+		volume = volume*(user_volume / 10)
 		hearer.playsound_local(turf_source = get_turf(dopplerbooper), sound_to_use = final_boop, vol = volume, vary = TRUE, frequency = freq, falloff_distance = falloff_exponent, max_distance = 16)
