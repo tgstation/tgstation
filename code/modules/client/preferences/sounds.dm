@@ -1,11 +1,23 @@
 /// Controls hearing ambience
-/datum/preference/toggle/sound_ambience
+///BEGIN DOPPLER EDIT - VOLUME MIXER
+////datum/preference/toggle/sound_ambience
+/// Controls ambience volume
+/datum/preference/numeric/sound_ambience_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_ambience"
+///	savefile_key = "sound_ambience"
+	savefile_key = "sound_ambience_volume"
 	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 200
 
-/datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_ambience_volume/create_default_value()
+	return maximum/2
+
+////datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
+/datum/preference/numeric/sound_ambience_volume/apply_to_client(client/client, value)
 	client.update_ambience_pref(value)
+///END DOPPLER EDIT
 
 /datum/preference/toggle/sound_breathing
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -85,16 +97,27 @@
 		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
 
 /// Controls hearing lobby music
-/datum/preference/toggle/sound_lobby
+///BEGIN DOPPLER EDIT - VOLUME MIXER
+////datum/preference/toggle/sound_lobby
+/datum/preference/numeric/sound_lobby_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_lobby"
+///	savefile_key = "sound_lobby"
+	savefile_key = "sound_lobby_volume"
 	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 200
 
-/datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_lobby_volume/create_default_value()
+	return maximum/2
+
+////datum/preference/toggle/sound_lobby/apply_to_client_updated(client/client, value)
+/datum/preference/numeric/sound_lobby/apply_to_client_updated(client/client, value)
 	if (value && isnewplayer(client.mob))
 		client.playtitlemusic()
 	else
 		client.mob.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+///END DOPPLER EDIT
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi
@@ -103,13 +126,24 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing ship ambience
-/datum/preference/toggle/sound_ship_ambience
+///BEGIN DOPPLER EDIT - VOLUME MIXER
+////datum/preference/toggle/sound_ship_ambience
+/datum/preference/numeric/sound_ship_ambience_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_ship_ambience"
+///	savefile_key = "sound_ship_ambience"
+	savefile_key = "sound_ship_ambience_volume"
 	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 200
 
-/datum/preference/toggle/sound_ship_ambience/apply_to_client_updated(client/client, value)
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_ship_ambience_volume/create_default_value()
+	return maximum/2
+
+////datum/preference/toggle/sound_ship_ambience/apply_to_client_updated(client/client, value)
+/datum/preference/numeric/sound_ship_ambience_volume/apply_to_client_updated(client/client, value)
 	client.mob.refresh_looping_ambience()
+///END DOPPLER EDIT
 
 /// Controls hearing elevator music
 /datum/preference/toggle/sound_elevator
@@ -118,7 +152,16 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing radio noise
-/datum/preference/toggle/radio_noise
+///BEGIN DOPPLER EDIT - VOLUME MIXER
+////datum/preference/toggle/radio_noise
+/datum/preference/numeric/sound_radio_noise
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 200
+
+/// default value is max/2 because 100 1x modifier, while 200 is 2x
+/datum/preference/numeric/sound_radio_noise/create_default_value()
+	return maximum/2
+///END DOPPLER EDIT
