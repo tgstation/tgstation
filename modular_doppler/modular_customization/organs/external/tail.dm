@@ -164,9 +164,6 @@
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
 
-/datum/bodypart_overlay/mutant/tail/fish
-	color_source = ORGAN_COLOR_INHERIT // not haircolor because that breaks stuff
-
 /// Cybernetic tail
 //
 /obj/item/organ/external/tail/cybernetic
