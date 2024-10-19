@@ -1295,7 +1295,7 @@
 	pixel_x = -1;
 	pixel_y = 5
 	},
-/turf/open/floor/stone/icemoon,
+/turf/open/floor/stone,
 /area/ruin/huntinglodge)
 "wO" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1321,7 +1321,7 @@
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone/icemoon,
+/turf/open/floor/stone,
 /area/ruin/huntinglodge)
 "xh" = (
 /obj/effect/turf_decal/siding/wood/end{
@@ -1718,7 +1718,7 @@
 /obj/structure/table/wood,
 /obj/item/paper/crumpled/bloody,
 /obj/machinery/coffeemaker/impressa,
-/turf/open/floor/stone/icemoon,
+/turf/open/floor/stone,
 /area/ruin/huntinglodge)
 "CA" = (
 /turf/closed/mineral/snowmountain/cavern/icemoon,
