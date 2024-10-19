@@ -5,6 +5,9 @@
 	category = SPELLBOOK_CATEGORY_PERKS
 	refundable = FALSE // no refund
 	requires_wizard_garb = FALSE
+	/// Icon that will be shown on wizard hud when purchasing a perk.
+	var/hud_icon
+	/// Type path to perks hud.
 	var/atom/movable/screen/perk/hud_to_show = /atom/movable/screen/perk
 
 /datum/spellbook_entry/perks/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
@@ -20,6 +23,8 @@
 	if(user.hud_used)
 		var/datum/hud/user_hud = user.hud_used
 		hud_to_show = new hud_to_show(null, user_hud)
+		hud_to_show.name = name
+		hud_to_show.icon_state = hud_icon
 		hud_to_show.screen_loc = ui_perk_position(wizard_datum.perks.len)
 		user_hud.infodisplay += hud_to_show
 		user_hud.show_hud(user_hud.hud_version)
@@ -34,7 +39,7 @@
 /datum/spellbook_entry/perks/fourhands
 	name = "Four Hands"
 	desc = "Gives you even more hands to perform magic"
-	hud_to_show = /atom/movable/screen/perk/fourhands
+	hud_icon = "fourhands"
 
 /datum/spellbook_entry/perks/fourhands/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -44,8 +49,8 @@
 	name = "Worm Born"
 	desc = "Your soul is infested with mana worms. When you die, you will be reborn as a large worm. \
 		When the worm dies, it has no such luck. Parasitic infection prevents you from binding your soul to objects."
+	hud_icon = "wormborn"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
-	hud_to_show = /atom/movable/screen/perk/wormborn
 
 /datum/spellbook_entry/perks/wormborn/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -54,7 +59,7 @@
 /datum/spellbook_entry/perks/dejavu
 	name = "Déjà vu"
 	desc = "Every 60 seconds returns you to the place where you were 60 seconds ago with the same amount of health as you had 60 seconds ago."
-	hud_to_show = /atom/movable/screen/perk/dejavu
+	hud_icon = "dejavu"
 
 /datum/spellbook_entry/perks/dejavu/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -71,7 +76,7 @@
 /datum/spellbook_entry/perks/spell_lottery
 	name = "Spells Lottery"
 	desc = "Spells Lottery gives you the chance to get something from the book absolutely free, but you can no longer refund any purchases."
-	hud_to_show = /atom/movable/screen/perk/spellottery
+	hud_icon = "spellottery"
 
 /datum/spellbook_entry/perks/spell_lottery/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -80,7 +85,7 @@
 /datum/spellbook_entry/perks/gamble
 	name = "Gamble"
 	desc = "You get 2 random perks."
-	hud_to_show = /atom/movable/screen/perk/gamble
+	hud_icon = "gamble"
 
 /datum/spellbook_entry/perks/gamble/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -108,7 +113,7 @@
 	desc = "Gives you ability to obtain a person's life force by eating their heart. \
 		By eating someone's heart you can increase your damage resistance or gain random mutation. \
 		Heart also give strong healing buff."
-	hud_to_show = /atom/movable/screen/perk/hearteater
+	hud_icon = "hearteater"
 
 /datum/spellbook_entry/perks/heart_eater/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -118,7 +123,7 @@
 	name = "Slime Friends"
 	desc = "Slimes are your friends. \
 		Every 15 seconds you lose some nutriments and summon a random evil slime to fight on your side."
-	hud_to_show = /atom/movable/screen/perk/slimefriends
+	hud_icon = "slimefriends"
 
 /datum/spellbook_entry/perks/slime_friends/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -128,7 +133,7 @@
 	name = "Transparence"
 	desc = "You become a little closer to the world of the dead. \
 		Projectiles pass through you, but you lose 25% of your health and you are hunted by a terrible curse which wants to return you to the afterlife."
-	hud_to_show = /atom/movable/screen/perk/transparence
+	hud_icon = "transparence"
 
 /datum/spellbook_entry/perks/transparence/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -149,7 +154,7 @@
 	name = "Magnetism"
 	desc = "You get a small gravity anomaly that orbit around you. \
 		Nearby things will be attracted to you."
-	hud_to_show = /atom/movable/screen/perk/magnetism
+	hud_icon = "magnetism"
 
 /datum/spellbook_entry/perks/magnetism/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
