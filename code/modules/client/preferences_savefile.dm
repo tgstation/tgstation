@@ -308,7 +308,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
 	/// DOPPLER SHIFT ADDITION BEGIN
-	var/list/save_languages = SANITIZE_LIST(save_data["languages"])
+	var/list/save_languages = SANITIZE_LIST(save_data?["languages"])
 	for(var/language in save_languages)
 		var/value = save_languages[language]
 		save_languages -= language

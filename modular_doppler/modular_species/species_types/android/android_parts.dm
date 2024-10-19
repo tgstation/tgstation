@@ -37,6 +37,21 @@
 // head
 /obj/item/bodypart/head/robot/android
 	biological_state = (BIO_ROBOTIC|BIO_BLOODED)
+	// var for monitor heads and their emissive states
+	var/monitor_state
+
+/obj/item/bodypart/head/robot/android/get_limb_icon(dropped)
+	. = ..()
+	// emissive handling
+	if(!monitor_state || monitor_state == "none")
+		return .
+
+	var/monitor_type = istype(src, /obj/item/bodypart/head/robot/android/synth_lizard) ? "lizard_em" : "monitor_em"
+
+	var/image/monitor_emissive = image('icons/blanks/32x32.dmi', "nothing", -BODY_LAYER)
+	monitor_emissive.overlays += emissive_appearance('modular_doppler/modular_customization/accessories/icons/cybernetic/synth_screens.dmi', monitor_type, src, alpha = owner.alpha)
+	. += monitor_emissive
+	return .
 
 /obj/item/bodypart/head/robot/android/welder_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -803,6 +818,7 @@
 	limb_id = "synth_lizard"
 
 /obj/item/bodypart/leg/right/robot/android/synth_lizard
+	bodypart_traits = list(TRAIT_HARD_SOLES)
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	should_draw_greyscale = TRUE
 	icon_static = ANDROID_BODYPARTS_DMI
@@ -812,6 +828,7 @@
 	limb_id = "synth_lizard"
 
 /obj/item/bodypart/leg/left/robot/android/synth_lizard
+	bodypart_traits = list(TRAIT_HARD_SOLES)
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	should_draw_greyscale = TRUE
 	icon_static = ANDROID_BODYPARTS_DMI

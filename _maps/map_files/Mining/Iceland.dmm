@@ -205,9 +205,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production/middle)
 "bD" = (
-/obj/structure/fence/corner{
-	dir = 2
-	},
+/obj/structure/fence/corner,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "bH" = (
@@ -1002,6 +1000,17 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
+/obj/item/stock_parts/power_store/cell/high{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/stock_parts/power_store/cell/high{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/stock_parts/power_store/cell/high{
+	pixel_x = 3
+	},
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "gs" = (
@@ -1851,10 +1860,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production/middle)
 "lD" = (
-/obj/structure/fence{
-	dir = 2;
-	pixel_y = 0
-	},
+/obj/structure/fence,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "lE" = (
@@ -2313,10 +2319,7 @@
 	},
 /area/mine/mechbay)
 "oM" = (
-/obj/structure/fence{
-	dir = 2;
-	pixel_y = 0
-	},
+/obj/structure/fence,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "oN" = (
@@ -2677,15 +2680,11 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "re" = (
-/obj/structure/fence/corner{
-	dir = 2
-	},
+/obj/structure/fence/corner,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rf" = (
-/obj/structure/fence/corner{
-	dir = 2
-	},
+/obj/structure/fence/corner,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rm" = (
@@ -5150,10 +5149,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/labor)
 "ID" = (
-/obj/structure/fence{
-	dir = 2;
-	pixel_y = 0
-	},
+/obj/structure/fence,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "IH" = (
@@ -5801,9 +5797,9 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "LW" = (
-/obj/structure/fence{
-	dir = 2
-	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "LY" = (
@@ -114162,8 +114158,8 @@ pY
 yV
 yV
 yV
-LW
-LW
+lD
+lD
 Cy
 NL
 NL
@@ -114676,7 +114672,7 @@ Vy
 MA
 bc
 WW
-Zy
+LW
 Zy
 uM
 pU

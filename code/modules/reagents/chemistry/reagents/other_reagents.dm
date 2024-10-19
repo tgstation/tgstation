@@ -2217,8 +2217,7 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	exposed_human.set_facial_haircolor(pick(potential_colors), update = FALSE)
-	exposed_human.set_haircolor(pick(potential_colors), update = TRUE)
-	exposed_human.update_body_parts()
+	exposed_human.set_haircolor(pick(potential_colors)) //this will call update_body_parts()
 
 /datum/reagent/barbers_aid
 	name = "Barber's Aid"
@@ -2276,13 +2275,11 @@
 		if(!head || (head.head_flags & HEAD_HAIR))
 			return
 		head.head_flags |= HEAD_HAIR
-		var/message
 		if(HAS_TRAIT(affected_mob, TRAIT_BALD))
-			message = span_warning("You feel your scalp mutate, but you are still hopelessly bald.")
+			to_chat(affected_mob, span_warning("You feel your scalp mutate, but you are still hopelessly bald."))
 		else
-			message = span_notice("Your scalp mutates, a full head of hair sprouting from it.")
-		to_chat(affected_mob, message)
-		human_mob.update_body_parts()
+			to_chat(affected_mob, span_notice("Your scalp mutates, a full head of hair sprouting from it."))
+			human_mob.update_body_parts()
 
 /datum/reagent/baldium
 	name = "Baldium"

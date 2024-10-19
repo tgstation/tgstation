@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(can_be_named && item_details?[INFO_NAMED] && !visuals_only)
 		equipped_item.name = trim(item_details[INFO_NAMED], PREVENT_CHARACTER_TRIM_LOSS(MAX_NAME_LEN))
 		ADD_TRAIT(equipped_item, TRAIT_WAS_RENAMED, "Loadout")
-		equipped_item.on_loadout_custom_named() // NOVA EDIT ADDITION - Loadout item names
+		equipped_item.on_loadout_custom_named() // DOPPLER EDIT ADDITION - Loadout item names
 
 	// DOPPLER EDIT ADDITION START - Loadout item descriptions
 	if(can_be_named && item_details?[INFO_DESCRIBED] && !visuals_only)

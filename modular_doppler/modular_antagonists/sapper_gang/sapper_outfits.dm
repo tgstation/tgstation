@@ -128,12 +128,12 @@
 	preload = FALSE
 
 /obj/item/storage/belt/utility/sapper/PopulateContents() //its just a complete mishmash
-	new /obj/item/forcefield_projector(src)
+	new /obj/item/screwdriver/omni_drill(src)
 	new /obj/item/multitool(src)
 	new /obj/item/wrench/combat(src)
 	new /obj/item/construction/rcd/loaded(src)
 	new /obj/item/screwdriver/caravan(src)
-	new /obj/item/inducer/syndicate(src)
+	new /obj/item/crowbar/large/old(src)
 	new /obj/item/weldingtool/abductor(src)
 
 /obj/item/storage/toolbox/guncase/modular/carwo_large_case/sapper

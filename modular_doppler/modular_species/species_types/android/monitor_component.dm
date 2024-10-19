@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	icon = 'modular_doppler/modular_customization/accessories/icons/cybernetic/synth_screens.dmi'
 	icon_state = "none"
 	layers = EXTERNAL_ADJACENT
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 // the component
 /datum/component/monitor_head
@@ -179,9 +180,12 @@ GLOBAL_LIST_INIT(monitor_lizard_displays, list(
 	monitor_head.add_bodypart_overlay(display_overlay)
 
 /datum/action/innate/monitor_head/proc/change_screen(mob/living/carbon/wearer, screen)
-	playsound(wearer, 'modular_doppler/modular_sounds/sound/mobs/humanoids/android/monitor_switch.ogg', 100, TRUE)
-	display_overlay.icon_state = screen
+	var/obj/item/bodypart/head/robot/android/monitor_head = wearer.get_bodypart(BODY_ZONE_HEAD)
 
+	display_overlay.icon_state = screen
+	monitor_head.monitor_state = screen
+
+	playsound(wearer, 'modular_doppler/modular_sounds/sound/mobs/humanoids/android/monitor_switch.ogg', 100, TRUE)
 	wearer.update_body_parts()
 
 /datum/action/innate/monitor_head/Remove(mob/remove_from)
