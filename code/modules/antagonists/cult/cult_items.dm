@@ -210,12 +210,12 @@ Striking a noncultist, however, will tear their flesh."}
 /datum/action/item_action/haunted_blade
 	name = "Unseal Spirit" // img is of a chained shade
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
-	button_icon_state = "shade_sealed"
+	button_icon_state = "spirit_sealed"
 
 /datum/action/item_action/haunted_blade/apply_button_icon(atom/movable/screen/movable/action_button/button, force)
 	var/obj/item/melee/cultblade/haunted/blade = target
 	if(istype(blade))
-		button_icon_state = "shade_[blade.bound ? "sealed" : "unsealed"]"
+		button_icon_state = "spirit_[blade.bound ? "sealed" : "unsealed"]"
 		name = "[blade.bound ? "Unseal" : "Seal"] Spirit"
 
 	return ..()
@@ -223,48 +223,83 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/haunted/ui_action_click(mob/living/user, actiontype)
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return // gtfo
-	// if(IS_NORMIE())
-	var/list/binding_implements = list(/obj/item/book/bible)
-	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
-	var/list/chant_text = list("You start reading [bound ? "backwards" : "aloud"] the passage in [passage]...", "[user] starts reading [bound ? "backwards" : "aloud"] the passage in [passage]...")
-	var/delay_time = 12 SECONDS
-	if(user.mind?.holy_role)
-		binding_implements = null
-		chant_text = list("You begin chanting the holy hymns of [GLOB.deity][bound ? "backwards" : ""]...", "[user] begins chanting while holding [src] aloft...")
-		delay_time = 6 SECONDS
-	if(IS_CULTIST_OR_CULTIST_MOB(user))
-		binding_implements = list(/obj/item/melee/cultblade/dagger, /obj/item/melee/sickly_blade/cursed)
-		chant_text = list("You begin slicing open your palm on top of [src]...", "[user] begins slicing open [user.p_their()] palm on top of [src]...")
-		delay_time = 8 SECONDS
-	if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
-		// todo make the former a subtype of latter
-		binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
-		chant_text = list("You channel the Mansus through your focus, [bound ? "un" : ""]binding the spirit within...", "[user] holds up their eldritch focus on top of [src] and begins concentrating...")
-		delay_time = 6 SECONDS
-	if(IS_WIZARD(user))
-		binding_implements = null
-		chant_text = list("You begin quickly and nimbly casting the [bound ? "unseal" : "seal"]ing runes.", "[user] begins drawing magical runes on [src]...")
-		delay_time = 3 SECONDS
-
-	var/fail_text = "a " + type_english_list(binding_implements)
-	for(var/obj/thingy as anything in user.held_items)
-		if(binding_implements && is_type_in_list(thingy, binding_implements))
-			fail_text = null
-
-	if(fail_text)
-		to_chat(user, span_cult_bold("You need to be holding [fail_text] to [bound ? "unseal" : "seal"] the spirit within!"))
-		return
-
-	visible_message(span_cult_bold(chant_text[1]), span_cult_bold(chant_text[2]))
-	if(!do_after(user, delay_time, target = src))
-		return
-
 	if(bound)
 		unbind_blade(user)
+		return
+	if(user.mind?.holy_role)
+		on_priest_handle(user)
+	else if(IS_CULTIST_OR_CULTIST_MOB(user))
+		on_cultist_handle(user)
+	else if(IS_HERETIC_OR_MONSTER(user) || IS_LUNATIC(user))
+		on_heresy_handle(user)
+	else if(IS_WIZARD(user))
+		on_wizard_handle(user)
 	else
-		rebind_blade(user)
+		on_normie_handle(user)
+	return
+
+/obj/item/melee/cultblade/haunted/proc/on_priest_handle(mob/living/user, actiontype)
+	user.visible_message(span_cult_bold("You begin chanting the holy hymns of [GLOB.deity]..."),\
+		span_cult_bold("[user] begins chanting while holding [src] aloft..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	playsound(user, 'sound/effects/pray_chaplain.ogg',60,TRUE)
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_cultist_handle(mob/living/user, actiontype)
+	var/binding_implements = list(/obj/item/melee/cultblade/dagger, /obj/item/melee/sickly_blade/cursed)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to hold a ritual dagger to bind [src]!"))
+		return
+
+	user.visible_message(span_cult_bold("You begin slicing open your palm on top of [src]..."),\
+		span_cult_bold("[user] begins slicing open [user.p_their()] palm on top of [src]..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	playsound(user, 'sound/items/weapons/slice.ogg', 30, TRUE)
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
+	// todo make the former a subtype of latter
+	var/binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to hold a focus to bind [src]!"))
+		return
+
+	user.visible_message(span_cult_bold("You channel the Mansus through your focus, empowering the sealing runes..."), span_cult_bold("[user] holds up their eldritch focus on top of [src] and begins concentrating..."))
+	if(!do_after(user, 6 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_wizard_handle(mob/living/user, actiontype)
+	user.visible_message(span_cult_bold("You begin quickly and nimbly casting the sealing runes."), span_cult_bold("[user] begins tracing anti-light runes on [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+	return TRUE
+
+/obj/item/melee/cultblade/haunted/proc/on_normie_handle(mob/living/user, actiontype)
+	// todo make the former a subtype of latter
+	var/binding_implements = list(/obj/item/book/bible)
+	if(!user.is_holding_item_of_types(binding_implements))
+		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
+		return
+
+	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
+	user.visible_message(span_cult_bold("You start reading aloud the passage in [passage]..."), span_cult_bold("[user] starts reading aloud the passage in [passage]..."))
+	if(!do_after(user, 12 SECONDS, src))
+		to_chat(user, span_notice("You were interrupted!"))
+		return
+
+	rebind_blade(user)
 
 /obj/item/melee/cultblade/haunted/proc/unbind_blade(mob/user)
+	var/holup = tgui_alert(user, "Are you sure you wish to unseal the spirit within?", "Sealed Evil In A Jar", list("I need the power!", "Maybe not..."))
+	if(holup != "I need the power!")
+		return
 	visible_message(span_danger("[user] has unbound [src]!"))
 	bound = FALSE
 	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
@@ -370,39 +405,41 @@ Striking a noncultist, however, will tear their flesh."}
 	if(wielder_spells)
 		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
 			var/datum/action/cooldown/spell/instanced_spell = new wielder_spell(trapped_entity)
-			LAZYADD(path_wielder_actions, new wielder_spell(src))
+			LAZYADD(path_wielder_actions, instanced_spell)
 			instanced_spell.overlay_icon_state = "bg_cult_border"
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
 	if((!(slot & ITEM_SLOT_HANDS)) || bound)
 		return
-	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
-		wielder_spell?.Grant(user)
+	for(var/datum/action/cooldown/spell/wielder_spell in path_wielder_actions)
+		wielder_spell.Grant(user)
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/dropped(mob/user, silent)
 	. = ..()
-	for(var/datum/action/cooldown/spell/wielder_spell as anything in path_wielder_actions)
-		wielder_spell?.Remove(user)
+	for(var/datum/action/cooldown/spell/wielder_spell in path_wielder_actions)
+		wielder_spell.Remove(user)
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/proc/binding_filters_update(mob/user)
 
 	// on bound
 	if(bound)
-		add_filter("bind_glow", 2, list("type" = "outline", "color" = COLOR_VOID_PURPLE, "size" = 1))
+		add_filter("bind_glow", 2, list("type" = "outline", "color" = GLOB.heretic_path_to_color[heretic_path], "size" = 0.1))
 		remove_filter("unbound_ray")
 		update_filters()
 	// on unbound
 	else
+		// we re-add this every time it's picked up or dropped
+		remove_filter("unbound_ray")
 		add_filter(name = "unbound_ray", priority = 1, params = list(
 			type = "rays",
-			size = 20,
-			color = COLOR_VOID_PURPLE,
-			density = 16
+			size = 16,
+			color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
+			density = 16,
 		))
-		// This is re-animated on drop and pickup to reset the loop - otherwise the animation breaks
+		// because otherwise the animations stack and it looks ridiculous
 		var/ray_filter = get_filter("unbound_ray")
 		animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
 		animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
