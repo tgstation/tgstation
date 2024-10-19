@@ -29,9 +29,15 @@
 		if (fexists("./lib[RUST_G_BASE].so"))
 			// No need for LD_LIBRARY_PATH badness.
 			return __rust_g = "./lib[RUST_G_BASE].so"
+		else if (fexists("./[RUST_G_BASE]"))
+			// Old dumb filename.
+			return __rust_g = "./[RUST_G_BASE]"
+		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/[RUST_G_BASE]"))
+			// Old dumb filename in `~/.byond/bin`.
+			return __rust_g = RUST_G_BASE
 		else
 			// It's not in the current directory, so try others
-			return __rust_g = "lib[RUST_G_BASE]"
+			return __rust_g = "lib[RUST_G_BASE].so"
 	else
 		return __rust_g = RUST_G_BASE
 
