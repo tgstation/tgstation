@@ -177,7 +177,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "cb" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -366,7 +366,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "eO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1500,7 +1500,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "ue" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -1524,7 +1524,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "uq" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -1589,7 +1589,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "uH" = (
 /obj/effect/decal/cleanable/blood/footprints,
@@ -1749,7 +1749,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "wd" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1927,7 +1927,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "xz" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2154,7 +2154,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "zF" = (
 /obj/effect/turf_decal/trimline/green/corner,
@@ -2217,7 +2217,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Ax" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -2298,7 +2298,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Br" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
@@ -2419,13 +2419,13 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Dl" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Do" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -2825,7 +2825,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "IR" = (
 /obj/effect/turf_decal/trimline/purple/line{
@@ -2848,7 +2848,7 @@
 	dir = 1
 	},
 /obj/structure/railing/corner,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Jk" = (
 /obj/machinery/door/firedoor,
@@ -2922,7 +2922,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "JZ" = (
 /obj/effect/decal/cleanable/blood/trails{
@@ -2971,7 +2971,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "KE" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -3076,7 +3076,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/machinery/light/warm/dim/directional/north,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/ruin/syndibiodome)
 "Ly" = (
 /obj/structure/aquarium/prefilled,
@@ -3315,7 +3315,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Nt" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3922,7 +3922,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "Uc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -4015,7 +4015,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "UI" = (
 /obj/item/flashlight/lantern/on,
@@ -4416,7 +4416,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/noteleport)
 "ZT" = (
 /obj/machinery/light/warm/directional/south,
