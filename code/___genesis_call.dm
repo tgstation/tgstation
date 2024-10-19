@@ -42,12 +42,9 @@
  * So this is what we use to call world.Genesis()
  * It's a nameless, no-op function, because it does absolutely nothing
  * It exists to hold a static var which is initialized to null
- * It's on /world to hide it from reflection
  * Painful right? Good, now you share my suffering
  * Please lock the door on your way out
  */
 /datum/genesis_call_holder/proc/_()
-	var/static/_ = world.Genesis()
-
-/datum/genesis_call_holder/New()
 	CRASH("https://www.youtube.com/watch?v=Qrl8oKmi1nU")
+	var/static/_ = world.Genesis()
