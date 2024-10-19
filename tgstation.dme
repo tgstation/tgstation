@@ -1134,6 +1134,7 @@
 #include "code\datums\components\growth_and_differentiation.dm"
 #include "code\datums\components\gunpoint.dm"
 #include "code\datums\components\happiness.dm"
+#include "code\datums\components\hat_stabilizer.dm"
 #include "code\datums\components\hazard_area.dm"
 #include "code\datums\components\healing_touch.dm"
 #include "code\datums\components\health_scaling_effects.dm"
