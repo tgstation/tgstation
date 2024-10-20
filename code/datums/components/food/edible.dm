@@ -282,7 +282,7 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_notice("It could use a little more Sodium Chloride...")
 	if (isliving(user))
 		var/mob/living/living_user = user
-		living_user.taste(owner.reagents)
+		living_user.taste_container(owner.reagents)
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -689,7 +689,7 @@ Behavior that's still missing from this component that original food items had t
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
-	doggy.taste(food.reagents) // why should carbons get all the fun?
+	doggy.taste_container(food.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
 		doggy.manual_emote(satisfaction_text)
