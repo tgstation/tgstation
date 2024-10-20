@@ -30,13 +30,6 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/evidencebag/Exited(atom/movable/gone, direction)
-	. = ..()
-	cut_overlays()
-	update_weight_class(initial(w_class))
-	icon_state = initial(icon_state)
-	desc = initial(desc)
-
 /obj/item/evidencebag/update_desc(updates)
 	. = ..()
 	if(!atom_storage.get_total_weight())
