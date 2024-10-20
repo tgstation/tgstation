@@ -32,16 +32,16 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the Path of Blades to you. \
-		Allows you to transmute a knife with two bars of silver or titanium to create a Sundered Blade. \
-		You can create up to five at a time."
+		Allows you to transmute a knife with one bar of silver or titanium to create a Sundered Blade. \
+		You can create up to four at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 2,
+		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
-	limit = 5 // It's the blade path, it's a given
+	limit = 4 // It's the blade path, it's a given
 	route = PATH_BLADE
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
@@ -67,40 +67,16 @@
 /datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	// Let's see if source is behind target
-	// "Behind" is defined as 3 tiles directly to the back of the target
-	// x . .
-	// x > .
-	// x . .
-
-	var/are_we_behind = FALSE
-	// No tactical spinning allowed
-	if(HAS_TRAIT(target, TRAIT_SPINNING))
-		are_we_behind = TRUE
-
-	// We'll take "same tile" as "behind" for ease
-	if(target.loc == source.loc)
-		are_we_behind = TRUE
-
-	// We'll also assume lying down is behind, as mob directions when lying are unclear
-	if(target.body_position == LYING_DOWN)
-		are_we_behind = TRUE
-
-	// Exceptions aside, let's actually check if they're, yknow, behind
-	var/dir_target_to_source = get_dir(target, source)
-	if(target.dir & REVERSE_DIR(dir_target_to_source))
-		are_we_behind = TRUE
-
-	if(!are_we_behind)
+	if(!check_behind(source, target))
 		return
 
 	// We're officially behind them, apply effects
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
-	playsound(get_turf(target), 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
-/// The cooldown duration between trigers of blade dance
+/// The cooldown duration between triggers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
 
 /datum/heretic_knowledge/blade_dance
@@ -315,10 +291,11 @@
 #undef BLOOD_FLOW_PER_SEVEIRTY
 
 /datum/heretic_knowledge/blade_upgrade/blade
-	name = "Swift Blades"
+	name = "Empowered Blades"
 	desc = "Attacking someone with a Sundered Blade in both hands \
 		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
-		The second blow will be slightly weaker."
+		The second blow will be slightly weaker. \
+		You are able to infuse your mansus grasp directly into your blades, and your blades are more effective against structures."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
@@ -330,7 +307,39 @@
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
 	var/last_weapon_force = -1
 
-/datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
+	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(do_melee_effects))
+
+/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK))
+
+///Tries to infuse our held blade with our mansus grasp
+/datum/heretic_knowledge/blade_upgrade/blade/proc/on_grasp_cast(mob/living/carbon/cast_on)
+	SIGNAL_HANDLER
+
+	var/held_item = cast_on.get_active_held_item()
+	if(!istype(held_item, /obj/item/melee/sickly_blade/dark))
+		return NONE
+	var/obj/item/melee/sickly_blade/dark/held_blade = held_item
+	if(held_blade.infused)
+		return NONE
+	held_blade.infused = TRUE
+	held_blade.update_appearance(UPDATE_ICON)
+
+	//Infuse our off-hand blade just so it's nicer visually
+	var/obj/item/melee/sickly_blade/dark/off_hand_blade = cast_on.get_inactive_held_item()
+	if(istype(off_hand_blade, /obj/item/melee/sickly_blade/dark))
+		off_hand_blade.infused = TRUE
+		off_hand_blade.update_appearance(UPDATE_ICON)
+	cast_on.update_held_items()
+
+	return COMPONENT_CAST_HANDLESS
+
+/datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
 		return
 
@@ -345,7 +354,7 @@
 	// Give it a short delay (for style, also lets people dodge it I guess)
 	addtimer(CALLBACK(src, PROC_REF(follow_up_attack), source, target, off_hand), 0.25 SECONDS)
 
-/datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, atom/target, obj/item/melee/sickly_blade/blade)
 	if(QDELETED(source) || QDELETED(target) || QDELETED(blade))
 		return
 	// Sanity to ensure that the blade we're delivering an offhand attack with is ACTUALLY our offhand
@@ -372,12 +381,19 @@
 
 	// Save the force as our last weapon force
 	last_weapon_force = blade.force
-	// Subtract the decrement
-	blade.force -= offand_force_decrement
+	// Subtract the decrement, but only if the target is living
+	if(isliving(target))
+		blade.force -= offand_force_decrement
 	// Perform the offhand attack
 	blade.melee_attack_chain(source, target)
 	// Restore the force.
 	blade.force = last_weapon_force
+
+///Modifies our blade demolition modifier so we can take down doors with it
+/datum/heretic_knowledge/blade_upgrade/blade/proc/on_blade_equipped(mob/user, obj/item/equipped, slot)
+	SIGNAL_HANDLER
+	if(istype(equipped, /obj/item/melee/sickly_blade/dark))
+		equipped.demolition_mod = 1.5
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"

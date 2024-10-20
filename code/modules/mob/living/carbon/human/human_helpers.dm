@@ -136,6 +136,11 @@
 	. = ..()
 	. += "[dna.species.type]"
 
+/mob/living/carbon/human/proc/get_eye_scars()
+	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	if (!isnull(eyes))
+		return eyes.scarring
+
 /// When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.
 /mob/living/carbon/human/proc/increment_scar_slot()
 	var/check_ckey = ckey || client?.ckey

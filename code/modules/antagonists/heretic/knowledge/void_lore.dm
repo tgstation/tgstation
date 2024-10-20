@@ -176,7 +176,7 @@
 	research_tree_icon_state = "blade_upgrade_void"
 
 /datum/heretic_knowledge/blade_upgrade/void/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
 	target.apply_status_effect(/datum/status_effect/void_chill, 2)
@@ -341,7 +341,7 @@
 		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
-	playsound(ascended_heretic, pick('sound/effects/magic/VoidDeflect01.ogg', 'sound/effects/magic/VoidDeflect02.ogg', 'sound/effects/magic/VoidDeflect03.ogg'), 75, TRUE)
+	playsound(ascended_heretic, SFX_VOID_DEFLECT, 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
 	if(prob(75))
 		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))

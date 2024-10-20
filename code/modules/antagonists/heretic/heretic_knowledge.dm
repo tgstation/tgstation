@@ -303,7 +303,7 @@
 	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
 /datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
@@ -327,6 +327,8 @@
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
 	trigger_mark(source, target)
 
 /**

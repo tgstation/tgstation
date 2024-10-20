@@ -166,6 +166,12 @@
 	description = "This is where all of your paychecks went. Signed, the management."
 	suffix = "icemoon_underground_mailroom.dmm"
 
+/datum/map_template/ruin/icemoon/underground/biodome
+	name = "Ice-Ruin Syndicate Bio-Dome"
+	id = "biodome"
+	description = "Unchecked experimention gone awry."
+	suffix = "icemoon_underground_syndidome.dmm"
+
 /datum/map_template/ruin/icemoon/underground/frozen_comms
 	name = "Ice-Ruin Frozen Communicatons Outpost"
 	id = "frozen_comms"

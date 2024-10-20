@@ -90,12 +90,12 @@
 		var/message_verb = del_on_grow ? "grows into" : "generates"
 		location.visible_message(span_notice("[source] [message_verb] \a [result]."), vision_distance = 3)
 
-	if(inherit_name && source.name != initial(source.name))
+	if(inherit_name && HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		if(ismob(result))
 			var/mob/mob = result
 			mob.fully_replace_character_name(mob.name, source.name)
 		else
-			result.name = source.name
+			result.AddComponent(/datum/component/rename, source.name, result.desc)
 
 	SEND_SIGNAL(source, COMSIG_FISH_FINISH_GROWING, result)
 
