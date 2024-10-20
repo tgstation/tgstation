@@ -387,6 +387,14 @@
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
 
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Squid with a hint of the sea (from the ink)
+	food_tastes = list(
+		"squid" = 1,
+		"the sea" = 0.2,
+	)
+
 /obj/item/organ/internal/tongue/inky/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "Slick black ink seldom rivulets from %PRONOUN_their mouth.", BODY_ZONE_PRECISE_MOUTH)
