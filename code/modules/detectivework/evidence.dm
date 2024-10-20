@@ -21,12 +21,12 @@
 /obj/item/evidencebag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with == loc || !isitem(interacting_with) || HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
 		return NONE
-	if(evidencebagEquip(interacting_with, user))
+	if(atom_storage.attempt_insert(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
 /obj/item/evidencebag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(evidencebagEquip(tool, user))
+	if(atom_storage.attempt_insert(tool, user))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -36,23 +36,6 @@
 	update_weight_class(initial(w_class))
 	icon_state = initial(icon_state)
 	desc = initial(desc)
-
-/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
-	if(!istype(I) || I.anchored)
-		return FALSE
-
-	if(I.atom_storage)
-		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
-		return TRUE //begone infinite storage ghosts, begone from me
-
-	if(loc in I.get_all_contents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
-		to_chat(user, span_warning("You find putting [I] in [src] while it's still inside it quite difficult!"))
-		return TRUE
-
-	if(!atom_storage.attempt_insert(I))
-		return TRUE
-
-	return TRUE
 
 /obj/item/evidencebag/update_desc(updates)
 	. = ..()
