@@ -677,7 +677,7 @@
 	wound = 5
 
 /obj/item/clothing/head/helmet/durability/holymelon
-	name = "Holymelon Helmet"
+	name = "holymelon helmet"
 	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it whitstand much."
 	icon_state = "holymelon"
 	inhand_icon_state = "holymelon"
@@ -713,7 +713,7 @@
 	take_damage(8, BRUTE, 0, 0)
 
 /obj/item/clothing/head/helmet/durability/barrelmelon
-	name = "Barrelmelon Helmet"
+	name = "barrelmelon helmet"
 	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
 	icon_state = "barrelmelon"
 	inhand_icon_state = "barrelmelon"
