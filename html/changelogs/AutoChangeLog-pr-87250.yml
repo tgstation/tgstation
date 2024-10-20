@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Portable SMESes should no longer turn invisible when unscrewed."

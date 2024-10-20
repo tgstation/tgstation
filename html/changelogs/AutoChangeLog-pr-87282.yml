@@ -1,0 +1,4 @@
+author: "the-orange-cow"
+delete-after: True
+changes:
+  - bugfix: "revs once again pass out upon deconversion"

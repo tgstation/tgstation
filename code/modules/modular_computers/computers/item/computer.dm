@@ -559,7 +559,10 @@
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(src, pick(
+			'sound/machines/beep/twobeep_voice1.ogg',
+			'sound/machines/beep/twobeep_voice2.ogg',
+			), 50, TRUE)
 	else
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 	audible_message("*[ringtone]*")
