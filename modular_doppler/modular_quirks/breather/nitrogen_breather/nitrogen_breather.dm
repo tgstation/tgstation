@@ -14,7 +14,6 @@
 
 /datum/quirk/item_quirk/breather/nitrogen_breather/add_unique(client/client_source)
 	var/mob/living/carbon/human/target = quirk_holder
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(target))
 	target_tag.breath_type = breath_type
 
@@ -28,6 +27,10 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS
 		)
 	)
+	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(!target_lungs)
+		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
+		return
 	// set lung vars
 	target_lungs.safe_oxygen_min = 0 //Dont need oxygen
 	target_lungs.safe_oxygen_max = 2 //But it is quite toxic

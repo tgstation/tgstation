@@ -10,8 +10,6 @@
 
 /datum/quirk/item_quirk/breather/water_breather/add_unique(client/client_source)
 	var/mob/living/carbon/human/target = quirk_holder
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
 	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(target))
 	target_tag.breath_type = breath_type
 
@@ -25,6 +23,11 @@
 			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 		), "Be sure to equip your vaporizer, or you may end up choking to death!"
 	)
+	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!target_lungs || !target_chest)
+		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
+		return
 	// if your lungs already have this trait, no need to update
 	if(target_lungs.type == /obj/item/organ/internal/lungs/fish)
 		return
