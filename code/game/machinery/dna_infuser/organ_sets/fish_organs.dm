@@ -413,6 +413,11 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5, /datum/reagent/toxin/tetrodotoxin = 5)
 
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Just fish, the toxin isn't obvious
+	food_tastes = list("fish" = 1)
+
 /obj/item/organ/internal/liver/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
