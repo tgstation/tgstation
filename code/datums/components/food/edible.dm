@@ -214,7 +214,6 @@ Behavior that's still missing from this component that original food items had t
 		var/amount = reagents[rid]
 		if(length(tastes) && ispath(rid, /datum/reagent/consumable/nutriment))
 			var/datum/reagent/consumable/nutriment/nid = rid
-			message_admins("setup_reagents -<br>nid: [nid]<br>nid.carry_food_tastes: [nid.carry_food_tastes]")
 			if(nid.carry_food_tastes)
 				owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
 				continue
