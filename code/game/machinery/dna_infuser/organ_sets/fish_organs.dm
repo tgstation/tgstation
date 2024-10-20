@@ -241,7 +241,7 @@
 
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
-	tastes = list("gross fish" = 1)
+	food_tastes = list("gross fish" = 1)
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not suffocating.
 	var/safe_water_level = parent_type::safe_oxygen_min
