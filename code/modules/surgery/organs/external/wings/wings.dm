@@ -6,6 +6,7 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 
+	organ_traits = list(TRAIT_TACKLING_WINGED_ATTACKER) // DOPPLER EDIT ADDITION
 	use_mob_sprite_as_obj_sprite = TRUE
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings
 
