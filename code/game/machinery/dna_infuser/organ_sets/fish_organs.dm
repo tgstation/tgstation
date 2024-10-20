@@ -368,7 +368,7 @@
 	disgust_metabolism = 2.5
 
 	// Seafood instead of meat, because it's a fish organ
-	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
+	foodtype_flags = RAW | SEAFOOD | GORE
 	// Salty and putrid like it smells, yum
 	food_tastes = list(
 		"salt" = 1,
