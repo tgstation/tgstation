@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Untie shoes should have its cooldown increased correctly when casting it from a long distance"

@@ -643,3 +643,13 @@
 		/obj/item/clothing/head/fedora/beige = 1,
 	)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/jonkler
+	name = "gamer's wig and mask"
+	result = /obj/item/clothing/mask/gas/jonkler
+	time = 10 SECONDS
+	tool_paths = list(/obj/item/toy/crayon/green)
+	reqs = list(
+		/obj/item/clothing/mask/gas/clown_hat = 1,
+	)
+	category = CAT_CLOTHING
