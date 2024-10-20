@@ -71,7 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	if(..())
 		return TRUE
 	to_chat(user, span_notice("You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]..."))
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
+	create_sound(loc, 'sound/effects/stonedoor_openclose.ogg').vary(TRUE).play()
 	if(I.use_tool(src, user, 20))
 		user.visible_message(span_notice("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!"),
 			span_notice("You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!"),

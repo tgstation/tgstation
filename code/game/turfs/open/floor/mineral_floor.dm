@@ -216,12 +216,12 @@
 
 /turf/open/floor/mineral/bananium/proc/honk()
 	if(sound_cooldown < world.time)
-		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/bikehorn.ogg').vary(TRUE).play()
 		sound_cooldown = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()
 	if(sound_cooldown < world.time)
-		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
+		create_sound(src, SFX_CLOWN_STEP).vary(TRUE).play()
 		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless

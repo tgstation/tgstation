@@ -45,7 +45,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transferred_by = user)
 		balloon_alert(user, "doused mop")
-		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
+		create_sound(src, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 
 	if(istype(weapon, /obj/item/reagent_containers) || istype(weapon, /obj/item/mop))
 		update_appearance(UPDATE_OVERLAYS)

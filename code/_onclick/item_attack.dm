@@ -214,9 +214,14 @@
 		return FALSE
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		create_sound(src, 'sound/items/weapons/tap.ogg').volume(get_clamped_volume()).vary(TRUE).extra_range(-1).play()
 	else if(hitsound)
-		playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+		create_sound(src, hitsound)\
+			.volume(get_clamped_volume())\
+			.vary(TRUE)\
+			.extra_range(stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1)\
+			.falloff_distance(0)\
+			.play()
 
 	target_mob.lastattacker = user.real_name
 	target_mob.lastattackerckey = user.ckey

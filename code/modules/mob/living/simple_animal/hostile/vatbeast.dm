@@ -108,7 +108,7 @@
 		span_warning("[owner] slaps [to_slap] with its tentacle!"),
 		span_notice("You slap [to_slap] with your tentacle."),
 	)
-	playsound(owner, 'sound/effects/emotes/assslap.ogg', 90)
+	create_sound(owner, 'sound/effects/emotes/assslap.ogg').volume(90).play()
 	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)
 	living_to_slap.throw_at(throw_target, 6, 4, owner)
 	living_to_slap.apply_damage(30, BRUTE)

@@ -86,7 +86,7 @@
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		knock_down()
 
 /**
@@ -146,7 +146,7 @@
 		// Emagging an intercom with an emaggable lock will remove the lock
 		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
 			balloon_alert(user, "frequency lock cleared")
-			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+			create_sound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			freqlock = RADIO_FREQENCY_UNLOCKED
 			obj_flags |= EMAGGED
 			return TRUE
@@ -154,7 +154,7 @@
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
 			balloon_alert(user, "can't override frequency lock!")
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+			create_sound(src, 'sound/machines/buzz/buzz-two.ogg').extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			return
 
 		// Emagging an unlocked one will do nothing, for now

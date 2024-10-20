@@ -192,7 +192,7 @@
 /turf/open/indestructible/honk/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(ismob(arrived))
-		playsound(src, sound, 50, TRUE)
+		create_sound(src, sound).vary(TRUE).play()
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"
@@ -376,7 +376,7 @@
 	if(!(lube & SLIDE_ICE))
 		// Ice slides are intended to be combo'd so don't give the feedback
 		to_chat(slipper, span_notice("You slipped[ slippable ? " on the [slippable.name]" : ""]!"))
-		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
@@ -435,7 +435,7 @@
 		if(used_rods.use(1))
 			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
-			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 			new /obj/structure/lattice/catwalk(src)
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
@@ -443,7 +443,7 @@
 
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 		new /obj/structure/lattice(src)
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
@@ -459,7 +459,7 @@
 		balloon_alert(user, "need a floor tile to build!")
 		return
 
-	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
@@ -483,7 +483,7 @@
 		balloon_alert(user, "no tile!")
 		return
 
-	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 	new used_tiles.tile_type(src)
 
 /turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
@@ -505,5 +505,5 @@
 		balloon_alert(user, "not enough titanium!")
 		return
 
-	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit.ogg').vary(TRUE).play()
 	new /obj/structure/girder/tram(src)

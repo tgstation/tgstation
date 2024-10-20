@@ -60,14 +60,14 @@
 		cast_on.Shake(shake_interval = 0.1 SECONDS, duration = 0.5 SECONDS)
 		// which we need to re-rust
 		living_owner?.do_rust_heretic_act(cast_on)
-		playsound(cast_on, 'sound/effects/bang.ogg', 50, vary = TRUE)
+		create_sound(cast_on, 'sound/effects/bang.ogg').vary(TRUE).play()
 		return
 
 	var/turf/closed/wall/new_wall = cast_on.place_on_top(/turf/closed/wall)
 	if(!istype(new_wall))
 		return
 
-	playsound(new_wall, 'sound/effects/constructform.ogg', 50, TRUE)
+	create_sound(new_wall, 'sound/effects/constructform.ogg').vary(TRUE).play()
 	new_wall.rust_heretic_act()
 	new_wall.name = "\improper enchanted [new_wall.name]"
 	new_wall.AddComponent(/datum/component/torn_wall)

@@ -46,13 +46,23 @@
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
 	var/play_click = sqrt(magazine?.max_ammo) > get_ammo(TRUE, FALSE)
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		create_sound(src, suppressed_sound).volume(suppressed_volume).vary(vary_fire_sound).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 		if(play_click)
-			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
+			create_sound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg')\
+				.volume(suppressed_volume)\
+				.vary(vary_fire_sound)\
+				.extra_range(SILENCED_SOUND_EXTRARANGE)\
+				.falloff_distance(0)\
+				.frequency(click_frequency_to_use)\
+				.play()
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+		create_sound(src, fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 		if(play_click)
-			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
+			create_sound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg')\
+				.volume(fire_sound_volume)\
+				.vary(vary_fire_sound)\
+				.frequency(click_frequency_to_use)\
+				.play()
 
 
 /obj/item/gun/ballistic/revolver/verb/spin()
@@ -70,7 +80,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
+		create_sound(usr, SFX_REVOLVER_SPIN).volume(30).play()
 		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 		balloon_alert(user, "chamber spun")
 	else
@@ -225,7 +235,7 @@
 		if(!can_trigger_gun(user))
 			return
 	if(target != user)
-		playsound(src, dry_fire_sound, 30, TRUE)
+		create_sound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 		user.visible_message(
 			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."),
 			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
@@ -261,7 +271,7 @@
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
-				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
+				create_sound(user, fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 				if(is_target_face)
 					shoot_self(user, affecting)
 				else if(tk_controlled) // the consequence of you doing the telekinesis stuff
@@ -277,7 +287,7 @@
 			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
-		playsound(src, dry_fire_sound, 30, TRUE)
+		create_sound(src, dry_fire_sound).volume(30).vary(TRUE).play()
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)

@@ -45,13 +45,13 @@
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
 	if(!hidden)
-		playsound(src, 'sound/effects/magic/timeparadox2.ogg', 75, TRUE, frequency = -1) //reverse!
+		create_sound(src, 'sound/effects/magic/timeparadox2.ogg').volume(75).vary(TRUE).frequency(-1).play()
 	return ..()
 
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	if(!hidden)
-		playsound(src, 'sound/effects/magic/timeparadox2.ogg', 75, TRUE, -1)
+		create_sound(src, 'sound/effects/magic/timeparadox2.ogg').volume(75).vary(TRUE).extra_range(-1).play()
 	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)

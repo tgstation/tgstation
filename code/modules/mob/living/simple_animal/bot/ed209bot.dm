@@ -59,10 +59,10 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick(
+	create_sound(src, pick(
 		'sound/mobs/non-humanoids/ed209/ed209_20sec.ogg',
 		'sound/mobs/non-humanoids/ed209/edplaceholder.ogg',
-		), 50, FALSE)
+	)).play()
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/items/weapons/laser.ogg'
@@ -85,7 +85,7 @@
 		return
 
 	var/obj/projectile/fired_bullet = new projectile(loc)
-	playsound(src, shoot_sound, 50, TRUE)
+	create_sound(src, shoot_sound).vary(TRUE).play()
 	fired_bullet.preparePixelProjectile(target, src)
 	fired_bullet.fire()
 

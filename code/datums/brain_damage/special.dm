@@ -45,7 +45,7 @@
 		else
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
-	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
+	create_sound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg').volume(200).vary(TRUE).extra_range(5).play()
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name, TRUE)
 
 /datum/brain_trauma/special/bluespace_prophet
@@ -218,7 +218,7 @@
 		linked = FALSE
 		return
 	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
-	owner.playsound_local(owner, 'sound/effects/magic/lightning_chargeup.ogg', 75, FALSE)
+	create_sound(owner, 'sound/effects/magic/lightning_chargeup.ogg').volume(75).direct_listeners(owner).play()
 	returning = TRUE
 	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
 
@@ -231,7 +231,7 @@
 		return
 	to_chat(owner, span_warning("You're pulled through spacetime!"))
 	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
-	owner.playsound_local(owner, 'sound/effects/magic/repulse.ogg', 100, FALSE)
+	create_sound(owner, 'sound/effects/magic/repulse.ogg').volume(100).direct_listeners(owner).play()
 	linked_target = null
 	linked = FALSE
 
@@ -388,17 +388,17 @@
 
 	if(owner.stat != CONSCIOUS)
 		if(prob(20))
-			owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg', 50)
+			create_sound(beepsky, 'sound/mobs/non-humanoids/beepsky/iamthelaw.ogg').direct_listeners(owner).play()
 		return
 
 	if(get_dist(owner, beepsky) <= 1)
-		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
+		create_sound(owner, 'sound/items/weapons/egloves.ogg').direct_listeners(owner).play()
 		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
 		owner.adjustStaminaLoss(rand(40, 70))
 		QDEL_NULL(beepsky)
 
 	if(prob(20) && get_dist(owner, beepsky) <= 8)
-		owner.playsound_local(beepsky, 'sound/mobs/non-humanoids/beepsky/criminal.ogg', 40)
+		create_sound(beepsky, 'sound/mobs/non-humanoids/beepsky/criminal.ogg').volume(40).direct_listeners(owner).play()
 
 /obj/effect/client_image_holder/securitron
 	name = "Securitron"

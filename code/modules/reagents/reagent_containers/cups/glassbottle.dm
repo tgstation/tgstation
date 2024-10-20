@@ -99,7 +99,7 @@
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] tosses [src] in [target]"), span_notice("You toss [src] in [target]"), span_notice("you hear a splash."))
 	SSpersistence.save_message_bottle(message_in_a_bottle, type)
-	playsound(target, 'sound/effects/bigsplash.ogg', 70)
+	create_sound(target, 'sound/effects/bigsplash.ogg').volume(70).play()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -299,7 +299,7 @@
 		if(prob(33))
 			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
 			target.Bumped(stab_with)
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)
 
@@ -699,7 +699,7 @@
 		balloon_alert(user, "not strong enough!")
 		return
 
-	playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
+	create_sound(user, 'sound/items/unsheath.ogg').volume(25).vary(TRUE).play()
 	balloon_alert(user, "preparing to swing...")
 	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
 		return
@@ -765,7 +765,7 @@
 			stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
 
 	reagents.flags |= OPENCONTAINER
-	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
+	create_sound(src, 'sound/items/champagne_pop.ogg').volume(70).vary(TRUE).play()
 	spillable = TRUE
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
@@ -1005,7 +1005,7 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
 			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
-		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
+		create_sound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg').volume(25).vary(TRUE).play()
 
 /**
  * Cartons

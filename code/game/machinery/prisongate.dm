@@ -51,7 +51,7 @@
 		for(var/mob/living/stowaway in cargobay.contents) //nice try bub
 			if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 				say("Stowaway detected in internal contents. Access denied.")
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/buzz/buzz-two.ogg').play()
 				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 			return FALSE
 	var/mob/living/carbon/the_toucher = gate_toucher
@@ -62,7 +62,7 @@
 		if(ACCESS_BRIG in id_access)
 			if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 				say("Brig clearance detected. Access granted.")
-				playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+				create_sound(src, 'sound/machines/chime.ogg').play()
 				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 			return TRUE
 	for(var/obj/item/card/id/advanced/prisoner/prison_id in the_toucher.get_all_contents())
@@ -70,7 +70,7 @@
 			continue
 		if(prison_id.time_to_assign)
 			say("Prison ID with active sentence detected. Please enjoy your stay in our corporate rehabilitation center, [prison_id.registered_name]!")
-			playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/chime.ogg').play()
 			prison_id.time_left = prison_id.time_to_assign
 			prison_id.time_to_assign = initial(prison_id.time_to_assign)
 			prison_id.start_timer()
@@ -78,11 +78,11 @@
 		if(prison_id.time_left <= 0)
 			say("Prison ID with served sentence detected. Access granted.")
 			prison_id.timed = FALSE //disables the id check from earlier so you can't just throw it back into perma for mass escapes
-			playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/chime.ogg').play()
 			return TRUE
 		if(COOLDOWN_FINISHED(src, spam_cooldown_time))
 			say("Prison ID with ongoing sentence detected. Access denied.")
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
+			create_sound(src, 'sound/machines/buzz/buzz-two.ogg').play()
 			COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 		return FALSE
 	if(COOLDOWN_FINISHED(src, spam_cooldown_time))

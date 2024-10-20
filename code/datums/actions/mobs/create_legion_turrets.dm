@@ -18,7 +18,7 @@
 
 /// Creates new legion turrets around the owner between the minimum and maximum
 /datum/action/cooldown/mob_cooldown/create_legion_turrets/proc/create(atom/target)
-	playsound(owner, 'sound/effects/magic/RATTLEMEBONES.ogg', 100, TRUE)
+	create_sound(owner, 'sound/effects/magic/RATTLEMEBONES.ogg').volume(100).vary(TRUE).play()
 	var/list/possible_locations = list()
 	for(var/turf/checked_turf in oview(owner, 4)) //Only place the turrets on open turfs
 		if(checked_turf.is_blocked_turf())
@@ -80,7 +80,7 @@
 	var/angle = get_angle(our_turf, target_turf)
 	var/datum/point/vector/V = new(our_turf.x, our_turf.y, our_turf.z, 0, 0, angle)
 	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
-	playsound(src, 'sound/machines/airlock/airlockopen.ogg', 100, TRUE)
+	create_sound(src, 'sound/machines/airlock/airlockopen.ogg').volume(100).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
 /// Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
@@ -88,7 +88,7 @@
 	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src
 	ouchie.fire(angle)
-	playsound(src, 'sound/effects/bin/bin_close.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/bin/bin_close.ogg').volume(100).vary(TRUE).play()
 	QDEL_IN(src, 0.5 SECONDS)
 
 /// Used for the legion turret.

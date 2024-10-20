@@ -84,14 +84,14 @@ RSF
 		else
 			qdel(W)
 		matter = tempMatter //We add its value
-		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		create_sound(src.loc, 'sound/machines/click.ogg').volume(10).vary(TRUE).play()
 		to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))
 		icon_state = base_icon_state//and set the icon state to the base state
 	else
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	create_sound(src.loc, 'sound/effects/pop.ogg').play()
 	var/target = cost_by_item
 	var/cost = 0
 	//Warning, prepare for bodgecode
@@ -131,7 +131,7 @@ RSF
 	if (!is_allowed(interacting_with))
 		return NONE
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
-		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
+		create_sound(loc, 'sound/machines/click.ogg').volume(10).vary(TRUE).play()
 		var/atom/meme = new to_dispense(get_turf(interacting_with))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay

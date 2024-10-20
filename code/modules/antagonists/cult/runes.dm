@@ -387,14 +387,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		qdel(sacrificial)
 		return TRUE
 	if(sacrificial && (signal_result & DUST_SACRIFICE)) // No soulstone when dusted
-		playsound(sacrificial, 'sound/effects/magic/teleport_diss.ogg', 100, TRUE)
+		create_sound(sacrificial, 'sound/effects/magic/teleport_diss.ogg').volume(100).vary(TRUE).play()
 		sacrificial.investigate_log("has been sacrificially dusted by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.dust(TRUE, FALSE, TRUE)
 	else if (sacrificial)
 		var/obj/item/soulstone/stone = new(loc)
 		if(sacrificial.mind && !HAS_TRAIT(sacrificial, TRAIT_SUICIDED))
 			stone.capture_soul(sacrificial,  invokers[1], forced = TRUE)
-		playsound(sacrificial, 'sound/effects/magic/disintegrate.ogg', 100, TRUE)
+		create_sound(sacrificial, 'sound/effects/magic/disintegrate.ogg').volume(100).vary(TRUE).play()
 		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib(DROP_ALL_REMAINS)
 
@@ -427,7 +427,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /// Does an animation of a null rod transforming into a cult sword
 /obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
-	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
+	create_sound(src, 'sound/effects/magic.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.66).play()
 	former_rod.anchored = TRUE
 	former_rod.Shake()
 	animate(former_rod, alpha = 0, transform = matrix(former_rod.transform).Scale(0.01), time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
@@ -545,8 +545,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		playsound(src, SFX_PORTAL_ENTER, 50, TRUE)
-		playsound(target, SFX_PORTAL_ENTER, 50, TRUE)
+		create_sound(src, SFX_PORTAL_ENTER).vary(TRUE).play()
+		create_sound(target, SFX_PORTAL_ENTER).vary(TRUE).play()
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
@@ -569,7 +569,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, SFX_PORTAL_CREATED, 100, TRUE, 14)
+	create_sound(T, SFX_PORTAL_CREATED).volume(100).vary(TRUE).extra_range(4).play()
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -697,7 +697,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	cult_team.narsie_summoned = TRUE
 	..()
-	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
+	create_sound(GLOBAL_SOUND, 'sound/effects/dimensional_rend.ogg').play()
 	var/turf/rune_turf = get_turf(src)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		cult_team.true_cultists += cult_mind
@@ -890,8 +890,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	playsound(src, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
-	playsound(old_turf, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	create_sound(src, SFX_PORTAL_ENTER).volume(100).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
+	create_sound(old_turf, SFX_PORTAL_ENTER).volume(100).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -1022,7 +1022,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.set_invis_see(SEE_INVISIBLE_OBSERVER)
 		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
-		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/magic/exit_blood.ogg').vary(TRUE).play()
 		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
 		to_chat(user, span_cult_italic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
@@ -1137,7 +1137,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
 
-	playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE)
+	create_sound(T, 'sound/effects/magic/enter_blood.ogg').volume(100).vary(TRUE).play()
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
 
 	for(var/mob/living/target in range(src, 3))

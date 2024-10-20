@@ -59,7 +59,7 @@
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
 		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
 	)
-	playsound(source, SFX_BULLET_MISS, 75, TRUE)
+	create_sound(source, SFX_BULLET_MISS).volume(75).vary(TRUE).play()
 	return COMPONENT_BULLET_PIERCED
 
 /obj/item/organ/internal/heart/nightmare
@@ -85,7 +85,7 @@
 		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
 		span_danger("[src] feels unnaturally cold in your hands. You raise [src] to your mouth and devour it!")
 	)
-	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	create_sound(user, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 
 	user.visible_message(
 		span_warning("Blood erupts from [user]'s arm as it reforms into a weapon!"),
@@ -118,7 +118,7 @@
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			respawn_progress += seconds_per_tick SECONDS
-			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+			create_sound(owner, 'sound/effects/singlebeat.ogg').volume(40).vary(TRUE).play()
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
@@ -131,7 +131,7 @@
 		to_chat(owner, span_userdanger("You feel the shadows invade your skin, leaping into the center of your chest! You're alive!"))
 		SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 	owner.visible_message(span_warning("[owner] staggers to [owner.p_their()] feet!"))
-	playsound(owner, 'sound/effects/hallucinations/far_noise.ogg', 50, TRUE)
+	create_sound(owner, 'sound/effects/hallucinations/far_noise.ogg').vary(TRUE).play()
 	respawn_progress = 0
 
 /obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)

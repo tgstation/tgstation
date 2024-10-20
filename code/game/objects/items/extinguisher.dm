@@ -74,13 +74,12 @@
 /obj/item/extinguisher/dropped(mob/user, silent)
 	. = ..()
 	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
-		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+		create_sound(src, fire_extinguisher_reagent_sloshing_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
 
 /obj/item/extinguisher/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	if((slot & ITEM_SLOT_HANDS) && fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
-		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
-
+		create_sound(src, fire_extinguisher_reagent_sloshing_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
 
 /obj/item/extinguisher/empty
 	starting_water = FALSE
@@ -213,7 +212,7 @@
 		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
 			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
+
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
@@ -247,7 +246,7 @@
 
 	src.last_use = world.time
 
-	playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+
 
 	var/direction = get_dir(src,interacting_with)
 

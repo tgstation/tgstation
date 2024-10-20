@@ -84,7 +84,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your arm!"))
 		if(affecting?.receive_damage(30))
 			bite_victim.update_damage_overlays()
-			playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
+			create_sound(src, 'sound/items/weapons/bite.ogg').volume(70).vary(TRUE).play()
 			return
 	to_chat(user, span_warning("You find nothing of value..."))
 
@@ -188,7 +188,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGEONE
 	update_icon()
 	visible_message(span_warning("[src] starts creating something..."))
-	playsound(src, 'sound/effects/magic/pantsaltar.ogg', 60)
+	create_sound(src, 'sound/effects/magic/pantsaltar.ogg').volume(60).play()
 	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby nauseous.
@@ -299,7 +299,7 @@ at the cost of risking a vicious bite.**/
 		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		deconstruct()
 		return TRUE
 
@@ -321,7 +321,7 @@ at the cost of risking a vicious bite.**/
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(range = 1, amount = 1, location = src)
 	smoke.start()
-	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
+	create_sound(src, 'sound/machines/steam_hiss.ogg').volume(75).vary(TRUE).extra_range(-2).play()
 	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 
 /obj/structure/steam_vent/update_icon_state()

@@ -215,7 +215,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 
 	item_to_buy = new item_to_buy(get_turf(customer))
 	customer.put_in_hands(item_to_buy)
-	playsound(trader, trader_data.sell_sound, 50, TRUE)
+	create_sound(trader, trader_data.sell_sound).vary(TRUE).play()
 	log_econ("[item_to_buy] has been sold to [customer] (typepath used for product info; [item_to_buy.type]) by [trader] for [product_info[TRADER_PRODUCT_INFO_PRICE]] cash.")
 	product_info[TRADER_PRODUCT_INFO_QUANTITY] -= 1
 	trader.say(trader_data.return_trader_phrase(BUY_PHRASE))
@@ -307,7 +307,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 		return TRUE
 
 	trader.say(trader_data.return_trader_phrase(ITEM_SELLING_ACCEPTED_PHRASE))
-	playsound(trader, trader_data.sell_sound, 50, TRUE)
+	create_sound(trader, trader_data.sell_sound).vary(TRUE).play()
 	log_econ("[selling] has been sold to [trader] (typepath used for product info; [typepath_for_product_info]) by [customer] for [cost] cash.")
 	exchange_sold_items(selling, cost, typepath_for_product_info)
 	generate_cash(cost, customer)

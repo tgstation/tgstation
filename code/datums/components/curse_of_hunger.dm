@@ -87,7 +87,7 @@
 	UnregisterSignal(cursed_item, COMSIG_ITEM_DROPPED)
 
 	var/turf/vomit_turf = get_turf(cursed_item)
-	playsound(vomit_turf, 'sound/effects/splat.ogg', 50, TRUE)
+	create_sound(vomit_turf, 'sound/effects/splat.ogg').vary(TRUE).play()
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
 
 	uncursed.dropItemToGround(cursed_item, force = TRUE)
@@ -117,7 +117,7 @@
 	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) || prob(80))
 		return
 
-	playsound(cursed_item, 'sound/items/eatfood.ogg', 20, TRUE)
+	create_sound(cursed_item, 'sound/items/eatfood.ogg').volume(20).vary(TRUE).play()
 	hunger = 0
 
 	//check hungry enough to eat something!

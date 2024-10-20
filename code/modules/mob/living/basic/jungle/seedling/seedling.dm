@@ -310,7 +310,7 @@
 		seed_owner.change_combatant_state(state = SEEDLING_STATE_WARMUP)
 
 	var/turf/target_turf = get_turf(target)
-	playsound(owner, 'sound/effects/seedling_chargeup.ogg', 100, FALSE)
+	create_sound(owner, 'sound/effects/seedling_chargeup.ogg').volume(100).play()
 
 	var/obj/effect/temp_visual/solarbeam_killsat/owner_beam = new(get_turf(owner))
 	animate(owner_beam, transform = matrix().Scale(1, 32), alpha = 255, time = beam_charge_up)
@@ -339,7 +339,7 @@
 		living_target.ignite_mob()
 		living_target.adjustFireLoss(30)
 
-	playsound(target_turf, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
+	create_sound(target_turf, 'sound/effects/magic/lightningbolt.ogg').vary(TRUE).play()
 	if(!is_seedling)
 		return
 	var/mob/living/basic/seedling/seed_firer = firer

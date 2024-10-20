@@ -74,7 +74,7 @@
 			var/sound = 'sound/effects/footstep/crawl1.ogg'
 			if(HAS_TRAIT(source, TRAIT_FLOPPING))
 				sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
-			playsound(turf, sound, 15 * volume, falloff_distance = 1, vary = sound_vary)
+			create_sound(turf, sound).volume(15 * volume).falloff_distance(1).vary(sound_vary).play()
 		return
 
 	if(iscarbon(source) && source.move_intent == MOVE_INTENT_WALK)
@@ -128,13 +128,18 @@
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
-		playsound(source.loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
+		create_sound(source, footstep_sounds).volume(volume).vary(sound_vary).falloff_distance(1).play()
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
 	if(isnull(turf_footstep) || !footstep_sounds[turf_footstep])
 		return
-	playsound(source.loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
+	create_sound(source, pick(footstep_sounds[turf_footstep][1]))\
+		.volume(footstep_sounds[turf_footstep][2] * volume)\
+		.vary(sound_vary)\
+		.extra_range(footstep_sounds[turf_footstep][3] + e_range)\
+		.falloff_distance(1)\
+		.play()
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
@@ -194,24 +199,15 @@
 		volume_multiplier = 0.6
 		range_adjustment = -2
 
-	// list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
+	// list returned by create_sound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 	var/picked_sound = pick(footstep_sounds[1])
 	var/picked_volume = footstep_sounds[2] * volume * volume_multiplier
 	var/picked_range = footstep_sounds[3] + e_range + range_adjustment
 
-	heard_clients = playsound(
-		source = source,
-		soundin = picked_sound,
-		vol = picked_volume,
-		vary = sound_vary,
-		extrarange = picked_range,
-		falloff_distance = 1,
-	)
-
-	if(heard_clients)
+	heard_clients = create_sound(source, picked_sound).volume(picked_volume).vary(sound_vary).extra_range(picked_range).falloff_distance(1).play()
+	if(length(heard_clients))
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
-
 
 ///Prepares a footstep for machine walking
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
@@ -230,6 +226,6 @@
 	if(CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 
-	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+	create_sound(source_loc, footstep_sounds).vary(sound_vary).falloff_distance(1).play()
 
 #undef SHOULD_DISABLE_FOOTSTEPS

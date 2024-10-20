@@ -101,7 +101,7 @@
 		jaunter.put_in_hands(right_hand)
 
 	blood.visible_message(span_warning("[jaunter] sinks into [blood]!"))
-	playsound(jaunt_turf, 'sound/effects/magic/enter_blood.ogg', 50, TRUE, -1)
+	create_sound(jaunt_turf, 'sound/effects/magic/enter_blood.ogg').vary(TRUE).extra_range(-1).play()
 	jaunter.extinguish_mob()
 
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
@@ -140,7 +140,7 @@
 /// Adds an coloring effect to mobs which exit blood crawl.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/exit_blood_effect(mob/living/exited)
 	var/turf/landing_turf = get_turf(exited)
-	playsound(landing_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
+	create_sound(landing_turf, 'sound/effects/magic/exit_blood.ogg').vary(TRUE).extra_range(-1).play()
 
 	// Make the mob have the color of the blood pool it came out of
 	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
@@ -240,7 +240,7 @@
 	on_victim_start_consume(victim, jaunter)
 
 	for(var/i in 1 to 3)
-		playsound(get_turf(jaunter), consume_sound, 50, TRUE)
+		create_sound(get_turf(jaunter), consume_sound).vary(TRUE).play()
 		if(!do_after(jaunter, 3 SECONDS, victim))
 			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE
@@ -332,7 +332,7 @@
 		// Heals them back to state one
 		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
+		create_sound(release_turf, consumed_mobs).vary(TRUE).extra_range(-1).play()
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 
 

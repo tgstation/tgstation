@@ -16,5 +16,5 @@
 	if(HAS_TRAIT(source, TRAIT_HONKSPAMMING))
 		return
 	ADD_TRAIT(source, TRAIT_HONKSPAMMING, ELEMENT_TRAIT(type))
-	playsound(source.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
+	create_sound(source.loc, 'sound/items/bikehorn.ogg').vary(TRUE).play()
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_HONKSPAMMING, ELEMENT_TRAIT(type)), 2 SECONDS)

@@ -436,7 +436,7 @@
 		is_open = TRUE
 		balloon_alert(user, "opened")
 		update_appearance()
-		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
+		create_sound(src, 'sound/items/poster/poster_ripped.ogg').volume(20).vary(TRUE).play()
 		return
 	return ..()
 
@@ -547,7 +547,7 @@
 
 /obj/item/stack/medical/poultice/heal(mob/living/patient, mob/user)
 	if(iscarbon(patient))
-		playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
+		create_sound(src, 'sound/misc/soggy.ogg').volume(30).vary(TRUE).play()
 		return heal_carbon(patient, user, heal_brute, heal_burn)
 	return ..()
 

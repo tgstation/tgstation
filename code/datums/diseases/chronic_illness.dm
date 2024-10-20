@@ -50,7 +50,7 @@
 		if(4)
 			var/need_mob_update = FALSE
 			if(prob(30))
-				affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, FALSE, use_reverb = FALSE)
+				create_sound(affected_mob, 'sound/effects/singlebeat.ogg').volume(100).use_reverb(FALSE).direct_listeners(affected_mob).play()
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a gruesome pain in your chest!"))
 				if(prob(75))
@@ -75,7 +75,7 @@
 				if(2)
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)
-					playsound(affected_mob.loc, 'sound/effects/magic/repulse.ogg', 100, FALSE)
+					create_sound(affected_mob.loc, 'sound/effects/magic/repulse.ogg').volume(100).play()
 					affected_mob.emote("scream")
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()

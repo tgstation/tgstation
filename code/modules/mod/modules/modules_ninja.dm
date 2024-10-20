@@ -279,7 +279,7 @@
 	cooldown_time = 8 SECONDS
 
 /obj/item/mod/module/emp_shield/pulse/on_use()
-	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
+	create_sound(src, 'sound/effects/empulse.ogg').volume(60).vary(TRUE).play()
 	empulse(src, heavy_range = 4, light_range = 6)
 	drain_power(use_energy_cost)
 
@@ -325,7 +325,7 @@
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.preparePixelProjectile(target, mod.wearer)
 	net.firer = mod.wearer
-	playsound(src, 'sound/items/weapons/punchmiss.ogg', 25, TRUE)
+	create_sound(src, 'sound/items/weapons/punchmiss.ogg').volume(25).vary(TRUE).play()
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 

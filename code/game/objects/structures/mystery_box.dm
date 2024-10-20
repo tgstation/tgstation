@@ -190,8 +190,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	presented_item = new(loc)
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
-	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
-	playsound(src, crate_open_sound, 80)
+	create_sound(src, open_sound).volume(70).channel(current_sound_channel).falloff_exponent(10).play()
+	create_sound(src, crate_open_sound).volume(80).play()
 	if(user.mind)
 		LAZYINITLIST(minds_that_opened_us)
 		var/datum/weakref/ref = WEAKREF(user.mind)
@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	QDEL_NULL(presented_item)
 	deltimer(box_close_timer)
 	deltimer(box_expire_timer)
-	playsound(src, crate_close_sound, 100)
+	create_sound(src, crate_close_sound).volume(100).play()
 	box_close_timer = null
 	box_expire_timer = null
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
 	var/atom/movable/instantiated_weapon = new presented_item.selected_path(loc)
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
+	create_sound(src, grant_sound).volume(70).channel(current_sound_channel).falloff_exponent(10).play()
 	close_box()
 
 	if(!isitem(instantiated_weapon))

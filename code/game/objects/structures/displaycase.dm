@@ -77,9 +77,9 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
+			create_sound(src, 'sound/effects/glass/glasshit.ogg').volume(75).vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/displaycase/atom_deconstruct(disassembled = TRUE)
 	dump()
@@ -93,7 +93,7 @@
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		update_appearance()
 		trigger_alarm()
 
@@ -107,7 +107,7 @@
 	alarm_manager.send_alarm(ALARM_BURGLAR)
 	addtimer(CALLBACK(alarm_manager, TYPE_PROC_REF(/datum/alarm_handler, clear_alarm), ALARM_BURGLAR), 1 MINUTES)
 
-	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/alert.ogg').vary(TRUE).play()
 
 /obj/structure/displaycase/update_overlays()
 	. = ..()
@@ -186,7 +186,7 @@
 
 ///Opens and closes the display case
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
-	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 	open = !open
 	update_appearance()
 
@@ -264,7 +264,7 @@
 	balloon_alert(user, "disassembling...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 		if(electronics)
 			electronics.forceMove(drop_location())
@@ -387,7 +387,7 @@
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
 	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
-	playsound(src, 'sound/machines/beep/twobeep.ogg', vary = 50)
+	create_sound(src, 'sound/machines/beep/twobeep.ogg').vary(TRUE).play()
 	SStgui.update_uis(src)
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
@@ -563,7 +563,7 @@
 					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
 				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
-				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				create_sound(src, 'sound/effects/cashregister.ogg').volume(40).vary(TRUE).play()
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
 				update_appearance()
@@ -576,7 +576,7 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 				return
 			toggle_lock()
 		if("Register")
@@ -585,13 +585,13 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 				return
 			payments_acc = potential_acc.registered_account
-			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+			create_sound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
-				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 				return
 
 			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
@@ -673,7 +673,7 @@
 	. = ..()
 	if(!broken)
 		broken = TRUE
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 		update_appearance()
 		trigger_alarm() //In case it's given an alarm anyway.
 

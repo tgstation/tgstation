@@ -80,7 +80,7 @@
 
 	broken = TRUE
 	soundloop.stop()
-	playsound(src, break_sound, 40, FALSE)
+	create_sound(src, break_sound).volume(40).play()
 	times_broken++
 	update_appearance(UPDATE_ICON)
 	return TRUE

@@ -103,7 +103,7 @@
 		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
-		playsound(src,'sound/items/weapons/punch1.ogg',50,TRUE)
+		create_sound(src, 'sound/items/weapons/punch1.ogg').vary(TRUE).play()
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -196,7 +196,12 @@
 		power_throw_text = " flimsily."
 	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
 	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
-	playsound(src, throwsound, min(8*min(get_dist(loc,target),thrown_thing.throw_range), 50), vary = TRUE, extrarange = -1, frequency = frequency_number)
+	create_sound(src, throwsound)\
+		.volume(min(8*min(get_dist(loc,target),thrown_thing.throw_range), 50))\
+		.vary(TRUE)\
+		.extra_range(-1)\
+		.frequency(frequency_number)\
+		.play()
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
@@ -482,7 +487,7 @@
 	if(knockdown)
 		Knockdown(8 SECONDS)
 
-	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/splat.ogg').vary(TRUE).play()
 
 	var/need_mob_update = FALSE
 	var/turf/location = get_turf(src)

@@ -27,7 +27,14 @@
 
 /obj/reality_tear/proc/start_disaster()
 	apply_wibbly_filters(src)
-	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', vary = 200, extrarange = 3, falloff_exponent = 1, frequency = 0.33, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	create_sound(src, 'sound/effects/clockcult_gateway_disrupted.ogg')\
+		.volume(200)\
+		.extra_range(3)\
+		.falloff_exponent(1)\
+		.frequency(0.33)\
+		.ignore_walls(TRUE)\
+		.falloff_distance(7)\
+		.play()
 	AddComponent(
 		/datum/component/singularity, \
 		consume_range = singularity_consume_range, \
@@ -41,7 +48,7 @@
 	animate(time = 0.5 SECONDS, alpha = 0)
 
 /obj/reality_tear/proc/reality_collapse()
-	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	create_sound(src, 'sound/effects/supermatter.ogg').volume(200).vary(TRUE).extra_range(3).falloff_exponent(1).ignore_walls(TRUE).falloff_distance(7).play()
 	var/obj/singularity/bagulo = new(loc)
 	bagulo.expand(STAGE_TWO)
 	bagulo.energy = 400

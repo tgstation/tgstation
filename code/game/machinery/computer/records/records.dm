@@ -57,7 +57,7 @@
 
 			expunge_record_info(target)
 			balloon_alert(user, "record expunged")
-			playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
+			create_sound(src, 'sound/machines/terminal/terminal_eject.ogg').volume(70).vary(TRUE).play()
 			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
 			return TRUE
@@ -69,7 +69,7 @@
 
 		if("logout")
 			balloon_alert(user, "logged out")
-			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
+			create_sound(src, 'sound/machines/terminal/terminal_off.ogg').volume(70).vary(TRUE).play()
 			authenticated = FALSE
 
 			return TRUE
@@ -82,14 +82,14 @@
 
 			ui.close()
 			balloon_alert(user, "purging records...")
-			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 70, TRUE)
+			create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').volume(70).vary(TRUE).play()
 
 			if(do_after(user, 5 SECONDS))
 				for(var/datum/record/crew/entry in GLOB.manifest.general)
 					expunge_record_info(entry)
 
 				balloon_alert(user, "records purged")
-				playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
+				create_sound(src, 'sound/machines/terminal/terminal_off.ogg').volume(70).vary(TRUE).play()
 				investigate_log("[key_name(user)] purged all records.", INVESTIGATE_RECORDS)
 			else
 				balloon_alert(user, "interrupted!")
@@ -139,12 +139,12 @@
 
 	if(!authenticated && !allowed(user))
 		balloon_alert(user, "access denied")
-		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
+		create_sound(src, 'sound/machines/terminal/terminal_error.ogg').volume(70).vary(TRUE).play()
 		return FALSE
 
 	if(mugshot.picture.psize_x > ICON_SIZE_X || mugshot.picture.psize_y > ICON_SIZE_Y)
 		balloon_alert(user, "photo too large!")
-		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
+		create_sound(src, 'sound/machines/terminal/terminal_error.ogg').volume(70).vary(TRUE).play()
 		return FALSE
 
 	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
@@ -155,7 +155,7 @@
 	new /datum/record/crew(name = name, character_appearance = mugshot.picture.picture_image)
 
 	balloon_alert(user, "record created")
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 70, TRUE)
+	create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').volume(70).vary(TRUE).play()
 
 	qdel(mugshot)
 
@@ -168,10 +168,10 @@
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied")
-		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 70, TRUE)
+		create_sound(src, 'sound/machines/terminal/terminal_error.ogg').volume(70).vary(TRUE).play()
 		return FALSE
 
 	balloon_alert(user, "logged in")
-	playsound(src, 'sound/machines/terminal/terminal_on.ogg', 70, TRUE)
+	create_sound(src, 'sound/machines/terminal/terminal_on.ogg').volume(70).vary(TRUE).play()
 
 	return TRUE

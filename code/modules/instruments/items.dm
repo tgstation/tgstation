@@ -118,7 +118,7 @@
 	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trumpet/spectral/attack(mob/living/target_mob, mob/living/user, params)
-	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	create_sound(src, 'sound/runtime/instruments/trombone/En4.mid').volume(1000).vary(TRUE).extra_range(-1).play()
 	return ..()
 
 /obj/item/instrument/saxophone
@@ -142,7 +142,7 @@
 	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/target_mob, mob/living/user, params)
-	playsound(src, 'sound/runtime/instruments/trombone/En4.mid', 1000, 1, -1)
+	create_sound(src, 'sound/runtime/instruments/trombone/En4.mid').volume(1000).vary(TRUE).extra_range(-1).play()
 	return ..()
 
 /obj/item/instrument/trombone
@@ -166,7 +166,7 @@
 	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/target_mob, mob/living/user, params)
-	playsound(src, 'sound/runtime/instruments/trombone/Cn4.mid', 1000, 1, -1)
+	create_sound(src, 'sound/runtime/instruments/trombone/Cn4.mid').volume(1000).vary(TRUE).extra_range(-1).play()
 	return ..()
 
 /obj/item/instrument/recorder

@@ -159,7 +159,7 @@
 		bot_owner.internal_radio.talk_into(bot_owner, message = line, channel = channel)
 
 	if (length(automated_announcements) && !isnull(automated_announcements[line]))
-		playsound(bot_owner, automated_announcements[line], vol = 50, vary = FALSE)
+		create_sound(bot_owner, automated_announcements[line]).play()
 
 
 /datum/action/cooldown/bot_announcement/medbot

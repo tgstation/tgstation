@@ -72,7 +72,7 @@
 		var/obj/item/melee/energy/sword/saber/sabre_color = pick(subtypesof(/obj/item/melee/energy/sword/saber))
 		// Yes this can break if someone changes esword icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_on_[initial(sabre_color.sword_color_icon)]"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/saberon.ogg', 35, TRUE)
+		create_sound(get_turf(hallucinator), 'sound/items/weapons/saberon.ogg').volume(35).vary(TRUE).direct_listeners(hallucinator).play()
 
 	return hallucinated_item
 
@@ -87,7 +87,7 @@
 	if((equip_flags & ITEM_SLOT_HANDS) && prob(30))
 		// Yes this can break if someone changes baton icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
-		hallucinator.playsound_local(get_turf(hallucinator), SFX_SPARKS, 75, TRUE, -1)
+		create_sound(hallucinator, SFX_SPARKS).volume(75).vary(TRUE).direct_listeners(hallucinator).play()
 
 	return hallucinated_item
 
@@ -109,7 +109,7 @@
 	if(prob(15))
 		// Yes this can break if someone changse grenade icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/armbomb.ogg', 60, TRUE)
+		create_sound(get_turf(hallucinator), 'sound/items/weapons/armbomb.ogg').volume(60).vary(TRUE).direct_listeners(hallucinator).play()
 		to_chat(hallucinator, span_warning("You prime [hallucinated_item]! 5 seconds!"))
 
 	return hallucinated_item

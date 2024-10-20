@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
 	check_on_table()
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 	return SUCCESSFUL_UNFASTEN
 

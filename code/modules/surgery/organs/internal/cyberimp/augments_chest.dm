@@ -116,8 +116,8 @@
 	defib_cooldown += 16 SECONDS // delay so it doesn't spam
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
-	playsound(owner, SFX_BODYFALL, 50, TRUE)
-	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
+	create_sound(owner, SFX_BODYFALL).vary(TRUE).play()
+	create_sound(owner, 'sound/machines/defib/defib_zap.ogg').volume(75).vary(TRUE).extra_range(-1).play()
 	owner.set_heartattack(FALSE)
 	owner.revive()
 	owner.emote("gasp")

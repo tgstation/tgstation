@@ -167,7 +167,7 @@
 
 	hangup = new(eye, src)
 	hangup.Grant(user)
-	playsound(answering_holopad, 'sound/machines/ping.ogg', 100)
+	create_sound(answering_holopad, 'sound/machines/ping.ogg').volume(100).play()
 	answering_holopad.say("Connection established.")
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise

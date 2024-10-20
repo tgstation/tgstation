@@ -112,7 +112,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You leg sweep [defender]!"))
-	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	create_sound(attacker, 'sound/effects/hit_kick.ogg').vary(TRUE).extra_range(-1).play()
 	defender.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
 	defender.Knockdown(6 SECONDS)
 	log_combat(attacker, defender, "leg sweeped")
@@ -128,7 +128,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You pound [defender] on the chest!"))
-	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	create_sound(attacker, 'sound/effects/hit_punch.ogg').vary(TRUE).extra_range(-1).play()
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
 	defender.adjustOxyLoss(10)
@@ -147,7 +147,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
-	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	create_sound(attacker, 'sound/effects/hit_punch.ogg').vary(TRUE).extra_range(-1).play()
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
 	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
@@ -170,10 +170,10 @@
 	defender.apply_damage(10 + bonus_damage, attacker.get_attack_type(), affecting)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
-		playsound(defender, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+		create_sound(defender, 'sound/effects/hit_kick.ogg').vary(TRUE).extra_range(-1).play()
 	else
 		attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-		playsound(defender, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+		create_sound(defender, 'sound/effects/hit_punch.ogg').vary(TRUE).extra_range(-1).play()
 	defender.visible_message(
 		span_danger("[attacker] [picked_hit_type]s [defender]!"),
 		span_userdanger("You're [picked_hit_type]ed by [attacker]!"),
@@ -201,7 +201,7 @@
 			attacker,
 		)
 		to_chat(attacker, span_danger("You disarm [defender]!"))
-		playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		create_sound(defender, 'sound/items/weapons/thudswoosh.ogg').vary(TRUE).extra_range(-1).play()
 		log_combat(attacker, defender, "disarmed (Krav Maga)", addition = "(disarmed of [stuff_in_hand])")
 	return MARTIAL_ATTACK_INVALID // normal shove
 

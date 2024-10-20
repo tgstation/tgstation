@@ -72,7 +72,7 @@
 	yote_nearby(deploy_location)
 	template.load(deploy_location, centered = TRUE)
 	trigger_admin_alert(triggerer, deploy_location)
-	playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/phasein.ogg').volume(100).vary(TRUE).play()
 	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
 	qdel(src)
 

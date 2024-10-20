@@ -199,7 +199,7 @@
 		return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
-	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
+	create_sound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary(TRUE).play()
 	if(monkey_pop) // Monkeys make money from popping bloons
 		new /obj/item/coin/iron(get_turf(src))
 	qdel(src)
@@ -398,7 +398,7 @@
 
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
-	playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, vary = TRUE)
+	create_sound(src, 'sound/items/tools/screwdriver2.ogg').vary(TRUE).play()
 	if (current_mode <= modes.len)
 		balloon_alert(user, "set to [current_mode]")
 	else
@@ -429,7 +429,7 @@
 		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
 		return SHAME
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
+	create_sound(user, 'sound/items/eatfood.ogg').vary(TRUE).play()
 	user.adjust_nutrition(50) // mmmm delicious
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3 SECONDS))
 	return MANUAL_SUICIDE
@@ -531,9 +531,9 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message(span_warning("*click*"), MSG_AUDIBLE)
-		playsound(src, 'sound/items/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
+		create_sound(src, 'sound/items/weapons/gun/revolver/dry_fire.ogg').volume(30).vary(TRUE).play()
 		return ITEM_INTERACT_SUCCESS
-	playsound(user, 'sound/items/weapons/gun/revolver/shot.ogg', 100, TRUE)
+	create_sound(user, 'sound/items/weapons/gun/revolver/shot.ogg').volume(100).vary(TRUE).play()
 	src.bullets--
 	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
 		span_danger("You fire [src] at [interacting_with]!"), \
@@ -606,7 +606,7 @@
 	if(user)
 		balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 
-	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 20, TRUE)
+	create_sound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg').volume(20).vary(TRUE).play()
 	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -720,7 +720,7 @@
 		to_chat(user, span_notice("You wind up [src], it begins to rumble."))
 		active = TRUE
 		update_appearance()
-		playsound(src, 'sound/effects/pope_entry.ogg', 100)
+		create_sound(src, 'sound/effects/pope_entry.ogg').volume(100).play()
 		Rumble()
 		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 60 SECONDS)
 	else
@@ -747,7 +747,7 @@
 	active = FALSE
 	update_appearance()
 	visible_message(span_warning("[src] slowly stops rattling and falls still, its latch snapping shut.")) //subtle difference
-	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
+	create_sound(loc, 'sound/items/weapons/batonextend.ogg').volume(100).vary(TRUE).play()
 	animate(src, transform = matrix())
 
 /*
@@ -810,7 +810,7 @@
 	new ash_type(loc)
 	visible_message(span_warning("[src] explodes!"),
 		span_hear("You hear a snap!"))
-	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/snap.ogg').vary(TRUE).play()
 	qdel(src)
 
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
@@ -872,7 +872,7 @@
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
 		activation_message(user)
-		playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+		create_sound(loc, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 
 		INVOKE_ASYNC(src, PROC_REF(do_toy_talk), user)
 
@@ -963,7 +963,7 @@
 		cooldown = world.time + 600
 		user.audible_message(span_hear("You hear the click of a button."), self_message = span_notice("You activate [src], it plays a loud noise!"))
 		sleep(0.5 SECONDS)
-		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
+		create_sound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).play()
 		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
@@ -973,7 +973,7 @@
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
 		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 20, FALSE)
+		create_sound(src, 'sound/announcer/alarm/nuke_alarm.ogg').volume(20).play()
 		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1010,7 +1010,7 @@
 	return TRUE
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	create_sound(src, 'sound/effects/meteorimpact.ogg').volume(40).vary(TRUE).play()
 	for(var/mob/M in urange(10, src))
 		if(!M.stat && !isAI(M))
 			shake_camera(M, 3, 1)
@@ -1032,7 +1032,7 @@
 	if (cooldown < world.time)
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message(span_warning("[user] presses the big red button."), span_notice("You press the button, it plays a loud noise!"), span_hear("The button clicks loudly."))
-		playsound(src, 'sound/effects/explosion/explosionfar.ogg', 50, FALSE)
+		create_sound(src, 'sound/effects/explosion/explosionfar.ogg').play()
 		for(var/mob/M in urange(10, src)) // Checks range
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
@@ -1059,7 +1059,7 @@
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
-		playsound(src, 'sound/effects/pop.ogg', 20, TRUE)
+		create_sound(src, 'sound/effects/pop.ogg').volume(20).vary(TRUE).play()
 		qdel(src)
 
 /*
@@ -1104,7 +1104,7 @@
 	if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message(span_warning("[user] rotates a cogwheel on [src]."), span_notice("You rotate a cogwheel on [src], it plays a loud noise!"), span_hear("You hear cogwheels turning."))
-		playsound(src, 'sound/effects/magic/clockwork/ark_activation.ogg', 50, FALSE)
+		create_sound(src, 'sound/effects/magic/clockwork/ark_activation.ogg').play()
 	else
 		to_chat(user, span_alert("The cogwheels are already turning!"))
 
@@ -1145,7 +1145,7 @@
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
 		var/list/possible_sounds = list('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
-		playsound(get_turf(src), chosen_sound, 50, TRUE)
+		create_sound(get_turf(src), chosen_sound).vary(TRUE).play()
 		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
 	else
 		to_chat(user, span_warning("The string on [src] hasn't rewound all the way!"))
@@ -1183,7 +1183,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
 		to_chat(user, span_notice("[src] says \"[toysay]\""))
-		playsound(user, toysound, 20, TRUE)
+		create_sound(user, toysound).volume(20).vary(TRUE).play()
 
 /obj/item/toy/figure/cmo
 	name = "\improper Chief Medical Officer action figure"
@@ -1450,7 +1450,7 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 300)
 		user.visible_message(span_notice("[user] adjusts the dial on [src]."))
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
+		create_sound(src, 'sound/items/radiostatic.ogg').wait(0.5 SECONDS).play()
 	else
 		to_chat(user, span_warning("The dial on [src] jams up"))
 		return
@@ -1465,7 +1465,7 @@
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/blob/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+		create_sound(src, 'sound/effects/blob/blobattack.ogg').wait(0.5 SECONDS).play()
 
 /*
  * Eldritch Toys
@@ -1642,7 +1642,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/boot()
 	say("Game starting!")
-	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/synth/synth_yes.ogg').play()
 
 	state = STATE_STARTING
 	COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
@@ -1721,7 +1721,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
-	playsound(src, 'sound/machines/synth/synth_no.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/synth/synth_no.ogg').play()
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)
@@ -1770,7 +1770,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 /obj/item/toy/intento/proc/render(input)
 	icon_state = input
-	playsound(src, sound_by_intent[input], 50, FALSE)
+	create_sound(src, sound_by_intent[input]).play()
 
 	START_PROCESSING(SSfastprocess, src)
 	COOLDOWN_START(src, next_icon_reset, TIME_TO_RESET_ICON)

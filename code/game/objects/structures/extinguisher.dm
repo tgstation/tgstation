@@ -70,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		user.balloon_alert(user, "deconstructing cabinet...")
 		used_item.play_tool_sound(src)
 		if(used_item.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			user.balloon_alert(user, "cabinet deconstructed")
 			deconstruct(TRUE)
 		return
@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		user.balloon_alert(user, "extinguisher removed")
 		if(!opened)
 			opened = 1
-			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+			create_sound(loc, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 			update_appearance(UPDATE_ICON)
 	else
 		toggle_cabinet(user)
@@ -122,7 +122,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		to_chat(user, span_notice("You telekinetically remove [stored_extinguisher] from [src]."))
 		stored_extinguisher = null
 		opened = TRUE
-		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+		create_sound(loc, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 		update_appearance(UPDATE_ICON)
 		return
 	toggle_cabinet(user)
@@ -135,7 +135,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	if(opened && broken)
 		user.balloon_alert(user, "it's broken!")
 	else
-		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+		create_sound(loc, 'sound/machines/click.ogg').volume(15).vary(TRUE).extra_range(-3).play()
 		opened = !opened
 		update_appearance(UPDATE_ICON)
 

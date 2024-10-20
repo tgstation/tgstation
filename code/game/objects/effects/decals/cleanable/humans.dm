@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
 	if(isturf(loc) && !skip)
-		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
+		create_sound(src, 'sound/effects/wounds/splatter.ogg').volume(60).vary(TRUE).extra_range(-1).play()
 		if(blood_dna_info)
 			loc.add_blood_DNA(blood_dna_info)
 	return ..()

@@ -285,7 +285,7 @@
 		var/datum/disease/heart_attack = new /datum/disease/heart_failure
 		drinker.ForceContractDisease(heart_attack)
 		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-		drinker.playsound_local(drinker, 'sound/effects/singlebeat.ogg', 100, 0)
+		create_sound(drinker, 'sound/effects/singlebeat.ogg').volume(100).direct_listeners(drinker).play()
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -881,7 +881,7 @@
 
 /datum/reagent/consumable/ethanol/b52/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	playsound(drinker, 'sound/effects/explosion/explosion_distant.ogg', 100, FALSE)
+	create_sound(drinker, 'sound/effects/explosion/explosion_distant.ogg').volume(100).play()
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -1118,7 +1118,7 @@
 
 		var/turf/gravity_well_turf = get_turf(drinker)
 		goonchem_vortex(gravity_well_turf, 0, suck_range)
-		playsound(get_turf(drinker), 'sound/effects/supermatter.ogg', 150, TRUE)
+		create_sound(get_turf(drinker), 'sound/effects/supermatter.ogg').volume(150).vary(TRUE).play()
 		drinker.add_filter("singulo_rays", 1, ray_filter)
 		animate(drinker.get_filter("singulo_rays"), offset = 10, time = 1.5 SECONDS, loop = -1)
 		addtimer(CALLBACK(drinker, TYPE_PROC_REF(/datum, remove_filter), "singulo_rays"), 1.5 SECONDS)
@@ -1259,7 +1259,7 @@
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(2.5, seconds_per_tick))
-		playsound(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg', 100, TRUE)
+		create_sound(get_turf(drinker), 'sound/effects/explosion/explosionfar.ogg').volume(100).vary(TRUE).play()
 
 /datum/reagent/consumable/ethanol/hiveminderaser
 	name = "Hivemind Eraser"

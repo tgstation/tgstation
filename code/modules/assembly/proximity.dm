@@ -94,7 +94,7 @@
 	pulse()
 	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		create_sound(src, 'sound/machines/beep/triple_beep.ogg').volume(ASSEMBLY_BEEP_VOLUME).vary(TRUE).direct_listeners(hearing_mob).play()
 
 	return TRUE
 

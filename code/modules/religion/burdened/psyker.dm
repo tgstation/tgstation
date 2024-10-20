@@ -225,7 +225,7 @@
 		return
 	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
 	magazine.top_off()
-	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
+	create_sound(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg').vary(TRUE).direct_listeners(user).play()
 	chamber_round()
 
 /datum/action/item_action/pray_refill
@@ -258,8 +258,8 @@
 	. = ..()
 	var/roll_them_bones = rand(1,38)
 	if(roll_them_bones == 1 && isliving(target))
-		playsound(target, 'sound/machines/synth/synth_yes.ogg', 50, TRUE)
-		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
+		create_sound(target, 'sound/machines/synth/synth_yes.ogg').vary(TRUE).play()
+		create_sound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).volume(40).vary(TRUE).play()
 		new /obj/effect/temp_visual/crit(get_turf(target))
 
 /datum/action/cooldown/spell/pointed/psychic_projection

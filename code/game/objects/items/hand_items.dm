@@ -60,7 +60,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+
 	owner.visible_message(span_danger("[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name]."), span_userdanger("You shamefully bop yourself with your [src.name]."), \
 		span_hear("You hear a dull thud!"))
 	log_combat(owner, owner, "bopped", src.name, "(self)")
@@ -89,7 +89,7 @@
 	if(owner.client)
 		owner.client.give_award(/datum/award/achievement/misc/gottem, owner) // then everybody clapped
 
-	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+
 	owner.do_attack_animation(sucker)
 
 	if(HAS_TRAIT(owner, TRAIT_HULK))
@@ -187,7 +187,7 @@
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 	user.adjustStaminaLoss(iteration + 5)
-	playsound(get_turf(user), SFX_RUSTLE, 50)
+	create_sound(get_turf(user), SFX_RUSTLE).play()
 
 	if(prob(33))
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
@@ -224,7 +224,6 @@
 		potential_tailed.unwag_tail()
 	user.do_attack_animation(slapped)
 
-	var/slap_volume = 50
 	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(/datum/status_effect/offering)
 	if(kiss_check && istype(kiss_check.offered_item, /obj/item/hand_item/kisser) && (user in kiss_check.possible_takers))
 		user.visible_message(
@@ -234,7 +233,6 @@
 			ignored_mobs = slapped,
 		)
 		to_chat(slapped, span_userdanger("You see [user] scoff and pull back [user.p_their()] arm, then suddenly you're on the ground with an ungodly ringing in your ears!"))
-		slap_volume = 120
 		SEND_SOUND(slapped, sound('sound/items/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
@@ -278,7 +276,7 @@
 			span_notice("You slap [slapped]!"),
 			span_hear("You hear a slap."),
 		)
-	playsound(slapped, 'sound/items/weapons/slap.ogg', slap_volume, TRUE, -1)
+
 	return
 
 /obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
@@ -298,7 +296,7 @@
 /// Slap the table, get some attention
 /obj/item/hand_item/slapper/proc/slap_table(obj/structure/table/table, mob/living/user)
 	user.do_attack_animation(table)
-	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 40, TRUE)
+	create_sound(get_turf(table), 'sound/effects/tableslam.ogg').volume(40).vary(TRUE).play()
 	user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [table]."), span_notice("You slap your hand on [table]."), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	table_smacks_left--
@@ -319,7 +317,7 @@
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, table)
 	SEND_SIGNAL(table, COMSIG_TABLE_SLAMMED, user)
 
-	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 110, TRUE)
+	create_sound(get_turf(table), 'sound/effects/tableslam.ogg').volume(110).vary(TRUE).play()
 	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
 	qdel(src)
 
@@ -577,7 +575,7 @@
  * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
  */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
-	playsound(get_turf(living_target), hitsound, 100, TRUE)
+	create_sound(get_turf(living_target), hitsound).volume(100).vary(TRUE).play()
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 

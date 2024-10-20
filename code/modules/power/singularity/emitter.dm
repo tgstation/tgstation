@@ -234,7 +234,7 @@
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
 	var/obj/projectile/projectile = new projectile_type(get_turf(src))
-	playsound(src, projectile_sound, 50, TRUE)
+	create_sound(src, projectile_sound).vary(TRUE).play()
 	if(prob(35))
 		sparks.start()
 	projectile.firer = user ? user : src
@@ -364,7 +364,7 @@
 		return
 	user.put_in_hands(gun)
 	gun = null
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	gun_properties = list()
 	set_projectile()
 	return TRUE
@@ -407,7 +407,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+	create_sound(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 	manual = FALSE
 	for(var/obj/item/item in buckled_mob.held_items)
 		if(istype(item, /obj/item/turret_control))
@@ -428,7 +428,7 @@
 			return
 	buckled_mob.forceMove(get_turf(src))
 	..()
-	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+	create_sound(src, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 	buckled_mob.pixel_y = 14
 	layer = 4.1
 	if(buckled_mob.client)
@@ -461,7 +461,7 @@
 
 /datum/action/innate/proto_emitter/firing/Activate()
 	if(proto_emitter.manual)
-		playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+		create_sound(proto_emitter, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 		proto_emitter.manual = FALSE
 		name = "Switch to Manual Firing"
 		desc = "The emitter will only fire on your command and at your designated target"
@@ -471,7 +471,7 @@
 				qdel(item)
 		build_all_button_icons()
 		return
-	playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
+	create_sound(proto_emitter, 'sound/vehicles/mecha/mechmove01.ogg').vary(TRUE).play()
 	name = "Switch to Automatic Firing"
 	desc = "Emitters will switch to periodic firing at your last target"
 	button_icon_state = "mech_zoom_off"
@@ -553,7 +553,7 @@
 		emitter.fire_beam(user)
 		delay = world.time + 10
 	else if (emitter.charge < 10)
-		playsound(src,'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').vary(TRUE).play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/emitter/ctf

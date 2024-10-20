@@ -118,11 +118,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(src, knock_sound, 50, TRUE)
+		create_sound(src, knock_sound).vary(TRUE).play()
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(src, bash_sound, 100, TRUE)
+		create_sound(src, bash_sound).volume(100).vary(TRUE).play()
 
 /obj/structure/tram/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -563,7 +563,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, span_warning("You short-circuit the [src]'s servo to overheat!"), type = MESSAGE_TYPE_INFO)
-	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	do_sparks(5, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
 

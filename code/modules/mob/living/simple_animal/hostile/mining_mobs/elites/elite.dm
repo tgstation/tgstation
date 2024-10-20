@@ -167,7 +167,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				span_boldwarning("[src] convulses as your arm enters its radius.  Your instincts tell you to step back."))
 			make_activator(user)
 			if(boosted)
-				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
+				create_sound(get_turf(mychild), 'sound/effects/magic.ogg').volume(40).direct_listeners(mychild).play()
 				to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
 			addtimer(CALLBACK(src, PROC_REF(return_elite)), 3 SECONDS)
 			INVOKE_ASYNC(src, PROC_REF(arena_checks))
@@ -188,7 +188,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(chosen_one)
 				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
 				elitemind = chosen_one
-				elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
+				create_sound(get_turf(elitemind), 'sound/effects/magic.ogg').volume(40).direct_listeners(elitemind).play()
 				to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\n\
 					Your attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\n\
 					While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\n\
@@ -204,7 +204,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	create_sound(loc, 'sound/effects/phasein.ogg')\
+		.volume(200)\
+		.extra_range(50)\
+		.ignore_walls(TRUE)\
+		.play()
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
@@ -222,7 +226,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
-	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+	create_sound(loc, 'sound/effects/phasein.ogg')\
+		.volume(200)\
+		.extra_range(50)\
+		.ignore_walls(TRUE)\
+		.play()
 	mychild.revive(HEAL_ALL)
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
@@ -319,14 +327,26 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
 		visible_message(span_boldwarning("[activator] suddenly reappears above [src]!"))
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		create_sound(loc, 'sound/effects/phasein.ogg')\
+			.volume(200)\
+			.extra_range(50)\
+			.ignore_walls(TRUE)\
+			.play()
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
 		visible_message(span_boldwarning("[mychild] suddenly reappears above [src]!"))
-		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+		create_sound(loc, 'sound/effects/phasein.ogg')\
+			.volume(200)\
+			.extra_range(50)\
+			.ignore_walls(TRUE)\
+			.play()
 
 /obj/structure/elite_tumor/proc/onEliteLoss()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
+	create_sound(loc, 'sound/effects/tendril_destroyed.ogg')\
+		.volume(200)\
+		.extra_range(50)\
+		.ignore_walls(TRUE)\
+		.play()
 	visible_message(span_boldwarning("[src] begins to convulse violently before beginning to dissipate."))
 	visible_message(span_boldwarning("As [src] closes, something is forced up from down below."))
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
@@ -346,7 +366,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.maxHealth = mychild.maxHealth * 0.4
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
-		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
+		create_sound(get_turf(mychild), 'sound/effects/magic.ogg').volume(40).direct_listeners(mychild).play()
 		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\n\
 			Despite this inferno being your home, you feel as if you aren't welcome here anymore.\n\
 			Without any guidance, your purpose is now for you to decide."))
@@ -379,7 +399,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	E.faction = list("[REF(user)]")
 	E.revive(HEAL_ALL)
 	user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
-	E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
+	create_sound(get_turf(E), 'sound/effects/magic.ogg').volume(40).direct_listeners(E).play()
 	to_chat(E, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
 	to_chat(E, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
 	E.maxHealth = E.maxHealth * 0.4

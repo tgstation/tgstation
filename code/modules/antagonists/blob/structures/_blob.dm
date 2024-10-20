@@ -81,7 +81,7 @@
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 		overmind = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
+	create_sound(src.loc, 'sound/effects/splat.ogg').vary(TRUE).play() //Expand() is no longer broken, no check necessary.
 	return ..()
 
 /obj/structure/blob/blob_act()
@@ -174,7 +174,7 @@
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		create_sound(src.loc, 'sound/effects/splat.ogg').vary(TRUE).play() //Let's give some feedback that we DID try to spawn in space, since players are used to it
 		balloon_alert(controller, "failed to expand!")
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
@@ -282,11 +282,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
+				create_sound(src.loc, 'sound/effects/blob/attackblob.ogg').vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
-			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src.loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)

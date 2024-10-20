@@ -116,7 +116,7 @@
 	return ..()
 
 /obj/structure/kitchenspike/post_buckle_mob(mob/living/target)
-	playsound(src.loc, 'sound/effects/splat.ogg', 25, TRUE)
+	create_sound(src.loc, 'sound/effects/splat.ogg').volume(25).vary(TRUE).play()
 	target.emote("scream")
 	target.add_splatter_floor()
 	target.adjustBruteLoss(30)

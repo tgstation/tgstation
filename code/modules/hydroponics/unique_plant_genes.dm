@@ -523,7 +523,6 @@
 /datum/plant_gene/trait/bomb_plant/proc/trigger_detonation(obj/item/our_plant, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/food/grown/grown_plant = our_plant
 	// If we have an alt icon, use that to show our plant is exploding.
 	if(istype(our_plant) && grown_plant.alt_icon)
@@ -531,7 +530,6 @@
 	else
 		our_plant.color = COLOR_RED
 
-	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
 	user.visible_message(
 		span_warning("[user] plucks the stem from [our_plant]!"),
 		span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"),
@@ -593,7 +591,7 @@
 	else
 		our_plant.color = COLOR_RED
 
-	playsound(our_plant.drop_location(), 'sound/items/weapons/armbomb.ogg', 75, TRUE, -3)
+
 	addtimer(CALLBACK(src, PROC_REF(detonate), our_plant), rand(1 SECONDS, 6 SECONDS))
 
 /datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)

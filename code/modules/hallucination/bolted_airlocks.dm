@@ -102,11 +102,11 @@
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/show_image_to(mob/show_to)
 	. = ..()
-	show_to.playsound_local(get_turf(src), 'sound/machines/airlock/boltsdown.ogg', 30, FALSE, 3)
+	create_sound(get_turf(src), 'sound/machines/airlock/boltsdown.ogg').volume(30).extra_range(3).direct_listeners(show_to).play()
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/hide_image_from(mob/show_to)
 	. = ..()
-	show_to.playsound_local(get_turf(src), 'sound/machines/airlock/boltsup.ogg', 30, FALSE, 3)
+	create_sound(get_turf(src), 'sound/machines/airlock/boltsup.ogg').volume(30).extra_range(3).direct_listeners(show_to).play()
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/proc/on_airlock_deleted(datum/source)
 	SIGNAL_HANDLER

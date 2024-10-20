@@ -66,7 +66,7 @@
 	StartCooldown(uncloak_timer / 3)
 
 /datum/action/cooldown/spell/shadow_cloak/proc/cloak_mob(mob/living/cast_on)
-	playsound(cast_on, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
+	create_sound(cast_on, 'sound/effects/chemistry/ahaha.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.5).play()
 	cast_on.visible_message(
 		span_warning("[cast_on] disappears into the shadows!"),
 		span_notice("You disappear into the shadows, becoming unidentifiable."),
@@ -83,7 +83,7 @@
 	active_cloak = null
 
 	UnregisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
-	playsound(cast_on, 'sound/effects/curse/curseattack.ogg', 50)
+	create_sound(cast_on, 'sound/effects/curse/curseattack.ogg').play()
 	if(show_message)
 		cast_on.visible_message(
 			span_warning("[cast_on] appears from the shadows!"),

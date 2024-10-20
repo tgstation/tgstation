@@ -161,14 +161,14 @@
 			return
 		var/mob/living/living_user = user
 		to_chat(user, span_warning("As you try to use [src], you hear strange tearing sounds, as if the coder gods were attempting to reach out and choke you themselves."))
-		playsound(src, 'sound/effects/dimensional_rend.ogg')
+		create_sound(src, 'sound/effects/dimensional_rend.ogg').play()
 		sleep(4 SECONDS)
 		var/confirmation = tgui_alert(user, "Are you certain you want to do that?", "Admins Only. Last Chance.", list("Yes", "No"))
 		if(!confirmation || confirmation == ("No"))
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
-			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
+			create_sound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg').play()
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_user.gib(DROP_ALL_REMAINS)

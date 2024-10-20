@@ -12,7 +12,7 @@
 
 /datum/action/cooldown/mob_cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
-	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	create_sound(owner, 'sound/effects/magic/demon_attack1.ogg').volume(100).vary(TRUE).play()
 	var/obj/effect/temp_visual/effect_trail/spike_chaser/chaser = new(get_turf(owner), target)
 	LAZYADD(active_chasers, WEAKREF(chaser))
 	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
@@ -75,6 +75,6 @@
 		var/target_zone = victim.resting ? BODY_ZONE_CHEST : pick_weight(standing_damage_zones)
 		victim.apply_damage(impale_damage, damagetype = BRUTE, def_zone = target_zone, sharpness = SHARP_POINTY)
 	if (hit_someone)
-		playsound(src, 'sound/items/weapons/slice.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+		create_sound(src, 'sound/items/weapons/slice.ogg').vary(TRUE).play()
 	else
-		playsound(src, 'sound/misc/splort.ogg', vol = 25, vary = TRUE, pressure_affected = FALSE)
+		create_sound(src, 'sound/misc/splort.ogg').volume(25).vary(TRUE).play()

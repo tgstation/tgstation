@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if(isnull(copied_obj)) // something went wrong, so other copies will go wrong too
 			break
 
-		playsound(src, 'sound/machines/printer.ogg', 50, vary = FALSE)
+		create_sound(src, 'sound/machines/printer.ogg').play()
 		sleep(4 SECONDS)
 
 		// reveal our copied item

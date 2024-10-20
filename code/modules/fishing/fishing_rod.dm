@@ -161,7 +161,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
 
-	playsound(src, SFX_REEL, 50, vary = FALSE)
+	create_sound(src, SFX_REEL).play()
 	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS
 	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
@@ -484,7 +484,7 @@
 			return
 
 	update_icon()
-	playsound(src, 'sound/items/click.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/click.ogg').vary(TRUE).play()
 
 ///assign an item to the given slot and its standard effects, while Exited() should handle unsetting the slot.
 /obj/item/fishing_rod/proc/set_slot(obj/item/equipment, slot)
@@ -594,7 +594,7 @@
 	inhand_icon_state = active ? "rod" : null // When inactive, there is no inhand icon_state.
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 	update_appearance()
 	QDEL_NULL(fishing_line)
 	return COMPONENT_NO_DEFAULT_MESSAGE

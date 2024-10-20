@@ -216,7 +216,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.visible_message(span_danger("[attacker] throws [defender]!"), \
 						span_userdanger("You're thrown by [attacker]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, attacker)
 		to_chat(attacker, span_danger("You throw [defender]!"))
-		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		create_sound(attacker.loc, SFX_SWING_HIT).vary(TRUE).play()
 		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
 			if (!defender.stat)
@@ -318,7 +318,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.visible_message(span_danger("[attacker] [fluff] [defender]!"), \
 						span_userdanger("You're [fluff]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You [fluff] [defender]!"))
-		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		create_sound(attacker.loc, SFX_SWING_HIT).vary(TRUE).play()
 		if (!defender.stat)
 			defender.emote("scream")
 			defender.Paralyze(4 SECONDS)
@@ -364,7 +364,7 @@ If you make a derivative work from this code, you must include this notification
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You headbutt [defender]!"))
 		defender.adjustBruteLoss(rand(10,20))
-		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		create_sound(attacker.loc, SFX_SWING_HIT).vary(TRUE).play()
 		defender.Unconscious(2 SECONDS)
 	log_combat(attacker, defender, "headbutted")
 
@@ -378,7 +378,7 @@ If you make a derivative work from this code, you must include this notification
 	defender.visible_message(span_danger("[attacker] roundhouse-kicks [defender]!"), \
 					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
-	playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+	create_sound(attacker.loc, SFX_SWING_HIT).vary(TRUE).play()
 	defender.adjustBruteLoss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
@@ -444,7 +444,7 @@ If you make a derivative work from this code, you must include this notification
 		defender.visible_message(span_danger("[attacker] leg-drops [defender]!"), \
 						span_userdanger("You're leg-dropped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
 		to_chat(attacker, span_danger("You leg-drop [defender]!"))
-		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
+		create_sound(attacker.loc, SFX_SWING_HIT).vary(TRUE).play()
 		attacker.emote("scream")
 
 		if (falling == 1)

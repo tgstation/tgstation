@@ -196,7 +196,7 @@
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
@@ -218,7 +218,6 @@
  * Timers runtime if you try to make them call playsound. Yep.
  */
 /obj/item/modular_computer/proc/play_ping()
-	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
 
 /obj/item/modular_computer/get_cell()
 	return internal_cell
@@ -288,7 +287,7 @@
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 		balloon_alert(user, "inserted ID")
 
-	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+	create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -322,7 +321,7 @@
 
 	if(!silent && !isnull(user))
 		to_chat(user, span_notice("You remove the card from the card slot."))
-		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/terminal/terminal_insert_disc.ogg').play()
 		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
@@ -476,7 +475,7 @@
 		return
 	user.put_in_hands(inserted_disk)
 	inserted_disk = null
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	create_sound(src, 'sound/machines/card_slide.ogg').play()
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = FALSE // Robots and AIs get different activation messages.
@@ -552,23 +551,20 @@
 /obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/beep/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(src, sound, 50, TRUE)
+	create_sound(src, sound).vary(TRUE).play()
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick(
-			'sound/machines/beep/twobeep_voice1.ogg',
-			'sound/machines/beep/twobeep_voice2.ogg',
-			), 50, TRUE)
+		create_sound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg')).vary(TRUE).play()
 	else
-		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/beep/twobeep_high.ogg').vary(TRUE).play()
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
+	create_sound(src, 'sound/machines/terminal/terminal_success.ogg').volume(15).vary(TRUE).play()
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -730,7 +726,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+		create_sound(src, SFX_KEYBOARD_CLICKS).volume(10).vary(TRUE).extra_range(FALSE).play()
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
@@ -924,7 +920,7 @@
 		user.put_in_hands(inserted_disk)
 		balloon_alert(user, "disks swapped")
 	inserted_disk = disk
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	create_sound(src, 'sound/machines/card_slide.ogg').play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)

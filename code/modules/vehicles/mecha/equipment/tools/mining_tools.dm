@@ -74,7 +74,7 @@
 		if(istype(target, /turf/closed/mineral/gibtonite))
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
-				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+				create_sound(chassis, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 
@@ -115,7 +115,7 @@
 	while(do_after_mecha(target, source, drill_delay))
 		if(isliving(target))
 			drill_mob(target, source)
-			playsound(src,'sound/items/weapons/drill.ogg',40,TRUE)
+			create_sound(src, 'sound/items/weapons/drill.ogg').volume(40).vary(TRUE).play()
 		else if(isobj(target))
 			var/obj/obj_target = target
 			if(istype(obj_target, /obj/item/boulder))
@@ -123,7 +123,7 @@
 				nu_boulder.manual_process(src, source)
 			else
 				obj_target.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-			playsound(src,'sound/items/weapons/drill.ogg', 40, TRUE)
+			create_sound(src, 'sound/items/weapons/drill.ogg').volume(40).vary(TRUE).play()
 
 		// If we caused a qdel drilling the target, we can stop drilling them.
 		// Prevents starting a do_after on a qdeleted target.

@@ -48,7 +48,7 @@
 		owner.adjust_hallucinations_up_to(6 SECONDS, 48 SECONDS)
 
 	if(prob(2))
-		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
+		create_sound(owner, pick(GLOB.creepy_ambience)).vary(TRUE).play()
 
 	adjust_all_damages(healing_amount, seconds_between_ticks)
 	adjust_temperature(seconds_between_ticks)
@@ -115,7 +115,7 @@
 	if (isnull(spawn_turf))
 		return
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, victim.dir)
-	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
+	create_sound(spawn_turf, 'sound/effects/curse/curse2.ogg').volume(80).vary(TRUE).extra_range(-1).play()
 	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
 	hand.preparePixelProjectile(victim, spawn_turf)
 	if (QDELETED(hand)) // safety check if above fails - above has a stack trace if it does fail

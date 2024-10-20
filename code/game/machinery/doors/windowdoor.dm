@@ -245,7 +245,7 @@
 		operating = TRUE
 
 	run_animation(DOOR_OPENING_ANIMATION)
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	create_sound(src, 'sound/machines/windowdoor.ogg').volume(100).vary(TRUE).play()
 	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
 	sleep(passable_delay)
 	set_density(FALSE)
@@ -290,7 +290,7 @@
 
 	operating = TRUE
 	run_animation(DOOR_CLOSING_ANIMATION)
-	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	create_sound(src, 'sound/machines/windowdoor.ogg').volume(100).vary(TRUE).play()
 	var/unpassable_delay = animation_segment_delay(DOOR_CLOSING_UNPASSABLE)
 	sleep(unpassable_delay)
 	set_density(TRUE)
@@ -326,15 +326,15 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
+			create_sound(src, 'sound/effects/glass/glasshit.ogg').volume(90).vary(TRUE).play()
 		if(BURN)
-			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+			create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/machinery/door/window/on_deconstruction(disassembled)
 	if(disassembled)
 		return
 
-	playsound(src, SFX_SHATTER, 70, TRUE)
+	create_sound(src, SFX_SHATTER).volume(70).vary(TRUE).play()
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))
@@ -368,7 +368,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(src, SFX_SPARKS).volume(75).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE

@@ -299,8 +299,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
-	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
-	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
+	create_sound(get_sfx(get_turf(user)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
+	create_sound(get_turf(user), RPD_USE_SOUND).vary(TRUE).play()
 	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	create_sound(src, SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 	var/playeffect = TRUE
 	switch(action)
@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
 		spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
+		create_sound(get_turf(src), 'sound/effects/pop.ogg').play()
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/atom_to_attack, mob/user, params)
@@ -464,8 +464,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = TRUE
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
-		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
-		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+		create_sound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
+		create_sound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 		qdel(attack_target)
 		return
 
@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				balloon_alert(user, "already configured for its directions!")
 				return
 
-			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+			create_sound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 
 			// Something else could have changed the target's state while we were waiting in do_after
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
@@ -550,7 +550,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "target is blocked!")
 					return
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				create_sound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				if(do_after(user, disposal_build_speed, target = attack_target))
 					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_pipe_type, queued_pipe_dir, queued_pipe_flipped)
 
@@ -559,7 +559,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						qdel(new_disposals_segment)
 						return
 
-					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+					create_sound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 
 					new_disposals_segment.add_fingerprint(usr)
 					new_disposals_segment.update_appearance()
@@ -580,9 +580,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					balloon_alert(user, "something in the way!")
 					return
 
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				create_sound(get_sfx(get_turf(src)), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 				if(do_after(user, transit_build_speed, target = attack_target))
-					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+					create_sound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 					if(queued_pipe_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
 						pod.add_fingerprint(usr)
@@ -627,7 +627,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			return FALSE
 		if(!can_make_pipe)
 			return FALSE
-		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, vary = TRUE)
+		create_sound(get_turf(src), SFX_TOOL_SWITCH).volume(20).vary(TRUE).play()
 		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
 			return FALSE
 		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
@@ -635,7 +635,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(multi_layer)
 				continue
 			return FALSE
-		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+		create_sound(get_turf(src), RPD_USE_SOUND).vary(TRUE).play()
 		if(recipe.type == /datum/pipe_info/meter)
 			var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(atom_to_target))
 			new_meter.setAttachLayer(layer_to_build)
@@ -679,7 +679,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 	// Adds the upgrade from the disk and then deletes the disk
 	upgrade_flags |= rpd_disk.upgrade_flags
-	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
+	create_sound(loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	balloon_alert(user, "upgrade installed")
 	qdel(rpd_disk)
 

@@ -173,7 +173,7 @@
 	LE.def_zone = ran_zone(source.zone_selected)
 	LE.preparePixelProjectile(target, source, modifiers)
 	INVOKE_ASYNC(LE, TYPE_PROC_REF(/obj/projectile, fire))
-	playsound(source, 'sound/items/weapons/taser2.ogg', 75, TRUE)
+	create_sound(source, 'sound/items/weapons/taser2.ogg').volume(75).vary(TRUE).play()
 
 ///Projectile type used by laser eyes
 /obj/projectile/beam/laser/laser_eyes

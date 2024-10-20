@@ -66,7 +66,7 @@
 		var/obj/item/shard = new shard_type(scatter_turf)
 		shard.pixel_x = rand(-6, 6)
 		shard.pixel_y = rand(-6, 6)
-	playsound(scatter_turf, shattering_sound, 60, TRUE)
+	create_sound(scatter_turf, shattering_sound).volume(60).vary(TRUE).play()
 	if(isobj(source))
 		var/obj/obj_source = source
 		obj_source.deconstruct(FALSE)

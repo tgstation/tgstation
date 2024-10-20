@@ -112,7 +112,7 @@
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
-				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
+				create_sound(master, 'sound/effects/splat.ogg').volume(100).play()
 			else
 				master.apply_status_effect(/datum/status_effect/his_grace)
 		return
@@ -133,8 +133,8 @@
 		if(!L.stat)
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			playsound(L, 'sound/items/weapons/smash.ogg', 50, TRUE)
-			playsound(L, 'sound/effects/desecration/desecration-01.ogg', 50, TRUE)
+			create_sound(L, 'sound/items/weapons/smash.ogg').vary(TRUE).play()
+			create_sound(L, 'sound/effects/desecration/desecration-01.ogg').vary(TRUE).play()
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -155,7 +155,7 @@
 		source = src,
 		header = "All Hail His Grace!",
 	)
-	playsound(user, 'sound/effects/pope_entry.ogg', 100)
+	create_sound(user, 'sound/effects/pope_entry.ogg').volume(100).play()
 	update_appearance()
 	move_gracefully()
 
@@ -172,7 +172,7 @@
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message(span_boldwarning("[src] slowly stops rattling and falls still, His latch snapping shut."))
-	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
+	create_sound(loc, 'sound/items/weapons/batonextend.ogg').volume(100).vary(TRUE).play()
 	name = initial(name)
 	desc = initial(desc)
 	animate(src, transform=matrix())
@@ -189,8 +189,8 @@
 	var/victims = 0
 	meal.visible_message(span_warning("[src] swings open and devours [meal]!"), "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
-	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
+	create_sound(meal, 'sound/effects/desecration/desecration-02.ogg').volume(75).vary(TRUE).play()
+	create_sound(src, 'sound/items/eatfood.ogg').volume(100).vary(TRUE).play()
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
@@ -259,7 +259,7 @@
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
 	ascended = TRUE
 	update_appearance()
-	playsound(src, 'sound/effects/his_grace/his_grace_ascend.ogg', 100)
+	create_sound(src, 'sound/effects/his_grace/his_grace_ascend.ogg').volume(100).play()
 	if(istype(master))
 		master.update_held_items()
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")

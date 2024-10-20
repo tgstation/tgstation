@@ -80,11 +80,11 @@
 	if(panel_open)
 		balloon_alert(user, "close panel first!")
 		return
-	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/curtain.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/open_machine(drop = TRUE, density_to_set = FALSE)
-	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/curtain.ogg').vary(TRUE).play()
 	return ..()
 
 /obj/machinery/photobooth/update_icon_state()
@@ -130,7 +130,7 @@
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
 		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
-			playsound(src, SFX_POLAROID, 75, TRUE)
+			create_sound(src, SFX_POLAROID).volume(75).vary(TRUE).play()
 			if(carbon_occupant)
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)
@@ -141,12 +141,12 @@
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid/polaroid1.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/polaroid/polaroid1.ogg').volume(75).vary(TRUE).play()
 	flash()
 	if(!do_after(occupant, 3 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid/polaroid2.ogg', 75, TRUE)
+	create_sound(src, 'sound/items/polaroid/polaroid2.ogg').volume(75).vary(TRUE).play()
 	flash()
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE

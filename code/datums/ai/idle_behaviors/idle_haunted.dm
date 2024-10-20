@@ -9,5 +9,5 @@
 	if(ismob(item_pawn.loc)) //Being held. dont teleport
 		return
 	if(SPT_PROB(teleport_chance, seconds_per_tick))
-		playsound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
+		create_sound(item_pawn.loc, 'sound/items/haunted/ghostitemattack.ogg').volume(100).vary(TRUE).play()
 		do_teleport(item_pawn, get_turf(item_pawn), 4, channel = TELEPORT_CHANNEL_MAGIC)

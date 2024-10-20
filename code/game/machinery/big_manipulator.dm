@@ -125,7 +125,7 @@
 		to_chat(user, span_warning("[src] is activated!"))
 		return ITEM_INTERACT_BLOCKING
 	rotate_big_hand()
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)

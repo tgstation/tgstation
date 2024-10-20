@@ -43,7 +43,7 @@ Reproductive extracts:
 		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
 		if(inserted.len)
 			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			create_sound(src, 'sound/items/eatfood.ogg').volume(20).vary(TRUE).play()
 			slime_storage?.processCubes(user)
 		else
 			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
@@ -53,7 +53,7 @@ Reproductive extracts:
 		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = STORAGE_FULLY_LOCKED))
 			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
 			slime_storage?.processCubes(user)
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+			create_sound(src, 'sound/items/eatfood.ogg').volume(20).vary(TRUE).play()
 			return
 		else
 			to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback

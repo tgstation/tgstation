@@ -85,13 +85,13 @@
 			user.visible_message(
 				span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"),
 				span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
-			playsound(src, baton.on_stun_sound, 50, TRUE)
+			create_sound(src, baton.on_stun_sound).vary(TRUE).play()
 			return
 
 	if(istype(attacking_item, /obj/item/mop))
 		attacking_item.reagents.add_reagent(dispensedreagent, 5)
 		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		create_sound(loc, 'sound/effects/slosh.ogg').volume(25).vary(TRUE).play()
 		return
 
 	if(istype(attacking_item, /obj/item/stack/medical/gauze))
@@ -166,7 +166,7 @@
 	icon_state = "[base_icon_state]-splash"
 	balloon_alert(user, "scooping tadpoles...")
 	if(do_after(user, 5 SECONDS, src))
-		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
+		create_sound(loc, 'sound/effects/slosh.ogg').volume(15).vary(TRUE).play()
 		balloon_alert(user, "got a tadpole")
 		var/obj/item/fish/tadpole/tadpole = new(loc)
 		tadpole.randomize_size_and_weight()

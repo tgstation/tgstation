@@ -128,7 +128,7 @@
 		fire_debug(target, user, params)
 		return TRUE
 
-	playsound(src, dry_fire_sound, 30, TRUE) // *click
+	create_sound(src, dry_fire_sound).volume(30).vary(TRUE).play() // *click
 	user.visible_message(
 		span_danger("[user] opens [bomb] on [user.p_their()] [src] and points [p_them()] at [target]!"),
 		span_danger("You open [bomb] on your [src] and point [p_them()] at [target]!")

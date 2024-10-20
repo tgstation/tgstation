@@ -141,7 +141,7 @@
 			patient_ref = target_ref
 			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
 			W.selected_target = null
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/click.ogg').vary(TRUE).play()
 		scanner_wand = O
 		return
 	return ..()
@@ -161,7 +161,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."))
 	balloon_alert(user, "scanner pulled")
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 	scanner_wand = null
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

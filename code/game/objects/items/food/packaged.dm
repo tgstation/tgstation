@@ -21,7 +21,7 @@
 
 /obj/item/food/canned/proc/open_can(mob/user)
 	to_chat(user, span_notice("You pull back the tab of \the [src]."))
-	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
+
 	reagents.flags |= OPENCONTAINER
 	preserved_food = FALSE
 
@@ -144,7 +144,7 @@
 		span_nicegreen("You chow down on [src]."),
 		span_notice("You hear sloppy eating noises."))
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet) //If there is no dog mom, we assume the pet fed itself.
-	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	create_sound(loc, 'sound/items/eatfood.ogg').volume(rand(30, 50)).vary(TRUE).play()
 	qdel(src)
 
 /obj/item/food/canned/squid_ink
@@ -173,7 +173,7 @@
 		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
 		victim.Paralyze(2 SECONDS) //splat!
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
-	playsound(victim, SFX_DESECRATION, 50, TRUE)
+	create_sound(victim, SFX_DESECRATION).vary(TRUE).play()
 
 /obj/item/food/canned/chap
 	name = "can of CHAP"

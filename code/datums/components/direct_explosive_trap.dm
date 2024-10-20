@@ -74,7 +74,7 @@
 	to_chat(victim, span_bolddanger("[source] was boobytrapped!"))
 	if (!isnull(saboteur))
 		to_chat(saboteur, span_bolddanger("Success! Your trap on [source] caught [victim.name]!"))
-	playsound(source, 'sound/effects/explosion/explosion2.ogg', 200, TRUE)
+	create_sound(source, 'sound/effects/explosion/explosion2.ogg').volume(200).vary(TRUE).play()
 	new /obj/effect/temp_visual/explosion(get_turf(source))
 	EX_ACT(victim, explosive_force)
 	qdel(src)

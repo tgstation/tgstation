@@ -180,13 +180,13 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	balloon_alert_to_viewers("*click*")
-	playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
+	create_sound(src, dry_fire_sound).volume(dry_fire_sound_volume).vary(TRUE).play()
 
 /obj/item/gun/proc/fire_sounds()
 	if(suppressed)
-		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		create_sound(src, suppressed_sound).volume(suppressed_volume).vary(vary_fire_sound).extra_range(SILENCED_SOUND_EXTRARANGE).falloff_distance(0).play()
 	else
-		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
+		create_sound(src, fire_sound).volume(fire_sound_volume).vary(vary_fire_sound).play()
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
@@ -228,7 +228,7 @@
 	var/mob/living/holder = loc
 	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
-		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
+		create_sound(get_turf(src), 'sound/items/weapons/smash.ogg').vary(TRUE).direct_listeners(holder).play()
 	return ..()
 
 /obj/item/gun/emp_act(severity)
@@ -267,7 +267,7 @@
 			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
 			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
 		)
-		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+		create_sound(src, 'sound/items/handling/ammobox_pickup.ogg').volume(20).play()
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

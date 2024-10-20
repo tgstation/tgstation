@@ -117,7 +117,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
-	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
+	create_sound(source, 'sound/effects/meteorimpact.ogg').volume(200).vary(TRUE).extra_range(2).play()
 	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
@@ -174,7 +174,7 @@
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	target.visible_message(span_danger("[source] slams into [target]!"), span_userdanger("[source] tramples you into the ground!"))
 	target.apply_damage(damage_dealt, BRUTE, wound_bonus = CANT_WOUND)
-	playsound(get_turf(target), 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	create_sound(get_turf(target), 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 	shake_camera(target, 4, 3)
 	shake_camera(source, 2, 3)
 

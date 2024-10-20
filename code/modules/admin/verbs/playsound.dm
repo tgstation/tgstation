@@ -41,7 +41,7 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
-	playsound(get_turf(user.mob), sound, 50, FALSE, FALSE)
+	create_sound(get_turf(user.mob), sound).extra_range(FALSE).play()
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
 ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)

@@ -190,7 +190,7 @@
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")
-	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
+	create_sound(target, 'sound/effects/wounds/crackandbleed.ogg').volume(100).play()
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
@@ -204,8 +204,8 @@
 		target.equip_to_slot_if_possible(new_patch, ITEM_SLOT_EYES, disable_warning = TRUE)
 
 	to_chat(user, span_notice("You successfully extract [target]'s eyeballs."))
-	playsound(target, 'sound/items/handling/surgery/retractor2.ogg', 100, TRUE)
-	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
+	create_sound(target, 'sound/items/handling/surgery/retractor2.ogg').volume(100).vary(TRUE).play()
+	create_sound(target, 'sound/effects/pop.ogg').volume(100).vary(TRAIT_MUTE).play()
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
 	notify_ghosts(

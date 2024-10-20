@@ -179,12 +179,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
+				create_sound(loc, 'sound/effects/blob/attackblob.ogg').volume(100).vary(TRUE).play()
 			else
-				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/weapons/tap.ogg').vary(TRUE).play()
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
+				create_sound(loc, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 
 /obj/structure/ash_walker_eggshell/attack_ghost(mob/user) //Pass on ghost clicks to the mob spawner
 	if(egg)

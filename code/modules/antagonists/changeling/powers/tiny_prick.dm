@@ -177,13 +177,13 @@
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
-	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	create_sound(target, 'sound/effects/blob/blobattack.ogg').volume(30).vary(TRUE).play()
 
 	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 1 MINUTES)
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
-	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	create_sound(target, 'sound/effects/blob/blobattack.ogg').volume(30).vary(TRUE).play()
 	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
 	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
 

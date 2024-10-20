@@ -136,7 +136,7 @@
 	if (!COOLDOWN_FINISHED(src, ability_animation_cooldown))
 		return
 	COOLDOWN_START(src, ability_animation_cooldown, 2 SECONDS)
-	playsound(src, 'sound/effects/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
+
 	Shake(1, 0, 1.5 SECONDS)
 
 /// Called slightly before tentacles ability comes off cooldown, as a warning

@@ -458,7 +458,7 @@
 
 		qdel(eaten_atom)
 
-	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	create_sound(loc, 'sound/items/eatfood.ogg').volume(rand(30,50)).vary(TRUE).play()
 	flick("glutton_mouth", src)
 
 /mob/living/basic/clown/mutant/glutton/tamed(mob/living/tamer, atom/food)
@@ -521,7 +521,7 @@
 	projected_morsel.forceMove(pouch_owner.loc)
 	projected_morsel.throw_at(spit_at, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
-	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
+	create_sound(pouch_owner, 'sound/misc/soggy.ogg').volume(75).play()
 
 	StartCooldown()
 	return TRUE
@@ -584,7 +584,7 @@
 	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
-	playsound(owner, 'sound/mobs/non-humanoids/clown/clownana_rustle.ogg', 60)
+	create_sound(owner, 'sound/mobs/non-humanoids/clown/clownana_rustle.ogg').volume(60).play()
 	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
 	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
 	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
@@ -615,7 +615,7 @@
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
-	playsound(owner, 'sound/mobs/non-humanoids/clown/hehe.ogg', 100)
+	create_sound(owner, 'sound/mobs/non-humanoids/clown/hehe.ogg').volume(100).play()
 	if(!do_after(owner, 1 SECONDS))
 		activating = FALSE
 		return
@@ -625,6 +625,6 @@
 /datum/action/cooldown/exquisite_bunch/Activate(atom/target)
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
-	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/mobs/non-humanoids/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	create_sound(owner, 'sound/items/bikehorn.ogg').volume(60).play()
+	create_sound(owner, 'sound/mobs/non-humanoids/clown/hohoho.ogg').volume(100).vary(TRUE).wait(1 SECONDS).play()
 	StartCooldown()

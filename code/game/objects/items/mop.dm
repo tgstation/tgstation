@@ -103,7 +103,7 @@
 	else
 		STOP_PROCESSING(SSobj,src)
 	user.balloon_alert(user, "condenser switch [refill_enabled ? "on" : "off"]")
-	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
+	create_sound(user, 'sound/machines/click.ogg').volume(30).vary(TRUE).play()
 
 /obj/item/mop/advanced/process(seconds_per_tick)
 	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * seconds_per_tick)

@@ -202,13 +202,13 @@
 	guardian.locked = TRUE
 	guardian.forceMove(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
-	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
+	create_sound(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg').vary(TRUE).direct_listeners(guardian).play()
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
-	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/repulse.ogg', 50, TRUE)
+	create_sound(get_turf(guardian), 'sound/effects/magic/repulse.ogg').vary(TRUE).direct_listeners(guardian).play()
 
 /datum/action/item_action/hands_free/memento_mori
 	check_flags = NONE
@@ -555,7 +555,7 @@
 	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human, chest)
 	wings = new wings()
 	wings.Insert(exposed_human)
-	playsound(exposed_human.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE, -1)
+
 	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")
 
@@ -770,7 +770,7 @@
 /// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You enter berserk mode."))
-	playsound(user, 'sound/effects/magic/staff_healing.ogg', 50)
+	create_sound(user, 'sound/effects/magic/staff_healing.ogg').play()
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.brute_mod *= 0.5
 	user.next_move_modifier *= BERSERK_ATTACK_SPEED_MODIFIER
@@ -788,7 +788,7 @@
 	if(QDELETED(user))
 		return
 	to_chat(user, span_warning("You exit berserk mode."))
-	playsound(user, 'sound/effects/magic/summonitems_generic.ogg', 50)
+	create_sound(user, 'sound/effects/magic/summonitems_generic.ogg').play()
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.brute_mod *= 2
 	user.next_move_modifier /= BERSERK_ATTACK_SPEED_MODIFIER
@@ -904,7 +904,7 @@
 
 	healthscan(living_owner, living_scanned, 1, TRUE)
 
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/smoke.ogg', 50, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/magic/smoke.ogg').vary(TRUE).direct_listeners(owner).play()
 	owner.balloon_alert(owner, "[living_scanned] scanned")
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
@@ -940,7 +940,7 @@
 /obj/item/organ/internal/cyberimp/arm/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
-	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	create_sound(user, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 	var/index = user.get_held_index_of_item(src)
 	zone = (index == LEFT_HANDS ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
 	SetSlotFromZone()
@@ -961,7 +961,7 @@
 		return FALSE
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
-		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
+		create_sound(owner, 'sound/effects/magic/demon_attack1.ogg').vary(TRUE).play()
 		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(katana)
 		if(part)
 			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
@@ -1044,7 +1044,7 @@
 	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
 		span_notice("You hilt strike [target]!"))
 	to_chat(target, span_userdanger("You've been struck by [user]!"))
-	playsound(src, 'sound/items/weapons/genhit3.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit3.ogg').vary(TRUE).play()
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(strike_throw_impact))
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
@@ -1069,7 +1069,7 @@
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] does a wide slice!"),
 		span_notice("You do a wide slice!"))
-	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).play()
 	var/turf/user_turf = get_turf(user)
 	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	var/static/list/cursed_katana_slice_angles = list(0, -45, 45, -90, 90) //so that the animation animates towards the target clicked and not towards a side target
@@ -1089,7 +1089,7 @@
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/smoke.ogg').vary(TRUE).play()
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/hostile_target = target
 		if(hostile_target.target == user)
@@ -1102,7 +1102,7 @@
 	user.clear_sight(SEE_SELF)
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
-	playsound(src, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/summonitems_generic.ogg').vary(TRUE).play()
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
@@ -1111,7 +1111,7 @@
 	to_chat(target, span_userdanger("Your tendons have been cut by [user]!"))
 	target.apply_damage(damage = 15, sharpness = SHARP_EDGED, wound_bonus = 15)
 	user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(src, 'sound/items/weapons/rapierhit.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/rapierhit.ogg').vary(TRUE).play()
 	var/datum/status_effect/stacking/saw_bleed/bloodletting/status = target.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
 	if(!status)
 		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, 6)
@@ -1122,7 +1122,7 @@
 	user.visible_message(span_warning("[user] dashes through [target]!"),
 		span_notice("You dash through [target]!"))
 	to_chat(target, span_userdanger("[user] dashes through you!"))
-	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/blink.ogg').vary(TRUE).play()
 	target.apply_damage(damage = 17, sharpness = SHARP_POINTY, bare_wound_bonus = 10)
 	var/turf/dash_target = get_turf(target)
 	for(var/distance in 0 to 8)
@@ -1142,7 +1142,7 @@
 	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
 	target.apply_damage(damage = ishostile(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/glass/glassbr3.ogg').volume(100).vary(TRUE).play()
 	shattered = TRUE
 	moveToNullspace()
 	balloon_alert(user, "katana shattered")
@@ -1151,7 +1151,7 @@
 /obj/item/cursed_katana/proc/coagulate(mob/user)
 	balloon_alert(user, "katana coagulated")
 	shattered = FALSE
-	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/demon_consume.ogg').vary(TRUE).play()
 
 #undef ATTACK_STRIKE
 #undef ATTACK_SLICE

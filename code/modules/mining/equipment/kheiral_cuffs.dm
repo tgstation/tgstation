@@ -42,13 +42,13 @@
 	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 	on_wrist = TRUE
-	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	connect_kheiral_network(user)
 
 /obj/item/kheiral_cuffs/dropped(mob/user, silent)
 	. = ..()
 	if(on_wrist)
-		playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(loc, 'sound/items/weapons/handcuffs.ogg').volume(30).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	on_wrist = FALSE
 	remove_kheiral_network(user)
 

@@ -346,7 +346,7 @@
 		attacker = pick(diagonal_blobs)
 		if(attack_success)
 			attacker.blob_attack_animation(tile, src)
-			playsound(attacker, 'sound/effects/splat.ogg', 50, TRUE)
+			create_sound(attacker, 'sound/effects/splat.ogg').vary(TRUE).play()
 			add_points(BLOB_ATTACK_REFUND)
 		else
 			add_points(BLOB_EXPAND_COST) //if we're attacking diagonally and didn't hit anything, refund

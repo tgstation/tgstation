@@ -17,7 +17,7 @@
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
-	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
+	create_sound(get_turf(limb_owner), 'sound/effects/dismember.ogg').volume(80).vary(TRUE).play()
 	limb_owner.add_mood_event("dismembered_[body_zone]", /datum/mood_event/dismembered, src)
 	limb_owner.add_mob_memory(/datum/memory/was_dismembered, lost_limb = src)
 
@@ -64,7 +64,7 @@
 	. = list()
 	if(wounding_type != WOUND_BURN && isturf(chest_owner.loc) && can_bleed())
 		chest_owner.add_splatter_floor(chest_owner.loc)
-	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
+	create_sound(get_turf(chest_owner), 'sound/misc/splort.ogg').volume(80).vary(TRUE).play()
 	for(var/obj/item/organ/organ in contents)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)

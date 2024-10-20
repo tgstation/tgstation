@@ -221,7 +221,7 @@
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
-	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
+	create_sound(interacting_with, 'sound/effects/splash.ogg').play()
 	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -1306,14 +1306,14 @@
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		user.apply_damage((force * 0.2) + w_class * 2, BRUTE, body_zone, user.run_armor_check(body_zone, MELEE))
-		playsound(src,'sound/items/weapons/bite.ogg', 45, TRUE, -1)
+		create_sound(src, 'sound/items/weapons/bite.ogg').volume(45).vary(TRUE).extra_range(-1).play()
 	else
 		if(in_aquarium)
 			to_chat(user, span_notice("[src] dances around!"))
 		else
 			to_chat(user, span_notice("You pet [src] as you hold it."))
 		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
-		playsound(src, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
+		create_sound(src, 'sound/items/weapons/thudswoosh.ogg').volume(30).vary(TRUE).extra_range(-1).play()
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)
 	return TRUE
 

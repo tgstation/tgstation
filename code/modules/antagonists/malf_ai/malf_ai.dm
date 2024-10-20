@@ -43,7 +43,7 @@
 	add_law_zero()
 	RegisterSignal(owner.current, COMSIG_SILICON_AI_CORE_STATUS, PROC_REF(core_status))
 	if(malf_sound)
-		owner.current.playsound_local(get_turf(owner.current), malf_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+		create_sound(owner.current, malf_sound).volume(100).direct_listeners(owner.current).play()
 	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	var/datum/atom_hud/data/hackyhud = GLOB.huds[DATA_HUD_MALF_APC]

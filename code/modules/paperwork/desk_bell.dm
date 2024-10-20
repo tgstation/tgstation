@@ -67,7 +67,7 @@
 		tool.play_tool_sound(src)
 		if(tool.use_tool(src, user, 5 SECONDS))
 			balloon_alert_to_viewers("repaired")
-			playsound(user, 'sound/items/tools/change_drill.ogg', 50, vary = TRUE)
+			create_sound(user, 'sound/items/tools/change_drill.ogg').vary(TRUE).play()
 			broken_ringer = FALSE
 			times_rang = 0
 			return ITEM_INTERACT_SUCCESS
@@ -80,7 +80,7 @@
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 5 SECONDS))
 		balloon_alert(user, "disassembled")
-		playsound(user, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		create_sound(user, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		if(!broken_ringer) // Drop 2 if it's not broken.
 			new/obj/item/stack/sheet/iron(drop_location())
 		new/obj/item/stack/sheet/iron(drop_location())
@@ -100,7 +100,7 @@
 		return FALSE
 	check_clapper(user)
 	// The lack of varying is intentional. The only variance occurs on the strike the bell breaks.
-	playsound(src, ring_sound, 70, vary = broken_ringer, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, ring_sound).volume(70).vary(broken_ringer).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	flick("desk_bell_ring", src)
 	times_rang++
 	return TRUE

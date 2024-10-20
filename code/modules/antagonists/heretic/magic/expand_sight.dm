@@ -17,7 +17,7 @@
 /datum/action/innate/expand_sight/Activate()
 	active = TRUE
 	owner.client?.view_size.setTo(boost_to)
-	playsound(owner, SFX_HALLUCINATION_I_SEE_YOU, 50, TRUE, ignore_walls = FALSE)
+	create_sound(owner, SFX_HALLUCINATION_I_SEE_YOU).vary(TRUE).play()
 	COOLDOWN_START(src, last_toggle, 8 SECONDS)
 
 /datum/action/innate/expand_sight/Deactivate()

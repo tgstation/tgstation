@@ -83,7 +83,7 @@
 
 /obj/machinery/puzzle/button/meatderelict/on_puzzle_complete()
 	. = ..()
-	playsound(src, 'sound/effects/alert.ogg', 100, TRUE)
+	create_sound(src, 'sound/effects/alert.ogg').volume(100).vary(TRUE).play()
 	visible_message(span_warning("[src] lets out an alarm as the lockdown is lifted!"))
 
 /obj/structure/puzzle_blockade/meat
@@ -131,7 +131,7 @@
 /obj/lightning_thrower/process(seconds_per_tick)
 	var/list/dirs = throw_diagonals ? GLOB.diagonals : GLOB.cardinals
 	throw_diagonals = !throw_diagonals
-	playsound(src, 'sound/effects/magic/lightningbolt.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	create_sound(src, 'sound/effects/magic/lightningbolt.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	for(var/direction in dirs)
 		var/victim_turf = get_step(src, direction)
 		if(isclosedturf(victim_turf))

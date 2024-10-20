@@ -825,7 +825,7 @@
 	SIGNAL_HANDLER
 
 	our_plant.audible_message(span_notice("[our_plant] lets out burst of laughter."))
-	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(our_plant, pick(sounds)).volume(100).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /**
  * A plant trait that causes the plant to gain aesthetic googly eyes.

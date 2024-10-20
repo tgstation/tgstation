@@ -99,7 +99,7 @@
 	owner.add_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
-	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
+	create_sound(owner, 'sound/machines/chime.ogg').vary(TRUE).direct_listeners(owner).play()
 	var/atom/beam_origin = ismecha(owner.loc) ? owner.loc : owner
 	link = beam_origin.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
 	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))

@@ -176,7 +176,7 @@
  * cultist - the mob doing the destroying
  */
 /datum/component/cult_ritual_item/proc/do_destroy_girder(obj/structure/girder/cult/cult_girder, mob/living/cultist)
-	playsound(cult_girder, 'sound/items/weapons/resonator_blast.ogg', 40, TRUE, ignore_walls = FALSE)
+	create_sound(cult_girder, 'sound/items/weapons/resonator_blast.ogg').volume(40).vary(TRUE).ignore_walls(FALSE).play()
 	cultist.visible_message(
 		span_warning("[cultist] strikes [cult_girder] with [parent]!"),
 		span_notice("You demolish [cult_girder].")
@@ -191,7 +191,7 @@
  * cultist - the mob doing the unanchoring.
  */
 /datum/component/cult_ritual_item/proc/do_unanchor_structure(obj/structure/cult_structure, mob/living/cultist)
-	playsound(cult_structure, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+	create_sound(cult_structure, 'sound/items/deconstruct.ogg').volume(30).vary(TRUE).ignore_walls(FALSE).play()
 	cult_structure.set_anchored(!cult_structure.anchored)
 	to_chat(cultist, span_notice("You [cult_structure.anchored ? "":"un"]secure \the [cult_structure] [cult_structure.anchored ? "to":"from"] the floor."))
 

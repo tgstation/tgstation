@@ -100,7 +100,7 @@
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
-	playsound(stealing, 'sound/items/pshoom/pshoom.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.33, ignore_walls = FALSE)
+	create_sound(stealing, 'sound/items/pshoom/pshoom.ogg').volume(33).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.33).play()
 
 	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
 	active_scan_effect.appearance = stealing.appearance
@@ -161,7 +161,7 @@
 	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
 		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
 
-	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(parent, 'sound/machines/wewewew.ogg').vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 	log_combat(spy, stealing, "stole", parent, "(spy bounty)")
 	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] by stealing [stealing] for \a [reward].")

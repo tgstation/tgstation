@@ -75,7 +75,7 @@
 	switch(action)
 		if("createBounty")
 			if(!current_user || !bounty_text)
-				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 				return TRUE
 			for(var/datum/station_request/i in GLOB.request_list)
 				if("[i.req_number]" == "[current_user.account_id]")
@@ -85,21 +85,21 @@
 			GLOB.request_list += list(curr_request)
 			for(var/obj/i in GLOB.allbountyboards)
 				i.say("New bounty has been added!")
-				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
+				create_sound(i.loc, 'sound/effects/cashregister.ogg').volume(30).vary(TRUE).play()
 			return TRUE
 		if("apply")
 			if(!current_user)
 				computer.say("Please swipe a valid ID first.")
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
-				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+				create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 				return TRUE
 			active_request.applicants += list(current_user)
 		if("payApplicant")
 			if(!current_user)
 				return
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
-				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
+				create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(30).vary(TRUE).play()
 				return
 			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
 			computer.say("Paid out [active_request.value] credits.")
@@ -112,10 +112,10 @@
 				return TRUE
 		if("deleteRequest")
 			if(!current_user)
-				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+				create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 				return TRUE
 			if(active_request.owner != current_user.account_holder)
-				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+				create_sound(computer, 'sound/machines/buzz/buzz-sigh.ogg').volume(20).vary(TRUE).play()
 				return TRUE
 			computer.say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)

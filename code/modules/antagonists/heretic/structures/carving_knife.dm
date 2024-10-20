@@ -108,7 +108,7 @@
 		CRASH("[type] attempted to create a rune of incorrect type! (got: [to_make])")
 
 	target_turf.balloon_alert(user, "carving [picked_choice]...")
-	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, TRUE)
+	create_sound(target_turf, 'sound/items/sheath.ogg').vary(TRUE).direct_listeners(user).play()
 	if(!do_after(user, 5 SECONDS, target = target_turf))
 		target_turf.balloon_alert(user, "interrupted!")
 		return
@@ -152,7 +152,7 @@
 	if(!.)
 		return
 
-	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/magic/blind.ogg').vary(TRUE).direct_listeners(owner).play()
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
@@ -187,7 +187,7 @@
 /obj/structure/trap/eldritch/attacked_by(obj/item/weapon, mob/living/user)
 	if(istype(weapon, /obj/item/melee/rune_carver) || istype(weapon, /obj/item/nullrod))
 		loc.balloon_alert(user, "carving dispelled")
-		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		create_sound(src, 'sound/items/sheath.ogg').vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		qdel(src)
 
 	return ..()
@@ -204,7 +204,7 @@
 	var/mob/living/real_owner = owner?.resolve()
 	if(real_owner)
 		to_chat(real_owner, span_userdanger("[victim.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
-		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/magic/curse.ogg', 50, TRUE)
+		create_sound(get_turf(real_owner), 'sound/effects/magic/curse.ogg').vary(TRUE).direct_listeners(real_owner).play()
 
 /obj/structure/trap/eldritch/tentacle
 	name = "grasping carving"
@@ -220,7 +220,7 @@
 	carbon_victim.Paralyze(5 SECONDS)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_R_LEG)
 	carbon_victim.apply_damage(20, BRUTE, BODY_ZONE_L_LEG)
-	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
+	create_sound(src, 'sound/effects/magic/demon_attack1.ogg').volume(75).vary(TRUE).play()
 
 /obj/structure/trap/eldritch/mad
 	name = "mad carving"
@@ -241,4 +241,4 @@
 	carbon_victim.set_dizzy_if_lower(40 SECONDS)
 	carbon_victim.adjust_temp_blindness(4 SECONDS)
 	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
-	playsound(src, 'sound/effects/magic/blind.ogg', 75, TRUE)
+	create_sound(src, 'sound/effects/magic/blind.ogg').volume(75).vary(TRUE).play()

@@ -237,7 +237,7 @@
 	vored_mob = target
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
-	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	create_sound(owner, 'sound/items/eatfood.ogg').volume(rand(30,50)).vary(TRUE).play()
 	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
@@ -249,7 +249,7 @@
 	if (isnull(vored_mob))
 		return
 	vored_mob.forceMove(get_turf(owner))
-	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/splat.ogg').vary(TRUE).play()
 	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
@@ -507,7 +507,7 @@
 ///This proc dumps the mob and handles associated audiovisual feedback
 /obj/structure/gel_cocoon/proc/dump_inhabitant(destroy_after = TRUE)
 	inhabitant.forceMove(get_turf(src))
-	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
+	create_sound(get_turf(inhabitant), 'sound/effects/splat.ogg').vary(TRUE).play()
 	inhabitant.Paralyze(10)
 	inhabitant.visible_message(span_warning("[inhabitant] falls out of [src]!"), span_notice("You fall out of [src]."))
 	if(destroy_after)

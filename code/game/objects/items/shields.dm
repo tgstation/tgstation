@@ -74,7 +74,7 @@
 	if(!COOLDOWN_FINISHED(src, baton_bash))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
-	playsound(src, shield_bash_sound, 50, TRUE)
+	create_sound(src, shield_bash_sound).vary(TRUE).play()
 	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
 	return ITEM_INTERACT_SUCCESS
 
@@ -99,7 +99,7 @@
 	take_damage(damage, damage_type, armor_flag, armour_penetration = penetration)
 
 /obj/item/shield/atom_destruction(damage_flag)
-	playsound(src, shield_break_sound, 50)
+	create_sound(src, shield_break_sound).play()
 	new shield_break_leftover(get_turf(src))
 	if(isliving(loc))
 		loc.balloon_alert(loc, "shield broken!")
@@ -264,7 +264,7 @@
 			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 				qdel(embedded_flash)
 				flash.forceMove(src)
 				return
@@ -355,7 +355,7 @@
 
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
-	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
+	create_sound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg').volume(35).vary(TRUE).play()
 	is_bashable = !is_bashable
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -420,7 +420,7 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/weapons/batonextend.ogg').vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)

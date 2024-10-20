@@ -97,7 +97,7 @@
 
 /datum/action/cooldown/spell/jaunt/creature_teleport/cast(atom/cast_on)
 	. = ..()
-	playsound(get_turf(owner), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
+
 	if(is_jaunting(cast_on))
 		exit_jaunt(cast_on)
 		return

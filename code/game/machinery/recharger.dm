@@ -160,7 +160,7 @@
 		return
 	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
 		finished_recharging = TRUE
-		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+		create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 		say("[charging] has finished recharging!")
 
 /obj/machinery/recharger/emp_act(severity)

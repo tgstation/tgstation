@@ -143,7 +143,7 @@
 		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
 	user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
 	balloon_alert(user, "adding cables...")
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/deconstruct.ogg').play()
 
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING

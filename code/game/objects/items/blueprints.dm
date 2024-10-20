@@ -139,15 +139,15 @@
 					legend_viewing = setting_wireset
 					return TRUE
 		if("view_blueprints")
-			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
+			create_sound(src, 'sound/items/paper_flip.ogg').volume(40).vary(TRUE).play()
 			user.balloon_alert_to_viewers("flips blueprints over")
 			set_viewer(user)
 		if("hide_blueprints")
-			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
+			create_sound(src, 'sound/items/paper_flip.ogg').volume(40).vary(TRUE).play()
 			user.balloon_alert_to_viewers("flips blueprints over")
 			clear_viewer()
 		if("refresh")
-			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
+			create_sound(src, 'sound/items/paper_flip.ogg').volume(40).vary(TRUE).play()
 			clear_viewer()
 			set_viewer(user)
 	return TRUE

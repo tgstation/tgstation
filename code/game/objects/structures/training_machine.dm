@@ -118,7 +118,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(src, SFX_RUSTLE, 50, TRUE)
+	create_sound(src, SFX_RUSTLE).vary(TRUE).play()
 
 /**
  * Attach an item to the machine
@@ -186,7 +186,7 @@
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(src, SFX_RUSTLE, 50, TRUE)
+	create_sound(src, SFX_RUSTLE).vary(TRUE).play()
 	return CLICK_ACTION_SUCCESS
 
 /**
@@ -209,7 +209,7 @@
 	moving = FALSE
 	starting_turf = null
 	say(message)
-	playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
+	create_sound(src, 'sound/machines/synth/synth_no.ogg').play()
 	STOP_PROCESSING(SSfastprocess, src)
 
 /**
@@ -221,7 +221,7 @@
 	moving = TRUE
 	starting_turf = get_turf(src)
 	say("Beginning training simulation.")
-	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
+	create_sound(src, 'sound/machines/beep/triple_beep.ogg').play()
 	START_PROCESSING(SSfastprocess, src)
 
 /**
@@ -285,7 +285,7 @@
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
 		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST, attacking_item = attached_item)
-	playsound(src, 'sound/items/weapons/smash.ogg', 15, TRUE)
+	create_sound(src, 'sound/items/weapons/smash.ogg').volume(15).vary(TRUE).play()
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
 /**
@@ -321,7 +321,7 @@
 	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
 	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').vary(TRUE).play()
 	add_overlay("evil_trainer")
 	return TRUE
 
@@ -390,9 +390,9 @@
 			return FALSE
 	total_hits++
 	lap_hits++
-	playsound(src,'sound/items/weapons/smash.ogg',50,FALSE)
+	create_sound(src, 'sound/items/weapons/smash.ogg').play()
 	if (lap_hits % HITS_TO_KILL == 0)
-		playsound(src,'sound/machines/beep/twobeep.ogg',25,FALSE)
+		create_sound(src, 'sound/machines/beep/twobeep.ogg').volume(25).play()
 	return TRUE
 
 /obj/item/training_toolbox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

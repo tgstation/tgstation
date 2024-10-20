@@ -56,7 +56,7 @@
 	if(emag_message)
 		game.audible_message(emag_message)
 	if(emag_sound)
-		playsound(game, emag_sound, 100, TRUE)
+		create_sound(game, emag_sound).volume(100).vary(TRUE).play()
 
 #define BUTTON_FIX_ENGINE "Fix Engine"
 #define BUTTON_WAIT "Wait"
@@ -113,7 +113,7 @@
 	..()
 
 /datum/orion_event/electronic_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
-	playsound(game, 'sound/effects/empulse.ogg', 50, TRUE)
+	create_sound(game, 'sound/effects/empulse.ogg').vary(TRUE).play()
 	game.visible_message(span_danger("[game] malfunctions, randomizing in-game stats!"))
 	var/oldfood = game.food
 	var/oldfuel = game.fuel
@@ -129,7 +129,7 @@
 		game.audible_message(span_danger("[game] lets out a somehow ominous chime."))
 	game.food = oldfood
 	game.fuel = oldfuel
-	playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
+	create_sound(game, 'sound/machines/chime.ogg').vary(TRUE).play()
 
 #define BUTTON_RESTORE_HULL "Restore Hull"
 
@@ -159,9 +159,9 @@
 /datum/orion_event/hull_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(10+gamer_skill))
 		game.say("Something slams into the floor around [game] - luckily, it didn't get through!")
-		playsound(game, 'sound/effects/bang.ogg', 50, TRUE)
+		create_sound(game, 'sound/effects/bang.ogg').vary(TRUE).play()
 		return
-	playsound(game, 'sound/effects/bang.ogg', 100, TRUE)
+	create_sound(game, 'sound/effects/bang.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/open/floor/smashed in orange(1, game))
 		smashed.ScrapeAway()
 	game.say("Something slams into the floor around [game], exposing it to space!")
@@ -170,7 +170,7 @@
 
 /datum/orion_event/hull_part/proc/fix_floor(obj/machinery/computer/arcade/orion_trail/game)
 	game.say("A new floor suddenly appears around [game]. What the hell?")
-	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
+	create_sound(game, 'sound/items/weapons/genhit.ogg').volume(100).vary(TRUE).play()
 	for(var/turf/open/space/fixed in orange(1, game))
 		fixed.place_on_top(/turf/open/floor/plating)
 
@@ -264,7 +264,7 @@
 	else
 		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
 		gamer.take_bodypart_damage(30)
-		playsound(game, 'sound/items/weapons/genhit2.ogg', 100, TRUE)
+		create_sound(game, 'sound/items/weapons/genhit2.ogg').volume(100).vary(TRUE).play()
 
 /datum/orion_event/illness
 	name = "Space Illness"
@@ -321,7 +321,7 @@
 	gamer.Paralyze(60)
 	game.say("A sudden gust of powerful wind slams [gamer] into the floor!")
 	gamer.take_bodypart_damage(25)
-	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
+	create_sound(game, 'sound/items/weapons/genhit.ogg').volume(100).vary(TRUE).play()
 
 /datum/orion_event/changeling_infiltration
 	name = "Changeling Infiltration"
@@ -434,7 +434,7 @@
 
 /datum/orion_event/black_hole_death/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(game.obj_flags & EMAGGED)
-		playsound(game.loc, 'sound/effects/supermatter.ogg', 100, TRUE)
+		create_sound(game.loc, 'sound/effects/supermatter.ogg').volume(100).vary(TRUE).play()
 		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 		var/black_hole = new /obj/singularity/orion(gamer.loc)
@@ -523,7 +523,7 @@
 			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]fuel, [food] food, -Crew)"
 			if(game.obj_flags & EMAGGED)
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
-				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
+				create_sound(game, 'sound/items/weeoo1.ogg').volume(100).play()
 				for(var/i in 1 to 3)
 					var/mob/living/basic/trooper/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
 					spaceport_security.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, usr)

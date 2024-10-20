@@ -76,10 +76,10 @@
 	icon_state = base_icon_state
 	if (flipped_visor)
 		flags_cover &= ~HEADCOVERSEYES
-		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+		create_sound(src, SFX_VISOR_DOWN).volume(20).vary(TRUE).extra_range(-1).play()
 	else
 		flags_cover |= HEADCOVERSEYES
-		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+		create_sound(src, SFX_VISOR_UP).volume(20).vary(TRUE).extra_range(-1).play()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

@@ -86,7 +86,7 @@
 
 	to_chat(human, span_notice("Your wings spazz out and launch you!"))
 
-	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+
 
 	for(var/obj/item/choking_hazard in human.held_items)
 		human.accident(choking_hazard)
@@ -232,7 +232,7 @@
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
 
 /obj/item/organ/external/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
+	create_sound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg').vary(TRUE).play()
 
 ///mothra wings, which relate to moths.
 /obj/item/organ/external/wings/functional/moth/mothra

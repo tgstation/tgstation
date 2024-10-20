@@ -146,7 +146,7 @@
 
 		var/obj/item/bodypart/head/head = victim.get_bodypart("head")
 
-		playsound(src, drop_sound, 100, TRUE)
+		create_sound(src, drop_sound).volume(100).vary(TRUE).play()
 		if(head)
 			if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 				head.dismember()
@@ -197,7 +197,7 @@
 					user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
 						                 span_notice("You sharpen the large blade of the guillotine."))
 					blade_sharpness += 1
-					playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
+					create_sound(src, 'sound/items/unsheath.ogg').volume(100).vary(TRUE).play()
 					return
 				else
 					blade_status = GUILLOTINE_BLADE_RAISED

@@ -31,19 +31,19 @@
 		return
 
 	// We shoot our shot.
-	hallucinator.playsound_local(source, fire_sound, 25, TRUE)
+	create_sound(source, fire_sound).volume(25).vary(TRUE).direct_listeners(hallucinator).play()
 
 	// Shortly after shooting our shot, it plays a hit (or miss) sound.
 	var/next_hit_sound = rand(0.5 SECONDS, 1 SECONDS)
 	if(prob(50))
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_person_sound, 25, TRUE), next_hit_sound)
+		create_sound(source, hit_person_sound).volume(25).vary(TRUE).direct_listeners(hallucinator).wait(next_hit_sound).play()
 		hits++
 	else
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_wall_sound, 25, TRUE), next_hit_sound)
+		create_sound(source, hit_wall_sound).volume(25).vary(TRUE).direct_listeners(hallucinator).wait(next_hit_sound).play()
 
 	// If we scored enough hits, we have a chance to knock them down and stop the hallucination early.
 	if(hits >= number_of_hits_to_end && prob(chance_to_fall))
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
+		create_sound(source, SFX_BODYFALL).volume(25).vary(TRUE).direct_listeners(hallucinator).wait(next_hit_sound).play()
 		qdel(src)
 
 	// Or, if we do have shots left, keep it going.
@@ -82,8 +82,8 @@
 /datum/hallucination/battle/stun_prod/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
-	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+	create_sound(source, 'sound/items/weapons/egloves.ogg').volume(40).vary(TRUE).direct_listeners(hallucinator).play()
+	create_sound(source, SFX_BODYFALL).volume(25).vary(TRUE).direct_listeners(hallucinator).play()
 	addtimer(CALLBACK(src, PROC_REF(fake_cuff), source), 2 SECONDS)
 	return TRUE
 
@@ -92,7 +92,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
 
-	hallucinator.playsound_local(source, 'sound/items/weapons/cablecuff.ogg', 15, TRUE)
+	create_sound(source, 'sound/items/weapons/cablecuff.ogg').volume(15).vary(TRUE).direct_listeners(hallucinator).play()
 	qdel(src)
 
 /// A hallucination of someone being stun batonned, and subsequently harmbatonned.
@@ -101,8 +101,8 @@
 /datum/hallucination/battle/harm_baton/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
-	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+	create_sound(source, 'sound/items/weapons/egloves.ogg').volume(40).vary(TRUE).direct_listeners(hallucinator).play()
+	create_sound(source, SFX_BODYFALL).volume(25).vary(TRUE).direct_listeners(hallucinator).play()
 
 	addtimer(CALLBACK(src, PROC_REF(harmbaton_loop), source, rand(5, 12)), 2 SECONDS)
 	return TRUE
@@ -112,7 +112,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
 
-	hallucinator.playsound_local(source, SFX_SWING_HIT, 50, TRUE)
+	create_sound(source, SFX_SWING_HIT).vary(TRUE).direct_listeners(hallucinator).play()
 	hits_remaing--
 	if(hits_remaing <= 0)
 		qdel(src)
@@ -126,7 +126,7 @@
 /datum/hallucination/battle/e_sword/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/items/weapons/saberon.ogg', 15, 1)
+	create_sound(source, 'sound/items/weapons/saberon.ogg').volume(15).vary(TRUE).direct_listeners(hallucinator).play()
 	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, rand(4, 8)), CLICK_CD_MELEE)
 	return TRUE
 
@@ -136,15 +136,15 @@
 		return
 
 	if(stabs_remaining >= 1)
-		hallucinator.playsound_local(source, 'sound/items/weapons/blade1.ogg', 50, TRUE)
+		create_sound(source, 'sound/items/weapons/blade1.ogg').vary(TRUE).direct_listeners(hallucinator).play()
 
 	else
-		hallucinator.playsound_local(source, 'sound/items/weapons/saberoff.ogg', 15, TRUE)
+		create_sound(source, 'sound/items/weapons/saberoff.ogg').volume(15).vary(TRUE).direct_listeners(hallucinator).play()
 		qdel(src)
 		return
 
 	if(stabs_remaining == 4)
-		hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+		create_sound(source, SFX_BODYFALL).volume(25).vary(TRUE).direct_listeners(hallucinator).play()
 
 	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, stabs_remaining - 1), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 
@@ -160,7 +160,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
 
-	hallucinator.playsound_local(source, 'sound/items/timer.ogg', 25, FALSE)
+	create_sound(source, 'sound/items/timer.ogg').volume(25).direct_listeners(hallucinator).play()
 	ticks_remaining--
 	if(ticks_remaining <= 0)
 		qdel(src)

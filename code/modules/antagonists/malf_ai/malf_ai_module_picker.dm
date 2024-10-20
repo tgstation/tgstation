@@ -102,7 +102,7 @@
 		if(AM.unlock_text)
 			to_chat(AI, AM.unlock_text)
 		if(AM.unlock_sound)
-			AI.playsound_local(AI, AM.unlock_sound, 50, 0)
+			create_sound(AI, AM.unlock_sound).direct_listeners(AI).play()
 		update_static_data(AI)
 	else
 		if(AM.power_type)
@@ -116,7 +116,7 @@
 				if(AM.unlock_text)
 					to_chat(AI, AM.unlock_text)
 				if(AM.unlock_sound)
-					AI.playsound_local(AI, AM.unlock_sound, 50, 0)
+					create_sound(AI, AM.unlock_sound).direct_listeners(AI).play()
 			else //Adding uses to an existing module
 				action.uses += initial(action.uses)
 				action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."

@@ -135,7 +135,7 @@
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(turf_target, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(source,'sound/machines/airlock/airlockopen.ogg', 200, 1)
+	create_sound(source, 'sound/machines/airlock/airlockopen.ogg').volume(200).vary(TRUE).play()
 	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_2(turf/T, turf/source)

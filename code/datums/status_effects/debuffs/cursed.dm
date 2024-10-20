@@ -63,7 +63,7 @@
 		if(1) // basically your first is a "freebie" that will still require urgent medical attention and will leave you smoking forever but could be worse tbh
 			if(ishuman(owner))
 				var/mob/living/carbon/human/human_owner = owner
-				playsound(human_owner, SFX_SEAR, 50, TRUE)
+				create_sound(human_owner, SFX_SEAR).vary(TRUE).play()
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
 				branded_hand = affecting
 				affecting.force_wound_upwards(/datum/wound/burn/flesh/severe/cursed_brand, wound_source = "curse of the slot machine")

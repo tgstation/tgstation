@@ -35,7 +35,7 @@
 
 /obj/item/wrench/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/items/weapons/genhit.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/wrench/abductor
@@ -71,7 +71,7 @@
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
 	user.set_light(2)
 	user.add_overlay(mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
-	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
+	create_sound(loc, 'sound/effects/pray.ogg').vary(TRUE).extra_range(-1).play()
 
 	// Let the sound effect finish playing
 	add_fingerprint(user)
@@ -124,7 +124,7 @@
 	tool_behaviour = active ? TOOL_WRENCH : initial(tool_behaviour)
 	if(user)
 		balloon_alert(user, "[name] [active ? "active, woe!":"restrained"]")
-	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 5, TRUE)
+	create_sound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg').volume(5).vary(TRUE).play()
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/wrench/bolter

@@ -316,7 +316,7 @@
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			create_sound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -328,7 +328,7 @@
 			tmp_holder.add_reagent(chosenchem , 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			create_sound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -347,7 +347,7 @@
 		visible_message(span_notice("[src] raises [exp_on]'s temperature."))
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_warning("[src]'s emergency coolant system gives off a small ding!"))
-			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+			create_sound(src, 'sound/machines/ding.ogg').vary(TRUE).play()
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
 			chosenchem = pick(/datum/reagent/toxin/plasma,/datum/reagent/consumable/capsaicin,/datum/reagent/consumable/ethanol)
 			C.reagents.remove_all(25)
@@ -392,7 +392,7 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message(span_warning("[src]'s emergency coolant system gives off a small ding!"))
 			var/obj/item/reagent_containers/cup/glass/coffee/C = new /obj/item/reagent_containers/cup/glass/coffee(get_turf(pick(oview(1,src))))
-			playsound(src, 'sound/machines/ding.ogg', 50, TRUE) //Ding! Your death coffee is ready!
+			create_sound(src, 'sound/machines/ding.ogg').vary(TRUE).play() //Ding! Your death coffee is ready!
 			chosenchem = pick(/datum/reagent/uranium,/datum/reagent/consumable/frostoil,/datum/reagent/medicine/ephedrine)
 			C.reagents.remove_all(25)
 			C.reagents.add_reagent(chosenchem , 50)
@@ -407,7 +407,7 @@
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(0, holder = src, location = src, carry = tmp_holder, silent = TRUE)
-			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			create_sound(src, 'sound/effects/smoke.ogg').vary(TRUE).extra_range(-3).play()
 			smoke.start()
 			qdel(tmp_holder)
 			ejectItem(TRUE)
@@ -434,14 +434,14 @@
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
 		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes way too many levels too high, crushing right through space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
+			create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).extra_range(-3).play()
 			investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at(src,10,1)
 		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff) * 0.01))
 			visible_message(span_danger("[src]'s crusher goes one level too high, crushing right into space-time!"))
-			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
+			create_sound(src, 'sound/effects/supermatter.ogg').vary(TRUE).extra_range(-3).play()
 			investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 			var/list/throwAt = list()
 			for(var/atom/movable/AM in oview(7,src))
@@ -459,7 +459,7 @@
 
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message(span_notice("[src] scans the [exp_on], revealing its true nature!"))
-		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
+		create_sound(src, 'sound/effects/supermatter.ogg').vary(3).extra_range(-1).play()
 		var/obj/item/relic/loaded_artifact = loaded_item
 		loaded_artifact.reveal()
 		investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
@@ -519,7 +519,7 @@
 	explosion(src, devastation_range = 1, heavy_impact_range = 5, light_impact_range = 10, flash_range = 5, adminlog = TRUE)
 
 /obj/machinery/rnd/experimentor/proc/honk()
-	playsound(src, 'sound/items/bikehorn.ogg', 500)
+	create_sound(src, 'sound/items/bikehorn.ogg').volume(500).play()
 	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
@@ -652,20 +652,20 @@
 // Artefact Powers \\
 
 /obj/item/relic/proc/corgi_cannon(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(user))
 	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/cleaning_foam(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	spawned_foamer.detonate()
 	qdel(spawned_foamer)
 	warn_admins(user, "Foam", 0)
 
 /obj/item/relic/proc/flashbanger(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(rand(25, 50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	var/obj/item/grenade/flashbang/spawned_flashbang = new/obj/item/grenade/flashbang(user.loc)
 	spawned_flashbang.detonate()
 	warn_admins(user, "Flash")
@@ -741,12 +741,12 @@
 // Creates a glass and fills it up with a drink.
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
-	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(user, SFX_SPARKS).volume(rand(25,50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	sparks.start()
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
-	playsound(glasser, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(glasser, 'sound/effects/phasein.ogg').volume(rand(25,50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
 	throw_smoke(get_turf(glasser))
 
@@ -758,10 +758,10 @@
 
 /obj/item/relic/proc/scrambliticus(mob/user)
 	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
-	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+
 	for(var/mob/living/carbon/nearby in range(2, get_turf(src))) //needs get_turf() to work
 		nearby.bioscramble(name)
-		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(user, SFX_SPARKS).volume(rand(25,50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		throw_smoke(get_turf(nearby))
 		to_chat(nearby, span_notice("You feel weird."))
 	if(prob(33))
@@ -776,7 +776,7 @@
 		carboner.electrocute_act(15, src, flags = SHOCK_NOGLOVES, stun_duration = stunner)
 	else
 		user.electrocute_act(15, src, flags = SHOCK_NOGLOVES)
-	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(user, SFX_SPARKS).volume(rand(25,50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 	var/list/chargeable_batteries = list()
 	for(var/obj/item/stock_parts/power_store/C in user.get_all_contents())
@@ -844,7 +844,7 @@
 		ADD_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src)) // prevent dropping pockets & belt
 
 	// magic trick!
-	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(user, SFX_SPARKS).volume(rand(25,50)).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	throw_smoke(user)
 
 	// carbons always get a hat at least

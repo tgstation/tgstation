@@ -133,7 +133,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 	if(LAZYACCESS(modifiers, ICON_Y))
 		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
+	create_sound(user, 'sound/items/sheath.ogg').volume(40).vary(TRUE).play()
 	reagents.copy_to(broken_egg, reagents.total_volume)
 
 	hit_griddle.AddToGrill(broken_egg, user)

@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return ..()
 
 /mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
-	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
+	create_sound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg').volume(40).vary(TRUE).extra_range(TRUE).play()  //Alien roars when starting to break free
 	..(I, cuff_break = INSTANT_CUFFBREAK)
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
 	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_SNEAK))
-		playsound(get_turf(src), SFX_LOW_HISS, 50, FALSE, -5)
+		create_sound(src, SFX_LOW_HISS).extra_range(-5).play()
 	return ..()
 
 /mob/living/carbon/alien/adult/setGrabState(newstate)
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	lucky_winner.visible_message(span_danger("[src] is attempting to devour [lucky_winner]!"), \
 			span_userdanger("[src] is attempting to devour you!"))
 
-	playsound(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg', 100)
+	create_sound(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg').volume(100).play()
 	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
 		return TRUE
 	if(!can_consume(lucky_winner))

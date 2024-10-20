@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		return
 	if(use(1))
 		to_chat(user, span_notice("You activate and anchor [amount ? "a":"the"] [singular_name] in place."))
-		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(user, 'sound/machines/click.ogg').vary(TRUE).play()
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		M.update_appearance()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			qdel(src) //otherwise delete us
 
 /obj/structure/marker_beacon/attack_tk(mob/user)
@@ -140,14 +140,14 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		to_chat(user, span_notice("You start picking [src] up..."))
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			qdel(src)
 			return
 	if(istype(I, /obj/item/light_eater))
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
 		visible_message(span_danger("[src] is disintegrated by [I]!"))
-		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/tools/welder.ogg').vary(TRUE).play()
 		qdel(src)
 		return
 	return ..()

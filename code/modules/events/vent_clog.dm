@@ -163,7 +163,7 @@
 
 	var/filth_to_spawn = pick(filth_spawn_types)
 	new filth_to_spawn(spawn_location)
-	playsound(spawn_location, 'sound/effects/splat.ogg', 30, TRUE)
+	create_sound(spawn_location, 'sound/effects/splat.ogg').volume(30).vary(TRUE).play()
 
 ///Signal catcher for plunger_act()
 /datum/round_event/vent_clog/proc/plunger_unclog(datum/source, obj/item/plunger/attacking_plunger, mob/user, reinforced)

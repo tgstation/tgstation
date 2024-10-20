@@ -50,18 +50,18 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		else
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
-		playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
+		create_sound(sm, 'sound/machines/terminal/terminal_alert.ogg').volume(75).play()
 		return FALSE
 
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(sm, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			create_sound(sm, 'sound/announcer/alarm/bloblarm.ogg').volume(100).extra_range(40).falloff_distance(10).play()
 		if(SUPERMATTER_EMERGENCY)
-			playsound(sm, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			create_sound(sm, 'sound/machines/engine_alert/engine_alert1.ogg').volume(100).extra_range(30).falloff_distance(10).play()
 		if(SUPERMATTER_DANGER)
-			playsound(sm, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			create_sound(sm, 'sound/machines/engine_alert/engine_alert2.ogg').volume(100).extra_range(30).falloff_distance(10).play()
 		if(SUPERMATTER_WARNING)
-			playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
+			create_sound(sm, 'sound/machines/terminal/terminal_alert.ogg').volume(75).play()
 
 	if(sm.damage >= sm.emergency_point) // In emergency
 		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)

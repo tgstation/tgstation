@@ -147,7 +147,7 @@
 	user.visible_message(span_notice("[user] turns on [src]."), \
 		span_notice("You turn on [src]."), \
 		span_hear("You hear a food processor."))
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/machines/blender.ogg').vary(TRUE).play()
 	use_energy(active_power_usage)
 	var/total_time = 0
 	for(var/atom/movable/movable_input as anything in processor_contents)

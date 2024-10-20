@@ -73,7 +73,7 @@
 		return
 
 	living_target.adjustBruteLoss(20)
-	playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+	create_sound(src, 'sound/items/eatfood.ogg').volume(rand(30, 50)).vary(TRUE).play()
 	var/obj/item/bodypart/edible_bodypart
 
 	if(ishuman(living_target))
@@ -136,4 +136,4 @@
 
 	if(eaten && prob(10))
 		say("Nom") // bon appetit
-		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
+		create_sound(src, 'sound/items/eatfood.ogg').volume(rand(30, 50)).vary(TRUE).play()

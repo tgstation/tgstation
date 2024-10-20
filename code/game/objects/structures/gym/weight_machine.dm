@@ -111,7 +111,7 @@
 		// with enough dedication, even clowns can overcome their handicaps
 		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/athletics) * 5)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(clumsy_chance))
-			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+			create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 			to_chat(user, span_warning("Your hand slips, causing the [name] to smash you!"))
 			user.take_bodypart_damage(rand(2, 5))
 			end_workout()
@@ -119,7 +119,7 @@
 
 		// awlways a chance for a person not to fail horribly when drunk
 		if(user.get_drunk_amount() > SAFE_DRUNK_LEVEL && prob(min(user.get_drunk_amount(), 99)))
-			playsound(src,'sound/effects/bang.ogg', 50, TRUE)
+			create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 			to_chat(user, span_warning(drunk_message))
 			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
 			end_workout()
@@ -141,7 +141,7 @@
 	end_workout()
 
 /obj/structure/weightmachine/proc/end_workout()
-	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(60).vary(TRUE).play()
 	STOP_PROCESSING(SSobj, src)
 	icon_state = initial(icon_state)
 
@@ -157,7 +157,7 @@
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
 	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH * 0.5)
-	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
+	create_sound(user, 'sound/machines/creak.ogg').volume(60).vary(TRUE).play()
 	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH * 0.5)
 
 	if(!iscarbon(user) || isnull(user.mind))

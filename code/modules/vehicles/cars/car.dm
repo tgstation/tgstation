@@ -95,7 +95,7 @@
 
 	if(COOLDOWN_FINISHED(src, enginesound_cooldown))
 		COOLDOWN_START(src, enginesound_cooldown, engine_sound_length)
-		playsound(get_turf(src), engine_sound, 100, TRUE)
+		create_sound(get_turf(src), engine_sound).volume(100).vary(TRUE).play()
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)

@@ -41,7 +41,7 @@
 		//already has blood themed projectiles
 		return
 
-	playsound(source, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
+	create_sound(source, 'sound/effects/wounds/splatter.ogg').volume(60).vary(TRUE).extra_range(-1).play()
 	to_fire.color = "#ff7070"
 	to_fire.name = "blood-[to_fire.name]"
 	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, l_on = TRUE)

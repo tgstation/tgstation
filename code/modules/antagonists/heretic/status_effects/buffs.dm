@@ -84,7 +84,7 @@
 	if(length(drinker.get_missing_limbs()))
 		drinker.regenerate_limbs()
 		to_chat(drinker, span_hypnophrase("The mansus has given you new limbs."))
-	playsound(drinker, 'sound/effects/chemistry/ahaha.ogg', 50, TRUE, -1, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.5)
+	create_sound(drinker, 'sound/effects/chemistry/ahaha.ogg').vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).frequency(0.5).play()
 
 /datum/status_effect/marshal/tick(seconds_between_ticks)
 	if(!iscarbon(owner))
@@ -195,7 +195,7 @@
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
-	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
+	create_sound(get_turf(owner), 'sound/items/unsheath.ogg').volume(33).vary(TRUE).play()
 
 /// Signal proc for [COMSIG_LIVING_CHECK_BLOCK].
 /// If we have a blade in our list, consume it and block the incoming attack (shield it)
@@ -220,7 +220,7 @@
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
-	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
+	create_sound(get_turf(source), 'sound/items/weapons/parry.ogg').volume(100).vary(TRUE).play()
 	source.visible_message(
 		span_warning("[to_remove] orbiting [source] snaps in front of [attack_text], blocking it before vanishing!"),
 		span_warning("[to_remove] orbiting you snaps in front of [attack_text], blocking it before vanishing!"),
@@ -311,7 +311,7 @@
 
 /datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)
 	SIGNAL_HANDLER
-	playsound(get_turf(owner), 'sound/effects/curse/curse1.ogg', 80, TRUE)
+	create_sound(get_turf(owner), 'sound/effects/curse/curse1.ogg').volume(80).vary(TRUE).play()
 	owner.visible_message(span_warning("[weapon] repels the haze around [owner]!"))
 	owner.remove_status_effect(type)
 

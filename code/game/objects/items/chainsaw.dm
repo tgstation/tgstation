@@ -41,7 +41,6 @@
 		hitsound_on = 'sound/items/weapons/chainsawhit.ogg', \
 		w_class_on = w_class, \
 	)
-
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/chainsaw/proc/apply_components()
@@ -71,11 +70,11 @@
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
-		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
+		create_sound(src, 'sound/items/weapons/genhit1.ogg').volume(100).vary(TRUE).play()
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
+	create_sound(src, 'sound/items/weapons/chainsawhit.ogg').volume(100).vary(TRUE).play()
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(myhead)
 		myhead.dismember()
@@ -92,7 +91,7 @@
 	if (isnull(head))
 		return ..()
 
-	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
+
 
 	target_mob.balloon_alert(user, "cutting off head...")
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
@@ -123,7 +122,7 @@
 /obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, SFX_BULLET_MISS, 75, TRUE)
+		create_sound(src, SFX_BULLET_MISS).volume(75).vary(TRUE).play()
 		return TRUE
 	return FALSE
 

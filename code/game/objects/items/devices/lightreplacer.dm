@@ -170,7 +170,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(loc, SFX_SPARKS).volume(100).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	update_appearance()
 	to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
 	return FALSE
@@ -223,7 +223,7 @@
 	if(istype(target, /obj/machinery/light))
 		if(replace_light(target, user) && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+			create_sound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 		return TRUE
 
 	// if we are attacking a floodlight frame finish it
@@ -233,7 +233,7 @@
 			new /obj/machinery/power/floodlight(frame.loc)
 			if(bluespace_toggle)
 				user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-				playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+				create_sound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 			to_chat(user, span_notice("You finish \the [frame] with a light tube."))
 			qdel(frame)
 		return TRUE
@@ -246,7 +246,7 @@
 				light_replaced = TRUE
 		if(light_replaced && bluespace_toggle)
 			user.Beam(target, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-			playsound(src, 'sound/items/pshoom/pshoom.ogg', 40, 1)
+			create_sound(src, 'sound/items/pshoom/pshoom.ogg').volume(40).vary(TRUE).play()
 		return TRUE
 
 	return FALSE
@@ -258,7 +258,7 @@
 	if(uses <= 0)
 		return FALSE
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	create_sound(src.loc, 'sound/machines/click.ogg').vary(TRUE).play()
 	src.add_fingerprint(user)
 	add_uses(-1)
 
@@ -274,7 +274,7 @@
 		bulb_shards = 0
 		add_uses(1)
 		to_chat(user, span_notice("\The [src] fabricates a new bulb from the broken glass it has stored. [status_string()]"))
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		create_sound(src.loc, 'sound/machines/ding.ogg').vary(TRUE).play()
 		return TRUE
 	return FALSE
 

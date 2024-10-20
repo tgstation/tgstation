@@ -53,7 +53,7 @@
 		balloon_alert(user, "max capacity!")
 		return ITEM_INTERACT_BLOCKING
 
-	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(20).vary(TRUE).play()
 
 	if(creation_time)
 		holocreator_busy = TRUE

@@ -57,7 +57,7 @@
 	is_charging = TRUE
 	if(COOLDOWN_FINISHED(src, charge_sound_cooldown))
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
-		playsound(source, charge_sound, 40)
+		create_sound(source, charge_sound).volume(40).play()
 	source.balloon_alert(user, "charging...")
 	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = charge_move))
 		is_charging = FALSE

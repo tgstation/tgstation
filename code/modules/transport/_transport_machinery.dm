@@ -125,7 +125,7 @@
 		machine.balloon_alert(user, "interrupted!")
 		return FALSE
 
-	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, use_reverb = TRUE)
+	create_sound(src, 'sound/machines/synth/synth_yes.ogg').volume(75).play()
 	machine.balloon_alert(user, "success!")
 	UnregisterSignal(src, repair_signals)
 	LAZYNULL(repair_signals)
@@ -175,7 +175,7 @@
 
 /obj/item/wallframe/tram/attach(obj/structure/tram/on_tram, mob/user)
 	if(result_path)
-		playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+		create_sound(src.loc, 'sound/machines/click.ogg').volume(75).vary(TRUE).play()
 		user.visible_message(span_notice("[user.name] installs [src] on the tram."),
 			span_notice("You install [src] on the tram."),
 			span_hear("You hear clicking."))

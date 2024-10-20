@@ -141,12 +141,7 @@
 		to_chat(human_parent, span_boldwarning("Your [affected_limb.plaintext_zone] feels like it's bubbling, then burns like hell!"))
 
 	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, wound_clothing = FALSE)
-	playsound(
-		human_parent,
-		SFX_SIZZLE,
-		50,
-		vary = TRUE,
-	)
+	create_sound(human_parent, SFX_SIZZLE).vary(TRUE).play()
 
 /datum/component/irradiated/proc/create_glow()
 	var/atom/movable/parent_movable = parent

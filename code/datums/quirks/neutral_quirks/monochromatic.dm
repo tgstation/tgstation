@@ -17,7 +17,7 @@
 /datum/quirk/monochromatic/post_add()
 	if(is_detective_job(quirk_holder.mind.assigned_role))
 		to_chat(quirk_holder, span_boldannounce("Mmm. Nothing's ever clear on this station. It's all shades of gray..."))
-		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/security/ambidet1.ogg', 50, FALSE)
+		create_sound(quirk_holder, 'sound/ambience/security/ambidet1.ogg').direct_listeners(quirk_holder).play()
 
 /datum/quirk/monochromatic/remove()
 	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)

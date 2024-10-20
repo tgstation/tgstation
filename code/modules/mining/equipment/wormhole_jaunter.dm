@@ -107,7 +107,7 @@
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/items/weapons/resonator_blast.ogg',50,TRUE)
+		create_sound(M, 'sound/items/weapons/resonator_blast.ogg').vary(TRUE).play()
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
 			L.Paralyze(60)

@@ -125,9 +125,9 @@
 	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
 		if(isidcard(W))
-			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+			create_sound(src, 'sound/machines/card_slide.ogg').vary(TRUE).play()
 		else
-			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
+			create_sound(src, 'sound/machines/terminal/terminal_success.ogg').vary(TRUE).play()
 
 		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, span_notice("The machine appears to be disabled."))
@@ -135,17 +135,17 @@
 
 		if(!player_card.registered_account)
 			say("You don't have a bank account!")
-			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+			create_sound(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 			return FALSE
 
 		if(my_card)
 			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				say("You do not have the funds to play! Lower your bet or get more money.")
-				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+				create_sound(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
 				return FALSE
@@ -181,8 +181,8 @@
 
 			icon_state = "rolling" //Prepare the new icon state for rolling before hand.
 			flick("flick_up", src)
-			playsound(src, 'sound/machines/piston/piston_raise.ogg', 70)
-			playsound(src, 'sound/machines/chime.ogg', 50)
+			create_sound(src, 'sound/machines/piston/piston_raise.ogg').volume(70).play()
+			create_sound(src, 'sound/machines/chime.ogg').play()
 
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
@@ -209,7 +209,7 @@
 	if(!my_card?.registered_account) // Something happened to my_card during the 0.4 seconds delay of the timed callback.
 		icon_state = "idle"
 		flick("flick_down", src)
-		playsound(src, 'sound/machines/piston/piston_lower.ogg', 70)
+		create_sound(src, 'sound/machines/piston/piston_lower.ogg').volume(70).play()
 		return
 
 	var/payout = potential_payout
@@ -222,7 +222,7 @@
 
 	var/rolled_number = rand(0, 36)
 
-	playsound(src, 'sound/machines/roulette/roulettewheel.ogg', 50)
+	create_sound(src, 'sound/machines/roulette/roulettewheel.ogg').play()
 	addtimer(CALLBACK(src, PROC_REF(finish_play), player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, PROC_REF(finish_play_animation)), 3 SECONDS)
 
@@ -231,7 +231,7 @@
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"
 	flick("flick_down", src)
-	playsound(src, 'sound/machines/piston/piston_lower.ogg', 70)
+	create_sound(src, 'sound/machines/piston/piston_lower.ogg').volume(70).play()
 
 ///Ran after a while to check if the player won or not.
 /obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number)
@@ -249,7 +249,7 @@
 
 	if(!is_winner)
 		say("You lost! Better luck next time")
-		playsound(src, 'sound/machines/synth/synth_no.ogg', 50)
+		create_sound(src, 'sound/machines/synth/synth_no.ogg').play()
 		return FALSE
 
 	// Prevents money generation exploits. Doesn't prevent the owner being a scrooge and running away with the money.
@@ -257,7 +257,7 @@
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
 	say("You have won [potential_payout] credits! Congratulations!")
-	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
+	create_sound(src, 'sound/machines/synth/synth_yes.ogg').play()
 
 	dispense_prize(potential_payout)
 
@@ -303,7 +303,7 @@
 
 	var/turf/drop_loc = get_step(loc, drop_dir)
 	var/obj/item/cash = new coin_to_drop(drop_loc)
-	playsound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
+	create_sound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg'))).volume(40).vary(TRUE).play()
 
 	addtimer(CALLBACK(src, PROC_REF(drop_coin)), 3) //Recursion time
 
@@ -362,7 +362,7 @@
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
 	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
-	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/buzz/buzz-two.ogg').volume(30).vary(TRUE).play()
 	return FALSE
 
 /obj/machinery/roulette/update_overlays()

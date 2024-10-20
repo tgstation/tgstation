@@ -63,7 +63,7 @@
 
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/target_door = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		create_sound(chassis, clampsound).extra_range(-6).play()
 		target_door.try_to_crowbar(src, source, TRUE)
 		return ..()
 
@@ -75,7 +75,7 @@
 		if(workmech.cargo_hold.contents.len >= workmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
-		playsound(chassis, clampsound, 50, FALSE, -6)
+		create_sound(chassis, clampsound).extra_range(-6).play()
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
@@ -119,7 +119,7 @@
 			affected.dismember(damtype)
 			torn_off = TRUE
 		if(torn_off)
-			playsound(src, get_dismember_sound(), 80, TRUE)
+			create_sound(src, get_dismember_sound()).volume(80).vary(TRUE).play()
 			carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
@@ -176,7 +176,7 @@
 		reagents.trans_to(water, required_amount / 8)
 		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
-	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+	create_sound(chassis, 'sound/effects/extinguish.ogg').volume(75).vary(TRUE).extra_range(-3).play()
 
 
 /**
@@ -198,7 +198,7 @@
 		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
-	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
+	create_sound(chassis, 'sound/effects/refill.ogg').vary(TRUE).extra_range(-6).play()
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
 	return list(
@@ -370,7 +370,7 @@
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
+	create_sound(get_turf(newmech), 'sound/items/tools/ratchet.ogg').vary(TRUE).play()
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
 	name = "Paddy Conversion Kit"

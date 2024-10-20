@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
 	user.audible_message("[user]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
-	playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+	create_sound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg").volume(100).extra_range(4).play()
 	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/items/whistle/whistle.ogg', 50, FALSE, 4)
+	create_sound(src, 'sound/items/whistle/whistle.ogg').extra_range(4).play()
 
 /datum/action/item_action/halt
 	name = "HALT!"
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!COOLDOWN_FINISHED(src, horn_cooldown))
 		return
 	COOLDOWN_START(src, horn_cooldown, 10 SECONDS)
-	playsound(src, 'sound/items/party_horn.ogg', 75, FALSE)
+	create_sound(src, 'sound/items/party_horn.ogg').volume(75).play()
 	flick("party_horn_animated", src)
 
 /datum/action/item_action/toot

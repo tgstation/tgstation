@@ -80,7 +80,7 @@
 		return
 	var/percentile = round(calculate_dosh_amount()/maximum_value * 100, 1)
 	if(percentile >= 10)
-		playsound(src, SFX_RATTLE, percentile * 0.5, FALSE, FALSE)
+		create_sound(src, SFX_RATTLE).volume(percentile * 0.5).play()
 	switch(percentile)
 		if(0)
 			balloon_alert(user, "it's empty")

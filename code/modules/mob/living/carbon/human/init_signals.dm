@@ -80,4 +80,4 @@
 		span_warning("[changed] falls out of your pockets!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
-	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)
+	create_sound(src, SFX_RUSTLE).vary(TRUE).extra_range(-5).frequency(0.8).play()

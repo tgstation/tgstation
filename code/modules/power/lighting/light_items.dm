@@ -117,7 +117,7 @@
 		return
 	var/mob/living/moving_mob = moving_atom
 	if(!(moving_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || moving_mob.buckled)
-		playsound(src, 'sound/effects/footstep/glass_step.ogg', HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
+		create_sound(src, 'sound/effects/footstep/glass_step.ogg').volume(HAS_TRAIT(moving_mob, TRAIT_LIGHT_STEP) ? 30 : 50).vary(TRUE).play()
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter(moving_mob)
 
@@ -135,7 +135,7 @@
 		status = LIGHT_BROKEN
 		force = 5
 		sharpness = SHARP_POINTY
-		playsound(loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
+		create_sound(loc, 'sound/effects/glass/glasshit.ogg').volume(75).vary(TRUE).play()
 		if(length(reagents.reagent_list))
 			visible_message(span_danger("The contents of [src] splash onto you as you step on it!"),span_hear("You feel the contents of [src] splash onto you as you step on it!."))
 			reagents.expose(target, TOUCH)

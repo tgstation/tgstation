@@ -166,7 +166,7 @@
 					checkouts -= checkout_ref
 					computer.checkout_update()
 					user.balloon_alert(user, "book checked in")
-					playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
+					create_sound(loc, 'sound/items/barcodebeep.ogg').volume(20).play()
 					return
 
 				user.balloon_alert(user, "book not checked out!")
@@ -176,7 +176,7 @@
 				computer.inventory[ref(our_copy)] = our_copy
 				computer.inventory_update()
 				user.balloon_alert(user, "book added to inventory")
-				playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
+				create_sound(loc, 'sound/items/barcodebeep.ogg').volume(20).play()
 
 	else if(try_carve(attacking_item, user, params))
 		return
@@ -206,7 +206,7 @@
 /obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
 	if(user)
 		balloon_alert(user, "carved out")
-		playsound(src, 'sound/effects/cloth_rip.ogg', vol = 75, vary = TRUE)
+
 	carved = TRUE
 	create_storage(max_slots = 1)
 	return TRUE

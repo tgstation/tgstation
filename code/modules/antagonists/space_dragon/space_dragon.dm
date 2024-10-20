@@ -37,7 +37,7 @@
 					Today, we will snuff out one of those lights.</b>")
 	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/magic/demon_attack1.ogg', 80)
+	create_sound(owner.current, 'sound/effects/magic/demon_attack1.ogg').volume(80).direct_listeners(owner.current).play()
 
 /datum/antagonist/space_dragon/forge_objectives()
 	var/static/list/area/allowed_areas
@@ -182,7 +182,7 @@
 	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
 		Remaining crew are advised to evacuate as soon as possible.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
-	sound_to_playing_players('sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg', volume = 75)
+	create_sound(GLOBAL_SOUND, 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg').volume(75).play()
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
 		rift.time_charged = rift.max_charge

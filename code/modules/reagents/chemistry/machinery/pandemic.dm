@@ -373,5 +373,5 @@
 	wait = FALSE
 	SStgui.update_uis(src)
 	update_appearance()
-	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	create_sound(src, 'sound/machines/ping.ogg').volume(30).vary(TRUE).play()
 	return TRUE

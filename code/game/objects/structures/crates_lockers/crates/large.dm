@@ -40,7 +40,7 @@
 		user.visible_message(span_notice("[user] pries \the [src] open."), \
 			span_notice("You pry open \the [src]."), \
 			span_hear("You hear splitting wood."))
-		playsound(src.loc, 'sound/items/weapons/slashmiss.ogg', 75, TRUE)
+		create_sound(src.loc, 'sound/items/weapons/slashmiss.ogg').volume(75).vary(TRUE).play()
 
 		var/turf/T = get_turf(src)
 		for(var/i in 1 to material_drop_amount)

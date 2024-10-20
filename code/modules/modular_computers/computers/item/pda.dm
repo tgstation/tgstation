@@ -162,7 +162,7 @@
 	else
 		balloon_alert(user, "inserted [tool]")
 		inserted_item = tool
-		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/pda_button/pda_button1.ogg').vary(TRUE).play()
 	return ITEM_INTERACT_SUCCESS
 
 
@@ -189,7 +189,7 @@
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
-		playsound(src, 'sound/machines/pda_button/pda_button2.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/pda_button/pda_button2.ogg').vary(TRUE).play()
 
 /obj/item/modular_computer/pda/proc/swap_pen(mob/user, obj/item/tool)
 	if(inserted_item)
@@ -197,7 +197,7 @@
 		user.put_in_hands(inserted_item)
 		inserted_item = tool
 		update_appearance()
-		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/pda_button/pda_button1.ogg').vary(TRUE).play()
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/current_turf = get_turf(src)

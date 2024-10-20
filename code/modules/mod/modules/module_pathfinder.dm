@@ -56,7 +56,7 @@
 		to_chat(user, span_notice("You implant yourself with [implant]."))
 	else
 		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
-	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	create_sound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).extra_range(-6).play()
 	module_type = MODULE_PASSIVE
 
 /obj/item/mod/module/pathfinder/on_use()
@@ -67,7 +67,7 @@
 		balloon_alert(mod.wearer, "can't implant!")
 		return
 	balloon_alert(mod.wearer, "implanted")
-	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	create_sound(src, 'sound/effects/spray.ogg').volume(30).vary(TRUE).extra_range(-6).play()
 	module_type = MODULE_PASSIVE
 	var/datum/action/item_action/mod/pinnable/module/existing_action = pinned_to[REF(mod.wearer)]
 	if(existing_action)
@@ -84,7 +84,7 @@
 	mod.quick_deploy(user)
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
-	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
+	create_sound(mod, 'sound/machines/ping.ogg').vary(TRUE).play()
 	drain_power(use_energy_cost)
 
 /obj/item/implant/mod

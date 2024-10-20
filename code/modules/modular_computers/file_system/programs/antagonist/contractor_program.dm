@@ -54,22 +54,22 @@
 			if(!traitor_data.uplink_handler.contractor_hub)
 				traitor_data.uplink_handler.contractor_hub = new
 				traitor_data.uplink_handler.contractor_hub.create_contracts(traitor_user.owner)
-				user.playsound_local(user, 'sound/music/antag/contractstartup.ogg', 100, FALSE)
+				create_sound(user, 'sound/music/antag/contractstartup.ogg').volume(100).direct_listeners(user).play()
 				program_open_overlay = "contractor-contractlist"
 			return TRUE
 
 		if("PRG_call_extraction")
 			if (traitor_data.uplink_handler.contractor_hub.current_contract.status != CONTRACT_STATUS_EXTRACTING)
 				if (traitor_data.uplink_handler.contractor_hub.current_contract.handle_extraction(user))
-					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 100, TRUE)
+					create_sound(user, 'sound/effects/confirmdropoff.ogg').volume(100).vary(TRUE).direct_listeners(user).play()
 					traitor_data.uplink_handler.contractor_hub.current_contract.status = CONTRACT_STATUS_EXTRACTING
 
 					program_open_overlay = "contractor-extracted"
 				else
-					user.playsound_local(user, 'sound/machines/uplink/uplinkerror.ogg', 50)
+					create_sound(user, 'sound/machines/uplink/uplinkerror.ogg').direct_listeners(user).play()
 					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
 			else
-				user.playsound_local(user, 'sound/machines/uplink/uplinkerror.ogg', 50)
+				create_sound(user, 'sound/machines/uplink/uplinkerror.ogg').direct_listeners(user).play()
 				error = "Already extracting... Place the target into the pod. If the pod was destroyed, this contract is no longer possible."
 
 			return TRUE
@@ -96,7 +96,7 @@
 				traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem = 0
 				return TRUE
 			else
-				user.playsound_local(user, 'sound/machines/uplink/uplinkerror.ogg', 50)
+				create_sound(user, 'sound/machines/uplink/uplinkerror.ogg').direct_listeners(user).play()
 			return TRUE
 		if ("PRG_clear_error")
 			error = ""

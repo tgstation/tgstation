@@ -194,10 +194,10 @@
 		return TRUE
 	if(anchored)
 		anchored = FALSE
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 		return TRUE
 	anchored = TRUE
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	return TRUE
 
 /obj/structure/stairs_frame/wrench_act_secondary(mob/living/user, obj/item/used_tool)
@@ -205,7 +205,7 @@
 	used_tool.play_tool_sound(src)
 	if(!used_tool.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	create_sound(loc, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 	deconstruct(TRUE)
 	return TRUE
 

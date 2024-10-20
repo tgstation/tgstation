@@ -29,12 +29,10 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
-
 	// if we are on the second step of the diagonal movement, don't play step sound
 	if(src.moving_diagonally == SECOND_DIAG_STEP)
 		return
-
-	playsound(src, stepsound, 40, TRUE)
+	create_sound(src, stepsound).volume(40).vary(TRUE).play()
 
 // Do whatever you do to mobs to these fuckers too
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -148,7 +146,7 @@
 
 	//dir and olddir are the current direction of the sprite and the old direction of the sprite respectively
 	if (dir != olddir && !(mecha_flags & QUIET_TURNS))
-		playsound(src, turnsound, 40, TRUE)
+		create_sound(src, turnsound).volume(40).vary(TRUE).play()
 
 	if(phasing)
 		use_energy(phasing_energy_drain)

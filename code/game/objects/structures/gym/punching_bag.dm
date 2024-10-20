@@ -42,7 +42,7 @@
 	if(.)
 		return
 	flick("[icon_state]-punch", src)
-	playsound(loc, pick(hit_sounds), 25, TRUE, -1)
+	create_sound(loc, pick(hit_sounds)).volume(25).vary(TRUE).extra_range(-1).play()
 
 	if(!iscarbon(user))
 		return

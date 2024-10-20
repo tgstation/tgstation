@@ -34,7 +34,7 @@
 	gear.take_damage(damage_to_deal)
 	if(gear.get_integrity() <= 1)
 		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
-		playsound(src, gear.destroy_sound, 50)
+		create_sound(src, gear.destroy_sound).play()
 
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	var/damage_taken = ..()
@@ -63,7 +63,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	playsound(loc, 'sound/items/weapons/tap.ogg', 40, TRUE, -1)
+	create_sound(loc, 'sound/items/weapons/tap.ogg').volume(40).vary(TRUE).extra_range(-1).play()
 	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 
@@ -72,7 +72,7 @@
 
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
-	playsound(loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
+	create_sound(loc, 'sound/items/weapons/slash.ogg').volume(100).vary(TRUE).play()
 	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
 
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -84,7 +84,7 @@
 		var/play_soundeffect = 1
 		if(user.environment_smash)
 			play_soundeffect = 0
-			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+			create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
@@ -268,7 +268,7 @@
 			cell = weapon
 			balloon_alert(user, "installed power cell")
 			diag_hud_set_mechcell()
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+			create_sound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("Power cell installed", LOG_MECHA)
 		else
 			balloon_alert(user, "already installed!")
@@ -280,7 +280,7 @@
 				return
 			scanmod = weapon
 			balloon_alert(user, "installed scanning module")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+			create_sound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -293,7 +293,7 @@
 				return
 			capacitor = weapon
 			balloon_alert(user, "installed capacitor")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+			create_sound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -306,7 +306,7 @@
 				return
 			servo = weapon
 			balloon_alert(user, "installed servo")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+			create_sound(src, 'sound/items/tools/screwdriver2.ogg').play()
 			log_message("[weapon] installed", LOG_MECHA)
 			update_part_values()
 		else
@@ -480,7 +480,7 @@
 				gun.projectiles = gun.projectiles + ammo_needed
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
-			playsound(get_turf(user),A.load_audio,50,TRUE)
+			create_sound(user, A.load_audio).vary(TRUE).play()
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
 			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
@@ -499,7 +499,7 @@
 			gun.projectiles = gun.projectiles + A.rounds
 		else
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
-		playsound(get_turf(user),A.load_audio,50,TRUE)
+		create_sound(user, A.load_audio).vary(TRUE).play()
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
 		if(A.qdel_on_empty)
 			qdel(A)

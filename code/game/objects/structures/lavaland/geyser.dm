@@ -60,7 +60,7 @@
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		return ..() //this runs the plunger code
 
 	if(discovered)
@@ -166,7 +166,7 @@
 		icon_state = layer_mode_sprite
 		to_chat(user, span_notice("You set the plunger to 'Layer Mode'."))
 
-	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
+	create_sound(src, 'sound/machines/click.ogg').volume(10).vary(TRUE).play()
 
 /obj/item/plunger/click_alt(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)

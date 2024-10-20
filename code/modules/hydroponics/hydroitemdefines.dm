@@ -74,26 +74,26 @@
  */
 /obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		to_chat(user, examine_block(scan_tray_stats(scan_target)))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		var/obj/structure/glowshroom/shroom_plant = scan_target
 		to_chat(user, examine_block(scan_plant_stats(shroom_plant.myseed)))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		to_chat(user, examine_block(get_graft_text(scan_target)))
 		return TRUE
 	if(isitem(scan_target))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
 			to_chat(user, examine_block(scan_plant_stats(scanned_object)))
 			return TRUE
 	if(isliving(scan_target))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 		var/mob/living/L = scan_target
 		if(L.mob_biotypes & MOB_PLANT)
 			plant_biotype_health_scan(scan_target, user)
@@ -465,7 +465,7 @@
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
 		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
-		playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
+		create_sound(src, 'sound/items/weapons/punch4.ogg').vary(TRUE).play()
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
@@ -504,7 +504,7 @@
 
 /obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
+	create_sound(src, 'sound/items/weapons/bladeslice.ogg').vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/hatchet/wooden
@@ -553,7 +553,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
+			create_sound(src, SFX_DESECRATION).vary(TRUE).extra_range(-1).play()
 	return BRUTELOSS
 
 /obj/item/scythe/pre_attack(atom/target, mob/living/user, params)

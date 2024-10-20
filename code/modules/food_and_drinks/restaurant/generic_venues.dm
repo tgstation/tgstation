@@ -51,7 +51,7 @@
 		span_danger("[customer_pawn] pushes [order_item] into their mouth-shaped hole!"),
 		span_danger("You push [order_item] into your mouth-shaped hole."),
 	)
-	playsound(customer_pawn, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	create_sound(customer_pawn, 'sound/items/eatfood.ogg').volume(rand(10,50)).vary(TRUE).play()
 	qdel(order_item)
 
 /obj/machinery/restaurant_portal/restaurant

@@ -52,7 +52,7 @@
 	var/turf/FROM = T // the turf of origin we're travelling FROM
 	var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
 
-	playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
+	create_sound(TO, 'sound/effects/phasein.ogg').volume(100).vary(TRUE).play()
 	priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 	var/list/flashers = list()

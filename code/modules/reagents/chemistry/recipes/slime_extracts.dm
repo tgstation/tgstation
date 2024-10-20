@@ -137,7 +137,7 @@
 	//BORK BORK BORK
 	var/turf/T = get_turf(holder.my_atom)
 
-	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
+	create_sound(T, 'sound/effects/phasein.ogg').volume(100).vary(TRUE).play()
 
 	for(var/mob/living/carbon/C in viewers(T, null))
 		C.flash_act()

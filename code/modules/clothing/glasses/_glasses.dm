@@ -316,7 +316,7 @@
 	if(isliving(movable))
 		var/mob/living/crusher = movable
 		if(crusher.move_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crusher.buckled))
-			playsound(src, 'sound/effects/footstep/glass_step.ogg', 30, TRUE)
+			create_sound(src, 'sound/effects/footstep/glass_step.ogg').volume(30).vary(TRUE).play()
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 

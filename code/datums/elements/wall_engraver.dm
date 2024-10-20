@@ -46,7 +46,7 @@
 	if(!user.Adjacent(wall))
 		return
 	item.add_fingerprint(user)
-	playsound(item, item.hitsound, 30, TRUE, -1)
+	create_sound(item, item.hitsound).volume(30).vary(TRUE).extra_range(-1).play()
 	user.do_attack_animation(wall)
 	user.balloon_alert(user, "engraving wall...")
 	if(!do_after(user, 5 SECONDS, target = wall))

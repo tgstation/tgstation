@@ -131,7 +131,7 @@
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
+		create_sound(src, 'sound/items/tools/welder.ogg').volume(100).vary(TRUE).play()
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
@@ -197,13 +197,13 @@
 	if(arm.bodypart_disabled)
 		return
 	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		create_sound(src, 'sound/effects/meteorimpact.ogg').volume(100).vary(TRUE).play()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		hulk_recoil(arm, user)
 		dismantle_wall(1)
 
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		create_sound(src, 'sound/effects/bang.ogg').vary(TRUE).play()
 		add_dent(WALL_DENT_HIT)
 		user.visible_message(span_danger("[user] smashes \the [src]!"), \
 					span_danger("You smash \the [src]!"), \
@@ -234,7 +234,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, span_notice("You push the wall but nothing happens!"))
-	playsound(src, 'sound/items/weapons/genhit.ogg', 25, TRUE)
+	create_sound(src, 'sound/items/weapons/genhit.ogg').volume(25).vary(TRUE).play()
 	add_fingerprint(user)
 
 /turf/closed/wall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

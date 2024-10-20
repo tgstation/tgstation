@@ -310,7 +310,7 @@
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		affected_mob.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		create_sound(affected_mob, SFX_SPARKS).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 
 /datum/reagent/teslium/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT_FROM(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM))

@@ -16,14 +16,14 @@
 	if(!ui)
 		ui = new(user, src, "InfuserBook")
 		ui.open()
-		playsound(src, SFX_PAGE_TURN, 30, TRUE)
+		create_sound(src, SFX_PAGE_TURN).volume(30).vary(TRUE).play()
 
 /obj/item/infuser_book/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	if(action == "play_flip_sound")
-		playsound(src, SFX_PAGE_TURN, 30, TRUE)
+		create_sound(src, SFX_PAGE_TURN).volume(30).vary(TRUE).play()
 
 /obj/item/infuser_book/ui_static_data(mob/user)
 	var/list/data = list()

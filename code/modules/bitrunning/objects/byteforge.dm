@@ -26,7 +26,7 @@
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
-	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
+	create_sound(src, 'sound/effects/magic/blink.ogg').vary(TRUE).play()
 
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, 1, loc)

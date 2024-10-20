@@ -51,7 +51,7 @@
 	ink.preparePixelProjectile(target, caller, modifiers)
 	ink.firer = caller
 	ink.fire()
-	playsound(caller, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)
+	create_sound(caller, 'sound/items/weapons/pierce.ogg').volume(20).vary(TRUE).extra_range(-1).play()
 	caller.newtonian_move(get_angle(target, caller))
 	StartCooldown()
 	return TRUE

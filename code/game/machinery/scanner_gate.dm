@@ -177,7 +177,7 @@
 	var/beep = FALSE
 	var/color = null
 	var/detected_thing = null
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).play()
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
@@ -307,7 +307,7 @@
 		say("[detected_thing][reverse ? " not " : " "]detected!!")
 
 	COOLDOWN_START(src, next_beep, 2 SECONDS)
-	playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg', vol = 30, vary = FALSE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 4)
+	create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(30).extra_range(MEDIUM_RANGE_SOUND_EXTRARANGE).falloff_distance(4).play()
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)

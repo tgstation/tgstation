@@ -6,7 +6,7 @@
 	var/number = length(stored)
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	playsound(src, SFX_POLAROID, 75, TRUE, -3)
+	create_sound(src, SFX_POLAROID).volume(75).vary(TRUE).extra_range(-3).play()
 	balloon_alert(user, "image recorded")
 
 /**

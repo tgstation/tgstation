@@ -252,7 +252,7 @@
 			span_notice("You chew through \the [cable]."),
 		)
 
-	playsound(cable, 'sound/effects/sparks/sparks2.ogg', 100, TRUE)
+	create_sound(cable, 'sound/effects/sparks/sparks2.ogg').volume(100).vary(TRUE).play()
 	cable.deconstruct()
 
 /mob/living/basic/mouse/white

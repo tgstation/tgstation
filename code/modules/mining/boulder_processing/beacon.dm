@@ -16,7 +16,7 @@
  * Use one spawns a BRM teleporter, then a refinery, and lastly a smelter.
  */
 /obj/item/boulder_beacon/proc/launch_payload()
-	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(80).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	switch(uses)
 		if(3)
 			new /obj/machinery/brm(drop_location())

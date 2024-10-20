@@ -872,7 +872,7 @@
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
 		apply_organ_damage(10) //blind quickly
-		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
+		create_sound(owner, 'sound/machines/grill/grillsizzle.ogg').play()
 	else
 		apply_organ_damage(-10) //heal quickly
 	. = ..()

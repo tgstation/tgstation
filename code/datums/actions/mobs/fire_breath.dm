@@ -28,7 +28,7 @@
 
 /// Apply our specific fire breathing shape, in proc form so we can override it in subtypes
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/attack_sequence(atom/target)
-	playsound(owner.loc, fire_sound, 200, TRUE)
+	create_sound(owner.loc, fire_sound).volume(200).vary(TRUE).play()
 	fire_line(target)
 
 /// Breathe fire in a line towards the target, optionally rotated at an offset from the target
@@ -83,7 +83,7 @@
 	var/list/angles = list(-40, 0, 40)
 
 /datum/action/cooldown/mob_cooldown/fire_breath/cone/attack_sequence(atom/target)
-	playsound(owner.loc, fire_sound, 200, TRUE)
+	create_sound(owner.loc, fire_sound).volume(200).vary(TRUE).play()
 	for(var/offset in angles)
 		fire_line(target, offset)
 
@@ -117,7 +117,7 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/proc/fire_spin(target, spin_count)
 	if (QDELETED(owner) || owner.stat == DEAD)
 		return // Too dead to spin
-	playsound(owner.loc, fire_sound, 200, TRUE)
+	create_sound(owner.loc, fire_sound).volume(200).vary(TRUE).play()
 	var/angle_increment = 360 / sectors
 	var/additional_offset = spin_count * angle_increment / 2
 	for (var/i in 1 to sectors)

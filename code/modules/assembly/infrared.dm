@@ -164,7 +164,7 @@
 		message = span_infoplain("[icon2html(src, hearers(holder || src))] *beep* *beep* *beep*"),
 		hearing_distance = hearing_range,
 	)
-	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE, extrarange = hearing_range - SOUND_RANGE + 1, falloff_distance = hearing_range)
+	create_sound(src, 'sound/machines/beep/triple_beep.ogg').volume(ASSEMBLY_BEEP_VOLUME).vary(TRUE).extra_range(hearing_range).play()
 	COOLDOWN_START(src, next_activate, 3 SECONDS)
 
 /obj/item/assembly/infra/activate()

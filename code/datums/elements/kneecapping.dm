@@ -89,4 +89,3 @@
 		log_combat(attacker, target, "broke the kneecaps of", weapon)
 		target.update_damage_overlays()
 		attacker.do_attack_animation(target, used_item = weapon)
-		playsound(source = get_turf(weapon), soundin = weapon.hitsound, vol = weapon.get_clamped_volume(), vary = TRUE)

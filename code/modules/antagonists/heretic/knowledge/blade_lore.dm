@@ -74,7 +74,7 @@
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
-	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
+	create_sound(get_turf(target), 'sound/items/weapons/guillotine.ogg').volume(100).vary(TRUE).play()
 
 /// The cooldown duration between triggers of blade dance
 #define BLADE_DANCE_COOLDOWN (20 SECONDS)
@@ -160,7 +160,7 @@
 	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
 
 /datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
-	playsound(get_turf(source), 'sound/items/weapons/parry.ogg', 100, TRUE)
+	create_sound(get_turf(source), 'sound/items/weapons/parry.ogg').volume(100).vary(TRUE).play()
 	source.balloon_alert(source, "riposte used")
 	source.visible_message(
 		span_warning("[source] leans into [attack_text] and delivers a sudden riposte back at [target]!"),

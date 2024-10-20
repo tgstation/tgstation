@@ -78,7 +78,7 @@
 	var/turf/start_turf = get_turf(M)
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
-	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(loc, SFX_PORTAL_ENTER).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	use_energy(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem

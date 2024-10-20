@@ -20,7 +20,7 @@
 		to_chat(user, span_notice("You start disassembling [src]..."))
 		attacking_item.play_tool_sound(src)
 		if(attacking_item.use_tool(src, user, 30))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+			create_sound(src, 'sound/items/deconstruct.ogg').vary(TRUE).play()
 			for(var/i in 0 to framestackamount)
 				new framestack(get_turf(src))
 			qdel(src)

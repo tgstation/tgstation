@@ -345,7 +345,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/balloon_vest/proc/pop()
-	playsound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, vary = TRUE)
+	create_sound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary(TRUE).play()
 	qdel(src)
 
 
