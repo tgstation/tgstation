@@ -269,7 +269,7 @@
 		. += span_warning("This body has been reduced to a grotesque husk.")
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		if(HAS_TRAIT(src, TRAIT_DISSECTED))
-			. += span_notice("[user.p_They()] appear[user.p_s()] to have been dissected. Useless for examination... <b><i>for now.</i></b>")
+			. += span_notice("[t_He] appear[p_s()] to have been dissected. Useless for examination... <b><i>for now.</i></b>")
 		if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
 			. += span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [user.p_them()]. <b><i>Exquisite.</i></b>")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
