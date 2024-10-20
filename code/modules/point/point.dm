@@ -116,13 +116,15 @@
 /mob/proc/_pointed(atom/pointing_at)
 	if(!client)
 		return FALSE
-	if(!(pointing_at in view(client.view, src)))
-		if(!isitem(pointing_at))
-			return FALSE
 
+	//if the atom is on top of another atom, we need to point at the thing it's on top of
+	if(ismovable(pointing_at))
 		var/atom/movable/pointed_movable = pointing_at
-		if(!(pointed_movable.flags_1 & IS_ONTOP_1))
-			return FALSE
+		if(pointed_movable.flags_1 & IS_ONTOP_1)
+			pointing_at = pointed_movable.loc
+
+	if(!(pointing_at in view(client.view, src)))
+		return FALSE
 
 	point_at(pointing_at, TRUE)
 
