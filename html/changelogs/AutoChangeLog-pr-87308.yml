@@ -1,0 +1,4 @@
+author: "GremlinSeeker"
+delete-after: True
+changes:
+  - bugfix: "fixed active turfs on two icemoon ruins."
