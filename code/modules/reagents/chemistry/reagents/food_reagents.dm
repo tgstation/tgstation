@@ -215,6 +215,7 @@
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
+	carry_food_tastes = FALSE
 	nutriment_factor = 7 //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	penetrates_skin = NONE
