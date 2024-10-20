@@ -906,7 +906,7 @@
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(interacting_with, TRAIT_SPEED_POTIONED))
-		to_chat(user, span_warning("[interacting_with] can't be made any faster!")
+		to_chat(user, span_warning("[interacting_with] can't be made any faster!"))
 		return ITEM_INTERACT_BLOCKING
 	if(SEND_SIGNAL(interacting_with, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
 		return ITEM_INTERACT_SUCCESS
