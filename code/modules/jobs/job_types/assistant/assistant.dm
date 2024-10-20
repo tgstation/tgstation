@@ -94,11 +94,11 @@ Assistant
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
 
-/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
 	return
 
-/// DOPPLER SHIFT REMOVAL BEGIN
-/*/datum/outfit/job/assistant/consistent/give_jumpsuit(mob/living/carbon/human/target)
+/datum/outfit/job/assistant/consistent/give_jumpsuit(mob/living/carbon/human/target)
 	uniform = /obj/item/clothing/under/color/grey
 
 /datum/outfit/job/assistant/consistent/post_equip(mob/living/carbon/human/H, visualsOnly)
