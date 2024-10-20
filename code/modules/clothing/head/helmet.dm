@@ -645,7 +645,7 @@
 	take_damage(1, BRUTE, 0, 0)
 
 /obj/item/clothing/head/helmet/durability/watermelon
-	name = "Watermelon Helmet"
+	name = "watermelon helmet"
 	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
