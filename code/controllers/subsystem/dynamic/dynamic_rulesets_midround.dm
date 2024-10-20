@@ -233,6 +233,7 @@
 	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_flag_override = ROLE_TRAITOR
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -281,6 +282,7 @@
 	antag_datum = /datum/antagonist/malf_ai
 	antag_flag = ROLE_MALF_MIDROUND
 	antag_flag_override = ROLE_MALF
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	enemy_roles = list(
 		JOB_CHEMIST,
 		JOB_CHIEF_ENGINEER,
@@ -448,7 +450,7 @@
 	antag_datum = /datum/antagonist/blob/infection
 	antag_flag = ROLE_BLOB_INFECTION
 	antag_flag_override = ROLE_BLOB
-	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -826,7 +828,7 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/obsessed
 	antag_flag = ROLE_OBSESSED
-	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
@@ -892,7 +894,7 @@
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/paradox_clone
 	antag_flag = ROLE_PARADOX_CLONE
-	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,

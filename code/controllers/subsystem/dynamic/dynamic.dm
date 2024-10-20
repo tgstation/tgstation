@@ -19,8 +19,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
-/// Bitflags used during init by Dynamic to determine which rulesets we're allowed to use, used by station traits for gamemode-esque experiences
-GLOBAL_VAR_INIT(dynamic_ruleset_categories, RULESET_CATEGORY_DEFAULT)
+/**
+ * Bitflags used during init by Dynamic to determine which rulesets we're allowed to use,
+ * used by station traits for gamemode-esque experiences.
+ * If 0 (NONE), it will default to RULESET_CATEGORY_DEFAULT
+ */
+GLOBAL_VAR_INIT(dynamic_ruleset_categories, NONE)
 
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
@@ -943,7 +947,7 @@ SUBSYSTEM_DEF(dynamic)
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		ruleset.restricted_roles |= JOB_ASSISTANT
-	if(!(ruleset.ruleset_category & GLOB.dynamic_ruleset_categories))
+	if(!(ruleset.ruleset_category & (GLOB.dynamic_ruleset_categories || RULESET_CATEGORY_DEFAULT)))
 		ruleset.requirements = list(101,101,101,101,101,101,101,101,101,101)
 
 /// Get station traits and call for their config

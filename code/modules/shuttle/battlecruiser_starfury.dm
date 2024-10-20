@@ -178,4 +178,12 @@
 					source = spawner,
 				)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	// If we have a Station Trait "Naval Patrol" it will not prevent the Lone Ops but just announce it presence
+	// You should've secured that disk! Not even Navy will stop a disk-sniffing-determined Lone Operative
+	if(GLOB.dynamic_ruleset_categories & RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS)
+		priority_announce(
+			"We've detected a battlecruiser ship heading towards [GLOB.station_name]. It somehow evaded our engagement protocols. The situation is yours to handle, no reply.",
+			"Nanotrasen Navy Update",
+		)
+	else
+		priority_announce("Unidentified armed ship detected near the station.")
