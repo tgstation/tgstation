@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Getting stabbed or shot in the eyes has a chance of giving you a new wound and a semi-permanent scar, blinding you on one side"
-  - rscadd: "Added new \"Scarred Eye\" quirk which blinds you on one eye but gives you a fancy eyepatch"
-  - rscadd: "Medical eyepatches have been added to loadout"
