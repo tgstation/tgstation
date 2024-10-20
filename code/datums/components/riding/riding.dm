@@ -47,7 +47,7 @@
 	COOLDOWN_DECLARE(vehicle_move_cooldown)
 
 
-/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, buckle_mob_flags= NONE, potion_boost = FALSE)
+/datum/component/riding/Initialize(mob/living/riding_mob, force = FALSE, buckle_mob_flags= NONE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -55,7 +55,7 @@
 	riding_mob.updating_glide_size = FALSE
 	ride_check_flags |= buckle_mob_flags
 
-	if(potion_boost)
+	if(HAS_TRAIT(parent, TRAIT_SPEED_POTIONED))
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 
 /datum/component/riding/RegisterWithParent()
