@@ -58,7 +58,7 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 
-/obj/item/circuit_component/nfc_receive/proc/nfc_receive(obj/item/circuit_component/ntnet_send/source, list/data)
+/obj/item/circuit_component/nfc_receive/proc/nfc_receive(obj/item/circuit_component/source, list/data)
 	SIGNAL_HANDLER
 
 	if(data["enc_key"] != enc_key.value)
