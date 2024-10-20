@@ -9,7 +9,7 @@
 	var/being_used = FALSE
 
 /obj/item/anointing_oil/attack(mob/living/target_mob, mob/living/user, params)
-	if (!is_species(user, /datum/species/genemod/primitive))
+	if (!is_species(user, /datum/species/human/genemod/primitive))
 		to_chat(user, span_warning("You have no idea what this disgusting concoction is used for."))
 		return
 	if(being_used || !ismob(target_mob)) //originally this was going to check if the mob was friendly, but if an icecat wants to name some terror mob while it's tearing chunks out of them, why not?
@@ -48,7 +48,7 @@
 
 /obj/item/anointing_oil/examine(mob/user)
 	. = ..()
-	if(is_species(user, /datum/species/genemod/primitive))
+	if(is_species(user, /datum/species/human/genemod/primitive))
 		. += span_info("Using this on the local wildlife will allow you to give them a name.")
 
 /datum/crafting_recipe/anointing_oil
@@ -74,7 +74,7 @@
     w_class = WEIGHT_CLASS_TINY
 
 /obj/item/frozen_breath/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-    if (!is_species(user, /datum/species/genemod/primitive))
+    if (!is_species(user, /datum/species/human/genemod/primitive))
         to_chat(user, span_warning("You have no idea how to use this freezing concoction."))
         return
 
@@ -94,7 +94,7 @@
 
 /obj/item/frozen_breath/examine(mob/user)
     . = ..()
-    if(is_species(user, /datum/species/genemod/primitive))
+    if(is_species(user, /datum/species/human/genemod/primitive))
         . += span_info("Using this on a pair of organic lungs transforms them into hardy lungs. This will remove any other special features from the old lungs, if there were any.")
 
 /datum/crafting_recipe/frozen_breath

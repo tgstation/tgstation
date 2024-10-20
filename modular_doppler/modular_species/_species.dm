@@ -59,16 +59,38 @@
 /datum/species/proc/apply_animal_trait(mob/living/carbon/human/target, animal_trait)
 	if(!ishuman(target) || animal_trait == NO_VARIATION || !animal_trait)
 		return
-	// Organs (or just tongues)
-	/// Find and set our new informed tongue!
+
+	// Add the organs!
 	var/obj/item/organ/tongue = text2path("/obj/item/organ/internal/tongue/[animal_trait]")
 	if(tongue) // text2path nulls if it can't find a matching subtype, so don't worry adding an organ for every single trait value
 		mutanttongue = tongue.type
+/*	else
+		switch(animal_trait)
+*/
+
+	var/obj/item/organ/lungs = text2path("/obj/item/organ/internal/lungs/[animal_trait]")
+	if(lungs)
+		mutantlungs = lungs.type
+	else // If you have an organ that is more specific, you can add it in this switch() list
+		switch(animal_trait)
+			if(FROG)
+				mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
+
+	var/obj/item/organ/stomach = text2path("/obj/item/organ/internal/stomach/[animal_trait]")
+	if(stomach)
+		mutantstomach = stomach.type
+/*	else
+		switch(animal_trait)
+*/
+
+
 	//	Adding traits from here on
 	switch(animal_trait)
 		if(CAT)
 			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
+			ADD_TRAIT(target, TRAIT_WATER_HATER, SPECIES_TRAIT)
+
 
 
 /// spec_revival logic

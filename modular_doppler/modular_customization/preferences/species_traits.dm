@@ -27,6 +27,8 @@
 			return icon('icons/mob/simple/carp.dmi', "carp", WEST)
 		if(FOX)
 			return icon('icons/mob/simple/pets.dmi', "fox", EAST)
+		if(FROG)
+			return icon('icons/mob/simple/animal.dmi', "frog", WEST)
 		if(LIZARD)
 			return icon('icons/mob/simple/animal.dmi', "lizard", EAST)
 		if(MONKEY)

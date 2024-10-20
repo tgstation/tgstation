@@ -1,9 +1,39 @@
+/// Cat tongue
+//
+/obj/item/organ/internal/tongue/cat/Insert(mob/living/carbon/signer, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+	. = ..()
+	signer.verb_ask = "mrrps"
+	signer.verb_exclaim = "mrrowls"
+	signer.verb_whisper = "purrs"
+	signer.verb_yell = "yowls"
+
+/obj/item/organ/internal/tongue/cat/Remove(mob/living/carbon/speaker, special = FALSE)
+	. = ..()
+	speaker.verb_ask = initial(verb_ask)
+	speaker.verb_exclaim = initial(verb_exclaim)
+	speaker.verb_whisper = initial(verb_whisper)
+	speaker.verb_yell = initial(verb_yell)
+
 /// Dog tongue
 //
 /obj/item/organ/internal/tongue/dog
 	name = "dog tongue"
 	desc = "A fleshy muscle mostly used for barking."
-	say_mod = "barks"
+	say_mod = "woofs"
+
+/obj/item/organ/internal/tongue/dog/Insert(mob/living/carbon/signer, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+	. = ..()
+	signer.verb_ask = "arfs"
+	signer.verb_exclaim = "wans"
+	signer.verb_whisper = "whimpers"
+	signer.verb_yell = "barks"
+
+/obj/item/organ/internal/tongue/dog/Remove(mob/living/carbon/speaker, special = FALSE)
+	. = ..()
+	speaker.verb_ask = initial(verb_ask)
+	speaker.verb_exclaim = initial(verb_exclaim)
+	speaker.verb_whisper = initial(verb_whisper)
+	speaker.verb_yell = initial(verb_yell)
 
 /// Bird tongue
 //
@@ -40,6 +70,9 @@
 	desc = "A fleshy muscle mostly used for gnashing."
 	say_mod = "gnashes"
 
-/// Monkey tongue
+/// Frog tongue
 //
-/obj/item/organ/internal/tongue/monkey
+/obj/item/organ/internal/tongue/frog
+	name = "fish tongue"
+	desc = "A fleshy muscle mostly used for gnashing."
+	say_mod = "ribbits"
