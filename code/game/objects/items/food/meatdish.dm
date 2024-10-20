@@ -52,7 +52,7 @@
 
 /obj/item/food/fishmeat/salmon
 	name = "salmon fillet"
-	desc = "a chunky, fatty fillet of salmon meat."
+	desc = "A chunky, fatty fillet of salmon meat."
 	icon_state = "salmon"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
@@ -185,7 +185,7 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
-	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	tastes = list("fish" = 1, "pan-seared vegetables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -725,7 +725,7 @@
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
-	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself. You sure hope whoever made this is skilled."
+	desc = "Celebrate surviving an attack from hostile alien lifeforms by hospitalising yourself. You sure hope whoever made this is skilled."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "sashimi"
 	food_reagents = list(
