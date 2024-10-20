@@ -239,6 +239,8 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
 
+	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
+	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not suffocating.
 	var/safe_water_level = parent_type::safe_oxygen_min
@@ -363,6 +365,14 @@
 
 	organ_traits = list(TRAIT_STRONG_STOMACH, TRAIT_FISH_EATER)
 	disgust_metabolism = 2.5
+
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
+	// Salty and putrid like it smells, yum
+	food_tastes = list(
+		"salt" = 1,
+		"putrid fish" = 1,
+	)
 
 /obj/item/organ/internal/stomach/fish/Initialize(mapload)
 	. = ..()
