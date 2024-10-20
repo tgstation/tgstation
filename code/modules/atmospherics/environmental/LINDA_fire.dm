@@ -401,7 +401,7 @@
 	var/turf/open/target_turf = target.loc
 	x_coord -= target_turf.x
 	y_coord -= target_turf.y
-	if(spot_list.len <= 0)
+	if(!length(spot_list))
 		qdel(src)
 		return
 
@@ -412,7 +412,7 @@
 	x_coord += target_turf.x
 	y_coord += target_turf.y
 	z_coord += target_turf.z
-	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > 2)//arbitrary size to start playing the sound
 		update_sound()
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
@@ -421,11 +421,11 @@
 	var/datum/hot_group/saving_group
 	var/datum/hot_group/sacrificial_group
 
-	if(spot_list.len >= tiles_limit || enemy_group.spot_list.len >= tiles_limit)
+	if(length(spot_list) >= tiles_limit || length(enemy_group.spot_list) >= tiles_limit)
 		return
-	if(spot_list.len == enemy_group.spot_list.len)
+	if(length(spot_list) == length(enemy_group.spot_list))
 		choose_a_group = rand(0,1)
-	if(spot_list.len > enemy_group.spot_list.len || choose_a_group)//we're bigger take all of their territory!
+	if(length(spot_list) > length(enemy_group.spot_list) || choose_a_group)//we're bigger take all of their territory!
 		saving_group = src
 		sacrificial_group = enemy_group
 	else
@@ -437,7 +437,7 @@
 	saving_group.x_coord += sacrificial_group.x_coord
 	saving_group.y_coord += sacrificial_group.y_coord
 	qdel(sacrificial_group)
-	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > 2)//arbitrary size to start playing the sound
 		update_sound()
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
