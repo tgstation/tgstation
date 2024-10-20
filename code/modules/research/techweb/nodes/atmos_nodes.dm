@@ -11,6 +11,8 @@
 		"scrubber",
 		"generic_tank",
 		"oxygen_tank",
+		"nitrogen_tank", //DOPPLER EDIT ADDITION
+		"nitrogen_tank_belt", //DOPPLER EDIT ADDITION
 		"plasma_tank",
 		"plasmaman_tank_belt",
 		"plasmarefiller",

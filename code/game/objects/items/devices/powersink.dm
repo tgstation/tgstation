@@ -2,7 +2,7 @@
 #define CLAMPED_OFF 1
 #define OPERATING 2
 
-#define FRACTION_TO_RELEASE 25
+#define FRACTION_TO_RELEASE 5 // DOPPLER EDIT - buff powersink/creditminer, old code: 25
 #define ALERT 90
 #define MINIMUM_HEAT 20000
 

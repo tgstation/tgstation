@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * type_list - are we checking for types of atoms to ignore and not physical atoms
  */
 /turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
-	if(density)
+	if((!isnull(source_atom) && !CanPass(source_atom, get_dir(src, source_atom))) || density)
 		return TRUE
 
 	for(var/atom/movable/movable_content as anything in contents)
@@ -769,6 +769,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(alpha < 255)
+		AddElement(/datum/element/turf_z_transparency)
+		main_material.setup_glow(src)
+	rust_resistance = main_material.mat_rust_resistance
+
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+	. = ..()
+	rust_resistance = initial(rust_resistance)
+	if(alpha == 255)
+		return
+	RemoveElement(/datum/element/turf_z_transparency)
+	// yeets glow
+	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+	set_light(0, 0, null)
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)

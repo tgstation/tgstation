@@ -607,7 +607,13 @@
 	smoke.start()
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
+		playsound(borg, pick(
+			'sound/items/tools/drill_use.ogg',
+			'sound/items/tools/jaws_cut.ogg',
+			'sound/items/tools/jaws_pry.ogg',
+			'sound/items/tools/welder.ogg',
+			'sound/items/tools/ratchet.ogg',
+			), 80, TRUE, -1)
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -648,7 +654,7 @@
 	name = "Internal inducer"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	cell_type = null
+	powerdevice = null
 
 /obj/item/inducer/cyborg/get_cell()
 	var/obj/item/robot_model/possible_model = loc
@@ -657,7 +663,7 @@
 		. = silicon_friend.cell
 
 /obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return NONE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

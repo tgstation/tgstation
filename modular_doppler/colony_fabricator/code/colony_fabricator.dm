@@ -7,7 +7,7 @@
 	icon_state = "colony_lathe"
 	base_icon_state = "colony_lathe"
 	circuit = null
-	production_animation = "colony_lathe_n"
+	production_animation = "colony_lathe_working"
 	light_color = LIGHT_COLOR_BRIGHT_YELLOW
 	light_power = 5
 	allowed_buildtypes = COLONY_FABRICATOR

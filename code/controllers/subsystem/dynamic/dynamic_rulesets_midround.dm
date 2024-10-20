@@ -263,9 +263,15 @@
 			candidates -= player // We don't autotator people in CentCom
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player // We don't autotator people with roles already
+		// DOPPLER ADDITION START
+		else if(player in rejected_traitor)
+			candidates -= player
+		else if(player in current_polling)
+			candidates -= player
+		// DOPPLER ADDITION END
 
 /datum/dynamic_ruleset/midround/from_living/autotraitor/execute()
-	var/mob/M = pick(candidates)
+	var/mob/M = pick(poll_candidates_for_one(candidates)) // DOPPLER EDIT, old code: var/mob/M = pick(candidates)
 	assigned += M
 	candidates -= M
 	var/datum/antagonist/traitor/infiltrator/sleeper_agent/newTraitor = new
@@ -848,11 +854,15 @@
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
 			|| !candidate.mind.assigned_role \
+			// DOPPLER ADDITION START
+			|| (candidate in rejected_traitor) \
+			|| (candidate in current_polling) \
+			// DOPPLER ADDITION END
 		)
 			candidates -= candidate
 
 /datum/dynamic_ruleset/midround/from_living/obsessed/execute()
-	var/mob/living/carbon/human/obsessed = pick_n_take(candidates)
+	var/mob/living/carbon/human/obsessed = pick_n_take(poll_candidates_for_one(candidates)) // DOPPLER EDIT, old code: var/mob/living/carbon/human/obsessed = pick_n_take(candidates)
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")

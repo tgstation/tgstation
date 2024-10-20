@@ -149,7 +149,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_KILL)
 			special_effects |= FISHING_MINIGAME_RULE_KILL
 
+	//Finish the minigame faster at higher skill. The value modifiers for fishing are negative values btw.
 	completion_loss += user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/5
+	completion_gain -= user.mind?.get_skill_modifier(/datum/skill/fishing, SKILL_VALUE_MODIFIER)/7.5
 
 /datum/fishing_challenge/Destroy(force)
 	GLOB.fishing_challenges_by_user -= user
@@ -271,7 +273,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 		return
 	if(phase == WAIT_PHASE)
 		if(world.time < last_baiting_click + 0.25 SECONDS)
-			return //Don't punish players if they accidentally double clicked.
+			return COMSIG_MOB_CANCEL_CLICKON //Don't punish players if they accidentally double clicked.
 		if(float.spin_frequency)
 			if(!float.spin_ready)
 				send_alert("too early!")
@@ -360,6 +362,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	playsound(location, 'sound/effects/fish_splash.ogg', 100)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
+		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
 		switch(fish_icon)
 			if(FISH_ICON_DEF)
 				send_alert("fish!!!")
@@ -465,9 +468,6 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 
 	if(difficulty > FISHING_DEFAULT_DIFFICULTY)
 		completion -= MAX_FISH_COMPLETION_MALUS * (difficulty * 0.01)
-
-	if(HAS_MIND_TRAIT(user, TRAIT_REVEAL_FISH))
-		fish_icon = GLOB.specific_fish_icons[reward_path] || FISH_ICON_DEF
 
 	/// Fish minigame properties
 	if(ispath(reward_path,/obj/item/fish))

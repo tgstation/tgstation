@@ -112,8 +112,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/inert_mutation = /datum/mutation/human/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
-	///Sounds to override barefeet walking
-	var/list/special_step_sounds
 	///Special sound for grabbing
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
@@ -370,10 +368,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	// Drop the items the new species can't wear
-	if(human_who_gained_species.hud_used)
-		human_who_gained_species.hud_used.update_locked_slots()
 
+	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
+
+	// Drop the items the new species can't wear
 	human_who_gained_species.mob_biotypes = inherent_biotypes
 	human_who_gained_species.mob_respiration_type = inherent_respiration_type
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
@@ -382,7 +380,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		replace_body(human_who_gained_species, src)
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
-
+	// Update locked slots AFTER all organ and body stuff is handled
+	human_who_gained_species.hud_used?.update_locked_slots()
 	// Drop the items the new species can't wear
 	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), human_who_gained_species, TRUE)
 
@@ -421,6 +420,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	properly_gained = TRUE
 
+	human_who_gained_species.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
 /**
  * Proc called when a carbon is no longer this species.
  *
@@ -431,40 +432,44 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * new_species - The new species that the carbon became, used for genetics mutations.
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
-/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/proc/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	C.butcher_results = null
-	for(var/X in inherent_traits)
-		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
+	human.butcher_results = null
+	for(var/trait in inherent_traits)
+		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 
 	//If their inert mutation is not the same, swap it out
-	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
-		C.dna.remove_mutation(inert_mutation)
+	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(human.dna.mutation_index) && (inert_mutation in human.dna.mutation_index))
+		human.dna.remove_mutation(inert_mutation)
 		//keep it at the right spot, so we can't have people taking shortcuts
-		var/location = C.dna.mutation_index.Find(inert_mutation)
-		C.dna.mutation_index[location] = new_species.inert_mutation
-		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
-		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
-		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
+		var/location = human.dna.mutation_index.Find(inert_mutation)
+		human.dna.mutation_index[location] = new_species.inert_mutation
+		human.dna.default_mutation_genes[location] = human.dna.mutation_index[location]
+		human.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		human.dna.default_mutation_genes[new_species.inert_mutation] = human.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
-			C.faction -= i
+			human.faction -= i
 
-	clear_tail_moodlets(C)
+	clear_tail_moodlets(human)
 
-	remove_body_markings(C)
+	remove_body_markings(human)
 
 	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
 	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
 	for(var/language in losing_holder.understood_languages)
-		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+		human.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.spoken_languages)
-		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+		human.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.blocked_languages)
-		C.remove_blocked_language(language, LANGUAGE_SPECIES)
+		human.remove_blocked_language(language, LANGUAGE_SPECIES)
 
-	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+	SEND_SIGNAL(human, COMSIG_SPECIES_LOSS, src)
+
+	human.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
 /**
  * Handles the body of a human
@@ -650,7 +655,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(H.num_hands < 2)
+			if(H.num_hands == 0)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
@@ -840,8 +845,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(QDELETED(target)) //may be called from a timer
 		return
 	target.set_facial_hairstyle("Shaved", update = FALSE)
-	target.set_hairstyle("Bald", update = FALSE)
-	target.update_body_parts()
+	target.set_hairstyle("Bald") //This calls update_body_parts()
 
 //////////////////
 // ATTACK PROCS //
@@ -1138,7 +1142,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	humi.adjust_coretemperature(skin_core_change)
 
 	// get the enviroment details of where the mob is standing
-	var/datum/gas_mixture/environment = humi.loc.return_air()
+	var/datum/gas_mixture/environment = humi.loc?.return_air()
 	if(!environment) // if there is no environment (nullspace) drop out here.
 		return
 
@@ -1384,20 +1388,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
-
-//////////
-// FIRE //
-//////////
-
-/datum/species/proc/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
-	return no_protection
-
 ////////////
 //  Stun  //
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	if(H.movement_type & FLYING)
+	if((H.movement_type & FLYING) && !H.buckled)
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(wings)
 			wings.toggle_flight(H)
@@ -1482,6 +1478,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Returns the species' sneeze sound.
 /datum/species/proc/get_sneeze_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' snore sound.
+/datum/species/proc/get_snore_sound(mob/living/carbon/human/human)
 	return
 
 /datum/species/proc/get_mut_organs(include_brain = TRUE)
@@ -2030,7 +2030,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *
  * Returns a color string or null.
  */
-/datum/species/proc/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+/datum/species/proc/get_fixed_hair_color(mob/living/carbon/for_mob)
 	ASSERT(!isnull(for_mob))
 	switch(hair_color_mode)
 		if(USE_MUTANT_COLOR)

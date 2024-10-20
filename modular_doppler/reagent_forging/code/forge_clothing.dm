@@ -9,7 +9,7 @@
 	resistance_flags = FIRE_PROOF
 	obj_flags_doppler = ANVIL_REPAIR
 	armor_type = /datum/armor/armor_forging_plate_armor
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 
 /datum/armor/armor_forging_plate_armor
 	melee = 40
@@ -34,7 +34,7 @@
 	resistance_flags = FIRE_PROOF
 	obj_flags_doppler = ANVIL_REPAIR
 	armor_type = /datum/armor/gloves_forging_plate_gloves
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	body_parts_covered = HANDS|ARMS
 
 /datum/armor/gloves_forging_plate_gloves
@@ -59,7 +59,7 @@
 	flags_inv = null
 	obj_flags_doppler = ANVIL_REPAIR
 	armor_type = /datum/armor/helmet_forging_plate_helmet
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 
 /datum/armor/helmet_forging_plate_helmet
 	melee = 40
@@ -79,12 +79,12 @@
 	icon = 'modular_doppler/reagent_forging/icons/obj/forge_clothing.dmi'
 	worn_icon = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing.dmi'
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/food_replicator/icons/clothing_worn.dmi',
+	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing.dmi',
 		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/reagent_forging/icons/mob/clothing/forge_clothing_digi.dmi')
 	icon_state = "plate_boots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	armor_type = /datum/armor/shoes_forging_plate_boots
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	resistance_flags = FIRE_PROOF
 	obj_flags_doppler = ANVIL_REPAIR
 	can_be_tied = FALSE
@@ -123,7 +123,7 @@
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
 	w_class = WEIGHT_CLASS_SMALL
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	obj_flags_doppler = ANVIL_REPAIR
 
 /obj/item/clothing/neck/collar/reagent_clothing/Initialize(mapload)
@@ -133,7 +133,7 @@
 /obj/item/restraints/handcuffs/reagent_clothing
 	name = "reagent handcuffs"
 	desc = "A pair of handcuffs that are ready to keep someone captive."
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_COLOR
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	obj_flags_doppler = ANVIL_REPAIR
 
 /obj/item/restraints/handcuffs/reagent_clothing/Initialize(mapload)

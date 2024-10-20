@@ -35,6 +35,8 @@
 #define TRAIT_LEFT_HANDED "left_handed"
 /// Trait for people with the cybernetic quirk
 #define TRAIT_PERMITTED_CYBERNETIC "permitted_cybernetic"
+/// No step on glass
+#define TRAIT_HARD_SOLES "hard_soles"
 
 ////
 // Jobs
