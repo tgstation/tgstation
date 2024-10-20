@@ -898,7 +898,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potyellow"
 
-/obj/item/slimepotion/speed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/slimepotion/speed/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -919,7 +919,7 @@
 	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))
 	interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
-	apply_to.drag_slowdown = 0
+	interacting_with.drag_slowdown = 0
 	ADD_TRAIT(interacting_with, TRAIT_SPEED_POTIONED, SLIME_POTION_TRAIT)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
