@@ -430,9 +430,11 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/haunted/proc/binding_filters_update(mob/user)
 
+	var/h_color = heretic_path ? GLOB.heretic_path_to_color[heretic_path] : "#FF00FF"
+
 	// on bound
 	if(bound)
-		add_filter("bind_glow", 2, list("type" = "outline", "color" = GLOB.heretic_path_to_color[heretic_path], "size" = 0.1))
+		add_filter("bind_glow", 2, list("type" = "outline", "color" = h_color, "size" = 0.1))
 		remove_filter("unbound_ray")
 		update_filters()
 	// on unbound
