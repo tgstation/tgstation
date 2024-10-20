@@ -8,9 +8,11 @@
 	preview_outfit = /datum/outfit/insect_preview
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
+		TRAIT_WEB_WEAVER,
+		TRAIT_WEB_SURFER,
 	)
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "Insectoid Pattern")
-	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	exotic_blood = /datum/reagent/bug_blood
@@ -29,6 +31,10 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/insectoid,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/insectoid,
 	)
+	mutanttongue = /obj/item/organ/internal/tongue/bug
+	mutantstomach = /obj/item/organ/internal/stomach/roach
+	mutantliver = /obj/item/organ/internal/liver/roach
+	mutantappendix = /obj/item/organ/internal/appendix/roach
 
 /datum/outfit/insect_preview
 	name = "Insectoid (Species Preview)"

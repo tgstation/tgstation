@@ -28,14 +28,16 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS
 		)
 	)
-	// lung edits
+	// set lung vars
 	target_lungs.safe_oxygen_min = 0 //Dont need oxygen
 	target_lungs.safe_oxygen_max = 2 //But it is quite toxic
 	target_lungs.safe_nitro_min = 10 // Atleast 10 nitrogen
 	target_lungs.oxy_damage_type = TOX
 	target_lungs.oxy_breath_dam_min = 6
 	target_lungs.oxy_breath_dam_max = 20
-	//
+	// update lung procs
 	target_lungs.breathe_always = list(/datum/gas/nitrogen = "breathe_nitro")
 	target_lungs.breath_present += list(/datum/gas/oxygen = "too_much_oxygen")
 	target_lungs.breath_lost += list(/datum/gas/oxygen = "safe_oxygen")
+	// reflect correct lung flags
+	target_lungs.respiration_type = RESPIRATION_N2

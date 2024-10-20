@@ -4,6 +4,7 @@
 	limb_id = SPECIES_INSECTOID
 	damage_overlay_color = COLOR_DARK_MODERATE_LIME_GREEN
 	is_dimorphic = FALSE
+	bodypart_traits = list(TRAIT_ANTENNAE)
 
 /obj/item/bodypart/chest/insectoid
 	icon_greyscale = 'modular_doppler/modular_species/species_types/insectoid/icons/bodyparts.dmi'

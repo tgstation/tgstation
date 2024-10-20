@@ -240,7 +240,7 @@
 		gills = new()
 		AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
-	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+//	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) // DOPPLER EDIT REMOVAL - really funny i wish we could keep this
 
 /obj/item/organ/internal/lungs/fish/Destroy()
 	QDEL_NULL(gills)

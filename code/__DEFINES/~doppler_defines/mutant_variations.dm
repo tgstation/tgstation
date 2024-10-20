@@ -37,8 +37,8 @@ GLOBAL_LIST_INIT(mutant_variations, list(
 
 ///	This list gets read by the animalistic preference for genemod and anthros
 GLOBAL_LIST_INIT(genemod_variations, list(
-	NO_VARIATION,
 	BIRD,
+	BUG,
 	BUNNY,
 	CAT,
 	DEER,
@@ -49,4 +49,5 @@ GLOBAL_LIST_INIT(genemod_variations, list(
 	LIZARD,
 	MONKEY,
 	MOUSE,
+	NO_VARIATION,
 ))

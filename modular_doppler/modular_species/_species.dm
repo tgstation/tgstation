@@ -60,14 +60,13 @@
 	if(!ishuman(target) || animal_trait == NO_VARIATION || !animal_trait)
 		return
 
-	// Add the organs!
+	//// Add the organs!
+	// tongue
 	var/obj/item/organ/tongue = text2path("/obj/item/organ/internal/tongue/[animal_trait]")
 	if(tongue) // text2path nulls if it can't find a matching subtype, so don't worry adding an organ for every single trait value
 		mutanttongue = tongue.type
-/*	else
-		switch(animal_trait)
-*/
 
+	// lungs
 	var/obj/item/organ/lungs = text2path("/obj/item/organ/internal/lungs/[animal_trait]")
 	if(lungs)
 		mutantlungs = lungs.type
@@ -76,22 +75,53 @@
 			if(FROG)
 				mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
 
+	// liver
+	var/obj/item/organ/liver = text2path("/obj/item/organ/internal/liver/[animal_trait]")
+	if(liver)
+		mutantliver = liver.type
+	else
+		switch(animal_trait)
+			if(BUG)
+				mutantliver = /obj/item/organ/internal/liver/roach
+
+	// stomach
 	var/obj/item/organ/stomach = text2path("/obj/item/organ/internal/stomach/[animal_trait]")
 	if(stomach)
 		mutantstomach = stomach.type
-/*	else
+	else
 		switch(animal_trait)
-*/
+			if(BUG)
+				mutantstomach = /obj/item/organ/internal/stomach/roach
 
+	// appendix
+	var/obj/item/organ/appendix = text2path("/obj/item/organ/internal/appendix/[animal_trait]")
+	if(appendix)
+		mutantappendix = appendix.type
+	else
+		switch(animal_trait)
+			if(BUG)
+				mutantappendix = /obj/item/organ/internal/appendix/roach
 
-	//	Adding traits from here on
+	////
+	//	Adding remaining traits, elements, components, and more from here on
 	switch(animal_trait)
+		if(BIRD)
+			target.AddComponent(/datum/component/pinata, candy = list(/obj/item/feather))
+		if(BUG)
+			inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
+			ADD_TRAIT(target, TRAIT_WEB_WEAVER, SPECIES_TRAIT)
+			ADD_TRAIT(target, TRAIT_WEB_SURFER, SPECIES_TRAIT)
+			ADD_TRAIT(target, TRAIT_ANTENNAE, SPECIES_TRAIT)
 		if(CAT)
 			ADD_TRAIT(target, TRAIT_CATLIKE_GRACE, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_HATED_BY_DOGS, SPECIES_TRAIT)
 			ADD_TRAIT(target, TRAIT_WATER_HATER, SPECIES_TRAIT)
-
-
+		if(DEER)
+			target.AddElement(/datum/element/cliff_walking)
+		if(FISH)
+			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
+		if(FROG)
+			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
 
 /// spec_revival logic
 /datum/species/proc/spec_revival(mob/living/carbon/human/target)

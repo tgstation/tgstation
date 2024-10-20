@@ -1,3 +1,12 @@
+/// Bug tongue
+//
+/obj/item/organ/internal/tongue/bug
+	name = "bug tongue"
+	desc = "A fleshy muscle mostly used for chittering."
+	icon = 'icons/obj/medical/organs/fly_organs.dmi'
+	say_mod = "buzzes"
+	say_mod = "chitters"
+
 /// Cat tongue
 //
 /obj/item/organ/internal/tongue/cat/Insert(mob/living/carbon/signer, special = FALSE, movement_flags = DELETE_IF_REPLACED)
@@ -74,5 +83,5 @@
 //
 /obj/item/organ/internal/tongue/frog
 	name = "fish tongue"
-	desc = "A fleshy muscle mostly used for gnashing."
+	desc = "A fleshy muscle mostly used for ribbiting."
 	say_mod = "ribbits"
