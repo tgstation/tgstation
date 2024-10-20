@@ -165,9 +165,26 @@
 	wag_flags = WAG_ABLE
 	organ_traits = list(TRAIT_FLOPPING)
 
+	// Fishlike reagents, you could serve it raw like fish
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/nutriment/fat = 10,
+	)
+	// Seafood instead of meat, because it's a fish organ
+	foodtype_flags = RAW | SEAFOOD | GORE
+	// Also just tastes like fish
+	food_tastes = list("fatty fish" = 1)
+	/// The fillet type this fish tail is processable into
+	var/fillet_type = /obj/item/food/fishmeat/fish_tail
+	/// The amount of fillets this gets processed into
+	var/fillet_amount = 5
+
 /obj/item/organ/external/tail/fish/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+	var/time_to_fillet = fillet_amount * 0.5 SECONDS
+	AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, fillet_amount, time_to_fillet, screentip_verb = "Cut")
 
 /obj/item/organ/external/tail/fish/on_mob_insert(mob/living/carbon/owner)
 	. = ..()
