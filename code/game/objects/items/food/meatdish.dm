@@ -146,7 +146,7 @@
 
 /obj/item/food/fishmeat/fish_tail
 	name = "fish tail fillet"
-	desc = "A precious fatty filet cut straight from the tail of a very large fish. Its rarity has it seen as a delicacy in certain spaces."
+	desc = "A precious fatty filet cut straight from the tail of a very large ...fish? Its rarity has it seen as a delicacy in certain spaces."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
