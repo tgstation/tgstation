@@ -205,7 +205,7 @@
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
 	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
-	if(imprint_on_next_insertion && (receiver.dna.features["fish_tail"] != /datum/sprite_accessory/tails/fish/none::name && receiver.dna.tail_type != FISH)) // DOPPLER EDIT, old code: if(imprint_on_next_insertion && !receiver.dna.features["fish_tail"])
+	if(imprint_on_next_insertion && !receiver.dna.features["fish_tail"] && !(istype(receiver, /mob/living/carbon/human/dummy/consistent))) // DOPPLER EDIT, old code: if(imprint_on_next_insertion && !receiver.dna.features["fish_tail"])
 		receiver.dna.features["fish_tail"] = pick(SSaccessories.tails_list_fish)
 		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
 
