@@ -120,7 +120,9 @@
 	data = taste_amounts
 
 /datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
-	return data
+	if(length(data))
+		return data
+	return ..()
 
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
