@@ -122,11 +122,12 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
-## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
-
-## If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
-#ENFORCE_HUMAN_AUTHORITY_ON_EVERYONE
+## How human authority should be distributed. Can be set to four options (Make sure that what you type is exact!):
+## "DISABLED"/Comment out/Put any invalid value: non-human races can be heads of staff and "human only" settings on jobs will be fully ignored.
+## "HUMAN_WHITELIST": all heads-of-staff jobs will be able to be played by non-humans, unless that job incorporates the "human only" flag (Which can be configured via a variable or the job config txt).
+## "NON_HUMAN_WHITELIST": non-humans will not be able to play as heads of staff, unless that job incorporates the "allow non-humans" flag (Which can be configured via a variable or the job config txt).
+## "ENFORCED": non-humans cannot be heads of staff, only humans can. the "allow non-humans" setting will be ignored.
+HUMAN_AUTHORITY HUMAN_WHITELIST
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS

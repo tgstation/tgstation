@@ -18,7 +18,7 @@
 		return
 	if(isliving(moved))
 		var/mob/living/living_moved = moved
-		if (living_moved.incapacitated || living_moved.body_position == LYING_DOWN)
+		if (living_moved.incapacitated || (living_moved.body_position == LYING_DOWN && !HAS_TRAIT(living_moved, TRAIT_FLOPPING)))
 			return
 	waddling_animation(moved)
 
@@ -28,3 +28,16 @@
 	var/prev_transform = target.transform
 	animate(pixel_z = prev_pixel_z, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
 	animate(transform = prev_transform, time = 0)
+
+// DOPPLER ADDITION START
+/datum/element/waddling/flopping_only
+
+/datum/element/waddling/flopping_only/Waddle(atom/movable/moved, atom/oldloc, direction, forced)
+	if(forced || CHECK_MOVE_LOOP_FLAGS(moved, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	if(isliving(moved))
+		var/mob/living/living_moved = moved
+		if (living_moved.incapacitated || !(living_moved.body_position == LYING_DOWN) || !HAS_TRAIT(living_moved, TRAIT_FLOPPING))
+			return
+	waddling_animation(moved)
+// DOPPLER ADDITION END

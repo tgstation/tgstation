@@ -60,8 +60,9 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+#define DNA_FISH_TAIL_BLOCK 16
 /// DOPPLER SHIFT ADDITION BEGIN
-#define DNA_BREASTS_BLOCK 16
+#define DNA_BREASTS_BLOCK 17
 /// DOPPLER SHIFT ADDITION END
 
 // Hey! Listen up if you're here because you're adding a species feature!
@@ -71,7 +72,7 @@
 // (Which means having a DNA block for a feature tied to a mob without DNA is entirely pointless.)
 
 /// Total amount of DNA blocks, must be equal to the highest DNA block number
-#define DNA_FEATURE_BLOCKS 16 /// DOPPLER SHIFT EDIT: 16, up from 15
+#define DNA_FEATURE_BLOCKS 17 /// DOPPLER SHIFT EDIT: 17, up from 15
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8

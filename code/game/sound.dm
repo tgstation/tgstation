@@ -43,6 +43,9 @@
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
+	if(islist(soundin))
+		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
+
 	var/turf/turf_source = get_turf(source)
 
 	if (!turf_source || !soundin || !vol)
@@ -226,7 +229,10 @@
 		if(SFX_CLOWN_STEP)
 			soundin = pick('sound/effects/footstep/clownstep1.ogg','sound/effects/footstep/clownstep2.ogg')
 		if(SFX_SUIT_STEP)
-			soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
+			soundin = pick(
+			'sound/items/handling/armor_rustle/riot_armor/suitstep1.ogg',
+			'sound/items/handling/armor_rustle/riot_armor/suitstep2.ogg',
+			)
 		if(SFX_SWING_HIT)
 			soundin = pick('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg')
 		if(SFX_HISS)
@@ -522,5 +528,61 @@
 				'sound/effects/liquid_pour/liquid_pour1.ogg',
 				'sound/effects/liquid_pour/liquid_pour2.ogg',
 				'sound/effects/liquid_pour/liquid_pour3.ogg',
+			)
+		if(SFX_SNORE_FEMALE)
+			soundin = pick_weight(list(
+				'sound/mobs/humanoids/human/snore/snore_female1.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_female2.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_female3.ogg' = 33,
+				'sound/mobs/humanoids/human/snore/snore_mimimi1.ogg' = 1,
+			))
+		if(SFX_SNORE_MALE)
+			soundin = pick_weight(list(
+				'sound/mobs/humanoids/human/snore/snore_male1.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male2.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male3.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male4.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_male5.ogg' = 20,
+				'sound/mobs/humanoids/human/snore/snore_mimimi2.ogg' = 1,
+			))
+		if(SFX_CAT_MEOW)
+			soundin = pick_weight(list(
+				'sound/creatures/cat/cat_meow1.ogg' = 33,
+				'sound/creatures/cat/cat_meow2.ogg' = 33,
+				'sound/creatures/cat/cat_meow3.ogg' = 33,
+				'sound/creatures/cat/oranges_meow1.ogg' = 1,
+			))
+		if(SFX_CAT_PURR)
+			soundin = pick(
+				'sound/creatures/cat/cat_purr1.ogg',
+				'sound/creatures/cat/cat_purr2.ogg',
+				'sound/creatures/cat/cat_purr3.ogg',
+				'sound/creatures/cat/cat_purr4.ogg',
+			)
+		if(SFX_DEFAULT_LIQUID_SLOSH)
+			soundin = pick(
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh1.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh2.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh3.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh4.ogg',
+				'sound/items/handling/reagent_containers/default/default_liquid_slosh5.ogg',
+			)
+		if(SFX_PLASTIC_BOTTLE_LIQUID_SLOSH)
+			soundin = pick(
+				'sound/items/handling/reagent_containers/plastic_bottle/plastic_bottle_liquid_slosh1.ogg',
+				'sound/items/handling/reagent_containers/plastic_bottle/plastic_bottle_liquid_slosh2.ogg',
+			)
+		if(SFX_PLATE_ARMOR_RUSTLE)
+			soundin = pick_weight(list(
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle1.ogg' = 8, //longest sound is rarer.
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle2.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle3.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle4.ogg' = 23,
+				'sound/items/handling/armor_rustle/plate_armor/plate_armor_rustle5.ogg' = 23,
+			))
+		if(SFX_PIG_OINK)
+			soundin = pick(
+				'sound/mobs/non-humanoids/pig/pig1.ogg',
+				'sound/mobs/non-humanoids/pig/pig2.ogg',
 			)
 	return soundin
