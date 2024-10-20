@@ -4,7 +4,6 @@
 	name = "bug tongue"
 	desc = "A fleshy muscle mostly used for chittering."
 	icon = 'icons/obj/medical/organs/fly_organs.dmi'
-	say_mod = "buzzes"
 	say_mod = "chitters"
 
 /// Cat tongue
@@ -16,7 +15,7 @@
 	signer.verb_whisper = "purrs"
 	signer.verb_yell = "yowls"
 
-/obj/item/organ/internal/tongue/cat/Remove(mob/living/carbon/speaker, special = FALSE)
+/obj/item/organ/internal/tongue/cat/Remove(mob/living/carbon/speaker, special = FALSE, movement_flags)
 	. = ..()
 	speaker.verb_ask = initial(verb_ask)
 	speaker.verb_exclaim = initial(verb_exclaim)
@@ -37,7 +36,7 @@
 	signer.verb_whisper = "whimpers"
 	signer.verb_yell = "barks"
 
-/obj/item/organ/internal/tongue/dog/Remove(mob/living/carbon/speaker, special = FALSE)
+/obj/item/organ/internal/tongue/dog/Remove(mob/living/carbon/speaker, special = FALSE, movement_flags)
 	. = ..()
 	speaker.verb_ask = initial(verb_ask)
 	speaker.verb_exclaim = initial(verb_exclaim)
@@ -82,6 +81,6 @@
 /// Frog tongue
 //
 /obj/item/organ/internal/tongue/frog
-	name = "fish tongue"
+	name = "frog tongue"
 	desc = "A fleshy muscle mostly used for ribbiting."
 	say_mod = "ribbits"
