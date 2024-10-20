@@ -153,6 +153,7 @@
 		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	bite_consumption = 5
+	tastes = list("fatty fish" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/fishmeat/fish_tail/Initialize(mapload)
