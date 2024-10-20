@@ -119,6 +119,7 @@
 			target.AddElement(/datum/element/cliff_walking)
 		if(FISH)
 			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
+			target.add_quirk(/datum/quirk/item_quirk/breather/water_breather) // this trait necessitates you get this 'item_quirk'
 		if(FROG)
 			ADD_TRAIT(target, TRAIT_WATER_ADAPTATION, SPECIES_TRAIT)
 
