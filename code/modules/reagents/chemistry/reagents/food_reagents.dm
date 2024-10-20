@@ -243,6 +243,11 @@
 	taste_description = "rich earthy pungent"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining
+	name = "Stomach Lining"
+	description = "Natural tissue that keeps your stomach safe."
+	carry_food_tastes = FALSE // Don't want stomachs to leech the flavours of what they eat
+
 /datum/reagent/consumable/nutriment/cloth_fibers
 	name = "Cloth Fibers"
 	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
