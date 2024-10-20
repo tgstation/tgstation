@@ -467,7 +467,7 @@
 		maximum_weight = min(base_weight * 2, average_size * MAX_FISH_DEVIATION_COEFF)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
-/obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = FALSE)
+/obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	fish_flags |= FISH_FLAG_UPDATING_SIZE_AND_WEIGHT
 	SEND_SIGNAL(src, COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT, new_size, new_weight)
 
@@ -1231,7 +1231,7 @@
 				chosen_material_giver = pick(src, partner)
 			else if(prob(50))
 				chosen_material_giver = partner
-		else if(length(custom_materials))
+		else if(length(custom_materials) && prob(50))
 			chosen_material_giver = src
 	else
 		new_fish.temp_size = size

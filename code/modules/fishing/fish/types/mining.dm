@@ -42,7 +42,7 @@
 	return list("cooked crab" = 2)
 
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
-/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = FALSE)
+/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	var/multiplier = 1
 	switch(size)

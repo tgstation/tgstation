@@ -229,7 +229,7 @@
 		if(prob(material_chance))
 			var/obj/item/fish/fish = reward
 			var/datum/material/material = get_master_material()
-			fish.set_custom_materials(list(material.type = fish.weight * 0.5))
+			fish.set_custom_materials(list(material.type = fish.weight))
 	// catching things that aren't fish or alive mobs doesn't consume baits.
 	if(isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
