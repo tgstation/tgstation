@@ -221,8 +221,11 @@
 					. += "[t_He] [t_is] shivering."
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
-					living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
-					living_user.set_jitter_if_lower(15 SECONDS)
+					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+						. += span_warning("PERFECT FOR SMITING!!")
+					else
+						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+						living_user.set_jitter_if_lower(15 SECONDS)
 
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
 				. += "[t_He] [t_has] a holy aura about [t_him]."
