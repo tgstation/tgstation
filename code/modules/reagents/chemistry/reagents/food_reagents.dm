@@ -66,6 +66,9 @@
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+	// Whether this reagent should get the tastes of food it's in applied onto it
+	var/carry_food_tastes = TRUE
+
 	var/brute_heal = 1
 	var/burn_heal = 0
 
