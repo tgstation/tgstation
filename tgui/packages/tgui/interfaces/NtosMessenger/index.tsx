@@ -54,7 +54,7 @@ export const NtosMessenger = (props) => {
 
   let content: JSX.Element;
   if (remote_silicon) {
-      content = <AccessDeniedScreen />;
+    content = <AccessDeniedScreen />;
   } else if (open_chat !== null) {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
@@ -89,7 +89,7 @@ export const NtosMessenger = (props) => {
 
 const AccessDeniedScreen = (props: any) => {
   const { act, data } = useBackend<NtosMessengerData>();
-  
+
   return (
     <Stack fill vertical>
       <Stack.Item>
@@ -103,27 +103,21 @@ const AccessDeniedScreen = (props: any) => {
         </Section>
       </Stack.Item>
       <NoticeBox
-        color='white'
+        color="white"
         position="relative"
         top="30%"
         fontSize="30px"
         textAlign="center"
-        >
+      >
         ERROR: CONNECTION REFUSED
       </NoticeBox>
-        <Stack vertical position="relative" top="35%" textAlign="left">
-          <Section>
-          <Box>
-            Message from host:
-          </Box>
-          <Box>
-            -  Remote access of this application has been restricted.
-          </Box>
-          <Box>
-            -  Contact your Administrator for further assistance.
-          </Box>
-          </Section>
-        </Stack>
+      <Stack vertical position="relative" top="35%" textAlign="left">
+        <Section>
+          <Box>Message from host:</Box>
+          <Box>- Remote access of this application has been restricted.</Box>
+          <Box>- Contact your Administrator for further assistance.</Box>
+        </Section>
+      </Stack>
     </Stack>
   );
 };
