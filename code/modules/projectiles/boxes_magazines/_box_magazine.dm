@@ -140,6 +140,7 @@
 		stored_ammo += new_round
 		new_round.forceMove(src)
 		return TRUE
+	return FALSE
 
 ///Whether or not the box can be loaded, used in overrides
 /obj/item/ammo_box/proc/can_load(mob/user)
