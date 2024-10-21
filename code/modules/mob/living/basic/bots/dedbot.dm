@@ -39,10 +39,11 @@
 	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
+	var/list/remains = list(/obj/effect/gibspawner/robot)
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/effect/gibspawner/robot)
+	death_loot = string_list(remains)
 	AddElement(/datum/element/death_drops, death_loot)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
