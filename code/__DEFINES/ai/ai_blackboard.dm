@@ -123,6 +123,18 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
+///key holding any food we've found
+#define BB_TARGET_FOOD "BB_TARGET_FOOD"
+
+///key holding emotes we play after eating
+#define BB_EAT_EMOTES "BB_eat_emotes"
+
+///key holding the next time we eat
+#define BB_NEXT_FOOD_EAT "BB_next_food_eat"
+
+///key holding our eating cooldown
+#define BB_EAT_FOOD_COOLDOWN "BB_eat_food_cooldown"
+
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
 
@@ -168,5 +180,4 @@
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
 
-///mothroach next meal key!
-#define BB_MOTHROACH_NEXT_EAT "mothroach_next_eat"
+

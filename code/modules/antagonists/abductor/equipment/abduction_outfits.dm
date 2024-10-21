@@ -50,6 +50,13 @@
 		/obj/item/abductor/silencer = 1
 		)
 
+/datum/outfit/abductor/agent/cardboard
+	name = "Abductor Agent"
+	head = /obj/item/clothing/head/helmet/abductor
+	suit = /obj/item/clothing/suit/armor/abductor/vest
+	l_hand = /obj/item/melee/baton/abductor
+	belt = /obj/item/storage/belt/military/abductor/full
+
 /datum/outfit/abductor/scientist
 	name = "Abductor Scientist"
 

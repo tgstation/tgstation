@@ -360,7 +360,7 @@
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
 	crabbie = new(src)
-	crabbie.name = "Crabbie"
+	crabbie.AddComponent(/datum/component/rename, "Crabbie", crabbie.desc)
 	crabbie.last_feeding = world.time
 	crabbie.AddComponent(/datum/component/fish_growth, crabbie.lob_type, 1 SECONDS)
 

@@ -81,6 +81,16 @@
 		/obj/structure/window,
 	))
 
+/datum/emote/carp
+	mob_type_allowed_typecache = /mob/living/basic/carp
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/carp/bloop
+	key = "bloop"
+	key_third_person = "bloops"
+	message = "bloops!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
@@ -186,7 +196,7 @@
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 
 /**
  * Lia - Sometimes the pet of the Head of Security.
@@ -291,7 +301,7 @@
 /mob/living/basic/carp/passive/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked)))
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	AddElement(/datum/element/pet_bonus, "bloop")
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 
 /// If someone slaps one of the school, scatter
