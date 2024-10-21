@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { Component, Fragment } from 'react';
+import { clamp } from 'common/math';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -213,8 +214,17 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const hasEnoughProgression =
-        progression_points >= item.progression_minimum;
+      // please sync with real_cost on datum/uplink_item or whatever it was called
+      const real_cost = () => {
+        if (item.progression_minimum <= 0 || !has_progression) return item.cost;
+        var percentage = clamp(
+          progression_points / item.progression_minimum,
+          0,
+          1,
+        );
+        var mult = (1 - percentage) * 3 + percentage * 1;
+        return Math.ceil(item.cost * mult);
+      };
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -223,7 +233,8 @@ export class Uplink extends Component<{}, UplinkState> {
       if (!stock && stock !== 0) {
         stock = null;
       }
-      const canBuy = telecrystals >= item.cost && (stock === null || stock > 0);
+      const canBuy =
+        telecrystals >= real_cost() && (stock === null || stock > 0);
       items.push({
         id: item.id,
         name: item.name,
@@ -245,7 +256,7 @@ export class Uplink extends Component<{}, UplinkState> {
         ),
         cost: (
           <Box>
-            {item.cost_override_string || `${item.cost} TC`}
+            {item.cost_override_string || `${real_cost()} TC`}
             {has_progression ? (
               <>
                 ,&nbsp;
@@ -258,10 +269,7 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled:
-          !canBuy ||
-          (has_progression && !hasEnoughProgression) ||
-          (item.lock_other_purchases && purchased_items > 0),
+        disabled: !canBuy || (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
           icon: item.icon,
@@ -298,7 +306,9 @@ export class Uplink extends Component<{}, UplinkState> {
                               {has_objectives
                                 ? ' the severity of secondary objectives you get and '
                                 : ' '}
-                              what items you can purchase.&nbsp;
+                              the price of certain items, which will return to
+                              their normal price once you have enough
+                              reputation.&nbsp;
                               <Box mt={0.5}>
                                 {/* A minute in deciseconds */}
                                 Threat passively increases by{' '}
