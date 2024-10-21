@@ -63,7 +63,7 @@
 	neck = /obj/item/clothing/neck/beads
 	shoes = /obj/item/clothing/shoes/sandal
 
-/datum/outfit/yourmother/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/yourmother/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	user.set_hairstyle("Braided", update = TRUE) //get_dynamic_human_appearance uses bald dummies
 
