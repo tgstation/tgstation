@@ -1360,6 +1360,11 @@
 	toysay = "EI NATH!"
 	toysound = 'sound/effects/magic/disintegrate.ogg'
 
+/obj/item/toy/figure/wizard/special
+	name = "\improper Wizard action figure special edition"
+	toysay = "CLANG!";
+	toysound = 'sound/effects/clang.ogg'
+
 /obj/item/toy/figure/rd
 	name = "\improper Research Director action figure"
 	icon_state = "rd"
@@ -1810,6 +1815,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("smacks", "clubs", "wacks", "vendors")
-	attack_verb_simple = list("smack", "club", "wacks", "vendor")
+	attack_verb_simple = list("smack", "club", "wack", "vendor")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE

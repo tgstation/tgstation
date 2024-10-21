@@ -12653,6 +12653,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "ddg" = (

@@ -1035,7 +1035,7 @@
 	else
 		tips = world.file2list("strings/chemistrytips.txt")
 	var/message = pick(tips)
-	send_tip_of_the_round(affected_mob, message)
+	send_tip_of_the_round(affected_mob, message, source = "Chemical-induced wisdom")
 
 /datum/reagent/medicine/neurine
 	name = "Neurine"
@@ -1605,8 +1605,7 @@
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
 	exposed_human.set_facial_haircolor("#9922ff", update = FALSE)
-	exposed_human.set_haircolor(color, update = TRUE)
-	exposed_human.update_body_parts()
+	exposed_human.set_haircolor(color) //this will call update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

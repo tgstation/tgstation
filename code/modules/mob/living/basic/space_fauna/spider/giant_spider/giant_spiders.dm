@@ -608,6 +608,6 @@
 
 /mob/living/basic/spider/giant/sgt_araneus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "chitters proudly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

@@ -11,25 +11,17 @@
 	activate_message = span_notice("From \"The Definitive Compendium of Body Language for the Aspiring Leader\", page 164, paragraph 3...")
 	deactivate_message = span_notice("So, uh, yeah, how do I point at things again?")
 
-	///The action for changing the pointer color
-	var/datum/action/change_pointer_color/action
-
-/obj/item/skillchip/big_pointer/Destroy()
-	action = null
-	return ..()
+	actions_types = list(/datum/action/change_pointer_color)
 
 /obj/item/skillchip/big_pointer/on_activate(mob/living/carbon/user, silent=FALSE)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(fancier_pointer))
-	if(!action)
-		action = new(src)
-	action.Grant(user)
 
 /obj/item/skillchip/big_pointer/on_deactivate(mob/living/carbon/user, silent=FALSE)
 	UnregisterSignal(user, COMSIG_MOVABLE_POINTED)
+	var/datum/action/change_pointer_color/action = locate() in actions
 	action?.arrow_color = null
 	action?.arrow_overlay = null
-	action?.Remove(user)
 	return ..()
 
 /obj/item/skillchip/big_pointer/proc/fancier_pointer(mob/living/user, atom/pointed, obj/effect/temp_visual/point/point)
@@ -37,6 +29,7 @@
 	if(HAS_TRAIT(user, TRAIT_UNKNOWN))
 		return
 	point.cut_overlays()
+	var/datum/action/change_pointer_color/action = locate() in actions
 	if(!action.arrow_color)
 		point.icon_state = "arrow_large"
 		return

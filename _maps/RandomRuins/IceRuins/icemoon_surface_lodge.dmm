@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "aw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -36,7 +36,7 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "aU" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -48,7 +48,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "bs" = (
 /obj/machinery/door/airlock/wood{
@@ -84,7 +84,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "bX" = (
 /obj/structure/table,
@@ -134,7 +134,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "cQ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -189,7 +189,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "dC" = (
 /obj/machinery/door/airlock/wood{
@@ -213,7 +213,7 @@
 /obj/structure/railing/corner{
 	color = "#beada5"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/ruin/huntinglodge)
 "dQ" = (
 /obj/effect/decal/cleanable/wrapping,
@@ -305,13 +305,13 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "fi" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "fB" = (
 /obj/effect/turf_decal/siding/wood{
@@ -337,7 +337,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "gu" = (
 /obj/structure/table/wood,
@@ -401,7 +401,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "gY" = (
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -410,7 +410,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "hb" = (
 /obj/structure/railing{
@@ -541,7 +541,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "jp" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -868,7 +868,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "oY" = (
 /obj/structure/railing{
@@ -881,7 +881,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "pl" = (
 /obj/effect/turf_decal/siding/wood{
@@ -983,7 +983,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "qL" = (
 /obj/structure/table/wood/fancy/orange,
@@ -1038,7 +1038,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rI" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -1048,7 +1048,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "rS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1061,7 +1061,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "sX" = (
 /obj/structure/table/wood/fancy/royalblack,
@@ -1217,7 +1217,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "vO" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1304,7 +1304,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "wP" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -1481,7 +1481,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "yO" = (
 /obj/effect/decal/cleanable/garbage,
@@ -1595,7 +1595,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "AF" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1789,7 +1789,7 @@
 /obj/effect/decal/cleanable/blood/trails{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Ds" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1962,7 +1962,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Fw" = (
 /obj/structure/railing{
@@ -2037,7 +2037,7 @@
 	dir = 4;
 	color = "#beada5"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Gn" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2112,7 +2112,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Hi" = (
 /obj/structure/table/wood/fancy,
@@ -2177,7 +2177,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Hw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2208,7 +2208,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "HL" = (
 /obj/structure/table/wood,
@@ -2375,7 +2375,7 @@
 	dir = 8;
 	color = "#beada5"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "KB" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2536,14 +2536,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "NW" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Oa" = (
 /obj/effect/turf_decal/siding/wood,
@@ -2646,7 +2646,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Pa" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -2685,7 +2685,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "PS" = (
 /obj/effect/spawner/structure/window/reinforced{
@@ -2837,7 +2837,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Sp" = (
 /obj/effect/decal/cleanable/blood/trails{
@@ -2911,7 +2911,7 @@
 /obj/effect/decal/cleanable/blood/trails{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "TC" = (
 /obj/effect/decal/cleanable/blood,
@@ -3043,7 +3043,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/dim/directional/west,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/ruin/huntinglodge)
 "VW" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -3053,7 +3053,7 @@
 	pixel_x = -4;
 	pixel_y = -15
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wn" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -3109,7 +3109,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Xk" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3150,7 +3150,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "XF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3207,7 +3207,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "YD" = (
 /obj/effect/spawner/structure/window/reinforced{
@@ -3266,14 +3266,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ZA" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
 /obj/machinery/light/small/dim/directional/east,
-/turf/open/floor/stone,
+/turf/open/floor/stone/icemoon,
 /area/ruin/huntinglodge)
 "ZB" = (
 /obj/structure/table/wood/fancy,
