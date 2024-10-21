@@ -24,6 +24,17 @@
 		return TRUE
 	return FALSE
 
+/datum/computer_file/program/robotact/proc/evaluate_borg(mob/living/silicon/robot/this_borg, mob/living/silicon/robot/other_borg)
+	if(this_borg.scrambledcodes)
+		if(other_borg.scrambledcodes)
+			return TRUE //Syndicate bro
+		else
+			return FALSE //NT borgs unknown
+	if(other_borg.scrambledcodes)
+		return FALSE //Syndicate borgs unknown
+	if(this_borg.connected_ai && this_borg.connected_ai == other_borg.connected_ai)
+		return TRUE
+
 /datum/computer_file/program/robotact/ui_data(mob/user)
 	var/list/data = list()
 	if(!iscyborg(user))
@@ -37,6 +48,7 @@
 	data["name"] = cyborg.name
 	data["designation"] = cyborg.model
 	data["masterAI"] = cyborg.connected_ai //Master AI
+	data["masterAI_online"] = (data["masterAI"]?.stat == CONSCIOUS)
 
 	var/charge = 0
 	var/maxcharge = 1
@@ -55,6 +67,34 @@
 	data["thrustersInstalled"] = cyborg.ionpulse //If we have a thruster uprade
 	data["thrustersStatus"] = "[cyborg.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
 	data["selfDestructAble"] = (cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate))
+
+	data["cyborg_groups"] = list()
+	if(data["masterAI_online"] || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //unsynced borgs have fewer friends
+		var/list/borggroup = list() //temporary list for holding groups of borgs
+		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
+			if(!evaluate_borg(cyborg,R))
+				continue
+
+			var/shell = FALSE
+			if(R.shell && !R.ckey)
+				shell = TRUE
+
+			var/list/cyborg_data = list(
+				name = R.name,
+				integ = round((R.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
+				locked_down = R.lockcharge,
+				status = R.stat,
+				shell_discon = shell,
+				charge = R.cell ? round(R.cell.percent()) : null,
+				module = R.model ? "[R.model.name]" : "None",
+				ref = REF(R)
+			)
+			borggroup += list(cyborg_data)
+			if(borggroup.len == 4) //grouping borgs in packs of four, since I can't do it later in jsx
+				data["cyborg_groups"] += list(borggroup)
+				borggroup = list()
+		if(borggroup.len) //and any remainders
+			data["cyborg_groups"] += list(borggroup)
 
 	//Cover, TRUE for locked
 	data["cover"] = "[cyborg.locked? "LOCKED":"UNLOCKED"]"
