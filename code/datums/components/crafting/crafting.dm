@@ -451,14 +451,32 @@
 	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
-	var/fueled_welder_count = 0
-	for (var/obj/item/weldingtool/welder in surroundings["instances"][/obj/item/weldingtool])
-		fueled_welder_count++
-		if (welder.reagents.get_reagent_amount(/datum/reagent/fuel) == 0)
-			fueled_welder_count--
+	var/fueled_welder_found = FALSE
+	var/special_welder_found = FALSE
 
-	if(fueled_welder_count == 0)
-		surroundings["tool_behaviour"] -= "welder"
+	if ((/obj/item/debug/omnitool in surroundings["instances"]) || (/obj/item/abductor/alien_omnitool in surroundings["instances"]))
+		special_welder_found = TRUE
+
+	if(!special_welder_found)
+		for (var/obj/item/weldingtool/welder in surroundings["instances"][/obj/item/weldingtool])
+			if (welder.get_fuel() != 0)
+				fueled_welder_found = TRUE
+				break
+
+		if (!fueled_welder_found)
+			for (var/obj/item/lighter/lighter in surroundings["instances"][/obj/item/lighter])
+				if (lighter.get_fuel() != 0)
+					fueled_welder_found = TRUE
+					break
+
+		if(!fueled_welder_found)
+			for (var/obj/item/gun/energy/plasmacutter/plasmacutter in surroundings["instances"][/obj/item/gun/energy/plasmacutter])
+				if (plasmacutter.cell.charge != 0)
+					fueled_welder_found = TRUE
+					break
+
+		if(!fueled_welder_found)
+			surroundings["tool_behaviour"] -= TOOL_WELDER
 
 	var/list/craftability = list()
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
