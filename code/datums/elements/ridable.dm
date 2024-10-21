@@ -13,7 +13,7 @@
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
 
-/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, potion_boost = FALSE, force_rider_standup = TRUE)
+/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, force_rider_standup = TRUE)
 	. = ..()
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
