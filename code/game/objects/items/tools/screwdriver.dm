@@ -81,7 +81,7 @@
 
 /obj/item/screwdriver/power
 	name = "hand drill"
-	RU_NAMES_LIST_INIT("hand drill", "дрель-шуруповерт", "дрели-шуруповерта", "дрели-шуруповерту", "дрель-шуруповерт", "дрелью-шуруповертом", "дрели-шуруповерте")
+	RU_NAMES_LIST_INIT("hand drill", "шуруповёрт", "шуруповёрта", "шуруповёрту", "шуруповёрт", "шуруповёртом", "шуруповёрте")
 	desc = "A simple powered hand drill."
 	icon_state = "drill"
 	belt_icon_state = null
