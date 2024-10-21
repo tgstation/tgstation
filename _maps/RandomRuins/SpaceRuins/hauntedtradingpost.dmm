@@ -4638,7 +4638,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Of" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/closet/crate/cardboard{
 	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - DECO' and has the Donk Co. logo stamped on it."
@@ -5552,7 +5551,6 @@
 /obj/structure/cable/layer1,
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/toy,
-/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Wa" = (
