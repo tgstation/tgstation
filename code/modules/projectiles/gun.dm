@@ -23,14 +23,14 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
+	var/dry_fire_sound = 'sound/items/weapons/gun/general/dry_fire.ogg'
 	var/dry_fire_sound_volume = 30
 	var/suppressed = null //whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE /// whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
 	var/recoil = 0 //boom boom shake the room
@@ -126,6 +126,21 @@
 	suppressed = null
 	update_appearance()
 
+/obj/item/gun/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(isliving(hit_atom))
+		var/mob/living/thrower = throwingdatum?.get_thrower()
+		toss_gun_hard(thrower, hit_atom)
+
+/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target) //throw a gun at them. They don't expect it.
+	if(isnull(thrower))
+		return FALSE
+	if(!HAS_TRAIT(thrower, TRAIT_TOSS_GUN_HARD))
+		return FALSE
+	target.Knockdown(0.5 SECONDS)
+	target.apply_damage(damage = max(w_class * 5 - throwforce, 10), damagetype = BRUTE, def_zone = thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = src)
+	return TRUE
+
 /obj/item/gun/examine(mob/user)
 	. = ..()
 	if(!pinless)
@@ -137,6 +152,15 @@
 				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
+
+	var/healthpercent = (atom_integrity/max_integrity) * 100
+	switch(healthpercent)
+		if(60 to 95)
+			. += span_info("It looks slightly damaged.")
+		if(25 to 60)
+			. += span_warning("It appears heavily damaged.")
+		if(0 to 25)
+			. += span_boldwarning("It's falling apart!")
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -164,36 +188,48 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
-/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
+/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
-	if(!suppressed)
-		if(message)
-			if(tk_firing(user))
-				visible_message(
-						span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
-						blind_message = span_hear("You hear a gunshot!"),
-						vision_distance = COMBAT_MESSAGE_RANGE
-				)
-			else if(pointblank)
-				user.visible_message(
-						span_danger("[user] fires [src] point blank at [pbtarget]!"),
-						span_danger("You fire [src] point blank at [pbtarget]!"),
-						span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
-				)
-				to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
-				if(pb_knockback > 0 && ismob(pbtarget))
-					var/mob/PBT = pbtarget
-					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
-					PBT.throw_at(throw_target, pb_knockback, 2)
-			else if(!tk_firing(user))
-				user.visible_message(
-						span_danger("[user] fires [src]!"),
-						blind_message = span_hear("You hear a gunshot!"),
-						vision_distance = COMBAT_MESSAGE_RANGE,
-						ignored_mobs = user
-				)
+	if(suppressed || !message)
+		return
+	if(tk_firing(user))
+		visible_message(
+				span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+				blind_message = span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE
+		)
+	else if(pointblank)
+		user.visible_message(
+				span_danger("[user] fires [src] point blank at [pbtarget]!"),
+				span_danger("You fire [src] point blank at [pbtarget]!"),
+				span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
+		)
+		to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
+		if(pb_knockback > 0 && ismob(pbtarget))
+			var/mob/PBT = pbtarget
+			var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
+			PBT.throw_at(throw_target, pb_knockback, 2)
+	else if(!tk_firing(user))
+		user.visible_message(
+				span_danger("[user] fires [src]!"),
+				blind_message = span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = user
+		)
+
+	if(chambered?.integrity_damage)
+		take_damage(chambered.integrity_damage, sound_effect = FALSE)
+
+/obj/item/gun/atom_destruction(damage_flag)
+	if(!isliving(loc))
+		return ..()
+	var/mob/living/holder = loc
+	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
+		to_chat(holder, span_boldwarning("[src] breaks down!"))
+		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
+	return ..()
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
@@ -388,9 +424,9 @@
 			return FALSE
 		else
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, 1, target, message)
+				shoot_live_shot(user, TRUE, target, message)
 			else
-				shoot_live_shot(user, 0, target, message)
+				shoot_live_shot(user, FALSE, target, message)
 			if (iteration >= burst_size)
 				firing_burst = FALSE
 	else
@@ -444,9 +480,9 @@
 				return
 			else
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-					shoot_live_shot(user, 1, target, message)
+					shoot_live_shot(user, TRUE, target, message)
 				else
-					shoot_live_shot(user, 0, target, message)
+					shoot_live_shot(user, FALSE, target, message)
 		else
 			shoot_with_empty_chamber(user)
 			return

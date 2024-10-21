@@ -61,7 +61,7 @@
 	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
 
 /**
- * divides a list of materials uniformly among all contents of the target_object reccursively
+ * divides a list of materials uniformly among all contents of the target_object recursively
  * Used to set materials of printed items with their design cost by taking into consideration their already existing materials
  * e.g. if 12 iron is to be divided uniformly among 2 objects A, B who's current iron contents are 3 & 7
  * Then first we normalize those values i.e. find their weights to decide who gets an higher share of iron
@@ -81,7 +81,7 @@
 		target_object.set_custom_materials(custom_materials, multiplier)
 		return
 
-	//Step 1: Get reccursive contents of all objects, only filter obj cause that what's material container accepts
+	//Step 1: Get recursive contents of all objects, only filter obj cause that what's material container accepts
 	var/list/reccursive_contents = target_object.get_all_contents_type(/obj/item)
 
 	//Step 2: find the sum of each material type per object and record their amounts into an 2D list

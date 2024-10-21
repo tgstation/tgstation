@@ -45,12 +45,33 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/cakeslice/plain
 
+/obj/item/food/cake/plain/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cake/empty
+	name = "cake"
+	desc = "A custom cake made by an insane chef."
+	icon_state = "cake_custom"
+	foodtypes = GRAIN | DAIRY | SUGAR
+	slice_type = /obj/item/food/cakeslice/empty
+
+/obj/item/food/cakeslice/empty
+	name = "cake slice"
+	desc = "A slice of custom cake, made by an insane chef."
+	icon_state = "cake_custom_slice"
+	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cakeslice/empty/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cake/carrot
 	name = "carrot cake"
@@ -246,7 +267,7 @@
 	desc = "Just enough calories for a whole nuclear operative squad."
 	icon_state = "energycake"
 	force = 5
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/sprinkles = 10,
@@ -264,7 +285,7 @@
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
 	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(user, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
@@ -277,7 +298,7 @@
 	desc = "For the traitor on the go."
 	icon_state = "energycakeslice"
 	force = 2
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/sprinkles = 2,
@@ -304,7 +325,7 @@
 	if(eater != feeder)
 		log_combat(feeder, eater, "fed an energy cake to", src)
 	eater.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
-	playsound(eater, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(eater, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/apple
 	name = "apple cake"
@@ -521,6 +542,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	slice_type = /obj/item/food/cakeslice/clown_slice
 	crafting_complexity = FOOD_COMPLEXITY_5
+	crafted_food_buff = /datum/status_effect/food/trait/waddle
 
 /obj/item/food/cakeslice/clown_slice
 	name = "clown cake slice"
@@ -534,6 +556,7 @@
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtypes = GRAIN | SUGAR | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_5
+	crafted_food_buff = /datum/status_effect/food/trait/waddle
 
 /obj/item/food/cake/trumpet
 	name = "spaceman's cake"

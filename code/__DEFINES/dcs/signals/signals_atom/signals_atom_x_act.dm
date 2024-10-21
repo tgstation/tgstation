@@ -89,7 +89,6 @@
 /// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
 #define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
 
-/// This is sent via item interaction (IE, item clicking on atom) right before the item's inserted into the atom's storage
-/// Args: (obj/item/inserting, mob/living/user)
-#define COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT "atom_storage_item_interact_insert"
-	#define BLOCK_STORAGE_INSERT (1<<0)
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS 1

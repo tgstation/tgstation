@@ -71,7 +71,7 @@
 		return t
 	t = matchMiddle.group[1]
 
-	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
+	// Replace any non-space whitespace characters with spaces, and also multiple occurrences with just one space
 	var/static/regex/matchSpacing = new(@"\s+", "g")
 	t = replacetext_char(t, matchSpacing, " ") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: if(matchMiddle.Find(t) == 0)
 
@@ -121,7 +121,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext_char(html_encode(user_input), 1, max_length) //MASSMETA EDIT CHANGE - ORIGINAL: return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -140,7 +140,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length)
 
@@ -153,7 +153,7 @@
 /**
  * Filters out undesirable characters from names.
  *
- * * strict - return null immidiately instead of filtering out
+ * * strict - return null immediately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
  * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
  */
@@ -169,7 +169,7 @@
 	var/char = ""
 
 	// This is a sanity short circuit, if the users name is three times the maximum allowable length of name
-	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we dont
+	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we don't
 	// Want to iterate all of it.
 	if(t_len > 3 * MAX_NAME_LEN)
 		return
@@ -372,7 +372,7 @@
  */
 /proc/truncate(text, max_length)
 	//MASSMETA EDIT CHANGE BEGIN
-	if(length_char(text) > max_length) //ORIGINAL: if(length(text) > max_length)
+	if(length_char(text) > max_length)
 		return copytext_char(text, 1, max_length) //ORIGINAL: return copytext(text, 1, max_length)
 	//MASSMETA EDIT CHANGE END
 	return text
@@ -468,6 +468,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /proc/random_color()
 	return random_string(6, GLOB.hex_characters)
+
+/proc/ready_random_color()
+	return "#" + random_string(6, GLOB.hex_characters)
 
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
@@ -1145,8 +1148,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word
 	var/first_letter = copytext(word, 1, 2)
 	var/first_two_letters = copytext(word, 1, 3)
-	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
-	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	var/first_word_is_vowel = (first_letter in VOWELS)
+	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
@@ -1230,6 +1233,13 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/endswith(input_text, ending)
 	var/input_length = LAZYLEN(ending)
 	return !!findtext(input_text, ending, -input_length)
+
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE
 
 /// Generate a grawlix string of length of the text argument.
 /proc/grawlix(text)

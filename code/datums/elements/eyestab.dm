@@ -2,6 +2,8 @@
 #define CLUMSY_ATTACK_SELF_CHANCE 50
 /// The damage threshold (of the victim's eyes) after which they start taking more serious effects
 #define EYESTAB_BLEEDING_THRESHOLD 10
+/// The damage threshold (of the victim's eyes) after which they can go blind
+#define EYESTAB_BLINDING_THRESHOLD 30
 /// How much blur we can apply
 #define EYESTAB_MAX_BLUR (4 MINUTES)
 
@@ -80,13 +82,14 @@
 		return
 
 	target.adjust_eye_blur_up_to(6 SECONDS, EYESTAB_MAX_BLUR)
+	var/started_bleeding = eyes.damage < EYESTAB_BLEEDING_THRESHOLD
 	eyes.apply_organ_damage(rand(2, 4))
 	if(eyes.damage < EYESTAB_BLEEDING_THRESHOLD)
 		return
 
 	// At over 10 damage we apply a lot of eye blur
 	target.adjust_eye_blur_up_to(30 SECONDS, EYESTAB_MAX_BLUR)
-	if (target.stat != DEAD)
+	if (target.stat != DEAD && started_bleeding)
 		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
 
 	// At over 10 damage, we cause at least enough eye damage to force nearsightedness
@@ -102,8 +105,26 @@
 		target.Unconscious(2 SECONDS)
 		target.Paralyze(4 SECONDS)
 
-	// At over 10 damage, there is a chance (based on eye damage) of going blind
-	if (prob(eyes.damage - eyes.low_threshold + 1))
+	// A solid chance of getting a permanent scar over one of your eyes, if you have at least one unscarred eyeball
+	if (prob(eyes.damage - EYESTAB_BLEEDING_THRESHOLD + 1))
+		var/valid_sides = list()
+		if (!(eyes.scarring & RIGHT_EYE_SCAR))
+			valid_sides += RIGHT_EYE_SCAR
+		if (!(eyes.scarring & LEFT_EYE_SCAR))
+			valid_sides += LEFT_EYE_SCAR
+		if (length(valid_sides))
+			var/picked_side = pick(valid_sides)
+			to_chat(target, span_userdanger("You feel searing pain shoot though your [picked_side == RIGHT_EYE_SCAR ? "right" : "left"] eye!"))
+			// oof ouch my eyes
+			var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
+			eye_puncture.apply_wound(eyes.bodypart_owner, wound_source = "eye stab", right_side = picked_side)
+			eyes.apply_scar(picked_side)
+
+	if (eyes.damage < EYESTAB_BLINDING_THRESHOLD)
+		return
+
+	// At over 30 damage, there is a chance (based on eye damage) of going blind
+	if (prob(eyes.damage - EYESTAB_BLINDING_THRESHOLD + 1))
 		if (!target.is_blind_from(EYE_DAMAGE))
 			eyes.set_organ_damage(eyes.maxHealth)
 		// Also cause some temp blindness, so that they're still blind even if they get healed
@@ -111,4 +132,5 @@
 
 #undef CLUMSY_ATTACK_SELF_CHANCE
 #undef EYESTAB_BLEEDING_THRESHOLD
+#undef EYESTAB_BLINDING_THRESHOLD
 #undef EYESTAB_MAX_BLUR

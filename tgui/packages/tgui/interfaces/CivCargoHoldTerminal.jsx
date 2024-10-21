@@ -153,6 +153,7 @@ const BountyPickButton = (props) => {
         color="black"
         backgroundColor="linen"
         lineHeight="1.2em"
+        p={1}
       >
         {props.bounty_info}
       </Box>

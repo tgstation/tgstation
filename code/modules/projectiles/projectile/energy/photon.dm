@@ -37,7 +37,7 @@
 		do_sparks(rand(1, 4), FALSE, src)
 
 /**
- * When traveling to a new turf, throws a probability to generate a hotspot across it's path.
+ * When traveling to a new turf, throws a probability to generate a hotspot across its path.
  */
 /obj/projectile/energy/photon/proc/scorch_earth(turf/open/floor/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -50,7 +50,7 @@
 
 /obj/projectile/energy/photon/on_range()
 	do_sparks(rand(4, 9), FALSE, src)
-	playsound(loc, 'sound/weapons/solarflare.ogg', 100, FALSE, 8, 0.9)
+	playsound(loc, 'sound/items/weapons/solarflare.ogg', 100, FALSE, 8, 0.9)
 	for(var/mob/living/flashed_mob in viewers(5, loc))
 		flashed_mob.flash_act()
 	return ..()

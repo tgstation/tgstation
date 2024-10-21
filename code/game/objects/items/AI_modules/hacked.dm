@@ -4,7 +4,7 @@
 	laws = list("")
 
 /obj/item/ai_module/syndicate/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu
@@ -55,7 +55,7 @@
 		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
 		return
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
-		to_chat(sender, span_warning("Unknown error occured. Upload process aborted."))
+		to_chat(sender, span_warning("Unknown error occurred. Upload process aborted."))
 		return
 
 	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)

@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - qol: "blood bros get a hud to see eachother"
-  - code_imp: "teambased antagonists may not see the HUDs of other teams"

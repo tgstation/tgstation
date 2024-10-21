@@ -50,16 +50,12 @@
 	..()
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.show_to(user)
 	ADD_TRAIT(user, TRAIT_MEDICAL_HUD, type)
 
 /obj/item/statuebust/hippocratic/dropped(mob/living/carbon/human/user)
 	..()
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_MEDICAL_HUD, type))
 		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.hide_from(user)
 	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, type)
 
 /obj/item/statuebust/hippocratic/attack_self(mob/user)

@@ -55,7 +55,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic
-	name = "Prosthesis organ manipulation"
+	name = "Hardware Manipulation"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
 	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
@@ -85,6 +85,8 @@
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
+	if(tool)
+		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
 	if(tool && tool.tool_behaviour) //Mechanic organ manipulation isn't done with just surgery tools
@@ -110,7 +112,7 @@
 	)
 
 /datum/surgery/organ_manipulation/mechanic/external
-	name = "Prosthetic feature manipulation"
+	name = "Chassis Manipulation"
 	possible_locs = list(
 		BODY_ZONE_CHEST,
 		BODY_ZONE_HEAD,
@@ -128,15 +130,15 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
+///Organ manipulation base class. Do not use, it wont work. Use its subtypes
 /datum/surgery_step/manipulate_organs
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(
 		/obj/item/organ = 100,
 		/obj/item/borg/apparatus/organ_storage = 100)
-	preop_sound = 'sound/surgery/organ2.ogg'
-	success_sound = 'sound/surgery/organ1.ogg'
+	preop_sound = 'sound/items/handling/surgery/organ2.ogg'
+	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
@@ -163,8 +165,8 @@
 		tool = target_organ
 	if(isorgan(tool))
 		current_type = "insert"
-		preop_sound = 'sound/surgery/hemostat1.ogg'
-		success_sound = 'sound/surgery/organ2.ogg'
+		preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+		success_sound = 'sound/items/handling/surgery/organ2.ogg'
 		target_organ = tool
 		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
@@ -211,13 +213,24 @@
 			if(isnull(chosen_organ))
 				return SURGERY_STEP_FAIL
 			target_organ = chosen_organ
-			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+
+			if(user && target && user.Adjacent(target))
+				//tool check
+				var/obj/item/held_tool = user.get_active_held_item()
+				if(held_tool)
+					held_tool = held_tool.get_proxy_attacker_for(target, user)
+				if(held_tool != tool)
+					return SURGERY_STEP_FAIL
+
+				//organ check
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return SURGERY_STEP_FAIL
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
+
+				//start operation
 				display_results(
 					user,
 					target,
@@ -239,22 +252,20 @@
 			tool = tool.contents[1]
 		target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
-		if(target_organ.Insert(target))
-			if(apparatus)
-				apparatus.icon_state = initial(apparatus.icon_state)
-				apparatus.desc = initial(apparatus.desc)
-				apparatus.cut_overlays()
-			display_results(
-				user,
-				target,
-				span_notice("You insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
-				span_notice("[user] inserts [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
-				span_notice("[user] inserts something into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
-			)
-			display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
-			target_organ.on_surgical_insertion(user, target, target_zone, tool)
-		else
-			target_organ.forceMove(target.loc)
+		target_organ.Insert(target)
+		if(apparatus)
+			apparatus.icon_state = initial(apparatus.icon_state)
+			apparatus.desc = initial(apparatus.desc)
+			apparatus.cut_overlays()
+		display_results(
+			user,
+			target,
+			span_notice("You insert [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+			span_notice("[user] inserts [tool] into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+			span_notice("[user] inserts something into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
+		)
+		display_pain(target, "Your [target.parse_zone_with_bodypart(target_zone)] throbs with pain as your new [tool.name] comes to life!")
+		target_organ.on_surgical_insertion(user, target, target_zone, tool)
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)

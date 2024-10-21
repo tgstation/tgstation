@@ -102,7 +102,7 @@
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
-	if(isnull(illness_type))
+	if(!illness_type)
 		var/list/virus_candidates = list(
 			/datum/disease/anxiety,
 			/datum/disease/beesease,

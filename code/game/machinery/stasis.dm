@@ -9,6 +9,7 @@
 	obj_flags = BLOCKS_CONSTRUCTION
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	circuit = /obj/item/circuitboard/machine/stasis
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
@@ -22,6 +23,7 @@
 /obj/machinery/stasis/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
+	update_buckle_vars(dir)
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
@@ -32,9 +34,9 @@
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
 		if(_running)
-			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, frequency = sound_freq)
 		else
-			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
+			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
 /obj/machinery/stasis/click_alt(mob/user)
@@ -56,6 +58,13 @@
 		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
+
+/obj/machinery/stasis/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/machinery/stasis/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & NORTHEAST ? 270 : 90
 
 /obj/machinery/stasis/proc/stasis_running()
 	return stasis_enabled && is_operational

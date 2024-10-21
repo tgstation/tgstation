@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "EID'R-ELDR!!!"
+	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -67,13 +67,13 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "fire_ring"
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "ILLA-LASARA'FOSS!!!"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "C'SC'DE"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	/// The radius the flames will go around the caster.
@@ -112,7 +112,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 300
 
-	invocation = "Eld'sky!"
+	invocation = "F'RE"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -151,7 +151,7 @@
 			if(L.can_block_magic())
 				L.visible_message(span_danger("The spell bounces off of [L]!"), span_danger("The spell bounces off of you!"))
 				continue
-			if(L in hit_list || L == source)
+			if((L in hit_list) || L == source)
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)

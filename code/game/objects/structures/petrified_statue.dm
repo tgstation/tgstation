@@ -13,24 +13,24 @@
 /obj/structure/statue/petrified/relaymove()
 	return
 
-/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer, save_brain)
+/obj/structure/statue/petrified/Initialize(mapload, mob/living/living, statue_timer, save_brain)
 	. = ..()
 	if(statue_timer)
 		timer = statue_timer
 	if(save_brain)
 		brain = save_brain
-	if(L)
-		petrified_mob = L
-		if(L.buckled)
-			L.buckled.unbuckle_mob(L,force=1)
-		L.visible_message(span_warning("[L]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
-		L.forceMove(src)
-		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
-		L.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
-		L.status_flags |= GODMODE
-		atom_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		max_integrity = atom_integrity
-		START_PROCESSING(SSobj, src)
+	if(!living)
+		return
+	petrified_mob = living
+	if(living.buckled)
+		living.buckled.unbuckle_mob(living, force = TRUE)
+	living.visible_message(span_warning("[living]'s skin rapidly turns to marble!"), span_userdanger("Your body freezes up! Can't... move... can't... think..."))
+	living.forceMove(src)
+	living.add_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+	living.faction |= FACTION_MIMIC //Stops mimics from instaqdeling people in statues
+	atom_integrity = living.health + 100 //stoning damaged mobs will result in easier to shatter statues
+	max_integrity = atom_integrity
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/statue/petrified/process(seconds_per_tick)
 	if(!petrified_mob)
@@ -47,6 +47,9 @@
 /obj/structure/statue/petrified/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == petrified_mob)
+		petrified_mob.remove_traits(list(TRAIT_GODMODE, TRAIT_MUTE, TRAIT_NOBLOOD), STATUE_MUTE)
+		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
+		petrified_mob.faction -= FACTION_MIMIC
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()
@@ -64,13 +67,7 @@
 	for(var/obj/O in src)
 		O.forceMove(loc)
 
-	if(petrified_mob)
-		petrified_mob.status_flags &= ~GODMODE
-		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
-		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
-		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
-		petrified_mob.faction -= FACTION_MIMIC
-		petrified_mob.forceMove(loc)
+	petrified_mob?.forceMove(loc)
 	return ..()
 
 /obj/structure/statue/petrified/atom_deconstruct(disassembled = TRUE)
@@ -114,7 +111,6 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
 	S.name = "statue of [name]"
-	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	if(colorlist)

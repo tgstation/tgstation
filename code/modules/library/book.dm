@@ -133,7 +133,7 @@
 				name = newtitle
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
-				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", multiline = TRUE)
+				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
 				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				if(!content)
@@ -141,7 +141,7 @@
 					return
 				book_data.set_content(html_decode(content))
 			if("Author")
-				var/author = tgui_input_text(user, "Write the author's name", "Author Name")
+				var/author = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
 				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 					return
 				if(!author)

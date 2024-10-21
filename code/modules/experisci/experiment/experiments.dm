@@ -82,7 +82,7 @@
 
 /datum/experiment/ordnance/explosive/hydrogenbomb
 	name = "Hydrogen Explosives"
-	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
+	description = "Combustion of Hydrogen and its derivatives can be very powerful. Capture any tank explosion with a Doppler Array and publish the data in a paper. Only Hydrogen or Tritium Fires are allowed."
 	gain = list(15,40,60)
 	target_amount = list(50,75,150)
 	experiment_proper = TRUE
@@ -326,6 +326,7 @@
 	name = "Exosuit Materials: Stress Failure Test"
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
+	total_requirement = 2
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
@@ -386,7 +387,7 @@
 			if (organ.type == target_species.get_mutant_organ_type_for_slot(organ.slot))
 				continue
 		else
-			if ((organ.type in target_species.mutant_organs) || (organ.type in target_species.external_organs))
+			if ((organ.type in target_species.mutant_organs))
 				continue
 		return TRUE
 	return FALSE

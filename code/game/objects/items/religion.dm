@@ -75,7 +75,7 @@
 	inspired_human.AdjustImmobilized(-40)
 	inspired_human.AdjustParalyzed(-40)
 	inspired_human.AdjustUnconscious(-40)
-	playsound(inspired_human, 'sound/magic/staff_healing.ogg', 25, FALSE)
+	playsound(inspired_human, 'sound/effects/magic/staff_healing.ogg', 25, FALSE)
 
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return
@@ -343,10 +343,12 @@
 	var/staffcooldown = 0
 	var/staffwait = 30
 
-/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom(interacting_with, user, modifiers)
-
 /obj/item/godstaff/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/godstaff/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(staffcooldown + staffwait > world.time)
 		return ITEM_INTERACT_BLOCKING
 
@@ -386,6 +388,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/shoes_plate
+	body_parts_covered = FEET|LEGS
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

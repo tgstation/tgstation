@@ -144,6 +144,10 @@
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"wZ" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/rock/snow/ice,
+/area/icemoon/underground/explored/virtual_domain)
 "xB" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -172,9 +176,6 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/icemoon/underground/explored/virtual_domain)
-"Am" = (
-/turf/closed/indestructible/binary,
 /area/icemoon/underground/explored/virtual_domain)
 "AI" = (
 /obj/structure/flora/grass/green/style_random,
@@ -283,9 +284,8 @@
 /turf/closed/indestructible/rock/snow/ice,
 /area/icemoon/underground/explored/virtual_domain)
 "RD" = (
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/icemoon/underground/explored/virtual_domain)
+/area/virtual_domain/fullbright)
 "Tz" = (
 /obj/item/pickaxe/mini,
 /turf/open/misc/asteroid/snow,
@@ -309,84 +309,84 @@
 /area/virtual_domain/safehouse)
 
 (1,1,1) = {"
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
 RD
 "}
 (2,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -459,11 +459,11 @@ Qv
 Qv
 Qv
 Qv
-Qv
-Am
+wZ
+RD
 "}
 (3,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -537,10 +537,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (4,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -614,10 +614,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (5,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -691,10 +691,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (6,1,1) = {"
-Am
+RD
 Qv
 Qv
 kK
@@ -768,10 +768,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (7,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -845,10 +845,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (8,1,1) = {"
-Am
+RD
 Qv
 Qv
 eB
@@ -922,10 +922,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (9,1,1) = {"
-Am
+RD
 Qv
 Qv
 mr
@@ -999,10 +999,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (10,1,1) = {"
-Am
+RD
 Qv
 dR
 sw
@@ -1076,10 +1076,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (11,1,1) = {"
-Am
+RD
 Qv
 dR
 eB
@@ -1153,10 +1153,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (12,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -1230,10 +1230,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (13,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -1307,10 +1307,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (14,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -1384,10 +1384,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (15,1,1) = {"
-Am
+RD
 Qv
 sw
 sa
@@ -1461,10 +1461,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (16,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -1538,10 +1538,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (17,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -1615,10 +1615,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (18,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -1692,10 +1692,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (19,1,1) = {"
-Am
+RD
 Qv
 Qv
 kK
@@ -1769,10 +1769,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (20,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -1846,10 +1846,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (21,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -1923,10 +1923,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (22,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -2000,10 +2000,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (23,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -2077,10 +2077,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (24,1,1) = {"
-Am
+RD
 Qv
 Qv
 sw
@@ -2154,10 +2154,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (25,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -2231,10 +2231,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (26,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -2308,10 +2308,10 @@ pL
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (27,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -2385,10 +2385,10 @@ pL
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (28,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -2462,10 +2462,10 @@ pL
 pL
 Qv
 Qv
-Am
+RD
 "}
 (29,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -2539,10 +2539,10 @@ pL
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (30,1,1) = {"
-Am
+RD
 Qv
 Qv
 qc
@@ -2616,10 +2616,10 @@ pL
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (31,1,1) = {"
-Am
+RD
 Qv
 pl
 qc
@@ -2693,10 +2693,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (32,1,1) = {"
-Am
+RD
 Qv
 sM
 sM
@@ -2770,10 +2770,10 @@ dR
 dR
 Qv
 Qv
-Am
+RD
 "}
 (33,1,1) = {"
-Am
+RD
 Qv
 sM
 sM
@@ -2847,10 +2847,10 @@ dR
 dR
 Qv
 Qv
-Am
+RD
 "}
 (34,1,1) = {"
-Am
+RD
 Qv
 sM
 sM
@@ -2924,10 +2924,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (35,1,1) = {"
-Am
+RD
 Qv
 sM
 sM
@@ -3001,10 +3001,10 @@ YT
 YT
 vz
 Qv
-Am
+RD
 "}
 (36,1,1) = {"
-Am
+RD
 Qv
 dR
 sM
@@ -3078,10 +3078,10 @@ YT
 YT
 YT
 Qv
-Am
+RD
 "}
 (37,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -3155,10 +3155,10 @@ YT
 YT
 YT
 Qv
-Am
+RD
 "}
 (38,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -3232,10 +3232,10 @@ YT
 YT
 YT
 Qv
-Am
+RD
 "}
 (39,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -3309,10 +3309,10 @@ YT
 YT
 YT
 Qv
-Am
+RD
 "}
 (40,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -3386,10 +3386,10 @@ YT
 YT
 YT
 Qv
-Am
+RD
 "}
 (41,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -3463,10 +3463,10 @@ YT
 YT
 uJ
 Qv
-Am
+RD
 "}
 (42,1,1) = {"
-Am
+RD
 Qv
 dR
 AI
@@ -3540,10 +3540,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (43,1,1) = {"
-Am
+RD
 Qv
 yo
 yo
@@ -3617,10 +3617,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (44,1,1) = {"
-Am
+RD
 Qv
 dR
 yo
@@ -3694,10 +3694,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (45,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -3771,10 +3771,10 @@ kK
 dR
 Qv
 Qv
-Am
+RD
 "}
 (46,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -3848,10 +3848,10 @@ dR
 dR
 Qv
 Qv
-Am
+RD
 "}
 (47,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -3925,10 +3925,10 @@ dR
 dR
 Qv
 Qv
-Am
+RD
 "}
 (48,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4002,10 +4002,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (49,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4079,10 +4079,10 @@ sw
 dR
 dR
 Qv
-Am
+RD
 "}
 (50,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -4156,10 +4156,10 @@ eB
 dR
 dR
 Qv
-Am
+RD
 "}
 (51,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -4233,10 +4233,10 @@ dR
 dR
 sa
 Qv
-Am
+RD
 "}
 (52,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -4310,10 +4310,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (53,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -4387,10 +4387,10 @@ Qv
 dR
 dR
 Qv
-Am
+RD
 "}
 (54,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -4464,10 +4464,10 @@ Qv
 dR
 Qv
 Qv
-Am
+RD
 "}
 (55,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4541,10 +4541,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (56,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4618,10 +4618,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (57,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4695,10 +4695,10 @@ dR
 dR
 dR
 Qv
-Am
+RD
 "}
 (58,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4772,10 +4772,10 @@ sa
 dR
 dR
 Qv
-Am
+RD
 "}
 (59,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -4849,10 +4849,10 @@ dR
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (60,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -4926,10 +4926,10 @@ dR
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (61,1,1) = {"
-Am
+RD
 Qv
 dR
 kK
@@ -5003,10 +5003,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (62,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -5080,10 +5080,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (63,1,1) = {"
-Am
+RD
 Qv
 dR
 Lw
@@ -5157,10 +5157,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (64,1,1) = {"
-Am
+RD
 Qv
 dR
 sa
@@ -5234,10 +5234,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (65,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -5311,10 +5311,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (66,1,1) = {"
-Am
+RD
 Qv
 dR
 kK
@@ -5388,10 +5388,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (67,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -5465,10 +5465,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (68,1,1) = {"
-Am
+RD
 Qv
 dR
 dR
@@ -5542,10 +5542,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (69,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -5619,10 +5619,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (70,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -5696,10 +5696,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (71,1,1) = {"
-Am
+RD
 Qv
 Qv
 dR
@@ -5773,10 +5773,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (72,1,1) = {"
-Am
+RD
 Qv
 Qv
 sa
@@ -5850,10 +5850,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (73,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -5927,10 +5927,10 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (74,1,1) = {"
-Am
+RD
 Qv
 Qv
 Qv
@@ -6004,82 +6004,82 @@ Qv
 Qv
 Qv
 Qv
-Am
+RD
 "}
 (75,1,1) = {"
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
-Am
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
+RD
 "}

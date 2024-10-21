@@ -10,7 +10,7 @@
 			step_y = AM.step_y
 	. = ..()
 
-#define PHYSICAL_POSITION(atom) ((atom.y * world.icon_size) + (atom.pixel_y))
+#define PHYSICAL_POSITION(atom) ((atom.y * ICON_SIZE_Y) + (atom.pixel_y))
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
 	var/list/atoms = list()
@@ -99,8 +99,8 @@
 
 	if(!skip_normal) //these are not clones
 		for(var/atom/A in sorted)
-			var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
-			var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
+			var/xo = (A.x - center.x) * ICON_SIZE_X + A.pixel_x + xcomp
+			var/yo = (A.y - center.y) * ICON_SIZE_Y + A.pixel_y + ycomp
 			if(ismovable(A))
 				var/atom/movable/AM = A
 				xo += AM.step_x
@@ -116,9 +116,9 @@
 				CHECK_TICK
 				continue
 			// Center of the image in X
-			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
+			var/xo = (clone.x - center.x) * ICON_SIZE_X + clone.pixel_x + xcomp + clone.step_x
 			// Center of the image in Y
-			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
+			var/yo = (clone.y - center.y) * ICON_SIZE_Y + clone.pixel_y + ycomp + clone.step_y
 
 			if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
 				var/datum/decompose_matrix/decompose = clone.transform.decompose()
@@ -141,12 +141,6 @@
 
 			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
-
-	if(!silent)
-		if(istype(custom_sound)) //This is where the camera actually finishes its exposure.
-			playsound(loc, custom_sound, 75, TRUE, -3)
-		else
-			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
 
 	if(wipe_atoms)
 		QDEL_LIST(atoms)

@@ -324,6 +324,8 @@
 
 /obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
+	//Add to the early process queue to prioritize power draw
+	SSmachines.processing_early += src
 	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
@@ -356,7 +358,7 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/power/shieldwallgen/process()
+/obj/machinery/power/shieldwallgen/process_early()
 	if(active)
 		if(active == ACTIVE_SETUPFIELDS)
 			var/fields = 0

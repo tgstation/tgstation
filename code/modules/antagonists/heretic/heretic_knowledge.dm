@@ -155,7 +155,9 @@
 		return FALSE
 
 	for(var/result in result_atoms)
-		new result(loc)
+		var/atom/result_item = new result(loc)
+		if(isitem(result_item))
+			ADD_TRAIT(result_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	return TRUE
 
 /**
@@ -226,7 +228,7 @@
 
 /**
  * A knowledge subtype for knowledge that can only
- * have a limited amount of it's resulting atoms
+ * have a limited amount of its resulting atoms
  * created at once.
  */
 /datum/heretic_knowledge/limited_amount
@@ -301,7 +303,7 @@
 	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
 /datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
@@ -325,6 +327,8 @@
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
 	trigger_mark(source, target)
 
 /**
@@ -538,7 +542,7 @@
 	var/mob/living/mob_to_summon
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	summon_ritual_mob(user, loc, mob_to_summon)
+	return summon_ritual_mob(user, loc, mob_to_summon)
 
 /**
  * Creates the ritual mob and grabs a ghost for it
@@ -582,7 +586,6 @@
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
-	summoned.RegisterSignal(user, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/mob/living/, on_master_death))
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
@@ -639,7 +642,6 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/circular_saw,
 		/obj/item/scalpel,
-		/obj/item/binoculars,
 		/obj/item/clothing/gloves/color/yellow,
 		/obj/item/melee/baton/security,
 		/obj/item/clothing/glasses/sunglasses,
@@ -676,13 +678,12 @@
 	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
-	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_boldnotice("[name] completed!"))
-	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
@@ -723,7 +724,7 @@
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(!can_be_invoked(heretic_datum))
 		return FALSE
 
@@ -744,7 +745,7 @@
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
 	// Show the cool red gradiant in our UI

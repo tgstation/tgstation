@@ -226,6 +226,7 @@
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
+	reagent_container_liquid_sound = SFX_PLASTIC_BOTTLE_LIQUID_SLOSH
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
@@ -263,7 +264,7 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
+			playsound(loc, 'sound/effects/can/can_open1.ogg', 50, TRUE)
 	else
 		cap_on = TRUE
 		spillable = FALSE
@@ -316,7 +317,7 @@
 		var/mob/living/thrower = throwingdatum?.get_thrower()
 		if(thrower)
 			thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
-	else // landed on it's side
+	else // landed on its side
 		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
 /obj/item/reagent_containers/cup/glass/waterbottle/pickup(mob/user)

@@ -2,16 +2,16 @@
 "a" = (
 /obj/structure/closet/crate/secure,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "b" = (
 /obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "e" = (
 /obj/item/gun/ballistic/shotgun/lethal,
 /obj/structure/closet/crate/preopen,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "h" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/gun/ballistic/automatic/mini_uzi,
@@ -49,61 +49,61 @@
 /obj/item/gun/ballistic/revolver,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"k" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+"i" = (
+/obj/effect/landmark/bitrunning/crate_replacer,
+/turf/open/indestructible/dark,
+/area/virtual_domain)
 "m" = (
 /obj/item/toy/gun{
 	pixel_y = 3
 	},
 /obj/structure/closet/crate/wooden,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "o" = (
 /turf/template_noop,
 /area/template_noop)
-"q" = (
-/obj/effect/landmark/bitrunning/crate_replacer,
-/turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "r" = (
 /mob/living/simple_animal/hostile/mimic,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "s" = (
 /mob/living/simple_animal/hostile/mimic/crate,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "t" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"u" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/indestructible/dark,
+/area/virtual_domain)
 "v" = (
 /obj/structure/closet/crate/hydroponics,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "x" = (
 /obj/item/gun/ballistic/shotgun/lethal,
 /obj/item/gun/ballistic/revolver/mateba,
 /obj/structure/closet/crate/preopen,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "B" = (
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/turf/open/space,
+/area/space/virtual_domain)
 "F" = (
 /obj/structure/closet/crate/internals,
 /obj/item/gun/ballistic/revolver/mateba,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "K" = (
 /obj/structure/closet/crate/eva,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "M" = (
 /obj/machinery/door/airlock/abductor,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "N" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
@@ -111,23 +111,23 @@
 "O" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "P" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/gun/ballistic/revolver/mateba,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Q" = (
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "R" = (
 /obj/structure/closet/crate/secure/loot,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "S" = (
 /obj/structure/closet/crate/secure/bitrunning/encrypted,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "U" = (
 /obj/modular_map_root/safehouse{
 	key = "bathroom"
@@ -141,14 +141,15 @@
 /obj/projectile/bullet/shotgun_frag12,
 /obj/projectile/bullet/shotgun_frag12,
 /turf/open/indestructible/dark,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain)
 "Y" = (
 /turf/closed/indestructible/binary,
-/area/ruin/space/has_grav/powered/virtual_domain)
+/area/virtual_domain/fullbright)
 
 (1,1,1) = {"
 o
 o
+o
 Y
 Y
 Y
@@ -162,9 +163,8 @@ Y
 Y
 Y
 Y
-Y
-Y
-k
+o
+o
 o
 o
 o
@@ -177,7 +177,7 @@ o
 (2,1,1) = {"
 o
 o
-Y
+o
 Y
 Q
 Q
@@ -192,7 +192,7 @@ Q
 a
 Y
 Y
-Y
+o
 o
 o
 o
@@ -205,7 +205,7 @@ o
 (3,1,1) = {"
 o
 o
-Y
+o
 Y
 Y
 K
@@ -218,9 +218,9 @@ Q
 Q
 Q
 Q
-Q
+u
 Y
-Y
+o
 o
 o
 o
@@ -246,9 +246,9 @@ Y
 Q
 Q
 Q
-Q
+i
 Y
-Y
+o
 o
 o
 o
@@ -920,7 +920,7 @@ Y
 Y
 Y
 Y
-q
+Y
 o
 o
 o

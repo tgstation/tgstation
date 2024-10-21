@@ -24,8 +24,8 @@
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
-	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
-	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)
@@ -62,7 +62,7 @@
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if (target.z != z)
 			continue
-		if (target.status_flags & GODMODE)
+		if (HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		if (target.stat >= UNCONSCIOUS)
 			continue // Don't just haunt a corpse
@@ -81,18 +81,32 @@
 	return
 
 /// Visual effect spawned when the bioscrambler scrambles your bio
-/obj/effect/temp_visual/bioscrambler_wave
+/obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "circle_wave"
 	pixel_x = -16
 	pixel_y = -16
 	duration = 0.5 SECONDS
 	color = COLOR_LIME
+	var/max_alpha = 255
+	///How far the effect would scale in size
+	var/amount_to_scale = 2
 
-/obj/effect/temp_visual/bioscrambler_wave/Initialize(mapload)
+/obj/effect/temp_visual/circle_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
-	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
-	animate(src, alpha = 255, time = duration * 0.6, flags = ANIMATION_PARALLEL)
+	animate(src, transform = matrix().Scale(amount_to_scale), time = duration, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
 	return ..()
+
+/obj/effect/temp_visual/circle_wave/bioscrambler
+	color = COLOR_LIME
+
+/obj/effect/temp_visual/circle_wave/bioscrambler/light
+	max_alpha = 128
+
+/obj/effect/temp_visual/circle_wave/void_conduit
+	color = COLOR_FULL_TONER_BLACK
+	duration = 12 SECONDS
+	amount_to_scale = 12

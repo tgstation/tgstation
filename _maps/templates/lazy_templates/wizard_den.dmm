@@ -44,6 +44,18 @@
 /obj/structure/showcase/machinery/rng,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"dr" = (
+/obj/structure/table/wood,
+/obj/item/cigarette/cigar{
+	pixel_y = -9;
+	pixel_x = -5
+	},
+/obj/item/camera/spooky{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "dB" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
@@ -172,13 +184,6 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
-"kG" = (
-/obj/structure/railing,
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "kZ" = (
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -208,13 +213,6 @@
 	name = "wand of emergency engine ignition"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"mJ" = (
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "nc" = (
@@ -329,6 +327,13 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
+"qg" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "ql" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -436,6 +441,15 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
+"wA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "wQ" = (
 /obj/structure/mirror/magic{
 	pixel_x = 32
@@ -501,6 +515,13 @@
 	dir = 4
 	},
 /turf/open/floor/plastic,
+/area/centcom/wizard_station)
+"yX" = (
+/obj/structure/railing,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "zB" = (
 /turf/open/floor/iron,
@@ -648,32 +669,8 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
-"JU" = (
-/obj/structure/table/wood,
-/obj/item/cigarette/cigar{
-	pixel_y = -9;
-	pixel_x = -5
-	},
-/obj/item/camera/spooky{
-	pixel_y = 7;
-	pixel_x = 2
-	},
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "JW" = (
 /obj/machinery/door/window/left/directional/east,
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"KL" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Lt" = (
@@ -1551,7 +1548,7 @@ kZ
 uy
 VB
 TX
-kG
+yX
 VB
 VB
 op
@@ -1597,7 +1594,7 @@ kZ
 uy
 VB
 fX
-mJ
+qg
 fX
 VB
 VB
@@ -1643,7 +1640,7 @@ LU
 cy
 VB
 eI
-mJ
+qg
 fX
 fX
 dk
@@ -1688,7 +1685,7 @@ YT
 LU
 LU
 jp
-KL
+wA
 HX
 Ad
 Ad
@@ -1735,7 +1732,7 @@ LU
 cy
 VB
 fX
-mJ
+qg
 fX
 fX
 dk
@@ -1781,7 +1778,7 @@ kZ
 uy
 VB
 fX
-mJ
+qg
 fX
 VB
 VB
@@ -1827,7 +1824,7 @@ kZ
 uy
 VB
 fX
-mJ
+qg
 VB
 VB
 op
@@ -1852,7 +1849,7 @@ op
 op
 TG
 TG
-JU
+dr
 HD
 VB
 Dq

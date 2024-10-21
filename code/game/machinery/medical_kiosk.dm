@@ -304,7 +304,7 @@
 		addict_list += list(list("name" = initial(addiction_type.name)))
 
 	if (patient.has_status_effect(/datum/status_effect/hallucination))
-		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
+		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: Antipsychotic medication, [/datum/reagent/medicine/haloperidol::name] or [/datum/reagent/medicine/synaptizine::name]."
 
 	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss) >= 200))  //Patient status checks.
 		patient_status = "Dead."
@@ -318,7 +318,7 @@
 		patient_status = pick(
 			"The only kiosk is kiosk, but is the only patient, patient?",
 			"Breathing manually.",
-			"Constact NTOS site admin.",
+			"Contact NTOS site admin.",
 			"97% carbon, 3% natural flavoring",
 			"The ebb and flow wears us all in time.",
 			"It's Lupus. You have Lupus.",

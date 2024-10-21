@@ -230,7 +230,7 @@
 
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
-	cure_text = "frost oil"
+	cure_text = "Frost oil"
 	cures = list(/datum/reagent/consumable/frostoil)
 	cure_chance = 55
 	agent = "Advanced Mutation Toxin"

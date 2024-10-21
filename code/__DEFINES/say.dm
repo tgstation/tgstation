@@ -76,7 +76,7 @@
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_SMALL_VOICE "small"
-
+#define SPAN_SOAPBOX "soapbox"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)
@@ -122,3 +122,7 @@
 /// Meaning that if the message is visual, and sourced from a blind mob, they will not see it.
 /// This flag skips that behavior, and will always show the self message to the mob.
 #define ALWAYS_SHOW_SELF_MESSAGE (1<<1)
+
+///Defines for priorities for the bubble_icon_override comp
+#define BUBBLE_ICON_PRIORITY_ACCESSORY 2
+#define BUBBLE_ICON_PRIORITY_ORGAN 1

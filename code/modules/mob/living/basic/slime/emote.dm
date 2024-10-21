@@ -29,8 +29,6 @@
 
 /datum/emote/slime/mood/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!.)
-		return
 	var/mob/living/basic/slime/slime_user = user
 	slime_user.current_mood = mood_key
 	slime_user.regenerate_icons()
