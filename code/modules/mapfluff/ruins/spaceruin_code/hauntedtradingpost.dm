@@ -273,6 +273,8 @@
 	if(!locate(host_machine) in loc) //muh machine's gone, delete myself because im disarmed
 		qdel(src)
 		return
+	if(!isliving(target))
+		return
 	if(!COOLDOWN_FINISHED(src, trigger_cooldown)) //do nothing if we're on cooldown
 		return
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
