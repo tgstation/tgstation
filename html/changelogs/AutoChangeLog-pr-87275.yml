@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "TTS pitch now affects emote sounds"

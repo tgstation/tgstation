@@ -1,4 +1,0 @@
-author: "JackEnoff"
-delete-after: True
-changes:
-  - map: "Birdshot's Emitter Room should no longer be disconnected from the grid at shiftstart."

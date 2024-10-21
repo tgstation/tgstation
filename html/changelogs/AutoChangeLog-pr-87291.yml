@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Ghost polling/events no longer runtime or freak out when nobody signs up for them"

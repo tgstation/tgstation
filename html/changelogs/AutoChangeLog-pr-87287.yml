@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Nullblades and proto-kinetic crushers use the new proc for checking valid directions to backstab."

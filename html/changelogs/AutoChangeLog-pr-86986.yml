@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - config: "Added a policy message and associated config i think to when a heretic is soultrapped, allowing headmins to decide how they're allowed to act."
-  - rscadd: "Haunted longswords can be, and start, binded. Binded swords are weaker than usual, being basically just talking cultist longswords. You can, however, unbind them, which will heavily buff their stats, unlock their powers, allow you use of a heretic's path spell, and let them attempt to fling around and cast spells. (it's a 4-tap on melee when bound, 3-tap if unbound)"
-  - rscadd: "Reduced its throwing damage, turning it from a 3-hit-crit to a 4-hit-crit."
-  - rscadd: "void haunted swords have void prison instead of void chill"
-  - code_imp: "Added type_english_list() which recieves a list of types and returns 'an x, a y, and a z' strings."
