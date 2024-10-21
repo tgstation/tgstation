@@ -1,0 +1,4 @@
+author: "SuperDrish"
+delete-after: True
+changes:
+  - bugfix: "Condenser now simulates turf air after its activation"
