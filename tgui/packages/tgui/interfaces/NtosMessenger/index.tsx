@@ -43,7 +43,7 @@ export const NtosMessenger = (props) => {
   const { data } = useBackend<NtosMessengerData>();
   const {
     is_silicon,
-	remote_silicon,
+    remote_silicon,
     saved_chats,
     stored_photos,
     selected_photo_path,
@@ -54,7 +54,7 @@ export const NtosMessenger = (props) => {
 
   let content: JSX.Element;
   if (remote_silicon) {
-	  content = <AccessDeniedScreen />;
+      content = <AccessDeniedScreen />;
   } else if (open_chat !== null) {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
@@ -93,38 +93,37 @@ const AccessDeniedScreen = (props: any) => {
   return (
     <Stack fill vertical>
       <Stack.Item>
-	    <Section>
-	      <Stack vertical textAlign="center">
+        <Section>
+          <Stack vertical textAlign="center">
             <Box bold>
               <Icon name="address-card" />
               SpaceMessenger V6.5.3
             </Box>
-       </Stack>
-	    </Section>
+          </Stack>
+        </Section>
       </Stack.Item>
-	  
-	  <NoticeBox
-		color='white'
-		position="relative"
-		top="30%"
-		fontSize="30px"
-		textAlign="center"
-	    >
-		ERROR: CONNECTION REFUSED
-	  </NoticeBox>
-	    <Stack vertical position="relative" top="35%" textAlign="left">
-		  <Section>
-		  <Box>
-		    Message from host:
-		  </Box>
-		  <Box>
-		    -  Remote access of this application has been restricted.
-		  </Box>
-		  <Box>
-			-  Contact your Administrator for further assistance.
-    </Box>
-		  </Section>
-     </Stack>
+      <NoticeBox
+        color='white'
+        position="relative"
+        top="30%"
+        fontSize="30px"
+        textAlign="center"
+        >
+        ERROR: CONNECTION REFUSED
+      </NoticeBox>
+        <Stack vertical position="relative" top="35%" textAlign="left">
+          <Section>
+          <Box>
+            Message from host:
+          </Box>
+          <Box>
+            -  Remote access of this application has been restricted.
+          </Box>
+          <Box>
+            -  Contact your Administrator for further assistance.
+          </Box>
+          </Section>
+        </Stack>
     </Stack>
   );
 };
