@@ -452,29 +452,34 @@
 
 	var/list/surroundings = get_surroundings(user)
 	var/fueled_welder_found = FALSE
-	var/special_welder_found = FALSE
 
+	// set as found as these omnitools don't have fuel, they just work
 	if ((/obj/item/debug/omnitool in surroundings["instances"]) || (/obj/item/abductor/alien_omnitool in surroundings["instances"]))
-		special_welder_found = TRUE
+		fueled_welder_found = TRUE
 
-	if(!special_welder_found)
+	if(!fueled_welder_found)
+		//check if the welders have fuel
 		for (var/obj/item/weldingtool/welder in surroundings["instances"][/obj/item/weldingtool])
 			if (welder.get_fuel() != 0)
 				fueled_welder_found = TRUE
 				break
 
+		// this check is to stop redundant checks since only one welder needs to work for the recipe
 		if (!fueled_welder_found)
+			//check if the lighters have fuel
 			for (var/obj/item/lighter/lighter in surroundings["instances"][/obj/item/lighter])
 				if (lighter.get_fuel() != 0)
 					fueled_welder_found = TRUE
 					break
 
 		if(!fueled_welder_found)
+			//check if the plasmacutter have fuel
 			for (var/obj/item/gun/energy/plasmacutter/plasmacutter in surroundings["instances"][/obj/item/gun/energy/plasmacutter])
 				if (plasmacutter.cell.charge != 0)
 					fueled_welder_found = TRUE
 					break
 
+		//if no fueled welder found, remove the welding as an available tool
 		if(!fueled_welder_found)
 			surroundings["tool_behaviour"] -= TOOL_WELDER
 
