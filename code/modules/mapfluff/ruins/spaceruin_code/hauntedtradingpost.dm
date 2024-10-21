@@ -269,7 +269,7 @@
 	if(donk_ai_slave)
 		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
-/obj/effect/overloader_trap/HasProximity(atom/movable/target as mob)
+/obj/effect/overloader_trap/HasProximity(mob/living/target as mob)
 	if(!locate(host_machine) in loc) //muh machine's gone, delete myself because im disarmed
 		qdel(src)
 		return
