@@ -43,8 +43,9 @@
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	death_loot = string_list(remains)
-	AddElement(/datum/element/death_drops, death_loot)
+	if(length(remains))
+		remains = string_list(remains)
+		AddElement(/datum/element/death_drops, remains)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
