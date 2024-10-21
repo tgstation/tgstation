@@ -1273,3 +1273,10 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	alert_overlay.transform = alert_overlay.transform.Scale(scale)
 
 	return alert_overlay
+
+/proc/strip_light_underlays(mutable_appearance/appearance) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
+	for(var/mutable_appearance/underlay as anything in appearance.underlays)
+		if(IS_LIGHTING_UNDERLAY(underlay))
+			appearance.underlays -= underlay
+	return appearance
