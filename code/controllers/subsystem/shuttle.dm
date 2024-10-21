@@ -411,7 +411,9 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
-	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
+	// DOPPLER EDIT - NT -> PA
+	//var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr> // ORIGINAL
+	var/intercepttext = "<font size = 3><b>Port Authority Update</b>: Request For Shuttle.</font><hr>\
 						To whom it may concern:<br><br>\
 						We have taken note of the situation upon [station_name()] and have come to the \
 						conclusion that it does not warrant the abandonment of the station.<br>\

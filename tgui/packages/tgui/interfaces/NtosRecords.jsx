@@ -16,7 +16,8 @@ export const NtosRecords = (props) => {
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Section textAlign="center">
-          NANOTRASEN PERSONNEL RECORDS (CLASSIFIED)
+          {/* NANOTRASEN PERSONNEL RECORDS (CLASSIFIED)*/} {/* ORIGINAL */}
+          PERSONNEL RECORDS (CLASSIFIED) {/* DOPPLER EDIT - NT -> PA */}
         </Section>
         <Section>
           <Input
