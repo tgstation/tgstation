@@ -235,9 +235,9 @@
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
-		user.put_in_l_hand(SSwardrobe.provide_type(l_hand, user), visuals_only = TRUE)
+		user.put_in_l_hand(SSwardrobe.provide_type(l_hand, user), visuals_only = visuals_only)
 	if(r_hand)
-		user.put_in_r_hand(SSwardrobe.provide_type(r_hand, user), visuals_only = TRUE)
+		user.put_in_r_hand(SSwardrobe.provide_type(r_hand, user), visuals_only = visuals_only)
 
 	if(!visuals_only) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
