@@ -337,6 +337,7 @@
 
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
+	static_data["remote_silicon"] = static_data["is_silicon"] && !istype(computer, /obj/item/modular_computer/pda/silicon) //Silicon is accessing a PDA on the ground, not their internal one
 	static_data["alert_able"] = alert_able
 
 	return static_data
