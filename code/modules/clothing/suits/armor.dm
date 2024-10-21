@@ -794,7 +794,7 @@
 
 /obj/item/clothing/suit/armor/durability/holymelon
 	name = "holymelon armor"
-	desc = "An armour, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
+	desc = "An armor, made from holymelons. Inspires you to go on some sort of a crusade... Perhaps spreading spinach to children?"
 	icon_state = "holymelon"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -833,7 +833,7 @@
 
 /obj/item/clothing/suit/armor/durability/barrelmelon
 	name = "barrelmelon armor"
-	desc = "An armour, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
+	desc = "An armor, made from barrelmelons. Reeks of ale, inspiring to courageous deeds. Or, perhaps, a bar brawl."
 	icon_state = "barrelmelon"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
