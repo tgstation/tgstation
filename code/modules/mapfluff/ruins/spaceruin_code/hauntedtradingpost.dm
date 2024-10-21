@@ -269,7 +269,7 @@
 	if(donk_ai_slave)
 		SSqueuelinks.add_to_queue(src, SELFDESTRUCT_QUEUE)
 
-/obj/effect/overloader_trap/HasProximity(mob/living)
+/obj/effect/overloader_trap/HasProximity(atom/movable/target as mob)
 	if(!locate(host_machine) in loc) //muh machine's gone, delete myself because im disarmed
 		qdel(src)
 		return
@@ -278,9 +278,9 @@
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
-	if (living.stat) //ensure the guy triggering us is alive
+	if (target.stat) //ensure the guy triggering us is alive
 		return
-	if (!faction_check_atom(living)) //and make sure it ain't someone on our team
+	if (!faction_check_atom(target)) //and make sure it ain't someone on our team
 		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
 		trap_alerted()
 
