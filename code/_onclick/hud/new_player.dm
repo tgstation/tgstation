@@ -122,7 +122,6 @@
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
-<<<<<<< HEAD
 	/// The ref of the mob that owns this button. Only the owner can click on it.
 	var/owner
 	var/requires_discord = TRUE //MASSMETA EDIT ADDITION (discord verification)
@@ -138,12 +137,8 @@
 	else
 		if(owner != REF(usr))
 			return
-=======
-
-/atom/movable/screen/lobby/button/Click(location, control, params)
 	if(usr != get_mob())
 		return
->>>>>>> b1069e4a6cb9a0f577ee675640c0a3a60826d884
 
 		if(!usr.client || usr.client.interviewee)
 			return
