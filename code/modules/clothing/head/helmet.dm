@@ -678,7 +678,7 @@
 
 /obj/item/clothing/head/helmet/durability/holymelon
 	name = "holymelon helmet"
-	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it whitstand much."
+	desc = "A helmet from a hollowed out holymelon. Might take a few hits, but don't expect it to withstand much."
 	icon_state = "holymelon"
 	inhand_icon_state = "holymelon"
 	flags_inv = HIDEEARS
