@@ -6,7 +6,6 @@
 	icon_state = "aac_device"
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = UNIQUE_RENAME
-	slot_flags = ITEM_SLOT_BELT
 	flags_1 = IS_PLAYER_COLORABLE_1
 	greyscale_config = /datum/greyscale_config/aac_device
 	greyscale_colors = "#FFFFFF#FFFFFF"
