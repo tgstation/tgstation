@@ -13,9 +13,11 @@
 			update_appearance()
 			return
 
-/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = FALSE)
-	if (!keep)
-		rotate()
+/obj/item/ammo_box/magazine/internal/cylinder/get_round()
+	rotate()
+	return fetch_round()
+
+/obj/item/ammo_box/magazine/internal/cylinder/fetch_round()
 	var/casing = stored_ammo[1]
 	if (ispath(casing))
 		casing = new casing(src)

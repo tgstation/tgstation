@@ -49,7 +49,7 @@
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
-	for (var/casing in stored_ammo)
+	for (var/obj/item/ammo_casing/casing as anything in stored_ammo)
 		if (!ispath(casing))
 			qdel(casing)
 	stored_ammo = null
@@ -74,7 +74,7 @@
 		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
 		\nAccidentally discharging any of these projectiles may void your insurance contract."
 
-	var/obj/item/ammo_casing/mag_ammo = get_round(TRUE)
+	var/obj/item/ammo_casing/mag_ammo = fetch_round()
 
 	if(istype(mag_ammo))
 		readout += "\n[mag_ammo.add_notes_ammo()]"
@@ -101,8 +101,8 @@
 		stored_ammo += starting ? round_check : new round_check(src)
 	update_appearance()
 
-///gets a round from the magazine, if keep is TRUE the round will be moved to the bottom of the list.
-/obj/item/ammo_box/proc/get_round(keep = FALSE)
+///gets a round from the magazine
+/obj/item/ammo_box/proc/get_round()
 	var/ammo_len = length(stored_ammo)
 	if (!ammo_len)
 		return null
@@ -110,9 +110,15 @@
 	if (ispath(casing))
 		casing = new casing(src)
 		stored_ammo[ammo_len] = casing
-	if (keep)
-		stored_ammo -= casing
-		stored_ammo.Insert(1, casing)
+	return casing
+
+/// Gets a round from the magazine and puts it back at the bottom of the ammo list
+/obj/item/ammo_box/proc/fetch_round()
+	var/casing = get_round()
+	if (!casing)
+		return null
+	stored_ammo -= casing
+	stored_ammo.Insert(1, casing)
 	return casing
 
 ///puts a round into the magazine
