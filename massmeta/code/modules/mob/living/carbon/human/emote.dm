@@ -72,7 +72,7 @@
 			T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
 			Person.Paralyze(15)
 			to_chat(Person, "<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>")
-			playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
+			playsound(user,'sound/effects/magic/lightningshock.ogg', 50, 1)
 			playsound(user,	'massmeta/sounds/fartts/dagothgod.ogg', 80)
 			Person.electrocution_animation(15)
 			spawn(15)

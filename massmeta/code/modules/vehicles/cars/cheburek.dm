@@ -356,7 +356,7 @@
 			playsound(src, pick('massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
-			playsound(src, 'sound/mecha/mechmove04.ogg', 75)
+			playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 75)
 
 		vehicle_move_delay -= 0.5
 		gopgear++
@@ -387,7 +387,7 @@
 			playsound(src, pick('massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
-			playsound(src, 'sound/mecha/mechmove04.ogg', 75)
+			playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 75)
 
 		vehicle_move_delay += 0.5
 		gopgear--

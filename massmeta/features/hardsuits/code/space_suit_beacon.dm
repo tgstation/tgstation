@@ -24,7 +24,7 @@
 	if(ispath(choice_path, /obj/item/clothing/suit/space/hardsuit) && needs_magboots)
 		podspawn(list(
 			"target" = get_turf(src),
-			"style" = STYLE_BLUESPACE,
+			"style" = /datum/pod_style/advanced,
 			"spawn" = list(choice_path, /obj/item/clothing/shoes/magboots)
 		))
 		return
