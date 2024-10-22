@@ -1495,7 +1495,6 @@
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
-				/mob/living/silicon/ai = 200,
 				/mob/living/basic/drone/polymorphed = 200,
 				/mob/living/basic/bot/dedbot = 50,
 				/mob/living/basic/bot/cleanbot = 50,
@@ -1503,10 +1502,11 @@
 				/mob/living/basic/bot/honkbot = 50,
 				/mob/living/basic/bot/hygienebot = 50,
 				/mob/living/basic/bot/medbot/mysterious = 50,
+				/mob/living/basic/bot/medbot = 50,
 				/mob/living/basic/bot/vibebot = 50,
-				/mob/living/basic/netguardian = 50,
 				/mob/living/basic/hivebot/strong = 50,
 				/mob/living/basic/hivebot/mechanic = 50,
+				/mob/living/basic/netguardian = 1,
 				/mob/living/silicon/robot/model/syndicate = 1,
 				/mob/living/silicon/robot/model/syndicate/medical = 1,
 				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
@@ -1548,11 +1548,17 @@
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
 				/mob/living/basic/ant,
+				/mob/living/basic/axolotl,
 				/mob/living/basic/bat,
 				/mob/living/basic/bear,
+				/mob/living/basic/bear/butter,
+				/mob/living/basic/bear/snow,
+				/mob/living/basic/bear/russian,
 				/mob/living/basic/blob_minion/blobbernaut,
+				/mob/living/basic/blob_minion/spore,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
+				/mob/living/basic/carp/mega,
 				/mob/living/basic/carp/magic,
 				/mob/living/basic/carp/magic/chaos,
 				/mob/living/basic/chick,
@@ -1569,9 +1575,9 @@
 				/mob/living/basic/deer,
 				/mob/living/basic/eyeball,
 				/mob/living/basic/goat,
+				/mob/living/basic/gondola,
 				/mob/living/basic/gorilla,
 				/mob/living/basic/gorilla/lesser,
-				/mob/living/basic/gutlunch/warrior,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
@@ -1580,11 +1586,16 @@
 				/mob/living/basic/migo,
 				/mob/living/basic/migo/hatsune,
 				/mob/living/basic/mining/basilisk,
-				/mob/living/basic/mining/bileworm, // wildin'
-				/mob/living/basic/mining/bileworm/vileworm,
 				/mob/living/basic/mining/brimdemon,
+				/mob/living/basic/mining/goldgrub,
+				/mob/living/basic/mining/goldgrub/baby,
 				/mob/living/basic/mining/goliath,
 				/mob/living/basic/mining/goliath/ancient/immortal,
+				/mob/living/basic/mining/gutlunch/warrior,
+				/mob/living/basic/mining/mook,
+				/mob/living/basic/mining/mook/worker,
+				/mob/living/basic/mining/mook/worker/bard,
+				/mob/living/basic/mining/mook/worker/tribal_chief,
 				/mob/living/basic/mining/legion/monkey,
 				/mob/living/basic/mining/legion/monkey/snow,
 				/mob/living/basic/mining/lobstrosity,
@@ -1612,6 +1623,9 @@
 				/mob/living/basic/pet/gondola,
 				/mob/living/basic/pet/fox,
 				/mob/living/basic/pet/penguin,
+				/mob/living/basic/pet/penguin/baby,
+				/mob/living/basic/pet/penguin/baby/permanent,
+				/mob/living/basic/pet/penguin/emperor,
 				/mob/living/basic/pet/penguin/emperor/shamebrero,
 				/mob/living/basic/pony,
 				/mob/living/basic/pony/syndicate,
@@ -1625,7 +1639,7 @@
 				/mob/living/basic/snake,
 				/mob/living/basic/snake/banded,
 				/mob/living/basic/snake/banded/harmless,
-				/mob/living/basic/spider/giant/tangle,
+				/mob/living/basic/spider/giant/tangle, // curated for the most 'interesting' ones
 				/mob/living/basic/spider/giant/breacher,
 				/mob/living/basic/spider/giant/tank,
 				/mob/living/basic/spider/giant/ambush,
@@ -1636,13 +1650,14 @@
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/basic/stickman/ranged,
+				/mob/living/basic/living_limb_flesh,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 			)
 			new_mob = new picked_animal(loc)
 		if(WABBAJACK_HUMAN)
 			var/mob/living/carbon/human/new_human = new(loc)
 
-			// 50% chance that we'll also randomice race
+			// 50% chance that we'll also randomize race
 			if(prob(50))
 				var/list/chooseable_races = list()
 				for(var/datum/species/species_type as anything in subtypesof(/datum/species))
