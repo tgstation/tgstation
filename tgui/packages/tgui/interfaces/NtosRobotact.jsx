@@ -446,7 +446,7 @@ export const NtosRobotactContent = (props) => {
           {!!!cyborg_groups.length && (
             <NoticeBox textAlign="center" top="30%" position="relative">
               <Box fontSize={2}>
-                CONNECTION UNAVAILABLE. NETWORK STATUS UNKNOWN.
+                CONNECTION UNAVAILABLE -- NETWORK STATUS UNKNOWN
               </Box>
             </NoticeBox>
           )}
