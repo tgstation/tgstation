@@ -36,7 +36,7 @@
 				return TRUE
 			return FALSE
 	create_storage(storage_type = /datum/storage/implant)
-
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 	return ..()
 
 /obj/item/implanter/storage

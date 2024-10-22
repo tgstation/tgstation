@@ -320,7 +320,7 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability", max_length = MAX_NAME_LEN)
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(ability_recipient)
@@ -484,12 +484,14 @@ ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with t
 		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you to interact with most machines as an AI would as a ghost.", ADMIN_CATEGORY_GAME)
-	user.AI_Interact = !user.AI_Interact
-	if(user.mob && isAdminGhostAI(user.mob))
-		user.mob.has_unlimited_silicon_privilege = user.AI_Interact
+	var/doesnt_have_silicon_access = !HAS_TRAIT_FROM(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	if(doesnt_have_silicon_access)
+		ADD_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
+	else
+		REMOVE_TRAIT(user, TRAIT_AI_ACCESS, ADMIN_TRAIT)
 
-	log_admin("[key_name(user)] has [user.AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(user)] has [user.AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] their AI interaction")
 
 ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
@@ -521,7 +523,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 	// Then, spawn a human and slap a person into it.
 	var/number_made = 0
 	for(var/rank in SSjob.name_occupations)
-		var/datum/job/job = SSjob.GetJob(rank)
+		var/datum/job/job = SSjob.get_job(rank)
 
 		// JOB_CREW_MEMBER is all jobs that pretty much aren't silicon
 		if(!(job.job_flags & JOB_CREW_MEMBER))
@@ -533,7 +535,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
+		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(user, "[rank] wasn't able to be spawned.")
 			continue
@@ -545,7 +547,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		qdel(new_guy)
 
 		// Then equip up the human with job gear.
-		SSjob.EquipRank(character, job)
+		SSjob.equip_rank(character, job)
 		job.after_latejoin_spawn(character)
 
 		// Finally, ensure the minds are tracked and in the manifest.

@@ -11,7 +11,7 @@
 	nuke_icon_state = "bananiumbomb_base"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/clown_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has clown op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
@@ -64,6 +64,11 @@
 	var/obj/item/organ/internal/liver/liver = L.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
+
+// Clown op reinforcements
+/datum/antagonist/nukeop/reinforcement/clownop
+	name = "Clown Operative Reinforcement"
+	nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
 
 /datum/outfit/clown_operative
 	name = "Clown Operative (Preview only)"

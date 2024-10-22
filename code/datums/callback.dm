@@ -26,7 +26,7 @@
  * ## PROC TYPEPATH SHORTCUTS
  * (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
  *
- * ### proc defined on current(src) object OR overridden at src or any of it's parents:
+ * ### proc defined on current(src) object OR overridden at src or any of its parents:
  * PROC_REF(procname)
  *
  * `CALLBACK(src, PROC_REF(some_proc_here))`
@@ -111,7 +111,7 @@
 		else
 			calling_arguments = args
 	if(datum_flags & DF_VAR_EDITED)
-		if(usr != GLOB.AdminProcCallHandler && !usr?.client?.ckey) //This happens when a timer or the MC invokes a callback
+		if(usr != GLOB.AdminProcCallHandler && !(usr && usr?.client?.ckey)) //This happens when a timer or the MC invokes a callback
 			return HandleUserlessProcCall(usr, object, delegate, calling_arguments)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
@@ -148,7 +148,7 @@
 		else
 			calling_arguments = args
 	if(datum_flags & DF_VAR_EDITED)
-		if(usr != GLOB.AdminProcCallHandler && !usr?.client?.ckey) //This happens when a timer or the MC invokes a callback
+		if(usr != GLOB.AdminProcCallHandler && !(usr && usr?.client?.ckey)) //This happens when a timer or the MC invokes a callback
 			return HandleUserlessProcCall(usr, object, delegate, calling_arguments)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)

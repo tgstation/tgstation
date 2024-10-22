@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(polling)
  * * chat_text_border_icon: Object or path to make an icon of to decorate the chat announcement.
  * * announce_chosen: Whether we should announce the chosen candidates in chat. This is ignored unless amount_to_pick is greater than 0.
  *
- * Returns a list of all mobs who signed up for the poll.
+ * Returns a list of all mobs who signed up for the poll, OR, in the case that amount_to_pick is equal to 1 the singular mob/null if no available candidates.
  */
 /datum/controller/subsystem/polling/proc/poll_candidates(
 	question,
@@ -130,10 +130,9 @@ SUBSYSTEM_DEF(polling)
 
 		// Image to display
 		var/image/poll_image
-		if(ispath(alert_pic, /atom))
-			poll_image = image(alert_pic)
-		else if(isatom(alert_pic))
+		if(ispath(alert_pic, /atom) || isatom(alert_pic))
 			poll_image = new /mutable_appearance(alert_pic)
+			poll_image.pixel_z = 0
 		else if(!isnull(alert_pic))
 			poll_image = alert_pic
 		else
@@ -156,7 +155,7 @@ SUBSYSTEM_DEF(polling)
 			act_never = "[custom_link_style_start]<a href='?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
-			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+			SEND_SOUND(candidate_mob, 'sound/announcer/notice/notice2.ogg')
 			var/surrounding_icon
 			if(chat_text_border_icon)
 				var/image/surrounding_image
@@ -174,9 +173,15 @@ SUBSYSTEM_DEF(polling)
 
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
-	if(!(amount_to_pick > 0))
+	if(!amount_to_pick)
 		return new_poll.signed_up
+	if (!length(new_poll.signed_up))
+		return null
 	for(var/pick in 1 to amount_to_pick)
+		// There may be less people signed up than amount_to_pick
+		// pick_n_take returns the default return value of null if passed an empty list, so just break in that case rather than adding null to the list.
+		if(!length(new_poll.signed_up))
+			break
 		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)
 	if(announce_chosen)
 		new_poll.announce_chosen(group)
@@ -206,6 +211,12 @@ SUBSYSTEM_DEF(polling)
 		return
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
+
+#ifdef TESTING
+	for(var/mob/dude in GLOB.player_list)
+		candidates |= dude
+#endif
+
 	return poll_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, candidates, alert_pic, jump_target, role_name_text, custom_response_messages, start_signed_up, amount_to_pick, chat_text_border_icon, announce_chosen)
 
 /datum/controller/subsystem/polling/proc/poll_ghosts_for_target(
@@ -271,7 +282,7 @@ SUBSYSTEM_DEF(polling)
 			return FALSE
 
 	if(check_jobban)
-		if(is_banned_from(potential_candidate.ckey, list(check_jobban, ROLE_SYNDICATE)))
+		if(is_banned_from(potential_candidate.ckey, list(ROLE_SYNDICATE) + check_jobban))
 			return FALSE
 
 	return TRUE

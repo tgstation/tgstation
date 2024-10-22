@@ -9,7 +9,7 @@
 	var/draw_color
 
 /datum/bodypart_overlay/simple/get_image(layer, obj/item/bodypart/limb)
-	return image(icon, icon_state, layer = layer)
+	return mutable_appearance(icon, icon_state, layer = layer)
 
 /datum/bodypart_overlay/simple/color_image(image/overlay, layer, obj/item/bodypart/limb)
 
@@ -24,11 +24,6 @@
 /datum/bodypart_overlay/simple/sixpack
 	icon_state = "sixpack"
 	layers = EXTERNAL_ADJACENT
-
-///A creampie drawn on the head
-/datum/bodypart_overlay/simple/creampie
-	icon_state = "creampie_human"
-	layers = EXTERNAL_FRONT
 
 ///bags drawn beneath the eyes
 /datum/bodypart_overlay/simple/bags

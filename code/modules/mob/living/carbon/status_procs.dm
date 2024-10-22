@@ -5,19 +5,6 @@
 /mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)
 	return ..() || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
-/mob/living/carbon/proc/enter_stamcrit()
-	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
-		return
-	if(check_stun_immunity(CANKNOCKDOWN))
-		return
-	if (SEND_SIGNAL(src, COMSIG_CARBON_ENTER_STAMCRIT) & STAMCRIT_CANCELLED)
-		return
-
-	to_chat(src, span_notice("You're too exhausted to keep going..."))
-	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
-	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
-		adjustStaminaLoss(30, FALSE)
-
 /mob/living/carbon/adjust_disgust(amount, max = DISGUST_LEVEL_MAXEDOUT)
 	disgust = clamp(disgust + amount, 0, max)
 

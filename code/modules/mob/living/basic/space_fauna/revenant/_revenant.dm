@@ -125,7 +125,7 @@
 		return TRUE
 
 	generated_objectives_and_spells = TRUE
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/revenant))
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/revenant))
 	mind.special_role = ROLE_REVENANT
 	SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 	mind.add_antag_datum(/datum/antagonist/revenant)
@@ -235,7 +235,7 @@
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
-	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+	orbitsize -= (orbitsize / ICON_SIZE_ALL) * (ICON_SIZE_ALL * 0.25)
 	orbit(target, orbitsize)
 
 /mob/living/basic/revenant/adjust_health(amount, updating_health = TRUE, forced = FALSE)

@@ -149,8 +149,9 @@
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if(user.job != JOB_ROBOTICIST)
-		to_chat(user, span_warning("You clicking and typing but don’t understand what to do with it"))
+	if(!HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
+		to_chat(user, span_warning("You're unsure about [emag_card ? "where to swipe [emag_card] over" : "how to override"] [src] for any effect. Maybe if you had more knowledge of robotics..."))
+
 		return FALSE
 	obj_flags |= EMAGGED
 	for(var/found_illegal_mech_nods in SSresearch.techweb_nodes)
@@ -162,7 +163,7 @@
 			illegal_local_designs |= illegal_mech_design
 			cached_designs |= illegal_mech_design
 	say("R$c!i&ed ERROR de#i$ns. C@n%ec$%ng to ~NULL~ se%ve$s.")
-	playsound(src, 'sound/machines/uplinkerror.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 50, TRUE)
 	update_static_data_for_all_viewers()
 	return TRUE
 
@@ -179,11 +180,14 @@
 		if(design.build_type & MECHFAB)
 			cached_designs |= design
 
+	for(var/datum/design/illegal_disign in illegal_local_designs)
+		cached_designs |= illegal_disign
+
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -423,7 +427,7 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(.)

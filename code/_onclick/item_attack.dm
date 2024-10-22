@@ -200,13 +200,11 @@
  * * params - Click params of this attack
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params) || SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return FALSE
-
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
 		return FALSE
@@ -216,7 +214,7 @@
 		return FALSE
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(src, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
 		playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
@@ -253,7 +251,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) | SEND_SIGNAL(user, COMSIG_LIVING_ATTACK_ATOM, attacked_atom)
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return TRUE
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -272,12 +270,12 @@
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!uses_integrity)
-		CRASH("attacked_by() was called on an object that doesnt use integrity!")
+		CRASH("attacked_by() was called on an object that doesn't use integrity!")
 
 	if(!attacking_item.force)
 		return
 
-	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
@@ -359,18 +357,6 @@
 		return TRUE
 
 	return FALSE
-
-/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
-		spark_system.start()
-		. = TRUE
-	return ..() || .
-
-/mob/living/silicon/ai/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
-	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
-		spark_system.start()
-		. = TRUE
-	return ..() || .
 
 /mob/living/carbon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || bodyparts[1]
@@ -486,4 +472,3 @@
 		return " in the [input_area]"
 
 	return ""
-

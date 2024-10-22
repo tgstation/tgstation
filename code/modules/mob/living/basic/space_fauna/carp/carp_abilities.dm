@@ -9,7 +9,7 @@
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	button_icon_state = "arcane_barrage"
 	cooldown_time = 5 SECONDS
-	projectile_sound = 'sound/weapons/emitter.ogg'
+	projectile_sound = 'sound/items/weapons/emitter.ogg'
 	melee_cooldown_time = 0 SECONDS // Without this they become extremely hesitant to bite anyone ever
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
@@ -26,6 +26,11 @@
 	if (!length(permitted_projectiles))
 		return
 	projectile_type = pick(permitted_projectiles)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/InterceptClickOn(mob/living/caller, params, atom/target)
+	if (!caller.combat_mode)
+		return FALSE
 	return ..()
 
 /**
@@ -135,8 +140,8 @@
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)
-	playsound(src, 'sound/magic/wand_teleport.ogg', 50)
-	playsound(destination, 'sound/magic/wand_teleport.ogg', 50)
+	playsound(src, 'sound/effects/magic/wand_teleport.ogg', 50)
+	playsound(destination, 'sound/effects/magic/wand_teleport.ogg', 50)
 
 /// Doesn't actually do anything, just a visual marker
 /obj/effect/temp_visual/lesser_carp_rift/exit

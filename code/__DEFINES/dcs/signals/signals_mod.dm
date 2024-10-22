@@ -39,3 +39,5 @@
 #define COMSIG_MOD_WEARER_SET "mod_wearer_set"
 /// Called when the MODsuit wearer is unset.
 #define COMSIG_MOD_WEARER_UNSET "mod_wearer_unset"
+/// Sent by the tether module when it triggers its snapping function
+#define COMSIG_MOD_TETHER_SNAP "mod_tether_snap"

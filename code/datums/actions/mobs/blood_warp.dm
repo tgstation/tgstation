@@ -21,14 +21,21 @@
 /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
 	if(owner.Adjacent(target))
 		return FALSE
-	var/list/can_jaunt = get_bloodcrawlable_pools(get_turf(owner), 1)
+
+	var/turf/target_turf = get_turf(target)
+	var/turf/owner_turf = get_turf(owner)
+
+	if (target_turf.z != owner_turf.z)
+		return FALSE
+
+	var/list/can_jaunt = get_bloodcrawlable_pools(owner_turf, 1)
 	if(!can_jaunt.len)
 		return FALSE
 
 	var/chosen_pick_range = get_pick_range()
-	var/list/pools = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range)
+	var/list/pools = get_bloodcrawlable_pools(target_turf, chosen_pick_range)
 	if(remove_inner_pools)
-		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range - 1)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(target_turf, chosen_pick_range - 1)
 		pools -= pools_to_remove
 	if(!pools.len)
 		return FALSE
@@ -42,19 +49,19 @@
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
-	pools = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range)
+	pools = get_bloodcrawlable_pools(target_turf, chosen_pick_range)
 	if(remove_inner_pools)
-		var/list/pools_to_remove = get_bloodcrawlable_pools(get_turf(target), chosen_pick_range - 1)
+		var/list/pools_to_remove = get_bloodcrawlable_pools(target_turf, chosen_pick_range - 1)
 		pools -= pools_to_remove
 	if(pools.len)
 		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
-		owner.visible_message("<span class='danger'>[owner] sinks into the blood...</span>")
-		playsound(get_turf(owner), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
+		owner.visible_message(span_danger("[owner] sinks into the blood..."))
+		playsound(owner_turf, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 		owner.forceMove(get_turf(found_bloodpool))
-		playsound(get_turf(owner), 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
-		owner.visible_message("<span class='danger'>And springs back out!</span>")
+		playsound(get_turf(owner), 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
+		owner.visible_message(span_danger("And springs back out!"))
 		SEND_SIGNAL(owner, COMSIG_BLOOD_WARP)
 		return TRUE
 	return FALSE

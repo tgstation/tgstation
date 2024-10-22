@@ -7,7 +7,9 @@
 	var/can_use_abilities = FALSE
 	/// shall we require riders to go through the riding minigame if they arent in our friends list
 	var/require_minigame = FALSE
-	/// list of blacklisted abilities that cant be shared
+	/// unsharable abilities that we will force to be shared anyway
+	var/list/override_unsharable_abilities = list()
+	/// abilities that are always blacklisted from sharing
 	var/list/blacklist_abilities = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
@@ -58,10 +60,10 @@
 	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		. = FALSE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
-	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
+	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || INCAPACITATED_IGNORING(rider, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
+	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || INCAPACITATED_IGNORING(living_parent, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)))
 		. = FALSE
 	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
 		. = FALSE
@@ -105,9 +107,7 @@
 			to_chat(user, span_warning("You need a [initial(key.name)] to ride [movable_parent]!"))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
-	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)
-	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
 	var/modified_move_cooldown = vehicle_move_cooldown
 	var/modified_move_delay = vehicle_move_delay
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
@@ -133,7 +133,7 @@
 			if(SANITY_LEVEL_INSANE)
 				modified_move_cooldown *= 1.2
 				modified_move_delay *= 1.2
-	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, (last_move_diagonal ? 2 : 1) * modified_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown = modified_move_cooldown, modified_move_delay)
 	return ..()
 
 /// Yeets the rider off, used for animals and cyborgs, redefined for humans who shove their piggyback rider off
@@ -169,6 +169,8 @@
 
 	for(var/datum/action/action as anything in ridden_creature.actions)
 		if(is_type_in_list(action, blacklist_abilities))
+			continue
+		if(!action.can_be_shared && !is_type_in_list(action, override_unsharable_abilities))
 			continue
 		action.GiveAction(rider)
 
@@ -387,7 +389,7 @@
 
 	if(human_user && is_clown_job(human_user.mind?.assigned_role))
 		// there's a new sheriff in town
-		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		playsound(movable_parent, 'sound/mobs/non-humanoids/pony/clown_gallup.ogg', 50)
 		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear/handle_specials()
@@ -506,7 +508,6 @@
 /datum/component/riding/creature/leaper
 	can_force_unbuckle = FALSE
 	can_use_abilities = TRUE
-	blacklist_abilities = list(/datum/action/cooldown/toggle_seethrough)
 	ride_check_flags = JUST_FRIEND_RIDERS
 
 /datum/component/riding/creature/leaper/handle_specials()
@@ -515,9 +516,9 @@
 
 /datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()
-	RegisterSignal(riding_mob, COMSIG_MOB_POINTED, PROC_REF(attack_pointed))
+	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
 
-/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed, obj/effect/temp_visual/point/point)
 	SIGNAL_HANDLER
 	if(!isclosedturf(pointed))
 		return
@@ -529,7 +530,7 @@
 
 /datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
 	. = ..()
-	UnregisterSignal(rider,  COMSIG_MOB_POINTED)
+	UnregisterSignal(rider,  COMSIG_MOVABLE_POINTED)
 
 /datum/component/riding/creature/raptor
 	require_minigame = TRUE

@@ -32,7 +32,7 @@
 	var/move_delay = FALSE
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
-	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
+	if(opened || move_delay || user.incapacitated || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	var/oldloc = loc
@@ -72,7 +72,7 @@
 	for(var/mob/living/alerted_mob as anything in alerted)
 		if(alerted_mob.stat != CONSCIOUS || alerted_mob.is_blind())
 			continue
-		if(!alerted_mob.incapacitated(IGNORE_RESTRAINTS))
+		if(!INCAPACITATED_IGNORING(alerted_mob, INCAPABLE_RESTRAINTS))
 			alerted_mob.face_atom(src)
 		alerted_mob.do_alert_animation()
 
@@ -105,8 +105,8 @@
 	resistance_flags = NONE
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
-	open_sound = 'sound/machines/crate_open.ogg'
-	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound = 'sound/machines/crate/crate_open.ogg'
+	close_sound = 'sound/machines/crate/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	material_drop = /obj/item/stack/sheet/plasteel

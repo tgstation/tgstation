@@ -48,7 +48,7 @@
 		can_slip_callback = CALLBACK(src, PROC_REF(pre_slip)),\
 	)
 	AddComponent(/datum/component/stun_n_cuff,\
-		stun_sound = 'sound/items/AirHorn.ogg',\
+		stun_sound = 'sound/items/airhorn/AirHorn.ogg',\
 		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
 		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
 		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake,\
@@ -88,7 +88,7 @@
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_access_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_access_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["slip_people"] = honkbot_flags & HONKBOT_MODE_SLIP
 		data["custom_controls"]["fake_cuff"] = honkbot_flags & HONKBOT_HANDCUFF_TARGET
 		data["custom_controls"]["check_ids"] = honkbot_flags & HONKBOT_CHECK_IDS
@@ -97,7 +97,8 @@
 
 /mob/living/basic/bot/honkbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !(ui.user.has_unlimited_silicon_privilege))
+	var/mob/user = ui.user
+	if(. || !isliving(user) || (bot_access_flags & BOT_COVER_LOCKED) && !HAS_SILICON_ACCESS(user))
 		return
 	switch(action)
 		if("slip_people")

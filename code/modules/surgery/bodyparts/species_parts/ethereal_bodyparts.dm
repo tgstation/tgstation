@@ -4,8 +4,8 @@
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
 	head_flags = HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 
@@ -23,6 +23,7 @@
 	dmg_overlay_type = null
 	brute_modifier = 1.25 //ethereal are weak to brute damages
 	wing_types = NONE
+	bodypart_traits = list(TRAIT_NO_UNDERWEAR)
 
 /obj/item/bodypart/chest/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -38,8 +39,8 @@
 	attack_type = BURN //burn bish
 	unarmed_attack_verbs = list("burn", "sear")
 	grappled_attack_verb = "scorch"
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
 
 /obj/item/bodypart/arm/left/ethereal/update_limb(dropping_limb, is_creating)
@@ -56,8 +57,8 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_verbs = list("burn", "sear")
 	grappled_attack_verb = "scorch"
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
 
 /obj/item/bodypart/arm/right/ethereal/update_limb(dropping_limb, is_creating)
@@ -72,8 +73,8 @@
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
 
 /obj/item/bodypart/leg/left/ethereal/update_limb(dropping_limb, is_creating)
@@ -88,8 +89,8 @@
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
 	attack_type = BURN // bish buzz
-	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
-	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	unarmed_attack_sound = 'sound/items/weapons/etherealhit.ogg'
+	unarmed_miss_sound = 'sound/items/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
 
 /obj/item/bodypart/leg/right/ethereal/update_limb(dropping_limb, is_creating)

@@ -1,9 +1,6 @@
 /obj/item/clothing/mask/gas/sechailer
 	flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/mask/gas
-	has_fov = FALSE
-
 /datum/component/clothing_fov_visor/Initialize(fov_angle)
 	. = ..()
 	src.fov_angle = null
@@ -19,7 +16,8 @@
 		)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
-	if(!istype(user) || user.incapacitated())
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user) || human_user.incapacitated)
 		return
 	var/list/options = list()
 	options["Blanc"] = "mime"
@@ -31,7 +29,7 @@
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
-	if(src && choice && !user.incapacitated() && in_range(user,src))
+	if(src && choice && !human_user.incapacitated && in_range(user,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()

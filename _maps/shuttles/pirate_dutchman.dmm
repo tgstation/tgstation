@@ -387,15 +387,6 @@
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
-"rR" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 1;
-	x_offset = 7;
-	y_offset = -3;
-	view_range = 10
-	},
-/turf/open/floor/carpet/royalblack/airless,
-/area/shuttle/pirate/flying_dutchman)
 "sa" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -492,6 +483,15 @@
 	name = "fool's gold"
 	},
 /turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"xA" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	dir = 1;
+	x_offset = 7;
+	y_offset = -3;
+	view_range = 10
+	},
+/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "xY" = (
 /obj/structure/railing/corner{
@@ -610,6 +610,27 @@
 	},
 /obj/machinery/light/floor,
 /turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"Dr" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
+	name = "Ghost Pirate Rum";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/cigarette/cigar{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/lighter{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ew" = (
 /obj/effect/turf_decal/siding/wood{
@@ -745,6 +766,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
+"ND" = (
+/obj/structure/mounted_gun/canister_gatling,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
 "Oe" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -787,27 +812,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
-"Qe" = (
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/bottle/rum{
-	desc = "Rum with ghostly properties that can help the drinker enter the spirit realm. It has fermented under the sea of space for ages.";
-	name = "Ghost Pirate Rum";
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/cigarette/cigar{
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/lighter{
-	pixel_x = 8;
-	pixel_y = 11
-	},
-/turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "QM" = (
 /obj/structure/festivus{
@@ -880,6 +884,25 @@
 "VF" = (
 /obj/machinery/loot_locator,
 /turf/open/floor/carpet/royalblack/airless,
+/area/shuttle/pirate/flying_dutchman)
+"Wg" = (
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = -8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "WB" = (
 /turf/open/floor/wood/airless,
@@ -1234,7 +1257,7 @@ fW
 St
 QM
 da
-WB
+ND
 WB
 RQ
 eG
@@ -1261,7 +1284,7 @@ km
 sC
 mG
 bn
-WB
+Wg
 WB
 xY
 WR
@@ -1275,7 +1298,7 @@ gS
 WR
 tH
 kz
-Qe
+Dr
 WR
 "}
 (13,1,1) = {"
@@ -1302,7 +1325,7 @@ WR
 WR
 Ms
 WQ
-rR
+xA
 WR
 "}
 (14,1,1) = {"

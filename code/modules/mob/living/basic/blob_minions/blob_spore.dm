@@ -19,7 +19,7 @@
 	obj_damage = 0
 	attack_verb_continuous = "batters"
 	attack_verb_simple = "batter"
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/items/weapons/genhit1.ogg'
 	death_message = "explodes into a cloud of gas!"
 	gold_core_spawnable = HOSTILE_SPAWN
 	basic_mob_flags = DEL_ON_DEATH

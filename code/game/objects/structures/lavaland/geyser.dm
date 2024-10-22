@@ -45,7 +45,7 @@
 
 ///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
 /obj/structure/geyser/proc/start_chemming()
-	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
+	START_PROCESSING(SSplumbing, src) //Its main function is to be plumbed, so use SSplumbing
 
 ///We're full so stop processing
 /obj/structure/geyser/proc/stop_chemming()
@@ -60,6 +60,7 @@
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		return ..() //this runs the plunger code
 
 	if(discovered)
@@ -185,3 +186,7 @@
 	layer_mode_sprite = "reinforced_plunger_layer"
 
 	custom_premium_price = PAYCHECK_CREW * 8
+
+/obj/item/plunger/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)

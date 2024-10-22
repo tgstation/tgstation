@@ -73,14 +73,10 @@
 
 /obj/item/mod/module/stealth/ninja/on_activation()
 	. = ..()
-	if(!.)
-		return
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 /obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
-	if(!.)
-		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 
 ///Camera Vision - Prevents flashes, blocks tracking.
@@ -177,10 +173,10 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)
@@ -329,7 +325,7 @@
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.preparePixelProjectile(target, mod.wearer)
 	net.firer = mod.wearer
-	playsound(src, 'sound/weapons/punchmiss.ogg', 25, TRUE)
+	playsound(src, 'sound/items/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
 
@@ -347,8 +343,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
 	range = 9
-	hitsound = 'sound/items/fultext_deploy.ogg'
-	hitsound_wall = 'sound/items/fultext_deploy.ogg'
+	hitsound = 'sound/items/fulton/fultext_deploy.ogg'
+	hitsound_wall = 'sound/items/fulton/fultext_deploy.ogg'
 	/// Reference to the beam following the projectile.
 	var/line
 	/// Reference to the energy net module.

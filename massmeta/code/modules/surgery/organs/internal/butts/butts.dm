@@ -71,7 +71,7 @@
 	name = "Flatulence Simulator"
 	desc = "Designed from the ground up to create advanced humor."
 	icon_state = "roboass"
-	sound_effect = list('sound/machines/buzz-sigh.ogg', 'sound/machines/buzz-two.ogg', 'sound/machines/terminal_error.ogg', 'sound/weapons/ring.ogg')
+	sound_effect = list('sound/machines/buzz/buzz-sigh.ogg', 'sound/machines/buzz/buzz-two.ogg', 'sound/machines/terminal/terminal_error.ogg', 'sound/items/weapons/ring.ogg')
 	atmos_gas = "co2=0.25;TEMP=310.15"
 
 //CLOWN ASS
@@ -171,7 +171,7 @@
 			T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
 			Person.Paralyze(15)
 			Person.visible_message("<span class='warning'>[Person] attempts to fart on the [Holy], uh oh.<span>","<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
-			playsound(user,'sound/magic/lightningshock.ogg', 50, 1)
+			playsound(user,'sound/effects/magic/lightningshock.ogg', 50, 1)
 			playsound(user,	'massmeta/sounds/fartts/dagothgod.ogg', 80)
 			Person.electrocution_animation(15)
 			spawn(15)
@@ -278,7 +278,6 @@
 	maxHealth = 25
 	bot_type = BUTT_BOT
 	pass_flags = PASSMOB
-	has_unlimited_silicon_privilege = FALSE
 	var/cooling_down = FALSE
 	var/butt_probability = 15
 	var/listen_probability = 30

@@ -242,6 +242,7 @@
 			// If our feet are bloody enough, add an entered dir
 			pool_FP.entered_dirs |= wielder.dir
 			pool_FP.update_appearance()
+		return
 
 	share_blood(pool)
 

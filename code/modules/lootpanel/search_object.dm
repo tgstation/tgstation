@@ -62,6 +62,7 @@
 
 /datum/search_object/Destroy(force)
 	item = null
+	icon = null
 
 	return ..()
 
@@ -75,6 +76,9 @@
 /datum/search_object/proc/on_item_moved(atom/source)
 	SIGNAL_HANDLER
 
+	if(QDELETED(src))
+		return
+
 	qdel(src)
 
 
@@ -82,4 +86,4 @@
 /datum/search_object/proc/on_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 
-	post_change_callbacks += CALLBACK(src, GLOBAL_PROC_REF(qdel), src)
+	post_change_callbacks += CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src)
