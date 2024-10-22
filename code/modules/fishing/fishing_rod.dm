@@ -56,7 +56,7 @@
 	COOLDOWN_DECLARE(casting_cd)
 
 	///The chance of catching fish made of the same material of the fishing rod (if MATERIAL_EFFECTS is enabled)
-	var/material_fish_chance = 8
+	var/material_fish_chance = 10
 	///The multiplier of how much experience is gained when fishing with this rod.
 	var/experience_multiplier = 1
 	///The multiplier of the completion gain during the minigame
@@ -145,7 +145,7 @@
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
 		block = list()
-		block += span_info("Fish caught by this fishing rod have a [material_fish_chance]% of being made of its same materials.")
+		block += span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials.")
 		var/datum/material/material = get_master_material()
 		if(material.fish_weight_modifier != 1)
 			var/heavier = material.fish_weight_modifier > 1 ? "heavier" : "lighter"
@@ -179,7 +179,6 @@
 
 /obj/item/fishing_rod/apply_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	material_fish_chance += custom_material.material_fish_extra_chance * multiplier
 	difficulty_modifier += custom_material.fishing_difficulty_modifier * multiplier
 	cast_range += custom_material.fishing_cast_range * multiplier
 	experience_multiplier *= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
@@ -192,7 +191,6 @@
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
 	. = ..()
-	material_fish_chance -= custom_material.material_fish_extra_chance * multiplier
 	difficulty_modifier -= custom_material.fishing_difficulty_modifier * multiplier
 	cast_range -= custom_material.fishing_cast_range * multiplier
 	experience_multiplier /= GET_MATERIAL_MODIFIER(custom_material.fishing_experience_multiplier, multiplier)
@@ -213,20 +211,12 @@
 	return hook?.reason_we_cant_fish(target_fish_source)
 
 ///Called at the end of on_challenge_completed() once the reward has been spawned
-/obj/item/fishing_rod/proc/on_reward_caught(atom/movable/reward)
+/obj/item/fishing_rod/proc/on_reward_caught(atom/movable/reward, mob/user)
 	if(isnull(reward))
 		return
 	var/isfish = isfish(reward)
 	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials))
-		var/material_chance = material_fish_chance
-		if(bait)
-			if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
-				material_chance += 16
-			else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-				material_chance += 8
-			else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
-				material_chance += 4
-		if(prob(material_chance))
+		if(prob(get_material_fish_chance(user)))
 			var/obj/item/fish/fish = reward
 			var/datum/material/material = get_master_material()
 			fish.set_custom_materials(list(material.type = fish.weight))
@@ -252,6 +242,18 @@
 
 	QDEL_NULL(bait)
 	update_icon()
+
+///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
+/obj/item/fishing_rod/proc/get_material_fish_chance(mob/user)
+	var/material_chance = material_fish_chance
+	if(bait)
+		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
+			material_chance += 16
+		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
+			material_chance += 8
+		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
+			material_chance += 4
+	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
 
 ///Fishing rodss should only bane fish DNA-infused spessman
 /obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
@@ -617,7 +619,7 @@
 		else
 			CRASH("set_slot called with an undefined slot: [slot]")
 
-	equipment.on_fishing_rod_slotted(src, slot)
+	SEND_SIGNAL(equipment, COMSIG_ITEM_FISHING_ROD_SLOTTED, src, slot)
 
 /obj/item/fishing_rod/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -636,8 +638,7 @@
 		hook = null
 
 	if(slot)
-		var/obj/item/item = gone
-		item.on_fishing_rod_unslotted(src, slot)
+		SEND_SIGNAL(gone, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, src, slot)
 
 ///Found in the fishing toolbox (the hook and line are separate items)
 /obj/item/fishing_rod/unslotted
@@ -749,6 +750,7 @@
 	deceleration_mult = 1.55
 	bounciness_mult = 0.3
 	gravity_mult = 1.2
+	material_fish_chance = 33 //if somehow you metalgen it.
 
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"

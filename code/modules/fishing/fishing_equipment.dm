@@ -26,12 +26,17 @@
 	line_color = "#2b9c2b"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
 
-/obj/item/fishing_line/reinforced/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+/obj/item/fishing_line/reinforced/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/obj/item/fishing_line/reinforced/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	. = ..()
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /obj/item/fishing_line/cloaked
@@ -58,12 +63,17 @@
 	line_color = "#d1cca3"
 	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
 
-/obj/item/fishing_line/sinew/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+/obj/item/fishing_line/sinew/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
-/obj/item/fishing_line/sinew/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	. = ..()
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
@@ -81,12 +91,17 @@
 		It can also be used to snag in objects from a distance more rapidly.<br>\
 		<b>It requires the Advanced Fishing Technology Node to be researched to be printed.</b>"
 
-/obj/item/fishing_line/auto_reel/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+/obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
 
-/obj/item/fishing_line/auto_reel/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	. = ..()
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	UnregisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
 /obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
@@ -183,13 +198,18 @@
 	chasm_detritus_type = /datum/chasm_detritus/restricted/objects
 	wiki_desc = "It vastly improves the chances of catching things other than fish."
 
-/obj/item/fishing_hook/magnet/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+/obj/item/fishing_hook/magnet/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-/obj/item/fishing_hook/magnet/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	. = ..()
-	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
+
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -204,15 +224,20 @@
 	rod_overlay_icon_state = "hook_shiny_overlay"
 	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
 
-/obj/item/fishing_hook/shiny/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
+/obj/item/fishing_hook/shiny/Initialize(mapload)
 	. = ..()
-	rod.material_fish_chance += 15 //Increases the chance of catching a shiny po... erh, material fish
-	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-/obj/item/fishing_hook/shiny/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	. = ..()
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	rod.material_fish_chance += 15 //Increases the chance of catching a shiny po... erh, material fish
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
 	rod.material_fish_chance -= 15
-	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, type)
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"

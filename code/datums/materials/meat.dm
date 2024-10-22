@@ -18,7 +18,6 @@
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
-	material_fish_extra_chance = 20
 	fishing_difficulty_modifier = 13
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.8

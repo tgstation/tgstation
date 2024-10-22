@@ -102,8 +102,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 	fish_weight_modifier = 1.35
-	material_fish_extra_chance = 7.5
-	is_shiny_fishing_lure = TRUE
 	fishing_difficulty_modifier = -5
 	fishing_experience_multiplier = 0.85
 	fishing_completion_speed = 1.1
@@ -140,8 +138,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 	fish_weight_modifier = 1.5
-	material_fish_extra_chance = 12.5
-	is_shiny_fishing_lure = TRUE
 	fishing_difficulty_modifier = -10
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.75
@@ -181,8 +177,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.4
-	material_fish_extra_chance = 15
-	is_shiny_fishing_lure = TRUE
 	fishing_difficulty_modifier = -13
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 0.7
@@ -218,7 +212,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 2
-	material_fish_extra_chance = 4
 	fishing_completion_speed = 0.9
 	fishing_bait_speed_mult = 0.8
 	fishing_deceleration_mult = 1.4
@@ -316,7 +309,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	texture_layer_icon_state = "shine"
 	fish_weight_modifier = 1.3
-	material_fish_extra_chance = 15
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 5 //space-bending scifi magic
 	fishing_experience_multiplier = 0.85
@@ -330,23 +322,16 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
-/datum/material/bluespace/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
+/datum/material/bluespace/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(67))
 		return
-	comp.fish_source.UnregisterSignal(challenge, list(
-		COMSIG_FISHING_CHALLENGE_ROLL_REWARD,
-		COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY,
-	))
-	var/datum/fish_source/new_source
-	var/list/elegible_fish_sources = GLOB.preset_fish_sources.Copy()
-	for(var/source_type in elegible_fish_sources)
-		var/datum/fish_source/source = elegible_fish_sources[source_type]
+	var/list/elegible_fish_sources = flatten_list(GLOB.preset_fish_sources)
+	for(var/datum/fish_source/source as anything in elegible_fish_sources)
 		if(source.fish_source_flags & FISH_SOURCE_FLAG_NO_BLUESPACE_ROD)
-			elegible_fish_sources -= source_type
-	new_source = elegible_fish_sources[pick(elegible_fish_sources)]
-	new_source.RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
-	new_source.RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
+			elegible_fish_sources -= source
+	var/datum/fish_source/new_source = pick(elegible_fish_sources)
+	challenge.register_reward_signals(new_source)
 
 /datum/material/bluespace/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -378,7 +363,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
-	material_fish_extra_chance = 30
 	fishing_difficulty_modifier = 20 //can't get a good grip on slipperiness.
 	fishing_cast_range = 3 //long slide
 	fishing_experience_multiplier = 1.6
@@ -397,7 +381,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item/fishing_rod))
 		RegisterSignal(source, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
-/datum/material/bananium/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
+/datum/material/bananium/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40))
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_funny_fish))
@@ -482,7 +466,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.5
-	material_fish_extra_chance = 30
 	fishing_difficulty_modifier = -18
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 3.2 //grind all the way to level 100 in no time.
@@ -564,7 +547,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
 	fish_weight_modifier = 0.5
-	material_fish_extra_chance = 5
 	fishing_difficulty_modifier = 8
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 1.3
@@ -612,7 +594,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.6
-	material_fish_extra_chance = 25
 	fishing_difficulty_modifier = -23
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.6
@@ -655,7 +636,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.4
-	material_fish_extra_chance = 35 // In remembrance of mythril fishing...
 	fishing_difficulty_modifier = -25
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 0.5
@@ -698,7 +678,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.2
 	fish_weight_modifier = 0.9
-	material_fish_extra_chance = 10
 	fishing_difficulty_modifier = -10
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.9
@@ -740,7 +719,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
 	fish_weight_modifier = 0.6 //It may be metallic, but it's just "denser" hydrogen at the end of the day, no?
-	material_fish_extra_chance = 15
 	fishing_difficulty_modifier = -15
 	fishing_cast_range = 4
 	fishing_experience_multiplier = 0.8
@@ -831,7 +809,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
 	fish_weight_modifier = 0.8
-	material_fish_extra_chance = 5
 	fishing_difficulty_modifier = 25
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.3
@@ -861,7 +838,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 	fish_weight_modifier = 1.5
-	material_fish_extra_chance = 30
 	fishing_difficulty_modifier = -12
 	fishing_experience_multiplier = 0.9
 	fishing_completion_speed = 1.2
@@ -890,7 +866,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.2
 	fish_weight_modifier = 1.4
-	material_fish_extra_chance = 5
 	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 0.8
 	fishing_bounciness_mult = 1.2
@@ -932,7 +907,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(paper, /obj/item/fishing_rod))
 		RegisterSignal(paper, COMSIG_ROD_BEGIN_FISHING, PROC_REF(on_begin_fishing))
 
-/datum/material/paper/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
+/datum/material/paper/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40)) //consider the default reward and it's 15%
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_stickman))
@@ -1018,7 +993,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	else if(istype(source, /obj/item/fish))
 		ADD_TRAIT(source, TRAIT_FISH_MADE_OF_BONE, REF(src))
 
-/datum/material/bone/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge, datum/component/fishing_spot/comp)
+/datum/material/bone/proc/on_begin_fishing(obj/item/fishing_rod/rod, datum/fishing_challenge/challenge)
 	SIGNAL_HANDLER
 	if(prob(40))
 		RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, PROC_REF(roll_bones))
@@ -1062,7 +1037,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
 	fish_weight_modifier = 0.5
-	material_fish_extra_chance = 5
 	fishing_difficulty_modifier = -4
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 1.3
@@ -1087,7 +1061,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
 	beauty_modifier = 0.001
 	fish_weight_modifier = 1.2
-	material_fish_extra_chance = 20
 	fishing_difficulty_modifier = -16
 	fishing_experience_multiplier = 0.9
 	fishing_completion_speed = 1.3

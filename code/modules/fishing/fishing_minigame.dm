@@ -111,6 +111,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	///The background as shown in the minigame, and the holder of the other visual overlays
 	var/atom/movable/screen/fishing_hud/fishing_hud
 
+	///Keep track of the fish source from which we're pulling the reward
+	var/datum/fish_source/fish_source
+
 /datum/fishing_challenge/New(datum/component/fishing_spot/comp, obj/item/fishing_rod/rod, mob/user)
 	src.user = user
 	used_rod = rod
@@ -119,13 +122,12 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	float.spin_frequency = rod.spin_frequency
 	RegisterSignal(location, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	RegisterSignal(comp, COMSIG_QDELETING, PROC_REF(on_spot_gone))
-	RegisterSignal(comp.fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
-	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
-	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
-	comp.fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
+	register_reward_signals(comp.fish_source)
+	RegisterSignal(fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
+	fish_source.RegisterSignal(user, COMSIG_MOB_COMPLETE_FISHING, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background
 	SEND_SIGNAL(user, COMSIG_MOB_BEGIN_FISHING, src)
-	SEND_SIGNAL(rod, COMSIG_ROD_BEGIN_FISHING, src, comp)
+	SEND_SIGNAL(rod, COMSIG_ROD_BEGIN_FISHING, src)
 	GLOB.fishing_challenges_by_user[user] = src
 
 	/// Enable special parameters
@@ -175,6 +177,20 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	location = null
 	QDEL_NULL(mover)
 	return ..()
+
+/**
+ * Proc responsible for registering the signals for difficulty and possible reward.
+ * Call this if you want to override the fish source from which we roll rewards (preferably before the minigame phase).
+ */
+/datum/fishing_challenge/proc/register_reward_signals(datum/fish_source/fish_source)
+	if(fish_source)
+		fish_source.UnregisterSignal(src, list(
+			COMSIG_FISHING_CHALLENGE_ROLL_REWARD,
+			COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY,
+		))
+	src.fish_source = fish_source
+	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_ROLL_REWARD, TYPE_PROC_REF(/datum/fish_source, roll_reward_minigame))
+	fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_GET_DIFFICULTY, TYPE_PROC_REF(/datum/fish_source, calculate_difficulty_minigame))
 
 /datum/fishing_challenge/proc/send_alert(message)
 	location?.balloon_alert(user, message)

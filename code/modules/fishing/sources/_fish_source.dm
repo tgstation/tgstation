@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(reward)
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
-	challenge.used_rod.on_reward_caught(reward)
+	challenge.used_rod.on_reward_caught(reward, user)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)

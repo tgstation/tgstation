@@ -553,7 +553,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/lubed/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
-	if(GetComponent(rod, /datum/component/slippery)) //At least you get x5 chance of catching a lubefish with a bananium rod.
+	if(istype(rod.get_master_material(), /datum/material/bananium)) //x5 chance of catching lubefish & co with a bananium rod.
 		.[MULTIPLICATIVE_FISHING_MOD] *= 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)

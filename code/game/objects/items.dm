@@ -1824,16 +1824,6 @@
 
 	return src
 
-///Called when an item is added to a slot of a fishing rod.
-/obj/item/proc/on_fishing_rod_slotted(obj/item/fishing_rod/rod, slot)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, rod, slot)
-
-///Called when an item is removed from a slot of a fishing rod
-/obj/item/proc/on_fishing_rod_unslotted(obj/item/fishing_rod/rod, slot)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, rod, slot)
-
 /// Checks if the bait is liked by the fish type or not. Returns a multiplier that affects the chance of catching it.
 /obj/item/proc/check_bait(obj/item/fish/fish_type)
 	if(HAS_TRAIT(src, TRAIT_OMNI_BAIT))

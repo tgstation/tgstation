@@ -204,7 +204,6 @@
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 	added_slowdown = 0.1
 	fish_weight_modifier = 2.4
-	material_fish_extra_chance = 25
 	fishing_difficulty_modifier = -25
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 0.5

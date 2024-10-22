@@ -65,9 +65,9 @@
 /// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
 #define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
 
-/// From /obj/item/on_fishing_rod_slotted: (obj/item/fishing_rod/rod, slot)
+/// From /obj/item/fishing_rod/set_slot: (obj/item/fishing_rod/rod, slot)
 #define COMSIG_ITEM_FISHING_ROD_SLOTTED "item_fishing_rod_slotted"
-/// From /obj/item/on_fishing_rod_slotted: (obj/item/fishing_rod/rod, slot)
+/// From /obj/item/fishing_rod/Exited: (obj/item/fishing_rod/rod, slot)
 #define COMSIG_ITEM_FISHING_ROD_UNSLOTTED "item_fishing_rod_unslotted"
 
 /// Sent when the challenge is to be interrupted: (reason)

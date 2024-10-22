@@ -17,7 +17,6 @@
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"
 	fish_weight_modifier = 0.9
-	material_fish_extra_chance = 20
 	fishing_difficulty_modifier = 13
 	fishing_cast_range = -2
 	fishing_experience_multiplier = 0.8
