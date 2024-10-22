@@ -2,6 +2,7 @@
 	icon_state = "eyechart"
 	name = "eye chart"
 	desc = "A poster with a series of letters in different sizes, used to test blindness - I mean, vision."
+	is_editable = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 
