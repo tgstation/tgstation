@@ -1274,10 +1274,11 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	return alert_overlay
 
-/// Strips all lighting underlays from a mutable appearance.
-/proc/strip_light_underlays(mutable_appearance/appearance) as /mutable_appearance
-	RETURN_TYPE(/mutable_appearance)
+/// Strips all underlays on a different plane from an appearance.
+/// Returns the stripped appearance.
+/proc/strip_appearance_underlays(mutable_appearance/appearance)
+	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
-		if(IS_LIGHTING_UNDERLAY(underlay))
+		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance

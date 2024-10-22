@@ -23,5 +23,3 @@
 			}\
 		} \
 	}
-
-#define IS_LIGHTING_UNDERLAY(appearance) (PLANE_TO_TRUE(appearance.plane) == O_LIGHTING_VISUAL_PLANE)
