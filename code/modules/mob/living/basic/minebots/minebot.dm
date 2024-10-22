@@ -85,7 +85,6 @@
 		/datum/id_trim/job/shaft_miner,
 	)
 	AddElement(/datum/element/mob_access, accesses)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
@@ -250,13 +249,15 @@
 	QDEL_NULL(stored_gun)
 	return ..()
 
-/mob/living/basic/mining_drone/proc/pre_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/mining_drone/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(!istype(target, /mob/living/basic/node_drone))
-		return NONE
-	INVOKE_ASYNC(src, PROC_REF(repair_node_drone), target)
-	return COMPONENT_HOSTILE_NO_ATTACK
+		return TRUE
+	repair_node_drone(target)
+	return FALSE
 
 /mob/living/basic/mining_drone/proc/repair_node_drone(mob/living/my_target)
 	do_sparks(5, FALSE, source = my_target)

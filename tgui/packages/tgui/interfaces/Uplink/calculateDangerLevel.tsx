@@ -70,8 +70,6 @@ export const ranks: Rank[] = [
   },
 ];
 
-export const dangerDefault = 50 * 600;
-
 let lastMinutesThan = -1;
 export const dangerLevelsTooltip = (
   <Box preserveWhitespace>

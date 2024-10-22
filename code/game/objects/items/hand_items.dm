@@ -187,7 +187,7 @@
 	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
 	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
 	user.adjustStaminaLoss(iteration + 5)
-	playsound(get_turf(user), pick('sound/effects/rustle/rustle1.ogg','sound/effects/rustle/rustle2.ogg','sound/effects/rustle/rustle3.ogg','sound/effects/rustle/rustle4.ogg','sound/effects/rustle/rustle5.ogg'), 50)
+	playsound(get_turf(user), SFX_RUSTLE, 50)
 
 	if(prob(33))
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)

@@ -74,18 +74,6 @@
 		PATH_MOON = "node_moon",
 	)
 
-	var/static/list/path_to_rune_color = list(
-		PATH_START = COLOR_LIME,
-		PATH_RUST = COLOR_CARGO_BROWN,
-		PATH_FLESH = COLOR_SOFT_RED,
-		PATH_ASH = COLOR_VIVID_RED,
-		PATH_VOID = COLOR_CYAN,
-		PATH_BLADE = COLOR_SILVER,
-		PATH_COSMIC = COLOR_PURPLE,
-		PATH_LOCK = COLOR_YELLOW,
-		PATH_MOON = COLOR_BLUE_LIGHT,
-	)
-
 	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
 		/obj/item/melee/sickly_blade/cursed = 0,
@@ -426,7 +414,7 @@
 /datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 20 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
-	var/rune_colour = path_to_rune_color[heretic_path]
+	var/rune_colour = GLOB.heretic_path_to_color[heretic_path]
 	target_turf.balloon_alert(user, "drawing rune...")
 	var/obj/effect/temp_visual/drawing_heretic_rune/drawing_effect
 	if (drawing_time < (10 SECONDS))
