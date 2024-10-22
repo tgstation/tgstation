@@ -302,7 +302,7 @@
 	. = ..()
 	affected_mob.adjust_drowsiness_up_to((5 SECONDS * REM * seconds_per_tick), 60 SECONDS)
 
-/datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & INGEST)
 		exposed_mob.check_allergic_reaction(SUGAR, reac_volume * 10)
