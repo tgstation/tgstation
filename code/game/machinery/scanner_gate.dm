@@ -52,7 +52,17 @@
 	var/base_false_beep = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
-
+	var/list/available_species = list(
+		SCANGATE_LIZARD = /datum/species/lizard,
+		SCANGATE_FLY = /datum/species/fly,
+		SCANGATE_FELINID = /datum/species/human/felinid,
+		SCANGATE_PLASMAMAN = /datum/species/plasmaman,
+		SCANGATE_MOTH = /datum/species/moth,
+		SCANGATE_JELLY = /datum/species/jelly,
+		SCANGATE_POD = /datum/species/pod,
+		SCANGATE_GOLEM = /datum/species/golem,
+		SCANGATE_ZOMBIE = /datum/species/zombie,
+	)
 
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
@@ -205,34 +215,9 @@
 			if(ishuman(thing))
 				var/mob/living/carbon/human/scanned_human = thing
 				var/datum/species/scan_species = /datum/species/human
-				switch(detect_species)
-					if(SCANGATE_LIZARD)
-						detected_thing = "Lizardperson"
-						scan_species = /datum/species/lizard
-					if(SCANGATE_FLY)
-						detected_thing = "Flyperson"
-						scan_species = /datum/species/fly
-					if(SCANGATE_FELINID)
-						detected_thing = "Felinid"
-						scan_species = /datum/species/human/felinid
-					if(SCANGATE_PLASMAMAN)
-						detected_thing = "Plasmaman"
-						scan_species = /datum/species/plasmaman
-					if(SCANGATE_MOTH)
-						detected_thing = "Mothperson"
-						scan_species = /datum/species/moth
-					if(SCANGATE_JELLY)
-						detected_thing = "Jellyperson"
-						scan_species = /datum/species/jelly
-					if(SCANGATE_POD)
-						detected_thing = "Podperson"
-						scan_species = /datum/species/pod
-					if(SCANGATE_GOLEM)
-						detected_thing = "Golem"
-						scan_species = /datum/species/golem
-					if(SCANGATE_ZOMBIE)
-						detected_thing = "Zombie"
-						scan_species = /datum/species/zombie
+				if(detect_species && available_species[detect_species])
+					scan_species = available_species[detect_species]
+					detected_thing = scan_species::name
 				if(is_species(scanned_human, scan_species))
 					beep = TRUE
 				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
@@ -321,6 +306,11 @@
 		ui = new(user, src, "ScannerGate", name)
 		ui.open()
 
+/obj/machinery/scanner_gate/ui_static_data(mob/user)
+	. = ..()
+	for(var/datum/species/specie in available_species)
+		.["available_species"] += list(capitalize(replacetext(replacetext(specie::name, "\proper", ""), "\improper", "")))
+
 /obj/machinery/scanner_gate/ui_data()
 	var/list/data = list()
 	data["locked"] = locked
@@ -330,6 +320,8 @@
 	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
 	data["contraband_enabled"] = !!n_spect
+	for(var/datum/species/specie in available_species)
+		data["available_species"] += list(capitalize(replacetext(replacetext(specie::name, "\proper", ""), "\improper", "")))
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
