@@ -31,9 +31,12 @@
 
 	var/detached = FALSE
 
-/datum/tgs_api/v5/New()
+	var/datum/tgs_http_handler/http_handler
+
+/datum/tgs_api/v5/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version, datum/tgs_http_handler/http_handler)
 	. = ..()
 	interop_version = version
+	src.http_handler = http_handler
 	TGS_DEBUG_LOG("V5 API created: [json_encode(args)]")
 
 /datum/tgs_api/v5/ApiVersion()
@@ -50,7 +53,9 @@
 	version = null // we want this to be the TGS version, not the interop version
 
 	// sleep once to prevent an issue where world.Export on the first tick can hang indefinitely
+	TGS_DEBUG_LOG("Starting Export bug prevention sleep tick. time:[world.time] sleep_offline:[world.sleep_offline]")
 	sleep(world.tick_lag)
+	TGS_DEBUG_LOG("Export bug prevention sleep complete")
 
 	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands(), DMAPI5_PARAMETER_TOPIC_PORT = GetTopicPort()))
 	if(!istype(bridge_response))
