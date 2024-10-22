@@ -1575,7 +1575,6 @@
 				/mob/living/basic/deer,
 				/mob/living/basic/eyeball,
 				/mob/living/basic/goat,
-				/mob/living/basic/gondola,
 				/mob/living/basic/gorilla,
 				/mob/living/basic/gorilla/lesser,
 				/mob/living/basic/headslug,
