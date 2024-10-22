@@ -7,8 +7,8 @@
  * # Goliath Broodmother
  *
  * A stronger, faster variation of the goliath.  Has the ability to spawn baby goliaths, which it can later detonate at will.
- * When it's health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
- * It's attacks are as follows:
+ * When its health is below half, tendrils will spawn randomly around it.  When it is below a quarter of health, this effect is doubled.
+ * Its attacks are as follows:
  * - Spawns a 3x3/plus shape of tentacles on the target location
  * - Spawns 2 baby goliaths on its tile, up to a max of 8.  Children blow up when they die.
  * - The broodmother lets out a noise, and is able to move faster for 6.5 seconds.
@@ -36,7 +36,7 @@
 	armour_penetration = 30
 	attack_verb_continuous = "beats down on"
 	attack_verb_simple = "beat down on"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5
@@ -50,7 +50,7 @@
 								/datum/action/innate/elite_attack/rage,
 								/datum/action/innate/elite_attack/call_children)
 
-	var/rand_tent = 0
+	COOLDOWN_DECLARE(random_tentacle)
 	var/list/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/children_list = list()
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/Initialize(mapload)
@@ -60,25 +60,25 @@
 /datum/action/innate/elite_attack/tentacle_patch
 	name = "Tentacle Patch"
 	button_icon_state = "tentacle_patch"
-	chosen_message = "<span class='boldwarning'>You are now attacking with a patch of tentacles.</span>"
+	chosen_message = span_boldwarning("You are now attacking with a patch of tentacles.")
 	chosen_attack_num = TENTACLE_PATCH
 
 /datum/action/innate/elite_attack/spawn_children
 	name = "Spawn Children"
 	button_icon_state = "spawn_children"
-	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 8.</span>"
+	chosen_message = span_boldwarning("You will spawn two children at your location to assist you in combat. You can have up to 8.")
 	chosen_attack_num = SPAWN_CHILDREN
 
 /datum/action/innate/elite_attack/rage
 	name = "Rage"
 	button_icon_state = "rage"
-	chosen_message = "<span class='boldwarning'>You will temporarily increase your movement speed.</span>"
+	chosen_message = span_boldwarning("You will temporarily increase your movement speed.")
 	chosen_attack_num = RAGE
 
 /datum/action/innate/elite_attack/call_children
 	name = "Call Children"
 	button_icon_state = "call_children"
-	chosen_message = "<span class='boldwarning'>You will summon your children to your location.</span>"
+	chosen_message = span_boldwarning("You will summon your children to your location.")
 	chosen_attack_num = CALL_CHILDREN
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/OpenFire()
@@ -108,15 +108,16 @@
 	. = ..()
 	if(!.) //Checks if they are dead as a rock.
 		return
-	if(health < maxHealth * 0.5 && rand_tent < world.time)
-		rand_tent = world.time + 30
-		var/tentacle_amount = 5
-		if(health < maxHealth * 0.25)
-			tentacle_amount = 10
-		var/tentacle_loc = spiral_range_turfs(5, get_turf(src))
-		for(var/i in 1 to tentacle_amount)
-			var/turf/t = pick_n_take(tentacle_loc)
-			new /obj/effect/goliath_tentacle/broodmother(t, src)
+	if(health >= maxHealth * 0.5 || !COOLDOWN_FINISHED(src, random_tentacle))
+		return
+	COOLDOWN_START(src, random_tentacle, 3 SECONDS)
+	var/tentacle_amount = 5
+	if(health < maxHealth * 0.25)
+		tentacle_amount = 10
+	var/list/possible_turfs = RANGE_TURFS(5, get_turf(src))
+	for(var/i in 1 to tentacle_amount)
+		var/turf/innsmouth = pick_n_take(possible_turfs)
+		new /obj/effect/goliath_tentacle/broodmother(innsmouth, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/tentacle_patch(target)
 	ranged_cooldown = world.time + 15
@@ -141,7 +142,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
-	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
+	playsound(src,'sound/misc/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
 	color = COLOR_RED
 	set_varspeed(0)
@@ -167,7 +168,7 @@
 //The goliath's children.  Pretty weak, simple mobs which are able to put a single tentacle under their target when at range.
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child
 	name = "baby goliath"
-	desc = "A young goliath recently born from it's mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."
+	desc = "A young goliath recently born from its mother.  While they hatch from eggs, said eggs are incubated in the mother until they are ready to be born."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath_baby"
 	icon_living = "goliath_baby"
@@ -180,7 +181,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "bashes against"
 	attack_verb_simple = "bash against"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
 	move_to_delay = 5

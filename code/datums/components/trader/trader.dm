@@ -52,7 +52,7 @@
 	 * Format; list(TYPEPATH = list(PRICE, QUANTITY, ADDITIONAL_DESCRIPTION))
 	 * Associated list of items able to be sold to the NPC with the money given for them.
 	 * The price given should be the "base" price; any price manipulation based on variables should be done with apply_sell_price_mods()
-	 * ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, it's final price depends how much is in the stack
+	 * ADDITIONAL_DESCRIPTION is any additional text added to explain how the variables of the item effect the price; if it's stack based, its final price depends how much is in the stack
 	 * EX; /obj/item/stack/sheet/mineral/diamond = list(500, INFINITY, ", per 100 cm3 sheet of diamond")
 	 * This list is filled by Initialize(), if you want to change the starting wanted items, modify initial_wanteds()
 	*/
@@ -327,7 +327,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	return original_cost
 
 /**
- * Handles modifying/deleting the items to ensure that a proper amount is converted into cash; put into it's own proc to make the children of this not override a 30+ line sell_item()
+ * Handles modifying/deleting the items to ensure that a proper amount is converted into cash; put into its own proc to make the children of this not override a 30+ line sell_item()
  *
  * Arguments:
  * * selling - (Item REF) this is the item being sold

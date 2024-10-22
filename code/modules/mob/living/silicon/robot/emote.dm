@@ -1,5 +1,5 @@
 /datum/emote/silicon
-	mob_type_allowed_typecache = list(/mob/living/silicon, /mob/living/simple_animal/bot, /mob/living/basic/bot)
+	trait_required = TRAIT_SILICON_EMOTES_ALLOWED
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/silicon/boop
@@ -7,20 +7,27 @@
 	key_third_person = "boops"
 	message = "boops."
 
+/datum/emote/silicon/beep
+	key = "beep"
+	key_third_person = "beeps"
+	message = "beeps."
+	message_param = "beeps at %t."
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/machines/beep/twobeep.ogg'
+
 /datum/emote/silicon/buzz
 	key = "buzz"
 	key_third_person = "buzzes"
 	message = "buzzes."
 	message_param = "buzzes at %t."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz-sigh.ogg'
-
+	sound = 'sound/machines/buzz/buzz-sigh.ogg'
 
 /datum/emote/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
 	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/machines/buzz-two.ogg'
+	sound = 'sound/machines/buzz/buzz-two.ogg'
 
 /datum/emote/silicon/chime
 	key = "chime"

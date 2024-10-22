@@ -1,13 +1,21 @@
-import { DmIcon, Icon, Image } from '../../components';
+import { DmIcon, Icon, Image } from 'tgui-core/components';
+
 import { SearchItem } from './types';
 
 type Props = {
   item: SearchItem;
+  size: Size;
+};
+
+type Size = {
+  height: number;
+  width: number;
 };
 
 export function IconDisplay(props: Props) {
   const {
     item: { icon, icon_state },
+    size: { height, width },
   } = props;
 
   const fallback = <Icon name="spinner" size={2.2} spin color="gray" />;
@@ -26,8 +34,8 @@ export function IconDisplay(props: Props) {
         fallback={fallback}
         icon={icon}
         icon_state={icon_state}
-        height={3}
-        width={3}
+        height={height}
+        width={width}
       />
     );
   }

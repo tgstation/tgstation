@@ -7,15 +7,15 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "adrenal"
-	// sound = 'sound/magic/whistlereset.ogg'
+	// sound = 'sound/effects/magic/whistlereset.ogg' I have no idea why this was commented out
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 6 SECONDS
 	cooldown_reduction_per_rank = -6 SECONDS // we're not a wizard spell but we use the levelling mechanic
 	spell_max_level = 10 // we can get up to / over a minute duration cd time
 
-	invocation = "Rasut"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "R'S'T."
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 /datum/action/cooldown/spell/realignment/is_valid_target(atom/cast_on)
@@ -54,12 +54,14 @@
 	alert_type = /atom/movable/screen/alert/status_effect/realignment
 	tick_interval = 0.2 SECONDS
 	show_duration = TRUE
+	///Traits to add/remove
+	var/list/realignment_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_PACIFISM)
 
 /datum/status_effect/realignment/get_examine_text()
 	return span_notice("[owner.p_Theyre()] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.add_traits(realignment_traits, id)
 	owner.add_filter(id, 2, list("type" = "outline", "color" = "#d6e3e7", "size" = 2))
 	var/filter = owner.get_filter(id)
 	animate(filter, alpha = 127, time = 1 SECONDS, loop = -1)
@@ -67,12 +69,12 @@
 	return TRUE
 
 /datum/status_effect/realignment/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
+	owner.remove_traits(realignment_traits, id)
 	owner.remove_filter(id)
 
 /datum/status_effect/realignment/tick(seconds_between_ticks)
-	owner.adjustStaminaLoss(-5)
-	owner.AdjustAllImmobility(-0.5 SECONDS)
+	owner.adjustStaminaLoss(-10)
+	owner.AdjustAllImmobility(-1 SECONDS)
 
 /atom/movable/screen/alert/status_effect/realignment
 	name = "Realignment"

@@ -26,7 +26,7 @@
 	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
 
 /datum/station_trait/mail_blocked/on_round_start()
-	//This is either a holiday or sunday... well then, let's flip the situation.
+	//This is either a holiday or Sunday... well then, let's flip the situation.
 	if(SSeconomy.mail_blocked)
 		name = "Postal system overtime"
 		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
@@ -185,6 +185,22 @@
 	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
 
+/datum/station_trait/machine_languages
+	name = "Machine Language Matrix Malfunction"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 2
+	cost = STATION_TRAIT_COST_FULL
+	show_in_report = TRUE
+	report_message = "Your station's machines have had their language matrix fried due to an event, \
+		resulting in some strange and unfamiliar speech patterns."
+	trait_to_give = STATION_TRAIT_MACHINES_GLITCHED
+
+/datum/station_trait/machine_languages/New()
+	. = ..()
+	// What "caused" our machines to go haywire (fluff)
+	var/event_source = pick("an ion storm", "a malfunction", "a software update", "a power surge", "a computer virus", "a subdued machine uprising", "a clown's prank")
+	report_message = "Your station's machinery have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
+
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -229,6 +245,9 @@
 
 	weapon?.add_mob_blood(punpun)
 	punpun.add_mob_blood(punpun)
+
+	if(!isnull(punpun.ai_controller)) // In case punpun somehow lacks AI
+		QDEL_NULL(punpun.ai_controller)
 
 	new /datum/ai_controller/monkey/angry(punpun)
 
@@ -324,7 +343,7 @@
 
 /datum/station_trait/random_event_weight_modifier/dust_storms
 	name = "Dust Stormfront"
-	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
+	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelihood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
 	cost = STATION_TRAIT_COST_LOW
@@ -595,12 +614,18 @@
 	//Send a nebula shielding unit to engineering
 	var/datum/supply_pack/supply_pack_shielding = new /datum/supply_pack/engineering/rad_nebula_shielding_kit()
 	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
-		//if engineering isnt valid, just send it to the bridge
+		//if engineering isn't valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
-	// Let medical know resistence is futile
-	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
-	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
+	// Let medical know resistance is futile
+	if (/area/station/medical/virology in GLOB.areas_by_type)
+		send_fax_to_area(
+			new /obj/item/paper/fluff/radiation_nebula_virologist,
+			/area/station/medical/virology,
+			"NT Virology Department",
+			force = TRUE,
+			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
@@ -631,7 +656,7 @@
 	if(!istype(get_area(spawned_mob), radioactive_areas)) //only if you're spawned in the radioactive areas
 		return
 
-	if(!isliving(spawned_mob)) // Dynamic shouldnt spawn non-living but uhhhhhhh why not
+	if(!isliving(spawned_mob)) // Dynamic shouldn't spawn non-living but uhhhhhhh why not
 		return
 
 	var/mob/living/spawnee = spawned_mob
@@ -671,7 +696,7 @@
 /datum/station_trait/nebula/hostile/radiation/send_instructions()
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation
 	var/obj/machinery/gravity_generator/main/innate_shielding = /obj/machinery/gravity_generator/main
-	//How long do we have untill the first shielding unit needs to be up?
+	//How long do we have until the first shielding unit needs to be up?
 	var/deadline = "[(initial(innate_shielding.radioactive_nebula_shielding) * intensity_increment_time) / (1 MINUTES)] minute\s"
 	//For how long each shielding unit will protect for
 	var/shielder_time = "[(initial(shielder.shielding_strength) * intensity_increment_time) / (1 MINUTES)] minute\s"
@@ -688,7 +713,7 @@
 		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
-	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
+	priority_announce(announcement, sound = 'sound/announcer/notice/notice1.ogg')
 
 	//Set the display screens to the radiation alert
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
@@ -730,5 +755,14 @@
 	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
 	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
 	return advisory_string
+
+/datum/station_trait/spiked_drinks
+	name = "Spiked Drinks"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
+	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 #undef GLOW_NEBULA

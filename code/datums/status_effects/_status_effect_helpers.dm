@@ -65,7 +65,7 @@
 /**
  * Checks if this mob has a status effect that shares the passed effect's ID
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
@@ -99,7 +99,7 @@
  * Checks if this mob has a status effect that shares the passed effect's ID
  * and has the passed sources are in its list of sources (ONLY works for grouped efects!)
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
@@ -128,7 +128,7 @@
 /**
  * Returns a list of all status effects that share the passed effect type's ID
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns a list
  */

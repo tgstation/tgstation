@@ -183,5 +183,5 @@
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
 	var/obj/structure/closet/supplypod/S = new
-	S.setStyle(STYLE_SYNDICATE)
+	S.setStyle(/datum/pod_style/syndicate)
 	return S

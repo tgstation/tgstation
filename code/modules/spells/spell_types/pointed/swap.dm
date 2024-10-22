@@ -82,12 +82,12 @@
 		do_teleport(second_target, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(cast_on, second_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		second_target.playsound_local(get_turf(second_target), 'sound/magic/swap.ogg', 50, 1)
-		cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
-		owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+		second_target.playsound_local(get_turf(second_target), 'sound/effects/magic/swap.ogg', 50, 1)
+		cast_on.playsound_local(get_turf(cast_on), 'sound/effects/magic/swap.ogg', 50, 1)
+		owner.playsound_local(get_turf(owner), 'sound/effects/magic/swap.ogg', 50, 1)
 	else
 		do_teleport(cast_on, owner.loc, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 		do_teleport(owner, target_location, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		cast_on.playsound_local(get_turf(cast_on), 'sound/magic/swap.ogg', 50, 1)
-		owner.playsound_local(get_turf(owner), 'sound/magic/swap.ogg', 50, 1)
+		cast_on.playsound_local(get_turf(cast_on), 'sound/effects/magic/swap.ogg', 50, 1)
+		owner.playsound_local(get_turf(owner), 'sound/effects/magic/swap.ogg', 50, 1)
 	second_target = null

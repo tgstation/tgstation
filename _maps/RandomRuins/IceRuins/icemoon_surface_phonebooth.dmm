@@ -25,9 +25,8 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 8;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
@@ -71,7 +70,7 @@
 /area/ruin/powered/icemoon_phone_booth)
 "W" = (
 /obj/machinery/vending/cigarette{
-	onstation_override = 1
+	all_products_free = 0
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,

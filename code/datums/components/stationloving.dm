@@ -61,7 +61,7 @@
 			CRASH("Unable to find a blobstart landmark for [type] to relocate [parent].")
 
 	var/atom/movable/movable_parent = parent
-	playsound(movable_parent, 'sound/machines/synth_no.ogg', 5, TRUE)
+	playsound(movable_parent, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 
 	var/mob/holder = get(movable_parent, /mob)
 	if(holder)

@@ -100,7 +100,6 @@
 
 //oguzok in kitchen, huh?
 #include "code\modules\clothing\under\undersuit.dm"
-#include "code\modules\clothing\masks\moustache_ru.dm"
 
 //Testicular_torsion wizard
 #include "code\modules\spells\spell_types\touch\testicular_torsion.dm"

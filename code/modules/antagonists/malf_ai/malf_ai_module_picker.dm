@@ -62,7 +62,7 @@
 
 	return data
 
-/datum/module_picker/ui_act(action, list/params)
+/datum/module_picker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

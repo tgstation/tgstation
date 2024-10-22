@@ -13,9 +13,8 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "d" = (
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/lavaland/surface/outdoors/virtual_domain)
+/area/virtual_domain/fullbright)
 "f" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -85,9 +84,6 @@
 /obj/structure/stone_tile/cracked,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
-"v" = (
-/turf/closed/indestructible/binary,
-/area/lavaland/surface/outdoors/virtual_domain)
 "w" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -116,6 +112,10 @@
 "C" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"D" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "G" = (
 /obj/structure/stone_tile{
@@ -208,55 +208,55 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
 d
 "}
 (2,1,1) = {"
-v
+d
 s
 s
 s
@@ -300,11 +300,11 @@ s
 s
 s
 s
-s
-v
+D
+d
 "}
 (3,1,1) = {"
-v
+d
 s
 s
 s
@@ -349,10 +349,10 @@ s
 J
 J
 s
-v
+d
 "}
 (4,1,1) = {"
-v
+d
 s
 s
 J
@@ -397,10 +397,10 @@ J
 J
 J
 s
-v
+d
 "}
 (5,1,1) = {"
-v
+d
 s
 s
 J
@@ -445,10 +445,10 @@ J
 J
 s
 s
-v
+d
 "}
 (6,1,1) = {"
-v
+d
 s
 s
 J
@@ -493,10 +493,10 @@ J
 J
 s
 s
-v
+d
 "}
 (7,1,1) = {"
-v
+d
 s
 s
 J
@@ -541,10 +541,10 @@ J
 J
 J
 s
-v
+d
 "}
 (8,1,1) = {"
-v
+d
 s
 s
 J
@@ -589,10 +589,10 @@ J
 J
 s
 s
-v
+d
 "}
 (9,1,1) = {"
-v
+d
 s
 J
 J
@@ -637,10 +637,10 @@ a
 J
 J
 s
-v
+d
 "}
 (10,1,1) = {"
-v
+d
 s
 J
 J
@@ -685,10 +685,10 @@ a
 J
 J
 s
-v
+d
 "}
 (11,1,1) = {"
-v
+d
 s
 s
 J
@@ -733,10 +733,10 @@ a
 J
 J
 s
-v
+d
 "}
 (12,1,1) = {"
-v
+d
 s
 s
 J
@@ -781,10 +781,10 @@ J
 J
 J
 s
-v
+d
 "}
 (13,1,1) = {"
-v
+d
 s
 s
 J
@@ -829,10 +829,10 @@ a
 J
 J
 s
-v
+d
 "}
 (14,1,1) = {"
-v
+d
 s
 s
 J
@@ -877,10 +877,10 @@ a
 J
 J
 s
-v
+d
 "}
 (15,1,1) = {"
-v
+d
 s
 J
 J
@@ -925,10 +925,10 @@ a
 J
 J
 s
-v
+d
 "}
 (16,1,1) = {"
-v
+d
 s
 J
 J
@@ -973,10 +973,10 @@ a
 J
 J
 s
-v
+d
 "}
 (17,1,1) = {"
-v
+d
 s
 s
 J
@@ -1021,10 +1021,10 @@ a
 J
 J
 s
-v
+d
 "}
 (18,1,1) = {"
-v
+d
 s
 s
 J
@@ -1069,10 +1069,10 @@ J
 J
 s
 s
-v
+d
 "}
 (19,1,1) = {"
-v
+d
 s
 J
 J
@@ -1117,10 +1117,10 @@ a
 J
 J
 s
-v
+d
 "}
 (20,1,1) = {"
-v
+d
 s
 J
 J
@@ -1165,10 +1165,10 @@ a
 J
 J
 s
-v
+d
 "}
 (21,1,1) = {"
-v
+d
 s
 s
 J
@@ -1213,10 +1213,10 @@ a
 J
 s
 s
-v
+d
 "}
 (22,1,1) = {"
-v
+d
 s
 s
 J
@@ -1261,10 +1261,10 @@ a
 J
 s
 s
-v
+d
 "}
 (23,1,1) = {"
-v
+d
 s
 J
 J
@@ -1309,10 +1309,10 @@ a
 J
 s
 s
-v
+d
 "}
 (24,1,1) = {"
-v
+d
 s
 J
 J
@@ -1357,10 +1357,10 @@ a
 J
 J
 s
-v
+d
 "}
 (25,1,1) = {"
-v
+d
 s
 s
 J
@@ -1405,10 +1405,10 @@ J
 J
 J
 s
-v
+d
 "}
 (26,1,1) = {"
-v
+d
 s
 s
 J
@@ -1453,10 +1453,10 @@ a
 J
 J
 s
-v
+d
 "}
 (27,1,1) = {"
-v
+d
 s
 s
 J
@@ -1501,10 +1501,10 @@ a
 J
 J
 s
-v
+d
 "}
 (28,1,1) = {"
-v
+d
 s
 J
 J
@@ -1549,10 +1549,10 @@ J
 J
 J
 s
-v
+d
 "}
 (29,1,1) = {"
-v
+d
 s
 J
 J
@@ -1597,10 +1597,10 @@ J
 J
 s
 s
-v
+d
 "}
 (30,1,1) = {"
-v
+d
 s
 s
 J
@@ -1645,10 +1645,10 @@ J
 J
 s
 s
-v
+d
 "}
 (31,1,1) = {"
-v
+d
 s
 s
 a
@@ -1693,10 +1693,10 @@ J
 J
 J
 s
-v
+d
 "}
 (32,1,1) = {"
-v
+d
 s
 s
 a
@@ -1741,10 +1741,10 @@ J
 J
 J
 s
-v
+d
 "}
 (33,1,1) = {"
-v
+d
 s
 s
 s
@@ -1789,10 +1789,10 @@ J
 J
 J
 s
-v
+d
 "}
 (34,1,1) = {"
-v
+d
 s
 s
 s
@@ -1837,53 +1837,53 @@ s
 s
 s
 s
-v
+d
 "}
 (35,1,1) = {"
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
 "}

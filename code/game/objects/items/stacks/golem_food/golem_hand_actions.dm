@@ -35,7 +35,7 @@
 		qdel(src)
 		return ITEM_INTERACT_BLOCKING
 
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
 	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [interacting_with] with a thrown and primed")

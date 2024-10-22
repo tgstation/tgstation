@@ -42,7 +42,7 @@
 	. = ..()
 	if(is_portable)
 		desc = "The wheels and bottom storage of this medical cart have been stowed away, \
-			leaving a cumbersome tray in it's place."
+			leaving a cumbersome tray in its place."
 	else
 		desc = initial(desc)
 

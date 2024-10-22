@@ -198,7 +198,7 @@
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
-			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
@@ -209,7 +209,7 @@
 
 	var/list/visible_turfs = list()
 
-	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	// Get the camera's turf to correctly gather what's visible from its turf, in case it's located in a moving object (borgs / mechs)
 	var/new_cam_turf = get_turf(active_camera)
 
 	// If we're not forcing an update for some reason and the cameras are in the same location,

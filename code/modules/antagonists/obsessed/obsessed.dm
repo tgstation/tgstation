@@ -1,3 +1,9 @@
+#define OBSESSED_OBJECTIVE_SPEND_TIME "spend_time"
+#define OBSESSED_OBJECTIVE_POLAROID "polaroid"
+#define OBSESSED_OBJECTIVE_HUG "hug"
+#define OBSESSED_OBJECTIVE_HEIRLOOM "heirloom"
+#define OBSESSED_OBJECTIVE_JEALOUS "jealous"
+
 /datum/antagonist/obsessed
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
@@ -12,8 +18,23 @@
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
 	hardcore_random_bonus = TRUE
-	stinger_sound = 'sound/ambience/antag/creepalert.ogg'
+	stinger_sound = 'sound/music/antag/creepalert.ogg'
+	/// How many objectives should be generated
+	var/objectives_to_generate = 3
+	/// Brain trauma that causes the obsession
 	var/datum/brain_trauma/special/obsessed/trauma
+
+/// Dummy antag datum that will show the cured obsessed to admins
+/datum/antagonist/former_obsessed
+	name = "Former Obsessed"
+	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
+	antagpanel_category = ANTAG_GROUP_CREW
+	show_in_roundend = FALSE
+	count_against_dynamic_roll_chance = FALSE
+	silent = TRUE
+	can_elimination_hijack = ELIMINATION_PREVENT
+	antag_flags = FLAG_FAKE_ANTAG
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current
@@ -72,7 +93,7 @@
 	H.regenerate_icons()
 
 /datum/antagonist/obsessed/forge_objectives(datum/mind/obsessionmind)
-	var/list/objectives_left = list("spendtime", "polaroid", "hug")
+	var/list/objectives_left = list(OBSESSED_OBJECTIVE_SPEND_TIME, OBSESSED_OBJECTIVE_POLAROID, OBSESSED_OBJECTIVE_HUG)
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner
 	kill.target = obsessionmind
@@ -84,49 +105,49 @@
 			family_heirloom = heirloom_quirk.heirloom?.resolve()
 			break
 	if(family_heirloom)
-		objectives_left += "heirloom"
+		objectives_left += OBSESSED_OBJECTIVE_HEIRLOOM
 
 	// If they have no coworkers, jealousy will pick someone else on the station. This will never be a free objective.
 	if(!is_captain_job(obsessionmind.assigned_role))
-		objectives_left += "jealous"
+		objectives_left += OBSESSED_OBJECTIVE_JEALOUS
 
-	for(var/i in 1 to 3)
-		var/chosen_objective = pick(objectives_left)
-		objectives_left.Remove(chosen_objective)
+	for(var/i in 1 to objectives_to_generate)
+		var/chosen_objective = pick_n_take(objectives_left)
 		switch(chosen_objective)
-			if("spendtime")
+			if(OBSESSED_OBJECTIVE_SPEND_TIME)
 				var/datum/objective/spendtime/spendtime = new
 				spendtime.owner = owner
 				spendtime.target = obsessionmind
 				objectives += spendtime
-			if("polaroid")
+			if(OBSESSED_OBJECTIVE_POLAROID)
 				var/datum/objective/polaroid/polaroid = new
 				polaroid.owner = owner
 				polaroid.target = obsessionmind
 				objectives += polaroid
-			if("hug")
+			if(OBSESSED_OBJECTIVE_HUG)
 				var/datum/objective/hug/hug = new
 				hug.owner = owner
 				hug.target = obsessionmind
 				objectives += hug
-			if("heirloom")
+			if(OBSESSED_OBJECTIVE_HEIRLOOM)
 				var/datum/objective/steal/heirloom_thief/heirloom_thief = new
 				heirloom_thief.owner = owner
 				heirloom_thief.target = obsessionmind//while you usually wouldn't need this for stealing, we need the name of the obsession
 				heirloom_thief.steal_target = family_heirloom
 				objectives += heirloom_thief
-			if("jealous")
+			if(OBSESSED_OBJECTIVE_JEALOUS)
 				var/datum/objective/assassinate/jealous/jealous = new
 				jealous.owner = owner
 				jealous.target = obsessionmind//will reroll into a coworker on the objective itself
 				objectives += jealous
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
+
 	for(var/datum/objective/O in objectives)
 		O.update_explanation_text()
 
 /datum/antagonist/obsessed/roundend_report_header()
-	return "<span class='header'>Someone became obsessed!</span><br>"
+	return span_header("Someone became obsessed!<br>")
 
 /datum/antagonist/obsessed/roundend_report()
 	var/list/report = list()
@@ -278,3 +299,9 @@
 		explanation_text = "Steal [target.name]'s family heirloom, [steal_target] they cherish."
 	else
 		explanation_text = "Free Objective"
+
+#undef OBSESSED_OBJECTIVE_SPEND_TIME
+#undef OBSESSED_OBJECTIVE_POLAROID
+#undef OBSESSED_OBJECTIVE_HUG
+#undef OBSESSED_OBJECTIVE_HEIRLOOM
+#undef OBSESSED_OBJECTIVE_JEALOUS

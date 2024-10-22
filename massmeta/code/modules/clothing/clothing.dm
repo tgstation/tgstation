@@ -15,7 +15,7 @@
 				shreds.add_fingerprint(user)
 		qdel(src)
 		to_chat(user, span_notice("You tear [src] up."))
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+		playsound(src.loc, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 		return TRUE
 	..()
 

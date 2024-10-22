@@ -68,26 +68,25 @@
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
-		user.visible_message("<span class='notice'>[user] tosses some \
-			wood into [src].</span>", "<span class='notice'>You add \
-			some fuel to [src].</span>")
-	else if(istype(T, /obj/item/paper_bin))
+		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
+		return
+
+	if(istype(T, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = T
-		user.visible_message("<span class='notice'>[user] throws [T] into \
-			[src].</span>", "<span class='notice'>You add [T] to [src].\
-			</span>")
+		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You add [T] to [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
-	else if(istype(T, /obj/item/paper))
-		user.visible_message("<span class='notice'>[user] throws [T] into \
-			[src].</span>", "<span class='notice'>You throw [T] into [src].\
-			</span>")
+		return
+
+	if(istype(T, /obj/item/paper))
+		user.visible_message(span_notice("[user] throws [T] into [src]."), span_notice("You throw [T] into [src]."))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(T)
-	else if(try_light(T,user))
 		return
-	else
-		. = ..()
+
+	if(try_light(T,user))
+		return
+	return ..()
 
 /obj/structure/fireplace/update_overlays()
 	. = ..()
