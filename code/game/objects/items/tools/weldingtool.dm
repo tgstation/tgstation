@@ -274,15 +274,18 @@
 	return welding
 
 /// If welding tool ran out of fuel during a construction task, construction fails.
-/obj/item/weldingtool/tool_use_check(mob/living/user, amount, heat_required)
+/obj/item/weldingtool/tool_use_check(mob/living/user, amount, heat_required, silent = FALSE)
 	if(!isOn() || !check_fuel())
-		to_chat(user, span_warning("[src] has to be on to complete this task!"))
+		if(!silent)
+			to_chat(user, span_warning("[src] has to be on to complete this task!"))
 		return FALSE
 	if(get_fuel() < amount)
-		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
+		if(!silent)
+			to_chat(user, span_warning("You need more welding fuel to complete this task!"))
 		return FALSE
 	if(heat < heat_required)
-		to_chat(user, span_warning("[src] is not hot enough to complete this task!"))
+		if(!silent)
+			to_chat(user, span_warning("[src] is not hot enough to complete this task!"))
 		return FALSE
 	return TRUE
 

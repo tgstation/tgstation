@@ -1187,7 +1187,7 @@
 		SEND_SIGNAL(src, COMSIG_TOOL_START_USE, user)
 
 /// A check called by [/obj/item/proc/tool_start_check] once, and by use_tool on every tick of delay.
-/obj/item/proc/tool_use_check(mob/living/user, amount, heat_required)
+/obj/item/proc/tool_use_check(mob/living/user, amount, heat_required, silent = FALSE)
 	return !amount
 
 /// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc. Returns TRUE on success, FALSE on failure.

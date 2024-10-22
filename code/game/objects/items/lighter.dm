@@ -207,12 +207,14 @@
 		cig.light(span_notice("[user] holds the [name] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
 
 ///Checks if the lighter is able to perform a welding task.
-/obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
+/obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required, silent = FALSE)
 	if(!lit)
-		to_chat(user, span_warning("[src] has to be on to complete this task!"))
+		if(!silent)
+			to_chat(user, span_warning("[src] has to be on to complete this task!"))
 		return FALSE
 	if(get_fuel() < amount)
-		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
+		if(!silent)
+			to_chat(user, span_warning("You need more welding fuel to complete this task!"))
 		return FALSE
 	if(heat < heat_required)
 		return FALSE
