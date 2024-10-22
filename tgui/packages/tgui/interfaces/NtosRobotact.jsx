@@ -55,6 +55,7 @@ export const NtosRobotactContent = (props) => {
     selfDestructAble,
     cyborg_groups = [],
     masterAI_online,
+    MasterAI_connected,
   } = data;
   const borgName = data.name || [];
   const borgType = data.designation || [];
@@ -349,13 +350,13 @@ export const NtosRobotactContent = (props) => {
       {tab_main === 3 && (
         <Flex.Item height={40}>
           <Section
-            title={masterAI ? masterAI : 'NOT CONFIGURED'}
+            title={MasterAI_connected ? masterAI : 'NOT CONFIGURED'}
             textAlign="center"
           >
             <LabeledList>
               <LabeledList.Item label="Status">
                 <Box color={masterAI_online ? 'good' : 'bad'}>
-                  {!masterAI
+                  {!MasterAI_connected
                     ? 'No Conection'
                     : masterAI_online
                       ? 'Online'
@@ -426,7 +427,7 @@ export const NtosRobotactContent = (props) => {
                             >
                               {typeof cyborg.charge === 'number'
                                 ? cyborg.charge + '%'
-                                : 'Not Found'}
+                                : 'No Cell'}
                             </Box>
                           </LabeledList.Item>
                           <LabeledList.Item label="Model">
