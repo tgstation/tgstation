@@ -315,7 +315,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(deaf_message)
 			deaf_type = MSG_VISUAL
 			message = deaf_message
-			return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+			show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+			return FALSE
 
 
 	// we need to send this signal before compose_message() is used since other signals need to modify

@@ -338,7 +338,7 @@
 ///Fish infuser organ, allows mobs to safely eat raw fish.
 /obj/item/organ/internal/stomach/fish
 	name = "mutated fish-stomach"
-	desc = "Fish DNA infused into a stomach now parmated by the faint smell of salt and slightly putrified fish."
+	desc = "Fish DNA infused into a stomach now permeated by the faint smell of salt and slightly putrefied fish."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ

@@ -105,10 +105,11 @@
 
 /mob/living/basic/creature/tiggles
 	name = "Miss Tiggles"
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/creature/hatchling
 	name = "hatchling"
 	health = 25
 	maxHealth = 25
 	health_scaling = FALSE
-	current_size = 0.85
+	initial_size = 0.85

@@ -22,8 +22,8 @@
 	message = "claps."
 	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	audio_cooldown = 5 SECONDS
 	vary = TRUE
+	affected_by_pitch = FALSE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
 	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
@@ -53,7 +53,6 @@
 	key_third_person = "cries"
 	message = "cries."
 	message_mime = "sobs silently."
-	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
 	stat_allowed = SOFT_CRIT
@@ -177,10 +176,14 @@
 	message_param = "snaps their fingers at %t."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	hands_use_check = TRUE
+	affected_by_pitch = FALSE
 
 /datum/emote/living/carbon/snap/get_sound(mob/living/user)
 	if(ishuman(user))
-		return pick('sound/mobs/humanoids/human/snap/fingersnap1.ogg', 'sound/mobs/humanoids/human/snap/fingersnap2.ogg')
+		return pick(
+			'sound/mobs/humanoids/human/snap/fingersnap1.ogg',
+			'sound/mobs/humanoids/human/snap/fingersnap2.ogg',
+			)
 	return null
 
 /datum/emote/living/carbon/shoesteal

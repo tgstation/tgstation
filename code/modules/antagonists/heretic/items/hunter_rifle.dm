@@ -139,7 +139,7 @@
 
 /obj/projectile/bullet/strilka310/lionhunter/fire(angle, atom/direct_target)
 	. = ..()
-	if(!isliving(firer) || !isliving(original))
+	if(QDELETED(src) || !isliving(firer) || !isliving(original))
 		return
 	var/mob/living/living_firer = firer
 	if(IS_HERETIC(living_firer))

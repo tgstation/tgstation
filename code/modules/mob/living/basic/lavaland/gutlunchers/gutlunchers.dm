@@ -137,7 +137,7 @@
 	can_breed = FALSE
 	gender = NEUTER
 	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
-	current_size = 0.6
+	initial_size = 0.6
 	///list of stats we inherited
 	var/datum/gutlunch_inherited_stats/inherited_stats
 
