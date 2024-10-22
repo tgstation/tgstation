@@ -108,7 +108,7 @@
 /datum/config_entry/flag/protect_assistant_from_antagonist //If assistants can be traitor/cult/other
 
 /datum/config_entry/string/human_authority //Controls how to enforce human authority
-	default = "HUMAN_WHITELIST"
+	default = "DISABLED"
 
 /////////////////////////////////////////////////Outdated human authority settings
 /datum/config_entry/flag/enforce_human_authority
