@@ -30,3 +30,7 @@
 /datum/loadout_item/inhand/slimpack
 	name = "Custom Flatpack"
 	item_path = /obj/item/storage/backpack/satchel/flat/empty/custom
+
+/datum/loadout_item/inhand/aac_device
+	name = "AAC Device"
+	item_path = /obj/item/aac_device
