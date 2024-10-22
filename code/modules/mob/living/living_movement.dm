@@ -66,6 +66,8 @@
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_ALLOW_THROUGH, mover, border_dir) & COMPONENT_LIVING_PASSABLE)
+		return TRUE
 	return !mover.density || body_position == LYING_DOWN
 
 /mob/living/update_config_movespeed()
