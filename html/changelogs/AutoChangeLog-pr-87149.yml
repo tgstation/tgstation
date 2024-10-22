@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Jammers can now disable players' radio microphones via a new secondary ability, both for handhelds and headsets"

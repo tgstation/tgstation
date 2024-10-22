@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Speed potions now cancel drag slowdown too."
-  - balance: "Speed potions can be used on fish past 2000 units of weight."
-  - bugfix: "You can now speed up cardboard boxes with speed potions."

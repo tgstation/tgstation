@@ -615,3 +615,24 @@
       the need arises.
   the-orange-cow:
   - bugfix: revs once again pass out upon deconversion
+2024-10-22:
+  00-Steven:
+  - bugfix: Getting a fish tail, cat ears, or a cat tail as any of the slime species
+      no longer runtimes.
+  Ghommie:
+  - balance: Speed potions now cancel drag slowdown too.
+  - balance: Speed potions can be used on fish past 2000 units of weight.
+  - bugfix: You can now speed up cardboard boxes with speed potions.
+  Sealed101:
+  - bugfix: fixed bolt of possession incorrectly setting up the previous owner of
+      the victim's body, resulting in a fucked-up camera mob with no icon or movement
+      capability
+  SmArtKar:
+  - bugfix: Fixed a typo in ooze eating code
+  - rscadd: Jammers can now disable players' radio microphones via a new secondary
+      ability, both for handhelds and headsets
+  SuperDrish:
+  - bugfix: Condenser now simulates turf air after its activation
+  carlarctg:
+  - spellcheck: Grammar fixes for produce-based armaments
+  - spellcheck: bo staves are very punny
