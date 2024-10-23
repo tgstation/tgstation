@@ -36,7 +36,7 @@
 		Allows you to transmute a knife and a pool of blood into a Bloody Blade. \
 		You can only create three at a time."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_grasp)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
@@ -62,7 +62,7 @@
 		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
 		You can only create one at a time by this method."
 	gain_text = "My new found desires drove me to greater and greater heights."
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
+
 	limit = 1
 	cost = 1
 	route = PATH_FLESH
@@ -131,10 +131,7 @@
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/flesh_mark,
-		/datum/heretic_knowledge/void_cloak,
-	)
+
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -217,12 +214,12 @@
 	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/flesh)
+
 	route = PATH_FLESH
 	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
-	next_knowledge = list(/datum/heretic_knowledge/spell/flesh_surgery)
+
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/spell/flesh_surgery
@@ -232,7 +229,7 @@
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
-	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
+
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
 	route = PATH_FLESH
@@ -245,12 +242,7 @@
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/flesh,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/opening_blast,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
@@ -267,7 +259,7 @@
 	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
-	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
+
 	route = PATH_FLESH
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
@@ -289,11 +281,7 @@
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/flesh_final,
-		/datum/heretic_knowledge/spell/apetra_vulnera,
-		/datum/heretic_knowledge/spell/cleave,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/external/tail = 1,
 		/obj/item/organ/internal/stomach = 1,

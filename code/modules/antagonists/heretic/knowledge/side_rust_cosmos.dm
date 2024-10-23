@@ -6,10 +6,7 @@
 		Eldritch water can be consumed for potent healing, or given to heathens for deadly poisoning."
 	gain_text = "This is an old recipe. The Owl whispered it to me. \
 		Created by the Priest - the Liquid that both was and is not."
-	next_knowledge = list(
-		/datum/heretic_knowledge/rust_regen,
-		/datum/heretic_knowledge/spell/cosmic_runes,
-		)
+
 	required_atoms = list(
 		/obj/structure/reagent_dispensers/watertank = 1,
 		/obj/item/shard = 1,
@@ -53,10 +50,7 @@
 		While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item \
 		that a victim has touched or is covered in the victim's blood to make the curse last longer."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/area_conversion,
-		/datum/heretic_knowledge/spell/star_blast,
-	)
+
 	required_atoms = list(
 		/obj/item/wirecutters = 1,
 		/obj/effect/decal/cleanable/vomit = 1,
@@ -89,10 +83,7 @@
 	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/area_conversion,
-		/datum/heretic_knowledge/spell/star_blast,
-	)
+
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
 		/obj/item/stack/sheet/iron = 10,

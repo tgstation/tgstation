@@ -6,10 +6,7 @@
 		Fire Sharks are fast and strong in groups, but die quickly. They are also highly resistant against fire attacks. \
 		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
 	gain_text = "The cradle of the nebula was cold, but not dead. Light and heat flits even through the deepest darkness, and is hunted by its own predators."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cosmic_runes,
-		/datum/heretic_knowledge/spell/ash_passage,
-	)
+
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
 		/obj/item/organ/internal/liver = 1,
@@ -27,10 +24,7 @@
 	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
 		You can only phase in and out when you are on a space or misc turf."
 	gain_text = "You feel like your body can move through space as if you where dust."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/star_blast,
-		/datum/heretic_knowledge/mad_mask,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	route = PATH_SIDE
@@ -44,10 +38,7 @@
 		when landing on tails. If you insert the coin into an airlock, it will be consumed \
 		to fry its electronics, opening the airlock permanently unless bolted. "
 	gain_text = "The Mansus is a place of all sorts of sins. But greed held a special role."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cosmic_expansion,
-		/datum/heretic_knowledge/spell/flame_birth,
-	)
+
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/diamond = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,

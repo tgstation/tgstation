@@ -34,7 +34,7 @@
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
-	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
+
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
@@ -58,7 +58,7 @@
 	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
 	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
 		They are quiet. This isn't the end of the mystery."
-	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
+
 	cost = 1
 	route = PATH_VOID
 	depth = 3
@@ -87,11 +87,7 @@
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/void_mark,
-		/datum/heretic_knowledge/void_cloak,
-		/datum/heretic_knowledge/limited_amount/risen_corpse,
-	)
+
 	cost = 1
 	route = PATH_VOID
 	research_tree_icon_path = 'icons/effects/effects.dmi'
@@ -127,12 +123,12 @@
 		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
+
 	route = PATH_VOID
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_conduit)
+
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_conduit
@@ -141,7 +137,7 @@
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
 	route = PATH_VOID
@@ -153,13 +149,7 @@
 		Additionally causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/void,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/void_prison,
-		/datum/heretic_knowledge/rune_carver,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
 	route = PATH_VOID
@@ -170,7 +160,7 @@
 	name = "Seeking Blade"
 	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
+
 	route = PATH_VOID
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_void"
@@ -198,11 +188,7 @@
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/void_final,
-		/datum/heretic_knowledge/spell/cleave,
-		/datum/heretic_knowledge/summon/maid_in_mirror,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
 	route = PATH_VOID

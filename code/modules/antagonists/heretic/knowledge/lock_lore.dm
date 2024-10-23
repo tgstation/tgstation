@@ -31,7 +31,7 @@
 		You can only create two at a time and they function as fast crowbars. \
 		In addition, they can fit into utility belts."
 	gain_text = "The Locked Labyrinth leads to freedom. But only the trapped Stewards know the correct path."
-	next_knowledge = list(/datum/heretic_knowledge/lock_grasp)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/crowbar = 1,
@@ -48,7 +48,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(/datum/heretic_knowledge/key_ring)
+
 	cost = 1
 	route = PATH_LOCK
 	depth = 3
@@ -110,10 +110,7 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/lock_mark,
-		/datum/heretic_knowledge/spell/mind_gate,
-	)
+
 	cost = 1
 	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/card.dmi'
@@ -126,12 +123,12 @@
 		Attack a marked person to bar them from all passages for the duration of the mark. \
 		This will make it so that they have no access whatsoever, even public access doors will reject them."
 	gain_text = "The Gatekeeper was a corrupt Steward. She hindered her fellows for her own twisted amusement."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/lock)
+
 	route = PATH_LOCK
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
+
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
@@ -145,7 +142,7 @@
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
+
 	cost = 1
 	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/service/library.dmi'
@@ -157,13 +154,7 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/opening_blast,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
-		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/painting,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 	route = PATH_LOCK
@@ -173,7 +164,7 @@
 	name = "Opening Blade"
 	desc = "Your blade has a chance to cause a weeping avulsion on attack."
 	gain_text = "The Pilgrim-Surgeon was not an Steward. Nonetheless, its blades and sutures proved a match for their keys."
-	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
+
 	route = PATH_LOCK
 	wound_type = /datum/wound/slash/flesh/critical
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -190,10 +181,7 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/lock_final,
-		/datum/heretic_knowledge/spell/apetra_vulnera,
-	)
+
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1

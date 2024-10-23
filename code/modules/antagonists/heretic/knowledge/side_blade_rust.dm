@@ -5,10 +5,7 @@
 		Eldritch Armor provides great protection while also acting as a focus when hooded."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity. And the Blacksmith \
 		returned their generosity in kind."
-	next_knowledge = list(
-		/datum/heretic_knowledge/rust_regen,
-		/datum/heretic_knowledge/blade_dance,
-	)
+
 	required_atoms = list(
 		/obj/structure/table = 1,
 		/obj/item/clothing/mask/gas = 1,
@@ -27,10 +24,7 @@
 		The Mawed Crucible can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
 	gain_text = "This is pure agony. I wasn't able to summon the figure of the Aristocrat, \
 		but with the Priest's attention I stumbled upon a different recipe..."
-	next_knowledge = list(
-		/datum/heretic_knowledge/duel_stance,
-		/datum/heretic_knowledge/spell/area_conversion,
-	)
+
 	required_atoms = list(
 		/obj/structure/reagent_dispensers/watertank = 1,
 		/obj/structure/table = 1,
@@ -52,11 +46,7 @@
 		causing the shot to mark your victim with your grasp and teleport you directly to them."
 	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
-	next_knowledge = list(
-		/datum/heretic_knowledge/duel_stance,
-		/datum/heretic_knowledge/spell/area_conversion,
-		/datum/heretic_knowledge/rifle_ammo,
-	)
+
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/stack/sheet/animalhide = 1,
@@ -111,10 +101,7 @@
 	name = "Rust Charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
 	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/furious_steel,
-		/datum/heretic_knowledge/spell/entropic_plume,
-	)
+
 	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
 	route = PATH_SIDE

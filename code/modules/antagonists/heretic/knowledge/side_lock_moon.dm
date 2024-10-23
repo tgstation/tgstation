@@ -6,10 +6,7 @@
 		confusion, oxygen loss and brain damage to its target over 10 seconds.\
 		The caster takes 20 brain damage per use."
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/spell/moon_smile,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 1
 	route = PATH_SIDE
@@ -22,10 +19,7 @@
 			veil you, allowing you to take 5 hits without suffering damage, this veil will recharge very slowly \
 			outside of combat."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulet,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/internal/lungs = 1,
 		/obj/item/stack/rods = 3,
@@ -49,10 +43,7 @@
 			Master of the Rusted Mountain: Requires a piece of Trash. Curses non-heretics to rust the floor they walk on."
 	gain_text = "A wind of inspiration blows through me. Beyond the veil and past the gate great works exist, yet to be painted. \
 				They yearn for mortal eyes, so I shall give them an audience."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulet,
-	)
+
 	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)
 	cost = 1

@@ -19,10 +19,7 @@
 	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
 	/// If TRUE, populates the banned_knowledge list of every other subtype of this knowledge's abstract_parent_type
 	var/mutually_exclusive = FALSE
-	/// The knowledge this unlocks next after learning.
-	var/list/next_knowledge = list()
 	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
-	var/list/banned_knowledge = list()
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'

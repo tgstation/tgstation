@@ -32,7 +32,7 @@
 		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
 		You can only create two at a time."
 	gain_text = "Under the light of the moon the laughter echoes."
-	next_knowledge = list(/datum/heretic_knowledge/moon_grasp)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/stack/sheet/iron = 2,
@@ -50,7 +50,7 @@
 	desc = "Your Mansus Grasp will cause your victims to hallucinate everyone as lunar mass, \
 		and hides your identity for a short duration."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
+
 	cost = 1
 	route = PATH_MOON
 	depth = 3
@@ -79,11 +79,7 @@
 	desc = "Grants you Smile of the moon, a ranged spell muting, blinding, deafening and knocking down the target for a\
 		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/moon_mark,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/spell/mind_gate,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 	route = PATH_MOON
@@ -96,12 +92,12 @@
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \
 		but when the night came its smile would dull forced to gaze on the earth."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/moon)
+
 	route = PATH_MOON
 	mark_type = /datum/status_effect/eldritch/moon
 
 /datum/heretic_knowledge/knowledge_ritual/moon
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_parade)
+
 	route = PATH_MOON
 
 /datum/heretic_knowledge/spell/moon_parade
@@ -109,7 +105,7 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	next_knowledge = list(/datum/heretic_knowledge/moon_amulet)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
@@ -122,13 +118,7 @@
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
 			if their sanity isn't low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/moon,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/curse/paralysis,
-		/datum/heretic_knowledge/painting,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/internal/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
@@ -146,7 +136,7 @@
 	name = "Moonlight Blade"
 	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
-	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
+
 	route = PATH_MOON
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_moon"
@@ -170,10 +160,7 @@
 			If their sanity is low enough this turns them insane, the spell then halves their sanity."
 	gain_text = "I grabbed his hand and we rose, those who saw the truth rose with us. \
 		The ringleader pointed up and the dim light of truth illuminated us further."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/moon_final,
-		/datum/heretic_knowledge/summon/ashy,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 	route = PATH_MOON

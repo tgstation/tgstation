@@ -35,7 +35,7 @@
 		Allows you to transmute a knife with one bar of silver or titanium to create a Sundered Blade. \
 		You can create up to four at a time."
 	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
-	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
@@ -51,7 +51,7 @@
 	desc = "Your Mansus Grasp will cause a short stun when used on someone lying down or facing away from you."
 	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
 		and is championed by sword, steel and silver."
-	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
+
 	cost = 1
 	route = PATH_BLADE
 	depth = 3
@@ -85,11 +85,7 @@
 		towards your attacker. This effect can only trigger once every 20 seconds."
 	gain_text = "The footsoldier was known to be a fearsome duelist. \
 		Their general quickly appointed them as their personal Champion."
-	next_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/risen_corpse,
-		/datum/heretic_knowledge/mark/blade_mark,
-		/datum/heretic_knowledge/armor,
-	)
+
 	cost = 1
 	route = PATH_BLADE
 	depth = 4
@@ -183,7 +179,7 @@
 		The knife will block any attack directed towards you, but is consumed on use."
 	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
 		He would slay the coward himself, and anyone who tried to run."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
+
 	route = PATH_BLADE
 	mark_type = /datum/status_effect/eldritch/blade
 
@@ -202,7 +198,7 @@
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/knowledge_ritual/blade
-	next_knowledge = list(/datum/heretic_knowledge/spell/realignment)
+
 	route = PATH_BLADE
 
 /datum/heretic_knowledge/spell/realignment
@@ -211,7 +207,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
@@ -227,13 +223,7 @@
 		you gain increased resistance to gaining wounds and resistance to batons."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
 		He was without rival, equal, or purpose."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/blade,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/rune_carver,
-		/datum/heretic_knowledge/crucible,
-		/datum/heretic_knowledge/rifle,
-	)
+
 	cost = 1
 	route = PATH_BLADE
 	depth = 8
@@ -298,7 +288,7 @@
 		You are able to infuse your mansus grasp directly into your blades, and your blades are more effective against structures."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
-	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
+
 	route = PATH_BLADE
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_blade"
@@ -403,11 +393,7 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
-	next_knowledge = list(
-		/datum/heretic_knowledge/summon/maid_in_mirror,
-		/datum/heretic_knowledge/ultimate/blade_final,
-		/datum/heretic_knowledge/spell/rust_charge,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE

@@ -35,7 +35,7 @@
 		Allows you to transmute a knife with any trash item into a Rusty Blade. \
 		You can only create two at a time."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
-	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/trash = 1,
@@ -51,7 +51,7 @@
 		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click. \
 		Allows you to rust basic iron walls and floors."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
+
 	cost = 1
 	route = PATH_RUST
 	depth = 3
@@ -90,12 +90,7 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/armor,
-		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/entropy_pulse,
-	)
+
 	cost = 1
 	route = PATH_RUST
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
@@ -114,7 +109,7 @@
 		When triggered, your victim will suffer heavy disgust and confusion. \
 		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
+
 	route = PATH_RUST
 	mark_type = /datum/status_effect/eldritch/rust
 
@@ -123,7 +118,7 @@
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/knowledge_ritual/rust
-	next_knowledge = list(/datum/heretic_knowledge/spell/rust_construction)
+
 	route = PATH_RUST
 
 /datum/heretic_knowledge/spell/rust_construction
@@ -132,7 +127,7 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
@@ -143,14 +138,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/rust,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/curse/corrosion,
-		/datum/heretic_knowledge/summon/rusty,
-		/datum/heretic_knowledge/crucible,
-		/datum/heretic_knowledge/rifle,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	route = PATH_RUST
@@ -166,7 +154,7 @@
 	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
-	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
+
 	route = PATH_RUST
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
@@ -189,10 +177,7 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits and improves the rusting abilities of non-rust heretics."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/rust_final,
-		/datum/heretic_knowledge/spell/rust_charge,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 	route = PATH_RUST

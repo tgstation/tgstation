@@ -12,10 +12,7 @@
 	gain_text = "I witnessed a cold, rending force drag this corpse back to near-life. \
 		When it moves, it crunches like broken glass. Its hands are no longer recognizable as human - \
 		each clenched fist contains a brutal nest of sharp bone-shards instead."
-	next_knowledge = list(
-		/datum/heretic_knowledge/cold_snap,
-		/datum/heretic_knowledge/blade_dance,
-	)
+
 	required_atoms = list(
 		/obj/item/clothing/suit = 1,
 		/obj/item/clothing/gloves/latex = 1,
@@ -130,10 +127,7 @@
 		Also makes for a handy throwing weapon."
 	gain_text = "Etched, carved... eternal. There is power hidden in everything. I can unveil it! \
 		I can carve the monolith to reveal the chains!"
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_phase,
-		/datum/heretic_knowledge/duel_stance,
-	)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/shard = 1,
@@ -154,10 +148,7 @@
 		However, they are weak to mortal gaze and take damage by being examined."
 	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
 		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_pull,
-		/datum/heretic_knowledge/spell/furious_steel,
-	)
+
 	required_atoms = list(
 		/obj/item/stack/sheet/mineral/titanium = 5,
 		/obj/item/clothing/suit/armor = 1,

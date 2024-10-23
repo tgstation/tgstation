@@ -32,7 +32,7 @@
 		Allows you to transmute a match and a knife into an Ashen Blade. \
 		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
-	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
+
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
@@ -47,7 +47,7 @@
 	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
-	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
+
 	cost = 1
 	route = PATH_ASH
 	depth = 3
@@ -77,11 +77,7 @@
 	name = "Ashen Passage"
 	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
 	gain_text = "He knew how to walk between the planes."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/ash_mark,
-		/datum/heretic_knowledge/summon/fire_shark,
-		/datum/heretic_knowledge/medallion,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
 	route = PATH_ASH
@@ -96,7 +92,7 @@
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
+
 	route = PATH_ASH
 	mark_type = /datum/status_effect/eldritch/ash
 
@@ -112,7 +108,7 @@
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
-	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
+
 	route = PATH_ASH
 
 /datum/heretic_knowledge/spell/fire_blast
@@ -121,7 +117,7 @@
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	route = PATH_ASH
@@ -135,12 +131,7 @@
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/ash,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/space_phase,
-		/datum/heretic_knowledge/curse/paralysis,
-	)
+
 	required_atoms = list(
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
@@ -159,7 +150,7 @@
 	desc = "Your blade now lights enemies ablaze on attack."
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
-	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
+
 	route = PATH_ASH
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_ash"
@@ -178,11 +169,7 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/ash_final,
-		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/eldritch_coin,
-	)
+
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	route = PATH_ASH
