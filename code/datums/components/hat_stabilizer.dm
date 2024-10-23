@@ -18,6 +18,7 @@
 	src.pixel_y_offset = pixel_y_offset
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_qdel))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_secondary_attack_hand))
 	RegisterSignals(parent, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
 	if (add_overlay)
@@ -28,7 +29,7 @@
 		remove_hat()
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACKBY,
 	COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_MODULE_GENERATE_WORN_OVERLAY,
-	COMSIG_ITEM_GET_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS))
+	COMSIG_ITEM_GET_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING))
 
 /datum/component/hat_stabilizer/proc/on_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
@@ -51,6 +52,12 @@
 	var/mutable_appearance/worn_overlay = use_worn_icon ? attached_hat.build_worn_icon(default_layer = ABOVE_OBJ_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi') : mutable_appearance(attached_hat, layer = ABOVE_OBJ_LAYER)
 	worn_overlay.pixel_y = pixel_y_offset
 	overlays += worn_overlay
+
+/datum/component/hat_stabilizer/proc/on_qdel(atom/movable/source)
+	SIGNAL_HANDLER
+
+	if (attached_hat)
+		QDEL_NULL(attached_hat)
 
 /datum/component/hat_stabilizer/proc/on_attackby(datum/source, obj/item/hitting_item, mob/user)
 	SIGNAL_HANDLER
