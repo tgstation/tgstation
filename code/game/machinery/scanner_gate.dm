@@ -58,15 +58,16 @@
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/scanner_gate(src))
+	set_scanline("passive")
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
 
-/obj/machinery/scanner_gate/post_machine_initialize()
-	. = ..()
-	set_scanline("passive")
+/obj/machinery/scanner_gate/Destroy(force)
+	QDEL_NULL(scanline)
+	return ..()
 
 /obj/machinery/scanner_gate/RefreshParts()
 	. = ..()
