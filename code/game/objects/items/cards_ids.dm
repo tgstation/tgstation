@@ -1303,7 +1303,8 @@
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
-		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		//registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE) // ORIGINAL
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of the Port Authority may use this card."), force = TRUE) // DOPPLER EDIT - NT -> PA
 		return FALSE
 
 	return TRUE
@@ -1311,7 +1312,8 @@
 /obj/item/card/id/advanced/debug/can_be_used_in_payment(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder))
-		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		//registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE) // ORIGINAL
+		registered_account.bank_card_talk(span_warning("Only authorized representatives of the Port Authority may use this card."), force = TRUE) // DOPPLER EDIT - NT -> PA
 		return FALSE
 
 	return TRUE

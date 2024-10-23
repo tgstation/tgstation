@@ -11,7 +11,7 @@
 	if(with_paper)
 		var/obj/item/paper/cryo_paper = new /obj/item/paper(loc)
 		cryo_paper.name = "Notification - [name]"
-		cryo_paper.add_raw_text("Our sincerest apologies, [name][job ? ", [job]," : ""] had to be sent back in Cryogenic Storage for reasons that cannot be elaborated on at the moment.<br><br>Sincerely,<br><i>Nanotrasen Anti-Sudden Sleep Disorder Agency</i>")
+		cryo_paper.add_raw_text("Our sincerest apologies, [name][job ? ", [job]," : ""] had to be sent back in Cryogenic Storage for reasons that cannot be elaborated on at the moment.<br><br>Sincerely,<br><i>Port Authority Anti-Sudden Sleep Disorder Agency</i>")
 		cryo_paper.update_appearance()
 	//find cryopod
 	for(var/obj/machinery/cryopod/cryo in GLOB.valid_cryopods)

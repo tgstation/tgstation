@@ -222,7 +222,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["channelAuthor"] = current_channel?.author
 
 	if(!current_channel)
-		data["channelAuthor"] = "Nanotrasen Inc"
+		//data["channelAuthor"] = "Nanotrasen Inc" // ORIGINAL
+		data["channelAuthor"] = "The Port Authority" // DOPPLER EDIT - NT -> PA
 		data["channelDesc"] = "Welcome to Newscaster Net. Interface & News networks Operational."
 		data["channelLocked"] = TRUE
 	else
