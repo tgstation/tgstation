@@ -113,16 +113,15 @@
 		vis_contents -= scanline
 	else
 		scanline = new(src)
+		scanline.icon = icon
+		scanline.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		scanline.layer = layer
 	deltimer(scanline_timer)
 	if (isnull(scanline_type))
 		if(duration)
 			scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 		return
-	scanline.icon = icon
 	scanline.icon_state = scanline_type
-	scanline.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	scanline.layer = layer
-
 	vis_contents += scanline
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
