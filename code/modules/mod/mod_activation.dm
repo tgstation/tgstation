@@ -21,7 +21,7 @@
 	if(!istype(part) || user.incapacitated)
 		return
 	if(activating)
-		balloon_alert(user, "currently unsealing/sealing!")
+		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	var/parts_to_check = parts - part
