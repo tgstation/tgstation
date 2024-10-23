@@ -51,6 +51,7 @@
 		for(var/mob/target in players)
 			to_chat(target, finalized_announcement)
 			if(play_sound && target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements)) //DOPPLER EDIT CHANGE - Original: if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+				SEND_SOUND(target, sound(sound_override))
 	else
 		to_chat(world, finalized_announcement)
 
