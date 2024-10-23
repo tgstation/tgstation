@@ -20,8 +20,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "gh" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "gr" = (
 /obj/machinery/door/poddoor/shutters/preopen,
 /turf/open/floor/plating,
@@ -83,7 +83,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "iU" = (
 /obj/item/storage/medkit/brute,
@@ -110,7 +110,7 @@
 "kx" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "lT" = (
 /turf/open/floor/catwalk_floor/iron,
@@ -207,7 +207,7 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "sU" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "tI" = (
 /obj/structure/tank_holder/anesthetic,
@@ -494,7 +494,7 @@
 "LG" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "LI" = (
 /obj/structure/table/reinforced,
@@ -558,7 +558,7 @@
 "Pd" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Pe" = (
 /obj/effect/decal/cleanable/robot_debris/up,
@@ -659,8 +659,8 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "WX" = (
 /obj/machinery/light/warm,
 /obj/structure/cable,

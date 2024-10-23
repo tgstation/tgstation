@@ -357,6 +357,12 @@
 	desc = "Melted down oil can, in some cases, be used to pave road surfaces."
 	icon_state = "asphalt"
 
+/turf/open/floor/asphalt/outdoors
+	planetary_atmos = TRUE
+
 /turf/open/floor/asphalt/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/misc/asteroid/basalt
+
+/turf/open/floor/asphalt/lavaland/outdoors
+	planetary_atmos = TRUE
