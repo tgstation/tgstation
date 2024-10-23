@@ -401,7 +401,7 @@
 			if (occupant && safeties)
 				say("Alert: safeties triggered, occupant detected!")
 				return
-			else if (!helmet && !mask && !suit && !storage && !occupant)
+			else if (!helmet && !mask && !suit && !mod && !storage && !occupant)
 				to_chat(user, "There's nothing inside [src] to disinfect!")
 				return
 			else
