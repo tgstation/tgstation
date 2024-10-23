@@ -1760,6 +1760,8 @@
 /datum/sprite_accessory/tails/fish/long
 	name = "Long"
 	icon_state = "long"
+	center = TRUE
+	dimension_x = 38
 
 /datum/sprite_accessory/tails/fish/shark
 	name = "Shark"
@@ -1769,7 +1771,7 @@
 	name = "Chonky"
 	icon_state = "chonky"
 	center = TRUE
-	dimension_x = 34
+	dimension_x = 36
 
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
