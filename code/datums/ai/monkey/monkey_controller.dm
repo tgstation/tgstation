@@ -120,7 +120,7 @@ have ways of interacting with a specific mob and control it.
 	var/mob/living/living_pawn = pawn
 
 	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB) || living_pawn.stat > CONSCIOUS)
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)

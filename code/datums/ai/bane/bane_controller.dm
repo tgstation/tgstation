@@ -27,5 +27,5 @@ And the only victory you achieved was a lie. Now you understand Gotham is beyond
 /datum/ai_controller/bane/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 	if(IS_DEAD_OR_INCAP(living_pawn))
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	return ..()
