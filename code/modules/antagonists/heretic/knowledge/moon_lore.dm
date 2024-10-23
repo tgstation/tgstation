@@ -53,7 +53,7 @@
 
 	cost = 1
 
-	depth = 3
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_moon"
 
@@ -83,7 +83,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 
-	depth = 4
+
 
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
@@ -109,7 +109,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 
-	depth = 7
+
 
 
 /datum/heretic_knowledge/moon_amulet
@@ -127,7 +127,7 @@
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 1
 
-	depth = 8
+
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "moon_amulette"
 	research_tree_icon_frame = 9
@@ -164,7 +164,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 
-	depth = 10
+
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/ultimate/moon_final

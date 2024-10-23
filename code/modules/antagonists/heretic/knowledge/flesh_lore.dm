@@ -66,7 +66,7 @@
 	limit = 1
 	cost = 1
 
-	depth = 3
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
 
@@ -142,7 +142,7 @@
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
-	depth = 4
+
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -233,7 +233,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
 
-	depth = 7
+
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -252,7 +252,7 @@
 	cost = 1
 
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
-	depth = 8
+
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
@@ -293,7 +293,7 @@
 	cost = 1
 
 	poll_ignore_define = POLL_IGNORE_STALKER
-	depth = 10
+
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"

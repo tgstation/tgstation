@@ -51,7 +51,7 @@
 
 	cost = 1
 
-	depth = 3
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_lock"
 
@@ -115,7 +115,7 @@
 
 	research_tree_icon_path = 'icons/obj/card.dmi'
 	research_tree_icon_state = "card_gold"
-	depth = 4
+
 
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
@@ -147,7 +147,7 @@
 
 	research_tree_icon_path = 'icons/obj/service/library.dmi'
 	research_tree_icon_state = "heretichandbook"
-	depth = 7
+
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
@@ -158,7 +158,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 
-	depth = 8
+
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
@@ -185,7 +185,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
-	depth = 10
+
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"

@@ -12,7 +12,7 @@
 	)
 	cost = 1
 
-	depth = 8
+
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "gaze"
 

@@ -54,7 +54,7 @@
 
 	cost = 1
 
-	depth = 3
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_rust"
 
@@ -95,7 +95,7 @@
 
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
 	research_tree_icon_state = "cloud_swirl"
-	depth = 4
+
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.AddElement(/datum/element/leeching_walk)
@@ -131,7 +131,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 
-	depth = 7
+
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
@@ -142,7 +142,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 
-	depth = 8
+
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -181,7 +181,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 
-	depth = 10
+
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()

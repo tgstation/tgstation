@@ -18,7 +18,7 @@
 
 	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
 	research_tree_icon_state = "void_cloak"
-	depth = 4
+
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
@@ -29,7 +29,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
 
-	depth = 8
+
 
 /datum/heretic_knowledge/spell/void_prison
 	name = "Void Prison"
@@ -43,7 +43,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
 
-	depth = 8
+
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
@@ -55,4 +55,4 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/cleave
 	cost = 1
 
-	depth = 10
+

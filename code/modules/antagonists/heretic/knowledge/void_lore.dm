@@ -61,7 +61,7 @@
 
 	cost = 1
 
-	depth = 3
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_void"
 
@@ -92,7 +92,7 @@
 
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
-	depth = 4
+
 	/// Traits we apply to become immune to the environment
 	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
@@ -141,7 +141,7 @@
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
 
-	depth = 7
+
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -153,7 +153,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
 
-	depth = 8
+
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/blade_upgrade/void
@@ -192,7 +192,7 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
 
-	depth = 10
+
 	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/ultimate/void_final

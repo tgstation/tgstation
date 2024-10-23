@@ -54,7 +54,6 @@
 
 	cost = 1
 
-	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_blade"
 
@@ -88,7 +87,6 @@
 
 	cost = 1
 
-	depth = 4
 	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
 	research_tree_icon_state = "shatter"
 	/// Whether the counter-attack is ready or not.
@@ -211,7 +209,6 @@
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 
-	depth = 7
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -226,7 +223,6 @@
 
 	cost = 1
 
-	depth = 8
 	research_tree_icon_path = 'icons/effects/blood.dmi'
 	research_tree_icon_state = "suitblood"
 	research_tree_icon_dir = SOUTH
@@ -397,7 +393,6 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 
-	depth = 10
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"

@@ -50,7 +50,6 @@
 
 	cost = 1
 
-	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_ash"
 
@@ -81,7 +80,6 @@
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
 
-	depth = 4
 
 /datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
@@ -121,7 +119,6 @@
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 
-	depth = 7
 	research_tree_icon_frame = 7
 
 
@@ -143,7 +140,6 @@
 
 	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
 	research_tree_icon_state = "mad_mask"
-	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
@@ -173,7 +169,6 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 
-	depth = 10
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/ultimate/ash_final

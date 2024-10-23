@@ -50,7 +50,6 @@
 
 	cost = 1
 
-	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_cosmos"
 
@@ -79,7 +78,6 @@
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
 
-	depth = 4
 
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
@@ -109,7 +107,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 
-	depth = 7
+
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
@@ -120,7 +118,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
 
-	depth = 8
+
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -230,7 +228,7 @@
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
 
-	depth = 10
+
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"

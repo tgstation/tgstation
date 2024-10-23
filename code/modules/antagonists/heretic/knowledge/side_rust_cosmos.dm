@@ -14,7 +14,7 @@
 	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
 
-	depth = 4
+
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eldritch_flask"
 
@@ -31,7 +31,7 @@
 	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
 	research_tree_icon_state = "corrode"
 	research_tree_icon_frame = 10
-	depth = 4
+
 	var/rusting_range = 8
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
@@ -63,7 +63,7 @@
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_corrosion"
-	depth = 8
+
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	to_chat(chosen_mob, span_danger("You feel very ill..."))
@@ -93,5 +93,5 @@
 	cost = 1
 
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
-	depth = 8
+
 

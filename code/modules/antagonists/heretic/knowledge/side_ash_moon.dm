@@ -15,7 +15,7 @@
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
-	depth = 4
+
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
@@ -36,7 +36,7 @@
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
-	depth = 8
+
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
@@ -72,4 +72,4 @@
 	cost = 1
 
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
-	depth = 10
+

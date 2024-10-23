@@ -16,7 +16,7 @@
 	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
 	research_tree_icon_state = "eldritch_armor"
 	research_tree_icon_frame = 12
-	depth = 4
+
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
@@ -34,7 +34,7 @@
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "crucible"
-	depth = 8
+
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
@@ -55,7 +55,7 @@
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
 	cost = 1
 
-	depth = 8
+
 	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
 	research_tree_icon_state = "goldrevolver"
 
@@ -74,7 +74,7 @@
 
 	research_tree_icon_path = 'icons/obj/weapons/guns/ammo.dmi'
 	research_tree_icon_state = "310_strip"
-	depth = 8
+
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
 		CALIBER_LASER,
@@ -105,4 +105,4 @@
 	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
 
-	depth = 10
+
