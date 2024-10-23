@@ -41,6 +41,7 @@
 	var/base_false_beep = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
+	///List of species that can be scanned by the gate. Supports adding more species' IDs during in-game.
 	var/list/available_species = list(
 		SPECIES_HUMAN,
 		SPECIES_LIZARD,
@@ -301,7 +302,7 @@
 	for(var/species_id in available_species)
 		var/datum/species/specie = GLOB.species_list[species_id]
 		.["available_species"] += list(list(
-			"specie_name" = capitalize(replacetext(replacetext(specie.name, "\proper", ""), "\improper", "")),
+			"specie_name" = capitalize(format_text(specie.name)),
 			"specie_id" = species_id,
 		))
 
