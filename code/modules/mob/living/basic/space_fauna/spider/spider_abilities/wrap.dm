@@ -75,7 +75,7 @@
 
 /datum/action/cooldown/mob_cooldown/wrap/proc/cocoon(atom/movable/to_wrap)
 	if(isliving(to_wrap))
-    	to_chat(to_wrap, span_userdanger("[owner] begins to secrete a sticky substance around you."))
+		to_chat(to_wrap, span_userdanger("[owner] begins to secrete a sticky substance around you."))
 	to_chat(owner, span_danger("You begin wrapping [to_wrap] into a cocoon."))
 	owner.visible_message(
 		span_notice("[owner] begins to secrete a sticky substance around [to_wrap]."),
