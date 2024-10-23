@@ -13,7 +13,7 @@
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
 
-/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding)
+/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, force_rider_standup = TRUE)
 	. = ..()
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
@@ -25,6 +25,9 @@
 	target.can_buckle = TRUE
 	riding_component_type = component_type
 
+	if(force_rider_standup)
+		target.buckle_lying = 0
+
 	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_mounting))
 	if(isvehicle(target))
 		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, PROC_REF(check_potion))
@@ -32,7 +35,8 @@
 		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/element/ridable/Detach(atom/movable/target)
-	target.can_buckle = initial(target.can_buckle)
+	target.buckle_lying = target::buckle_lying
+	target.can_buckle = target::can_buckle
 	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_MOB_STATCHANGE))
 	return ..()
 
