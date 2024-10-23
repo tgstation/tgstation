@@ -329,14 +329,20 @@
 /obj/machinery/big_manipulator/proc/finish_rotate_animation(backward)
 	animate(manipulator_hand, transform = matrix(180 * backward, MATRIX_ROTATE), working_speed*0.5)
 
-/obj/machinery/big_manipulator/proc/check_filter(obj/item/what_item)
-	var/filtered_obj = filter_obj?.resolve()
-	if(!istype(what_item, selected_type))
-		return
+/obj/machinery/big_manipulator/proc/check_filter(atom/movable/target)
+	if (target.anchored || HAS_TRAIT(target, TRAIT_NODROP))
+		return FALSE
+	if(!istype(target, selected_type))
+		return FALSE
 	/// We use filter only on items. closets, humans and etc don't need filter check.
-	if(istype(what_item, /obj/item))
-		if((filtered_obj && !istype(what_item, filtered_obj)))
-			return FALSE
+	if(!isitem(target))
+		return TRUE
+	var/obj/item/target_item = target
+	if (target_item.item_flags & (ABSTRACT|DROPDEL))
+		return FALSE
+	var/filtered_obj = filter_obj?.resolve()
+	if((filtered_obj && !istype(target_item, filtered_obj)))
+		return FALSE
 	return TRUE
 
 /// Proc called when we changing item interaction mode.
