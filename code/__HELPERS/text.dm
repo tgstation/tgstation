@@ -1213,7 +1213,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		if(WEIGHT_CLASS_NORMAL)
 			return "This item can fit into backpacks."
 		if(WEIGHT_CLASS_BULKY to WEIGHT_CLASS_GIGANTIC)
-			return "This item is too large to fit into any storage."
+			return "This item is too large to fit into any standard storage."
 	return ""
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
