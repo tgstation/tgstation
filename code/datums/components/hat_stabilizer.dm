@@ -103,7 +103,7 @@
 /datum/component/hat_stabilizer/proc/remove_hat(mob/user)
 	SIGNAL_HANDLER
 
-	if(!attached_hat)
+	if(QDELETED(attached_hat))
 		return
 
 	var/atom/movable/movable_parent = parent
