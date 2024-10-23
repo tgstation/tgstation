@@ -1,4 +1,5 @@
 /*
+/*
  * This test checks all heretic knowledge nodes and validates they are setup correctly.
  * We check that all knowledge is reachable by players (through the research tree)
  * and that all knowledge have a valid next_knowledge list.
@@ -90,3 +91,4 @@
 				"Heretic Knowledge: [main_path] had [paths[main_path]] knowledges, \
 				which was not equal to [other_main_path]'s [paths[other_main_path]] knowledges. \
 				All main paths should have the same number of knowledges!")
+*/

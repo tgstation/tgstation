@@ -38,7 +38,7 @@
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	route = PATH_ASH
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "ash_blade"
 
@@ -49,7 +49,7 @@
 		Their lantern, expired to ash - their watch, absent."
 
 	cost = 1
-	route = PATH_ASH
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_ash"
@@ -80,7 +80,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
 	cost = 1
-	route = PATH_ASH
+
 	depth = 4
 
 /datum/heretic_knowledge/mark/ash_mark
@@ -93,7 +93,7 @@
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
 
-	route = PATH_ASH
+
 	mark_type = /datum/status_effect/eldritch/ash
 
 /datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
@@ -109,7 +109,7 @@
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 
-	route = PATH_ASH
+
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
@@ -120,7 +120,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
-	route = PATH_ASH
+
 	depth = 7
 	research_tree_icon_frame = 7
 
@@ -140,7 +140,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
-	route = PATH_ASH
+
 	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
 	research_tree_icon_state = "mad_mask"
 	depth = 8
@@ -151,7 +151,7 @@
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 
-	route = PATH_ASH
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_ash"
 
@@ -172,7 +172,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
-	route = PATH_ASH
+
 	depth = 10
 	research_tree_icon_frame = 5
 
@@ -188,7 +188,7 @@
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
-	route = PATH_ASH
+
 	ascension_achievement = /datum/award/achievement/misc/ash_ascension
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(

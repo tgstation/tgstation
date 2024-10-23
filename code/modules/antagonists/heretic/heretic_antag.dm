@@ -819,11 +819,11 @@
  */
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
-	var/list/
+	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= knowledge.next_knowledge
-		banned_knowledge |= knowledge.banned_knowledge
+		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index]["next"]
+		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index]["banned"]
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge

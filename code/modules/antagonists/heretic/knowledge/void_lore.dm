@@ -37,7 +37,7 @@
 
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
-	route = PATH_VOID
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
 
@@ -60,7 +60,7 @@
 		They are quiet. This isn't the end of the mystery."
 
 	cost = 1
-	route = PATH_VOID
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_void"
@@ -89,7 +89,7 @@
 		Translucent and white, a depiction of a nobleman stood before me."
 
 	cost = 1
-	route = PATH_VOID
+
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
 	depth = 4
@@ -124,12 +124,12 @@
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
 
-	route = PATH_VOID
+
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
 
-	route = PATH_VOID
+
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
@@ -140,7 +140,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
-	route = PATH_VOID
+
 	depth = 7
 
 /datum/heretic_knowledge/spell/void_phase
@@ -152,7 +152,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
-	route = PATH_VOID
+
 	depth = 8
 	research_tree_icon_frame = 7
 
@@ -161,7 +161,7 @@
 	desc = "Your blade now freezes enemies. Additionally, you can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 
-	route = PATH_VOID
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_void"
 
@@ -191,7 +191,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
-	route = PATH_VOID
+
 	depth = 10
 	research_tree_icon_frame = 6
 
@@ -205,7 +205,7 @@
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
-	route = PATH_VOID
+
 	ascension_achievement = /datum/award/achievement/misc/void_ascension
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop

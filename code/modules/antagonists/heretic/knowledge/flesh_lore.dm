@@ -43,7 +43,7 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
-	route = PATH_FLESH
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
 
@@ -65,7 +65,7 @@
 
 	limit = 1
 	cost = 1
-	route = PATH_FLESH
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_flesh"
@@ -138,7 +138,7 @@
 	)
 	limit = 2
 	cost = 1
-	route = PATH_FLESH
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
@@ -215,12 +215,12 @@
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
 
-	route = PATH_FLESH
+
 	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
 
-	route = PATH_FLESH
+
 
 /datum/heretic_knowledge/spell/flesh_surgery
 	name = "Knitting of Flesh"
@@ -232,7 +232,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
-	route = PATH_FLESH
+
 	depth = 7
 
 /datum/heretic_knowledge/summon/raw_prophet
@@ -250,7 +250,7 @@
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
 	cost = 1
-	route = PATH_FLESH
+
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
 	depth = 8
 
@@ -260,7 +260,7 @@
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
 
-	route = PATH_FLESH
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
@@ -291,7 +291,7 @@
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/stalker
 	cost = 1
-	route = PATH_FLESH
+
 	poll_ignore_define = POLL_IGNORE_STALKER
 	depth = 10
 
@@ -309,7 +309,7 @@
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
-	route = PATH_FLESH
+
 	ascension_achievement = /datum/award/achievement/misc/flesh_ascension
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

@@ -37,7 +37,7 @@
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
-	route = PATH_COSMIC
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "cosmic_blade"
 
@@ -49,7 +49,7 @@
 		With newfound strength I could channel the nebula's power into myself."
 
 	cost = 1
-	route = PATH_COSMIC
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_cosmos"
@@ -78,7 +78,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
-	route = PATH_COSMIC
+
 	depth = 4
 
 /datum/heretic_knowledge/mark/cosmic_mark
@@ -90,12 +90,12 @@
 	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
 		I can help them, I have to help them."
 
-	route = PATH_COSMIC
+
 	mark_type = /datum/status_effect/eldritch/cosmic
 
 /datum/heretic_knowledge/knowledge_ritual/cosmic
 
-	route = PATH_COSMIC
+
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
@@ -108,7 +108,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
-	route = PATH_COSMIC
+
 	depth = 7
 
 /datum/heretic_knowledge/spell/star_blast
@@ -119,7 +119,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
-	route = PATH_COSMIC
+
 	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
@@ -132,7 +132,7 @@
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
 
-	route = PATH_COSMIC
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_cosmos"
 	/// Storage for the second target.
@@ -229,7 +229,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
-	route = PATH_COSMIC
+
 	depth = 10
 
 /datum/heretic_knowledge/ultimate/cosmic_final
@@ -247,7 +247,7 @@
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \
 		WITNESS MY ASCENSION!"
-	route = PATH_COSMIC
+
 	ascension_achievement = /datum/award/achievement/misc/cosmic_ascension
 	/// A static list of command we can use with our mob.
 	var/static/list/star_gazer_commands = list(

@@ -41,7 +41,7 @@
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
-	route = PATH_RUST
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "rust_blade"
 
@@ -53,7 +53,7 @@
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 
 	cost = 1
-	route = PATH_RUST
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_rust"
@@ -92,7 +92,7 @@
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 
 	cost = 1
-	route = PATH_RUST
+
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
 	research_tree_icon_state = "cloud_swirl"
 	depth = 4
@@ -110,7 +110,7 @@
 		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 
-	route = PATH_RUST
+
 	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -119,7 +119,7 @@
 
 /datum/heretic_knowledge/knowledge_ritual/rust
 
-	route = PATH_RUST
+
 
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
@@ -130,7 +130,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
-	route = PATH_RUST
+
 	depth = 7
 
 /datum/heretic_knowledge/spell/area_conversion
@@ -141,7 +141,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
-	route = PATH_RUST
+
 	depth = 8
 	research_tree_icon_frame = 5
 
@@ -155,7 +155,7 @@
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 
-	route = PATH_RUST
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
 
@@ -180,7 +180,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
-	route = PATH_RUST
+
 	depth = 10
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
@@ -197,7 +197,7 @@
 		and becoming immune to many effects and dangers \ You will be able to rust almost anything upon ascending."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
-	route = PATH_RUST
+
 	ascension_achievement = /datum/award/achievement/misc/rust_ascension
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE

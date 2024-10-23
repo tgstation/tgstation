@@ -12,7 +12,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
 	depth = 4
@@ -33,7 +33,7 @@
 	duration_modifier = 2
 	curse_color = "#f19a9a"
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_paralysis"
 	depth = 8
@@ -70,6 +70,6 @@
 		)
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
 	cost = 1
-	route = PATH_SIDE
+
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
 	depth = 10

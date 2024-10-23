@@ -35,6 +35,8 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+
+	var/is_starting_knowledge = FALSE
 	/// In case we want to override the default UI icon getter and plug in our own icon instead.
 	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
 	var/research_tree_icon_path
@@ -50,10 +52,10 @@
 	if(!mutually_exclusive)
 		return
 
-	for(var/knowledge_type in subtypesof(abstract_parent_type))
-		if(knowledge_type == type)
-			continue
-		banned_knowledge += knowledge_type
+	//for(var/knowledge_type in subtypesof(abstract_parent_type))
+	//	if(knowledge_type == type)
+	//		continue
+	//	banned_knowledge += knowledge_type
 
 /**
  * Called when the knowledge is first researched.
@@ -271,14 +273,6 @@
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	depth = 2
-
-/datum/heretic_knowledge/limited_amount/starting/New()
-	. = ..()
-	// Starting path also determines the final knowledge we're limited too
-	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/ultimate))
-		if(initial(final_knowledge_type.route) == route)
-			continue
-		banned_knowledge += final_knowledge_type
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

@@ -13,7 +13,7 @@
 	)
 	result_atoms = list(/obj/item/reagent_containers/cup/beaker/eldritch)
 	cost = 1
-	route = PATH_SIDE
+
 	depth = 4
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eldritch_flask"
@@ -27,7 +27,7 @@
 		/obj/item/trash = 1,
 	)
 	cost = 0
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
 	research_tree_icon_state = "corrode"
 	research_tree_icon_frame = 10
@@ -60,7 +60,7 @@
 	duration_modifier = 4
 	curse_color = "#c1ffc9"
 	cost = 1
-	route = PATH_SIDE
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "curse_corrosion"
 	depth = 8
@@ -91,7 +91,7 @@
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
-	route = PATH_SIDE
+
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 	depth = 8
 

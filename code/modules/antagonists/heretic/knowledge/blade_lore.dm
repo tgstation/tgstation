@@ -42,7 +42,7 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 4 // It's the blade path, it's a given
-	route = PATH_BLADE
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
 
@@ -53,7 +53,7 @@
 		and is championed by sword, steel and silver."
 
 	cost = 1
-	route = PATH_BLADE
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_blade"
@@ -87,7 +87,7 @@
 		Their general quickly appointed them as their personal Champion."
 
 	cost = 1
-	route = PATH_BLADE
+
 	depth = 4
 	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
 	research_tree_icon_state = "shatter"
@@ -180,7 +180,7 @@
 	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
 		He would slay the coward himself, and anyone who tried to run."
 
-	route = PATH_BLADE
+
 	mark_type = /datum/status_effect/eldritch/blade
 
 /datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
@@ -199,7 +199,7 @@
 
 /datum/heretic_knowledge/knowledge_ritual/blade
 
-	route = PATH_BLADE
+
 
 /datum/heretic_knowledge/spell/realignment
 	name = "Realignment"
@@ -210,7 +210,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
-	route = PATH_BLADE
+
 	depth = 7
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
@@ -225,7 +225,7 @@
 		He was without rival, equal, or purpose."
 
 	cost = 1
-	route = PATH_BLADE
+
 	depth = 8
 	research_tree_icon_path = 'icons/effects/blood.dmi'
 	research_tree_icon_state = "suitblood"
@@ -289,7 +289,7 @@
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 
-	route = PATH_BLADE
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
@@ -396,7 +396,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
-	route = PATH_BLADE
+
 	depth = 10
 
 /datum/heretic_knowledge/ultimate/blade_final
@@ -410,7 +410,7 @@
 		Your Sundered Blades deal bonus damage and heal you on attack for a portion of the damage dealt."
 	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
-	route = PATH_BLADE
+
 	ascension_achievement = /datum/award/achievement/misc/blade_ascension
 
 /datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)

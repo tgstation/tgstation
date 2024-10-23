@@ -38,7 +38,7 @@
 		/obj/item/stack/sheet/iron = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
-	route = PATH_MOON
+
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 
@@ -52,7 +52,7 @@
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
 
 	cost = 1
-	route = PATH_MOON
+
 	depth = 3
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_moon"
@@ -82,7 +82,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
-	route = PATH_MOON
+
 	depth = 4
 
 /datum/heretic_knowledge/mark/moon_mark
@@ -93,12 +93,12 @@
 		and in that dance the moon would smile upon us \
 		but when the night came its smile would dull forced to gaze on the earth."
 
-	route = PATH_MOON
+
 	mark_type = /datum/status_effect/eldritch/moon
 
 /datum/heretic_knowledge/knowledge_ritual/moon
 
-	route = PATH_MOON
+
 
 /datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"
@@ -108,7 +108,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
-	route = PATH_MOON
+
 	depth = 7
 
 
@@ -126,7 +126,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 1
-	route = PATH_MOON
+
 	depth = 8
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "moon_amulette"
@@ -137,7 +137,7 @@
 	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 
-	route = PATH_MOON
+
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_moon"
 
@@ -163,7 +163,7 @@
 
 	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
-	route = PATH_MOON
+
 	depth = 10
 	research_tree_icon_frame = 5
 
@@ -177,7 +177,7 @@
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
-	route = PATH_MOON
+
 	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
