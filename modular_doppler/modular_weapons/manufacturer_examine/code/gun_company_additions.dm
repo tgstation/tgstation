@@ -26,22 +26,22 @@
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/shotgun/riot/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/ballistic/shotgun/bulldog/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/ballistic/automatic/pistol/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/revolver/c38/detective/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/ballistic/shotgun/toy/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_DONK)
@@ -70,7 +70,7 @@
 	AddElement(/datum/element/manufacturer_examine, COMPANY_ALLSTAR)
 
 /obj/item/gun/energy/pulse/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/energy/laser/redtag/give_manufacturer_examine()
 	return
@@ -85,16 +85,16 @@
 	return
 
 /obj/item/gun/energy/laser/captain/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/energy/laser/retro/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_REMOVED)
 
 /obj/item/gun/energy/laser/retro/old/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/energy/e_gun/old/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
+	AddElement(/datum/element/manufacturer_examine, COMPANY_PORT_AUTHORITY)
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/give_manufacturer_examine()
 	return

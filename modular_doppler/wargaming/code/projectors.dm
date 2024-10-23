@@ -1,6 +1,6 @@
 /obj/item/wargame_projector
 	name = "holographic projector"
-	desc = "A handy-dandy holographic projector developed by Nanotrasen Naval Command for playing wargames with, this one seems broken."
+	desc = "A handy-dandy holographic projector developed by the Port Authority Naval Command for playing wargames with, this one seems broken."
 	icon = 'modular_doppler/wargaming/icons/projectors_and_holograms.dmi'
 	icon_state = "projector"
 	base_icon_state = "projector"
@@ -157,7 +157,7 @@
 
 /obj/item/wargame_projector/ships
 	name = "holographic unit projector"
-	desc = "A handy-dandy holographic projector developed by Nanotrasen Naval Command for playing wargames with, this one creates markers for 'units'."
+	desc = "A handy-dandy holographic projector developed by the Port Authority Naval Command for playing wargames with, this one creates markers for 'units'."
 	max_signs = 30
 	holosign_color = COLOR_BLUE_LIGHT
 	holosign_type = /obj/structure/wargame_hologram/ship_marker
@@ -181,7 +181,7 @@
 
 /obj/item/wargame_projector/terrain
 	name = "holographic terrain projector"
-	desc = "A handy-dandy holographic projector developed by Nanotrasen Naval Command for playing wargames with, this one creates markers for space 'terrain'."
+	desc = "A handy-dandy holographic projector developed by the Port Authority Naval Command for playing wargames with, this one creates markers for space 'terrain'."
 	max_signs = 30
 	holosign_color = COLOR_GRAY
 	holosign_type = /obj/structure/wargame_hologram/asteroid

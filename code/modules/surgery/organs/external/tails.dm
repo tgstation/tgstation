@@ -9,6 +9,7 @@
 
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
+	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER) // DOPPLER EDIT ADDITION
 
 	// defaults to cat, but the parent type shouldn't be created regardless
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
