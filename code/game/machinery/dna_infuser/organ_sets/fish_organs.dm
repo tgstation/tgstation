@@ -224,7 +224,7 @@
 
 	safe_oxygen_min = 0 //We don't breathe this
 	///The required partial pressure of water_vapor for not suffocating.
-	var/safe_water_level = parent_type::safe_oxygen_min
+//	var/safe_water_level = parent_type::safe_oxygen_min // DOPPLER EDIT REMOVAL - moved to parent type
 
 	/// Bodypart overlay applied to the chest where the lungs are in
 	var/datum/bodypart_overlay/simple/gills/gills
@@ -240,7 +240,7 @@
 		gills = new()
 		AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 	AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
-	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean"))
+//	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) // DOPPLER EDIT REMOVAL - really funny i wish we could keep this
 
 /obj/item/organ/internal/lungs/fish/Destroy()
 	QDEL_NULL(gills)
@@ -261,7 +261,7 @@
 	owner.clear_alert(ALERT_NOT_ENOUGH_WATER)
 
 /// Requires the spaceman to have either water vapor or be wet.
-/obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
+/obj/item/organ/internal/lungs/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp) // DOPPLER EDIT, old code: /obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
 	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
@@ -278,7 +278,7 @@
 		breather.adjustOxyLoss(-5)
 
 /// Called when there isn't enough water to breath
-/obj/item/organ/internal/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
+/obj/item/organ/internal/lungs/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp) // DOPPLER EDIT, old code: /obj/item/organ/internal/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
 	breather.throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
 	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
 	if(water_pp)

@@ -22,7 +22,6 @@
 	preview_outfit = /datum/outfit/ramatan_preview
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_TACKLING_TAILED_DEFENDER,
 		TRAIT_EXPERT_FISHER,
 		TRAIT_BEAST_EMPATHY,
 		TRAIT_MUTE,

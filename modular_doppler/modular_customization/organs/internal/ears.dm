@@ -91,6 +91,7 @@
 /obj/item/organ/internal/ears/bug
 	preference = "feature_bug_ears"
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ears/bug_ears
+	organ_traits = list(TRAIT_ANTENNAE)
 
 /datum/bodypart_overlay/mutant/ears/bug_ears/get_global_feature_list()
 	return SSaccessories.ears_list_bug
