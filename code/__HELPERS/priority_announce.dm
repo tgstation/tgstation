@@ -189,8 +189,7 @@
 	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/announcer/notice/notice2.ogg'
 
 	for(var/mob/target in players)
-///BEGIN DOPPLER EDIT - VOLUME MIXER
-		var/volume_modifier = (target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements))
+		var/volume_modifier = (target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements)) //DOPPLER EDIT ADDITION
 		if(isnewplayer(target) || !target.can_hear())
 			continue
 
@@ -198,11 +197,8 @@
 		if(!should_play_sound)
 			continue
 
-///		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-///			SEND_SOUND(target, sound(sound_to_play))
-		if(target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements))
-			SEND_SOUND(target, sound(sound_to_play, volume = volume_modifier))
-///END DOPPLER EDIT
+		if(target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements)) //DOPPLER EDIT CHANGE - Original: if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			SEND_SOUND(target, sound(sound_to_play, volume = volume_modifier)) //DOPPLER EDIT CHANGE - Original: SEND_SOUND(target, sound(sound_to_play))
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT
