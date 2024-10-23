@@ -52,17 +52,21 @@
 	var/base_false_beep = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
-
+	/// Overlay object we're using for scanlines
+	var/obj/effect/overlay/scanline = null
 
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/scanner_gate(src))
-	set_scanline("passive")
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
+
+/obj/machinery/scanner_gate/post_machine_initialize()
+	. = ..()
+	set_scanline("passive")
 
 /obj/machinery/scanner_gate/RefreshParts()
 	. = ..()
@@ -104,12 +108,31 @@
 	if(!(machine_stat & (BROKEN|NOPOWER)) && anchored && !panel_open)
 		perform_scan(thing)
 
-/obj/machinery/scanner_gate/proc/set_scanline(type, duration)
-	cut_overlays()
+/obj/machinery/scanner_gate/proc/set_scanline(scanline_type, duration)
+	if (!isnull(scanline))
+		vis_contents -= scanline
+	else
+		scanline = new(src)
 	deltimer(scanline_timer)
-	add_overlay(type)
+	if (isnull(scanline_type))
+		if(duration)
+			scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
+		return
+	scanline.icon = icon
+	scanline.icon_state = scanline_type
+	scanline.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	scanline.layer = layer
+
+	vis_contents += scanline
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
+
+/obj/machinery/scanner_gate/power_change()
+	. = ..()
+	if (machine_stat & (NOPOWER | BROKEN))
+		set_scanline(null)
+		return
+	set_scanline("passive")
 
 /obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/inspector))
