@@ -70674,6 +70674,7 @@
 /obj/item/multitool{
 	pixel_x = 3
 	},
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "utA" = (
