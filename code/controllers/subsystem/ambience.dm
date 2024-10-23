@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(ambience)
 /mob/proc/refresh_looping_ambience()
 	SIGNAL_HANDLER
 
-	if(!client) // If a tree falls in the woods.
+	if(!client || isobserver(client.mob)) // If a tree falls in the woods. sadboysuss: Don't refresh for ghosts, it sounds bad
 		return
 
 	var/area/my_area = get_area(src)
