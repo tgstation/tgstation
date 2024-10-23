@@ -95,7 +95,7 @@
 				egg_power.charges++
 				egg_power.build_all_button_icons()
 				owner.visible_message(
-					span_danger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
+					span_userdanger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 				)
 			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
