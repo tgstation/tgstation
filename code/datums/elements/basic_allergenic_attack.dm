@@ -20,10 +20,12 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_HOSTILE_POST_ATTACKINGTARGET)
 
-/datum/element/basic_allergenic_attack/proc/trigger_allergy(datum/source, mob/living/target, result)
+/datum/element/basic_allergenic_attack/proc/trigger_allergy(mob/living/source, mob/living/target, result)
 	SIGNAL_HANDLER
 
 	if(result <= 0 || !istype(target))
+		return
+	if(!target.can_inject(source))
 		return
 
 	target.check_allergic_reaction(allergen, allergen_chance)
