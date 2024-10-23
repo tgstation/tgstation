@@ -1,7 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - spellcheck: "Fish fry tastes like \"pan-seared vegetables\" instead of \"pan seared vegtables\"."
-  - spellcheck: "Fish liver is now \"permeated\" by the smell of \"putrefied\" fish, instead of \"parmated\" and \"putrified\"."
-  - spellcheck: "Salmon fillet description is now capitalized."
-  - spellcheck: "Carp sashimi mentions \"surviving an attack\" instead of \"surviving attack\"."

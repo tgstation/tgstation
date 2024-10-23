@@ -636,3 +636,24 @@
   carlarctg:
   - spellcheck: Grammar fixes for produce-based armaments
   - spellcheck: bo staves are very punny
+2024-10-23:
+  00-Steven:
+  - spellcheck: Fish fry tastes like "pan-seared vegetables" instead of "pan seared
+      vegtables".
+  - spellcheck: Fish liver is now "permeated" by the smell of "putrefied" fish, instead
+      of "parmated" and "putrified".
+  - spellcheck: Salmon fillet description is now capitalized.
+  - spellcheck: Carp sashimi mentions "surviving an attack" instead of "surviving
+      attack".
+  Hatterhat:
+  - qol: 'Nanotrasen employees have been given a quick primer on how specialized fauna
+      organs (brimdust sacs, rush glands, regenerative cores) look in varying states
+      of decay corresponding to lifespan (read: you can now examine monster organs
+      to get a vague idea of how long they have left before decaying and becoming
+      useless).'
+  Iamgoofball:
+  - spellcheck: Adjusts the No ERP poster description to be more subtle and reference
+      the lore.
+  Sealed101:
+  - spellcheck: fixed donk-rolls and meat pockets having illegal coderspeak in their
+      name
