@@ -27,14 +27,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/here_for_your_safety, 32)
 
-/* DOPPLER EDIT REMOVAL - NT -> PA
 /obj/structure/sign/poster/official/nanotrasen_logo
 	name = "\improper Nanotrasen logo"
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "nanotrasen_logo"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/nanotrasen_logo, 32)
-*/
 
 /obj/structure/sign/poster/official/cleanliness
 	name = "Cleanliness"

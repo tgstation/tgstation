@@ -1,3 +1,8 @@
+/obj/structure/sign/poster/official/nanotrasen_logo/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		qdel(src) // >:)
+
 /obj/structure/sign/poster/official
 	poster_item_desc = "An official Port Authority-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
 
