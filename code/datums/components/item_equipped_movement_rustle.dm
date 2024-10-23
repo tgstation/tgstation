@@ -40,16 +40,16 @@
 		sound_falloff_distance = falloff_distance
 
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
 	var/obj/item/our_item = parent
 	if(!(slot & our_item.slot_flags))
 		return
-	SIGNAL_HANDLER
-	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
+	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step))
 
-/datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/equipper, slot)
+/datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/dropped)
 	SIGNAL_HANDLER
 	move_counter = 0
-	UnregisterSignal(equipper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(dropped, COMSIG_MOVABLE_MOVED)
 
 /datum/component/item_equipped_movement_rustle/proc/try_step(mob/source)
 	SIGNAL_HANDLER
