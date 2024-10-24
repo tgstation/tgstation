@@ -244,10 +244,6 @@
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
 		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/fire.dmi', "overcharged")
-		if(!(smoothing_junction & NORTH))
-			var/mutable_appearance/frill = mutable_appearance('icons/effects/fire.dmi', "overcharged_frill")
-			frill.pixel_z = 32
-			lightning_overlay.add_overlay(frill)
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
@@ -386,8 +382,6 @@
 	///the range for the sound to drop off based on the size of the group
 	var/drop_off_dist
 	COOLDOWN_DECLARE(update_sound_center)
-	//use to prevent hot group from expanding outside a room, a group spandin multiple rooms may have issue when they are cutoff and rebuilding groups like zas is too expensive
-	//var/list/turf/open/our_airtight_room = list()
 
 
 /datum/hot_group/Destroy()
