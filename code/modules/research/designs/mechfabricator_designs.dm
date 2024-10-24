@@ -1651,6 +1651,21 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
 
+/datum/design/borg_upgrade_botany
+	name = "Botany Tools"
+	id = "borg_upgrade_botany"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/botany_upgrade
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT, // because like.. plants are green :D
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT*2
+	)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
 /datum/design/borg_upgrade_drink_apparatus
 	name = "Drink Apparatus"
 	id = "borg_upgrade_drink_apparatus"
