@@ -29,19 +29,35 @@
  *
  * Rustbringer's Oath
  */
+/datum/heretic_knowledge_tree_column/main/rust
+	id = HKT_UUID_RUST
+	neighbour_id_0 = HKT_UUID_BLADE_TO_RUST
+	neighbour_id_1 = HKT_UUID_RUST_TO_COSMIC
+
+	route = PATH_RUST
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_rust
+	grasp = 				/datum/heretic_knowledge/rust_fist
+	tier1 = 				/datum/heretic_knowledge/rust_regen
+	mark = 					/datum/heretic_knowledge/mark/rust_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/rust
+	unique_ability = 		/datum/heretic_knowledge/spell/rust_construction
+	tier2 = 				/datum/heretic_knowledge/spell/area_conversion
+	blade = 				/datum/heretic_knowledge/blade_upgrade/rust
+	tier3 =					/datum/heretic_knowledge/spell/entropic_plume
+	ascension =				/datum/heretic_knowledge/ultimate/rust_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. \
 		Allows you to transmute a knife with any trash item into a Rusty Blade. \
 		You can only create two at a time."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "rust_blade"
 
@@ -51,10 +67,7 @@
 		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click. \
 		Allows you to rust basic iron walls and floors."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
-
 	cost = 1
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_rust"
 
@@ -119,8 +132,6 @@
 
 /datum/heretic_knowledge/knowledge_ritual/rust
 
-
-
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
 	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
@@ -130,8 +141,6 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"

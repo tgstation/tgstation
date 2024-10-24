@@ -30,20 +30,36 @@
  *
  * Priest's Final Hymn
  */
+/datum/heretic_knowledge_tree_column/main/flesh
+	id = HKT_UUID_FLESH
+	neighbour_id_0 = HKT_UUID_LOCK_TO_FLESH
+	neighbour_id_1 = HKT_UUID_FLESH_TO_VOID
+
+	route = PATH_FLESH
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_flesh
+	grasp = 				/datum/heretic_knowledge/limited_amount/flesh_grasp
+	tier1 = 				/datum/heretic_knowledge/limited_amount/flesh_ghoul
+	mark = 					/datum/heretic_knowledge/mark/flesh_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/flesh
+	unique_ability = 		/datum/heretic_knowledge/spell/flesh_surgery
+	tier2 = 				/datum/heretic_knowledge/summon/raw_prophet
+	blade = 				/datum/heretic_knowledge/blade_upgrade/flesh
+	tier3 =					/datum/heretic_knowledge/summon/stalker
+	ascension =				/datum/heretic_knowledge/ultimate/flesh_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. \
 		Allows you to transmute a knife and a pool of blood into a Bloody Blade. \
 		You can only create three at a time."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "flesh_blade"
 
@@ -131,14 +147,12 @@
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
 		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
-
 	required_atoms = list(
 		/mob/living/carbon/human = 1,
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
 	cost = 1
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
@@ -220,8 +234,6 @@
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
 
-
-
 /datum/heretic_knowledge/spell/flesh_surgery
 	name = "Knitting of Flesh"
 	desc = "Grants you the spell Knit Flesh. This spell allows you to remove organs from victims \
@@ -229,11 +241,8 @@
 		This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status."
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
-
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
-
-
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -242,7 +251,6 @@
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
-
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/effect/decal/cleanable/blood = 1,
@@ -250,7 +258,6 @@
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
 	cost = 1
-
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
 
 
@@ -259,8 +266,6 @@
 	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
@@ -309,7 +314,6 @@
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
-
 	ascension_achievement = /datum/award/achievement/misc/flesh_ascension
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

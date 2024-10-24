@@ -1,3 +1,14 @@
+/datum/heretic_knowledge_tree_column/flesh_to_void
+	id = HKT_UUID_FLESH_TO_VOID
+	neighbour_id_0 = HKT_UUID_FLESH
+	neighbour_id_1 = HKT_UUID_VOID
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/void_cloak
+	tier2 = /datum/heretic_knowledge/spell/blood_siphon
+	tier3 = /datum/heretic_knowledge/spell/void_prison
+
 // Sidepaths for knowledge between Flesh and Void.
 
 /datum/heretic_knowledge/void_cloak
@@ -19,7 +30,6 @@
 	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
 	research_tree_icon_state = "void_cloak"
 
-
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
 	desc = "Grants you Blood Siphon, a spell that drains a victim of blood and health, transferring it to you. \
@@ -28,8 +38,6 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/void_prison
 	name = "Void Prison"
@@ -42,8 +50,6 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"

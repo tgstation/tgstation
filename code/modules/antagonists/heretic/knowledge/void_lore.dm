@@ -27,6 +27,24 @@
  *
  * Waltz at the End of Time
  */
+/datum/heretic_knowledge_tree_column/main/void
+	id = HKT_UUID_VOID
+	neighbour_id_0 = HKT_UUID_FLESH_TO_VOID
+	neighbour_id_1 = HKT_UUID_VOID_TO_BLADE
+
+	route = PATH_VOID
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_void
+	grasp = 				/datum/heretic_knowledge/void_grasp
+	tier1 = 				/datum/heretic_knowledge/cold_snap
+	mark = 					/datum/heretic_knowledge/mark/void_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/void
+	unique_ability = 		/datum/heretic_knowledge/spell/void_conduit
+	tier2 = 				/datum/heretic_knowledge/spell/void_phase
+	blade = 				/datum/heretic_knowledge/blade_upgrade/void
+	tier3 =					/datum/heretic_knowledge/spell/void_pull
+	ascension =				/datum/heretic_knowledge/ultimate/void_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the Path of Void to you. \
@@ -34,10 +52,8 @@
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existence. Something's watching me."
-
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "void_blade"
 
@@ -58,10 +74,7 @@
 	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
 	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
 		They are quiet. This isn't the end of the mystery."
-
 	cost = 1
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_void"
 
@@ -87,9 +100,7 @@
 		You can still take damage due to a lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
-
 	cost = 1
-
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
 
@@ -123,13 +134,9 @@
 		When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
-
-
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
-
-
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"
@@ -137,11 +144,8 @@
 	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
 		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
 		The doors won't close. I can't keep the cold out now."
-
 	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -149,11 +153,8 @@
 		Additionally causes damage to heathens around your original and target destination."
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
-
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
-
-
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/blade_upgrade/void

@@ -25,19 +25,35 @@
  *
  * Creators's Gift
  */
+/datum/heretic_knowledge_tree_column/main/cosmic
+	id = HKT_UUID_COSMIC
+	neighbour_id_0 = HKT_UUID_RUST_TO_COSMIC
+	neighbour_id_1 = HKT_UUID_COSMIC_TO_ASH
+
+	route = PATH_COSMIC
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_cosmic
+	grasp = 				/datum/heretic_knowledge/cosmic_grasp
+	tier1 = 				/datum/heretic_knowledge/spell/cosmic_runes
+	mark = 					/datum/heretic_knowledge/mark/cosmic_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/cosmic
+	unique_ability = 		/datum/heretic_knowledge/spell/star_touch
+	tier2 = 				/datum/heretic_knowledge/spell/star_blast
+	blade = 				/datum/heretic_knowledge/blade_upgrade/cosmic
+	tier3 =	 				/datum/heretic_knowledge/spell/cosmic_expansion
+	ascension =				/datum/heretic_knowledge/ultimate/cosmic_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"
 	desc = "Opens up the Path of Cosmos to you. \
 		Allows you to transmute a sheet of plasma and a knife into an Cosmic Blade. \
 		You can only create two at a time."
 	gain_text = "A nebula appeared in the sky, its infernal birth shone upon me. This was the start of a great transcendence."
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "cosmic_blade"
 
@@ -47,9 +63,7 @@
 		People with a star mark can not pass cosmic fields."
 	gain_text = "Some stars dimmed, others' magnitude increased. \
 		With newfound strength I could channel the nebula's power into myself."
-
 	cost = 1
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_cosmos"
 
@@ -74,7 +88,6 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
-
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
 
@@ -87,13 +100,9 @@
 		They will then be paralyzed for 2 seconds."
 	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
 		I can help them, I have to help them."
-
-
 	mark_type = /datum/status_effect/eldritch/cosmic
 
 /datum/heretic_knowledge/knowledge_ritual/cosmic
-
-
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
@@ -103,22 +112,16 @@
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
-
 	spell_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
-
-
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
 		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 1
-
-
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -129,8 +132,6 @@
 		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_cosmos"
 	/// Storage for the second target.
@@ -224,11 +225,8 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
-
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
-
-
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"

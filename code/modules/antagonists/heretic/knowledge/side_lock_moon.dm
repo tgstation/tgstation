@@ -1,4 +1,23 @@
+/datum/heretic_knowledge_tree_column/moon_to_lock
+	id = HKT_UUID_MOON_TO_LOCK
+	neighbour_id_0 = HKT_UUID_MOON
+	neighbour_id_1 = HKT_UUID_LOCK
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/spell/mind_gate
+	tier2 = list(/datum/heretic_knowledge/unfathomable_curio,/datum/heretic_knowledge/painting)
+	tier3 = /datum/heretic_knowledge/dummy_moon_to_lock
+
 // Sidepaths for knowledge between Knock and Moon.
+
+/datum/heretic_knowledge/dummy_moon_to_lock
+	name = "Lock and Moon ways"
+	desc = "Research this to gain access to the other path"
+	gain_text = "The powers of Madness are like a wound in one's soul, and every wound can be opened and closed."
+	cost = 1
+
+
 
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
@@ -9,8 +28,6 @@
 
 	spell_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 1
-
-
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"

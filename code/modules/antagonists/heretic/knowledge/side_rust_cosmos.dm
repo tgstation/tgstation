@@ -1,3 +1,15 @@
+/datum/heretic_knowledge_tree_column/rust_to_cosmic
+	id = HKT_UUID_RUST_TO_COSMIC
+	neighbour_id_0 = HKT_UUID_RUST
+	neighbour_id_1 = HKT_UUID_COSMIC
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/essence
+	tier2 = list(/datum/heretic_knowledge/curse/corrosion,/datum/heretic_knowledge/entropy_pulse)
+	tier3 = /datum/heretic_knowledge/summon/rusty
+
+
 // Sidepaths for knowledge between Rust and Cosmos.
 
 /datum/heretic_knowledge/essence

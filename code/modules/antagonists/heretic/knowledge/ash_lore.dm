@@ -26,19 +26,36 @@
  *
  * Ashlord's Rite
  */
+
+/datum/heretic_knowledge_tree_column/main/ash
+	id = HKT_UUID_ASH
+	neighbour_id_0 = HKT_UUID_COSMIC_TO_ASH
+	neighbour_id_1 = HKT_UUID_ASH_TO_MOON
+
+	route = PATH_ASH
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_ash
+	grasp = 				/datum/heretic_knowledge/ashen_grasp
+	tier1 = 				/datum/heretic_knowledge/spell/ash_passage
+	mark = 					/datum/heretic_knowledge/mark/ash_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/ash
+	unique_ability = 		/datum/heretic_knowledge/spell/fire_blast
+	tier2 = 				/datum/heretic_knowledge/mad_mask
+	blade = 				/datum/heretic_knowledge/blade_upgrade/ash
+	tier3 =					/datum/heretic_knowledge/spell/flame_birth
+	ascension =				/datum/heretic_knowledge/ultimate/ash_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
 	desc = "Opens up the Path of Ash to you. \
 		Allows you to transmute a match and a knife into an Ashen Blade. \
 		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "ash_blade"
 
@@ -47,9 +64,7 @@
 	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
 		Their lantern, expired to ash - their watch, absent."
-
 	cost = 1
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_ash"
 
@@ -90,8 +105,6 @@
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
-
-
 	mark_type = /datum/status_effect/eldritch/ash
 
 /datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
@@ -115,10 +128,8 @@
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-
 	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
-
 	research_tree_icon_frame = 7
 
 
@@ -128,7 +139,6 @@
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
-
 	required_atoms = list(
 		/obj/item/organ/internal/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
@@ -137,7 +147,6 @@
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
-
 	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
 	research_tree_icon_state = "mad_mask"
 
@@ -165,10 +174,8 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
-
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/ultimate/ash_final

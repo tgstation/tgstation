@@ -26,19 +26,35 @@
  *
  * Last Act
  */
+/datum/heretic_knowledge_tree_column/main/moon
+	id = HKT_UUID_MOON
+	neighbour_id_0 = HKT_UUID_ASH_TO_MOON
+	neighbour_id_1 = HKT_UUID_MOON_TO_LOCK
+
+	route = PATH_MOON
+
+	start = 				/datum/heretic_knowledge/limited_amount/starting/base_moon
+	grasp = 				/datum/heretic_knowledge/moon_grasp
+	tier1 = 				/datum/heretic_knowledge/spell/moon_smile
+	mark = 					/datum/heretic_knowledge/mark/moon_mark
+	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/moon
+	unique_ability = 		/datum/heretic_knowledge/spell/moon_parade
+	tier2 = 				/datum/heretic_knowledge/moon_amulet
+	blade = 				/datum/heretic_knowledge/blade_upgrade/moon
+	tier3 =					/datum/heretic_knowledge/spell/moon_ringleader
+	ascension =				/datum/heretic_knowledge/ultimate/moon_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
 	desc = "Opens up the Path of Moon to you. \
 		Allows you to transmute 2 sheets of iron and a knife into an Lunar Blade. \
 		You can only create two at a time."
 	gain_text = "Under the light of the moon the laughter echoes."
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/stack/sheet/iron = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
-
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "moon_blade"
 
@@ -50,10 +66,7 @@
 	desc = "Your Mansus Grasp will cause your victims to hallucinate everyone as lunar mass, \
 		and hides your identity for a short duration."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
-
 	cost = 1
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "grasp_moon"
 
@@ -83,8 +96,6 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 
-
-
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
 	desc = "Your Mansus Grasp now applies the Mark of Moon, pacifying the victim until attacked. \
@@ -92,25 +103,17 @@
 	gain_text = "The troupe on the moon would dance all day long \
 		and in that dance the moon would smile upon us \
 		but when the night came its smile would dull forced to gaze on the earth."
-
-
 	mark_type = /datum/status_effect/eldritch/moon
 
 /datum/heretic_knowledge/knowledge_ritual/moon
-
-
 
 /datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
-
-
-
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"

@@ -1,3 +1,14 @@
+/datum/heretic_knowledge_tree_column/ash_to_moon
+	id = HKT_UUID_ASH_TO_MOON
+	neighbour_id_0 = HKT_UUID_ASH
+	neighbour_id_1 = HKT_UUID_MOON
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/medallion
+	tier2 = /datum/heretic_knowledge/curse/paralysis
+	tier3 = /datum/heretic_knowledge/summon/ashy
+
 // Sidepaths for knowledge between Ash and Flesh.
 /datum/heretic_knowledge/medallion
 	name = "Ashen Eyes"

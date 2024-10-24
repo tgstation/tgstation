@@ -822,8 +822,8 @@
 	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index]["next"]
-		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index]["banned"]
+		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_NEXT]
+		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_BAN]
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge

@@ -1,3 +1,15 @@
+/datum/heretic_knowledge_tree_column/cosmic_to_ash
+	id = HKT_UUID_COSMIC_TO_ASH
+	neighbour_id_0 = HKT_UUID_COSMIC
+	neighbour_id_1 = HKT_UUID_ASH
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/summon/fire_shark
+	tier2 = /datum/heretic_knowledge/spell/space_phase
+	tier3 = /datum/heretic_knowledge/eldritch_coin
+
+
 // Sidepaths for knowledge between Cosmos and Ash.
 
 /datum/heretic_knowledge/summon/fire_shark

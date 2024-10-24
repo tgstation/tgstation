@@ -1,3 +1,14 @@
+/datum/heretic_knowledge_tree_column/blade_to_rust
+	id = HKT_UUID_BLADE_TO_RUST
+	neighbour_id_0 = HKT_UUID_BLADE
+	neighbour_id_1 = HKT_UUID_RUST
+
+	route = PATH_SIDE
+
+	tier1 = /datum/heretic_knowledge/armor
+	tier2 = list(/datum/heretic_knowledge/crucible,/datum/heretic_knowledge/rifle)
+	tier3 = /datum/heretic_knowledge/spell/rust_charge
+
 // Sidepaths for knowledge between Rust and Blade.
 /datum/heretic_knowledge/armor
 	name = "Armorer's Ritual"

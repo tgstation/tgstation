@@ -17,9 +17,6 @@
 	var/gain_text
 	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
 	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
-	/// If TRUE, populates the banned_knowledge list of every other subtype of this knowledge's abstract_parent_type
-	var/mutually_exclusive = FALSE
-	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
@@ -44,17 +41,7 @@
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
-/datum/heretic_knowledge/New()
-	if(!mutually_exclusive)
-		return
-
-	//for(var/knowledge_type in subtypesof(abstract_parent_type))
-	//	if(knowledge_type == type)
-	//		continue
-	//	banned_knowledge += knowledge_type
-
-/**
- * Called when the knowledge is first researched.
+/* Called when the knowledge is first researched.
  * This is only ever called once per heretic.
  *
  * Arguments
@@ -264,7 +251,6 @@
  */
 /datum/heretic_knowledge/limited_amount/starting
 	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
-	mutually_exclusive = TRUE
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
@@ -282,7 +268,6 @@
  */
 /datum/heretic_knowledge/mark
 	abstract_parent_type = /datum/heretic_knowledge/mark
-	mutually_exclusive = TRUE
 	cost = 2
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
@@ -349,7 +334,6 @@
  */
 /datum/heretic_knowledge/blade_upgrade
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
-	mutually_exclusive = TRUE
 	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -587,7 +571,6 @@
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	abstract_parent_type = /datum/heretic_knowledge/knowledge_ritual
-	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -679,7 +662,6 @@
  */
 /datum/heretic_knowledge/ultimate
 	abstract_parent_type = /datum/heretic_knowledge/ultimate
-	mutually_exclusive = TRUE // I guess, but it doesn't really matter by this point
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
