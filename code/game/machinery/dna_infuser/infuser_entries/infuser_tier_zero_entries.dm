@@ -69,6 +69,30 @@
 	infusion_desc = "fluffy"
 	tier = DNA_MUTANT_TIER_ZERO
 
+/datum/infuser_entry/lizard
+	name = "Lizard"
+	infuse_mob_name = "lacertilia"
+	desc = "Turns out infusing most humanoids with lizard DNA creates features remarkably similar to those of lizardpeople. What a strange coincidence."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"long tails",
+		"decorative horns",
+		"aesthetic snouts",
+		"not much honestly",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/lizard,
+	)
+	output_organs = list(
+		/obj/item/organ/external/horns,
+		/obj/item/organ/external/frills,
+		/obj/item/organ/external/snout,
+		/obj/item/organ/external/tail/lizard,
+		/obj/item/organ/internal/tongue/lizard,
+	)
+	infusion_desc = "scaly"
+	tier = DNA_MUTANT_TIER_ZERO
+
 /datum/infuser_entry/felinid
 	name = "Cat"
 	infuse_mob_name = "feline"

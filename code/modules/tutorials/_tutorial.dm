@@ -135,11 +135,11 @@
 	var/list/origin_offsets = screen_loc_to_offset(initial_screen_loc, view)
 
 	// A little offset to the right
-	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - world.icon_size * 0.5, origin_offsets[2] - world.icon_size * 1.5)
+	var/matrix/origin_transform = TRANSLATE_MATRIX(origin_offsets[1] - ICON_SIZE_X * 0.5, origin_offsets[2] - ICON_SIZE_Y * 1.5)
 
 	var/list/target_offsets = screen_loc_to_offset(target_screen_loc, view)
 	// `- world.icon_Size * 0.5` to patch over a likely bug in screen_loc_to_offset with CENTER, needs more looking at
-	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - world.icon_size * 1.5, target_offsets[2] - world.icon_size)
+	var/matrix/animate_to_transform = TRANSLATE_MATRIX(target_offsets[1] - ICON_SIZE_X * 1.5, target_offsets[2] - ICON_SIZE_Y)
 
 	preview.transform = origin_transform
 

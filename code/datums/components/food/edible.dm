@@ -98,6 +98,9 @@ Behavior that's still missing from this component that original food items had t
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
@@ -113,6 +116,9 @@ Behavior that's still missing from this component that original food items had t
 	))
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+	if(foodtypes & GORE)
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
@@ -137,6 +143,9 @@ Behavior that's still missing from this component that original food items had t
 		foodtypes = old_comp.foodtypes
 		tastes = old_comp.tastes
 		eatverbs = old_comp.eatverbs
+
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 	// only edit if we're OG
 	if(!i_am_original)
@@ -599,8 +608,12 @@ Behavior that's still missing from this component that original food items had t
 	return food.crafting_complexity + complexity_to_add
 
 /// Get food quality adjusted according to eater's preferences
-/datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
+/datum/component/edible/proc/get_perceived_food_quality(mob/living/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
@@ -712,7 +725,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
+		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN

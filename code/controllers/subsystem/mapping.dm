@@ -6,15 +6,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/config
-	var/datum/map_config/next_map_config
-
-	/// Has the map for the next round been voted for already?
-	var/map_voted = FALSE
-	/// Has the map for the next round been deliberately chosen by an admin?
-	var/map_force_chosen = FALSE
-	/// Has the map vote been rocked?
-	var/map_vote_rocked = FALSE
+	/// The current map config the server loaded at round start.
+	var/datum/map_config/current_map
 
 	var/list/map_templates = list()
 
@@ -95,20 +88,20 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
-	config = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
+	current_map = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
 #else
-	config = load_map_config(error_if_missing = FALSE)
+	current_map = load_map_config(error_if_missing = FALSE)
 #endif
 
 /datum/controller/subsystem/mapping/Initialize()
 	if(initialized)
 		return SS_INIT_SUCCESS
-	if(config.defaulted)
-		var/old_config = config
-		config = global.config.defaultmap
-		if(!config || config.defaulted)
-			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to MetaStation."))
-			config = old_config
+	if(current_map.defaulted)
+		var/datum/map_config/old_config = current_map
+		current_map = config.defaultmap
+		if(!current_map || current_map.defaulted)
+			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
+			current_map = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
 	plane_to_offset = list()
@@ -132,11 +125,11 @@ SUBSYSTEM_DEF(mapping)
 
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
-	while (space_levels_so_far < config.space_ruin_levels)
+	while (space_levels_so_far < current_map.space_ruin_levels)
 		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
 	// Create empty space levels
-	while (space_levels_so_far < config.space_empty_levels + config.space_ruin_levels)
+	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
 
@@ -144,7 +137,7 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
-	else if (SSmapping.config.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
 		load_all_away_missions()
 
 	loading_ruins = TRUE
@@ -363,9 +356,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	holodeck_templates = SSmapping.holodeck_templates
 	areas_in_z = SSmapping.areas_in_z
 
-	config = SSmapping.config
-	next_map_config = SSmapping.next_map_config
-
+	current_map = SSmapping.current_map
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
 
 	z_list = SSmapping.z_list
@@ -395,13 +386,23 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if (!length(traits))  // null or empty - default
 		for (var/i in 1 to total_z)
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
 	else if (total_z != traits.len)  // mismatch
 		INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [total_z] z-levels in [path]!")
 		if (total_z < traits.len)  // ignore extra traits
 			traits.Cut(total_z + 1)
 		while (total_z > traits.len)  // fall back to defaults on extra levels
-			traits += list(default_traits)
+			traits += list(default_traits.Copy())
+
+	if(total_z > 1) // it's a multi z map
+		for(var/z in 1 to total_z)
+			if(z == 1) // bottom z-level
+				traits[z]["Up"] = TRUE
+			else if(z == total_z) // top z-level
+				traits[z]["Down"] = TRUE
+			else
+				traits[z]["Down"] = TRUE
+				traits[z]["Up"] = TRUE
 
 	// preload the relevant space_level datums
 	var/start_z = world.maxz + 1
@@ -431,22 +432,22 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	// load the station
 	station_start = world.maxz + 1
-	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	INIT_ANNOUNCE("Loading [current_map.map_name]...")
+	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION)
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
-		"}, list("map_name" = config.map_name, "round_id" = GLOB.round_id))
+		"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
 
-	if(config.minetype == "lavaland")
+	if(current_map.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(config.minetype) && config.minetype != "none")
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
+		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 
 	if(LAZYLEN(FailedZs)) //but seriously, unless the server's filesystem is messed up this will never happen
@@ -459,10 +460,8 @@ Used by the AI doomsday and the self-destruct nuke.
 #undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == CUSTOM_MAP_PATH)
-		fdel("_maps/custom/[config.map_file]")
-		// And as the file is now removed set the next map to default.
-		next_map_config = load_default_map_config()
+	if(current_map.map_path == CUSTOM_MAP_PATH)
+		fdel("_maps/custom/[current_map.map_file]")
 
 /**
  * Global list of AREA TYPES that are associated with the station.
@@ -494,88 +493,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/area/A as anything in GLOB.areas)
 		A.RunTerrainPopulation()
 
-/datum/controller/subsystem/mapping/proc/maprotate()
-	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
-		return
-
-	var/players = GLOB.clients.len
-	var/list/mapvotes = list()
-	//count votes
-	var/pmv = CONFIG_GET(flag/preference_map_voting)
-	if(pmv)
-		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.read_preference(/datum/preference/choiced/preferred_map)
-			if (!vote)
-				if (global.config.defaultmap)
-					mapvotes[global.config.defaultmap.map_name] += 1
-				continue
-			mapvotes[vote] += 1
-	else
-		for(var/M in global.config.maplist)
-			mapvotes[M] = 1
-
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-			continue
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		if(map in SSpersistence.blocked_maps)
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
-
-		if(pmv)
-			mapvotes[map] = mapvotes[map]*VM.voteweight
-
-	var/pickedmap = pick_weight(mapvotes)
-	if (!pickedmap)
-		return
-	var/datum/map_config/VM = global.config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.map_name]")
-	. = changemap(VM)
-	if (. && VM.map_name != config.map_name)
-		to_chat(world, span_boldannounce("Map rotation has chosen [VM.map_name] for next round!"))
-
-/datum/controller/subsystem/mapping/proc/mapvote()
-	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
-		return
-	if(SSvote.current_vote) //Theres already a vote running, default to rotation.
-		maprotate()
-		return
-	SSvote.initiate_vote(/datum/vote/map_vote, "automatic map rotation", forced = TRUE)
-
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/change_to)
-	if(!change_to.MakeNextMap())
-		next_map_config = load_default_map_config()
-		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
-		return
-
-	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
-	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
-		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-
-	next_map_config = change_to
-	return TRUE
-
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
 	for(var/map in filelist)
@@ -590,10 +507,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("spaceruinblacklist.txt")
-	if(config.minetype == "lavaland")
+	if(current_map.minetype == "lavaland")
 		banned += generateMapList("lavaruinblacklist.txt")
-	else if(config.blacklist_file)
-		banned += generateMapList(config.blacklist_file)
+	else if(current_map.blacklist_file)
+		banned += generateMapList(current_map.blacklist_file)
 
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
 		var/datum/map_template/ruin/ruin_type = item
@@ -953,7 +870,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
-	return config.planetary
+	return current_map.planetary
 
 /// For debug purposes, will add every single away mission present in a given directory.
 /// You can optionally pass in a string directory to load from instead of the default.

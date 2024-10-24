@@ -53,7 +53,7 @@
 		return FALSE
 
 	/// Find our mecha, find the opposite direction. Used for kickback while the mecha is drifting in zero-g to launch us in this direction.
-	var/newtonian_target = REVERSE_DIR(chassis.dir)
+	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	. = ..()//start the cooldown early because of sleeps
 	for(var/projectiles_to_shoot in 1 to projectiles_per_shot)
 		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
@@ -381,7 +381,7 @@
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
 	chassis.use_energy(energy_drain)
-	var/newtonian_target = turn(chassis.dir,180)
+	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)

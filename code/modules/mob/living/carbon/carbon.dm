@@ -1,7 +1,9 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_carbon_reagents()
-	update_body_parts() //to update the carbon's new bodyparts appearance
+	update_body(is_creating = TRUE) //to update the carbon's new bodyparts appearance
+	living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
 	register_context()
 
 	GLOB.carbon_list += src
@@ -11,6 +13,8 @@
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
+
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	QDEL_LIST(hand_bodyparts)
 	QDEL_LIST(organs)
@@ -202,7 +206,12 @@
 	if(istype(potential_spine))
 		extra_throw_range += potential_spine.added_throw_range
 
-	newtonian_move(get_dir(target, src))
+	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
+	if (isitem(thrown_thing))
+		var/obj/item/thrown_item = thrown_thing
+		drift_force *= WEIGHT_TO_NEWTONS(thrown_item.w_class)
+
+	newtonian_move(get_angle(target, src), drift_force = drift_force)
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()

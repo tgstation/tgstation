@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(polling)
  * * chat_text_border_icon: Object or path to make an icon of to decorate the chat announcement.
  * * announce_chosen: Whether we should announce the chosen candidates in chat. This is ignored unless amount_to_pick is greater than 0.
  *
- * Returns a list of all mobs who signed up for the poll.
+ * Returns a list of all mobs who signed up for the poll, OR, in the case that amount_to_pick is equal to 1 the singular mob/null if no available candidates.
  */
 /datum/controller/subsystem/polling/proc/poll_candidates(
 	question,
@@ -173,11 +173,15 @@ SUBSYSTEM_DEF(polling)
 
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
-	if(!(amount_to_pick > 0))
+	if(!amount_to_pick)
 		return new_poll.signed_up
-	if(length(new_poll.signed_up) < amount_to_pick)
-		return new_poll.signed_up
+	if (!length(new_poll.signed_up))
+		return null
 	for(var/pick in 1 to amount_to_pick)
+		// There may be less people signed up than amount_to_pick
+		// pick_n_take returns the default return value of null if passed an empty list, so just break in that case rather than adding null to the list.
+		if(!length(new_poll.signed_up))
+			break
 		new_poll.chosen_candidates += pick_n_take(new_poll.signed_up)
 	if(announce_chosen)
 		new_poll.announce_chosen(group)
@@ -278,7 +282,7 @@ SUBSYSTEM_DEF(polling)
 			return FALSE
 
 	if(check_jobban)
-		if(is_banned_from(potential_candidate.ckey, list(check_jobban, ROLE_SYNDICATE)))
+		if(is_banned_from(potential_candidate.ckey, list(ROLE_SYNDICATE) + check_jobban))
 			return FALSE
 
 	return TRUE

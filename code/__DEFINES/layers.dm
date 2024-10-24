@@ -32,6 +32,7 @@
 
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
+#define WEATHER_PLANE 1
 #define AREA_PLANE 2
 #define MASSIVE_OBJ_PLANE 3
 #define GHOST_PLANE 4
@@ -64,6 +65,8 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+
+#define WEATHER_GLOW_PLANE 18
 
 ///---------------- MISC -----------------------
 
@@ -148,6 +151,11 @@
 #define ABOVE_OPEN_TURF_LAYER (12 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER (13 + TOPDOWN_LAYER)
+#define LOWER_RUNE_LAYER (14 + TOPDOWN_LAYER)
+#define RUNE_LAYER (15 + TOPDOWN_LAYER)
+/// [GAME_CLEAN_LAYER] but for floors.
+/// Basically any layer below this (numerically) is "on" a floor for the purposes of washing
+#define FLOOR_CLEAN_LAYER (20 + TOPDOWN_LAYER)
 
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
@@ -166,12 +174,10 @@
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
-#define LOW_SIGIL_LAYER 2.52
-#define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
 // Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
-#define FLOOR_CLEAN_LAYER 2.55
+#define GAME_CLEAN_LAYER 2.55
 #define TRAM_STRUCTURE_LAYER 2.57
 #define TRAM_FLOOR_LAYER 2.58
 #define TRAM_WALL_LAYER 2.59

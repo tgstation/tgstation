@@ -192,7 +192,10 @@
 /datum/wound/pierce/bleed/moderate
 	name = "Minor Skin Breakage"
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
-	treat_text = "Treat affected site with bandaging or exposure to extreme cold. In dire cases, brief exposure to vacuum may suffice." // space is cold in ss13, so it's like an ice pack!
+	treat_text = "Apply bandaging or suturing to the wound, make use of blood clotting agents, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with food and a rest period."
+	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has a small, circular hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
@@ -223,7 +226,10 @@
 /datum/wound/pierce/bleed/severe
 	name = "Open Puncture"
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and reduced limb stability."
-	treat_text = "Repair punctures in skin by suture or cautery, extreme cold may also work."
+	treat_text = "Swiftly apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with iron supplements and a rest period."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
@@ -250,10 +256,56 @@
 	if(!limb.can_bleed())
 		occur_text = "tears a hole open"
 
+/datum/wound/pierce/bleed/severe/eye
+	name = "Eyeball Puncture"
+	desc = "Patient's eye has sustained extreme damage, causing severe bleeding from the ocular cavity."
+	occur_text = "looses a violent spray of blood, revealing a crushed eyeball"
+	var/right_side = FALSE
+
+/datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
+	var/obj/item/organ/internal/eyes/eyes = locate() in limb
+	if (!istype(eyes))
+		return FALSE
+	. = ..()
+	src.right_side = right_side
+	examine_desc = "has its [right_side ? "right" : "left"] eye pierced clean through, blood spewing from the cavity"
+	RegisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, PROC_REF(wound_overlay))
+	limb.update_part_wound_overlay()
+
+/datum/wound/pierce/bleed/severe/eye/remove_wound(ignore_limb, replaced)
+	if (!isnull(limb))
+		UnregisterSignal(limb, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY)
+	return ..()
+
+/datum/wound/pierce/bleed/severe/eye/proc/wound_overlay(obj/item/bodypart/source, limb_bleed_rate)
+	SIGNAL_HANDLER
+
+	if (limb_bleed_rate <= BLEED_OVERLAY_LOW || limb_bleed_rate > BLEED_OVERLAY_GUSH)
+		return
+
+	if (blood_flow <= BLEED_OVERLAY_LOW)
+		return
+
+	source.bleed_overlay_icon = right_side ? "r_eye" : "l_eye"
+	return COMPONENT_PREVENT_WOUND_OVERLAY_UPDATE
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/eye
+	wound_path_to_generate = /datum/wound/pierce/bleed/severe/eye
+	viable_zones = list(BODY_ZONE_HEAD)
+	can_be_randomly_generated = FALSE
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/eye/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types, datum/wound/old_wound, random_roll, duplicates_allowed, care_about_existing_wounds)
+	if (isnull(locate(/obj/item/organ/internal/eyes) in limb))
+		return FALSE
+	return ..()
+
 /datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
-	treat_text = "Surgical repair of puncture wound, followed by supervised resanguination."
+	treat_text = "Immediately apply bandaging or suturing to the wound, make use of blood clotting agents or saline-glucose, \
+		cauterization, or in extreme circumstances, exposure to extreme cold or vaccuum. \
+		Follow with supervised resanguination."
+	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is ripped clear through, barely held together by exposed bone"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'

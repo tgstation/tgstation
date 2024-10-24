@@ -22,6 +22,8 @@
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 	/// Lazylist, tracks refs()s to all cultists which have been crit or killed by this nullrod.
 	var/list/cultists_slain
+	/// Affects GLOB.holy_weapon_type. Disable to allow null rods to change at will and without affecting the station's type.
+	var/station_holy_item = TRUE
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
@@ -35,7 +37,7 @@
 	)
 	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
-	if(!GLOB.holy_weapon_type && type == /obj/item/nullrod)
+	if((!GLOB.holy_weapon_type || !station_holy_item) && type == /obj/item/nullrod)
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
 			if(!initial(nullrod_type.chaplain_spawnable))
@@ -52,6 +54,8 @@
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
+	if(!station_holy_item)
+		return
 	GLOB.holy_weapon_type = holy_weapon_type
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NULLROD_PICKED)
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
@@ -89,6 +93,10 @@
 	var/num_slain = LAZYLEN(cultists_slain)
 	. += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
 		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
+
+/obj/item/nullrod/non_station
+	station_holy_item = FALSE
+	chaplain_spawnable = FALSE
 
 /// Claymore Variant
 /// This subtype possesses a block chance and is sharp.
@@ -818,21 +826,12 @@
 	else if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		successful_sneak_attack = TRUE
 
-	// traits that render you unable to defend yourself properly from an attack
-	else if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
+	// blocked hands renders you unable to defend yourself properly from an attack
+	else if(HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 		successful_sneak_attack = TRUE
 
-	// We'll take "same tile" as "behind" for ease
-	else if(living_target.loc == user.loc)
-		successful_sneak_attack = TRUE
-
-	// We'll also assume lying down is vulnerable, as mob directions when lying are unclear and you have trouble defending yourself from prone
-	else if(living_target.body_position == LYING_DOWN)
-		successful_sneak_attack = TRUE
-
-	// Now check for if we're behind
-	var/dir_living_target_to_user = get_dir(living_target, user)
-	if(living_target.dir & REVERSE_DIR(dir_living_target_to_user))
+	// Check for various positional outcomes to determine a sneak attack. We want to sneak attack whenever our target is behind.
+	else if(check_behind(user, living_target))
 		successful_sneak_attack = TRUE
 
 	/// Now we'll check for things that STOP a sneak attack. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.

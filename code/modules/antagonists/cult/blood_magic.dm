@@ -41,7 +41,7 @@
 			if(!moving_button)
 				continue
 			var/first_available_slot = position_list[1]
-			var/our_x = position[1] + first_available_slot * world.icon_size // Offset any new buttons into our list
+			var/our_x = position[1] + first_available_slot * ICON_SIZE_X // Offset any new buttons into our list
 			hud.position_action(moving_button, offset_to_screen_loc(our_x, position[2], our_view))
 			blood_spell.positioned = first_available_slot
 

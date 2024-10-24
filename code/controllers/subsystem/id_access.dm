@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(id_access)
 		id_card.assignment = trim.assignment
 
 	var/datum/job/trim_job = trim.find_job()
-	if (!isnull(trim_job) && !isnull(id_card.registered_account))
+	if (!isnull(id_card.registered_account))
 		var/datum/job/old_job = id_card.registered_account.account_job
 		id_card.registered_account.account_job = trim_job
 		id_card.registered_account.update_account_job_lists(trim_job, old_job)

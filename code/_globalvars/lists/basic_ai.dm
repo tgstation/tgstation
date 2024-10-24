@@ -10,3 +10,10 @@ GLOBAL_LIST_INIT(ai_controllers_by_status, list(
 
 ///basic ai controllers based on their z level
 GLOBAL_LIST_EMPTY(ai_controllers_by_zlevel)
+
+///basic ai controllers that are currently performing idled behaviors
+GLOBAL_LIST_INIT(unplanned_controllers, list(
+	AI_STATUS_ON = list(),
+	AI_STATUS_IDLE = list(),
+))
+

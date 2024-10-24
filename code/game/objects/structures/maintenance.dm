@@ -122,7 +122,7 @@ at the cost of risking a vicious bite.**/
 	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
-	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
+	break_message = span_warning("The structure shatters, leaving only a demonic screech!")
 	break_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
