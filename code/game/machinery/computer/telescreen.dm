@@ -45,6 +45,11 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
+	. = ..()
+	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
+	speakers.toggle_mute()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/item/wallframe/telescreen/entertainment
