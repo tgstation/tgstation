@@ -45,6 +45,9 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+
 /obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
 	. = ..()
 	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
@@ -70,6 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
 	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
+	. += span_notice("The ")
 
 /obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
 	return GLOB.always_state
