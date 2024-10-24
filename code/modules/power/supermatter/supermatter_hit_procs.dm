@@ -86,6 +86,7 @@
 
 	if(istype(item, /obj/item/hemostat/supermatter))
 		to_chat(user, span_warning("You poke \The [src] with\the [item]'s hyper-noblium tips. Nothing happens."))
+		return
 
 	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
