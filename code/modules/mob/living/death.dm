@@ -93,24 +93,42 @@
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	dust_animation()
+	dust_animation(src)
 	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	ghostize()
 	QDEL_IN(src, DUST_ANIMATION_TIME) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
-/mob/living/proc/dust_animation()
-	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(loc, REF(src))
-	add_filter("dust_filter", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
-	animate(src, color = COLOR_GRAY, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
+/// Animates an atom (or image) turning into dust
+/// Does not delete the atom afterwards, BUT it will become invisible, so ensure you handle that yourself
+/proc/dust_animation(datum/atom_or_image, atom/anim_loc)
+	ASSERT(isatom(atom_or_image) || isimage(atom_or_image))
+	if(isnull(anim_loc))
+		var/atom/movable/animating = atom_or_image
+		if(isimage(atom_or_image))
+			// an image's loc is often a movable. so we want to look at its loc's loc
+			var/image/animating_image = atom_or_image
+			animating = animating_image.loc
+		if(istype(animating))
+			anim_loc = animating.loc
+		// nothing found, kind of hard to animate it
+		if(isnull(anim_loc) || isarea(anim_loc))
+			CRASH("dust_animation() called with no loc passed and with no atom/image with a loc")
 
+	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc, REF(atom_or_image))
+	atom_or_image.add_filter("dust_filter", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
+	animate(atom_or_image, color = COLOR_DARK, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
+
+/// Holds the dust animation filter effect, so we can animate it
 /obj/effect/temp_visual/dust_animation_filter
 	icon = 'icons/mob/dust_animation.dmi'
 	icon_state = "dust.1"
 	duration = DUST_ANIMATION_TIME
 
-/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "error_dont_use_this")
+/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "random_default_anti_collision_text")
 	. = ..()
-	for(var/i in 1 to duration)
+	// we manually animate this, rather than just using an animated icon state or flick, to work around byond animated state memes
+	// (normally, all animated icon states are synced to the same time, which would bad here)
+	for(var/i in 2 to duration)
 		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
 	render_target = "*dust-[anim_id]"
 

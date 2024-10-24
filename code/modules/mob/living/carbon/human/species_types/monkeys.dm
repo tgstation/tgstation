@@ -35,7 +35,6 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
-	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
