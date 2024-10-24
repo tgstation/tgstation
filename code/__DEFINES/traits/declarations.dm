@@ -1353,4 +1353,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
 
+///Trait which stops the interaction cog from appearing for the mob when it interacts with something
+#define TRAIT_STEALTHY_INTERACT "stealthy_interact"
+
 // END TRAIT DEFINES
