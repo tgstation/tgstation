@@ -18,11 +18,19 @@
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
+	fishing_difficulty_modifier = 13
+	fishing_cast_range = -2
+	fishing_experience_multiplier = 0.8
+	fishing_bait_speed_mult = 0.9
+	fishing_deceleration_mult = 0.9
+	fishing_bounciness_mult = 0.9
+	fishing_gravity_mult = 0.85
 
 /datum/material/meat/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(!IS_EDIBLE(source))
 		make_edible(source, mat_amount, multiplier)
+	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //The rod itself is the bait... sorta.
 
 /datum/material/meat/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -64,6 +72,7 @@
 /datum/material/meat/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/edible))
+	REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
 /datum/material/meat/mob_meat
 	init_flags = MATERIAL_INIT_BESPOKE

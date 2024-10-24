@@ -226,6 +226,12 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
 
+/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
+		fish.adjust_health(fish.health + initial(fish.health) * max(fish.get_hunger() * 0.5, 0.12))
+		fish.sate_hunger()
+		return TRUE
+
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
 	description = "An opaque white liquid made from soybeans."
