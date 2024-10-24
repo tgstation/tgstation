@@ -5,4 +5,4 @@
 	if(alert("This will open our Discord in your browser. Are you sure?", "Discord", "Yes", "No") != "Yes")
 		return
 
-	DIRECT_OUTPUT(src, link("https://discord.gg/KBsjSv7Kh9"))
+	DIRECT_OUTPUT(src, link("https://discord.gg/Pp7SpQgvNt"))
