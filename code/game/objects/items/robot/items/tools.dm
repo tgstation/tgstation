@@ -307,5 +307,18 @@
 			. += "Its multitool buffer contains [tool.buffer]"
 			break
 
+/obj/item/borg/cyborg_omnitool/botany
+	name = "botanical omni-toolset"
+	desc = "A set of botanical tools used by cyborgs to do gardening."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili"
+
+	omni_toolkit = list(
+		/obj/item/secateurs/cyborg,
+		/obj/item/cultivator/cyborg,
+		/obj/item/hatchet/cyborg,
+		/obj/item/shovel/spade/cyborg,
+	)
+
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
