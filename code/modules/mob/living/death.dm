@@ -69,6 +69,9 @@
 /mob/living/proc/spread_bodyparts(drop_bitflags=NONE)
 	return
 
+/// Length of the animation in dust_animation.dmi
+#define DUST_ANIMATION_TIME 1.5 SECONDS
+
 /**
  * This is the proc for turning a mob into ash.
  * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
@@ -91,12 +94,25 @@
 		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
-	spawn_dust(just_ash)
+	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	ghostize()
-	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
+	QDEL_IN(src, DUST_ANIMATION_TIME) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /mob/living/proc/dust_animation()
-	return
+	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(loc, REF(src))
+	add_filter("dust_filter", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
+	animate(src, color = COLOR_GRAY, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
+
+/obj/effect/temp_visual/dust_animation_filter
+	icon = 'icons/mob/dust_animation.dmi'
+	icon_state = "c"
+	duration = DUST_ANIMATION_TIME
+
+/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "error_dont_use_this")
+	. = ..()
+	render_target = "*dust-[anim_id]"
+
+#undef DUST_ANIMATION_TIME
 
 /mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
