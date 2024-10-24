@@ -178,11 +178,10 @@
 					source = spawner,
 				)
 
-	// If we have a Station Trait "Naval Patrol" it will not prevent the Lone Ops but just announce it presence
-	// You should've secured that disk! Not even Navy will stop a disk-sniffing-determined Lone Operative
+	// If we have a Station Trait "Naval Patrol" it will anniunce the battlecruiser more conspiciously
 	if(GLOB.dynamic_ruleset_categories & RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS)
 		priority_announce(
-			"We've detected a battlecruiser ship heading towards [GLOB.station_name]. It somehow evaded our engagement protocols. The situation is yours to handle, no reply.",
+			"We've detected a Syndicate battlecruiser ship heading towards [GLOB.station_name]. It somehow evaded our engagement protocols. The situation is yours to handle, no reply.",
 			"Nanotrasen Navy Update",
 		)
 	else
