@@ -19,10 +19,10 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutantbrain = /obj/item/organ/internal/brain/dullahan
-	mutanteyes = /obj/item/organ/internal/eyes/dullahan
-	mutanttongue = /obj/item/organ/internal/tongue/dullahan
-	mutantears = /obj/item/organ/internal/ears/dullahan
+	mutantbrain = /obj/item/organ/brain/dullahan
+	mutanteyes = /obj/item/organ/eyes/dullahan
+	mutanttongue = /obj/item/organ/tongue/dullahan
+	mutantears = /obj/item/organ/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -51,7 +51,7 @@
 	human.put_in_hands(head)
 
 	// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
-	var/obj/item/organ/internal/eyes/eyes = new /obj/item/organ/internal/eyes(head)
+	var/obj/item/organ/eyes/eyes = new /obj/item/organ/eyes(head)
 	eyes.eye_color_left = human.eye_color_left
 	eyes.eye_color_right = human.eye_color_right
 	eyes.bodypart_insert(my_head)
@@ -95,7 +95,7 @@
 	human.reset_perspective(human)
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
-	var/obj/item/organ/internal/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		human.update_tint()
 		if(eyes.tint)
@@ -106,7 +106,7 @@
 			prevent_perspective_change = TRUE
 
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
-	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(owner_first_client_connection_handled)
 		if(!eyes.tint)
 			owner.reset_perspective(my_head, TRUE)
@@ -164,15 +164,15 @@
 
 	return to_add
 
-/obj/item/organ/internal/brain/dullahan
+/obj/item/organ/brain/dullahan
 	decoy_override = TRUE
 	organ_flags = ORGAN_ORGANIC //not vital
 
-/obj/item/organ/internal/tongue/dullahan
+/obj/item/organ/tongue/dullahan
 	zone = "abstract"
 	modifies_speech = TRUE
 
-/obj/item/organ/internal/tongue/dullahan/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		if(isdullahan(human))
@@ -182,10 +182,10 @@
 				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
-/obj/item/organ/internal/ears/dullahan
+/obj/item/organ/ears/dullahan
 	zone = "abstract"
 
-/obj/item/organ/internal/eyes/dullahan
+/obj/item/organ/eyes/dullahan
 	name = "head vision"
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
@@ -198,7 +198,7 @@
 
 /datum/action/item_action/organ_action/dullahan/Trigger(trigger_flags)
 	. = ..()
-	var/obj/item/organ/internal/eyes/dullahan/dullahan_eyes = target
+	var/obj/item/organ/eyes/dullahan/dullahan_eyes = target
 	dullahan_eyes.tint = dullahan_eyes.tint ? NONE : INFINITY
 
 	if(ishuman(owner))
@@ -247,7 +247,7 @@
 		return // It's so over
 	detached_head.real_name = wearer.real_name
 	detached_head.name = wearer.real_name
-	var/obj/item/organ/internal/brain/brain = locate(/obj/item/organ/internal/brain) in detached_head
+	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
 	brain.name = "[wearer.name]'s brain"
 
 /obj/item/dullahan_relay/proc/examinate_check(mob/user, atom/source)

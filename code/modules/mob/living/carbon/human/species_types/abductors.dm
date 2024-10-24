@@ -12,11 +12,11 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_VIRUSIMMUNE,
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/abductor
+	mutanttongue = /obj/item/organ/tongue/abductor
 	mutantstomach = null
 	mutantheart = null
 	mutantlungs = null
-	mutantbrain = /obj/item/organ/internal/brain/abductor
+	mutantbrain = /obj/item/organ/brain/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(

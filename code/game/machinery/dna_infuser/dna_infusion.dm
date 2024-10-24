@@ -67,7 +67,7 @@
 		if(old_organ)
 			if((old_organ.type != new_organ) && !IS_ROBOTIC_ORGAN(old_organ))
 				continue // Old organ can be mutated!
-		else if(ispath(new_organ, /obj/item/organ/external))
+		else if(new_organ::organ_flags & ORGAN_EXTERNAL)
 			continue // External organ can be grown!
 		// Internal organ is either missing, or is non-organic.
 		potential_new_organs -= new_organ

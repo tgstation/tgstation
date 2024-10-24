@@ -31,7 +31,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
 		/obj/effect/decal/cleanable/brimdust = 1,
-		/obj/item/organ/internal/monster_core/brimdust_sac = 1,
+		/obj/item/organ/monster_core/brimdust_sac = 1,
 	)
 	/// How we get blasting
 	var/datum/action/cooldown/mob_cooldown/brimbeam/beam

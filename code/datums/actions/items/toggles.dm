@@ -88,7 +88,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/organ/internal/cyberimp/eyes/hud/hud_implant = target
+	var/obj/item/organ/cyberimp/eyes/hud/hud_implant = target
 	hud_implant.toggle_hud(owner)
 
 /datum/action/item_action/wheelys

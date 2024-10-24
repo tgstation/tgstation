@@ -1336,7 +1336,7 @@
 		return GLOB.infuser_entries[/datum/infuser_entry/fish]
 	var/datum/infuser_entry/fish/entry = new
 	if(amphibious)
-		entry.output_organs -= /obj/item/organ/internal/lungs/fish
+		entry.output_organs -= /obj/item/organ/lungs/fish
 	for(var/key in possible_infusions)
 		var/datum/infuser_entry/infusion = GLOB.infuser_entries[key]
 		entry.output_organs |= infusion.output_organs

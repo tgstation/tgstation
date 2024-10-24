@@ -1,7 +1,7 @@
 /datum/component/manual_breathing
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/obj/item/organ/internal/lungs/L
+	var/obj/item/organ/lungs/L
 	var/warn_grace = FALSE
 	var/warn_dying = FALSE
 	var/last_breath
@@ -71,18 +71,18 @@
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/eyes/new_lungs = O
+	var/obj/item/organ/eyes/new_lungs = O
 
-	if(istype(new_lungs,/obj/item/organ/internal/lungs))
+	if(istype(new_lungs,/obj/item/organ/lungs))
 		L = new_lungs
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/proc/check_removed_organ(mob/who_cares, obj/item/organ/O)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/lungs/old_lungs = O
+	var/obj/item/organ/lungs/old_lungs = O
 
-	if(istype(old_lungs, /obj/item/organ/internal/lungs))
+	if(istype(old_lungs, /obj/item/organ/lungs))
 		L = null
 		STOP_PROCESSING(SSdcs, src)
 

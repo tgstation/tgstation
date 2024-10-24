@@ -35,13 +35,13 @@
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = BODYTEMP_COLD_ICEBOX_SAFE
 
-	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
-	mutanteyes = /obj/item/organ/internal/eyes/golem
-	mutantbrain = /obj/item/organ/internal/brain/golem
-	mutanttongue = /obj/item/organ/internal/tongue/golem
-	mutantstomach = /obj/item/organ/internal/stomach/golem
-	mutantliver = /obj/item/organ/internal/liver/golem
-	mutantappendix = /obj/item/organ/internal/appendix/golem
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
+	mutanteyes = /obj/item/organ/eyes/golem
+	mutantbrain = /obj/item/organ/brain/golem
+	mutanttongue = /obj/item/organ/tongue/golem
+	mutantstomach = /obj/item/organ/stomach/golem
+	mutantliver = /obj/item/organ/liver/golem
+	mutantappendix = /obj/item/organ/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem,

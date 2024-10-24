@@ -28,7 +28,7 @@
 	var/static/list/loot = list(
 		/obj/effect/decal/cleanable/ash,
 		/obj/item/clothing/suit/armor/vest,
-		/obj/item/organ/internal/lungs,
+		/obj/item/organ/lungs,
 		/obj/item/shard,
 	)
 	AddElement(/datum/element/death_drops, loot)

@@ -147,12 +147,12 @@
 		augment_list = list()
 		// cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
 		var/list/selectable_types = list(
-			/obj/item/organ/internal/cyberimp/brain/anti_drop,
-			/obj/item/organ/internal/cyberimp/arm/toolset,
-			/obj/item/organ/internal/cyberimp/arm/surgery,
-			/obj/item/organ/internal/cyberimp/chest/thrusters,
-			/obj/item/organ/internal/lungs/cybernetic/tier3,
-			/obj/item/organ/internal/liver/cybernetic/tier3,
+			/obj/item/organ/cyberimp/brain/anti_drop,
+			/obj/item/organ/cyberimp/arm/toolset,
+			/obj/item/organ/cyberimp/arm/surgery,
+			/obj/item/organ/cyberimp/chest/thrusters,
+			/obj/item/organ/lungs/cybernetic/tier3,
+			/obj/item/organ/liver/cybernetic/tier3,
 		)
 		for(var/obj/item/organ/organ as anything in selectable_types)
 			augment_list[initial(organ.name)] = organ

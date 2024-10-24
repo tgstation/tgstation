@@ -8,6 +8,11 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
+	///Override of the color of the organ, from dye sprays
+	var/dye_color
+	///Can this bodypart overlay be dyed?
+	var/dyable = FALSE
+
 	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 	///Take on the dna/preference from whoever we're gonna be inserted in
@@ -85,7 +90,7 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
-	overlay.color = sprite_datum.color_src ? draw_color : null
+	overlay.color = sprite_datum.color_src ? (dye_color || draw_color) : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)

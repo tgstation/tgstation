@@ -34,7 +34,7 @@
 	var/atom/Tsec = drop_location()
 
 	for(var/obj/item/organ/organ as anything in organs)
-		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/internal/brain))
+		if((drop_bitflags & DROP_BRAIN) && istype(organ, /obj/item/organ/brain))
 			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST)) // chests can't drop
 				continue // the head will drop, so the brain should stay inside
 
@@ -43,7 +43,7 @@
 			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
-		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/internal/brain))
+		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/brain))
 			if((drop_bitflags & DROP_BODYPARTS) && (check_zone(organ.zone) != BODY_ZONE_CHEST))
 				continue // only chest & groin organs will be ejected
 
@@ -65,7 +65,7 @@
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
-	var/obj/item/organ/internal/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)
 		userbrain.suicided = suicide_state
 

@@ -11,7 +11,7 @@
  * If implanted, you can shake off a cloud of brimdust to give this buff to people around you.area
  * It will also automatically grant you one stack every 30 seconds if you are on lavaland.
  */
-/obj/item/organ/internal/monster_core/brimdust_sac
+/obj/item/organ/monster_core/brimdust_sac
 	name = "brimdust sac"
 	desc = "A strange organ from a brimdemon. You can shake it out to coat yourself in explosive powder."
 	icon_state = "brim_sac"
@@ -24,16 +24,16 @@
 	/// You will gain a stack of the buff every x seconds
 	COOLDOWN_DECLARE(brimdust_auto_apply_cooldown)
 
-/obj/item/organ/internal/monster_core/brimdust_sac/Initialize(mapload)
+/obj/item/organ/monster_core/brimdust_sac/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/explodable, light_impact_range = 1)
 
-/obj/item/organ/internal/monster_core/brimdust_sac/apply_to(mob/living/target, mob/user)
+/obj/item/organ/monster_core/brimdust_sac/apply_to(mob/living/target, mob/user)
 	target.apply_status_effect(user_status, BRIMDUST_STACKS_ON_USE)
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/internal/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -43,7 +43,7 @@
 	owner.apply_status_effect(user_status, BRIMDUST_STACKS_ON_LIFE)
 
 /// Make a cloud which applies brimdust to everyone nearby
-/obj/item/organ/internal/monster_core/brimdust_sac/on_triggered_internal()
+/obj/item/organ/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
 	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 

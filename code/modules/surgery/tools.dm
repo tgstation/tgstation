@@ -536,7 +536,7 @@
 		return
 
 	var/candidate_name
-	var/obj/item/organ/external/tail_snip_candidate
+	var/obj/item/organ/tail_snip_candidate
 	var/obj/item/bodypart/limb_snip_candidate
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)

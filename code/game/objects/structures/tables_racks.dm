@@ -288,7 +288,7 @@
 		tableplace_delay = 2.75 SECONDS
 		skills_space = " quickly"
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		tableplace_delay *= potential_spine.athletics_boost_multiplier
 

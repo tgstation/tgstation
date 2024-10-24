@@ -29,7 +29,7 @@
 
 /mob/living/basic/mining/hivelord/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core)
 	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") // They writhe so much.

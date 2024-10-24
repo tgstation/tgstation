@@ -3,11 +3,11 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutantbrain = /obj/item/organ/internal/brain/felinid
-	mutanttongue = /obj/item/organ/internal/tongue/cat
-	mutantears = /obj/item/organ/internal/ears/cat
+	mutantbrain = /obj/item/organ/brain/felinid
+	mutanttongue = /obj/item/organ/tongue/cat
+	mutantears = /obj/item/organ/ears/cat
 	mutant_organs = list(
-		/obj/item/organ/external/tail/cat = "Cat",
+		/obj/item/organ/tail/cat = "Cat",
 	)
 	inherent_traits = list(
 		TRAIT_CATLIKE_GRACE,
@@ -41,9 +41,9 @@
 			if(target_human.dna.features["ears"] == "None")
 				target_human.dna.features["ears"] = "Cat"
 		if(target_human.dna.features["ears"] == "None")
-			mutantears = /obj/item/organ/internal/ears
+			mutantears = /obj/item/organ/ears
 		else
-			var/obj/item/organ/internal/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
+			var/obj/item/organ/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
 			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
@@ -128,7 +128,7 @@
 /proc/purrbation_toggle(mob/living/carbon/human/target_human, silent = FALSE)
 	if(!ishuman(target_human))
 		return
-	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
+	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat))
 		purrbation_apply(target_human, silent = silent)
 		. = TRUE
 	else
@@ -144,7 +144,7 @@
 		cat_species.original_felinid = FALSE
 	else
 		// This removes the spines if they exist
-		var/obj/item/organ/external/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+		var/obj/item/organ/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		if(current_spines)
 			current_spines.Remove(soon_to_be_felinid, special = TRUE)
 			qdel(current_spines)
@@ -153,10 +153,10 @@
 		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
 		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
-		var/obj/item/organ/internal/ears/cat/kitty_ears = new
+		var/obj/item/organ/ears/cat/kitty_ears = new
 		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-		if(should_visual_organ_apply_to(/obj/item/organ/external/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
-			var/obj/item/organ/external/tail/cat/kitty_tail = new
+		if(should_visual_organ_apply_to(/obj/item/organ/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
+			var/obj/item/organ/tail/cat/kitty_tail = new
 			kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 	if(!silent)
@@ -173,24 +173,24 @@
 		var/datum/species/target_species = purrbated_human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
-		var/obj/item/organ/external/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-		if(istype(old_tail, /obj/item/organ/external/tail/cat))
+		var/obj/item/organ/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(istype(old_tail, /obj/item/organ/tail/cat))
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
 			for(var/external_organ in target_species.mutant_organs)
 				if(!should_visual_organ_apply_to(external_organ, purrbated_human))
 					continue
-				if(ispath(external_organ, /obj/item/organ/external/tail))
-					var/obj/item/organ/external/tail/new_tail = new external_organ()
+				if(ispath(external_organ, /obj/item/organ/tail))
+					var/obj/item/organ/tail/new_tail = new external_organ()
 					new_tail.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 				// Don't forget the spines we removed earlier
-				else if(ispath(external_organ, /obj/item/organ/external/spines))
-					var/obj/item/organ/external/spines/new_spines = new external_organ()
+				else if(ispath(external_organ, /obj/item/organ/spines))
+					var/obj/item/organ/spines/new_spines = new external_organ()
 					new_spines.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
-		var/obj/item/organ/internal/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
-		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
+		var/obj/item/organ/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
+		if(istype(old_ears, /obj/item/organ/ears/cat))
 			var/obj/item/organ/new_ears = new target_species.mutantears()
 			new_ears.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(!silent)
@@ -200,7 +200,7 @@
 	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
 	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
 
-	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
+	var/obj/item/organ/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/ears/cat)
 	if (cat_ears)
 		cat_ears.color = human_for_preview.hair_color
 		human_for_preview.update_body()

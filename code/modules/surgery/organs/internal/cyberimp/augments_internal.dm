@@ -1,5 +1,5 @@
 
-/obj/item/organ/internal/cyberimp
+/obj/item/organ/cyberimp
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 
@@ -8,7 +8,7 @@
 	var/implant_color = COLOR_WHITE
 	var/implant_overlay
 
-/obj/item/organ/internal/cyberimp/New(mob/implanted_mob = null)
+/obj/item/organ/cyberimp/New(mob/implanted_mob = null)
 	if(iscarbon(implanted_mob))
 		src.Insert(implanted_mob)
 	if(implant_overlay)
@@ -19,13 +19,13 @@
 
 //[[[[BRAIN]]]]
 
-/obj/item/organ/internal/cyberimp/brain
+/obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"
 	desc = "Injectors of extra sub-routines for the brain."
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/internal/cyberimp/brain/emp_act(severity)
+/obj/item/organ/cyberimp/brain/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
@@ -34,7 +34,7 @@
 	to_chat(owner, span_warning("Your body seizes up!"))
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop
+/obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	icon_state = "brain_implant_antidrop"
@@ -43,7 +43,7 @@
 	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
+/obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
 		var/list/hold_list = owner.get_empty_held_indexes()
@@ -63,7 +63,7 @@
 		to_chat(owner, span_notice("Your hands relax..."))
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
@@ -78,25 +78,25 @@
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/proc/release_items()
+/obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/stored_item as anything in stored_items)
 		REMOVE_TRAIT(stored_item, TRAIT_NODROP, IMPLANT_TRAIT)
 		UnregisterSignal(stored_item, COMSIG_ITEM_DROPPED)
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special, movement_flags)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special, movement_flags)
 	if(active)
 		ui_action_click()
 	..()
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
+/obj/item/organ/cyberimp/brain/anti_drop/proc/on_held_item_dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(source, TRAIT_NODROP, IMPLANT_TRAIT)
 	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
 	stored_items -= source
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun
+/obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	icon_state = "brain_implant_rebooter"
@@ -114,28 +114,28 @@
 	var/stun_resistance_time = 6 SECONDS
 	COOLDOWN_DECLARE(implant_cooldown)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
+/obj/item/organ/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 	UnregisterSignal(implant_owner, COMSIG_LIVING_ENTER_STAMCRIT)
 	remove_stun_buffs(implant_owner)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
+/obj/item/organ/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
 	RegisterSignal(receiver, COMSIG_LIVING_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
 	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_stamcrit(datum/source)
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_stamcrit(datum/source)
 	SIGNAL_HANDLER
 	if(!(organ_flags & ORGAN_FAILING))
 		addtimer(CALLBACK(src, PROC_REF(clear_stuns)), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/clear_stuns()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/clear_stuns()
 	if(isnull(owner) || (organ_flags & ORGAN_FAILING) || !COOLDOWN_FINISHED(src, implant_cooldown))
 		return
 
@@ -156,41 +156,41 @@
 	COOLDOWN_START(src, implant_cooldown, 60 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(implant_ready)),60 SECONDS)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/implant_ready()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/implant_ready()
 	if(owner)
 		to_chat(owner, span_purple("Your rebooter implant is ready."))
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/give_stun_buffs(mob/living/give_to = owner)
+/obj/item/organ/cyberimp/brain/anti_stun/proc/give_stun_buffs(mob/living/give_to = owner)
 	give_to.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 	give_to.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/remove_stun_buffs(mob/living/remove_from = owner)
+/obj/item/organ/cyberimp/brain/anti_stun/proc/remove_stun_buffs(mob/living/remove_from = owner)
 	remove_from.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
 	remove_from.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 	implant_ready()
 
 //[[[[MOUTH]]]]
-/obj/item/organ/internal/cyberimp/mouth
+/obj/item/organ/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube
+/obj/item/organ/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/internal/cyberimp/mouth/breathing_tube/emp_act(severity)
+/obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return

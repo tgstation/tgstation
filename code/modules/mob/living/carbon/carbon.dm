@@ -198,7 +198,7 @@
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		extra_throw_range += potential_spine.added_throw_range
 
@@ -592,7 +592,7 @@
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		set_invis_see(eyes.see_invisible)
 		new_sight |= eyes.sight_flags
@@ -648,7 +648,7 @@
 	for(var/obj/item/clothing/worn_item in get_equipped_items())
 		tint += worn_item.tint
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		tint += eyes.tint
 
@@ -949,7 +949,7 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!get_organ_by_type(/obj/item/organ/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 	return ..()
 
@@ -968,7 +968,7 @@
 
 	// Only check for a heart if they actually need a heart. Who would've thunk
 	if (needs_heart())
-		var/obj/item/organ/internal/heart = get_organ_by_type(/obj/item/organ/internal/heart)
+		var/obj/item/organ/heart = get_organ_by_type(/obj/item/organ/heart)
 
 		if (!heart)
 			return DEFIB_FAIL_NO_HEART
@@ -976,7 +976,7 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	var/obj/item/organ/internal/brain/current_brain = get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/current_brain = get_organ_by_type(/obj/item/organ/brain)
 
 	if (QDELETED(current_brain))
 		return DEFIB_FAIL_NO_BRAIN
@@ -1087,7 +1087,7 @@
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
 /mob/living/carbon/proc/create_internal_organs()
-	for(var/obj/item/organ/internal/internal_organ in organs)
+	for(var/obj/item/organ/internal_organ in organs)
 		internal_organ.Insert(src)
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
@@ -1340,7 +1340,7 @@
 /mob/living/carbon/proc/adjust_skillchip_complexity_modifier(delta)
 	skillchip_complexity_modifier += delta
 
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	if(!brain)
 		return
@@ -1455,7 +1455,7 @@
 /// Accepts an optional timeout after which we remove the tail wagging
 /// Returns true if successful, false otherwise
 /mob/living/carbon/proc/wag_tail(timeout = INFINITY)
-	var/obj/item/organ/external/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(!wagged)
 		return FALSE
 	return wagged.start_wag(src, timeout)
@@ -1463,7 +1463,7 @@
 /// Helper to cleanly stop all tail wagging
 /// Returns true if successful, false otherwise
 /mob/living/carbon/proc/unwag_tail() // can't unwag a tail
-	var/obj/item/organ/external/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(!unwagged)
 		return FALSE
 	return unwagged.stop_wag(src)

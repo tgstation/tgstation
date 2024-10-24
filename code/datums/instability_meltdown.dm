@@ -72,7 +72,7 @@
 
 /datum/instability_meltdown/organ_vomit/meltdown(mob/living/carbon/human/victim)
 	var/list/elligible_organs = list()
-	for(var/obj/item/organ/internal/internal_organ in victim.organs) //make sure we dont get an implant or cavity item
+	for(var/obj/item/organ/internal_organ in victim.organs) //make sure we dont get an implant or cavity item
 		elligible_organs += internal_organ
 	victim.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 10)
 	if(!elligible_organs.len)

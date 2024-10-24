@@ -314,8 +314,8 @@
 		// Not quite the same if the reaction is in their stomach; they'll throw up
 		// from any explosion, but it'll only make them puke up everything in their
 		// stomach
-	else if (istype(holder.my_atom, /obj/item/organ/internal/stomach))
-		var/obj/item/organ/internal/stomach/indigestion = holder.my_atom
+	else if (istype(holder.my_atom, /obj/item/organ/stomach))
+		var/obj/item/organ/stomach/indigestion = holder.my_atom
 		if(power < 1)
 			return
 		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)

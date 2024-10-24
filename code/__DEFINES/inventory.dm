@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/kinetic_crusher,
 	/obj/item/knife,
 	/obj/item/mining_scanner,
-	/obj/item/organ/internal/monster_core,
+	/obj/item/organ/monster_core,
 	/obj/item/storage/bag/ore,
 	/obj/item/pickaxe,
 	/obj/item/resonator,

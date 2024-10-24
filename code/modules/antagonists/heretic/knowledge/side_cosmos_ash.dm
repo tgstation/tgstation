@@ -12,7 +12,7 @@
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/ash = 1,
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/fire_shark
