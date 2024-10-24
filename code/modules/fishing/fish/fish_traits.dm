@@ -39,6 +39,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/added_difficulty = 0
 	/// Reagents to add to the fish whenever the COMSIG_GENERATE_REAGENTS_TO_ADD signal is sent. Their values will be multiplied later.
 	var/list/reagents_to_add
+	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
+	var/infusion_entry
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -427,6 +429,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish contains toxins. Feeding it to predatory fishes or people is not recommended."
 	diff_traits_inheritability = 25
 	reagents_to_add = list(/datum/reagent/toxin/tetrodotoxin = 1)
+	infusion_entry = /datum/infuser_entry/ttx_healing
+	///The amount of venom injected if the fish has a stinger is multiplied by this value.
+	var/venom_mult = 1
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -438,13 +443,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
-	add_venom(source, /datum/reagent/toxin/tetrodotoxin, new_weight, mult = source.status == FISH_DEAD ? 0.1 : 0.25)
+	add_venom(source, reagents_to_add[1], new_weight, mult = (source.status == FISH_DEAD ? 0.1 : 0.25) * venom_mult)
 
 /datum/fish_trait/toxic/proc/on_status_change(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_FISH_STINGER))
 		return
-	change_venom_on_death(source, /datum/reagent/toxin/tetrodotoxin, 0.25, 0.1)
+	change_venom_on_death(source, reagents_to_add[1], 0.25 * venom_mult, 0.1 * venom_mult)
 
 /datum/fish_trait/toxic/proc/on_eaten(obj/item/fish/source, obj/item/fish/predator)
 	if(HAS_TRAIT(predator, TRAIT_FISH_TOXIN_IMMUNE))
@@ -463,7 +468,15 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic/apply_to_mob(mob/living/basic/mob)
 	. = ..()
-	mob.AddElement(/datum/element/venomous, /datum/reagent/toxin/tetrodotoxin, 0.5 * mob.mob_size)
+	mob.AddElement(/datum/element/venomous, reagents_to_add[1], 0.5 * mob.mob_size * venom_mult)
+
+/datum/fish_trait/toxic/carpotoxin
+	name = "Carpotoxic"
+	catalog_description = "This fish contains carpotoxin. Definitely not safe for consumption."
+	diff_traits_inheritability = 50
+	reagents_to_add = list(/datum/reagent/toxin/carpotoxin = 4)
+	infusion_entry = null
+	venom_mult = 6
 
 /datum/fish_trait/toxin_immunity
 	name = "Toxin Immunity"
@@ -534,6 +547,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	infusion_entry = /datum/infuser_entry/amphibious
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
 	. = ..()
@@ -712,6 +726,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish possess a sac that produces ink."
 	diff_traits_inheritability = 70
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
+	infusion_entry = /datum/infuser_entry/squid
 
 /datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish)
 	. = ..()

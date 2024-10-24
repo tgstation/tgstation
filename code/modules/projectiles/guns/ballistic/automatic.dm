@@ -10,6 +10,8 @@
 	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	burst_fire_selection = TRUE
+	drop_sound = 'sound/items/handling/gun/ballistics/smg/smg_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/smg/smg_pickup1.ogg'
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"

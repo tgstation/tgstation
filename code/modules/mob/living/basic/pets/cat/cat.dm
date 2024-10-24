@@ -45,6 +45,14 @@
 		/obj/item/food/deadmouse,
 		/obj/item/food/fishmeat,
 	)
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/perform_trick_sequence,
+	)
+
 	///item we are currently holding
 	var/obj/item/held_food
 	///mutable appearance for held item
@@ -74,10 +82,11 @@
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/cultist_pet, pet_cult_icon_state = cult_icon_state)
 	AddElement(/datum/element/wears_collar, collar_icon_state = collar_icon_state, collar_resting_icon_state = TRUE)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, null, /datum/mood_event/pet_animal, "purr")
+	AddElement(/datum/element/pet_bonus, "purr", /datum/mood_event/pet_animal)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
@@ -85,29 +94,27 @@
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
 	if(can_breed)
 		add_breeding_component()
-	if(can_hold_item)
-		RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	if(can_interact_with_stove)
-		RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
 
 /mob/living/basic/pet/cat/proc/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
-	SIGNAL_HANDLER
+/mob/living/basic/pet/cat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(istype(target, /obj/machinery/oven/range) && can_interact_with_stove)
+		target.attack_hand(src)
+		return FALSE
+
+	if(!can_hold_item)
+		return TRUE
+
 	if(!is_type_in_list(target, huntable_items) || held_food)
-		return
-	target.forceMove(src)
-
-/mob/living/basic/pet/cat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
-	SIGNAL_HANDLER
-
-	if(!proximity || !can_unarmed_attack())
-		return NONE
-	if(!istype(target, /obj/machinery/oven/range))
-		return NONE
-	target.attack_hand(src)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+		return TRUE
+	var/atom/movable/movable_target = target
+	movable_target.forceMove(src)
+	return FALSE
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -224,3 +231,9 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	gender = MALE
+
+/mob/living/basic/pet/cat/tabby
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	held_state = "cat"

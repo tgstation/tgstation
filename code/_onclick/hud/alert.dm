@@ -51,13 +51,15 @@
 	thealert.owner = src
 
 	if(new_master)
-		var/old_layer = new_master.layer
-		var/old_plane = new_master.plane
-		new_master.layer = FLOAT_LAYER
-		new_master.plane = FLOAT_PLANE
-		thealert.add_overlay(new_master)
-		new_master.layer = old_layer
-		new_master.plane = old_plane
+		var/mutable_appearance/master_appearance = new(new_master)
+		master_appearance.appearance_flags = KEEP_TOGETHER
+		master_appearance.layer = FLOAT_LAYER
+		master_appearance.plane = FLOAT_PLANE
+		master_appearance.dir = SOUTH
+		master_appearance.pixel_x = new_master.base_pixel_x
+		master_appearance.pixel_y = new_master.base_pixel_y
+		master_appearance.pixel_z = new_master.base_pixel_z
+		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
 	else
@@ -182,6 +184,11 @@
 	name = "Choking (N2O)"
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
+
+/atom/movable/screen/alert/not_enough_water
+	name = "Choking (No H2O)"
+	desc = "You're not getting enough water. Drench yourself in some water (e.g. showers) or get some water vapor before you pass out!"
+	icon_state = ALERT_NOT_ENOUGH_WATER
 
 //End gas alerts
 

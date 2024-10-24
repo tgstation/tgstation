@@ -521,8 +521,7 @@
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
 				set_facial_hairstyle("Shaved", update = FALSE)
-				set_hairstyle("Bald", update = FALSE)
-				update_body_parts()
+				set_hairstyle("Bald") //This calls update_body_parts()
 				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()
@@ -809,6 +808,6 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
 	burn_clothing(seconds_per_tick, fire_handler.stacks)
 	var/no_protection = FALSE
-	if(dna && dna.species)
-		no_protection = dna.species.handle_fire(src, seconds_per_tick, no_protection)
+	if (HAS_TRAIT(src, TRAIT_IGNORE_FIRE_PROTECTION))
+		no_protection = TRUE
 	fire_handler.harm_human(seconds_per_tick, no_protection)

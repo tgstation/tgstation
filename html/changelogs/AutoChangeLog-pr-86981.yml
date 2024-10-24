@@ -1,6 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "Security Officers (Engineering) can now open crucial doors in Engineering on Birdshot"
-  - bugfix: "Corrected access inconsistencies for maintenance doors in the Engineering department on Birdshot"
-  - bugfix: "Resolved naming inconsistency for the front doors of Engineering on Birdshot"

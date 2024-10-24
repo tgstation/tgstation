@@ -12,7 +12,7 @@
 	/// This outfit will grant these mutations if applied
 	var/list/mutations_to_add = list()
 
-/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	if(isdummy(user))
 		return
@@ -606,7 +606,7 @@
 	l_hand = /obj/item/melee/energy/sword
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	l_pocket = /obj/item/soap/syndie
-	belt = /obj/item/gun/ballistic/revolver/syndicate
+	belt = /obj/item/gun/ballistic/revolver
 
 /datum/outfit/deathmatch_loadout/nukie
 	name = "Deathmatch: Nuclear Operative"
@@ -914,13 +914,13 @@
 
 // We don't want them to just punch each other to death
 
-/datum/outfit/deathmatch_loadout/lattice_battles/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/lattice_battles/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_PACIFISM, REF(src))
 
 // Ragnarok: Fight between religions!
 
-/datum/outfit/deathmatch_loadout/cultish/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/cultish/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_CULTIST, REF(src))
 	user.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
@@ -990,7 +990,7 @@
 		/datum/action/innate/cult/blood_spell/manipulation,
 	)
 
-/datum/outfit/deathmatch_loadout/cultish/artificer/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/cultish/artificer/post_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	var/datum/action/innate/cult/blood_spell/manipulation/magick = locate() in user.get_all_contents()
 	magick.charges = 300
@@ -999,7 +999,7 @@
 	/// Grants the effects of these knowledges to the DMer
 	var/list/knowledge_to_grant
 
-/datum/outfit/deathmatch_loadout/heresy/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/heresy/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_HERETIC, REF(src))
 	user.AddElement(/datum/element/leeching_walk)

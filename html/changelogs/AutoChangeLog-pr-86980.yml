@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Prosopagnosia actually accounts for hover screentips, showing humans as Unknown in those too."

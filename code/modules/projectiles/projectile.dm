@@ -153,7 +153,7 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
-	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
+	///Whether or not our projectile doubles the value of affecting armour
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.

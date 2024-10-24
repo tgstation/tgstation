@@ -205,13 +205,17 @@
 /datum/drift_handler/proc/attempt_halt(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
 
-	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
+	if ((backup.density || !backup.CanPass(source, get_dir(backup, source))) && (get_dir(source, backup) == movement_dir || source.loc == backup.loc))
 		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
 			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		return
 
 	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
 		return
+
+	if (!isnull(source.client) && source.client.intended_direction)
+		if ((source.client.intended_direction & movement_dir) && !(get_dir(source, backup) & movement_dir))
+			return
 
 	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
 		glide_to_halt(get_loop_delay(source))
