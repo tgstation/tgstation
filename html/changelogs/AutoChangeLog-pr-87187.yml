@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Mending touch now has additional effects based on whether or not the target or user is evil, an undead or an empath. Don't use mending touch on evil people or undead, or they might go up in flames. Though evil people can get back at empaths specifically and heal udnead as normal."
-  - rscadd: "Chaplains engulf people using mending touch's harmful reactions to diametrically opposed entities especially well. Because of religious zeal, of course."
-  - rscadd: "Empath chaplains ignore the fear consequences of examining an evil person. They instead get additional information about what to do to these people if the need arises."

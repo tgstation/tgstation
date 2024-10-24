@@ -700,6 +700,9 @@
 /atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(HAS_TRAIT(original_atom, TRAIT_FOOD_SILVER))
+		ADD_TRAIT(src, TRAIT_FOOD_SILVER, INNATE_TRAIT) // stinky food always stinky
+
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))

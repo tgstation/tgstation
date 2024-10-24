@@ -20,7 +20,7 @@
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME
-	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND
 
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
@@ -520,7 +520,7 @@
 	if(make_edible)
 		make_edible()
 
-	if(weight >= FISH_WEIGHT_SLOWDOWN)
+	if(weight >= FISH_WEIGHT_SLOWDOWN && !HAS_TRAIT(src, TRAIT_SPEED_POTIONED))
 		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
 		drag_slowdown = round(slowdown * 0.5, 1)
 	else

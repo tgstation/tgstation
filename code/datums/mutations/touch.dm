@@ -164,7 +164,7 @@
 
 	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
 
-	if (hurt_this_guy && HAS_TRAIT(mendicant, TRAIT_PACIFISM) || hurt_this_guy && !mendicant.combat_mode) //Returns if we're a pacifist and we'd hurt them, or we're not in combat mode and we'll hurt them
+	if (hurt_this_guy && (HAS_TRAIT(mendicant, TRAIT_PACIFISM) || !mendicant.combat_mode)) //Returns if we're a pacifist and we'd hurt them, or we're not in combat mode and we'll hurt them
 		mendicant.balloon_alert(mendicant, "[hurtguy] would be hurt!")
 		return FALSE
 
@@ -351,24 +351,20 @@
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
-	var/hurt_this_guy = FALSE
-
-	if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
-		return FALSE //always return false if we're pacifist
 
 	if(hurtguy.mob_biotypes & MOB_UNDEAD && mendicant.mob_biotypes & MOB_UNDEAD)
 		return FALSE //always return false if we're both undead //undead solidarity
 
 	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the mob undead and we're not evil? If so, hurt.
-		hurt_this_guy = TRUE
+		return TRUE
 
-	else if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
-		hurt_this_guy = TRUE
+	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
+		return TRUE
 
-	else if(!(hurtguy.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(hurtguy, TRAIT_EMPATH) && HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy not undead, they're an empath and we're evil? If so, hurt.
-		hurt_this_guy = TRUE
+	if(!(hurtguy.mob_biotypes & MOB_UNDEAD) && HAS_TRAIT(hurtguy, TRAIT_EMPATH) && HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy not undead, they're an empath and we're evil? If so, hurt.
+		return TRUE
 
-	return hurt_this_guy
+	return FALSE
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
 
