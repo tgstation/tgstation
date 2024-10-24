@@ -9471,7 +9471,7 @@
 /obj/item/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/soulstone/anybody/chaplain,
 /obj/machinery/light/small/red/dim/directional/south,
 /obj/item/radio/intercom/chapel/directional/east,
