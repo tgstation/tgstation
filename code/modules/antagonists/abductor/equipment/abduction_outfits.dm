@@ -24,9 +24,9 @@
 			for(var/obj/item/abductor/gizmo/G in B.contents)
 				console.AddGizmo(G)
 
-/datum/outfit/abductor/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/abductor/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 
 	if(!isnull(user.mind))
@@ -64,9 +64,9 @@
 		/obj/item/abductor/gizmo = 1
 		)
 
-/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
-	if(!visualsOnly && !isnull(user.mind))
+	if(!visuals_only && !isnull(user.mind))
 		var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(user)
 		beamplant.implant(user)
 

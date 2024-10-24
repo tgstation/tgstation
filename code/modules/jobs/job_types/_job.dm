@@ -349,7 +349,7 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
-/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(ispath(back, /obj/item/storage/backpack))
 		switch(H.backpack)
 			if(GBACKPACK)
@@ -386,8 +386,8 @@
 	if(client?.is_veteran() && client?.prefs.read_preference(/datum/preference/toggle/playtime_reward_cloak))
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/job/post_equip(mob/living/carbon/human/equipped, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/datum/job/equipped_job = SSjob.get_job_type(jobtype)

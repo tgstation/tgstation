@@ -70,5 +70,5 @@
 	implants = list(/obj/item/implant/weapons_auth)
 
 
-/datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/virtual_syndicate/post_equip(mob/living/carbon/human/user, visuals_only)
 	user.faction |= ROLE_SYNDICATE

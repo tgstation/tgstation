@@ -306,7 +306,7 @@
 	r_hand = /obj/item/claymore
 	l_hand = /obj/item/shield/roman
 
-/datum/outfit/roman/pre_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/roman/pre_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 	head = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 
