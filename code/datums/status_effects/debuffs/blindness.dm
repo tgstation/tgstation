@@ -13,7 +13,7 @@
 	/// Static list of signals that, when received, we force an update to our nearsighted overlay
 	var/static/list/update_signals = list(SIGNAL_ADDTRAIT(TRAIT_NEARSIGHTED_CORRECTED), SIGNAL_REMOVETRAIT(TRAIT_NEARSIGHTED_CORRECTED))
 	/// How severe is our nearsightedness right now
-	var/overlay_severity = 1
+	var/overlay_severity = 2
 
 /datum/status_effect/grouped/nearsighted/on_apply()
 	RegisterSignals(owner, update_signals, PROC_REF(update_nearsightedness))
@@ -33,6 +33,10 @@
 
 /// Checks if we should be nearsighted currently, or if we should clear the overlay
 /datum/status_effect/grouped/nearsighted/proc/should_be_nearsighted()
+	if (ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if (human_owner.get_eye_scars())
+			return TRUE
 	return !HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED)
 
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't

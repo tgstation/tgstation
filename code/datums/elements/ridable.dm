@@ -12,10 +12,8 @@
 
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
 	var/riding_component_type = /datum/component/riding
-	/// If we have a xenobio red potion applied to us, we get split off so we can pass our special status onto new riding components
-	var/potion_boosted = FALSE
 
-/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, potion_boost = FALSE)
+/datum/element/ridable/Attach(atom/movable/target, component_type = /datum/component/riding, force_rider_standup = TRUE)
 	. = ..()
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
@@ -26,7 +24,9 @@
 
 	target.can_buckle = TRUE
 	riding_component_type = component_type
-	potion_boosted = potion_boost
+
+	if(force_rider_standup)
+		target.buckle_lying = 0
 
 	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_mounting))
 	if(isvehicle(target))
@@ -35,7 +35,8 @@
 		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/element/ridable/Detach(atom/movable/target)
-	target.can_buckle = initial(target.can_buckle)
+	target.buckle_lying = target::buckle_lying
+	target.can_buckle = target::can_buckle
 	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_MOB_STATCHANGE))
 	return ..()
 
@@ -75,7 +76,7 @@
 			span_warning("You can't get a grip on [potential_rider] because your hands are full!"))
 		return COMPONENT_BLOCK_BUCKLE
 
-	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags, potion_boost = potion_boosted)
+	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags)
 
 /// Try putting the appropriate number of [riding offhand items][/obj/item/riding_offhand] into the target's hands, return FALSE if we can't
 /datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)
@@ -117,25 +118,18 @@
 /datum/element/ridable/proc/check_potion(atom/movable/ridable_atom, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(potion_boosted)
+	if(HAS_TRAIT(ridable_atom, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[ridable_atom] has already been coated with red, that's as fast as it'll go!"))
-		return
+		return SPEED_POTION_STOP
 	if(ridable_atom.has_buckled_mobs()) // effect won't take place til the next time someone mounts it, so just prevent that situation
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!"))
-		return
+		return SPEED_POTION_STOP
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 	var/datum/component/riding/theoretical_riding_component = riding_component_type
 	var/theoretical_speed = initial(theoretical_riding_component.vehicle_move_delay)
 	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit to pass
 		to_chat(user, span_warning("[ridable_atom] can't be made any faster!"))
-		return
-	Detach(ridable_atom)
-	ridable_atom.AddElement(/datum/element/ridable, component_type = riding_component_type, potion_boost = TRUE)
-	to_chat(user, span_notice("You slather the red gunk over [ridable_atom], making it faster."))
-	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	ridable_atom.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
-	qdel(speed_potion)
-	return SPEED_POTION_STOP
+		return SPEED_POTION_STOP
 
 /// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
 /datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)

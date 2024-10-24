@@ -79,7 +79,6 @@
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 
 /mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
-	buckle_lying = 0
 	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 

@@ -299,7 +299,7 @@
 	foodtypes = GRAIN | MEAT | FRIED
 
 /obj/item/food/donkpocket/deluxe/nocarb
-	name = "/improper Meat-pocket"
+	name = "\improper Meat-pocket"
 	desc = "The food of choice for the carnivorous traitor."
 	icon_state = "donkpocketdeluxenocarb"
 	food_reagents = list(
@@ -332,7 +332,7 @@
 	foodtypes = MEAT
 
 /obj/item/food/donkpocket/deluxe/vegan
-	name = "/improper Donk-roll"
+	name = "\improper Donk-roll"
 	desc = "The classic station snack, now with rice! Certified vegan and cruelty free by the Animal Liberation Front."
 	icon_state = "donkpocketdeluxevegan"
 	food_reagents = list(
