@@ -59,7 +59,7 @@
 		master_appearance.pixel_x = new_master.base_pixel_x
 		master_appearance.pixel_y = new_master.base_pixel_y
 		master_appearance.pixel_z = new_master.base_pixel_z
-		thealert.add_overlay(master_appearance)
+		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
 	else
