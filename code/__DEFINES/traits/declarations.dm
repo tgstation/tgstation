@@ -1334,6 +1334,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 
+///Trait given to mobs that can dig
+#define TRAIT_MOB_CAN_DIG "mob_can_dig"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow

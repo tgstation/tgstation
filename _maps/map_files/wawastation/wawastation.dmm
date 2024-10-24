@@ -12657,6 +12657,7 @@
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/airalarm/directional/south,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "exR" = (
