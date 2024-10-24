@@ -70,7 +70,7 @@
 	return
 
 /// Length of the animation in dust_animation.dmi
-#define DUST_ANIMATION_TIME 1.5 SECONDS
+#define DUST_ANIMATION_TIME 1.6 SECONDS
 
 /**
  * This is the proc for turning a mob into ash.
@@ -105,11 +105,13 @@
 
 /obj/effect/temp_visual/dust_animation_filter
 	icon = 'icons/mob/dust_animation.dmi'
-	icon_state = "c"
+	icon_state = "dust.1"
 	duration = DUST_ANIMATION_TIME
 
 /obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "error_dont_use_this")
 	. = ..()
+	for(var/i in 1 to duration)
+		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
 	render_target = "*dust-[anim_id]"
 
 #undef DUST_ANIMATION_TIME
