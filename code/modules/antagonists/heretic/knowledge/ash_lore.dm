@@ -34,16 +34,16 @@
 
 	route = PATH_ASH
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_ash
-	grasp = 				/datum/heretic_knowledge/ashen_grasp
-	tier1 = 				/datum/heretic_knowledge/spell/ash_passage
-	mark = 					/datum/heretic_knowledge/mark/ash_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/ash
-	unique_ability = 		/datum/heretic_knowledge/spell/fire_blast
-	tier2 = 				/datum/heretic_knowledge/mad_mask
-	blade = 				/datum/heretic_knowledge/blade_upgrade/ash
-	tier3 =					/datum/heretic_knowledge/spell/flame_birth
-	ascension =				/datum/heretic_knowledge/ultimate/ash_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
+	grasp = /datum/heretic_knowledge/ashen_grasp
+	tier1 = /datum/heretic_knowledge/spell/ash_passage
+	mark = /datum/heretic_knowledge/mark/ash_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/ash
+	unique_ability = /datum/heretic_knowledge/spell/fire_blast
+	tier2 = /datum/heretic_knowledge/mad_mask
+	blade = /datum/heretic_knowledge/blade_upgrade/ash
+	tier3 =	/datum/heretic_knowledge/spell/flame_birth
+	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"

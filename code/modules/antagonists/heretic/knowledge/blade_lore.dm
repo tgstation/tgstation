@@ -36,16 +36,16 @@
 
 	route = PATH_BLADE
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_blade
-	grasp = 				/datum/heretic_knowledge/blade_grasp
-	tier1 = 				/datum/heretic_knowledge/blade_dance
-	mark = 					/datum/heretic_knowledge/mark/blade_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/blade
-	unique_ability = 		/datum/heretic_knowledge/spell/realignment
-	tier2 = 				/datum/heretic_knowledge/duel_stance
-	blade = 				/datum/heretic_knowledge/blade_upgrade/blade
-	tier3 =	 				/datum/heretic_knowledge/spell/furious_steel
-	ascension =				/datum/heretic_knowledge/ultimate/blade_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
+	grasp = /datum/heretic_knowledge/blade_grasp
+	tier1 = /datum/heretic_knowledge/blade_dance
+	mark = /datum/heretic_knowledge/mark/blade_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/blade
+	unique_ability = /datum/heretic_knowledge/spell/realignment
+	tier2 = /datum/heretic_knowledge/duel_stance
+	blade = /datum/heretic_knowledge/blade_upgrade/blade
+	tier3 =	 /datum/heretic_knowledge/spell/furious_steel
+	ascension =	/datum/heretic_knowledge/ultimate/blade_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"

@@ -37,16 +37,16 @@
 
 	route = PATH_FLESH
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_flesh
-	grasp = 				/datum/heretic_knowledge/limited_amount/flesh_grasp
-	tier1 = 				/datum/heretic_knowledge/limited_amount/flesh_ghoul
-	mark = 					/datum/heretic_knowledge/mark/flesh_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/flesh
-	unique_ability = 		/datum/heretic_knowledge/spell/flesh_surgery
-	tier2 = 				/datum/heretic_knowledge/summon/raw_prophet
-	blade = 				/datum/heretic_knowledge/blade_upgrade/flesh
-	tier3 =					/datum/heretic_knowledge/summon/stalker
-	ascension =				/datum/heretic_knowledge/ultimate/flesh_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
+	grasp = /datum/heretic_knowledge/limited_amount/flesh_grasp
+	tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
+	mark = 	/datum/heretic_knowledge/mark/flesh_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/flesh
+	unique_ability = /datum/heretic_knowledge/spell/flesh_surgery
+	tier2 = /datum/heretic_knowledge/summon/raw_prophet
+	blade = /datum/heretic_knowledge/blade_upgrade/flesh
+	tier3 = /datum/heretic_knowledge/summon/stalker
+	ascension =	/datum/heretic_knowledge/ultimate/flesh_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"

@@ -32,16 +32,16 @@
 
 	route = PATH_COSMIC
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_cosmic
-	grasp = 				/datum/heretic_knowledge/cosmic_grasp
-	tier1 = 				/datum/heretic_knowledge/spell/cosmic_runes
-	mark = 					/datum/heretic_knowledge/mark/cosmic_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/cosmic
-	unique_ability = 		/datum/heretic_knowledge/spell/star_touch
-	tier2 = 				/datum/heretic_knowledge/spell/star_blast
-	blade = 				/datum/heretic_knowledge/blade_upgrade/cosmic
-	tier3 =	 				/datum/heretic_knowledge/spell/cosmic_expansion
-	ascension =				/datum/heretic_knowledge/ultimate/cosmic_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
+	grasp = /datum/heretic_knowledge/cosmic_grasp
+	tier1 = /datum/heretic_knowledge/spell/cosmic_runes
+	mark = /datum/heretic_knowledge/mark/cosmic_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/cosmic
+	unique_ability = /datum/heretic_knowledge/spell/star_touch
+	tier2 = /datum/heretic_knowledge/spell/star_blast
+	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
+	tier3 =	 /datum/heretic_knowledge/spell/cosmic_expansion
+	ascension =	/datum/heretic_knowledge/ultimate/cosmic_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"

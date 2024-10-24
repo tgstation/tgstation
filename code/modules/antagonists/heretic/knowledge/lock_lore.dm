@@ -31,16 +31,16 @@
 
 	route = PATH_LOCK
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_knock
-	grasp = 				/datum/heretic_knowledge/lock_grasp
-	tier1 = 				/datum/heretic_knowledge/key_ring
-	mark = 					/datum/heretic_knowledge/mark/lock_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/lock
-	unique_ability = 		/datum/heretic_knowledge/limited_amount/concierge_rite
-	tier2 = 				/datum/heretic_knowledge/spell/burglar_finesse
-	blade = 				/datum/heretic_knowledge/blade_upgrade/flesh/lock
-	tier3 =					/datum/heretic_knowledge/spell/caretaker_refuge
-	ascension =				/datum/heretic_knowledge/ultimate/lock_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
+	grasp = /datum/heretic_knowledge/lock_grasp
+	tier1 = /datum/heretic_knowledge/key_ring
+	mark = /datum/heretic_knowledge/mark/lock_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/lock
+	unique_ability = /datum/heretic_knowledge/limited_amount/concierge_rite
+	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
+	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
+	tier3 =	/datum/heretic_knowledge/spell/caretaker_refuge
+	ascension =	/datum/heretic_knowledge/ultimate/lock_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock
 	name = "A Steward's Secret"

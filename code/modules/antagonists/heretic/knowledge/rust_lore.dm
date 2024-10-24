@@ -36,16 +36,16 @@
 
 	route = PATH_RUST
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_rust
-	grasp = 				/datum/heretic_knowledge/rust_fist
-	tier1 = 				/datum/heretic_knowledge/rust_regen
-	mark = 					/datum/heretic_knowledge/mark/rust_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/rust
-	unique_ability = 		/datum/heretic_knowledge/spell/rust_construction
-	tier2 = 				/datum/heretic_knowledge/spell/area_conversion
-	blade = 				/datum/heretic_knowledge/blade_upgrade/rust
-	tier3 =					/datum/heretic_knowledge/spell/entropic_plume
-	ascension =				/datum/heretic_knowledge/ultimate/rust_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
+	grasp = /datum/heretic_knowledge/rust_fist
+	tier1 = /datum/heretic_knowledge/rust_regen
+	mark = /datum/heretic_knowledge/mark/rust_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/rust
+	unique_ability = /datum/heretic_knowledge/spell/rust_construction
+	tier2 = /datum/heretic_knowledge/spell/area_conversion
+	blade = /datum/heretic_knowledge/blade_upgrade/rust
+	tier3 =	/datum/heretic_knowledge/spell/entropic_plume
+	ascension =	/datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"
@@ -103,9 +103,7 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
-
 	cost = 1
-
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
 	research_tree_icon_state = "cloud_swirl"
 
@@ -122,8 +120,6 @@
 		When triggered, your victim will suffer heavy disgust and confusion. \
 		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-
-
 	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/mark/rust_mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -138,7 +134,6 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 
@@ -147,11 +142,8 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
-
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
-
-
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -163,8 +155,6 @@
 	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
-
-
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
 

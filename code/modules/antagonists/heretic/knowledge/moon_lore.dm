@@ -33,16 +33,16 @@
 
 	route = PATH_MOON
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_moon
-	grasp = 				/datum/heretic_knowledge/moon_grasp
-	tier1 = 				/datum/heretic_knowledge/spell/moon_smile
-	mark = 					/datum/heretic_knowledge/mark/moon_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/moon
-	unique_ability = 		/datum/heretic_knowledge/spell/moon_parade
-	tier2 = 				/datum/heretic_knowledge/moon_amulet
-	blade = 				/datum/heretic_knowledge/blade_upgrade/moon
-	tier3 =					/datum/heretic_knowledge/spell/moon_ringleader
-	ascension =				/datum/heretic_knowledge/ultimate/moon_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
+	grasp = /datum/heretic_knowledge/moon_grasp
+	tier1 = /datum/heretic_knowledge/spell/moon_smile
+	mark = /datum/heretic_knowledge/mark/moon_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/moon
+	unique_ability = /datum/heretic_knowledge/spell/moon_parade
+	tier2 = /datum/heretic_knowledge/moon_amulet
+	blade = /datum/heretic_knowledge/blade_upgrade/moon
+	tier3 =	/datum/heretic_knowledge/spell/moon_ringleader
+	ascension =	/datum/heretic_knowledge/ultimate/moon_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"

@@ -34,16 +34,16 @@
 
 	route = PATH_VOID
 
-	start = 				/datum/heretic_knowledge/limited_amount/starting/base_void
-	grasp = 				/datum/heretic_knowledge/void_grasp
-	tier1 = 				/datum/heretic_knowledge/cold_snap
-	mark = 					/datum/heretic_knowledge/mark/void_mark
-	ritual_of_knowledge = 	/datum/heretic_knowledge/knowledge_ritual/void
-	unique_ability = 		/datum/heretic_knowledge/spell/void_conduit
-	tier2 = 				/datum/heretic_knowledge/spell/void_phase
-	blade = 				/datum/heretic_knowledge/blade_upgrade/void
-	tier3 =					/datum/heretic_knowledge/spell/void_pull
-	ascension =				/datum/heretic_knowledge/ultimate/void_final
+	start = /datum/heretic_knowledge/limited_amount/starting/base_void
+	grasp = /datum/heretic_knowledge/void_grasp
+	tier1 = /datum/heretic_knowledge/cold_snap
+	mark = 	/datum/heretic_knowledge/mark/void_mark
+	ritual_of_knowledge = /datum/heretic_knowledge/knowledge_ritual/void
+	unique_ability = /datum/heretic_knowledge/spell/void_conduit
+	tier2 = /datum/heretic_knowledge/spell/void_phase
+	blade = /datum/heretic_knowledge/blade_upgrade/void
+	tier3 =	/datum/heretic_knowledge/spell/void_pull
+	ascension =	/datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
