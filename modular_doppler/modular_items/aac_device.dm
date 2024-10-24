@@ -1,5 +1,6 @@
+//this is the tts device as seen on other codebases, renamed and reflavored to reflect its real world counterpart.
 /obj/item/aac_device
-	name = "AAC Device"
+	name = "AAC device"
 	desc = "An Augmented and Alternative Communication device designed to facilitate oral communication \
 	for people with communicative disabilities."
 	icon = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/devices.dmi'
@@ -19,13 +20,11 @@
 		playsound(src, 'modular_doppler/modular_items/sounds/aac_stopped_type.ogg', 50, TRUE)
 		return
 	src.say(str)
-	SEND_SIGNAL((usr), COMSIG_MOB_POST_SAY, (str), null, null)
+	//SEND_SIGNAL((src), COMSIG_MOB_POST_SAY, (str), null, null) ostensibly this would call the user's dopperboops, but it doesn't work :3c
 	str = null
 
-
-
 /obj/item/aac_device/item_ctrl_click(mob/user)
-	var/new_name = reject_bad_name(tgui_input_text(user, "Name your Augmented and Alternative Communication device.", "Set TTS Device Name", "", MAX_NAME_LEN))
+	var/new_name = reject_bad_name(tgui_input_text(user, "Name your Augmented and Alternative Communication device.", "Set AAC Device Name", "", MAX_NAME_LEN))
 	if(new_name)
 		name = "[new_name]'s [initial(name)]"
 	else
