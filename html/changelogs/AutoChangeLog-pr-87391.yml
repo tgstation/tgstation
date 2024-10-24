@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscdel: "Removed big manipulator's use mode"

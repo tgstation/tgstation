@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Moving along lattices in space with a jetpack on no longer causes your screen to jerk"

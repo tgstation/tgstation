@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed a potential rare source of strange behavior resulting from an admin manually restarting the MC."

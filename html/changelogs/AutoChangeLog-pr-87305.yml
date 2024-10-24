@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Refactored hat stabilizers into a component shared with plasmaman helmets"

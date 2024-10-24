@@ -1,8 +1,0 @@
-author: "DaCoolBoss"
-delete-after: True
-changes:
-  - balance: "[Haunted Trading Post] Explosive trap in Employee's Lounge is now less sensitive."
-  - balance: "[Haunted Trading Post] Shock traps will no longer be triggered by Syndicate mobs."
-  - bugfix: "Dedbots now properly spawn post-death visual effects."
-  - bugfix: "[Lizard's Gas (Lavaland)] Atmos outside the gas station has been tweaked, for realism."
-  - bugfix: "[MI13 Food Truck] Minor visual fixes."

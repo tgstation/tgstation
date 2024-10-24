@@ -1,4 +1,0 @@
-author: "Absolucy, Kapu"
-delete-after: True
-changes:
-  - bugfix: "Fix overlay lighting (such as lanterns) messing up alert overlays, i.e the rod of asclepius alert."

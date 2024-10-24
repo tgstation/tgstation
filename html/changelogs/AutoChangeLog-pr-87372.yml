@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "fixed an exception with firing a flamethrower without a tank"

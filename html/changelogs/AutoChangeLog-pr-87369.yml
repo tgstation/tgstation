@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "blob zombies inherit the blob spore's faction now, which means gold extract-spawned passive blob spores won't make aggressive blob zombies"

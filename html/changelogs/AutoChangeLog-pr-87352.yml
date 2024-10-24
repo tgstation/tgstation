@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Big manipulators can no longer pick up anchored, abstract or nodrop/dropdel objects"
