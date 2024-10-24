@@ -46,7 +46,7 @@
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck
 	name = "chief medical officer's turtleneck"
@@ -88,7 +88,7 @@
 
 /obj/item/clothing/under/rank/medical/scrubs/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) //FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/under/rank/medical/scrubs/blue
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."

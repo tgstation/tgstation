@@ -93,3 +93,7 @@
 		return FALSE
 
 	return TRUE
+
+/datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)
+	//The mushroom cap is red by default (can still be dyed)
+	return "#FF4B19"

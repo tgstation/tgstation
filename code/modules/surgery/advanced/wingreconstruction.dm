@@ -53,7 +53,7 @@
 			wings.heal_wings(user, ALL)
 
 		var/obj/item/organ/antennae/antennae = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_ANTENNAE) //i mean we might aswell heal their antennae too
-		antennae?.heal_antennae()
+		antennae?.heal_antennae(user, ALL)
 
 		human_target.update_body_parts()
 	return ..()

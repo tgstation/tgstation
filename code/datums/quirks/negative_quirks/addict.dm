@@ -211,7 +211,7 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
 	var/obj/item/reagent_containers/brandy_container = drug_container_type
 	if(isnull(brandy_container))
-		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		stack_trace("Alcoholic quirk added while the GLOB.possible_alcoholic_addictions is (somehow) not initialized!")
 		brandy_container = new drug_container_type
 		qdel(brandy_container)
 

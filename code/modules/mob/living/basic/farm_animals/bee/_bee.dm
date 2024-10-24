@@ -70,7 +70,6 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
@@ -108,18 +107,20 @@
 /mob/living/basic/bee/proc/spawn_corpse()
 	new /obj/item/trash/bee(loc, src)
 
-/mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it

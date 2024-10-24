@@ -240,6 +240,7 @@
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
+#include "screenshot_digi.dm"
 #include "screenshot_dynamic_human_icons.dm"
 #include "screenshot_high_luminosity_eyes.dm"
 #include "screenshot_humanoids.dm"

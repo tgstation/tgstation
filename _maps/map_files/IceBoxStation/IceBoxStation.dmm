@@ -44654,14 +44654,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "mYR" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen{
-	pixel_x = -5
-	},
-/obj/item/hand_labeler{
-	pixel_y = -3
-	},
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "mZf" = (

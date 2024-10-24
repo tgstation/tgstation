@@ -521,8 +521,7 @@
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
 				set_facial_hairstyle("Shaved", update = FALSE)
-				set_hairstyle("Bald", update = FALSE)
-				update_body_parts()
+				set_hairstyle("Bald") //This calls update_body_parts()
 				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()

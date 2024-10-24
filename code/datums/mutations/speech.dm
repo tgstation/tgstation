@@ -79,7 +79,7 @@
 		// Used to replace the original later
 		var/og_word = editing_word
 		// Iterating through each replaceable-string in the .json
-		var/list/static/super_wacky_words = strings("heckacious.json", "heckacious")
+		var/static/list/super_wacky_words = strings("heckacious.json", "heckacious")
 
 		// If the word doesn't get replaced we might do something with it later
 		var/word_edited

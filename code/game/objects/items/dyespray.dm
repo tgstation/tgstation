@@ -28,8 +28,8 @@
 		if(!istype(organ.bodypart_overlay, /datum/bodypart_overlay/mutant))
 			continue
 		var/datum/bodypart_overlay/mutant/overlay = organ.bodypart_overlay
-		if(overlay.dyable)
-			dyables += list("External Bodyparts/Organs")
+		if(overlay.dyable && overlay.sprite_datum.color_src)
+			dyables += list("External Body Parts")
 			break
 	var/obj/item/bodypart/head/head =  human_target.get_bodypart(BODY_ZONE_HEAD)
 	if(!head || !(head.head_flags & HEAD_HAIR) || HAS_TRAIT(human_target, TRAIT_BALD))
@@ -47,7 +47,7 @@
 		return
 
 	if(what_to_dye == "External Bodyparts/Organs")
-		dye_organ()
+		dye_organ(target, user)
 		return
 
 	var/list/choices = what_to_dye == "Hair" ? SSaccessories.hair_gradients_list : SSaccessories.facial_hair_gradients_list
@@ -74,15 +74,18 @@
 
 /obj/item/dyespray/proc/dye_organ(mob/living/carbon/human/target, mob/user)
 	var/list/dyables = list()
+	var/list/choices = list()
 	for(var/obj/item/organ/organ as anything in target.organs)
 		if(!istype(organ.bodypart_overlay, /datum/bodypart_overlay/mutant))
 			continue
 		var/datum/bodypart_overlay/mutant/overlay = organ.bodypart_overlay
-		if(overlay.dyable)
-			dyables[organ.name] = organ
-	if(!length(dyables))
+		if(overlay.dyable && overlay.sprite_datum.color_src)
+			var/choice_name = full_capitalize(organ.name)
+			dyables[choice_name] = organ
+			choices += choice_name
+	if(!length(choices))
 		return
-	var/what_to_dye = tgui_alert(user, "What do you want to dye?", "Character Preference", dyables)
+	var/what_to_dye = tgui_alert(user, "What do you want to dye?", "Character Preference", choices)
 	if(!what_to_dye || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
@@ -98,8 +101,7 @@
 		if(QDELETED(selected) || !(selected in target.organs))
 			return
 		if(remove_dye == "Yes")
-			overlay.dye_color = null
-			target.update_body_parts()
+			overlay.set_dye_color(null, selected)
 			return
 
 	var/default_color = overlay.dye_color || overlay.draw_color
@@ -112,5 +114,4 @@
 		return
 	if(QDELETED(selected) || !(selected in target.organs))
 		return
-	overlay.dye_color = new_color
-	target.update_body_parts()
+	overlay.set_dye_color(new_color, selected)

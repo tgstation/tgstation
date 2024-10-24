@@ -618,7 +618,7 @@
 /atom/movable/screen/alert/status_effect/shower_regen/hater
 	name = "Washing"
 	desc = "Waaater... Fuck this WATER!!"
-	icon_state = "shower_regen_hater"
+	icon_state = "shower_regen_catgirl"
 
 /datum/status_effect/shower_regen
 	id = "shower_regen"
@@ -637,10 +637,13 @@
 	. = ..()
 	var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
 	var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
+	var/healed = 0
 	if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
-		owner.adjustOxyLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		owner.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		owner.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		owner.adjustBruteLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjustOxyLoss(-1.5 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustFireLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustBruteLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 		heal_or_deal *= 1.5
-	owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks)
+	healed += owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks, updating_stamina = FALSE)
+	if(healed)
+		owner.updatehealth()

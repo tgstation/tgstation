@@ -103,6 +103,13 @@
 			return I
 	return FALSE
 
+// List version of above proc
+// Returns ret_item, which is either the succesfully located item or null
+/mob/proc/is_holding_item_of_types(list/typepaths)
+	for(var/typepath in typepaths)
+		var/ret_item = is_holding_item_of_type(typepath)
+		return ret_item
+
 //Checks if we're holding a tool that has given quality
 //Returns the tool that has the best version of this quality
 /mob/proc/is_holding_tool_quality(quality)

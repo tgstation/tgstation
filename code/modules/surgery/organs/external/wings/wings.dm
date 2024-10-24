@@ -23,7 +23,6 @@
 /datum/bodypart_overlay/mutant/wings
 	layers = ALL_EXTERNAL_OVERLAYS
 	feature_key = "wings"
-	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!human.wear_suit)

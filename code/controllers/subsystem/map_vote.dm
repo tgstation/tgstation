@@ -79,15 +79,33 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("No valid maps.")
 		return
 
-	var/winner = pick_weight(filter_cache_to_valid_maps())
+	var/winner
+	var/winner_amount = 0
+	for(var/map in valid_maps)
+		if(!winner_amount)
+			winner = map
+			winner_amount = map_vote_cache[map]
+			continue
+		if(map_vote_cache[map] <= winner_amount)
+			continue
+		winner = map
+		winner_amount = map_vote_cache[map]
+
+	ASSERT(winner, "No winner found in map vote.")
 	set_next_map(config.maplist[winner])
-	send_map_vote_notice("Map Selected - [span_bold(next_map_config.map_name)]")
+	var/list/messages = list("Map Selected - [span_bold(next_map_config.map_name)]")
+	messages += "Tallies at the time of selection:"
+	messages += tally_printout
 
 	// do not reset tallies if only one map is even possible
 	if(length(valid_maps) > 1)
 		map_vote_cache[winner] = CONFIG_GET(number/map_vote_minimum_tallies)
 		write_cache()
 		update_tally_printout()
+	else
+		messages += "Only one map was possible, tallies were not reset."
+
+	send_map_vote_notice(arglist(messages))
 
 /// Returns a list of all map options that are invalid for the current population.
 /datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()

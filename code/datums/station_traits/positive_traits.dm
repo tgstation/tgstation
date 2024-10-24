@@ -272,7 +272,7 @@
 		/datum/job/clown = /obj/item/organ/cyberimp/brain/anti_stun, //HONK!
 		/datum/job/cook = /obj/item/organ/cyberimp/chest/nutriment/plus,
 		/datum/job/coroner = /obj/item/organ/tongue/bone, //hes got a bone to pick with you
-		/datum/job/curator = /obj/item/organ/eyes/robotic/glow,
+		/datum/job/curator = /obj/item/organ/cyberimp/brain/connector,
 		/datum/job/detective = /obj/item/organ/lungs/cybernetic/tier3,
 		/datum/job/doctor = /obj/item/organ/cyberimp/arm/surgery,
 		/datum/job/geneticist = /obj/item/organ/fly, //we don't care about implants, we have cancer.

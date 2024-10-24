@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Plasmaman space suit internal extinguisher works and can be refilled now"
-  - refactor: "Refactored plasmamen self-ignition to be limb-side instead of being handled by their species"

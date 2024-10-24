@@ -170,8 +170,10 @@
 	tracker_owner_ckey = user.ckey
 	if(user.is_holding(parent))
 		RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 	else // The item is likely worn (eg. mothic cap)
 		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
+		RegisterSignal(user, COMSIG_ATOM_ENTERING, PROC_REF(on_enter_new_loc))
 		var/static/list/capacity_signals = list(
 			COMSIG_LIVING_STATUS_KNOCKDOWN,
 			COMSIG_LIVING_STATUS_PARALYZE,
@@ -181,6 +183,13 @@
 	START_PROCESSING(SSprojectiles, src)
 	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	return TRUE
+
+///Stop scoping if the `newloc` we move to is not a turf
+/datum/component/scope/proc/on_enter_new_loc(datum/source, atom/newloc, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+
+	if(!isturf(newloc))
+		stop_zooming(tracker.owner)
 
 /datum/component/scope/proc/on_incapacitated(mob/living/source, amount = 0, ignore_canstun = FALSE)
 	SIGNAL_HANDLER
@@ -207,6 +216,7 @@
 		COMSIG_LIVING_STATUS_STUN,
 		COMSIG_MOB_SWAP_HANDS,
 		COMSIG_QDELETING,
+		COMSIG_ATOM_ENTERING,
 	))
 	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 

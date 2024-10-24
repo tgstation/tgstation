@@ -1,5 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "the ghost \"t-ray view\" no longer requires a double press to activate a second time."
-  - qol: "renamed \"t-ray view\" to \"t-ray scan\" for clarity."

@@ -15,7 +15,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attack_verb_continuous = "weakly tackles"
-	attack_verb_simple = "weakly tackles"
+	attack_verb_simple = "weakly tackle"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"

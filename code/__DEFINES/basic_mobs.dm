@@ -24,6 +24,9 @@
 /// Above this speed we stop gliding because it looks silly
 #define END_GLIDE_SPEED 10
 
+///hunger cooldown for basic mobs
+#define EAT_FOOD_COOLDOWN 45 SECONDS
+
 ///mook attack status flags
 #define MOOK_ATTACK_NEUTRAL 0
 #define MOOK_ATTACK_WARMUP 1

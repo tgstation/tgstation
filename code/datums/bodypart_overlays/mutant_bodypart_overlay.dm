@@ -110,7 +110,7 @@
 	. = list()
 	. += "[get_base_icon_state()]"
 	. += "[feature_key]"
-	. += "[draw_color]"
+	. += "[dye_color || draw_color]"
 	return .
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
@@ -128,12 +128,12 @@
 
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
-			draw_color = override_color(bodypart_owner.draw_color)
+			draw_color = override_color(bodypart_owner)
 		if(ORGAN_COLOR_INHERIT)
 			draw_color = bodypart_owner.draw_color
 		if(ORGAN_COLOR_HAIR)
 			var/datum/species/species = bodypart_owner.owner?.dna?.species
-			var/fixed_color = species?.get_fixed_hair_color(bodypart_owner)
+			var/fixed_color = species?.get_fixed_hair_color(bodypart_owner.owner)
 			if(!ishuman(bodypart_owner.owner))
 				draw_color = fixed_color
 				return
@@ -168,3 +168,10 @@
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
 
+///From dye sprays. Set the dye_color (draw_color override) of this organ to a new value.
+/datum/bodypart_overlay/mutant/proc/set_dye_color(new_color, obj/item/organ/organ)
+	dye_color = new_color
+	if(organ.owner)
+		organ.owner.update_body_parts()
+	else
+		organ.bodypart_owner?.update_icon_dropped()

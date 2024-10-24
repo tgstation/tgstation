@@ -150,7 +150,8 @@
 			) = 9,
 			// Brain / Head
 			list(
-				/obj/item/organ/cyberimp/brain/anti_drop = 100,
+				/obj/item/organ/cyberimp/brain/anti_drop = 50,
+				/obj/item/organ/cyberimp/brain/connector = 50,
 				/obj/item/organ/cyberimp/brain/anti_stun = 10,
 			) = 10,
 			// Misc

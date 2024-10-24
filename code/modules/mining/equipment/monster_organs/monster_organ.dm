@@ -62,6 +62,23 @@
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
+/obj/item/organ/monster_core/examine(mob/user)
+	. = ..()
+	if(!decay_timer)
+		return
+	var/estimated_time_left = round(timeleft(decay_timer), 1 MINUTES)
+	switch(estimated_time_left)
+		if(4 MINUTES)
+			. += span_notice("It's fresh and still pulsating with the last vestiges of life.")
+		if(3 MINUTES)
+			. += span_notice("It still looks pretty fresh.")
+		if(2 MINUTES)
+			. += span_notice("It's not as fresh as could be.")
+		if(1 MINUTES)
+			. += span_notice("Signs of decay are starting to set in. It might not be good for much longer.")
+		if(0 SECONDS to 1 MINUTES)
+			. += span_warning("Signs of decay have set in, but it still looks alive. It's probably about to become unusable really quickly.")
+
 /obj/item/organ/monster_core/Destroy(force)
 	deltimer(decay_timer)
 	return ..()

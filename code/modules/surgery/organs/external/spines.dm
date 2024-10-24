@@ -41,3 +41,8 @@
 	. = ..()
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
+
+/datum/bodypart_overlay/mutant/spines/set_dye_color(new_color, obj/item/organ/tail/organ)
+	var/obj/item/organ/tail/tail = organ?.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	tail?.tail_spines_overlay?.set_dye_color(new_color, organ)
+	return ..()

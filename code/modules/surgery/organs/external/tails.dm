@@ -228,3 +228,6 @@
 	. = ..()
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
+
+/datum/bodypart_overlay/mutant/tail_spines/set_dye_color(new_color, obj/item/organ/organ)
+	dye_color = new_color //no update_body_parts() call, tail/set_dye_color will do it.
