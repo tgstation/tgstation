@@ -69865,6 +69865,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "ryt" = (
