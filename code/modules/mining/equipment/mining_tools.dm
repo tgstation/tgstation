@@ -168,6 +168,11 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "sili_shovel"
 	toolspeed = 0.6
+	worn_icon_state = null
+
+/obj/item/shovel/spade/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
