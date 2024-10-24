@@ -1,7 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "input output overlays for manufacturing machines actually update properly when rotated"
-  - qol: "you may dump materials of a manulathe via CTRL SHIFT LMB"
-  - balance: "manulathes may not receive ore (not intentional)"
-  - balance: "manulathes now use a matter bin in their construction, which now affects their material holding capacity: 50 sheets per tier"

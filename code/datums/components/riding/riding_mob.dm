@@ -12,7 +12,7 @@
 	/// abilities that are always blacklisted from sharing
 	var/list/blacklist_abilities = list()
 
-/datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+/datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -205,7 +205,7 @@
 /datum/component/riding/creature/human
 	can_be_driven = FALSE
 
-/datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+/datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	. = ..()
 	var/mob/living/carbon/human/human_parent = parent
 	human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
@@ -446,7 +446,7 @@
 /datum/component/riding/creature/goliath/deathmatch
 	keytype = null
 
-/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
+/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags)
 	. = ..()
 	var/mob/living/basic/mining/goliath/goliath = parent
 	goliath.add_movespeed_modifier(/datum/movespeed_modifier/goliath_mount)
@@ -514,7 +514,7 @@
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(17, 46), TEXT_SOUTH = list(17,51), TEXT_EAST = list(27, 46), TEXT_WEST = list(6, 46)))
 
-/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	. = ..()
 	RegisterSignal(riding_mob, COMSIG_MOVABLE_POINTED, PROC_REF(attack_pointed))
 
@@ -536,7 +536,7 @@
 	require_minigame = TRUE
 	ride_check_flags = RIDER_NEEDS_ARM | UNBUCKLE_DISABLED_RIDER
 
-/datum/component/riding/creature/raptor/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
+/datum/component/riding/creature/raptor/Initialize(mob/living/riding_mob, force, ride_check_flags)
 	. = ..()
 	RegisterSignal(parent, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_bullet_hit))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_attacked))
