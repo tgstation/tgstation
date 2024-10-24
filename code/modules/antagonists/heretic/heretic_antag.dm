@@ -272,6 +272,9 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
+	if(!GLOB.heretic_research_tree)
+		GLOB.heretic_research_tree = generate_heretic_research_tree()
+
 	if(give_objectives)
 		forge_primary_objectives()
 

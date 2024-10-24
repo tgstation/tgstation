@@ -1,7 +1,7 @@
 //Global typecache of all heretic knowledges -> instantiate the tree columns -> make them link themselves -> replace the old heretic stuff
 
 //heretic research tree is a directional graph so we can use some basic graph stuff to make internally handling it easier
-GLOBAL_LIST_INIT(heretic_research_tree,generate_heretic_research_tree())
+GLOBAL_LIST(heretic_research_tree)
 
 //HKT = Heretic Knowledge Tree (Heretic Research Tree :3) these objects really only exist for a short period of time at startup and then get deleted
 /datum/heretic_knowledge_tree_column

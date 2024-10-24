@@ -7,7 +7,8 @@
 /datum/unit_test/heretic_knowledge
 
 /datum/unit_test/heretic_knowledge/Run()
-
+	if(!GLOB.heretic_research_tree)
+		GLOB.heretic_research_tree = generate_heretic_research_tree()
 	// First, we get a list of all knowledge types
 	// EXCLUDING all abstract types
 	var/list/all_possible_knowledge = typesof(/datum/heretic_knowledge)
