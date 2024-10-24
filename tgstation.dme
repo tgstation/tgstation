@@ -591,6 +591,7 @@
 #include "code\_onclick\hud\movable_screen_objects.dm"
 #include "code\_onclick\hud\new_player.dm"
 #include "code\_onclick\hud\ooze.dm"
+#include "code\_onclick\hud\perks.dm"
 #include "code\_onclick\hud\picture_in_picture.dm"
 #include "code\_onclick\hud\radial.dm"
 #include "code\_onclick\hud\radial_persistent.dm"
