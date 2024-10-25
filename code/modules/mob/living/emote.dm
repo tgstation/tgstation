@@ -743,7 +743,7 @@
 	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/whistle
+/datum/emote/living/carbon/human/whistle
 	key = "whistle"
 	key_third_person = "whistles"
 	message = "whistles."
