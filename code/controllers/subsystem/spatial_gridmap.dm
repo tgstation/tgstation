@@ -1,4 +1,4 @@
-///the subsystem creates this many [/mob/oranges_ear] mob instances during init. allocations that require more than this create more.
+///the subsystem creates this many [/mob/abstract/oranges_ear] mob instances during init. allocations that require more than this create more.
 #define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
 
 /**
@@ -97,9 +97,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	///empty spatial grid cell content lists are just a reference to this instead of a standalone list to save memory without needed to check if its null when iterating
 	var/list/dummy_list = list()
 
-	///list of all of /mob/oranges_ear instances we have pregenerated for view() iteration speedup
-	var/list/mob/oranges_ear/pregenerated_oranges_ears = list()
-	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
+	///list of all of /mob/abstract/oranges_ear instances we have pregenerated for view() iteration speedup
+	var/list/mob/abstract/oranges_ear/pregenerated_oranges_ears = list()
+	///how many pregenerated /mob/abstract/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
 /datum/controller/subsystem/spatial_grid/Initialize()
@@ -626,11 +626,11 @@ SUBSYSTEM_DEF(spatial_grid)
 ///i really fucking hope this never gets called after init :clueless:
 /datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
 	for(var/new_ear in 1 to number_to_generate)
-		pregenerated_oranges_ears += new/mob/oranges_ear(null)
+		pregenerated_oranges_ears += new/mob/abstract/oranges_ear(null)
 
 	number_of_oranges_ears = length(pregenerated_oranges_ears)
 
-///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
+///allocate one [/mob/abstract/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
 ///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
 /datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
 	var/input_length = length(atoms_that_need_ears)
@@ -641,8 +641,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	. = list()
 
-	///the next unallocated /mob/oranges_ear that we try to allocate to assigned_atom's turf
-	var/mob/oranges_ear/current_ear
+	///the next unallocated /mob/abstract/oranges_ear that we try to allocate to assigned_atom's turf
+	var/mob/abstract/oranges_ear/current_ear
 	///the next atom in atoms_that_need_ears an ear assigned to it
 	var/atom/assigned_atom
 	///the turf loc of the current assigned_atom. turfs are used to track oranges_ears already assigned to one location so we dont allocate more than one

@@ -110,6 +110,9 @@
 	/// String to store an applicable error message for a subsystem crashing, used to help debug crashes in contexts such as Continuous Integration/Unit Tests
 	var/initialization_failure_message = null
 
+	/// An abstract mob used to make tracking which subsystem caused a runtime easier.
+	var/mob/abstract/subsystem_tracker/tracker
+
 	//Do not blindly add vars here to the bottom, put it where it goes above
 	//If your var only has two values, put it in as a flag.
 
@@ -133,7 +136,10 @@
 	tick_allocation_avg = MC_AVERAGE(tick_allocation_avg, tick_allocation_last)
 
 	. = SS_SLEEPING
+	var/old_usr = usr
+	usr = tracker
 	fire(resumed)
+	usr = old_usr
 	. = state
 	if (state == SS_SLEEPING)
 		slept_count++

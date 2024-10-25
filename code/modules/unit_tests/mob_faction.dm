@@ -5,9 +5,9 @@
 	/// Right now taken from create_and_destroy
 	var/list/ignored = list(
 		/mob/living/carbon,
-		/mob/dview,
-		/mob/oranges_ear
+		/mob/dview
 	)
+	ignored += typesof(/mob/abstract)
 	ignored += typesof(/mob/camera/imaginary_friend)
 	ignored += typesof(/mob/living/silicon/robot/model)
 	ignored += typesof(/mob/camera/ai_eye/remote/base_construction)

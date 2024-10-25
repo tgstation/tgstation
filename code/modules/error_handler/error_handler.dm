@@ -96,10 +96,13 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/list/usrinfo = null
 	var/locinfo
 	if(istype(usr))
-		usrinfo = list("  usr: [key_name(usr)]")
-		locinfo = loc_name(usr)
-		if(locinfo)
-			usrinfo += "  usr.loc: [locinfo]"
+		if(istype(usr, /mob/abstract/subsystem_tracker))
+			usrinfo = list("  subsystem: [usr]")
+		else
+			usrinfo = list("  usr: [key_name(usr)]")
+			locinfo = loc_name(usr)
+			if(locinfo)
+				usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()

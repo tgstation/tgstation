@@ -404,13 +404,16 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		SS_INIT_NO_MESSAGE,
 	)
 
-	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
 		return
 
 	current_initializing_subsystem = subsystem
 	rustg_time_reset(SS_INIT_TIMER_KEY)
 
+	var/old_usr = usr
+	usr = subsystem.tracker
 	var/result = subsystem.Initialize()
+	usr = old_usr
 
 	// Capture end time
 	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)
