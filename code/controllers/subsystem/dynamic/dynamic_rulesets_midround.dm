@@ -994,7 +994,7 @@
 	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag
 	player_mind.add_antag_datum(antag_datum)
-	ADD_TRAIT(voidwalker, TRAIT_STEALTHY_INTERACT)
+	ADD_TRAIT(voidwalker, TRAIT_STEALTHY_INTERACT, INNATE_TRAIT)
 
 	playsound(voidwalker, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Voidwalker by the midround ruleset.")
