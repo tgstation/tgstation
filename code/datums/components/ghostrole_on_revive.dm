@@ -42,6 +42,11 @@
 	SIGNAL_HANDLER
 
 	REMOVE_TRAIT(old_owner, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	var/obj/item/bodypart/head/head = old_owner?.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		var/soul_eyes = locate(/datum/bodypart_overlay/simple/soul_pending_eyes) in head.bodypart_overlays
+		if(soul_eyes)
+			head.remove_bodypart_overlay(soul_eyes)
 	prepare_brain(brain)
 
 /datum/component/ghostrole_on_revive/proc/prepare_brain(obj/item/organ/brein)
