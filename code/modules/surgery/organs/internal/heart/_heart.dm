@@ -19,7 +19,7 @@
 	attack_verb_simple = list("beat", "thump")
 
 	// Love is stored in the heart.
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/love = 2.5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/love = 2.5)
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 

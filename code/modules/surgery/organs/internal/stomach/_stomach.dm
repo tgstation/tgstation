@@ -20,7 +20,7 @@
 	high_threshold_cleared = span_info("The pain in your stomach dies down for now, but food still seems unappealing.")
 	low_threshold_cleared = span_info("The last bouts of pain in your stomach have died out.")
 
-	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining = 5)
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 

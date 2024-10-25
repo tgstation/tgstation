@@ -19,5 +19,5 @@
 	// We have a bigger heart full of love!
 	holder_heart.reagents.add_reagent(/datum/reagent/love, 2.5)
 	// Like, physically bigger.
-	holder_heart.reagents.add_reagent(/datum/reagent/consumable/nutriment, 5)
+	holder_heart.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 5)
 	holder_heart.transform = holder_heart.transform.Scale(1.5)
