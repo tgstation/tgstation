@@ -31,11 +31,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 		var/little_bad = isnull(eye) ? 20 : eye.low_threshold
 		var/very_bad = isnull(eye) ? 30 : eye.high_threshold
 
-		eye_goodness += ((get_dist(user, src) - 2) * 5) // add a modifier based on distance, so closer = "better", further = "worse"
 		if(user.has_status_effect(/datum/status_effect/eye_blur))
 			eye_goodness = max(eye_goodness, very_bad + 1)
 		if(user.is_nearsighted_currently())
 			eye_goodness = max(eye_goodness, little_bad + 1)
+		eye_goodness += ((get_dist(user, src) - 2) * 5) // add a modifier based on distance, so closer = "better", further = "worse"
 
 		if(eye_goodness <= 0)
 			report = span_notice("\"E, F, P...\" Yep, you can read down to the red line.")
