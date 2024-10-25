@@ -178,4 +178,11 @@
 					source = spawner,
 				)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	// If we have a Station Trait "Naval Patrol" it will anniunce the battlecruiser more conspiciously
+	if(GLOB.dynamic_ruleset_categories & RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS)
+		priority_announce(
+			"We've detected a Syndicate battlecruiser ship heading towards [GLOB.station_name]. It somehow evaded our engagement protocols. The situation is yours to handle, no reply.",
+			"Nanotrasen Navy Update",
+		)
+	else
+		priority_announce("Unidentified armed ship detected near the station.")

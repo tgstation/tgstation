@@ -55,6 +55,7 @@
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	antag_flag_override = ROLE_TRAITOR
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -85,6 +86,7 @@
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_PROVOCATEUR
 	antag_flag_override = ROLE_REV_HEAD
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
@@ -185,6 +187,7 @@
 	antag_datum = /datum/antagonist/heretic
 	antag_flag = ROLE_HERETIC_SMUGGLER
 	antag_flag_override = ROLE_HERETIC
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
@@ -227,6 +230,7 @@
 	antag_datum = /datum/antagonist/changeling
 	antag_flag = ROLE_STOWAWAY_CHANGELING
 	antag_flag_override = ROLE_CHANGELING
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_OUTSIDE_ANTAGONISTS
 	protected_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
