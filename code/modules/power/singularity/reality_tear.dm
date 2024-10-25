@@ -52,7 +52,7 @@
 		return
 	var/mob/living/jedi = user
 	to_chat(jedi, span_userdanger("You don't feel like you are real anymore."))
-	jedi.dust_animation()
+	dust_animation(jedi)
 	jedi.spawn_dust()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, attack_hand), jedi), 0.5 SECONDS)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

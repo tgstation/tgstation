@@ -2,9 +2,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, dna.species.gib_anim)
 
-/mob/living/carbon/human/dust_animation()
-	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
-
 /mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
 	if(flags_1 & HOLOGRAM_1)
 		return
