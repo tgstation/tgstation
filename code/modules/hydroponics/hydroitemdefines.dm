@@ -521,6 +521,11 @@
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 
+/obj/item/hatchet/cyborg
+	name = "cyborg hatchet"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_hatchet"
+
 /obj/item/scythe
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
