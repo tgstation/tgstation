@@ -73,6 +73,14 @@
 	name = "Shorts"
 	item_path = /obj/item/clothing/under/shorts
 
+/datum/loadout_item/undersuit/pants/shorts/shorter
+	name = "Short Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter
+
+/datum/loadout_item/undersuit/pants/shorts/shorter/shortest
+	name = "Shortest Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/shortest
+
 /datum/loadout_item/undersuit/pants/slacks
 	name = "Slacks"
 	item_path = /obj/item/clothing/under/pants/slacks
@@ -85,6 +93,14 @@
 	name = "Jean Shorts"
 	item_path = /obj/item/clothing/under/shorts/jeanshorts
 
+/datum/loadout_item/undersuit/pants/jeans/shorts/shorter
+	name = "Short Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/jeans
+
+/datum/loadout_item/undersuit/pants/jeans/shorts/shorter/shortest
+	name = "Shortest Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/shorter/jeans/shortest
+
 /datum/loadout_item/undersuit/pants/track
 	name = "Track Pants"
 	item_path = /obj/item/clothing/under/pants/track
@@ -96,6 +112,10 @@
 /datum/loadout_item/undersuit/pants/big_pants
 	name = "JUNCO megacargo pants"
 	item_path = /obj/item/clothing/under/pants/big_pants
+
+/datum/loadout_item/undersuit/pants/skirt
+	name = "Simple Skirt"
+	item_path = /obj/item/clothing/under/shorts/shorter/skirt
 
 /*
 *	BUTTONDOWNS
@@ -173,6 +193,68 @@
 /datum/loadout_item/undersuit/dress/strapless
 	name = "Strapless Dress"
 	item_path = /obj/item/clothing/under/dress/doppler/strapless
+
+/// JAPANESE/LUNAR BREAKER
+
+/datum/loadout_item/undersuit/dress/qipao
+	name = "Qipao"
+	item_path = /obj/item/clothing/under/dress/doppler/qipao
+
+/datum/loadout_item/undersuit/dress/qipao/customtrim
+	name = "Qipao (Custom Trim)"
+	item_path = /obj/item/clothing/under/dress/doppler/qipao/customtrim
+
+/datum/loadout_item/undersuit/dress/cheongsam
+	name = "Cheongsam"
+	item_path = /obj/item/clothing/under/dress/doppler/cheongsam
+
+/datum/loadout_item/undersuit/dress/cheongsam/customtrim
+	name = "Cheongsam (Custom Trim)"
+	item_path = /obj/item/clothing/under/dress/doppler/cheongsam/customtrim
+
+/datum/loadout_item/undersuit/dress/yukata
+	name = "Basic Yukata"
+	item_path = /obj/item/clothing/under/dress/doppler/yukata
+
+/datum/loadout_item/undersuit/dress/yukata/tg
+	name = "Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata
+
+/datum/loadout_item/undersuit/dress/yukata/tg/greyscale
+	name = "Custom Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/greyscale
+
+/datum/loadout_item/undersuit/dress/yukata/tg/green
+	name = "Aqua Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/green
+
+/datum/loadout_item/undersuit/dress/yukata/tg/green/greyscale
+	name = "Custom Floral Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/green/greyscale
+
+/datum/loadout_item/undersuit/dress/yukata/tg/white
+	name = "White Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/white
+
+/datum/loadout_item/undersuit/dress/yukata/tg/white/greyscale
+	name = "Custom Snowy Yukata"
+	item_path = /obj/item/clothing/under/costume/yukata/white/greyscale
+
+/datum/loadout_item/undersuit/dress/kimono
+	name = "Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono
+
+/datum/loadout_item/undersuit/dress/kimono/greyscale
+	name = "Custom Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono/greyscale
+
+/datum/loadout_item/undersuit/dress/kimono/red
+	name = "Red Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono/red
+
+/datum/loadout_item/undersuit/dress/kimono/purple
+	name = "Purple Kimono"
+	item_path = /obj/item/clothing/under/costume/kimono/purple
 
 /*
 *	MISCELLANEOUS

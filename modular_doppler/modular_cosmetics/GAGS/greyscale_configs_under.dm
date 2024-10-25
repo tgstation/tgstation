@@ -130,3 +130,155 @@
 /datum/greyscale_config/pentagram_dress/worn
 	name = "Pentagram Strapped Dress (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
+
+/// LUNAR JAPANESE SECTION
+
+/datum/greyscale_config/lunar_japanese
+	name = "Lunar Japanese Costume"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/dresses.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/lunar_japanese.json'
+
+/datum/greyscale_config/lunar_japanese/worn
+	name = "Lunar Japanese Costume (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses.dmi'
+
+/datum/greyscale_config/lunar_japanese/worn/digi
+	name = "Lunar Japanese Costume (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi'
+
+/datum/greyscale_config/lunar_japanese/bicol
+	name = "Bicolor Lunar Japanese Costume"
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/lunar_japanese_bicol.json'
+
+/datum/greyscale_config/lunar_japanese/bicol/worn
+	name = "Bicolor Lunar Japanese Costume (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses.dmi'
+
+/datum/greyscale_config/lunar_japanese/bicol/worn/digi
+	name = "Bicolor Lunar Japanese Costume (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi'
+
+/datum/greyscale_config/lunar_japanese/tricol
+	name = "Tricolor Lunar Japanese Costume"
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/lunar_japanese_tricol.json'
+
+/datum/greyscale_config/lunar_japanese/tricol/worn
+	name = "Tricolor Lunar Japanese Costume (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses.dmi'
+
+/datum/greyscale_config/lunar_japanese/tricol/worn/digi
+	name = "Tricolor Lunar Japanese Costume (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi'
+
+/// GAGS-IFIED TG LUNAR JAPANESE SECTION
+
+/datum/greyscale_config/lunar_japanese/tg
+	name = "TG Lunar Japanese Costume"
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/lunar_japanese_tg.json'
+
+/datum/greyscale_config/lunar_japanese/tg/worn
+	name = "TG Lunar Japanese Costume (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses.dmi'
+
+/datum/greyscale_config/lunar_japanese/tg/worn/digi
+	name = "TG Lunar Japanese Costume (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi'
+
+/datum/greyscale_config/lunar_japanese/tg/decorated
+	name = "Decorated TG Lunar Japanese Costume"
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/lunar_japanese_tg_decorated.json'
+
+/datum/greyscale_config/lunar_japanese/tg/decorated/worn
+	name = "Decorated TG Lunar Japanese Costume (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses.dmi'
+
+/datum/greyscale_config/lunar_japanese/tg/decorated/worn/digi
+	name = "Decorated TG Lunar Japanese Costume (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/dresses_digi.dmi'
+
+
+
+/////////
+//PANTS//
+/////////
+
+/datum/greyscale_config/slacks
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+
+/datum/greyscale_config/slacks/worn
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/slacks/worn/digi
+	name = "Slacks (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/shorts
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+
+/datum/greyscale_config/shorts/worn
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/shorts/worn/digi
+	name = "Shorts (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/jeans
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+
+/datum/greyscale_config/jeans/worn
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/jeans/worn/digi
+	name = "Jeans (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/jeanshorts
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+
+/datum/greyscale_config/jeanshorts/worn
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/jeanshorts/worn/digi
+	name = "Jeans Shorts (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/// CUSTOM PANTS GAGSIFICATIONS
+
+/datum/greyscale_config/camo_pants
+	name = "Camo Pants"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/camo_pants.json'
+
+/datum/greyscale_config/camo_pants/worn
+	name = "Camo Pants (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/camo_pants/worn/digi
+	name = "Camo Pants (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/track_pants
+	name = "Track Pants"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/track_pants.json'
+
+/datum/greyscale_config/track_pants/worn
+	name = "Track Pants (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/track_pants/worn/digi
+	name = "Track Pants (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/skimpypants
+	name = "Skimpy Pants"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/skimpypants.json'
+
+/datum/greyscale_config/skimpypants/worn
+	name = "Skimpy Pants (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/skimpypants/worn/digi
+	name = "Skimpy Pants (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
