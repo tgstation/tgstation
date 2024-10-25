@@ -69,7 +69,7 @@
 
 	var/list/removable_organs = list()
 	for(var/obj/item/organ/bodypart_organ in organ_storage.contents)
-		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
+		if(bodypart_organ.organ_flags & (ORGAN_EXTERNAL|ORGAN_UNREMOVABLE))
 			continue
 		removable_organs += bodypart_organ
 
