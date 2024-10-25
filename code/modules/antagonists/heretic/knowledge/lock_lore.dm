@@ -81,7 +81,7 @@
 			if(isAI(occupant))
 				continue
 			mecha.mob_exit(occupant, randomstep = TRUE)
-			occupant.Paralyze(50)
+			occupant.Paralyze(5 SECONDS)
 	else if(istype(target,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/door = target
 		door.unbolt()
