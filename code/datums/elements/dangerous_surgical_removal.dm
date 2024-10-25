@@ -19,7 +19,7 @@
 	src.surgical = surgical
 
 	if(surgical)
-		RegisterSignal(target, COMSIG_ORGAN_SURGICALLY_REMOVED, PROC_REF(on_surgical_removal))
+		RegisterSignal(target, COMSIG_ORGAN_SURGICALLY_REMOVED, PROC_REF(on_removal))
 	else
 		RegisterSignal(target, COMSIG_ORGAN_REMOVED, PROC_REF(on_removal))
 
@@ -28,7 +28,7 @@
 
 	UnregisterSignal(source, list(COMSIG_ORGAN_SURGICALLY_REMOVED, COMSIG_ORGAN_REMOVED))
 
-/datum/element/dangerous_organ_removal/proc/on_surgical_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+/datum/element/dangerous_organ_removal/proc/on_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SIGNAL_HANDLER
 	if(source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return

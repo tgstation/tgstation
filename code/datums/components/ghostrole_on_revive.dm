@@ -105,7 +105,8 @@
 	if(isliving(parent))
 		living = parent
 	else if(istype(parent, /obj/item/organ/internal/brain))
-		living = parent.owner
+		var/obj/item/organ/internal/brain/brain = parent
+		living = brain.owner
 	living?.med_hud_set_status()
 
 	. = ..()
