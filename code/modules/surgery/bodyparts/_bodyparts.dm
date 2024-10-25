@@ -1210,11 +1210,6 @@
 		bleed_rate *= 0.7
 	return bleed_rate
 
-// how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
-#define BLEED_OVERLAY_LOW 0.5
-#define BLEED_OVERLAY_MED 1.5
-#define BLEED_OVERLAY_GUSH 3.25
-
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
 		return FALSE
@@ -1223,6 +1218,9 @@
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()
 		return FALSE
+
+	if (SEND_SIGNAL(src, COMSIG_BODYPART_UPDATE_WOUND_OVERLAY, cached_bleed_rate) & COMPONENT_PREVENT_WOUND_OVERLAY_UPDATE)
+		return
 
 	var/bleed_rate = cached_bleed_rate
 	var/new_bleed_icon = null
@@ -1246,10 +1244,6 @@
 	if(new_bleed_icon != bleed_overlay_icon)
 		bleed_overlay_icon = new_bleed_icon
 		owner.update_wound_overlays()
-
-#undef BLEED_OVERLAY_LOW
-#undef BLEED_OVERLAY_MED
-#undef BLEED_OVERLAY_GUSH
 
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)

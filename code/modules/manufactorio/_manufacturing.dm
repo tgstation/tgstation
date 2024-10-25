@@ -28,7 +28,7 @@
 	. = ..()
 	if(may_be_moved)
 		. += "It receives power via cable, but certain buildings do not need power."
-	. += length(contents - circuit) ? "It contains:" : "Its empty."
+	. += length(contents - circuit) ? "It contains:" : "It contains no items."
 	for(var/atom/movable/thing as anything in contents - circuit)
 		var/text = thing.name
 		var/obj/item/stack/possible_stack = thing
@@ -61,6 +61,10 @@
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/power/manufacturing/setDir(newdir)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/manufacturing/crowbar_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING

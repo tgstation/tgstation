@@ -2,8 +2,6 @@
 
 	///sound that plays, use an SFX define if there is multiple.
 	var/rustle_sounds = SFX_SUIT_STEP
-	///human that has the item equipped.
-	var/mob/holder
 
 	///what move are we on.
 	var/move_counter = 0
@@ -42,26 +40,25 @@
 		sound_falloff_distance = falloff_distance
 
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
 	var/obj/item/our_item = parent
 	if(!(slot & our_item.slot_flags))
 		return
-	SIGNAL_HANDLER
-	holder = equipper
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
+	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step))
 
-/datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/equipper, slot)
+/datum/component/item_equipped_movement_rustle/proc/on_unequip(datum/source, mob/dropped)
 	SIGNAL_HANDLER
 	move_counter = 0
-	UnregisterSignal(equipper, COMSIG_MOVABLE_MOVED)
-	holder = null
+	UnregisterSignal(dropped, COMSIG_MOVABLE_MOVED)
 
-/datum/component/item_equipped_movement_rustle/proc/try_step(obj/item/clothing/source)
+/datum/component/item_equipped_movement_rustle/proc/try_step(mob/source)
 	SIGNAL_HANDLER
-
+	if (source.moving_diagonally == FIRST_DIAG_STEP)
+		return
 	move_counter++
 	if(move_counter >= move_delay)
-		play_rustle_sound()
+		play_rustle_sound(source)
 		move_counter = 0
 
-/datum/component/item_equipped_movement_rustle/proc/play_rustle_sound()
-	playsound(parent, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+/datum/component/item_equipped_movement_rustle/proc/play_rustle_sound(mob/source)
+	playsound(source, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)

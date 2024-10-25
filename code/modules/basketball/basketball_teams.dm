@@ -16,8 +16,8 @@
 	//Chance for the wearer to have their height increased. This is repeated three times for maximum height.
 	var/taller_chance = 50
 
-/datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
-	if(visualsOnly)
+/datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visuals_only=FALSE)
+	if(visuals_only)
 		return
 	var/list/no_drops = list()
 
@@ -98,7 +98,7 @@
 	head = /obj/item/clothing/head/costume/xenos
 	mask = /obj/item/clothing/mask/chameleon
 
-/datum/outfit/basketball/lusty_xenomorphs/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
+/datum/outfit/basketball/lusty_xenomorphs/post_equip(mob/living/carbon/human/human_to_equip, visuals_only=FALSE)
 	. = ..()
 
 	var/obj/item/card/id/idcard = human_to_equip.wear_id
