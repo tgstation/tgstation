@@ -57,7 +57,7 @@
 	qdel(sight_blocker)
 	return ..()
 
-/obj/structure/necropolis_gate/singularity_pull()
+/obj/structure/necropolis_gate/singularity_pull(atom/singularity, current_size)
 	return 0
 
 /obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, border_dir)
@@ -88,7 +88,7 @@
 	opacity = TRUE
 	anchored = TRUE
 
-/obj/structure/opacity_blocker/singularity_pull()
+/obj/structure/opacity_blocker/singularity_pull(atom/singularity, current_size)
 	return FALSE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -242,7 +242,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 
 	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL)
 
-/obj/structure/necropolis_arch/singularity_pull()
+/obj/structure/necropolis_arch/singularity_pull(atom/singularity, current_size)
 	return 0
 
 //stone tiles for boss arenas
@@ -266,7 +266,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED))
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
-/obj/structure/stone_tile/singularity_pull()
+/obj/structure/stone_tile/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/structure/stone_tile/block

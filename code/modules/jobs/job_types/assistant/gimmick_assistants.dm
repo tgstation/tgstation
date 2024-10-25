@@ -47,7 +47,7 @@
 
 	outfit_weight = 2
 
-/datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
 	var/obj/item/organ/internal/tongue/robot/robotongue = new ()
 	robotongue.Insert(equipped, movement_flags = DELETE_IF_REPLACED)
@@ -103,7 +103,7 @@
 
 	outfit_weight = 5
 
-/datum/outfit/job/assistant/gimmick/mopper/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/assistant/gimmick/mopper/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
 
 	for(var/turf/turf in range(1, equipped))

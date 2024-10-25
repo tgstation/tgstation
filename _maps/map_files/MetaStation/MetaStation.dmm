@@ -15685,6 +15685,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Cargo"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "fEW" = (
@@ -23637,6 +23638,7 @@
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iwL" = (
@@ -63491,7 +63493,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/iron/dark,
 /area/station/security/checkpoint/supply)
 "wmf" = (
 /obj/effect/spawner/random/trash/garbage{

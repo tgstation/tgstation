@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "Added a separate preference for hearing vocal AI announcements (also known as VOX), as opposed to lumping it into the \"Enable announcement sounds\" preference."
