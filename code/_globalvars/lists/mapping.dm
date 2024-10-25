@@ -93,6 +93,13 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHWEST,
 ))
 
+GLOBAL_LIST_INIT(cardinal_angles, list(
+	"[NORTH]" = 0,
+	"[SOUTH]" = 180,
+	"[EAST]" = 90,
+	"[WEST]" = 270,
+))
+
 /// list of all landmarks created
 GLOBAL_LIST_EMPTY(landmarks_list)
 /// list of all job spawn points created
