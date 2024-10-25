@@ -19,11 +19,6 @@
 	reward = CARGO_CRATE_VALUE * 32
 	wanted_types = list(/obj/vehicle/sealed/mecha/clarke = TRUE)
 
-/datum/bounty/item/mech/odysseus
-	name = "Odysseus"
-	reward = CARGO_CRATE_VALUE * 22
-	wanted_types = list(/obj/vehicle/sealed/mecha/odysseus = TRUE)
-
 /datum/bounty/item/mech/gygax
 	name = "Gygax"
 	reward = CARGO_CRATE_VALUE * 56

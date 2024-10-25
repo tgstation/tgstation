@@ -89,7 +89,6 @@
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP_ADV, TECHWEB_NODE_FUSION)
 	design_ids = list(
 		"cryotube",
-		"mech_sleeper",
 		"stasis",
 		"cryo_grenade",
 		"splitbeaker",

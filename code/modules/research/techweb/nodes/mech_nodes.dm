@@ -63,26 +63,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY) //The dread upon security when they hear this...
 
-/datum/techweb_node/mech_medical
-	id = TECHWEB_NODE_MECH_MEDICAL
-	display_name = "Medical Exosuit"
-	description = "Advanced robotic unit equipped with syringe guns and healing beams, revolutionizing medical assistance in hazardous environments."
-	prereq_ids = list(TECHWEB_NODE_MECH_ASSEMBLY, TECHWEB_NODE_CHEM_SYNTHESIS)
-	design_ids = list(
-		"odysseus_chassis",
-		"odysseus_torso",
-		"odysseus_head",
-		"odysseus_left_arm",
-		"odysseus_right_arm",
-		"odysseus_left_leg",
-		"odysseus_right_leg",
-		"odysseus_main",
-		"odysseus_peri",
-		"mech_medi_beam",
-		"mech_syringe_gun",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-
 /datum/techweb_node/mech_mining
 	id = TECHWEB_NODE_MECH_MINING
 	display_name = "Mining Exosuit"

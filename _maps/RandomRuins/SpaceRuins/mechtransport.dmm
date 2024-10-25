@@ -218,11 +218,7 @@
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"DD" = (
-/turf/open/floor/catwalk_floor/iron_smooth/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
 "DM" = (
-/obj/structure/mecha_wreckage/odysseus,
 /turf/open/floor/iron/recharge_floor/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ga" = (
@@ -232,7 +228,6 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Gy" = (
-/obj/structure/mecha_wreckage/odysseus,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "GT" = (
@@ -291,9 +286,6 @@
 "Ov" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"OJ" = (
-/turf/open/floor/iron/recharge_floor/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "PG" = (
 /obj/item/stack/rods,
@@ -430,11 +422,11 @@ yr
 yr
 yT
 gK
-DD
+Gy
 NG
-DD
+Gy
 gK
-DD
+Gy
 Mn
 dq
 wJ
@@ -473,11 +465,11 @@ YQ
 YQ
 YQ
 sv
-OJ
+DM
 Gy
 DM
 CT
-OJ
+DM
 ko
 lP
 lc
@@ -496,9 +488,9 @@ Lk
 rD
 WX
 Oh
-DD
+Gy
 Oh
-DD
+Gy
 Oh
 hq
 hq
@@ -518,9 +510,9 @@ Ry
 YQ
 Lk
 XO
-DD
+Gy
 XO
-DD
+Gy
 XO
 nf
 kY
@@ -540,11 +532,11 @@ YQ
 YQ
 dB
 uF
-DD
+Gy
 qH
 Ov
 Cy
-DD
+Gy
 jI
 if
 lc

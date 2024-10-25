@@ -61,42 +61,6 @@
 	desc = "A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
 
-///////// Odysseus
-
-/obj/item/mecha_parts/chassis/odysseus
-	name = "\improper Odysseus chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/odysseus
-
-/obj/item/mecha_parts/part/odysseus_head
-	name = "\improper Odysseus head"
-	desc = "An Odysseus head. Contains an integrated medical HUD scanner."
-	icon_state = "odysseus_head"
-
-/obj/item/mecha_parts/part/odysseus_torso
-	name = "\improper Odysseus torso"
-	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems along with an attachment port for a mounted sleeper."
-	icon_state = "odysseus_torso"
-
-/obj/item/mecha_parts/part/odysseus_left_arm
-	name = "\improper Odysseus left arm"
-	desc = "An Odysseus left arm. Data and power sockets are compatible with specialized medical equipment."
-	icon_state = "odysseus_l_arm"
-
-/obj/item/mecha_parts/part/odysseus_right_arm
-	name = "\improper Odysseus right arm"
-	desc = "An Odysseus right arm. Data and power sockets are compatible with specialized medical equipment."
-	icon_state = "odysseus_r_arm"
-
-/obj/item/mecha_parts/part/odysseus_left_leg
-	name = "\improper Odysseus left leg"
-	desc = "An Odysseus left leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
-	icon_state = "odysseus_l_leg"
-
-/obj/item/mecha_parts/part/odysseus_right_leg
-	name = "\improper Odysseus right leg"
-	desc = "An odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
-	icon_state = "odysseus_r_leg"
-
 ///////// Gygax
 
 /obj/item/mecha_parts/chassis/gygax
@@ -427,14 +391,6 @@
 
 /obj/item/circuitboard/mecha/honker/main
 	name = "H.O.N.K Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
-
-/obj/item/circuitboard/mecha/odysseus/peripherals
-	name = "Odysseus Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
-
-/obj/item/circuitboard/mecha/odysseus/main
-	name = "Odysseus Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/phazon/peripherals

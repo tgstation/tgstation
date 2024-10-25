@@ -235,17 +235,6 @@
 		/obj/item/mecha_parts/part/savannah_ivanov_left_leg,
 		/obj/item/mecha_parts/part/savannah_ivanov_right_leg)
 
-/obj/structure/mecha_wreckage/odysseus
-	name = "\improper Odysseus wreckage"
-	icon_state = "odysseus-broken"
-	parts = list(
-			/obj/item/mecha_parts/part/odysseus_torso,
-			/obj/item/mecha_parts/part/odysseus_head,
-			/obj/item/mecha_parts/part/odysseus_left_arm,
-			/obj/item/mecha_parts/part/odysseus_right_arm,
-			/obj/item/mecha_parts/part/odysseus_left_leg,
-			/obj/item/mecha_parts/part/odysseus_right_leg)
-
 /obj/structure/mecha_wreckage/justice
 	name = "\improper Justice wreckage"
 	icon_state = "justice-broken"

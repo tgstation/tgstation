@@ -527,13 +527,6 @@
 	special_attack_type = SPECIAL_ATTACK_UTILITY
 	special_attack_cry = "ROLL OUT"
 
-/obj/item/toy/mecha/odysseus
-	name = "toy Odysseus"
-	icon_state = "odysseustoy"
-	max_combat_health = 4 //120 integrity
-	special_attack_type = SPECIAL_ATTACK_HEAL
-	special_attack_cry = "MECHA BEAM"
-
 /obj/item/toy/mecha/gygax
 	name = "toy Gygax"
 	icon_state = "gygaxtoy"
@@ -646,6 +639,13 @@
 	max_combat_health = 5 //250 integrity?
 	special_attack_type = SPECIAL_ATTACK_HEAL
 	special_attack_cry = "FIRE SHIELD"
+
+/obj/item/toy/mecha/odysseus //rip
+	name = "toy Odysseus"
+	icon_state = "odysseustoy"
+	max_combat_health = 4 //120 integrity
+	special_attack_type = SPECIAL_ATTACK_HEAL
+	special_attack_cry = "MECHA BEAM"
 
 #undef SPECIAL_ATTACK_HEAL
 #undef SPECIAL_ATTACK_DAMAGE

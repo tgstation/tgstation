@@ -97,7 +97,6 @@
 "L" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/mecha_wreckage/odysseus,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)

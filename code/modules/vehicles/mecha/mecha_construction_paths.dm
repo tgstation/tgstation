@@ -795,31 +795,6 @@
 	outer_plating = /obj/item/mecha_parts/part/savannah_ivanov_armor
 	outer_plating_amount = 1
 
-//ODYSSEUS
-/datum/component/construction/unordered/mecha_chassis/odysseus
-	result = /datum/component/construction/mecha/odysseus
-	steps = list(
-		/obj/item/mecha_parts/part/odysseus_torso,
-		/obj/item/mecha_parts/part/odysseus_head,
-		/obj/item/mecha_parts/part/odysseus_left_arm,
-		/obj/item/mecha_parts/part/odysseus_right_arm,
-		/obj/item/mecha_parts/part/odysseus_left_leg,
-		/obj/item/mecha_parts/part/odysseus_right_leg
-	)
-
-/datum/component/construction/mecha/odysseus
-	result = /obj/vehicle/sealed/mecha/odysseus
-	base_icon = "odysseus"
-
-	circuit_control = /obj/item/circuitboard/mecha/odysseus/main
-	circuit_periph = /obj/item/circuitboard/mecha/odysseus/peripherals
-
-	inner_plating = /obj/item/stack/sheet/iron
-	inner_plating_amount = 5
-
-	outer_plating = /obj/item/stack/sheet/plasteel
-	outer_plating_amount = 5
-
 //Justice
 /datum/component/construction/unordered/mecha_chassis/justice
 	result = /datum/component/construction/mecha/justice
