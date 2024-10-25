@@ -155,6 +155,14 @@
 /datum/emote/jump/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 
+	jump_animation(user)
+
+	if(!isliving(user))
+		return
+	for(var/obj/item/storage/box/squeeze_box in get_turf(user))
+		squeeze_box.flatten_box()
+
+/datum/emote/jump/proc/jump_animation(mob/user)
 	var/original_transform = user.transform
 	animate(user, transform = user.transform.Translate(0, 4), time = 0.1 SECONDS, flags = ANIMATION_PARALLEL)
 	animate(transform = original_transform, time = 0.1 SECONDS)
