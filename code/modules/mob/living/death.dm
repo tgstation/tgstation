@@ -131,10 +131,10 @@
 	// we manually animate this, rather than just using an animated icon state or flick, to work around byond animated state memes
 	// (normally, all animated icon states are synced to the same time, which would bad here)
 	for(var/i in 2 to duration)
-		if(PERFORM_ALL_TESTS(focus_only/runtime_icon_state) && !icon_exists(icon, "dust.[i]"))
+		if(PERFORM_ALL_TESTS(focus_only/runtime_icon_states) && !icon_exists(icon, "dust.[i]"))
 			stack_trace("Missing dust animation icon state: dust.[i]")
 		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
-	if(PERFORM_ALL_TESTS(focus_only/runtime_icon_state) && icon_exists(icon, "dust.[duration + 1]"))
+	if(PERFORM_ALL_TESTS(focus_only/runtime_icon_states) && icon_exists(icon, "dust.[duration + 1]"))
 		stack_trace("Extra dust animation icon state: dust.[duration + 1]")
 	render_target = "*dust-[anim_id]"
 
