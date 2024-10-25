@@ -30,7 +30,8 @@ SUBSYSTEM_DEF(tgui)
 	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
 	polyfill = "<script>\n[polyfill]\n</script>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
-	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
+	//basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]") // ORIGINAL
+	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Port Authority (c) 2525-[CURRENT_STATION_YEAR]") // DOPPLER EDIT - NT -> PA
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

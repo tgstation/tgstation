@@ -163,6 +163,7 @@
 //
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
+	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER, TRAIT_FLOPPING)
 
 /// Cybernetic tail
 //

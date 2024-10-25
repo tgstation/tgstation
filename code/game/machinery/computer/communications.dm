@@ -872,7 +872,8 @@
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
-				"Attention crew, the Nanotrasen Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.",
+				//"Attention crew, the Nanotrasen Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.", // ORIGINAL
+				"Attention crew, the Port Authority Department of Intelligence has received intel suggesting increased enemy activity in your sector beyond that initially reported in today's threat advisory.", // DOPPLER EDIT - NT -> PA
 				"[command_name()] High-Priority Update",
 			)
 

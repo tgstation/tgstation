@@ -35,6 +35,10 @@
 	name = "Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots
 
+/datum/loadout_item/shoes/jackboots/greyscale
+	name = "Custom Jackboots"
+	item_path = /obj/item/clothing/shoes/jackboots/recolorable
+
 /datum/loadout_item/shoes/workboots
 	name = "Work Boots"
 	item_path = /obj/item/clothing/shoes/workboots
@@ -95,6 +99,26 @@
 	name = "Colonial Half-boots"
 	item_path = /obj/item/clothing/shoes/jackboots/colonial
 
+/datum/loadout_item/shoes/colonial_boots/greyscale
+	name = "Custom Colonial Half-boots"
+	item_path = /obj/item/clothing/shoes/jackboots/colonial/greyscale
+
 /datum/loadout_item/shoes/frontier_boots
 	name = "Heavy Boots"
 	item_path = /obj/item/clothing/shoes/jackboots/frontier_colonist
+
+/datum/loadout_item/shoes/greyscale_laceups
+	name = "Custom Laceups"
+	item_path = /obj/item/clothing/shoes/colorable_laceups
+
+/datum/loadout_item/shoes/greyscale_sandals
+	name = "Custom Sandals"
+	item_path = /obj/item/clothing/shoes/colorable_sandals
+
+/datum/loadout_item/shoes/wraps
+	name = "Cloth Footwraps"
+	item_path = /obj/item/clothing/shoes/wraps
+
+/datum/loadout_item/shoes/wraps/leggy
+	name = "Cloth Legwraps"
+	item_path = /obj/item/clothing/shoes/wraps/leggy

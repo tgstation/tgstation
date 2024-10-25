@@ -1376,10 +1376,12 @@
 	icon_state = "shirt_meat"
 	gender = NEUTER
 
+/* DOPPLER EDIT REMOVAL - NT -> PA
 /datum/sprite_accessory/undershirt/nano
 	name = "Shirt (Nanotrasen)"
 	icon_state = "shirt_nano"
 	gender = NEUTER
+*/
 
 /datum/sprite_accessory/undershirt/peace
 	name = "Shirt (Peace)"

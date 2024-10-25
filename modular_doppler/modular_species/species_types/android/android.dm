@@ -136,7 +136,7 @@
 
 /datum/species/android/get_species_lore()
 	return list(
-		"Androids are a synthetic species created by Nanotrasen as an intermediary between humans and cyborgs."
+		"Androids are a synthetic species created by the Port Authority as an intermediary between humans and cyborgs."
 	)
 
 #undef ENERGY_START_AMT

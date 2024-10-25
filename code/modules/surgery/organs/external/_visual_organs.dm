@@ -195,6 +195,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_moth_antennae"
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
+	organ_traits = list(TRAIT_ANTENNAE) // DOPPLER EDIT ADDITION
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae
 

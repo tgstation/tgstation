@@ -14,10 +14,10 @@
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /obj/item/tank/internals/nitrogen/belt
-	icon = 'modular_doppler/modular_quirks/nitrogen_breather/icons/tank.dmi'
-	worn_icon = 'modular_doppler/modular_quirks/nitrogen_breather/icons/belt.dmi'
-	lefthand_file = 'modular_doppler/modular_quirks/nitrogen_breather/icons/tanks_lefthand.dmi'
-	righthand_file = 'modular_doppler/modular_quirks/nitrogen_breather/icons/tanks_righthand.dmi'
+	icon = 'modular_doppler/modular_quirks/breather/nitrogen_breather/icons/tank.dmi'
+	worn_icon = 'modular_doppler/modular_quirks/breather/nitrogen_breather/icons/belt.dmi'
+	lefthand_file = 'modular_doppler/modular_quirks/breather/nitrogen_breather/icons/tanks_lefthand.dmi'
+	righthand_file = 'modular_doppler/modular_quirks/breather/nitrogen_breather/icons/tanks_righthand.dmi'
 	icon_state = "nitrogen_extended"
 	inhand_icon_state = "nitrogen"
 	slot_flags = ITEM_SLOT_BELT
