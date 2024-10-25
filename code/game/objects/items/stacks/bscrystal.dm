@@ -37,6 +37,7 @@
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)
+	user.adjust_disgust(12)
 	use(1)
 
 /obj/item/stack/ore/bluespace_crystal/proc/blink_mob(mob/living/L)
@@ -50,6 +51,8 @@
 		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
+			var/mob/living/our_living = hit_atom
+			our_living.adjust_disgust(12)
 		use(1)
 
 //Artificial bluespace crystal, doesn't give you much research.
