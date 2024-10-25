@@ -321,9 +321,9 @@
 				)
 		if(SFX_CAN_OPEN)
 			soundin = pick(
-				'sound/effects/can/can_open1.ogg',
-				'sound/effects/can/can_open2.ogg',
-				'sound/effects/can/can_open3.ogg',
+				'sound/items/can/can_open1.ogg',
+				'sound/items/can/can_open2.ogg',
+				'sound/items/can/can_open3.ogg',
 				)
 		if(SFX_BULLET_MISS)
 			soundin = pick(
