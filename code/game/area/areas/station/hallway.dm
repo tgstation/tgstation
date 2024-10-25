@@ -101,6 +101,10 @@
 	name = "\improper Recreation Hallway"
 	icon_state = "hall"
 
+/area/station/hallway/secondary/exit/hangar
+	name = "\improper Hangar Bay"
+	icon_state = "hangarbay"
+
 /*
 * Station Specific Areas
 * If another station gets added, and you make specific areas for it

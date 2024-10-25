@@ -232,3 +232,60 @@
 			Good luck!
 			</body>
 			</html>"}
+
+/obj/item/book/manual/podconstruction
+	name = "Nanotrasen-brand pods and you"
+	icon_state ="book4"
+	starting_author = "John Spespod"
+	starting_title =  "Nanotrasen-brand pods and you"
+	starting_content = {"<html>
+			<body>
+			So you got your hands on a Nanotrasen-brand pod. Lucky you. This brief manual will describe the requirements, construction and other useful stuff for pods.
+			<h3>Overview</h3>
+			Pods are exploration/repair/etc vehicles for 1 to 2 people. A pod should have:
+			<ul>
+			<li>Thrusters - Necessary, affecting maximum acceleration.</li>
+			<li>Engine - Necessary, to allow thrusters to move, affects acceleration.</li>
+			<li>Sensors - sensors come with a GPS necessary to not get lost if youre not packing your own.</li>
+			<li>Comms - Necessary to communicate with hangar doors.</li>
+			<li>Gas tank - Necessary to sustain life onboard.</li>
+			<li>Battery - Necessary to power the pod. Power is consumed to accelerate and use equipment.</li>
+			</ul>
+			The pod may not enter structures and go over tiles not suited for it, due to gravity interference with the engine, and other factors. A pod may move over: space (duh), reinforced flooring, asteroids, and plating (in no gravity). If you get your pod stuck inside stuff it shouldnt ordinarily be capable of moving through, <strong>Thats on you.</strong>
+			<span>The pod comes with its control panel, accessible to<strong> the driver.</strong> It allows control of certain equipment, and access to other info.</span>
+			<span> Also, do not ram your pod at high speeds into anything. Its harmful for whatever you hit and also your pod, <s>and pods have been proven to detonate if destroyed by force</s>.</span>
+			<span> Additionally, pods will slow down to 2/3rds of the thrusters maximum acceleration for safety reasons. </span>
+			<h4>Brakes</h4>
+			You may use the <strong>SHIFT</strong> stick to brake. How good is it depends on thrusters.
+
+			<h3>Removing/adding parts</h3>
+			<ol>
+				<li>Open the panel with a screwdriver. The panel closes and cannot be opened when driven, to protect components.</li>
+				<li>
+					Insert the part you wish to add / Use a crowbar to remove parts, battery and tank included.
+				</li>
+			</ol>
+			You may not insert multiple of most parts, and every slot except the miscellaneous slot (holds 3) only holds one part.
+			<h3>Repair</h3>
+			If the issue is low integrity, weld any damage to the hull. Wear protection unless you want to go blind like an idiot.
+			If the issue is low pressure or your tank ran out, follow part removal steps, and add a tank with a suitable mixture for life. Pure oxygen works. Check in with your atmospherics crew for this.
+			<h3>Construction</h3>
+				Exosuit fabricators and pod component fabricators are both capable of creating all parts needed.
+			<ol>
+				<li>Get a pod frame runner, and snip it free somewhere pods can pass over.</li>
+				<li>Wrench</li>
+				<li>Weld</li>
+				<li>Wire</li>
+				<li>Adjust wiring via wirecutters</li>
+				<li>Wrench</li>
+				<li>Add the pod control board, and screw it in</li>
+				<li>Add 15 sheets of iron as inner plating</li>
+				<li>Wrench plating</li>
+				<li>Weld plating</li>
+				<li>Add 25 sheets of a certain material or a hull kit</li>
+				<li>Wrench hull</li>
+				<li>Weld hull</li>
+			</ol>
+			</body>
+			</html>
+			"}

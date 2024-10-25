@@ -26,9 +26,9 @@
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
-	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
-		. = check_step(I, user)
-	return .
+	. = is_right_key(I)
+	ASYNC
+		check_step(I, user)
 
 /datum/component/construction/proc/update_index(diff)
 	index += diff

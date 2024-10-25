@@ -83,9 +83,9 @@
 	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 
-/obj/vehicle/sealed/car/relaymove(mob/living/user, direction)
-	if(is_driver(user) && canmove && (!key_type || istype(inserted_key, key_type)))
-		vehicle_move(direction)
+/obj/vehicle/sealed/car/may_move(mob/living/user)
+	if(key_type && !istype(inserted_key, key_type))
+		return FALSE
 	return TRUE
 
 /obj/vehicle/sealed/car/vehicle_move(direction)

@@ -281,7 +281,7 @@
 	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
 		return FALSE
 
-	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
+	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored || HAS_TRAIT(backup, TRAIT_ANCHORED_SPACEMOVE_BACKUP))
 		return TRUE
 
 	// last pushoff exists for one reason

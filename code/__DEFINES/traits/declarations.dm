@@ -1331,6 +1331,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which allows mobs to parry mining mob projectiles
 #define TRAIT_MINING_PARRYING "mining_parrying"
 
+///This atom is considered to be anchored when used as a backup atom for movement during space movement
+#define TRAIT_ANCHORED_SPACEMOVE_BACKUP "consideredanchoredforspacemovebackup"
+
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 

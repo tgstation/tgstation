@@ -17,7 +17,6 @@
 	////Maximum amount of drivers
 	var/max_drivers = 1
 	var/movedelay = 2
-	var/lastmove = 0
 	/**
 	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on their riding component subtype
 	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component
@@ -26,8 +25,6 @@
 	var/key_type
 	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	/// Whether the vehicle is currently able to move
-	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
 	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
@@ -120,37 +117,41 @@
 
 	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
+	if(isnull(control_flags))
+		auto_assign_occupant_flags(M)
 	after_add_occupant(M)
 	grant_passenger_actions(M)
+	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_ADDED, M, occupants[M])
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
-	auto_assign_occupant_flags(M)
 
 /obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/proc/remove_occupant(mob/M)
+/obj/vehicle/proc/remove_occupant(mob/removed)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!istype(M))
+	if(!istype(removed))
 		return FALSE
-	remove_control_flags(M, ALL)
-	remove_passenger_actions(M)
-	LAZYREMOVE(occupants, M)
-//	LAZYREMOVE(contents, M)
-	cleanup_actions_for_mob(M)
-	after_remove_occupant(M)
+	SEND_SIGNAL(src, COMSIG_VEHICLE_OCCUPANT_REMOVED, removed, occupants[removed])
+	remove_control_flags(removed, ALL)
+	remove_passenger_actions(removed)
+	LAZYREMOVE(occupants, removed)
+//	LAZYREMOVE(contents, removed)
+	cleanup_actions_for_mob(removed)
+	after_remove_occupant(removed)
 	return TRUE
 
-/obj/vehicle/proc/after_remove_occupant(mob/M)
+/obj/vehicle/proc/after_remove_occupant(mob/removed)
 
 /obj/vehicle/relaymove(mob/living/user, direction)
-	if(!canmove)
-		return FALSE
-	if(is_driver(user))
+	if(is_driver(user) && may_move(user) && user.moving_diagonally != FIRST_DIAG_STEP)
 		return relaydrive(user, direction)
 	return FALSE
+
+/obj/vehicle/proc/may_move(user)
+	return TRUE
 
 /obj/vehicle/proc/after_move(direction)
 	return
@@ -184,11 +185,8 @@
 	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
-/obj/vehicle/Move(newloc, dir)
-	// It is unfortunate, but this is the way to make it not mess up
-	var/atom/old_loc = loc
-	// When we do this, it will set the loc to the new loc
+/obj/vehicle/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(trailer && .)
-		var/dir_to_move = get_dir(trailer.loc, old_loc)
-		step(trailer, dir_to_move)
+	if(trailer)
+		trailer.Move(old_loc, movement_dir)
+

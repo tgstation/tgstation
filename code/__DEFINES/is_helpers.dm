@@ -88,6 +88,22 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
 
+GLOBAL_LIST_INIT(turfs_pass_pod, typecacheof(list(
+	/turf/open/misc/asteroid,
+	/turf/open/openspace,
+	/turf/open/space,
+	/turf/open/floor/engine,
+)))
+
+// additionally to the one above
+GLOBAL_LIST_INIT(turfs_pass_pod_nograv, typecacheof(list(
+	/turf/open/floor/iron/solarpanel,
+	/turf/open/floor/plating,
+)))
+
+#define ispodpassable(A) (is_type_in_typecache(A, GLOB.turfs_pass_pod))
+#define ispodpassable_nograv(A) (is_type_in_typecache(A, GLOB.turfs_pass_pod_nograv))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -250,6 +266,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
+
+#define issealedvehicle(A) (istype(A, /obj/vehicle/sealed))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
 

@@ -1719,6 +1719,17 @@
 		/obj/item/pipe/trinary/flippable/filter = 1,
 	)
 
+/obj/item/circuitboard/machine/podcommsreceiverdoor
+	name = "Pod Comms Receiver - Door"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/pod_comms_receiver/door
+	req_components = list(
+		/datum/stock_part/scanning_module = 2,
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/stack/sheet/glass = 2,
+	)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/portagrav
 	name = "Portable Gravity Unit"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

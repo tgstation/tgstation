@@ -22,8 +22,8 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/M, params)
-	if(!istype(dropping) || !istype(M))
+/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/living/M, params)
+	if(!istype(dropping) || !istype(M) || !M.can_interact_with(src))
 		return ..()
 	if(M == dropping)
 		mob_try_enter(M)
@@ -76,13 +76,14 @@
 /obj/vehicle/sealed/proc/enter_checks(mob/M)
 	return occupant_amount() < max_occupants
 
-/obj/vehicle/sealed/proc/mob_enter(mob/M, silent = FALSE)
+/// Puts the mob inside us while producing a visible message (if not silent). flags is occupancy flags, if not passed then it will be assigned automatically
+/obj/vehicle/sealed/proc/mob_enter(mob/M, silent = FALSE, flags)
 	if(!istype(M))
 		return FALSE
 	if(!silent)
 		M.visible_message(span_notice("[M] climbs into \the [src]!"))
 	M.forceMove(src)
-	add_occupant(M)
+	add_occupant(M, flags)
 	return TRUE
 
 /obj/vehicle/sealed/proc/mob_try_exit(mob/M, mob/user, silent = FALSE, randomstep = FALSE)
@@ -158,12 +159,14 @@
 /obj/vehicle/sealed/AllowDrop()
 	return FALSE
 
-/obj/vehicle/sealed/relaymove(mob/living/user, direction)
-	if(canmove)
-		vehicle_move(direction)
-	return TRUE
 
-/// Sinced sealed vehicles (cars and mechs) don't have riding components, the actual movement is handled here from [/obj/vehicle/sealed/proc/relaymove]
+/obj/vehicle/sealed/relaydrive(mob/living/user, direction)
+	. = ..()
+	if(!.)
+		return
+	return vehicle_move(direction)
+
+/// Sinced sealed vehicles (cars and mechs) don't have riding components, the actual movement is handled here from [/obj/vehicle/sealed/proc/relaydrive]
 /obj/vehicle/sealed/proc/vehicle_move(direction)
 	return FALSE
 

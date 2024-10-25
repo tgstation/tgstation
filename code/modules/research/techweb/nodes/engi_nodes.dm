@@ -148,6 +148,7 @@
 		"light_tube",
 		"crossing_signal",
 		"guideway_sensor",
+		"podcommsreceiverdoor",
 		"manuunloader",
 		"manusmelter",
 		"manucrusher",
