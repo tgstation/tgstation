@@ -5,7 +5,7 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/food/hotdog/debug/fooditem = allocate(/obj/item/food/hotdog/debug)
-	var/obj/item/organ/internal/stomach/belly = human.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = human.get_organ_slot(ORGAN_SLOT_STOMACH)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 

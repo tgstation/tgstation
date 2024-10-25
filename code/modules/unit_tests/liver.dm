@@ -12,7 +12,7 @@
 	var/datum/reagent/toxin/bonehurtingjuice/bonehurting = /datum/reagent/toxin/bonehurtingjuice
 	var/datum/reagent/consumable/milk/calcium = /datum/reagent/consumable/milk
 
-	TEST_ASSERT(!isnull(mrbones.get_organ_by_type(/obj/item/organ/internal/liver/bone)), "Skeleton does not have a bone liver")
+	TEST_ASSERT(!isnull(mrbones.get_organ_by_type(/obj/item/organ/liver/bone)), "Skeleton does not have a bone liver")
 	TEST_ASSERT_EQUAL(mrbones.has_reagent(/datum/reagent/toxin/bonehurtingjuice), FALSE, "Skeleton somehow has bone hurting juice before drinking")
 	TEST_ASSERT_EQUAL(mrbones.has_reagent(/datum/reagent/consumable/milk), FALSE, "Skeleton somehow has milk before drinking")
 
@@ -67,7 +67,7 @@
 
 	// Testing plasma/hot ice healing on wounds
 
-	TEST_ASSERT(!isnull(mrbones.get_organ_by_type(/obj/item/organ/internal/liver/bone/plasmaman)), "Plasmaman does not have a plasmaman bone liver")
+	TEST_ASSERT(!isnull(mrbones.get_organ_by_type(/obj/item/organ/liver/bone/plasmaman)), "Plasmaman does not have a plasmaman bone liver")
 	TEST_ASSERT_EQUAL(mrbones.has_reagent(plasma), FALSE, "Plasmaman somehow has plasma before drinking")
 	TEST_ASSERT_EQUAL(mrbones.has_reagent(hot_ice), FALSE, "Plasmaman somehow has hot ice before drinking")
 

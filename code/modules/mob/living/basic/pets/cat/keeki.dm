@@ -8,8 +8,8 @@
 	maxHealth = 50
 	gender = FEMALE
 	butcher_results = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/cakeslice/birthday = 3,
 		/obj/item/food/meat/slab = 2
 	)
@@ -40,7 +40,7 @@
 
 /mob/living/basic/pet/cat/cak/CheckParts(list/parts)
 	. = ..()
-	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(isnull(candidate?.brainmob?.mind))
 		return
 	var/datum/mind/candidate_mind = candidate.brainmob.mind

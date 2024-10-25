@@ -100,7 +100,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/item/organ/internal/stomach,
+/obj/item/organ/stomach,
 /obj/item/trash/syndi_cakes,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

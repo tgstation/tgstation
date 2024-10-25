@@ -4,7 +4,7 @@
 	id = SPECIES_ZOMBIE
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
 		TRAIT_EASILY_WOUNDED,
@@ -95,9 +95,9 @@
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
 	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
-	mutanteyes = /obj/item/organ/internal/eyes/zombie
-	mutantbrain = /obj/item/organ/internal/brain/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanteyes = /obj/item/organ/eyes/zombie
+	mutantbrain = /obj/item/organ/brain/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	inherent_traits = list(
@@ -139,7 +139,7 @@
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
 	// because it persists through species transitions
-	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	var/obj/item/organ/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(isnull(infection))
 		infection = new()
 		infection.Insert(new_zombie)

@@ -52616,7 +52616,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "pgN" = (
-/obj/item/organ/external/tail/monkey,
+/obj/item/organ/tail/monkey,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -56829,7 +56829,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qrj" = (

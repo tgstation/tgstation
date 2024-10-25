@@ -290,12 +290,12 @@
 /obj/item/stock_parts/power_store/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/stomach/maybe_stomach = H.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/maybe_stomach = H.get_organ_slot(ORGAN_SLOT_STOMACH)
 
-		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 			var/obj/item/stock_parts/power_store/stomach_cell = stomach.cell
 			if((stomach.drain_time > world.time) || !stomach)
 				return

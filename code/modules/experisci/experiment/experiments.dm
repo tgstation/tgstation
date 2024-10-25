@@ -429,7 +429,7 @@
 	. = ..()
 	if (!.)
 		return
-	var/obj/item/organ/internal/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if (isnull(scanned_brain))
 		experiment_handler.announce_message("Subject is brainless!")
 		return FALSE

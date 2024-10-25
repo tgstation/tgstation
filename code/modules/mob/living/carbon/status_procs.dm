@@ -16,17 +16,17 @@
 
 /mob/living/carbon/proc/get_traumas()
 	. = list()
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.traumas
 
 /mob/living/carbon/proc/has_trauma_type(brain_trauma_type, resilience)
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.has_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		var/list/arguments = list()
 		if(args.len > 2)
@@ -34,16 +34,16 @@
 		. = B.brain_gain_trauma(trauma, resilience, arguments)
 
 /mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.gain_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_all_traumas(resilience)
-	var/obj/item/organ/internal/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/B = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_all_traumas(resilience)

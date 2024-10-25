@@ -611,7 +611,7 @@
 	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
 		return FOOD_LIKED
 

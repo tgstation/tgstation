@@ -305,7 +305,7 @@
 
 ///only operate on internal organs
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
-	return isinternalorgan(organ)
+	return !(organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
 /datum/surgery_step/manipulate_organs/internal/mechanic
@@ -319,7 +319,7 @@
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return isexternalorgan(organ)
+	return (organ.organ_flags & ORGAN_EXTERNAL)
 
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
 /datum/surgery_step/manipulate_organs/external/mechanic

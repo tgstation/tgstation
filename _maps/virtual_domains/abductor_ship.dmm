@@ -63,7 +63,7 @@
 /area/virtual_domain)
 "kl" = (
 /obj/structure/table_frame/abductor,
-/obj/item/organ/internal/lungs{
+/obj/item/organ/lungs{
 	pixel_x = 8;
 	pixel_y = 7
 	},
@@ -247,7 +247,7 @@
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "JC" = (
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "JR" = (
@@ -298,7 +298,7 @@
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "PB" = (
-/obj/item/organ/external/antennae,
+/obj/item/organ/antennae,
 /turf/open/floor/plating/abductor,
 /area/virtual_domain)
 "Qp" = (

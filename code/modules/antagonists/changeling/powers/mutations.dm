@@ -632,7 +632,7 @@
 
 /obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(!istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core/legion) || !holds_reagents)
+	if(!istype(attacking_item, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
 		return
 	visible_message(span_boldwarning("As [user] shoves [attacking_item] into [src], [src] begins to mutate."))
 	var/mob/living/carbon/wearer = loc

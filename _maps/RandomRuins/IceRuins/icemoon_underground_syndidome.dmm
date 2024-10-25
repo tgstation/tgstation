@@ -217,8 +217,8 @@
 	dir = 5
 	},
 /obj/machinery/smartfridge/organ,
-/obj/item/organ/internal/alien/resinspinner,
-/obj/item/organ/internal/eyes/night_vision,
+/obj/item/organ/alien/resinspinner,
+/obj/item/organ/eyes/night_vision,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "cE" = (

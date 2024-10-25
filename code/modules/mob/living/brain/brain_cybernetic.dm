@@ -1,11 +1,11 @@
-/obj/item/organ/internal/brain/cybernetic
+/obj/item/organ/brain/cybernetic
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
 	icon_state = "brain-c"
 	organ_flags = ORGAN_ROBOTIC | ORGAN_VITAL
 	failing_desc = "seems to be broken, and will not work without repairs."
 
-/obj/item/organ/internal/brain/cybernetic/brain_damage_examine()
+/obj/item/organ/brain/cybernetic/brain_damage_examine()
 	if(suicided)
 		return span_info("Its circuitry is smoking slightly. They must not have been able to handle the stress of it all.")
 	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
@@ -18,7 +18,7 @@
 	else
 		return span_info("This one is completely devoid of life.")
 
-/obj/item/organ/internal/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
+/obj/item/organ/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
 	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain
 		if (brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
@@ -48,7 +48,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/organ/internal/brain/cybernetic/emp_act(severity)
+/obj/item/organ/brain/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

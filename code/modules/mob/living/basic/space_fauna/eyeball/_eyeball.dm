@@ -100,13 +100,13 @@
 	if(!ishuman(target))
 		return TRUE
 	var/mob/living/carbon/human_target = target
-	var/obj/item/organ/internal/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(eyes) || eyes.damage < 10)
 		return TRUE
 	heal_eye_damage(human_target, eyes)
 	return FALSE
 
-/mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/internal/eyes/eyes)
+/mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))
 		return
 	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))

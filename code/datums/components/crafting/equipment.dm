@@ -156,7 +156,7 @@
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
-	result = /obj/item/organ/internal/eyes/robotic/flashlight
+	result = /obj/item/organ/eyes/robotic/flashlight
 	time = 10
 	reqs = list(
 		/obj/item/flashlight = 2,

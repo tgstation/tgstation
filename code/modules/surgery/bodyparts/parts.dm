@@ -35,7 +35,7 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
+	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
 /obj/item/bodypart/chest/forced_removal(dismembered, special, move_to_floor)
 	var/mob/living/carbon/old_owner = owner
@@ -74,7 +74,7 @@
 	if(!ishuman(owner))
 		return null
 	var/mob/living/carbon/human/human_owner = owner
-	var/obj/item/organ/external/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/tail = human_owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail)
 		return tail.get_butt_sprite()
 

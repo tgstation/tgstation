@@ -93,7 +93,7 @@
 	//Equip
 	var/mob/living/carbon/human/new_abductor = owner.current
 	new_abductor.set_species(/datum/species/abductor)
-	var/obj/item/organ/internal/tongue/abductor/abductor_tongue = new_abductor.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/abductor/abductor_tongue = new_abductor.get_organ_slot(ORGAN_SLOT_TONGUE)
 	abductor_tongue.mothership = "[team.name]"
 
 	new_abductor.real_name = "[team.name] [sub_role]"

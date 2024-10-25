@@ -186,7 +186,7 @@
 /datum/antagonist/rev/head/on_removal()
 	if(give_hud)
 		var/mob/living/carbon/C = owner.current
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.get_organ_slot(ORGAN_SLOT_HUD)
 		if(S)
 			S.Remove(C)
 	return ..()
@@ -365,7 +365,7 @@
 			to_chat(carbon_owner, "The Syndicate were unfortunately unable to get you a flash.")
 
 	if(give_hud)
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/hud = new()
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/hud = new()
 		hud.Insert(carbon_owner)
 		if(carbon_owner.get_quirk(/datum/quirk/body_purist))
 			to_chat(carbon_owner, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \

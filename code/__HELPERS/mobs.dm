@@ -720,7 +720,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		mob_occupant = occupant
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant

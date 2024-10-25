@@ -527,7 +527,7 @@
 			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
 
-		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(human_lungs))
 			balloon_alert(src, "you don't have lungs!")
 			return FALSE
@@ -882,7 +882,7 @@
 		if(result != "Yes")
 			return
 
-		var/obj/item/organ/internal/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 		if(isnull(target_brain))
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
@@ -943,7 +943,7 @@
 	// can remove up to 2 seconds at legendary
 	carrydelay -= fitness_level * (1/3) SECONDS
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		carrydelay *= potential_spine.athletics_boost_multiplier
 

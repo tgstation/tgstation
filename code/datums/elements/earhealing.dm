@@ -26,7 +26,7 @@
 /datum/element/earhealing/process(seconds_per_tick)
 	for(var/i in user_by_item)
 		var/mob/living/carbon/user = user_by_item[i]
-		var/obj/item/organ/internal/ears/ears = user.get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/ears = user.get_organ_slot(ORGAN_SLOT_EARS)
 		if(!ears || !ears.damage || (ears.organ_flags & ORGAN_FAILING) || IS_ROBOTIC_ORGAN(ears))
 			continue
 		ears.deaf = max(ears.deaf - 0.25 * seconds_per_tick, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged

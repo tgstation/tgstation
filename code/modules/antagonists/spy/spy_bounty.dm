@@ -621,10 +621,10 @@
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/eyes,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver,
+		/obj/item/organ/eyes,
 	)
 	return ..()
 

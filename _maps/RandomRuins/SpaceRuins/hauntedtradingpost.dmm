@@ -5471,7 +5471,7 @@
 /obj/structure/table/wood,
 /obj/item/toy/figure/wizard/special{
 	pixel_y = 9;
-	pixel_x = -4;
+	pixel_x = -4
 	},
 /obj/item/toy/figure/warden{
 	name = "\improper Knight action figure";

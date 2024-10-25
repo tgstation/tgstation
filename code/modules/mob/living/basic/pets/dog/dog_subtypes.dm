@@ -91,7 +91,7 @@
 	maxHealth = 50
 	gender = NEUTER
 	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, STAMINA = 0, OXY = 1)
-	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/breadslice/plain = 3,  \
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
@@ -101,7 +101,7 @@
 
 /mob/living/basic/pet/dog/breaddog/CheckParts(list/parts)
 	. = ..()
-	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
 	candidate.brainmob.mind.transfer_to(src)

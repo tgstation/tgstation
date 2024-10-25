@@ -1092,7 +1092,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 /mob/living/carbon/human/cult_ghost/get_organs_for_zone(zone, include_children)
 	. = ..()
-	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
 		. -= B
 
 

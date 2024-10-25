@@ -951,7 +951,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/obj/item/organ/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else

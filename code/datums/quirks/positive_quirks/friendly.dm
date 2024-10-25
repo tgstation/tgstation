@@ -12,7 +12,7 @@
 
 /datum/quirk/friendly/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_quirkholder = quirk_holder
-	var/obj/item/organ/internal/heart/holder_heart = human_quirkholder.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/holder_heart = human_quirkholder.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(holder_heart) || isnull(holder_heart.reagents))
 		return
 	holder_heart.reagents.maximum_volume = 20

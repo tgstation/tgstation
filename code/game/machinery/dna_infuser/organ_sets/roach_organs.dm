@@ -46,7 +46,7 @@
 /// Roach heart:
 /// Reduces damage taken from brute attacks from behind,
 /// but increases duration of knockdowns
-/obj/item/organ/internal/heart/roach
+/obj/item/organ/heart/roach
 	name = "mutated roach-heart"
 	desc = "Roach DNA infused into what was once a normal heart."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
@@ -61,18 +61,18 @@
 
 	COOLDOWN_DECLARE(harden_effect_cd)
 
-/obj/item/organ/internal/heart/roach/Initialize(mapload)
+/obj/item/organ/heart/roach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_They %PRONOUN_have hardened, somewhat translucent skin.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 	AddElement(/datum/element/update_icon_blocker)
 	roach_shell = new()
 
-/obj/item/organ/internal/heart/roach/Destroy()
+/obj/item/organ/heart/roach/Destroy()
 	QDEL_NULL(roach_shell)
 	return ..()
 
-/obj/item/organ/internal/heart/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/heart/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -83,11 +83,11 @@
 	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
 	human_owner.physiology.knockdown_mod *= 3
 
-/obj/item/organ/internal/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
+/obj/item/organ/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
 	limb.add_bodypart_overlay(roach_shell)
 
-/obj/item/organ/internal/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
@@ -97,7 +97,7 @@
 	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
 	human_owner.physiology.knockdown_mod /= 3
 
-/obj/item/organ/internal/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
+/obj/item/organ/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
 
 	limb.remove_bodypart_overlay(roach_shell)
@@ -107,7 +107,7 @@
  *
  * Adds a 0.5 modifier to attacks from the back
  */
-/obj/item/organ/internal/heart/roach/proc/modify_damage(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/heart/roach/proc/modify_damage(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(!is_blocking(source, damage_amount, damagetype, attack_direction))
@@ -120,7 +120,7 @@
  *
  * Does a special effect if we blocked damage with our back
  */
-/obj/item/organ/internal/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
 	if(!is_blocking(source, damage_dealt, damagetype, attack_direction))
@@ -133,7 +133,7 @@
 	COOLDOWN_START(src, harden_effect_cd, 5 SECONDS) // Cooldown resets EVERY time we get hit
 
 /// Checks if the passed mob is in a valid state to be blocking damage with the roach shell
-/obj/item/organ/internal/heart/roach/proc/is_blocking(mob/living/carbon/human/blocker, damage_amount, damagetype, attack_direction)
+/obj/item/organ/heart/roach/proc/is_blocking(mob/living/carbon/human/blocker, damage_amount, damagetype, attack_direction)
 	if(damage_amount < 5 || damagetype != BRUTE || !attack_direction)
 		return
 	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
@@ -160,7 +160,7 @@
 /// Roach stomach:
 /// Makes disgust a non-issue, very slightly worse at passing off reagents
 /// Also makes you more hungry
-/obj/item/organ/internal/stomach/roach
+/obj/item/organ/stomach/roach
 	name = "mutated roach-stomach"
 	desc = "Roach DNA infused into what was once a normal stomach."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
@@ -173,13 +173,13 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
-/obj/item/organ/internal/stomach/roach/Initialize(mapload)
+/obj/item/organ/stomach/roach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
 /// Roach liver:
 /// Purges toxins at a higher threshold, but takes more damage from them if not purged
-/obj/item/organ/internal/liver/roach
+/obj/item/organ/liver/roach
 	name = "mutated roach-liver"
 	desc = "Roach DNA infused into what was once a normal liver."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
@@ -191,11 +191,11 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
-/obj/item/organ/internal/liver/roach/Initialize(mapload)
+/obj/item/organ/liver/roach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/internal/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/roach/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner))
 		return
@@ -203,7 +203,7 @@
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.tox_mod *= 2
 
-/obj/item/organ/internal/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/liver/roach/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
@@ -213,7 +213,7 @@
 
 /// Roach appendix:
 /// No appendicitus! weee!
-/obj/item/organ/internal/appendix/roach
+/obj/item/organ/appendix/roach
 	name = "mutated roach-appendix"
 	desc = "Roach DNA infused into what was once a normal appendix. It could get <i>worse</i>?"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
@@ -223,11 +223,11 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
-/obj/item/organ/internal/appendix/roach/Initialize(mapload)
+/obj/item/organ/appendix/roach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/internal/appendix/roach/become_inflamed()
+/obj/item/organ/appendix/roach/become_inflamed()
 	return
 
 #undef ROACH_ORGAN_COLOR

@@ -239,7 +239,7 @@
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/HD = W
-		if(locate(/obj/item/organ/internal) in HD)
+		if(locate(/obj/item/organ) in HD)
 			to_chat(user, span_warning("There are organs inside [HD]!"))
 			return
 		if(head)

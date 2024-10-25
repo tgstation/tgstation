@@ -178,7 +178,7 @@
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		var/obj/item/organ/internal/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
+		var/obj/item/organ/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
 		if(!istype(target_gland))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
@@ -448,7 +448,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		species = span_notice("[human_victim.dna.species.name]")
 		if(IS_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
+		var/obj/item/organ/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else

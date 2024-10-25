@@ -423,7 +423,7 @@
 	time = 15
 	name = "Deluxe Meat-pocket"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/meat/slab = 1,
 		/obj/item/food/grown/herbs = 1

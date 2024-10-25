@@ -311,7 +311,7 @@
 	head = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 
 //Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/internal/heart/cursed/wizard
+/obj/item/organ/heart/cursed/wizard
 	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25

@@ -145,15 +145,15 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
-	var/obj/item/organ/internal/lungs/smoker_lungs = null
-	var/obj/item/organ/internal/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/smoker_lungs = null
+	var/obj/item/organ/lungs/old_lungs = carbon_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(old_lungs && IS_ORGANIC_ORGAN(old_lungs))
 		if(isplasmaman(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/plasmaman/plasmaman_smoker
+			smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 		else if(isethereal(carbon_holder))
-			smoker_lungs = /obj/item/organ/internal/lungs/ethereal/ethereal_smoker
+			smoker_lungs = /obj/item/organ/lungs/ethereal/ethereal_smoker
 		else
-			smoker_lungs = /obj/item/organ/internal/lungs/smoker_lungs
+			smoker_lungs = /obj/item/organ/lungs/smoker_lungs
 	if(!isnull(smoker_lungs))
 		smoker_lungs = new smoker_lungs
 		smoker_lungs.Insert(carbon_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -217,7 +217,7 @@
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
-	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
 		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75

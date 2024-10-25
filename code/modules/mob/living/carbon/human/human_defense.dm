@@ -285,7 +285,7 @@
 //200 max knockdown for EXPLODE_HEAVY
 //160 max knockdown for EXPLODE_LIGHT
 
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
@@ -394,7 +394,7 @@
 		//Note we both check that the user is in cardiac arrest and can actually heartattack
 		//If they can't, they're missing their heart and this would runtime
 		if(undergoing_cardiac_arrest() && can_heartattack() && (shock_damage * siemens_coeff >= 1) && prob(25))
-			var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 			if(heart.Restart() && stat == CONSCIOUS)
 				to_chat(src, span_notice("You feel your heart beating again!"))
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))

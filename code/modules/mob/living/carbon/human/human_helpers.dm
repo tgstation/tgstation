@@ -137,7 +137,7 @@
 	. += "[dna.species.type]"
 
 /mob/living/carbon/human/proc/get_eye_scars()
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if (!isnull(eyes))
 		return eyes.scarring
 

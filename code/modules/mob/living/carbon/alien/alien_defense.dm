@@ -71,7 +71,7 @@ In all, this is a lot like the monkey code. /N
 	if(!. || QDELETED(src))
 		return FALSE
 
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib(DROP_ALL_REMAINS)

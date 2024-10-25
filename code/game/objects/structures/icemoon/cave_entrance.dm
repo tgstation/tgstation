@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(3)
 			new /obj/item/reagent_containers/cup/bottle/potion/flight(loc)
 		if(4)
-			new /obj/item/organ/internal/heart/cursed/wizard(loc)
+			new /obj/item/organ/heart/cursed/wizard(loc)
 		if(5)
 			new /obj/item/jacobs_ladder(loc)
 		if(6)

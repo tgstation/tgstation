@@ -5,7 +5,7 @@
  * On use in hand, makes you run really fast for 5 seconds and ignore injury movement decrease.
  * On use when implanted, run for longer and ignore all negative movement. Automatically triggers if health is low (to escape).
  */
-/obj/item/organ/internal/monster_core/rush_gland
+/obj/item/organ/monster_core/rush_gland
 	name = "rush gland"
 	icon_state = "lobster_gland"
 	icon_state_preserved = "lobster_gland_stable"
@@ -16,23 +16,23 @@
 	user_status = /datum/status_effect/lobster_rush
 	actions_types = list(/datum/action/cooldown/monster_core_action/adrenal_boost)
 
-/obj/item/organ/internal/monster_core/rush_gland/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/rush_gland/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
 
-/obj/item/organ/internal/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED)
 
-/obj/item/organ/internal/monster_core/rush_gland/on_triggered_internal()
+/obj/item/organ/monster_core/rush_gland/on_triggered_internal()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
-/obj/item/organ/internal/monster_core/rush_gland/proc/trigger_organ_action_on_sig(datum/source)
+/obj/item/organ/monster_core/rush_gland/proc/trigger_organ_action_on_sig(datum/source)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(trigger_organ_action))
 

@@ -19,8 +19,8 @@
 		expose_temperature(owner.bodytemperature, 0.25)
 
 	var/need_mob_update = FALSE
-	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/liver_tolerance = 0
 	var/liver_damage = 0
 	var/provide_pain_message

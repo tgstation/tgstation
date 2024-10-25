@@ -178,7 +178,7 @@
 	if(failed)
 		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))
 
-	var/obj/item/organ/internal/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)
 		if(!skill_chip.active)
 			continue

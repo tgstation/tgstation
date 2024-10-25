@@ -11,10 +11,10 @@
 	name = "Lizard Wine"
 	time = 40
 	reqs = list(
-		/obj/item/organ/external/tail/lizard = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/datum/reagent/consumable/ethanol = 100
 	)
-	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	result = /obj/item/reagent_containers/cup/glass/bottle/lizardwine
 	category = CAT_DRINK
 

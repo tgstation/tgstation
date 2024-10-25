@@ -480,7 +480,7 @@
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "yQ" = (
-/obj/item/organ/internal/brain,
+/obj/item/organ/brain,
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)

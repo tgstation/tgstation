@@ -661,7 +661,7 @@
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/eyes = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/eyeball = 20,

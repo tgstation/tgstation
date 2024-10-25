@@ -358,10 +358,10 @@
 //called in /obj/item/tank/jetpack/proc/turn_off() : ()
 #define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
 
-//called in /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle() : ()
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_ACTIVATED "jetmodule_activated"
 	#define THRUSTER_ACTIVATION_FAILED (1<<0)
-//called in /obj/item/organ/internal/cyberimp/chest/thrusters/proc/toggle() : ()
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
 #define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
 
 // /obj/item/camera signals

@@ -258,42 +258,42 @@
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
-		/datum/job/assistant = /obj/item/organ/internal/heart/cybernetic, //real cardiac
-		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/mouth/breathing_tube,
-		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
-		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/botanist = /obj/item/organ/internal/cyberimp/chest/nutriment,
-		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
-		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
-		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
-		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier2,
-		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
-		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun, //HONK!
-		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
-		/datum/job/coroner = /obj/item/organ/internal/tongue/bone, //hes got a bone to pick with you
-		/datum/job/curator = /obj/item/organ/internal/cyberimp/brain/connector,
-		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
-		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
-		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
-		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
-		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/human_ai = /obj/item/organ/internal/brain/cybernetic,
-		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
-		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
-		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
-		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
-		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
-		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/whisper,
-		/datum/job/pun_pun = /obj/item/organ/internal/cyberimp/arm/strongarm,
-		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
-		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
-		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
-		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
-		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
-		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
-		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+		/datum/job/assistant = /obj/item/organ/heart/cybernetic, //real cardiac
+		/datum/job/atmospheric_technician = /obj/item/organ/cyberimp/mouth/breathing_tube,
+		/datum/job/bartender = /obj/item/organ/liver/cybernetic/tier3,
+		/datum/job/bitrunner = /obj/item/organ/eyes/robotic/thermals,
+		/datum/job/botanist = /obj/item/organ/cyberimp/chest/nutriment,
+		/datum/job/captain = /obj/item/organ/heart/cybernetic/tier3,
+		/datum/job/cargo_technician = /obj/item/organ/stomach/cybernetic/tier2,
+		/datum/job/chaplain = /obj/item/organ/cyberimp/brain/anti_drop,
+		/datum/job/chemist = /obj/item/organ/liver/cybernetic/tier2,
+		/datum/job/chief_engineer = /obj/item/organ/cyberimp/chest/thrusters,
+		/datum/job/chief_medical_officer = /obj/item/organ/cyberimp/chest/reviver,
+		/datum/job/clown = /obj/item/organ/cyberimp/brain/anti_stun, //HONK!
+		/datum/job/cook = /obj/item/organ/cyberimp/chest/nutriment/plus,
+		/datum/job/coroner = /obj/item/organ/tongue/bone, //hes got a bone to pick with you
+		/datum/job/curator = /obj/item/organ/cyberimp/brain/connector,
+		/datum/job/detective = /obj/item/organ/lungs/cybernetic/tier3,
+		/datum/job/doctor = /obj/item/organ/cyberimp/arm/surgery,
+		/datum/job/geneticist = /obj/item/organ/fly, //we don't care about implants, we have cancer.
+		/datum/job/head_of_personnel = /obj/item/organ/eyes/robotic,
+		/datum/job/head_of_security = /obj/item/organ/eyes/robotic/thermals,
+		/datum/job/human_ai = /obj/item/organ/brain/cybernetic,
+		/datum/job/janitor = /obj/item/organ/eyes/robotic/xray,
+		/datum/job/lawyer = /obj/item/organ/heart/cybernetic/tier2,
+		/datum/job/mime = /obj/item/organ/tongue/robot, //...
+		/datum/job/paramedic = /obj/item/organ/cyberimp/eyes/hud/medical,
+		/datum/job/prisoner = /obj/item/organ/eyes/robotic/shield,
+		/datum/job/psychologist = /obj/item/organ/ears/cybernetic/whisper,
+		/datum/job/pun_pun = /obj/item/organ/cyberimp/arm/strongarm,
+		/datum/job/quartermaster = /obj/item/organ/stomach/cybernetic/tier3,
+		/datum/job/research_director = /obj/item/organ/cyberimp/bci,
+		/datum/job/roboticist = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
+		/datum/job/scientist = /obj/item/organ/ears/cybernetic,
+		/datum/job/security_officer = /obj/item/organ/cyberimp/arm/flash,
+		/datum/job/shaft_miner = /obj/item/organ/monster_core/rush_gland,
+		/datum/job/station_engineer = /obj/item/organ/cyberimp/arm/toolset,
+		/datum/job/warden = /obj/item/organ/cyberimp/eyes/hud/security,
 	)
 
 /datum/station_trait/cybernetic_revolution/New()
@@ -312,7 +312,7 @@
 			var/mob/living/silicon/ai/ai = spawned
 			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
-	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
+	var/obj/item/organ/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/station_trait/luxury_escape_pods

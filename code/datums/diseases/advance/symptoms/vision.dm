@@ -42,7 +42,7 @@
 		return
 
 	var/mob/living/carbon/infected_mob = source_disease.affected_mob
-	var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 
 	switch(source_disease.stage)
 		if(1, 2)

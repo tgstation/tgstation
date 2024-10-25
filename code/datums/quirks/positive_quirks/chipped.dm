@@ -42,7 +42,7 @@
 		quirk_holder_carbon.implant_skillchip(installed_chip, force = TRUE)
 	installed_chip.try_activate_skillchip(silent = FALSE, force = TRUE)
 
-	var/obj/item/organ/internal/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
 	itchy_timer = addtimer(CALLBACK(src, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES)) // they get The Itch from a poor quality install every so often
 
 /datum/quirk/chipped/remove()
@@ -50,7 +50,7 @@
 	deltimer(itchy_timer)
 	. = ..()
 
-/datum/quirk/chipped/proc/cause_itchy(obj/item/organ/internal/brain/itchy_brain)
+/datum/quirk/chipped/proc/cause_itchy(obj/item/organ/brain/itchy_brain)
 
 	itchy_brain.apply_organ_damage(rand(1, 5), maximum = itchy_brain.maxHealth * 0.3)
 	to_chat(itchy_brain.owner, span_warning("Your [itchy_brain] itches."))

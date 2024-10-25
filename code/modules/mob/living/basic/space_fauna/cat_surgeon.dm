@@ -51,7 +51,7 @@
 		return
 
 	var/mob/living/carbon/human/attacked = target
-	var/obj/item/organ/external/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/external/tail/cat)
+	var/obj/item/organ/tail/cat/tail = attacked.get_organ_by_type(/obj/item/organ/tail/cat)
 	if(QDELETED(tail))
 		return
 

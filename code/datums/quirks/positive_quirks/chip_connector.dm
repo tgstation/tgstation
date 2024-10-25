@@ -7,7 +7,7 @@
 	lose_text = span_danger("You don't feel so CONNECTED anymore.")
 	medical_record_text = "Patient has a cybernetic implant on their back of their head that lets them install and remove skillchips at will. Gross."
 	mail_goodies = list()
-	var/obj/item/organ/internal/cyberimp/brain/connector/connector
+	var/obj/item/organ/cyberimp/brain/connector/connector
 
 /datum/quirk/chip_connector/New()
 	. = ..()

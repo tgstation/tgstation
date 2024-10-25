@@ -27,7 +27,7 @@
 		/datum/heretic_knowledge/moon_amulet,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/stack/rods = 3,
 		/obj/item/storage/belt = 1,
 	)
@@ -62,11 +62,11 @@
 	depth = 8
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(locate(/obj/item/organ/internal/eyes) in atoms)
+	if(locate(/obj/item/organ/eyes) in atoms)
 		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/weeping)
 		src.required_atoms = list(
 			/obj/item/canvas = 1,
-			/obj/item/organ/internal/eyes = 1,
+			/obj/item/organ/eyes = 1,
 		)
 		return TRUE
 

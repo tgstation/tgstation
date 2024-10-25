@@ -7,7 +7,7 @@
 	if(!eye_damage_threshold)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	for(var/mob/living/carbon/blind in oview(9, living_pawn))
-		var/obj/item/organ/internal/eyes/eyes = blind.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/eyes = blind.get_organ_slot(ORGAN_SLOT_EYES)
 		if(isnull(eyes))
 			continue
 		if(eyes.damage < eye_damage_threshold)
@@ -36,7 +36,7 @@
 
 	if(QDELETED(target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	var/datum/callback/callback = CALLBACK(living_pawn, TYPE_PROC_REF(/mob/living/basic/eyeball, heal_eye_damage), target, eyes)
 	callback.Invoke()
 

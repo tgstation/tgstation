@@ -35,7 +35,7 @@
 
 /datum/quirk/item_quirk/scarred_eye/add(client/client_source)
 	var/mob/living/carbon/human/human_owner = quirk_holder
-	var/obj/item/organ/internal/eyes/eyes = human_owner.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human_owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if (isnull(eyes))
 		return
 
@@ -57,7 +57,7 @@
 
 /datum/quirk/item_quirk/scarred_eye/remove()
 	var/mob/living/carbon/human/human_owner = quirk_holder
-	var/obj/item/organ/internal/eyes/eyes = human_owner.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human_owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!isnull(eyes))
 		eyes.fix_scar(RIGHT_EYE_SCAR)
 		eyes.fix_scar(LEFT_EYE_SCAR)

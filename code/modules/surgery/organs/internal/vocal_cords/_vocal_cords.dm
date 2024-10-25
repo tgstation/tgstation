@@ -1,4 +1,4 @@
-/obj/item/organ/internal/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
+/obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -8,17 +8,17 @@
 	healing_factor = 0
 	var/list/spans = null
 
-/obj/item/organ/internal/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
+/obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
 	return TRUE
 
-/obj/item/organ/internal/vocal_cords/proc/speak_with(message) //do what the organ does
+/obj/item/organ/vocal_cords/proc/speak_with(message) //do what the organ does
 	return
 
-/obj/item/organ/internal/vocal_cords/proc/handle_speech(message) //actually say the message
+/obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
 
 //Colossus drop, forces the listeners to obey certain commands
-/obj/item/organ/internal/vocal_cords/colossus
+/obj/item/organ/vocal_cords/colossus
 	name = "divine vocal cords"
 	desc = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
@@ -30,7 +30,7 @@
 
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
-	var/obj/item/organ/internal/vocal_cords/colossus/cords = null
+	var/obj/item/organ/vocal_cords/colossus/cords = null
 
 /datum/action/item_action/organ_action/colossus/New()
 	..()
@@ -67,7 +67,7 @@
 		return
 	owner.say(".x[command]")
 
-/obj/item/organ/internal/vocal_cords/colossus/can_speak_with()
+/obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(!owner)
 		return FALSE
 
@@ -77,22 +77,22 @@
 
 	return owner.can_speak()
 
-/obj/item/organ/internal/vocal_cords/colossus/handle_speech(message)
+/obj/item/organ/vocal_cords/colossus/handle_speech(message)
 	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	return //voice of god speaks for us
 
-/obj/item/organ/internal/vocal_cords/colossus/speak_with(message)
+/obj/item/organ/vocal_cords/colossus/speak_with(message)
 	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
 
-/obj/item/organ/internal/adamantine_resonator
+/obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
-/obj/item/organ/internal/vocal_cords/adamantine
+/obj/item/organ/vocal_cords/adamantine
 	name = "adamantine vocal cords"
 	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Golems containing these formations use this to broadcast messages to nearby golems."
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
@@ -108,7 +108,7 @@
 		return
 	owner.say(".x[message]")
 
-/obj/item/organ/internal/vocal_cords/adamantine/handle_speech(message)
+/obj/item/organ/vocal_cords/adamantine/handle_speech(message)
 	var/msg = span_resonate("[span_name("[owner.real_name]")] resonates, \"[message]\"")
 	for(var/player in GLOB.player_list)
 		if(iscarbon(player))

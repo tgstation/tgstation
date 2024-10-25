@@ -341,7 +341,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
-/obj/item/organ/internal/liver,
+/obj/item/organ/liver,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -543,7 +543,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/bubblegum,
-/obj/item/organ/internal/appendix,
+/obj/item/organ/appendix,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -903,7 +903,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "mG" = (
 /obj/structure/table,
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/effect/spawner/random/medical/surgery_tool_advanced,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -1056,7 +1056,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/item/organ/internal/lungs,
+/obj/item/organ/lungs,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
@@ -1193,7 +1193,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/item/organ/internal/brain,
+/obj/item/organ/brain,
 /obj/item/skillchip/research_director,
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 4
@@ -1279,7 +1279,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research/lab)
@@ -3692,8 +3692,8 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Wt" = (
 /obj/structure/table/optable,
-/obj/item/organ/internal/eyes,
-/obj/item/organ/internal/liver,
+/obj/item/organ/eyes,
+/obj/item/organ/liver,
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
