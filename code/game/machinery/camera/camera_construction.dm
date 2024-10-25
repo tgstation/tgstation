@@ -123,7 +123,7 @@
 	if(camera_construction_state != CAMERA_STATE_FINISHED || panel_open)
 		if(attacking_item.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
+				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
 					return
 				upgradeXRay(FALSE, TRUE)
 				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
@@ -141,7 +141,7 @@
 			return
 		else if(isprox(attacking_item))
 			if(!isMotion())
-				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
+				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
 					return
 				upgradeMotion()
 				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
