@@ -76,10 +76,12 @@
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/mecha = target
 		mecha.dna_lock = null
+		mecha.mecha_flags &= ~ID_LOCK_ON
 		for(var/mob/living/occupant as anything in mecha.occupants)
 			if(isAI(occupant))
 				continue
 			mecha.mob_exit(occupant, randomstep = TRUE)
+			occupant.Paralyze(50)
 	else if(istype(target,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/door = target
 		door.unbolt()
