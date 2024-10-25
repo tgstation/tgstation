@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Improved descriptions on size tooltips to explain where the item can be stored"

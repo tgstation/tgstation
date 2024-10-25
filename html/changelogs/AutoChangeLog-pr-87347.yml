@@ -1,4 +1,0 @@
-author: "Hoolny"
-delete-after: True
-changes:
-  - bugfix: "fixes material tiles having no inhand sprites"

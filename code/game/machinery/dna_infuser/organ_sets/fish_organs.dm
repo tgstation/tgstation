@@ -162,7 +162,7 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
 	dna_block = DNA_FISH_TAIL_BLOCK
-	wag_flags = WAG_ABLE
+	wag_flags = NONE
 	organ_traits = list(TRAIT_FLOPPING)
 
 	// Fishlike reagents, you could serve it raw like fish
@@ -217,7 +217,7 @@
 
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
-	color_source = ORGAN_COLOR_HAIR
+	color_source = ORGAN_COLOR_OVERRIDE
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.
@@ -227,6 +227,13 @@
 		receiver.dna.update_uf_block(DNA_FISH_TAIL_BLOCK)
 
 	return ..()
+
+/datum/bodypart_overlay/mutant/tail/fish/override_color(obj/item/bodypart/bodypart_owner)
+	//If the owner uses mutant colors, inherit the color of the bodypart
+	if(!bodypart_owner.owner || HAS_TRAIT(bodypart_owner.owner, TRAIT_MUTANT_COLORS))
+		return bodypart_owner.draw_color
+	else //otherwise get one from a set of faded out blue and some greys colors.
+		return pick("#B4B8DD", "#85C7D0", "#67BBEE", "#2F4450", "#55CCBB", "#999FD0", "#345066", "#585B69", "#7381A0", "#B6DDE5", "#4E4E50")
 
 /datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
 	return SSaccessories.tails_list_fish

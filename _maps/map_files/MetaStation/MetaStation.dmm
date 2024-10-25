@@ -23637,6 +23637,7 @@
 /obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iwL" = (

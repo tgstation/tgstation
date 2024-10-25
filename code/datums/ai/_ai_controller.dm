@@ -268,11 +268,6 @@ multiple modular subtrees with behaviors
 		return AI_STATUS_IDLE
 	return AI_STATUS_ON
 
-/datum/ai_controller/proc/get_current_turf()
-	var/mob/living/mob_pawn = pawn
-	var/turf/pawn_turf = get_turf(mob_pawn)
-	to_chat(world, "[pawn_turf]")
-
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
@@ -380,6 +375,7 @@ multiple modular subtrees with behaviors
 		if(isnull(current_movement_target))
 			fail_behavior(current_behavior)
 			return
+
 		///Stops pawns from performing such actions that should require the target to be adjacent.
 		var/atom/movable/moving_pawn = pawn
 		var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)

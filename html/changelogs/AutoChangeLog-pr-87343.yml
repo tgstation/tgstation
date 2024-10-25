@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - balance: "Borgs and AIs can now access dropped PDAs. The Messenger app does not work over a remote connection, however."

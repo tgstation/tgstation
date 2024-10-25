@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - sound: "Removed MOD chestplate and glove equip/drop sounds"
