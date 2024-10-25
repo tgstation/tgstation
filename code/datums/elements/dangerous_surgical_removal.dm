@@ -30,7 +30,7 @@
 
 /datum/element/dangerous_organ_removal/proc/on_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SIGNAL_HANDLER
-	if(source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
+	if(surgical && source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return
 	if(user?.Adjacent(source))
 		source.audible_message("[source] explodes on [user]'s face!")
