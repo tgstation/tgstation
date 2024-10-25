@@ -73,7 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
 	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
-	. += span_notice("The ")
+	. += span_notice("The volume knob is currently " ?src.speakers.should_be_listening "on." : "off.")
 
 /obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
 	return GLOB.always_state
