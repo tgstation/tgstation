@@ -1427,6 +1427,7 @@
 #include "code\datums\elements\attack_zone_randomiser.dm"
 #include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bane.dm"
+#include "code\datums\elements\basic_allergenic_attack.dm"
 #include "code\datums\elements\basic_eating.dm"
 #include "code\datums\elements\basic_health_examine.dm"
 #include "code\datums\elements\beauty.dm"
