@@ -50,6 +50,17 @@
 	if(. || !apc_scanner)
 		return
 
+	scan_apc(user)
+
+/obj/item/multitool/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+
+	if(. || !apc_scanner)
+		return
+
+	scan_apc(user)
+
+/obj/item/multitool/proc/scan_apc(mob/user)
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))
 		return
 
@@ -94,19 +105,51 @@
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 /obj/item/multitool/ai_detect
-	actions_types = list(/datum/action/item_action/toggle_multitool)
+	/// How close the AI is to us
 	var/detect_state = PROXIMITY_NONE
+	/// Range at which the closest AI makes the multitool glow red
 	var/rangealert = 8 //Glows red when inside
+	/// Range at which the closest AI makes the multitool glow yellow
 	var/rangewarning = 20 //Glows yellow when inside
-	var/hud_type = DATA_HUD_AI_DETECT
-	var/detecting = FALSE
+	/// Is our HUD on
+	var/hud_on = FALSE
+
+/obj/item/multitool/ai_detect/examine(mob/user)
+	. = ..()
+	if(!hud_on)
+		return
+	. += span_notice("You can right-click to scan for a nearby APC.")
+	switch(detect_state)
+		if(PROXIMITY_NONE)
+			. += span_green("No AI should be currently looking at you. Keep on your clandestine activities.")
+		if(PROXIMITY_NEAR)
+			. += span_warning("An AI is getting uncomfortably close. Maybe time to drop what youre doing.")
+		if(PROXIMITY_ON_SCREEN)
+			. += span_danger("An AI is (probably) looking at you. You should probably hide this.")
 
 /obj/item/multitool/ai_detect/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	if(hud_on && ismob(loc))
+		remove_hud(loc)
 	return ..()
 
-/obj/item/multitool/ai_detect/ui_action_click()
-	return
+/obj/item/multitool/ai_detect/attack_self(mob/user, modifiers)
+	apc_scanner = FALSE //we want to toggle hud, not check for APC
+	toggle_hud(user)
+	return ..()
+
+/obj/item/multitool/ai_detect/attack_self_secondary(mob/user, modifiers)
+	apc_scanner = TRUE // so we can use rightclick instead of leftclick to scan apc
+	return ..()
+
+/obj/item/multitool/ai_detect/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(hud_on)
+		show_hud(user)
+
+/obj/item/multitool/ai_detect/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(hud_on)
+		remove_hud(user)
 
 /obj/item/multitool/ai_detect/update_icon_state()
 	. = ..()
@@ -118,17 +161,26 @@
 	if(detect_state != old_detect_state)
 		update_appearance()
 
-/obj/item/multitool/ai_detect/proc/toggle_detect(mob/user)
-	detecting = !detecting
+/obj/item/multitool/ai_detect/proc/toggle_hud(mob/user)
+	hud_on = !hud_on
 	if(user)
-		to_chat(user, span_notice("You toggle the ai detection feature on [src] [detecting ? "on" : "off"]."))
-	if(!detecting)
-		detect_state = PROXIMITY_NONE
-		update_appearance()
-		STOP_PROCESSING(SSfastprocess, src)
-		return
-	if(detecting)
+		to_chat(user, span_notice("You toggle the ai detection feature on [src] [hud_on ? "on" : "off"]."))
+	if(hud_on)
 		START_PROCESSING(SSfastprocess, src)
+		show_hud(user)
+	else
+		STOP_PROCESSING(SSfastprocess, src)
+		detect_state = PROXIMITY_NONE
+		update_appearance(UPDATE_ICON)
+		remove_hud(user)
+
+/obj/item/multitool/ai_detect/proc/show_hud(mob/user)
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+	hud.show_to(user)
+
+/obj/item/multitool/ai_detect/proc/remove_hud(mob/user)
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_AI_DETECT]
+	hud.hide_from(user)
 
 /obj/item/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
@@ -138,10 +190,11 @@
 		if(!AI_eye.ai_detector_visible)
 			continue
 
-		var/distance = get_dist(our_turf, get_turf(AI_eye))
+		var/turf/ai_turf = get_turf(AI_eye)
+		var/distance = get_dist(our_turf, ai_turf)
 
 		if(distance == -1) //get_dist() returns -1 for distances greater than 127 (and for errors, so assume -1 is just max range)
-			if(our_turf == get_turf(AI_eye)) // EXCEPT if the AI is on our TURF(ITS RIGHT ONTOP OF US!!!!)
+			if(ai_turf == our_turf)
 				detect_state = PROXIMITY_ON_SCREEN
 				break
 			continue
@@ -151,18 +204,6 @@
 			break
 		if(distance < rangewarning) //ai can't see us but is close
 			detect_state = PROXIMITY_NEAR
-
-/datum/action/item_action/toggle_multitool
-	name = "Toggle AI detecting mode"
-	check_flags = NONE
-
-/datum/action/item_action/toggle_multitool/Trigger(trigger_flags)
-	if(!..())
-		return FALSE
-	if(target)
-		var/obj/item/multitool/ai_detect/M = target
-		M.toggle_detect(owner)
-	return TRUE
 
 /obj/item/multitool/abductor
 	name = "alien multitool"
