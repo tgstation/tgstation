@@ -317,7 +317,8 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(get_organ_by_type(/obj/item/organ/internal/brain) && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client && !HAS_TRAIT(src, TRAIT_FAKE_SOULLESS))))
+	var/has_brain = !QDELETED(get_organ_by_type(/obj/item/organ/internal/brain))
+	if(has_brain && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client && (has_brain || !HAS_TRAIT(src, TRAIT_FAKE_SOULLESS)))))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
