@@ -84,6 +84,10 @@
 			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
 		return
 
+	if(istype(item, /obj/item/hemostat/supermatter))
+		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
+		return
+
 	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 

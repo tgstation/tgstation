@@ -85,3 +85,26 @@
 	)
 	category = CAT_STRUCTURE
 	crafting_flags = CRAFT_CHECK_DENSITY
+
+/datum/crafting_recipe/adam_pedestal
+	name = "Adamantine Pedestal"
+	result = /obj/item/adamantine_pedestal
+	reqs = list(
+		/obj/item/stack/sheet/mineral/adamantine = 20,
+	)
+	time = 120 SECONDS
+	category = CAT_STRUCTURE
+
+
+/datum/crafting_recipe/sm_small
+	name = "Small Supermatter Crystal"
+	result = /obj/machinery/power/supermatter_crystal/small
+	reqs = list(
+		/obj/item/gun/magic/wand/shrink = 1,
+		/obj/item/adamantine_pedestal = 1,
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 120 SECONDS
+	category = CAT_STRUCTURE

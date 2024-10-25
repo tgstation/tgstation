@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Tape recorders no longer deceptively claim to have wires or a wire panel in order to lure in unsuspecting assistants"

@@ -268,11 +268,6 @@ multiple modular subtrees with behaviors
 		return AI_STATUS_IDLE
 	return AI_STATUS_ON
 
-/datum/ai_controller/proc/get_current_turf()
-	var/mob/living/mob_pawn = pawn
-	var/turf/pawn_turf = get_turf(mob_pawn)
-	to_chat(world, "[pawn_turf]")
-
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
@@ -322,18 +317,21 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/proc/update_able_to_run()
 	SIGNAL_HANDLER
-	able_to_run = get_able_to_run()
-	if(!able_to_run)
+	var/run_flags = get_able_to_run()
+	if(run_flags & AI_UNABLE_TO_RUN)
+		able_to_run = FALSE
 		GLOB.move_manager.stop_looping(pawn) //stop moving
-	set_ai_status(get_expected_ai_status())
+	else
+		able_to_run = TRUE
+	set_ai_status(get_expected_ai_status(), run_flags)
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
 	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
-		return FALSE
+		return AI_UNABLE_TO_RUN
 	if(world.time < paused_until)
-		return FALSE
-	return TRUE
+		return AI_UNABLE_TO_RUN
+	return NONE
 
 ///Can this pawn interact with objects?
 /datum/ai_controller/proc/ai_can_interact()
@@ -380,6 +378,7 @@ multiple modular subtrees with behaviors
 		if(isnull(current_movement_target))
 			fail_behavior(current_behavior)
 			return
+
 		///Stops pawns from performing such actions that should require the target to be adjacent.
 		var/atom/movable/moving_pawn = pawn
 		var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)
@@ -419,7 +418,7 @@ multiple modular subtrees with behaviors
 		forgotten_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
-/datum/ai_controller/proc/set_ai_status(new_ai_status)
+/datum/ai_controller/proc/set_ai_status(new_ai_status, additional_flags = NONE)
 	if(ai_status == new_ai_status)
 		return FALSE //no change
 
@@ -431,7 +430,8 @@ multiple modular subtrees with behaviors
 	ai_status = new_ai_status
 	GLOB.ai_controllers_by_status[new_ai_status] += src
 	if(ai_status == AI_STATUS_OFF)
-		CancelActions()
+		if(!(additional_flags & AI_PREVENT_CANCEL_ACTIONS))
+			CancelActions()
 		return
 	if(!length(current_behaviors))
 		add_to_unplanned_controllers()

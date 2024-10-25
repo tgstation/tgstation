@@ -565,10 +565,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
@@ -725,7 +722,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
+		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN
