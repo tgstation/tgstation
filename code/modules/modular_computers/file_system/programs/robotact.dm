@@ -84,7 +84,7 @@
 				shell = TRUE
 
 			var/list/cyborg_data = list(
-				name = other_borg.name,
+				otherBorgName = other_borg.name,
 				integ = round((other_borg.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
 				locked_down = other_borg.lockcharge,
 				status = other_borg.stat,

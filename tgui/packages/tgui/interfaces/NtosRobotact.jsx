@@ -374,7 +374,7 @@ export const NtosRobotactContent = (props) => {
                     <Stack.Item width="24.25%">
                       <Section
                         key={cyborg.ref}
-                        title={cyborg.name.slice(0, 20)}
+                        title={cyborg.otherBorgName.slice(0, 20)}
                       >
                         <LabeledList>
                           <LabeledList.Item label="Status">
