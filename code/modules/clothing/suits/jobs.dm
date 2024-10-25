@@ -56,6 +56,16 @@
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
+//Janitor
+/obj/item/clothing/suit/apron/janitor_cloak
+	name = "waterproof poncho"
+	desc = "A transparent, waterproof cloak for your cleaning needs."
+	icon_state = "janicloak"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|ARMS
+
+
+
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
 	name = "captain's parade jacket"
