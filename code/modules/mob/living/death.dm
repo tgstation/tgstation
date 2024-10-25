@@ -70,7 +70,7 @@
 	return
 
 /// Length of the animation in dust_animation.dmi
-#define DUST_ANIMATION_TIME 1.6 SECONDS
+#define DUST_ANIMATION_TIME 1.3 SECONDS
 
 /**
  * This is the proc for turning a mob into ash.
@@ -117,7 +117,7 @@
 	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc, REF(atom_or_image))
 	atom_or_image.add_filter("dust_animation", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
 	atom_or_image.add_filter("dust_color", 1, color_matrix_filter())
-	atom_or_image.transition_filter("dust_color", color_matrix_filter(COLOR_MATRIX_GRAYSCALE), DUST_ANIMATION_TIME - 0.4 SECONDS)
+	atom_or_image.transition_filter("dust_color", color_matrix_filter(COLOR_MATRIX_GRAYSCALE), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	animate(atom_or_image, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
 
 /// Holds the dust animation filter effect, so we can animate it
@@ -131,7 +131,11 @@
 	// we manually animate this, rather than just using an animated icon state or flick, to work around byond animated state memes
 	// (normally, all animated icon states are synced to the same time, which would bad here)
 	for(var/i in 2 to duration)
+		if(PERFORM_ALL_TESTS(focus_only/runtime_icon_state) && !icon_exists(icon, "dust.[i]"))
+			stack_trace("Missing dust animation icon state: dust.[i]")
 		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
+	if(PERFORM_ALL_TESTS(focus_only/runtime_icon_state) && icon_exists(icon, "dust.[duration + 1]"))
+		stack_trace("Extra dust animation icon state: dust.[duration + 1]")
 	render_target = "*dust-[anim_id]"
 
 #undef DUST_ANIMATION_TIME
