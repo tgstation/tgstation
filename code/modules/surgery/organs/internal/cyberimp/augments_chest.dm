@@ -265,8 +265,10 @@
 	slot = ORGAN_SLOT_SPINE
 	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
 	var/athletics_boost_multiplier = 0.8
+	/// How much additional throwing speed does our spinal implant grant us.
+	var/added_throw_speed = 2
 	/// How much additional throwing range does our spinal implant grant us.
-	var/added_throw_range = 2
+	var/added_throw_range = 4
 	/// How much additional boxing damage and tackling power do we add?
 	var/strength_bonus = 4
 	/// Whether or not a gravity anomaly core has been installed, improving the effectiveness of the spinal implant.
@@ -285,16 +287,20 @@
 	. = ..()
 	stone_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "stone")
 	organ_owner.add_overlay(stone_overlay)
+	add_organ_trait(TRAIT_BOULDER_BREAKER)
 	if(core_applied)
 		organ_owner.AddElement(/datum/element/forced_gravity, 1)
+		add_organ_trait(TRAIT_STURDY_FRAME)
 
 /obj/item/organ/internal/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
+	remove_organ_trait(TRAIT_BOULDER_BREAKER)
 	if(stone_overlay)
 		organ_owner.cut_overlay(stone_overlay)
 		stone_overlay = null
 	if(core_applied)
 		organ_owner.RemoveElement(/datum/element/forced_gravity, 1)
+		remove_organ_trait(TRAIT_STURDY_FRAME)
 
 /obj/item/organ/internal/cyberimp/chest/spine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -305,7 +311,8 @@
 	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
 		user.balloon_alert(user, "core installed.")
 		athletics_boost_multiplier = 0.25
-		added_throw_range += 2
+		added_throw_speed += 4
+		added_throw_range += 4
 		strength_bonus += 4
 		core_applied = TRUE
 		name = "\improper Atlas gravitonic spinal implant"
