@@ -119,7 +119,9 @@
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
 	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.set_heartattack(FALSE)
-	owner.revive()
+	if (!owner.revive())
+		return
+	owner.apply_revival_shock()
 	owner.emote("gasp")
 	owner.set_jitter_if_lower(200 SECONDS)
 	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
