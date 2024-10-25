@@ -115,8 +115,10 @@
 			CRASH("dust_animation() called with no loc passed and with no atom/image with a loc")
 
 	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc, REF(atom_or_image))
-	atom_or_image.add_filter("dust_filter", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
-	animate(atom_or_image, color = COLOR_DARK, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
+	atom_or_image.add_filter("dust_animation", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
+	atom_or_image.add_filter("dust_color", 1, color_matrix_filter())
+	atom_or_image.transition_filter("dust_color", color_matrix_filter(COLOR_MATRIX_GRAYSCALE), DUST_ANIMATION_TIME - 0.4 SECONDS)
+	animate(atom_or_image, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
 
 /// Holds the dust animation filter effect, so we can animate it
 /obj/effect/temp_visual/dust_animation_filter
