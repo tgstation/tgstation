@@ -25,6 +25,7 @@
 			"Linkage": null
 		},
 		{
+			"Mining": true,
 			"No Parallax": true,
 			"Weather_Snowstorm": true,
 			"Ice Ruins": true,
