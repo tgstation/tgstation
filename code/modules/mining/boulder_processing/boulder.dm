@@ -31,6 +31,7 @@
 	register_context()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
 	AddComponent(/datum/component/sisyphus_awarder)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL, added_damage = 20, requires_combat_mode = FALSE)
 
 /obj/item/boulder/Destroy(force)
 	SSore_generation.available_boulders -= src
