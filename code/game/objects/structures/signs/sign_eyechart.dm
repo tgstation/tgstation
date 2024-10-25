@@ -38,9 +38,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 			eye_goodness = max(eye_goodness, little_bad + 1)
 
 		if(eye_goodness <= 0)
-			report = span_notice("\"E, F, P...\" Yep, you can read down to the green line.")
+			report = span_notice("\"E, F, P...\" Yep, you can read down to the red line.")
 		else if(eye_goodness < little_bad)
-			report = span_notice("\"E, F, P...\" You can make out most of the letters, but it gets a bit difficult towards the green line.")
+			report = span_notice("\"E, F, P...\" You can make out most of the letters, but it gets a bit difficult past the green line.")
 		else if(eye_goodness < very_bad)
 			report = span_warning("\"E, F, P..?\" You can make out the big letters, but the smaller ones are a bit of a blur.")
 		else
