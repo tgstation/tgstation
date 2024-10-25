@@ -429,6 +429,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 7
+	tool_behaviour = TOOL_CULTIVATOR
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
@@ -469,6 +470,11 @@
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
+/obj/item/cultivator/cyborg
+	name = "cyborg cultivator"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_cultivator"
+
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
@@ -483,6 +489,7 @@
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
+	tool_behaviour = TOOL_HATCHET
 	embed_type = /datum/embed_data/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
@@ -589,6 +596,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 6
+	tool_behaviour = TOOL_SECATEUR
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*2)
@@ -606,6 +614,11 @@
 ///Send a signal to whatever we clicked and ask them if they wanna be PLANT RESTYLED YEAAAAAAAH
 /obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
 	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
+
+/obj/item/secateurs/cyborg
+	name = "cyborg secateurs"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili_secateur"
 
 /obj/item/geneshears
 	name = "botanogenetic plant shears"
