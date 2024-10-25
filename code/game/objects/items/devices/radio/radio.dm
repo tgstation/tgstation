@@ -656,6 +656,9 @@
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
 
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
+
 /obj/item/radio/entertainment/speakers/Initialize(mapload)
 	. = ..()
 	set_broadcasting(FALSE)
