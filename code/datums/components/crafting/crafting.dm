@@ -141,7 +141,7 @@
 					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
 						.["other"][reagent.type] += reagent.volume
 				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-					if(item.tool_behaviour)
+					if(item.tool_behaviour && item.tool_use_check(a, amount = (item.tool_behaviour == TOOL_WELDER ? 1 : 0), silent = TRUE))
 						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
@@ -162,7 +162,7 @@
 				if(subcontained_item.tool_behaviour)
 					present_qualities[subcontained_item.tool_behaviour] = TRUE
 		available_tools[contained_item.type] = TRUE
-		if(contained_item.tool_behaviour)
+		if(contained_item.tool_behaviour && contained_item.tool_use_check(source, amount = (contained_item.tool_behaviour == TOOL_WELDER ? 1 : 0), silent = TRUE))
 			present_qualities[contained_item.tool_behaviour] = TRUE
 
 	for(var/quality in surroundings["tool_behaviour"])
@@ -451,6 +451,7 @@
 	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
+
 	var/list/craftability = list()
 	for(var/datum/crafting_recipe/recipe as anything in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		if(!is_recipe_available(recipe, user))
