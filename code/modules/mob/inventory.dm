@@ -355,10 +355,10 @@
 	. = doUnEquip(I, force, newloc, FALSE, silent = silent)
 	I.do_drop_animation(src)
 
-//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
+//visibly unequips I but it is NOT MOVED AND REMAINS IN SRC, newloc is for signal handling checks only which hints where you want to move the object after removal
 //item MUST BE FORCEMOVE'D OR QDEL'D
-/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
-	return doUnEquip(I, force, null, TRUE, idrop, silent = TRUE)
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE, atom/newloc = src)
+	return doUnEquip(I, force, newloc, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
