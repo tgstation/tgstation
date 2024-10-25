@@ -94,10 +94,10 @@
 				ref = REF(other_borg)
 			)
 			borggroup += list(cyborg_data)
-			if(borggroup.len == 4) //grouping borgs in packs of four, since I can't do it later in js
+			if(length(borggroup) == 4) //grouping borgs in packs of four, since I can't do it later in js
 				data["cyborg_groups"] += list(borggroup)
 				borggroup = list()
-		if(borggroup.len) //and any remainders
+		if(length(borggroup)) //and any remainders
 			data["cyborg_groups"] += list(borggroup)
 
 	//Cover, TRUE for locked
