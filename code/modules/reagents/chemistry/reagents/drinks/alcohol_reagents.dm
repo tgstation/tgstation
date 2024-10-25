@@ -98,7 +98,7 @@
 /datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	. = ..()
 	if(methods & INGEST)
-		exposed_mob.check_allergic_reaction(ALCOHOL, reac_volume * 5)
+		exposed_mob.check_allergic_reaction(ALCOHOL, chance = reac_volume * 5, histamine_add = min(10, reac_volume))
 
 	if(methods & (TOUCH|VAPOR|PATCH))
 		exposed_mob.adjust_fire_stacks(reac_volume / 15)

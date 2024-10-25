@@ -565,7 +565,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes))
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)

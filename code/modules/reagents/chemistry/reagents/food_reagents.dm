@@ -305,7 +305,7 @@
 /datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & INGEST)
-		exposed_mob.check_allergic_reaction(SUGAR, reac_volume * 10)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -1012,6 +1012,11 @@
 	taste_description = "caramel"
 	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/caramel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
 
 /datum/reagent/consumable/char
 	name = "Char"

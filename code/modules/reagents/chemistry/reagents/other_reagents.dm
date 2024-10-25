@@ -2934,7 +2934,7 @@
 	if(!iscarbon(exposed_mob))
 		return
 	if(methods & INGEST)
-		exposed_mob.check_allergic_reaction(BUGS, reac_volume * 10)
+		exposed_mob.check_allergic_reaction(BUGS, chance = reac_volume * 10, histamine_add = min(10, reac_volume))
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
 		exposed_mob.apply_status_effect(status_effect, amount_left)

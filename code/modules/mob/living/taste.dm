@@ -107,10 +107,11 @@
  *
  * * to_foodtype: The food type to check for an allergic reaction to.
  * * chance: The chance of an allergic reaction occurring. Default is 100 (guaranteed).
+ * * histamine_add: The amount of histamine to add to the mob if they are already experiencing an allergic reaction.
  *
  * Returns TRUE if the mob had an allergic reaction, FALSE otherwise.
  */
-/mob/living/proc/check_allergic_reaction(to_foodtype = NONE, chance = 100)
+/mob/living/proc/check_allergic_reaction(to_foodtype = NONE, chance = 100, histamine_add = 0)
 	if(!(get_allergic_foodtypes() & to_foodtype))
 		return FALSE
 	if(!prob(chance))
@@ -118,8 +119,9 @@
 	if(ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
 		to_chat(src, span_warning("You feel your throat start to itch."))
 		add_mood_event("allergic_food", /datum/mood_event/allergic_food)
-		return TRUE
-	return FALSE
+	else if(histamine_add)
+		reagents.add_reagent(/datum/reagent/toxin/histamine, histamine_add)
+	return TRUE
 
 /**
  * Gets the food reaction a mob would normally have from the given food item,
