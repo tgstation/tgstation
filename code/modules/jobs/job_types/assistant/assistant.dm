@@ -38,10 +38,10 @@ Assistant
 	config_tag = "ASSISTANT"
 
 /datum/job/assistant/get_outfit(consistent)
-	/// DOPPLER SHIFT REMOVAL BEGIN
-	/*if(consistent)
+	if(consistent)
 		return /datum/outfit/job/assistant/preview
-	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
+	/// DOPPLER SHIFT REMOVAL BEGIN
+	/*if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
 		return ..()
 
 	var/static/list/gimmicks = list()
@@ -93,6 +93,7 @@ Assistant
 
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
+	uniform = /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls
 
 /// DOPPLER SHIFT REMOVAL BEGIN
 /*/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
