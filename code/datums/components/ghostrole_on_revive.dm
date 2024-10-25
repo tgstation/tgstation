@@ -15,14 +15,16 @@
 
 	if(ismob(parent))
 		prepare_mob(parent)
-	else if(istype(parent, /obj/item/organ/internal/brain))
-		var/obj/item/organ/internal/brain/brein = parent
-		if(brein.owner)
-			prepare_mob(brein.owner)
-		else
-			prepare_brain(brein)
-	else
+		return
+
+	if(!istype(parent, /obj/item/organ/internal/brain))
 		return COMPONENT_INCOMPATIBLE
+
+	var/obj/item/organ/internal/brain/brein = parent
+	if(brein.owner)
+		prepare_mob(brein.owner)
+	else
+		prepare_brain(brein)
 
 /// Give the appropriate signals, and watch for organ removal
 /datum/component/ghostrole_on_revive/proc/prepare_mob(mob/living/liver)
@@ -68,9 +70,10 @@
 	if(ishuman(aliver))
 		hewmon = aliver
 		head = hewmon.get_bodypart(BODY_ZONE_HEAD)
-		soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes ()
-		head?.add_bodypart_overlay(soul_eyes)
-		hewmon.update_body_parts()
+		if(head)
+			soul_eyes = new /datum/bodypart_overlay/simple/soul_pending_eyes ()
+			head.add_bodypart_overlay(soul_eyes)
+			hewmon.update_body_parts()
 
 	var/mob/dead/observer/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Would you like to play as a recovered crewmember?",
@@ -82,9 +85,9 @@
 		alert_pic = aliver,
 		role_name_text = "recovered crew",
 	)
-	if(hewmon)
-		head?.remove_bodypart_overlay(soul_eyes)
-		hewmon.update_body_parts()
+	if(head)
+		head.remove_bodypart_overlay(soul_eyes)
+		hewmon?.update_body_parts()
 
 	if(!isobserver(chosen_one))
 		if(refuse_revival_if_failed)
@@ -97,4 +100,12 @@
 
 /datum/component/ghostrole_on_revive/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+
+	var/mob/living/living
+	if(isliving(parent))
+		living = parent
+	else if(istype(parent, /obj/item/organ/internal/brain))
+		living = parent.owner
+	living?.med_hud_set_status()
+
 	. = ..()

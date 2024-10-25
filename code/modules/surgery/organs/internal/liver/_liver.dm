@@ -270,7 +270,7 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/internal/liver/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_surgical_removal)
+	AddElement(/datum/element/dangerous_surgical_removal, /*surgical = */ TRUE)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

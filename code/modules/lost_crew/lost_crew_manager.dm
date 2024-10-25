@@ -39,37 +39,40 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
 
+	. = new_body
 	// so bodies can also be used for runes, morgue, etc
-	if(revivable)
-		//it's not necessary since we dont spawn the body until we open the bodybag, but why not be nice for once
-		new_body.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 5)
+	if(!revivable)
+		return
 
-		if(recovered_items)
-			var/obj/item/paper/paper = new()
-			recovered_items += paper
+	//it's not necessary since we dont spawn the body until we open the bodybag, but why not be nice for once
+	new_body.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 5)
 
-			if(!HAS_TRAIT(new_body, TRAIT_HUSK))
-				paper.name = "DO NOT REMOVE BRAIN"
-				paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain explosives have been administered to enforce stipend.")
-				var/obj/item/organ/internal/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
-				//I swear to fuck I will explode you. you're not clever
-				//everyone thought of this, but I am the fool for having any faith
-				//in people actually wanting to play the job in an interesting manner
-				//instead of just taking the easiest way out and learning nothing
-				//(no one abused it yet but I am already getting pinged by people who think they've broken the system when really I just expected better of them)
-				boombrain.AddElement(/datum/element/dangerous_organ_removal)
-			else
-				paper.name = "BODYSWAPPING PERMITTED"
-				paper.add_raw_text("Body swapping is covered by medical insurance in case of husking and a lack of skill in the practictioner.")
+	if(!recovered_items)
+		return
 
-		var/obj/item/organ/internal/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
-		hersens.AddComponent(
-			/datum/component/ghostrole_on_revive, \
-			/* refuse_revival_if_failed = */ TRUE, \
-			/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
-		)
+	var/obj/item/paper/paper = new()
+	recovered_items += paper
 
-	return new_body
+	if(!HAS_TRAIT(new_body, TRAIT_HUSK))
+		paper.name = "DO NOT REMOVE BRAIN"
+		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain explosives have been administered to enforce stipend.")
+		var/obj/item/organ/internal/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+		//I swear to fuck I will explode you. you're not clever
+		//everyone thought of this, but I am the fool for having any faith
+		//in people actually wanting to play the job in an interesting manner
+		//instead of just taking the easiest way out and learning nothing
+		//(no one abused it yet but I am already getting pinged by people who think they've broken the system when really I just expected better of them)
+		boombrain.AddElement(/datum/element/dangerous_organ_removal)
+	else
+		paper.name = "BODYSWAPPING PERMITTED"
+		paper.add_raw_text("Body swapping is covered by medical insurance in case of husking and a lack of skill in the practictioner.")
+
+	var/obj/item/organ/internal/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+	hersens.AddComponent(
+		/datum/component/ghostrole_on_revive, \
+		/* refuse_revival_if_failed = */ TRUE, \
+		/*on_revival = */ CALLBACK(src, PROC_REF(on_succesful_revive), hersens, scenario.death_lore, on_revive_and_player_occupancy) \
+	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
 /datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
