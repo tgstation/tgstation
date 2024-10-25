@@ -57,7 +57,7 @@ export const NtosRobotactContent = (props) => {
     masterAI_online,
     MasterAI_connected,
   } = data;
-  const borgName = data.name || [];
+  const borgName = data.borgName || [];
   const borgType = data.designation || [];
   const masterAI = data.masterAI || [];
   const laws = data.Laws || [];

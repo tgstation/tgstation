@@ -48,7 +48,7 @@
 
 	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
 
-	data["name"] = cyborg.name
+	data["borgName"] = cyborg.name
 	data["designation"] = cyborg.model
 	data["masterAI"] = cyborg.connected_ai
 	data["MasterAI_connected"] = !!cyborg.connected_ai //Need a bool for this on the other side
