@@ -351,7 +351,7 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(radio_noise && !talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+		if(radio_noise && talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && signal.frequency != FREQ_COMMON)
 			SEND_SOUND(talking_living, 'sound/items/radio/radio_talk.ogg')
 
 	// All radios make an attempt to use the subspace system first
