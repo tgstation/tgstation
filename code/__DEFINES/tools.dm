@@ -21,6 +21,10 @@
 #define TOOL_ROLLINGPIN "rolling pin"
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
+/// Currently used only in borg botany omnitool, you may add some funny interaction with it later
+#define TOOL_CULTIVATOR "cultivator"
+#define TOOL_SECATEUR "secateur"
+#define TOOL_HATCHET "hatchet"
 
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
