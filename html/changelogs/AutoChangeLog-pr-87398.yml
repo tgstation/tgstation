@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "bouncy castles no longer render under the gibs they spawn"

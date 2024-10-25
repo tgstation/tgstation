@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed nuclear devices not showing the overlays for deconstruction states and lights for arming state properly"
-  - qol: "more examine feedback for nuclear devices (deconstruction/arming state)"

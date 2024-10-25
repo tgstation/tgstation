@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "cleaned up how drone holds their tools from the toolbox. report bugs on github"

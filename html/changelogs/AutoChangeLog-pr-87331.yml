@@ -1,6 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - rscadd: "Evidence Bag is now considered a storage container with 1 slot. Allows to use all features storage has, such as drag-and-drop the bag onto a table."
-  - rscadd: "Using Evidence Bag in hand now drops the item on the ground instead of putting it in your hands. Don't mess with the evidence!"
-  - qol: "Detective's scanner can now scan items on your person. You can now pick up an evidence bag, open it like any other container, and scan the item inside without removing it"

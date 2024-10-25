@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Refactored some text helper procs to use BYOND's native text trimming proc."
-  - admin: "Added a _trimtext proc, for use with SDQL2 or Lua scripting."

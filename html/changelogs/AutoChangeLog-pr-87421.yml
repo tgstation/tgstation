@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Made scanner gate scanlines mouse transparent"
-  - bugfix: "Scanner gate scanlines no longer appear only after someone walks through them and are disabled when the gate is unpowered"

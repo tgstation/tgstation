@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - rscadd: "Borgs now get the job title of someone sending them a message through SiliConnect."

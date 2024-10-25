@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - sound: "AI controlled mobs will no longer make sounds that ignore walls"
