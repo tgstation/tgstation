@@ -203,6 +203,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(current_interaction_count >= max_interact_count) //We are at our peak
 			return
 		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
+	if(HAS_TRAIT(user, TRAIT_STEALTHY_INTERACT))
+		hidden = TRUE
 
 	var/atom/user_loc = user.loc
 	var/atom/target_loc = target?.loc
