@@ -36,6 +36,7 @@
 #define POLL_IGNORE_STALKER "stalker"
 #define POLL_IGNORE_SYNDICATE "syndicate"
 #define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
+#define POLL_IGNORE_RECOVERED_CREW "recovered_crew"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
@@ -74,6 +75,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_STALKER = "Stalker",
 	POLL_IGNORE_SYNDICATE = "Syndicate",
 	POLL_IGNORE_VENUSHUMANTRAP = "Venus Human Traps",
+	POLL_IGNORE_RECOVERED_CREW = "recovered_crew",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

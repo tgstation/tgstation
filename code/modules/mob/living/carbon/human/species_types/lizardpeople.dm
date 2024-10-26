@@ -101,8 +101,8 @@
 
 /datum/species/lizard/get_sigh_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/lizard/get_sniff_sound(mob/living/carbon/human/lizard)
 	if(lizard.physique == FEMALE)
@@ -208,7 +208,7 @@ Lizard subspecies: SILVER SCALED
 	damage_modifier = 10 //very light silvery scales soften blows
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor

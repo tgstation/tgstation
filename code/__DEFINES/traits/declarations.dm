@@ -1337,6 +1337,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 
+///Trait given to mobs that can dig
+#define TRAIT_MOB_CAN_DIG "mob_can_dig"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow
@@ -1352,5 +1355,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+/// Gives a little examine to their body that they can be revived with a soul
+#define TRAIT_GHOSTROLE_ON_REVIVE "ghostrole_on_revive"
 
 // END TRAIT DEFINES
