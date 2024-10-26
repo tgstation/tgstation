@@ -236,7 +236,7 @@
 	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 
 	//set the reference & update icons
-	for(var/obj/item/tool as anything in omni_toolkit)
+	for(var/obj/item as anything in omni_toolkit)
 		if(initial(item.name) == toolkit_menu)
 			reference = item
 			update_appearance(UPDATE_ICON_STATE)
