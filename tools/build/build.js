@@ -221,8 +221,8 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
-    'massmeta/**', //MASSMETA EDIT ADDITION (Making the CBT work)
-	'modular_meta/**', //MASSMETA EDIT ADDITIO
+    'massmeta/**', //MASSMETA EDIT ADDITION (Making the CBT work) (DELETE IT AFTER MODS)
+    'modular_meta/**', //MASSMETA EDIT ADDITION (Making the CBT work)
     'sound/**',
     `${DME_NAME}.dme`,
     NamedVersionFile,
