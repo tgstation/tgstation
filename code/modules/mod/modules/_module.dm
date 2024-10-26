@@ -350,7 +350,7 @@
 		return
 	var/mutable_appearance/module_icon
 	if(mask_worn_overlay)
-		var/icon/mod_mask = mod.generate_suit_mask()
+		var/icon/mod_mask = icon(mod.generate_suit_mask())
 		mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
 		module_icon = mutable_appearance(mod_mask, layer = standing.layer + 0.1)
 	else

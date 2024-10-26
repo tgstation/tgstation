@@ -264,8 +264,9 @@
 				continue
 			module.on_suit_deactivation()
 	update_speed()
-	update_appearance(UPDATE_ICON_STATE)
 	update_charge_alert()
+	update_appearance(UPDATE_ICON_STATE)
+	generate_suit_mask()
 	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.

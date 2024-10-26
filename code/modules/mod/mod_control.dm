@@ -479,7 +479,7 @@
 
 /obj/item/mod/control/proc/generate_suit_mask()
 	var/covered_slots = NONE
-	var/parts = get_parts(all = TRUE)
+	var/list/parts = get_parts(all = TRUE)
 	for(var/obj/item/part as anything in parts)
 		if(!get_part_datum(part).sealed)
 			parts -= part
