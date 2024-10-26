@@ -35,7 +35,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	var/datum/corpse_damage_class/scenario = forced_class || pick_weight(scenarios)
 	scenario = new scenario ()
 
-	scenario.apply_character(new_body, protected_items, on_revive_and_player_occupancy, body_data)
+	scenario.apply_character(new_body, protected_items, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
 
