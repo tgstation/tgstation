@@ -422,7 +422,6 @@
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
-		if(user)
 			balloon_alert(user, "no cell found!")
 		return 0
 	. = borgy.cell.use(amount * energyfactor)
