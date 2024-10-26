@@ -453,7 +453,7 @@
 	// but regardless block all relayed moves, because no, you cannot move in the void.
 	return
 
-/obj/effect/immortality_talisman/singularity_pull()
+/obj/effect/immortality_talisman/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/immortality_talisman/void

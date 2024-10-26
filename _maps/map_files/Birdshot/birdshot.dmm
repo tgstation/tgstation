@@ -2454,6 +2454,12 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"aVK" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "aVT" = (
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -13883,6 +13889,7 @@
 	cycle_id = "engine_airlock_1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "ffL" = (
@@ -26321,8 +26328,8 @@
 /area/station/maintenance/port/greater)
 "jar" = (
 /obj/machinery/drone_dispenser,
-/turf/open/misc/asteroid,
-/area/station/maintenance/starboard/greater)
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "jat" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
@@ -34189,6 +34196,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/radio/intercom/directional/north,
 /obj/item/clothing/head/utility/welding,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "lEa" = (
@@ -112832,7 +112840,7 @@ tjj
 tjj
 blb
 ssz
-xQI
+jar
 qRO
 ssz
 vLv
@@ -113089,7 +113097,7 @@ tjj
 blb
 blb
 ssz
-roz
+aVK
 sPO
 ssz
 aSy
@@ -113346,8 +113354,8 @@ blb
 blb
 ssz
 ssz
+xQI
 roz
-ssz
 ssz
 pus
 cYG
@@ -113603,7 +113611,7 @@ ssz
 ssz
 ssz
 xQI
-roz
+xQI
 roz
 ssz
 iWZ
@@ -131092,7 +131100,7 @@ tiN
 aCM
 bDq
 eUF
-jar
+fcq
 mMr
 fPR
 ylD

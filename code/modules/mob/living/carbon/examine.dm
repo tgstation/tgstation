@@ -167,7 +167,7 @@
 			var/bleed_text = "<b>"
 			if(appears_dead)
 				bleed_text += "<span class='deadsay'>"
-				bleed_text += "Blood is visible in [t_his] open"
+				bleed_text += "Blood is visible in [t_his] open "
 			else
 				bleed_text += "<span class='warning'>"
 				bleed_text += "[t_He] [t_is] bleeding from [t_his] "
@@ -221,8 +221,11 @@
 					. += "[t_He] [t_is] shivering."
 				if(HAS_TRAIT(src, TRAIT_EVIL))
 					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
-					living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
-					living_user.set_jitter_if_lower(15 SECONDS)
+					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+						. += span_warning("PERFECT FOR SMITING!!")
+					else
+						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+						living_user.set_jitter_if_lower(15 SECONDS)
 
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role)
 				. += "[t_He] [t_has] a holy aura about [t_him]."
@@ -236,9 +239,12 @@
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					. += "[t_He] [t_has] a stupid expression on [t_his] face."
-		if(get_organ_by_type(/obj/item/organ/internal/brain) && isnull(ai_controller))
+		var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
+		if(brain && isnull(ai_controller))
 			var/npc_message = ""
-			if(!key)
+			if(HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
+				npc_message = "Soul is pending..."
+			else if(!key)
 				npc_message = "[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely."
 			else if(!client)
 				npc_message ="[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
@@ -269,7 +275,7 @@
 		. += span_warning("This body has been reduced to a grotesque husk.")
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		if(HAS_TRAIT(src, TRAIT_DISSECTED))
-			. += span_notice("[user.p_They()] appear[user.p_s()] to have been dissected. Useless for examination... <b><i>for now.</i></b>")
+			. += span_notice("[t_He] appear[p_s()] to have been dissected. Useless for examination... <b><i>for now.</i></b>")
 		if(HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
 			. += span_notice("A skilled hand has mapped this one's internal intricacies. It will be far easier to perform future experimentations upon [user.p_them()]. <b><i>Exquisite.</i></b>")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
@@ -314,7 +320,10 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(get_organ_by_type(/obj/item/organ/internal/brain) && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
+	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/internal/brain)
+	if(brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; but [t_his] soul might yet come back...")
+	if(brain && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

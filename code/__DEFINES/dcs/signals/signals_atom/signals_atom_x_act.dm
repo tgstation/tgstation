@@ -40,7 +40,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
+///from base of atom/singularity_pull(): (/atom, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"

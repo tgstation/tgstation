@@ -12657,6 +12657,7 @@
 /obj/item/clothing/head/utility/welding,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/airalarm/directional/south,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "exR" = (
@@ -39320,8 +39321,12 @@
 	pixel_y = -1
 	},
 /obj/item/storage/box/gloves{
-	pixel_x = -4;
-	pixel_y = 8
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -5;
+	pixel_y = -1
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -39517,11 +39522,11 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box/beakers{
-	pixel_x = 24;
-	pixel_y = 6
+	pixel_x = 10;
+	pixel_y = 14
 	},
 /obj/item/storage/box/syringes{
-	pixel_x = 11;
+	pixel_x = 10;
 	pixel_y = 4
 	},
 /turf/open/floor/glass/reinforced,
@@ -39982,6 +39987,14 @@
 /obj/item/clothing/mask/gas{
 	pixel_x = 12;
 	pixel_y = 2
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 1;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -2;
+	pixel_x = -5
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -67962,12 +67975,12 @@
 /area/station/service/kitchen)
 "xXm" = (
 /obj/structure/table,
-/obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/item/clothing/glasses/science{
+	pixel_y = 2
 	},
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science{
+	pixel_y = -2
+	},
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
