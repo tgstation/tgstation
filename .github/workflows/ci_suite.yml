@@ -96,7 +96,7 @@ jobs:
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
           bash tools/ci/check_grep.sh
-          bash massmeta/tools/massmeta_check_grep.sh # MASSMETA EDIT ADDITION - checking modular_meta code
+          bash modular_meta/tools/massmeta_check_grep.sh # MASSMETA EDIT ADDITION - checking modular_meta code
       - name: Ticked File Enforcement
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
