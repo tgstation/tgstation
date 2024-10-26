@@ -487,10 +487,11 @@
 	return suit_masks["[covered_slots]"]
 
 /obj/item/mod/control/proc/generate_suit_mask(covered_slots)
-	suit_masks["[covered_slots]"] = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/obj/item/part as anything in get_parts())
 		if(get_part_datum(part).sealed)
-			suit_masks["[covered_slots]"].Blend(icon(part.worn_icon, part.worn_icon_state), ICON_ADD)
+			slot_mask.Blend(icon(part.worn_icon, part.worn_icon_state), ICON_ADD)
+	suit_masks["[covered_slots]"] = slot_mask
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
