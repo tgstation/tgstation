@@ -205,7 +205,6 @@
  * * Make the clown car look like a singulo temporarily
  * * Spawn Laughing chem gas
  * * Drop oil
- * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
