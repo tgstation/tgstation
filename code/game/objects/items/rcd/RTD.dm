@@ -437,7 +437,7 @@
 			balloon_alert(user, "no cell found!")
 		return 0
 	. = borgy.cell.charge >= (amount * energyfactor)
-	if(!. && user)
+	if(!.)
 		balloon_alert(user, "insufficient charge!")
 	return .
 
