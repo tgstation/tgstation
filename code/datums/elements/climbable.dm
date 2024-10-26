@@ -64,6 +64,15 @@
 								span_notice("You start climbing onto [climbed_thing]..."))
 	var/adjusted_climb_time = climb_time
 	var/adjusted_climb_stun = climb_stun
+
+	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics) - 1
+	adjust_climb_time -= fitness_level
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		adjusted_climb_time *= potential_spine.athletics_boost_multiplier
+		adjusted_climb_stun *= potential_spine.athletics_boost_multiplier
+
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)) //climbing takes twice as long without help from the hands.
 		adjusted_climb_time *= 2
 	if(isalien(user))
@@ -88,6 +97,7 @@
 			if(istype(buckle_target))
 				if(buckle_target.is_buckle_possible(user))
 					buckle_target.buckle_mob(user)
+			user.mind?.adjust_experience(/datum/skill/athletics, 5) //Get a bit fitter with every climb.
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
