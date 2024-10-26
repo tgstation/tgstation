@@ -705,3 +705,105 @@
   zxaber:
   - balance: Borgs and AIs can now access dropped PDAs. The Messenger app does not
       work over a remote connection, however.
+2024-10-25:
+  Absolucy:
+  - rscadd: Added a separate preference for hearing vocal AI announcements (also known
+      as VOX), as opposed to lumping it into the "Enable announcement sounds" preference.
+  - refactor: Refactored some text helper procs to use BYOND's native text trimming
+      proc.
+  - admin: Added a _trimtext proc, for use with SDQL2 or Lua scripting.
+  Ben10Omintrix:
+  - rscadd: penguins will now fish from water holes
+  - bugfix: fixes ai controllers resetting their targets post do_afters
+  - bugfix: stationary medbots no longer search for patrol beacons
+  Cruix:
+  - rscadd: Hardhats now squish down excessively tall hairstyles while being worn.
+  DaCoolBoss:
+  - bugfix: Donk-Rolls no longer turn into Deluxe Donk Pockets when microwaved.
+  DaydreamIQ:
+  - map: Moved Birdshot's drone dispenser closer to robotics
+  Fikou:
+  - bugfix: bouncy castles no longer render under the gibs they spawn
+  - qol: suit storage units can hold backpacks in the modsuit slot
+  - bugfix: teleport turrets are no longer magical and will not be stopped by antimagic
+  JackEnoff:
+  - bugfix: MetaStation's Cargo Security Outpost is no longer free to access by anyone.
+  Profakos:
+  - rscadd: Adds a roboticist spraycan, and adds one of them to robotics on every
+      map
+  - qol: adds a screentip to spraycans that tells you that it can restyle robotic
+      limbs
+  - bugfix: fixes peg legs bringing up the augment restyle menu
+  - bugfix: if an outfit puts a reagent container in the preview dummy's hand, it
+      will not try to slosh
+  - code_imp: outfits putting items in your hand will respect the visual_only argument
+  Sealed101:
+  - bugfix: fixed akimbo firing automatic guns runtiming on the offhand gun when it's
+      empty, possibly causing dry fire clicks to not play
+  - bugfix: fixed nuclear devices not showing the overlays for deconstruction states
+      and lights for arming state properly
+  - qol: more examine feedback for nuclear devices (deconstruction/arming state)
+  SmArtKar:
+  - rscadd: You can now lean on windows the same way you can lean on walls
+  - bugfix: You no longer stop leaning on walls after clicking on anything
+  - bugfix: Rustle component no longer counts diagonal steps as two moves
+  - qol: Improved descriptions on size tooltips to explain where the item can be stored
+  - qol: Made scanner gate scanlines mouse transparent
+  - bugfix: Scanner gate scanlines no longer appear only after someone walks through
+      them and are disabled when the gate is unpowered
+  - sound: Removed MOD chestplate and glove equip/drop sounds
+  SyncIt21:
+  - refactor: cleaned up how drone holds their tools from the toolbox. report bugs
+      on github
+  carlarctg:
+  - bugfix: Silver extract food now transfers its slime trait to any processed slices
+  grungussuss:
+  - sound: 'reduced volume of: lightningbolt, lightningshock, lightning_chargeup sounds'
+  - qol: getting cocooned gives a better warning
+  - sound: ambience no longer gets cut off for ghosts
+  - sound: radio noise will no longer be heard in hard crit
+  - sound: AI controlled mobs will no longer make sounds that ignore walls
+  larentoun:
+  - rscadd: Evidence Bag is now considered a storage container with 1 slot. Allows
+      to use all features storage has, such as drag-and-drop the bag onto a table.
+  - rscadd: Using Evidence Bag in hand now drops the item on the ground instead of
+      putting it in your hands. Don't mess with the evidence!
+  - qol: Detective's scanner can now scan items on your person. You can now pick up
+      an evidence bag, open it like any other container, and scan the item inside
+      without removing it
+  mc-oofert:
+  - balance: you no longer need all parts deployed to activate a modsuit, you can
+      use them limbless
+  necromanceranne:
+  - bugfix: Nanite projectiles respect a targets immunity to any temperature effects
+      that the bullet might look for (cold immune targets against inferno bullets/heat
+      immune targets against cold bullets)
+  zxaber:
+  - rscadd: Borgs now get the job title of someone sending them a message through
+      SiliConnect.
+2024-10-26:
+  Ghommie:
+  - bugfix: Fixed a small botherance with special fish infusions. You no longer need
+      to infuse squids and pufferfish last to reap their special organs.
+  Melbert:
+  - rscadd: Drinking any ethanol (beer, wine, etc) will trigger alcohol allergies
+  - rscadd: Drinking ants will trigger Bug allergies
+  - rscadd: Getting stung by a bee, or bitten by a (giant) ant or (giant) spider,
+      will trigger bug allergies
+  - rscadd: Drinking plain sugar or caramel will trigger sugar allergies
+  - qol: Ethanol can speed up the surgeries of any mob type applied to, rather than
+      solely humans.
+  MelokGleb and KREKS:
+  - rscadd: very hard wiz-only sm sword craft
+  WebcomicArtist:
+  - bugfix: Un-breaks etherial apc charging and charge from ethereal wine.
+  carlarctg:
+  - bugfix: Hitting an SM with extraction tongs won't dust them anymore
+  grungussuss:
+  - bugfix: fixed plastic flaps losing atmos qualities when anchored
+  - sound: radio noise will no longer play on the common channel
+  necromanceranne:
+  - balance: Shock touch is now less-than-lethal, dealing a decent amount of stamina
+      damage at the cost of lethal damage. Lower cooldown. Power chromosome makes
+      it force a stagger rather than cause a chain lightning effect (this used to
+      do like only 5 damage so...)

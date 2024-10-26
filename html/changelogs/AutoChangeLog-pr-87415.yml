@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed akimbo firing automatic guns runtiming on the offhand gun when it's empty, possibly causing dry fire clicks to not play"

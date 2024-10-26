@@ -97,19 +97,14 @@
 
 /datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR|PATCH)))
-		return
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(ALCOHOL, chance = reac_volume * 5, histamine_add = min(10, reac_volume))
 
-	exposed_mob.adjust_fire_stacks(reac_volume / 15)
-
-	if(!iscarbon(exposed_mob))
-		return
-
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
-
-	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
+	if(methods & (TOUCH|VAPOR|PATCH))
+		exposed_mob.adjust_fire_stacks(reac_volume / 15)
+		var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
+			surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -2660,7 +2655,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.003 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.02 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/telepole
 	name = "Telepole"
@@ -2680,7 +2675,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.002 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.05 * ETHEREAL_CHARGE_NORMAL)
 
 /datum/reagent/consumable/ethanol/pod_tesla
 	name = "Pod Tesla"
@@ -2707,7 +2702,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * 0.005 * ETHEREAL_CHARGE_NORMAL)
+		stomach.adjust_charge(reac_volume * 0.1 * ETHEREAL_CHARGE_NORMAL)
 
 // Welcome to the Blue Room Bar and Grill, home to Mars' finest cocktails
 /datum/reagent/consumable/ethanol/rice_beer

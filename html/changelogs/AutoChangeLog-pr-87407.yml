@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - sound: "ambience no longer gets cut off for ghosts"

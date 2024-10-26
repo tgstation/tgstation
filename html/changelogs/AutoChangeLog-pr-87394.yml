@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Silver extract food now transfers its slime trait to any processed slices"

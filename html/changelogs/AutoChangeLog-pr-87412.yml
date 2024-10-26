@@ -1,6 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - rscadd: "Adds a roboticist spraycan, and adds one of them to robotics on every map"
-  - qol: "adds a screentip to spraycans that tells you that it can restyle robotic limbs"
-  - bugfix: "fixes peg legs bringing up the augment restyle menu"

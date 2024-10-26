@@ -1324,24 +1324,6 @@
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
 
-/obj/item/fish/get_infusion_entry()
-	var/amphibious = required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS)
-	var/list/possible_infusions = list()
-	for(var/type in fish_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[type]
-		if(!trait.infusion_entry)
-			continue
-		possible_infusions |= trait.infusion_entry
-	if(!length(possible_infusions) && !amphibious)
-		return GLOB.infuser_entries[/datum/infuser_entry/fish]
-	var/datum/infuser_entry/fish/entry = new
-	if(amphibious)
-		entry.output_organs -= /obj/item/organ/lungs/fish
-	for(var/key in possible_infusions)
-		var/datum/infuser_entry/infusion = GLOB.infuser_entries[key]
-		entry.output_organs |= infusion.output_organs
-	return entry
-
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
 	var/static/probability_table

@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Nanite projectiles respect a targets immunity to any temperature effects that the bullet might look for (cold immune targets against inferno bullets/heat immune targets against cold bullets)"

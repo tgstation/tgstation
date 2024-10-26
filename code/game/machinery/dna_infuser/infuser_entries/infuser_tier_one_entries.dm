@@ -136,6 +136,32 @@
 	tier = DNA_MUTANT_TIER_ONE
 	status_effect_type = /datum/status_effect/organ_set_bonus/fish
 
+/datum/infuser_entry/fish/get_output_organs(mob/living/carbon/human/target, obj/item/fish/infused_from)
+	if(!istype(infused_from))
+		return ..()
+
+	///Get a list of possible alternatives to the standard fish infusion. We prioritize special infusions over it.
+	var/list/possible_alt_infusions = list()
+	for(var/type in infused_from.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[type]
+		if(!trait.infusion_entry)
+			continue
+		var/datum/infuser_entry/entry = GLOB.infuser_entries[trait.infusion_entry]
+		for(var/organ in entry.output_organs)
+			if(!target.get_organ_by_type(organ))
+				possible_alt_infusions |= entry
+				break
+
+	if(length(possible_alt_infusions))
+		var/datum/infuser_entry/chosen = pick(possible_alt_infusions)
+		return chosen.get_output_organs(target, infused_from)
+
+	var/list/organs = ..()
+	if(infused_from.required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(infused_from, TRAIT_FISH_AMPHIBIOUS))
+		organs -= /obj/item/organ/lungs/fish
+	return organs
+
+
 /datum/infuser_entry/squid
 	name = "Ink Production"
 	infuse_mob_name = "ink-producing sealife"

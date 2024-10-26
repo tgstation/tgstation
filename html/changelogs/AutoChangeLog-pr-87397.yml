@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "teleport turrets are no longer magical and will not be stopped by antimagic"

@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "if an outfit puts a reagent container in the preview dummy's hand, it will not try to slosh"
-  - code_imp: "outfits putting items in your hand will respect the visual_only argument"
