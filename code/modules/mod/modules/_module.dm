@@ -233,12 +233,13 @@
 
 /// Called on the MODsuit's process
 /obj/item/mod/module/proc/on_process(seconds_per_tick)
+	if(part_process && !part_activated)
+		return FALSE
 	if(active)
 		if(!drain_power(active_power_cost * seconds_per_tick))
 			deactivate()
 			return FALSE
-		if(!part_process || part_activated)
-			on_active_process(seconds_per_tick)
+		on_active_process(seconds_per_tick)
 	else
 		drain_power(idle_power_cost * seconds_per_tick)
 	return TRUE
