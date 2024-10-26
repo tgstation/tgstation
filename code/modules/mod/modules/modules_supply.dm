@@ -361,7 +361,7 @@
 	incompatible_modules = list(/obj/item/mod/module/ash_accretion)
 	overlay_state_inactive = "module_ash"
 	use_mod_colors = TRUE
-	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	/// How many tiles we can travel to max out the armor.
 	var/max_traveled_tiles = 10
 	/// How many tiles we traveled through.
@@ -471,7 +471,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
 	cooldown_time = 1.25 SECONDS
-	required_slots = list(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	/// Time it takes us to complete the animation.
 	var/animate_time = 0.25 SECONDS
 	/// List of traits to add/remove from our subject as needed.
