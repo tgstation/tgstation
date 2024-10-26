@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Shock touch is now less-than-lethal, dealing a decent amount of stamina damage at the cost of lethal damage. Lower cooldown. Power chromosome makes it force a stagger rather than cause a chain lightning effect (this used to do like only 5 damage so...)"

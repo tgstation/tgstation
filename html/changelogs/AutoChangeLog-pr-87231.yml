@@ -1,4 +1,0 @@
-author: "WebcomicArtist"
-delete-after: True
-changes:
-  - bugfix: "Un-breaks etherial apc charging and charge from ethereal wine."
