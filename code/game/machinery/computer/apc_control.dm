@@ -72,7 +72,7 @@
 	active_apc = null
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/station/ai_monitored)
+	return is_station_level(APC.z) && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/station/ai_monitored)
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
