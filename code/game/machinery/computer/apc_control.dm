@@ -6,15 +6,16 @@
 	req_access = list(ACCESS_CE)
 	circuit = /obj/item/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_DIM_YELLOW
-	var/obj/machinery/power/apc/active_apc //The APC we're using right now
+	///The APC we're using right now
+	var/obj/machinery/power/apc/active_apc
+	///Whether actions are being logged to the console's logs or not
 	var/should_log = TRUE
+	///Whether the console is currently being restored from an emagged state
 	var/restoring = FALSE
-	var/list/logs
+	///List of logs containing events like logins/logoffs, APC access and manipulation, checking the APC/logs tabs and restoring logging after an emag
+	var/list/logs = list()
+	///Tracks the current logged-in user's ID card's name and assignment
 	var/auth_id = "\[NULL\]:"
-
-/obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
-	. = ..()
-	logs = list()
 
 /obj/machinery/computer/apc_control/on_set_machine_stat(old_value)
 	. = ..()
@@ -37,11 +38,13 @@
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
+///Creates a log entry in the console with a timestamp, current login ID data and the text provided in log_text
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)
 		return
 	LAZYADD(logs, "([station_time_timestamp()]): [auth_id] [log_text]")
 
+///Resets the console's emagged state and re-enables logging of activity
 /obj/machinery/computer/apc_control/proc/restore_comp(mob/user)
 	obj_flags &= ~EMAGGED
 	should_log = TRUE
@@ -49,6 +52,7 @@
 	log_activity("-=- Logging restored to full functionality at this point -=-")
 	restoring = FALSE
 
+///Initiates remote access to the APC
 /obj/machinery/computer/apc_control/proc/connect_apc(obj/machinery/power/apc/apc, mob/user)
 	if(isnull(apc))
 		return
@@ -63,6 +67,7 @@
 	log_activity("[auth_id] remotely accessed APC in [get_area_name(apc.area, TRUE)]")
 	active_apc = apc
 
+///Disconnect from the APC we're currently in remote access with
 /obj/machinery/computer/apc_control/proc/disconnect_apc()
 	// check if apc exists and is not controlled by anyone
 	if(QDELETED(active_apc))
@@ -71,8 +76,19 @@
 		active_apc.disconnect_remote_access()
 	active_apc = null
 
-/obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return is_station_level(APC.z) && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/station/ai_monitored)
+/**
+* Checks for whether the APC provided is eligible for access and being listed in the APC list.
+* The APC has to:
+* - be on a station z-level
+* - be not hacked by a malf AI
+* - have AI control enabled
+* - be not emagged
+* - be working
+* - not be an AI monitored area (AI sat areas and AI upload)
+*/
+
+/obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/checked_apc)
+	return is_station_level(checked_apc.z) && !checked_apc.malfhack && !checked_apc.aidisabled && !(checked_apc.obj_flags & EMAGGED) && !checked_apc.machine_stat && !istype(checked_apc.area, /area/station/ai_monitored)
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -125,18 +141,18 @@
 				auth_id = "Unknown (Unknown):"
 				log_activity("[auth_id] logged in to the terminal")
 				return
-			var/mob/living/operator = usr
-			if(!istype(operator))
+			var/mob/living/user = usr
+			if(!istype(user))
 				return
-			var/obj/item/card/id/ID = operator.get_idcard(TRUE)
-			if(ID && istype(ID))
-				if(check_access(ID))
+			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
+			if(user_id_card && istype(user_id_card))
+				if(check_access(user_id_card))
 					authenticated = TRUE
-					auth_id = "[ID.registered_name] ([ID.assignment]):"
+					auth_id = "[user_id_card.registered_name] ([user_id_card.assignment]):"
 					log_activity("[auth_id] logged in to the terminal")
 					playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 				else
-					auth_id = "[ID.registered_name] ([ID.assignment]):"
+					auth_id = "[user_id_card.registered_name] ([user_id_card.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
 					playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
 					say("ID rejected, access denied!")
@@ -157,8 +173,8 @@
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
-			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
-			connect_apc(APC, usr)
+			var/obj/machinery/power/apc/remote_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
+			connect_apc(remote_target, usr)
 		if("check-logs")
 			log_activity("Checked Logs")
 		if("check-apcs")
@@ -196,10 +212,10 @@
 			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
-			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
-			target.toggle_breaker(usr)
-			var/setTo = target.operating ? "On" : "Off"
-			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
+			var/obj/machinery/power/apc/breaker_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
+			breaker_target.toggle_breaker(usr)
+			var/setTo = breaker_target.operating ? "On" : "Off"
+			log_activity("Turned APC [breaker_target.area.name]'s breaker [setTo]")
 
 /obj/machinery/computer/apc_control/ui_close(mob/user)
 	. = ..()
