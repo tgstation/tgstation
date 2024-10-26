@@ -39,6 +39,10 @@
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
+	/// Are all parts needed active- have we ran on_part_activation
+	var/part_activated = FALSE
+	/// Do we need the parts to be extended to run process
+	var/part_process = TRUE
 	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
 	/// flags that let the module ability be used in odd circumstances
@@ -233,7 +237,8 @@
 		if(!drain_power(active_power_cost * seconds_per_tick))
 			deactivate()
 			return FALSE
-		on_active_process(seconds_per_tick)
+		if(!part_process || part_activated)
+			on_active_process(seconds_per_tick)
 	else
 		drain_power(idle_power_cost * seconds_per_tick)
 	return TRUE
@@ -263,11 +268,11 @@
 	return
 
 /// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
+/obj/item/mod/module/proc/on_part_activation()
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/proc/on_part_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped

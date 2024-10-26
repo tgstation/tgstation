@@ -21,11 +21,11 @@
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
 	mod.activation_step_time *= 2
 
-/obj/item/mod/module/springlock/on_suit_activation()
+/obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))
 	AddComponent(/datum/component/connect_loc_behalf, mod.wearer, gas_connections)
 
-/obj/item/mod/module/springlock/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/springlock/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 

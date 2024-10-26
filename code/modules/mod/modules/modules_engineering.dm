@@ -12,13 +12,13 @@
 	overlay_state_inactive = "module_welding"
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
-/obj/item/mod/module/welding/on_suit_activation()
+/obj/item/mod/module/welding/on_part_activation()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		//this is a screen that displays an image, so flash sensitives can use this to protect against flashes.
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 
-/obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/welding/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
@@ -244,13 +244,13 @@
 	target.AddComponent(/datum/component/tether, src, 7, "tether")
 
 /datum/embed_data/tether_projectile
-	embed_chance=65 // spiky
-	fall_chance=2
+	embed_chance = 65 // spiky
+	fall_chance = 2
 	ignore_throwspeed_threshold=TRUE
-	pain_stam_pct=0.4
-	pain_mult=3
-	jostle_pain_mult=2
-	rip_time=1 SECONDS
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	jostle_pain_mult = 2
+	rip_time = 1 SECONDS
 
 ///Radiation Protection - Protects the user from radiation, gives them a geiger counter and rad info in the panel.
 /obj/item/mod/module/rad_protection
@@ -263,17 +263,18 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	/// Radiation threat level being perceived.
 	var/perceived_threat_level
 
-/obj/item/mod/module/rad_protection/on_suit_activation()
+/obj/item/mod/module/rad_protection/on_part_activation()
 	AddComponent(/datum/component/geiger_sound)
 	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 	for(var/obj/item/part in mod.get_parts(all = TRUE))
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
-/obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/rad_protection/on_part_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
 	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
@@ -309,10 +310,10 @@
 	cooldown_time = 11 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 
-/obj/item/mod/module/constructor/on_suit_activation()
+/obj/item/mod/module/constructor/on_part_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/constructor/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
@@ -332,10 +333,10 @@
 	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
-/obj/item/mod/module/headprotector/on_suit_activation()
+/obj/item/mod/module/headprotector/on_part_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
-/obj/item/mod/module/headprotector/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/headprotector/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
 ///Mister - Sprays water over an area.

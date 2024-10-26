@@ -80,7 +80,7 @@
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
-/obj/item/mod/module/clamp/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/clamp/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	for(var/atom/movable/crate as anything in stored_crates)
@@ -275,10 +275,10 @@
 	. = ..()
 	disposal_tag = pick(GLOB.TAGGERLOCATIONS)
 
-/obj/item/mod/module/disposal_connector/on_suit_activation()
+/obj/item/mod/module/disposal_connector/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
 
-/obj/item/mod/module/disposal_connector/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/disposal_connector/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
 /obj/item/mod/module/disposal_connector/get_configuration()
@@ -406,11 +406,11 @@
 			/turf/open/water,
 		))
 
-/obj/item/mod/module/ash_accretion/on_suit_activation()
+/obj/item/mod/module/ash_accretion/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
-/obj/item/mod/module/ash_accretion/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/ash_accretion/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	if(!traveled_tiles)
