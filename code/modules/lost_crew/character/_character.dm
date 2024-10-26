@@ -49,4 +49,4 @@
 /datum/corpse_character/pod/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)
 	. = ..()
 
-	recovered_items = new /obj/item/plant_analyzer () //needed to properly healthscan them
+	recovered_items += new /obj/item/plant_analyzer () //needed to properly healthscan them

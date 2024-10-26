@@ -52,7 +52,7 @@
 
 /// Set up injuries
 /datum/corpse_damage_class/proc/apply_injuries(mob/living/carbon/human/victim, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy, list/body_data)
-	var/bonus_roll = prob(60) //do an extra turn for cause of death or post mortum effect
+	var/bonus_roll = prob(80) //do an extra turn for cause of death or post mortum effect
 	var/bonus_roll_used = FALSE
 	var/list/used_damage_types = list()
 
@@ -66,7 +66,7 @@
 		cause_of_death.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
 		body_data += cause_of_death.type
 
-		if(cause_of_death.no_bonus_roll || !bonus_roll || prob(50))
+		if(cause_of_death.no_bonus_roll || !bonus_roll || prob(70))
 			break
 
 		bonus_roll = FALSE

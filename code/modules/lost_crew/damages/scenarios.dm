@@ -33,11 +33,10 @@
 	post_mortem_effects = list(
 		/datum/corpse_damage/post_mortem/limb_loss = 5,
 		/datum/corpse_damage/post_mortem/organ_loss = 5,
-		null = 1,
 		)
 
 	decays = list(
-		/datum/corpse_damage/post_mortem/organ_decay = 3,
+		/datum/corpse_damage/post_mortem/organ_decay = 5,
 		/datum/corpse_damage/post_mortem/organ_decay/light = 1,
 		/datum/corpse_damage/post_mortem/organ_decay/heavy = 1,
 		)
