@@ -87,12 +87,8 @@
 #define INITSTAGE_MAIN 2 //! Main init stage
 #define INITSTAGE_MAX 2 //! Highest initstage.
 
-#ifndef UNIT_TESTS
 /// Sets up the abstract usr tracker for the subsystem, and uses it for PreInit()
 #define SETUP_SS_TRACKER_AND_PREINIT tracker = new(src); var/_old_usr = usr; usr = tracker; PreInit(); usr = _old_usr;
-#else
-#define SETUP_SS_TRACKER_AND_PREINIT PreInit();
-#endif
 
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\
