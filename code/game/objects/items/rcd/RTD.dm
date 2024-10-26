@@ -425,7 +425,7 @@
 			balloon_alert(user, "no cell found!")
 		return 0
 	. = borgy.cell.use(amount * energyfactor)
-	if(!. && user)
+	if(!.)
 		balloon_alert(user, "insufficient charge!")
 	return .
 /obj/item/construction/rtd/borg/checkResource(amount, mob/user)
