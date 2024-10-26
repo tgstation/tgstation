@@ -107,10 +107,10 @@
 	apply_main_material_effects(main_material, main_mat_amount, main_mat_mult)
 
 	if(material_flags & (MATERIAL_COLOR|MATERIAL_GREYSCALE))
-		var/init_alpha = initial(alpha)
-		var/alpha_value = (total_alpha / length(materials)) * init_alpha
+		var/previous_alpha = alpha
+		alpha *= (total_alpha / length(materials))/255
 
-		if(alpha_value < init_alpha * 0.9)
+		if(alpha_value < previous_alpha * 0.9)
 			opacity = FALSE
 
 		if(material_flags & MATERIAL_GREYSCALE)
