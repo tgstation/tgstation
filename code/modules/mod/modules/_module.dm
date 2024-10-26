@@ -45,6 +45,8 @@
 	var/allow_flags = NONE
 	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
 	var/list/required_slots = list()
+	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
+	var/mask_worn_overlay = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -335,7 +337,7 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
-	if(!mod.active || !has_required_parts(mod.mod_parts, TRUE))
+	if(!mod.active || !has_required_parts(mod.mod_parts, need_extended = TRUE))
 		return
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
@@ -349,6 +351,8 @@
 	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
+	if (mask_worn_overlay)
+		module_icon.add_filter("mod_worn_mask", 1, alpha_mask_filter(icon = mod.get_suit_mask()))
 	. += module_icon
 	SEND_SIGNAL(src, COMSIG_MODULE_GENERATE_WORN_OVERLAY, ., standing)
 

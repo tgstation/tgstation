@@ -86,6 +86,8 @@
 	COOLDOWN_DECLARE(cooldown_mod_move)
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
+	/// Sum of all deployed modules' icons, used as a mask by certain modules
+	var/icon/suit_mask
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
@@ -474,6 +476,18 @@
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
+
+/obj/item/mod/control/proc/get_suit_mask()
+	if (!suit_mask)
+		generate_suit_mask()
+	return suit_mask
+
+/obj/item/mod/control/proc/generate_suit_mask()
+	suit_mask = icon('icons/blanks/32x32.dmi', "nothing")
+	for(var/obj/item/part as anything in get_parts())
+		if(!get_part_datum(part).sealed)
+			continue
+		suit_mask.Blend(icon(part.worn_icon, part.worn_icon_state), ICON_ADD)
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
