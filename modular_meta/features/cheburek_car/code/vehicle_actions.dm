@@ -1,6 +1,6 @@
 //CHЁBUREK ACTION DATUMS
 /datum/action/vehicle/sealed/gopnik
-	button_icon = 'massmeta/icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'modular_meta/features/cheburek_car/icons/actions_vehicle.dmi'
 	name = "Toggle Gop Mode"
 	desc = "Grabs your Vodka and Semki!"
 	button_icon_state = "gop_mode"
@@ -16,7 +16,7 @@
 	C.toggle_gopmode(owner)
 
 /datum/action/vehicle/sealed/gear_up
-	button_icon = 'massmeta/icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'modular_meta/features/cheburek_car/icons/actions_vehicle.dmi'
 	name = "Gear UP"
 	desc = "Make your vedro move faster!"
 	button_icon_state = "car_gear_up"
@@ -32,7 +32,7 @@
 	G.increase_gear(owner)
 
 /datum/action/vehicle/sealed/gear_down
-	button_icon = 'massmeta/icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'modular_meta/features/cheburek_car/icons/actions_vehicle.dmi'
 	name = "Gear DOWN"
 	desc = "Make your vedro move slower!"
 	button_icon_state = "car_gear_down"
@@ -62,7 +62,7 @@
 	L.car_lights_toggle(owner)
 
 /datum/action/vehicle/sealed/blinkers
-	button_icon = 'massmeta/icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'modular_meta/features/cheburek_car/icons/actions_vehicle.dmi'
 	name = "Avariyka"
 	desc = "Useful if you need to park your bucket anywhere"
 	button_icon_state = "car_blinker"
