@@ -38,6 +38,10 @@
 	if(total_taste <= 0)
 		return TEXT_NO_TASTE
 
+	// If we have exactly one taste, don't bother with relative strengths
+	if(length(tastes) == 1)
+		return tastes[1]
+
 	// Sort tastes descending by strength, so strong flavours come first
 	sortTim(tastes, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 
