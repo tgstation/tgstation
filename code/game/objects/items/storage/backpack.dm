@@ -26,6 +26,7 @@
 	pickup_sound = 'sound/items/handling/backpack/backpack_pickup1.ogg'
 	drop_sound = 'sound/items/handling/backpack/backpack_drop1.ogg'
 	equip_sound = 'sound/items/equip/backpack_equip.ogg'
+	sound_vary = TRUE
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -62,6 +63,8 @@
 	item_flags = NO_MAT_REDEMPTION
 	armor_type = /datum/armor/backpack_holding
 	storage_type = /datum/storage/bag_of_holding
+	pickup_sound = NULL
+	drop_sound = NULL
 
 /datum/armor/backpack_holding
 	fire = 60
