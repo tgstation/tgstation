@@ -25,6 +25,7 @@
 	storage_type = /datum/storage/backpack
 	pickup_sound = 'sound/items/handling/backpack/backpack_pickup1.ogg'
 	drop_sound = 'sound/items/handling/backpack/backpack_drop1.ogg'
+	equip_sound = 'sound/items/equip/backpack_equip.ogg'
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
