@@ -477,21 +477,22 @@
 	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
 
-/obj/item/mod/control/proc/get_suit_mask()
+/obj/item/mod/control/proc/generate_suit_mask()
 	var/covered_slots = NONE
-	for(var/obj/item/part as anything in get_parts())
-		if(get_part_datum(part).sealed)
-			covered_slots |= part.slot_flags
-	if (!("[covered_slots]" in suit_masks))
-		generate_suit_mask(covered_slots)
-	return suit_masks["[covered_slots]"]
-
-/obj/item/mod/control/proc/generate_suit_mask(covered_slots)
+	var/parts = get_parts(all = TRUE)
+	for(var/obj/item/part as anything in parts)
+		if(!get_part_datum(part).sealed)
+			parts -= part
+			continue
+		covered_slots |= part.slot_flags
+	if(suit_masks["[covered_slots]"])
+		return suit_masks["[covered_slots]"]
 	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
-	for(var/obj/item/part as anything in get_parts())
-		if(get_part_datum(part).sealed)
-			slot_mask.Blend(icon(part.worn_icon, part.worn_icon_state), ICON_ADD)
+	for(var/obj/item/part as anything in parts)
+		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
+	slot_mask.Blend("#fff", ICON_ADD)
 	suit_masks["[covered_slots]"] = slot_mask
+	return suit_masks["[covered_slots]"]
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))

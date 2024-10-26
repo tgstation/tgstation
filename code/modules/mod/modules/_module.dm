@@ -348,11 +348,16 @@
 		used_overlay = overlay_state_inactive
 	else
 		return
-	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+	var/mutable_appearance/module_icon
+	if(mask_worn_overlay)
+		var/icon/mod_mask = mod.generate_suit_mask()
+		mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
+		module_icon = mutable_appearance(mod_mask, layer = standing.layer + 0.1)
+	else
+		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
-	if (mask_worn_overlay)
-		module_icon.add_filter("mod_worn_mask", 1, alpha_mask_filter(icon = mod.get_suit_mask()))
+
 	. += module_icon
 	SEND_SIGNAL(src, COMSIG_MODULE_GENERATE_WORN_OVERLAY, ., standing)
 
