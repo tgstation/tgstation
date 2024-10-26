@@ -5,5 +5,5 @@
 // because they will exist *before* SSatoms.
 /mob/abstract/subsystem_tracker/New(datum/controller/subsystem/subsystem)
 	if(!istype(subsystem))
-		CRASH("Tried to create subsystem tracker without reference to a valid subssyet")
+		CRASH("Tried to create subsystem tracker without reference to a valid subsystem")
 	name = "[subsystem.name] ([subsystem.type])"

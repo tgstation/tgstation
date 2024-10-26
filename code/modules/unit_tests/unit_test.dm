@@ -257,6 +257,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
+		//Technically not a true "mob" anyways, only used to track subsystem runtimes via usr
+		/mob/abstract/subsystem_tracker,
 	)
 
 	// Everything that follows is a typesof() check.
