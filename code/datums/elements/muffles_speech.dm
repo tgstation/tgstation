@@ -1,5 +1,7 @@
 /datum/element/muffles_speech
 
+var/mob/living/speaker
+
 /datum/element/muffles_speech/Attach(datum/target)
 	. = ..()
 	if(!isitem(target))
@@ -15,11 +17,13 @@
 /datum/element/muffles_speech/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
 	if(source.slot_flags & slot)
+		speaker = user
 		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
 		RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(emote_override))
 
 /datum/element/muffles_speech/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
+	speaker = null
 	UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY))
 
 /datum/element/muffles_speech/proc/emote_override(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
@@ -32,6 +36,8 @@
 /datum/element/muffles_speech/proc/muzzle_talk(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG))
+		return
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	if(spoken_message)
 		var/list/words = splittext(spoken_message, " ")
