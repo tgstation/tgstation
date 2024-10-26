@@ -211,7 +211,7 @@
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)
-	switch(rand(1,6))
+	switch(rand(1,5))
 		if(1)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and a special banana peel drops out of it."))
 			new /obj/item/grown/bananapeel/specialpeel(loc)
