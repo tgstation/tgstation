@@ -193,14 +193,13 @@
 
 /obj/item/bodypart/arm/drop_limb(special, dismembered, move_to_floor = TRUE)
 	var/mob/living/carbon/arm_owner = owner
-	. = ..()
 	if(special || !arm_owner)
-		return
-
+		return ..()
 	if(arm_owner.hand_bodyparts[held_index] == src)
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
+	. = ..()
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
