@@ -66,7 +66,7 @@
 	var/adjusted_climb_stun = climb_stun
 
 	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics) - 1
-	adjust_climb_time -= fitness_level
+	adjusted_climb_time -= fitness_level
 
 	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))

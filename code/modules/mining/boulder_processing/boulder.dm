@@ -10,7 +10,7 @@
 	icon = 'icons/obj/ore.dmi'
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
 	w_class = WEIGHT_CLASS_HUGE
-	throw_force = 30 // Under normal circumstances, pretty much nobody can throw this.
+	throwforce = 30 // Under normal circumstances, pretty much nobody can throw this.
 	throw_range = 0
 	tk_throw_range = 1 // Sorry, this is too cheesy, but maybe you can smash down doors with it.
 	throw_speed = 0.5
