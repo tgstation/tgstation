@@ -63,7 +63,7 @@
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
 	AddComponent(/datum/component/happiness)
-	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(process_food)) //signal sent by the element, no support for callbacks sadly (to do)
+	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food)) //signal sent by the element, no support for callbacks sadly (to do)
 	update_appearance()
 	create_reagents(150, REAGENT_HOLDER_ALIVE)
 	START_PROCESSING(SSprocessing, src)
@@ -173,21 +173,19 @@
 	regenerate_icons()
 
 /mob/living/basic/turtle/attackby(obj/item/used_item, mob/living/user, params)
-	. = ..()
-
-	if(stat == DEAD)
-		balloon_alert(user, "its dead!")
-		return
-
-	if(istype(used_item, /obj/item/seeds))
+	if(istype(used_item, /obj/item/seeds) && stat == CONSCIOUS)
 		melee_attack(used_item)
 		return
 
 	if(!istype(used_item, /obj/item/reagent_containers))
-		return
+		return ..()
 
 	if(isnull(used_item.reagents))
 		balloon_alert(user, "empty!")
+		return
+
+	if(stat == DEAD)
+		balloon_alert(user, "its dead!")
 		return
 
 	var/should_transfer = FALSE

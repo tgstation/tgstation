@@ -8,9 +8,9 @@
 	///type of effect our tree releases
 	var/effect_path
 	///how many times our ability affects surroundings
-	var/maximum_intervals = 3
+	var/maximum_intervals = 5
 	///time between each interval
-	var/time_between_intervals = 5 SECONDS
+	var/time_between_intervals = 3 SECONDS
 	///range our tree affects
 	var/tree_range = 5
 
@@ -97,7 +97,7 @@
 ///effects we give our tree abilities depending on their type
 /obj/effect/temp_visual/circle_wave/tree
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
-	duration = 15 SECONDS
+	duration = 10 SECONDS
 	amount_to_scale = 3
 
 /obj/effect/temp_visual/circle_wave/tree/healer

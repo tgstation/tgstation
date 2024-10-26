@@ -308,3 +308,7 @@
 //turtle
 ///our tree's ability
 #define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
+///people we headbutt!
+#define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
+///flore we must smell
+#define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
