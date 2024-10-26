@@ -199,10 +199,6 @@
 
 	return ..()
 
-/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
-	. = list()
-	for(var/obj/item/tool as anything in omni_toolkit)
-		. += initial(tool.tool_behaviour)
 
 ///The omnitool interacts with real world objects based on the state it has assumed
 /obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
@@ -210,52 +206,46 @@
 		return src
 
 	//first check if we have the tool
-	var/obj/item/tool = atoms[reference]
-	if(!QDELETED(tool))
-		return tool
+	var/obj/item = atoms[reference]
+	if(!QDELETED(item))
+		return item
 
 	//else try to borrow an in-built tool from our other omnitool brothers to save & share memory & such
 	var/mob/living/silicon/robot/borg = user
 	for(var/obj/item/borg/cyborg_omnitool/omni_tool in borg.model.basic_modules)
 		if(omni_tool == src)
 			continue
-		tool = omni_tool.atoms[reference]
-		if(!QDELETED(tool))
-			atoms[reference] = tool
-			return tool
+		item = omni_tool.atoms[reference]
+		if(!QDELETED(item))
+			atoms[reference] = item
+			return item
 
 	//if all else fails just make a new one from scratch
-	tool = new reference(user)
-	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-	atoms[reference] = tool
-	return tool
+	item = new reference(user)
+	ADD_TRAIT(item, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	atoms[reference] = item
+	return item
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
-	for(var/obj/item/tool as anything in omni_toolkit)
-		radial_menu_options[initial(tool.tool_behaviour)] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+	for(var/obj/item as anything in omni_toolkit)
+		radial_menu_options[initial(item.name)] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
 
 	//assign the new tool behaviour
-	var/new_tool_behaviour = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
-	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
-		return
-	tool_behaviour = new_tool_behaviour
+	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 
 	//set the reference & update icons
 	for(var/obj/item/tool as anything in omni_toolkit)
-		if(initial(tool.tool_behaviour) == new_tool_behaviour)
-			reference = tool
+		if(initial(item.name) == toolkit_menu)
+			reference = item
 			update_appearance(UPDATE_ICON_STATE)
 			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 			break
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
-	icon_state = initial(icon_state)
-
-	if (tool_behaviour)
-		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
-
+	if (reference)
+		icon_state = reference.icon_state
 	return ..()
 
 /**
