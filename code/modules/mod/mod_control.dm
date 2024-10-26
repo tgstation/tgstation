@@ -490,7 +490,7 @@
 	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/obj/item/part as anything in get_parts())
 		if(get_part_datum(part).sealed)
-			slot_mask.Blend(icon(part.worn_icon, part.worn_icon_state), ICON_ADD)
+			slot_mask.Blend(icon(part.worn_icon, part.worn_icon_state), ICON_OR)
 	suit_masks["[covered_slots]"] = slot_mask
 
 /obj/item/mod/control/proc/clean_up()
