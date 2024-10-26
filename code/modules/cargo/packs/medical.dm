@@ -191,3 +191,12 @@
 	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/lost_crew
+	name = "Recovered NT Employee corpse"
+	desc = "We don't have the accomodations to bring them back, could we send them to you? Please revive and employ them. \
+	The price is a downpayment, we will reimburse the medical budget once our employee has been alive again for a bit."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
+	crate_name = "body freezer"
+	crate_type = /obj/structure/closet/crate/secure/freezer

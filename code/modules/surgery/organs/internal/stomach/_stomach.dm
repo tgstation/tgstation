@@ -323,6 +323,6 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/stomach/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_surgical_removal)
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 #undef STOMACH_METABOLISM_CONSTANT

@@ -98,7 +98,7 @@
 
 /datum/component/hat_stabilizer/proc/on_secondary_attack_hand(datum/source, mob/user)
 	SIGNAL_HANDLER
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
 		return
 	var/atom/movable/movable_parent = parent

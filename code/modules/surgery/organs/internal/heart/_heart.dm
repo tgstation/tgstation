@@ -285,7 +285,7 @@
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/heart/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dangerous_surgical_removal)
+	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

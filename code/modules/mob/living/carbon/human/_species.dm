@@ -1,3 +1,4 @@
+/// List of roundstart races' their species_id's
 GLOBAL_LIST_EMPTY(roundstart_races)
 ///List of all roundstart languages by path except common
 GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
@@ -192,7 +193,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return ..()
 
-/// Gets a list of all species available to choose in roundstart.
+/// Gets a list of all species id's available to choose in roundstart.
 /proc/get_selectable_species()
 	RETURN_TYPE(/list)
 
