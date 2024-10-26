@@ -193,7 +193,6 @@
 	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
-	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
@@ -243,13 +242,6 @@
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
 			RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(cover_in_oil))
 			addtimer(CALLBACK(src, PROC_REF(stop_dropping_oil)), 3 SECONDS)
-		if(6)
-			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
-			playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
-			for(var/mob/living/L in orange(loc, 6))
-				L.emote("laugh")
-			for(var/mob/living/L as anything in occupants)
-				L.emote("laugh")
 
 ///resets the icon and iconstate of the clowncar after it was set to singulo states
 /obj/vehicle/sealed/car/clowncar/proc/reset_icon()
