@@ -4,7 +4,6 @@
 #define REQUIRED_TREE_GROWTH 400
 #define UPPER_BOUND_VOLUME 50
 #define LOWER_BOUND_VOLUME 10
-#define BB_TURTLE_TREE_ABILITY "turtle_tree_ability"
 
 /mob/living/basic/turtle
 	name = "turtle"
@@ -25,7 +24,7 @@
 	verb_exclaim = "snaps loudly"
 	verb_yell = "snaps loudly"
 	faction = list(FACTION_NEUTRAL)
-//	ai_controller = /datum/ai_controller/basic_controller/turtle
+	ai_controller = /datum/ai_controller/basic_controller/turtle
 	///our displayed tree
 	var/mutable_appearance/grown_tree
 	///growth progress of our tree
@@ -48,6 +47,8 @@
 	)
 	///if we are fully grown, what is our path
 	var/developed_path
+	///our last east/west direction
+	var/last_direction = WEST
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -58,9 +59,21 @@
 		"Dog ahead.",
 		"Could this be a Dog?",
 	)
-
+	var/static/list/eatable_food = list(/obj/item/seeds)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
+	AddElement(/datum/element/basic_eating, food_types = eatable_food)
+	AddComponent(/datum/component/happiness)
+	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(process_food)) //signal sent by the element, no support for callbacks sadly (to do)
+	update_appearance()
 	create_reagents(150, REAGENT_HOLDER_ALIVE)
 	START_PROCESSING(SSprocessing, src)
+
+/mob/living/basic/turtle/setDir(newdir)
+	if(REVERSE_DIR(last_direction) & newdir)
+		transform = transform.Scale(-1, 1)
+		last_direction = REVERSE_DIR(last_direction)
+	return ..()
+
 
 /mob/living/basic/turtle/process(seconds_per_tick)
 	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to being a plant healer
@@ -69,6 +82,7 @@
 
 	for(var/datum/reagent/existing_reagent as anything in reagents.reagent_list)
 		var/evolution_path = path_requirements[existing_reagent.type]
+
 		switch(existing_reagent.volume)
 			if(UPPER_BOUND_VOLUME to INFINITY)
 				set_plant_growth(evolution_path, 3)
@@ -155,26 +169,30 @@
 	. = ..()
 	if(stat == DEAD)
 		return
-	if(resting)
-		icon_state = "[base_icon_state]_rest"
-	else
-		icon_state = "[base_icon_state]"
+	icon_state = resting ? "[base_icon_state]_rest" : base_icon_state
 	regenerate_icons()
 
-/mob/living/basic/turtle/attackby(obj/item/reagent_containers/container, mob/living/user, params)
+/mob/living/basic/turtle/attackby(obj/item/used_item, mob/living/user, params)
 	. = ..()
 
 	if(stat == DEAD)
 		balloon_alert(user, "its dead!")
 		return
 
-	if(isnull(container.reagents))
+	if(istype(used_item, /obj/item/seeds))
+		melee_attack(used_item)
+		return
+
+	if(!istype(used_item, /obj/item/reagent_containers))
+		return
+
+	if(isnull(used_item.reagents))
 		balloon_alert(user, "empty!")
 		return
 
 	var/should_transfer = FALSE
 	for(var/reagent as anything in path_requirements)
-		if(container.reagents.has_reagent(reagent))
+		if(used_item.reagents.has_reagent(reagent))
 			should_transfer = TRUE
 			break
 
@@ -182,7 +200,24 @@
 		balloon_alert(user, "refuses to drink!")
 		return
 
-	container.reagents.trans_to(reagents, 5)
+	used_item.reagents.trans_to(reagents, 5)
 	balloon_alert(user, "drinks happily")
 
+/mob/living/basic/turtle/proc/pre_eat_food(datum/source, obj/item/seeds/potential_food)
+	SIGNAL_HANDLER
 
+	if(!istype(potential_food))
+		return NONE
+	if(ispath(potential_food.product, /obj/item/food/grown))
+		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), 30 SECONDS)
+	return NONE
+
+/mob/living/basic/turtle/proc/process_food(food_path)
+	if(QDELETED(src) || stat != CONSCIOUS)
+		return
+	new food_path(drop_location())
+	balloon_alert_to_viewers("spits out some food")
+
+/mob/living/basic/turtle/death(gibbed)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)

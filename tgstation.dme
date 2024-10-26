@@ -5114,6 +5114,7 @@
 #include "code\modules\mob\living\basic\trooper\trooper_ai.dm"
 #include "code\modules\mob\living\basic\turtle\turtle.dm"
 #include "code\modules\mob\living\basic\turtle\turtle_ability.dm"
+#include "code\modules\mob\living\basic\turtle\turtle_ai.dm"
 #include "code\modules\mob\living\basic\vermin\axolotl.dm"
 #include "code\modules\mob\living\basic\vermin\butterfly.dm"
 #include "code\modules\mob\living\basic\vermin\cockroach.dm"

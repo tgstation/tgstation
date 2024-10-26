@@ -53,10 +53,10 @@
 	///amount we heal plants by
 	var/vermin_damage_amount = 20
 	///type of vermin our field affects
-	var/static/list/vermin_mob_targets = list(
+	var/static/list/vermin_mob_targets = typecacheof(list(
 		/mob/living/basic/cockroach,
 		/mob/living/basic/mouse/rat,
-	)
+	))
 	///how much we reduce weed levels
 	var/weed_level_reduce = 2
 
@@ -104,7 +104,7 @@
 	color = "#28a3bc"
 
 /obj/effect/temp_visual/circle_wave/tree/killer
-	color = "#a125ca"
+	color = "#ce3ebf"
 
 /obj/effect/temp_visual/circle_wave/tree/mutator
 	color = "#c49f26"
