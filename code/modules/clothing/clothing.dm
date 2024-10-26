@@ -430,9 +430,9 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
-			if(body_parts_covered & ARMS)
+			if(body_parts_covered & ARMS|HANDS)
 				parts_covered += "arms"
-			if(body_parts_covered & LEGS)
+			if(body_parts_covered & LEGS|FEET)
 				parts_covered += "legs"
 			if(length(parts_covered))
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
