@@ -38,7 +38,7 @@
 	var/datum/tile_info/tile_design
 	/// overlays on a tile
 	var/list/design_overlays = list()
-	var/ranged = FALSE
+	var/ranged = TRUE
 /// stores the name, type, icon & cost for each tile type
 /datum/tile_info
 	/// name of this tile design for ui
@@ -290,7 +290,7 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	var/beam
-	if(ranged)
+	if(!ranged)
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	else
 		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
@@ -400,7 +400,7 @@
 /obj/item/construction/rtd/borg
 	var/energyfactor = 0.03 * STANDARD_CELL_CHARGE
 	var/delay = 0
-	ranged = TRUE
+	ranged = FALSE
 /obj/item/construction/rtd/borg/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!(interacting_with in view(1, get_turf(user))))
 		return NONE
