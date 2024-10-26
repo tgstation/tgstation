@@ -54,6 +54,7 @@
 			var/datum/sprite_accessory/underwear/worn_underwear = SSaccessories.underwear_list[human.underwear]
 			if(worn_underwear.hides_breasts)
 				return FALSE
+		return TRUE
 	else
 		var/vis = visibility == ORGAN_VISIBILITY_MODE_ALWAYS_SHOW ? TRUE : FALSE
 		return vis
