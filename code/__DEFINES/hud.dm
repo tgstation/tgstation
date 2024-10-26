@@ -48,8 +48,9 @@
 	var/y_off = round((M.held_items.len-1) / 2)
 	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
 
-/proc/ui_perk_position(i)
-	return "WEST+0.5:12,NORTH-2-[i/2]:20"
+/proc/ui_perk_position(perk_count)
+	var/y_off = perk_count < 1 ? 0 : perk_count/2
+	return "WEST+0.5:12,NORTH-2-[y_off]:20"
 
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"

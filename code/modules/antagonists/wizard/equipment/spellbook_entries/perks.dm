@@ -19,15 +19,25 @@
 	log_purchase(user.key)
 	return TRUE
 
+/datum/spellbook_entry/perks/proc/create_compact_button(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
+	var/datum/hud/user_hud = user.hud_used
+	wizard_datum.compact_button = new /atom/movable/screen/perk/more(null, user_hud)
+	wizard_datum.compact_button.screen_loc = ui_perk_position(0)
+	user_hud.infodisplay += wizard_datum.compact_button
+	user_hud.show_hud(user_hud.hud_version)
+
 /datum/spellbook_entry/perks/proc/create_hud_icon(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
 	if(user.hud_used)
 		var/datum/hud/user_hud = user.hud_used
+		if(isnull(wizard_datum.compact_button))
+			create_compact_button(user, wizard_datum)
 		hud_to_show = new hud_to_show(null, user_hud)
 		hud_to_show.name = name
 		hud_to_show.icon_state = hud_icon
 		hud_to_show.screen_loc = ui_perk_position(wizard_datum.perks.len)
 		user_hud.infodisplay += hud_to_show
 		user_hud.show_hud(user_hud.hud_version)
+		wizard_datum.compact_button.perks_on_hud += hud_to_show
 	else
 		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, wizard_datum, PROC_REF(on_hud_created))
 
