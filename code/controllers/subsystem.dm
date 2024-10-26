@@ -136,10 +136,16 @@
 	tick_allocation_avg = MC_AVERAGE(tick_allocation_avg, tick_allocation_last)
 
 	. = SS_SLEEPING
+
+#ifndef UNIT_TESTS
 	var/old_usr = usr
 	usr = tracker
+#endif
 	fire(resumed)
+#ifndef UNIT_TESTS
 	usr = old_usr
+#endif
+
 	. = state
 	if (state == SS_SLEEPING)
 		slept_count++
