@@ -77,9 +77,16 @@
 
 	if(!user.transferItemToLoc(hat, parent, force = FALSE, silent = TRUE))
 		return
+
+	attach_hat(hat, user)
+
+/datum/component/hat_stabilizer/proc/attach_hat(obj/item/clothing/hat, mob/user)
+	var/atom/movable/movable_parent = parent
 	attached_hat = hat
 	RegisterSignal(hat, COMSIG_MOVABLE_MOVED, PROC_REF(remove_hat))
-	movable_parent.balloon_alert(user, "hat attached, right-click to remove")
+
+	if (!isnull(user))
+		movable_parent.balloon_alert(user, "hat attached, right-click to remove")
 
 	if (!istype(parent, /obj/item/clothing))
 		movable_parent.update_appearance()
@@ -92,6 +99,7 @@
 	apparel.flags_cover |= attached_hat.flags_cover
 	apparel.visor_flags_cover |= attached_hat.visor_flags_cover
 	apparel.update_appearance()
+
 	if (ismob(apparel.loc))
 		var/mob/wearer = apparel.loc
 		wearer.update_clothing(wearer.get_slot_by_item(apparel))
