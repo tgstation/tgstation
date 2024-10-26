@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Changed the color of entertainment radio to be darker"
