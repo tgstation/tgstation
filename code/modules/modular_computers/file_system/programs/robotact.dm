@@ -84,14 +84,14 @@
 				shell = TRUE
 
 			var/list/cyborg_data = list(
-				otherBorgName = other_borg.name,
-				integ = round((other_borg.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
-				locked_down = other_borg.lockcharge,
-				status = other_borg.stat,
-				shell_discon = shell,
-				charge = other_borg.cell ? round(other_borg.cell.percent()) : null,
-				module = other_borg.model ? "[other_borg.model.name]" : "None",
-				ref = REF(other_borg)
+				"otherBorgName" = other_borg.name,
+				"integ" = round((other_borg.health + 100) / 2), //mob heath is -100 to 100, we want to scale that to 0 - 100
+				"locked_down" = other_borg.lockcharge,
+				"status" = other_borg.stat,
+				"shell_discon" = shell,
+				"charge" = other_borg.cell ? round(other_borg.cell.percent()) : null,
+				"module" = other_borg.model ? "[other_borg.model.name]" : "None",
+				"ref" = REF(other_borg)
 			)
 			borggroup += list(cyborg_data)
 			if(length(borggroup) == 4) //grouping borgs in packs of four, since I can't do it later in js
