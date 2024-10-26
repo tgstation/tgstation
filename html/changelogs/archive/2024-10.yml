@@ -781,3 +781,29 @@
   zxaber:
   - rscadd: Borgs now get the job title of someone sending them a message through
       SiliConnect.
+2024-10-26:
+  Ghommie:
+  - bugfix: Fixed a small botherance with special fish infusions. You no longer need
+      to infuse squids and pufferfish last to reap their special organs.
+  Melbert:
+  - rscadd: Drinking any ethanol (beer, wine, etc) will trigger alcohol allergies
+  - rscadd: Drinking ants will trigger Bug allergies
+  - rscadd: Getting stung by a bee, or bitten by a (giant) ant or (giant) spider,
+      will trigger bug allergies
+  - rscadd: Drinking plain sugar or caramel will trigger sugar allergies
+  - qol: Ethanol can speed up the surgeries of any mob type applied to, rather than
+      solely humans.
+  MelokGleb and KREKS:
+  - rscadd: very hard wiz-only sm sword craft
+  WebcomicArtist:
+  - bugfix: Un-breaks etherial apc charging and charge from ethereal wine.
+  carlarctg:
+  - bugfix: Hitting an SM with extraction tongs won't dust them anymore
+  grungussuss:
+  - bugfix: fixed plastic flaps losing atmos qualities when anchored
+  - sound: radio noise will no longer play on the common channel
+  necromanceranne:
+  - balance: Shock touch is now less-than-lethal, dealing a decent amount of stamina
+      damage at the cost of lethal damage. Lower cooldown. Power chromosome makes
+      it force a stagger rather than cause a chain lightning effect (this used to
+      do like only 5 damage so...)

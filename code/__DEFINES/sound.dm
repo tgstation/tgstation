@@ -210,6 +210,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_VOID_DEFLECT "void_deflect"
 #define SFX_LOW_HISS "low_hiss"
 #define SFX_INDUSTRIAL_SCAN "industrial_scan"
+#define SFX_MALE_SIGH "male_sigh"
+#define SFX_FEMALE_SIGH "female_sigh"
 
 // Default is 45kbps
 #define MIN_EMOTE_PITCH 42000
