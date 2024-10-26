@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Drinking any ethanol (beer, wine, etc) will trigger alcohol allergies"
-  - rscadd: "Drinking ants will trigger Bug allergies"
-  - rscadd: "Getting stung by a bee, or bitten by a (giant) ant or (giant) spider, will trigger bug allergies"
-  - rscadd: "Drinking plain sugar or caramel will trigger sugar allergies"
-  - qol: "Ethanol can speed up the surgeries of any mob type applied to, rather than solely humans."

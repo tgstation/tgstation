@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "fixed plastic flaps losing atmos qualities when anchored"
