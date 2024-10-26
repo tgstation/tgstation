@@ -31,7 +31,7 @@
 /datum/element/dangerous_organ_removal/proc/on_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SIGNAL_HANDLER
 
-	if(QDELETED(parent))
+	if(QDELETED(source))
 		return
 
 	if(surgical && source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))

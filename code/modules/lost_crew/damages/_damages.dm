@@ -66,7 +66,7 @@
 		cause_of_death.apply_to_body(victim, rand(), saved_objects, on_revive_and_player_occupancy)
 		body_data += cause_of_death.type
 
-		if(cause_of_death.no_bonus_roll || !bonus_roll || prob(70))
+		if(cause_of_death.no_bonus_roll || !bonus_roll || prob(70)) //70% chance to do the bonus roll, otherwise pass the bonus to post mortem
 			break
 
 		bonus_roll = FALSE
