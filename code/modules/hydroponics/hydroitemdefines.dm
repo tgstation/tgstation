@@ -429,7 +429,6 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 7
-	tool_behaviour = TOOL_CULTIVATOR
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
@@ -489,7 +488,6 @@
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
-	tool_behaviour = TOOL_HATCHET
 	embed_type = /datum/embed_data/hatchet
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
@@ -601,7 +599,6 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 5
 	throwforce = 6
-	tool_behaviour = TOOL_SECATEUR
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT*2)
