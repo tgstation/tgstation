@@ -138,6 +138,7 @@
 		balloon_alert(mod.wearer, "holster full!")
 
 /obj/item/mod/module/holster/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(holstered)
 		holstered.forceMove(drop_location())
 

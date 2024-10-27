@@ -230,6 +230,7 @@
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(!field)
 		return
 	field_disconnect(field)
