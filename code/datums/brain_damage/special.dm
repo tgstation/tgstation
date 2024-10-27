@@ -534,7 +534,7 @@
 	lose_text = span_warning("You feel like you lost your sense of duty.")
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 	random_gain = FALSE
-	var/static/list/axe_hallucinations = list(
+	var/static/list/talk_lines = list(
 		"I'm proud of you.",
 		"I believe in you!",
 		"Do I bother you?",
@@ -544,6 +544,18 @@
 		"Mother, my body disgusts me.",
 		"There's a gap where we meet, where I end and you begin.",
 		"Humble yourself.",
+	)
+	var/static/list/hurt_lines = list(
+		"Ow!",
+		"Ouch!",
+		"Ack!",
+		"It burns!",
+		"Stop!",
+		"Arghh!",
+		"Please!",
+		"End it!",
+		"Cease!",
+		"Ah!",
 	)
 
 /datum/brain_trauma/special/axedoration/on_life(seconds_per_tick, times_fired)
@@ -565,7 +577,7 @@
 	if(isliving(axe_location))
 		var/mob/living/axe_holder = axe_location
 		if(axe_holder == owner)
-			owner.Hear(null, GLOB.bridge_axe, owner.get_selected_language(), pick(axe_hallucinations))
+			talk_tuah(pick(talk_lines))
 			return
 		var/datum/job/holder_job = axe_holder.mind?.assigned_role
 		if(!holder_job || (/datum/job_department/command in holder_job.departments_list))
@@ -600,11 +612,13 @@
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
 		RegisterSignal(owner, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_unequip))
 		RegisterSignal(owner, COMSIG_MOB_EXAMINING, PROC_REF(on_examine))
+		RegisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_axe_attack))
 	return ..()
 
 /datum/brain_trauma/special/axedoration/on_lose()
 	owner.clear_mood_event("fireaxe")
 	UnregisterSignal(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EXAMINING))
+	UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
 	return ..()
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)
@@ -664,6 +678,15 @@
 		examine_strings += span_notice("It's the axe I've sworn to protect.")
 	else
 		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
+
+/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, click_parameters)
+	SIGNAL_HANDLER
+	if(user != owner)
+		return
+	talk_tuah(pick(hurt_lines))
+
+/datum/brain_trauma/special/axedoration/proc/talk_tuah(sent_message = "Hello World.")
+	owner.Hear(null, GLOB.bridge_axe, owner.get_selected_language(), sent_message)
 
 /datum/brain_trauma/special/axedoration/proc/get_axe_location()
 	if(!GLOB.bridge_axe)
