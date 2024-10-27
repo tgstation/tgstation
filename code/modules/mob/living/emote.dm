@@ -274,7 +274,7 @@
 	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional, params)
-	return ..() && user.can_speak(allow_mimes = TRUE)
+	return ..() && user.can_speak(TRUE, TRUE) // DOPPLER EDIT CHANGE - speech only mute - ORIGINAL: return ..() && user.can_speak(allow_mimes = TRUE)
 
 /datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))

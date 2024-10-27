@@ -379,7 +379,7 @@
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
 	if(emote_type & EMOTE_AUDIBLE && !hands_use_check)
-		if(HAS_TRAIT(user, TRAIT_MUTE) && !isramatan(user)) // DOPPLER EDIT ADDITION - Allows Ramatae to use verbal emotes despite being mute. :3
+		if(HAS_TRAIT(user, TRAIT_MUTE))
 			return FALSE
 		if(ishuman(user))
 			var/mob/living/carbon/human/loud_mouth = user
