@@ -619,7 +619,8 @@
 /datum/brain_trauma/special/axedoration/on_lose()
 	owner.clear_mood_event("fireaxe")
 	UnregisterSignal(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EXAMINING))
-	UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
+	if(GLOB.bridge_axe)
+		UnregisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK)
 	return ..()
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)
