@@ -14,15 +14,15 @@
 			return
 
 /obj/item/ammo_box/magazine/internal/cylinder/get_round()
+	rotate()
 	var/casing = stored_ammo[1]
 	if (ispath(casing))
 		casing = new casing(src)
 		stored_ammo[1] = casing
 	return casing
 
-/obj/item/ammo_box/magazine/internal/cylinder/fetch_round()
-	rotate()
-	return ..()
+/obj/item/ammo_box/magazine/internal/cylinder/get_and_shuffle_round()
+	return get_round()
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
 	var/b = stored_ammo[1]

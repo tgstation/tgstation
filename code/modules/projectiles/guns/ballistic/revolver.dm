@@ -26,7 +26,13 @@
 		CRASH("revolver tried to chamber a round without a magazine!")
 	if(chambered)
 		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
-	chambered = spin_cylinder ? magazine.fetch_round() : magazine.get_round()
+	if (spin_cylinder)
+		chambered = magazine.get_round()
+	else
+		chambered = stored_ammo[1]
+		if (ispath(chambered))
+			chambered = new chambered(src)
+			stored_ammo[1] = chambered
 	if(chambered)
 		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 

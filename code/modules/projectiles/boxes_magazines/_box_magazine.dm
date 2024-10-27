@@ -74,7 +74,7 @@
 		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
 		\nAccidentally discharging any of these projectiles may void your insurance contract."
 
-	var/obj/item/ammo_casing/mag_ammo = fetch_round()
+	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 
 	if(istype(mag_ammo))
 		readout += "\n[mag_ammo.add_notes_ammo()]"
@@ -113,7 +113,7 @@
 	return casing
 
 /// Gets a round from the magazine and puts it back at the bottom of the ammo list
-/obj/item/ammo_box/proc/fetch_round()
+/obj/item/ammo_box/proc/get_and_shuffle_round()
 	var/casing = get_round()
 	if (!casing)
 		return null
