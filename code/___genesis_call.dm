@@ -44,6 +44,10 @@
  * It exists to hold a static var which is initialized to null
  * Painful right? Good, now you share my suffering
  * Please lock the door on your way out
+ *
+ * The /proc is necessary for some reason
+ * Many thanks to the OpenDream team for donating brain cells to figuring this out
  */
-/datum/genesis_call_holder/proc/_()
+/proc
+/world/proc/_()
 	var/static/_ = world.Genesis()
