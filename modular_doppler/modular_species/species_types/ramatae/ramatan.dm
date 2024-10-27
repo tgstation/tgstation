@@ -24,7 +24,6 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_EXPERT_FISHER,
 		TRAIT_BEAST_EMPATHY,
-		TRAIT_MUTE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
