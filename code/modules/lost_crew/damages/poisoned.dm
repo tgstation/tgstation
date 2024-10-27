@@ -20,8 +20,3 @@
 /datum/corpse_damage/cause_of_death/poison/venom
 	cause_of_death = "when I got bit by a spider!"
 	poison = /datum/reagent/toxin/venom
-
-/datum/corpse_damage/cause_of_death/poison/cyanide
-	cause_of_death = "when I got poisoned!"
-	poison = /datum/reagent/toxin/cyanide
-	metabolisations_per_unit = 3

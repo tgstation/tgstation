@@ -27,7 +27,6 @@
 		/datum/corpse_damage/cause_of_death/projectile/bullet = 1,
 		/datum/corpse_damage/cause_of_death/projectile/laser = 1,
 		/datum/corpse_damage/cause_of_death/poison/venom = 1,
-		/datum/corpse_damage/cause_of_death/poison/cyanide = 1,
 		)
 
 	post_mortem_effects = list(
