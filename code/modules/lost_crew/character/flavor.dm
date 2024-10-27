@@ -12,19 +12,3 @@
 
 /datum/corpse_flavor/quirk/prosthetic_limb
 	quirk = /datum/quirk/prosthetic_limb
-
-/// A random positive quirk! Why not tbh, even if it gives them an unbalanced quirk score for however long they exist
-/datum/corpse_flavor/quirk/positive_quirk
-
-/datum/corpse_flavor/quirk/positive_quirk/apply_flavor(mob/living/carbon/human/working_dead, list/job_gear, list/datum/callback/on_revive_and_player_occupancy)
-	var/static/list/positive_quirks
-	if(!positive_quirks)
-		positive_quirks = list()
-
-		for(var/datum/quirk/quirk as anything in subtypesof(/datum/quirk))
-			if(initial(quirk.value) > 0)
-				positive_quirks += quirk
-
-	quirk = pick(positive_quirks)
-
-	..()

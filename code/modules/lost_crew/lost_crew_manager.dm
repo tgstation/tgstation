@@ -21,8 +21,8 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
  * * protected_items - Items that can only be recovered by the revived player
  * * body_data - Debug data we can use to get a readout of what has been done
  */
-/datum/lost_crew_manager/proc/create_lost_crew(revivable = TRUE, atom/location, datum/corpse_damage_class/forced_class, list/recovered_items, list/protected_items, list/body_data = list())
-	var/mob/living/carbon/human/new_body = new(location)
+/datum/lost_crew_manager/proc/create_lost_crew(revivable = TRUE, datum/corpse_damage_class/forced_class, list/recovered_items, list/protected_items, list/body_data = list())
+	var/mob/living/carbon/human/new_body = new()
 	new_body.death()
 
 	var/static/list/scenarios = list()

@@ -21,7 +21,7 @@
 	var/list/recovered_items = list()
 	var/list/protected_items = list()
 	var/list/lost_crew_data = list()
-	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, location = src, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
+	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
 	corpse.mind_initialize()
 	corpse.forceMove(src)
 

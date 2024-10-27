@@ -13,8 +13,7 @@
 		)
 	possible_flavor_types = list(
 		/datum/corpse_flavor/quirk/prosthetic_limb = 1,
-		/datum/corpse_flavor/quirk/positive_quirk = 4,
-		null = 5,
+		null = 9,
 	)
 
 	possible_causes_of_death = list(

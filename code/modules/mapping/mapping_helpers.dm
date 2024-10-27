@@ -906,7 +906,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, location = body_bag, forced_class = morgue_body_class)
+		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = morgue_body_class)
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
