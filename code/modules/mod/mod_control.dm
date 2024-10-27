@@ -86,8 +86,6 @@
 	COOLDOWN_DECLARE(cooldown_mod_move)
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
-	/// Assoc list of covered slots -> sums of all deployed modules' icons, used as a mask by certain modules
-	var/list/suit_masks = list()
 
 /obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
@@ -485,14 +483,17 @@
 			parts -= part
 			continue
 		covered_slots |= part.slot_flags
-	if(suit_masks["[covered_slots]"])
-		return suit_masks["[covered_slots]"]
+	if(GLOB.mod_masks[skin])
+		if(GLOB.mod_masks[skin]["[covered_slots]"])
+			return GLOB.mod_masks[skin]["[covered_slots]"]
+	else
+		GLOB.mod_masks[skin] = list()
 	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/obj/item/part as anything in parts)
 		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
 	slot_mask.Blend("#fff", ICON_ADD)
-	suit_masks["[covered_slots]"] = slot_mask
-	return suit_masks["[covered_slots]"]
+	GLOB.mod_masks[skin]["[covered_slots]"] = slot_mask
+	return GLOB.mod_masks[skin]["[covered_slots]"]
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))

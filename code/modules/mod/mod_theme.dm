@@ -139,7 +139,6 @@
 
 /datum/mod_theme/proc/set_skin(obj/item/mod/control/mod, skin)
 	mod.skin = skin
-	mod.suit_masks.Cut()
 	var/list/used_skin = variants[skin]
 	var/list/parts = mod.get_parts()
 	for(var/obj/item/clothing/part as anything in parts)
