@@ -69,11 +69,37 @@
 /obj/item/implant/teleport_blocker/c38/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
 	timerid = QDEL_IN_STOPPABLE(src, lifespan)
+	target.apply_status_effect(/datum/status_effect/teleport_blocked)
 
-/obj/item/implant/teleport_blocker/c38/removed(mob/living/source, silent, special)
+/obj/item/implant/teleport_blocker/c38/removed(mob/living/target, silent = FALSE, special = FALSE)
 	. = ..()
 	deltimer(timerid)
 	timerid = null
+	target.remove_status_effect(/datum/status_effect/teleport_blocked)
 
 /obj/item/implant/teleport_blocker/c38/Destroy()
+	return ..()
+
+/// Uh oh, you can't move, yell for help
+/datum/status_effect/teleport_blocked
+	id = "teleport_blocked"
+	alert_type = /atom/movable/screen/alert/status_effect/teleport_blocked
+
+/atom/movable/screen/alert/status_effect/teleport_blocked
+	name = "Bluespace Anchored"
+	desc = "Your bluespace signature has been stabilised. You can't teleport anymore!"
+	icon_state = "teleport_blocked"
+
+/datum/status_effect/teleport_blocked/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	owner.visible_message(span_warning("[owner] crackles with bluespace energy!"), span_warning("You can sense your bluespace signature stabilising!"))
+	return TRUE
+
+/datum/status_effect/teleport_blocked/get_examine_text()
+	return span_warning("[owner.p_They()] [owner.p_are()] is shimmering with blueish sparks!")
+
+/datum/status_effect/teleport_blocked/on_remove()
+	owner.visible_message(span_warning("[owner] looks less blue than moments ago!"), span_warning("You can sense your bluespace signature destabilising!"))
 	return ..()
