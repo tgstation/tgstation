@@ -788,12 +788,16 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		selector.moveToNullspace() //Otherwise, we move the selector to nullspace until it is needed again
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
-	for (var/obj/O in bay.get_all_contents())
-		qdel(O)
-	for (var/mob/M in bay.get_all_contents())
-		qdel(M)
+	for (var/obj/object in bay.get_all_contents())
+		if (object.type == /obj/effect/light_emitter/podbay)
+			continue
+		qdel(object)
+	for (var/mob/mob in bay.get_all_contents())
+		qdel(mob)
 	for (var/bayturf in bay)
 		var/turf/turf_to_clear = bayturf
+		if (turf_to_clear.type == /obj/effect/light_emitter/podbay)
+			continue
 		turf_to_clear.ChangeTurf(/turf/open/floor/iron)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
