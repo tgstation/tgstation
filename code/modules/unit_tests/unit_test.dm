@@ -258,8 +258,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/organ/external/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
-		/// these bitches spawn specially crafted humans with gear and moving organs being shuffled around through the whole process
-		/obj/structure/closet/body_bag/lost_crew/with_body,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -340,6 +338,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
+	/// these bitches spawn specially crafted humans with gear and moving organs being shuffled around through the whole process
+	returnable_list += typesof(/obj/structure/closet/body_bag/lost_crew/with_body)
 
 	return returnable_list
 
