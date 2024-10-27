@@ -56,3 +56,24 @@
 	name = "implant case - 'Bluespace Grounding'"
 	desc = "A glass case containing a bluespace grounding implant."
 	imp_type = /obj/item/implant/teleport_blocker
+
+/obj/item/implant/teleport_blocker/c38
+	name = "ANCR implant"
+	desc = "A smaller bluespace grounding implant that supplies power for only a few minutes."
+	implant_flags = NONE
+	///How long before this implant self-deletes?
+	var/lifespan = 1 MINUTES
+	///The id of the timer that's qdeleting us
+	var/timerid
+
+/obj/item/implant/teleport_blocker/c38/implant(mob/living/target, mob/user, silent, force)
+	. = ..()
+	timerid = QDEL_IN_STOPPABLE(src, lifespan)
+
+/obj/item/implant/teleport_blocker/c38/removed(mob/living/source, silent, special)
+	. = ..()
+	deltimer(timerid)
+	timerid = null
+
+/obj/item/implant/teleport_blocker/c38/Destroy()
+	return ..()

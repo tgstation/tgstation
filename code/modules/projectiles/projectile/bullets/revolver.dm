@@ -98,6 +98,24 @@
 		imp = new /obj/item/implant/tracking/c38(M)
 		imp.implant(M)
 
+/obj/projectile/bullet/c38/ancr
+	name = ".38 ANCR bullet"
+	damage = 10
+	ricochets_max = 0
+
+/obj/projectile/bullet/c38/ancr/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	var/mob/living/carbon/victim = target
+	if(!istype(victim))
+		return
+	var/obj/item/implant/teleport_blocker/c38/imp
+	for(var/obj/item/implant/teleport_blocker/c38/TI in victim.implants) //checks if the target already contains an anchor implant
+		imp = TI
+		return
+	if(!imp)
+		imp = new /obj/item/implant/teleport_blocker/c38(victim)
+		imp.implant(victim)
+
 /obj/projectile/bullet/c38/hotshot //similar to incendiary bullets, but do not leave a flaming trail
 	name = ".38 Hot Shot bullet"
 	damage = 20
