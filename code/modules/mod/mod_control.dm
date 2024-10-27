@@ -166,7 +166,7 @@
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
-	. += "<i>[extended_desc]</i>"
+	. += examine_block("<i>[extended_desc]</i>")
 
 /obj/item/mod/control/process(seconds_per_tick)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
