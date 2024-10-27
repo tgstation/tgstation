@@ -47,8 +47,6 @@
 	var/list/required_slots = list()
 	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
 	var/mask_worn_overlay = FALSE
-	/// Stores a cached icon if mask_worn_overlay is true to cut down on icon ops
-	var/mutable_appearance/cached_module_icon
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -346,12 +344,7 @@
 		return
 	var/mutable_appearance/module_icon
 	if(mask_worn_overlay)
-		if (!cached_module_icon)
-			recache_module_icon()
-			if (!cached_module_icon)
-				return
-		cached_module_icon.layer = standing.layer + 0.1
-		module_icon = cached_module_icon
+		module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 0.1)
 	else
 		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
@@ -369,16 +362,22 @@
 		return overlay_state_inactive
 	return null
 
-/obj/item/mod/module/proc/recache_module_icon()
+/obj/item/mod/module/proc/get_module_icon_cache(used_overlay)
 	SIGNAL_HANDLER
-
-	var/used_overlay = get_current_overlay_state()
-	if (!used_overlay)
-		cached_module_icon = null
-		return
+	var/covered_slots = mod.get_sealed_slots(mod.get_parts(all = TRUE))
+	if (GLOB.mod_module_overlays[mod.skin])
+		if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"])
+			if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay])
+				return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
+		else
+			GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
+	else
+		GLOB.mod_module_overlays[mod.skin] = list()
+		GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
 	var/icon/mod_mask = icon(mod.generate_suit_mask())
 	mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
-	cached_module_icon = mutable_appearance(mod_mask)
+	GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay] = mod_mask
+	return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
 
 /// Updates the signal used by active modules to be activated
 /obj/item/mod/module/proc/update_signal(value)

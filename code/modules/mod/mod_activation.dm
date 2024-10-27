@@ -227,7 +227,6 @@
 		part.cold_protection = NONE
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	generate_suit_mask()
-	SEND_SIGNAL(src, COMSIG_MOD_SEAL_PART, part, is_sealed, no_activation)
 	wearer.update_clothing(part.slot_flags | slot_flags)
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
@@ -268,7 +267,6 @@
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
 	generate_suit_mask()
-	SEND_SIGNAL(src, COMSIG_MOD_FINISH_ACTIVATION, is_on)
 	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.

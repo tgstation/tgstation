@@ -43,7 +43,3 @@
 #define COMSIG_MOD_TETHER_SNAP "mod_tether_snap"
 /// Called when a MOD module generats its worn overlay
 #define COMSIG_MODULE_GENERATE_WORN_OVERLAY "mod_module_generate_worn_overlay"
-/// Called when a MODsuit finishes activating
-#define COMSIG_MOD_FINISH_ACTIVATION "mod_finish_activation"
-/// Called when a MODsuit seals/unseales a part
-#define COMSIG_MOD_SEAL_PART "mod_seal_part"

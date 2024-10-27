@@ -475,14 +475,18 @@
 	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
 
-/obj/item/mod/control/proc/generate_suit_mask()
+/obj/item/mod/control/proc/get_sealed_slots(list/parts)
 	var/covered_slots = NONE
-	var/list/parts = get_parts(all = TRUE)
 	for(var/obj/item/part as anything in parts)
 		if(!get_part_datum(part).sealed)
 			parts -= part
 			continue
 		covered_slots |= part.slot_flags
+	return covered_slots
+
+/obj/item/mod/control/proc/generate_suit_mask()
+	var/list/parts = get_parts(all = TRUE)
+	var/covered_slots = get_sealed_slots(parts)
 	if(GLOB.mod_masks[skin])
 		if(GLOB.mod_masks[skin]["[covered_slots]"])
 			return GLOB.mod_masks[skin]["[covered_slots]"]
@@ -600,8 +604,6 @@
 	complexity += new_module.complexity
 	new_module.mod = src
 	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
-	if (new_module.mask_worn_overlay)
-		new_module.RegisterSignals(src, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART), TYPE_PROC_REF(/obj/item/mod/module, recache_module_icon))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
@@ -620,7 +622,7 @@
 		old_module.on_suit_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.deactivate(display_message = !deleting, deleting = deleting)
-	old_module.UnregisterSignal(src, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART, COMSIG_ITEM_GET_WORN_OVERLAYS))
+	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
