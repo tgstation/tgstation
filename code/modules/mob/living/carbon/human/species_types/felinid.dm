@@ -101,8 +101,8 @@
 
 /datum/species/human/felinid/get_sigh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/human/felinid/get_sniff_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)

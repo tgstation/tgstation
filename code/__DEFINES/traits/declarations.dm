@@ -501,6 +501,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob has a scar on their left/right eye
+#define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
+#define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -701,6 +704,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
+/// This object has been slathered with a speed potion
+#define TRAIT_SPEED_POTIONED "speed_potioned"
 
 ///This mob is currently blocking a projectile.
 #define TRAIT_BLOCKING_PROJECTILES "blocking_projectiles"
@@ -1329,6 +1334,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 
+///Trait given to mobs that can dig
+#define TRAIT_MOB_CAN_DIG "mob_can_dig"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow
@@ -1344,5 +1352,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+/// Gives a little examine to their body that they can be revived with a soul
+#define TRAIT_GHOSTROLE_ON_REVIVE "ghostrole_on_revive"
 
 // END TRAIT DEFINES

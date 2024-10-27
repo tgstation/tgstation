@@ -208,7 +208,7 @@
 	wound_bonus = -40
 	bare_wound_bonus = 70
 
-/obj/projectile/beam/emitter/singularity_pull()
+/obj/projectile/beam/emitter/singularity_pull(atom/singularity, current_size)
 	return //don't want the emitters to miss
 
 /obj/projectile/beam/emitter/hitscan

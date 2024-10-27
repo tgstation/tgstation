@@ -1,3 +1,4 @@
+/// List of roundstart races' their species_id's
 GLOBAL_LIST_EMPTY(roundstart_races)
 ///List of all roundstart languages by path except common
 GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
@@ -192,7 +193,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return ..()
 
-/// Gets a list of all species available to choose in roundstart.
+/// Gets a list of all species id's available to choose in roundstart.
 /proc/get_selectable_species()
 	RETURN_TYPE(/list)
 
@@ -368,6 +369,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
+
+	human_who_gained_species.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay added.
+
 	// Drop the items the new species can't wear
 	human_who_gained_species.mob_biotypes = inherent_biotypes
 	human_who_gained_species.mob_respiration_type = inherent_respiration_type
@@ -417,6 +421,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	properly_gained = TRUE
 
+	human_who_gained_species.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
 /**
  * Proc called when a carbon is no longer this species.
  *
@@ -427,40 +433,44 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * new_species - The new species that the carbon became, used for genetics mutations.
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
-/datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/proc/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	C.butcher_results = null
-	for(var/X in inherent_traits)
-		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	human.living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS //Don't call update_body_parts() for every single bodypart overlay removed.
+	human.butcher_results = null
+	for(var/trait in inherent_traits)
+		REMOVE_TRAIT(human, trait, SPECIES_TRAIT)
 
 	//If their inert mutation is not the same, swap it out
-	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
-		C.dna.remove_mutation(inert_mutation)
+	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(human.dna.mutation_index) && (inert_mutation in human.dna.mutation_index))
+		human.dna.remove_mutation(inert_mutation)
 		//keep it at the right spot, so we can't have people taking shortcuts
-		var/location = C.dna.mutation_index.Find(inert_mutation)
-		C.dna.mutation_index[location] = new_species.inert_mutation
-		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
-		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
-		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
+		var/location = human.dna.mutation_index.Find(inert_mutation)
+		human.dna.mutation_index[location] = new_species.inert_mutation
+		human.dna.default_mutation_genes[location] = human.dna.mutation_index[location]
+		human.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		human.dna.default_mutation_genes[new_species.inert_mutation] = human.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
-			C.faction -= i
+			human.faction -= i
 
-	clear_tail_moodlets(C)
+	clear_tail_moodlets(human)
 
-	remove_body_markings(C)
+	remove_body_markings(human)
 
 	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
 	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
 	for(var/language in losing_holder.understood_languages)
-		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+		human.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.spoken_languages)
-		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+		human.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
 	for(var/language in losing_holder.blocked_languages)
-		C.remove_blocked_language(language, LANGUAGE_SPECIES)
+		human.remove_blocked_language(language, LANGUAGE_SPECIES)
 
-	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+	SEND_SIGNAL(human, COMSIG_SPECIES_LOSS, src)
+
+	human.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
 /**
  * Handles the body of a human
@@ -808,8 +818,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(QDELETED(target)) //may be called from a timer
 		return
 	target.set_facial_hairstyle("Shaved", update = FALSE)
-	target.set_hairstyle("Bald", update = FALSE)
-	target.update_body_parts()
+	target.set_hairstyle("Bald") //This calls update_body_parts()
 
 //////////////////
 // ATTACK PROCS //

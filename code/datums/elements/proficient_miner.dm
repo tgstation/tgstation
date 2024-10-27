@@ -12,7 +12,16 @@
 	if(!ismineralturf(target))
 		return
 	var/turf/closed/mineral/mineral_wall = target
-	mineral_wall.gets_drilled(source)
+
+	if(!istype(mineral_wall, /turf/closed/mineral/gibtonite))
+		mineral_wall.gets_drilled(source)
+		return
+
+	var/turf/closed/mineral/gibtonite/gibtonite_wall = mineral_wall
+	if(gibtonite_wall.stage == GIBTONITE_UNSTRUCK)
+		mineral_wall.gets_drilled(source)
+
+
 
 /datum/element/proficient_miner/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_MOVABLE_BUMP)

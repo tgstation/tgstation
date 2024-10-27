@@ -133,7 +133,6 @@
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
-	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
 	if (!feedback)

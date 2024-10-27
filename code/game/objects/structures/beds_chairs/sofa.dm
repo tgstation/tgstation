@@ -19,44 +19,17 @@ path/corner/color_name {\
 	icon = 'icons/obj/chairs_wide.dmi'
 	buildstackamount = 1
 	item_chair = null
-	fishing_modifier = -4
-	var/mutable_appearance/armrest
+	fishing_modifier = -6
+	has_armrest = TRUE
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()
-	gen_armrest()
 	AddElement(/datum/element/soft_landing)
-
-/obj/structure/chair/sofa/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	cut_overlay(armrest)
-	QDEL_NULL(armrest)
-	gen_armrest()
-	return ..()
-
-/obj/structure/chair/sofa/proc/gen_armrest()
-	armrest = mutable_appearance(initial(icon), "[icon_state]_armrest", ABOVE_MOB_LAYER)
-	update_armrest()
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1, layer = OBJ_LAYER))
 	. = ..()
-
-/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
-	. = ..()
-	update_armrest()
-
-/obj/structure/chair/sofa/proc/update_armrest()
-	if(has_buckled_mobs())
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
-
-/obj/structure/chair/sofa/post_unbuckle_mob()
-	. = ..()
-	update_armrest()
 
 /obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
 	return
@@ -101,6 +74,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bench/left
 	icon_state = "bench_left"
@@ -128,6 +102,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	max_integrity = 60
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

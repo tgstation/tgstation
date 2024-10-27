@@ -54,7 +54,7 @@
 	to_wear.r_pocket = null
 	to_wear.suit_store = null
 
-	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
+	avatar.equipOutfit(to_wear, visuals_only = TRUE)
 
 	var/obj/item/clothing/under/jumpsuit = avatar.w_uniform
 	if(istype(jumpsuit))
