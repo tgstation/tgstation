@@ -388,7 +388,6 @@
 	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
-	. = ..()
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
@@ -398,7 +397,6 @@
 		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
-	. = ..()
 	if(current_disguise)
 		return_look()
 	possible_disguises = null
@@ -462,12 +460,10 @@
 	var/old_size
 
 /obj/item/mod/module/plate_compression/on_install()
-	. = ..()
 	old_size = mod.w_class
 	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
-	. = ..()
 	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
@@ -511,11 +507,9 @@
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
-	. = ..()
 	mod.item_flags |= EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
-	. = ..()
 	mod.item_flags &= ~EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_suit_activation()

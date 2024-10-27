@@ -600,6 +600,8 @@
 	complexity += new_module.complexity
 	new_module.mod = src
 	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
+	if (new_module.mask_worn_overlay)
+		new_module.RegisterSignals(src, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART), TYPE_PROC_REF(/obj/item/mod/module, recache_module_icon))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
@@ -618,7 +620,7 @@
 		old_module.on_suit_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.deactivate(display_message = !deleting, deleting = deleting)
-	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
+	old_module.UnregisterSignal(src, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART, COMSIG_ITEM_GET_WORN_OVERLAYS))
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null

@@ -260,15 +260,10 @@
 
 /// Called from MODsuit's install() proc, so when the module is installed
 /obj/item/mod/module/proc/on_install()
-	SHOULD_CALL_PARENT(TRUE)
-	if (mask_worn_overlay)
-		RegisterSignals(mod, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART), PROC_REF(recache_module_icon))
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled
 /obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
-	UnregisterSignal(mod, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART))
 	return
 
 /// Called when the MODsuit is activated

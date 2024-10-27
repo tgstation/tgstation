@@ -17,11 +17,9 @@
 	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
-	. = ..()
 	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	. = ..()
 	mod.activation_step_time /= step_change
 
 /obj/item/mod/module/springlock/on_suit_activation()

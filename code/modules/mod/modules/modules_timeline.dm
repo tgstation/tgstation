@@ -20,12 +20,10 @@
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
-	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
 	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
 /obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
-	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
@@ -230,7 +228,6 @@
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
-	. = ..()
 	if(!field)
 		return
 	field_disconnect(field)

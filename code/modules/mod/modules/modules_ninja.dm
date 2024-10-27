@@ -422,11 +422,9 @@
 	addtimer(CALLBACK(src, PROC_REF(boost_aftereffects), mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
-	. = ..()
 	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_boost))
 
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting = FALSE)
-	. = ..()
 	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
 
 /obj/item/mod/module/adrenaline_boost/proc/try_boost(source, mob/user, obj/item/attacking_item)
