@@ -45,4 +45,4 @@
 /obj/item/circuit_component/nfc_send/input_received(datum/port/input/port)
 	if(isatom(target.value))
 		var/atom/target_enty = target.value
-		SEND_SIGNAL(target_enty, COMSIG_CIRCUIT_NFC_DATA_SENT, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))
+		SEND_SIGNAL(target_enty, COMSIG_CIRCUIT_NFC_DATA_SENT, parent, list("data" = data_package.value, "enc_key" = enc_key.value, "port" = WEAKREF(data_package)))

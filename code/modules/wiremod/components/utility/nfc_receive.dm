@@ -58,8 +58,11 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 
-/obj/item/circuit_component/nfc_receive/proc/nfc_receive(obj/item/circuit_component/source, list/data)
+/obj/item/circuit_component/nfc_receive/proc/nfc_receive(obj/item/circuit_component/source,obj/sender, list/data)
 	SIGNAL_HANDLER
+	var/t = get_dist(sender,parent)
+	if(get_dist(sender,parent) >= 10)
+		return
 
 	if(data["enc_key"] != enc_key.value)
 		return
