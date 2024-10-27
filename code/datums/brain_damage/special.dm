@@ -632,7 +632,7 @@
 
 /datum/brain_trauma/special/axedoration/proc/on_equip(source, obj/item/picked_up, slot)
 	SIGNAL_HANDLER
-	if(!istype(picked_up, /obj/item/fireaxe) || (picked_up.item_flags & IN_INVENTORY))
+	if(!istype(picked_up, /obj/item/fireaxe))
 		return
 	owner.set_jitter_if_lower(3 SECONDS)
 	if(picked_up == GLOB.bridge_axe)
