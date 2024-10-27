@@ -363,7 +363,6 @@
 	return null
 
 /obj/item/mod/module/proc/get_module_icon_cache(used_overlay)
-	SIGNAL_HANDLER
 	var/covered_slots = mod.get_sealed_slots(mod.get_parts(all = TRUE))
 	if (GLOB.mod_module_overlays[mod.skin])
 		if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"])
