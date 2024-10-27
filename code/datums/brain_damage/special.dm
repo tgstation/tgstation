@@ -599,21 +599,22 @@
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 
 /datum/brain_trauma/special/axedoration/on_gain()
+	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
+	RegisterSignal(owner, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_unequip))
+	RegisterSignal(owner, COMSIG_MOB_EXAMINING, PROC_REF(on_examine))
 	if(!GLOB.bridge_axe)
 		axe_gone()
+		return ..()
+	RegisterSignal(GLOB.bridge_axe, COMSIG_QDELETING, PROC_REF(axe_gone))
+	if(istype(get_axe_location(), /area/station/command) && istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
+	else if(owner.is_holding(GLOB.bridge_axe))
+		on_equip(owner, GLOB.bridge_axe)
 	else
-		RegisterSignal(GLOB.bridge_axe, COMSIG_QDELETING, PROC_REF(axe_gone))
-		if(istype(get_axe_location(), /area/station/command) && istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
-		else if(owner.is_holding(GLOB.bridge_axe))
-			on_equip(owner, GLOB.bridge_axe)
-		else
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
-		RegisterSignal(owner, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(on_unequip))
-		RegisterSignal(owner, COMSIG_MOB_EXAMINING, PROC_REF(on_examine))
-		RegisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_axe_attack))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+	RegisterSignal(GLOB.bridge_axe, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_axe_attack))
 	return ..()
+
 
 /datum/brain_trauma/special/axedoration/on_lose()
 	owner.clear_mood_event("fireaxe")
@@ -636,11 +637,11 @@
 	if(picked_up == GLOB.bridge_axe)
 		to_chat(owner, span_hypnophrase("I have it. It's time to put it back."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_held)
-	else
-		ADD_TRAIT(picked_up, TRAIT_NODROP, type)
-		to_chat(owner, span_warning("...This is not the one I'm looking after."))
-		owner.Immobilize(2 SECONDS)
-		addtimer(CALLBACK(src, PROC_REF(throw_faker), picked_up), 2 SECONDS)
+		return
+	ADD_TRAIT(picked_up, TRAIT_NODROP, type)
+	to_chat(owner, span_warning("...This is not the one I'm looking after."))
+	owner.Immobilize(2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(throw_faker), picked_up), 2 SECONDS)
 
 /datum/brain_trauma/special/axedoration/proc/throw_faker(obj/item/faker)
 	REMOVE_TRAIT(faker, TRAIT_NODROP, type)
