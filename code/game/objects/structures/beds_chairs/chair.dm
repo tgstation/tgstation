@@ -248,7 +248,7 @@
 	fishing_modifier = -10
 
 /obj/structure/chair/office/light
-	name = "light office chair"
+	name = "office chair"
 	icon_state = "officechair_white"
 
 //Stool
