@@ -323,10 +323,12 @@
 	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/internal/brain)
 	if(brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; but [t_his] soul might yet come back...")
-	if(brain && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
+	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
+	var/valid_ghost = ghost?.can_reenter_corpse && ghost?.client
+	var/valid_soul = brain || !HAS_TRAIT(src, TRAIT_FAKE_SOULLESS)
+	if((brain && client_like) || (valid_ghost && valid_soul))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
-	else
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
+	return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
 
 /// Returns a list of "damtype" => damage description based off of which bodypart description is most common
 /mob/living/carbon/proc/get_majority_bodypart_damage_desc()
