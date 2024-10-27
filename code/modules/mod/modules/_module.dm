@@ -47,6 +47,8 @@
 	var/list/required_slots = list()
 	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
 	var/mask_worn_overlay = FALSE
+	/// Stores a cached icon if mask_worn_overlay is true to cut down on icon ops
+	var/mutable_appearance/cached_module_icon
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -258,10 +260,15 @@
 
 /// Called from MODsuit's install() proc, so when the module is installed
 /obj/item/mod/module/proc/on_install()
+	SHOULD_CALL_PARENT(TRUE)
+	if (mask_worn_overlay)
+		RegisterSignals(mod, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART), PROC_REF(recache_module_icon))
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled
 /obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(mod, list(COMSIG_MOD_FINISH_ACTIVATION, COMSIG_MOD_SEAL_PART))
 	return
 
 /// Called when the MODsuit is activated
@@ -339,20 +346,17 @@
 	. = list()
 	if(!mod.active || !has_required_parts(mod.mod_parts, need_extended = TRUE))
 		return
-	var/used_overlay
-	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
-		used_overlay = overlay_state_use
-	else if(overlay_state_active && active)
-		used_overlay = overlay_state_active
-	else if(overlay_state_inactive)
-		used_overlay = overlay_state_inactive
-	else
+	var/used_overlay = get_current_overlay_state()
+	if (!used_overlay)
 		return
 	var/mutable_appearance/module_icon
 	if(mask_worn_overlay)
-		var/icon/mod_mask = icon(mod.generate_suit_mask())
-		mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
-		module_icon = mutable_appearance(mod_mask, layer = standing.layer + 0.1)
+		if (!cached_module_icon)
+			recache_module_icon()
+			if (!cached_module_icon)
+				return
+		cached_module_icon.layer = standing.layer + 0.1
+		module_icon = cached_module_icon
 	else
 		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
@@ -360,6 +364,26 @@
 
 	. += module_icon
 	SEND_SIGNAL(src, COMSIG_MODULE_GENERATE_WORN_OVERLAY, ., standing)
+
+/obj/item/mod/module/proc/get_current_overlay_state()
+	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
+		return overlay_state_use
+	if(overlay_state_active && active)
+		return overlay_state_active
+	if(overlay_state_inactive)
+		return overlay_state_inactive
+	return null
+
+/obj/item/mod/module/proc/recache_module_icon()
+	SIGNAL_HANDLER
+
+	var/used_overlay = get_current_overlay_state()
+	if (!used_overlay)
+		cached_module_icon = null
+		return
+	var/icon/mod_mask = icon(mod.generate_suit_mask())
+	mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
+	cached_module_icon = mutable_appearance(mod_mask)
 
 /// Updates the signal used by active modules to be activated
 /obj/item/mod/module/proc/update_signal(value)
