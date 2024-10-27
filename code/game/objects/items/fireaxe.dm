@@ -48,6 +48,11 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	//axes are not known for being precision butchering tools
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
 
+/obj/item/fireaxe/Destroy()
+	if(GLOB.bridge_axe == src)
+		GLOB.bridge_axe = null
+	return ..()
+
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
