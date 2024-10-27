@@ -1,3 +1,5 @@
+GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
+
 /*
  * Fireaxe
  */
@@ -34,6 +36,9 @@
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
+	if(!GLOB.bridge_axe && istype(get_area(src), /area/station/command/bridge))
+		GLOB.bridge_axe = src
+
 	AddComponent(/datum/component/butchering, \
 		speed = 10 SECONDS, \
 		effectiveness = 80, \

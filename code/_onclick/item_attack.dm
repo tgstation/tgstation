@@ -251,7 +251,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) | SEND_SIGNAL(user, COMSIG_LIVING_ATTACK_ATOM, attacked_atom)
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) | SEND_SIGNAL(user, COMSIG_LIVING_ATTACK_ATOM, attacked_atom, src)
 	if(signal_return & COMPONENT_SKIP_ATTACK)
 		return TRUE
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)

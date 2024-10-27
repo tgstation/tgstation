@@ -9,7 +9,7 @@
 
 	RegisterSignal(target, COMSIG_LIVING_ATTACK_ATOM, PROC_REF(check_if_glass))
 
-/datum/element/glass_pacifist/proc/check_if_glass(mob/living/owner, atom/hit)
+/datum/element/glass_pacifist/proc/check_if_glass(mob/living/owner, atom/hit, obj/item/weapon)
 	SIGNAL_HANDLER
 
 	if(istype(hit, /obj/structure/window))
