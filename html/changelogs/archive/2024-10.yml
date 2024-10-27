@@ -807,3 +807,37 @@
       damage at the cost of lethal damage. Lower cooldown. Power chromosome makes
       it force a stagger rather than cause a chain lightning effect (this used to
       do like only 5 damage so...)
+2024-10-27:
+  Absolucy:
+  - rscadd: GPSes now show the general direction of cross-linked z-levels.
+  CliffracerX:
+  - config: altered coded defaults for human authority, no impact on TG
+  Jewelry-x:
+  - admin: make sparks optional when sending a supply pod
+  KazooBard:
+  - balance: Knock path's grasp now stuns the previous mech occupant when ejecting
+      them and unlocks BOTH the ID and DNA lock, allowing the heretic to freely board
+      the vehicle.
+  SmArtKar:
+  - bugfix: Fixed hat stabilizer component not cancelling the attack chain
+  Time-Green, 00-Steven:
+  - rscadd: 'Adds Lost Crew as an orderable cargo package by medical! Fix and revive
+      them to bring new players back into the game and make some money for medical!
+
+      admin:'
+  Vekter:
+  - bugfix: Changed the color of entertainment radio to be darker
+  carlarctg:
+  - bugfix: spray-on insulated gloves are chunky once more. does not affect regular
+      ones
+  - rscadd: Modernizes polymorph types by adding mob types that never entered the
+      wabbajack list.
+  - balance: Updated a few species' changesource flags
+  grungussuss:
+  - qol: you can now turn off the volume on an entertainment monitor
+  - sound: fan loop sounds have been improved
+  grungussuss and redemptionarc:
+  - sound: sigh sounds have been improved
+  tontyGH:
+  - bugfix: pointing at stuff on-top of plates, griddles, stoves and ovens will point
+      at the plate and no longer just do nothing
