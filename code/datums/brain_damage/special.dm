@@ -580,12 +580,12 @@
 			talk_tuah(pick(talk_lines))
 			return
 		var/datum/job/holder_job = axe_holder.mind?.assigned_role
-		if(!holder_job || (/datum/job_department/command in holder_job.departments_list))
-			to_chat(owner, span_warning("You start having a bad feeling..."))
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
-		else
+		if(holder_job && (/datum/job_department/command in holder_job.departments_list))
 			to_chat(owner, span_notice("I hope the axe is in good hands..."))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+		else
+			to_chat(owner, span_warning("You start having a bad feeling..."))
+			owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 	else if(isarea(axe_location))
 		if(istype(axe_location, /area/station/command))
 			to_chat(owner, span_notice("You feel a sense of relief..."))
