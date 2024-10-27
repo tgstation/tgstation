@@ -59,7 +59,7 @@
 
 /obj/item/implant/teleport_blocker/c38
 	name = "ANCR implant"
-	desc = "A smaller bluespace grounding implant that supplies power for only a few minutes."
+	desc = "A smaller bluespace grounding implant that supplies power for only one minute."
 	implant_flags = NONE
 	///How long before this implant self-deletes?
 	var/lifespan = 1 MINUTES
