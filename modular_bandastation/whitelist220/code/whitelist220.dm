@@ -8,6 +8,8 @@
 	default = FALSE
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/string/interview_webhook_url
+
 /world/IsBanned(key, address, computer_id, type, real_bans_only)
 	. = ..()
 	if(.)
@@ -45,7 +47,44 @@
 
 /datum/interview/approve(client/approved_by)
 	add_owner_to_whitelist(approved_by)
+	send_interview_webhook(src, "[approved_by.ckey] approved:")
 	. = ..()
+
+/datum/interview_manager/enqueue(datum/interview/to_queue)
+	. = ..()
+	send_interview_webhook(src, "New interview enqueued:")
+
+/datum/interview/deny(client/denied_by)
+	. = ..()
+	send_interview_webhook(src, "[denied_by.ckey] denied:")
+
+/datum/interview/proc/serialize_embed()
+	. = list(
+		"fields" = list(),
+		"author" = list(
+			"name" = owner_ckey
+			)
+	)
+	for(var/question_id in 1 to length(questions))
+		var/list/question_data = list(
+			"name" = "[questions[question_id]]",
+			"value" = "[isnull(responses[question_id]) ? "N/A" : responses[question_id]]"
+		)
+		.["fields"] += list(question_data)
+	return .
+
+/proc/send_interview_webhook(datum/interview/interview, additional_msg)
+	var/webhook = CONFIG_GET(string/interview_webhook_url)
+	if(!webhook || !interview)
+		return
+	var/list/webhook_info = list()
+	webhook_info["content"] = additional_msg
+	webhook_info["embeds"] = list(interview.serialize_embed())
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
+	request.begin_async()
 
 /datum/interview/proc/add_owner_to_whitelist(client/added_by)
 	PRIVATE_PROC(TRUE)
