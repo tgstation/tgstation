@@ -68,6 +68,17 @@
 
 	return ..()
 
+/obj/item/clothing/head/helmet/sec/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] straps...")
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	flags_inv ^= HIDEHAIR
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened "] straps")
+	return TRUE
+
 /obj/item/clothing/head/helmet/sec/click_alt(mob/user)
 	flipped_visor = !flipped_visor
 	balloon_alert(user, "visor flipped")
