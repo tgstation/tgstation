@@ -408,7 +408,8 @@
 /obj/item/construction/rtd/borg/try_tiling(atom/interacting_with, mob/living/user)
 	. = ..()
 /obj/item/construction/rtd/borg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	return 0
+	return NONE
+
 /obj/item/construction/rtd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
 		return 0
