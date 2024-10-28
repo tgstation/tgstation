@@ -30219,7 +30219,6 @@
 /area/station/command/corporate_dock)
 "kmD" = (
 /obj/structure/chair/office/light{
-	name = "blue";
 	color = "#6495ED";
 	dir = 4
 	},
@@ -64493,7 +64492,6 @@
 /area/station/security/checkpoint/customs/auxiliary)
 "vKn" = (
 /obj/structure/chair/office/light{
-	name = "blue";
 	color = "#6495ED";
 	dir = 8
 	},
