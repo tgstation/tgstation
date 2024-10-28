@@ -405,8 +405,6 @@
 	if(!(interacting_with in view(1, get_turf(user))))
 		return NONE
 	return try_tiling(interacting_with, user)
-/obj/item/construction/rtd/borg/try_tiling(atom/interacting_with, mob/living/user)
-	. = ..()
 /obj/item/construction/rtd/borg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return NONE
 
