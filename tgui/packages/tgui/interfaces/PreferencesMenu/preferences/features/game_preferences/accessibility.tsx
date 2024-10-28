@@ -1,10 +1,10 @@
 import { CheckboxInput, FeatureToggle } from '../base';
 
 export const enable_tips: FeatureToggle = {
-  name: 'Enable surgery sounds',
+  name: 'Disable surgery sounds',
   category: 'ACCESSIBILITY',
   description: `
-    Do you want to hear surgery sounds?
+    Disable surgery sounds?
   `,
   component: CheckboxInput,
 };
