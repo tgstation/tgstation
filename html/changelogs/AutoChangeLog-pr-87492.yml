@@ -1,4 +1,0 @@
-author: "DATA-xPUNGED"
-delete-after: True
-changes:
-  - bugfix: "The parrot from the Corsair Cove will no longer be immediatelly shanked by the pirates upon loading of the domain."
