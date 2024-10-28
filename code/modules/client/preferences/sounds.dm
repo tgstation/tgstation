@@ -145,7 +145,6 @@
 	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER
 
-<<<<<<< HEAD
 	minimum = 0
 	maximum = 200
 
