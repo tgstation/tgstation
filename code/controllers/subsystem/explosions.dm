@@ -544,11 +544,6 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
 			listener.playsound_local(epicenter, null, 100, TRUE, frequency, sound_to_use = near_sound)
 			if(base_shake_amount > 0)
-				if(listener.client?.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
-					type = /atom/movable/screen/fullscreen/flash/black
-
-					overlay_fullscreen("flash", type)
-					addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
 				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
 
 		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
