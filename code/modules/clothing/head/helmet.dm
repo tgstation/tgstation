@@ -76,7 +76,7 @@
 	if(!do_after(user, 3 SECONDS, src))
 		return
 	flags_inv ^= HIDEHAIR
-	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened "] straps")
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened"] straps")
 	return TRUE
 
 /obj/item/clothing/head/helmet/sec/click_alt(mob/user)
