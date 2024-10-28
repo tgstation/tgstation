@@ -11,7 +11,7 @@
 /datum/preference/numeric/sound_ambience_volume/create_default_value()
 	return maximum/2
 
-/datum/preference/toggle/sound_ambience_volume/apply_to_client(client/client, value)
+/datum/preference/numeric/sound_ambience_volume/apply_to_client(client/client, value)
 	client.update_ambience_pref(value)
 
 /datum/preference/toggle/sound_breathing
@@ -105,7 +105,7 @@
 /datum/preference/numeric/sound_lobby_volume/create_default_value()
 	return maximum/2
 
-/datum/preference/toggle/sound_lobby_volume/apply_to_client_updated(client/client, value)
+/datum/preference/numeric/sound_lobby_volume/apply_to_client_updated(client/client, value)
 	if (value && isnewplayer(client.mob))
 		client.playtitlemusic()
 	else
@@ -130,7 +130,7 @@
 /datum/preference/numeric/sound_ship_ambience_volume/create_default_value()
 	return maximum/2
 
-/datum/preference/toggle/sound_ship_ambience_volume/apply_to_client_updated(client/client, value)
+/datum/preference/numeric/sound_ship_ambience_volume/apply_to_client_updated(client/client, value)
 	client.mob.refresh_looping_ambience()
 
 /// Controls hearing elevator music
@@ -152,10 +152,9 @@
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_radio_noise/create_default_value()
 	return maximum/2
-=======
+
 /// Controls hearing AI VOX announcements
 /datum/preference/toggle/sound_ai_vox
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ai_vox"
 	savefile_identifier = PREFERENCE_PLAYER
->>>>>>> upstream/master
