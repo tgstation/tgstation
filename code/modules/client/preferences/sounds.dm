@@ -128,3 +128,15 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ai_vox"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// Controls volume at which select sounds are played
+/datum/preference/numeric/sound_menu_ui_buttons
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_menu_ui_buttons"
+	savefile_identifier = PREFERENCE_PLAYER
+
+	minimum = 0
+	maximum = 200
+
+/datum/preference/numeric/sound_tts_volume/create_default_value()
+	return maximum/2

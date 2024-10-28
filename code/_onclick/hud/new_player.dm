@@ -137,8 +137,8 @@
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
-	if(select_sound_play)
-		var/sound/ui_select_sound = sound('sound/misc/menu/ui_select1.ogg')
+	if(select_sound_play && usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons))
+		var/sound/ui_select_sound = sound('sound/misc/menu/ui_select1.ogg', volume = usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons))
 		ui_select_sound.frequency = get_rand_frequency_low_range()
 		SEND_SOUND(hud.mymob, ui_select_sound)
 	update_appearance(UPDATE_ICON)
@@ -211,8 +211,6 @@
 	base_icon_state = "not_ready"
 	///Whether we are readied up for the round or not
 	var/ready = FALSE
-	///This button has a unique click sound
-	select_sound_play = FALSE
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -244,11 +242,9 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	ready = !ready
 	if(ready)
-		SEND_SOUND(new_player.client, 'sound/misc/menu/ready_up.ogg')
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
 	else
-		SEND_SOUND(new_player.client, 'sound/misc/menu/unready.ogg')
 		new_player.ready = PLAYER_NOT_READY
 		base_icon_state = "not_ready"
 	update_appearance(UPDATE_ICON)
@@ -578,14 +574,16 @@
 	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
 	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
-	SEND_SOUND(hud.mymob, 'sound/misc/menu/menu_rollup1.ogg')
+	if(usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons))
+		SEND_SOUND(hud.mymob, sound('sound/misc/menu/menu_rollup1.ogg', volume = usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons)))
 
 ///Extends the button back to its usual spot
 ///Sends a signal on the hud for the menu hud elements to listen to
 /atom/movable/screen/lobby/button/collapse/proc/expand_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_EXPANDED)
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
-	SEND_SOUND(hud.mymob, 'sound/misc/menu/menu_rolldown1.ogg')
+	if(usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons))
+		SEND_SOUND(hud.mymob, sound('sound/misc/menu/menu_rolldown1.ogg', volume = usr.client.prefs.read_preference(/datum/preference/numeric/sound_menu_ui_buttons)))
 
 
 /atom/movable/screen/lobby/shutter
