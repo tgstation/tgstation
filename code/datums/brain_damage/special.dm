@@ -583,20 +583,24 @@
 		if(holder_job && (/datum/job_department/command in holder_job.departments_list))
 			to_chat(owner, span_notice("I hope the axe is in good hands..."))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
-		else
-			to_chat(owner, span_warning("You start having a bad feeling..."))
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
-	else if(isarea(axe_location))
-		if(istype(axe_location, /area/station/command))
-			to_chat(owner, span_notice("You feel a sense of relief..."))
-			if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
-				return
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
-		else
-			to_chat(owner, span_warning("You start having a bad feeling..."))
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
-	else
+			return
+		to_chat(owner, span_warning("You start having a bad feeling..."))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
+		return
+		
+	if(!isarea(axe_location))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
+		return
+		
+	if(istype(axe_location, /area/station/command))
+		to_chat(owner, span_notice("You feel a sense of relief..."))
+		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
+			return
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+		return
+		
+	to_chat(owner, span_warning("You start having a bad feeling..."))
+	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
 /datum/brain_trauma/special/axedoration/on_gain()
 	RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
