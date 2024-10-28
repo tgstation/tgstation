@@ -1,6 +1,15 @@
 import { CheckboxInput, FeatureToggle } from '../base';
 
-export const enable_tips: FeatureToggle = {
+export const screen_shake_darken: FeatureToggle = {
+  name: 'Darken screen shake',
+  category: 'ACCESSIBILITY',
+  description: `
+    When toggled, experiencing screen shake will darken your screen.
+  `,
+  component: CheckboxInput,
+};
+
+export const surgery_noise: FeatureToggle = {
   name: 'Disable surgery sounds',
   category: 'ACCESSIBILITY',
   description: `
