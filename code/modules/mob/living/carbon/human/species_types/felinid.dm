@@ -13,6 +13,7 @@
 		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
+		TRAIT_WATER_HATER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
@@ -100,14 +101,18 @@
 
 /datum/species/human/felinid/get_sigh_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/human/felinid/get_sniff_sound(mob/living/carbon/human/felinid)
 	if(felinid.physique == FEMALE)
 		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
 	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
 
+/datum/species/human/felinid/get_snore_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
 
 
 /proc/mass_purrbation()

@@ -258,7 +258,8 @@
 
 /datum/station_trait/job/pun_pun/New()
 	. = ..()
-	if(!SSticker.HasRoundStarted() || !GLOB.the_one_and_only_punpun) //Make sure we don't have two Pun Puns if loaded before the start of the round.
+	//Make sure we don't have two Pun Puns if loaded before the start of the round.
+	if(SSticker.HasRoundStarted() || !GLOB.the_one_and_only_punpun)
 		return
 	new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
 	qdel(GLOB.the_one_and_only_punpun)

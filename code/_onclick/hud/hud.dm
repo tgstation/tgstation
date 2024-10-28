@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/stamina
-	var/atom/movable/screen/healthdoll
+	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
 	var/atom/movable/screen/hunger
 	// subtypes can override this to force a specific UI style
@@ -198,6 +198,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	SIGNAL_HANDLER
 	update_parallax_pref() // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
+	SEND_SIGNAL(src, COMSIG_HUD_Z_CHANGED, eye_turf.z)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
 		return
@@ -504,6 +505,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(ismob(mymob) && mymob.hud_used == src)
 		show_hud(hud_version)
 
+/// Handles dimming inventory slots that a mob can't equip items to in their current state
 /datum/hud/proc/update_locked_slots()
 	return
 
@@ -548,7 +550,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
-			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, world.icon_size, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
 
 	button.location = relative_to.location
 
@@ -712,14 +714,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// We're primarially concerned about width here, if someone makes us 1x2000 I wish them a swift and watery death
 	var/furthest_screen_loc = ButtonNumberToScreenCoords(column_max - 1)
 	var/list/offsets = screen_loc_to_offset(furthest_screen_loc, owner_view)
-	if(offsets[1] > world.icon_size && offsets[1] < view_size[1] && offsets[2] > world.icon_size && offsets[2] < view_size[2]) // We're all good
+	if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2]) // We're all good
 		return
 
 	for(column_max in column_max - 1 to 1 step -1) // Yes I could do this by unwrapping ButtonNumberToScreenCoords, but I don't feel like it
 		var/tested_screen_loc = ButtonNumberToScreenCoords(column_max)
 		offsets = screen_loc_to_offset(tested_screen_loc, owner_view)
 		// We've found a valid max length, pack it in
-		if(offsets[1] > world.icon_size && offsets[1] < view_size[1] && offsets[2] > world.icon_size && offsets[2] < view_size[2])
+		if(offsets[1] > ICON_SIZE_X && offsets[1] < view_size[1] && offsets[2] > ICON_SIZE_Y && offsets[2] < view_size[2])
 			break
 	// Use our newly resized column max
 	refresh_actions()

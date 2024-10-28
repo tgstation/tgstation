@@ -219,6 +219,10 @@
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
+	if(active)
+		balloon_alert(wearer, "deactivate the suit first!")
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
+		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(user, "retract parts first!")
@@ -227,6 +231,10 @@
 
 /obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
 	if(user != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
+		return
+	if(active)
+		balloon_alert(wearer, "deactivate the suit first!")
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
@@ -467,6 +475,30 @@
 	wearer.update_spacesuit_hud_icon("0")
 	wearer = null
 
+/obj/item/mod/control/proc/get_sealed_slots(list/parts)
+	var/covered_slots = NONE
+	for(var/obj/item/part as anything in parts)
+		if(!get_part_datum(part).sealed)
+			parts -= part
+			continue
+		covered_slots |= part.slot_flags
+	return covered_slots
+
+/obj/item/mod/control/proc/generate_suit_mask()
+	var/list/parts = get_parts(all = TRUE)
+	var/covered_slots = get_sealed_slots(parts)
+	if(GLOB.mod_masks[skin])
+		if(GLOB.mod_masks[skin]["[covered_slots]"])
+			return GLOB.mod_masks[skin]["[covered_slots]"]
+	else
+		GLOB.mod_masks[skin] = list()
+	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
+	for(var/obj/item/part as anything in parts)
+		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
+	slot_mask.Blend("#fff", ICON_ADD)
+	GLOB.mod_masks[skin]["[covered_slots]"] = slot_mask
+	return GLOB.mod_masks[skin]["[covered_slots]"]
+
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
 		unset_wearer()
@@ -575,7 +607,7 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-	if(active)
+	if(active && new_module.has_required_parts(mod_parts, need_extended = TRUE))
 		new_module.on_suit_activation()
 	if(user)
 		balloon_alert(user, "[new_module] added")
@@ -679,8 +711,6 @@
 			part.forceMove(src)
 			return
 		retract(wearer, part)
-		if(active)
-			INVOKE_ASYNC(src, PROC_REF(toggle_activate), wearer, TRUE)
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER

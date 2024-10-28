@@ -159,15 +159,15 @@
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		if(user.mind.holy_role == HOLY_ROLE_DEACON)
-			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		else
-			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are not holy, and therefore cannot perform rites."))
 		return
 	if(rite_types_allowlist && !is_path_in_list(path, rite_types_allowlist))
 		to_chat(user, span_warning("This cannot perform that kind of rite."))
 		return
 	if(performing_rite)
-		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
+		to_chat(user, span_notice("There is a rite currently being performed here already."))
 		return
 	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You are not close enough to perform the rite."))

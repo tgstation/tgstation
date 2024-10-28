@@ -124,6 +124,7 @@
 	tastes = list("nachos" = 2, "hot pepper" = 1)
 	foodtypes = VEGETABLES | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/taco

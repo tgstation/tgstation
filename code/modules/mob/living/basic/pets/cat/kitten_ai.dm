@@ -3,10 +3,12 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_HUNGRY_MEOW = list("mrrp...", "mraw..."),
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_MAX_DISTANCE_TO_FOOD = 2,
 	)
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/beg_human,

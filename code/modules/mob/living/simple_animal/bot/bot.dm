@@ -117,8 +117,8 @@
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "<b>pAI Controlled</b>" : "<b>Autonomous</b>"
 	if(!(bot_mode_flags & BOT_MODE_ON))
-		return "<span class='bad'>Inactive</span>"
-	return "<span class='average'>[mode]</span>"
+		return span_bad("Inactive")
+	return span_average("[mode]")
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.

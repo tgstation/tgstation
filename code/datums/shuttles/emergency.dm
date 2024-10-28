@@ -31,13 +31,13 @@
 		mobile.event_list.Cut()
 	if(use_all_events)
 		for(var/path in events)
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 			events -= path
 	else
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
 			events -= path
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"

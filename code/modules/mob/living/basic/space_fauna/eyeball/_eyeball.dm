@@ -60,7 +60,6 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
 
 /mob/living/basic/eyeball/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -94,21 +93,18 @@
 	cut_overlay(on_hit_overlay)
 
 
-/mob/living/basic/eyeball/proc/pre_attack(mob/living/eyeball, atom/target)
-	SIGNAL_HANDLER
-
+/mob/living/basic/eyeball/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!ishuman(target))
-		return
-
+		return TRUE
 	var/mob/living/carbon/human_target = target
 	var/obj/item/organ/internal/eyes/eyes = human_target.get_organ_slot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return
-	if(eyes.damage < 10)
-		return
+	if(isnull(eyes) || eyes.damage < 10)
+		return TRUE
 	heal_eye_damage(human_target, eyes)
-	return COMPONENT_HOSTILE_NO_ATTACK
-
+	return FALSE
 
 /mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/internal/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))

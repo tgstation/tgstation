@@ -27,7 +27,7 @@
 	// changed to allow Z cropping and that's a mess
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
-	for (var/path in SSmapping.config.GetFullMapPaths())
+	for (var/path in SSmapping.current_map.GetFullMapPaths())
 		var/datum/parsed_map/parsed = load_map(
 			file(path),
 			1,

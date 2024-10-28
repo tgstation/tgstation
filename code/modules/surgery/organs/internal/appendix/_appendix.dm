@@ -14,8 +14,8 @@
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
-	now_failing = "<span class='warning'>An explosion of pain erupts in your lower right abdomen!</span>"
-	now_fixed = "<span class='info'>The pain in your abdomen has subsided.</span>"
+	now_failing = span_warning("An explosion of pain erupts in your lower right abdomen!")
+	now_fixed = span_info("The pain in your abdomen has subsided.")
 
 	var/inflamation_stage = 0
 
@@ -37,7 +37,7 @@
 		owner.adjustToxLoss(2 * seconds_per_tick, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
-	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick))
+	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick) && !HAS_TRAIT(owner, TRAIT_TEMPORARY_BODY))
 		become_inflamed()
 
 /obj/item/organ/internal/appendix/proc/become_inflamed()

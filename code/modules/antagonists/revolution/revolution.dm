@@ -336,6 +336,9 @@
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
+	if(iscarbon(owner.current) && deconverter)
+		var/mob/living/carbon/formerrev = owner.current
+		formerrev.Unconscious(10 SECONDS)
 	deconversion_source = deconverter
 	owner.remove_antag_datum(type)
 
@@ -584,19 +587,19 @@
 
 	if(headrevs.len)
 		var/list/headrev_part = list()
-		headrev_part += "<span class='header'>The head revolutionaries were:</span>"
+		headrev_part += span_header("The head revolutionaries were:")
 		headrev_part += printplayerlist(headrevs, !check_rev_victory())
 		result += headrev_part.Join("<br>")
 
 	if(revs.len)
 		var/list/rev_part = list()
-		rev_part += "<span class='header'>The revolutionaries were:</span>"
+		rev_part += span_header("The revolutionaries were:")
 		rev_part += printplayerlist(revs, !check_rev_victory())
 		result += rev_part.Join("<br>")
 
 	var/list/heads = SSjob.get_all_heads()
 	if(heads.len)
-		var/head_text = "<span class='header'>The heads of staff were:</span>"
+		var/head_text = span_header("The heads of staff were:")
 		head_text += "<ul class='playerlist'>"
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)

@@ -1,7 +1,7 @@
 /mob/living/Initialize(mapload)
 	. = ..()
-	if(current_size != RESIZE_DEFAULT_SIZE)
-		update_transform(current_size)
+	if(initial_size != RESIZE_DEFAULT_SIZE)
+		update_transform(initial_size)
 	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
@@ -525,7 +525,7 @@
 	if(!..())
 		return FALSE
 	log_message("points at [pointing_at]", LOG_EMOTE)
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
+	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
 /mob/living/verb/succumb(whispered as num|null)
 	set hidden = TRUE
@@ -832,7 +832,7 @@
 		if(!livingdoll.filtered)
 			livingdoll.filtered = TRUE
 			var/icon/mob_mask = icon(icon, icon_state)
-			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+			if(mob_mask.Height() > ICON_SIZE_Y || mob_mask.Width() > ICON_SIZE_X)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
 				mob_mask = icon('icons/hud/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
 			livingdoll.add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
@@ -1204,8 +1204,11 @@
 		var/altered_grab_state = pulledby.grab_state
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
-		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
-		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		if(HAS_TRAIT(src, TRAIT_GRABRESISTANCE))
+			altered_grab_state--
+		// see defines/combat.dm, this should be baseline 60%
+		// Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
+		var/resist_chance = altered_grab_state ? (BASE_GRAB_RESIST_CHANCE / altered_grab_state) : 100
 		if(prob(resist_chance))
 			visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
 							span_danger("You break free of [pulledby]'s grip!"), null, null, pulledby)
@@ -1279,14 +1282,14 @@
 		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
 		base_pixel_y -= 4
 
-/mob/living/singularity_pull(S, current_size)
+/mob/living/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return
 	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
-		throw_at(S, 14, 3, src, TRUE)
+		throw_at(singularity, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
-		step_towards(src,S)
+		step_towards(src, singularity)
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C
@@ -1470,6 +1473,7 @@
 
 	var/static/list/possible_results = list(
 		WABBAJACK_MONKEY,
+		WABBAJACK_CLOWN,
 		WABBAJACK_ROBOT,
 		WABBAJACK_SLIME,
 		WABBAJACK_XENO,
@@ -1484,10 +1488,25 @@
 		if(WABBAJACK_MONKEY)
 			new_mob = new /mob/living/carbon/human/species/monkey(loc)
 
+		if(WABBAJACK_CLOWN)
+			var/picked_clown = pick(typesof(/mob/living/basic/clown))
+			new_mob = new picked_clown(loc)
+
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
 				/mob/living/basic/drone/polymorphed = 200,
+				/mob/living/basic/bot/dedbot = 25,
+				/mob/living/basic/bot/cleanbot = 25,
+				/mob/living/basic/bot/firebot = 25,
+				/mob/living/basic/bot/honkbot = 25,
+				/mob/living/basic/bot/hygienebot = 25,
+				/mob/living/basic/bot/medbot/mysterious = 12,
+				/mob/living/basic/bot/medbot = 13,
+				/mob/living/basic/bot/vibebot = 25,
+				/mob/living/basic/hivebot/strong = 50,
+				/mob/living/basic/hivebot/mechanic = 50,
+				/mob/living/basic/netguardian = 1,
 				/mob/living/silicon/robot/model/syndicate = 1,
 				/mob/living/silicon/robot/model/syndicate/medical = 1,
 				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
@@ -1516,56 +1535,128 @@
 				picked_xeno_type = pick(
 					/mob/living/carbon/alien/adult/hunter,
 					/mob/living/carbon/alien/adult/sentinel,
+					/mob/living/basic/alien/maid,
 				)
 			else
 				picked_xeno_type = pick(
 					/mob/living/carbon/alien/adult/hunter,
 					/mob/living/basic/alien/sentinel,
+					/mob/living/basic/alien/maid,
 				)
 			new_mob = new picked_xeno_type(loc)
 
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
+				/mob/living/basic/ant,
+				/mob/living/basic/axolotl,
 				/mob/living/basic/bat,
 				/mob/living/basic/bear,
+				/mob/living/basic/bear/butter,
+				/mob/living/basic/bear/snow,
+				/mob/living/basic/bear/russian,
 				/mob/living/basic/blob_minion/blobbernaut,
+				/mob/living/basic/blob_minion/spore,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
+				/mob/living/basic/carp/mega,
 				/mob/living/basic/carp/magic,
 				/mob/living/basic/carp/magic/chaos,
 				/mob/living/basic/chick,
+				/mob/living/basic/chick/permanent,
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
+				/mob/living/basic/cow/moonicorn,
 				/mob/living/basic/crab,
+				/mob/living/basic/crab/evil,
+				/mob/living/basic/crab/kreb,
+				/mob/living/basic/crab/evil/kreb,
+				/mob/living/basic/flesh_spider,
+				/mob/living/basic/frog, // finally we can turn people into the most iconic polymorph form.
+				/mob/living/basic/deer,
+				/mob/living/basic/eyeball,
 				/mob/living/basic/goat,
 				/mob/living/basic/gorilla,
+				/mob/living/basic/gorilla/lesser,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
+				/mob/living/basic/lizard/space,
+				/mob/living/basic/lightgeist,
+				/mob/living/basic/migo,
+				/mob/living/basic/migo/hatsune,
+				/mob/living/basic/mining/basilisk,
+				/mob/living/basic/mining/brimdemon,
+				/mob/living/basic/mining/goldgrub,
+				/mob/living/basic/mining/goldgrub/baby,
 				/mob/living/basic/mining/goliath,
+				/mob/living/basic/mining/goliath/ancient/immortal,
+				/mob/living/basic/mining/gutlunch/warrior,
+				/mob/living/basic/mining/mook,
+				/mob/living/basic/mining/mook/worker,
+				/mob/living/basic/mining/mook/worker/bard,
+				/mob/living/basic/mining/mook/worker/tribal_chief,
+				/mob/living/basic/mining/legion/monkey,
+				/mob/living/basic/mining/legion/monkey/snow,
+				/mob/living/basic/mining/lobstrosity,
+				/mob/living/basic/mining/lobstrosity/lava,
+				/mob/living/basic/mining/ice_demon,
+				/mob/living/basic/mining/ice_whelp,
 				/mob/living/basic/mining/watcher,
+				/mob/living/basic/mining/watcher/icewing,
+				/mob/living/basic/mining/watcher/magmawing,
+				/mob/living/basic/mining/wolf,
 				/mob/living/basic/morph,
+				/mob/living/basic/mothroach,
+				/mob/living/basic/mothroach/bar,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
 				/mob/living/basic/parrot,
 				/mob/living/basic/pet/cat,
 				/mob/living/basic/pet/cat/cak,
 				/mob/living/basic/pet/dog/breaddog,
+				/mob/living/basic/pet/dog/bullterrier,
 				/mob/living/basic/pet/dog/corgi,
+				/mob/living/basic/pet/dog/corgi/exoticcorgi,
+				/mob/living/basic/pet/dog/corgi/narsie,
 				/mob/living/basic/pet/dog/pug,
+				/mob/living/basic/pet/gondola,
 				/mob/living/basic/pet/fox,
-				/mob/living/basic/spider/giant,
-				/mob/living/basic/spider/giant/hunter,
+				/mob/living/basic/pet/penguin,
+				/mob/living/basic/pet/penguin/baby,
+				/mob/living/basic/pet/penguin/baby/permanent,
+				/mob/living/basic/pet/penguin/emperor,
+				/mob/living/basic/pet/penguin/emperor/shamebrero,
+				/mob/living/basic/pony,
+				/mob/living/basic/pony/syndicate,
+				/mob/living/basic/rabbit,
+				/mob/living/basic/rabbit/easter,
+				/mob/living/basic/rabbit/easter/space,
+				/mob/living/basic/regal_rat,
+				/mob/living/basic/seedling,
+				/mob/living/basic/seedling/meanie,
+				/mob/living/basic/sheep,
+				/mob/living/basic/snake,
+				/mob/living/basic/snake/banded,
+				/mob/living/basic/snake/banded/harmless,
+				/mob/living/basic/spider/giant/tangle, // curated for the most 'interesting' ones
+				/mob/living/basic/spider/giant/breacher,
+				/mob/living/basic/spider/giant/tank,
+				/mob/living/basic/spider/giant/ambush,
+				/mob/living/basic/spider/maintenance,
 				/mob/living/basic/statue,
+				/mob/living/basic/statue/frosty,
+				/mob/living/basic/statue/mannequin/suspicious,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
+				/mob/living/basic/stickman/ranged,
+				/mob/living/basic/living_limb_flesh,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 			)
 			new_mob = new picked_animal(loc)
 		if(WABBAJACK_HUMAN)
 			var/mob/living/carbon/human/new_human = new(loc)
 
-			// 50% chance that we'll also randomice race
+			// 50% chance that we'll also randomize race
 			if(prob(50))
 				var/list/chooseable_races = list()
 				for(var/datum/species/species_type as anything in subtypesof(/datum/species))
@@ -1789,13 +1880,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 // used by secbot and monkeys Crossed
 /mob/living/proc/knockOver(mob/living/carbon/C)
 	if(C.key) //save us from monkey hordes
-		C.visible_message("<span class='warning'>[pick( \
+		C.visible_message(span_warning(pick( \
 						"[C] dives out of [src]'s way!", \
 						"[C] stumbles over [src]!", \
 						"[C] jumps out of [src]'s path!", \
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
-						"[C] leaps out of [src]'s way!")]</span>")
+						"[C] leaps out of [src]'s way!")))
 	C.Paralyze(40)
 
 /mob/living/can_be_pulled()
@@ -2163,6 +2254,19 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/start_look_up()
 	SIGNAL_HANDLER
+
+	looking_vertically = TRUE
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf above exists
+	if(!above_turf)
+		to_chat(src, span_warning("There's nothing interesting above."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
 		if (prob(0.1))
@@ -2183,7 +2287,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			to_chat(src, span_warning("You can't see through the floor above you."))
 			return
 
-	looking_vertically = TRUE
 	reset_perspective(ceiling)
 
 /mob/living/proc/stop_look_up()
@@ -2214,6 +2317,19 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/start_look_down()
 	SIGNAL_HANDLER
+
+	looking_vertically = TRUE
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
+		to_chat(src, span_warning("There's nothing interesting below."))
+		to_chat(src, "You set your head straight again.")
+		end_look_up()
+		return
+
 	var/turf/floor = get_turf(src)
 	var/turf/lower_level = get_step_multiz(floor, DOWN)
 	if(!lower_level) //We are at the lowest z-level.
@@ -2235,7 +2351,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			to_chat(src, span_warning("You can't see through the floor below you."))
 			return
 
-	looking_vertically = TRUE
 	reset_perspective(lower_level)
 
 /mob/living/proc/stop_look_down()
@@ -2765,18 +2880,40 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	set category = "IC"
 
 	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
 		end_look_up()
-	else
-		look_up()
+		return
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
+
+	//Check if turf above exists
+	if(!above_turf)
+		to_chat(src, span_warning("There's nothing interesting above. Better keep your eyes ahead."))
+		return
+
+	to_chat(src, "You tilt your head upwards.")
+	look_up()
 
 /mob/living/verb/lookdown()
 	set name = "Look Down"
 	set category = "IC"
 
 	if(looking_vertically)
+		to_chat(src, "You set your head straight again.")
 		end_look_down()
-	else
-		look_down()
+		return
+
+	var/turf/current_turf = get_turf(src)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	//Check if turf below exists
+	if(!below_turf)
+		to_chat(src, span_warning("There's nothing interesting below. Better keep your eyes ahead."))
+		return
+
+	to_chat(src, "You tilt your head downwards.")
+	look_down()
 
 /**
  * Totals the physical cash on the mob and returns the total.

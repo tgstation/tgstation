@@ -302,6 +302,11 @@
 	. = ..()
 	affected_mob.adjust_drowsiness_up_to((5 SECONDS * REM * seconds_per_tick), 60 SECONDS)
 
+/datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
+
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
@@ -1007,6 +1012,11 @@
 	taste_description = "caramel"
 	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/caramel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
 
 /datum/reagent/consumable/char
 	name = "Char"

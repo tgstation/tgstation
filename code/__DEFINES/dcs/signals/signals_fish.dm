@@ -24,8 +24,6 @@
 #define COMSIG_FISH_EATEN_BY_OTHER_FISH "fish_eaten_by_other_fish"
 ///From /obj/item/fish/generate_reagents_to_add, which returns a holder when the fish is eaten or composted for example: (list/reagents)
 #define COMSIG_GENERATE_REAGENTS_TO_ADD "generate_reagents_to_add"
-///From /obj/item/fish/feed: (fed_reagents, fed_reagent_type)
-#define COMSIG_FISH_FED "fish_on_fed"
 ///From /obj/item/fish/update_size_and_weight: (new_size, new_weight)
 #define COMSIG_FISH_UPDATE_SIZE_AND_WEIGHT "fish_update_size_and_weight"
 ///From /obj/item/fish/update_fish_force: (weight_rank, bonus_malus)

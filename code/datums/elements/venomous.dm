@@ -7,7 +7,7 @@
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	///Path of the reagent added
-	var/poison_type
+	var/reagents
 	///Details of how we inject our venom
 	var/injection_flags
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
@@ -17,7 +17,7 @@
 
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added, injection_flags = NONE, thrown_effect = FALSE)
 	. = ..()
-	src.poison_type = poison_type
+	src.reagents = poison_type
 	src.amount_added = amount_added
 	src.injection_flags = injection_flags
 	src.thrown_effect = thrown_effect
@@ -41,4 +41,17 @@
 		final_amount_added = rand(amount_added[1], amount_added[2])
 	else
 		final_amount_added = amount_added
-	target.reagents?.add_reagent(poison_type, final_amount_added)
+
+	var/datum/reagents/tmp_holder = new(final_amount_added)
+	tmp_holder.my_atom = src
+	tmp_holder.add_reagent(reagents, final_amount_added)
+
+	tmp_holder.trans_to(
+		target = target,
+		amount = tmp_holder.total_volume,
+		multiplier = 1,
+		methods = INJECT,
+		transferred_by = ismob(element_owner) ? element_owner : null,
+		show_message = FALSE,
+	)
+	qdel(tmp_holder)

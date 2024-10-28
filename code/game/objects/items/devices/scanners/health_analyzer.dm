@@ -86,7 +86,7 @@
 		return
 
 	if(ispodperson(M) && !advanced)
-		to_chat(user, "<span class='info'>[M]'s biological structure is too complex for the health analyzer.")
+		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
 	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
@@ -151,11 +151,13 @@
 	var/tox_loss = target.getToxLoss()
 	var/fire_loss = target.getFireLoss()
 	var/brute_loss = target.getBruteLoss()
-	var/mob_status = (target.stat == DEAD ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
+	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
-	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)
-		mob_status = span_alert("<b>Deceased</b>")
-		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
+	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
+		// if we don't appear to actually be in a "dead state", add fake oxyloss
+		if(oxy_loss + tox_loss + fire_loss + brute_loss < 200)
+			oxy_loss += 200 - (oxy_loss + tox_loss + fire_loss + brute_loss)
+			oxy_loss = clamp(oxy_loss, 0, 200)
 
 	render_list += "[span_info("Analyzing results for <b>[target]</b> ([station_time_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
@@ -278,7 +280,7 @@
 		var/list/missing_organs = list()
 		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
 			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
-		if(!humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+		if(humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
 			missing_organs[ORGAN_SLOT_HEART] = "Heart"
 		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
 			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
@@ -401,7 +403,7 @@
 			</span>"
 
 	// Time of death
-	if(target.station_timestamp_timeofdeath && (target.stat == DEAD || (HAS_TRAIT(target, TRAIT_FAKEDEATH) && !advanced)))
+	if(target.station_timestamp_timeofdeath && !target.appears_alive())
 		render_list += "<hr>"
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"

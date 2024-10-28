@@ -105,8 +105,8 @@
 	if(!popup_name)
 		return
 	clear_map("[popup_name]_map")
-	var/x_value = world.icon_size * tilesize * width
-	var/y_value = world.icon_size * tilesize * height
+	var/x_value = ICON_SIZE_X * tilesize * width
+	var/y_value = ICON_SIZE_Y * tilesize * height
 	var/map_name = create_popup(popup_name, title, x_value, y_value)
 
 	var/atom/movable/screen/background/background = new

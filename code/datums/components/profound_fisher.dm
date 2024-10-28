@@ -9,6 +9,7 @@
 		return COMPONENT_INCOMPATIBLE
 	src.our_rod = our_rod || new(parent)
 	src.our_rod.internal = TRUE
+	ADD_TRAIT(src.our_rod, TRAIT_NOT_BARFABLE, REF(src))
 	RegisterSignal(src.our_rod, COMSIG_QDELETING, PROC_REF(on_rod_qdel))
 
 	if(!isgloves)
@@ -43,6 +44,7 @@
 /datum/component/profound_fisher/Destroy()
 	our_rod.internal = FALSE
 	UnregisterSignal(our_rod, COMSIG_QDELETING)
+	REMOVE_TRAIT(our_rod, TRAIT_NOT_BARFABLE, REF(src))
 	our_rod = null
 	return ..()
 

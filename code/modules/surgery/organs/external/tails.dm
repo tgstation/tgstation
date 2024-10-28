@@ -158,9 +158,6 @@
 
 	wag_flags = WAG_ABLE
 
-/datum/bodypart_overlay/mutant/tail/get_global_feature_list()
-	return SSaccessories.tails_list_human
-
 /obj/item/organ/external/tail/cat/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_CAT)
 
@@ -168,6 +165,9 @@
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR
+
+/datum/bodypart_overlay/mutant/tail/cat/get_global_feature_list()
+	return SSaccessories.tails_list_felinid
 
 /obj/item/organ/external/tail/monkey
 	name = "monkey tail"

@@ -235,7 +235,7 @@
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/player_area = get_area(character)
-	deadchat_broadcast("<span class='game'> has arrived at the station at <span class='name'>[player_area.name]</span>.</span>", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])</span>", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(!character.mind)
 		return
 	if(!GLOB.announcement_systems.len)
@@ -285,6 +285,35 @@
 
 	return pick(possible_loc)
 
+///Checks to see if `atom/source` is behind `atom/target`
+/proc/check_behind(atom/source, atom/target)
+	// Let's see if source is behind target
+	// "Behind" is defined as 3 tiles directly to the back of the target
+	// x . .
+	// x > .
+	// x . .
+
+	// No tactical spinning allowed
+	if(HAS_TRAIT(target, TRAIT_SPINNING))
+		return TRUE
+
+	// We'll take "same tile" as "behind" for ease
+	if(target.loc == source.loc)
+		return TRUE
+
+	// We'll also assume lying down is behind, as mob directions when lying are unclear
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.body_position == LYING_DOWN)
+			return TRUE
+
+	// Exceptions aside, let's actually check if they're, yknow, behind
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
+		return TRUE
+
+	return FALSE
+
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
 	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
@@ -302,7 +331,7 @@
  * Tips that starts with the @ character won't be html encoded. That's necessary for any tip containing markup tags,
  * just make sure they don't also have html characters like <, > and ' which will be garbled.
  */
-/proc/send_tip_of_the_round(target, selected_tip)
+/proc/send_tip_of_the_round(target, selected_tip, source = "Tip of the round")
 	var/message
 	if(selected_tip)
 		message = selected_tip
@@ -320,4 +349,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>Tip of the round: </b>[message]</span>")))
+	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>[source]: </b>[message]</span>")))

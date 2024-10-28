@@ -345,7 +345,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight))
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight), override = TRUE)
 	handle_sight(mymob, mymob.sight, NONE)
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)

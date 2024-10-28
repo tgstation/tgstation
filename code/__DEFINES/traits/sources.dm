@@ -11,6 +11,7 @@
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define FLIGHTPOTION_TRAIT "flightpotion"
+#define SLIME_POTION_TRAIT "slime_potion"
 /// Trait inherited by experimental surgeries
 #define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
 #define DISEASE_TRAIT "disease"
@@ -231,6 +232,7 @@
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
+#define EYE_SCARRING_TRAIT "eye_scarring_trait"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -293,11 +295,12 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
-/// Trait when something was labelled by the /datum/element/tool_renaming element.
-#define RENAMING_TOOL_LABEL_TRAIT "renaming_tool_label"
 
 /// Trait when a drink was renamed by a shaker
 #define SHAKER_LABEL_TRAIT "shaker_trait"
+
+/// Trait given by a jetpack
+#define JETPACK_TRAIT "jetpack_trait"
 
 /// Trait added by style component
 #define STYLE_TRAIT "style"

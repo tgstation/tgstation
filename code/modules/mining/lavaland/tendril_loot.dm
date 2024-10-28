@@ -453,7 +453,7 @@
 	// but regardless block all relayed moves, because no, you cannot move in the void.
 	return
 
-/obj/effect/immortality_talisman/singularity_pull()
+/obj/effect/immortality_talisman/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/immortality_talisman/void
@@ -735,6 +735,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()

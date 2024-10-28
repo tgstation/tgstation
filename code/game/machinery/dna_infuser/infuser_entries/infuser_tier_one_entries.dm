@@ -105,3 +105,112 @@
 	infusion_desc = "kafkaesque" // Gregor Samsa !!
 	tier = DNA_MUTANT_TIER_ONE
 	status_effect_type = /datum/status_effect/organ_set_bonus/roach
+
+/datum/infuser_entry/fish
+	name = "Fish"
+	infuse_mob_name = "fish"
+	desc = "Aquatic life comes in several forms. A fisherman could tell you more about it, but that's beside the point. \
+		This infusion comes with many benefits and one potential major drawback being fish-mutated lungs, with \
+		additional organs depending on the traits of the fish used for the infusion."
+	threshold_desc = "While wet, you're slightly sturdier, immune to slips, and both slippery and faster while crawling. \
+		Drinking water and showers heal you, and it takes longer to dry out, however you're weaker when dry. \
+		Finally, you resist high pressures and are better at fishing. "
+	qualities = list(
+		"faster in water",
+		"resistant to food diseases",
+		"enjoy eating raw fish",
+		"flopping and waddling",
+		"fishing is easier",
+		"Need water. badly!",
+		"possibly more",
+	)
+	input_obj_or_mob = list(
+		/obj/item/fish,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/lungs/fish,
+		/obj/item/organ/internal/stomach/fish,
+		/obj/item/organ/external/tail/fish,
+	)
+	infusion_desc = "piscine"
+	tier = DNA_MUTANT_TIER_ONE
+	status_effect_type = /datum/status_effect/organ_set_bonus/fish
+
+/datum/infuser_entry/fish/get_output_organs(mob/living/carbon/human/target, obj/item/fish/infused_from)
+	if(!istype(infused_from))
+		return ..()
+
+	///Get a list of possible alternatives to the standard fish infusion. We prioritize special infusions over it.
+	var/list/possible_alt_infusions = list()
+	for(var/type in infused_from.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[type]
+		if(!trait.infusion_entry)
+			continue
+		var/datum/infuser_entry/entry = GLOB.infuser_entries[trait.infusion_entry]
+		for(var/organ in entry.output_organs)
+			if(!target.get_organ_by_type(organ))
+				possible_alt_infusions |= entry
+				break
+
+	if(length(possible_alt_infusions))
+		var/datum/infuser_entry/chosen = pick(possible_alt_infusions)
+		return chosen.get_output_organs(target, infused_from)
+
+	var/list/organs = ..()
+	if(infused_from.required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(infused_from, TRAIT_FISH_AMPHIBIOUS))
+		organs -= /obj/item/organ/internal/lungs/fish
+	return organs
+
+
+/datum/infuser_entry/squid
+	name = "Ink Production"
+	infuse_mob_name = "ink-producing sealife"
+	desc = "Some marine mollusks like cuttlefish, squids and octopus release ink when threatened as a smokescreen for their escape. \
+		This kind of infusion enhances the salivary glands, producing excessive quantities of ink which can later be spat to blind foes."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"spit ink to blind foes",
+	)
+	output_organs = list(
+		/obj/item/organ/internal/tongue/inky
+	)
+	tier = DNA_MUTANT_TIER_ONE
+
+/datum/infuser_entry/ttx_healing
+	name = "TTX healing"
+	infuse_mob_name = "Tetraodontiformes"
+	desc = "Fish of the Tetraodontiformes (pufferfish etc.) order are known for the highly poisonous tetrodotoxin (TTX) in their bodies. \
+		Extracting their DNA can provide a way to utilize it for healing instead. It also enables better alcohol metabolization."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"TTX healing",
+		"drink like a fish",
+	)
+	output_organs = list(
+		/obj/item/organ/internal/liver/fish
+	)
+	tier = DNA_MUTANT_TIER_ONE
+	unreachable_effect = TRUE
+	status_effect_type = /datum/status_effect/organ_set_bonus/fish
+
+/datum/infuser_entry/amphibious
+	name = "Amphibious"
+	infuse_mob_name = "Semi-aquatic critters"
+	desc = "Some animals breathe air, some breath water, a few can breath both, even if none (at least on Earth) can breathe in space."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"no need to breathe while wet",
+		"can beathe water vapor",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/frog,
+		/mob/living/basic/axolotl,
+		/mob/living/basic/crab,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/lungs/fish/amphibious,
+	)
+	infusion_desc = "semi-aquatic"
+	tier = DNA_MUTANT_TIER_ONE
+	unreachable_effect = TRUE
+	status_effect_type = /datum/status_effect/organ_set_bonus/fish

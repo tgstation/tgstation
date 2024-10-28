@@ -219,15 +219,15 @@
 			adjustStaminaLoss(35)
 			throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
 			log_combat(user, src, "shoved")
-			visible_message("<span class='danger'>[user] tackles [src] down!</span>", \
-							"<span class='userdanger'>[user] shoves you with great force!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, user)
-			to_chat(user, "<span class='danger'>You shove [src] with great force!</span>")
+			visible_message(span_danger("[user] tackles [src] down!"), \
+							span_userdanger("[user] shoves you with great force!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
+			to_chat(user, span_danger("You shove [src] with great force!"))
 		else
 			Paralyze(5 SECONDS)
 			playsound(loc, 'sound/items/weapons/punch3.ogg', 25, TRUE, -1)
-			visible_message("<span class='danger'>[user] slams [src] into the floor!</span>", \
-							"<span class='userdanger'>[user] slams you into the ground!</span>", "<span class='hear'>You hear something slam loudly onto the floor!</span>", null, user)
-			to_chat(user, "<span class='danger'>You slam [src] into the floor beneath you!</span>")
+			visible_message(span_danger("[user] slams [src] into the floor!"), \
+							span_userdanger("[user] slams you into the ground!"), span_hear("You hear something slam loudly onto the floor!"), null, user)
+			to_chat(user, span_danger("You slam [src] into the floor beneath you!"))
 			log_combat(user, src, "slammed into the ground")
 		return TRUE
 
@@ -521,8 +521,7 @@
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
 				set_facial_hairstyle("Shaved", update = FALSE)
-				set_hairstyle("Bald", update = FALSE)
-				update_body_parts()
+				set_hairstyle("Bald") //This calls update_body_parts()
 				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()
@@ -809,6 +808,6 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
 	burn_clothing(seconds_per_tick, fire_handler.stacks)
 	var/no_protection = FALSE
-	if(dna && dna.species)
-		no_protection = dna.species.handle_fire(src, seconds_per_tick, no_protection)
+	if (HAS_TRAIT(src, TRAIT_IGNORE_FIRE_PROTECTION))
+		no_protection = TRUE
 	fire_handler.harm_human(seconds_per_tick, no_protection)

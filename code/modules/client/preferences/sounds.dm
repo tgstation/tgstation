@@ -145,9 +145,17 @@
 	savefile_key = "sound_radio_noise"
 	savefile_identifier = PREFERENCE_PLAYER
 
+<<<<<<< HEAD
 	minimum = 0
 	maximum = 200
 
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_radio_noise/create_default_value()
 	return maximum/2
+=======
+/// Controls hearing AI VOX announcements
+/datum/preference/toggle/sound_ai_vox
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_ai_vox"
+	savefile_identifier = PREFERENCE_PLAYER
+>>>>>>> upstream/master

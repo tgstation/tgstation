@@ -32,7 +32,7 @@
 	if((width > 0) && (height > 0))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
-		M.Translate((width-1)/2 * world.icon_size, (height-1)/2 * world.icon_size)
+		M.Translate((width-1)/2 * ICON_SIZE_X, (height-1)/2 * ICON_SIZE_Y)
 		highlighted_background.transform = M
 		standard_background.transform = M
 		add_overlay(highlighted ? highlighted_background : standard_background)

@@ -50,16 +50,20 @@
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
 	var/sound
-	/// Used for the honk borg emote.
+	/// Does this emote vary in pitch?
 	var/vary = FALSE
+	/// If this emote's sound is affected by TTS pitch
+	var/affected_by_pitch = TRUE
 	/// Can only code call this event instead of the player.
 	var/only_forced_audio = FALSE
 	/// The cooldown between the uses of the emote.
 	var/cooldown = 0.8 SECONDS
 	/// Does this message have a message that can be modified by the user?
 	var/can_message_change = FALSE
-	/// How long is the cooldown on the audio of the emote, if it has one?
-	var/audio_cooldown = 2 SECONDS
+	/// How long is the shared emote cooldown triggered by this emote?
+	var/general_emote_audio_cooldown = 2 SECONDS
+	/// How long is the specific emote cooldown triggered by this emote?
+	var/specific_emote_audio_cooldown = 5 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
 
@@ -100,9 +104,13 @@
 	user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "audible_emote_cooldown"))
-		TIMER_COOLDOWN_START(user, "audible_emote_cooldown", audio_cooldown)
-		playsound(source = user,soundin = tmp_sound,vol = 50, vary = vary, ignore_walls = sound_wall_ignore)
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
+		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
+		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
+		var/frequency = null
+		if (affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
+			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(user.pitch)) * SIGN(user.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+		playsound(source = user,soundin = tmp_sound,vol = 50, vary = vary, ignore_walls = sound_wall_ignore, frequency = frequency)
 
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE
@@ -125,22 +133,22 @@
 					runechat_flags = EMOTE_MESSAGE,
 				)
 			else if(is_important)
-				to_chat(viewer, "<span class='emote'><b>[user]</b> [msg]</span>")
+				to_chat(viewer, span_emote("<b>[user]</b> [msg]"))
 			else if(is_audible && is_visual)
 				viewer.show_message(
-					"<span class='emote'><b>[user]</b> [msg]</span>", MSG_AUDIBLE,
-					"<span class='emote'>You see how <b>[user]</b> [msg]</span>", MSG_VISUAL,
+					span_emote("<b>[user]</b> [msg]"), MSG_AUDIBLE,
+					span_emote("You see how <b>[user]</b> [msg]"), MSG_VISUAL,
 				)
 			else if(is_audible)
-				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_AUDIBLE)
+				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_AUDIBLE)
 			else if(is_visual)
-				viewer.show_message("<span class='emote'><b>[user]</b> [msg]</span>", MSG_VISUAL)
+				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_VISUAL)
 		return // Early exit so no dchat message
 
 	// The emote has some important information, and should always be shown to the user
 	else if(is_important)
 		for(var/mob/viewer as anything in viewers(user))
-			to_chat(viewer, "<span class='emote'><b>[user]</b> [msg]</span>")
+			to_chat(viewer, span_emote("<b>[user]</b> [msg]"))
 			if(user.runechat_prefs_check(viewer, EMOTE_MESSAGE))
 				viewer.create_chat_message(
 					speaker = user,
@@ -152,7 +160,7 @@
 	else if(is_visual && is_audible)
 		user.audible_message(
 			message = msg,
-			deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>",
+			deaf_message = span_emote("You see how <b>[user]</b> [msg]"),
 			self_message = msg,
 			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
 		)
@@ -180,7 +188,7 @@
 				continue
 			if(!(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT))
 				continue
-			to_chat(ghost, "<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+			to_chat(ghost, span_emote("[FOLLOW_LINK(ghost, user)] [dchatmsg]"))
 
 	return
 
@@ -196,8 +204,13 @@
  * Returns FALSE if the cooldown is not over, TRUE if the cooldown is over.
  */
 /datum/emote/proc/check_cooldown(mob/user, intentional)
+
+	if(SEND_SIGNAL(user, COMSIG_MOB_EMOTE_COOLDOWN_CHECK, src.key, intentional) & COMPONENT_EMOTE_COOLDOWN_BYPASS)
+		intentional = FALSE
+
 	if(!intentional)
 		return TRUE
+
 	if(user.emotes_used && user.emotes_used[src] + cooldown > world.time)
 		var/datum/emote/default_emote = /datum/emote
 		if(cooldown > initial(default_emote.cooldown)) // only worry about longer-than-normal emotes

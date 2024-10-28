@@ -62,9 +62,9 @@
 			icon_state = "[boulder_string]_small"
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
 	if(istype(mover, /obj/item/boulder)) //This way, boulders can only go one at a time on conveyor belts, but everyone else can go through.
 		return FALSE
+	return ..()
 
 /obj/item/boulder/attack_self(mob/user, list/modifiers)
 	. = ..()

@@ -122,9 +122,9 @@
 	if(panel_open)
 		. += span_notice("[src]'s maintenance hatch is open!")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads:\n\
+		. += span_notice("The status display reads:\n\
 		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
-		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.</span>"
+		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.")
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)

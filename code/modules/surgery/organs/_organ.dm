@@ -46,6 +46,10 @@
 
 	/// Food reagents if the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	/// Foodtypes if the organ is edible
+	var/foodtype_flags = RAW | MEAT | GORE
+	/// Overrides tastes if the organ is edible
+	var/food_tastes
 	/// The size of the reagent container if the organ is edible
 	var/reagent_vol = 10
 
@@ -74,8 +78,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
-			foodtypes = RAW | MEAT | GORE,\
+			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
+			tastes = food_tastes,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
 	if(bodypart_overlay)
@@ -356,7 +361,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
-	return Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+	Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 
 /// Get all possible organ slots by checking every organ, and then store it and give it whenever needed

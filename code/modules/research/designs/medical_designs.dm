@@ -592,6 +592,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_connector
+	name = "CNS Skillchip Connector Implant"
+	desc = "This cybernetic adds a port to the back of your head, where you can remove or add skillchips at will."
+	id = "ci-connector"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 6 SECONDS
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*6,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT*3,
+	)
+	build_path = /obj/item/organ/internal/cyberimp/brain/connector
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."

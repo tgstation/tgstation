@@ -98,11 +98,13 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/tether,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/loader
@@ -208,13 +210,13 @@
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
 	)
 	default_pins = list(
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/cosmohonk
@@ -256,7 +258,7 @@
 		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
@@ -265,7 +267,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
 
@@ -279,7 +281,7 @@
 		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
@@ -287,14 +289,14 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
 
 /obj/item/mod/control/pre_equipped/nuclear/no_jetpack
 
 /obj/item/mod/control/pre_equipped/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
-	applied_modules -= list(/obj/item/mod/module/jetpack, /obj/item/mod/module/jump_jet)
+	applied_modules -= list(/obj/item/mod/module/jetpack/advanced, /obj/item/mod/module/jump_jet)
 	return ..()
 
 /obj/item/mod/control/pre_equipped/nuclear/plasmaman
@@ -316,7 +318,7 @@
 		/obj/item/mod/module/shock_absorber,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
@@ -324,7 +326,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
 
@@ -335,7 +337,7 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/thermal_regulator,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
@@ -344,7 +346,7 @@
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flamethrower,
 	)
@@ -440,13 +442,13 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/magnetic_harness,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
 
@@ -637,7 +639,7 @@
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/admin,
 		/obj/item/mod/module/shove_blocker,
 		/obj/item/mod/module/quick_cuff,
@@ -645,7 +647,7 @@
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/magboot/advanced,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/admin,
 	)
 

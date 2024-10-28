@@ -48,6 +48,7 @@
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
+	newtonian_force = 1.25
 
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
@@ -61,6 +62,7 @@
 	icon_state = "rod_sharp"
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar
+	newtonian_force = 1.5
 
 /obj/item/ammo_casing/rebar/syndie
 	name = "Jagged Iron Rod"
@@ -109,6 +111,7 @@
 	icon_state = "paperball"
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
+	newtonian_force = 0.5
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()

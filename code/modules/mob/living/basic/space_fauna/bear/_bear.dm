@@ -53,8 +53,6 @@
 		return FALSE
 
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
-	can_buckle = TRUE
-	buckle_lying = 0
 
 /mob/living/basic/bear/update_icons()
 	..()

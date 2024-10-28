@@ -58,17 +58,9 @@
 	var/mob/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.stat != CONSCIOUS)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
-	var/mob/living/basic/living_pawn = controller.pawn
-	living_pawn.set_combat_mode(FALSE)
-	living_pawn.melee_attack(target)
+	controller.ai_interact(target = target, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-	if(!succeeded)
-		return
-	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn)) // pawn can be null at this point
-		return
-	living_pawn.set_combat_mode(initial(living_pawn.combat_mode))
