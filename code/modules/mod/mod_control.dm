@@ -607,7 +607,7 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-	if(active && new_module.has_required_parts(mod_parts, need_extended = TRUE))
+	if(active && new_module.has_required_parts(mod_parts, need_active = TRUE))
 		new_module.on_part_activation()
 		new_module.part_activated = TRUE
 	if(user)
@@ -737,6 +737,7 @@
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(overslot != part_datum.overslotting)
 		return
+	UnregisterSignal(part, COMSIG_ATOM_EXITED)
 	part_datum.overslotting = null
 
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)

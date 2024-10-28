@@ -96,6 +96,7 @@
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
+		wearer.update_clothing(slot_flags)
 		if(!user)
 			return TRUE
 		wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
@@ -105,6 +106,10 @@
 		SEND_SIGNAL(src, COMSIG_MOD_PART_DEPLOYED, user, part)
 		return TRUE
 	else
+		if(part_datum.overslotting)
+			var/obj/item/overslot = part_datum.overslotting
+			if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+				wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")
@@ -123,11 +128,10 @@
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
 	if(part_datum.overslotting)
-		UnregisterSignal(part, COMSIG_ATOM_EXITED)
 		var/obj/item/overslot = part_datum.overslotting
 		if(!QDELING(wearer) && !wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
-		part_datum.overslotting = null
+	wearer.update_clothing(slot_flags)
 	SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTED, user, part)
 	if(!user)
 		return TRUE
@@ -262,13 +266,13 @@
 		return
 	if(is_sealed)
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(module.part_activated || !module.has_required_parts(mod_parts, need_extended = TRUE))
+			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
 			module.on_part_activation()
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.part_activated || module.has_required_parts(mod_parts, need_extended = TRUE))
+			if(!module.part_activated || module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
 			module.on_part_deactivation()
 			module.part_activated = FALSE
@@ -283,13 +287,13 @@
 	active = is_on
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(module.part_activated || !module.has_required_parts(mod_parts, need_extended = TRUE))
+			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
 			module.on_part_activation()
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.part_activated || module.has_required_parts(mod_parts, need_extended = TRUE))
+			if(!module.part_activated || module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
 			module.on_part_deactivation()
 			module.part_activated = FALSE

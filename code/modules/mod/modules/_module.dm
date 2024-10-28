@@ -83,14 +83,14 @@
 		. += span_notice("Complexity level: [complexity]")
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
-/obj/item/mod/module/proc/has_required_parts(list/parts, need_extended = FALSE)
+/obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)
 	if(!length(required_slots))
 		return TRUE
 	var/total_slot_flags = NONE
 	for(var/part_slot in parts)
-		if(need_extended)
+		if(need_active)
 			var/datum/mod_part/part_datum = parts[part_slot]
-			if(part_datum.part_item.loc == mod)
+			if(!part_datum.sealed)
 				continue
 		total_slot_flags |= text2num(part_slot)
 	var/list/needed_slots = required_slots.Copy()
@@ -114,7 +114,7 @@
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
-	if(!has_required_parts(mod.mod_parts, need_extended = TRUE))
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE))
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "required parts inactive!")
 			var/list/slot_strings = list()
@@ -343,7 +343,7 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
-	if(!mod.active || !has_required_parts(mod.mod_parts, need_extended = TRUE))
+	if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
 		return
 	var/used_overlay = get_current_overlay_state()
 	if (!used_overlay)
