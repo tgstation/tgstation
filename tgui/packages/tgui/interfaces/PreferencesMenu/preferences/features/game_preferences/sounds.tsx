@@ -66,8 +66,8 @@ export const sound_tts_volume: Feature<number> = {
   component: FeatureSliderInput,
 };
 
-export const sound_menu_ui_sounds: Feature<number> = {
-  name: 'UI Volume',
+export const sound_menu_ui_buttons: Feature<number> = {
+  name: 'UI buttons Volume',
   category: 'SOUND',
   description: 'The volume that the buttons in the menu will play at.',
   component: FeatureSliderInput,
