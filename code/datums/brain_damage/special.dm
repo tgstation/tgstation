@@ -669,9 +669,9 @@
 			to_chat(owner, span_nicegreen("Ah! Back where it belongs!"))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "smile")
-		else
-			to_chat(owner, span_warning("Leaving it outside of command? Am I sure about that?"))
-			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
+			return
+		to_chat(owner, span_warning("Leaving it outside of command? Am I sure about that?"))
+		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
 	to_chat(owner, span_warning("Should I really leave it here?"))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
