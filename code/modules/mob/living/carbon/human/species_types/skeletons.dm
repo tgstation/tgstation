@@ -31,7 +31,7 @@
 	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
 	//They can technically be in an ERT
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	species_language_holder = /datum/language_holder/skeleton
 

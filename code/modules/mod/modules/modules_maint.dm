@@ -14,12 +14,13 @@
 	var/static/list/gas_connections = list(
 		COMSIG_TURF_EXPOSE = PROC_REF(on_wearer_exposed_gas),
 	)
+	var/step_change = 0.5
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.5
+	mod.activation_step_time *= step_change
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 2
+	mod.activation_step_time /= step_change
 
 /obj/item/mod/module/springlock/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))

@@ -59,3 +59,4 @@
 	cold_protection = FEET|LEGS
 	item_flags = IGNORE_DIGITIGRADE | IMMUTABLE_SLOW
 	can_be_tied = FALSE
+	equip_sound = null

@@ -486,7 +486,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
-		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+		if(HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 			return
 	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return

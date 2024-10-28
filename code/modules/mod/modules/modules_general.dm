@@ -694,8 +694,6 @@
 	required_slots = list(ITEM_SLOT_HEAD)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
-	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
-	var/obj/item/clothing/head/attached_hat
 	/// Original cover flags for the MOD helmet, before a hat is placed
 	var/former_flags
 	var/former_visor_flags

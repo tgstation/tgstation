@@ -285,9 +285,9 @@
 /obj/item/organ/internal/eyes/on_mob_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	if (scarring)
-		owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
-		owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
-		owner.cure_blind(EYE_SCARRING_TRAIT)
+		eye_owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
+		eye_owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
+		eye_owner.cure_blind(EYE_SCARRING_TRAIT)
 
 #undef OFFSET_X
 #undef OFFSET_Y
