@@ -523,8 +523,8 @@
 		pkc.projectile_icon = retool_projectile_icon
 		if(iscarbon(pkc.loc))
 			var/mob/living/carbon/holder = pkc.loc
-			holder.update_held_items()
-			holder.update_worn_back()
+			holder.update_held_items();
+			holder.update_worn_back();
 			holder.update_suit_storage()
 		pkc.update_appearance()
 
@@ -534,8 +534,8 @@
 	pkc.projectile_icon = initial(pkc.projectile_icon)
 	if(iscarbon(pkc.loc))
 		var/mob/living/carbon/holder = pkc.loc
-		holder.update_held_items()
-		holder.update_worn_back()
+		holder.update_held_items();
+		holder.update_worn_back();
 		holder.update_suit_storage()
 	pkc.update_appearance()
 	..()
