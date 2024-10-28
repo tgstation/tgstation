@@ -1,2 +1,2 @@
-menu sounds made by sadboysuss
+ui sounds made by sadboysuss
 license: CC-BY-SA

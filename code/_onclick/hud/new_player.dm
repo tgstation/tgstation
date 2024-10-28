@@ -138,7 +138,9 @@
 		return
 	flick("[base_icon_state]_pressed", src)
 	if(select_sound_play)
-		SEND_SOUND(hud.mymob, 'sound/misc/menu/select.ogg')
+		var/sound/ui_select_sound = sound('sound/misc/menu/ui_select1.ogg')
+		ui_select_sound.frequency = get_rand_frequency_low_range()
+		SEND_SOUND(hud.mymob, ui_select_sound)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
@@ -576,12 +578,15 @@
 	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
 	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	SEND_SOUND(hud.mymob, 'sound/misc/menu/menu_rollup1.ogg')
 
 ///Extends the button back to its usual spot
 ///Sends a signal on the hud for the menu hud elements to listen to
 /atom/movable/screen/lobby/button/collapse/proc/expand_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_EXPANDED)
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	SEND_SOUND(hud.mymob, 'sound/misc/menu/menu_rolldown1.ogg')
+
 
 /atom/movable/screen/lobby/shutter
 	icon = 'icons/hud/lobby/shutter.dmi'
