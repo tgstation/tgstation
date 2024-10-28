@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Fixes a runtime when trying to remove someones scarred eyes. Now you can remove them!"

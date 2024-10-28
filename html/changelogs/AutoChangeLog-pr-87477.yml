@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Randomly generated female bodies/humans no longer have a 50% to get a male name"
