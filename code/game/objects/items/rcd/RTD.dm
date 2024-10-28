@@ -427,7 +427,7 @@
 	. = borgy.cell.use(amount * energyfactor)
 	if(!.)
 		balloon_alert(user, "insufficient charge!")
-	return .
+
 /obj/item/construction/rtd/borg/checkResource(amount, mob/user)
 	if(!iscyborg(user))
 		return 0
