@@ -841,3 +841,27 @@
   tontyGH:
   - bugfix: pointing at stuff on-top of plates, griddles, stoves and ovens will point
       at the plate and no longer just do nothing
+2024-10-28:
+  DATA-xPUNGED:
+  - bugfix: The parrot from the Corsair Cove will no longer be immediatelly shanked
+      by the pirates upon loading of the domain.
+  Pepsilawn:
+  - bugfix: You will now receive the advertised amount of credits for selling spacecash
+      bills through cargo
+  SmArtKar:
+  - bugfix: Fixed deathsquad commandos not getting their berets
+  - bugfix: Changelings no longer have a soul when examined if their brain is missing
+  - bugfix: MODules don't create visual overlays when their required part isn't deployed
+  Time-Green:
+  - bugfix: Randomly generated female bodies/humans no longer have a 50% to get a
+      male name
+  carlarctg:
+  - rscadd: adds big pointer to chipped quirk
+  grungussuss:
+  - bugfix: signers can sign past muzzles
+  - sound: bags now have handling and equip sounds
+  - sound: shoes have handling and equip sounds
+  - bugfix: it is now possible to succumb without speaking
+  necromanceranne:
+  - bugfix: Fixes a runtime when trying to remove someones scarred eyes. Now you can
+      remove them!
