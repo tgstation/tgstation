@@ -401,6 +401,7 @@
 	var/energyfactor = 0.03 * STANDARD_CELL_CHARGE
 	var/delay = 0
 	ranged = FALSE
+	
 /obj/item/construction/rtd/borg/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!(interacting_with in view(1, get_turf(user))))
 		return NONE
