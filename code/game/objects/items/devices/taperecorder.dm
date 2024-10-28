@@ -20,7 +20,6 @@
 	var/playsleepseconds = 0
 	var/obj/item/tape/mytape
 	var/starting_tape_type = /obj/item/tape/random
-	var/open_panel = FALSE
 	var/canprint = TRUE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_taperecorder.dmi'
@@ -58,7 +57,7 @@
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
+		. += span_notice("The display reads:")
 		. += "[readout()]"
 
 /obj/item/taperecorder/click_alt(mob/user)

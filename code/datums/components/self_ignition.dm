@@ -30,6 +30,9 @@
 /datum/component/self_ignition/proc/on_life(mob/living/carbon/human/owner, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
+	if (HAS_TRAIT(owner, TRAIT_STASIS))
+		return
+
 	if (owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
 		if (!owner.on_fire)
 			REMOVE_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, REF(parent))

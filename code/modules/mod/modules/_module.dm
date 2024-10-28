@@ -45,6 +45,8 @@
 	var/allow_flags = NONE
 	/// A list of slots required in the suit to work. Formatted like list(x|y, z, ...) where either x or y are required and z is required.
 	var/list/required_slots = list()
+	/// If TRUE worn overlay will be masked with the suit, preventing any bits from poking out of its controur
+	var/mask_worn_overlay = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -107,6 +109,16 @@
 	if(((!mod.active || mod.activating) && !(allow_flags & MODULE_ALLOW_INACTIVE)) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
+		return
+	if(!has_required_parts(mod.mod_parts, need_extended = TRUE))
+		if(mod.wearer)
+			balloon_alert(mod.wearer, "required parts inactive!")
+			var/list/slot_strings = list()
+			for(var/slot in required_slots)
+				var/list/slot_list = parse_slot_flags(slot)
+				slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
+			to_chat(mod.wearer, span_warning("[src] requires these slots to be deployed: [english_list(slot_strings)]"))
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -325,21 +337,46 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
-	if(!mod.active)
+	if(!mod.active || !has_required_parts(mod.mod_parts, need_extended = TRUE))
 		return
-	var/used_overlay
-	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
-		used_overlay = overlay_state_use
-	else if(overlay_state_active && active)
-		used_overlay = overlay_state_active
-	else if(overlay_state_inactive)
-		used_overlay = overlay_state_inactive
+	var/used_overlay = get_current_overlay_state()
+	if (!used_overlay)
+		return
+	var/mutable_appearance/module_icon
+	if(mask_worn_overlay)
+		module_icon = mutable_appearance(get_module_icon_cache(used_overlay), layer = standing.layer + 0.1)
 	else
-		return
-	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+		module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
 	if(!use_mod_colors)
 		module_icon.appearance_flags |= RESET_COLOR
+
 	. += module_icon
+	SEND_SIGNAL(src, COMSIG_MODULE_GENERATE_WORN_OVERLAY, ., standing)
+
+/obj/item/mod/module/proc/get_current_overlay_state()
+	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
+		return overlay_state_use
+	if(overlay_state_active && active)
+		return overlay_state_active
+	if(overlay_state_inactive)
+		return overlay_state_inactive
+	return null
+
+/obj/item/mod/module/proc/get_module_icon_cache(used_overlay)
+	var/covered_slots = mod.get_sealed_slots(mod.get_parts(all = TRUE))
+	if (GLOB.mod_module_overlays[mod.skin])
+		if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"])
+			if (GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay])
+				return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
+		else
+			GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
+	else
+		GLOB.mod_module_overlays[mod.skin] = list()
+		GLOB.mod_module_overlays[mod.skin]["[covered_slots]"] = list()
+	var/icon/mod_mask = icon(mod.generate_suit_mask())
+	mod_mask.Blend(icon(overlay_icon_file, used_overlay), ICON_MULTIPLY)
+	GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay] = mod_mask
+	return GLOB.mod_module_overlays[mod.skin]["[covered_slots]"][used_overlay]
 
 /// Updates the signal used by active modules to be activated
 /obj/item/mod/module/proc/update_signal(value)

@@ -47,8 +47,6 @@
 	// Valid organ successfully picked.
 	new_organ = new new_organ()
 	new_organ.replace_into(src)
-	//make sure bodypart overlays are correctly displayed.
-	update_body_parts()
 	return TRUE
 
 /// Picks a random mutated organ from the given infuser entry which is also compatible with this human.
@@ -57,10 +55,10 @@
 ///   - or the new organ must be external.
 /// 2. Target's pre-existing organ must be organic / not robotic.
 /// 3. Target must not have the same/identical organ.
-/mob/living/carbon/human/proc/pick_infusion_organ(datum/infuser_entry/entry)
+/mob/living/carbon/human/proc/pick_infusion_organ(datum/infuser_entry/entry, atom/movable/infused_from)
 	if(!entry)
 		return FALSE
-	var/list/obj/item/organ/potential_new_organs = entry.output_organs.Copy()
+	var/list/obj/item/organ/potential_new_organs = entry.get_output_organs(src, infused_from)
 	// Remove organ typepaths from the list if they're incompatible with target.
 	for(var/obj/item/organ/new_organ as anything in entry.output_organs)
 		var/obj/item/organ/old_organ = get_organ_slot(initial(new_organ.slot))

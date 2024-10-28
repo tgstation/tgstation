@@ -97,6 +97,7 @@
 		/obj/item/clothing/shoes/wheelys/skishoes = 4,
 		/obj/item/instrument/musicalmoth = 1,
 		/obj/item/gun/ballistic/revolver/russian = 1, //the most dangerous game
+		/obj/item/skillchip/acrobatics = 1,
 	)
 	premium = list(
 		/obj/item/disk/holodisk = 5,
