@@ -69,12 +69,13 @@
 		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
 		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
 		return
-	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
+	//. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
+	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, src.color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	var/working_layer = FLOAT_LAYER - HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? 1 : 0.01
 	var/mutable_appearance/muta = mutable_appearance('icons/obj/pipes_n_cables/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = working_layer, appearance_flags = RESET_COLOR)
-	muta.color = p_color
+	muta.color = src.color
 	return muta
 
 /obj/machinery/atmospherics/pipe/layer_manifold/set_init_directions()
