@@ -65,14 +65,14 @@
 /**
  * PALM TREES
  */
-/obj/structure/flora/tree/palm/style_3
+/obj/structure/flora/tree/palm/doppler
 	icon = 'modular_doppler/objects_and_structures/icons/trees/palm.dmi'
 	icon_state = "palm_3"
 	pixel_x = -48
 	pixel_y = -16
 	// Need coconuts
 
-/obj/structure/flora/tree/palm/style_random/Initialize(mapload)
+/obj/structure/flora/tree/palm/doppler/style_random/Initialize(mapload)
 	. = ..()
 	icon_state = "palm[rand(1,3)]"
 	update_appearance()
