@@ -416,6 +416,7 @@
 		return 0
 	max_matter = borgy.cell.maxcharge
 	return borgy.cell.charge
+
 /obj/item/construction/rtd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
 		return 0
