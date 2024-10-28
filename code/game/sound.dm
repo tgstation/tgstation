@@ -201,11 +201,11 @@
 	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
-///get a random frequency: Ranges from 32000 to 55000
+///get a random frequency.
 /proc/get_rand_frequency()
 	return rand(32000, 55000)
 
-///get_rand_frequency but lower range: From 38000 to 45000
+///get_rand_frequency but lower range.
 /proc/get_rand_frequency_low_range()
 	return rand(38000, 45000)
 
