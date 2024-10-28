@@ -29,10 +29,10 @@
 	if (spin_cylinder)
 		chambered = magazine.get_round()
 	else
-		chambered = stored_ammo[1]
+		chambered = magazine.stored_ammo[1]
 		if (ispath(chambered))
 			chambered = new chambered(src)
-			stored_ammo[1] = chambered
+			magazine.stored_ammo[1] = chambered
 	if(chambered)
 		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 
