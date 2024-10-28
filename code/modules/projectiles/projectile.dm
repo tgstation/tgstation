@@ -817,11 +817,11 @@
 		store_hitscan_collision(point_cache)
 	return TRUE
 
-/obj/projectile/proc/firer_deleted()
+/obj/projectile/proc/firer_deleted(datum/source)
 	SIGNAL_HANDLER
 	firer = null
 
-/obj/projectile/proc/original_deleted()
+/obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
 	original = null
 
