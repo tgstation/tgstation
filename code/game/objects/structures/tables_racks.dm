@@ -226,6 +226,9 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/table/analyzer_act(mob/living/user, obj/item/analyzer/tool, list/modifiers)
+	return table_place_act(user, tool, modifiers)
+
 // This extends base item interaction because tables default to blocking 99% of interactions
 /obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()

@@ -104,19 +104,19 @@
 
 	switch(tool_type)
 		if(TOOL_CROWBAR)
-			act_result = is_left_clicking ? crowbar_act(user, tool) : crowbar_act_secondary(user, tool)
+			act_result = is_left_clicking ? crowbar_act(user, tool, modifiers) : crowbar_act_secondary(user, tool, modifiers)
 		if(TOOL_MULTITOOL)
-			act_result = is_left_clicking ? multitool_act(user, tool) : multitool_act_secondary(user, tool)
+			act_result = is_left_clicking ? multitool_act(user, tool, modifiers) : multitool_act_secondary(user, tool, modifiers)
 		if(TOOL_SCREWDRIVER)
-			act_result = is_left_clicking ? screwdriver_act(user, tool) : screwdriver_act_secondary(user, tool)
+			act_result = is_left_clicking ? screwdriver_act(user, tool, modifiers) : screwdriver_act_secondary(user, tool, modifiers)
 		if(TOOL_WRENCH)
-			act_result = is_left_clicking ? wrench_act(user, tool) : wrench_act_secondary(user, tool)
+			act_result = is_left_clicking ? wrench_act(user, tool, modifiers) : wrench_act_secondary(user, tool, modifiers)
 		if(TOOL_WIRECUTTER)
-			act_result = is_left_clicking ? wirecutter_act(user, tool) : wirecutter_act_secondary(user, tool)
+			act_result = is_left_clicking ? wirecutter_act(user, tool, modifiers) : wirecutter_act_secondary(user, tool, modifiers)
 		if(TOOL_WELDER)
-			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
+			act_result = is_left_clicking ? welder_act(user, tool, modifiers) : welder_act_secondary(user, tool, modifiers)
 		if(TOOL_ANALYZER)
-			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+			act_result = is_left_clicking ? analyzer_act(user, tool, modifiers) : analyzer_act_secondary(user, tool, modifiers)
 
 	if(!act_result)
 		return NONE
@@ -269,57 +269,57 @@
  */
 
 /// Called on an object when a tool with crowbar capabilities is used to left click an object
-/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with crowbar capabilities is used to right click an object
-/atom/proc/crowbar_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/crowbar_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with multitool capabilities is used to left click an object
-/atom/proc/multitool_act(mob/living/user, obj/item/tool)
+/atom/proc/multitool_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with multitool capabilities is used to right click an object
-/atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with screwdriver capabilities is used to left click an object
-/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
+/atom/proc/screwdriver_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with screwdriver capabilities is used to right click an object
-/atom/proc/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/screwdriver_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with wrench capabilities is used to left click an object
-/atom/proc/wrench_act(mob/living/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with wrench capabilities is used to right click an object
-/atom/proc/wrench_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/wrench_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with wirecutter capabilities is used to left click an object
-/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with wirecutter capabilities is used to right click an object
-/atom/proc/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/wirecutter_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with welder capabilities is used to left click an object
-/atom/proc/welder_act(mob/living/user, obj/item/tool)
+/atom/proc/welder_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with welder capabilities is used to right click an object
-/atom/proc/welder_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/welder_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with analyzer capabilities is used to left click an object
-/atom/proc/analyzer_act(mob/living/user, obj/item/tool)
+/atom/proc/analyzer_act(mob/living/user, obj/item/tool, list/modifiers)
 	return
 
 /// Called on an object when a tool with analyzer capabilities is used to right click an object
-/atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
+/atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	return
