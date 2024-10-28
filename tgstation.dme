@@ -7053,6 +7053,7 @@
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\gun_company_additions.dm"
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\manufacturer_element.dm"
 #include "modular_doppler\obj_flags_doppler\code\objs.dm"
+#include "modular_doppler\objects_and_structures\code\flora.dm"
 #include "modular_doppler\objects_and_structures\code\icemoon_tiles.dm"
 #include "modular_doppler\objects_and_structures\code\mannequin.dm"
 #include "modular_doppler\objects_and_structures\code\sauna_oven.dm"
