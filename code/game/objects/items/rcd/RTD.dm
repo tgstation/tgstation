@@ -438,7 +438,6 @@
 	. = borgy.cell.charge >= (amount * energyfactor)
 	if(!.)
 		balloon_alert(user, "insufficient charge!")
-	return .
 
 /obj/item/construction/rtd/admin
 	name = "admin RTD"
