@@ -524,6 +524,8 @@
 		if(iscarbon(pkc.loc))
 			var/mob/living/carbon/holder = pkc.loc
 			holder.update_held_items()
+			holder.update_worn_back()
+			holder.update_suit_storage()
 		pkc.update_appearance()
 
 /obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
@@ -533,6 +535,8 @@
 	if(iscarbon(pkc.loc))
 		var/mob/living/carbon/holder = pkc.loc
 		holder.update_held_items()
+		holder.update_worn_back()
+		holder.update_suit_storage()
 	pkc.update_appearance()
 	..()
 
