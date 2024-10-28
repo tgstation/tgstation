@@ -393,12 +393,12 @@ function handle_pr($payload) {
 
 	$repo_name = $payload['repository']['name'];
 
-	if (in_array($repo_name, $game_announce_whitelist)) {
-		game_announce($action, $payload, $pr_flags);
-	}
-
 	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
 		discord_announce($action, $payload, $pr_flags);
+	}
+	
+	if (in_array($repo_name, $game_announce_whitelist)) {
+		game_announce($action, $payload, $pr_flags);
 	}
 }
 
@@ -488,10 +488,15 @@ function game_announce($action, $payload, $pr_flags) {
 	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($game_payload));
 
 	foreach ($game_servers as $serverid => $server) {
-		$server_message = $msg;
-		if (isset($server['comskey']))
-			$server_message .= '&key='.urlencode($server['comskey']);
-		game_server_send($server['address'], $server['port'], $server_message);
+		try {
+			$server_message = $msg;
+			if (isset($server['comskey']))
+				$server_message .= '&key='.urlencode($server['comskey']);
+			game_server_send($server['address'], $server['port'], $server_message);
+		} catch (exception $e) {
+			log_error('Error on line ' . $e->getLine() . ': ' . $e->getMessage());
+			continue;
+		}
 	}
 
 }

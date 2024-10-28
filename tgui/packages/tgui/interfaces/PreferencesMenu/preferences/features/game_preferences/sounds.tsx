@@ -115,3 +115,11 @@ export const sound_radio_noise: Feature<number> = {
   description: `Volume of talking and hearing radio chatter sounds.`,
   component: FeatureSliderInput,
 };
+
+export const sound_ai_vox: FeatureToggle = {
+  name: 'Enable AI VOX announcements',
+  category: 'SOUND',
+  description:
+    'When enabled, hear vocal AI announcements (also known as "VOX").',
+  component: CheckboxInput,
+};

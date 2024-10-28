@@ -37,6 +37,7 @@ const icons = {
   soundadd: { icon: 'tg-sound-plus', color: 'green' },
   sounddel: { icon: 'tg-sound-minus', color: 'red' },
   spellcheck: { icon: 'spell-check', color: 'green' },
+  map: { icon: 'map', color: 'green' },
   tgs: { icon: 'toolbox', color: 'purple' },
   tweak: { icon: 'wrench', color: 'green' },
   unknown: { icon: 'info-circle', color: 'label' },
