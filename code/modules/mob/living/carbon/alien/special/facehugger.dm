@@ -316,6 +316,7 @@
 	sterile = TRUE
 	tint = 3 //Makes it feel more authentic when it latches on
 	slowdown = 0
+	integrity_failure = 0
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
