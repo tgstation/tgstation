@@ -55635,7 +55635,9 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tIU" = (
-/obj/machinery/door/airlock/maintenance/glass,
+/obj/machinery/door/airlock/maintenance/glass{
+	name = "maintenance access"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
