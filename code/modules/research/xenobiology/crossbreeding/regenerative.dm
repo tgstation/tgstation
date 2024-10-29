@@ -154,6 +154,8 @@ Regenerative extracts:
 		old_location.visible_message(span_warning("[target] disappears in a shower of sparks!"))
 		to_chat(target, span_danger("The milky goo teleports you somewhere it remembers!"))
 
+	if(ismegafauna(target))  //They already have TRAIT_NO_TELEPORT but a chat warning won't hurt
+		old_location.visible_message(span_warning("[target] distorts briefly, but is prevented from teleporting!"))
 
 /obj/item/slimecross/regenerative/bluespace/Initialize(mapload)
 	. = ..()
