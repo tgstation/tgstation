@@ -155,9 +155,6 @@
 						return TRUE
 					active_program.kill_program(usr)
 					open_program(usr, our_chat_client)
-					// If we're already in the common chat, open it.
-					if((our_chat_client in SSmodular_computers.common_chat.active_clients) || (our_chat_client in SSmodular_computers.common_chat.offline_clients))
-						our_chat_client.active_channel = SSmodular_computers.common_chat.id
 
 			// DOPPLER EDIT ADDITION END - NTNRC_FOR_ALL
 			return TRUE

@@ -16,4 +16,3 @@
 	our_chat_client.username = default_username
 	SSmodular_computers.common_chat.add_client(our_chat_client)
 	open_program(null, our_chat_client, FALSE)
-	our_chat_client.active_channel = SSmodular_computers.common_chat.id
