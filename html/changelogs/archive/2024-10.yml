@@ -865,3 +865,18 @@
   necromanceranne:
   - bugfix: Fixes a runtime when trying to remove someones scarred eyes. Now you can
       remove them!
+2024-10-29:
+  Aliceee2ch:
+  - qol: replaced old engineer borg "tile stacker" on crippled RTD
+  Fikou:
+  - rscadd: The Bridge Assistant's no item wielding disability was replaced with a
+      duty-sworn axe protection brain trauma.
+  - balance: you need something spaceproof to cover your legs (or feet) and arms (or
+      hands) to be spaceproof, not only head and chest
+  - balance: magboots and atmos gloves now have pressure protection
+  Ghommie:
+  - bugfix: Throw impact sounds won't play if the item has been caught.
+  Jackal-boop:
+  - bugfix: fixes the toy larva hugger getting shredded
+  r3dj4ck0424:
+  - bugfix: certain office chairs are now properly labelled
