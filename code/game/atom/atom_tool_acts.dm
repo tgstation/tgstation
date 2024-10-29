@@ -269,7 +269,7 @@
  */
 
 /// Called on an object when a tool with crowbar capabilities is used to left click an object
-/atom/proc/crowbar_act(mob/living/user, obj/item/tool, list/modifiers)
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with crowbar capabilities is used to right click an object
