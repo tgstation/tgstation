@@ -322,6 +322,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	COOLDOWN_DECLARE(cuff_cd)
 
 /obj/item/melee/baton/abductor/examine(mob/user)
+	. = ..()
 	if(!AbductorCheck(user))
 		return
 	if(COOLDOWN_FINISHED(src, sleep_cd))
@@ -416,7 +417,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(COOLDOWN_FINISHED(src, sleep_cd))
+	if(!COOLDOWN_FINISHED(src, sleep_cd))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, sleep_cd))
 		to_chat(user, span_warning("The sleep inducement needs time to recharge! It will be ready again in [timeleft]."))
 		return
@@ -446,7 +447,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
 	if(!iscarbon(victim))
 		return
-	if(COOLDOWN_FINISHED(src, cuff_cd))
+	if(!COOLDOWN_FINISHED(src, cuff_cd))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, cuff_cd))
 		to_chat(user, span_warning("The hard-light restraint synthesizer needs time to recharge! It will be ready again in [timeleft]."))
 		return
