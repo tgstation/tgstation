@@ -302,9 +302,11 @@
 		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-	if(!build_delay(user, delay, target = floor) || !checkResource(selected_design.cost, user))
+	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
+		return ITEM_INTERACT_BLOCKING
+	if(!checkResource(selected_design.cost * 0.7, user))
 		return ITEM_INTERACT_BLOCKING
 
 	//do the tilling
@@ -370,9 +372,11 @@
 		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-	if(!do_after(user, delay, target = floor) || !checkResource(cost * 0.7, user))
+	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
+		return ITEM_INTERACT_BLOCKING
+	if(!checkResource(cost * 0.7, user))
 		return ITEM_INTERACT_BLOCKING
 
 	//begin deconstruction
