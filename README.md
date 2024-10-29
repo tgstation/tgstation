@@ -3,16 +3,15 @@
 [![Build Status](https://github.com/Huz2e/massmeta/workflows/CI%20Suite/badge.svg)](https://github.com/Huz2e/massmeta/actions?query=workflow%3A%22CI+Suite%22)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/Huz2e/massmeta.svg)](https://isitmaintained.com/project/Huz2e/massmeta "Percentage of issues still open")
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/Huz2e/massmeta.svg)](https://isitmaintained.com/project/Huz2e/massmeta "Average time to resolve an issue")
-![Coverage](https://img.shields.io/badge/coverage---4%25-red.svg)
 
 [![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
 | Website                   | Link                                                                      |
 |---------------------------|---------------------------------------------------------------------------|
 | MassMeta Code             | [https://github.com/Huz2e/massmeta](https://github.com/Huz2e/massmeta)    |
-| Guide to Modularization   | [./massmeta/modularization_guide.md](./massmeta/modularization_guide.md)  |
-| MassMeta Discord          | [https://discord.gg/massmeta](https://discord.gg/KBsjSv7Kh9)              |
-| MassMeta Wiki             | [https://massmeta.ru](https://massmeta.ru/w/index.php/Заглавная_страница) |
+| Guide to Modularization   | [./modular_meta/modularization_guide_ru.md](./massmeta/modularization_guide.md)  |
+| MassMeta Discord          | [https://discord.gg/massmeta](https://discord.gg/Pp7SpQgvNt)              |
+| MassMeta Wiki             | [https://massmeta.ru](https://massmeta.ru/index.php/Заглавная_страница) |
 | /TG/ Website              | [https://www.tgstation13.org](https://www.tgstation13.org)                |
 | /TG/ Codedocs             | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)    |
 | /TG/ Coderbus Discord     | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)                  |
@@ -22,8 +21,6 @@ This is MassMeta downstream fork of /tg/station SpaceStation 13.
 **This is Kvass-Based repository, mmmmmm Kvass.**
 
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
-
-*All github inquiries (such as moderation actions) may be handled via the /tg/station discord [#coding-general](https://discord.com/channels/326822144233439242/326831214667235328). Simply ping the `@Maintainer` role, following the guide on asking questions located in the channel description, with your issue!*
 
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
@@ -44,6 +41,8 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 
 ## Contributors
 [Guides for Contributors](.github/CONTRIBUTING.md)
+
+**Если вы хотите, чтобы ваша фича попала в репозиторий на показ игрокам, то велком в `#Code-chat` в [нашем Дискорде](https://discord.gg/Pp7SpQgvNt).**
 
 [/tg/station HACKMD account (BLOCKED in RU)](https://hackmd.io/@tgstation) - Design documentation here
 
