@@ -259,7 +259,8 @@
 
 	var/floor_designs = GLOB.floor_designs
 	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
-		user.Beam(floor, icon_state = "light_beam", time = 5)
+		if(ranged)
+			user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])
 				for(var/list/design_info in floor_designs[main_root][sub_category])
