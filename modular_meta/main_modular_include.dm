@@ -10,6 +10,11 @@
 #endif
 
 /// PEREVODY
-
+#ifdef RU_CRAYONS
+	#include "perevody\ru_crayons\includes.dm"
+#endif
+#ifdef RU_VENDORS
+	#include "perevody\ru_vendors\includes.dm"
+#endif
 
 /// REVERTS

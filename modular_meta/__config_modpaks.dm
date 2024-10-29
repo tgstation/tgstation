@@ -10,5 +10,7 @@
 
 /// PEREVODY
 
+#define RU_CRAYONS
+#define RU_VENDORS
 
 /// REVERTS
