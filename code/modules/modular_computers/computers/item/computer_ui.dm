@@ -139,6 +139,27 @@
 			//you can't close apps in emergency mode.
 			if(isnull(internal_cell) || internal_cell.charge)
 				active_program.kill_program(usr)
+			// DOPPLER EDIT ADDITION START - NTNRC_FOR_ALL
+			else // Slightly cursed code to let you swap between the chat client or messenger instead
+
+				if(istype(active_program, /datum/computer_file/program/chatclient))
+					var/datum/computer_file/program/messenger/our_messenger = locate() in stored_files
+					if(isnull(our_messenger))
+						return TRUE
+					active_program.kill_program(usr)
+					open_program(usr, our_messenger)
+
+				else if(istype(active_program, /datum/computer_file/program/messenger))
+					var/datum/computer_file/program/chatclient/our_chat_client = locate() in stored_files
+					if(isnull(our_chat_client))
+						return TRUE
+					active_program.kill_program(usr)
+					open_program(usr, our_chat_client)
+					// If we're already in the common chat, open it.
+					if((our_chat_client in SSmodular_computers.common_chat.active_clients) || (our_chat_client in SSmodular_computers.common_chat.offline_clients))
+						our_chat_client.active_channel = SSmodular_computers.common_chat.id
+
+			// DOPPLER EDIT ADDITION END - NTNRC_FOR_ALL
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()

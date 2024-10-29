@@ -9,6 +9,7 @@ Implements a general NTNRC channel every crewmember is added to by default, and 
 ### TG Proc Changes:
 
 - `/datum/computer_file/program/chatclient/ui_act(...)` - Blocked passwords from being set on `strong` channels.
+- `/obj/item/modular_computer/ui_act(...)` - Emergency mode exit program swaps between NTNRC and messenger.
 
 ### Defines:
 
