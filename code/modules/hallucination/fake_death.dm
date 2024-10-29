@@ -105,20 +105,51 @@
 	if(!.)
 		return
 
-	created_images = list()
-	// Apply a blank / empty image to make them look invisible to themselves
+	LAZYINITLIST(created_images)
+	// Makes hallucinator invisible, we create a clone image to animate on
 	var/image/make_them_invisible = image(loc = hallucinator)
 	make_them_invisible.override = TRUE
 	created_images += make_them_invisible
-
+	// Makes remains, only visible if on a turf
 	if(isturf(hallucinator.loc))
-		var/mutable_appearance/fake_dust_animation = new(hallucinator)
-		dust_animation(fake_dust_animation, hallucinator.loc)
-		created_images += fake_dust_animation
 		created_images += image(/obj/effect/decal/remains/human, hallucinator.loc)
-
+	// Makes a ghost
 	var/image/fake_ghost = image(/mob/dead/observer, get_turf(hallucinator))
 	DO_FLOATING_ANIM(fake_ghost)
 	created_images += fake_ghost
 
 	hallucinator.client?.images |= created_images
+
+	// Does the actual animation here
+	if(isturf(hallucinator.loc))
+		new /obj/effect/temp_visual/dust_hallucination(hallucinator.loc, hallucinator)
+
+/obj/effect/temp_visual/dust_hallucination
+	// duration doesn't really matter - it just needs to be longer than the dust animation
+	// for all non-hallucinating mobs, we're invisible
+	// for the hallucinating mob, we animate into invisibility
+	duration = 10 SECONDS
+	randomdir = FALSE
+
+/obj/effect/temp_visual/dust_hallucination/Initialize(mapload, mob/hallucinator)
+	. = ..()
+	if(isnull(hallucinator))
+		return INITIALIZE_HINT_QDEL
+
+	dir = hallucinator.dir
+	appearance = hallucinator.appearance
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// make it invisible to everyone else
+	var/image/invisible = image(loc = src)
+	invisible.override = TRUE
+	add_alt_appearance(
+		/* type = *//datum/atom_hud/alternate_appearance/basic/one_person/reversed,
+		/* key = */"[REF(src)]",
+		/* image = */invisible,
+		/* options = */null,
+		/* non-seer = */hallucinator,
+	)
+
+	// do the dust animation, only the hallucinator can see it now
+	dust_animation()
