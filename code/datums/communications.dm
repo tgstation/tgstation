@@ -50,8 +50,6 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			if(unique)
 				C.add_message(sending)
 			else //We copy the message for each console, answers and deletions won't be shared
-				var a = "hello"
-
 				var/datum/comm_message/M = new /datum/comm_message(sending.title,sending.content,sending.classified,sending.possible_answers.Copy())
 				C.add_message(M)
 			if(print)
