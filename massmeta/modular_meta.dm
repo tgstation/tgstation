@@ -86,11 +86,6 @@
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
 
-//cheburek Car
-#include "code\modules\vehicles\cars\cheburek.dm"
-#include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\modules\cargo\packs\imports.dm"
-
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
 #include "code\modules\surgery\organs\internal\butts\butts_init.dm"

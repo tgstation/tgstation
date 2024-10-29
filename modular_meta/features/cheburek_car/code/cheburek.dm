@@ -1,21 +1,21 @@
- /**
- * Really big car with 4х4 sprite.
- *
- * Can run people over.
- *
- * Can run ALL over in "I DRIVE" mode.
- *
- * Has gearbox, you can break it, and also fix it by yourself!
- *
- * It can be used in minor events.
- *
- * Some memes and gags included.
- */
+ /*
+Really big car with 4х4 sprite.
+
+Can run people over.
+
+Can run ALL over in "I DRIVE" mode.
+
+Has gearbox, you can break it, and also fix it by yourself!
+
+It can be used in minor events.
+
+Some memes and gags included.
+*/
 
 /obj/vehicle/sealed/car/cheburek
 	name = "Cheburek"
 	desc = "The cheapest Bucket with bolts and nuts you can afford"
-	icon = 'massmeta/icons/obj/toys/shaha.dmi'
+	icon = 'modular_meta/features/cheburek_car/icons/shaha.dmi'
 	icon_state = "cheburek" // the name form gta 5, you know?
 	layer = LYING_MOB_LAYER
 	max_occupants = 4
@@ -127,47 +127,6 @@
 		)
 	return ..()
 
-//////////////////////////
-/////Driveshaft Event/////
-//////////////////////////
-
-/obj/effect/immovablerod/driveshaft
-	name = "hyperspaced driveshaft"
-	desc = "What the fuck is that?"
-	icon = 'massmeta/icons/obj/anomaly.dmi'
-	icon_state = "driveshaft"
-	notify = FALSE
-	loopy_rod = TRUE
-	dnd_style_level_up = FALSE
-	/// The distance the rod will go.
-	var/max_distance = 13
-	/// The turf the rod started from, to calcuate distance.
-	var/turf/start_turf
-
-/obj/effect/immovablerod/driveshaft/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE, max_distance = 13)
-	. = ..()
-	start_turf = get_turf(src)
-	src.max_distance = max_distance
-
-/obj/effect/immovablerod/driveshaft/Destroy(force)
-	start_turf = null
-	return ..()
-
-/obj/effect/immovablerod/driveshaft/Move()
-	if(get_dist(start_turf, get_turf(src)) >= max_distance)
-		qdel(src)
-		return
-	return ..()
-
-/obj/effect/immovablerod/driveshaft/penetrate(mob/living/penetrated)
-	penetrated.visible_message(
-		span_danger("[penetrated] is penetrated by a hyperspaced driveshaft!"),
-		span_userdanger("The [src] penetrates you!"),
-		span_danger("You hear a CRANG!"),
-		)
-	penetrated.adjustBruteLoss(50)
-
-
 ///////////////////////
 /////Damage Events/////
 ///////////////////////
@@ -227,8 +186,8 @@
 		add_overlay(image(icon, "open_bonnet_stickers", ABOVE_MOB_LAYER))
 	else
 		add_overlay(image(icon, "close_bonnet_stickers", ABOVE_MOB_LAYER))
-	playsound(src, 'massmeta/sounds/vehicles/gopnik_laught.ogg', 66)
-	balloon_alert(user, "Some odd insulating tape appeared on [src].")
+	playsound(src, 'modular_meta/features/cheburek_car/sound/gopnik_laught.ogg', 66)
+	balloon_alert(user, "some odd insulating tape appeared on [src].")
 	visible_message(span_userdanger("You hear a terrible roar from under the bottom of the car"))
 	name = "Cheburek Chad"
 	desc = "This is a verified Slavic Сar, that's all you need to know"
@@ -247,14 +206,14 @@
 			if(obj_flags & EMAGGED)
 				cut_overlay(image(icon, "open_bonnet_stickers", ABOVE_MOB_LAYER))
 				add_overlay(image(icon, "close_bonnet_stickers", ABOVE_MOB_LAYER))
-			playsound(src, 'massmeta/sounds/vehicles/close_bonnet.ogg', 50)
+			playsound(src, 'modular_meta/features/cheburek_car/sound/close_bonnet.ogg', 50)
 		else
 			bonnet_isopen = !bonnet_isopen
 			add_overlay(image(icon, "car_openbonnet", LYING_MOB_LAYER))
 			if(obj_flags & EMAGGED)
 				cut_overlay(image(icon, "close_bonnet_stickers", ABOVE_MOB_LAYER))
 				add_overlay(image(icon, "open_bonnet_stickers", ABOVE_MOB_LAYER))
-			playsound(src, 'massmeta/sounds/vehicles/open_bonnet.ogg', 50)
+			playsound(src, 'modular_meta/features/cheburek_car/sound/open_bonnet.ogg', 50)
 
 /obj/vehicle/sealed/car/cheburek/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -338,7 +297,7 @@
 		return
 	if(gopgear == 0 && gearbox_failure_count != 10)
 		canmove = TRUE
-		playsound(src, 'massmeta/sounds/vehicles/emergency_brake_release.ogg', 100)
+		playsound(src, 'modular_meta/features/cheburek_car/sound/emergency_brake_release.ogg', 100)
 		vehicle_move_delay -= 0.5
 		gopgear++
 		return
@@ -346,14 +305,14 @@
 		if(prob(gearbox_failure_count * 10) || prob(33))
 			if(gearbox_failure_count == 10)
 				if(canmove)
-					playsound(src, pick('massmeta/sounds/vehicles/gear_blyat.ogg', 'massmeta/sounds/vehicles/gear_nah.ogg'), 100)
+					playsound(src, pick('modular_meta/features/cheburek_car/sound/gear_blyat.ogg', 'modular_meta/features/cheburek_car/sound/gear_nah.ogg'), 100)
 					toggle_blinkers()
 				canmove = FALSE
-				balloon_alert(user, "Gearbox broken")
+				balloon_alert(user, "gearbox broken")
 			else
 				gearbox_failure_count++
 			AddElement(/datum/element/waddling)
-			playsound(src, pick('massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
+			playsound(src, pick('modular_meta/features/cheburek_car/sound/gear_fault.ogg', 'modular_meta/features/cheburek_car/sound/gear_fault2.ogg', 'modular_meta/features/cheburek_car/sound/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
 			playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 75)
@@ -369,7 +328,7 @@
 		return
 	if(gopgear == 1 && gearbox_failure_count != 10)
 		canmove = FALSE
-		playsound(src, 'massmeta/sounds/vehicles/emergency_brake_pull.ogg', 100)
+		playsound(src, 'modular_meta/features/cheburek_car/sound/emergency_brake_pull.ogg', 100)
 		vehicle_move_delay += 0.5
 		gopgear--
 		return
@@ -377,14 +336,14 @@
 		if(prob(gearbox_failure_count * 10) || prob(33))
 			if(gearbox_failure_count == 10)
 				if(canmove)
-					playsound(src, pick('massmeta/sounds/vehicles/gear_blyat.ogg', 'massmeta/sounds/vehicles/gear_nah.ogg'), 100)
+					playsound(src, pick('modular_meta/features/cheburek_car/sound/gear_blyat.ogg', 'modular_meta/features/cheburek_car/sound/gear_nah.ogg'), 100)
 					toggle_blinkers()
 				canmove = FALSE
 				balloon_alert(user, "Gearbox broken")
 			else
 				gearbox_failure_count++
 			AddElement(/datum/element/waddling) // your gears are juggling like a clown do
-			playsound(src, pick('massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
+			playsound(src, pick('modular_meta/features/cheburek_car/sound/gear_fault.ogg', 'modular_meta/features/cheburek_car/sound/gear_fault2.ogg', 'modular_meta/features/cheburek_car/sound/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
 			playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 75)
@@ -415,7 +374,7 @@
 
 /obj/vehicle/sealed/car/cheburek/proc/endless_tik()
 	if(isturnsound_on)
-		playsound(src, 'massmeta/sounds/vehicles/car_turn_signal.ogg', 60)
+		playsound(src, 'modular_meta/features/cheburek_car/sound/car_turn_signal.ogg', 60)
 		//update_overlays()
 		cut_overlay(image(icon, "car_blinkers", LYING_MOB_LAYER))
 		blinkers_on = FALSE
