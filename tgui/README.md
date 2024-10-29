@@ -35,10 +35,10 @@ If you are using the tooling provided in this repo, everything is included! Feel
 
 However, if you want finer control over the installation or build process, you will need these:
 
-- [Node v16.13+](https://nodejs.org/en/download/)
+- [Node v20.2+](https://nodejs.org/en/download/)
   - **LTS** release is recommended instead of latest
   - **DO NOT install Chocolatey if Node installer asks you to!**
-- [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install)
+- [Yarn v4.1.1+](https://yarnpkg.com/getting-started/install)
   - You can run `npm install -g yarn` to install it.
 
 ## Usage
@@ -144,12 +144,13 @@ together, and can reveal certain layout bugs which are not normally visible.
 ## Browser Developer Tools
 
 To debug TGUI interfaces with browser-style developer tools, there exists a utility
-that Microsoft bundles with Windows to debug any Internet Explorer/Trident-using interface,
+that Microsoft bundles with Windows called IEChooser/F12 to debug any Internet Explorer/Trident-using interface,
 which BYOND uses.
 
 This provides invaluable tools such as a local console, a DOM viewer, an interactive debugger, and more.
 
-The 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
+You can access the `IEChooser.exe` by pressing <kbd>Win + R</kbd>, then typing `f12`, then pressing enter.
+To manually go there: 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
 There's also a 32-bit one in `system32\`.
 
 Simply launch the application after you've opened a TGUI window, and choose the .html name.

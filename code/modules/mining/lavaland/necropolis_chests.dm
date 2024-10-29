@@ -8,6 +8,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	can_install_electronics = FALSE
 	paint_jobs = null
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
@@ -18,7 +19,7 @@
 /obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
-	var/loot = rand(1,20)
+	var/loot = rand(1,21)
 	var/mod
 	switch(loot)
 		if(1)
@@ -71,6 +72,9 @@
 			new /obj/item/bedsheet/cult(src)
 		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+		if(21)
+			new /obj/item/clothing/gloves/fingerless/punch_mitts(src)
+			new /obj/item/clothing/head/cowboy(src)
 	if(!contents.len)
 		to_chat(user, span_warning("[src] makes a clunking sound as you try to open it. You feel compelled to let the gods know! (Please open an adminhelp and try again!)"))
 		CRASH("Failed to generate loot. loot number: [loot][mod ? "subloot: [mod]" : null]")

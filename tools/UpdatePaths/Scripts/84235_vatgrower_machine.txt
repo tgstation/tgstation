@@ -1,0 +1,3 @@
+#comment Replaces the plumbing vatgrower variant with a vatgrower machine https://github.com/tgstation/tgstation/pull/84235
+
+/obj/machinery/plumbing/growing_vat : /obj/machinery/vatgrower{@OLD}

@@ -1,7 +1,7 @@
 /datum/disease/chronic_illness
 	name = "Hereditary Manifold Sickness"
 	max_stages = 5
-	spread_text = "Unspread Illness"
+	spread_text = "Non-communicable disease"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
 	infectable_biotypes = MOB_ORGANIC | MOB_MINERAL | MOB_ROBOTIC
@@ -42,7 +42,7 @@
 				need_mob_update += affected_mob.adjustStaminaLoss(70, updating_stamina = FALSE)
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a buzzing in your brain."))
-				SEND_SOUND(affected_mob, sound('sound/weapons/flash_ring.ogg'))
+				SEND_SOUND(affected_mob, sound('sound/items/weapons/flash_ring.ogg'))
 			if(SPT_PROB(0.5, seconds_per_tick))
 				need_mob_update += affected_mob.adjustBruteLoss(1, updating_health = FALSE)
 			if(need_mob_update)
@@ -65,8 +65,8 @@
 				to_chat(affected_mob, span_danger("[pick("You feel as though your atoms are accelerating in place.", "You feel like you're being torn apart!")]"))
 				affected_mob.emote("scream")
 				need_mob_update += affected_mob.adjustBruteLoss(10, updating_health = FALSE)
-				if(need_mob_update)
-					affected_mob.updatehealth()
+			if(need_mob_update)
+				affected_mob.updatehealth()
 		if(5)
 			switch(rand(1,2))
 				if(1)
@@ -75,7 +75,7 @@
 				if(2)
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)
-					playsound(affected_mob.loc, 'sound/magic/repulse.ogg', 100, FALSE)
+					playsound(affected_mob.loc, 'sound/effects/magic/repulse.ogg', 100, FALSE)
 					affected_mob.emote("scream")
 					for(var/mob/living/viewers in viewers(3, affected_mob.loc))
 						viewers.flash_act()

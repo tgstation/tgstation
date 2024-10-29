@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 	if(isliving(user))
 		var/mob/living/living_mob = user
-		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+		if(living_mob.incorporeal_move || HAS_TRAIT(living_mob, TRAIT_GODMODE))
 			return
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
@@ -80,7 +80,7 @@
 
 /datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
+	if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 		return
 	var/atom/atom_source = source
 	var/murder
@@ -101,7 +101,7 @@
 	SIGNAL_HANDLER
 	if(isliving(user))
 		var/mob/living/living_mob = user
-		if(living_mob.incorporeal_move || living_mob.status_flags & GODMODE)
+		if(living_mob.incorporeal_move || HAS_TRAIT(living_mob, TRAIT_GODMODE))
 			return
 	var/atom/atom_source = source
 	if(iscyborg(user) && atom_source.Adjacent(user))
@@ -115,7 +115,7 @@
 
 /datum/component/supermatter_crystal/proc/hand_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(user.incorporeal_move || user.status_flags & GODMODE)
+	if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 		return
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		dust_mob(source, user, cause = "hand")
@@ -202,7 +202,7 @@
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
-		if(user.incorporeal_move || user.status_flags & GODMODE)
+		if(user.incorporeal_move || HAS_TRAIT(user, TRAIT_GODMODE))
 			return
 		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_They()] burst[user.p_s()] into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
@@ -219,7 +219,7 @@
 	SIGNAL_HANDLER
 	if(isliving(hit_object))
 		var/mob/living/hit_mob = hit_object
-		if(hit_mob.incorporeal_move || hit_mob.status_flags & GODMODE)
+		if(hit_mob.incorporeal_move || HAS_TRAIT(hit_mob, TRAIT_GODMODE))
 			return
 	var/atom/atom_source = source
 	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
@@ -272,7 +272,7 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 
 /datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
-	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
+	if(nom.incorporeal_move || HAS_TRAIT(nom, TRAIT_GODMODE)) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
 		return
 	var/atom/atom_source = source
 	if(!vis_msg)
@@ -290,10 +290,8 @@
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
 	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
-	if(isliving(consumed_object))
-		var/mob/living/consumed_mob = consumed_object
-		if(consumed_mob.status_flags & GODMODE)
-			return
+	if(HAS_TRAIT(consumed_object, TRAIT_GODMODE))
+		return
 
 	var/atom/atom_source = source
 	SEND_SIGNAL(consumed_object, COMSIG_SUPERMATTER_CONSUMED, atom_source)

@@ -85,7 +85,7 @@
 
 	. = ITEM_INTERACT_SUCCESS
 
-	var/sound/teleport_sound = sound('sound/magic/summonitems_generic.ogg')
+	var/sound/teleport_sound = sound('sound/effects/magic/summonitems_generic.ogg')
 	teleport_sound.pitch = 0.5
 	// Handle our own pizzaz rather than doing it in do_teleport
 	new /obj/effect/temp_visual/teleport_flux(start_turf, user.dir)

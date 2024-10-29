@@ -79,7 +79,7 @@
 	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
 	return ..()
 
-/obj/structure/ladder/singularity_pull()
+/obj/structure/ladder/singularity_pull(atom/singularity, current_size)
 	if (!(resistance_flags & INDESTRUCTIBLE))
 		visible_message(span_danger("[src] is torn to pieces by the gravitational pull!"))
 		qdel(src)
@@ -105,7 +105,20 @@
 
 /obj/structure/ladder/proc/start_travelling(mob/user, going_up)
 	show_initial_fluff_message(user, going_up)
-	if(do_after(user, travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
+
+	// Our climbers athletics ability
+	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics)
+
+	// Misc bonuses to the climb speed.
+	var/misc_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		misc_multiplier *= potential_spine.athletics_boost_multiplier
+
+	var/final_travel_time = (travel_time - fitness_level) * misc_multiplier
+
+	if(do_after(user, final_travel_time, target = src, interaction_key = DOAFTER_SOURCE_CLIMBING_LADDER))
 		travel(user, going_up)
 
 /// The message shown when the player starts climbing the ladder
@@ -169,7 +182,7 @@
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)
 
 /obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
-	if(user.incapacitated() || (!user.Adjacent(src)))
+	if(user.incapacitated || (!user.Adjacent(src)))
 		return FALSE
 	return TRUE
 

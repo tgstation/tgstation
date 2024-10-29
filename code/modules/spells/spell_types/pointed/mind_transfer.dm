@@ -9,6 +9,7 @@
 	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED|AB_CHECK_OPEN_TURF
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
@@ -137,7 +138,7 @@
 
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
-	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
-	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(caster, sound('sound/effects/magic/mandswap.ogg'))
+	SEND_SOUND(to_swap, sound('sound/effects/magic/mandswap.ogg'))
 
 	return TRUE

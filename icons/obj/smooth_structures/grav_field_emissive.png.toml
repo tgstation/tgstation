@@ -1,0 +1,5 @@
+output_name = "grav_field_emissive"
+template = "bitmask/diagonal_32x32.toml"
+
+[animation]
+delays = [1, 1, 1]

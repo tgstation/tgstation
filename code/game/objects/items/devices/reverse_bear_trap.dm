@@ -112,7 +112,7 @@
 		source = src,
 		header = "Reverse bear trap armed",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
-		ghost_sound = 'sound/machines/beep.ogg',
+		ghost_sound = 'sound/machines/beep/beep.ogg',
 		notify_volume = 75,
 	)
 

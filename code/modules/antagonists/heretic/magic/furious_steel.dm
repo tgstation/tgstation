@@ -7,7 +7,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "furious_steel"
-	sound = 'sound/weapons/guillotine.ogg'
+	sound = 'sound/items/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 60 SECONDS
@@ -155,7 +155,7 @@
 	overlay_icon_state = "bg_cult_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cursed_steel"
-	sound = 'sound/weapons/guillotine.ogg'
+	sound = 'sound/items/weapons/guillotine.ogg'
 
 	cooldown_time = 40 SECONDS
 	invocation = "IA!"

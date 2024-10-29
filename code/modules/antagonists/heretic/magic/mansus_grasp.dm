@@ -5,7 +5,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mansus_grasp"
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 10 SECONDS
@@ -56,7 +56,7 @@
 		carbon_hit.color = COLOR_CULT_RED
 		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = EASE_IN)
 		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
-		playsound(carbon_hit, 'sound/magic/curse.ogg', 50, TRUE)
+		playsound(carbon_hit, 'sound/effects/magic/curse.ogg', 50, TRUE)
 
 		to_chat(caster, span_warning("An unholy force intervenes as you grasp [carbon_hit], absorbing most of the effects!"))
 		to_chat(carbon_hit, span_warning("As [caster] grasps you with eldritch forces, your blood magic absorbs most of the effects!"))
@@ -66,6 +66,7 @@
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	carbon_hit.AdjustKnockdown(5 SECONDS)
 	carbon_hit.adjustStaminaLoss(80)
+	carbon_hit.apply_status_effect(/datum/status_effect/next_shove_stuns)
 
 	return TRUE
 

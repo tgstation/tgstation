@@ -50,14 +50,14 @@
 		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 1 mole per mole of freon consumed.",
 		"Temperature" = "Can only occur between [FREON_LOWER_TEMPERATURE] - [FREON_MAXIMUM_BURN_TEMPERATURE] Kelvin",
 		"Energy" = "[FIRE_FREON_ENERGY_CONSUMED] joules of energy is absorbed per mole of freon consumed.",
-		"Hot Ice" = "This reaction produces hot ice when occuring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
+		"Hot Ice" = "This reaction produces hot ice when occurring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
 	)
 
 
 /datum/gas_reaction/nitrousformation/init_factors()
 	factor = list(
 		/datum/gas/oxygen = "10 moles of Oxygen needs to be present for the reaction to occur. Oxygen is consumed at 0.5 moles per mole of nitrous oxide formed.",
-		/datum/gas/nitrogen = " 20 moles of Nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 1 mole per mole of nitrous oxife formed.",
+		/datum/gas/nitrogen = " 20 moles of Nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 1 mole per mole of nitrous oxide formed.",
 		/datum/gas/bz = "5 moles of BZ needs to be present for the reaction to occur. Not consumed.",
 		/datum/gas/nitrous_oxide = "Nitrous oxide gets produced rapidly.",
 		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE] Kelvin",

@@ -111,7 +111,7 @@
 				if(!cyborg.cell || !cyborg.cell.charge)
 					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
-					playsound(cyborg, 'sound/machines/buzz-two.ogg', 50, FALSE)
+					playsound(cyborg, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 
 		if("toggleSensors")
 			cyborg.toggle_sensors()

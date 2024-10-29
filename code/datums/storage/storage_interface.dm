@@ -2,7 +2,7 @@
 /datum/storage_interface
 	/// UI elements for this theme
 	var/atom/movable/screen/close/closer
-	var/atom/movable/screen/storage/cells
+	var/atom/movable/screen/storage/cell/cells
 	var/atom/movable/screen/storage/corner/corner_top_left
 	var/atom/movable/screen/storage/corner/top_right/corner_top_right
 	var/atom/movable/screen/storage/corner/bottom_left/corner_bottom_left

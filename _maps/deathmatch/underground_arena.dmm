@@ -473,9 +473,6 @@
 	},
 /turf/open/indestructible/vault,
 /area/deathmatch)
-"En" = (
-/turf/cordon,
-/area/deathmatch)
 "EA" = (
 /obj/effect/landmark/deathmatch_player_spawn,
 /turf/open/indestructible/dark/smooth_large,
@@ -889,75 +886,70 @@
 /area/deathmatch)
 
 (1,1,1) = {"
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
+qa
 "}
 (2,1,1) = {"
-En
 qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
 qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-qa
-En
 "}
 (3,1,1) = {"
-En
 qa
 aI
 aI
@@ -988,44 +980,8 @@ aI
 aI
 aI
 qa
-En
 "}
 (4,1,1) = {"
-En
-qa
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-qa
-En
-"}
-(5,1,1) = {"
-En
 qa
 aI
 aI
@@ -1056,10 +1012,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(6,1,1) = {"
-En
+(5,1,1) = {"
 qa
 aI
 aI
@@ -1090,10 +1044,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(7,1,1) = {"
-En
+(6,1,1) = {"
 qa
 aI
 aI
@@ -1124,10 +1076,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(8,1,1) = {"
-En
+(7,1,1) = {"
 qa
 aI
 aI
@@ -1158,10 +1108,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(9,1,1) = {"
-En
+(8,1,1) = {"
 qa
 aI
 aI
@@ -1192,10 +1140,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(10,1,1) = {"
-En
+(9,1,1) = {"
 qa
 aI
 aI
@@ -1226,10 +1172,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(11,1,1) = {"
-En
+(10,1,1) = {"
 qa
 aI
 aI
@@ -1260,10 +1204,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(12,1,1) = {"
-En
+(11,1,1) = {"
 qa
 aI
 aI
@@ -1294,10 +1236,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(13,1,1) = {"
-En
+(12,1,1) = {"
 qa
 aI
 aI
@@ -1328,10 +1268,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(14,1,1) = {"
-En
+(13,1,1) = {"
 qa
 aI
 aI
@@ -1362,10 +1300,8 @@ fX
 aI
 aI
 qa
-En
 "}
-(15,1,1) = {"
-En
+(14,1,1) = {"
 qa
 aI
 aI
@@ -1396,10 +1332,8 @@ xK
 aI
 aI
 qa
-En
 "}
-(16,1,1) = {"
-En
+(15,1,1) = {"
 qa
 aI
 aI
@@ -1430,10 +1364,8 @@ sd
 aI
 aI
 qa
-En
 "}
-(17,1,1) = {"
-En
+(16,1,1) = {"
 qa
 aI
 aI
@@ -1464,10 +1396,8 @@ aI
 aI
 aI
 qa
-En
 "}
-(18,1,1) = {"
-En
+(17,1,1) = {"
 qa
 aI
 aI
@@ -1498,10 +1428,8 @@ aI
 aI
 aI
 qa
-En
 "}
-(19,1,1) = {"
-En
+(18,1,1) = {"
 qa
 aI
 aI
@@ -1532,10 +1460,8 @@ aI
 aI
 aI
 qa
-En
 "}
-(20,1,1) = {"
-En
+(19,1,1) = {"
 qa
 aI
 aI
@@ -1566,10 +1492,8 @@ mz
 aI
 aI
 qa
-En
 "}
-(21,1,1) = {"
-En
+(20,1,1) = {"
 qa
 aI
 aI
@@ -1600,10 +1524,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(22,1,1) = {"
-En
+(21,1,1) = {"
 qa
 aI
 aI
@@ -1634,10 +1556,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(23,1,1) = {"
-En
+(22,1,1) = {"
 qa
 aI
 aI
@@ -1668,10 +1588,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(24,1,1) = {"
-En
+(23,1,1) = {"
 qa
 aI
 aI
@@ -1702,10 +1620,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(25,1,1) = {"
-En
+(24,1,1) = {"
 qa
 aI
 aI
@@ -1736,10 +1652,8 @@ xG
 aI
 aI
 qa
-En
 "}
-(26,1,1) = {"
-En
+(25,1,1) = {"
 qa
 aI
 aI
@@ -1770,10 +1684,8 @@ xG
 aI
 aI
 qa
-En
 "}
-(27,1,1) = {"
-En
+(26,1,1) = {"
 qa
 aI
 aI
@@ -1804,10 +1716,8 @@ qa
 aI
 aI
 qa
-En
 "}
-(28,1,1) = {"
-En
+(27,1,1) = {"
 qa
 aI
 aI
@@ -1838,10 +1748,40 @@ qa
 aI
 aI
 qa
-En
+"}
+(28,1,1) = {"
+qa
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+aI
+qa
 "}
 (29,1,1) = {"
-En
 qa
 aI
 aI
@@ -1872,44 +1812,8 @@ aI
 aI
 aI
 qa
-En
 "}
 (30,1,1) = {"
-En
-qa
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-qa
-En
-"}
-(31,1,1) = {"
-En
 qa
 qa
 qa
@@ -1940,39 +1844,4 @@ qa
 qa
 qa
 qa
-En
-"}
-(32,1,1) = {"
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
-En
 "}

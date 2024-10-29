@@ -23,6 +23,7 @@
 	jaunter.forceMove(src)
 	if(ismob(jaunter))
 		var/mob/mob_jaunter = jaunter
+		RegisterSignal(mob_jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 		mob_jaunter.reset_perspective(src)
 
 /obj/effect/dummy/phased_mob/Destroy()
@@ -55,6 +56,7 @@
 /obj/effect/dummy/phased_mob/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == jaunter)
+		UnregisterSignal(jaunter, COMSIG_MOB_STATCHANGE)
 		SEND_SIGNAL(src, COMSIG_MOB_EJECTED_FROM_JAUNT, jaunter)
 		jaunter = null
 
@@ -84,13 +86,23 @@
 		return
 	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_PHASED_CHECK, user, newloc) & COMPONENT_BLOCK_PHASED_MOVE)
+		return null
+
 	if(newloc.turf_flags & NOJAUNT)
 		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return
 	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
-		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
+		to_chat(user, span_danger("Some dull, universal force is blocking the way. Its overwhelmingly oppressive force feels dangerous."))
 		return
 	if (direction == UP || direction == DOWN)
 		newloc = can_z_move(direction, get_turf(src), newloc, ZMOVE_INCAPACITATED_CHECKS | ZMOVE_FEEDBACK | ZMOVE_ALLOW_ANCHORED, user)
 
 	return newloc
+
+/// Signal proc for [COMSIG_MOB_STATCHANGE], to throw us out of the jaunt if we lose consciousness.
+/obj/effect/dummy/phased_mob/proc/on_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+	if(source == jaunter && source.stat != CONSCIOUS)
+		eject_jaunter()

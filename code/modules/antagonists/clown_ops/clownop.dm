@@ -11,7 +11,7 @@
 	nuke_icon_state = "bananiumbomb_base"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/clown_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has clown op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
@@ -65,13 +65,18 @@
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
 
+// Clown op reinforcements
+/datum/antagonist/nukeop/reinforcement/clownop
+	name = "Clown Operative Reinforcement"
+	nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
+
 /datum/outfit/clown_operative
 	name = "Clown Operative (Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
 
-/datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
 	H.update_worn_back()
@@ -82,7 +87,7 @@
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
 
-/datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
 	H.update_worn_back()

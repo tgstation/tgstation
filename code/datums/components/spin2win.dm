@@ -84,7 +84,7 @@
 	if(start_spin_message)
 		var/message = replacetext(start_spin_message, "%USER", spinning_user)
 		spinning_user.visible_message(message)
-	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	playsound(spinning_user, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), spin_duration, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_spin_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_spin_dropped))
@@ -95,7 +95,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	deltimer(stop_spinning_timer_id)
-	playsound(user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	playsound(user, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	if(user && end_spin_message)
 		var/message = replacetext(end_spin_message, "%USER", user)
 		user.visible_message(message)
@@ -111,7 +111,7 @@
 		return PROCESS_KILL
 	var/mob/living/item_owner = spinning_item.loc
 	item_owner.emote("spin")
-	playsound(item_owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	playsound(item_owner, 'sound/items/weapons/fwoosh.ogg', 75, FALSE)
 	for(var/mob/living/victim in orange(1, item_owner))
 		spinning_item.attack(victim, item_owner)
 

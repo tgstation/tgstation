@@ -406,6 +406,9 @@ There are a few snowflake layers that can be used to accomplish niche goals, alo
 
 Floating layers will float "up" the chain of things they're being drawn onto, until they find a real layer. They'll then offset off of that.
 
+Adding `TOPDOWN_LAYER` (actual value `10000`) to another layer forces the appearance into topdown rendering, locally disabling [side map](#side_map-check-the-main-page-too).
+We can think of this as applying to planes, since we don't want it interlaying with other non topdown objects.
+
 This allows us to keep relative layer differences while not needing to make all sources static. Often very useful.
 
 ## Planes

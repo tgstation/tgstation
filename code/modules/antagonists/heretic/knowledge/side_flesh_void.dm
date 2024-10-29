@@ -19,6 +19,9 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
+	research_tree_icon_state = "void_cloak"
+	depth = 4
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
@@ -32,6 +35,24 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
 	route = PATH_SIDE
+	depth = 8
+
+/datum/heretic_knowledge/spell/void_prison
+	name = "Void Prison"
+	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
+		Applies void chill afterwards."
+	gain_text = "At first, I see myself, waltzing along a snow-laden street. \
+		I try to yell, grab hold of this fool and tell them to run. \
+		But the only welts made are on my own beating fist. \
+		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/summon/raw_prophet,
+	)
+	spell_to_add = /datum/action/cooldown/spell/pointed/void_prison
+	cost = 1
+	route = PATH_SIDE
+	depth = 8
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
@@ -46,3 +67,4 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/cleave
 	cost = 1
 	route = PATH_SIDE
+	depth = 10

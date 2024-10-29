@@ -84,7 +84,7 @@
 		return
 
 	if(!transform_dead && victim.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// Activate the cooldown
@@ -92,7 +92,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_appearance()
 
-	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/tools/welder.ogg', 50, TRUE)
 	victim.emote("scream") // It is painful
 	victim.adjustBruteLoss(max(0, 80 - victim.getBruteLoss())) // Hurt the human, don't try to kill them though.
 

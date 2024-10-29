@@ -10,6 +10,8 @@
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
+	limb_overlay = /datum/bodypart_overlay/texture/carpskin
+	color_overlay_priority = LIMB_COLOR_CARP_INFUSION
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /// Inverts behavior of lungs. Bypasses suffocation due to space / lack of gas, but also allows Oxygen to suffocate.
@@ -58,11 +60,12 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
 
-/obj/item/organ/internal/tongue/carp/on_bodypart_insert(obj/item/bodypart/limb)
+/obj/item/organ/internal/tongue/carp/on_bodypart_insert(obj/item/bodypart/head)
 	. = ..()
-	limb.unarmed_damage_low = 10
-	limb.unarmed_damage_high = 15
-	limb.unarmed_effectiveness = 15
+	head.unarmed_damage_low = 10
+	head.unarmed_damage_high = 15
+	head.unarmed_effectiveness = 15
+	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
 
 /obj/item/organ/internal/tongue/carp/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
@@ -76,10 +79,10 @@
 
 /obj/item/organ/internal/tongue/carp/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
-
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
 	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
+	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -104,6 +107,7 @@
 	icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
+	can_smoothen_out = FALSE
 
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer

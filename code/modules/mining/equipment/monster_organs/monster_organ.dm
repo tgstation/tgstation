@@ -36,7 +36,7 @@
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "hivelord_core"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
-	visual = FALSE
+
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
 	organ_flags = ORGAN_ORGANIC
@@ -62,14 +62,30 @@
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
+/obj/item/organ/internal/monster_core/examine(mob/user)
+	. = ..()
+	if(!decay_timer)
+		return
+	var/estimated_time_left = round(timeleft(decay_timer), 1 MINUTES)
+	switch(estimated_time_left)
+		if(4 MINUTES)
+			. += span_notice("It's fresh and still pulsating with the last vestiges of life.")
+		if(3 MINUTES)
+			. += span_notice("It still looks pretty fresh.")
+		if(2 MINUTES)
+			. += span_notice("It's not as fresh as could be.")
+		if(1 MINUTES)
+			. += span_notice("Signs of decay are starting to set in. It might not be good for much longer.")
+		if(0 SECONDS to 1 MINUTES)
+			. += span_warning("Signs of decay have set in, but it still looks alive. It's probably about to become unusable really quickly.")
+
 /obj/item/organ/internal/monster_core/Destroy(force)
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
+/obj/item/organ/internal/monster_core/mob_insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
+
 	if (inert)
 		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
 		qdel(src)
@@ -80,7 +96,7 @@
 	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
-/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special, movement_flags)
+/obj/item/organ/internal/monster_core/mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()
@@ -133,6 +149,9 @@
 	return ..()
 
 /obj/item/organ/internal/monster_core/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
 	try_apply(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 

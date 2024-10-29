@@ -3,9 +3,11 @@
 	desc = "A modified helmet to allow space pirates to intimidate their customers whilst staying safe from the void. Comes with some additional protection."
 	icon_state = "spacepirate"
 	inhand_icon_state = "space_pirate_helmet"
+	slowdown = 0
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -2
 
 /datum/armor/space_pirate
 	melee = 30
@@ -30,3 +32,16 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+	fishing_modifier = -3
+
+/obj/item/clothing/head/helmet/space/pirate/tophat
+	name = "designer pirate helmet"
+	desc = "A modified EVA helmet with a five-thousand credit Lizzy Vuitton hat affixed to the top, proving that working in deep space is no excuse for being poor."
+	icon_state = "spacetophat"
+
+/obj/item/clothing/suit/space/pirate/silverscale
+	name = "designer pirate suit"
+	desc = "A specially-made Cybersun branded space suit; the fine plastisilk exterior is woven from the cocoons of black-market Lümlan mothroaches \
+		and the trim is lined with the ivory of the critically endangered Zanzibarian dwarf elephant. Baby seal leather boots sold separately."
+	inhand_icon_state = "syndicate-black"
+	icon_state = "syndicate-black-white"

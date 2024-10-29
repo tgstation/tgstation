@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,7 +5,9 @@ import {
   LabeledList,
   NoticeBox,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const CivCargoHoldTerminal = (props) => {
@@ -152,6 +153,7 @@ const BountyPickButton = (props) => {
         color="black"
         backgroundColor="linen"
         lineHeight="1.2em"
+        p={1}
       >
         {props.bounty_info}
       </Box>

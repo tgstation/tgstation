@@ -373,6 +373,10 @@ em {
   color: #d65d95;
 }
 
+.enteradio {
+  color: #79c5a8;
+}
+
 .redteamradio {
   color: #ff4444 !important;
 }
@@ -412,6 +416,15 @@ em {
   color: #c51e1e;
 }
 
+.tinydanger {
+  color: #c51e1e;
+  font-size: 85%;
+}
+
+.smalldanger {
+  color: #c51e1e;
+  font-size: 90%;
+}
 .warning {
   color: #c51e1e;
   font-style: italic;
@@ -747,8 +760,17 @@ em {
   font-size: 160%;
 }
 
+.soapbox {
+  font-weight: bold;
+  font-size: 135%;
+}
+
 .small {
   font-size: 60%;
+}
+
+.slightly_larger {
+  font-size: 115%;
 }
 
 .big {
@@ -941,7 +963,7 @@ em {
 }
 
 .ml-3 {
-  margin-left: 3em;
+  margin-left: 2.5em;
 }
 
 .examine_block {
@@ -954,6 +976,47 @@ em {
 .tooltip {
   font-style: italic;
   border-bottom: 1px dashed #fff;
+}
+
+// Provides a horizontal bar with text in the middle
+// I got this off stackoverflow
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #a4bad6;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+// Used to display images besides text
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 3em; // a css guru can probably dehardcode this later
+  height: auto;
+  margin-right: 12px;
+  margin-top: 6px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
 }
 
 $alert-stripe-colors: (
@@ -1023,7 +1086,6 @@ $border-width-px: $border-width * 1px;
   padding-top: 0.25rem;
   line-height: 100%;
   width: 100%;
-  height: 100%;
   text-align: left;
   font-size: 125%;
 }

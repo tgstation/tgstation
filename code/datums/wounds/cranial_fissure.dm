@@ -12,10 +12,16 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 
 /datum/wound_pregen_data/cranial_fissure/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
-	if (limb.owner?.stat < HARD_CRIT)
-		return 0
+	if (isnull(limb.owner))
+		return ..()
 
-	return ..()
+	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
+		return ..()
+
+	if (limb.owner.stat >= HARD_CRIT)
+		return ..()
+
+	return 0
 
 /// A wound applied when receiving significant enough damage to the head.
 /// Will allow other players to take your eyes out of your head, and slipping
@@ -23,7 +29,8 @@
 /datum/wound/cranial_fissure
 	name = "Cranial Fissure"
 	desc = "Patient's crown is agape, revealing severe damage to the skull."
-	treat_text = "Immediate surgical reconstruction of the skull."
+	treat_text = "Surgical reconstruction of the skull is necessary."
+	treat_text_short = "Surgical reconstruction required."
 	examine_desc = "is split open"
 	occur_text = "is split into two separated chunks"
 
@@ -75,7 +82,7 @@
 	)
 
 /datum/wound/cranial_fissure/try_handling(mob/living/user)
-	if (user.usable_hands <= 0)
+	if (user.usable_hands <= 0 || user.combat_mode)
 		return FALSE
 
 	if(!isnull(user.hud_used?.zone_select) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
@@ -89,7 +96,7 @@
 		victim.balloon_alert(user, "no eyes to take!")
 		return TRUE
 
-	playsound(victim, 'sound/surgery/organ2.ogg', 50, TRUE)
+	playsound(victim, 'sound/items/handling/surgery/organ2.ogg', 50, TRUE)
 	victim.balloon_alert(user, "pulling out eyes...")
 	user.visible_message(
 		span_boldwarning("[user] reaches inside [victim]'s skull..."),
@@ -109,7 +116,7 @@
 
 	log_combat(user, victim, "pulled out the eyes of")
 
-	playsound(victim, 'sound/surgery/organ1.ogg', 75, TRUE)
+	playsound(victim, 'sound/items/handling/surgery/organ1.ogg', 75, TRUE)
 	user.visible_message(
 		span_boldwarning("[user] rips out [victim]'s eyes!"),
 		span_boldwarning("You rip out [victim]'s eyes!"),

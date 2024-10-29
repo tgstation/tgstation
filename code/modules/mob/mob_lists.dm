@@ -1,12 +1,10 @@
 ///Adds the mob reference to the list and directory of all mobs. Called on Initialize().
 /mob/proc/add_to_mob_list()
 	GLOB.mob_list |= src
-	GLOB.mob_directory[tag] = src
 
 ///Removes the mob reference from the list and directory of all mobs. Called on Destroy().
 /mob/proc/remove_from_mob_list()
 	GLOB.mob_list -= src
-	GLOB.mob_directory -= tag
 
 ///Adds the mob reference to the list of all mobs alive. If mob is cliented, it adds it to the list of all living player-mobs.
 /mob/proc/add_to_alive_mob_list()

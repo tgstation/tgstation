@@ -156,7 +156,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=1))
+	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return TRUE
 
 	to_chat(user, span_notice("You start slicing [src]..."))
@@ -189,7 +189,7 @@
 				pipe.setDir(dir)
 	spew_forth()
 
-/obj/structure/disposalpipe/singularity_pull(S, current_size)
+/obj/structure/disposalpipe/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

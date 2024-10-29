@@ -70,7 +70,10 @@
 	var/obj/item/radio/headset/dongle = ears
 	if(!istype(dongle))
 		return FALSE
-	return dongle.translate_binary
+	var/area/our_area = get_area(src)
+	if(our_area.area_flags & BINARY_JAMMING)
+		return FALSE
+	return (dongle.special_channels & RADIO_SPECIAL_BINARY)
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()

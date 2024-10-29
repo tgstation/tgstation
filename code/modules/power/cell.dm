@@ -20,6 +20,11 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 
+/obj/item/stock_parts/power_store/cell/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_POISONOUS_BAIT, INNATE_TRAIT) //bro is fishing using lithium...
+
 /* Cell variants*/
 /obj/item/stock_parts/power_store/cell/empty
 	empty = TRUE
@@ -220,9 +225,6 @@
 	connector_type = "crystal"
 	custom_materials = null
 	grind_results = null
-
-/obj/item/stock_parts/power_store/cell/inducer_supply
-	maxcharge = STANDARD_CELL_CHARGE * 5
 
 /obj/item/stock_parts/power_store/cell/ethereal
 	name = "ahelp it"

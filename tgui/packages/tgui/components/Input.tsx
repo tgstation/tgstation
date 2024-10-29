@@ -59,6 +59,8 @@ type OptionalProps = Partial<{
   placeholder: string;
   /** Clears the input value on enter */
   selfClear: boolean;
+  /** Auto-updates the input value on props change */
+  updateOnPropsChange: boolean;
   /** The state variable of the input. */
   value: string | number;
 }>;
@@ -96,6 +98,7 @@ export function Input(props: Props) {
     placeholder,
     selfClear,
     value,
+    updateOnPropsChange,
     ...rest
   } = props;
 
@@ -154,6 +157,19 @@ export function Input(props: Props) {
       }
     }, 1);
   }, []);
+
+  if (updateOnPropsChange) {
+    /** Updates the initial value on props change */
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const newValue = toInputValue(value);
+      if (input.value === newValue) return;
+
+      input.value = newValue;
+    }, [value]);
+  }
 
   return (
     <Box

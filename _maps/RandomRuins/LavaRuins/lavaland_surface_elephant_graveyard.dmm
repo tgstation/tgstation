@@ -496,7 +496,6 @@
 /obj/structure/flora/rock/style_random,
 /obj/structure/cable,
 /obj/item/pickaxe{
-	layer = 2.5;
 	pixel_x = -8;
 	pixel_y = 5
 	},

@@ -34,7 +34,7 @@
 		return FALSE
 
 	to_chat(cast_on, span_userdanger("A freezing darkness surrounds you..."))
-	cast_on.playsound_local(get_turf(cast_on), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
+	cast_on.playsound_local(get_turf(cast_on), 'sound/effects/hallucinations/i_see_you1.ogg', 50, 1)
 	owner.playsound_local(get_turf(owner), 'sound/effects/ghost2.ogg', 50, 1)
 	cast_on.adjust_temp_blindness(blind_duration)
 	if(ishuman(cast_on))

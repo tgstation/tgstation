@@ -143,7 +143,7 @@
 		return FALSE
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_active)
 	subtract_charge(CHARGE_PER_STEP)
-	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
+	playsound(src, 'sound/vehicles/mecha/mechmove01.ogg', 25, TRUE)
 	if(ismovable(wearer?.loc))
 		return wearer.loc.relaymove(wearer, direction)
 	else if(wearer)

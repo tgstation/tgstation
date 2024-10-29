@@ -139,15 +139,15 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 
 /// Gets the rating of armor for the specified rating
 /datum/armor/proc/get_rating(rating)
-	// its not that I dont trust coders, its just that I don't trust coders
+	// its not that I don't trust coders, its just that I don't trust coders
 	if(!(rating in ARMOR_LIST_ALL()))
-		CRASH("Attempted to get a rating '[rating]' that doesnt exist")
+		CRASH("Attempted to get a rating '[rating]' that doesn't exist")
 	return vars[rating]
 
 /datum/armor/immune/get_rating(rating)
 	return 100
 
-/// Converts all the ratings of the armor into a list, optionally inversed
+/// Converts all the ratings of the armor into a list, optionally inverted
 /datum/armor/proc/get_rating_list(inverse = FALSE)
 	var/ratings = list()
 	for(var/rating in ARMOR_LIST_ALL())

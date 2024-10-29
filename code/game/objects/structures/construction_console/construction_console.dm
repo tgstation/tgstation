@@ -119,7 +119,7 @@
 		return ..()
 
 /mob/camera/ai_eye/remote/base_construction/relaymove(mob/living/user, direction)
-	//This camera eye is visible, and as such needs to keep it's dir updated
+	//This camera eye is visible, and as such needs to keep its dir updated
 	dir = direction
 	return ..()
 

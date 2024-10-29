@@ -51,6 +51,8 @@ no power level overlay is currently in the overlays list.
 	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
+	/// we warm up and cool down instantly
+	var/instantenous = FALSE
 
 /datum/armor/field_generator
 	melee = 25
@@ -207,8 +209,11 @@ no power level overlay is currently in the overlays list.
 	can_atmos_pass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
 	INVOKE_ASYNC(src, PROC_REF(cleanup))
-	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+	if(instantenous)
+		warming_up = 0
+		return
+	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
@@ -219,9 +224,14 @@ no power level overlay is currently in the overlays list.
 		addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/turn_on()
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
+	if(instantenous)
+		active = FG_ONLINE
+		warming_up = 3
+		start_fields()
+		return
 	active = FG_CHARGING
 	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
-	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)
@@ -421,7 +431,18 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/starts_on/Initialize(mapload)
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/field/generator/starts_on/post_machine_initialize()
+	. = ..()
 	turn_on()
+
+/obj/machinery/field/generator/starts_on/magic
+	power_level = 6 //forces the highest level overlay
+	instantenous = TRUE
+
+/obj/machinery/field/generator/starts_on/magic/process()
+	return PROCESS_KILL // this is the only place calc_power is called, and doing it here avoids one unnecessary proc call
 
 #undef FG_UNSECURED
 #undef FG_SECURED

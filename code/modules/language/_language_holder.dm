@@ -37,10 +37,10 @@ Key procs
 
 /datum/language_holder
 	/// Lazyassoclist of all understood languages
-	var/list/understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	var/list/understood_languages
 	/// Lazyassoclist of languages that can be spoken.
 	/// Tongue organ may also set limits beyond this list.
-	var/list/spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	var/list/spoken_languages
 	/// Lazyassoclist of blocked languages.
 	/// Used to prevent understanding and speaking certain languages, ie for certain mobs, mutations etc.
 	var/list/blocked_languages
@@ -503,14 +503,17 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/nekomimetic = list(LANGUAGE_ATOM),
 	)
 
-/datum/language_holder/empty
-	understood_languages = null
-	spoken_languages = null
+// Given to atoms by default
+/datum/language_holder/atom_basic
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
+// Explicitly empty one for readability
+/datum/language_holder/empty
+
+// Has all the languages known (via "mind")
 /datum/language_holder/universal
-	understood_languages = null
-	spoken_languages = null
 
 /datum/language_holder/universal/New()
 	. = ..()
-	grant_all_languages()
+	grant_all_languages(source = LANGUAGE_MIND)

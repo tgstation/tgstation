@@ -1,5 +1,5 @@
 /obj/item/seeds/nettle
-	name = "pack of nettle seeds"
+	name = "nettle seed pack"
 	desc = "These seeds grow into nettles."
 	icon_state = "seed-nettle"
 	plant_icon_offset = 0
@@ -17,7 +17,7 @@
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/nettle/death
-	name = "pack of death-nettle seeds"
+	name = "death-nettle seed pack"
 	desc = "These seeds grow into death-nettles."
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
@@ -43,7 +43,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
 	force = 15
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1

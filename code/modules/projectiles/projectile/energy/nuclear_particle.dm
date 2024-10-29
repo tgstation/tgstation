@@ -7,7 +7,7 @@
 	damage_type = TOX
 	damage = 10
 	speed = 0.4
-	hitsound = 'sound/weapons/emitter2.ogg'
+	hitsound = 'sound/items/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
 	var/static/list/particle_colors = list(
 		"red" = COLOR_RED,

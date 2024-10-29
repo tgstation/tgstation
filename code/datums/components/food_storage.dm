@@ -18,7 +18,7 @@
 
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(try_inserting_item))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(try_inserting_item))
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
@@ -48,34 +48,34 @@
  * inserted_item - the item being placed into the food
  * user - the person inserting the item
  */
-/datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/living/user, params)
+/datum/component/food_storage/proc/try_inserting_item(datum/source, mob/living/user, obj/item/inserted_item, list/modifiers)
 	SIGNAL_HANDLER
 
 	// No matryoshka-ing food storage
 	if(istype(inserted_item, /obj/item/storage) || IS_EDIBLE(inserted_item))
-		return
+		return NONE
 
 	//Harm intent will bypass inserting for injecting food with syringes and such
 	if(user.combat_mode)
-		return
+		return NONE
 
 	if(inserted_item.w_class > minimum_weight_class)
 		to_chat(user, span_warning("\The [inserted_item.name] won't fit in \the [parent]."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!QDELETED(stored_item))
 		to_chat(user, span_warning("There's something in \the [parent]."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(HAS_TRAIT(inserted_item, TRAIT_NODROP))
 		to_chat(user, span_warning("\the [inserted_item] is stuck to your hand, you can't put into \the [parent]!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user.name] begins inserting [inserted_item.name] into \the [parent]."), \
 					span_notice("You start to insert the [inserted_item.name] into \the [parent]."))
 
 	INVOKE_ASYNC(src, PROC_REF(insert_item), inserted_item, user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /** Begins the process of attempting to remove the stored item.
  *
@@ -108,15 +108,17 @@
  * user - the person inserting the item.
  */
 /datum/component/food_storage/proc/insert_item(obj/item/inserted_item, mob/user)
-	if(do_after(user, 1.5 SECONDS, target = parent))
-		var/atom/food = parent
-		to_chat(user, span_notice("You slip [inserted_item.name] inside \the [parent]."))
-		inserted_item.forceMove(food)
-		user.log_message("inserted [inserted_item] into [parent].", LOG_ATTACK)
-		food.add_fingerprint(user)
-		inserted_item.add_fingerprint(user)
+	if(!do_after(user, 1.5 SECONDS, target = parent))
+		return
 
-		stored_item = inserted_item
+	var/atom/food = parent
+	to_chat(user, span_notice("You slip [inserted_item.name] inside \the [parent]."))
+	inserted_item.forceMove(food)
+	user.log_message("inserted [inserted_item] into [parent].", LOG_ATTACK)
+	food.add_fingerprint(user)
+	inserted_item.add_fingerprint(user)
+
+	stored_item = inserted_item
 
 /** Removes the item from the food, after a do_after.
  *

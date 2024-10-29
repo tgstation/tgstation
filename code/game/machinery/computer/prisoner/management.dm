@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 /obj/machinery/computer/prisoner/management/ui_data(mob/user)
 	var/list/data = list()
 
-	data["authorized"] = (authenticated && isliving(user)) || isAdminGhostAI(user) || issilicon(user)
+	data["authorized"] = (authenticated && isliving(user)) || HAS_SILICON_ACCESS(user)
 	data["inserted_id"] = null
 	if(!isnull(contained_id))
 		data["inserted_id"] = list(
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
 	return data
 
-/obj/machinery/computer/prisoner/management/ui_act(action, list/params)
+/obj/machinery/computer/prisoner/management/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -52,20 +52,20 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 		CRASH("[usr] potentially spoofed ui action [action] on prisoner console without the console being logged in.")
 
 	if(isliving(usr))
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 	switch(action)
 		if("login")
 			if(allowed(usr))
 				authenticated = TRUE
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 			else
-				playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+				playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
 			return TRUE
 
 		if("logout")
 			authenticated = FALSE
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
 			return TRUE
 
 		if("insert_id")

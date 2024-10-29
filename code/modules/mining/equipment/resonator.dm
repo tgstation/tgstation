@@ -87,7 +87,7 @@
 	if(parent_resonator)
 		parent_resonator.fields += src
 	adding_failure = set_failure
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
 	if(mode == RESONATOR_MODE_AUTO)
 		transform = matrix()*0.75
 		animate(src, transform = matrix()*1.5, time = duration)
@@ -123,7 +123,7 @@
 		var/turf/closed/mineral/mineral_turf = src_turf
 		mineral_turf.gets_drilled(creator)
 	check_pressure(src_turf)
-	playsound(src_turf, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
+	playsound(src_turf, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
 	for(var/mob/living/attacked_living in src_turf)
 		if(creator)
 			log_combat(creator, attacked_living, "used a resonator field on", "resonator")

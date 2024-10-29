@@ -11,7 +11,7 @@
 		user.reset_perspective(null)
 	user.remote_control = null
 
-//this datum manages it's own references
+//this datum manages its own references
 
 /datum/holocall
 	///the one that called
@@ -179,7 +179,7 @@
 	if(QDELETED(src))
 		return FALSE
 
-	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
+	. = !QDELETED(user) && !user.incapacitated && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
 
 	if(.)
 		if(!connected_holopad)

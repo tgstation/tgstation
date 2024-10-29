@@ -82,7 +82,7 @@
 
 /obj/item/food/monkeycube/gorilla
 	name = "gorilla cube"
-	desc = "A Waffle Co. brand gorilla cube. Now with extra molecules!"
+	desc = "A Waffle Corp. brand gorilla cube. Now with extra molecules!"
 	bite_consumption = 20
 	food_reagents = list(
 		/datum/reagent/monkey_powder = 30,

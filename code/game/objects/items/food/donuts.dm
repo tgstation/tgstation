@@ -79,7 +79,7 @@
 	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/food/donut/meat
-	name = "Meat Donut"
+	name = "meat donut"
 	desc = "Tastes as gross as it looks."
 	icon_state = "donut_meat"
 	food_reagents = list(

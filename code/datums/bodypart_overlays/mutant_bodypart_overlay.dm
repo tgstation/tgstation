@@ -8,10 +8,28 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
-	///Where does this organ inherit it's color from?
+	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 	///Take on the dna/preference from whoever we're gonna be inserted in
 	var/imprint_on_next_insertion = TRUE
+
+/datum/bodypart_overlay/mutant/New(obj/item/organ/attached_organ)
+	. = ..()
+
+	RegisterSignal(attached_organ, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_mob_insert))
+
+/datum/bodypart_overlay/mutant/proc/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
+	SIGNAL_HANDLER
+
+	if(!should_visual_organ_apply_to(parent.type, receiver))
+		stack_trace("adding a [parent.type] to a [receiver.type] when it shouldn't be!")
+
+	if(imprint_on_next_insertion) //We only want this set *once*
+		var/feature_name = receiver.dna.features[feature_key]
+		if (isnull(feature_name))
+			feature_name = receiver.dna.species.mutant_organs[parent.type]
+		set_appearance_from_name(feature_name)
+		imprint_on_next_insertion = FALSE
 
 /datum/bodypart_overlay/mutant/get_overlay(layer, obj/item/bodypart/limb)
 	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
@@ -28,12 +46,15 @@
 	sprite_datum = get_random_appearance()
 
 ///Grab a random appearance datum (thats not locked)
-/datum/bodypart_overlay/mutant/proc/get_random_appearance()
+/datum/bodypart_overlay/mutant/proc/get_random_appearance() as /datum/sprite_accessory
+	RETURN_TYPE(/datum/sprite_accessory)
 	var/list/valid_restyles = list()
 	var/list/feature_list = get_global_feature_list()
 	for(var/accessory in feature_list)
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
 		if(initial(accessory_datum.locked)) //locked is for stuff that shouldn't appear here
+			continue
+		if(!initial(accessory_datum.natural_spawn))
 			continue
 		valid_restyles += accessory_datum
 	return pick(valid_restyles)
@@ -64,7 +85,6 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
-
 	overlay.color = sprite_datum.color_src ? draw_color : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
@@ -103,19 +123,25 @@
 
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
-			draw_color = override_color(bodypart_owner.draw_color)
+			draw_color = override_color(bodypart_owner)
 		if(ORGAN_COLOR_INHERIT)
 			draw_color = bodypart_owner.draw_color
 		if(ORGAN_COLOR_HAIR)
+			var/datum/species/species = bodypart_owner.owner?.dna?.species
+			var/fixed_color = species?.get_fixed_hair_color(bodypart_owner.owner)
 			if(!ishuman(bodypart_owner.owner))
+				draw_color = fixed_color
 				return
 			var/mob/living/carbon/human/human_owner = bodypart_owner.owner
 			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as bodypart_owner
 			//head hair color takes priority, owner hair color is a backup if we lack a head or something
-			if(my_head)
-				draw_color = my_head.hair_color
-			else
-				draw_color = human_owner.hair_color
+			if(!my_head)
+				draw_color = fixed_color || human_owner.hair_color
+				return
+			if(my_head.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR))
+				draw_color = my_head.fixed_hair_color || my_head.hair_color
+			else //inherit mutant color of the bodypart if the owner doesn't have hair.
+				draw_color = bodypart_owner.draw_color
 
 	return TRUE
 
@@ -136,3 +162,4 @@
 		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
+

@@ -192,7 +192,7 @@
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
-	hitsound = 'sound/weapons/barragespellhit.ogg'
+	hitsound = 'sound/items/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/locker
 	name = "locker bolt"
@@ -376,13 +376,9 @@
 		return
 	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
-		var/oldkey = target.key
-		target.ghostize(FALSE)
+		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
 		target.key = chosen_one.key
-		trauma.friend.key = oldkey
-		trauma.friend.reset_perspective(null)
-		trauma.friend.Show()
-		trauma.friend_initialized = TRUE
+		trauma.add_friend(ghosted_target)
 	else
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
@@ -522,7 +518,7 @@
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
-	hitsound = 'sound/magic/mm_hit.ogg'
+	hitsound = 'sound/effects/magic/mm_hit.ogg'
 
 	trail = TRUE
 	trail_lifespan = 0.5 SECONDS
@@ -539,7 +535,7 @@
 	damage = 30
 	damage_type = BRUTE
 	knockdown = 50
-	hitsound = 'sound/weapons/punch3.ogg'
+	hitsound = 'sound/items/weapons/punch3.ogg'
 	trigger_range = 0
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
@@ -550,7 +546,7 @@
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
-	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	playsound(target_turf, 'sound/items/weapons/resonator_blast.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/cult/sac(target_turf)
 	for(var/obj/adjacent_object in range(1, src))
 		if(!adjacent_object.density)
@@ -585,7 +581,7 @@
 /obj/projectile/magic/shrink
 	name = "shrink ray"
 	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
+	hitsound = 'sound/items/weapons/shrink_hit.ogg'
 	damage = 0
 	damage_type = STAMINA
 	armor_flag = ENERGY

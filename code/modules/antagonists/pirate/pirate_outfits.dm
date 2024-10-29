@@ -55,6 +55,12 @@
 
 	head = /obj/item/clothing/head/helmet/space/pirate
 
+	id_trim = /datum/id_trim/pirate/captain
+
+/datum/outfit/pirate/space/captain/cardboard
+	name = "Space Pirate Captain (EVA)"
+	l_hand = /obj/item/nullrod/claymore/saber/pirate
+
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
 
@@ -62,10 +68,12 @@
 	id_trim = /datum/id_trim/pirate/silverscale
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	suit = /obj/item/clothing/suit/armor/vest/alt
+	back = /obj/item/storage/backpack/satchel
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/collectable/tophat
 	shoes = /obj/item/clothing/shoes/laceup
+	implants = list(/obj/item/implant/explosive)
 
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
@@ -149,6 +157,8 @@
 	suit = /obj/item/clothing/suit/jacket/oversized
 	head = /obj/item/clothing/head/costume/crown
 
+	id_trim = /datum/id_trim/pirate/captain
+
 /datum/outfit/pirate/medieval
 	name = "Medieval Warmonger"
 
@@ -179,3 +189,6 @@
 	belt = /obj/item/gun/magic/hook
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/lantern
+
+
+	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed

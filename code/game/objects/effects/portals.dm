@@ -66,7 +66,7 @@
 	return ..()
 
 // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
-/obj/effect/portal/newtonian_move(direction, instant = FALSE, start_delay = 0)
+/obj/effect/portal/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 0, controlled_cap = null)
 	return TRUE
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
@@ -113,7 +113,7 @@
 	playsound(loc, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
 
-/obj/effect/portal/singularity_pull()
+/obj/effect/portal/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/portal/singularity_act()

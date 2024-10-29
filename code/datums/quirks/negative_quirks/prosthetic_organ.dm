@@ -60,9 +60,9 @@
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 		Removal of these organs is known to be dangerous to the patient as well as the practitioner."
 	old_organ = human_holder.get_organ_slot(organ_slot)
-	if(prosthetic.Insert(human_holder, special = TRUE))
-		old_organ.moveToNullspace()
-		STOP_PROCESSING(SSobj, old_organ)
+	prosthetic.Insert(human_holder, special = TRUE)
+	old_organ.moveToNullspace()
+	STOP_PROCESSING(SSobj, old_organ)
 
 /datum/quirk/prosthetic_organ/post_add()
 	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is weak and highly unstable. \

@@ -393,12 +393,12 @@ function handle_pr($payload) {
 
 	$repo_name = $payload['repository']['name'];
 
-	if (in_array($repo_name, $game_announce_whitelist)) {
-		game_announce($action, $payload, $pr_flags);
-	}
-
 	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
 		discord_announce($action, $payload, $pr_flags);
+	}
+	
+	if (in_array($repo_name, $game_announce_whitelist)) {
+		game_announce($action, $payload, $pr_flags);
 	}
 }
 
@@ -482,14 +482,21 @@ function game_announce($action, $payload, $pr_flags) {
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 
 	$game_servers = filter_announce_targets($servers, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
-
-	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($payload));
+	$game_payload = array();
+	$game_payload['pull_request'] = array();
+	$game_payload['pull_request']['id'] = $payload['pull_request']['id'];
+	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($game_payload));
 
 	foreach ($game_servers as $serverid => $server) {
-		$server_message = $msg;
-		if (isset($server['comskey']))
-			$server_message .= '&key='.urlencode($server['comskey']);
-		game_server_send($server['address'], $server['port'], $server_message);
+		try {
+			$server_message = $msg;
+			if (isset($server['comskey']))
+				$server_message .= '&key='.urlencode($server['comskey']);
+			game_server_send($server['address'], $server['port'], $server_message);
+		} catch (exception $e) {
+			log_error('Error on line ' . $e->getLine() . ': ' . $e->getMessage());
+			continue;
+		}
 	}
 
 }
@@ -786,7 +793,7 @@ function game_server_send($addr, $port, $str) {
 	/* --- Create a socket and connect it to the server --- */
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
-	if(!socket_connect($server,$addr,$port)) {
+	if(!@socket_connect($server,$addr,$port)) {
 		return "ERROR: Connection failed";
 	}
 
@@ -804,8 +811,8 @@ function game_server_send($addr, $port, $str) {
 	}
 
 	/* --- Idle for a while until received bytes from game server --- */
-	$result = socket_read($server, 10000, PHP_BINARY_READ);
-	socket_close($server); // we don't need this anymore
+	$result = @socket_read($server, 10000, PHP_BINARY_READ);
+	@socket_close($server); // we don't need this anymore
 
 	if($result != "") {
 		if($result[0] == "\x00" || $result[1] == "\x83") { // make sure it's the right packet format

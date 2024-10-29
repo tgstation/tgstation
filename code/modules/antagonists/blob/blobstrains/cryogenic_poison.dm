@@ -12,7 +12,7 @@
 
 /datum/reagent/blob/cryogenic_poison
 	name = "Cryogenic Poison"
-	description = "will inject targets with a freezing poison that does high damage over time."
+	description = "A freezing poison that does high damage over time. Cryogenic poison blobs inject this into their victims."
 	color = "#8BA6E9"
 	taste_description = "brain freeze"
 

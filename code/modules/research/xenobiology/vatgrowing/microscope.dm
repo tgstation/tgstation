@@ -128,7 +128,5 @@
 	reqs = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/sheet/plastic = 1,
-		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/flashlight = 1,
 	)
 	category = CAT_CHEMISTRY

@@ -383,62 +383,18 @@
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
-	var/list/roundstart_non_secure_closets = GLOB.roundstart_station_closets.Copy()
-	for(var/obj/structure/closet/closet in roundstart_non_secure_closets)
-		if(closet.secure)
-			roundstart_non_secure_closets -= closet
+	var/list/roundstart_closets = GLOB.roundstart_station_closets.Copy()
 
 	/**
-	 * The number of links to perform.
-	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
-	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
-	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
-	 *
-	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
-	 * so, about 13 to 17 closets will be affected by this most of the times.
+	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
+	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_closets) * (rand(400, 430)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
-		var/closets_left = length(roundstart_non_secure_closets)
-		if(closets_left < 2)
-			return
 		var/list/targets = list()
-		for(var/how_many in 1 to min(closets_left, rand(2,3)))
-			targets += pick_n_take(roundstart_non_secure_closets)
-		if(closets_left == 1) //there's only one closet left. Let's not leave it alone.
-			targets += roundstart_non_secure_closets[1]
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
 		GLOB.eigenstate_manager.create_new_link(targets)
-
-/datum/station_trait/triple_ai
-	name = "AI Triumvirate"
-	trait_type = STATION_TRAIT_NEUTRAL
-	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
-	show_in_report = TRUE
-	weight = 1
-	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
-
-/datum/station_trait/triple_ai/New()
-	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
-
-/datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
-	return ..()
-
-/datum/station_trait/triple_ai/proc/on_occupations_setup(datum/controller/subsystem/job/source)
-	SIGNAL_HANDLER
-
-	//allows for latejoining AIs
-	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-		secondary_ai_spawn.latejoin_active = TRUE
-
-	var/datum/station_trait/job/human_ai/ai_trait = locate() in SSstation.station_traits
-	//human AI quirk will handle adding its own job positions, but for now don't allow more AI slots.
-	if(ai_trait)
-		return
-	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
-		ai_datum.spawn_positions = 3
-		ai_datum.total_positions = 3
 
 
 #define PRO_SKUB "pro-skub"
@@ -523,7 +479,7 @@
 		return
 
 	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
-		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
+		var/obj/item/storage/box/stickers/skub/boxie = new(spawned.loc)
 		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
@@ -540,24 +496,28 @@
 		shirt.forceMove(boxie)
 
 /// A box containing a skub, for easier carry because skub is a bulky item.
-/obj/item/storage/box/skub
-	name = "skub box"
-	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
-	icon_state = "hugbox"
-	illustration = "skub"
+/obj/item/storage/box/stickers/skub
+	name = "skub fan pack"
+	desc = "A vinyl pouch to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "skubpack"
+	illustration = "label_skub"
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/box/skub/Initialize(mapload)
+/obj/item/storage/box/stickers/skub/Initialize(mapload)
 	. = ..()
+	atom_storage.max_slots = 3
 	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
 
-/obj/item/storage/box/skub/PopulateContents()
+/obj/item/storage/box/stickers/skub/PopulateContents()
 	new /obj/item/skub(src)
 	new /obj/item/sticker/skub(src)
 	new /obj/item/sticker/skub(src)
 
 /obj/item/storage/box/stickers/anti_skub
-	name = "anti-skub stickers box"
-	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
+	name = "anti-skub stickers pack"
+	desc = "The enemy may have been given a skub and a shirt, but I've got more stickers! Plus the pack can hold my anti-skub shirt."
+	icon_state = "skubpack"
+	illustration = "label_anti_skub"
 
 /obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
 	. = ..()
@@ -584,3 +544,47 @@
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
+
+
+/datum/station_trait/pet_day
+	name = "Bring Your Pet To Work Day"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+
+/datum/station_trait/pet_day/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/pet_day/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	lobby_button.desc = "Want to bring your innocent pet to a giant metal deathtrap? Click here to customize it!"
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	return ..()
+
+/datum/station_trait/pet_day/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/datum/station_trait/pet_day/on_round_start()
+	return
+
+/datum/station_trait/pet_day/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/our_player = lobby_button.get_mob()
+	var/client/player_client = our_player.client
+	if(isnull(player_client))
+		return
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		customization = new(player_client)
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum, ui_interact), our_player)
+
+/datum/station_trait/pet_day/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		return
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum/pet_customization, create_pet), spawned, player_client)
+
+/datum/station_trait/pet_day/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	overlays += "select_pet"

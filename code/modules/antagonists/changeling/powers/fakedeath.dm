@@ -108,7 +108,7 @@
 	if(!length(user.get_missing_limbs() - dont_regenerate))
 		return
 
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	user.visible_message(
 		span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
 		span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
@@ -123,7 +123,7 @@
 		return
 
 	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
-	if(QDELETED(ling) || !(src in ling.innate_powers + ling.purchased_powers)) // checking both innate and purchased for full coverage
+	if(QDELETED(ling) || !(src in (ling.innate_powers + ling.purchased_powers))) // checking both innate and purchased for full coverage
 		return
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return

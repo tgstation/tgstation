@@ -22,7 +22,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 25
 	lighting_cutoff_blue = 20
-	attack_sound = 'sound/weapons/punch3.ogg'
+	attack_sound = 'sound/items/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
 
@@ -108,7 +108,7 @@
 		span_warning("[owner] slaps [to_slap] with its tentacle!"),
 		span_notice("You slap [to_slap] with your tentacle."),
 	)
-	playsound(owner, 'sound/effects/assslap.ogg', 90)
+	playsound(owner, 'sound/effects/emotes/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)
 	living_to_slap.throw_at(throw_target, 6, 4, owner)
 	living_to_slap.apply_damage(30, BRUTE)

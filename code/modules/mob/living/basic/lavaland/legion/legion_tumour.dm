@@ -7,7 +7,7 @@
 	icon_state = "legion_remains"
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
-	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_PROMINENT
+	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	decay_factor = STANDARD_ORGAN_DECAY * 3 // About 5 minutes outside of a host
 	/// What stage of growth the corruption has reached.
 	var/stage = 0
@@ -21,10 +21,10 @@
 	var/spawn_type = /mob/living/basic/mining/legion
 	/// Spooky sounds to play as you start to turn
 	var/static/list/spooky_sounds = list(
-		'sound/voice/lowHiss1.ogg',
-		'sound/voice/lowHiss2.ogg',
-		'sound/voice/lowHiss3.ogg',
-		'sound/voice/lowHiss4.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+		'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
 	)
 
 /obj/item/organ/internal/legion_tumour/Initialize(mapload)
@@ -117,7 +117,7 @@
 				to_chat(owner, span_danger("Something flexes under your skin."))
 			if(SPT_PROB(2, seconds_per_tick))
 				if (prob(40))
-					SEND_SOUND(owner, sound('sound/voice/ghost_whisper.ogg'))
+					SEND_SOUND(owner, sound('sound/music/antag/bloodcult/ghost_whisper.ogg'))
 				else
 					SEND_SOUND(owner, sound(pick(spooky_sounds)))
 			if(SPT_PROB(3, seconds_per_tick))

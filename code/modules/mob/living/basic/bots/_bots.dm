@@ -26,7 +26,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	maximum_survivable_temperature = INFINITY
 	minimum_survivable_temperature = 0
-	has_unlimited_silicon_privilege = TRUE
 
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
@@ -59,6 +58,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///All initial access this bot started with.
 	var/list/initial_access = list()
 	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+	/// DO NOT MODIFY MANUALLY, USE set_bot_mode_flags. If you don't shit breaks BAD
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_MAINTS_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 	var/bot_access_flags = BOT_COVER_LOCKED
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// Message to display upon possession
@@ -109,11 +109,12 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
 
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
-	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -142,9 +143,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 		datahud.show_to(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
-
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT) && (bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION))
 		enable_possession(mapload = mapload)
 
@@ -153,6 +151,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	ai_controller.set_blackboard_key(BB_ANNOUNCE_ABILITY, pa_system)
 	ai_controller.set_blackboard_key(BB_RADIO_CHANNEL, radio_channel)
 	update_appearance()
+
+/mob/living/basic/bot/proc/set_mode_flags(mode_flags)
+	SHOULD_CALL_PARENT(TRUE)
+	bot_mode_flags = mode_flags
+	SEND_SIGNAL(src, COMSIG_BOT_MODE_FLAGS_SET, mode_flags)
 
 /mob/living/basic/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -184,7 +187,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/turn_on()
 	if(stat == DEAD)
 		return FALSE
-	bot_mode_flags |= BOT_MODE_ON
+	set_mode_flags(bot_mode_flags | BOT_MODE_ON)
 	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
@@ -193,7 +196,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/proc/turn_off()
-	bot_mode_flags &= ~BOT_MODE_ON
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_ON)
 	add_traits(on_toggle_traits, POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
@@ -311,7 +314,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	bot_access_flags |= BOT_COVER_EMAGGED
 	bot_access_flags |= BOT_COVER_LOCKED
-	bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED) //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -520,7 +523,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
-		dropped_cell.update_appearance()
 		return
 
 	if(istype(item_to_drop, /obj/item/storage))
@@ -536,6 +538,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	access_card.set_access(initial_access)
+	update_bot_mode(new_mode = src::mode)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()
@@ -556,15 +559,17 @@ GLOBAL_LIST_INIT(command_strings, list(
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!! //OBJECTION!!
-			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+			set_patrol_off()
 		if("patrolon")
-			bot_mode_flags |= BOT_MODE_AUTOPATROL
+			set_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 		if("summon")
 			summon_bot(user, user_access = user_access)
 		if("ejectpai")
 			eject_pai_remote(user)
 
+/mob/living/basic/bot/proc/set_patrol_off()
+	bot_reset()
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 
 /mob/living/basic/bot/proc/bot_control_message(command, user)
 	if(command == "summon")
@@ -611,10 +616,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("maintenance")
 			bot_access_flags ^= BOT_COVER_MAINTS_OPEN
 		if("patrol")
-			bot_mode_flags ^= BOT_MODE_AUTOPATROL
+			set_mode_flags(bot_mode_flags ^ BOT_MODE_AUTOPATROL)
 			bot_reset()
 		if("airplane")
-			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
+			set_mode_flags(bot_mode_flags ^ BOT_MODE_REMOTE_ENABLED)
 		if("hack")
 			if(!HAS_SILICON_ACCESS(the_user))
 				return

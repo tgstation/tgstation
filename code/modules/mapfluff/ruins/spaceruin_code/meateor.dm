@@ -56,7 +56,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 			else
 				playsound(loc, 'sound/effects/meatslap.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 		if(BURN)

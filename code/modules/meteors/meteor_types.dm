@@ -60,8 +60,7 @@
 			get_hit()
 
 	if(z != z_original || loc == get_turf(dest))
-		qdel(src)
-		return
+		moved_off_z()
 
 /obj/effect/meteor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Keeps us from drifting for no reason
@@ -80,13 +79,9 @@
 	if(!new_loop)
 		return
 
-	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(handle_stopping))
-
 ///Deals with what happens when we stop moving, IE we die
-/obj/effect/meteor/proc/handle_stopping()
-	SIGNAL_HANDLER
-	if(!QDELETED(src))
-		qdel(src)
+/obj/effect/meteor/proc/moved_off_z()
+	qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first yell at mobs about them dying horribly
@@ -208,7 +203,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
+	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 
@@ -306,7 +301,7 @@
 	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
-	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
 	threat = 5
@@ -347,7 +342,7 @@
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
@@ -373,7 +368,7 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
 	empulse(src, 3, 8)
 
 //Meaty Ore
@@ -383,7 +378,7 @@
 	desc = "Just... don't think too hard about where this thing came from."
 	hits = 2
 	heavy = TRUE
-	meteorsound = 'sound/effects/blobattack.ogg'
+	meteorsound = 'sound/effects/blob/blobattack.ogg'
 	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
@@ -459,8 +454,8 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
-	icon_state = "pumpkin"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "spooky"
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
@@ -469,6 +464,6 @@
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+	meteorsound = SFX_HALLUCINATION_I_M_HERE
 
 #undef DEFAULT_METEOR_LIFETIME

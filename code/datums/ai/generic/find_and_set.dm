@@ -177,3 +177,25 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/potential_friend = living_pawn.faction.Find(REF(friend)) ? friend : null
 	return potential_friend
+
+
+/datum/ai_behavior/find_and_set/in_list/turf_types
+
+/datum/ai_behavior/find_and_set/in_list/turf_types/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+	var/list/found = RANGE_TURFS(search_range, controller.pawn)
+	shuffle_inplace(found)
+	for(var/turf/possible_turf as anything in found)
+		if(!is_type_in_typecache(possible_turf, locate_paths))
+			continue
+		if(can_see(controller.pawn, possible_turf, search_range))
+			return possible_turf
+	return null
+
+/datum/ai_behavior/find_and_set/in_list/closest_turf
+
+/datum/ai_behavior/find_and_set/in_list/closest_turf/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+	var/list/found = RANGE_TURFS(search_range, controller.pawn)
+	for(var/turf/possible_turf as anything in found)
+		if(!is_type_in_typecache(possible_turf, locate_paths) || !can_see(controller.pawn, possible_turf, search_range))
+			found -= possible_turf
+	return (length(found)) ? get_closest_atom(/turf, found, controller.pawn) : null

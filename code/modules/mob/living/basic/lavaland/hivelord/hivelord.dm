@@ -15,9 +15,9 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attack_verb_continuous = "weakly tackles"
-	attack_verb_simple = "weakly tackles"
+	attack_verb_simple = "weakly tackle"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/pierce.ogg'
+	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"
 	obj_damage = 0
 	pass_flags = PASSTABLE
@@ -94,7 +94,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	density = FALSE

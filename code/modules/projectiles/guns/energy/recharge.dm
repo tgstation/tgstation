@@ -12,7 +12,7 @@
 	/// How much time we need to recharge
 	var/recharge_time = 1.6 SECONDS
 	/// Sound we use when recharged
-	var/recharge_sound = 'sound/weapons/kinetic_reload.ogg'
+	var/recharge_sound = 'sound/items/weapons/kinetic_reload.ogg'
 	/// An ID for our recharging timer.
 	var/recharge_timerid
 	/// Do we recharge slower with more of our type?
@@ -111,9 +111,9 @@
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+
+/obj/item/gun/energy/recharge/ebow/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"

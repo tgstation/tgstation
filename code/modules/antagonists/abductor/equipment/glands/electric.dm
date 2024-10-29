@@ -23,4 +23,4 @@
 
 /obj/item/organ/internal/heart/gland/electric/proc/zap()
 	tesla_zap(source = owner, zap_range = 4, power = 8e3, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN)
-	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/effects/magic/lightningshock.ogg', 50, TRUE)

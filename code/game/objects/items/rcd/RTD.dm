@@ -24,6 +24,9 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -35,7 +38,7 @@
 	var/datum/tile_info/tile_design
 	/// overlays on a tile
 	var/list/design_overlays = list()
-
+	var/ranged = TRUE
 /// stores the name, type, icon & cost for each tile type
 /datum/tile_info
 	/// name of this tile design for ui
@@ -195,6 +198,7 @@
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
@@ -285,8 +289,12 @@
 	if(!checkResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+	var/beam
+	if(!ranged)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	else
+		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
+		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -387,6 +395,51 @@
 
 /obj/item/construction/rtd/loaded
 	matter = 350
+
+
+/obj/item/construction/rtd/borg
+	var/energyfactor = 0.03 * STANDARD_CELL_CHARGE
+	var/delay = 0
+	ranged = FALSE
+	
+/obj/item/construction/rtd/borg/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!(interacting_with in view(1, get_turf(user))))
+		return NONE
+	return try_tiling(interacting_with, user)
+	
+/obj/item/construction/rtd/borg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/obj/item/construction/rtd/borg/get_matter(mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	max_matter = borgy.cell.maxcharge
+	return borgy.cell.charge
+
+/obj/item/construction/rtd/borg/useResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.use(amount * energyfactor)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
+
+/obj/item/construction/rtd/borg/checkResource(amount, mob/user)
+	if(!iscyborg(user))
+		return 0
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		balloon_alert(user, "no cell found!")
+		return 0
+	. = borgy.cell.charge >= (amount * energyfactor)
+	if(!.)
+		balloon_alert(user, "insufficient charge!")
 
 /obj/item/construction/rtd/admin
 	name = "admin RTD"

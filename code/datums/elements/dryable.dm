@@ -27,25 +27,24 @@
 		var/atom/movable/resulting_atom = dried_atom
 		resulting_atom.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY)
 		apply_dried_status(resulting_atom, drying_user)
-		resulting_atom.forceMove(source.drop_location())
 		return
 	else if(isstack(source)) //Check if its a sheet
 		var/obj/item/stack/itemstack = dried_atom
 		for(var/i in 1 to itemstack.amount)
-			var/atom/movable/resulting_atom = new dry_result(source.drop_location())
+			var/atom/movable/resulting_atom = new dry_result(source.loc)
 			apply_dried_status(resulting_atom, drying_user)
 		qdel(source)
 		return
 	else if(istype(source, /obj/item/food) && ispath(dry_result, /obj/item/food))
 		var/obj/item/food/source_food = source
-		var/obj/item/food/resulting_food = new dry_result(source.drop_location())
+		var/obj/item/food/resulting_food = new dry_result(source.loc)
 		resulting_food.reagents.clear_reagents()
 		source_food.reagents.trans_to(resulting_food, source_food.reagents.total_volume)
 		apply_dried_status(resulting_food, drying_user)
 		qdel(source)
 		return
 	else
-		var/atom/movable/resulting_atom = new dry_result(source.drop_location())
+		var/atom/movable/resulting_atom = new dry_result(source.loc)
 		apply_dried_status(resulting_atom, drying_user)
 		qdel(source)
 

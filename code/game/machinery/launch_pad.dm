@@ -66,6 +66,15 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!panel_open)
+		return
+
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
 	if(!stationary)
 		return ..()
@@ -73,14 +82,6 @@
 	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
 		update_indicator()
 		return
-
-	if(panel_open && weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, weapon))
-			return
-		var/obj/item/multitool/multi = weapon
-		multi.set_buffer(src)
-		balloon_alert(user, "saved to buffer")
-		return TRUE
 
 	if(default_deconstruction_crowbar(weapon))
 		return
@@ -97,7 +98,7 @@
 /// Updates diagnostic huds
 /obj/machinery/launchpad/proc/update_hud()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
-	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_OPEN_TURF_LAYER, src, GAME_PLANE)
+	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 	holder.appearance = target
 
 	update_indicator()
@@ -180,11 +181,11 @@
 		indicator_icon = "launchpad_pull"
 	update_indicator()
 
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
 	if(!hidden)
-		playsound(target, 'sound/weapons/flash.ogg', 25, TRUE)
+		playsound(target, 'sound/items/weapons/flash.ogg', 25, TRUE)
 		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
 		spark_system.set_up(5, TRUE, target)
 		spark_system.start()
@@ -202,7 +203,7 @@
 	if(!hidden)
 		// Takes twice as long to make sure it properly fades out.
 		Beam(target, icon_state = teleport_beam, time = BEAM_FADE_TIME*2, beam_type = /obj/effect/ebeam/launchpad)
-		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
+		playsound(target, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
 	use_energy(active_power_usage)
@@ -215,7 +216,7 @@
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
@@ -416,7 +417,7 @@
 		return
 	pad.doteleport(user, sending)
 
-/obj/item/launchpad_remote/ui_act(action, params)
+/obj/item/launchpad_remote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

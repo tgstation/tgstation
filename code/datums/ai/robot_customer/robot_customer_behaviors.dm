@@ -63,7 +63,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	controller.add_blackboard_key(BB_CUSTOMER_PATIENCE, seconds_per_tick * -1 SECONDS) // Convert seconds_per_tick to a SECONDS equivalent.
-	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
+	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because something might've forced us to
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	// SPT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
@@ -78,7 +78,7 @@
 		if(my_seat)
 			controller.pawn.setDir(my_seat.dir) //Sit in your seat
 
-	///Now check if theres a meal infront of us.
+	///Now check if there's a meal infront of us.
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
 	var/turf/infront_turf = get_step(controller.pawn, controller.pawn.dir)
@@ -100,7 +100,7 @@
 	if(greytider || QDELETED(src) || QDELETED(customer_pawn))
 		return
 	controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE)
-	customer_pawn.update_icon() //They might have a special leaving accesoiry (french flag)
+	customer_pawn.update_icon() //They might have a special leaving accessory (French flag)
 	if(succeeded)
 		customer_pawn.say(pick(customer_data.leave_happy_lines))
 	else

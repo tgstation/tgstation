@@ -160,8 +160,7 @@
 // This is specifically happening because they're not used to their new height and are stumbling around into machinery made for normal humans
 /datum/mutation/human/acromegaly/proc/head_bonk(mob/living/parent)
 	SIGNAL_HANDLER
-	var/turf/airlock_turf = get_turf(parent)
-	var/atom/movable/whacked_by = locate(/obj/machinery/door/airlock) in airlock_turf || locate(/obj/machinery/door/firedoor) in airlock_turf || locate(/obj/structure/mineral_door) in airlock_turf
+	var/atom/movable/whacked_by = (locate(/obj/machinery/door/airlock) in parent.loc) || (locate(/obj/machinery/door/firedoor) in parent.loc) || (locate(/obj/structure/mineral_door) in parent.loc)
 	if(!whacked_by || prob(100 - (8 *  GET_MUTATION_SYNCHRONIZER(src))))
 		return
 	to_chat(parent, span_danger("You hit your head on \the [whacked_by]'s header!"))
@@ -258,8 +257,8 @@
 /datum/mutation/human/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
-	text_gain_indication = "You feel unusually monkey-like."
-	text_lose_indication = "You feel like your old self."
+	text_gain_indication = span_green("You feel unusually monkey-like.")
+	text_lose_indication = span_notice("You feel like your old self.")
 	quality = NEGATIVE
 	instability = NEGATIVE_STABILITY_MAJOR // mmmonky
 	remove_on_aheal = FALSE
@@ -269,18 +268,26 @@
 	var/original_name
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	if(!ismonkey(owner))
-		original_species = owner.dna.species.type
-		original_name = owner.real_name
-		owner.fully_replace_character_name(null, "monkey ([rand(1,999)])")
-	. = owner.monkeyize()
+	if(ismonkey(owner))
+		return
+	original_species = owner.dna.species.type
+	original_name = owner.real_name
+	owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(!QDELETED(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		owner.fully_replace_character_name(null, original_name)
-		. = owner.humanize(original_species)
+	if(owner.stat == DEAD)
+		return
+	. = ..()
+	if(.)
+		return
+	if(QDELETED(owner))
+		return
+
+	owner.fully_replace_character_name(null, original_name)
+	owner.humanize(original_species)
 
 /datum/mutation/human/glow
 	name = "Glowy"
@@ -467,7 +474,7 @@
 		if(prob(15))
 			owner.acid_act(rand(30, 50), 10)
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
-			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
+			playsound(owner,'sound/items/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/human/spastic
 	name = "Spastic"
@@ -583,9 +590,9 @@
 
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = BODY_ZONE_CHEST
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -608,9 +615,9 @@
 		return TRUE
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = initial(brain.zone)
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.

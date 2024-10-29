@@ -120,7 +120,7 @@
 	data["sprites"] = sprite_data
 	return data
 
-/datum/greyscale_modify_menu/ui_act(action, params)
+/datum/greyscale_modify_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

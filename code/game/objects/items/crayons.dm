@@ -372,7 +372,7 @@
 	.["selected_color"] = GLOB.pipe_color_name[paint_color] || paint_color
 	.["paint_colors"] = GLOB.pipe_paint_colors
 
-/obj/item/toy/crayon/ui_act(action, list/params)
+/obj/item/toy/crayon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -384,7 +384,7 @@
 				. = TRUE
 		if("select_stencil")
 			var/stencil = params["item"]
-			if(stencil in all_drawables + randoms)
+			if(stencil in (all_drawables + randoms))
 				drawtype = stencil
 				. = TRUE
 				text_buffer = ""
@@ -402,7 +402,7 @@
 			set_painting_tool_color(paint_color)
 			. = TRUE
 		if("enter_text")
-			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer, max_length = MAX_MESSAGE_LEN)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)
@@ -458,6 +458,12 @@
 		if(RANDOM_ANY)
 			drawing = pick(all_drawables)
 
+	if(drawing in graffiti_large_h)
+		paint_mode = PAINT_LARGE_HORIZONTAL
+		text_buffer = ""
+	else
+		paint_mode = PAINT_NORMAL
+
 	var/istagger = HAS_TRAIT(user, TRAIT_TAGGER)
 	var/cost = all_drawables[drawing] || CRAYON_COST_DEFAULT
 	if(istype(target, /obj/item/canvas))
@@ -479,7 +485,7 @@
 		temp = "symbol"
 	else if(drawing in drawings)
 		temp = "drawing"
-	else if(drawing in graffiti|oriented)
+	else if(drawing in (graffiti|oriented))
 		temp = "graffiti"
 
 	var/graf_rot
@@ -498,8 +504,8 @@
 	var/clicky
 
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+		clickx = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
+		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
 		to_chat(user, span_notice("You start drawing a [temp] on the [target.name]..."))
@@ -645,12 +651,37 @@
 	dye_color = DYE_BLACK
 
 /obj/item/toy/crayon/white
-	name = "white crayon"
+	name = "stick of chalk"
+	desc = "A stark-white stick of chalk."
 	icon_state = "crayonwhite"
 	paint_color = COLOR_WHITE
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
+
+/obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return ..()
+
+	var/mob/living/carbon/human/pwned_human = interacting_with
+
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		balloon_alert_to_viewers("FEEDING TIME")
+		return ..()
+
+	balloon_alert_to_viewers("drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
+		return NONE
+	if(!use_charges(user, 1))
+		return NONE
+
+	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"
@@ -763,8 +794,8 @@
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 	register_context()
@@ -788,7 +819,13 @@
 		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
-	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
+
+	if(isbodypart(target))
+		var/obj/item/bodypart/limb = target
+		if(IS_ROBOTIC_LIMB(limb))
+			context[SCREENTIP_CONTEXT_RMB] = "Restyle robotic limb"
+	else
+		context[SCREENTIP_CONTEXT_RMB] = "Copy color"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -796,7 +833,6 @@
 	return (isfloorturf(surface) || iswallturf(surface))
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
-	var/mob/living/carbon/human/H = user
 	var/used = min(charges_left, 10)
 	if(is_capped || !actually_paints || !use_charges(user, 10, FALSE))
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
@@ -811,7 +847,7 @@
 		set_painting_tool_color(COLOR_SILVER)
 	update_appearance()
 	if(actually_paints)
-		H.update_lips("spray_face", paint_color)
+		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
 
@@ -835,7 +871,10 @@
 /obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)
 	if(iscarbon(target))
 		return TRUE
-	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+	if(is_capped && HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		// specifically don't try to use a capped spraycan on stuff like bags and tables, just place it
+		return FALSE
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE))
 		return TRUE
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		return TRUE
@@ -860,13 +899,13 @@
 		if(carbon_target.client)
 			carbon_target.set_eye_blur_if_lower(6 SECONDS)
 			carbon_target.adjust_temp_blindness(2 SECONDS)
-		if(carbon_target.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
+		if(carbon_target.get_eye_protection() <= 0 || carbon_target.is_eyes_covered()) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks. added redundancy because gas masks don't give you eye protection
 			carbon_target.adjust_jitter(1 SECONDS)
 			carbon_target.adjust_eye_blur(0.5 SECONDS)
 			flash_color(carbon_target, flash_color=paint_color, flash_time=40)
 		if(ishuman(carbon_target) && actually_paints)
 			var/mob/living/carbon/human/human_target = carbon_target
-			human_target.update_lips("spray_face", paint_color)
+			human_target.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 		use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
@@ -937,6 +976,10 @@
 
 /obj/item/toy/crayon/spraycan/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_capped)
+		if(!interacting_with.color)
+			// let's be generous and assume if they're trying to match something with no color, while capped,
+			// we shouldn't be blocking further interactions
+			return NONE
 		balloon_alert(user, "take the cap off first!")
 		return ITEM_INTERACT_BLOCKING
 	if(check_empty(user))
@@ -944,7 +987,7 @@
 
 	if(isbodypart(interacting_with) && actually_paints)
 		var/obj/item/bodypart/limb = interacting_with
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)
@@ -972,9 +1015,6 @@
 	balloon_alert(user, is_capped ? "capped" : "cap removed")
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
-/obj/item/toy/crayon/spraycan/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
@@ -1058,6 +1098,13 @@
 	name = "infinite spraycan"
 	charges = INFINITE_CHARGES
 	desc = "Now with 30% more bluespace technology."
+
+/obj/item/toy/crayon/spraycan/roboticist
+	name = "roboticist spraycan"
+	desc = "Paint for restyling unattached robotic limbs. Sadly doesn't shine like chrome."
+	icon_state = "robocan"
+	icon_capped = "robocan_cap"
+	icon_uncapped = "robocan"
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

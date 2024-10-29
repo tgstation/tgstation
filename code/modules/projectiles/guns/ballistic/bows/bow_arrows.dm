@@ -33,16 +33,71 @@
 	speed = 1
 	range = 25
 	shrapnel_type = null
-	embedding = list(
-		embed_chance = 90,
-		fall_chance = 2,
-		jostle_chance = 2,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.5,
-		pain_mult = 3,
-		jostle_pain_mult = 3,
-		rip_time = 1 SECONDS
-	)
+	embed_type = /datum/embed_data/arrow
+
+/datum/embed_data/arrow
+	embed_chance = 90
+	fall_chance = 2
+	jostle_chance = 2
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.5
+	pain_mult = 3
+	jostle_pain_mult = 3
+	rip_time = 1 SECONDS
+
+/// sticky arrows
+/obj/item/ammo_casing/arrow/sticky
+	name = "sticky arrow"
+	desc = "A sticky arrow. Not sharp-ended, but ripping it off yourself once hit would be rather difficult and painful."
+	icon_state = "sticky_arrow"
+	inhand_icon_state = "sticky_arrow"
+	base_icon_state = "sticky_arrow"
+	projectile_type = /obj/projectile/bullet/arrow/sticky
+
+///sticky arrow projectile
+/obj/projectile/bullet/arrow/sticky
+	name = "sticky arrow"
+	desc = "Quite the sticky situation..."
+	icon_state = "sticky_arrow_projectile"
+	damage = 30
+	speed = 0.75
+	range = 20
+	embed_type = /datum/embed_data/arrow/sticky
+
+/datum/embed_data/arrow/sticky
+	embed_chance = 99
+	fall_chance = 0
+	jostle_chance = 1
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.7
+	pain_mult = 3
+	jostle_pain_mult = 3
+	rip_time = 8 SECONDS
+
+/// poison arrows
+/obj/item/ammo_casing/arrow/poison
+	name = "poisonous arrow"
+	desc = "A poisonous arrow."
+	icon_state = "poison_arrow"
+	inhand_icon_state = "poison_arrow"
+	base_icon_state = "poison_arrow"
+	projectile_type = /obj/projectile/bullet/arrow/poison
+
+/// poison arrow projctile
+/obj/projectile/bullet/arrow/poison
+	name = "poisonous arrow"
+	desc = "Better to not get hit with this!"
+	icon_state = "poison_arrow_projectile"
+	damage = 40
+	embed_type = /datum/embed_data/arrow
+
+/obj/projectile/bullet/arrow/poison/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!ishuman(target))
+		return
+
+	target.reagents?.add_reagent(/datum/reagent/toxin/cyanide, 8)
+	target.reagents?.add_reagent(/datum/reagent/toxin/staminatoxin, 1)
 
 /// holy arrows
 /obj/item/ammo_casing/arrow/holy
@@ -58,21 +113,33 @@
 	name = "holy arrow"
 	desc = "Here it comes, cultist scum!"
 	icon_state = "holy_arrow_projectile"
-	damage = 20 //still a lot but this is roundstart gear so far less
-	embedding = list(
-		embed_chance = 50,
-		fall_chance = 2,
-		jostle_chance = 0,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.5,
-		pain_mult = 3,
-		rip_time = 1 SECONDS
-	)
 
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
 	//50 damage to revenants
 	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 30)
+
+/// plastic arrows
+// completely dogshit quality and they break when they hit something.
+/obj/item/ammo_casing/arrow/plastic
+	name = "plastic arrow"
+	desc = "The earliest mining teams within the Spinward Sector were the somewhat stout ancestors of the modern settlers. These teams \
+		found themselves often unable to access the quality materials they were digging up for equipment maintenance, all being sent off-site. \
+		Left with few options, and in need of a way to protect themselves in the hostile work enviroments of the Spinward, they turned \
+		to the one material they had in abundance."
+	icon_state = "plastic_arrow"
+	base_icon_state = "plastic_arrow"
+	projectile_type = /obj/projectile/bullet/arrow/plastic
+	reusable = FALSE //cheap shit
+
+/// plastic arrow projectile
+/obj/projectile/bullet/arrow/plastic
+	name = "plastic arrow"
+	desc = "If this is about to kill you, you should feel genuine shame."
+	damage = 5
+	stamina = 50
+	weak_against_armour = TRUE
+	icon_state = "plastic_arrow_projectile"
 
 /// special pyre sect arrow
 /// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
@@ -87,7 +154,7 @@
 	desc = "THE UNMATCHED POWER OF THE SUN"
 	icon_state = "holy_arrow_projectile"
 	damage = 20
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/arrow/blazing/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
@@ -99,5 +166,5 @@
 		human_target.adjust_fire_stacks(2)
 		human_target.ignite_mob()
 		return
-	to_chat(human_target, span_danger("[src] reacts with the flames on y-"))
+	to_chat(human_target, span_danger("[src] reacts with the flames enveloping you! Oh shit!"))
 	explosion(src, light_impact_range = 1, flame_range = 2) //ow

@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
@@ -198,6 +199,10 @@
 
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE
+
+/turf/open/openspace/xenobio
+	name = "xenobio bz air"
+	initial_gas_mix = XENOBIO_BZ
 
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE

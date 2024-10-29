@@ -14,6 +14,13 @@ export const sound_ambience: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const sound_breathing: FeatureToggle = {
+  name: 'Enable breathing sounds',
+  category: 'SOUND',
+  description: 'When enabled, hear breathing sounds when using internals.',
+  component: CheckboxInput,
+};
+
 export const sound_announcements: FeatureToggle = {
   name: 'Enable announcement sounds',
   category: 'SOUND',
@@ -100,4 +107,20 @@ export const sound_achievement: FeatureChoiced = {
     If disabled, no sound will be played.
   `,
   component: FeatureDropdownInput,
+};
+
+export const sound_radio_noise: FeatureToggle = {
+  name: 'Enable radio noise',
+  category: 'SOUND',
+  description:
+    'When enabled, hear sounds of talking and hearing radio chatter.',
+  component: CheckboxInput,
+};
+
+export const sound_ai_vox: FeatureToggle = {
+  name: 'Enable AI VOX announcements',
+  category: 'SOUND',
+  description:
+    'When enabled, hear vocal AI announcements (also known as "VOX").',
+  component: CheckboxInput,
 };

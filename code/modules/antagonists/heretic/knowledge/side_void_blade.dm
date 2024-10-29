@@ -23,6 +23,9 @@
 	limit = 1
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "ghoul_shattered"
+	depth = 4
 
 /datum/heretic_knowledge/limited_amount/risen_corpse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -139,6 +142,9 @@
 	result_atoms = list(/obj/item/melee/rune_carver)
 	cost = 1
 	route = PATH_SIDE
+	depth = 8
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "rune_carver"
 
 /datum/heretic_knowledge/summon/maid_in_mirror
 	name = "Maid in the Mirror"
@@ -162,3 +168,4 @@
 	route = PATH_SIDE
 	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
 	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR
+	depth = 10

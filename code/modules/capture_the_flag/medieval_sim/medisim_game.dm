@@ -22,7 +22,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/human_knight = .
-	randomize_human(human_knight)
+	randomize_human_normie(human_knight)
 	human_knight.dna.add_mutation(/datum/mutation/human/medieval, MUT_OTHER)
 	var/oldname = human_knight.name
 	var/title = "error"

@@ -480,7 +480,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cR" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cS" = (
@@ -610,7 +610,7 @@
 "dw" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dx" = (
@@ -653,7 +653,7 @@
 "dH" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dI" = (
@@ -705,7 +705,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ea" = (
@@ -714,7 +714,7 @@
 /area/awaymission/caves/northblock)
 "ed" = (
 /obj/structure/bed,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ee" = (
@@ -849,7 +849,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eO" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eP" = (
@@ -1584,7 +1584,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Bs" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/caves,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

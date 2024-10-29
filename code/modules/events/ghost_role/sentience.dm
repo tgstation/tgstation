@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/butterfly,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/chicken,
+	/mob/living/basic/crab,
 	/mob/living/basic/cow,
 	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
@@ -18,6 +19,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/bot/secbot/beepsky,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/basic/bear/snow/misha,
+	/mob/living/basic/mining/lobstrosity/juvenile,
 )))
 
 /datum/round_event_control/sentience
@@ -102,9 +104,9 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		spawned_mobs += selected
 
 		to_chat(selected, span_userdanger("Hello world!"))
-		to_chat(selected, "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(selected, span_warning("Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
-			and the ability to speak and understand human language!</span>")
+			and the ability to speak and understand human language!"))
 
 	return SUCCESSFUL_SPAWN
 

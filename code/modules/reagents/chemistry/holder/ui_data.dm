@@ -297,7 +297,7 @@
 	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 	return reaction.type
 
-/datum/reagents/ui_act(action, params)
+/datum/reagents/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

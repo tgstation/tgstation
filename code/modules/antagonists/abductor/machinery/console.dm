@@ -118,7 +118,7 @@
 		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 	return data
 
-/obj/machinery/abductor/console/ui_act(action, list/params)
+/obj/machinery/abductor/console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

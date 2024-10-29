@@ -101,24 +101,28 @@ SUBSYSTEM_DEF(vote)
 
 	// stringify the winners to prevent potential unimplemented serialization errors.
 	// Perhaps this can be removed in the future and we assert that vote choices must implement serialization.
-	var/final_winner_string = final_winner && "[final_winner]"
+	var/final_winner_string = (final_winner && "[final_winner]") || "NO WINNER"
 	var/list/winners_string = list()
-	for(var/winner in winners)
-		winners_string += "[winner]"
+
+	if(length(winners))
+		for(var/winner in winners)
+			winners_string += "[winner]"
+	else
+		winners_string = list("NO WINNER")
 
 	var/list/vote_log_data = list(
+		"type" = "[current_vote.type]",
 		"choices" = vote_choice_data,
 		"total" = total_votes,
 		"winners" = winners_string,
 		"final_winner" = final_winner_string,
 	)
-	var/log_string = replacetext(to_display, "\n", "\\n") // 'keep' the newlines, but dont actually print them as newlines
-	log_vote(log_string, vote_log_data)
-	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
+	log_vote("vote finalized", vote_log_data)
+	if(to_display)
+		to_chat(world, span_infoplain(vote_font("\n[to_display]")))
 
 	// Finally, doing any effects on vote completion
-	if (final_winner) // if no one voted, or the vote cannot be won, final_winner will be null
-		current_vote.finalize_vote(final_winner)
+	current_vote.finalize_vote(final_winner)
 
 /**
  * One selection per person, and the selection with the most votes wins.
@@ -274,6 +278,15 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 
 	return TRUE
+
+/datum/controller/subsystem/vote/proc/toggle_dead_voting(mob/toggle_initiator)
+	var/switch_deadvote_config = !CONFIG_GET(flag/no_dead_vote)
+	CONFIG_SET(flag/no_dead_vote, switch_deadvote_config)
+	var/text_verb = !switch_deadvote_config ? "enabled" : "disabled"
+	log_admin("[key_name(toggle_initiator)] [text_verb] Dead Vote.")
+	message_admins("[key_name_admin(toggle_initiator)] [text_verb] Dead Vote.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead Vote", text_verb))
+
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
 
@@ -293,6 +306,7 @@ SUBSYSTEM_DEF(vote)
 
 	data["user"] = list(
 		"ckey" = user.client?.ckey,
+		"isGhost" = CONFIG_GET(flag/no_dead_vote) && user.stat == DEAD && !user.client?.holder,
 		"isLowerAdmin" = is_lower_admin,
 		"isUpperAdmin" = is_upper_admin,
 		// What the current user has selected in any ongoing votes.
@@ -346,7 +360,7 @@ SUBSYSTEM_DEF(vote)
 	data["VoteCD"] = CONFIG_GET(number/vote_delay)
 	return data
 
-/datum/controller/subsystem/vote/ui_act(action, params)
+/datum/controller/subsystem/vote/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -375,6 +389,15 @@ SUBSYSTEM_DEF(vote)
 			voter.log_message("ended the current vote early", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has ended the current vote.")
 			end_vote()
+			return TRUE
+
+		if("toggleDeadVote")
+			if(!check_rights_for(voter.client, R_ADMIN))
+				message_admins("[key_name(voter)] tried to toggle vote abillity for ghosts while having improper rights, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			toggle_dead_voting(voter)
 			return TRUE
 
 		if("toggleVote")

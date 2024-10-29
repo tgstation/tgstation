@@ -52,27 +52,31 @@
 	return NONE
 
 /mob/living/carbon/get_liked_foodtypes()
-	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
-	// No tongue, no tastin'
-	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
 	// Handled in here since the brain trauma can't modify taste directly (/datum/brain_trauma/severe/flesh_desire)
 	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
 		return GORE | MEAT
-	return tongue.liked_foodtypes
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	. = tongue.liked_foodtypes
+	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
+		. &= ~MEAT
 
 /**
  * Gets food flags that this mob dislikes
  **/
 /mob/living/proc/get_disliked_foodtypes()
+	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
+		return MEAT
 	return NONE
 
 /mob/living/carbon/get_disliked_foodtypes()
-	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
-	// No tongue, no tastin'
-	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
-	return tongue.disliked_foodtypes
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	. = tongue.disliked_foodtypes
+	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
+		. |= MEAT
 
 /**
  * Gets food flags that this mob hates
@@ -83,9 +87,8 @@
 
 /mob/living/carbon/get_toxic_foodtypes()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
-	// No tongue, no tastin'
 	if(!tongue)
-		return TOXIC
+		return ..()
 	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
 		return VEGETABLES | DAIRY | FRUIT | FRIED
 	return tongue.toxic_foodtypes
@@ -97,6 +100,28 @@
 /mob/living/proc/get_allergic_foodtypes()
 	var/datum/quirk/item_quirk/food_allergic/allergy = get_quirk(/datum/quirk/item_quirk/food_allergic)
 	return allergy?.target_foodtypes || NONE
+
+/**
+ * Checks if the mob has an allergic reaction to the given food type.
+ * If so, the mob will contract anaphylaxis.
+ *
+ * * to_foodtype: The food type to check for an allergic reaction to.
+ * * chance: The chance of an allergic reaction occurring. Default is 100 (guaranteed).
+ * * histamine_add: The amount of histamine to add to the mob if they are already experiencing an allergic reaction.
+ *
+ * Returns TRUE if the mob had an allergic reaction, FALSE otherwise.
+ */
+/mob/living/proc/check_allergic_reaction(to_foodtype = NONE, chance = 100, histamine_add = 0)
+	if(!(get_allergic_foodtypes() & to_foodtype))
+		return FALSE
+	if(!prob(chance))
+		return FALSE
+	if(ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
+		to_chat(src, span_warning("You feel your throat start to itch."))
+		add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	else if(histamine_add)
+		reagents.add_reagent(/datum/reagent/toxin/histamine, histamine_add)
+	return TRUE
 
 /**
  * Gets the food reaction a mob would normally have from the given food item,

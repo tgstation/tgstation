@@ -8,43 +8,78 @@
 	var/weak_infection_chance = 10
 
 
-/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in, weak = FALSE)
-	if(islist(_diseases))
-		diseases = _diseases
-	else
-		diseases = list(_diseases)
+/datum/component/infective/Initialize(list/datum/disease/diseases, expire_in, weak = FALSE, weak_infection_chance = 10)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	if(!islist(diseases))
+		diseases = islist(diseases)
+
+	///Make sure the diseases list is populated with instances of diseases so that it doesn't have to be for each AddComponent call.
+	for(var/datum/disease/disease as anything in diseases)
+		if(!disease) //empty entry, remove.
+			diseases -= disease
+		if(ispath(disease, /datum/disease))
+			var/datum/disease/instance = new disease
+			diseases -= disease
+			diseases += instance
+		else if(!istype(disease))
+			stack_trace("found [isdatum(disease) ? "an instance of [disease.type]" : disease] inside the diseases list argument for [type]")
+			diseases -= disease
+
+	src.diseases = diseases
+
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
 
-	if(!ismovable(parent))
-		return COMPONENT_INCOMPATIBLE
-
 	is_weak = weak
+	src.weak_infection_chance = weak_infection_chance
 
+/datum/component/infective/Destroy()
+	QDEL_LIST(diseases)
+	return ..()
+
+/datum/component/infective/RegisterWithParent()
 	if(is_weak && isitem(parent))
 		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
 		RegisterSignal(parent, COMSIG_PILL_CONSUMED, PROC_REF(try_infect_eat))
-	else
-		var/static/list/disease_connections = list(
-			COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
-		)
-		AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
+		return
+	var/static/list/disease_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
+	)
+	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
-		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
-		RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
-		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
-		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
-		if(isitem(parent))
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
-			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
-			RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
-			RegisterSignal(parent, COMSIG_PILL_CONSUMED, PROC_REF(try_infect_eat))
-			if(istype(parent, /obj/item/reagent_containers/cup))
-				RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
-			if(isorgan(parent))
-				RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_insertion))
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
+	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
+		RegisterSignal(parent, COMSIG_PILL_CONSUMED, PROC_REF(try_infect_eat))
+		if(istype(parent, /obj/item/reagent_containers/cup))
+			RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
+		if(isorgan(parent))
+			RegisterSignal(parent, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_insertion))
+
+/datum/component/infective/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_FOOD_EATEN,
+		COMSIG_PILL_CONSUMED,
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_MOVABLE_BUMP,
+		COMSIG_MOVABLE_IMPACT_ZONE,
+		COMSIG_ITEM_ATTACK_ZONE,
+		COMSIG_ITEM_ATTACK,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_GLASS_DRANK,
+		COMSIG_ORGAN_IMPLANTED,
+	))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /datum/component/infective/proc/on_organ_insertion(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
@@ -62,16 +97,16 @@
 
 	eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
 
-	if(is_weak && !prob(weak_infection_chance))
-		return
-
-	for(var/datum/disease/disease in diseases)
+	for(var/datum/disease/disease as anything in diseases)
+		if(is_weak && !prob(weak_infection_chance))
+			continue
 		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
 		eater.ForceContractDisease(disease)
 
-	try_infect(feeder, BODY_ZONE_L_ARM)
+	if(!is_weak)
+		try_infect(feeder, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -79,11 +114,14 @@
 	if(HAS_TRAIT(drinker, TRAIT_STRONG_STOMACH))
 		return
 
-	var/appendage_zone = feeder.held_items.Find(source)
-	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
-	try_infect(feeder, appendage_zone)
+	if(!is_weak)
+		var/appendage_zone = feeder.held_items.Find(source)
+		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+		try_infect(feeder, appendage_zone)
 
-	for(var/datum/disease/disease in diseases)
+	for(var/datum/disease/disease as anything in diseases)
+		if(is_weak && !prob(weak_infection_chance))
+			continue
 		if(!disease.has_required_infectious_organ(drinker, ORGAN_SLOT_STOMACH))
 			continue
 
@@ -163,19 +201,3 @@
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)
 	for(var/V in diseases)
 		L.ContactContractDisease(V, target_zone)
-
-/datum/component/infective/UnregisterFromParent()
-	. = ..()
-	UnregisterSignal(parent, list(
-		COMSIG_FOOD_EATEN,
-		COMSIG_PILL_CONSUMED,
-		COMSIG_COMPONENT_CLEAN_ACT,
-		COMSIG_MOVABLE_BUMP,
-		COMSIG_MOVABLE_IMPACT_ZONE,
-		COMSIG_ITEM_ATTACK_ZONE,
-		COMSIG_ITEM_ATTACK,
-		COMSIG_ITEM_EQUIPPED,
-		COMSIG_GLASS_DRANK,
-		COMSIG_ORGAN_IMPLANTED,
-	))
-	qdel(GetComponent(/datum/component/connect_loc_behalf))

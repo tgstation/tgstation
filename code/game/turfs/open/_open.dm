@@ -1,4 +1,5 @@
 /turf/open
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower
 	var/slowdown = 0
@@ -11,7 +12,11 @@
 	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = null
 	var/broken = FALSE
+	/// Are broken overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_broken = FALSE
 	var/burnt = FALSE
+	/// Are burnt overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_burnt = FALSE
 
 
 /// Returns a list of every turf state considered "broken".
@@ -47,7 +52,7 @@
 	if(broken)
 		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+		if(smoothing_flags && !smooth_broken)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			broken_appearance.transform = translation
@@ -62,12 +67,15 @@
 		else
 			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+		if(smoothing_flags && !smooth_burnt)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			burnt_appearance.transform = translation
 
 		. += burnt_appearance
+
+/turf/open/examine_descriptor(mob/user)
+	return "floor"
 
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
@@ -410,10 +418,10 @@
 /turf/open/get_dumping_location()
 	return src
 
-/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperiness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// Builds with rods. This doesn't exist to be overridden, just to remove duplicate logic for turfs that want
 /// To support floor tile creation
 /// I'd make it a component, but one of these things is space. So no.
 /turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
@@ -427,7 +435,7 @@
 		if(used_rods.use(1))
 			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 			new /obj/structure/lattice/catwalk(src)
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
@@ -435,7 +443,7 @@
 
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
-		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		new /obj/structure/lattice(src)
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
@@ -451,7 +459,7 @@
 		balloon_alert(user, "need a floor tile to build!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
@@ -475,8 +483,17 @@
 		balloon_alert(user, "no tile!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new used_tiles.tile_type(src)
+
+/turf/open/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(!main_material.turf_sound_override)
+		return
+	footstep = main_material.turf_sound_override
+	barefootstep = main_material.turf_sound_override + "barefoot"
+	clawfootstep = main_material.turf_sound_override + "claw"
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
 /turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
@@ -488,5 +505,5 @@
 		balloon_alert(user, "not enough titanium!")
 		return
 
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	new /obj/structure/girder/tram(src)

@@ -11,7 +11,7 @@
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
 /**
- * Randomizes everything about a human, including DNA and name
+ * Fully randomizes everything about a human, including DNA and name.
  */
 /proc/randomize_human(mob/living/carbon/human/human, randomize_mutations = FALSE)
 	human.gender = human.dna.species.sexes ? pick(MALE, FEMALE, PLURAL, NEUTER) : PLURAL
@@ -29,5 +29,34 @@
 	// Needs to be called towards the end to update all the UIs just set above
 	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
 	// Snowflake for Ethereals
+	human.updatehealth()
+	human.updateappearance(mutcolor_update = TRUE)
+
+/**
+ * Randomizes a human, but produces someone who looks exceedingly average (by most standards).
+ *
+ * (IE, no wacky hair styles / colors)
+ */
+/proc/randomize_human_normie(mob/living/carbon/human/human, randomize_mutations = FALSE)
+	// Sorry enbys but statistically you are not average enough
+	human.gender = human.dna.species.sexes ? pick(MALE, FEMALE) : PLURAL
+	human.physique = human.gender
+	human.real_name = human.generate_random_mob_name()
+	human.name = human.get_visible_name()
+	human.eye_color_left = random_eye_color()
+	human.eye_color_right = human.eye_color_left
+	human.skin_tone = pick(GLOB.skin_tones)
+	// No underwear generation handled here
+	var/picked_color = random_hair_color()
+	human.set_haircolor(picked_color, update = FALSE)
+	human.set_facial_haircolor(picked_color, update = FALSE)
+	var/datum/sprite_accessory/hairstyle = SSaccessories.hairstyles_list[random_hairstyle(human.gender)]
+	if(hairstyle && hairstyle.natural_spawn && !hairstyle.locked)
+		human.set_hairstyle(hairstyle.name, update = FALSE)
+	var/datum/sprite_accessory/facial_hair = SSaccessories.facial_hairstyles_list[random_facial_hairstyle(human.gender)]
+	if(facial_hair && facial_hair.natural_spawn && !facial_hair.locked)
+		human.set_facial_hairstyle(facial_hair.name, update = FALSE)
+	// Normal DNA init stuff, these can generally be wacky but we care less, they're aliens after all
+	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
 	human.updatehealth()
 	human.updateappearance(mutcolor_update = TRUE)

@@ -21,7 +21,7 @@ import { Window } from '../layouts';
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useSharedState('tab', 'material');
   const [searchItem, setSearchItem] = useState('');
   const [compact, setCompact] = useState(false);
   const search = createSearch(searchItem, (materials) => materials.name);

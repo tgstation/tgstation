@@ -8,7 +8,6 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	visor_vars_to_toggle = NONE
-	var/modifies_speech = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
@@ -24,31 +23,6 @@
 		clothing_flags ^= (VOICEBOX_DISABLED)
 		var/status = !(clothing_flags & VOICEBOX_DISABLED)
 		to_chat(user, span_notice("You turn the voice box in [src] [status ? "on" : "off"]."))
-
-/obj/item/clothing/mask/equipped(mob/M, slot)
-	. = ..()
-	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	else
-		UnregisterSignal(M, COMSIG_MOB_SAY)
-
-/obj/item/clothing/mask/dropped(mob/M)
-	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
-
-/obj/item/clothing/mask/vv_edit_var(vname, vval)
-	if(vname == NAMEOF(src, modifies_speech) && ismob(loc))
-		var/mob/M = loc
-		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
-			if(vval)
-				if(!modifies_speech)
-					RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-			else if(modifies_speech)
-				UnregisterSignal(M, COMSIG_MOB_SAY)
-	return ..()
-
-/obj/item/clothing/mask/proc/handle_speech()
-	SIGNAL_HANDLER
 
 /obj/item/clothing/mask/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()

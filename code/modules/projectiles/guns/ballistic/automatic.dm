@@ -5,11 +5,13 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
-	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	rack_sound = 'sound/items/weapons/gun/smg/smgrack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'
 	burst_fire_selection = TRUE
+	drop_sound = 'sound/items/handling/gun/ballistics/smg/smg_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/smg/smg_pickup1.ogg'
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -41,12 +43,12 @@
 	fire_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
-	can_bayonet = TRUE
-	knife_x_offset = 26
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/c20r/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 26, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
@@ -75,9 +77,6 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
@@ -86,20 +85,36 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
-/obj/item/gun/ballistic/automatic/plastikov
-	name = "\improper PP-95 SMG"
-	desc = "An ancient 9mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."
-	icon_state = "plastikov"
-	inhand_icon_state = "plastikov"
-	accepted_magazine_type = /obj/item/ammo_box/magazine/plastikov9mm
-	burst_size = 5
-	spread = 25
-	can_suppress = FALSE
+/obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
+
+/obj/item/gun/ballistic/automatic/smartgun
+	name = "\improper Abielle Smart-SMG"
+	desc = "An old experiment in smart-weapon technology that guides bullets towards the target the gun was aimed at when fired. \
+		While the tracking functions worked fine, the gun is prone to insanely wide spread thanks to it's practically non-existant barrel."
+	icon_state = "smartgun"
+	inhand_icon_state = "smartgun"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
+	burst_size = 4
+	fire_delay = 1
+	spread = 40
+	dual_wield_spread = 20
 	actions_types = list()
-	projectile_damage_multiplier = 0.35 //It's like 10.5 damage per bullet, it's close enough to 10 shots
+	bolt_type = BOLT_TYPE_LOCKING
+	can_suppress = FALSE
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	click_on_low_ammo = FALSE
+	/// List of the possible firing sounds
+	var/list/firing_sound_list = list(
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_1.ogg',
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_2.ogg',
+		'sound/items/weapons/gun/smartgun/smartgun_shoot_3.ogg',
+	)
+
+/obj/item/gun/ballistic/automatic/smartgun/fire_sounds()
+	var/picked_fire_sound = pick(firing_sound_list)
+	playsound(src, picked_fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -110,7 +125,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	mag_display = TRUE
-	rack_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	rack_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 
 /**
  * Weak uzi for syndicate chimps. It comes in a 4 TC kit.
@@ -140,7 +155,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE
-	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
+	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
 	. = ..()
@@ -241,9 +256,9 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	tac_reloads = FALSE
-	fire_sound = 'sound/weapons/gun/l6/shot.ogg'
-	rack_sound = 'sound/weapons/gun/l6/l6_rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	fire_sound = 'sound/items/weapons/gun/l6/shot.ogg'
+	rack_sound = 'sound/items/weapons/gun/l6/l6_rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/cover_open = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
@@ -264,7 +279,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
-	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
+	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -306,7 +321,7 @@
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus
-	name = "Surplus Rifle"
+	name = "surplus rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	worn_icon_state = null
@@ -335,5 +350,5 @@
 	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/laser.ogg'
+	fire_sound = 'sound/items/weapons/laser.ogg'
 	casing_ejector = FALSE

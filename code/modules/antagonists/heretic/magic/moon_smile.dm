@@ -8,7 +8,7 @@
 	button_icon_state = "moon_smile"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
-	sound = 'sound/magic/blind.ogg'
+	sound = 'sound/effects/magic/blind.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 
@@ -35,7 +35,7 @@
 		to_chat(owner, span_warning("The moon does not smile upon them."))
 		return FALSE
 
-	playsound(cast_on, 'sound/hallucinations/i_see_you1.ogg', 50, 1)
+	playsound(cast_on, 'sound/effects/hallucinations/i_see_you1.ogg', 50, 1)
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
 	cast_on.adjust_temp_blindness(moon_smile_duration + 1 SECONDS)
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 2 SECONDS)

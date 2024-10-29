@@ -11,7 +11,7 @@
  *
  * Most of the time, you won't encounter two different static lists with similar contents used as element args,
  * meaning using static lists is accepted. However, should that happen, it's advised to replace the instances
- * with various string_x procs: lists, assoc_lists, assoc_nested_lists or numbers_list, depending on the type.
+ * with either string_list(), string_assoc_list(), string_assoc_nested_list() or string_numbers_list(), depending on the contents of the list.
  *
  * In the case of an element where the position of the contents of each datum list argument is important,
  * ELEMENT_DONT_SORT_LIST_ARGS should be added to its flags, to prevent such issues where the contents are similar
@@ -51,5 +51,5 @@
 				TEST_FAIL("Found [length(bad_lists)] datum list arguments with similar contents for [element_type]. Contents: [json_encode(unsorted_list)].")
 	///Let's avoid sending the same instructions over and over, as it's just going to clutter the CI and confuse someone.
 	if(we_failed)
-		TEST_FAIL("Ensure that each list is static or cached. string_lists() (as well as similar procs) is your friend here.\n\
+		TEST_FAIL("Ensure that each list is static or cached. string_list() (as well as similar procs) is your friend here.\n\
 			Check the documentation from dcs_check_list_arguments.dm for more information!")

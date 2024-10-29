@@ -292,7 +292,7 @@
 	input_turf = null
 
 /**
- * transfer's gases from it's input turf to it's internal gas mix
+ * transfers gases from its input turf to its internal gas mix
  * Returns temperature of the gas mix absorbed only if some work was done
  */
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
@@ -648,7 +648,7 @@
 			return PROCESS_KILL
 
 		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", RADIO_CHANNEL_ENGINEERING)
-		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+		playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
 	//================ROTOR WORKING============//
 	//The Rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers

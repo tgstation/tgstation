@@ -19,7 +19,7 @@ import {
   Stack,
   Table,
 } from '../components';
-import { formatEnergy, formatPower, formatSiUnit } from '../format';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type MODsuitData = {
@@ -122,8 +122,8 @@ export const MODsuit = (props) => {
   const { interface_break } = data.suit_status;
   return (
     <Window
-      width={800}
-      height={640}
+      width={600}
+      height={600}
       theme={ui_theme}
       title="MOD Interface Panel"
     >
@@ -706,7 +706,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="plug"
-                tooltip="Idle Power Cost"
+                tooltip="Idle Power Cost (Watts)"
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -714,7 +714,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="lightbulb"
-                tooltip="Active Power Cost"
+                tooltip="Active Power Cost (Watts)"
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -722,7 +722,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="bolt"
-                tooltip="Use Energy Cost"
+                tooltip="Use Energy Cost (Joules)"
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -794,44 +794,16 @@ const ModuleSection = (props) => {
                   )}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  <div
-                    style={{
-                      display: 'inline-block',
-                      width: '60px',
-                    }}
-                  >
-                    {formatPower(module.idle_power)}
-                  </div>
+                  {formatSiUnit(module.idle_power, 0)}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  <div
-                    style={{
-                      display: 'inline-block',
-                      width: '60px',
-                    }}
-                  >
-                    {formatPower(module.active_power)}
-                  </div>
+                  {formatSiUnit(module.active_power, 0)}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  <div
-                    style={{
-                      display: 'inline-block',
-                      width: '60px',
-                    }}
-                  >
-                    {formatEnergy(module.use_energy)}
-                  </div>
+                  {formatSiUnit(module.use_energy, 0)}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
-                  <div
-                    style={{
-                      display: 'inline-block',
-                      width: '10px',
-                    }}
-                  >
-                    {module.module_complexity}
-                  </div>
+                  {module.module_complexity}
                 </Table.Cell>
               </Table.Row>
             );

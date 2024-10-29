@@ -128,10 +128,10 @@
 		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
-			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+			playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
-		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+		playsound(src, 'sound/items/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else
 		balloon_alert(mod.wearer, "holster full!")
 
@@ -232,14 +232,14 @@
 		return
 	linked_bodybag = new bodybag_type(target_turf)
 	linked_bodybag.take_contents()
-	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/mod/module/criminalcapture/proc/packup()
 	if(!linked_bodybag)
 		return
-	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	playsound(linked_bodybag, 'sound/items/weapons/egloves.ogg', 80, TRUE)
 	apply_wibbly_filters(linked_bodybag)
 	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, PROC_REF(delete_bag), linked_bodybag), 0.5 SECONDS)
@@ -269,7 +269,7 @@
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
-	var/obj/item/grenade/mirage/grenade = .
+	var/obj/item/grenade/mirage/grenade = ..()
 	grenade.arm_grenade(mod.wearer)
 
 /obj/item/grenade/mirage
@@ -308,6 +308,8 @@
 	var/field_radius = 2
 	/// Damage multiplier on projectiles.
 	var/damage_multiplier = 0.75
+	/// Debuff multiplier on projectiles.
+	var/debuff_multiplier = 0.66
 	/// Speed multiplier on projectiles, higher means slower.
 	var/speed_multiplier = 2.5
 	/// List of all tracked projectiles.
@@ -329,15 +331,15 @@
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
 
 /obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	QDEL_NULL(dampening_field)
 
 /obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
 	projectile.damage *= damage_multiplier
+	projectile.stamina *= damage_multiplier
+	projectile.stun *= debuff_multiplier
+	projectile.knockdown *= debuff_multiplier
 	projectile.speed *= speed_multiplier
 	projectile.add_overlay(projectile_effect)
 
@@ -346,6 +348,9 @@
 
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
+	projectile.stamina /= damage_multiplier
+	projectile.stun /= debuff_multiplier
+	projectile.knockdown /= debuff_multiplier
 	projectile.cut_overlay(projectile_effect)
 
 ///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
@@ -447,7 +452,7 @@
 
 /obj/item/mod/module/active_sonar/on_use()
 	balloon_alert(mod.wearer, "readying sonar...")
-	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mod.wearer, 'sound/vehicles/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
@@ -498,7 +503,7 @@
 		return
 	if(new_mode != SHOOTING_ASSISTANT_OFF && !mod.get_charge())
 		balloon_alert(mod.wearer, "no charge!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 
 	//Remove the effects of the previously selected mode
@@ -563,7 +568,7 @@
 	projectile.ricochets_max += 1
 	projectile.min_ricochets += 1
 	projectile.ricochet_incidence_leeway = 0 //allows the projectile to bounce at any angle.
-	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, MOD_TRAIT)
+	projectile.accuracy_falloff = 0
 
 #undef SHOOTING_ASSISTANT_OFF
 #undef STORMTROOPER_MODE

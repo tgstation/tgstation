@@ -153,7 +153,7 @@
 	/// Type of projectile we fire
 	var/projectile_type = /obj/projectile/baby_watcher_blast
 	/// Sound to make when we shoot
-	var/projectile_sound = 'sound/weapons/pierce.ogg'
+	var/projectile_sound = 'sound/items/weapons/pierce.ogg'
 	/// Time between taking potshots at goliaths
 	var/fire_delay = 5 SECONDS
 	/// How much faster do we shoot when avenging our parent?

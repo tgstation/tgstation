@@ -3,11 +3,12 @@
 /proc/debug_variable(name, value, level, datum/owner, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	if(owner)
 		if(islist(owner))
+			var/list/list_owner = owner
 			var/index = name
 			if (value)
-				name = owner[name] //name is really the index until this line
+				name = list_owner[name] //name is really the index until this line
 			else
-				value = owner[name]
+				value = list_owner[name]
 			. = "<li style='backgroundColor:white'>([VV_HREF_TARGET_1V(owner, VV_HK_LIST_EDIT, "E", index)]) ([VV_HREF_TARGET_1V(owner, VV_HK_LIST_CHANGE, "C", index)]) ([VV_HREF_TARGET_1V(owner, VV_HK_LIST_REMOVE, "-", index)]) "
 		else
 			. = "<li style='backgroundColor:white'>([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_EDIT, "E", name)]) ([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_CHANGE, "C", name)]) ([VV_HREF_TARGET_1V(owner, VV_HK_BASIC_MASSEDIT, "M", name)]) "
@@ -28,7 +29,7 @@
 
 	return "[.][item]</li>"
 
-// This is split into a seperate proc mostly to make errors that happen not break things too much
+// This is split into a separate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
 	if(isappearance(value))
 		value = get_vv_appearance(value)
@@ -63,11 +64,11 @@
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
 
-	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists arent detectable as a list through istype
+	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists aren't detectable as a list through istype
 		var/list/list_value = value
 		var/list/items = list()
 
-		// This is becuse some lists either dont count as lists or a locate on their ref will return null
+		// This is because some lists either don't count as lists or a locate on their ref will return null
 		var/link_vars = "Vars=[REF(value)]"
 		if(name in GLOB.vv_special_lists)
 			link_vars = "Vars=[REF(owner)];special_varname=[name]"
