@@ -62,7 +62,7 @@
 		return
 
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.usable_hands < 1 && !(food_target in living_pawn.held_items))
+	if(!length(living_pawn.get_empty_held_indexes())  && !(food_target in living_pawn.held_items))
 		controller.queue_behavior(/datum/ai_behavior/drop_item)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
