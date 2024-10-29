@@ -307,10 +307,12 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	if(!checkResource(selected_design.cost * 0.7, user))
+		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
 	//do the tilling
 	if(!useResource(selected_design.cost, user))
+		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	activate()
 	//step 1 create tile
@@ -377,10 +379,12 @@
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	if(!checkResource(cost * 0.7, user))
+		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
 	//begin deconstruction
 	if(!useResource(cost * 0.7, user))
+		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 	activate()
 	//find & collect all decals
