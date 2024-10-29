@@ -7,8 +7,8 @@ Difficulty: Hard
 */
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
-	name = "Bambi" //DOPPLER EDIT
-	desc = "A local fauna with an evocative appearance. Its cervine features have earned it an evocative nickname." //DOPPLER EDIT
+	name = "wendigo"
+	desc = "A mythological man-eating legendary creature, the sockets of its eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
 	icon_state = "wendigo"
@@ -197,7 +197,7 @@ Difficulty: Hard
 	exit.set_light(20, 1, COLOR_SOFT_RED)
 
 /obj/projectile/colossus/wendigo_shockwave
-	name = "bambi shockwave" //DOPPLER EDIT
+	name = "wendigo shockwave"
 	speed = 2
 	/// If wave movement is enabled
 	var/wave_movement = FALSE
@@ -224,7 +224,7 @@ Difficulty: Hard
 		set_angle(original_angle + pixel_moves * wave_speed)
 
 /obj/item/wendigo_blood
-	name = "bottle of bambi blood" //DOPPLER EDIT
+	name = "bottle of wendigo blood"
 	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "vial"
@@ -242,8 +242,8 @@ Difficulty: Hard
 	qdel(src)
 
 /obj/item/crusher_trophy/wendigo_horn
-	name = "bambi horn" //DOPPLER EDIT
-	desc = "A gnarled horn ripped from the skull of a bambi. Suitable as a trophy for a kinetic crusher." //DOPPLER EDIT
+	name = "wendigo horn"
+	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
 	icon_state = "wendigo_horn"
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
@@ -261,8 +261,8 @@ Difficulty: Hard
 		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/wendigo_skull
-	name = "bambi skull" // DOPPLER EDIT
-	desc = "The skull of an exotic xenofauna, named for its cervine appearance." // DOPPLER EDIT
+	name = "wendigo skull"
+	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
