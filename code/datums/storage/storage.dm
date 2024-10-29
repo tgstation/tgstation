@@ -468,6 +468,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if (!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		return
 
+	if (target.loc != real_location) // what even
+		return
+
 	if(numerical_stacking)
 		return
 
