@@ -38423,7 +38423,6 @@
 /area/station/service/bar)
 "eLu" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "eMe" = (
