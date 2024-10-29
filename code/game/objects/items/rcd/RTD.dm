@@ -306,7 +306,7 @@
 		qdel(beam)
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
-	if(!checkResource(selected_design.cost * 0.7, user))
+	if(!checkResource(selected_design.cost, user))
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
 
