@@ -76,6 +76,9 @@ Regenerative extracts:
 	C.name = "slimy closet"
 	C.desc = "Looking closer, it seems to be made of a sort of solid, opaque, metal-like goo."
 	target.forceMove(C)
+	if(ismegafauna(target))  //Prevents capturing megafauna in closets, makes them immediately break it open
+		C.bust_open()
+		C.visible_message(span_warning("[target] immediately breaks \the [C.name] open!"))
 
 /obj/item/slimecross/regenerative/yellow
 	colour = SLIME_TYPE_YELLOW
