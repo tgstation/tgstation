@@ -204,12 +204,11 @@
 
 /datum/ai_behavior/drop_item/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
-	for(var/obj/item/held as anything in living_pawn.held_items)
-		if(!held || held == best_held)
-			continue
-		living_pawn.dropItemToGround(held)
-	return AI_BEHAVIOR_DELAY
+	var/list/my_held_items = living_pawn.held_items - GetBestWeapon(controller, null, living_pawn.held_items)
+	if(!length(my_held_items))
+		return AI_BEHAVIOR_FAILED | AI_BEHAVIOR_DELAY
+	living_pawn.dropItemToGround(pick(my_held_items))
+	return AI_BEHAVIOR_SUCCEEDED | AI_BEHAVIOR_DELAY
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/attack
