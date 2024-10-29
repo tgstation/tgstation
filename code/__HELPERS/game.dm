@@ -4,6 +4,9 @@
 /// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
 
+///The minimum pressure for lavaland equiment checks to be considered valid.
+#define MINIMUM_LAVALAND_ATMOS_PRESSURE 3
+
 ///Returns the name of the area the atom is in
 /proc/get_area_name(atom/checked_atom, format_text = FALSE)
 	var/area/checked_area = isarea(checked_atom) ? checked_atom : get_area(checked_atom)
@@ -263,7 +266,7 @@
 	if(!istype(environment))
 		return
 	var/pressure = environment.return_pressure()
-	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
+	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE && pressure >= MINIMUM_LAVALAND_ATMOS_PRESSURE)
 		. = TRUE
 
 ///Find an obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
@@ -350,3 +353,5 @@
 	else
 		message = copytext(message, 2)
 	to_chat(target, span_purple(examine_block("<span class='oocplain'><b>[source]: </b>[message]</span>")))
+
+#undef MINIMUM_LAVALAND_ATMOS_PRESSURE

@@ -518,7 +518,7 @@
 
 /obj/item/mod/module/sphere_transform/used()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
-		balloon_alert(mod.wearer, "too much pressure!")
+		balloon_alert(mod.wearer, "atomosphere lacks adequate pressure!")
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()
