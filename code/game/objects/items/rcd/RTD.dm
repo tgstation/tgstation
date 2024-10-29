@@ -369,7 +369,6 @@
 		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
-	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	if(!do_after(user, delay, target = floor) || !checkResource(cost * 0.7, user))
 		qdel(beam)
 		qdel(rcd_effect)
