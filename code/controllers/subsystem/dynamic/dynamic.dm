@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(dynamic)
 		. += "<hr><b>Additional Notes: </b><BR><BR>" + footnote_pile
 
 #ifndef MAP_TEST
-	print_command_report(., "[command_name()] Status Summary", announce=FALSE)
+	print_command_report(., "[command_name()] Status Summary", announce=FALSE, classified = TRUE)
 	if(greenshift)
 		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound(), color_override = "green")
 	else

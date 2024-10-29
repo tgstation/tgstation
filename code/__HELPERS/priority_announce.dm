@@ -91,7 +91,7 @@
 		else
 			GLOB.news_network.submit_article(text, "[command_name()] Update", "Station Announcements", null)
 
-/proc/print_command_report(text = "", title = null, announce=TRUE)
+/proc/print_command_report(text = "", title = null, announce=TRUE, classified=FALSE)
 	if(!title)
 		title = "Classified [command_name()] Update"
 
@@ -106,6 +106,7 @@
 	var/datum/comm_message/message = new
 	message.title = title
 	message.content = text
+	message.classified = classified
 
 	GLOB.communications_controller.send_message(message)
 

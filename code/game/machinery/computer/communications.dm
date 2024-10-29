@@ -581,6 +581,8 @@
 				if (messages)
 					for (var/_message in messages)
 						var/datum/comm_message/message = _message
+						if (message.classified && HAS_SILICON_ACCESS(user))
+							continue
 						data["messages"] += list(list(
 							"answered" = message.answered,
 							"content" = message.content,
@@ -917,9 +919,10 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered = FALSE
+	var/classified
 	var/datum/callback/answer_callback
 
-/datum/comm_message/New(new_title,new_content,new_possible_answers)
+/datum/comm_message/New(new_title,new_content,new_classified,new_possible_answers)
 	..()
 	if(new_title)
 		title = new_title
@@ -927,6 +930,7 @@
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
+	classified = new_classified
 
 /datum/comm_message/Destroy()
 	answer_callback = null

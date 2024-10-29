@@ -146,7 +146,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
 
 	if(!announce_contents || print_report)
-		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents)
+		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents, !announce_contents)
 
 	change_command_name(original_command_name)
 
