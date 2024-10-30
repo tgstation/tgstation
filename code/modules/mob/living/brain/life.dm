@@ -20,10 +20,10 @@
 		return
 	if(stat != DEAD)
 		death()
-	var/obj/item/organ/internal/brain/BR
+	var/obj/item/organ/brain/BR
 	if(container?.brain)
 		BR = container.brain
-	else if(istype(loc, /obj/item/organ/internal/brain))
+	else if(istype(loc, /obj/item/organ/brain))
 		BR = loc
 	if(BR)
 		BR.set_organ_damage(BRAIN_DAMAGE_DEATH) //beaten to a pulp

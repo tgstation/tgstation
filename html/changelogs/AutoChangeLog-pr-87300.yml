@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Message upon examining an already dissected corpse now uses their pronouns and not yours."

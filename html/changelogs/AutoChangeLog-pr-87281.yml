@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Refactored how some screen alerts, such as aura healing, show atom overlays."

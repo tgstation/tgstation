@@ -453,7 +453,7 @@
 	// but regardless block all relayed moves, because no, you cannot move in the void.
 	return
 
-/obj/effect/immortality_talisman/singularity_pull()
+/obj/effect/immortality_talisman/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/immortality_talisman/void
@@ -552,7 +552,7 @@
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human, chest)
+	var/obj/item/organ/wings/functional/wings = get_wing_choice(exposed_human, chest)
 	wings = new wings()
 	wings.Insert(exposed_human)
 	playsound(exposed_human.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE, -1)
@@ -565,7 +565,7 @@
 		return wing_types[1]
 	var/list/radial_wings = list()
 	var/list/name2type = list()
-	for(var/obj/item/organ/external/wings/functional/possible_type as anything in wing_types)
+	for(var/obj/item/organ/wings/functional/possible_type as anything in wing_types)
 		var/datum/sprite_accessory/accessory = initial(possible_type.sprite_accessory_override) //get the type
 		accessory = SSaccessories.wings_list[initial(accessory.name)] //get the singleton instance
 		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
@@ -927,7 +927,7 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
-/obj/item/organ/internal/cyberimp/arm/shard
+/obj/item/organ/cyberimp/arm/shard
 	name = "dark spoon shard"
 	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
@@ -937,7 +937,7 @@
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/shard/attack_self(mob/user, modifiers)
+/obj/item/organ/cyberimp/arm/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
@@ -947,15 +947,15 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/internal/cyberimp/arm/shard/katana
+/obj/item/organ/cyberimp/arm/shard/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	items_to_create = list(/obj/item/cursed_katana)
 
-/obj/item/organ/internal/cyberimp/arm/shard/katana/Retract()
+/obj/item/organ/cyberimp/arm/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
