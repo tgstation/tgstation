@@ -34,7 +34,7 @@
 		rotate()
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_list()
-	var/list/no_nulls_ammo = stored_ammo.Copy()
+	var/list/no_nulls_ammo = ..()
 	list_clear_nulls(no_nulls_ammo)
 	return no_nulls_ammo
 
