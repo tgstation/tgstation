@@ -44,7 +44,7 @@ export const ChemDispenser = (props) => {
   const { act, data } = useBackend<Data>();
   const recording = !!data.recordingRecipe;
   const { recipeReagents = [], recipes = [], beaker } = data;
-  const [hasCol, setHasCol] = useState(false);
+  const [showPhCol, setShowPhCol] = useState(false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const recordedContents =
@@ -85,8 +85,8 @@ export const ChemDispenser = (props) => {
                 icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-start"
-                selected={hasCol}
-                onClick={() => setHasCol(!hasCol)}
+                selected={showPhCol}
+                onClick={() => setShowPhCol(!showPhCol)}
               />
             </>
           }
@@ -187,18 +187,16 @@ export const ChemDispenser = (props) => {
               <Button
                 key={chemical.id}
                 icon="tint"
-                textColor={chemical.color}
+                textColor={showPhCol ? chemical.pHCol : chemical.color}
                 width="129.5px"
                 lineHeight={1.75}
                 tooltip={'pH: ' + chemical.pH}
                 backgroundColor={
                   recipeReagents.includes(chemical.id)
-                    ? hasCol
+                    ? showPhCol
                       ? 'black'
                       : 'green'
-                    : hasCol
-                      ? chemical.pHCol
-                      : 'default'
+                    : 'default'
                 }
                 onClick={() =>
                   act('dispense', {
