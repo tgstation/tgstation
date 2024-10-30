@@ -65,8 +65,24 @@ ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-sugg
 	var/suggested_list = "RU_NAMES_LIST_INIT(\"[data["suggested_list"]["base"]]\", \"[data["suggested_list"][NOMINATIVE]]\", \"[data["suggested_list"][GENITIVE]]\", \"[data["suggested_list"][DATIVE]]\", \"[data["suggested_list"][ACCUSATIVE]]\", \"[data["suggested_list"][INSTRUMENTAL]]\", \"[data["suggested_list"][PREPOSITIONAL]]\")"
 	var/message = "approves [suggested_list] for [data["atom_path"]]"
 	// Here we send message to discord
-	var/webhook_message = "[usr.ckey] [message] by [data["ckey"]]"
-	send2translate_webhook(webhook_message)
+	var/list/webhook_data = list(
+		"title" = data["atom_path"],
+		"fields" = list(
+			list(
+				"name" = "Suggested List:",
+				"value" = suggested_list,
+			),
+			list(
+				"name" = "Suggested by:",
+				"value" = data["ckey"],
+			),
+			list(
+				"name" = "Approved by:",
+				"value" = usr.ckey,
+			),
+		),
+	)
+	send2translate_webhook(webhook_data)
 	json_data.Remove(entry_id)
 	// Logging
 	write_data()
@@ -104,21 +120,12 @@ ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-sugg
 // MARK: Webhook
 /datum/config_entry/string/translate_suggest_webhook_url
 
-/datum/config_entry/string/translate_suggest_webhook_pfp
-
-/datum/config_entry/string/translate_suggest_webhook_name
-
-/proc/send2translate_webhook(message)
+/proc/send2translate_webhook(list/webhook_data)
 	var/webhook = CONFIG_GET(string/translate_suggest_webhook_url)
-	if(!webhook || !message)
+	if(!webhook || !list(webhook_data))
 		return
 	var/list/webhook_info = list()
-	message = GLOB.has_discord_embeddable_links.Replace_char(replacetext_char(message, "`", ""), " ```$1``` ")
-	webhook_info["content"] = message
-	if(CONFIG_GET(string/translate_suggest_webhook_name))
-		webhook_info["username"] = CONFIG_GET(string/translate_suggest_webhook_name)
-	if(CONFIG_GET(string/translate_suggest_webhook_pfp))
-		webhook_info["avatar_url"] = CONFIG_GET(string/translate_suggest_webhook_pfp)
+	webhook_info["embeds"] = list(webhook_data)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
