@@ -375,6 +375,7 @@
 		/obj/item/stack/sheet/mineral/adamantine = 3,
 		/obj/item/stack/sheet/mineral/runite = 2,
 	)
+	overlay_state = "portal_plasma"
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
