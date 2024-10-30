@@ -5,6 +5,7 @@
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
 	name = "insulated gloves"
+	RU_NAMES_LIST_INIT("insulated gloves", "пара изоляционных перчаток", "пары изоляционных перчаток", "паре изоляционных перчаток", "пару изоляционных перчаток", "парой изоляционных перчаток", "паре изоляционных перчаток")
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	siemens_coefficient = 0

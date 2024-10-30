@@ -347,6 +347,7 @@
 
 /obj/structure/closet/crate/engineering
 	name = "engineering crate"
+	RU_NAMES_LIST_INIT("engineering crate", "инженерный ящик", "инженерного ящика", "инженерному ящику", "инженерный ящик", "инженерным ящиком", "инженерном ящиком")
 	icon_state = "engi_crate"
 	base_icon_state = "engi_crate"
 

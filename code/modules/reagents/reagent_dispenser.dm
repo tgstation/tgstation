@@ -385,6 +385,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
+	RU_NAMES_LIST_INIT("beer keg", "кега пива", "кеги пива", "кеге пива", "кегу пива", "кегой пива", "кеге пива")
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
 	reagent_id = /datum/reagent/consumable/ethanol/beer

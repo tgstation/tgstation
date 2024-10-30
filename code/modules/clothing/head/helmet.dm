@@ -1,5 +1,6 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
+	RU_NAMES_LIST_INIT("helmet", "шлем", "шлема", "шлему", "шлем", "шлемом", "шлеме")
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'

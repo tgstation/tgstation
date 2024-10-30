@@ -1,7 +1,6 @@
 /atom
 	// code\__DEFINES\bandastation\pronouns.dm for more info
 	/// RU_NAMES_LIST_INIT("name", "именительный", "родительный", "дательный", "винительный", "творительный", "предложный")
-	var/list/ru_names
 	var/ru_name_base
 	var/ru_name_nominative
 	var/ru_name_genitive
@@ -9,6 +8,10 @@
 	var/ru_name_accusative
 	var/ru_name_instrumental
 	var/ru_name_prepositional
+
+/atom/Initialize(mapload, ...)
+	. = ..()
+	article = null
 
 /datum/proc/ru_names_rename(list/new_list)
 	SHOULD_CALL_PARENT(FALSE)
@@ -29,7 +32,7 @@
 	CRASH("Unimplemented proc/declent_ru() was used")
 
 /atom/declent_ru(case_id, list/ru_names_override)
-	var/list/list_to_use = ru_names_override || ru_names
+	var/list/list_to_use = ru_names_override || RU_NAMES_LIST(ru_name_base, ru_name_nominative, ru_name_genitive, ru_name_dative, ru_name_accusative, ru_name_instrumental, ru_name_prepositional)
 	if(length(list_to_use))
 		if(list_to_use[case_id] && list_to_use["base"] == name)
 			return list_to_use[case_id] || name

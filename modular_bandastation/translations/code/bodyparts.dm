@@ -32,7 +32,7 @@
 	var/static/list/right_leg = RU_NAMES_LIST("right leg", "правая нога", "правой ноги", "правой ноге", "правую ногу", "правой ногой", "правой ноге")
 	var/static/list/left_foot = RU_NAMES_LIST("left leg", "левая стопа", "левой стопы", "левой стопе", "левую стопу", "левой стопой", "левой стопе")
 	var/static/list/right_foot = RU_NAMES_LIST("left leg", "правая стопа", "правой стопы", "правой стопе", "правую стопу", "правой стопой", "правой стопе")
-	var/static/list/groin = RU_NAMES_LIST("groin", "пах", "паха", "паху", "пах", "пахом", "пахе")
+	var/static/list/groin = RU_NAMES_LIST("groin", "паховая область", "паховой области", "паховой области", "паховую область", "паховой областью", "паховой области")
 	switch(zone)
 		if(BODY_ZONE_CHEST)
 			return chest[declent]

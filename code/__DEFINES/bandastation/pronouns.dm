@@ -19,7 +19,6 @@
 
 /// Макрос для добавления значений для переменных
 #define RU_NAMES_LIST_INIT(base, nominative, genitive, dative, accusative, instrumental, prepositional)\
-	ru_names = RU_NAMES_LIST(base, nominative, genitive, dative, accusative, instrumental, prepositional);\
 	ru_name_base = base;\
 	ru_name_nominative = nominative;\
 	ru_name_genitive = genitive;\

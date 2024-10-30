@@ -506,6 +506,7 @@
 
 /obj/item/toy/plush/lizard_plushie
 	name = "lizard plushie"
+	RU_NAMES_LIST_INIT("lizard plushie", "плюшевая ящерица", "плюшевой ящерицы", "плюшевой ящерице", "плюшевую ящерицу", "плюшевой ящерицей", "плюшевой ящерице")
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "map_plushie_lizard"
 	greyscale_config = /datum/greyscale_config/plush_lizard

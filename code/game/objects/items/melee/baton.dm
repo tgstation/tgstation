@@ -303,6 +303,7 @@
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
+	RU_NAMES_LIST_INIT("telescopic baton", "телескопическая дубинка", "телескопической дубинки", "телескопической дубинке", "телескопическую дубинку", "телескопической дубинкой", "телескопической дубинке")
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "telebaton"
