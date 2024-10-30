@@ -246,7 +246,7 @@
 /datum/embed_data/tether_projectile
 	embed_chance = 65 // spiky
 	fall_chance = 2
-	ignore_throwspeed_threshold=TRUE
+	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.4
 	pain_mult = 3
 	jostle_pain_mult = 2
