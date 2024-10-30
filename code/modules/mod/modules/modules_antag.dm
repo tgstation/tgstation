@@ -515,7 +515,7 @@
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
-	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = "states"
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(head_cover))
@@ -524,7 +524,7 @@
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
-	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
 	if(deleting)
 		return

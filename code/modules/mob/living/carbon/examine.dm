@@ -51,7 +51,7 @@
 	if (length(status_examines))
 		. += status_examines
 
-	if(get_bodypart(BODY_ZONE_HEAD) && !get_organ_by_type(/obj/item/organ/internal/brain))
+	if(get_bodypart(BODY_ZONE_HEAD) && !get_organ_by_type(/obj/item/organ/brain))
 		. += span_deadsay("It appears that [t_his] brain is missing...")
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -239,7 +239,7 @@
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					. += "[t_He] [t_has] a stupid expression on [t_his] face."
-		var/obj/item/organ/internal/brain/brain = get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain/brain = get_organ_by_type(/obj/item/organ/brain)
 		if(brain && isnull(ai_controller))
 			var/npc_message = ""
 			if(HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
@@ -320,7 +320,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/brain)
 	if(brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; but [t_his] soul might yet come back...")
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
@@ -519,7 +519,7 @@
 	. = list()
 
 	var/list/cybers = list()
-	for(var/obj/item/organ/internal/cyberimp/cyberimp in organs)
+	for(var/obj/item/organ/cyberimp/cyberimp in organs)
 		if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
 			cybers += cyberimp.examine_title(user)
 	if(length(cybers))

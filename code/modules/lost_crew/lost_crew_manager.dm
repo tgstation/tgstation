@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	if(!HAS_TRAIT(new_body, TRAIT_HUSK))
 		paper.name = "DO NOT REMOVE BRAIN"
 		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain explosives have been administered to enforce stipend.")
-		var/obj/item/organ/internal/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/brain)
 		//I swear to fuck I will explode you. you're not clever
 		//everyone thought of this, but I am the fool for having any faith
 		//in people actually wanting to play the job in an interesting manner
@@ -67,7 +67,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		paper.name = "BODYSWAPPING PERMITTED"
 		paper.add_raw_text("Body swapping is covered by medical insurance in case of husking and a lack of skill in the practictioner.")
 
-	var/obj/item/organ/internal/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/brain)
 	hersens.AddComponent(
 		/datum/component/ghostrole_on_revive, \
 		/* refuse_revival_if_failed = */ TRUE, \
@@ -75,7 +75,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
+/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/human/owner = brain.owner
 
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly

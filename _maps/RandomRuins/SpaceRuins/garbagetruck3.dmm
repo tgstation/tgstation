@@ -662,7 +662,7 @@
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/molten_object,
-/obj/item/organ/internal/tongue/robot,
+/obj/item/organ/tongue/robot,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HN" = (
