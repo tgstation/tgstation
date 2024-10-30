@@ -37,8 +37,10 @@
 	jobtype = /datum/job/janitor
 
 	id_trim = /datum/id_trim/job/janitor
-	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	uniform = /obj/item/clothing/under/rank/civilian/janitor/doppler
+	suit = /obj/item/clothing/suit/apron/janitor_cloak
 	belt = /obj/item/modular_computer/pda/janitor
+	gloves = /obj/item/clothing/gloves/botanic_leather/janitor
 	ears = /obj/item/radio/headset/headset_srv
 	skillchips = list(/obj/item/skillchip/job/janitor)
 	backpack_contents = list(/obj/item/access_key)

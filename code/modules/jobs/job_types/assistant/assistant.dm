@@ -40,7 +40,8 @@ Assistant
 /datum/job/assistant/get_outfit(consistent)
 	if(consistent)
 		return /datum/outfit/job/assistant/preview
-	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
+	/// DOPPLER SHIFT REMOVAL BEGIN
+	/*if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
 		return ..()
 
 	var/static/list/gimmicks = list()
@@ -48,15 +49,19 @@ Assistant
 		for(var/datum/outfit/job/assistant/gimmick/gimmick_outfit as anything in subtypesof(/datum/outfit/job/assistant/gimmick))
 			gimmicks[gimmick_outfit] = gimmick_outfit::outfit_weight
 
-	return pick_weight(gimmicks)
+	return pick_weight(gimmicks)*/
+	/// DOPPLER SHIFT REMOVAL END
+	return /datum/outfit/job/assistant/preview /// DOPPLER SHIFT ADDITION
 
 /datum/outfit/job/assistant
 	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
+	uniform = /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls/colored /// DOPPLER SHIFT ADDITION
 
-/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()
 	give_holiday_hat(target)
 	give_jumpsuit(target)
@@ -83,12 +88,15 @@ Assistant
 	if (target.jumpsuit_style == PREF_SUIT)
 		uniform = GLOB.colored_assistant.jumpsuits[index]
 	else
-		uniform = GLOB.colored_assistant.jumpskirts[index]
+		uniform = GLOB.colored_assistant.jumpskirts[index]*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
+	uniform = /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls
 
-/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/consistent/give_holiday_hat(mob/living/carbon/human/target)
 	return
 
 /datum/outfit/job/assistant/consistent/give_jumpsuit(mob/living/carbon/human/target)
@@ -100,13 +108,15 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
-		H.update_worn_undersuit()
+		H.update_worn_undersuit()*/
 
 /datum/outfit/job/assistant/preview
 	name = "Assistant - Preview"
 
-/datum/outfit/job/assistant/preview/give_jumpsuit(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/preview/give_jumpsuit(mob/living/carbon/human/target)
 	if (target.jumpsuit_style == PREF_SUIT)
 		uniform = /obj/item/clothing/under/color/grey
 	else
-		uniform = /obj/item/clothing/under/color/jumpskirt/grey
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey*/
+/// DOPPLER SHIFT REMOVAL END

@@ -7,8 +7,11 @@
 	var/outfit_weight = 0
 
 
-/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
 	return //dont do colorized and stuff, it messes with our uniforms
+	*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
