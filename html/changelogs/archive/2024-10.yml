@@ -880,3 +880,13 @@
   - bugfix: fixes the toy larva hugger getting shredded
   r3dj4ck0424:
   - bugfix: certain office chairs are now properly labelled
+2024-10-30:
+  JackEnoff:
+  - spellcheck: spellchecks "maintainance glass airlock"
+  SmArtKar:
+  - bugfix: Fixed harddels caused by certain projectiles
+  - code_imp: Magazines now lazyload their contents in order to save on gun init times.
+      Please report any broken/non-functional guns!
+  - qol: Detailed examine descriptions are prettier now.
+  carlarctg:
+  - bugfix: The Traps won't spawn traps on walls anymore

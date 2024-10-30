@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Magazines now lazyload their contents in order to save on gun init times. Please report any broken/non-functional guns!"

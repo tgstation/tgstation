@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "The Traps won't spawn traps on walls anymore"
