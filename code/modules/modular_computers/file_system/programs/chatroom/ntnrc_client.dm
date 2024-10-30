@@ -251,6 +251,7 @@
 			var/list/messages = list()
 			for(var/i=channel.messages.len to 1 step -1)
 				messages.Add(list(list(
+					"key" = "msgkey[i]",
 					"msg" = channel.messages[i],
 				)))
 			data["messages"] = messages
