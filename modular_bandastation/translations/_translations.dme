@@ -7,6 +7,7 @@
 #include "code/moustache.dm"
 #include "code/pronouns.dm"
 #include "code/restaurant_customer.dm"
+#include "code/saymode.dm"
 #include "code/translate_attack_verb.dm"
 #include "code/translate_eat_verb.dm"
 #include "code/translate_say.dm"
