@@ -244,7 +244,7 @@
 	target.AddComponent(/datum/component/tether, src, 7, "tether")
 
 /datum/embed_data/tether_projectile
-	embed_chance = 65 // spiky
+	embed_chance = 65 //spiky
 	fall_chance = 2
 	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.4
