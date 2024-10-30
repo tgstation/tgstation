@@ -15446,7 +15446,7 @@
 /obj/item/nullrod{
 	pixel_x = 4
 	},
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/soulstone/anybody/chaplain,
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -66285,11 +66285,11 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "xrt" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/organ/external/horns,
-/obj/item/organ/external/antennae,
-/obj/item/organ/external/frills,
-/obj/item/organ/external/spines,
-/obj/item/organ/external/tail/lizard/fake,
+/obj/item/organ/horns,
+/obj/item/organ/antennae,
+/obj/item/organ/frills,
+/obj/item/organ/spines,
+/obj/item/organ/tail/lizard/fake,
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)

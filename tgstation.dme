@@ -1695,6 +1695,7 @@
 #include "code\datums\mocking\client.dm"
 #include "code\datums\mood_events\_mood_event.dm"
 #include "code\datums\mood_events\area_events.dm"
+#include "code\datums\mood_events\axe_events.dm"
 #include "code\datums\mood_events\beauty_events.dm"
 #include "code\datums\mood_events\dna_infuser_events.dm"
 #include "code\datums\mood_events\drink_events.dm"

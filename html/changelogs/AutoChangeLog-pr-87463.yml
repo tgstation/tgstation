@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - admin: "make sparks optional when sending a supply pod"
