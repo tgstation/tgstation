@@ -863,6 +863,8 @@
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
+	if(.) //it's been caught.
+		return
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		if (mob_throw_hit_sound)
 			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)

@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - code_imp: "Removed internal/external pathing from organs in favor of a bit flag. Hopefully this shouldn't break anything about organs."
+  - bugfix: "Fixed invisible fox ears."
+  - bugfix: "Fixed mushpeople caps not being colored red by default."
+  - rscadd: "You can now dye most tails, podpeople hair, mushpeople caps etc. with a hair dye spray."
