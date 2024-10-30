@@ -1424,7 +1424,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 		return
 	if (item_record.amount <= 0)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 		speak("Товар [item_record.name] распродан.")
 #else
 		speak("Sold out of [item_record.name].")
@@ -1440,7 +1440,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			living_user = usr
 			card_used = living_user.get_idcard(TRUE)
 		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("Вы не достигли совершеннолетия для покупки [item_record.name].")
 #else
 			speak("You are not of legal age to purchase [item_record.name].")
@@ -1461,7 +1461,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			return
 
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 		var/vend_response = vend_reply || "Спасибо за покупку в [src]!"
 #else
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
@@ -1517,7 +1517,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
  */
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
 	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 		speak("Требуется ID для покупки [product_to_vend.name].")
 #else
 		speak("You do not possess an ID to purchase [product_to_vend.name].")
@@ -1531,7 +1531,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(LAZYLEN(product_to_vend.returned_products))
 		price_to_use = 0 //returned items are free
 	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 		speak("У вас недостаточно средств для покупки [product_to_vend.name].")
 #else
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
@@ -1751,7 +1751,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	. = FALSE
 	if(loaded_item.flags_1 & HOLOGRAM_1)
 		if(send_message)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("Этот вендор не может принимать несуществующие товары.")
 #else
 			speak("This vendor cannot accept nonexistent items.")
@@ -1759,7 +1759,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	if(loaded_items >= max_loaded_items)
 		if(send_message)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("Слишком много товаров в наличии.")
 #else
 			speak("There are too many items in stock.")
@@ -1767,7 +1767,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	if(isstack(loaded_item))
 		if(send_message)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("Незакрепленные предметы могут вызвать сбои, старайтесь помещать их в оберточную бумагу.")
 #else
 			speak("Loose items may cause problems, try to use it inside wrapping paper.")
@@ -1827,7 +1827,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		var/obj/item/card/id/card_used = living_user.get_idcard(TRUE)
 		if(card_used?.registered_account)
 			linked_account = card_used.registered_account
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("[src] теперь привязанно к карте [card_used].")
 #else
 			speak("\The [src] has been linked to [card_used].")
@@ -1893,7 +1893,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
 		/// Make an alert
 		if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
-#ifdef RU_VENDORS //MASSMETA EDIT
+#if RU_VENDORS //MASSMETA EDIT
 			speak("Благодарим [user] за вашу поддержку!")
 #else
 			speak("Thank you for your patronage [user]!")

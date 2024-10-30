@@ -5,15 +5,15 @@
 #include "_modpacks_subsystem.dm" //actually mods subsystem
 
 /// FEATURES
-#ifdef CHEBUREK_CAR
+#if CHEBUREK_CAR
 	#include "features\cheburek_car\includes.dm"
 #endif
 
 /// PEREVODY
-#ifdef RU_CRAYONS
+#if RU_CRAYONS 
 	#include "perevody\ru_crayons\includes.dm"
 #endif
-#ifdef RU_VENDORS
+#if RU_VENDORS
 	#include "perevody\ru_vendors\includes.dm"
 #endif
 

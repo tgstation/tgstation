@@ -5,12 +5,8 @@
 
 
 /// FEATURES
-
-#define CHEBUREK_CAR
-
+#define CHEBUREK_CAR 1
 /// PEREVODY
-
-#define RU_CRAYONS
-#define RU_VENDORS
-
+#define RU_CRAYONS 1
+#define RU_VENDORS 1
 /// REVERTS
