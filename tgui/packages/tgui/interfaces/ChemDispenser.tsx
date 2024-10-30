@@ -18,6 +18,7 @@ type DispensableReagent = {
   title: string;
   id: string;
   pH: number;
+  color: string;
   pHCol: string;
 };
 
@@ -186,6 +187,7 @@ export const ChemDispenser = (props) => {
               <Button
                 key={chemical.id}
                 icon="tint"
+                textColor={chemical.color}
                 width="129.5px"
                 lineHeight={1.75}
                 tooltip={'pH: ' + chemical.pH}
@@ -204,7 +206,7 @@ export const ChemDispenser = (props) => {
                   })
                 }
               >
-                {chemical.title}
+                <span style={{ color: 'white' }}>{chemical.title}</span>
               </Button>
             ))}
           </Box>
