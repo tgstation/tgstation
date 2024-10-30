@@ -148,6 +148,7 @@
 	if(.)
 		return
 
+	var/mob/living/user = ui.user
 	switch(action)
 		if("log-in")
 			if(obj_flags & EMAGGED)
@@ -155,7 +156,6 @@
 				auth_id = "Unknown (Unknown):"
 				log_activity("[auth_id] logged in to the terminal")
 				return
-			var/mob/living/user = ui.user
 			if(!istype(user))
 				return
 			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
@@ -180,15 +180,15 @@
 			auth_id = "\[NULL\]"
 		if("toggle-logs")
 			should_log = !should_log
-			usr.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
+			user.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
 		if("restore-console")
 			restoring = TRUE
-			addtimer(CALLBACK(src, PROC_REF(restore_comp), usr), rand(3,5) * 9 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(restore_comp), user), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 			var/obj/machinery/power/apc/remote_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
-			connect_apc(remote_target, usr)
+			connect_apc(remote_target, user)
 		if("check-logs")
 			log_activity("Checked Logs")
 		if("check-apcs")
@@ -206,8 +206,8 @@
 				if("equipment", "lighting", "environ")
 					target.vars[type] = value
 				else
-					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [html_encode(type)] on [target] to [html_encode(value)]")
-					usr.log_message("possibly trying to href exploit - attempted to set [html_encode(type)] on [target] to [html_encode(value)]", LOG_ADMIN)
+					message_admins("Warning: possible href exploit by [key_name(user)] - attempted to set [html_encode(type)] on [target] to [html_encode(value)]")
+					user.log_message("possibly trying to href exploit - attempted to set [html_encode(type)] on [target] to [html_encode(value)]", LOG_ADMIN)
 					return
 
 			target.update_appearance()
@@ -223,11 +223,11 @@
 				if(3)
 					setTo = "Auto On"
 			log_activity("Set APC [target.area.name] [type] to [setTo]")
-			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
+			user.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
 			var/obj/machinery/power/apc/breaker_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
-			breaker_target.toggle_breaker(usr)
+			breaker_target.toggle_breaker(user)
 			var/setTo = breaker_target.operating ? "On" : "Off"
 			log_activity("Turned APC [breaker_target.area.name]'s breaker [setTo]")
 
