@@ -195,6 +195,12 @@
 		new /regex(@"(\w)X", "g") = "$1KSSS",
 		new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1",
 		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
+		// BANDASTATION EDIT START - speech mod
+		new /regex("с+", "g") = "ссс",
+		new /regex("C+", "g") = "ССС",
+		new /regex("ч+", "g") = "щ",
+		new /regex("Ч+", "g") = "Щ",
+		// BANDASTATION END
 	)
 
 /obj/item/organ/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
