@@ -127,6 +127,7 @@
 #define VV_HK_GODMODE "godmode"
 #define VV_HK_DROP_ALL "dropall"
 #define VV_HK_REGEN_ICONS "regen_icons"
+#define VV_HK_REGEN_ICONS_FULL "regen_icons_full"
 #define VV_HK_PLAYER_PANEL "player_panel"
 #define VV_HK_BUILDMODE "buildmode"
 #define VV_HK_DIRECT_CONTROL "direct_control"

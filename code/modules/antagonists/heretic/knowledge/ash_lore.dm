@@ -142,7 +142,7 @@
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
 		/obj/item/flashlight/flare/candle = 4,
@@ -165,7 +165,7 @@
 	research_tree_icon_state = "blade_upgrade_ash"
 
 /datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
 	target.adjust_fire_stacks(1)

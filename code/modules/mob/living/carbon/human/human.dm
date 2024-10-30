@@ -15,7 +15,9 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
-	set_species(dna.species.type)
+	set_species(dna.species.type, icon_update = FALSE) //carbon/Initialize will call update_body()
+	//set species enables and disables the flag. Just to be sure, we re-enable it now until it's removed by the parent call.
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -486,13 +488,13 @@
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
-/mob/living/carbon/human/singularity_pull(S, current_size)
+/mob/living/carbon/human/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
-				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
+				to_chat(src, span_warning("\The [singularity] pulls \the [hand] from your grip!"))
 
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
@@ -525,7 +527,7 @@
 			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
 
-		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(human_lungs))
 			balloon_alert(src, "you don't have lungs!")
 			return FALSE
@@ -880,7 +882,7 @@
 		if(result != "Yes")
 			return
 
-		var/obj/item/organ/internal/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 		if(isnull(target_brain))
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
@@ -941,7 +943,7 @@
 	// can remove up to 2 seconds at legendary
 	carrydelay -= fitness_level * (1/3) SECONDS
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		carrydelay *= potential_spine.athletics_boost_multiplier
 

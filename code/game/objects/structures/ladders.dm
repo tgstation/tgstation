@@ -79,7 +79,7 @@
 	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
 	return ..()
 
-/obj/structure/ladder/singularity_pull()
+/obj/structure/ladder/singularity_pull(atom/singularity, current_size)
 	if (!(resistance_flags & INDESTRUCTIBLE))
 		visible_message(span_danger("[src] is torn to pieces by the gravitational pull!"))
 		qdel(src)
@@ -112,7 +112,7 @@
 	// Misc bonuses to the climb speed.
 	var/misc_multiplier = 1
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		misc_multiplier *= potential_spine.athletics_boost_multiplier
 

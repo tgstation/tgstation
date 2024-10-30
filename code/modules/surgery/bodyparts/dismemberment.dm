@@ -70,7 +70,8 @@
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(chest_owner.loc)
+		if(chest_owner.loc)
+			organ.forceMove(chest_owner.loc)
 		. += organ
 
 	if(cavity_item)
@@ -121,7 +122,6 @@
 	update_icon_dropped()
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
-	phantom_owner.update_body_parts()
 	if(!special)
 		phantom_owner.hud_used?.update_locked_slots()
 

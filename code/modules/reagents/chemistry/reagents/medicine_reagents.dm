@@ -559,7 +559,7 @@
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.losebreath >= 4)
-		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type // use lungs' respiration type or mob_respiration_type if no lungs
 		if(our_respiration_type & affected_respiration_type)
 			affected_mob.losebreath -= 2 * REM * seconds_per_tick
@@ -698,33 +698,33 @@
 		return
 	RegisterSignal(affected_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
 	RegisterSignal(affected_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
-	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
 	improve_eyesight(affected_mob, eyes)
 
 
-/datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
+/datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/affected_mob, obj/item/organ/eyes/eyes)
 	delta_light = creation_purity*10
 	eyes.lighting_cutoff += delta_light
 	affected_mob.update_sight()
 
-/datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/internal/eyes/eyes)
+/datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/affected_mob, obj/item/organ/eyes/eyes)
 	eyes.lighting_cutoff -= delta_light
 	affected_mob.update_sight()
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/affected_mob, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/internal/eyes))
+	if(!istype(organ, /obj/item/organ/eyes))
 		return
-	var/obj/item/organ/internal/eyes/affected_eyes = organ
+	var/obj/item/organ/eyes/affected_eyes = organ
 	improve_eyesight(affected_mob, affected_eyes)
 
 /datum/reagent/medicine/oculine/proc/on_removed_organ(mob/prev_affected_mob, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!istype(organ, /obj/item/organ/internal/eyes))
+	if(!istype(organ, /obj/item/organ/eyes))
 		return
-	var/obj/item/organ/internal/eyes/eyes = organ
+	var/obj/item/organ/eyes/eyes = organ
 	restore_eyesight(prev_affected_mob, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -732,7 +732,7 @@
 	var/normalized_purity = normalise_creation_purity()
 	affected_mob.adjust_temp_blindness(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
 	affected_mob.adjust_eye_blur(-4 SECONDS * REM * seconds_per_tick * normalized_purity)
-	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
 		if(eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
@@ -749,7 +749,7 @@
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
 	restore_eyesight(affected_mob, eyes)
@@ -786,7 +786,7 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/ears/ears = affected_mob.get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = affected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return
 	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
@@ -819,7 +819,7 @@
 		need_mob_update += affected_mob.adjustOxyLoss(-5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
-	var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
 	if(our_respiration_type & affected_respiration_type)
 		affected_mob.losebreath = 0
@@ -859,7 +859,7 @@
 		need_mob_update += affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.losebreath >= 4)
-		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
 		if(our_respiration_type & affected_respiration_type)
 			affected_mob.losebreath -= 2 * REM * seconds_per_tick
@@ -886,7 +886,7 @@
 		var/need_mob_update
 		need_mob_update = affected_mob.adjustStaminaLoss(2.5 * REM * seconds_per_tick, updating_stamina = FALSE)
 		need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		var/obj/item/organ/internal/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type
 		if(our_respiration_type & affected_respiration_type)
 			affected_mob.losebreath++
@@ -1605,8 +1605,7 @@
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
 	exposed_human.set_facial_haircolor("#9922ff", update = FALSE)
-	exposed_human.set_haircolor(color, update = TRUE)
-	exposed_human.update_body_parts()
+	exposed_human.set_haircolor(color) //this will call update_body_parts()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1706,10 +1705,10 @@
 			affected_mob.adjustOxyLoss(rand(3, 4) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 
 		if(prob(50))
-			var/obj/item/organ/internal/lungs/our_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+			var/obj/item/organ/lungs/our_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 			our_lungs.apply_organ_damage(1 * REM * seconds_per_tick)
 		else
-			var/obj/item/organ/internal/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/heart/our_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 			our_heart.apply_organ_damage(1 * REM * seconds_per_tick)
 
 		return UPDATE_MOB_HEALTH

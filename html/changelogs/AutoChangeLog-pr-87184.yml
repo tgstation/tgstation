@@ -1,5 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - bugfix: "fixed mech step sound playing twice diagonally"
-  - bugfix: "fixed turn sound playing every time you move diagonally, now only plays when the sprite turns"

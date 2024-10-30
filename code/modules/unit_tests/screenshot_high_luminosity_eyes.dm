@@ -4,7 +4,7 @@
 /// Tests to make sure no punks have broken high luminosity eyes
 /datum/unit_test/screenshot_high_luminosity_eyes
 	var/mob/living/carbon/human/test_subject
-	var/obj/item/organ/internal/eyes/robotic/glow/test_eyes
+	var/obj/item/organ/eyes/robotic/glow/test_eyes
 
 /datum/unit_test/screenshot_high_luminosity_eyes/Run()
 	// Create a mob with red and blue eyes. This is to test that high luminosity eyes properly default to the old eye color.
@@ -14,7 +14,7 @@
 	test_subject.eye_color_right = COLOR_BLUE
 
 	// Create our eyes, and insert them into the mob
-	test_eyes = allocate(/obj/item/organ/internal/eyes/robotic/glow)
+	test_eyes = allocate(/obj/item/organ/eyes/robotic/glow)
 	test_eyes.Insert(test_subject)
 
 	// This should be 4, but just in case it ever changes in the future

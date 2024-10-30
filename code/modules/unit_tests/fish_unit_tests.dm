@@ -360,7 +360,7 @@
 /obj/structure/aquarium/crab/Initialize(mapload)
 	. = ..()
 	crabbie = new(src)
-	crabbie.name = "Crabbie"
+	crabbie.AddComponent(/datum/component/rename, "Crabbie", crabbie.desc)
 	crabbie.last_feeding = world.time
 	crabbie.AddComponent(/datum/component/fish_growth, crabbie.lob_type, 1 SECONDS)
 
@@ -455,7 +455,7 @@
 
 	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish is not dead, despite having sustained enough damage that it should. health: [fish.health]")
 
-	var/obj/item/organ/internal/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = gourmet.get_organ_slot(ORGAN_SLOT_STOMACH)
 	belly.reagents.clear_reagents()
 
 	fish.set_status(FISH_ALIVE)
