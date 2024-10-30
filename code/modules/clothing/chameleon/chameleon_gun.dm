@@ -155,3 +155,12 @@
 	var/obj/item/gun/new_gun = new guntype(src)
 	set_chameleon_gun(new_gun)
 	qdel(new_gun)
+
+/obj/item/gun/energy/laser/chameleon/ballistic
+	actions_types = list(/datum/action/item_action/chameleon/change/gun/ballistic)
+
+/obj/item/gun/energy/laser/chameleon/ballistic/Initialize(mapload)
+	. = ..()
+	if(!.)
+		return
+	gun_action?.update_look(/obj/item/gun/ballistic/automatic/mini_uzi)

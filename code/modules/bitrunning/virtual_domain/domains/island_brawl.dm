@@ -13,9 +13,8 @@
 		/obj/item/toy/beach_ball = 2,
 		/obj/item/clothing/shoes/sandal = 1,
 		/obj/item/clothing/glasses/sunglasses = 1,
-		/obj/item/gun/ballistic/automatic/mini_uzi = 1,
+		/obj/item/gun/energy/laser/chameleon/ballistic = 1,
 	)
-
 
 /datum/lazy_template/virtual_domain/island_brawl/setup_domain(list/created_atoms)
 	for(var/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander/spawner in created_atoms)
