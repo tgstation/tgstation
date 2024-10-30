@@ -4,7 +4,7 @@ directory = "_maps/shuttles/emergency_scrapheap/"
 modules = ["classic1.dmm"]
 
 [rooms.classic_fore]
-modules = ["classic_fore1.dmm"]
+modules = ["classic_fore3.dmm"]
 
 [rooms.classic_aft]
 modules = ["classic_aft1.dmm"]

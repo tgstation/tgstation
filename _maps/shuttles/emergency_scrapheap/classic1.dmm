@@ -2,12 +2,18 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"d" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "e" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "f" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "g" = (
@@ -21,15 +27,28 @@
 "i" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "k" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "n" = (
 /obj/structure/table_frame,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"p" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "q" = (
@@ -62,6 +81,7 @@
 "z" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/radio/intercom/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "A" = (
@@ -87,6 +107,7 @@
 /area/shuttle/escape)
 "E" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "F" = (
@@ -96,6 +117,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "H" = (
@@ -106,6 +128,11 @@
 "I" = (
 /obj/structure/table/wood,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"J" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "K" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -122,12 +149,14 @@
 "M" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "O" = (
@@ -145,6 +174,7 @@
 /area/template_noop)
 "V" = (
 /obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "W" = (
@@ -152,6 +182,7 @@
 /obj/structure/barricade/wooden,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "X" = (
@@ -166,6 +197,11 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Z" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -175,7 +211,7 @@ a
 a
 R
 O
-B
+Z
 B
 B
 O
@@ -203,8 +239,8 @@ a
 a
 a
 a
-D
-B
+p
+Z
 A
 H
 L
@@ -235,7 +271,7 @@ a
 a
 D
 B
-g
+d
 q
 D
 B
@@ -249,12 +285,12 @@ Q
 w
 e
 q
-q
-q
+j
+j
 q
 D
-B
-h
+Z
+J
 t
 "}
 (7,1,1) = {"
@@ -289,12 +325,12 @@ a
 "}
 (9,1,1) = {"
 v
-q
-q
+j
+j
 q
 q
 D
-B
+Z
 g
 q
 s
@@ -304,7 +340,7 @@ a
 "}
 (10,1,1) = {"
 B
-B
+Z
 i
 M
 q

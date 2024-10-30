@@ -11,6 +11,7 @@
 	pixel_y = -24
 	},
 /obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "c" = (
@@ -19,16 +20,23 @@
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "h" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "i" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"j" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
 /obj/structure/chair/comfy/brown{
@@ -41,14 +49,20 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "p" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "s" = (
@@ -65,6 +79,7 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "x" = (
@@ -82,9 +97,19 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
+"z" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "D" = (
@@ -105,6 +130,7 @@
 	name = "Emergency Shuttle Cockpit"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "K" = (
@@ -123,10 +149,12 @@
 /obj/structure/table,
 /obj/item/extinguisher,
 /obj/item/crowbar,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "R" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "T" = (
@@ -144,13 +172,15 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "V" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Y" = (
 /obj/item/radio/intercom/directional/south,
+/obj/item/kirbyplants/random,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 
@@ -171,7 +201,7 @@ i
 i
 i
 c
-c
+j
 x
 Q
 i
@@ -199,14 +229,14 @@ V
 i
 "}
 (5,1,1) = {"
-c
-l
+j
+z
 s
 Y
 i
 c
 K
-c
+j
 p
 "}
 (6,1,1) = {"
@@ -223,7 +253,7 @@ L
 (7,1,1) = {"
 c
 l
-s
+q
 g
 I
 E
