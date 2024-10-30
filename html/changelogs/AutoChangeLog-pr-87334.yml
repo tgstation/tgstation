@@ -1,6 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - rscadd: "Organs can now define their own tastes or food types."
-  - rscadd: "Fish tails can now be filleted into quality ingredient fish tail fish fillets, and have a fitting amount of food reagents on the whole."
-  - balance: "Fish organs are now counted as seafood, and have specific tastes set."

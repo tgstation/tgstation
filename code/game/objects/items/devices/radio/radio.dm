@@ -351,13 +351,11 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-/*BEGIN DOPPLER EDIT - VOLUME MIXER
-		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
-			SEND_SOUND(talking_living, 'sound/items/radio/radio_talk.ogg') */
+	// BEGIN DOPPLER EDIT - VOLUME MIXER
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
-		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier)
+		if(radio_noise && talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && signal.frequency != FREQ_COMMON)
 			SEND_SOUND(talking_living, sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
-///END DOPPLER EDIT
+	// END DOPPLER EDIT
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -661,6 +659,9 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
 
 /obj/item/radio/entertainment/speakers/Initialize(mapload)
 	. = ..()

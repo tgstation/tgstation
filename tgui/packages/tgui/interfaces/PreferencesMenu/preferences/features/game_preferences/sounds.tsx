@@ -140,3 +140,11 @@ export const sound_radio_noise: Feature<number> = {
   component: FeatureSliderInput,
 };
 // END DOPPLER EDIT
+
+export const sound_ai_vox: FeatureToggle = {
+  name: 'Enable AI VOX announcements',
+  category: 'SOUND',
+  description:
+    'When enabled, hear vocal AI announcements (also known as "VOX").',
+  component: CheckboxInput,
+};

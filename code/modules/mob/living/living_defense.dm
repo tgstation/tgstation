@@ -623,7 +623,7 @@
 
 /** Handles exposing a mob to reagents.
  *
- * If the methods include INGEST the mob tastes the reagents.
+ * If the methods include INGEST or INHALE, the mob tastes the reagents.
  * If the methods include VAPOR it incorporates permiability protection.
  */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
@@ -631,7 +631,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(methods & INGEST)
+	if(methods & (INGEST | INHALE))
 		taste(source)
 
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
