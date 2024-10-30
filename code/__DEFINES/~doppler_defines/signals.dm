@@ -13,7 +13,7 @@
 #define COMSIG_PULSATING_TUMOR_ADDED "pulsating_tumor_added"
 /// For when a Hemophage's pulsating tumor gets removed from their body.
 #define COMSIG_PULSATING_TUMOR_REMOVED "pulsating_tumor_removed"
-/// From /obj/item/organ/internal/stomach/after_eat(atom/edible)
+/// From /obj/item/organ/stomach/after_eat(atom/edible)
 #define COMSIG_STOMACH_AFTER_EAT "stomach_after_eat"
 /// Whenever a baton successfully executes its nonlethal attack. WARNING wonderful FUCKING CODE by niko THIS IS peak AAAAAAAAAAAAH
 #define COMSIG_PRE_BATON_FINALIZE_ATTACK "pre_baton_finalize_attack"

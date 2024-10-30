@@ -27,19 +27,19 @@
  * Handles corrupting already-existing organs upon having the tumor be inserted in the mob.
  */
 /datum/element/tumor_corruption/proc/handle_organ_corruption_on_existing_organs(mob/living/carbon/organ_enjoyer)
-	var/obj/item/organ/internal/liver/liver = organ_enjoyer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = organ_enjoyer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && !(liver.organ_flags & ORGAN_TUMOR_CORRUPTED))
 		liver.AddComponent(/datum/component/organ_corruption/liver)
 
-	var/obj/item/organ/internal/lungs/lungs = organ_enjoyer.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lungs = organ_enjoyer.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && !(lungs.organ_flags & ORGAN_TUMOR_CORRUPTED))
 		lungs.AddComponent(/datum/component/organ_corruption/lungs)
 
-	var/obj/item/organ/internal/stomach/stomach = organ_enjoyer.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/stomach = organ_enjoyer.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(stomach && !(stomach.organ_flags & ORGAN_TUMOR_CORRUPTED))
 		stomach.AddComponent(/datum/component/organ_corruption/stomach)
 
-	var/obj/item/organ/internal/tongue/tongue = organ_enjoyer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = organ_enjoyer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue && !(tongue.organ_flags & ORGAN_TUMOR_CORRUPTED))
 		tongue.AddComponent(/datum/component/organ_corruption/tongue)
 

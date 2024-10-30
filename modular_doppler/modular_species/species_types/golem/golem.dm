@@ -63,7 +63,7 @@
 
 /datum/crafting_recipe/golem_stomach
 	name = "Silicate Grinder"
-	result = /obj/item/organ/internal/stomach/golem
+	result = /obj/item/organ/stomach/golem
 	time = 120
 	tool_behaviors = list(TOOL_MINING)
 	reqs = list(/obj/item/stack/stone = 10, /obj/item/stack/sheet/plasteel = 10)
@@ -71,7 +71,7 @@
 
 /datum/crafting_recipe/golem_liver
 	name = "Porous Rock"
-	result = /obj/item/organ/internal/liver/golem
+	result = /obj/item/organ/liver/golem
 	time = 120
 	tool_behaviors = list(TOOL_MINING)
 	reqs = list(/obj/item/stack/stone = 10)
@@ -79,7 +79,7 @@
 
 /datum/crafting_recipe/golem_tongue
 	name = "Golem Tongue"
-	result = /obj/item/organ/internal/tongue/golem
+	result = /obj/item/organ/tongue/golem
 	time = 120
 	tool_behaviors = list(TOOL_MINING)
 	reqs = list(/obj/item/stack/stone = 10)
@@ -87,7 +87,7 @@
 
 /datum/crafting_recipe/golem_eyes
 	name = "Resonating Crystal"
-	result = /obj/item/organ/internal/eyes/golem
+	result = /obj/item/organ/eyes/golem
 	time = 120
 	tool_behaviors = list(TOOL_MINING)
 	reqs = list(/obj/item/stack/stone = 10, /obj/item/stack/sheet/glass = 15)
@@ -95,7 +95,7 @@
 
 /datum/crafting_recipe/golem_appendix
 	name = "Internal Forge"
-	result = /obj/item/organ/internal/appendix/golem
+	result = /obj/item/organ/appendix/golem
 	time = 120
 	tool_behaviors = list(TOOL_MINING)
 	reqs = list(/obj/item/stack/stone = 10, /obj/item/stack/sheet/mineral/plasma = 15)

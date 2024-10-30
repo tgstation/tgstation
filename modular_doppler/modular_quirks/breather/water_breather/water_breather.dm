@@ -23,13 +23,13 @@
 			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 		), "Be sure to equip your vaporizer, or you may end up choking to death!"
 	)
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
 	if(!target_lungs || !target_chest)
 		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
 		return
 	// if your lungs already have this trait, no need to update
-	if(target_lungs.type == /obj/item/organ/internal/lungs/fish)
+	if(target_lungs.type == /obj/item/organ/lungs/fish)
 		return
 	target_lungs.safe_oxygen_min = 0
 	// update lung procs

@@ -288,7 +288,7 @@
 	owner.clear_alert(ALERT_NOT_ENOUGH_WATER)
 
 /// Requires the spaceman to have either water vapor or be wet.
-/obj/item/organ/internal/lungs/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp) // DOPPLER EDIT, old code: /obj/item/organ/internal/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
+/obj/item/organ/lungs/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp) // DOPPLER EDIT, old code: /obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
 	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
 	if(water_pp < safe_water_level && need_to_breathe)
 		on_low_water(breather, breath, water_pp)
@@ -305,7 +305,7 @@
 		breather.adjustOxyLoss(-5)
 
 /// Called when there isn't enough water to breath
-/obj/item/organ/internal/lungs/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp) // DOPPLER EDIT, old code: /obj/item/organ/internal/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
+/obj/item/organ/lungs/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp) // DOPPLER EDIT, old code: /obj/item/organ/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
 	breather.throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
 	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
 	if(water_pp)

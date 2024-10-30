@@ -7,7 +7,7 @@
 	if(!iscarbon(source))
 		return FALSE
 	var/mob/living/carbon/carbon_source = source
-	var/obj/item/organ/external/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(!tail || !tail.atom_storage)
 		return FALSE
 	return TRUE
@@ -16,7 +16,7 @@
 	if(!iscarbon(source))
 		return null
 	var/mob/living/carbon/carbon_source = source
-	var/obj/item/organ/external/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(tail && tail.atom_storage && length(tail.contents))
 		return tail.contents[1]
 
@@ -42,7 +42,7 @@
 	if(!iscarbon(source))
 		return FALSE
 	var/mob/living/carbon/carbon_source = source
-	var/obj/item/organ/external/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/tail/tail = carbon_source.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	tail.atom_storage?.attempt_insert(equipping, user)
 
 	return finish_equip_mob(equipping, source, user)

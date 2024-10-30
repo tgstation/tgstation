@@ -62,45 +62,45 @@
 
 	//// Add the organs!
 	// tongue
-	var/obj/item/organ/tongue = text2path("/obj/item/organ/internal/tongue/[animal_trait]")
+	var/obj/item/organ/tongue = text2path("/obj/item/organ/tongue/[animal_trait]")
 	if(tongue) // text2path nulls if it can't find a matching subtype, so don't worry adding an organ for every single trait value
 		mutanttongue = tongue.type
 
 	// lungs
-	var/obj/item/organ/lungs = text2path("/obj/item/organ/internal/lungs/[animal_trait]")
+	var/obj/item/organ/lungs = text2path("/obj/item/organ/lungs/[animal_trait]")
 	if(lungs)
 		mutantlungs = lungs.type
 	else // If you have an organ that is more specific, you can add it in this switch() list
 		switch(animal_trait)
 			if(FROG)
-				mutantlungs = /obj/item/organ/internal/lungs/fish/amphibious
+				mutantlungs = /obj/item/organ/lungs/fish/amphibious
 
 	// liver
-	var/obj/item/organ/liver = text2path("/obj/item/organ/internal/liver/[animal_trait]")
+	var/obj/item/organ/liver = text2path("/obj/item/organ/liver/[animal_trait]")
 	if(liver)
 		mutantliver = liver.type
 	else
 		switch(animal_trait)
 			if(BUG)
-				mutantliver = /obj/item/organ/internal/liver/roach
+				mutantliver = /obj/item/organ/liver/roach
 
 	// stomach
-	var/obj/item/organ/stomach = text2path("/obj/item/organ/internal/stomach/[animal_trait]")
+	var/obj/item/organ/stomach = text2path("/obj/item/organ/stomach/[animal_trait]")
 	if(stomach)
 		mutantstomach = stomach.type
 	else
 		switch(animal_trait)
 			if(BUG)
-				mutantstomach = /obj/item/organ/internal/stomach/roach
+				mutantstomach = /obj/item/organ/stomach/roach
 
 	// appendix
-	var/obj/item/organ/appendix = text2path("/obj/item/organ/internal/appendix/[animal_trait]")
+	var/obj/item/organ/appendix = text2path("/obj/item/organ/appendix/[animal_trait]")
 	if(appendix)
 		mutantappendix = appendix.type
 	else
 		switch(animal_trait)
 			if(BUG)
-				mutantappendix = /obj/item/organ/internal/appendix/roach
+				mutantappendix = /obj/item/organ/appendix/roach
 
 	////
 	//	Adding remaining traits, elements, components, and more from here on

@@ -353,7 +353,7 @@
 		var/mob/living/talking_living = talking_movable
 	// BEGIN DOPPLER EDIT - VOLUME MIXER
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
-		if(radio_noise && talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && signal.frequency != FREQ_COMMON)
+		if(radio_noise && talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise) && signal.frequency != FREQ_COMMON)
 			SEND_SOUND(talking_living, sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
 	// END DOPPLER EDIT
 

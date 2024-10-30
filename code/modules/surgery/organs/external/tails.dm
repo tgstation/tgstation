@@ -43,7 +43,6 @@
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/tail/on_bodypart_insert(obj/item/bodypart/bodypart)
-	var/obj/item/organ/spines/our_spines = bodypart.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 	/// DOPPLER SHIFT ADDITION BEGIN
 	// damnit TG your own code fails CI for reasons unclear - TODO, stack trace this to eventually figure out how it's ending up with null owners
 	if(bodypart == null)
@@ -51,7 +50,7 @@
 	if(bodypart.owner == null)
 		return ..()
 	/// DOPPLER SHIFT ADDITION END
-	var/obj/item/organ/external/spines/our_spines = bodypart.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+	var/obj/item/organ/spines/our_spines = bodypart.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 	if(our_spines)
 		try_insert_tail_spines(bodypart)
 	return ..()

@@ -1,4 +1,4 @@
-/obj/item/organ/internal/liver/snail
+/obj/item/organ/liver/snail
 	name = "gastropod liver"
 	icon = 'modular_doppler/modular_species/species_types/snails/icons/organs/snail_liver.dmi'
 	icon_state = "liver-snail"

@@ -1,5 +1,5 @@
 /// Horns fixing
-/obj/item/organ/external/horns
+/obj/item/organ/horns
 	name = "horns"
 
 /datum/bodypart_overlay/mutant/horns
@@ -64,7 +64,7 @@
 	. = ..()
 	if(target.dna.features["horns"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["horns"] != /datum/sprite_accessory/horns/none::name && target.dna.features["horns"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/horns)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/horns)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
