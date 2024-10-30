@@ -266,7 +266,7 @@
 	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
 	var/athletics_boost_multiplier = 0.8
 	/// How much additional throwing speed does our spinal implant grant us.
-	var/added_throw_speed = 2
+	var/added_throw_speed = 1
 	/// How much additional throwing range does our spinal implant grant us.
 	var/added_throw_range = 4
 	/// How much additional boxing damage and tackling power do we add?
@@ -311,7 +311,7 @@
 	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
 		user.balloon_alert(user, "core installed.")
 		athletics_boost_multiplier = 0.25
-		added_throw_speed += 4
+		added_throw_speed += 5
 		added_throw_range += 4
 		strength_bonus += 4
 		core_applied = TRUE
