@@ -52,7 +52,7 @@
 
 /datum/interview_manager/enqueue(datum/interview/to_queue)
 	. = ..()
-	send_interview_webhook(src, "New interview enqueued:")
+	send_interview_webhook(to_queue, "New interview enqueued:")
 
 /datum/interview/deny(client/denied_by)
 	. = ..()
