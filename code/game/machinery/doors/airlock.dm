@@ -2001,12 +2001,12 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/glass
-	name = "maintainence glass airlock"
+	name = "maintenance glass airlock"
 	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/external/glass
-	name = "maintainence external glass airlock"
+	name = "maintenance external glass airlock"
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 200
