@@ -428,7 +428,8 @@
 	return /datum/sprite_accessory/tails/fish/none::name
 
 /datum/preference/choiced/fish_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["fish_tail"] = value
+	if(target.dna.tail_type == FISH)
+		target.dna.features["fish_tail"] = value
 
 /datum/preference/choiced/fish_tail/icon_for(value)
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_fish[value]
