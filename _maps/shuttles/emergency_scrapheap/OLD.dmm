@@ -1,0 +1,633 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"bF" = (
+/obj/machinery/door/airlock{
+	name = "Unit 1"
+	},
+/turf/open/floor/iron/freezer,
+/area/space)
+"bN" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"dq" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/space)
+"dw" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"dL" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/space)
+"eS" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"fG" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas,
+/turf/open/floor/mineral/titanium,
+/area/space)
+"fM" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/space)
+"fR" = (
+/turf/open/floor/mineral/titanium,
+/area/space)
+"gh" = (
+/obj/structure/grille/broken,
+/turf/open/floor/iron,
+/area/space)
+"gJ" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
+	},
+/turf/open/floor/iron/freezer,
+/area/space)
+"hu" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "Scrapheap Challenge"
+	},
+/turf/open/floor/plating,
+/area/space)
+"kh" = (
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/space)
+"kt" = (
+/obj/structure/table_frame,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"kO" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/space)
+"mB" = (
+/obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"mW" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"ns" = (
+/obj/machinery/flasher/directional/north{
+	id = "cockpit_flasher"
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/space)
+"nA" = (
+/obj/machinery/door/airlock{
+	name = "Unit 2"
+	},
+/turf/open/floor/iron/freezer,
+/area/space)
+"nP" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/space)
+"oQ" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet,
+/area/space)
+"oS" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/freezer,
+/area/space)
+"pN" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/carpet,
+/area/space)
+"rm" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/space)
+"ry" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"sD" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"sX" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/space)
+"vd" = (
+/obj/structure/table/wood,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"vp" = (
+/obj/structure/grille,
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/plating,
+/area/space)
+"vw" = (
+/turf/open/floor/iron/freezer,
+/area/space)
+"xm" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"yc" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/carpet,
+/area/space)
+"yK" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/freezer,
+/area/space)
+"ze" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"zZ" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/space)
+"Ay" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"AZ" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet,
+/area/space)
+"BM" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/space)
+"Dm" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"DK" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas/black,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"DT" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"Ee" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/carpet,
+/area/space)
+"Fc" = (
+/turf/template_noop,
+/area/space)
+"Fe" = (
+/turf/open/floor/iron/grimy,
+/area/space)
+"GY" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/carpet,
+/area/space)
+"Hm" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/space)
+"Ib" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"Jz" = (
+/turf/open/floor/carpet,
+/area/space)
+"JG" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/plating,
+/area/space)
+"JS" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"JX" = (
+/obj/machinery/door/airlock{
+	name = "Unit B"
+	},
+/turf/open/floor/iron/freezer,
+/area/space)
+"Kg" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"KD" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/space)
+"Lf" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/space)
+"LJ" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/space)
+"Me" = (
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/space)
+"Nl" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/space)
+"Oz" = (
+/turf/closed/wall/mineral/titanium,
+/area/space)
+"OX" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/space)
+"Pe" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/carpet,
+/area/space)
+"PT" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/barricade/wooden,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/space)
+"PY" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/space)
+"Qd" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"Qv" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/space)
+"Rp" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/table,
+/obj/item/extinguisher,
+/obj/item/crowbar,
+/turf/open/floor/mineral/plastitanium/red,
+/area/space)
+"RL" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"St" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/freezer,
+/area/space)
+"Wn" = (
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_y = -24
+	},
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet,
+/area/space)
+
+(1,1,1) = {"
+Fc
+Fc
+Fc
+Fc
+Oz
+Oz
+Oz
+JG
+Oz
+hu
+Oz
+zZ
+zZ
+zZ
+Oz
+Hm
+Oz
+Hm
+Oz
+Oz
+Oz
+Fc
+"}
+(2,1,1) = {"
+Fc
+Oz
+Oz
+Oz
+zZ
+zZ
+as
+Rp
+Oz
+ry
+gh
+sD
+fR
+kt
+Fe
+Nl
+Oz
+vw
+bF
+yK
+Oz
+Oz
+"}
+(3,1,1) = {"
+Oz
+sX
+Me
+fM
+Qd
+xm
+JS
+bN
+Oz
+Ib
+zZ
+DK
+fG
+vd
+BM
+Lf
+Oz
+vw
+Oz
+Oz
+KD
+Qv
+"}
+(4,1,1) = {"
+zZ
+AZ
+kO
+Jz
+zZ
+zZ
+JS
+ze
+Oz
+Ib
+zZ
+mB
+dL
+mB
+BM
+Nl
+Oz
+oS
+nA
+yK
+KD
+Qv
+"}
+(5,1,1) = {"
+zZ
+rm
+Jz
+GY
+Oz
+zZ
+vp
+zZ
+sX
+Ib
+zZ
+sD
+fR
+Ib
+zZ
+kh
+Oz
+vw
+Oz
+Oz
+KD
+Qv
+"}
+(6,1,1) = {"
+zZ
+pN
+Jz
+Wn
+Oz
+ns
+gh
+mW
+dq
+fR
+fR
+fR
+fR
+Ib
+zZ
+Nl
+gJ
+vw
+JX
+St
+KD
+Qv
+"}
+(7,1,1) = {"
+zZ
+rm
+Jz
+yc
+Pe
+Nl
+zZ
+sD
+fR
+Ib
+zZ
+sD
+fR
+Ib
+zZ
+PT
+sX
+Oz
+Oz
+Oz
+nP
+Qv
+"}
+(8,1,1) = {"
+zZ
+Ee
+oQ
+Fc
+zZ
+zZ
+OX
+sD
+fR
+Ib
+zZ
+sD
+fR
+Ay
+Oz
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+"}
+(9,1,1) = {"
+Fc
+Fc
+Fc
+Fc
+PY
+fR
+fR
+fR
+fR
+Ib
+zZ
+sD
+fR
+DT
+Oz
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+"}
+(10,1,1) = {"
+Fc
+Fc
+Fc
+Fc
+zZ
+zZ
+OX
+eS
+fR
+Ib
+zZ
+sD
+fR
+RL
+Oz
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+"}
+(11,1,1) = {"
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Oz
+dw
+LJ
+Dm
+Dm
+Dm
+LJ
+Kg
+Oz
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+Fc
+"}

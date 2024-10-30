@@ -54,6 +54,7 @@
 
 /datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
 	. = ..()
+	sleep(1 SECONDS) // Ugly temporary hack fix to make sure modular shuttles have time to assemble themselves before being moved.
 	if(!.)
 		return
 	var/list/turfs = block( locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),

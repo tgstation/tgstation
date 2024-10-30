@@ -1,0 +1,334 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"f" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"g" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"i" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/escape)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"n" = (
+/obj/structure/table_frame,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"q" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"s" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"t" = (
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_aft"
+	},
+/turf/template_noop,
+/area/template_noop)
+"u" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"v" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"w" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"z" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas/black,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"B" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"C" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
+"D" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"E" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"G" = (
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
+"H" = (
+/obj/structure/table/wood,
+/obj/item/toy/cards/deck/cas,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"K" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/table/wood,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"M" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"O" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Q" = (
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_fore"
+	},
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/structure/grille/broken,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"W" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/barricade/wooden,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"X" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Y" = (
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+R
+O
+B
+B
+B
+O
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+k
+V
+g
+q
+n
+G
+h
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+D
+B
+A
+H
+L
+C
+u
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+D
+B
+I
+F
+I
+C
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+D
+B
+g
+q
+D
+B
+Y
+a
+"}
+(6,1,1) = {"
+a
+a
+Q
+w
+e
+q
+q
+q
+q
+D
+B
+h
+t
+"}
+(7,1,1) = {"
+a
+a
+a
+g
+q
+D
+B
+g
+q
+D
+B
+W
+a
+"}
+(8,1,1) = {"
+B
+B
+i
+g
+q
+D
+B
+g
+q
+X
+O
+a
+a
+"}
+(9,1,1) = {"
+v
+q
+q
+q
+q
+D
+B
+g
+q
+s
+O
+a
+a
+"}
+(10,1,1) = {"
+B
+B
+i
+M
+q
+D
+B
+g
+q
+N
+O
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+O
+z
+f
+K
+K
+K
+f
+E
+O
+a
+a
+"}
