@@ -81,3 +81,16 @@ SUBSYSTEM_DEF(modpacks)
 		popup.open()
 	else
 		to_chat(src, "Этот сервер не использует какие-либо модификации.")
+
+//Show button on lobby screen
+//ORIGINAL FILE: code/_onclick/hud/new_player.dm
+/atom/movable/screen/lobby/button/bottom/poll
+	icon = 'modular_meta/mods_button.dmi'
+	name = "View Loaded Modpacks"
+	icon_state = "mods"
+	base_icon_state = "mods"
+	screen_loc = "TOP:-122,CENTER:-26"
+
+/atom/movable/screen/lobby/button/bottom/poll/Click(location, control, params)
+	. = ..()
+	usr.client?.modpacks_list()

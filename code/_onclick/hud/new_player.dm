@@ -388,6 +388,8 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.ViewManifest()
 
+//MASSMETA EDIT REMOVAL BEGIN (modpack itself)
+/*
 /atom/movable/screen/lobby/button/bottom/poll
 	name = "View Available Polls"
 	icon_state = "poll"
@@ -451,6 +453,8 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
+*/
+//MASSMETA EDIT REMOVAL END
 
 /// A generic "sign up" button used by station traits
 /atom/movable/screen/lobby/button/sign_up
