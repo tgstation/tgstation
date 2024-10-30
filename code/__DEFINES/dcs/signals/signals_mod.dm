@@ -41,3 +41,5 @@
 #define COMSIG_MOD_WEARER_UNSET "mod_wearer_unset"
 /// Sent by the tether module when it triggers its snapping function
 #define COMSIG_MOD_TETHER_SNAP "mod_tether_snap"
+/// Called when a MOD module generats its worn overlay
+#define COMSIG_MODULE_GENERATE_WORN_OVERLAY "mod_module_generate_worn_overlay"

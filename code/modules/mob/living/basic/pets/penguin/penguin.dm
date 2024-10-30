@@ -35,6 +35,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/pet_bonus, "honk")
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
+	ADD_TRAIT(src, TRAIT_MOB_CAN_DIG, INNATE_TRAIT)
 	if(!can_lay_eggs)
 		return
 	AddComponent(\
@@ -47,6 +48,11 @@
 		max_eggs_held = 1,\
 		egg_laid_callback = CALLBACK(src, PROC_REF(lay_penguin_egg)),\
 	)
+	var/static/list/fishable_objects = typecacheof(list(/turf/open/misc/ice))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_objects)
+	var/static/list/delicious_food = list(/obj/item/fish)
+	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = delicious_food)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(delicious_food))
 
 /mob/living/basic/pet/penguin/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -93,38 +99,6 @@
 	carried_egg = null
 	cut_overlay("penguin_egg_overlay")
 
-/datum/ai_controller/basic_controller/penguin
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-	)
-
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/find_and_hunt_target/penguin_egg,
-		/datum/ai_planning_subtree/random_speech/penguin,
-	)
-
-/datum/ai_planning_subtree/find_and_hunt_target/penguin_egg
-	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/penguin_egg
-	finding_behavior = /datum/ai_behavior/find_hunt_target/penguin_egg
-	hunt_targets = list(/obj/item/food/egg/penguin_egg)
-	hunt_range = 7
-
-/datum/ai_behavior/find_hunt_target/penguin_egg/valid_dinner(mob/living/source, atom/dinner, radius)
-	return can_see(source, dinner, radius) && !(dinner in source.contents)
-/datum/ai_behavior/hunt_target/penguin_egg
-	hunt_cooldown = 15 SECONDS
-	always_reset_target = TRUE
-
-/datum/ai_behavior/hunt_target/penguin_egg/target_caught(mob/living/basic/hunter, obj/item/food/egg/target)
-	hunter.UnarmedAttack(target, TRUE)
-
 /mob/living/basic/pet/penguin/emperor
 	name = "emperor penguin"
 	real_name = "penguin"
@@ -157,12 +131,11 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
+	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
 	can_lay_eggs = FALSE
 	///will it grow up?
 	var/can_grow_up = TRUE
-
 
 /mob/living/basic/pet/penguin/baby/Initialize(mapload)
 	. = ..()
@@ -186,23 +159,6 @@
 
 /mob/living/basic/pet/penguin/baby/proc/ready_to_grow()
 	return (stat == CONSCIOUS)
-
-/datum/ai_controller/basic_controller/penguin/baby
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_FIND_MOM_TYPES = list(/mob/living/basic/pet/penguin),
-		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/penguin/baby),
-	)
-
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/look_for_adult,
-	)
 
 /mob/living/basic/pet/penguin/baby/permanent
 	can_grow_up = FALSE

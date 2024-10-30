@@ -2603,6 +2603,10 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/sandy_dirt,
 /area/station/service/lawoffice)
+"aZg" = (
+/obj/machinery/drone_dispenser,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "aZh" = (
 /obj/machinery/modular_computer/preset/curator{
 	dir = 8
@@ -9459,24 +9463,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"dzi" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/reagent_containers/cup/glass/bottle/holywater{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/nullrod{
-	pixel_x = 4
-	},
-/obj/item/organ/internal/heart,
-/obj/item/soulstone/anybody/chaplain,
-/obj/machinery/light/small/red/dim/directional/south,
-/obj/item/radio/intercom/chapel/directional/east,
-/turf/open/floor/iron/terracotta/diagonal,
-/area/station/service/chapel/office)
 "dzE" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -13883,6 +13869,7 @@
 	cycle_id = "engine_airlock_1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "ffL" = (
@@ -26319,10 +26306,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"jar" = (
-/obj/machinery/drone_dispenser,
-/turf/open/misc/asteroid,
-/area/station/maintenance/starboard/greater)
 "jat" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
@@ -30212,7 +30195,6 @@
 /area/station/command/corporate_dock)
 "kmD" = (
 /obj/structure/chair/office/light{
-	name = "blue";
 	color = "#6495ED";
 	dir = 4
 	},
@@ -34189,6 +34171,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/radio/intercom/directional/north,
 /obj/item/clothing/head/utility/welding,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "lEa" = (
@@ -45431,6 +45414,24 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"pEQ" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/nullrod{
+	pixel_x = 4
+	},
+/obj/item/organ/heart,
+/obj/item/soulstone/anybody/chaplain,
+/obj/machinery/light/small/red/dim/directional/south,
+/obj/item/radio/intercom/chapel/directional/east,
+/turf/open/floor/iron/terracotta/diagonal,
+/area/station/service/chapel/office)
 "pET" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 8
@@ -64485,7 +64486,6 @@
 /area/station/security/checkpoint/customs/auxiliary)
 "vKn" = (
 /obj/structure/chair/office/light{
-	name = "blue";
 	color = "#6495ED";
 	dir = 8
 	},
@@ -70253,6 +70253,12 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/security/breakroom)
+"xtv" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "xtD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -85837,7 +85843,7 @@ jte
 diI
 yea
 vmt
-dzi
+pEQ
 fEC
 wxR
 fEC
@@ -112832,7 +112838,7 @@ tjj
 tjj
 blb
 ssz
-xQI
+aZg
 qRO
 ssz
 vLv
@@ -113089,7 +113095,7 @@ tjj
 blb
 blb
 ssz
-roz
+xtv
 sPO
 ssz
 aSy
@@ -113346,8 +113352,8 @@ blb
 blb
 ssz
 ssz
+xQI
 roz
-ssz
 ssz
 pus
 cYG
@@ -113603,7 +113609,7 @@ ssz
 ssz
 ssz
 xQI
-roz
+xQI
 roz
 ssz
 iWZ
@@ -131092,7 +131098,7 @@ tiN
 aCM
 bDq
 eUF
-jar
+fcq
 mMr
 fPR
 ylD
