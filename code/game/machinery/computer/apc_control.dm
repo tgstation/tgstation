@@ -16,17 +16,23 @@
 	var/list/logs = list()
 	///Tracks the current logged-in user's ID card's name and assignment
 	var/auth_id = "\[NULL\]:"
+	///Whether the computer is on a station-level; set in Initialize() for use in checking APCs
+	var/is_on_station = TRUE
+
+/obj/machinery/computer/apc_control/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	is_on_station = is_station_level(z)
 
 /obj/machinery/computer/apc_control/on_set_machine_stat(old_value)
 	. = ..()
-	if(machine_stat)
+	if(machine_stat && active_apc)
 		disconnect_apc()
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
 	if(!isAdminGhostAI(user))
 		to_chat(user,span_warning("[src] does not support AI control.")) //You already have APC access, cheater!
 		return
-	..()
+	return ..()
 
 /obj/machinery/computer/apc_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -66,20 +72,28 @@
 	user.log_message("remotely accessed [apc] from [src].", LOG_GAME)
 	log_activity("[auth_id] remotely accessed APC in [get_area_name(apc.area, TRUE)]")
 	active_apc = apc
+	RegisterSignal(active_apc, COMSIG_QDELETING, PROC_REF(on_apc_destroyed))
 
-///Disconnect from the APC we're currently in remote access with
-/obj/machinery/computer/apc_control/proc/disconnect_apc()
-	// check if apc exists and is not controlled by anyone
-	if(QDELETED(active_apc))
-		return
+///Disconnects the computer from the accessed APC upon its destruction
+/obj/machinery/computer/apc_control/proc/on_apc_destroyed(datum/source)
+	SIGNAL_HANDLER
+	disconnect_apc(TRUE) //to prevent the APC from trying to speak while being qdel'd
+
+/**
+ * Disconnect from the APC we're currently in remote access with
+ * arguments:
+ * mute - whether the APC should announce the disconnection locally, passed into apc's disconnect_remote_access()
+ */
+/obj/machinery/computer/apc_control/proc/disconnect_apc(mute = FALSE)
+	UnregisterSignal(active_apc, COMSIG_QDELETING)
 	if(active_apc.remote_control_user)
-		active_apc.disconnect_remote_access()
+		active_apc.disconnect_remote_access(mute)
 	active_apc = null
 
 /**
 * Checks for whether the APC provided is eligible for access and being listed in the APC list.
 * The APC has to:
-* - be on a station z-level
+* - be on a station z-level if the computer is station-side or be on the same z-level as the computer if otherwise (away subtype, charlie station)
 * - be not hacked by a malf AI
 * - have AI control enabled
 * - be not emagged
@@ -88,7 +102,7 @@
 */
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/checked_apc)
-	return is_station_level(checked_apc.z) && !checked_apc.malfhack && !checked_apc.aidisabled && !(checked_apc.obj_flags & EMAGGED) && !checked_apc.machine_stat && !istype(checked_apc.area, /area/station/ai_monitored)
+	return (is_on_station ? is_station_level(checked_apc.z) : checked_apc.z == z) && !checked_apc.malfhack && !checked_apc.aidisabled && !(checked_apc.obj_flags & EMAGGED) && !checked_apc.machine_stat && !istype(checked_apc.area, /area/station/ai_monitored)
 
 /obj/machinery/computer/apc_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -141,11 +155,11 @@
 				auth_id = "Unknown (Unknown):"
 				log_activity("[auth_id] logged in to the terminal")
 				return
-			var/mob/living/user = usr
+			var/mob/living/user = ui.user
 			if(!istype(user))
 				return
 			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
-			if(user_id_card && istype(user_id_card))
+			if(istype(user_id_card))
 				if(check_access(user_id_card))
 					authenticated = TRUE
 					auth_id = "[user_id_card.registered_name] ([user_id_card.assignment]):"
