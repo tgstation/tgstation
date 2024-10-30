@@ -123,7 +123,7 @@
 
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
-			draw_color = override_color(bodypart_owner.draw_color)
+			draw_color = override_color(bodypart_owner)
 		if(ORGAN_COLOR_INHERIT)
 			draw_color = bodypart_owner.draw_color
 		if(ORGAN_COLOR_HAIR)
