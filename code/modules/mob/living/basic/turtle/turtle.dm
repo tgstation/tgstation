@@ -14,7 +14,7 @@
 	base_icon_state = "turtle"
 	icon = 'icons/mob/simple/pets.dmi'
 	butcher_results = list(/obj/item/food/meat/slab = 3, /obj/item/food/pickle = 1, /obj/item/stack/sheet/mineral/wood = 10)
-	mob_biotypes = MOB_ORGANIC
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	health = 100
 	maxHealth = 100
@@ -102,7 +102,7 @@
 	. = ..()
 
 	if(stat == DEAD)
-		. += span_notice("its tree seems to be all withered...")
+		. += span_notice("Its tree seems to be all withered...")
 		return
 
 	var/destined_path
@@ -113,7 +113,7 @@
 			destined_path = evolution_path
 			current_max_growth = path_growth_progress[evolution_path]
 
-	var/text_to_display = "its tree seems to be exuding "
+	var/text_to_display = "Its tree seems to be exuding "
 	switch(destined_path)
 		if(PATH_PEST_KILLER)
 			text_to_display += "pest killing"
@@ -219,3 +219,10 @@
 /mob/living/basic/turtle/death(gibbed)
 	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
+
+#undef PATH_PEST_KILLER
+#undef PATH_PLANT_HEALER
+#undef PATH_PLANT_MUTATOR
+#undef REQUIRED_TREE_GROWTH
+#undef UPPER_BOUND_VOLUME
+#undef LOWER_BOUND_VOLUME

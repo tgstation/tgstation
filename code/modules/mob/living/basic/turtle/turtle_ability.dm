@@ -1,7 +1,10 @@
+#define TREE_FIELD_DURATION_EFFECT 10 SECONDS
+#define WARP_ANIMATE_TIME 0.35 SECONDS
+
 /datum/action/cooldown/mob_cooldown/turtle_tree
 	name = "Tree Ability"
 	desc = "Invoke your tree's special ability."
-	cooldown_time = 50 SECONDS
+	cooldown_time = 2 MINUTES
 	click_to_activate = FALSE
 	button_icon = 'icons/mob/simple/pets.dmi'
 	button_icon_state = "turtle"
@@ -13,11 +16,36 @@
 	var/time_between_intervals = 3 SECONDS
 	///range our tree affects
 	var/tree_range = 5
+	///warp effect to apply some distortion to our field
+	var/atom/movable/warp_effect/turtle_field/warp
+
+/datum/action/cooldown/mob_cooldown/turtle_tree/Grant(mob/granted_to)
+	. = ..()
+	if(isnull(granted_to))
+		return
+	RegisterSignal(granted_to, COMSIG_QDELETING, PROC_REF(remove_warp))
 
 /datum/action/cooldown/mob_cooldown/turtle_tree/Activate(atom/target)
 	. = ..()
+	warp = new(owner)
+	warp.alpha = 0
+	owner.vis_contents += warp
+
 	for(var/index in 0 to maximum_intervals)
 		addtimer(CALLBACK(src, PROC_REF(tree_effect)), time_between_intervals * index)
+
+	animate(warp, transform = matrix(), alpha = warp::alpha, time = WARP_ANIMATE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(warp_extinguish)), (time_between_intervals * maximum_intervals) + 3 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/turtle_tree/proc/warp_extinguish()
+	if(QDELETED(warp))
+		return
+	animate(warp, alpha = 0, time = WARP_ANIMATE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(remove_warp)), WARP_ANIMATE_TIME)
+
+/datum/action/cooldown/mob_cooldown/turtle_tree/proc/remove_warp()
+	SIGNAL_HANDLER
+	QDEL_NULL(warp)
 
 ///effect we apply on our trees
 /datum/action/cooldown/mob_cooldown/turtle_tree/proc/tree_effect()
@@ -93,6 +121,8 @@
 	for(var/obj/machinery/hydroponics/hydro in oview(tree_range, owner))
 		hydro.myseed?.adjust_instability(mutator_boost)
 
+/atom/movable/warp_effect/turtle_field
+	alpha = 75
 
 ///effects we give our tree abilities depending on their type
 /obj/effect/temp_visual/circle_wave/tree
