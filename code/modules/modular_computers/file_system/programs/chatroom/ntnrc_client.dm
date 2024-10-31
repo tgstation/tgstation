@@ -211,7 +211,7 @@
 	return ..()
 
 /// Converts active/idle/closed to a numerical status for sorting clients by.
-/datum/computer_file/program/chatclient/proc/get_status()
+/datum/computer_file/program/chatclient/proc/get_numerical_status()
 	if(src == computer.active_program)
 		return STATUS_ONLINE
 	if(src in computer.idle_threads)
@@ -254,7 +254,7 @@
 				"away" = (channel_client in channel_client.computer.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),
-				"status" = channel_client.get_status(),
+				"status" = channel_client.get_numerical_status(),
 				"ref" = REF(channel_client),
 			)))
 		//no fishing for ui data allowed
