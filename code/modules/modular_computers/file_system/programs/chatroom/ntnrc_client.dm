@@ -127,8 +127,8 @@
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
 			logfile.stored_text = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
-			for(var/logstring in channel.messages)
-				logfile.stored_text = "[logfile.stored_text][logstring]\[BR\]"
+			for(var/message_id in channel.messages)
+				logfile.stored_text = "[logfile.stored_text][channel.messages[message_id]]\[BR\]"
 			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
 			if(!computer || !computer.store_file(logfile))
@@ -180,14 +180,19 @@
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
 	if(src in computer.idle_threads)
 		ui_header = "ntnrc_idle.gif"
-		if(channel)
-			// Remember the last message. If there is no message in the channel remember null.
-			last_message = length(channel.messages) ? channel.messages[length(channel.messages)] : null
-		else
+		if(isnull(channel))
 			last_message = null
+			return TRUE
+		// Remember the last message. If there is no message in the channel remember null.
+		if(!length(channel.messages))
+			last_message = null
+			return TRUE
+		var/last_message_id = channel.messages[length(channel.messages)]
+		last_message = channel.messages[last_message_id]
 		return TRUE
 	if(channel?.messages?.len)
-		ui_header = (last_message == channel.messages[length(channel.messages)] ? "ntnrc_idle.gif" : "ntnrc_new.gif")
+		var/last_message_id = channel.messages[length(channel.messages)]
+		ui_header = (last_message == channel.messages[last_message_id] ? "ntnrc_idle.gif" : "ntnrc_new.gif")
 	else
 		ui_header = "ntnrc_idle.gif"
 
@@ -250,8 +255,10 @@
 			data["clients"] = clients
 			var/list/messages = list()
 			for(var/i=channel.messages.len to 1 step -1)
+				var/message_id = channel.messages[i]
 				messages.Add(list(list(
-					"msg" = channel.messages[i],
+					"key" = message_id,
+					"msg" = channel.messages[message_id],
 				)))
 			data["messages"] = messages
 			data["is_operator"] = (channel.channel_operator == src) || netadmin_mode
