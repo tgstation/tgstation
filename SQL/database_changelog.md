@@ -20,9 +20,9 @@ Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
 ```sql
 CREATE TABLE `fish_progress` (
   `ckey` VARCHAR(32) NOT NULL,
-  `fish_id` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ckey`,`fish_id`)
+  PRIMARY KEY (`ckey`,`id`)
 ) ENGINE=InnoDB;
 ```
 

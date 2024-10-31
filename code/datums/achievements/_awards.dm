@@ -277,7 +277,7 @@
 	holder.original_cached_data[type] = holder.data[type] = results
 	///This list will be populated on validate_entries()
 	var/list/validated_results = list()
-	if(!validate_entries(result, validated_results))
+	if(!validate_entries(results, validated_results))
 		holder.data[type] = validated_results
 	return validated_results
 
