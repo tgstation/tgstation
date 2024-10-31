@@ -135,3 +135,6 @@
 
 /obj/effect/temp_visual/circle_wave/tree/mutator
 	color = "#c49f26"
+
+#undef TREE_FIELD_DURATION_EFFECT
+#undef WARP_ANIMATE_TIME
