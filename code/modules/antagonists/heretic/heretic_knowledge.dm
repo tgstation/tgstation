@@ -187,7 +187,7 @@
 /datum/heretic_knowledge/spell
 	abstract_parent_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/cooldown/spell/spell_to_add
+	var/datum/action/cooldown/spell_to_add
 	/// The spell we actually created.
 	var/datum/weakref/created_spell_ref
 

@@ -5,7 +5,7 @@
 	///Description shown in the shop, set automatically unless it's hard set by the subtype
 	var/desc
 	///Path of the item that is purchased when ordering us.
-	var/obj/item/item_path
+	var/atom/movable/item_path
 	///The category this item will be displayed in.
 	var/category_index = NONE
 	///How much this item costs to order.
