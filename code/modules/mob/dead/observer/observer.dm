@@ -263,13 +263,13 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
 	if(!key)
 		return
 	if(key[1] == "@") // Skip aghosts.
 		return
 
-	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED))
+	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
 		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 			return
 		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
