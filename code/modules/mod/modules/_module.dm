@@ -173,7 +173,6 @@
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	mod.wearer.update_clothing(mod.slot_flags)
-	start_cooldown()
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	on_activation()
 	return TRUE
