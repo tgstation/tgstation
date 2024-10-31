@@ -4,6 +4,10 @@
 
 #define PING_COOLDOWN_TIME (3 SECONDS)
 
+#define STATUS_ONLINE 3
+#define STATUS_AWAY 2
+#define STATUS_OFFLINE 1
+
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
@@ -206,6 +210,13 @@
 	active_channel = null
 	return ..()
 
+/datum/computer_file/program/chatclient/proc/get_status()
+	if(src == computer.active_program)
+		return STATUS_ONLINE
+	if(src in computer.idle_threads)
+		return STATUS_AWAY
+	return STATUS_OFFLINE
+
 /datum/computer_file/program/chatclient/ui_static_data(mob/user)
 	var/list/data = list()
 	data["selfref"] = REF(src) //used to verify who is you, as usernames can be copied.
@@ -242,6 +253,7 @@
 				"away" = (channel_client in channel_client.computer.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),
+				"status" = channel_client.get_status(),
 				"ref" = REF(channel_client),
 			)))
 		//no fishing for ui data allowed
@@ -267,3 +279,7 @@
 #undef MESSAGE_SIZE
 
 #undef PING_COOLDOWN_TIME
+
+#undef STATUS_ONLINE
+#undef STATUS_AWAY
+#undef STATUS_OFFLINE

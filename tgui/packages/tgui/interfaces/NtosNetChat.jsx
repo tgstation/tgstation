@@ -64,13 +64,7 @@ export const NtosNetChat = (props) => {
   const authorized = authed || adminmode;
   // this list has cliented ordered from their status. online > away > offline
   const displayed_clients = clients.sort((clientA, clientB) => {
-    if (clientA.operator) {
-      return -1;
-    }
-    if (clientB.operator) {
-      return 1;
-    }
-    return clientB.status - clientA.status;
+    return (clientB.operator - clientA.operator) || (clientB.status - clientA.status) || (clientB.name < clientA.name)
   });
   const client_color = (client) => {
     if (client.operator) {
