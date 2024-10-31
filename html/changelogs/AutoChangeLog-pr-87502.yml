@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed APC control console found in CE office only accessing APCs on its z-level"
-  - bugfix: "fixed restoring an emagged APC control console potentially leaving the console in a forever state of restoring"

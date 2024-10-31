@@ -1,5 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - qol: "added fail feedback to xenobio Regenerative Metal/Bluespace Extracts"
-  - bugfix: "fixed Regenerative Metal Extract not checking for mob size when moving them into the spawned closet"
