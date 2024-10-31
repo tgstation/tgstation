@@ -11,6 +11,8 @@
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
+	/// how it looks by default.
+	var/default_look = /obj/item/gun/energy/laser
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
@@ -18,7 +20,7 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 	// Init order shenanigans dictate we have to do this last so we can't just use `active_type`
 	var/datum/action/item_action/chameleon/change/gun/gun_action = locate() in actions
-	gun_action?.update_look(/obj/item/gun/energy/laser)
+	gun_action?.update_look(default_look)
 
 /**
  * Description: Resets the currently loaded chameleon variables, essentially resetting it to brand new.
@@ -158,9 +160,4 @@
 
 /obj/item/gun/energy/laser/chameleon/ballistic
 	actions_types = list(/datum/action/item_action/chameleon/change/gun/ballistic)
-
-/obj/item/gun/energy/laser/chameleon/ballistic/Initialize(mapload)
-	. = ..()
-	if(!.)
-		return
-	gun_action?.update_look(/obj/item/gun/ballistic/automatic/mini_uzi)
+	default_look = /obj/item/gun/ballistic/automatic/mini_uzi
