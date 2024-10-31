@@ -16,6 +16,7 @@
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
+	mask_worn_overlay = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Speed added to the control unit.
@@ -213,6 +214,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
 	overlay_state_inactive = "module_insignia"
+	mask_worn_overlay = TRUE
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -266,6 +268,7 @@
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
+	step_change = 0.1
 
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
 	. = ..()
@@ -275,12 +278,6 @@
 	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
 	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
-
-/obj/item/mod/module/springlock/bite_of_87/on_install()
-	mod.activation_step_time *= 0.1
-
-/obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	mod.activation_step_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
@@ -518,7 +515,7 @@
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
-	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = "states"
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD)
 	if(istype(head_cover))
@@ -527,7 +524,7 @@
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
-	var/obj/item/organ/internal/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)
 	if(deleting)
 		return

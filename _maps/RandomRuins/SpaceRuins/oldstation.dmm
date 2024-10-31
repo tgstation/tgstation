@@ -521,7 +521,7 @@
 	pixel_x = 17;
 	pixel_y = 12
 	},
-/obj/item/organ/internal/cyberimp/arm/toolset{
+/obj/item/organ/cyberimp/arm/toolset{
 	pixel_y = 2;
 	pixel_x = 6
 	},

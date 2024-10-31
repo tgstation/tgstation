@@ -8,6 +8,11 @@
 
 	///The color this organ draws with. Updated by bodypart/inherit_color()
 	var/draw_color
+	///Override of the color of the organ, from dye sprays
+	var/dye_color
+	///Can this bodypart overlay be dyed?
+	var/dyable = FALSE
+
 	///Where does this organ inherit its color from?
 	var/color_source = ORGAN_COLOR_INHERIT
 	///Take on the dna/preference from whoever we're gonna be inserted in
@@ -85,7 +90,7 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
-	overlay.color = sprite_datum.color_src ? draw_color : null
+	overlay.color = sprite_datum.color_src ? (dye_color || draw_color) : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
 	inherit_color(limb)
@@ -105,7 +110,7 @@
 	. = list()
 	. += "[get_base_icon_state()]"
 	. += "[feature_key]"
-	. += "[draw_color]"
+	. += "[dye_color || draw_color]"
 	return .
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
@@ -163,3 +168,10 @@
 	else
 		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")
 
+///From dye sprays. Set the dye_color (draw_color override) of this organ to a new value.
+/datum/bodypart_overlay/mutant/proc/set_dye_color(new_color, obj/item/organ/organ)
+	dye_color = new_color
+	if(organ.owner)
+		organ.owner.update_body_parts()
+	else
+		organ.bodypart_owner?.update_icon_dropped()
