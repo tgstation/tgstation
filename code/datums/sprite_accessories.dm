@@ -1747,19 +1747,31 @@
 ///Used for fish-infused tails, which come in different flavors.
 /datum/sprite_accessory/tails/fish
 	icon = 'icons/mob/human/fish_features.dmi'
-	color_src = HAIR_COLOR
+	color_src = TRUE
 
-/datum/sprite_accessory/tails/fish/default
-	name = "Fish"
-	icon_state = "fish"
+/datum/sprite_accessory/tails/fish/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/tails/fish/crescent
+	name = "Crescent"
+	icon_state = "crescent"
+
+/datum/sprite_accessory/tails/fish/long
+	name = "Long"
+	icon_state = "long"
+	center = TRUE
+	dimension_x = 38
 
 /datum/sprite_accessory/tails/fish/shark
 	name = "Shark"
 	icon_state = "shark"
 
-/datum/sprite_accessory/tails/fish/orca
-	name = "Orca"
-	icon_state = "orca"
+/datum/sprite_accessory/tails/fish/chonky
+	name = "Chonky"
+	icon_state = "chonky"
+	center = TRUE
+	dimension_x = 36
 
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'

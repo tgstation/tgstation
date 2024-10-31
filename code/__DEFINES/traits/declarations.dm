@@ -116,6 +116,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTHEAT "resist_heat"
 /// Trait for when you can no longer gain body heat
 #define TRAIT_HYPOTHERMIC "body_hypothermic"
+/// This non-living object is valid to be used in dna infusers
+#define TRAIT_VALID_DNA_INFUSION "valid_dna_infusion"
 ///For when you've gotten a power from a dna vault
 #define TRAIT_USED_DNA_VAULT "used_dna_vault"
 /// For when you want to be able to touch hot things, but still want fire to be an issue.
@@ -139,7 +141,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOFIRE "nonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
 /// Prevents plasmamen from self-igniting if only their helmet is missing
-#define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
+#define TRAIT_HEAD_ATMOS_SEALED "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
 ///Can toss a guns like a badass, causing additional damage/effect to their enemies
 #define TRAIT_TOSS_GUN_HARD "toss_gun_hard"
@@ -287,6 +289,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Applied into wounds when they're scanned with the wound analyzer, halves time to treat them manually.
 #define TRAIT_WOUND_SCANNED "wound_scanned"
+
+/// Owner will ignore any fire protection when calculating fire damage
+#define TRAIT_IGNORE_FIRE_PROTECTION "ignore_fire_protection"
 
 #define TRAIT_NODEATH "nodeath"
 #define TRAIT_NOHARDCRIT "nohardcrit"
@@ -496,6 +501,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_USER_SCOPED "user_scoped"
 /// Mob is unable to feel pain
 #define TRAIT_ANALGESIA "analgesia"
+/// Mob has a scar on their left/right eye
+#define TRAIT_RIGHT_EYE_SCAR "right_eye_scar"
+#define TRAIT_LEFT_EYE_SCAR "left_eye_scar"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -611,7 +619,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // example. Through years of training/abuse, their livers have taken
 // a liking to those substances. Steal a sec officer's liver, eat donuts good.
 
-// These traits are applied to /obj/item/organ/internal/liver
+// These traits are applied to /obj/item/organ/liver
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law_enforcement_metabolism"
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
@@ -696,6 +704,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
+/// This object has been slathered with a speed potion
+#define TRAIT_SPEED_POTIONED "speed_potioned"
 
 ///This mob is currently blocking a projectile.
 #define TRAIT_BLOCKING_PROJECTILES "blocking_projectiles"
@@ -967,6 +977,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given to a mob with a ckey currently in a temporary body, allowing people to know someone will re-enter the round later.
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
+/// Mobs with this trait will show up as soulless if their brain is missing even if their ghost can reenter the corpse
+#define TRAIT_FAKE_SOULLESS "fake_soulless"
+
 /// Similar trait given to temporary bodies inhabited by players
 #define TRAIT_TEMPORARY_BODY "temporary_body"
 
@@ -1010,6 +1023,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SHOULD_TWOHANDED "fish_should_twohanded"
 ///This fish won't be killed when cooked.
 #define TRAIT_FISH_SURVIVE_COOKING "fish_survive_cooking"
+/**
+ * This fish has been fed teslium without the electrogenesis having trait.
+ * Gives the electrogenesis, but at halved output, and it hurts the fish over time.
+ */
+#define TRAIT_FISH_ON_TESLIUM "fish_on_teslium"
+/// This fish has been fed growth serum or something and will grow 5 times faster, up to 50% weight and size gain when fed.
+#define TRAIT_FISH_QUICK_GROWTH "fish_quick_growth"
+/// This fish has been fed mutagen or something. Evolutions will have more than twice the probability
+#define TRAIT_FISH_MUTAGENIC "fish_mutagenic"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1315,6 +1337,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait which silences all chemical reactions in its container
 #define TRAIT_SILENT_REACTIONS "silent_reactions"
 
+///Trait given to mobs that can dig
+#define TRAIT_MOB_CAN_DIG "mob_can_dig"
+
 /**
  *
  * This trait is used in some interactions very high in the interaction chain to allow
@@ -1330,5 +1355,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///A "fake" effect that should not be subject to normal effect removal methods (like the effect remover component)
 #define TRAIT_ILLUSORY_EFFECT "illusory_effect"
+/// Gives a little examine to their body that they can be revived with a soul
+#define TRAIT_GHOSTROLE_ON_REVIVE "ghostrole_on_revive"
 
 // END TRAIT DEFINES

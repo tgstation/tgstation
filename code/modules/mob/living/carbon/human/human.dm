@@ -15,7 +15,9 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
-	set_species(dna.species.type)
+	set_species(dna.species.type, icon_update = FALSE) //carbon/Initialize will call update_body()
+	//set species enables and disables the flag. Just to be sure, we re-enable it now until it's removed by the parent call.
+	living_flags |= STOP_OVERLAY_UPDATE_BODY_PARTS
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -105,7 +107,7 @@
 		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
-		if(get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway
+		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
 			to_chat(viewer, span_notice("You can't make out that ID from here."))
 			return
 
@@ -486,13 +488,13 @@
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
-/mob/living/carbon/human/singularity_pull(S, current_size)
+/mob/living/carbon/human/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
-				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
+				to_chat(src, span_warning("\The [singularity] pulls \the [hand] from your grip!"))
 
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
@@ -525,7 +527,7 @@
 			to_chat(src, span_warning("you can't breathe!"))
 			return FALSE
 
-		var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 		if(isnull(human_lungs))
 			balloon_alert(src, "you don't have lungs!")
 			return FALSE
@@ -880,7 +882,7 @@
 		if(result != "Yes")
 			return
 
-		var/obj/item/organ/internal/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 		if(isnull(target_brain))
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
@@ -941,7 +943,7 @@
 	// can remove up to 2 seconds at legendary
 	carrydelay -= fitness_level * (1/3) SECONDS
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		carrydelay *= potential_spine.athletics_boost_multiplier
 
@@ -1050,6 +1052,26 @@
 		mutation.class = MUT_OTHER
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
+
+/mob/living/carbon/human/proc/is_atmos_sealed(additional_flags = null, check_hands = FALSE, ignore_chest_pressureprot = FALSE)
+	var/chest_covered = FALSE
+	var/head_covered = FALSE
+	var/hands_covered = FALSE
+	for (var/obj/item/clothing/equipped in get_equipped_items())
+		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
+		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
+			hands_covered = TRUE
+		if (!isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
+			continue
+		if ((ignore_chest_pressureprot || (equipped.clothing_flags & STOPSPRESSUREDAMAGE)) && (equipped.body_parts_covered & CHEST))
+			chest_covered = TRUE
+		if ((equipped.clothing_flags & STOPSPRESSUREDAMAGE) && (equipped.body_parts_covered & HEAD))
+			head_covered = TRUE
+	if (!chest_covered)
+		return FALSE
+	if (!hands_covered && check_hands)
+		return FALSE
+	return head_covered || HAS_TRAIT(src, TRAIT_HEAD_ATMOS_SEALED)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

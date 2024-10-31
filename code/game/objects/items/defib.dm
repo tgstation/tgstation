@@ -639,10 +639,37 @@
 			do_success()
 			return
 
+<<<<<<< HEAD
 		user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted."))
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 		do_cancel()
 		return
+=======
+/obj/item/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
+	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
+	busy = TRUE
+	update_appearance()
+	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
+		playsound(src, 'sound/machines/defib/defib_charge.ogg', 75, FALSE)
+		var/obj/item/organ/heart = H.get_organ_by_type(/obj/item/organ/heart)
+		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+			if((!combat && !req_defib) || (req_defib && !defib.combat))
+				for(var/obj/item/clothing/C in H.get_equipped_items())
+					if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
+						user.audible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's chest is obscured. Operation aborted."))
+						playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
+						do_cancel()
+						return
+			if(SEND_SIGNAL(H, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, user, src) & COMPONENT_DEFIB_STOP)
+				do_cancel()
+				return
+			if(H.stat == DEAD)
+				H.visible_message(span_warning("[H]'s body convulses a bit."))
+				playsound(src, SFX_BODYFALL, 50, TRUE)
+				playsound(src, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
+				shock_pulling(30, H)
+>>>>>>> e0be65b21f22997dc325f2a561257723dc326c4a
 
 	target.visible_message(span_warning("[target]'s body convulses a bit."))
 	playsound(src, SFX_BODYFALL, 50, TRUE)
@@ -672,6 +699,7 @@
 		if (DEFIB_FAIL_BLACKLISTED)
 			fail_reason = "Patient has been blacklisted from revival. Further attempts futile."
 
+<<<<<<< HEAD
 	if(fail_reason)
 		user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
@@ -712,6 +740,47 @@
 		user.add_mood_event("saved_life", /datum/mood_event/saved_life)
 	log_combat(user, target, "revived", defib)
 	do_success()
+=======
+					var/need_mob_update = FALSE
+					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
+					if (H.health > HALFWAYCRITDEATH)
+						need_mob_update += H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, updating_health = FALSE)
+					else
+						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+						var/mobhealth = H.health
+						need_mob_update += H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), updating_health = FALSE, forced = TRUE) // force tox heal for toxin lovers too
+						need_mob_update += H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
+					if(need_mob_update)
+						H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
+					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))
+					playsound(src, 'sound/machines/defib/defib_success.ogg', 50, FALSE)
+					H.set_heartattack(FALSE)
+					if(defib_result == DEFIB_POSSIBLE)
+						H.grab_ghost()
+					H.revive()
+					H.emote("gasp")
+					H.set_jitter_if_lower(200 SECONDS)
+					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
+					if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+						user.add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
+					else
+						user.add_mood_event("saved_life", /datum/mood_event/saved_life)
+					log_combat(user, H, "revived", defib)
+				do_success()
+				return
+			else if (!H.get_organ_by_type(/obj/item/organ/heart))
+				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
+				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
+			else if(H.undergoing_cardiac_arrest())
+				playsound(src, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
+				if(!(heart.organ_flags & ORGAN_FAILING))
+					H.set_heartattack(FALSE)
+					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again."))
+				else
+					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed, heart damage detected."))
+>>>>>>> e0be65b21f22997dc325f2a561257723dc326c4a
 
 
 /obj/item/shockpaddles/proc/is_wielded()

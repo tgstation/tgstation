@@ -21,6 +21,9 @@
 /obj/singularity/dark_matter/Initialize(mapload, starting_energy)
 	. = ..()
 	COOLDOWN_START(src, initial_explosion_immunity, 5 SECONDS)
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	resolved_singularity.chance_to_move_to_target = 100
+	addtimer(CALLBACK(src, PROC_REF(normalize_tracking)), 20 SECONDS)
 
 /obj/singularity/dark_matter/examine(mob/user)
 	. = ..()
@@ -49,5 +52,10 @@
 	name = "Dark Lord Singuloth"
 	desc = "You managed to make a singularity from dark matter, which makes no sense at all, and then you threw a supermatter into it? Are you fucking insane? Fuck it, praise Lord Singuloth."
 	consumed_supermatter = TRUE
+
+///For 20 seconds, the singularity has buffed tracking to ensure it actually makes its way to the station, normalizes after 20 seconds
+/obj/singularity/dark_matter/proc/normalize_tracking()
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	resolved_singularity.chance_to_move_to_target = consumed_supermatter ? initial(resolved_singularity.chance_to_move_to_target) + DARK_MATTER_SUPERMATTER_CHANCE_BONUS : initial(resolved_singularity.chance_to_move_to_target)
 
 #undef DARK_MATTER_SUPERMATTER_CHANCE_BONUS

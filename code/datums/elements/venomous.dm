@@ -42,9 +42,16 @@
 	else
 		final_amount_added = amount_added
 
-	var/datum/reagents/tmp_holder = new/datum/reagents(50)
+	var/datum/reagents/tmp_holder = new(final_amount_added)
 	tmp_holder.my_atom = src
 	tmp_holder.add_reagent(reagents, final_amount_added)
 
-	tmp_holder.expose(target, INJECT, 1, FALSE)
+	tmp_holder.trans_to(
+		target = target,
+		amount = tmp_holder.total_volume,
+		multiplier = 1,
+		methods = INJECT,
+		transferred_by = ismob(element_owner) ? element_owner : null,
+		show_message = FALSE,
+	)
 	qdel(tmp_holder)

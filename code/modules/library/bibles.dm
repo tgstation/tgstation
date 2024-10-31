@@ -308,10 +308,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			return .
 
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
+		var/obj/item/melee/cultblade/haunted/sword_smacked = bible_smacked
+		if(!sword_smacked.bound)
+			sword_smacked.balloon_alert(user, "must be bound!")
+			return ITEM_INTERACT_BLOCKING
 		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
 		sword.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 4 SECONDS, target = sword))
+		if(do_after(user, 12 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			new /obj/item/nullrod/nullblade(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
@@ -340,7 +344,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
-	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curses", "smites")
+	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curse", "smite")
 	deity_name = "The Syndicate"
 	var/uses = 1
 	var/owner_name
