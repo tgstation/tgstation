@@ -16,7 +16,7 @@ Difficulty: Extremely Hard
 	icon_living = "demonic_miner"
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
-	attack_verb_simple = "pummels"
+	attack_verb_simple = "pummel"
 	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
 	light_color = COLOR_LIGHT_GRAYISH_RED

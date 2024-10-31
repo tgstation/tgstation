@@ -98,6 +98,9 @@ Behavior that's still missing from this component that original food items had t
 	else if(isturf(parent) || isstructure(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
+
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
@@ -113,6 +116,9 @@ Behavior that's still missing from this component that original food items had t
 	))
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+	if(foodtypes & GORE)
+		REMOVE_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 /datum/component/edible/InheritComponent(
 	datum/component/edible/old_comp,
@@ -137,6 +143,9 @@ Behavior that's still missing from this component that original food items had t
 		foodtypes = old_comp.foodtypes
 		tastes = old_comp.tastes
 		eatverbs = old_comp.eatverbs
+
+	if(foodtypes & GORE)
+		ADD_TRAIT(parent, TRAIT_VALID_DNA_INFUSION, REF(src))
 
 	// only edit if we're OG
 	if(!i_am_original)
@@ -490,7 +499,7 @@ Behavior that's still missing from this component that original food items had t
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
@@ -556,10 +565,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
@@ -599,8 +605,12 @@ Behavior that's still missing from this component that original food items had t
 	return food.crafting_complexity + complexity_to_add
 
 /// Get food quality adjusted according to eater's preferences
-/datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
+/datum/component/edible/proc/get_perceived_food_quality(mob/living/eater)
 	var/food_quality = get_recipe_complexity()
+	var/list/extra_quality = list()
+	SEND_SIGNAL(eater, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, src, extra_quality)
+	for(var/quality in extra_quality)
+		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
@@ -712,7 +722,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
+		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN

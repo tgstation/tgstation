@@ -91,11 +91,11 @@
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
-	desc = "Waffle Corp's modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
-	item = /obj/item/gun/ballistic/revolver/syndicate
+	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
+	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //only traitors get the original revolver
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"

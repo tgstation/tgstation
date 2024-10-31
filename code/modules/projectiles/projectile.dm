@@ -153,7 +153,7 @@
 	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
-	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
+	///Whether or not our projectile doubles the value of affecting armour
 	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
@@ -223,6 +223,8 @@
 	if(get_embed())
 		AddElement(/datum/element/embed)
 	AddElement(/datum/element/connect_loc, projectile_connections)
+
+	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
 /obj/projectile/proc/Range()
 	range--
@@ -762,7 +764,10 @@
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if(firer)
+		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted))
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
+	if (original)
+		RegisterSignal(original, COMSIG_QDELETING, PROC_REF(original_deleted))
 	if(!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
@@ -811,6 +816,14 @@
 		point_cache = trajectory.copy_to()
 		store_hitscan_collision(point_cache)
 	return TRUE
+
+/obj/projectile/proc/firer_deleted(datum/source)
+	SIGNAL_HANDLER
+	firer = null
+
+/obj/projectile/proc/original_deleted(datum/source)
+	SIGNAL_HANDLER
+	original = null
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
@@ -1020,14 +1033,14 @@
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
 	var/angle = 0
-	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : world.icon_size / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
-	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : world.icon_size / 2 // This centers the target if modifiers aren't passed.
+	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : ICON_SIZE_X / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
+	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : ICON_SIZE_Y / 2 // This centers the target if modifiers aren't passed.
 
 	if(target)
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
-		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (p_y - (world.icon_size / 2))
+		var/dx = ((target_loc.x - source_loc.x) * ICON_SIZE_X) + (target.pixel_x - source.pixel_x) + (p_x - (ICON_SIZE_X / 2))
+		var/dy = ((target_loc.y - source_loc.y) * ICON_SIZE_Y) + (target.pixel_y - source.pixel_y) + (p_y - (ICON_SIZE_Y / 2))
 
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
@@ -1046,8 +1059,8 @@
 	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 
-	var/tx = (text2num(screen_loc_X[1]) - 1) * world.icon_size + text2num(screen_loc_X[2])
-	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
+	var/tx = (text2num(screen_loc_X[1]) - 1) * ICON_SIZE_X + text2num(screen_loc_X[2])
+	var/ty = (text2num(screen_loc_Y[1]) - 1) * ICON_SIZE_Y + text2num(screen_loc_Y[2])
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 	var/list/screenview = view_to_pixels(user.client.view)
@@ -1062,6 +1075,8 @@
 		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	cleanup_beam_segments()
+	firer = null
+	original = null
 	if(trajectory)
 		QDEL_NULL(trajectory)
 	return ..()

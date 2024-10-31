@@ -71,4 +71,5 @@
 	if(can_splat_on && is_type_in_typecache(hit_atom, GLOB.splattable))
 		hit_atom.AddComponent(/datum/component/face_decal/splat, icon_state, layer, splat_color || source.color, memory_type, moodlet_type)
 	SEND_SIGNAL(source, COMSIG_MOVABLE_SPLAT, hit_atom)
-	qdel(source)
+	if(!isprojectile(source))
+		qdel(source)

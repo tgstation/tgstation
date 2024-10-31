@@ -81,12 +81,12 @@
 		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
-		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
+		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - ICON_SIZE_X/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - ICON_SIZE_Y/2)
 			return //spare us redrawing if we are standing still
-		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 		kinesis_beam.redrawing()
 		return
-	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - ICON_SIZE_X/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - ICON_SIZE_Y/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
 	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
@@ -100,13 +100,13 @@
 	var/pixel_y_change = 0
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
-		pixel_y_change = world.icon_size/2
+		pixel_y_change = ICON_SIZE_Y/2
 	else if(direction & SOUTH)
-		pixel_y_change = -world.icon_size/2
+		pixel_y_change = -ICON_SIZE_Y/2
 	if(direction & EAST)
-		pixel_x_change = world.icon_size/2
+		pixel_x_change = ICON_SIZE_X/2
 	else if(direction & WEST)
-		pixel_x_change = -world.icon_size/2
+		pixel_x_change = -ICON_SIZE_X/2
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + pixel_x_change, pixel_y = grabbed_atom.base_pixel_y + pixel_y_change)
 	kinesis_beam.redrawing()
 	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))

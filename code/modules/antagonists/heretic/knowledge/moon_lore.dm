@@ -130,7 +130,7 @@
 		/datum/heretic_knowledge/painting,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
@@ -152,7 +152,7 @@
 	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
 	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)

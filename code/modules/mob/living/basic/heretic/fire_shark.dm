@@ -30,4 +30,5 @@
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

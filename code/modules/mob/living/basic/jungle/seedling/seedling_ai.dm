@@ -19,7 +19,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/watering_can
 	target_key = BB_WATERCAN_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target
 	hunt_targets = list(/obj/item/reagent_containers/cup/watering_can)
 	hunt_range = 7
 
@@ -32,7 +32,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/treat_hydroplants
 	target_key = BB_HYDROPLANT_TARGET
 	finding_behavior = /datum/ai_behavior/find_and_set/treatable_hydro
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 7
 
@@ -58,11 +58,11 @@
 	if(possible_trays.len)
 		return pick(possible_trays)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant
+/datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant
 	hunt_cooldown = 2 SECONDS
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
+/datum/ai_behavior/hunt_target/interact_with_target/treat_hydroplant/target_caught(mob/living/living_pawn, obj/machinery/hydroponics/hydro_target)
 	if(QDELETED(hydro_target) || QDELETED(hydro_target.myseed))
 		return
 
@@ -112,7 +112,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/fill_watercan
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target/suitable_dispenser
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/water_source
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/water_source
 	hunt_targets = list(/obj/structure/sink, /obj/structure/reagent_dispensers)
 	hunt_range = 7
 
@@ -135,7 +135,7 @@
 
 	return can_see(source, water_source, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/water_source
+/datum/ai_behavior/hunt_target/interact_with_target/water_source
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	hunt_cooldown = 5 SECONDS
 

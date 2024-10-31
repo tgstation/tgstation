@@ -547,7 +547,7 @@
 			if(QDELETED(human_mob))
 				return
 			if(prob(1))//low chance of the alternative reality returning to monkey
-				var/obj/item/organ/external/tail/monkey/monkey_tail = new ()
+				var/obj/item/organ/tail/monkey/monkey_tail = new ()
 				monkey_tail.Insert(human_mob, movement_flags = DELETE_IF_REPLACED)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
@@ -609,3 +609,41 @@
 /datum/status_effect/gutted/proc/stop_gutting()
 	SIGNAL_HANDLER
 	qdel(src)
+
+/atom/movable/screen/alert/status_effect/shower_regen
+	name = "Washing"
+	desc = "A good wash fills me with energy!"
+	icon_state = "shower_regen"
+
+/atom/movable/screen/alert/status_effect/shower_regen/hater
+	name = "Washing"
+	desc = "Waaater... Fuck this WATER!!"
+	icon_state = "shower_regen_catgirl"
+
+/datum/status_effect/shower_regen
+	id = "shower_regen"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/shower_regen
+	/// How many heals from washing.
+	var/stamina_heal_per_tick = 4
+
+/datum/status_effect/shower_regen/on_apply()
+	. = ..()
+	if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
+		alert_type = /atom/movable/screen/alert/status_effect/shower_regen/hater
+
+/datum/status_effect/shower_regen/tick(seconds_between_ticks)
+	. = ..()
+	var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
+	var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
+	var/healed = 0
+	if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
+		healed += owner.adjustOxyLoss(-1.5 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustFireLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		healed += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+		healed += owner.adjustBruteLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+		heal_or_deal *= 1.5
+	healed += owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks, updating_stamina = FALSE)
+	if(healed)
+		owner.updatehealth()
