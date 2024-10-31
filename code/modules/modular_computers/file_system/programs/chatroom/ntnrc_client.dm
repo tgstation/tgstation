@@ -210,6 +210,7 @@
 	active_channel = null
 	return ..()
 
+/// Converts active/idle/closed to a numerical status for sorting clients by.
 /datum/computer_file/program/chatclient/proc/get_status()
 	if(src == computer.active_program)
 		return STATUS_ONLINE
