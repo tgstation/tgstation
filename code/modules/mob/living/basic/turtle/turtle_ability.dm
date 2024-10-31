@@ -19,15 +19,10 @@
 	///warp effect to apply some distortion to our field
 	var/atom/movable/warp_effect/turtle_field/warp
 
-/datum/action/cooldown/mob_cooldown/turtle_tree/Grant(mob/granted_to)
-	. = ..()
-	if(isnull(granted_to))
-		return
-	RegisterSignal(granted_to, COMSIG_QDELETING, PROC_REF(remove_warp))
-
 /datum/action/cooldown/mob_cooldown/turtle_tree/Activate(atom/target)
 	. = ..()
 	warp = new(owner)
+	RegisterSignal(warp, COMSIG_QDELETING, PROC_REF(remove_warp))
 	warp.alpha = 0
 	owner.vis_contents += warp
 
@@ -45,7 +40,9 @@
 
 /datum/action/cooldown/mob_cooldown/turtle_tree/proc/remove_warp()
 	SIGNAL_HANDLER
-	QDEL_NULL(warp)
+
+	UnregisterSignal(warp, COMSIG_QDELETING)
+	warp = null
 
 ///effect we apply on our trees
 /datum/action/cooldown/mob_cooldown/turtle_tree/proc/tree_effect()
