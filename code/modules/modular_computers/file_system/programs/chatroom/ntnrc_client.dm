@@ -19,8 +19,8 @@
 
 	///The user's screen name.
 	var/username
-	///The last message you sent in a channel, used to tell if someone has sent a new message yet.
-	var/last_message
+	///The id of the last message sent in a channel, used to tell if someone has sent a new message yet.
+	var/last_message_id
 	///The channel currently active in.
 	var/active_channel
 	///If the tablet is in Admin mode, you bypass Passwords and aren't announced when entering a channel.
@@ -177,24 +177,23 @@
 
 /datum/computer_file/program/chatclient/process_tick(seconds_per_tick)
 	. = ..()
-	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
-	if(src in computer.idle_threads)
+
+	if(!(src in computer.idle_threads))
+		return
+
+	var/datum/ntnet_conversation/watched_channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
+	if(isnull(watched_channel)) // If we're not in a channel, no need for a message notification header.
+		ui_header = null
+		return
+	if(!length(watched_channel.messages)) // But if there's no messages, we do still wait for a message.
 		ui_header = "ntnrc_idle.gif"
-		if(isnull(channel))
-			last_message = null
-			return TRUE
-		// Remember the last message. If there is no message in the channel remember null.
-		if(!length(channel.messages))
-			last_message = null
-			return TRUE
-		var/last_message_id = channel.messages[length(channel.messages)]
-		last_message = channel.messages[last_message_id]
-		return TRUE
-	if(channel?.messages?.len)
-		var/last_message_id = channel.messages[length(channel.messages)]
-		ui_header = (last_message == channel.messages[last_message_id] ? "ntnrc_idle.gif" : "ntnrc_new.gif")
-	else
+		return
+
+	var/last_message_id_found = watched_channel.messages[length(watched_channel.messages)]
+	if(last_message_id_found == last_message_id)
 		ui_header = "ntnrc_idle.gif"
+		return
+	ui_header = "ntnrc_new.gif"
 
 /datum/computer_file/program/chatclient/on_start(mob/living/user)
 	. = ..()
@@ -210,6 +209,17 @@
 		channel.go_offline(src)
 	active_channel = null
 	return ..()
+
+/datum/computer_file/program/chatclient/background_program(mob/user)
+	. = ..()
+	var/datum/ntnet_conversation/open_channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
+	if(isnull(open_channel) || !length(open_channel.messages))
+		last_message_id = null
+		ui_header = null
+		return
+
+	last_message_id = open_channel.messages[length(open_channel.messages)]
+	ui_header = "ntnrc_idle.gif"
 
 /datum/computer_file/program/chatclient/ui_static_data(mob/user)
 	var/list/data = list()
