@@ -35,7 +35,7 @@
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
 	///Whether this door has a panel or not; FALSE also stops the examine blurb about the panel from showing up
-	var/has_access_panel = FALSE
+	var/has_access_panel = TRUE
 	/// For rglass-windowed airlocks and firedoors
 	var/heat_proof = FALSE
 	/// Emergency access override
