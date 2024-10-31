@@ -303,9 +303,11 @@
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/atom/atom_checked as anything in atoms)
-		if (typecache[atom_checked.type])
-			. += atom_checked
+
+	if(typecache)
+		for(var/atom/atom_checked as anything in atoms)
+			if (typecache[atom_checked.type])
+				. += atom_checked
 
 ///return a new list with atoms that are not in the typecache list
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
