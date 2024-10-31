@@ -59,7 +59,7 @@
 		if("PRG_speak")
 			if(!channel || isnull(active_channel))
 				return
-			if(src in channel.muted_clients) // Mute safety check
+			if(src in channel.muted_clients) // Make sure we aren't muted
 				return
 			var/message = reject_bad_chattext(params["message"], MESSAGE_SIZE)
 			if(!message)
