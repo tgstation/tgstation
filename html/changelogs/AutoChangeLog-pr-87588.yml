@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "NTNRC \"rename channel\" button is now grayed out when unusable."
+  - bugfix: "Genetics console \"create advanced injector\" button is now grayed out when unusable."
