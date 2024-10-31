@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(starlight)
 		return
 	if(istype(C, /obj/item/stack/rods))
 		build_with_rods(C, user)
-	else if(istype(C, /obj/item/stack/tile/iron))
+	else if(istype(C, /obj/item/stack/tile/iron) || istype(C, /obj/item/stack/tile/material) && findtext(C.name, "iron"))
 		build_with_floor_tiles(C, user)
 
 
