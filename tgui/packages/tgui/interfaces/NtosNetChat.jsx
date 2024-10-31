@@ -65,8 +65,8 @@ export const NtosNetChat = (props) => {
   // This list has clients ordered by operator>status>alphabetical
   const displayed_clients = clients.sort((clientA, clientB) => {
     return (clientB.operator - clientA.operator) ||
-	(clientB.status - clientA.status) ||
-	(clientB.name < clientA.name);
+    (clientB.status - clientA.status) ||
+    (clientB.name < clientA.name);
   });
   const client_color = (client) => {
     if (client.operator) {
