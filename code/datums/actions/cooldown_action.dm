@@ -12,7 +12,7 @@
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
 	/// The default melee cooldown applied after the ability ends
-	var/melee_cooldown_time
+	var/melee_cooldown_time = 0
 	/// The actual next time the owner of this action can melee
 	var/next_melee_use_time = 0
 	/// Whether or not you want the cooldown for the ability to display in text form
@@ -56,9 +56,6 @@
 		base_overlay_icon_state ||= overlay_icon_state
 	if(active_icon_state)
 		base_icon_state ||= button_icon_state
-
-	if(isnull(melee_cooldown_time))
-		melee_cooldown_time = cooldown_time
 
 	if(original)
 		create_sequence_actions()
