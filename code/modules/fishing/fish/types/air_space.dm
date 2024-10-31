@@ -1,5 +1,6 @@
 /obj/item/fish/sand_surfer
 	name = "sand surfer"
+	fish_id = "sand_surfer"
 	desc = "A bronze alien \"fish\" living and swimming underneath faraway sandy places."
 	icon_state = "sand_surfer"
 	sprite_height = 6
@@ -19,6 +20,7 @@
 
 /obj/item/fish/sand_crab
 	name = "burrower crab"
+	fish_id = "sand_crab"
 	desc = "A sand-dwelling crustacean. It looks like a crab and tastes like a crab, but waddles like a fish."
 	icon_state = "crab"
 	dedicated_in_aquarium_icon_state = "crab_small"
@@ -48,6 +50,7 @@
 
 /obj/item/fish/bumpy
 	name = "bump-fish"
+	fish_id = "bumpy"
 	desc = "An misshapen fish-thing all covered in stubby little tendrils"
 	icon_state = "bumpy"
 	sprite_height = 4
@@ -67,6 +70,7 @@
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
+	fish_id = "cosmostarfish"
 	desc = "A peculiar, gravity-defying, echinoderm-looking critter from hyperspace."
 	icon_state = "starfish"
 	icon_state_dead = "starfish_dead"
@@ -102,6 +106,7 @@
 
 /obj/item/fish/baby_carp
 	name = "baby space carp"
+	fish_id = "baby_carp"
 	desc = "A juvenile spawn of the dreaded space carp. Don't let the innocent looks fool you, they're aggressive little bastards."
 	icon_state = "baby_carp"
 	sprite_height = 3

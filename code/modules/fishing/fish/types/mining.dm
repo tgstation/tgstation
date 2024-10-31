@@ -1,6 +1,7 @@
 /// Commonly found on the mining fishing spots. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
+	fish_id = "chasm_crab"
 	desc = "The young of the lobstrosity mature in pools below the earth, eating what falls in until large enough to clamber out. Those found near the station are well-fed."
 	icon_state = "chrab"
 	sprite_height = 9
@@ -103,6 +104,7 @@
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
+	fish_id = "arctic_crab"
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
 	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
@@ -114,6 +116,7 @@
 
 /obj/item/fish/boned
 	name = "unmarine bonemass"
+	fish_id = "bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
 	icon_state = "bonemass"
 	sprite_width = 10
@@ -139,6 +142,7 @@
 
 /obj/item/fish/lavaloop
 	name = "lavaloop fish"
+	fish_id = "lavaloop"
 	desc = "Due to its curvature, it can be used as make-shift boomerang."
 	icon_state = "lava_loop"
 	sprite_width = 3
@@ -155,6 +159,7 @@
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
 	hitsound = null
 	throwforce = 5
 	beauty = FISH_BEAUTY_GOOD
@@ -196,6 +201,8 @@
 	return (target.mob_size >= MOB_SIZE_LARGE)
 
 /obj/item/fish/lavaloop/plasma_river
+	fish_id = "plasma_lavaloop"
+	compatible_types = list(/obj/item/fish/lavaloop)
 	maximum_bonus = 30
 
 /obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)

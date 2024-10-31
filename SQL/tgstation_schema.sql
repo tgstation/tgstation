@@ -591,6 +591,16 @@ CREATE TABLE `achievement_metadata` (
 	PRIMARY KEY (`achievement_key`)
 ) ENGINE=InnoDB;
 
+-- Table structure for table 'x_progress'
+
+DROP TABLE IF EXISTS `fish_progress`;
+CREATE TABLE `fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `fish_id` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`fish_id`)
+) ENGINE=InnoDB;
+
 --
 -- Table structure for table `ticket`
 --
