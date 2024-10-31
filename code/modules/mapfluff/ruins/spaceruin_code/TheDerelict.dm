@@ -163,11 +163,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	id_tag = "derelictvault"
 
-///Overrides screwdriver attack to prevent all deconstruction and hacking.
-/obj/machinery/door/airlock/vault/derelict/attackby(obj/item/C, mob/user, params)
-	if(C.tool_behaviour == TOOL_SCREWDRIVER)
-		return
-	..()
+///Overrides screwdriver act to prevent all deconstruction and hacking.
+/obj/machinery/door/airlock/vault/derelict/screwdriver_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_danger("The robust make of [src] makes it impossible to access the panel in any way!"))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/fluff/oldturret
 	name = "broken turret"
