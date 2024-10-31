@@ -336,4 +336,4 @@
 	SIGNAL_HANDLER
 	if(!length(changed_entries))
 		return
-	SSdbcore.MassInsert(format_table_name(table_id), changed_entries, duplicate_key = TRUE)
+	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, MassInsert), format_table_name(table_id), changed_entries, duplicate_key = TRUE)
