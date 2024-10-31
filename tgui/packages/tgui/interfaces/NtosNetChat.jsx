@@ -62,7 +62,7 @@ export const NtosNetChat = (props) => {
   } = data;
   const in_channel = active_channel !== null;
   const authorized = authed || adminmode;
-  // this list has cliented ordered from their status. online > away > offline
+  // This list has clients ordered by operator>status>alphabetical
   const displayed_clients = clients.sort((clientA, clientB) => {
     return (clientB.operator - clientA.operator) ||
 	(clientB.status - clientA.status) ||
