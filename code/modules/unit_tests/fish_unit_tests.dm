@@ -423,6 +423,7 @@
 	fish_counts = list(/obj/item/fish/testdummy = 2)
 
 /datum/fish_source/unit_test_all_fish
+	include_catchables = FALSE
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))

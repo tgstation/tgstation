@@ -92,7 +92,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/mob/living/basic/mining/lobstrosity,
 		/obj/structure/closet/crate/necropolis/tendril,
 	))
-
+	/// If FALSE, fish that can be caught from this source won't be included in the 'fish caught' score.
+	var/include_catchables = TRUE
 
 	///List of multipliers used to make fishes more common compared to everything else depending on bait quality, indexed from best to worst.
 	var/static/weight_result_multiplier = list(
