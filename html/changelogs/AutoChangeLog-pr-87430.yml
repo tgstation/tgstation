@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Hitting an SM with extraction tongs won't dust them anymore"
