@@ -11,7 +11,7 @@
 	var/panel
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
-	/// The default melee cooldown applied after the ability ends. If set to null, copise cooldown_time.
+	/// The default melee cooldown applied after the ability ends. If set to null, copies cooldown_time.
 	var/melee_cooldown_time = 0
 	/// The actual next time the owner of this action can melee
 	var/next_melee_use_time = 0
