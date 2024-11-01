@@ -53,7 +53,7 @@
 	icon_state = "hellfire"
 	wound_bonus = 0
 	damage = 30
-	speed = 0.6 // higher power = faster, that's how light works right
+	speed = 0.2 // higher power = faster, that's how light works right
 	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser

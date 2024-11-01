@@ -94,7 +94,7 @@
 	stamina = 11
 	sharpness = NONE
 	embed_type = null
-	speed = 1.2
+	speed = 0.6
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -124,7 +124,6 @@
 	wound_bonus = -25
 	bare_wound_bonus = 50
 	wound_falloff_tile = -10
-	speed = 0.8
 	ricochet_decay_chance = 0.6
 	ricochet_decay_damage = 0.3
 	demolition_mod = 10
