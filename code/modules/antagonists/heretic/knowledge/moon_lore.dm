@@ -228,8 +228,8 @@
 		lunatic_candidates += crewmate
 
 	// Roughly 1/5th of the station will rise up as lunatics to the heretic.
-	// We use the (locked) manifest for the maximum,
-	// but if there's more eligible humans than crew, more power to them I guess.
+	// We use either the (locked) manifest for the maximum, or the amount of candidates, whichever is larger.
+	// If there's more eligible humans than crew, more power to them I guess.
 	var/max_lunatics = ceil(max(length(GLOB.manifest.locked), length(lunatic_candidates)) * 0.2)
 
 	for(var/mob/living/carbon/human/crewmate as anything in lunatic_candidates)
