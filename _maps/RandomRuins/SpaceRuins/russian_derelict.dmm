@@ -4636,10 +4636,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
-"GF" = (
-/turf/open/floor/engine/airless,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ks13/engineering/supermatter)
 "GG" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/stack/cable_coil/cut,
@@ -13146,7 +13142,7 @@ sU
 Fp
 RI
 zv
-GF
+Fp
 zv
 HX
 RI
