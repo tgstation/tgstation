@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Modsuit actions no longer go on cooldown when selected"
-  - balance: "microwave beam module is on a 4s cooldown not 10s"

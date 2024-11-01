@@ -1,0 +1,24 @@
+2024-11-01:
+  00-Steven:
+  - bugfix: NTNRC "rename channel" button is now grayed out when unusable.
+  - bugfix: Genetics console "create advanced injector" button is now grayed out when
+      unusable.
+  Fikou:
+  - bugfix: fixes some issues with separate modsuit part activation
+  - bugfix: rad protection, miner and stealth modsuit modules require the full suit
+      out
+  - bugfix: armor booster now applies slowdown removal per part instead of to the
+      control unit
+  SmArtKar:
+  - bugfix: Fixed some guns runtiming when attempting to reload
+  - bugfix: Fixed HTML injections via pet tricks
+  TealSeer:
+  - bugfix: The gene recipes for cindikinesis and pyrokinesis should now work properly.
+  TheVekter:
+  - bugfix: Clarifies mayhem-in-a-bottle's effects and makes the text much, much more
+      obvious.
+  carlarctg:
+  - image: adds some placeholder and not sprites for various fish sources
+  - code_imp: added debug portal with all fish locations
+  - qol: Modsuit actions no longer go on cooldown when selected
+  - balance: microwave beam module is on a 4s cooldown not 10s

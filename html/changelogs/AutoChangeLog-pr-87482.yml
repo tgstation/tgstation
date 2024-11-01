@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes some issues with separate modsuit part activation"
-  - bugfix: "rad protection, miner and stealth modsuit modules require the full suit out"
-  - bugfix: "armor booster now applies slowdown removal per part instead of to the control unit"

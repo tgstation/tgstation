@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "The gene recipes for cindikinesis and pyrokinesis should now work properly."

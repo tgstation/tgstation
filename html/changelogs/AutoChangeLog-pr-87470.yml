@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - image: "adds some placeholder and not sprites for various fish sources"
-  - code_imp: "added debug portal with all fish locations"
