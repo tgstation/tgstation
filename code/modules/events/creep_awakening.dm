@@ -2,7 +2,7 @@
 	name = "Obsession Awakening"
 	typepath = /datum/round_event/obsessed
 	max_occurrences = 1
-	min_players = 20
+	min_players = 5
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember becomes obsessed with another."
 

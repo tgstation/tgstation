@@ -7,7 +7,7 @@
 	typepath = /datum/round_event/pirates
 	weight = 10
 	max_occurrences = 1
-	min_players = 20
+	min_players = 15
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."

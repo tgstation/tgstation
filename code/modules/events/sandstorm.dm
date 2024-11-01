@@ -11,7 +11,7 @@
 	name = "Sandstorm: Directional"
 	typepath = /datum/round_event/sandstorm
 	max_occurrences = 3
-	min_players = 35
+	min_players = 5
 	earliest_start = 35 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."

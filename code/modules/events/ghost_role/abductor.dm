@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/abductor
 	weight = 10
 	max_occurrences = 1
-	min_players = 20
+	min_players = 10
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "One or more abductor teams spawns, and they plan to experiment on the crew."

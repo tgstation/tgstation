@@ -2,7 +2,7 @@
 	name = "Anomaly: Hallucination"
 	typepath = /datum/round_event/anomaly/anomaly_hallucination
 
-	min_players = 10
+	min_players = 5
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly causes you to hallucinate."
