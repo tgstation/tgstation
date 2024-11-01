@@ -153,6 +153,9 @@
 					var/datum/computer_file/program/chatclient/our_chat_client = locate() in stored_files
 					if(isnull(our_chat_client))
 						return TRUE
+					if(!get_ntnet_status()) // Can't swap to NTNRC without NTNet.
+						to_chat(usr, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+						return TRUE
 					active_program.kill_program(usr)
 					open_program(usr, our_chat_client)
 
