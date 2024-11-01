@@ -74,6 +74,9 @@
 	if(!target.handcuffed)
 		return
 
+	if(cutter_user.combat_mode)
+		return
+
 	var/obj/item/restraints/handcuffs/cuffs = target.handcuffed
 
 	if(!istype(cuffs))
