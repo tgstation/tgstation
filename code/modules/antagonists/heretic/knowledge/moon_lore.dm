@@ -216,10 +216,11 @@
 	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
+	// How many lunatics we have
+	var/amount_of_lunatics = 0
+
 	// Roughly 1/5th of the station will rise up as lunatics to the heretic
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
-		// How many lunatics we have
-		var/amount_of_lunatics = 0
 		// Where the crewmate is, used to check their z-level
 		var/turf/crewmate_turf = get_turf(crewmate)
 		var/crewmate_z = crewmate_turf?.z
