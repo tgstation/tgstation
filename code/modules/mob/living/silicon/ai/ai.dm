@@ -120,7 +120,7 @@
 
 	create_eye()
 
-	if(target_ai.mind)
+	if(target_ai.mind && target_ai.mind.active)
 		target_ai.mind.transfer_to(src)
 		if(mind.special_role)
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
