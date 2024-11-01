@@ -259,15 +259,17 @@
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		var/datum/reagent/target = reagent
+		var/is_inverse = FALSE
 
 		//inverted chems are dealt with diffrently
 		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			is_inverse = TRUE
 		//out of our selected range
 		if(target.mass < lower_mass_range || target.mass > upper_mass_range)
 			continue
 		//already at max purity
-		if((initial(reagent.purity) - reagent.purity) <= 0)
+		if(!is_inverse && (initial(reagent.purity) - reagent.purity) <= 0)
 			continue
 		///Roughly 10 - 30s?
 		delay_time += (((target.mass * reagent.volume) + (target.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
