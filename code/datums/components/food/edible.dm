@@ -499,7 +499,7 @@ Behavior that's still missing from this component that original food items had t
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
@@ -565,10 +565,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)

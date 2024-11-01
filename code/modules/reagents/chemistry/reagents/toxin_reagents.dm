@@ -54,7 +54,7 @@
 	. = ..()
 	if(!exposed_mob.can_mutate())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT)))
+	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT|INHALE)))
 		exposed_mob.random_mutate_unique_identity()
 		exposed_mob.random_mutate_unique_features()
 		if(prob(98))
@@ -258,7 +258,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
 	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	if((data?["method"] & INGEST) && holder_mob.stat != DEAD)
+	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
@@ -268,10 +268,10 @@
 /datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
 	. = ..()
 	var/datum/reagent/zombiepowder = target_atom.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-	if(!zombiepowder || !(methods & INGEST))
+	if(!zombiepowder || !(methods & (INGEST|INHALE)))
 		return
 	LAZYINITLIST(zombiepowder.data)
-	zombiepowder.data["method"] |= INGEST
+	zombiepowder.data["method"] |= (INGEST|INHALE)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -655,7 +655,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //mmmm, the forbidden pickle juice
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
 			return UPDATE_MOB_HEALTH
@@ -1085,11 +1085,11 @@
 	. = ..()
 	if(!istype(exposed_carbon))
 		return
-	var/obj/item/organ/internal/liver/liver = exposed_carbon.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = exposed_carbon.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
 	reac_volume = round(reac_volume,0.1)
-	if(methods & INGEST)
+	if(methods & (INGEST|INHALE))
 		exposed_carbon.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr), required_bodytype = affected_bodytype)
 		return
 	if(methods & INJECT)
@@ -1341,7 +1341,7 @@
 			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
-				var/obj/item/organ/internal/tongue/tongue = affected_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
+				var/obj/item/organ/tongue/tongue = affected_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 				if(tongue)
 					to_chat(affected_mob, span_warning("Your [tongue.name] feels numb..."))
 				affected_mob.set_slurring_if_lower(5 SECONDS * REM * seconds_per_tick)
