@@ -884,9 +884,6 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-/// We need gloves to layer on top of modsuit chestplates because we need the hole in the suit filled in if the user lacks a limb
-#define MOD_CHESTPLATE_LAYER (GLOVES_LAYER+0.5)
-
 /// If gravity must be present to perform action (can't use pens without gravity)
 #define NEED_GRAVITY (1<<0)
 /// If reading is required to perform action (can't read a book if you are illiterate)
