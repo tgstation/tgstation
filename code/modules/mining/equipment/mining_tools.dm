@@ -170,10 +170,6 @@
 	toolspeed = 0.6
 	worn_icon_state = null
 
-/obj/item/shovel/spade/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \
