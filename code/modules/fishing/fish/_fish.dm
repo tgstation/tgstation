@@ -447,7 +447,10 @@
 	if(bites_amount)
 		. += span_warning("It's been bitten by someone.")
 
-///Randomizes weight and size.
+/**
+ * This proc takes a base size, base weight and deviation arguments to generate new size and weight through a gaussian distribution (bell curve)
+ * Mainly used to determinate the size and weight of caught fish.
+ */
 /obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = weight_size_deviation, update = TRUE)
 	var/size_deviation = 0.2 * base_size
 	temp_size = round(clamp(gaussian(base_size, size_deviation), average_size * 1/MAX_FISH_DEVIATION_COEFF, average_size * MAX_FISH_DEVIATION_COEFF))

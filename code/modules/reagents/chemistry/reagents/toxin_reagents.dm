@@ -1230,7 +1230,7 @@
 			to_chat(affected_mob, span_warning("A phantom limb hurts!"))
 			affected_mob.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 
-/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+/datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
 		fish.adjust_health(fish.health - 30)
 		return TRUE
