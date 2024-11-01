@@ -220,7 +220,7 @@
 		if(!result)
 			result = target.mass
 		else
-			result = smallest ? min(result, reagent.mass) : max(result, reagent.mass)
+			result = smallest ? min(result, target.mass) : max(result, target.mass)
 	return smallest ? FLOOR(result, 50) : CEILING(result, 50)
 
 /*
