@@ -6966,6 +6966,7 @@
 #include "modular_doppler\modular_medical\wounds\synth\blunt\secures_internals.dm"
 #include "modular_doppler\modular_mob_spawn\code\mob_spawn.dm"
 #include "modular_doppler\modular_mobs\simple_animal\bot\secbot_permit_overwrite.dm"
+#include "modular_doppler\modular_mobs\simple_animal\megafauna\wendigo.dm"
 #include "modular_doppler\modular_mood\code\mood_events\brushed.dm"
 #include "modular_doppler\modular_mood\code\mood_events\dog_wag.dm"
 #include "modular_doppler\modular_mood\code\mood_events\hotspring.dm"
