@@ -227,9 +227,11 @@
 			continue
 		lunatic_candidates += crewmate
 
-	var/max_lunatics = ceil(length(GLOB.manifest.locked) * 0.2) // use the manifest for the maximum
+	// Roughly 1/5th of the station will rise up as lunatics to the heretic.
+	// We use the (locked) manifest for the maximum,
+	// but if there's more eligible humans than crew, more power to them I guess.
+	var/max_lunatics = ceil(max(length(GLOB.manifest.locked), length(lunatic_candidates)) * 0.2)
 
-	// Roughly 1/5th of the station will rise up as lunatics to the heretic
 	for(var/mob/living/carbon/human/crewmate as anything in lunatic_candidates)
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 		if(IS_HERETIC_OR_MONSTER(crewmate))
