@@ -421,6 +421,7 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
+	include_catchables = FALSE
 
 /datum/fish_source/unit_test_all_fish
 	include_catchables = FALSE

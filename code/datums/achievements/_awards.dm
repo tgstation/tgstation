@@ -14,18 +14,19 @@
 	//Bump this up if you're changing outdated table identifier and/or achievement type
 	var/achievement_version = 2
 
-	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
-	var/default_value = FALSE
-
 ///This proc loads the achievement data from the hub.
 /datum/award/proc/load(datum/achievement_data/holder)
 	if(!SSdbcore.Connect())
-		return default_value
+		return default_value()
 	if(!holder.owner_ckey || !database_id || !name)
-		return default_value
+		return default_value()
 	var/value = parse_value(get_raw_value(holder.owner_ckey))
 	holder.original_cached_data[type] = holder.data[type] = value
 	return value
+
+//Proc that returns a value upon db connection failure, in case we need different instances too.
+/datum/award/proc/default_value()
+	return FALSE
 
 /datum/award/proc/unlock(mob/user, datum/achievement_data/holder, value = 1)
 	return
@@ -69,7 +70,7 @@
 
 //Should return sanitized value for achievement cache
 /datum/award/proc/parse_value(raw_value)
-	return default_value
+	return default_value()
 
 ///Can be overridden for achievement specific events
 /datum/award/proc/on_unlock(mob/user)
@@ -143,7 +144,6 @@
 /datum/award/score
 	desc = "you did it sooo many times."
 	category = "Scores"
-	default_value = 0
 
 	var/track_high_scores = TRUE
 	var/list/high_scores = list()
@@ -152,6 +152,9 @@
 	. = ..()
 	if(track_high_scores)
 		LoadHighScores()
+
+/datum/award/score/default_value()
+	return 0
 
 /datum/award/score/get_metadata_row()
 	. = ..()
@@ -197,7 +200,7 @@
 	)
 	if(!get_unlocked_count.Execute(async = TRUE))
 		qdel(get_unlocked_count)
-		.["value"] = default_value
+		.["value"] = 0
 		return .
 	if(get_unlocked_count.NextRow())
 		.["value"] = text2num(get_unlocked_count.item[1])
@@ -237,7 +240,6 @@
  * It also has an unique tab in the UI that lets you review the progress.
  */
 /datum/award/score/progress
-	default_value = list()
 	///The id of table we're looking for, the one containing the progress objects.
 	var/table_id = ""
 	/**
@@ -258,7 +260,7 @@
 		return
 	// This ensures that the original list and the new won't be the same any longer.
 	// So that it'll pass the not-equal if statement and be saved in the db.
-	if(entries == holder.original_cached_data)
+	if(entries == holder.original_cached_data[type])
 		entries = entries?.Copy() || list()
 		holder.data[type] = entries
 	entries |= value
@@ -272,9 +274,9 @@
 	validate_loaded_data(holder, results)
 
 /datum/award/score/progress/proc/validate_loaded_data(datum/achievement_data/holder, list/results)
+	holder.original_cached_data[type] = holder.data[type] = results
 	if(!length(results))
 		return results
-	holder.original_cached_data[type] = holder.data[type] = results
 	///This list will be populated on validate_entries()
 	var/list/validated_results = list()
 	if(!validate_entries(results, validated_results))
@@ -283,7 +285,7 @@
 
 ///Along with the changed rows for the main table, this also populates changed_entries with the entries list
 /datum/award/score/progress/get_changed_rows(datum/achievement_data/holder)
-	if(!database_id || !holder.owner_ckey || !name || !table_id)
+	if(!database_id || !holder || !name || !table_id)
 		return
 	var/list/entries = holder.data[type]
 	for(var/entry in (entries - holder.original_cached_data[type]))
@@ -302,16 +304,24 @@
 /datum/award/score/progress/get_raw_value(key)
 	var/list/entries = list()
 	var/datum/db_query/get_entries_load = SSdbcore.NewQuery(
-		"SELECT progress_entry,value FROM [format_table_name(table_id)] WHERE ckey = :ckey",
+		"SELECT progress_entry FROM [format_table_name(table_id)] WHERE ckey = :ckey",
 		list("ckey" = key)
 	)
 	if(!get_entries_load.Execute())
 		qdel(get_entries_load)
-		return
+		return entries
 	while(get_entries_load.NextRow())
 		entries |= get_entries_load.item[1]
 	qdel(get_entries_load)
 	return entries
+
+/datum/award/score/progress/parse_value(raw_value)
+	return islist(raw_value) ? raw_value : list()
+
+
+//Proc that returns a value upon db connection failure, in case we need to new instances too
+/datum/award/score/progress/default_value()
+	return list()
 
 /**
  * Validates the list of entries after it's parsed.
@@ -323,9 +333,6 @@
 /datum/award/score/progress/proc/validate_entries(list/entries, list/validated_entries)
 	validated_entries = unique_list(entries)
 	return length(validated_entries) == length(entries)
-
-/datum/award/score/progress/parse_value(raw_value)
-	return islist(raw_value) ? raw_value : list()
 
 ////Returns a list of data that we can use to make an index of contents that progress this award/score.
 /datum/award/score/progress/proc/get_progress(datum/achievement_data/holder)

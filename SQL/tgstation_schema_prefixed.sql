@@ -595,9 +595,9 @@ CREATE TABLE `SS13_achievement_metadata` (
 DROP TABLE IF EXISTS `SS13_fish_progress`;
 CREATE TABLE `fish_progress` (
   `ckey` VARCHAR(32) NOT NULL,
-  `fish_id` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ckey`,`fish_id`)
+  PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 
 --

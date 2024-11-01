@@ -142,7 +142,7 @@ const ProgressTable = () => {
   const { data } = useBackend<Data>();
   const { progresses } = data;
   const [progressIndex, setProgressIndex] = useState(0);
-  if (!progresses) {
+  if (!progresses || progresses.length === 0) {
     return null;
   }
   const progress: Progress = progresses[progressIndex];
@@ -206,7 +206,7 @@ const HighScoreTable = () => {
   const { data } = useBackend<Data>();
   const { highscores, user_key } = data;
   const [highScoreIndex, setHighScoreIndex] = useState(0);
-  if (!highscores) {
+  if (!highscores || highscores.length === 0) {
     return null;
   }
   const highscore: Highscore = highscores[highScoreIndex];

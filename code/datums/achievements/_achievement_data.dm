@@ -92,7 +92,7 @@
 	. = ..()
 	.["categories"] = GLOB.achievement_categories
 	.["achievements"] = list()
-	.["highscore"] = list()
+	.["highscores"] = list()
 	.["progresses"] = list()
 	.["user_key"] = owner_ckey
 

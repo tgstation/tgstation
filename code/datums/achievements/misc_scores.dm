@@ -27,9 +27,33 @@
 	desc = "How many different species of fish you've caught so far. Gotta fish 'em all."
 	table_id = "fish_progress"
 	database_id = FISH_SCORE
+	var/list/early_entries_to_validate = list()
+
+/datum/award/score/progress/fish/New()
+	. = ..()
+	RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(validate_early_joiners))
+
+/datum/award/score/progress/fish/proc/validate_early_joiners(datum/source)
+	for(var/client/client as anything in GLOB.clients)
+		var/datum/achievement_data/holder = client.player_details.achievements
+		if(!holder?.initialized)
+			continue
+		var/list/entries = holder.data[/datum/award/score/progress/fish]
+		var/list_copied = FALSE
+		for(var/fish_id in entries)
+			if(SSfishing.catchable_fish[fish_id])
+				continue
+			//make a new list, unbound from the cached awards data, so that the score can be updated at the end of the round.
+			if(!list_copied)
+				entries = entries.Copy()
+				holder.data[/datum/award/score/progress/fish] = entries
+				list_copied = TRUE
+			entries -= fish_id
 
 /datum/award/score/progress/fish/validate_entries(list/entries, list/validated_entries)
 	. = ..()
+	if(!SSfishing.initialized)
+		return
 	for(var/fish_id in validated_entries)
 		if(!(SSfishing.catchable_fish[fish_id]))
 			validated_entries -= fish_id

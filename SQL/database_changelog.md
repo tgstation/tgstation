@@ -5,12 +5,12 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 27);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
 
 -----------------------------------------------------
@@ -22,7 +22,7 @@ CREATE TABLE `fish_progress` (
   `ckey` VARCHAR(32) NOT NULL,
   `progress_entry` VARCHAR(32) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ckey`,`id`)
+  PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 ```
 
