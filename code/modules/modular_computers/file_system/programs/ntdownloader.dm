@@ -65,7 +65,7 @@
 
 	downloaded_file = PRG.clone()
 
-	// If the filesize is 0 (or somehow lower), we instantly download.
+	// If the filesize is 0 (or somehow lower), we instantly download to avoid invalid number issues with stepwise completion.
 	if(downloaded_file.size <= 0)
 		complete_file_download()
 
