@@ -8,7 +8,7 @@
 		return FALSE
 	if(mutation1 == mutation2) //this could otherwise be bad
 		return FALSE
-	for(var/datum/generecipe/GR as anything in GLOB.mutation_recipes)
+	for(var/datum/generecipe/GR as anything in subtypesof(/datum/generecipe))
 		if((initial(GR.input_one) == mutation1 && initial(GR.input_two) == mutation2) || (initial(GR.input_one) == mutation2 && initial(GR.input_two) == mutation1))
 			return initial(GR.result)
 

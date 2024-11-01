@@ -173,8 +173,6 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	var/list/mutations = subtypesof(/datum/mutation/human)
 	shuffle_inplace(mutations)
-	for(var/datum/generecipe/GR as anything in subtypesof(/datum/generecipe))
-		GLOB.mutation_recipes |= GR
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
 		var/datum/mutation/human/B = new path ()
