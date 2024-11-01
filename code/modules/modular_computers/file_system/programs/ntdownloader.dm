@@ -65,6 +65,10 @@
 
 	downloaded_file = PRG.clone()
 
+	// If the filesize is 0 (or somehow lower), we instantly download.
+	if(downloaded_file.size <= 0)
+		complete_file_download()
+
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
 		return
