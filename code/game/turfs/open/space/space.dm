@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(starlight)
 		return
 	if(istype(C, /obj/item/stack/rods))
 		build_with_rods(C, user)
-	else if(C.has_material_type(/datum/material/iron))
+	else if(istype(C, /obj/item/stack/tile) && C.has_material_type(/datum/material/iron))
 		build_with_floor_tiles(C, user)
 
 
