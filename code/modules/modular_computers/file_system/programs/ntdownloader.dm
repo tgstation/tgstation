@@ -110,7 +110,7 @@
 		download_netspeed *= 0.5
 
 	download_completion += download_netspeed
-	if(download_completion >= downloaded_file.size)
+	if(download_completion > downloaded_file.size)
 		// We don't complete it here so we stay on 100% for a cycle
 		// We do cap out our completion to avoid UI issues
 		download_completion = downloaded_file.size
