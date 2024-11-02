@@ -39,7 +39,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
 	kidnapping = TRUE
 
-	if(do_after(parent, kidnap_time, victim, extra_checks = victim.incapacitated))
+	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(victim, PROC_REF(check_incapacitated))))
 		take_them(victim)
 
 	qdel(particles)
@@ -67,3 +67,8 @@
 
 /datum/component/space_kidnap/proc/succesfully_kidnapped(mob/living/carbon/human/kidnappee)
 	SEND_SIGNAL(parent, COMSIG_VOIDWALKER_SUCCESFUL_KIDNAP, kidnappee)
+
+/datum/component/space_kidnap/proc/check_incapacitated(mob/living/carbon/human/kidnappee)
+	SIGNAL_HANDLER
+
+	return kidnappee.incapacitated
