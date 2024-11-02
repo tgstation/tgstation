@@ -809,6 +809,17 @@
 
 	items_to_add = list(/obj/item/borg/cookbook)
 
+/obj/item/borg/upgrade/botany_upgrade
+	name = "Service Cyborg Botany Tools"
+	desc = "An upgrade to the service model cyborg, that let them do gardening and plant processing."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+	items_to_add = list(/obj/item/storage/bag/plants/cyborg, /obj/item/borg/cyborg_omnitool/botany, /obj/item/plant_analyzer)
+
+
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board

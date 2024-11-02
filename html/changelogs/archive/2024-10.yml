@@ -890,3 +890,31 @@
   - qol: Detailed examine descriptions are prettier now.
   carlarctg:
   - bugfix: The Traps won't spawn traps on walls anymore
+2024-10-31:
+  Ben10Omintrix:
+  - bugfix: penguins now correctly hunt for food
+  Ghommie:
+  - code_imp: Removed internal/external pathing from organs in favor of a bit flag.
+      Hopefully this shouldn't break anything about organs.
+  - bugfix: Fixed invisible fox ears.
+  - bugfix: Fixed mushpeople caps not being colored red by default.
+  - rscadd: You can now dye most tails, podpeople hair, mushpeople caps etc. with
+      a hair dye spray.
+  OrionTheFox:
+  - qol: added fail feedback to xenobio Regenerative Metal/Bluespace Extracts
+  - bugfix: fixed Regenerative Metal Extract not checking for mob size when moving
+      them into the spawned closet
+  Sealed101:
+  - bugfix: fixed APC control console found in CE office only accessing APCs on its
+      z-level
+  - bugfix: fixed restoring an emagged APC control console potentially leaving the
+      console in a forever state of restoring
+  SmArtKar:
+  - bugfix: Fixed green raptor corpses being able to mine rocks
+  larentoun:
+  - bugfix: 'Bitrunning: falling into chasms and other ways of destroying your virtual
+      body instead of killing it, WILL now return you to your body'
+  necromanceranne:
+  - code_imp: Introduces a INHALE method for reagent transfer. Cigarettes and smoke
+      reactions use this new method.
+  - balance: Nitrous oxide now brain damage if you inhale it. So don't do that.

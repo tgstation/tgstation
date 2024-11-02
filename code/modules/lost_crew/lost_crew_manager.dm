@@ -15,13 +15,14 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
  *
  * Arguments:
  * * revivable - Whether or not we can be revived to grand a ghost controle
+ * * container - Humans really dont like not having a loc, so please either give the container where you want to spawn it or a turf
  * * forced_class - To force a specific damage class for some specific lore reason
  * * recovered_items - Items recovered, such as some organs, dropped directly with the body
  * * protected_items - Items that can only be recovered by the revived player
  * * body_data - Debug data we can use to get a readout of what has been done
  */
 /datum/lost_crew_manager/proc/create_lost_crew(revivable = TRUE, datum/corpse_damage_class/forced_class, list/recovered_items, list/protected_items, list/body_data = list())
-	var/mob/living/carbon/human/new_body = new(null)
+	var/mob/living/carbon/human/new_body = new()
 	new_body.death()
 
 	var/static/list/scenarios = list()
@@ -35,7 +36,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	var/datum/corpse_damage_class/scenario = forced_class || pick_weight(scenarios)
 	scenario = new scenario ()
 
-	scenario.apply_character(new_body, protected_items, on_revive_and_player_occupancy, body_data)
+	scenario.apply_character(new_body, protected_items, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
 

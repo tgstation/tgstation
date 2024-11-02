@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - bugfix: "Bitrunning: falling into chasms and other ways of destroying your virtual body instead of killing it, WILL now return you to your body"

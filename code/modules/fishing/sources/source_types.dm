@@ -375,10 +375,12 @@
 		/obj/item/stack/sheet/mineral/adamantine = 3,
 		/obj/item/stack/sheet/mineral/runite = 2,
 	)
+	overlay_state = "portal_plasma"
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
 	radial_state = "garbage"
+	overlay_state = "portal_river" // placeholder
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
@@ -390,6 +392,7 @@
 	catalog_description = "Station toilets"
 	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
+	overlay_state = "portal_river" // placeholder
 	fish_table = list(
 		FISHING_DUD = 18,
 		/obj/item/fish/sludgefish = 18,
@@ -473,6 +476,7 @@
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
 	radial_state = "hydro"
+	overlay_state = "portal_tray"
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
@@ -581,6 +585,7 @@
 /datum/fish_source/carp_rift
 	catalog_description = "Space Dragon Rifts"
 	radial_state = "carp"
+	overlay_state = "portal_rift"
 	fish_table = list(
 		FISHING_DUD = 3,
 		/obj/item/fish/baby_carp = 5,
@@ -600,6 +605,7 @@
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
 	radial_state = "fryer"
+	overlay_state = "portal_fry" // literally resprited lava. better than nothing
 	fish_table = list(
 		/obj/item/food/badrecipe = 15,
 		/obj/item/food/nugget = 5,
