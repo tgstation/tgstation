@@ -33,6 +33,7 @@
 
 /datum/preference_middleware/loadout/proc/action_clear_all(list/params, mob/user)
 	PRIVATE_PROC(TRUE)
+	preferences.loadout_points = preferences.get_loadout_points() // SS220 ADD - Lodout points
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], null)
 	return TRUE
 
@@ -97,6 +98,7 @@
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	var/list/data = list()
 	data["job_clothes"] = preferences.character_preview_view.show_job_clothes
+	data["loadout_leftpoints"] = preferences.loadout_points // SS220 ADD - Lodout points
 	return data
 
 /datum/preference_middleware/loadout/get_ui_static_data(mob/user)

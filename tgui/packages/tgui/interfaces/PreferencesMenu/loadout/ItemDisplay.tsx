@@ -86,6 +86,11 @@ export const ItemDisplay = (props: {
             ))}
           </Flex.Item>
         )}
+        <Flex.Item mt={1}>
+          <Box fontSize="10px" textColor={'yellow'}>
+            Цена: {item.cost}
+          </Box>
+        </Flex.Item>
       </Flex>
     </Button>
   );

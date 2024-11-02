@@ -3,10 +3,12 @@
 #define DONATION_TIER_3 1000
 #define DONATION_TIER_4 2220
 #define DONATION_TIER_5 10000
+#define BASIC_DONATOR_LEVEL 0
 
 /client
 	/// Call `proc/get_donator_level()` instead to get a value when possible.
-	var/donator_level = 0
+	var/donator_level = BASIC_DONATOR_LEVEL
+	var/can_save_donator_level = FALSE
 	COOLDOWN_DECLARE(db_check_cooldown)
 
 // For unit-tests
@@ -47,6 +49,8 @@
 	if(query_get_donator_level.warn_execute() && length(query_get_donator_level.rows))
 		query_get_donator_level.NextRow()
 		amount = query_get_donator_level.item[1]
+		//Даем разрешение сохранять лодаут только после успешного запроса к СУБД
+		can_save_donator_level = TRUE
 	qdel(query_get_donator_level)
 
 	switch(amount)

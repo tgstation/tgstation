@@ -31,6 +31,7 @@ export type LoadoutItem = {
   buttons: LoadoutButton[];
   reskins: ReskinOption[] | null;
   information: string[];
+  cost: string;
 };
 
 // Category of items in the loadout
@@ -43,4 +44,5 @@ export type LoadoutCategory = {
 
 export type LoadoutManagerData = PreferencesMenuData & {
   job_clothes: BooleanLike;
+  loadout_leftpoints: string;
 };
