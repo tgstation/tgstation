@@ -44,7 +44,7 @@
 
 /// Returns whether the game is supposed to consider the parent "secure".
 /datum/component/keep_me_secure/proc/is_secured()
-	if(living_player_count < src.min_pop_limit)
+	if(living_player_count() < src.min_pop_limit)
 		return TRUE
 
 	var/obj/item/item_parent = parent
