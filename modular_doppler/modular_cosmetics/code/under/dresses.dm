@@ -26,7 +26,7 @@
 	greyscale_colors = "#cc0000#5f5f5f"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/under/pants/giant_scarf
+/obj/item/clothing/under/dress/doppler/giant_scarf
 	name = "giant scarf"
 	desc = "An absurdly massive scarf, worn as the main article of clothing over the body. Ironically, not very suitable for the cold."
 	icon_state = "giant_scarf"

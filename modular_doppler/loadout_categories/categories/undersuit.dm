@@ -148,7 +148,7 @@
 
 /datum/loadout_item/undersuit/dress/giantscarf
 	name = "Giant Scarf"
-	item_path = /obj/item/clothing/under/pants/giant_scarf
+	item_path = /obj/item/clothing/under/dress/doppler/giant_scarf
 
 /datum/loadout_item/undersuit/dress/evening
 	name = "Evening Dress"

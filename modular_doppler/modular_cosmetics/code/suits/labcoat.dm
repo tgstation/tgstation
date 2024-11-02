@@ -14,6 +14,6 @@
 /obj/item/clothing/suit/toggle/labcoat/lalunevest
 	name = "sleeveless buttoned coat"
 	desc = "A fashionable jacket bearing the La Lune insignia on the inside. It appears similar to a labcoat in design and materials, though the tag warns against it being a replacement for such."
-	icon_state = "labcoat_lalune_vest"
+	icon_state = "labcoat_lalunevest"
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'
