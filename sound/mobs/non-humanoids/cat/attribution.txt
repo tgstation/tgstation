@@ -1,0 +1,10 @@
+{
+cat_meow1.ogg
+cat_meow2.ogg
+cat_meow3.ogg
+cat_purr1.ogg
+cat_purr2.ogg
+cat_purr3.ogg
+cat_purr4.ogg
+} - made by sadboysuss, License: CC-BY-SA
+oranges_meow.ogg - voiced by orangesnz, License: CC0

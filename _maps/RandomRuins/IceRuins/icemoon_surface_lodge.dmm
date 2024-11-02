@@ -1,0 +1,4641 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"aw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"aA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"aE" = (
+/obj/item/shovel,
+/obj/structure/rack,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/item/shovel{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"aU" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"be" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"bs" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"bR" = (
+/obj/structure/railing{
+	dir = 8;
+	color = "#beada5"
+	},
+/obj/structure/railing{
+	dir = 4;
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/stairs{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"bV" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"bX" = (
+/obj/structure/table,
+/obj/machinery/gibber,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"ca" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"cy" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"cC" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"cJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"cO" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"cQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/food_or_drink/jelly_donuts{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"cS" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"dc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"dr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"du" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"dC" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"dP" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/railing{
+	dir = 5;
+	color = "#beada5"
+	},
+/obj/structure/railing/corner{
+	color = "#beada5"
+	},
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"dQ" = (
+/obj/effect/decal/cleanable/wrapping,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"eh" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/warm/directional/south,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"ej" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"et" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"eB" = (
+/turf/open/floor/iron/stairs/left{
+	color = "#5d341f";
+	dir = 1
+	},
+/area/ruin/huntinglodge)
+"eD" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"eE" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/chair/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"eQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"eX" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"fb" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"fe" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"fi" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"fB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"fK" = (
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"fO" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"fP" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"gu" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/toy,
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = -14;
+	pixel_y = 0
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"gA" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 2
+	},
+/obj/structure/chair/comfy/brown,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/minesite/overseer,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"gB" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 11;
+	pixel_y = -13
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"gM" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"gS" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"gY" = (
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/ruin/huntinglodge)
+"gZ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"hb" = (
+/obj/structure/railing{
+	dir = 10;
+	color = "#beada5"
+	},
+/obj/structure/hedge,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"hf" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"hl" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -3;
+	pixel_y = -8
+	},
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"hm" = (
+/turf/open/floor/iron/stairs/right{
+	color = "#5d341f";
+	dir = 8
+	},
+/area/ruin/huntinglodge)
+"hE" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"hK" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"hP" = (
+/obj/structure/table/wood,
+/obj/item/paper{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/pen/fountain{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/wood/end,
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"hV" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#beada5"
+	},
+/obj/structure/curtain/cloth/fancy,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/ruin/huntinglodge)
+"hZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/ammo_casing/c45{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"ic" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gift{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"if" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"iq" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"iZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/gift,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"jl" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"jp" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/bodypart/head/ethereal,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/item/chair/stool,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"jr" = (
+/obj/structure/fermenting_barrel,
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = 1;
+	pixel_y = 13
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"jF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"jK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"jN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"jQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"kf" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"kk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"kl" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"kn" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"kD" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"kH" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"kI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/chair/stool{
+	pixel_x = -10;
+	pixel_y = -14
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"kJ" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"kP" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"kR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"lc" = (
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"lv" = (
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/ruin/huntinglodge)
+"lC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"lE" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"lJ" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"lL" = (
+/obj/structure/table/wood,
+/obj/item/toy/talking/ai{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = -18;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/plushie,
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = -9;
+	pixel_y = 10
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"lO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"lU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"mb" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"mm" = (
+/obj/structure/table/wood,
+/obj/item/storage/cans/sixbeer,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"mo" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"mq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/mob_spawn/corpse/human,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"mr" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/rainbow{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"mA" = (
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/ruin/huntinglodge)
+"mG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/north,
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"mX" = (
+/obj/structure/dresser,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"nt" = (
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"nC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"nI" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/flora/tree/pine/xmas/presentless{
+	pixel_x = -15;
+	pixel_y = 10
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"nK" = (
+/obj/structure/ore_container/food_trough/raptor_trough,
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"nX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/bodypart/head/ethereal,
+/obj/machinery/light/warm/directional/east,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"og" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"oF" = (
+/obj/structure/bookcase/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"oT" = (
+/obj/machinery/computer/security/wooden_tv,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"oW" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"oY" = (
+/obj/structure/railing{
+	dir = 10;
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"pl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 0;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"pr" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"pE" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"pF" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"pJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"pN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/light/small/dim/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/confetti,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"pU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/item/food/grown/carrot{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/food/grown/carrot{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/structure/sink/kitchen/directional/west,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"pX" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"qp" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/paper/crumpled/bloody,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"qH" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"qL" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/trash/tray{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/obj/item/bodypart/head{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"qO" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -4;
+	pixel_y = -13
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"qU" = (
+/obj/item/hatchet/wooden{
+	pixel_x = -8;
+	pixel_y = 17
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"qW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/item/chair/stool,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"qZ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"ry" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"rI" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"rS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"sU" = (
+/obj/item/ammo_casing/c45,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"sX" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/effect/spawner/random/food_or_drink/jelly_donuts{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/food_or_drink/jelly_donuts{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/effect/spawner/random/food_or_drink/jelly_donuts{
+	pixel_x = -14;
+	pixel_y = 0
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"ta" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"td" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"tk" = (
+/obj/effect/turf_decal/siding/wood/end,
+/obj/structure/rack,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat{
+	pixel_x = -3;
+	pixel_y = 0
+	},
+/obj/item/clothing/suit/hooded/wintercoat{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/pickaxe,
+/obj/item/pickaxe{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/pickaxe{
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/flashlight{
+	pixel_x = 0;
+	pixel_y = -2
+	},
+/obj/item/flashlight{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"tq" = (
+/obj/machinery/jukebox,
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"tT" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"tY" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/gift{
+	pixel_x = 0;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"uc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/cook,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"uU" = (
+/obj/structure/barricade/wooden/crude/snow,
+/obj/machinery/door/airlock/wood,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"uZ" = (
+/obj/machinery/light/warm/directional/north,
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"vc" = (
+/obj/item/knife/combat/bone{
+	pixel_x = -19;
+	pixel_y = -2
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"vg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"vr" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"vv" = (
+/obj/structure/railing{
+	dir = 10;
+	color = "#beada5"
+	},
+/obj/structure/hedge,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"vH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"vK" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"vO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/gift{
+	pixel_x = 0;
+	pixel_y = 1
+	},
+/obj/item/gift{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/gift{
+	pixel_x = -12;
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"vW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"wd" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 0;
+	pixel_y = 6
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"ws" = (
+/obj/structure/musician/piano{
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"ww" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"wC" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"wI" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/gun/ballistic/shotgun/riot{
+	pixel_x = 1;
+	pixel_y = 27
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"wO" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"wP" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"wV" = (
+/obj/structure/fireplace,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"xh" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"xv" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"xy" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"xz" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"xB" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"xE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/gift{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/gift{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/gift{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"xG" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"xH" = (
+/obj/effect/decal/cleanable/insectguts,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"xM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/machinery/light/warm/directional/west,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"xQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"ye" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = -17;
+	pixel_y = -1
+	},
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"yk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"yt" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"yB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"yG" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"yN" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"yO" = (
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/viscerator,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"yR" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/ash,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"yW" = (
+/obj/structure/railing/corner{
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"zr" = (
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#beada5"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ruin/huntinglodge)
+"zM" = (
+/obj/item/chair/stool/bamboo{
+	dir = 8;
+	color = "#463934"
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"zN" = (
+/turf/open/floor/iron/stairs{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"Ah" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Ao" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = 3;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Ar" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"As" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Aw" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"AF" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"AG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"AV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/oven/range,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"AX" = (
+/obj/structure/table/wood,
+/obj/item/clothing/suit/space/santa,
+/obj/item/storage/backpack/santabag{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/costume/santa{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/ammo_box/magazine/m45{
+	pixel_x = 8;
+	pixel_y = 0
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Bl" = (
+/obj/structure/railing{
+	dir = 6;
+	color = "#beada5"
+	},
+/obj/structure/hedge,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Bm" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"BE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/orange,
+/obj/item/plate/small{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/plate/small{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass{
+	pixel_x = 7;
+	pixel_y = 17
+	},
+/obj/item/food/meat/steak/plain/human{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/food/meat/steak/plain/human{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"BI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Cv" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/hay/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"Cy" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/bodypart/head{
+	pixel_x = -1;
+	pixel_y = 25
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/item/paper/crumpled/bloody,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"CA" = (
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
+"CC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/chair/stool/directional/west,
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/warm/dim/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"CD" = (
+/turf/open/floor/iron/stairs/right{
+	color = "#5d341f";
+	dir = 1
+	},
+/area/ruin/huntinglodge)
+"CE" = (
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/ruin/huntinglodge)
+"CL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/gift{
+	pixel_x = -18;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"CS" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Dc" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/stool/directional/south,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Dp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Dq" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Ds" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"DE" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"DF" = (
+/obj/structure/flora/tree/pine/style_2,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"DH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/light/warm/directional/east,
+/obj/structure/table/wood,
+/obj/item/clothing/shoes/winterboots/ice_boots,
+/obj/item/clothing/shoes/winterboots/ice_boots{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/item/clothing/shoes/winterboots/ice_boots{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"DM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"DO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"DX" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Ea" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/blood/splatter/over_window{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/obj/item/gift{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/gift{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/gift{
+	pixel_x = -5;
+	pixel_y = 15
+	},
+/obj/item/gift{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Ei" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c45{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Ej" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Es" = (
+/obj/structure/table/wood/fancy,
+/obj/item/gift{
+	pixel_x = -1;
+	pixel_y = -11
+	},
+/obj/item/gift{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/gift{
+	pixel_x = 9;
+	pixel_y = -11
+	},
+/obj/item/gift{
+	pixel_x = 10;
+	pixel_y = 0
+	},
+/obj/item/gift{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"EB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/effect/decal/cleanable/chem_pile,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"EG" = (
+/obj/structure/bed,
+/obj/item/bedsheet/gondola,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"EJ" = (
+/turf/template_noop,
+/area/template_noop)
+"EK" = (
+/obj/effect/decal/cleanable/ash,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -28;
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"EY" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Fw" = (
+/obj/structure/railing{
+	dir = 6;
+	color = "#beada5"
+	},
+/obj/structure/hedge,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Fz" = (
+/obj/item/chair/stool/bamboo{
+	dir = 4;
+	color = "#463934"
+	},
+/obj/item/flashlight/lantern/on{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"FN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"FX" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/warm/directional/north,
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 0;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Gj" = (
+/obj/structure/bed/double{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/bedsheet/patriot/double{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/laborer,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Gl" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/structure/railing/corner/end{
+	dir = 4;
+	color = "#beada5"
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Gn" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Gp" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#beada5"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/ruin/huntinglodge)
+"Gy" = (
+/obj/structure/falsewall/wood,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"GA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"GD" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/item/gift{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"GF" = (
+/obj/structure/chair/sofa/bench{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"GN" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/c45{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"GU" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Hi" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/siding/wood,
+/obj/item/stack/wrapping_paper,
+/obj/item/stack/wrapping_paper{
+	pixel_x = 0;
+	pixel_y = 12
+	},
+/obj/item/gift{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/gift{
+	pixel_x = 0;
+	pixel_y = 14
+	},
+/obj/item/gift{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/gift{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Hm" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Ho" = (
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/cans/sixbeer,
+/obj/item/knife/hunting{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Hq" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Hr" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Hv" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Hw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/trash/candle,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Hx" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"HC" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"HK" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"HL" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/effect/spawner/random/entertainment/toy,
+/obj/item/clothing/mask/facehugger/toy{
+	pixel_x = -13;
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Ia" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"If" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"Ig" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Ip" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Iq" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Iw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Iz" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 2
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"IH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/item/storage/cans/sixbeer,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"IZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Jb" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/huntinglodge)
+"Jj" = (
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Jk" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/noticeboard/directional/north,
+/obj/structure/sign/poster/contraband/blood_geometer/directional/east,
+/obj/structure/table/wood,
+/obj/item/paper{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/machinery/light/small/dim/directional/east,
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Jo" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/stool/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"JQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor6-old"
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"JZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Kc" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Kl" = (
+/obj/structure/railing/corner{
+	dir = 8;
+	color = "#beada5"
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"KB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"KU" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Lt" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Lv" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = -7;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/dualsaber/toy{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/item/toy/toy_dagger{
+	pixel_x = 4;
+	pixel_y = -9
+	},
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"LQ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/chair/wood/wings,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Mb" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Mc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Mf" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/ruin/huntinglodge)
+"Mw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/paper/crumpled,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"MJ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/stool/directional/south,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"MQ" = (
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Nj" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/viscerator,
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Nl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/north,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Nu" = (
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/ruin/huntinglodge)
+"Nw" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c45{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"NE" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"NL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 15;
+	pixel_y = 9
+	},
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"NN" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"NP" = (
+/obj/structure/fermenting_barrel,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"NW" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Oa" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/warm/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Of" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Ok" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Oq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/brimdust,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Ot" = (
+/obj/structure/table/wood/fancy,
+/obj/item/gift{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/gift{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/gift{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/gift{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/item/gift{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/gift{
+	pixel_x = 7;
+	pixel_y = 17
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Oz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/musical_instrument{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"OA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"OH" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/crumpled/bloody,
+/obj/item/paper/crumpled/bloody,
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"ON" = (
+/obj/item/flashlight/lantern/on,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"OY" = (
+/obj/machinery/light/small/dim/directional/south,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"OZ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Pa" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Pd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Pi" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/ammo_casing/c45{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"PK" = (
+/obj/structure/railing{
+	dir = 9;
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"PS" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#beada5"
+	},
+/obj/structure/curtain/cloth/fancy,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/ruin/huntinglodge)
+"PU" = (
+/turf/open/floor/iron/stairs/medium{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"Qp" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/table/wood/fancy/orange,
+/obj/item/plate/small{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/item/plate/small{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/food/meat/steak/plain/human{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/food/meat/steak/plain/human{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/lone/star,
+/area/ruin/huntinglodge)
+"Qy" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"QB" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"QG" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"QS" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Rg" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Rl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"RB" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"RH" = (
+/obj/effect/turf_decal/siding/thinplating{
+	color = "#beada5"
+	},
+/obj/structure/railing{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Sf" = (
+/obj/structure/rack,
+/obj/item/gps/mining,
+/obj/item/gps/mining{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"Sg" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Sl" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"So" = (
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Sp" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gift{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"SK" = (
+/obj/structure/table/wood,
+/obj/item/toy/talking{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"SL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/chem_pile,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"SN" = (
+/mob/living/basic/raptor/green,
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"SO" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"SS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"SW" = (
+/obj/item/flashlight/lantern/on,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Th" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Tp" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Tv" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"TC" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 2
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/gift{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"TI" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"TN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/chair/comfy/brown,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"TO" = (
+/turf/open/floor/iron/stairs/right{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"TV" = (
+/mob/living/basic/migo/hatsune,
+/turf/open/floor/light/colour_cycle,
+/area/ruin/huntinglodge)
+"Uv" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Ux" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/knife/butcher,
+/obj/item/chainsaw{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/knife,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"UB" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/rainbow{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"UJ" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"US" = (
+/obj/structure/railing{
+	color = "#beada5"
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Vb" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ammo_casing/c45{
+	pixel_x = -5;
+	pixel_y = -11
+	},
+/obj/effect/decal/cleanable/glass,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Vk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"VC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 2
+	},
+/obj/item/gift,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"VE" = (
+/turf/open/floor/iron/stairs/left{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"VO" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"VW" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/item/storage/cans/sixbeer{
+	pixel_x = -4;
+	pixel_y = -15
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Wn" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/innards,
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/viscerator,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"Ws" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"WC" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"WX" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/gift,
+/turf/open/floor/carpet/green,
+/area/ruin/huntinglodge)
+"Xa" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"Xd" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Xf" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"Xk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Xl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/flashlight/lamp/green{
+	pixel_x = 0;
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"Xs" = (
+/obj/structure/railing{
+	dir = 4;
+	color = "#beada5"
+	},
+/obj/structure/railing{
+	dir = 8;
+	color = "#beada5"
+	},
+/turf/open/floor/iron/stairs{
+	color = "#5d341f"
+	},
+/area/ruin/huntinglodge)
+"Xu" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"XF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/machinery/griddle,
+/turf/open/floor/iron/checker,
+/area/ruin/huntinglodge)
+"XL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"XN" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/warm/dim/directional/south,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"XY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/large,
+/area/ruin/huntinglodge)
+"Yr" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Yu" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Yy" = (
+/obj/item/ammo_casing/c45{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"YD" = (
+/obj/effect/spawner/structure/window/reinforced{
+	color = "#beada5"
+	},
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed,
+/turf/open/floor/plating,
+/area/ruin/huntinglodge)
+"YQ" = (
+/turf/open/misc/hay/icemoon,
+/area/ruin/huntinglodge)
+"YR" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"YZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/mob/living/basic/viscerator,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/huntinglodge)
+"Zg" = (
+/obj/machinery/door/airlock/wood{
+	color = "#beada5"
+	},
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+"Zi" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/ammo_casing/shotgun/buckshot/spent,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/west,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/tile,
+/area/ruin/huntinglodge)
+"Zk" = (
+/obj/effect/mob_spawn/corpse/human/skeleton/cultist,
+/turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
+/area/icemoon/surface/outdoors/nospawn)
+"Zs" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/floor/stone,
+/area/icemoon/surface/outdoors/nospawn)
+"ZA" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/machinery/light/small/dim/directional/east,
+/turf/open/floor/stone,
+/area/ruin/huntinglodge)
+"ZB" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/turf/open/floor/carpet,
+/area/ruin/huntinglodge)
+"ZI" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 4
+	},
+/obj/item/bodypart/head/ethereal,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/ruin/huntinglodge)
+"ZN" = (
+/turf/open/floor/iron/stairs/left{
+	color = "#5d341f";
+	dir = 8
+	},
+/area/ruin/huntinglodge)
+"ZT" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy{
+	pixel_x = 5;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = -10;
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"ZV" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/entertainment/toy_figure{
+	pixel_x = -5;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/entertainment/plushie{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/stack/wrapping_paper,
+/turf/open/floor/carpet/red,
+/area/ruin/huntinglodge)
+"ZW" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/herringbone,
+/area/ruin/huntinglodge)
+
+(1,1,1) = {"
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(2,1,1) = {"
+EJ
+EJ
+CA
+CA
+fK
+EJ
+EJ
+EJ
+fK
+DF
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+Zs
+HK
+wO
+HK
+wO
+wO
+gZ
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(3,1,1) = {"
+EJ
+CA
+CA
+fK
+fK
+fK
+fK
+fK
+fK
+fK
+fK
+EJ
+EJ
+EJ
+Zs
+wO
+oW
+fK
+ON
+fK
+Th
+fb
+EY
+bV
+So
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(4,1,1) = {"
+EJ
+CA
+CA
+fK
+ta
+fK
+Jb
+hV
+Gp
+Jb
+fK
+fK
+Zs
+HK
+be
+ta
+fK
+Jb
+Gp
+Jb
+fK
+fK
+Mb
+As
+ry
+gZ
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(5,1,1) = {"
+EJ
+CA
+fK
+DF
+fK
+Jb
+Jb
+Gj
+AX
+Jb
+Jb
+fK
+NW
+fK
+fK
+fK
+Jb
+Jb
+eE
+Jb
+Gp
+Gp
+Jb
+fK
+hE
+ry
+fe
+gZ
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(6,1,1) = {"
+EJ
+EJ
+fK
+fK
+mA
+Jb
+mX
+dc
+KB
+oF
+Jb
+fP
+ZA
+fK
+DF
+fK
+Jb
+Jk
+dQ
+Iz
+og
+Mc
+Jb
+Jb
+fK
+fK
+fK
+NW
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(7,1,1) = {"
+EJ
+EJ
+EJ
+fK
+fK
+Jb
+oT
+Vb
+Bm
+OY
+Jb
+dC
+Jb
+fK
+fK
+Jb
+Jb
+Jb
+Jb
+Jb
+TC
+lc
+Dp
+Jb
+Jb
+Jb
+fK
+NW
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(8,1,1) = {"
+EJ
+EJ
+EJ
+fK
+fK
+Jb
+Jb
+Hm
+Jb
+Jb
+Jb
+mo
+Jb
+Jb
+fK
+Jb
+TN
+xM
+xQ
+Jb
+DX
+Sp
+Ig
+mq
+kJ
+Gp
+aU
+NW
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(9,1,1) = {"
+EJ
+EJ
+fK
+fK
+Jb
+Jb
+Oq
+BI
+Gn
+Jb
+Jb
+Vk
+tk
+Jb
+Jb
+Jb
+lU
+sX
+Ds
+Jb
+gB
+NN
+xv
+qZ
+Hi
+zr
+fK
+NW
+DF
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(10,1,1) = {"
+EJ
+EJ
+ta
+Jb
+Jb
+XY
+eX
+Ip
+xB
+vH
+Jb
+Yr
+Jb
+Jb
+Jb
+iZ
+pl
+IZ
+Iw
+Jb
+QS
+MQ
+lO
+Pa
+YR
+Gp
+fK
+NW
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(11,1,1) = {"
+EJ
+EJ
+mA
+Jb
+wI
+Ei
+yt
+wC
+cy
+SL
+Yr
+Hq
+zN
+Hq
+VE
+DO
+rS
+yB
+tY
+Kc
+kD
+fO
+EK
+Jb
+Jb
+Jb
+fK
+ry
+gZ
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(12,1,1) = {"
+EJ
+EJ
+fK
+Jb
+wV
+yR
+BE
+qL
+Qp
+Oa
+Jb
+Iq
+Jb
+FX
+PU
+hZ
+eQ
+nI
+Lt
+Uv
+Sg
+Hr
+tT
+Jb
+fK
+fK
+fK
+fK
+NW
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(13,1,1) = {"
+EJ
+EJ
+fK
+Jb
+Cy
+Nw
+vr
+hf
+HC
+Tp
+QB
+xh
+zN
+nt
+TO
+VC
+If
+jN
+NL
+Jb
+xH
+LQ
+kH
+Jb
+CA
+fK
+fK
+Zs
+fi
+sU
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(14,1,1) = {"
+EJ
+fK
+DF
+Jb
+Jb
+dr
+gM
+if
+Ar
+yk
+Jb
+Jb
+Jb
+Jb
+Jb
+qp
+hl
+WX
+Pi
+Jb
+YD
+Yr
+YD
+Jb
+CA
+CA
+Zs
+be
+Fz
+Xu
+jl
+EJ
+EJ
+EJ
+EJ
+"}
+(15,1,1) = {"
+EJ
+EJ
+fK
+CA
+Jb
+Jb
+vW
+AG
+fB
+Jb
+Jb
+Nu
+TV
+gY
+Jb
+Jb
+Jj
+pF
+Jb
+Jb
+Xl
+wP
+kf
+Jb
+Jb
+CA
+NW
+fK
+DF
+jr
+du
+EJ
+EJ
+EJ
+EJ
+"}
+(16,1,1) = {"
+EJ
+EJ
+fK
+CA
+CA
+Jb
+Jb
+Zg
+Jb
+Jb
+Jb
+Gy
+Jb
+Jb
+Jb
+Jb
+ZN
+hm
+Jb
+kf
+ca
+xz
+gA
+hP
+Jb
+CA
+ry
+gZ
+zM
+qH
+be
+EJ
+EJ
+EJ
+EJ
+"}
+(17,1,1) = {"
+EJ
+fK
+fK
+fK
+ta
+Mf
+aE
+Dq
+NP
+Jb
+et
+yW
+Xs
+KU
+Jb
+Bl
+kR
+YZ
+Jb
+kf
+SS
+ej
+kf
+Jb
+Jb
+CA
+fK
+Yy
+gS
+be
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(18,1,1) = {"
+EJ
+fK
+fK
+fK
+fK
+fK
+fK
+Tv
+fK
+PS
+Oz
+US
+xE
+TI
+Gp
+Hw
+Qy
+XN
+Jb
+Jb
+Jb
+uU
+Jb
+Jb
+fK
+fK
+fK
+Ho
+NW
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(19,1,1) = {"
+EJ
+DF
+Jb
+Jb
+Jb
+fK
+fK
+yN
+fK
+Gp
+ws
+RH
+CL
+kP
+Yr
+Pd
+Xd
+Yu
+Gp
+fK
+dP
+ac
+VO
+fK
+fK
+fK
+fK
+Zs
+be
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(20,1,1) = {"
+EJ
+Jb
+Jb
+YQ
+Jb
+Jb
+fK
+NW
+fK
+Gp
+CC
+xG
+vO
+ZW
+Gp
+Xk
+Rg
+kl
+hV
+GN
+Zk
+EY
+rI
+Aw
+GU
+fe
+wO
+be
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(21,1,1) = {"
+EJ
+Jb
+nK
+SN
+YQ
+Jb
+fK
+vK
+mA
+Jb
+Jb
+eD
+bR
+NE
+Jb
+vv
+jF
+aA
+Gp
+DE
+vc
+fK
+ta
+fK
+OZ
+fK
+fK
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(22,1,1) = {"
+EJ
+Jb
+Sf
+YQ
+YQ
+YQ
+kn
+Xf
+fK
+fK
+Jb
+Gp
+Jb
+Jb
+Jb
+Jb
+ZN
+hm
+Jb
+Jb
+fK
+DF
+fK
+fK
+Gl
+fK
+fK
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(23,1,1) = {"
+EJ
+Jb
+uZ
+YQ
+Jb
+OH
+Cv
+cO
+fK
+ta
+lv
+fK
+fK
+Jb
+Jb
+Zi
+kk
+JQ
+pN
+Jb
+Jb
+fK
+fK
+PK
+Kl
+oY
+fK
+fK
+DF
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(24,1,1) = {"
+EJ
+Jb
+pE
+cS
+UJ
+YQ
+AF
+ry
+gZ
+fK
+fK
+DF
+fK
+Jb
+GA
+qO
+nC
+vg
+jp
+IH
+Jb
+Jb
+Gp
+Gp
+bs
+Gp
+Jb
+fK
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(25,1,1) = {"
+EJ
+Jb
+nK
+SN
+YQ
+Jb
+QG
+fK
+Hv
+fe
+gZ
+fK
+Jb
+Jb
+XL
+MJ
+lJ
+SK
+Rl
+yG
+Jb
+Fw
+UB
+Ea
+Ej
+mr
+Jb
+Jb
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(26,1,1) = {"
+EJ
+Jb
+Jb
+YQ
+Jb
+Jb
+QG
+fK
+Xf
+DF
+NW
+fK
+Gp
+ZB
+kI
+Ok
+ZV
+lL
+Nl
+lE
+CS
+eB
+SO
+GD
+Wn
+Ia
+mm
+Jb
+CE
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(27,1,1) = {"
+EJ
+CA
+Jb
+Jb
+Jb
+fK
+QG
+SW
+ry
+wO
+VW
+fK
+Gp
+tq
+Mw
+Dc
+Lv
+ye
+JZ
+pr
+hK
+CD
+mb
+Nj
+iq
+ic
+ZI
+Jb
+fK
+DF
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(28,1,1) = {"
+CA
+CA
+fK
+fK
+fK
+fK
+Zk
+qU
+Sl
+GF
+xy
+fK
+Gp
+wd
+Ah
+Jo
+Ao
+HL
+qW
+Of
+Jb
+hb
+EG
+EB
+DH
+EG
+Jb
+Jb
+fK
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+"}
+(29,1,1) = {"
+CA
+CA
+CA
+fK
+fK
+DF
+fK
+fK
+DF
+fK
+fK
+DF
+Jb
+Jb
+aw
+cC
+gu
+ZT
+mG
+eh
+Jb
+Jb
+Jb
+Yr
+Jb
+Jb
+Jb
+fK
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(30,1,1) = {"
+EJ
+CA
+CA
+fK
+fK
+fK
+fK
+fK
+fK
+DF
+fK
+fK
+CA
+Jb
+lC
+WC
+td
+OA
+pX
+cQ
+Jb
+AV
+Xa
+jQ
+ww
+Jb
+fK
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(31,1,1) = {"
+EJ
+CA
+CA
+CA
+CA
+CA
+fK
+fK
+fK
+fK
+DF
+CA
+CA
+Jb
+Jb
+jK
+FN
+DM
+pJ
+Jb
+Jb
+XF
+RB
+yO
+bX
+Jb
+CE
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(32,1,1) = {"
+EJ
+EJ
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+fK
+fK
+CA
+CA
+CA
+Jb
+Es
+nX
+Ot
+Ot
+Jb
+pU
+uc
+jQ
+Hx
+cJ
+Jb
+fK
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(33,1,1) = {"
+EJ
+EJ
+EJ
+EJ
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+Jb
+Gp
+Gp
+Gp
+Gp
+Jb
+Jb
+Ux
+jQ
+Ws
+Jb
+Jb
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(34,1,1) = {"
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+CA
+CA
+CA
+CA
+fK
+lv
+EJ
+EJ
+EJ
+EJ
+lv
+Jb
+Jb
+dC
+Jb
+Jb
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}
+(35,1,1) = {"
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+EJ
+"}

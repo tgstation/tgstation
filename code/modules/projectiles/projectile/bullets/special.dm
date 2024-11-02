@@ -196,7 +196,7 @@
 	if(possible_victims.len)
 		return pick(possible_victims)
 
-	var/list/static/prioritized_targets = list(/obj/structure/reagent_dispensers, /obj/item/grenade, /obj/structure/window)
+	var/static/list/prioritized_targets = list(/obj/structure/reagent_dispensers, /obj/item/grenade, /obj/structure/window)
 	for(var/iter_type in prioritized_targets)
 		for(var/already_coined_tries in 1 to 3)
 			var/atom/iter_type_check = locate(iter_type) in valid_targets

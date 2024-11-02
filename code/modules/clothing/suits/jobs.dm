@@ -54,7 +54,17 @@
 
 /obj/item/clothing/suit/apron/overalls/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+
+//Janitor
+/obj/item/clothing/suit/apron/janitor_cloak
+	name = "waterproof poncho"
+	desc = "A transparent, waterproof cloak for your cleaning needs."
+	icon_state = "janicloak"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|ARMS
+
+
 
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
@@ -124,6 +134,7 @@
 	armor_type = /datum/armor/jacket_det_suit
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
+	flags_inv = HIDEBELT
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -355,7 +366,7 @@
 
 /obj/item/clothing/suit/apron/surgical/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2) // FISH DOCTOR?!
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) // FISH DOCTOR?!
 
 //Curator
 /obj/item/clothing/suit/jacket/curator

@@ -88,6 +88,13 @@
 	cell_line = null
 	starting_reagent_purity = 0.3
 
+///carp fillet, but without the toxin. Used by baby carps (fish item), which have a trait that handles the toxin already.
+/obj/item/food/fishmeat/carp/no_tox
+
+/obj/item/food/fishmeat/carp/no_tox/Initialize(mapload)
+	food_reagents -= /datum/reagent/toxin/carpotoxin
+	return ..()
+
 /obj/item/food/fishmeat/moonfish
 	name = "moonfish fillet"
 	desc = "A fillet of moonfish."

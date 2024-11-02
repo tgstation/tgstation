@@ -32,6 +32,7 @@
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
 #define EQUIP_SOUND_VOLUME 30
+#define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
@@ -184,4 +185,25 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
 #define SFX_ALT_FISH_SLAP "alt_fish_slap"
 #define SFX_FISH_PICKUP "fish_pickup"
+#define SFX_CAT_MEOW "cat_meow"
+#define SFX_CAT_PURR "cat_purr"
 #define SFX_LIQUID_POUR "liquid_pour"
+#define SFX_SNORE_FEMALE "snore_female"
+#define SFX_SNORE_MALE "snore_male"
+#define SFX_PLASTIC_BOTTLE_LIQUID_SLOSH "plastic_bottle_liquid_slosh"
+#define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
+#define SFX_PIG_OINK "pig_oink"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
+#define SFX_SIZZLE "sizzle"
+#define SFX_GROWL "growl"
+#define SFX_POLAROID "polaroid"
+#define SFX_HALLUCINATION_TURN_AROUND "hallucination_turn_around"
+#define SFX_HALLUCINATION_I_SEE_YOU "hallucination_i_see_you"
+#define SFX_HALLUCINATION_OVER_HERE "hallucination_over_here"
+#define SFX_HALLUCINATION_I_M_HERE "hallucination_i_m_here"
+#define SFX_VOID_DEFLECT "void_deflect"
+#define SFX_LOW_HISS "low_hiss"
+
+#define SFX_INDUSTRIAL_SCAN "industrial_scan"

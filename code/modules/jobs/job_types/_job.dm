@@ -120,8 +120,7 @@
 	/// Alternate titles to register as pointing to this job.
 	var/list/alternate_titles
 
-	/// Does this job ignore human authority?
-	var/ignore_human_authority = FALSE
+	var/human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 	/// String key to track any variables we want to tie to this job in config, so we can avoid using the job title. We CAPITALIZE it in order to ensure it's unique and resistant to trivial formatting changes.
 	/// You'll probably break someone's config if you change this, so it's best to not to.
@@ -535,11 +534,28 @@
 	if(!player_client)
 		return // Disconnected while checking for the appearance ban.
 
-	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.job_flags & JOB_HEAD_OF_STAFF)
-	if(require_human)
-		var/all_authority_require_human = CONFIG_GET(flag/enforce_human_authority_on_everyone)
-		if(!all_authority_require_human && job.ignore_human_authority)
-			require_human = FALSE
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
+	var/require_human = FALSE
+
+	// If the job in question is a head of staff,
+	// check the config to see if we should force the player onto a human character or not
+	if(job.job_flags & JOB_HEAD_OF_STAFF)
+		switch(human_authority_setting)
+
+			// If non-humans are the norm and jobs must be forced to be only for humans
+			// then we only force the player to be a human if the job exclusively allows humans
+			if(HUMAN_AUTHORITY_HUMAN_WHITELIST)
+				require_human = job.human_authority == JOB_AUTHORITY_HUMANS_ONLY
+
+			// If humans are the norm and jobs must be allowed to be played by non-humans
+			// then we only force the player to be a human if the job doesn't allow for non-humans to play it
+			if(HUMAN_AUTHORITY_NON_HUMAN_WHITELIST)
+				require_human = job.human_authority != JOB_AUTHORITY_NON_HUMANS_ALLOWED
+
+			// If humans are the norm and there is no chance that a non-human can be a head of staff
+			// always return true, since there is no chance that a non-human can be a head of staff.
+			if(HUMAN_AUTHORITY_ENFORCED)
+				require_human = TRUE
 
 	src.job = job.title
 

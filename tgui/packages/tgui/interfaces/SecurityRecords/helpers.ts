@@ -65,8 +65,10 @@ export const getDefaultPrintDescription = (
     case PRINTOUT.Rapsheet:
       return `A standard security record for ${name}.`;
     case PRINTOUT.Wanted:
-      return `A poster declaring ${name} to be a wanted criminal, wanted by Nanotrasen. Report any sightings to security immediately.`;
+      /** return `A poster declaring ${name} to be a wanted criminal, wanted by Nanotrasen. Report any sightings to security immediately.`; ORIGINAL*/
+      return `A poster declaring ${name} to be a wanted criminal, wanted by the Port Authority. Report any sightings to security immediately.`; /** DOPPLER EDIT - NT -> PA */
     case PRINTOUT.Missing:
-      return `A poster declaring ${name} to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately.`;
+      /** return `A poster declaring ${name} to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately.`; */
+      return `A poster declaring ${name} to be a missing individual, missed by the Port Authority. Report any sightings to security immediately.`; /** DOPPLER EDIT - NT -> PA */
   }
 };

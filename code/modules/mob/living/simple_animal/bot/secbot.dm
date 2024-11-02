@@ -509,7 +509,11 @@
 /// React to detecting criminal scum by making some kind of noise
 /mob/living/simple_animal/bot/secbot/proc/threat_react(threatlevel)
 	speak("Level [threatlevel] infraction alert!")
-	playsound(src, pick('sound/mobs/non-humanoids/beepsky/criminal.ogg', 'sound/mobs/non-humanoids/beepsky/justice.ogg', 'sound/mobs/non-humanoids/beepsky/freeze.ogg'), 50, FALSE)
+	playsound(src, pick(
+		'sound/mobs/non-humanoids/beepsky/criminal.ogg',
+		'sound/mobs/non-humanoids/beepsky/justice.ogg',
+		'sound/mobs/non-humanoids/beepsky/freeze.ogg',
+		), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/explode()
 	var/atom/Tsec = drop_location()

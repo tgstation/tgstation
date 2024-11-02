@@ -112,7 +112,8 @@
 		trauma.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
-	brain_owner.update_body_parts()
+	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		brain_owner.update_body_parts()
 
 /obj/item/organ/internal/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
@@ -134,7 +135,8 @@
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(organ_owner)
 	if(!special)
-		organ_owner.update_body_parts()
+		if(!(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+			organ_owner.update_body_parts()
 		organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/update_icon_state()
@@ -470,7 +472,7 @@
 /obj/item/organ/internal/brain/lizard //A bit smaller than average
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
-	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+//	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER) // DOPPLER EDIT REMOVAL
 
 /obj/item/organ/internal/brain/abductor
 	name = "grey brain"

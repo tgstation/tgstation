@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(automapper)
 
 		// !builtin is a magic code for built in maps, ie CentCom levels.
 		// We'll pretend it's loaded with the station z-level, because they by definition they are loaded before the station z-levels.
-		var/requires_builtin = (required_map == AUTOMAPPER_MAP_BUILTIN) && ((SSmapping.config.map_file in map_names) || SSmapping.config.map_file == map_names)
+		var/requires_builtin = (required_map == AUTOMAPPER_MAP_BUILTIN) && ((SSmapping.current_map.map_file in map_names) || SSmapping.current_map.map_file == map_names)
 
 		if(!requires_builtin && !(required_map in map_names))
 			continue
@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(automapper)
 	if(!islist(map_names))
 		map_names = list(map_names)
 	for(var/datum/map_template/automap_template/iterating_template as anything in preloaded_map_templates)
-		if(iterating_template.affects_builtin_map && ((SSmapping.config.map_file in map_names) || SSmapping.config.map_file == map_names))
+		if(iterating_template.affects_builtin_map && ((SSmapping.current_map.map_file in map_names) || SSmapping.current_map.map_file == map_names))
 			// CentCom already started loading objects, place them in the netherzone
 			for(var/turf/old_turf as anything in iterating_template.get_affected_turfs(iterating_template.load_turf, FALSE))
 				init_contents(old_turf)

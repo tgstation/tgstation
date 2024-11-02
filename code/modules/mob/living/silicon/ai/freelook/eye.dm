@@ -179,7 +179,7 @@
 
 	// I'd like to make this scale with the steps we take, but it like, just can't
 	// So we're doin this instead
-	eyeobj.glide_size = world.icon_size
+	eyeobj.glide_size = ICON_SIZE_ALL
 
 	last_moved = world.timeofday
 	if(acceleration)

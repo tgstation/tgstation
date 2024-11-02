@@ -166,7 +166,7 @@
 	if(ignore_next_glide)
 		ignore_next_glide = FALSE
 		return
-	var/glide_delay = round(world.icon_size / glide_size, 1) * world.tick_lag
+	var/glide_delay = round(ICON_SIZE_ALL / glide_size, 1) * world.tick_lag
 	drifting_loop.pause_for(glide_delay)
 	delayed = TRUE
 
@@ -212,6 +212,10 @@
 
 	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB || isnull(drifting_loop))
 		return
+
+	if (!isnull(source.client) && source.client.intended_direction)
+		if ((source.client.intended_direction & movement_dir) && !(get_dir(source, backup) & movement_dir))
+			return
 
 	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
 		glide_to_halt(get_loop_delay(source))

@@ -97,12 +97,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	switch(message_type)
 		if(AUTO_ANNOUNCE_ARRIVAL)
 			if(!arrival_toggle)
-				message = CompileText(arrival, target, rank)
 				return
+			message = CompileText(arrival, target, rank)
 		if(AUTO_ANNOUNCE_NEWHEAD)
 			if(!newhead_toggle)
-				message = CompileText(newhead, target, rank)
 				return
+			message = CompileText(newhead, target, rank)
 		if(AUTO_ANNOUNCE_ARRIVALS_BROKEN)
 			message = "The arrivals shuttle has been damaged. Docking for repairs..."
 		if(AUTO_ANNOUNCE_NODE)

@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
-	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curses", "smites")
+	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curse", "smite")
 	deity_name = "The Syndicate"
 	var/uses = 1
 	var/owner_name

@@ -72,13 +72,13 @@
 
 ///	All current ear types to choose from
 //	Cat
-/datum/preference/choiced/ears
+/datum/preference/choiced/felinid_ears
 	category = PREFERENCE_CATEGORY_CLOTHING
 	relevant_external_organ = null
 	should_generate_icons = TRUE
 	main_feature_name = "Ears"
 
-/datum/preference/choiced/ears/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/felinid_ears/is_accessible(datum/preferences/preferences)
 	. = ..()
 	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
 	if(species.type in GLOB.species_blacklist_no_mutant)
@@ -88,15 +88,15 @@
 		return TRUE
 	return FALSE
 
-/datum/preference/choiced/ears/create_default_value()
+/datum/preference/choiced/felinid_ears/create_default_value()
 	return /datum/sprite_accessory/ears/none::name
 
-/datum/preference/choiced/ears/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/felinid_ears/apply_to_human(mob/living/carbon/human/target, value)
 	..()
 	if(target.dna.ear_type == CAT)
 		target.dna.features["ears"] = value
 
-/datum/preference/choiced/ears/icon_for(value)
+/datum/preference/choiced/felinid_ears/icon_for(value)
 	var/datum/sprite_accessory/chosen_ears = SSaccessories.ears_list[value]
 	return generate_ears_icon(chosen_ears)
 

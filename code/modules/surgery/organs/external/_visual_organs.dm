@@ -83,11 +83,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 	bodypart_overlay.set_appearance(typed_accessory)
 
-	if(owner) //are we in a person?
-		owner.update_body_parts()
-	else if(bodypart_owner) //are we in a limb?
+	if(bodypart_owner) //are we in a limb?
 		bodypart_owner.update_icon_dropped()
-	//else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
+	else if(owner && !(owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS)) //are we a person?
+		owner.update_body_parts()
 
 /obj/item/organ/update_overlays()
 	. = ..()
@@ -196,6 +195,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	preference = "feature_moth_antennae"
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
+	organ_traits = list(TRAIT_ANTENNAE) // DOPPLER EDIT ADDITION
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/antennae
 

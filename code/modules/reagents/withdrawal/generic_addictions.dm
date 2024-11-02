@@ -280,16 +280,20 @@
 
 /datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(10 SECONDS * seconds_per_tick)
+	//DOPPLER REMOVAL: affected_carbon.set_jitter_if_lower(10 SECONDS * seconds_per_tick)
 
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(20 SECONDS * seconds_per_tick)
-	if(SPT_PROB(2, seconds_per_tick))
-		affected_carbon.emote("cough")
+	//BEGIN DOPPLER REMOVAL
+	//affected_carbon.set_jitter_if_lower(20 SECONDS * seconds_per_tick)
+	//if(SPT_PROB(2, seconds_per_tick))
+		//affected_carbon.emote("cough")
+	//END DOPPLER REMOVAL
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
-	if(SPT_PROB(5, seconds_per_tick))
-		affected_carbon.emote("cough")
+	//BEGIN DOPPLER REMOVAL
+	//affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
+	//if(SPT_PROB(5, seconds_per_tick))
+		//affected_carbon.emote("cough")
+	//END DOPPLER REMOVAL

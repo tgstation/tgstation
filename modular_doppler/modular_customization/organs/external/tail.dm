@@ -163,15 +163,7 @@
 //
 /obj/item/organ/external/tail/fish
 	preference = "feature_fish_tail"
-	dna_block = null
-	wag_flags = WAG_ABLE
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
-
-/datum/bodypart_overlay/mutant/tail/fish
-	feature_key = "tail_other"
-
-/datum/bodypart_overlay/mutant/tail/fish/get_global_feature_list()
-	return SSaccessories.tails_list_fish
+	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER, TRAIT_FLOPPING)
 
 /// Cybernetic tail
 //

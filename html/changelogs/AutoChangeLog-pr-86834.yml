@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "Artifact boulders should keep their alien icon even after a first round of processing."
-  - bugfix: "Boulders are less likely to exist with zero materials after processing."
-  - bugfix: "Boulders should be slightly less laggy on conveyor belts."
-  - bugfix: "Grammar of refinery/smeltery examine is corrected."

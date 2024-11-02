@@ -164,7 +164,8 @@
 				to_chat(user, span_warning("You do not possess the funds to purchase that."))
 		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
 		return FALSE
-	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
+	//target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery") // ORIGINAL
+	target_acc.transfer_money(idcard.registered_account, total_cost, "The Port Authority: Usage of Corporate Machinery") // DOPPLER EDIT - NT -> PA
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)

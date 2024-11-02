@@ -7,8 +7,11 @@
 	var/outfit_weight = 0
 
 
-/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
+/// DOPPLER SHIFT REMOVAL BEGIN
+/*/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
 	return //dont do colorized and stuff, it messes with our uniforms
+	*/
+/// DOPPLER SHIFT REMOVAL END
 
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
@@ -54,7 +57,7 @@
 
 /datum/outfit/job/assistant/gimmick/skater
 	name = "Gimmick Assistant - Skater"
-	head = /obj/item/clothing/head/helmet/redtaghelm
+	head = /obj/item/clothing/head/helmet/taghelm/red
 	suit = /obj/item/clothing/suit/redtag
 
 	l_hand = /obj/item/melee/skateboard
@@ -65,7 +68,7 @@
 
 /datum/outfit/job/assistant/gimmick/rollerskater
 	name = "Gimmick Assistant - Rollerskater"
-	head = /obj/item/clothing/head/helmet/bluetaghelm
+	head = /obj/item/clothing/head/helmet/taghelm/blue
 	suit = /obj/item/clothing/suit/bluetag
 
 	shoes = /obj/item/clothing/shoes/wheelys/rollerskates

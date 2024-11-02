@@ -21,6 +21,14 @@
 #define MAT_CATEGORY_RIGID "rigid material"
 /// Materials that can be used to craft items
 #define MAT_CATEGORY_ITEM_MATERIAL "item material"
+/**
+ * Materials that can also be used to craft items for designs that require two custom mats.
+ * This is mainly a work around to the fact we can't (easily) have the same category show
+ * multiple times in a list with different values, because list access operator [] will fetch the
+ * top-most value.
+ */
+#define MAT_CATEGORY_ITEM_MATERIAL_COMPLEMENTARY "item material complementary"
+
 /// Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"
 
@@ -87,3 +95,10 @@
 #define MATERIAL_RARITY_RARE 3
 /// Is this material only going to spawn once in ore vents? (6% of vents on lavaland)
 #define MATERIAL_RARITY_UNDISCOVERED 1
+
+///The key to access the 'optimal' amount of a material key from its assoc value list.
+#define MATERIAL_LIST_OPTIMAL_AMOUNT "optimal_amount"
+///The key to access the multiplier used to selectively control effects and modifiers of a material.
+#define MATERIAL_LIST_MULTIPLIER "multiplier"
+///A macro that ensures some multiplicative modifiers higher than 1 don't become lower than 1 and viceversa because of the multiplier.
+#define GET_MATERIAL_MODIFIER(modifier, multiplier) (modifier >= 1 ? 1 + ((modifier) - 1) * (multiplier) : (modifier)**(multiplier))

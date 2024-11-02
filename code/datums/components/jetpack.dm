@@ -100,15 +100,14 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
+	RegisterSignal(user, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(on_pushoff))
 	START_PROCESSING(SSnewtonian_movement, src)
 	setup_trail(user)
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/old_user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(old_user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(old_user, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(old_user, COMSIG_MOB_CLIENT_MOVE_NOGRAV)
+	UnregisterSignal(old_user, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_CLIENT_MOVE_NOGRAV, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE))
 	STOP_PROCESSING(SSnewtonian_movement, src)
 	user = null
 
@@ -161,3 +160,11 @@
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / source.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
 	source.newtonian_move(dir2angle(source.client.intended_direction), instant = TRUE, drift_force = drift_force, controlled_cap = max_drift_force)
 	source.setDir(source.client.intended_direction)
+
+/datum/component/jetpack/proc/on_pushoff(mob/source, movement_dir, continuous_move, atom/backup)
+	SIGNAL_HANDLER
+
+	if (!should_trigger(source) || !check_on_move.Invoke(FALSE))
+		return
+
+	return COMPONENT_PREVENT_SPACEMOVE_HALT

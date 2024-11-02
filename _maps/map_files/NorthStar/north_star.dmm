@@ -86467,6 +86467,7 @@
 /area/station/security/brig)
 "wms" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "wmt" = (

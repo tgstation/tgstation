@@ -6,6 +6,16 @@
     savefile_key = "hear_dopplerboop"
     savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/numeric/voice_volume
+	savefile_key = "voice_volume"
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_identifier = PREFERENCE_PLAYER
+	minimum = 0
+	maximum = 100
+
+/datum/preference/numeric/voice_volume/create_default_value()
+	return maximum
+
 //Character preferences
 
 /datum/preference/choiced/voice_type

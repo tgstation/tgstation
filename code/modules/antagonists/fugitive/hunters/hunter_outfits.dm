@@ -249,7 +249,7 @@
 		/obj/item/clothing/mask/chameleon = 20,
 		/obj/item/language_manual/codespeak_manual/unlimited = 10,
 		/obj/item/storage/mail_counterfeit_device = 10,
-		/obj/item/traitor_machine_trapper = 10,
+		/obj/item/clothing/glasses/thermal = 10,
 		/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher = 10,
 	))
 

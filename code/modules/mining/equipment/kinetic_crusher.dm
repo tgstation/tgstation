@@ -40,6 +40,8 @@
 	var/charge_time = 1.5 SECONDS
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
+	var/current_inhand_icon_state = "crusher" //variable used by retool kits when changing the crusher's appearance
+	var/projectile_icon = "pulse1" //variable used by retool kits when changing the crusher's projectile sprite
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -153,6 +155,7 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
+	destabilizer.icon_state = "[projectile_icon]"
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.preparePixelProjectile(target, user, modifiers)
@@ -181,7 +184,7 @@
 	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
-	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "[current_inhand_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 	return ..()
 
 /obj/item/kinetic_crusher/update_overlays()
@@ -198,7 +201,6 @@
 //destablizing force
 /obj/projectile/destabilizer
 	name = "destabilizing force"
-	icon_state = "pulse1"
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	armor_flag = BOMB
@@ -326,15 +328,15 @@
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
 
-/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time -= bonus_value
+		pkc.charge_time -= bonus_value
 
-/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.charge_time += bonus_value
+		pkc.charge_time += bonus_value
 
 //blood-drunk hunter
 /obj/item/crusher_trophy/miner_eye
@@ -384,18 +386,18 @@
 /obj/item/crusher_trophy/demon_claws/effect_desc()
 	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>, with <b>5X</b> effect on mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.force += bonus_value * 0.2
-		H.detonation_damage += bonus_value * 0.8
+		pkc.force += bonus_value * 0.2
+		pkc.detonation_damage += bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
-/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/pkc, mob/living/user)
 	. = ..()
 	if(.)
-		H.force -= bonus_value * 0.2
-		H.detonation_damage -= bonus_value * 0.8
+		pkc.force -= bonus_value * 0.2
+		pkc.detonation_damage -= bonus_value * 0.8
 		AddComponent(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
@@ -495,3 +497,80 @@
 
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
+
+//cosmetic items for changing the crusher's look
+
+/obj/item/crusher_trophy/retool_kit
+	name = "crusher sword retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a sword."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
+	var/retool_icon = "crusher_sword"
+	///Specifies the icon state for the crusher's appearance in hand. Should appear in both icons/mob/inhands/weapons/hammers_lefthand.dmi and icons/mob/inhands/weapons/hammers_righthand.dmi
+	var/retool_inhand_icon = "crusher_sword"
+	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi
+	var/retool_projectile_icon = "pulse1"
+
+/obj/item/crusher_trophy/retool_kit/effect_desc()
+	return "the crusher to have the appearance of a sword"
+
+/obj/item/crusher_trophy/retool_kit/add_to(obj/item/kinetic_crusher/pkc, mob/user)
+	. = ..()
+	if(.)
+		pkc.icon_state = retool_icon
+		pkc.current_inhand_icon_state = retool_inhand_icon
+		pkc.projectile_icon = retool_projectile_icon
+		if(iscarbon(pkc.loc))
+			var/mob/living/carbon/holder = pkc.loc
+			holder.update_held_items()
+		pkc.update_appearance()
+
+/obj/item/crusher_trophy/retool_kit/remove_from(obj/item/kinetic_crusher/pkc)
+	pkc.icon_state = initial(pkc.icon_state)
+	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
+	pkc.projectile_icon = initial(pkc.projectile_icon)
+	if(iscarbon(pkc.loc))
+		var/mob/living/carbon/holder = pkc.loc
+		holder.update_held_items()
+	pkc.update_appearance()
+	..()
+
+/obj/item/crusher_trophy/retool_kit/harpoon
+	name = "crusher harpoon retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a harpoon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_harpoon"
+	retool_inhand_icon = "crusher_harpoon"
+	retool_projectile_icon = "pulse_harpoon"
+
+/obj/item/crusher_trophy/retool_kit/harpoon/effect_desc()
+	return "the crusher to have the appearance of a harpoon"
+
+/obj/item/crusher_trophy/retool_kit/dagger
+	name = "crusher dagger retool kit"
+	desc = "A toolkit for changing the crusher's appearance without affecting the device's function. This one will make it look like a dual dagger and mini-blaster on a chain."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_dagger"
+	retool_inhand_icon = "crusher_dagger"
+
+/obj/item/crusher_trophy/retool_kit/dagger/effect_desc()
+	return "the crusher to have the appearance of a dual dagger and blaster"
+
+/obj/item/crusher_trophy/retool_kit/ashenskull
+	name = "ashen skull"
+	desc = "It burns with the flame of the necropolis, whispering in your ear. It demands to be bound to a suitable weapon."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "retool_kit_skull"
+	denied_type = /obj/item/crusher_trophy/retool_kit
+	retool_icon = "crusher_skull"
+	retool_inhand_icon = "crusher_skull"
+	retool_projectile_icon = "pulse_skull"
+
+/obj/item/crusher_trophy/retool_kit/ashenskull/effect_desc()
+	return "the crusher to appear corrupted by infernal powers"

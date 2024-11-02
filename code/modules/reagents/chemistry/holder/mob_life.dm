@@ -40,7 +40,7 @@
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
-			if(amount <= liver_tolerance)
+			if(amount <= liver_tolerance * toxin.liver_tolerance_multiplier)
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
 				continue
 

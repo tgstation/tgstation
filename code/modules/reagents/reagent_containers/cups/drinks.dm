@@ -228,6 +228,7 @@
 	/// DOPPLER SHIFT REMOVAL END
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
+	reagent_container_liquid_sound = SFX_PLASTIC_BOTTLE_LIQUID_SLOSH
 
 /// DOPPLER SHIFT REMOVAL BEGIN
 /*/obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)

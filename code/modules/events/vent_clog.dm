@@ -236,7 +236,7 @@
 	name = "Ventilation Clog: Critical"
 	typepath = /datum/round_event/vent_clog/critical
 	weight = 8
-	min_players = 15
+	min_players = 10
 	max_occurrences = 3
 	earliest_start = 25 MINUTES
 	description = "Really dangerous mobs climb out of a vent."

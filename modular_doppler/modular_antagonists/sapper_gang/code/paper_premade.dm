@@ -3,7 +3,7 @@
 	default_raw_text = {"
 Remember employee,
 
-<br>The work-day starts with preparation, you're currently in deep-space nearby a Nanotrasen researching outpost, <b>once you enter their sector there is no turning back.</b> Before you set sail a small check-list should be completed:
+<br>The work-day starts with preparation, you're currently in deep-space nearby a Port Authority researching outpost, <b>once you enter their sector there is no turning back.</b> Before you set sail a small check-list should be completed:
 <br>1. Meet with your partner and decide who wears which mask.
 2. Sort out your equipment, including the contents of the lockers and crates.
 3. Fill and link the portable ore-silo and flat-pack fabricator.
@@ -33,7 +33,7 @@ IMPORTANT, make sure to understand the following:
 You may be considering plugging it straight into an engine, which is a great strategy to a successful day at work; <i>if</i> you are prepared to siphon such large pulses of energy.
 Temperature control is key, both in the work environment and of the miner's hardware. Set up space-coolers and <b>don't leave the miner unattended for a long time!</b>
 
-What happens if you or your partner forget to manage the temperature? Besides the catastrophic consequence of blowing a giant crater into Nanotrasen assets, the significant loss of profits, or the very likely odds of employee casualty, it <i>isn't</i> the end of the work day.
+What happens if you or your partner forget to manage the temperature? Besides the catastrophic consequence of blowing a giant crater into Port Authority assets, the significant loss of profits, or the very likely odds of employee casualty, it <i>isn't</i> the end of the work day.
 
 A truly committed sapper can continue by re-building the credit-miner, the knowledge of doing so being a data-fragment uploaded into the mind of each employee.
 Don't get to celebrating just yet, though. The recipe to crafting the machine is complex, and after what you've likely caused to nearby civilization; these materials won't be easy to come by.

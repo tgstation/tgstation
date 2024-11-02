@@ -40,7 +40,8 @@
 #define MOD_WORN_ICON_OVERRIDE "mod_worn_icon_override"
 
 //Defines for MODlink frequencies
-#define MODLINK_FREQ_NANOTRASEN "NT"
+//#define MODLINK_FREQ_NANOTRASEN "NT" // ORIGINAL
+#define MODLINK_FREQ_NANOTRASEN "PA" // DOPPLER EDIT - NT -> PA
 #define MODLINK_FREQ_SYNDICATE "SYND"
 #define MODLINK_FREQ_CHARLIE "CHRL"
 #define MODLINK_FREQ_CENTCOM "CC"

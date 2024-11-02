@@ -9,10 +9,9 @@
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
 	fishing_modifier = 0
-	var/next_extinguish = 0
+	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
-
 
 /datum/armor/eva_plasmaman
 	bio = 100
@@ -23,21 +22,52 @@
 	. = ..()
 	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.")
 
+/obj/item/clothing/suit/space/eva/plasmaman/equipped(mob/living/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_OCLOTHING)
+		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)), PROC_REF(check_fire_state))
+		check_fire_state()
 
-/obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/suit/space/eva/plasmaman/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)))
+
+/obj/item/clothing/suit/space/eva/plasmaman/proc/check_fire_state(datum/source)
+	SIGNAL_HANDLER
+
+	if (!ishuman(loc))
 		return
 
-	if(H.fire_stacks > 0)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
+	// This is why we're ignoring source and instead checking by loc
+	var/mob/living/carbon/human/owner = loc
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, ignore_chest_pressureprot = TRUE))
+		return
 
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	// Check if our (possibly other) wearer is on fire once the cooldown ends
+	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(owner))
+
+/obj/item/clothing/suit/space/eva/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/extinguisher_refill))
+		return
+
+	if (extinguishes_left == 5)
+		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	extinguishes_left = 5
+	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	check_fire_state()
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 //I just want the light feature of helmets
 /obj/item/clothing/head/helmet/space/plasmaman
@@ -81,11 +111,26 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
+	register_context()
+
+/obj/item/clothing/head/helmet/space/plasmaman/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle Welding Screen"
+
+	if(attached_hat)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove hat"
+
+	if(istype(held_item, /obj/item/clothing/head))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach hat"
+
+	if(istype(held_item, /obj/item/toy/crayon))
+		context[SCREENTIP_CONTEXT_LMB] = "Vandalize"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/head/helmet/space/plasmaman/examine()
 	. = ..()
 	if(attached_hat)
-		. += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
+		. += span_notice("There's [attached_hat.name] placed on the helmet.")
 	else
 		. += span_notice("There's nothing placed on the helmet.")
 

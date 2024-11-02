@@ -108,17 +108,13 @@
 /datum/bodypart_overlay/simple/golem_overlay/proc/add_to_bodypart(prefix, obj/item/bodypart/part)
 	icon_state = "[prefix]_[part.body_zone]"
 	attached_bodypart = WEAKREF(part)
-	part.add_bodypart_overlay(src)
+	part.add_bodypart_overlay(src, update = FALSE)
 
 /datum/bodypart_overlay/simple/golem_overlay/Destroy(force)
 	var/obj/item/bodypart/referenced_bodypart = attached_bodypart.resolve()
 	if(!referenced_bodypart)
 		return ..()
 	referenced_bodypart.remove_bodypart_overlay(src)
-	if(referenced_bodypart.owner) //Keep in mind that the bodypart could have been severed from the owner by now
-		referenced_bodypart.owner.update_body_parts()
-	else
-		referenced_bodypart.update_icon_dropped()
 	return ..()
 
 /// Freezes hunger for the duration

@@ -20,7 +20,7 @@
 	protected_areas = list(/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload, /area/station/ai_monitored/turret_protected/ai_upload_foyer,
 							/area/station/ai_monitored/turret_protected/aisat/maint, /area/station/ai_monitored/command/storage/satellite,
 							/area/station/ai_monitored/turret_protected/ai, /area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
-							/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance, /area/icemoon/underground, /area/ruin/comms_agent/maint)
+							/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance, /area/icemoon/underground, /area/ruin/comms_agent/maint, /area/ruin, /area/ruin/unpowered/primitive_genemod_den) /// DOPPLER SHIFT EDIT: adding ruins as protected areas, hearthkin explicitly protected
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = TRAIT_RADSTORM_IMMUNE
@@ -51,8 +51,10 @@
 	if (SSradiation.wearing_rad_protected_clothing(human))
 		return
 
-	human.random_mutate_unique_identity()
-	human.random_mutate_unique_features()
+	/// DOPPLER SHIFT REMOVAL BEGIN: getting bad mutations is horrid enough already, we don't need to be taking people's fucking snouts off
+	/*human.random_mutate_unique_identity()
+	human.random_mutate_unique_features()*/
+	/// DOPPLER SHIFT REMOVAL END
 
 	if(prob(50))
 		do_mutate(human)

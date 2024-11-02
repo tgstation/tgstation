@@ -32,6 +32,9 @@
 	shuttleId = "pirate_sapper"
 	shuttlePortId = "sapper_custom"
 
+/obj/item/storage/toolbox/emergency/turret/sapper/set_faction(obj/machinery/porta_turret/turret, mob/user)
+	turret.faction = list(FACTION_SAPPER)
+
 /mob/living/basic/bot/medbot/sapper
 	name = "Manon"
 	medkit_type = /obj/item/storage/medkit/fire

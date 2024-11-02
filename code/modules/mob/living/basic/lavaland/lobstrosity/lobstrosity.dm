@@ -157,6 +157,17 @@
 	/// Were we tamed? If yes, tame the mob we become when we grow up too.
 	var/was_tamed = FALSE
 
+/datum/emote/lobstrosity_juvenile
+	mob_type_allowed_typecache = /mob/living/basic/mining/lobstrosity/juvenile
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/lobstrosity_juvenile/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters pleasantly!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
+
 /mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
 	. = ..()
 	var/growth_step = 1000/(7 MINUTES) //It should take 7-ish minutes if you keep the happiness above 40% and at most 12
@@ -203,7 +214,7 @@
 	. = ..()
 	was_tamed = TRUE
 	// They are more pettable I guess
-	AddElement(/datum/element/pet_bonus, "chitters pleasantly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	REMOVE_TRAIT(src, TRAIT_MOB_HIDE_HAPPINESS, INNATE_TRAIT)
 
 /mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()

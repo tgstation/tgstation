@@ -2,7 +2,7 @@
 #define HEMOPHAGE_SPAWN_TEXT "You are an [span_danger("Hemophage")]. You will slowly but constantly lose blood if outside of a closet-like object. If inside a closet-like object, or in pure darkness, you will slowly heal, at the cost of blood. You may gain more blood by grabbing a live victim and using your drain ability."
 
 
-/datum/species/genemod/hemophage
+/datum/species/human/genemod/hemophage
 	name = "Hemophage"
 	id = SPECIES_HEMOPHAGE
 	preview_outfit = /datum/outfit/hemophage_preview
@@ -26,30 +26,24 @@
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-	digitigrade_customization = DIGITIGRADE_OPTIONAL
-	digi_leg_overrides = list(
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/anthromorph,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/anthromorph,
-	)
-
-/datum/species/genemod/hemophage/check_roundstart_eligible()
+/datum/species/human/genemod/hemophage/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 
 	return ..()
 
-/datum/species/genemod/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load)
+/datum/species/human/genemod/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load)
 	. = ..()
 	to_chat(new_hemophage, HEMOPHAGE_SPAWN_TEXT)
 	new_hemophage.update_body()
 
-/datum/species/genemod/hemophage/get_species_description()
+/datum/species/human/genemod/hemophage/get_species_description()
 	return "Oftentimes feared or pushed out of society for the predatory nature of their condition, \
 		Hemophages are typically mixed around various Frontier populations, keeping their true nature hidden while \
 		reaping both the benefits and easy access to prey, enjoying unpursued existences on the Frontier."
 
 
-/datum/species/genemod/hemophage/get_species_lore()
+/datum/species/human/genemod/hemophage/get_species_lore()
 	return list(
 		"Though known by many other names, 'Hemophages' are those that have found themselves the host of a bloodthirsty infection. 'Natural' hemophages have their infection first overtake their body through the bloodstream, though methods vary; \
 		Hemophages thought to be a dense cluster of tightly related but distinct strains and variants. It will first take root in the chest, making alterations to the cells making up the host's organs to rapidly expand and take them over. \
@@ -104,7 +98,7 @@
 	name = "Hemophage (Species Preview)"
 	uniform = /obj/item/clothing/under/suit/black_really/skirt
 
-/datum/species/genemod/hemophage/prepare_human_for_preview(mob/living/carbon/human/human)
+/datum/species/human/genemod/hemophage/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = skintone2hex("albino")
 	human.dna.features["horns"] = "Lifted"
 	human.dna.features["horns_color_1"] = "#52435e"
@@ -118,7 +112,7 @@
 	regenerate_organs(human, src, visual_only = TRUE)
 	human.update_body(TRUE)
 
-/datum/species/genemod/hemophage/create_pref_unique_perks()
+/datum/species/human/genemod/hemophage/create_pref_unique_perks()
 	var/list/to_add = list()
 
 	to_add += list(
@@ -161,7 +155,7 @@
 	return to_add
 
 
-/datum/species/genemod/hemophage/create_pref_blood_perks()
+/datum/species/human/genemod/hemophage/create_pref_blood_perks()
 	var/list/to_add = list()
 
 	to_add += list(list(
@@ -177,12 +171,12 @@
 
 	return to_add
 
-/datum/species/genemod/hemophage/get_cry_sound(mob/living/carbon/human/hemophage)
+/datum/species/human/genemod/hemophage/get_cry_sound(mob/living/carbon/human/hemophage)
 	var/datum/species/human/human_species = GLOB.species_prototypes[/datum/species/human]
 	return human_species.get_cry_sound(hemophage)
 
 // We don't need to mention that they're undead, as the perks that come from it are otherwise already explicited, and they might no longer be actually undead from a gameplay perspective, eventually.
-/datum/species/genemod/hemophage/create_pref_biotypes_perks()
+/datum/species/human/genemod/hemophage/create_pref_biotypes_perks()
 	return
 
 

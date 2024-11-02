@@ -39,10 +39,20 @@
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
 
+/datum/emote/rabbit
+	mob_type_allowed_typecache = /mob/living/basic/rabbit
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/rabbit
+	key = "hop"
+	key_third_person = "hops"
+	message = "hops around happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/rabbit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "hops around happily!")
+	AddElement(/datum/element/pet_bonus, "hop")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
 	if(prob(20)) // bunny
 		name = "bunny"
