@@ -111,7 +111,10 @@
 		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
+	if(!ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
+		return
+	//First, floor plane objects use TOPDOWN_LAYER, second this check shouldn't apply to them anyway.
+	if(movable.plane > MUTATE_PLANE(FLOOR_PLANE, source) && movable.layer >= ABOVE_ALL_MOB_LAYER)
 		return
 	if(is_type_in_typecache(movable, movables_to_ignore))
 		return
@@ -145,7 +148,9 @@
 	var/width = icon_dimensions["width"] || ICON_SIZE_X
 	var/height = icon_dimensions["height"] || ICON_SIZE_Y
 
-	var/is_below_water = movable.layer < WATER_LEVEL_LAYER ? "underwater-" : ""
+	///This determines if the overlay should cover the entire surface of the object or not
+	var/turf/mov_turf = movable.loc
+	var/is_below_water = (movable.plane == MUTATE_PLANE(FLOOR_PLANE, mov_turf) || movable.layer < WATER_LEVEL_LAYER) ? "underwater-" : ""
 
 	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[is_below_water][width]x[height]"]
 
