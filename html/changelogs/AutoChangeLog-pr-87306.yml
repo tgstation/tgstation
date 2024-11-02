@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Introduces a INHALE method for reagent transfer. Cigarettes and smoke reactions use this new method."
-  - balance: "Nitrous oxide now brain damage if you inhale it. So don't do that."

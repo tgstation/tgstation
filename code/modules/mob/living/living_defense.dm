@@ -631,7 +631,7 @@
 		return
 
 	if(methods & (INGEST | INHALE))
-		taste(source)
+		taste_list(reagents)
 
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
