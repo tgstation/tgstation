@@ -275,10 +275,6 @@ GLOBAL_LIST_INIT(turfs_pass_pod_nograv, typecacheof(list(
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
-#define isinternalorgan(A) (istype(A, /obj/item/organ/internal))
-
-#define isexternalorgan(A) (istype(A, /obj/item/organ/external))
-
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
 #define ispickedupmob(A) (istype(A, /obj/item/clothing/head/mob_holder)) // Checks if clothing item is actually a held mob

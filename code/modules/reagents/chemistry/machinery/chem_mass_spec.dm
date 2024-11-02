@@ -214,7 +214,7 @@
 	var/result = 0
 	for(var/datum/reagent/reagent as anything in beaker1?.reagents.reagent_list)
 		var/datum/reagent/target = reagent
-		if(!istype(reagent, /datum/reagent/inverse) && (reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem))
+		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 
 		if(!result)
@@ -258,17 +258,19 @@
 		return
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-		//we don't deal chems that are so impure that they are about to become inverted
-		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
-			continue
+		var/datum/reagent/target = reagent
+
+		//inverted chems are dealt with diffrently
+		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
+			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
 		//out of our selected range
-		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
+		if(target.mass < lower_mass_range || target.mass > upper_mass_range)
 			continue
 		//already at max purity
 		if((initial(reagent.purity) - reagent.purity) <= 0)
 			continue
 		///Roughly 10 - 30s?
-		delay_time += (((reagent.mass * reagent.volume) + (reagent.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
+		delay_time += (((target.mass * reagent.volume) + (target.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10
 
 	delay_time *= cms_coefficient
 
@@ -295,7 +297,7 @@
 		beaker1Data["maxVolume"] = beaker_1_reagents.maximum_volume
 		var/list/beakerContents = list()
 		for(var/datum/reagent/reagent as anything in beaker_1_reagents.reagent_list)
-			var/log = ""
+			var/log = "Ready"
 			var/datum/reagent/target = reagent
 			var/purity = target.purity
 			var/is_inverse = FALSE
@@ -303,14 +305,11 @@
 			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
 				purity = target.get_inverse_purity()
 				target = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				log = "Too impure to use" //we don't bother about impure chems
 				is_inverse = TRUE
 			else
 				var/initial_purity = initial(reagent.purity)
 				if((initial_purity - reagent.purity) <= 0) //already at max purity
 					log = "Cannot purify above [round(initial_purity * 100)]%"
-				else
-					log = "Ready"
 
 			beakerContents += list(list(
 				"name" = target.name,
@@ -453,19 +452,31 @@
 		progress_time = 0
 
 		log.Cut()
+		var/datum/reagents/input_reagents = beaker1.reagents
+		var/datum/reagents/output_reagents = beaker2.reagents
 		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-			//we don't deal chems that are so impure that they are about to become inverted
-			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/product_vol = reagent.volume
+
+			//purify inverted chems to their inverted purity
+			if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
+				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
+					continue
+				input_reagents.remove_reagent(reagent.type, product_vol)
+				output_reagents.add_reagent(reagent.inverse_chem, product_vol, reagtemp = input_reagents.chem_temp, added_purity = reagent.get_inverse_purity(), added_ph = reagent.ph)
+				log[reagent.type] = "Purified to [reagent.get_inverse_purity() * 100]%"
 				continue
+
 			//out of our selected range
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				continue
+
 			//already at max purity
 			var/delta_purity = initial(reagent.purity) - reagent.purity
 			if(delta_purity <= 0)
 				continue
+
 			//add the purified reagent. More impure reagents will yield smaller amounts
-			var/product_vol = reagent.volume
 			beaker1.reagents.remove_reagent(reagent.type, product_vol)
 			beaker2.reagents.add_reagent(reagent.type, product_vol * (1 - delta_purity), reagtemp = beaker1.reagents.chem_temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
 			log[reagent.type] = "Purified to [initial(reagent.purity) * 100]%"
