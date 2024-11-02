@@ -90,7 +90,7 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos/holed/Initialize(mapload)
 	. = ..()
-	dig_hole()
+	INVOKE_ASYNC(src, PROC_REF(dig_hole))
 
 /turf/open/misc/ice/temperate
 	baseturfs = /turf/open/misc/ice/temperate
