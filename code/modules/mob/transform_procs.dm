@@ -153,7 +153,7 @@
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
-		mind.transfer_to(new_borg)
+		mind.transfer_to(new_borg, TRUE)
 	else if(transfer_after)
 		new_borg.key = key
 

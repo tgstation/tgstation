@@ -321,9 +321,9 @@
 				)
 		if(SFX_CAN_OPEN)
 			soundin = pick(
-				'sound/effects/can/can_open1.ogg',
-				'sound/effects/can/can_open2.ogg',
-				'sound/effects/can/can_open3.ogg',
+				'sound/items/can/can_open1.ogg',
+				'sound/items/can/can_open2.ogg',
+				'sound/items/can/can_open3.ogg',
 				)
 		if(SFX_BULLET_MISS)
 			soundin = pick(
@@ -734,5 +734,17 @@
 				'sound/effects/industrial_scan/industrial_scan1.ogg',
 				'sound/effects/industrial_scan/industrial_scan2.ogg',
 				'sound/effects/industrial_scan/industrial_scan3.ogg',
+			)
+		if(SFX_MALE_SIGH)
+			soundin = pick(
+				'sound/mobs/humanoids/human/sigh/male_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh3.ogg',
+			)
+		if(SFX_FEMALE_SIGH)
+			soundin = pick(
+				'sound/mobs/humanoids/human/sigh/female_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
 			)
 	return soundin

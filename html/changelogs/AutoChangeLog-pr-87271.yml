@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - code_imp: "Golem boulder breaking trait moved from species to limbs"

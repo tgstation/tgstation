@@ -335,7 +335,7 @@
 /mob/living/carbon/human/toggle_externals(obj/item/tank)
 	return toggle_internals(tank, TRUE)
 
-/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visuals_only = FALSE)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -347,11 +347,11 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly)
+	return O.equip(src, visuals_only)
 
 
 ///A version of equipOutfit that overrides passed in outfits with their entry on the species' outfit override registry
-/mob/living/carbon/human/proc/equip_species_outfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equip_species_outfit(outfit, visuals_only = FALSE)
 	var/datum/outfit/outfit_to_equip
 
 	var/override_outfit_path = dna?.species.outfit_override_registry[outfit]
@@ -363,7 +363,7 @@
 	if(isnull(outfit_to_equip))
 		return FALSE
 
-	return outfit_to_equip.equip(src, visualsOnly)
+	return outfit_to_equip.equip(src, visuals_only)
 
 
 //delete all equipment without dropping anything

@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(stat == DEAD)
 		return
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
 	human_heart?.beat = BEAT_NONE
 	human_heart?.Stop()
 
@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 
 	readout += "<br>Stomach:"
-	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])
 			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"
