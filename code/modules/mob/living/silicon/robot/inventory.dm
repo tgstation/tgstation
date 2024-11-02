@@ -128,7 +128,7 @@
 	item_module.forceMove(model) //Return item to configuration so it appears in its contents, so it can be taken out again.
 
 	observer_screen_update(item_module, FALSE)
-	hud_used.update_robot_modules_display()
+	hud_used?.update_robot_modules_display()
 	return TRUE
 
 /**

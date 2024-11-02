@@ -60,3 +60,5 @@
 	var/obj/item/multitool/tool = held_item.get_proxy_attacker_for(silo, borg)
 	TEST_ASSERT(istype(tool), "Borg failed to switch internal tool to multitool")
 	TEST_ASSERT(istype(tool.buffer, /obj/machinery/ore_silo), "Borg omnitool multitool failed to log ore silo!")
+
+	borg.unequip_module_from_slot(engi_tool, 1)
