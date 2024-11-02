@@ -45,6 +45,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
+"u" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/template_noop,
+/area/template_noop)
 "v" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
@@ -73,9 +77,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
+"F" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/template_noop,
+/area/template_noop)
 "G" = (
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
+"J" = (
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "L" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -83,6 +96,8 @@
 /area/shuttle/escape)
 
 (1,1,1) = {"
+B
+B
 a
 B
 a
@@ -91,6 +106,8 @@ a
 B
 "}
 (2,1,1) = {"
+B
+B
 a
 f
 t
@@ -99,6 +116,8 @@ a
 a
 "}
 (3,1,1) = {"
+B
+F
 a
 f
 a
@@ -107,6 +126,8 @@ A
 g
 "}
 (4,1,1) = {"
+B
+B
 a
 L
 C
@@ -115,6 +136,8 @@ A
 g
 "}
 (5,1,1) = {"
+B
+u
 a
 j
 a
@@ -123,6 +146,8 @@ A
 g
 "}
 (6,1,1) = {"
+B
+B
 v
 G
 o
@@ -131,10 +156,52 @@ A
 g
 "}
 (7,1,1) = {"
+B
+J
 l
 a
 a
 a
 w
 g
+"}
+(8,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(9,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(10,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(11,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
 "}

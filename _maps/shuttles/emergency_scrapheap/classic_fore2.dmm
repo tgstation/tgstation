@@ -79,6 +79,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
+"q" = (
+/obj/machinery/flasher/directional/west,
+/turf/template_noop,
+/area/template_noop)
 "r" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -94,7 +98,6 @@
 /area/shuttle/escape)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/abductor/random/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "w" = (
@@ -104,6 +107,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "x" = (
@@ -124,7 +128,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/random/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "B" = (
@@ -151,6 +155,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "F" = (
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "H" = (
@@ -163,6 +168,11 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_y = -8;
+	pixel_x = -24
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -181,10 +191,12 @@
 /obj/item/poster/traitor,
 /obj/effect/spawner/random/contraband/cannabis,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
+/obj/structure/sign/poster/abductor/random/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "L" = (
 /obj/item/kirbyplants/random/fullysynthetic,
+/obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "M" = (
@@ -192,6 +204,11 @@
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"N" = (
+/obj/item/stack/tile/mineral/plastitanium/red,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/shuttle/escape/brig)
 "O" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -208,6 +225,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Q" = (
@@ -220,6 +238,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "R" = (
@@ -292,7 +311,7 @@ S
 K
 w
 P
-g
+N
 C
 "}
 (3,1,1) = {"
@@ -336,7 +355,7 @@ I
 f
 f
 n
-z
+q
 z
 "}
 (7,1,1) = {"

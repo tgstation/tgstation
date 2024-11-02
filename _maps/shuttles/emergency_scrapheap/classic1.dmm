@@ -8,13 +8,15 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "e" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/obj/modular_map_root/scrapheapchallenge{
+	key = "classic_starboard"
+	},
+/turf/template_noop,
+/area/template_noop)
 "f" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/chair/comfy/shuttle,
@@ -22,10 +24,11 @@
 /area/shuttle/escape)
 "h" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "i" = (
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "j" = (
 /obj/effect/decal/cleanable/dirt,
@@ -55,7 +58,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "s" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "t" = (
 /obj/modular_map_root/scrapheapchallenge{
@@ -63,11 +66,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"u" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "v" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -76,6 +74,7 @@
 /area/shuttle/escape)
 "w" = (
 /obj/item/kirbyplants/random,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "z" = (
@@ -106,9 +105,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "E" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "F" = (
 /obj/structure/chair/comfy/brown{
@@ -132,14 +132,8 @@
 "J" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"K" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/wood,
@@ -149,13 +143,6 @@
 "M" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"N" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -175,26 +162,27 @@
 "V" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "W" = (
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/barricade/wooden,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "X" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Y" = (
-/obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Z" = (
@@ -227,10 +215,10 @@ a
 k
 V
 g
-q
+s
 n
 G
-h
+Y
 a
 "}
 (3,1,1) = {"
@@ -245,7 +233,7 @@ A
 H
 L
 C
-u
+h
 a
 "}
 (4,1,1) = {"
@@ -256,7 +244,7 @@ a
 a
 D
 B
-I
+X
 F
 I
 C
@@ -273,9 +261,9 @@ D
 B
 d
 q
-D
+E
 B
-Y
+h
 a
 "}
 (6,1,1) = {"
@@ -284,11 +272,11 @@ a
 Q
 w
 e
-q
-j
-j
-q
-D
+a
+a
+a
+a
+a
 Z
 J
 t
@@ -298,12 +286,12 @@ a
 a
 a
 g
-q
-D
-B
-g
-q
-D
+a
+a
+a
+a
+a
+a
 B
 W
 a
@@ -312,14 +300,14 @@ a
 B
 B
 i
-g
-q
-D
-B
-g
-q
-X
-O
+f
+a
+a
+a
+a
+a
+a
+a
 a
 a
 "}
@@ -328,13 +316,13 @@ v
 j
 j
 q
-q
-D
-Z
-g
-q
-s
-O
+a
+a
+a
+a
+a
+a
+a
 a
 a
 "}
@@ -343,13 +331,13 @@ B
 Z
 i
 M
-q
-D
-B
-g
-q
-N
-O
+a
+a
+a
+a
+a
+a
+a
 a
 a
 "}
@@ -358,13 +346,13 @@ a
 a
 O
 z
-f
-K
-K
-K
-f
-E
-O
+a
+a
+a
+a
+a
+a
+a
 a
 a
 "}

@@ -169,6 +169,7 @@
 	id = "cockpit_flasher"
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "V" = (
@@ -176,6 +177,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Y" = (

@@ -2,6 +2,10 @@
 "a" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+"b" = (
+/obj/machinery/flasher/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "d" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -9,6 +13,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/reinforced,
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 5
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "i" = (
@@ -16,7 +24,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "j" = (
 /obj/effect/decal/cleanable/dirt,
@@ -34,7 +42,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/utility/fire/firefighter,
 /obj/item/clothing/head/utility/hardhat/red,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "l" = (
 /turf/open/floor/plating/airless,
@@ -45,6 +53,13 @@
 "o" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/glass,
+/obj/item/clipboard,
+/obj/item/paper,
+/obj/item/pen/red{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/pen,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "p" = (
@@ -60,6 +75,10 @@
 "r" = (
 /obj/structure/lattice,
 /turf/template_noop,
+/area/shuttle/escape)
+"u" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "v" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
@@ -104,6 +123,7 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 8
 	},
@@ -124,6 +144,7 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 8
 	},
@@ -165,7 +186,7 @@
 "Z" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 
 (1,1,1) = {"
 m
@@ -183,7 +204,7 @@ r
 r
 r
 a
-l
+u
 l
 Q
 "}
@@ -194,7 +215,7 @@ m
 m
 r
 m
-l
+u
 B
 "}
 (4,1,1) = {"
@@ -253,7 +274,7 @@ P
 j
 v
 m
-m
+b
 m
 m
 "}
