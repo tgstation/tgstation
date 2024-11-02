@@ -47,16 +47,14 @@
 
 /datum/ntnet_conversation/proc/add_message(message, username)
 	message = "[station_time_timestamp(format = "hh:mm")] [username]: [message]"
-	var/message_id = "[next_message_id]"
+	messages["[next_message_id]"] = message
 	next_message_id++
-	messages[message_id] = message
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
 	message = "[station_time_timestamp(format = "hh:mm")] -!- [message]"
-	var/message_id = "[next_message_id]"
+	messages["[next_message_id]"] = message
 	next_message_id++
-	messages[message_id] = message
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/trim_message_list()
