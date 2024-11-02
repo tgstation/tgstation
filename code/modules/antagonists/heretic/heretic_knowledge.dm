@@ -288,6 +288,12 @@
 	our_heretic.heretic_path = route
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
 
+/datum/heretic_knowledge/limited_amount/starting/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	if(.)
+		var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
+		our_heretic.used_blade = TRUE
+
 /**
  * A knowledge subtype for heretic knowledge
  * that applies a mark on use.
@@ -747,6 +753,8 @@
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
+	if(!heretic_datum.used_blade)
+		user.client?.give_award(/datum/award/achievement/misc/bladeless_ascension, user)
 
 	// Show the cool red gradiant in our UI
 	heretic_datum.update_static_data(user)

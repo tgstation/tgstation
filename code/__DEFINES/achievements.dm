@@ -60,6 +60,7 @@
 #define MEDAL_CIGARETTES "Cigarettes"
 #define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
+#define MEDAL_BLADELESS_ASCENSION "While You Studied The Blade..."
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

@@ -244,3 +244,9 @@
 	desc = "Nutritionists often recommend a balanced and varied diet. However that clearly isn't the case for some creatures."
 	database_id = MEDAL_SHARKDRAGON
 	icon_state = "dragon_plus_fish"
+
+/datum/award/achievement/misc/bladeless_ascension
+	name = "While You Studied The Blade..."
+	desc = "Ascend as a heretic without ever crafting or using a blade."
+	database_id = MEDAL_BLADELESS_ASCENSION
+	icon_state = "theoreticallimits"

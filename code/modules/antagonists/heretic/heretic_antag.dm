@@ -82,6 +82,8 @@
 	)
 	/// Simpler version of above used to limit amount of loot that can be hoarded
 	var/rewards_given = 0
+	/// If this heretic has ever crafted or used a blade, for the bladeless ascension achievement.
+	var/used_blade = FALSE
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -303,6 +305,7 @@
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
+	RegisterSignals(our_mob, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -319,6 +322,8 @@
 		COMSIG_USER_ITEM_INTERACTION,
 		COMSIG_LIVING_POST_FULLY_HEAL,
 		COMSIG_LIVING_CULT_SACRIFICED,
+		COMSIG_HERETIC_BLADE_ATTACK,
+		COMSIG_HERETIC_RANGED_BLADE_ATTACK,
 	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -376,6 +381,14 @@
 
 	try_draw_rune(source, target, additional_checks = CALLBACK(src, PROC_REF(check_mansus_grasp_offhand), source))
 	return ITEM_INTERACT_SUCCESS
+
+/*
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK] and [COMSIG_HERETIC_RANGED_BLADE_ATTACK].
+ * Used to set the `used_blade` var.
+ */
+/datum/antagonist/heretic/proc/on_blade_attack()
+	SIGNAL_HANDLER
+	used_blade = TRUE
 
 /**
  * Attempt to draw a rune on [target_turf].
