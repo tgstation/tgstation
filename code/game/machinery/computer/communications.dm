@@ -492,6 +492,7 @@
 		"authenticated" = FALSE,
 		"emagged" = FALSE,
 		"syndicate" = syndicate,
+		"canSeeMessages" = FALSE
 	)
 
 	var/ui_state = HAS_SILICON_ACCESS(user) ? cyborg_state : state
@@ -502,6 +503,7 @@
 	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
 		data["canRequestSafeCode"] = TRUE
 		data["safeCodeDeliveryWait"] = 0
+		data["canSeeMessages"] = TRUE
 	else
 		data["canRequestSafeCode"] = FALSE
 		if(SSjob.safe_code_timer_id && has_connection)
@@ -575,7 +577,7 @@
 					data["shuttleCalledPreviously"] = TRUE
 					if (SSshuttle.emergency_last_call_loc)
 						data["shuttleLastCalled"] = format_text(SSshuttle.emergency_last_call_loc.name)
-			if (STATE_MESSAGES)
+			if (STATE_MESSAGES && data["canSeeMessages"] == TRUE)
 				data["messages"] = list()
 
 				if (messages)
