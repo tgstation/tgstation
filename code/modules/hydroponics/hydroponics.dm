@@ -288,10 +288,10 @@
 /obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(proj , /obj/projectile/energy/flora/mut))
+	if(istype(proj, /obj/projectile/energy/flora/mut))
 		mutate()
 		return ..()
-	if(istype(proj,/obj/projectile/energy/flora/yield))
+	if(istype(proj, /obj/projectile/energy/flora/yield))
 		return myseed.bullet_act(proj)
 	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
