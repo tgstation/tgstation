@@ -93,13 +93,12 @@
 
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE)
 	. = ..()
-	var/blocked = check_projectile_armor(def_zone, proj, silent = TRUE)
+	var/blocked = check_projectile_armor(def_zone, proj, is_silent = TRUE)
 	if(blocked >= 100)
 		if(. == BULLET_ACT_HIT && proj.is_hostile_projectile())
 			apply_projectile_effects(proj, def_zone, blocked)
 		return .
 
-	var/turf/our_turf = get_turf(src)
 	var/hit_limb_zone = check_hit_limb_zone_name(def_zone)
 	var/organ_hit_text = ""
 	if (hit_limb_zone)
@@ -148,11 +147,11 @@
 		check_projectile_dismemberment(proj, def_zone)
 
 	if (proj.damage && armor_check < 100)
-		create_projectile_hit_effects(proj, def_zone)
+		create_projectile_hit_effects(proj, def_zone, armor_check)
 
 	return BULLET_ACT_HIT
 
-/mob/living/create_projectile_hit_effects(obj/projectile/proj, def_zone)
+/mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)
 		return
 
@@ -160,7 +159,7 @@
 	if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 		create_splatter(angle2dir(proj.angle))
 		if(prob(33))
-			add_splatter_floor(our_turf)
+			add_splatter_floor(get_turf(src))
 		return
 
 	if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
