@@ -240,10 +240,10 @@
 	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 
 	//set the reference & update icons
-	for(var/obj/item as anything in omni_toolkit)
-		if(initial(item.name) == toolkit_menu)
-			reference = item
-			tool_behaviour = reference.tool_behaviour
+	for(var/obj/item/tool as anything in omni_toolkit)
+		if(initial(tool.name) == toolkit_menu)
+			reference = tool
+			tool_behaviour = initial(tool.tool_behaviour)
 			update_appearance(UPDATE_ICON_STATE)
 			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 			break
