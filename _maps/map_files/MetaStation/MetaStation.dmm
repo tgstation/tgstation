@@ -15274,7 +15274,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "fuc" = (
 /obj/structure/frame/machine{
@@ -28344,7 +28344,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "jYv" = (
 /obj/machinery/meter,
@@ -40512,7 +40512,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "otI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60406,7 +60406,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "vmX" = (
 /obj/machinery/light/directional/west,
@@ -66770,7 +66770,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "xwD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
@@ -66926,7 +66926,7 @@
 	dir = 8
 	},
 /obj/structure/sign/clock/directional/south,
-/turf/open/water,
+/turf/open/water/no_planet_atmos,
 /area/station/service/hydroponics/garden)
 "xyM" = (
 /obj/structure/cable,

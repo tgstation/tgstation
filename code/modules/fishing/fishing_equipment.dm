@@ -441,5 +441,93 @@
 		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
 		That's all, best of luck to your angling journey."
 
+///A modified mining capsule from the black market
+/obj/item/survivalcapsule/fishing
+	name = "fishing spot capsule"
+	desc = "An illegally modified mining capsule containing a small fishing spot connected to some faraway place."
+	icon_state = "capsule_fishing"
+	initial_language_holder = /datum/language_holder/speaking_machine
+	verb_say = "beeps"
+	verb_yell = "blares"
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.3:ratio=40:attack=15:release=350:makeup=1.5,highpass=f=1000,rubberband=pitch=1.5"
+	template_id = "fishing_default"
+	yeet_back = FALSE
+
+/obj/item/survivalcapsule/fishing/Initialize(mapload)
+	. = ..()
+	register_context()
+
+	if(SStts.tts_enabled) //This capsule informs you on why it cannot be deployed in a sliiiiightly different way.
+		voice = pick(SStts.available_speakers)
+
+/obj/item/survivalcapsule/fishing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change fishing spot"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/survivalcapsule/fishing/examine(mob/user)
+	. = ..()
+	. += span_info("[EXAMINE_HINT("Alt-Click")] to change the selected fishing spot.")
+
+/obj/item/survivalcapsule/fishing/examine_more(mob/user)
+	. = ..()
+	. += span_tinynotice("A tiny print on the side reads: \"Use a cryptographic sequencer to disable safeties\".")
+
+/obj/item/survivalcapsule/fishing/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	balloon_alert(user, "safeties disabled")
+	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
+
+/obj/item/survivalcapsule/fishing/click_alt(mob/user)
+	. = ..()
+	if(used)
+		return CLICK_ACTION_BLOCKING
+	var/list/choices = list()
+	var/list/spot_ids_by_name = list()
+	for(var/datum/map_template/shelter/fishing/spot as anything in typesof(/datum/map_template/shelter/fishing))
+		if(!spot::safe && !(obj_flags & EMAGGED))
+			continue
+		choices[spot::name] = image('icons/hud/radial_fishing.dmi', spot::radial_icon)
+		spot_ids_by_name[spot::name] = spot::shelter_id
+	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
+	if(!choice || used || !can_interact(user))
+		return CLICK_ACTION_BLOCKING
+	template_id = spot_ids_by_name[choice]
+	template = SSmapping.shelter_templates[template_id]
+	to_chat(user, span_notice("You change [src]'s selected fishing spot to [choice]."))
+	playsound(src, 'sound/items/pen_click.ogg', 20, TRUE, -3)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/survivalcapsule/fishing/get_ignore_flags()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += (CAPSULE_IGNORE_ANCHORED_OBJECTS|CAPSULE_IGNORE_BANNED_OBJECTS)
+
+/obj/item/survivalcapsule/fishing/fail_feedback(status)
+	switch(status)
+		if(SHELTER_DEPLOY_BAD_AREA)
+			say("I refuse to deploy in this area.")
+		if(SHELTER_DEPLOY_BAD_TURFS)
+			say("The walls are too close! I need [template.width]x[template.height] area to deploy.")
+		if(SHELTER_DEPLOY_ANCHORED_OBJECTS)
+			say("Get these anchored objects out of the way! I need [template.width]x[template.height] area to deploy.")
+		if(SHELTER_DEPLOY_BANNED_OBJECTS)
+			say("Remove all cables and pipes in a [template.width]x[template.height] area or I won't deploy.")
+		if(SHELTER_DEPLOY_OUTSIDE_MAP)
+			say("For fucks sake, deploy me somewhere less far fatched!")
+
+/obj/item/survivalcapsule/fishing/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
+	var/datum/map_template/shelter/fishing/spot = template
+	if(spot.safe) //Don't log if the fishing spot is safe
+		return
+
+	var/area/area = get_area(src)
+
+	if(!area.outdoors)
+		message_admins("[ADMIN_LOOKUPFLW(triggerer)] activated an unsafe fishing capsule at [ADMIN_VERBOSEJMP(trigger_loc)]")
+	log_admin("[key_name(triggerer)] activated an unsafe fishing capsule at [AREACOORD(trigger_loc)]")
+
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

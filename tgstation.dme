@@ -4634,7 +4634,7 @@
 #include "code\modules\mapfluff\ruins\generic.dm"
 #include "code\modules\mapfluff\ruins\lavaland_ruin_code.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\commsagent.dm"
-#include "code\modules\mapfluff\ruins\icemoonruin_code\hotsprings.dm"
+#include "code\modules\mapfluff\ruins\icemoonruin_code\cursed_spring.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\lavaland_incursion.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\library.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\mailroom.dm"

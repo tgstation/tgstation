@@ -6,7 +6,7 @@
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/unexplored)
 "c" = (
-/turf/open/water/cursed_spring,
+/turf/open/water/hot_spring/cursed,
 /area/icemoon/surface/outdoors/noteleport)
 "d" = (
 /obj/item/paper/crumpled{
