@@ -26,7 +26,7 @@ export const Modpacks = (props) => {
 		    <Table.Row key={name} className="candystripe">
               <Table.Cell bold>{name}</Table.Cell>
               <Table.Cell>({desc})</Table.Cell>
-			  <Table.Cell>({author})</Table.Cell>
+              <Table.Cell>({author})</Table.Cell>
             </Table.Row>
           ))}
 		</Table>
