@@ -115,11 +115,23 @@
 	/// Is our HUD on
 	var/hud_on = FALSE
 
+	// static scan stuff
+	/// hud object that the fake static images use
+	var/obj/effect/overlay/ai_detect_hud/camera_unseen/hud_obj
+	/// fake static image
+	var/list/image/static_images = list()
+	/// the client that we shoved those images to
+	var/datum/weakref/static_viewer
+	/// timerid for the timer that makes em disappear
+	var/static_disappear_timer
+	/// cooldown for actually doing a static scan
+	COOLDOWN_DECLARE(static_scan_cd)
+
 /obj/item/multitool/ai_detect/examine(mob/user)
 	. = ..()
 	if(!hud_on)
 		return
-	. += span_notice("You can right-click to scan for a nearby APC.")
+	. += span_notice("You can right-click to scan for nearby unseen spots. They will be shown for exactly 8 seconds due to battery limitations.")
 	switch(detect_state)
 		if(PROXIMITY_NONE)
 			. += span_green("No AI should be currently looking at you. Keep on your clandestine activities.")
@@ -131,6 +143,7 @@
 /obj/item/multitool/ai_detect/Destroy()
 	if(hud_on && ismob(loc))
 		remove_hud(loc)
+	cleanup_static()
 	return ..()
 
 /obj/item/multitool/ai_detect/attack_self(mob/user, modifiers)
@@ -143,7 +156,7 @@
 	. = ..()
 	if(.)
 		return
-	scan_apc(user)
+	scan_unseen(user)
 
 /obj/item/multitool/ai_detect/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -154,6 +167,7 @@
 	. = ..()
 	if(hud_on)
 		remove_hud(user)
+	cleanup_static()
 
 /obj/item/multitool/ai_detect/update_icon_state()
 	. = ..()
@@ -208,6 +222,61 @@
 			break
 		if(distance < rangewarning) //ai can't see us but is close
 			detect_state = PROXIMITY_NEAR
+
+/obj/item/multitool/ai_detect/proc/scan_unseen(mob/user)
+	if(isnull(user?.client)) // the monkey incident of 2564
+		return
+	if(!COOLDOWN_FINISHED(src, static_scan_cd))
+		balloon_alert(user, "recharging!")
+		return
+	cleanup_static()
+	var/turf/our_turf = get_turf(src)
+	var/list/datum/camerachunk/chunks = surrounding_chunks(our_turf)
+
+	if(!hud_obj)
+		hud_obj = new()
+		SET_PLANE_W_SCALAR(hud_obj, PLANE_TO_TRUE(hud_obj.plane), GET_TURF_PLANE_OFFSET(our_turf))
+
+	var/list/new_images = list()
+	for(var/datum/camerachunk/chunk as anything in chunks)
+		for(var/turf/seen_turf as anything in chunk.obscuredTurfs)
+			var/image/img = image(loc = seen_turf, layer = ABOVE_ALL_MOB_LAYER)
+			img.vis_contents += hud_obj
+			SET_PLANE(img, GAME_PLANE, seen_turf)
+			new_images += img
+	user.client.images |= new_images
+	static_viewer = WEAKREF(user.client)
+	balloon_alert(user, "nearby unseen spots shown")
+	static_disappear_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_static)), 8 SECONDS, TIMER_STOPPABLE)
+	COOLDOWN_START(src, static_scan_cd, 4 SECONDS)
+
+// copied from camera chunks but we are doing a really big edge case here though
+/obj/item/multitool/ai_detect/proc/surrounding_chunks(turf/epicenter)
+	. = list()
+	var/static_range = /mob/camera/ai_eye::static_visibility_range
+	var/x1 = max(1, epicenter.x - static_range)
+	var/y1 = max(1, epicenter.y - static_range)
+	var/x2 = min(world.maxx, epicenter.x + static_range)
+	var/y2 = min(world.maxy, epicenter.y + static_range)
+
+	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+			var/datum/camerachunk/chunk = GLOB.cameranet.getCameraChunk(x, y, epicenter.z)
+			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
+			// unless we only want to see static in a jank manner only if an eye updates it
+			chunk?.update() // UPDATE THE FUCK NOW
+			. |= chunk
+
+/obj/item/multitool/ai_detect/proc/cleanup_static()
+	if(isnull(hud_obj)) //we never did anything
+		return
+	var/client/viewer = static_viewer?.resolve()
+	viewer?.images -= static_images
+	static_images.Cut()
+	QDEL_NULL(hud_obj)
+	viewer = null
+	deltimer(static_disappear_timer)
+	static_disappear_timer = null
 
 /obj/item/multitool/abductor
 	name = "alien multitool"

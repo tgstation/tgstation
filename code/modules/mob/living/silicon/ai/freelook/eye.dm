@@ -254,3 +254,6 @@
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
+
+/obj/effect/overlay/ai_detect_hud/camera_unseen
+	icon = 'icons/effects/cameravis.dmi'
