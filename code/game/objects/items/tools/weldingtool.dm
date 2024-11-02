@@ -1,6 +1,5 @@
 /obj/item/weldingtool
 	name = "welding tool"
-	RU_NAMES_LIST_INIT("welding tool", "сварочный инструмент", "сварочного инструмента", "сварочному инструменту", "сварочный инструмент", "сварочным инструментом", "сварочном инструменте")
 	desc = "A standard edition welder provided by Nanotrasen."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "welder"
@@ -327,7 +326,6 @@
 
 /obj/item/weldingtool/largetank
 	name = "industrial welding tool"
-	RU_NAMES_LIST_INIT("industrial welding tool", "промышленный сварочный инструмент", "промышленного сварочного инструмента", "промышленному сварочному инструменту", "промышленный сварочный инструмент", "промышленным сварочным инструментом", "промышленном сварочном инструменте")
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
@@ -341,7 +339,6 @@
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
-	RU_NAMES_LIST_INIT("integrated welding tool", "интегрированный сварочный инструмент", "интегрированного сварочного инструмента", "интегрированному сварочному инструменту", "интегрированный сварочный инструмент", "интегрированным сварочным инструментом", "интегрированном сварочном инструменте")
 	desc = "An advanced welder designed to be used in robotic systems. Custom framework doubles the speed of welding."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
@@ -355,7 +352,6 @@
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
-	RU_NAMES_LIST_INIT("emergency welding tool", "аварийный сварочный инструмент", "аварийного сварочного инструмента", "аварийному сварочному инструменту", "аварийный сварочный инструмент", "аварийным сварочным инструментом", "аварийном сварочном инструменте")
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
@@ -371,7 +367,6 @@
 
 /obj/item/weldingtool/abductor
 	name = "alien welding tool"
-	RU_NAMES_LIST_INIT("alien welding tool", "инопланетный сварочный инструмент", "инопланетного сварочного инструмента", "инопланетному сварочному инструменту", "инопланетный сварочный инструмент", "инопланетным сварочным инструментом", "инопланетном сварочном инструменте")
 	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "welder"
@@ -388,7 +383,6 @@
 
 /obj/item/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
-	RU_NAMES_LIST_INIT("upgraded industrial welding tool", "улучшенный сварочный инструмент", "улучшенного сварочного инструмента", "улучшенному сварочному инструменту", "улучшенный сварочный инструмент", "улучшенным сварочным инструментом", "улучшенном сварочном инструменте")
 	desc = "An upgraded welder based of the industrial welder."
 	icon_state = "upindwelder"
 	inhand_icon_state = "upindwelder"
@@ -397,7 +391,6 @@
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
-	RU_NAMES_LIST_INIT("experimental welding tool", "экспериментальный сварочный инструмент", "экспериментального сварочного инструмента", "экспериментальному сварочному инструменту", "экспериментальный сварочный инструмент", "экспериментальным сварочным инструментом", "экспериментальном сварочном инструменте")
 	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
 	icon_state = "exwelder"
 	inhand_icon_state = "exwelder"

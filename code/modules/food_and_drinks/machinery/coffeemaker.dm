@@ -2,7 +2,6 @@
 
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
-	RU_NAMES_LIST_INIT("coffeemaker", "кофемашина", "кофемашины", "кофемашине", "кофемашину", "кофемашиной", "кофемашине")
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "coffeemaker_nopot_nocart"
@@ -420,7 +419,6 @@
 //Coffee Cartridges: like toner, but for your coffee!
 /obj/item/coffee_cartridge
 	name = "coffeemaker cartridge- Caffè Generico"
-	RU_NAMES_LIST_INIT("coffeemaker cartridge- Caffè Generico", "картридж кофеварки - Caffè Generico", "картриджа кофеварки - Caffè Generico", "картриджу кофеварки - Caffè Generico", "картридж кофеварки - Caffè Generico", "картриджем кофеварки - Caffè Generico", "картридже кофеварки - Caffè Generico")
 	desc = "A coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
 	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_basic"
@@ -436,7 +434,6 @@
 
 /obj/item/coffee_cartridge/fancy
 	name = "coffeemaker cartridge - Caffè Fantasioso"
-	RU_NAMES_LIST_INIT("coffeemaker cartridge - Caffè Fantasioso", "картридж кофеварки - Caffè Fantasioso", "картриджа кофеварки - Caffè Fantasioso", "картриджу кофеварки - Caffè Fantasioso", "картридж кофеварки - Caffè Fantasioso", "картриджем кофеварки - Caffè Fantasioso", "картридже кофеварки - Caffè Fantasioso")
 	desc = "A fancy coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
 	icon_state = "cartridge_blend"
 
@@ -460,21 +457,18 @@
 
 /obj/item/coffee_cartridge/decaf
 	name = "coffeemaker cartridge - Caffè Decaffeinato"
-	RU_NAMES_LIST_INIT("coffeemaker cartridge - Caffè Decaffeinato", "картридж кофеварки - Caffè Decaffeinato", "картриджа кофеварки - Caffè Decaffeinato", "картриджу кофеварки - Caffè Decaffeinato", "картридж кофеварки - Caffè Decaffeinato", "картриджем кофеварки - Caffè Decaffeinato", "картридже кофеварки - Caffè Decaffeinato")
 	desc = "A decaf coffee cartridge manufactured by Piccionaia Coffee, for use with the Modello 3 system."
 	icon_state = "cartridge_decaf"
 
 // no you can't just squeeze the juice bag into a glass!
 /obj/item/coffee_cartridge/bootleg
 	name = "coffeemaker cartridge - Botany Blend"
-	RU_NAMES_LIST_INIT("coffeemaker cartridge - Botany Blend", "картридж кофеварки - Botany Blend", "картриджа кофеварки - Botany Blend", "картриджу кофеварки - Botany Blend", "картридж кофеварки - Botany Blend", "картриджем кофеварки - Botany Blend", "картридже кофеварки - Botany Blend")
 	desc = "A jury-rigged coffee cartridge. Should work with a Modello 3 system, though it might void the warranty."
 	icon_state = "cartridge_bootleg"
 
 // blank cartridge for crafting's sake, can be made at the service lathe
 /obj/item/blank_coffee_cartridge
 	name = "blank coffee cartridge"
-	RU_NAMES_LIST_INIT("blank coffee cartridge", "пустой кофе-картридж", "пустого кофе-картриджа", "пустому кофе-картриджу", "пустой кофе-картридж", "пустым кофе-картриджем", "пустом кофе-картридже")
 	desc = "A blank coffee cartridge, ready to be filled with coffee paste."
 	icon = 'icons/obj/food/cartridges.dmi'
 	icon_state = "cartridge_blank"
@@ -482,7 +476,6 @@
 //now, how do you store coffee carts? well, in a rack, of course!
 /obj/item/storage/fancy/coffee_cart_rack
 	name = "coffeemaker cartridge rack"
-	RU_NAMES_LIST_INIT("coffeemaker", "стойка для кофе-картриджей", "стойки для кофе-картриджей", "стойке для кофе-картриджей", "стойку для кофе-картриджей", "стойкой для кофе-картриджей", "стойке для кофе-картриджей")
 	desc = "A small rack for storing coffeemaker cartridges."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "coffee_cartrack4"
@@ -504,7 +497,6 @@
 
 /obj/machinery/coffeemaker/impressa
 	name = "impressa coffeemaker"
-	RU_NAMES_LIST_INIT("impressa coffeemaker", "кофемашина Impressa", "кофемашины Impressa", "кофемашине Impressa", "кофемашину Impressa", "кофемашиной Impressa", "кофемашине Impressa")
 	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
 	icon = 'icons/obj/machines/coffeemaker.dmi'
 	icon_state = "coffeemaker_impressa"

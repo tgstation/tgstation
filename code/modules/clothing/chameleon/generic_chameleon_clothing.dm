@@ -102,7 +102,6 @@ do { \
 /obj/item/clothing/gloves/chameleon
 	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
-	RU_NAMES_LIST_INIT("insulated gloves", "пара изоляционных перчаток", "пары изоляционных перчаток", "паре изоляционных перчаток", "пару изоляционных перчаток", "парой изоляционных перчаток", "паре изоляционных перчаток")
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
 	greyscale_colors = null

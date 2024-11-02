@@ -1,6 +1,5 @@
 /obj/item/wrench
 	name = "wrench"
-	RU_NAMES_LIST_INIT("wrench", "гаечный ключ", "гаечного ключа", "гаечному ключу", "гаечный ключ", "гаечным ключом", "гаечном ключе")
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wrench"
@@ -41,7 +40,6 @@
 
 /obj/item/wrench/abductor
 	name = "alien wrench"
-	RU_NAMES_LIST_INIT("alien wrench", "инопланетный гаечный ключ", "инопланетного гаечного ключа", "инопланетному гаечному ключу", "инопланетный гаечный ключ", "инопланетным гаечным ключом", "инопланетном гаечном ключе")
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/antags/abductor.dmi'
 	belt_icon_state = "wrench_alien"
@@ -52,7 +50,6 @@
 
 /obj/item/wrench/medical
 	name = "medical wrench"
-	RU_NAMES_LIST_INIT("medical wrench", "медицинский гаечный ключ", "медицинского гаечного ключа", "медицинскому гаечному ключу", "медицинский гаечный ключ", "медицинским гаечным ключом", "медицинском гаечном ключе")
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
 	inhand_icon_state = "wrench_medical"
@@ -89,7 +86,6 @@
 
 /obj/item/wrench/cyborg
 	name = "hydraulic wrench"
-	RU_NAMES_LIST_INIT("hydraulic wrench", "гидравлический гаечный ключ", "гидравлического гаечного ключа", "гидравлическому гаечному ключу", "гидравлический гаечный ключ", "гидравлическим гаечным ключом", "гидравлическом гаечном ключе")
 	desc = "An advanced robotic wrench, powered by internal hydraulics. Twice as fast as the handheld version."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_wrench"
@@ -97,7 +93,6 @@
 
 /obj/item/wrench/combat
 	name = "combat wrench"
-	RU_NAMES_LIST_INIT("combat wrench", "боевой гаечный ключ", "боевого гаечного ключа", "боевому гаечному ключу", "боевой гаечный ключ", "боевым гаечным ключом", "боевом гаечном ключе")
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
 	inhand_icon_state = "wrench_combat"
@@ -134,7 +129,6 @@
 
 /obj/item/wrench/bolter
 	name = "bolter wrench"
-	RU_NAMES_LIST_INIT("bolter wrench", "затворный гаечный ключ", "затворного гаечного ключа", "затворному гаечному ключу", "затворный гаечный ключ", "затворным гаечным ключом", "затворном гаечном ключе")
 	desc = "A wrench designed to grab into airlock's bolting system and raise it regardless of the airlock's power status."
 	icon_state = "bolter_wrench"
 	inhand_icon_state = "bolter_wrench"

@@ -1,7 +1,6 @@
 /obj/item/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
-	RU_NAMES_LIST_INIT("mop", "швабра", "швабры", "швабре", "швабру", "шваброй", "швабре")
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mop"
 	inhand_icon_state = "mop"

@@ -2,7 +2,6 @@
 
 /obj/machinery/processor
 	name = "food processor"
-	RU_NAMES_LIST_INIT("food processor", "комбайн", "комбайна", "комбайну", "комбайн", "комбайном", "комбайне")
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	base_icon_state = "processor"
@@ -193,7 +192,6 @@
 
 /obj/machinery/processor/slime
 	name = "slime processor"
-	RU_NAMES_LIST_INIT("slime processor", "переработчик слаймов", "переработчика слаймов", "переработчику слаймов", "переработчик слаймов", "переработчиком слаймов", "переработчике слаймов")
 	base_icon_state = "processor_slime"
 	icon_state = "processor_slime"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."

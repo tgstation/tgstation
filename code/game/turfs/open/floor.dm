@@ -1,7 +1,6 @@
 /// Anything above a lattice should go here.
 /turf/open/floor
 	name = "floor"
-	RU_NAMES_LIST_INIT("floor", "плитка", "плитку", "плитке", "плитку", "плиткой", "плитке")
 	icon = 'icons/turf/floors.dmi'
 	base_icon_state = "floor"
 	baseturfs = /turf/open/floor/plating

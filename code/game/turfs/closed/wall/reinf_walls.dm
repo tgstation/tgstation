@@ -1,6 +1,5 @@
 /turf/closed/wall/r_wall
 	name = "reinforced wall"
-	RU_NAMES_LIST_INIT("reinforced wall", "усиленная стена", "усиленной стены", "усиленной стене", "усиленную стену", "усиленной стеной", "усиленной стене")
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "reinforced_wall-0"

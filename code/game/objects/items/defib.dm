@@ -4,7 +4,6 @@
 
 /obj/item/defibrillator
 	name = "defibrillator"
-	RU_NAMES_LIST_INIT("defibrillator", "дефибриллятор", "дефибриллятора", "дефибриллятору", "дефибриллятор", "дефибриллятором", "дефибрилляторе")
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
 	Has a rear bracket for attachments to wall mounts and medical cyborgs."
 	icon = 'icons/obj/medical/defib.dmi'

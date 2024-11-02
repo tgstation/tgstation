@@ -6,7 +6,6 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	name = "personal AI device"
-	RU_NAMES_LIST_INIT("personal AI device", "устройство ПИИ", "устройства ПИИ", "устройству ПИИ", "устройство ПИИ", "устройством ПИИ", "устройстве ПИИ")
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT

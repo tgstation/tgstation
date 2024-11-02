@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/adult/drone
 	name = "alien drone"
-	RU_NAMES_LIST_INIT("alien", "трутень Чужих", "трутня Чужих", "трутню Чужих", "трутня Чужих", "трутнем Чужих", "трутне Чужих")
 	caste = "d"
 	maxHealth = 125
 	health = 125

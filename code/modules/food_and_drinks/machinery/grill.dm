@@ -5,7 +5,6 @@
 
 /obj/machinery/grill
 	name = "Barbeque grill"
-	RU_NAMES_LIST_INIT("Barbeque grill", "грилль для барбекю", "грилля для барбекю", "гриллю для барбекю", "грилль для барбекю", "гриллем для барбекю", "грилле для барбекю")
 	desc = "Just like the old days. Smokes items over a light heat"
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grill_open"

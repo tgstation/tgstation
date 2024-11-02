@@ -259,7 +259,6 @@
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
 	name = "wall"
-	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle_wall-0"
@@ -332,7 +331,6 @@
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
-	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"

@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/adult
 	name = "alien"
-	RU_NAMES_LIST_INIT("alien", "чужой", "чужого", "чужому", "чужого", "чужим", "чужом")
 	icon_state = "alien"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)

@@ -1,7 +1,6 @@
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
-	RU_NAMES_LIST_INIT("gas analyzer", "газоанализатор", "газоанализатора", "газоанализатору", "газоанализатор", "газоанализатором", "газоанализаторе")
 	custom_price = PAYCHECK_LOWER * 0.9
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "analyzer"
@@ -227,7 +226,6 @@
 /obj/item/analyzer/ranged
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
 	name = "long-range gas analyzer"
-	RU_NAMES_LIST_INIT("long-range gas analyzer", "газоанализатор дальнего действия", "газоанализатора дальнего действия", "газоанализатору дальнего действия", "газоанализатор дальнего действия", "газоанализатором дальнего действия", "газоанализаторе дальнего действия")
 	icon_state = "analyzerranged"
 	worn_icon_state = "analyzer"
 	w_class = WEIGHT_CLASS_NORMAL

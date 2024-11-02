@@ -20,7 +20,6 @@
 
 /mob/living/basic/living_floor
 	name = "floor"
-	RU_NAMES_LIST_INIT("floor", "плитка", "плитку", "плитке", "плитку", "плиткой", "плитке")
 	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"

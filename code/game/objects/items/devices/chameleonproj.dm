@@ -1,6 +1,5 @@
 /obj/item/chameleon
 	name = "chameleon projector"
-	RU_NAMES_LIST_INIT("chameleon projector", "маскировочный проектор", "маскировочного проектора", "маскировочному проектору", "маскировочный проектор", "маскировочным проектором", "маскировочном проекторе")
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	obj_flags = CONDUCTS_ELECTRICITY

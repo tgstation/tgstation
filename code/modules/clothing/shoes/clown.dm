@@ -58,7 +58,6 @@
 
 /obj/item/clothing/shoes/clown_shoes/moffers
 	name = "moffers"
-	RU_NAMES_LIST_INIT("moffers", "мофферсы", "мофферсов", "мофферсам", "мофферсы", "мофферсами", "мофферсах")
 	desc = "No moths were harmed in the making of these slippers."
 	icon_state = "moffers"
 	squeak_sound = list('sound/effects/footstep/moffstep01.ogg'=1) //like sweet music to my ears

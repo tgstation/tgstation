@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer
 	name = "deep fryer"
-	RU_NAMES_LIST_INIT("deep fryer", "фритюрница", "фритюрницы", "фритюрнице", "фритюрницу", "фритюрницей", "фритюрнице")
 	desc = "Deep fried <i>everything</i>."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "fryer_off"

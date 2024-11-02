@@ -3,7 +3,6 @@
 
 /obj/item/borg_chameleon
 	name = "cyborg chameleon projector"
-	RU_NAMES_LIST_INIT("cyborg chameleon projector", "маскировочный проектор киборга", "маскировочного проектора киборга", "маскировочному проектору киборга", "маскировочный проектор киборга", "маскировочным проектором киборга", "маскировочном проекторе киборга")
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	obj_flags = CONDUCTS_ELECTRICITY

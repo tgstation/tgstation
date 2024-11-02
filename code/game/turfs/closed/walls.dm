@@ -1,6 +1,5 @@
 /turf/closed/wall
 	name = "wall"
-	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	gender = FEMALE
 	desc = "A huge chunk of iron used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'

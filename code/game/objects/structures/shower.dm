@@ -28,7 +28,6 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 
 /obj/machinery/shower
 	name = "shower"
-	RU_NAMES_LIST_INIT("shower", "душ", "душа", "душу", "душ", "душем", "душе")
 	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance! Passively replenishes itself with water when not in use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
@@ -353,7 +352,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/structure/showerframe
 	name = "shower frame"
-	RU_NAMES_LIST_INIT("shower frame", "каркас душа", "каркаса душа", "каркасу душа", "каркас душа", "каркасом душа", "каркасе душа")
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower_frame"
 	desc = "A shower frame, that needs a water recycler to finish construction."
@@ -390,7 +388,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/effect/mist
 	name = "mist"
-	RU_NAMES_LIST_INIT("mist", "туман", "тумана", "туману", "туман", "туманом", "тумане")
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER

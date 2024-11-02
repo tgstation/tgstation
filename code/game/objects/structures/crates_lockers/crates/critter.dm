@@ -1,6 +1,5 @@
 /obj/structure/closet/crate/critter
 	name = "critter crate"
-	RU_NAMES_LIST_INIT("critter crate", "ящик для животных", "ящика для животных", "ящику для животных", "ящик для животных", "ящиком для животных", "ящике для животных")
 	desc = "A crate designed for safe transport of animals. It has an oxygen tank for safe transport in space."
 	icon_state = "crittercrate"
 	base_icon_state = "crittercrate"

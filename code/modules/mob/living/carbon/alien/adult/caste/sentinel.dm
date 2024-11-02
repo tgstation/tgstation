@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/adult/sentinel
 	name = "alien sentinel"
-	RU_NAMES_LIST_INIT("alien sentinel", "страж Чужих", "стража Чужих", "стражу Чужих", "стража Чужих", "стражем Чужих", "страже Чужих")
 	caste = "s"
 	maxHealth = 150
 	health = 150

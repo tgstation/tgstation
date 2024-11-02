@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/adult/royal/praetorian
 	name = "alien praetorian"
-	RU_NAMES_LIST_INIT("alien praetorian", "преторианец Чужих", "преторианца Чужих", "преторианцу Чужих", "преторианца Чужих", "преторианцем Чужих", "преторианце Чужих")
 	caste = "p"
 	maxHealth = 250
 	health = 250

@@ -2,7 +2,6 @@
 
 /obj/item/fishing_rod
 	name = "fishing rod"
-	RU_NAMES_LIST_INIT("fishing rod", "удочка", "удочки", "удочке", "удочку", "удочкой", "удочке")
 	desc = "You can fish with this."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "fishing_rod"

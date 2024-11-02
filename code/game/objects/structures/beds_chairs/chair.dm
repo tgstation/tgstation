@@ -1,6 +1,5 @@
 /obj/structure/chair
 	name = "chair"
-	RU_NAMES_LIST_INIT("chair", "стул", "стула", "стулу", "стул", "стулом", "стуле")
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
@@ -310,7 +309,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/item/chair
 	name = "chair"
-	RU_NAMES_LIST_INIT("chair", "стул", "стула", "стулу", "стул", "стулом", "стуле")
 	desc = "Bar brawl essential."
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair_toppled"

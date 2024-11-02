@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/larva
 	name = "alien larva"
-	RU_NAMES_LIST_INIT("alien larva", "грудолом Чужих", "грудолома Чужих", "грудолому Чужих", "грудолома Чужих", "грудоломом Чужих", "грудоломе Чужих")
 	real_name = "alien larva"
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB

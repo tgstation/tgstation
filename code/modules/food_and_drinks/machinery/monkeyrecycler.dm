@@ -2,7 +2,6 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	RU_NAMES_LIST_INIT("monkey recycler", "переработчик обезьян", "переработчика обезьян", "переработчику обезьян", "переработчик обезьян", "переработчиком обезьян", "переработчике обезьян")
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"

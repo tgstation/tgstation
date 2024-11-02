@@ -1,6 +1,5 @@
 /obj/machinery/recharge_station
 	name = "recharging station"
-	RU_NAMES_LIST_INIT("recharging station", "зарядная станция", "зарядной станции", "зарядной станции", "зарядную станцию", "зарядной станцией", "зарядной станции")
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"

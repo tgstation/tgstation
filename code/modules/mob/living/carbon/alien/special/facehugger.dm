@@ -10,7 +10,6 @@
 
 /obj/item/clothing/mask/facehugger
 	name = "alien"
-	RU_NAMES_LIST_INIT("alien", "чужой", "чужого", "чужому", "чужого", "чужим", "чужом")
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "facehugger"

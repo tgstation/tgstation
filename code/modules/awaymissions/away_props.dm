@@ -118,7 +118,6 @@
 
 /obj/structure/pitgrate/hidden
 	name = "floor"
-	RU_NAMES_LIST_INIT("floor", "плитка", "плитку", "плитке", "плитку", "плиткой", "плитке")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE

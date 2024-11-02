@@ -637,7 +637,6 @@
 
 /obj/structure/flora/bush
 	name = "bush"
-	RU_NAMES_LIST_INIT("bush", "куст", "куста", "кусту", "куст", "кустом", "кусте")
 	desc = "Some type of shrubbery. Known for causing considerable economic stress on designers."
 	icon = 'icons/obj/fluff/flora/ausflora.dmi'
 	icon_state = "firstbush_1"

@@ -1,6 +1,5 @@
 /obj/item/radio/intercom
 	name = "station intercom"
-	RU_NAMES_LIST_INIT("station intercom", "интерком станции", "интеркома станции", "интеркому станции", "интерком станции", "интеркомом станции", "интеркоме станции")
 	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
@@ -25,7 +24,6 @@
 
 /obj/item/radio/intercom/prison
 	name = "receive-only intercom"
-	RU_NAMES_LIST_INIT("receive-only intercom", "интерком для приема", "интеркома для приема", "интеркому для приема", "интерком для приема", "интеркомом для приема", "интеркоме для приема")
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
 	icon_state = "intercom_prison"
 	icon_off = "intercom_prison-p"
@@ -193,7 +191,6 @@
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
-	RU_NAMES_LIST_INIT("intercom frame", "каркас интеркома", "каркаса интеркома", "каркасу интеркома", "каркас интеркома", "каркасом интеркома", "каркасе интеркома")
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
@@ -205,7 +202,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
-	RU_NAMES_LIST_INIT("Confessional intercom", "интерком исповедания", "интеркома исповедания", "интеркому исповедания", "интерком исповедания", "интеркомом исповедания", "интеркоме исповедания")
 	desc = "Talk through this... to confess your many sins. Conceals your voice, to keep them secret."
 	anonymize = TRUE
 	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
@@ -217,7 +213,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/command
 	name = "command intercom"
-	RU_NAMES_LIST_INIT("command intercom", "интерком командования", "интеркома командования", "интеркому командования", "интерком командования", "интеркомом командования", "интеркоме командования")
 	desc = "The command's special free-frequency intercom. It's a versatile tool that can be tuned to any frequency, granting you access to channels you're not supposed to be on. Plus, it comes equipped with a built-in voice amplifier for crystal-clear communication."
 	icon_state = "intercom_command"
 	freerange = TRUE
@@ -226,14 +221,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/syndicate
 	name = "syndicate intercom"
-	RU_NAMES_LIST_INIT("syndicate intercom", "интерком синдиката", "интеркома синдиката", "интеркому синдиката", "интерком синдиката", "интеркомом синдиката", "интеркоме синдиката")
 	desc = "Talk smack through this."
 	command = TRUE
 	special_channels = RADIO_SPECIAL_SYNDIE
 
 /obj/item/radio/intercom/syndicate/freerange
 	name = "syndicate wide-band intercom"
-	RU_NAMES_LIST_INIT("syndicate wide-band intercom", "широкополосный интерком синдиката", "широкополосного интеркома синдиката", "широкополосному интеркому синдиката", "широкополосный интерком синдиката", "широкополосным интеркомом синдиката", "широкополосном интеркоме синдиката")
 	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	freerange = TRUE
 

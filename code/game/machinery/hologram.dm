@@ -35,7 +35,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad
 	name = "holopad"
-	RU_NAMES_LIST_INIT("holopad", "голопад", "голопада", "голопаду", "голопад", "голопадом", "голопаде")
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
@@ -115,7 +114,6 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
-	RU_NAMES_LIST_INIT("secure holopad", "защищенный голопад", "защищенного голопада", "защищенному голопаду", "защищенный голопад", "защищенным голопадом", "защищенном голопаде")
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 

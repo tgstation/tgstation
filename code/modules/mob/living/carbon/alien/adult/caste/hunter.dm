@@ -1,6 +1,5 @@
 /mob/living/carbon/alien/adult/hunter
 	name = "alien hunter"
-	RU_NAMES_LIST_INIT("alien hunter", "охотник Чужих", "охотника Чужих", "охотнику Чужих", "охотника Чужих", "охотником Чужих", "охотнике Чужих")
 	caste = "h"
 	maxHealth = 125
 	health = 125

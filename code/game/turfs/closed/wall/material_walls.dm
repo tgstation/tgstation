@@ -1,6 +1,5 @@
 /turf/closed/wall/material
 	name = "wall"
-	RU_NAMES_LIST_INIT("wall", "стена", "стены", "стене", "стену", "стеной", "стене")
 	desc = "A huge chunk of material used to separate rooms."
 	icon = 'icons/turf/walls/material_wall.dmi'
 	icon_state = "material_wall-0"

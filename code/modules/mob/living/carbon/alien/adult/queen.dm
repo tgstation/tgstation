@@ -35,7 +35,6 @@
 
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
-	RU_NAMES_LIST_INIT("alien queen", "королева Чужих", "королевы Чужих", "королеве Чужих", "королеву Чужих", "королевой Чужих", "королеве Чужих")
 	caste = "q"
 	maxHealth = 500
 	health = 500

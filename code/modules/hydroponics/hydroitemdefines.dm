@@ -1,7 +1,6 @@
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
-	RU_NAMES_LIST_INIT("plant analyzer", "анализатор растений", "анализатора растений", "анализатору растений", "анализатор растений", "анализатором растений", "анализаторе растений")
 	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits. Comes with a growth scanning mode and a chemical scanning mode."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "hydro"

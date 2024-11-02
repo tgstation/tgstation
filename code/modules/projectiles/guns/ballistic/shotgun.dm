@@ -265,7 +265,6 @@
 
 /obj/item/gun/ballistic/shotgun/doublebarrel
 	name = "double-barreled shotgun"
-	RU_NAMES_LIST_INIT("double-barreled shotgun", "двуствольный дробовик", "двуствольного дробовика", "двуствольному дробовику", "двуствольный дробовик", "двуствольным дробовиком", "двуствольном дробовике")
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"

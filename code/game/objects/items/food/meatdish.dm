@@ -925,7 +925,6 @@
 
 /obj/item/food/kebab/rat/double
 	name = "double rat-kebab"
-	RU_NAMES_LIST_INIT("double rat-kebab", "двойной крышлык", "двойного крышлыка", "двойному крышлыку", "двойной крышлык", "двойным крышлыком", "двойном крышлыке")
 	icon_state = "doubleratkebab"
 	tastes = list("rat meat" = 2, "metal" = 1)
 	food_reagents = list(

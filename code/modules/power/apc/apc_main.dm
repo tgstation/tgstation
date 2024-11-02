@@ -16,7 +16,6 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	RU_NAMES_LIST_INIT("area power controller", "локальный контроллер питания", "локального контроллера питания", "локальному контроллеру питания", "локальный контроллер питания", "локальным контроллером питания", "локальном контроллере питания")
 	desc = "A control terminal for the area's electrical systems."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"

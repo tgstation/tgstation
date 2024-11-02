@@ -1,6 +1,5 @@
 /obj/item/gun/syringe
 	name = "medical syringe gun"
-	RU_NAMES_LIST_INIT("medical syringe gun", "медицинский шприцемёт", "медицинского шприцимёта", "медицинскому шприцемёту", "медицинский шприцемёт", "медицинским шприцемётом", "медицинском шприцемёте")
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon = 'icons/obj/weapons/guns/syringegun.dmi'
 	icon_state = "medicalsyringegun"

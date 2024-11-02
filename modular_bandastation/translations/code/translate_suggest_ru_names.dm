@@ -70,7 +70,14 @@ ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-sugg
 		"fields" = list(
 			list(
 				"name" = "Suggested List:",
-				"value" = suggested_list,
+				"value" = "\
+					\[\"[data["suggested_list"]["base"]]\"\]\n\
+					nominative = \"[data["suggested_list"][NOMINATIVE]]\"\n\
+					genitive = \"[data["suggested_list"][GENITIVE]]\"\n\
+					dative = \"[data["suggested_list"][DATIVE]]\"\n\
+					accusative = \"[data["suggested_list"][ACCUSATIVE]]\"\n\
+					instrumental = \"[data["suggested_list"][INSTRUMENTAL]]\"\n\
+					prepositional = \"[data["suggested_list"][PREPOSITIONAL]]\"",
 			),
 			list(
 				"name" = "Suggested by:",

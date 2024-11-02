@@ -1,6 +1,5 @@
 /obj/machinery/griddle
 	name = "griddle"
-	RU_NAMES_LIST_INIT("griddle", "гридль", "гридля", "гридлю", "гридль", "гридлем", "гридле")
 	desc = "Because using pans is for pansies."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "griddle1_off"
@@ -225,7 +224,6 @@
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"
-	RU_NAMES_LIST_INIT("griddle stand", "столик гридля", "столика гридля", "столику гридля", "столик гридля", "столиком гридля", "столике гридля")
 	desc = "A more commercialized version of your traditional griddle. What happened to the good old days where people griddled with passion?"
 	variant = "stand"
 

@@ -4,7 +4,6 @@
  */
 /obj/item/wirebrush
 	name = "wirebrush"
-	RU_NAMES_LIST_INIT("wirebrush", "проволочная щётка", "проволочной щётки", "проволочной щётке", "проволочную щётку", "проволочной щёткой", "проволочной щётке")
 	desc = "A tool that is used to scrub the rust thoroughly off walls. Not for hair!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "wirebrush"

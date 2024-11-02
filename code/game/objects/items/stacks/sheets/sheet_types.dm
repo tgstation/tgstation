@@ -153,7 +153,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron
 	name = "iron"
-	RU_NAMES_LIST_INIT("iron", "железо", "железа", "железу", "железо", "железом", "железе")
 	desc = "Sheets made out of iron."
 	singular_name = "iron sheet"
 	icon_state = "sheet-metal"
@@ -280,7 +279,6 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
-	RU_NAMES_LIST_INIT("plasteel", "пласталь", "пластали", "пластали", "пласталь", "пласталью", "пластали")
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
@@ -373,7 +371,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
-	RU_NAMES_LIST_INIT("wooden plank", "деревянная доска", "деревянной доски", "деревянной доске", "деревянную доску", "деревянной доской", "деревянной доске")
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
@@ -858,7 +855,6 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
-	RU_NAMES_LIST_INIT("plastic", "пластик", "пластика", "пластику", "пластик", "пластиком", "пластике")
 	desc = "Compress dinosaur over millions of years, then refine, split and mold, and voila! You have plastic."
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"

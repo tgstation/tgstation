@@ -1,6 +1,5 @@
 /obj/item/kirbyplants
 	name = "potted plant"
-	RU_NAMES_LIST_INIT("potted plant", "комнатное растение", "комнатного растения", "комнатному растению", "комнатное растение", "комнатным растением", "комнатном растении")
 	icon = 'icons/obj/fluff/flora/plants.dmi'
 	icon_state = "plant-01"
 	base_icon_state = "plant-01"
@@ -116,7 +115,6 @@
 
 /obj/item/kirbyplants/random/fullysynthetic
 	name = "plastic potted plant"
-	RU_NAMES_LIST_INIT("plastic potted plant", "пластиковое растение", "пластикового растения", "пластиковому растению", "пластиковое растение", "пластиковым растением", "пластиковом растении")
 	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
 	icon_state = "plant-26"
 	custom_materials = (list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4))

@@ -1,6 +1,5 @@
 /obj/item/stack/sheet
 	name = "sheet"
-	RU_NAMES_LIST_INIT("sheet", "лист", "листа", "листу", "лист", "листом", "листу")
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon_state = "sheet-metal_3"

@@ -117,7 +117,6 @@
 ///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger
 	name = "plunger"
-	RU_NAMES_LIST_INIT("plunger", "вантуз", "вантуза", "вантузу", "вантуз", "вантузом", "вантузе")
 	desc = "It's a plunger for plunging."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
@@ -179,7 +178,6 @@
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	RU_NAMES_LIST_INIT("reinforced plunger", "усиленный вантуз", "усиленного вантуза", "усиленному вантузу", "усиленный вантуз", "усиленным вантузом", "усиленном вантузе")
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 	worn_icon_state = "reinforced_plunger"

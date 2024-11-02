@@ -16,7 +16,6 @@
 
 /obj/machinery/camera
 	name = "security camera"
-	RU_NAMES_LIST_INIT("security camera", "камера наблюдения", "камеры наблюдения", "камере наблюдения", "камеру наблюдения", "камерой наблюдения", "камере наблюдения")
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera"

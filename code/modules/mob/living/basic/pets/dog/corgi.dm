@@ -330,7 +330,6 @@
 //IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/ian
 	name = "Ian"
-	RU_NAMES_LIST_INIT("Ian", "Иан", "Иана", "Иану", "Иана", "Ианом", "Иане")
 	real_name = "Ian" //Intended to hold the name without altering it.
 	gender = MALE
 	desc = "He's the HoP's beloved corgi."
