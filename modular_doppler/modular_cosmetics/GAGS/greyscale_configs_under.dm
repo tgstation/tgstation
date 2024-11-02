@@ -138,7 +138,7 @@
 
 /datum/greyscale_config/giant_scarf/worn
 	name = "Giant Scarf (Worn)"
-	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
 
 
 /// LUNAR JAPANESE SECTION
