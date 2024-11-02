@@ -121,12 +121,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
-/obj/singularity_pull(S, current_size)
+/obj/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return
 	if(!anchored || current_size >= STAGE_FIVE)
-		step_towards(src,S)
+		step_towards(src, singularity)
 
 /obj/get_dumping_location()
 	return get_turf(src)
