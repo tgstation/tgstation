@@ -1,0 +1,4 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - rscadd: "A new cirucit component allows NFC communications"
