@@ -1,6 +1,6 @@
+import { clamp } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { Component, Fragment } from 'react';
-import { clamp } from 'common/math';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -217,12 +217,12 @@ export class Uplink extends Component<{}, UplinkState> {
       // please sync with real_cost on datum/uplink_item or whatever it was called
       const real_cost = () => {
         if (item.progression_minimum <= 0 || !has_progression) return item.cost;
-        var percentage = clamp(
+        let percentage = clamp(
           progression_points / item.progression_minimum,
           0,
           1,
         );
-        var mult = (1 - percentage) * 3 + percentage * 1;
+        let mult = (1 - percentage) * 3 + percentage * 1;
         return Math.ceil(item.cost * mult);
       };
 
