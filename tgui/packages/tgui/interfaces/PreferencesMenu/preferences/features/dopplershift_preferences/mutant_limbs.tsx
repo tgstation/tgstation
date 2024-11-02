@@ -22,6 +22,14 @@ export const chest_type: FeatureChoiced = {
   description: `
   Add a cybernetic chassis to your character.
 `,
+  component: FeatureDropdownInput,
+};
+
+export const markings_head: FeatureChoiced = {
+  name: 'Head Markings',
+  description: `
+  Add a suitable marking to your character's head.
+  `,
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
   ) => {

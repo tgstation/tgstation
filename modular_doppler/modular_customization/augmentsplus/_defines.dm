@@ -1,0 +1,1 @@
+#define PREFERENCE_CATEGORY_MARKINGS "markings"

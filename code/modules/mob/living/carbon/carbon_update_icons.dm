@@ -533,7 +533,13 @@
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(owner))
 			continue
+		var/list/prior = .
+		var/priorjoined = prior.Join()
+		testing("return is [priorjoined]")
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+		var/list/after = .
+		var/afterjoined = after.Join()
+		testing("modified return is [afterjoined]")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
