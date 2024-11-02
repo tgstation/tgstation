@@ -157,7 +157,7 @@
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
-		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
+		force_dismount(yeet_mob, gentle=!user.combat_mode) // gentle on help, byeeee if not
 
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
