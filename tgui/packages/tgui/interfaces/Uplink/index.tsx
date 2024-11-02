@@ -99,8 +99,9 @@ type ItemExtraData = Item & {
 };
 
 function real_cost(item: UplinkItem, uplink: UplinkData) {
-  if (item.progression_minimum <= 0 || !uplink.has_progression)
+  if (item.progression_minimum <= 0 || !uplink.has_progression) {
     return item.cost;
+  }
   let percentage = clamp(
     uplink.progression_points / item.progression_minimum,
     0,
