@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/heart_attack
 	weight = 20
 	max_occurrences = 2
-	min_players = 40 // To avoid shafting lowpop
+	min_players = 20 // To avoid shafting lowpop
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember's heart gives out."
 	min_wizard_trigger_potency = 6

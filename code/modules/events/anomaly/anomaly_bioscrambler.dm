@@ -2,7 +2,7 @@
 	name = "Anomaly: Bioscrambler"
 	typepath = /datum/round_event/anomaly/anomaly_bioscrambler
 
-	min_players = 10
+	min_players = 5
 	max_occurrences = 5
 	weight = 20
 	description = "This anomaly replaces the limbs of nearby people."

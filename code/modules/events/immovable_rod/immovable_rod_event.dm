@@ -3,7 +3,7 @@
 /datum/round_event_control/immovable_rod
 	name = "Immovable Rod"
 	typepath = /datum/round_event/immovable_rod
-	min_players = 15
+	min_players = 5
 	max_occurrences = 5
 	category = EVENT_CATEGORY_SPACE
 	description = "The station passes through an immovable rod."

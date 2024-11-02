@@ -7,7 +7,7 @@
 	description = "Causes an earthquake, demolishing anything caught in the fault."
 	typepath = /datum/round_event/earthquake
 	category = EVENT_CATEGORY_ENGINEERING
-	min_players = 20
+	min_players = 10
 	max_occurrences = 3
 	earliest_start = 35 MINUTES
 	weight = 7

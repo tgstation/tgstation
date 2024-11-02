@@ -517,7 +517,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
-	minimum_players = 35
+	minimum_players = 15
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -719,7 +719,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	weight = 5
 	cost = 8
 	scaling_cost = 4
-	minimum_players = 10
+	minimum_players = 5
 	antag_cap = list("denominator" = 20, "offset" = 1)
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
 	/// What fraction is added to the antag cap for each additional scale
