@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(limb_loadout_options, init_loadout_limb_options())
 		return
 
 	var/obj/item/organ/internal/new_organ = new limb_path()
-	new_organ.Insert(apply_to, special = TRUE, drop_if_replaced = FALSE)
+	new_organ.Insert(apply_to, special = TRUE)
 
 /datum/limb_option_datum/organ/cyberheart
 	name = "Cybernetic Heart"
