@@ -188,7 +188,7 @@
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
-	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that scientist a beer."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
