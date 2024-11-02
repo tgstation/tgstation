@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "HPLC computes lower & upper mass ranges & ETA for reagents correctly"
