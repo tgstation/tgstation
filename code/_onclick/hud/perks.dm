@@ -24,12 +24,12 @@
 	compact = !compact
 	var/datum/hud/user_hud = usr_is_living.hud_used
 	if(compact)
-		for(var/atom/movable/screen/perk/perk_on_hud in perks_on_hud)
+		for(var/atom/movable/screen/perk/perk_on_hud as anything in perks_on_hud)
 			perks_compacted += perk_on_hud
 			user_hud.infodisplay -= perk_on_hud
 		user_hud.show_hud(user_hud.hud_version)
 	else
-		for(var/atom/movable/screen/perk/perk_compacted in perks_compacted)
+		for(var/atom/movable/screen/perk/perk_compacted as anything in perks_compacted)
 			user_hud.infodisplay += perk_compacted
 			perks_compacted -= perk_compacted
 		user_hud.show_hud(user_hud.hud_version)
