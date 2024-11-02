@@ -306,7 +306,7 @@
 		hity = target.pixel_y + rand(-8, 8)
 
 	if(isturf(target) && hitsound_wall)
-		playsound(loc, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
+		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
 
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
@@ -355,7 +355,7 @@
 		return 5
 	if(!damage)
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
-	return clamp((damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 1
+	return clamp(damage * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 1
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -420,20 +420,27 @@
 	var/turf/target_turf = get_turf(target)
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(target_turf, starting)), 5, 100))
-	target = select_target(target_turf, target)
-	process_hit_loop(target)
+	process_hit_loop(select_target(target_turf, target))
 
+/*
+ * Main projectile hit loop code
+ * As long as there are valid targets on the hit target's tile, we will loop through all the ones that we have not hit
+ * (and thus invalidated) and try to hit them until either no targets remain or we've been deleted.
+ */
 /obj/projectile/proc/process_hit_loop(atom/target)
 	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/turf/target_turf = get_turf(target)
 	while (target && !QDELETED(src))
+		// Doublehitting can be an issue with slow projectiles or when the server is chugging
 		impacted[WEAKREF(target)] = TRUE
 		var/mode = prehit_pierce(target)
 		if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
 			qdel(src)
 			return
 
+		// If we've phasing through a target, first set ourselves as phasing and then try to locate a new one
 		if(mode == PROJECTILE_PIERCE_PHASE)
 			if(!(movement_type & PHASING))
 				temporary_unstoppable_movement = TRUE
@@ -452,15 +459,18 @@
 		if(mode == PROJECTILE_PIERCE_HIT)
 			pierces += 1
 
+		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
 		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
 		if (result != BULLET_ACT_FORCE_PIERCE && pierces >= max_pierces)
 			qdel(src)
 			return
 
+		// If we're not piercing or phasing, delete ourselves
 		if (result != BULLET_ACT_FORCE_PIERCE && mode != PROJECTILE_PIERCE_HIT && mode != PROJECTILE_PIERCE_PHASE)
 			qdel(src)
 			return
 
+		// We've piercing though this one, go look for a new target
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING

@@ -93,8 +93,7 @@
 
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE)
 	. = ..()
-	var/blocked = check_projectile_armor(def_zone, proj)
-
+	var/blocked = check_projectile_armor(def_zone, proj, silent = TRUE)
 	if(blocked >= 100)
 		if(. == BULLET_ACT_HIT && proj.is_hostile_projectile())
 			apply_projectile_effects(proj, def_zone, blocked)
@@ -102,20 +101,6 @@
 
 	var/turf/our_turf = get_turf(src)
 	var/hit_limb_zone = check_hit_limb_zone_name(def_zone)
-	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_limb_zone)
-	if (proj.damage && proj.damage_type == BRUTE)
-		if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
-			create_splatter(angle2dir(proj.angle))
-			if(prob(33))
-				add_splatter_floor(our_turf)
-		else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
-			var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
-			var/damage_dealt = ((proj.damage / (1 - (blocked / 100))) * random_damage_mult)
-
-			var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
-			if (spark_amount > 0)
-				do_sparks(spark_amount, FALSE, src)
-
 	var/organ_hit_text = ""
 	if (hit_limb_zone)
 		organ_hit_text = "in \the [parse_zone_with_bodypart(hit_limb_zone)]"
@@ -162,7 +147,29 @@
 	if(proj.dismemberment)
 		check_projectile_dismemberment(proj, def_zone)
 
+	if (proj.damage && armor_check < 100)
+		create_projectile_hit_effects(proj, def_zone)
+
 	return BULLET_ACT_HIT
+
+/mob/living/create_projectile_hit_effects(obj/projectile/proj, def_zone)
+	if (proj.damage_type != BRUTE)
+		return
+
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(check_hit_limb_zone_name(def_zone))
+	if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+		create_splatter(angle2dir(proj.angle))
+		if(prob(33))
+			add_splatter_floor(our_turf)
+		return
+
+	if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
+		var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
+		var/damage_dealt = ((proj.damage / (1 - (blocked / 100))) * random_damage_mult)
+
+		var/spark_amount = round((damage_dealt / PROJECTILE_DAMAGE_PER_ROBOTIC_SPARK))
+		if (spark_amount > 0)
+			do_sparks(spark_amount, FALSE, src)
 
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return run_armor_check(def_zone, impacting_projectile.armor_flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
