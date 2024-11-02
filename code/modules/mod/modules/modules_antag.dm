@@ -12,7 +12,6 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding, /obj/item/mod/module/headprotector)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
@@ -37,12 +36,12 @@
 	laser = 15
 	energy = 15
 
-/obj/item/mod/module/armor_booster/on_suit_activation()
+/obj/item/mod/module/armor_booster/on_part_activation()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/armor_booster/on_part_deactivation(deleting = FALSE)
 	if(deleting)
 		return
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
@@ -53,36 +52,38 @@
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
-	mod.slowdown -= actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
+		part.slowdown -= speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
+	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	if(!deleting)
 		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
-	mod.slowdown += actual_speed_added
-	mod.wearer.update_equipment_speed_mods()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
+		part.slowdown += speed_added / length(mod_parts)
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
+	mod.wearer.update_equipment_speed_mods()
 	spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
@@ -126,12 +127,12 @@
 	. = ..()
 	charges = max_charges
 
-/obj/item/mod/module/energy_shield/on_suit_activation()
+/obj/item/mod/module/energy_shield/on_part_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/energy_shield/on_part_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -182,10 +183,10 @@
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
 	required_slots = list(ITEM_SLOT_BACK)
 
-/obj/item/mod/module/anti_magic/on_suit_activation()
+/obj/item/mod/module/anti_magic/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/anti_magic/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
 
 /obj/item/mod/module/anti_magic/wizard
@@ -197,10 +198,10 @@
 	icon_state = "magic_neutralizer"
 	required_slots = list()
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_activation()
+/obj/item/mod/module/anti_magic/wizard/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.
@@ -260,10 +261,10 @@
 	incompatible_modules = list(/obj/item/mod/module/noslip)
 	required_slots = list(ITEM_SLOT_FEET)
 
-/obj/item/mod/module/noslip/on_suit_activation()
+/obj/item/mod/module/noslip/on_part_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 
-/obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/noslip/on_part_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
@@ -279,7 +280,7 @@
 	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
 	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
-/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+/obj/item/mod/module/springlock/bite_of_87/on_part_activation()
 	..()
 	if(check_holidays(APRIL_FOOLS) || prob(1))
 		mod.set_mod_color("#b17f00")
@@ -485,11 +486,11 @@
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
 
-/obj/item/mod/module/demoralizer/on_suit_activation()
+/obj/item/mod/module/demoralizer/on_part_activation()
 	var/datum/demoralise_moods/module/mood_category = new()
 	demoralizer = new(mod.wearer, 7, TRUE, mood_category)
 
-/obj/item/mod/module/demoralizer/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/demoralizer/on_part_deactivation(deleting = FALSE)
 	QDEL_NULL(demoralizer)
 
 /obj/item/mod/module/infiltrator
@@ -512,7 +513,7 @@
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
 	mod.item_flags &= ~EXAMINE_SKIP
 
-/obj/item/mod/module/infiltrator/on_suit_activation()
+/obj/item/mod/module/infiltrator/on_part_activation()
 	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
 	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -521,7 +522,7 @@
 	if(istype(head_cover))
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 
-/obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/infiltrator/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
 	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
@@ -584,7 +585,16 @@
 		if(disrupted.on_saboteur(src, 1 MINUTES))
 			mod.add_charge(DEFAULT_CHARGE_DRAIN * 250)
 
-/obj/item/mod/module/stealth/wraith/on_suit_activation()
+/obj/item/mod/module/stealth/wraith/on_part_activation()
+	start_stealth()
+
+/obj/item/mod/module/stealth/wraith/on_part_deactivation(deleting)
+	if(bumpoff)
+		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+
+/obj/item/mod/module/stealth/wraith/proc/start_stealth()
 	if(bumpoff)
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
@@ -593,16 +603,10 @@
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
 
-/obj/item/mod/module/stealth/wraith/on_suit_deactivation(deleting)
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
-	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
-
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
 	. = ..()
 	if(mod.active)
-		addtimer(CALLBACK(src, PROC_REF(on_suit_activation)), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(start_stealth)), 5 SECONDS)
 
 /obj/item/mod/module/stealth/wraith/examine_more(mob/user)
 	. = ..()

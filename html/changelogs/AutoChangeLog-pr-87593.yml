@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed Keykeeper's Burden being usable on centcom/away z levels"

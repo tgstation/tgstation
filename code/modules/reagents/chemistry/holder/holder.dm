@@ -257,14 +257,14 @@
 		if(!include_subtypes)
 			break
 
-	//inform others about our reagents being removed
-	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
-
 	//update the holder & handle reactions
 	update_total()
 	if(!safety)
 		handle_reactions()
+
+	//inform others about our reagents being removed
+	for(var/datum/reagent/removed_reagent as anything in removed_reagents)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, removed_reagents[removed_reagent])
 
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 

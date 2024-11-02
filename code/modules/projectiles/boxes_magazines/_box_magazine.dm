@@ -81,6 +81,15 @@
 
 	return readout.Join("\n")
 
+///list of every bullet in the box
+///forces all bullets to lazyload
+/obj/item/ammo_box/proc/ammo_list()
+	for (var/i in 1 to length(stored_ammo))
+		if (ispath(stored_ammo[i]))
+			var/casing_type = stored_ammo[i]
+			stored_ammo[i] = new casing_type(src)
+	return stored_ammo.Copy()
+
 /**
  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
  *
@@ -159,7 +168,7 @@
 
 	if(istype(tool, /obj/item/ammo_box))
 		var/obj/item/ammo_box/other_box = tool
-		for(var/obj/item/ammo_casing/casing in other_box.stored_ammo)
+		for(var/obj/item/ammo_casing/casing in other_box.ammo_list())
 			var/did_load = give_round(casing, replace_spent)
 			if(did_load)
 				other_box.stored_ammo -= casing
@@ -248,15 +257,6 @@
 		if(ispath(bullet) || bullet && (bullet.loaded_projectile || countempties))
 			boolets++
 	return boolets
-
-///list of every bullet in the magazine
-///forces all bullets to lazyload
-/obj/item/ammo_box/magazine/proc/ammo_list()
-	for (var/i in 1 to length(stored_ammo))
-		if (ispath(stored_ammo[i]))
-			var/casing_type = stored_ammo[i]
-			stored_ammo[i] = new casing_type(src)
-	return stored_ammo.Copy()
 
 ///drops the entire contents of the magazine on the floor
 /obj/item/ammo_box/magazine/proc/empty_magazine()

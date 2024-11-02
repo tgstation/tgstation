@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - bugfix: "Fixed the maintenance area in the upstairs cargo bay of Wawastation not being flagged as maintenance."
