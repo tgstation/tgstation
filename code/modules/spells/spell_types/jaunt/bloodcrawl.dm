@@ -332,7 +332,7 @@
 		// Heals them back to state one
 		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
+		friend.playsound_local(release_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 
 
