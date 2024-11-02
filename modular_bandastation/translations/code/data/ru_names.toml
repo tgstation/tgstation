@@ -1,0 +1,1223 @@
+#["name"]
+#nominative = "именительный"
+#genitive = "родительный"
+#dative = "дательный"
+#accusative = "винительный"
+#instrumental = "творительный"
+#prepositional = "предложный"
+
+["jaws of life"]
+nominative = "челюсти жизни"
+genitive = "челюстей жизни"
+dative = "челюстям жизни"
+accusative = "челюсти жизни"
+instrumental = "челюстями жизни"
+prepositional = "челюстях жизни"
+
+[holopad]
+nominative = "голопад"
+genitive = "голопада"
+dative = "голопаду"
+accusative = "голопад"
+instrumental = "голопадом"
+prepositional = "голопаде"
+
+["secure holopad"]
+nominative = "защищенный голопад"
+genitive = "защищенного голопада"
+dative = "защищенному голопаду"
+accusative = "защищенный голопад"
+instrumental = "защищенным голопадом"
+prepositional = "защищенном голопаде"
+
+["recharging station"]
+nominative = "зарядная станция"
+genitive = "зарядной станции"
+dative = "зарядной станции"
+accusative = "зарядную станцию"
+instrumental = "зарядной станцией"
+prepositional = "зарядной станции"
+
+["security camera"]
+nominative = "камера наблюдения"
+genitive = "камеры наблюдения"
+dative = "камере наблюдения"
+accusative = "камеру наблюдения"
+instrumental = "камерой наблюдения"
+prepositional = "камере наблюдения"
+
+["motion-sensitive security camera"]
+nominative = "камера наблюдения с датчиком движения"
+genitive = "камеры наблюдения с датчиком движения"
+dative = "камере наблюдения с датчиком движения"
+accusative = "камеру наблюдения с датчиком движения"
+instrumental = "камерой наблюдения с датчиком движения"
+prepositional = "камере наблюдения с датчиком движения"
+
+["Barbeque grill"]
+accusative = "грилль для барбекю"
+dative = "гриллю для барбекю"
+genitive = "грилля для барбекю"
+instrumental = "гриллем для барбекю"
+nominative = "грилль для барбекю"
+prepositional = "грилле для барбекю"
+
+["Confessional intercom"]
+accusative = "интерком исповедания"
+dative = "интеркому исповедания"
+genitive = "интеркома исповедания"
+instrumental = "интеркомом исповедания"
+nominative = "интерком исповедания"
+prepositional = "интеркоме исповедания"
+
+[Ian]
+accusative = "Иана"
+dative = "Иану"
+genitive = "Иана"
+instrumental = "Ианом"
+nominative = "Иан"
+prepositional = "Иане"
+
+[adamantine]
+accusative = "адамантин"
+dative = "адамантину"
+genitive = "адамантина"
+instrumental = "адамантином"
+nominative = "адамантин"
+prepositional = "адамантине"
+
+["air alarm"]
+accusative = "воздушную сигнализацию"
+dative = "воздушной сигнализации"
+genitive = "воздушной сигнализации"
+instrumental = "воздушной сигнализацией"
+nominative = "воздушная сигнализация"
+prepositional = "воздушной сигнализации"
+
+[alien]
+accusative = "чужого"
+dative = "чужому"
+genitive = "чужого"
+instrumental = "чужим"
+nominative = "чужой"
+prepositional = "чужом"
+
+["alien crowbar"]
+accusative = "инопланетный лом"
+dative = "инопланетному лому"
+genitive = "инопланетного лома"
+instrumental = "инопланетным ломом"
+nominative = "инопланетный лом"
+prepositional = "инопланетном ломе"
+
+["alien embryo"]
+accusative = "эмбрион Чужих"
+dative = "эмбриону Чужих"
+genitive = "эмбриона Чужих"
+instrumental = "эмбрионом Чужих"
+nominative = "эмбрион Чужих"
+prepositional = "эмбрионе Чужих"
+
+["alien hunter"]
+accusative = "охотника Чужих"
+dative = "охотнику Чужих"
+genitive = "охотника Чужих"
+instrumental = "охотником Чужих"
+nominative = "охотник Чужих"
+prepositional = "охотнике Чужих"
+
+["alien larva"]
+accusative = "грудолома Чужих"
+dative = "грудолому Чужих"
+genitive = "грудолома Чужих"
+instrumental = "грудоломом Чужих"
+nominative = "грудолом Чужих"
+prepositional = "грудоломе Чужих"
+
+["alien praetorian"]
+accusative = "преторианца Чужих"
+dative = "преторианцу Чужих"
+genitive = "преторианца Чужих"
+instrumental = "преторианцем Чужих"
+nominative = "преторианец Чужих"
+prepositional = "преторианце Чужих"
+
+["alien queen"]
+accusative = "королеву Чужих"
+dative = "королеве Чужих"
+genitive = "королевы Чужих"
+instrumental = "королевой Чужих"
+nominative = "королева Чужих"
+prepositional = "королеве Чужих"
+
+["alien screwdriver"]
+accusative = "инопланетную отвёртку"
+dative = "инопланетной отвёртке"
+genitive = "инопланетной отвёртки"
+instrumental = "инопланетной отвёрткой"
+nominative = "инопланетная отвёртка"
+prepositional = "инопланетной отвёртке"
+
+["alien sentinel"]
+accusative = "стража Чужих"
+dative = "стражу Чужих"
+genitive = "стража Чужих"
+instrumental = "стражем Чужих"
+nominative = "страж Чужих"
+prepositional = "страже Чужих"
+
+["alien welding tool"]
+accusative = "инопланетный сварочный инструмент"
+dative = "инопланетному сварочному инструменту"
+genitive = "инопланетного сварочного инструмента"
+instrumental = "инопланетным сварочным инструментом"
+nominative = "инопланетный сварочный инструмент"
+prepositional = "инопланетном сварочном инструменте"
+
+["alien wirecutters"]
+accusative = "инопланетных кусачек"
+dative = "инопланетным кусачкам"
+genitive = "инопланетных кусачек"
+instrumental = "инопланетными кусачками"
+nominative = "инопланетные кусачки"
+prepositional = "инопланетных кусачках"
+
+["alien wrench"]
+accusative = "инопланетный гаечный ключ"
+dative = "инопланетному гаечному ключу"
+genitive = "инопланетного гаечного ключа"
+instrumental = "инопланетным гаечным ключом"
+nominative = "инопланетный гаечный ключ"
+prepositional = "инопланетном гаечном ключе"
+
+["area power controller"]
+accusative = "локальный контроллер питания"
+dative = "локальному контроллеру питания"
+genitive = "локального контроллера питания"
+instrumental = "локальным контроллером питания"
+nominative = "локальный контроллер питания"
+prepositional = "локальном контроллере питания"
+
+["automated screwdriver"]
+accusative = "автоматическую отвёртку"
+dative = "автоматической отвёртке"
+genitive = "автоматической отвёртки"
+instrumental = "автоматической отвёрткой"
+nominative = "автоматическая отвёртка"
+prepositional = "автоматической отвёртке"
+
+[bananium]
+accusative = "бананиум"
+dative = "бананиуму"
+genitive = "бананиума"
+instrumental = "бананиумом"
+nominative = "бананиум"
+prepositional = "бананиуме"
+
+["beer keg"]
+accusative = "кегу пива"
+dative = "кеге пива"
+genitive = "кеги пива"
+instrumental = "кегой пива"
+nominative = "кега пива"
+prepositional = "кеге пива"
+
+["blank coffee cartridge"]
+accusative = "пустой кофе-картридж"
+dative = "пустому кофе-картриджу"
+genitive = "пустого кофе-картриджа"
+instrumental = "пустым кофе-картриджем"
+nominative = "пустой кофе-картридж"
+prepositional = "пустом кофе-картридже"
+
+["bolter wrench"]
+accusative = "затворный гаечный ключ"
+dative = "затворному гаечному ключу"
+genitive = "затворного гаечного ключа"
+instrumental = "затворным гаечным ключом"
+nominative = "затворный гаечный ключ"
+prepositional = "затворном гаечном ключе"
+
+["bright shard"]
+accusative = "яркий осколок"
+dative = "яркому осколку"
+genitive = "яркого осколка"
+instrumental = "ярким осколком"
+nominative = "яркий осколок"
+prepositional = "ярком осколоке"
+
+[bush]
+accusative = "куст"
+dative = "кусту"
+genitive = "куста"
+instrumental = "кустом"
+nominative = "куст"
+prepositional = "кусте"
+
+[chair]
+accusative = "стул"
+dative = "стулу"
+genitive = "стула"
+instrumental = "стулом"
+nominative = "стул"
+prepositional = "стуле"
+
+["chameleon projector"]
+accusative = "маскировочный проектор"
+dative = "маскировочному проектору"
+genitive = "маскировочного проектора"
+instrumental = "маскировочным проектором"
+nominative = "маскировочный проектор"
+prepositional = "маскировочном проекторе"
+
+["claw hammer"]
+accusative = "молоток-гвоздодер"
+dative = "молотку-гвоздодеру"
+genitive = "молотка-гвоздодера"
+instrumental = "молотком-гвоздодером"
+nominative = "молоток-гвоздодер"
+prepositional = "молотке-гвоздодере"
+
+["cleaner grenade"]
+accusative = "чистящую гранату"
+dative = "чистящей гранате"
+genitive = "чистящей гранаты"
+instrumental = "чистящей гранатой"
+nominative = "чистящая граната"
+prepositional = "чистящей гранате"
+
+[coffeemaker]
+accusative = "кофемашину"
+dative = "кофемашине"
+genitive = "кофемашины"
+instrumental = "кофемашиной"
+nominative = "кофемашина"
+prepositional = "кофемашине"
+
+["coffeemaker cartridge - Botany Blend"]
+accusative = "картридж кофеварки - Botany Blend"
+dative = "картриджу кофеварки - Botany Blend"
+genitive = "картриджа кофеварки - Botany Blend"
+instrumental = "картриджем кофеварки - Botany Blend"
+nominative = "картридж кофеварки - Botany Blend"
+prepositional = "картридже кофеварки - Botany Blend"
+
+["coffeemaker cartridge - Caffè Decaffeinato"]
+accusative = "картридж кофеварки - Caffè Decaffeinato"
+dative = "картриджу кофеварки - Caffè Decaffeinato"
+genitive = "картриджа кофеварки - Caffè Decaffeinato"
+instrumental = "картриджем кофеварки - Caffè Decaffeinato"
+nominative = "картридж кофеварки - Caffè Decaffeinato"
+prepositional = "картридже кофеварки - Caffè Decaffeinato"
+
+["coffeemaker cartridge - Caffè Fantasioso"]
+accusative = "картридж кофеварки - Caffè Fantasioso"
+dative = "картриджу кофеварки - Caffè Fantasioso"
+genitive = "картриджа кофеварки - Caffè Fantasioso"
+instrumental = "картриджем кофеварки - Caffè Fantasioso"
+nominative = "картридж кофеварки - Caffè Fantasioso"
+prepositional = "картридже кофеварки - Caffè Fantasioso"
+
+["coffeemaker cartridge- Caffè Generico"]
+accusative = "картридж кофеварки - Caffè Generico"
+dative = "картриджу кофеварки - Caffè Generico"
+genitive = "картриджа кофеварки - Caffè Generico"
+instrumental = "картриджем кофеварки - Caffè Generico"
+nominative = "картридж кофеварки - Caffè Generico"
+prepositional = "картридже кофеварки - Caffè Generico"
+
+["combat wrench"]
+accusative = "боевой гаечный ключ"
+dative = "боевому гаечному ключу"
+genitive = "боевого гаечного ключа"
+instrumental = "боевым гаечным ключом"
+nominative = "боевой гаечный ключ"
+prepositional = "боевом гаечном ключе"
+
+["command intercom"]
+accusative = "интерком командования"
+dative = "интеркому командования"
+genitive = "интеркома командования"
+instrumental = "интеркомом командования"
+nominative = "интерком командования"
+prepositional = "интеркоме командования"
+
+["critter crate"]
+accusative = "ящик для животных"
+dative = "ящику для животных"
+genitive = "ящика для животных"
+instrumental = "ящиком для животных"
+nominative = "ящик для животных"
+prepositional = "ящике для животных"
+
+["cyborg chameleon projector"]
+accusative = "маскировочный проектор киборга"
+dative = "маскировочному проектору киборга"
+genitive = "маскировочного проектора киборга"
+instrumental = "маскировочным проектором киборга"
+nominative = "маскировочный проектор киборга"
+prepositional = "маскировочном проекторе киборга"
+
+["dark shard"]
+accusative = "темный осколок"
+dative = "темному осколку"
+genitive = "темного осколка"
+instrumental = "темным осколком"
+nominative = "темный осколок"
+prepositional = "темном осколоке"
+
+["deep fryer"]
+accusative = "фритюрницу"
+dative = "фритюрнице"
+genitive = "фритюрницы"
+instrumental = "фритюрницей"
+nominative = "фритюрница"
+prepositional = "фритюрнице"
+
+[dehydrator]
+accusative = "иссушатель"
+dative = "иссушателю"
+genitive = "иссушателя"
+instrumental = "иссушателем"
+nominative = "иссушатель"
+prepositional = "иссушателе"
+
+[diamond]
+accusative = "алмаз"
+dative = "алмазу"
+genitive = "алмаза"
+instrumental = "алмазом"
+nominative = "алмаз"
+prepositional = "алмазе"
+
+["disk compartmentalizer"]
+accusative = "сортировщик дисков"
+dative = "сортировщику дисков"
+genitive = "сортировщика дисков"
+instrumental = "сортировщиком дисков"
+nominative = "сортировщик дисков"
+prepositional = "сортировщике дисков"
+
+["double rat-kebab"]
+accusative = "двойной крышлык"
+dative = "двойному крышлыку"
+genitive = "двойного крышлыка"
+instrumental = "двойным крышлыком"
+nominative = "двойной крышлык"
+prepositional = "двойном крышлыке"
+
+["double-barreled shotgun"]
+accusative = "двуствольный дробовик"
+dative = "двуствольному дробовику"
+genitive = "двуствольного дробовика"
+instrumental = "двуствольным дробовиком"
+nominative = "двуствольный дробовик"
+prepositional = "двуствольном дробовике"
+
+["drink showcase"]
+accusative = "витрину дла напитков"
+dative = "витрине дла напитков"
+genitive = "витрины дла напитков"
+instrumental = "витриной дла напитков"
+nominative = "витрина дла напитков"
+prepositional = "витрине дла напитков"
+
+["drying rack"]
+accusative = "сушилку"
+dative = "сушилке"
+genitive = "сушилки"
+instrumental = "сушилкой"
+nominative = "сушилка"
+prepositional = "сушилке"
+
+["emergency crowbar"]
+accusative = "аварийный лом"
+dative = "аварийному лому"
+genitive = "аварийного лома"
+instrumental = "аварийным ломом"
+nominative = "аварийный лом"
+prepositional = "аварийном ломе"
+
+["emergency welding tool"]
+accusative = "аварийный сварочный инструмент"
+dative = "аварийному сварочному инструменту"
+genitive = "аварийного сварочного инструмента"
+instrumental = "аварийным сварочным инструментом"
+nominative = "аварийный сварочный инструмент"
+prepositional = "аварийном сварочном инструменте"
+
+["engineering crate"]
+accusative = "инженерный ящик"
+dative = "инженерному ящику"
+genitive = "инженерного ящика"
+instrumental = "инженерным ящиком"
+nominative = "инженерный ящик"
+prepositional = "инженерном ящиком"
+
+["experimental welding tool"]
+accusative = "экспериментальный сварочный инструмент"
+dative = "экспериментальному сварочному инструменту"
+genitive = "экспериментального сварочного инструмента"
+instrumental = "экспериментальным сварочным инструментом"
+nominative = "экспериментальный сварочный инструмент"
+prepositional = "экспериментальном сварочном инструменте"
+
+["fishing rod"]
+accusative = "удочку"
+dative = "удочке"
+genitive = "удочки"
+instrumental = "удочкой"
+nominative = "удочка"
+prepositional = "удочке"
+
+[floor]
+accusative = "плитку"
+dative = "плитке"
+genitive = "плитку"
+instrumental = "плиткой"
+nominative = "плитка"
+prepositional = "плитке"
+
+["food cart"]
+accusative = "тележку с едой"
+dative = "тележке с едой"
+genitive = "тележки с едой"
+instrumental = "тележкой с едой"
+nominative = "тележка с едой"
+prepositional = "тележке с едой"
+
+["food cart tent"]
+accusative = "палатку для тележки с едой"
+dative = "палатке для тележки с едой"
+genitive = "палатки для тележки с едой"
+instrumental = "палаткой для тележки с едой"
+nominative = "палатка для тележки с едой"
+prepositional = "палатке для тележки с едой"
+
+["food processor"]
+accusative = "комбайн"
+dative = "комбайну"
+genitive = "комбайна"
+instrumental = "комбайном"
+nominative = "комбайн"
+prepositional = "комбайне"
+
+["gas analyzer"]
+accusative = "газоанализатор"
+dative = "газоанализатору"
+genitive = "газоанализатора"
+instrumental = "газоанализатором"
+nominative = "газоанализатор"
+prepositional = "газоанализаторе"
+
+[gibber]
+accusative = "мясорубку"
+dative = "мясорубке"
+genitive = "мясорубки"
+instrumental = "мясорубкой"
+nominative = "мясорубка"
+prepositional = "мясорубке"
+
+[glass]
+accusative = "стекло"
+dative = "стеклу"
+genitive = "стекла"
+instrumental = "стеклом"
+nominative = "стекло"
+prepositional = "стекле"
+
+[gold]
+accusative = "золото"
+dative = "золоту"
+genitive = "золота"
+instrumental = "золотом"
+nominative = "золото"
+prepositional = "золоте"
+
+[griddle]
+accusative = "гридль"
+dative = "гридлю"
+genitive = "гридля"
+instrumental = "гридлем"
+nominative = "гридль"
+prepositional = "гридле"
+
+["griddle stand"]
+accusative = "столик гридля"
+dative = "столику гридля"
+genitive = "столика гридля"
+instrumental = "столиком гридля"
+nominative = "столик гридля"
+prepositional = "столике гридля"
+
+["hand drill"]
+accusative = "шуруповёрт"
+dative = "шуруповёрту"
+genitive = "шуруповёрта"
+instrumental = "шуруповёртом"
+nominative = "шуруповёрт"
+prepositional = "шуруповёрте"
+
+["heavy crowbar"]
+accusative = "тяжелый лом"
+dative = "тяжелому лому"
+genitive = "тяжелого лома"
+instrumental = "тяжелым ломом"
+nominative = "тяжелый лом"
+prepositional = "тяжелом ломе"
+
+[helmet]
+accusative = "шлем"
+dative = "шлему"
+genitive = "шлема"
+instrumental = "шлемом"
+nominative = "шлем"
+prepositional = "шлеме"
+
+["hydraulic crowbar"]
+accusative = "гидравлический лом"
+dative = "гидравлическому лому"
+genitive = "гидравлического лома"
+instrumental = "гидравлическим ломом"
+nominative = "гидравлический лом"
+prepositional = "гидравлическом ломе"
+
+["hydraulic wrench"]
+accusative = "гидравлический гаечный ключ"
+dative = "гидравлическому гаечному ключу"
+genitive = "гидравлического гаечного ключа"
+instrumental = "гидравлическим гаечным ключом"
+nominative = "гидравлический гаечный ключ"
+prepositional = "гидравлическом гаечном ключе"
+
+["ice cream vat"]
+accusative = "машину для мороженного"
+dative = "машине для мороженного"
+genitive = "машины для мороженного"
+instrumental = "машиной для мороженного"
+nominative = "машина для мороженного"
+prepositional = "машине для мороженного"
+
+["impressa coffeemaker"]
+accusative = "кофемашину Impressa"
+dative = "кофемашине Impressa"
+genitive = "кофемашины Impressa"
+instrumental = "кофемашиной Impressa"
+nominative = "кофемашина Impressa"
+prepositional = "кофемашине Impressa"
+
+["industrial welding tool"]
+accusative = "промышленный сварочный инструмент"
+dative = "промышленному сварочному инструменту"
+genitive = "промышленного сварочного инструмента"
+instrumental = "промышленным сварочным инструментом"
+nominative = "промышленный сварочный инструмент"
+prepositional = "промышленном сварочном инструменте"
+
+["insulated gloves"]
+accusative = "пару изоляционных перчаток"
+dative = "паре изоляционных перчаток"
+genitive = "пары изоляционных перчаток"
+instrumental = "парой изоляционных перчаток"
+nominative = "пара изоляционных перчаток"
+prepositional = "паре изоляционных перчаток"
+
+["integrated welding tool"]
+accusative = "интегрированный сварочный инструмент"
+dative = "интегрированному сварочному инструменту"
+genitive = "интегрированного сварочного инструмента"
+instrumental = "интегрированным сварочным инструментом"
+nominative = "интегрированный сварочный инструмент"
+prepositional = "интегрированном сварочном инструменте"
+
+["intercom frame"]
+accusative = "каркас интеркома"
+dative = "каркасу интеркома"
+genitive = "каркаса интеркома"
+instrumental = "каркасом интеркома"
+nominative = "каркас интеркома"
+prepositional = "каркасе интеркома"
+
+[iron]
+accusative = "железо"
+dative = "железу"
+genitive = "железа"
+instrumental = "железом"
+nominative = "железо"
+prepositional = "железе"
+
+["jaws of death"]
+accusative = "челюсти смерти"
+dative = "челюстям смерти"
+genitive = "челюстей смерти"
+instrumental = "челюстями смерти"
+nominative = "челюсти смерти"
+prepositional = "челюстях смерти"
+
+["kitchen sink"]
+accusative = "кухонную раковину"
+dative = "кухонной раковине"
+genitive = "кухонной раковины"
+instrumental = "кухонной раковиной"
+nominative = "кухонная раковина"
+prepositional = "кухонной раковине"
+
+["large crowbar"]
+accusative = "большой лом"
+dative = "большому лому"
+genitive = "большого лома"
+instrumental = "большим ломом"
+nominative = "большой лом"
+prepositional = "большом ломе"
+
+["lizard plushie"]
+accusative = "плюшевую ящерицу"
+dative = "плюшевой ящерице"
+genitive = "плюшевой ящерицы"
+instrumental = "плюшевой ящерицей"
+nominative = "плюшевая ящерица"
+prepositional = "плюшевой ящерице"
+
+["long-range gas analyzer"]
+accusative = "газоанализатор дальнего действия"
+dative = "газоанализатору дальнего действия"
+genitive = "газоанализатора дальнего действия"
+instrumental = "газоанализатором дальнего действия"
+nominative = "газоанализатор дальнего действия"
+prepositional = "газоанализаторе дальнего действия"
+
+["mech removal tool"]
+accusative = "огромный лом"
+dative = "огромному лому"
+genitive = "огромного лома"
+instrumental = "огромным ломом"
+nominative = "огромный лом"
+prepositional = "огромном ломе"
+
+["medical syringe gun"]
+accusative = "медицинский шприцемёт"
+dative = "медицинскому шприцемёту"
+genitive = "медицинского шприцимёта"
+instrumental = "медицинским шприцемётом"
+nominative = "медицинский шприцемёт"
+prepositional = "медицинском шприцемёте"
+
+["medical wrench"]
+accusative = "медицинский гаечный ключ"
+dative = "медицинскому гаечному ключу"
+genitive = "медицинского гаечного ключа"
+instrumental = "медицинским гаечным ключом"
+nominative = "медицинский гаечный ключ"
+prepositional = "медицинском гаечном ключе"
+
+["microwave oven"]
+accusative = "микроволновку"
+dative = "микроволновке"
+genitive = "микроволновки"
+instrumental = "микроволновкой"
+nominative = "микроволновка"
+prepositional = "микроволновке"
+
+[mist]
+accusative = "туман"
+dative = "туману"
+genitive = "тумана"
+instrumental = "туманом"
+nominative = "туман"
+prepositional = "тумане"
+
+[moffers]
+accusative = "мофферсы"
+dative = "мофферсам"
+genitive = "мофферсов"
+instrumental = "мофферсами"
+nominative = "мофферсы"
+prepositional = "мофферсах"
+
+["monkey recycler"]
+accusative = "переработчик обезьян"
+dative = "переработчику обезьян"
+genitive = "переработчика обезьян"
+instrumental = "переработчиком обезьян"
+nominative = "переработчик обезьян"
+prepositional = "переработчике обезьян"
+
+[mop]
+accusative = "швабру"
+dative = "швабре"
+genitive = "швабры"
+instrumental = "шваброй"
+nominative = "швабра"
+prepositional = "швабре"
+
+[mythril]
+accusative = "мифрил"
+dative = "мифрилу"
+genitive = "мифрила"
+instrumental = "мифрилом"
+nominative = "мифрил"
+prepositional = "мифриле"
+
+["old crowbar"]
+accusative = "старый лом"
+dative = "старому лому"
+genitive = "старого лома"
+instrumental = "старым ломом"
+nominative = "старый лом"
+prepositional = "старом ломе"
+
+["operating table"]
+accusative = "операционный стол"
+dative = "операционному столу"
+genitive = "операционного стола"
+instrumental = "операционным столом"
+nominative = "операционный стол"
+prepositional = "операционном столе"
+
+[oven]
+accusative = "духовку"
+dative = "духовке"
+genitive = "духовки"
+instrumental = "духовкой"
+nominative = "духовка"
+prepositional = "духовке"
+
+["oven tray"]
+accusative = "протевень"
+dative = "протевеню"
+genitive = "протевеня"
+instrumental = "протевенем"
+nominative = "протевень"
+prepositional = "протевене"
+
+["personal AI device"]
+accusative = "устройство ПИИ"
+dative = "устройству ПИИ"
+genitive = "устройства ПИИ"
+instrumental = "устройством ПИИ"
+nominative = "устройство ПИИ"
+prepositional = "устройстве ПИИ"
+
+[photocopier]
+accusative = "ксерокс"
+dative = "ксероксу"
+genitive = "ксерокса"
+instrumental = "ксероксом"
+nominative = "ксерокс"
+prepositional = "ксероксе"
+
+["plant analyzer"]
+accusative = "анализатор растений"
+dative = "анализатору растений"
+genitive = "анализатора растений"
+instrumental = "анализатором растений"
+nominative = "анализатор растений"
+prepositional = "анализаторе растений"
+
+["plasma glass"]
+accusative = "плазменное стекло"
+dative = "плазменному стеклу"
+genitive = "плазменного стекла"
+instrumental = "плазменным стеклом"
+nominative = "плазменное стекло"
+prepositional = "плазменном стекле"
+
+[plasteel]
+accusative = "пласталь"
+dative = "пластали"
+genitive = "пластали"
+instrumental = "пласталью"
+nominative = "пласталь"
+prepositional = "пластали"
+
+[plastic]
+accusative = "пластик"
+dative = "пластику"
+genitive = "пластика"
+instrumental = "пластиком"
+nominative = "пластик"
+prepositional = "пластике"
+
+["plastic potted plant"]
+accusative = "пластиковое растение"
+dative = "пластиковому растению"
+genitive = "пластикового растения"
+instrumental = "пластиковым растением"
+nominative = "пластиковое растение"
+prepositional = "пластиковом растении"
+
+[plastitanium]
+accusative = "пластитан"
+dative = "пластитану"
+genitive = "пластитана"
+instrumental = "пластитаном"
+nominative = "пластитан"
+prepositional = "пластитане"
+
+[plunger]
+accusative = "вантуз"
+dative = "вантузу"
+genitive = "вантуза"
+instrumental = "вантузом"
+nominative = "вантуз"
+prepositional = "вантузе"
+
+["pocket crowbar"]
+accusative = "карманный лом"
+dative = "карманному лому"
+genitive = "карманного лома"
+instrumental = "карманным ломом"
+nominative = "карманный лом"
+prepositional = "карманном ломе"
+
+["potted plant"]
+accusative = "комнатное растение"
+dative = "комнатному растению"
+genitive = "комнатного растения"
+instrumental = "комнатным растением"
+nominative = "комнатное растение"
+prepositional = "комнатном растении"
+
+["powered wirecutters"]
+accusative = "электрических кусачек"
+dative = "электрическим кусачкам"
+genitive = "электрических кусачек"
+instrumental = "электрическими кусачками"
+nominative = "электрические кусачки"
+prepositional = "электрических кусачках"
+
+["purple shard"]
+accusative = "фиолетовый осколок"
+dative = "фиолетовому осколку"
+genitive = "фиолетового осколка"
+instrumental = "фиолетовым осколком"
+nominative = "фиолетовый осколок"
+prepositional = "фиолетовом осколоке"
+
+[range]
+accusative = "духовку"
+dative = "духовке"
+genitive = "духовки"
+instrumental = "духовкой"
+nominative = "духовка"
+prepositional = "духовке"
+
+["receive-only intercom"]
+accusative = "интерком для приема"
+dative = "интеркому для приема"
+genitive = "интеркома для приема"
+instrumental = "интеркомом для приема"
+nominative = "интерком для приема"
+prepositional = "интеркоме для приема"
+
+["reinforced glass"]
+accusative = "усиленное стекло"
+dative = "усиленному стеклу"
+genitive = "усиленного стекла"
+instrumental = "усиленным стеклом"
+nominative = "усиленное стекло"
+prepositional = "усиленном стекле"
+
+["reinforced plasma glass"]
+accusative = "усиленное плазменное стекло"
+dative = "усиленному плазменному стеклу"
+genitive = "усиленного плазменного стекла"
+instrumental = "усиленным плазменным стеклом"
+nominative = "усиленное плазменное стекло"
+prepositional = "усиленном плазменном стекле"
+
+["reinforced plunger"]
+accusative = "усиленный вантуз"
+dative = "усиленному вантузу"
+genitive = "усиленного вантуза"
+instrumental = "усиленным вантузом"
+nominative = "усиленный вантуз"
+prepositional = "усиленном вантузе"
+
+["reinforced table"]
+accusative = "укреплённый стол"
+dative = "укреплённому столу"
+genitive = "укреплённого стола"
+instrumental = "укреплённым столом"
+nominative = "укреплённый стол"
+prepositional = "укреплённом столе"
+
+["reinforced wall"]
+accusative = "усиленную стену"
+dative = "усиленной стене"
+genitive = "усиленной стены"
+instrumental = "усиленной стеной"
+nominative = "усиленная стена"
+prepositional = "усиленной стене"
+
+[screwdriver]
+accusative = "отвёртку"
+dative = "отвёртке"
+genitive = "отвёртки"
+instrumental = "отвёрткой"
+nominative = "отвёртка"
+prepositional = "отвёртке"
+
+[shard]
+accusative = "осколок"
+dative = "осколку"
+genitive = "осколка"
+instrumental = "осколком"
+nominative = "осколок"
+prepositional = "осколоке"
+
+[sheet]
+accusative = "лист"
+dative = "листу"
+genitive = "листа"
+instrumental = "листом"
+nominative = "лист"
+prepositional = "листу"
+
+[shower]
+accusative = "душ"
+dative = "душу"
+genitive = "душа"
+instrumental = "душем"
+nominative = "душ"
+prepositional = "душе"
+
+["shower frame"]
+accusative = "каркас душа"
+dative = "каркасу душа"
+genitive = "каркаса душа"
+instrumental = "каркасом душа"
+nominative = "каркас душа"
+prepositional = "каркасе душа"
+
+[silver]
+accusative = "серебро"
+dative = "серебру"
+genitive = "серебра"
+instrumental = "серебром"
+nominative = "серебро"
+prepositional = "серебре"
+
+[sink]
+accusative = "раковину"
+dative = "раковине"
+genitive = "раковины"
+instrumental = "раковиной"
+nominative = "раковина"
+prepositional = "раковине"
+
+["sink frame"]
+accusative = "каркас раковины"
+dative = "каркасу раковины"
+genitive = "каркаса раковины"
+instrumental = "каркасом раковины"
+nominative = "каркас раковины"
+prepositional = "каркасе раковины"
+
+["slime processor"]
+accusative = "переработчик слаймов"
+dative = "переработчику слаймов"
+genitive = "переработчика слаймов"
+instrumental = "переработчиком слаймов"
+nominative = "переработчик слаймов"
+prepositional = "переработчике слаймов"
+
+["smart chemical storage"]
+accusative = "умное хранилище химикатов"
+dative = "умному хранилищу химикатов"
+genitive = "умного хранилища химикатов"
+instrumental = "умным хранилищем химикатов"
+nominative = "умное хранилище химикатов"
+prepositional = "умном хранилище химикатов"
+
+["smart organ storage"]
+accusative = "умное хранилище органов"
+dative = "умному хранилищу органов"
+genitive = "умного хранилища органов"
+instrumental = "умным хранилищем органов"
+nominative = "умное хранилище органов"
+prepositional = "умном хранилище органов"
+
+["smart petri dish storage"]
+accusative = "умное хранилище чашек Петри"
+dative = "умному хранилищу чашек Петри"
+genitive = "умного хранилища чашек Петри"
+instrumental = "умным хранилищем чашек Петри"
+nominative = "умное хранилище чашек Петри"
+prepositional = "умном хранилище чашек Петри"
+
+["smart slime extract storage"]
+accusative = "умное хранилище экстрактов слаймов"
+dative = "умному хранилищу экстрактов слаймов"
+genitive = "умного хранилища экстрактов слаймов"
+instrumental = "умным хранилищем экстрактов слаймов"
+nominative = "умное хранилище экстрактов слаймов"
+prepositional = "умном хранилище экстрактов слаймов"
+
+["smart virus storage"]
+accusative = "умное хранилище вирусов"
+dative = "умному хранилищу вирусов"
+genitive = "умного хранилища вирусов"
+instrumental = "умным хранилищем вирусов"
+nominative = "умное хранилище вирусов"
+prepositional = "умном хранилище вирусов"
+
+[smartfridge]
+accusative = "умный холодильник"
+dative = "умному холодильнику"
+genitive = "умного холодильника"
+instrumental = "умным холодильником"
+nominative = "умный холодильник"
+prepositional = "умном холодильнике"
+
+["solid plasma"]
+accusative = "твёрдую плазму"
+dative = "твёрдой плазме"
+genitive = "твёрдой плазмы"
+instrumental = "твёрдой плазмой"
+nominative = "твёрдая плазма"
+prepositional = "твёрдой плазме"
+
+["soup pot"]
+accusative = "кастрюлю"
+dative = "кастрюле"
+genitive = "кастрюли"
+instrumental = "кастрюлей"
+nominative = "кастрюля"
+prepositional = "кастрюле"
+
+["spess knife"]
+accusative = "швейцарский нож"
+dative = "швейцарскому ножу"
+genitive = "швейцарского ножа"
+instrumental = "швейцарским ножом"
+nominative = "швейцарский нож"
+prepositional = "швейцарском ноже"
+
+["station intercom"]
+accusative = "интерком станции"
+dative = "интеркому станции"
+genitive = "интеркома станции"
+instrumental = "интеркомом станции"
+nominative = "интерком станции"
+prepositional = "интеркоме станции"
+
+[stove]
+accusative = "плиту"
+dative = "плите"
+genitive = "плиты"
+instrumental = "плитой"
+nominative = "плита"
+prepositional = "плите"
+
+["syndicate intercom"]
+accusative = "интерком синдиката"
+dative = "интеркому синдиката"
+genitive = "интеркома синдиката"
+instrumental = "интеркомом синдиката"
+nominative = "интерком синдиката"
+prepositional = "интеркоме синдиката"
+
+["syndicate wide-band intercom"]
+accusative = "широкополосный интерком синдиката"
+dative = "широкополосному интеркому синдиката"
+genitive = "широкополосного интеркома синдиката"
+instrumental = "широкополосным интеркомом синдиката"
+nominative = "широкополосный интерком синдиката"
+prepositional = "широкополосном интеркоме синдиката"
+
+["telescopic baton"]
+accusative = "телескопическую дубинку"
+dative = "телескопической дубинке"
+genitive = "телескопической дубинки"
+instrumental = "телескопической дубинкой"
+nominative = "телескопическая дубинка"
+prepositional = "телескопической дубинке"
+
+[titanium]
+accusative = "титан"
+dative = "титану"
+genitive = "титана"
+instrumental = "титаном"
+nominative = "титан"
+prepositional = "титане"
+
+["titanium glass"]
+accusative = "титановое стекло"
+dative = "титановому стеклу"
+genitive = "титанового стекла"
+instrumental = "титановым стеклом"
+nominative = "титановое стекло"
+prepositional = "титановом стекле"
+
+["upgraded industrial welding tool"]
+accusative = "улучшенный сварочный инструмент"
+dative = "улучшенному сварочному инструменту"
+genitive = "улучшенного сварочного инструмента"
+instrumental = "улучшенным сварочным инструментом"
+nominative = "улучшенный сварочный инструмент"
+prepositional = "улучшенном сварочном инструменте"
+
+[uranium]
+accusative = "уран"
+dative = "урану"
+genitive = "урана"
+instrumental = "ураном"
+nominative = "уран"
+prepositional = "уране"
+
+[wall]
+accusative = "стену"
+dative = "стене"
+genitive = "стены"
+instrumental = "стеной"
+nominative = "стена"
+prepositional = "стене"
+
+["welding tool"]
+accusative = "сварочный инструмент"
+dative = "сварочному инструменту"
+genitive = "сварочного инструмента"
+instrumental = "сварочным инструментом"
+nominative = "сварочный инструмент"
+prepositional = "сварочном инструменте"
+
+[wirebrush]
+accusative = "проволочную щётку"
+dative = "проволочной щётке"
+genitive = "проволочной щётки"
+instrumental = "проволочной щёткой"
+nominative = "проволочная щётка"
+prepositional = "проволочной щётке"
+
+[wirecutters]
+accusative = "кусачек"
+dative = "кусачкам"
+genitive = "кусачек"
+instrumental = "кусачками"
+nominative = "кусачки"
+prepositional = "кусачках"
+
+["wireless microwave oven"]
+accusative = "беспроводную микроволновку"
+dative = "беспроводной микроволновке"
+genitive = "беспроводной микроволновки"
+instrumental = "беспроводной микроволновкой"
+nominative = "беспроводная микроволновка"
+prepositional = "беспроводной микроволновке"
+
+["wooden plank"]
+accusative = "деревянную доску"
+dative = "деревянной доске"
+genitive = "деревянной доски"
+instrumental = "деревянной доской"
+nominative = "деревянная доска"
+prepositional = "деревянной доске"
+
+[wrench]
+accusative = "гаечный ключ"
+dative = "гаечному ключу"
+genitive = "гаечного ключа"
+instrumental = "гаечным ключом"
+nominative = "гаечный ключ"
+prepositional = "гаечном ключе"
