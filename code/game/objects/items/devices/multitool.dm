@@ -105,6 +105,7 @@
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 /obj/item/multitool/ai_detect
+	apc_scanner = FALSE
 	/// How close the AI is to us
 	var/detect_state = PROXIMITY_NONE
 	/// Range at which the closest AI makes the multitool glow red
@@ -133,13 +134,16 @@
 	return ..()
 
 /obj/item/multitool/ai_detect/attack_self(mob/user, modifiers)
-	apc_scanner = FALSE //we want to toggle hud, not check for APC
+	. = ..()
+	if(.)
+		return
 	toggle_hud(user)
-	return ..()
 
 /obj/item/multitool/ai_detect/attack_self_secondary(mob/user, modifiers)
-	apc_scanner = TRUE // so we can use rightclick instead of leftclick to scan apc
-	return ..()
+	. = ..()
+	if(.)
+		return
+	scan_apc(user)
 
 /obj/item/multitool/ai_detect/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
