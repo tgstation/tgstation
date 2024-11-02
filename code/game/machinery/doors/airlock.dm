@@ -1825,7 +1825,7 @@
 /obj/structure/fluff/airlock_filler/singularity_act()
 	return
 
-/obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
+/obj/structure/fluff/airlock_filler/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/machinery/door/airlock/proc/set_cycle_pump(obj/machinery/atmospherics/components/unary/airlock_pump/pump)
@@ -2001,12 +2001,12 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/glass
-	name = "maintainence glass airlock"
+	name = "maintenance glass airlock"
 	opacity = FALSE
 	glass = TRUE
 
 /obj/machinery/door/airlock/maintenance/external/glass
-	name = "maintainence external glass airlock"
+	name = "maintenance external glass airlock"
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 200

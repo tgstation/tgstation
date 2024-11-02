@@ -133,12 +133,26 @@
 	for(var/i in 1 to 2)
 		if(children_list.len >= 8)
 			return
-		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/newchild = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
-		newchild.GiveTarget(target)
-		newchild.faction = faction.Copy()
-		visible_message(span_boldwarning("[newchild] appears below [src]!"))
-		newchild.mother = src
-		children_list += newchild
+		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/new_child = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
+		new_child.GiveTarget(target)
+		new_child.faction = faction.Copy()
+		visible_message(span_boldwarning("[new_child] appears below [src]!"))
+		register_child(new_child)
+
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/register_child(atom/child)
+	children_list += child
+	RegisterSignals(child, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(remove_child))
+
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/remove_child(atom/source)
+	SIGNAL_HANDLER
+
+	children_list -= source
+	UnregisterSignal(source, list(
+		COMSIG_QDELETING,
+		COMSIG_LIVING_DEATH,
+	))
+
+
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
@@ -191,7 +205,6 @@
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	death_message = "falls to the ground."
 	status_flags = CANPUSH
-	var/mob/living/simple_animal/hostile/asteroid/elite/broodmother/mother = null
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/Initialize(mapload)
 	. = ..()
@@ -208,8 +221,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/death()
 	. = ..()
-	if(mother != null)
-		mother.children_list -= src
 	visible_message(span_warning("[src] explodes!"))
 	explosion(src, flame_range = 3, adminlog = FALSE)
 	gib(DROP_ALL_REMAINS)

@@ -391,7 +391,7 @@
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	reagents.copy_to(smoker, reagents.total_volume, fraction)
-	reagents.expose(smoker, INGEST, fraction)
+	reagents.expose(smoker, INHALE, fraction)
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
