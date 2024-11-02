@@ -2820,6 +2820,7 @@
 #include "code\game\objects\structures\plaques\_plaques.dm"
 #include "code\game\objects\structures\plaques\static_plaques.dm"
 #include "code\game\objects\structures\signs\_signs.dm"
+#include "code\game\objects\structures\signs\sign_eyechart.dm"
 #include "code\game\objects\structures\signs\signs_departments.dm"
 #include "code\game\objects\structures\signs\signs_flags.dm"
 #include "code\game\objects\structures\signs\signs_interactive.dm"
