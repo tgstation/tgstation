@@ -927,10 +927,10 @@
 	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
 	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
 	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
-	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
+	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_height - 16
 
-	visual.pixel_x = visual.base_px = rand(px_min,px_max)
-	visual.pixel_y = visual.base_py = rand(py_min,py_max)
+	visual.pixel_x = visual.base_pixel_x = rand(px_min,px_max)
+	visual.pixel_y = visual.base_pixel_y = rand(py_min,py_max)
 
 /obj/item/fish/proc/get_aquarium_animation()
 	var/obj/structure/aquarium/aquarium = loc
@@ -961,8 +961,8 @@
 	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
 	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
 
-	var/origin_x = visual.base_px
-	var/origin_y = visual.base_py
+	var/origin_x = visual.base_pixel_x
+	var/origin_y = visual.base_pixel_y
 	var/prev_x = origin_x
 	var/prev_y = origin_y
 	animate(visual, pixel_x = origin_x, time = 0, loop = -1) //Just to start the animation
@@ -985,11 +985,11 @@
 		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
 
 /obj/item/fish/proc/dead_animation(obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
-	//Set base_py to lowest possible value
+	//Set base_pixel_y to lowest possible value
 	var/avg_height = round(sprite_height / 2)
 	var/list/aq_properties = current_aquarium.get_surface_properties()
 	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
-	visual.base_py = py_min
+	visual.base_pixel_y = py_min
 	animate(visual, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
 
 /// Checks if our current environment lets us live.

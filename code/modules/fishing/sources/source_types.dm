@@ -13,12 +13,10 @@
 		/obj/item/fish/stingray = 8,
 		/obj/item/fish/plaice = 8,
 		/obj/item/fish/monkfish = 5,
-		/obj/item/fish/stingray = 10,
 		/obj/item/fish/lanternfish = 7,
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
-		/obj/item/fish/swordfish = 3,
 		/obj/structure/mystery_box/fishing = 2,
 	)
 	fish_counts = list(
