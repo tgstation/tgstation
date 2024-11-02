@@ -29,7 +29,6 @@
 	desc = "Leap towards the enemy!"
 	cooldown_time = 7 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	///telegraph time before jumping
 	var/wind_up_time = 2 SECONDS
 	///intervals between each of our attacks
@@ -92,7 +91,6 @@
 	desc = "Soar high in the air!"
 	cooldown_time = 14 SECONDS
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/Activate(atom/target)
