@@ -531,6 +531,7 @@
 #include "code\_globalvars\silo.dm"
 #include "code\_globalvars\tgui.dm"
 #include "code\_globalvars\time_vars.dm"
+#include "code\_globalvars\~meta_globalvars_include.dm"
 #include "code\_globalvars\lists\achievements.dm"
 #include "code\_globalvars\lists\ambience.dm"
 #include "code\_globalvars\lists\basic_ai.dm"
