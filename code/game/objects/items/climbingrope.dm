@@ -14,6 +14,7 @@
 	attack_verb_continuous = list("whacks", "flails", "bludgeons")
 	attack_verb_simple = list("whack", "flail", "bludgeon")
 	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_SMALL
 	///how many times can we climb with this rope
 	var/uses = 5
 	///climb time
@@ -98,7 +99,6 @@
 	desc = "An emergency climbing hook to scale up holes. The rope is EXTREMELY cheap and may not withstand extended use."
 	uses = 2
 	climb_time = 4 SECONDS
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/climbing_hook/syndicate
 	name = "suspicious climbing hook"
