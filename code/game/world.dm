@@ -516,6 +516,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
 		GLOB.tracy_initialized = TRUE
 		return GLOB.tracy_log = init_result
+	else if(init_result == "already initialized") // not gonna question it.
+		GLOB.tracy_initialized = TRUE
+		SEND_TEXT(world.log, "byond-tracy already initialized ([GLOB.tracy_log ? "logfile: [GLOB.tracy_log]" : "no logfile"])")
 	else if(init_result != "0")
 		GLOB.tracy_init_error = init_result
 		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
