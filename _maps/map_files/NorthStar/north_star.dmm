@@ -3332,8 +3332,7 @@
 	},
 /turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "aSq" = (
@@ -11246,8 +11245,7 @@
 	},
 /turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "cPR" = (
@@ -43705,8 +43703,7 @@
 	},
 /turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "loa" = (
@@ -51277,8 +51274,7 @@
 	},
 /turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "nhV" = (
@@ -86668,8 +86664,7 @@
 /obj/machinery/light/red/dim/directional/south,
 /turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "wot" = (
