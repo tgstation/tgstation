@@ -198,6 +198,7 @@
 		return
 
 	if(name == initial(name))
+		ru_names_rename(ru_names_toml("motion-sensitive security camera"))
 		name = "motion-sensitive security camera"
 	if(!proximity_monitor)
 		proximity_monitor = new(src)
@@ -206,6 +207,7 @@
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
+		ru_names_rename(ru_names_toml("security camera"))
 		name = "security camera"
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_MOTION
 	if(!area_motion)

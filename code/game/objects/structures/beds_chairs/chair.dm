@@ -25,6 +25,7 @@
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
 	if(prob(0.2))
+		ru_names_rename(RU_NAMES_LIST("tactical [name]", "тактический стул", "тактического стула", "тактическому стулу", "тактический стул", "тактическим стулом", "тактическом стуле"))
 		name = "tactical [name]"
 		fishing_modifier -= 8
 	MakeRotate()

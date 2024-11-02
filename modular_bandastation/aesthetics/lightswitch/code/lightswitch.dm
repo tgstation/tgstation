@@ -1,5 +1,5 @@
 /obj/machinery/light_switch
-    icon = 'modular_bandastation/aesthetics/lightswitch/icons/lightswitch.dmi'
+	icon = 'modular_bandastation/aesthetics/lightswitch/icons/lightswitch.dmi'
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()

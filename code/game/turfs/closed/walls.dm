@@ -1,5 +1,6 @@
 /turf/closed/wall
 	name = "wall"
+	gender = FEMALE
 	desc = "A huge chunk of iron used to separate rooms."
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"

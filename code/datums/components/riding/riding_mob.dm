@@ -109,7 +109,7 @@
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
 	var/modified_move_cooldown = vehicle_move_cooldown
-	var/modified_move_delay = vehicle_move_delay
+	var/modified_move_delay = modified_move_delay(vehicle_move_delay)
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
 		var/mob/living/carbon/human/rough_rider = user
 		var/ride_benefit = null

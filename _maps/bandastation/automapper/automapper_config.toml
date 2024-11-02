@@ -17,10 +17,18 @@
 # coordinates = [133, 182, 1]
 # trait_name = "Station"
 
-# Зона кекипажа
+# CentCom Crew Quarters
 [templates.CentCom_kekypaj]
 map_files = ["CentCom.dmm"]
 directory = "_maps/bandastation/automapper/templates/centcom/"
 required_map = "builtin"
 coordinates = [12, 53, 1]
 trait_name = "CentCom"
+
+# IceBoxStation Detective's Office
+[templates.iceboxstation_detective_office]
+map_files = ["iceboxstation_detective_office.dmm"]
+directory = "_maps/bandastation/automapper/templates/iceboxstation/"
+required_map = "IceBoxStation.dmm"
+coordinates = [86, 161, 2]
+trait_name = "Station"

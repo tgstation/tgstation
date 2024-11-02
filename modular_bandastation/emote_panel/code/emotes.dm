@@ -195,9 +195,9 @@
 	message = "самодовольно улыбается."
 
 /datum/emote/living/sniff
-	name = "нюхать"
-	message = "нюхает."
-	message_mime = "бесшумно нюхает."
+	name = "шмыгнуть"
+	message = "шмыгает носом."
+	message_mime = "бесшумно шмыгает носом."
 
 /datum/emote/living/snore
 	name = "храпеть"
@@ -412,8 +412,8 @@
 /datum/emote/living/carbon/human/snuffle
 	key = "snuffle"
 	key_third_person = "snuffles"
-	name = "шмыгнуть"
-	message = "шмыгает носом"
+	name = "нюхать"
+	message = "нюхает."
 
 /datum/emote/living/carbon/human/eyebrow
 	name = "приподнять бровь"

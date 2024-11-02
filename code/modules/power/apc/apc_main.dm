@@ -196,6 +196,7 @@
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if(auto_name)
+		ru_names_rename(RU_NAMES_LIST("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]"))
 		name = "\improper [get_area_name(area, TRUE)] APC"
 
 	//Initialize its electronics
@@ -266,6 +267,7 @@
 /obj/machinery/power/apc/update_name(updates)
 	. = ..()
 	if(auto_name)
+		ru_names_rename(RU_NAMES_LIST("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]"))
 		name = "\improper [get_area_name(area, TRUE)] APC"
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))

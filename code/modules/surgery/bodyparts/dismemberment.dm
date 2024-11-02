@@ -238,6 +238,7 @@
 		if(pill)
 			pill.forceMove(src)
 
+	ru_names_rename(RU_NAMES_LIST("[owner.real_name]'s head", "голова [owner.real_name]", "головы [owner.real_name]", "голове [owner.real_name]", "голову [owner.real_name]", "головой [owner.real_name]", "голове [owner.real_name]"))
 	name = "[owner.real_name]'s head"
 	return ..()
 

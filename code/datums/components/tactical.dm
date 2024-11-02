@@ -79,8 +79,8 @@
 		identity[VISIBLE_NAME_FORCED] = tactical_disguise_power
 
 	var/obj/item/flawless_disguise = parent
-	identity[VISIBLE_NAME_FACE] = flawless_disguise.name
-	identity[VISIBLE_NAME_ID] = flawless_disguise.name // for Unknown (as 'potted plant') says
+	identity[VISIBLE_NAME_FACE] = flawless_disguise.declent_ru(NOMINATIVE) // BANDASTATION EDIT - Declent
+	identity[VISIBLE_NAME_ID] = flawless_disguise.declent_ru(NOMINATIVE) // for Unknown (as 'potted plant') says // BANDASTATION EDIT - Declent
 
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)

@@ -51,10 +51,12 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
+			var/number = rand(1, 999) // BANDASTATION EDIT
+			ru_names_rename(RU_NAMES_LIST("alien princess ([number])", "принцесса Чужих ([number])", "принцессы Чужих ([number])", "принцессе Чужих ([number])", "принцессу Чужих ([number])", "принцессой Чужих ([number])", "принцессе Чужих ([number])"))
+			name = "alien princess ([number])" //if this is too cutesy feel free to change it/remove it.
 			break
 
-	real_name = src.name
+	real_name = declent_ru(NOMINATIVE)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,

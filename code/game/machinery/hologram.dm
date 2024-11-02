@@ -556,6 +556,7 @@ Possible to do for anyone motivated enough:
 		hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
 		SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 		hologram.set_anchored(TRUE)//So space wind cannot drag it.
+		hologram.ru_names_rename(RU_NAMES_LIST("[user.name] (Hologram)", "голограмма [user.declent_ru(GENITIVE)]", "голограммы [user.declent_ru(GENITIVE)]", "голограмме [user.declent_ru(GENITIVE)]", "голограмму [user.declent_ru(GENITIVE)]", "голограммой [user.declent_ru(GENITIVE)]", "голограмме [user.declent_ru(GENITIVE)]"))
 		hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		set_holo(user, hologram)
 
@@ -744,6 +745,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	SET_PLANE_EXPLICIT(hologram, ABOVE_GAME_PLANE, src)
 	hologram.set_anchored(TRUE)//So space wind cannot drag it.
+	hologram.ru_names_rename(RU_NAMES_LIST("[record.caller_name] (Hologram)", "голограмма [record.caller_name]", "голограммы [record.caller_name]", "голограмме [record.caller_name]", "голограмму [record.caller_name]", "голограммой [record.caller_name]", "голограмме [record.caller_name]"))
 	hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	set_holo(record, hologram)
 
@@ -780,7 +782,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		return
 	//make this command so you can have multiple languages in single record
 	if((!disk.record.caller_name || disk.record.caller_name == "Unknown") && istype(speaker))
-		disk.record.caller_name = speaker.name
+		disk.record.caller_name = speaker.declent_ru(GENITIVE) // BANDASTATION EDIT - Declents
 	if(!disk.record.language)
 		disk.record.language = language
 	else if(language != disk.record.language)
@@ -835,6 +837,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			replay_holo.icon_state = work_off.icon_state
 			replay_holo.copy_overlays(work_off, TRUE)
 		if(HOLORECORD_RENAME)
+			replay_holo.ru_names_rename(RU_NAMES_LIST(entry[2] + " (Hologram)", "голограмма [entry[2]]", "голограммы [entry[2]]", "голограмме [entry[2]]", "голограмму [entry[2]]", "голограммой [entry[2]]", "голограмме [entry[2]]"))
 			replay_holo.name = entry[2] + " (Hologram)"
 	.(entry_number+1)
 

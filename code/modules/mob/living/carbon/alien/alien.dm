@@ -164,6 +164,7 @@ Des: Removes all infected images from the alien.
 
 	if(old_number != 0)
 		numba = old_number
+		ru_names_rename(initial(name))
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
 
 	set_name()

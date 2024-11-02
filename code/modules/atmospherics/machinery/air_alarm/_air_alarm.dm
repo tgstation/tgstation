@@ -94,6 +94,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		set_panel_open(TRUE)
 
 	if(name == initial(name))
+		ru_names_rename(RU_NAMES_LIST("[get_area_name(src)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]"))
 		name = "[get_area_name(src)] Air Alarm"
 
 	tlv_collection = list()
@@ -174,6 +175,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/update_name(updates)
 	. = ..()
+	ru_names_rename(RU_NAMES_LIST("[get_area_name(my_area)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]"))
 	name = "[get_area_name(my_area)] Air Alarm"
 
 /obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)

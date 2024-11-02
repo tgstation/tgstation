@@ -97,7 +97,7 @@
 		return
 
 	step(movable_parent, direction)
-	COOLDOWN_START(src, vehicle_move_cooldown, vehicle_move_delay)
+	COOLDOWN_START(src, vehicle_move_cooldown, modified_move_delay(vehicle_move_delay)) // BANDASTATION EDIT - Vehicle speed
 
 	if(QDELETED(src))
 		return

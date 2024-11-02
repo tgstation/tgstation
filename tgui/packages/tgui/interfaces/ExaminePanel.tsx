@@ -15,11 +15,11 @@ export const ExaminePanel = (props) => {
   const { act, data } = useBackend<Data>();
   const { character_name, obscured, assigned_map, flavor_text } = data;
   return (
-    <Window title="Examine Panel" width={900} height={670} theme="admin">
+    <Window title="Подробное описание" width={900} height={670} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item width="30%">
-            <Section fill title="Character Preview">
+            <Section fill title="Превью персонажа">
               {!obscured && (
                 <CharacterPreview id={assigned_map} height="100%" />
               )}
@@ -31,7 +31,7 @@ export const ExaminePanel = (props) => {
                 <Section
                   scrollable
                   fill
-                  title={character_name + "'s Flavor Text:"}
+                  title={character_name + ', описание:'}
                   preserveWhitespace
                 >
                   {flavor_text}

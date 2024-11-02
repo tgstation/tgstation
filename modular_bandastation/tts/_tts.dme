@@ -20,6 +20,7 @@
 #include "code/base_seeds/mobs/lavaland.dm"
 #include "code/base_seeds/mobs/other.dm"
 #include "code/base_seeds/mobs/pets.dm"
+#include "code/base_seeds/mobs/spiders.dm"
 #include "code/base_seeds/objs/objs.dm"
 #include "code/providers/silero.dm"
 #include "code/seeds/base.dm"
