@@ -108,12 +108,9 @@
 		return
 	if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
 		download_netspeed *= 0.5
-
-	download_completion += download_netspeed
-	if(download_completion > downloaded_file.size)
-		// We don't complete it here so we stay on 100% for a cycle
-		// We do cap out our completion to avoid UI issues
-		download_completion = downloaded_file.size
+	// We don't complete it here so we stay on 100% for a cycle
+	// We do cap out our completion to avoid UI issues
+	download_completion = min(download_completion  + download_netspeed, downloaded_file.size)
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
