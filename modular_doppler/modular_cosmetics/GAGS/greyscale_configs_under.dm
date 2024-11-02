@@ -131,6 +131,16 @@
 	name = "Pentagram Strapped Dress (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
 
+/datum/greyscale_config/giant_scarf
+	name = "Giant Scarf"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/giant_scarf.json'
+
+/datum/greyscale_config/giant_scarf/worn
+	name = "Giant Scarf (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+
+
 /// LUNAR JAPANESE SECTION
 
 /datum/greyscale_config/lunar_japanese

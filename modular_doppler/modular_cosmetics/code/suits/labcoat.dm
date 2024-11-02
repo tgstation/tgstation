@@ -10,3 +10,10 @@
 	body_parts_covered = NONE //Allows surgeries despite wearing it; hiding genitals is handled in /datum/sprite_accessory/genital/is_hidden() (Only place it'd work sadly)
 	armor_type = /datum/armor/none
 	equip_delay_other = 8
+
+/obj/item/clothing/suit/toggle/labcoat/lalunevest
+	name = "sleeveless buttoned coat"
+	desc = "A fashionable jacket bearing the La Lune insignia on the inside. It appears similar to a labcoat in design and materials, though the tag warns against it being a replacement for such."
+	icon_state = "labcoat_lalune_vest"
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'

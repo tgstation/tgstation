@@ -146,6 +146,10 @@
 	name = "Dress"
 	item_path = /obj/item/clothing/under/dress
 
+/datum/loadout_item/undersuit/dress/giantscarf
+	name = "Giant Scarf"
+	item_path = /obj/item/clothing/under/pants/giant_scarf
+
 /datum/loadout_item/undersuit/dress/evening
 	name = "Evening Dress"
 	item_path = /obj/item/clothing/under/dress/eveninggown
