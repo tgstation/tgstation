@@ -190,7 +190,6 @@
 	for(var/obj/item/part as anything in get_parts()) //seals/unseals all deployed parts
 		if(part.loc == src)
 			continue
-		to_chat(world, "[part]")
 		if(!delayed_seal_part(part)) //shit something broke, revert it all
 			activating = FALSE
 			for(var/obj/item/sealed_part as anything in sealed_parts)
@@ -229,7 +228,6 @@
 		if(!silent)
 			to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
 			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(world, "calling sealing [part] [!part_datum.sealed]")
 		seal_part(part, is_sealed = !part_datum.sealed)
 		return TRUE
 
@@ -295,7 +293,7 @@
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.part_activated || module.has_required_parts(mod_parts, need_active = TRUE))
+			if(!module.part_activated)
 				continue
 			module.on_part_deactivation()
 			module.part_activated = FALSE
