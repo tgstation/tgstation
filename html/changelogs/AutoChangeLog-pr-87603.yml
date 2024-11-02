@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed pure inacusiate not giving you ungarbled whisper hearing at full range"
-  - qol: "pure inacusiate will also provide chat messages when its boost is gained/lost"

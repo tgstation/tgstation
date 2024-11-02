@@ -1,8 +1,0 @@
-author: "Aliceee2ch"
-delete-after: True
-changes:
-  - rscadd: "Added new botany module in mechfabricator designs. Gives service cyborg plant bag and plant analyzer."
-  - rscadd: "Added cyborg botanical omni-tool."
-  - qol: "Service apparatus (another existing module) can now hold: seeds, fish, grafts."
-  - qol: "Secondary beaker storage can now hold any beakers. It used to spawn with one, but when you dropped it - you could no longer pick it back."
-  - image: "New gardener skin for service cyborg."

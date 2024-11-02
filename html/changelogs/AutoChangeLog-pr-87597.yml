@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed Make Cyborg admin verb and player panel Make AI not putting the ghosted player in control if they weren't an observer"
