@@ -68,7 +68,7 @@
 	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics) - 1
 	adjusted_climb_time -= fitness_level
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		adjusted_climb_time *= potential_spine.athletics_boost_multiplier
 		adjusted_climb_stun *= potential_spine.athletics_boost_multiplier
