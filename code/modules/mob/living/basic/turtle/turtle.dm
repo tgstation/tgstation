@@ -189,7 +189,7 @@
 		return
 
 	var/should_transfer = FALSE
-	for(var/reagent as anything in path_requirements)
+	for(var/reagent in path_requirements)
 		if(used_item.reagents.has_reagent(reagent))
 			should_transfer = TRUE
 			break
