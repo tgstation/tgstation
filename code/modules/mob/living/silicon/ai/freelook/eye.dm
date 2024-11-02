@@ -45,7 +45,7 @@
 		QDEL_LIST(old_images)
 		return
 
-	if(!length(hud.hud_users))
+	if(!length(hud.hud_users_all_z_levels))
 		return //no one is watching, do not bother updating anything
 
 	hud.remove_atom_from_hud(src)
@@ -64,14 +64,15 @@
 
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
-	for(var/T in turfs)
-		var/image/I = (old_images.len > new_images.len) ? old_images[new_images.len + 1] : image(null, T)
-		I.loc = T
-		I.vis_contents += hud_obj
-		new_images += I
+	for(var/turf/seen_turf as anything in turfs)
+		var/image/img = (old_images.len > new_images.len) ? old_images[new_images.len + 1] : image(loc = seen_turf, layer = ABOVE_ALL_MOB_LAYER)
+		img.vis_contents += hud_obj
+		SET_PLANE(img, GAME_PLANE, seen_turf)
+		new_images += img
 	for(var/i in (new_images.len + 1) to old_images.len)
 		qdel(old_images[i])
-	hud_list[AI_DETECT_HUD] = new_images
+
+	active_hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
 /mob/camera/ai_eye/proc/get_visible_turfs()
@@ -253,3 +254,6 @@
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
+
+/obj/effect/overlay/ai_detect_hud/camera_unseen
+	icon = 'icons/effects/cameravis.dmi'
