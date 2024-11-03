@@ -6,7 +6,7 @@
 	name = "Inactive AI Eye"
 
 	icon_state = "ai_camera"
-	icon = 'icons/mob/silicon/cameramob.dmi'
+	icon = 'icons/mob/eyemob.dmi'
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
