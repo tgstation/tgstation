@@ -83,7 +83,6 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos
 	planetary_atmos = FALSE
-	can_make_hole = FALSE
 
 ///Ice turf with a fishing spot already dug
 /turf/open/misc/ice/icemoon/no_planet_atmos/holed

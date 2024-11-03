@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/effect/turf_decal/siding/blue/corner{
+/obj/effect/turf_decal/siding/green/corner{
 	dir = 8
 	},
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/effect/turf_decal/siding/blue,
+/obj/effect/turf_decal/siding/green,
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/obj/effect/turf_decal/siding/blue/corner{
+/obj/effect/turf_decal/siding/green/corner{
 	dir = 1
 	},
 /turf/template_noop,
@@ -20,42 +20,42 @@
 /area/template_noop)
 "e" = (
 /obj/structure/chair/plastic,
-/obj/item/reagent_containers/cup/soda_cans/beer{
-	pixel_x = 12;
-	pixel_y = -5
-	},
-/obj/effect/turf_decal/siding/blue/inner_corner{
+/obj/effect/turf_decal/siding/green/inner_corner{
 	dir = 8
+	},
+/obj/item/food/canned/desert_snails{
+	pixel_x = 14;
+	pixel_y = -3
 	},
 /turf/template_noop,
 /area/template_noop)
 "f" = (
-/obj/effect/turf_decal/siding/blue{
+/obj/effect/turf_decal/siding/green{
 	dir = 4
 	},
 /turf/template_noop,
 /area/template_noop)
 "g" = (
-/obj/effect/turf_decal/siding/blue/corner{
+/obj/effect/turf_decal/siding/green/corner{
 	dir = 4
 	},
 /turf/template_noop,
 /area/template_noop)
 "i" = (
-/turf/open/water/no_planet_atmos,
+/turf/open/water/beach/tizira,
 /area/template_noop)
 "j" = (
-/obj/effect/turf_decal/siding/blue{
+/obj/effect/turf_decal/siding/green{
 	dir = 8
 	},
 /turf/template_noop,
 /area/template_noop)
 "m" = (
-/obj/effect/turf_decal/siding/blue/corner,
+/obj/effect/turf_decal/siding/green/corner,
 /turf/template_noop,
 /area/template_noop)
 "o" = (
-/obj/effect/turf_decal/siding/blue{
+/obj/effect/turf_decal/siding/green{
 	dir = 1
 	},
 /turf/template_noop,

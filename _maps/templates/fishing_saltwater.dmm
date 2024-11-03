@@ -20,18 +20,12 @@
 /area/template_noop)
 "e" = (
 /obj/structure/chair/plastic,
-/obj/effect/turf_decal/siding/yellow,
-/obj/effect/turf_decal/siding/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/yellow/corner{
-	dir = 4;
-	pixel_x = -27;
-	pixel_y = -27
-	},
 /obj/item/reagent_containers/cup/glass/bottle/beer/light{
 	pixel_x = 13;
 	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/yellow/inner_corner{
+	dir = 8
 	},
 /turf/template_noop,
 /area/template_noop)

@@ -12,15 +12,14 @@
 	///Areas where the capsule cannot be deployed.
 	var/list/banned_areas
 	///If any object in this list is found in the affected turfs, the capsule cannot deploy.
-	var/list/banned_objects
+	var/list/banned_objects = list()
 
 /datum/map_template/shelter/New()
 	. = ..()
 	blacklisted_turfs = typecacheof(/turf/closed)
 	banned_areas = typecacheof(/area/shuttle)
-	banned_objects = list()
 
-/datum/map_template/shelter/proc/check_deploy(turf/deploy_location, /obj/item/survivalcapsule/capsule, ignore_flags = NONE)
+/datum/map_template/shelter/proc/check_deploy(turf/deploy_location, obj/item/survivalcapsule/capsule, ignore_flags = NONE)
 	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
 	for(var/turf/turf in affected)
 		var/area/area = get_area(turf)
@@ -121,13 +120,14 @@
 /datum/map_template/shelter/fishing/New()
 	. = ..()
 	blacklisted_turfs -= typesof(/turf/closed/mineral)
+	blacklisted_turfs += typecacheof(/turf/open/openspace)
 	// Stop the capsule from being used around pipes and cables (if not emagged) cuz it'd look bad and a bit disruptive.
-	banned_objects = typecacheof(
+	banned_objects = typecacheof(list(
 		/obj/structure/disposalpipe,
 		/obj/machinery/atmospherics/pipe,
 		/obj/structure/cable,
 		/obj/structure/transit_tube,
-	)
+	))
 
 /datum/map_template/shelter/fishing/beach
 	name = "Saltwater Spring"

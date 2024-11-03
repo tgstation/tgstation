@@ -504,7 +504,7 @@
 /obj/item/survivalcapsule/fishing/get_ignore_flags()
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += (CAPSULE_IGNORE_ANCHORED_OBJECTS|CAPSULE_IGNORE_BANNED_OBJECTS)
+		. += CAPSULE_IGNORE_ANCHORED_OBJECTS|CAPSULE_IGNORE_BANNED_OBJECTS
 
 /obj/item/survivalcapsule/fishing/fail_feedback(status)
 	switch(status)
