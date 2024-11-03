@@ -1,0 +1,25 @@
+name: Check OGG Sample Rate
+
+on: [push, pull_request]
+
+jobs:
+  check_sample_rate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Check OGG sample rates
+        run: |
+          for file in $(find . -type f -name '*.ogg'); do
+            sample_rate=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "$file")
+            if [ "$sample_rate" != "44100" ]; then
+              echo "Error: $file has sample rate $sample_rate Hz (expected 44100 Hz)"
+              exit 1
+            fi
+          done
+          echo "All OGG files have the correct sample rate."
