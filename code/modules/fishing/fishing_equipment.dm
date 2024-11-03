@@ -455,7 +455,7 @@
 
 /obj/item/survivalcapsule/fishing/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 	register_context()
 
 	if(SStts.tts_enabled) //This capsule informs you on why it cannot be deployed in a sliiiiightly different way.
