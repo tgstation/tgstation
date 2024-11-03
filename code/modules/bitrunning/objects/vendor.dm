@@ -33,7 +33,7 @@
 /obj/machinery/computer/order_console/bitrunning/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
-		things_to_order[item.item_path] = groceries[item]
+		things_to_order[item.purchase_path] = groceries[item]
 
 	var/datum/supply_pack/bitrunning/pack = new(
 		purchaser = purchaser, \
