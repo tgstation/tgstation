@@ -93,9 +93,12 @@
 
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE)
 	. = ..()
+	if (. != BULLET_ACT_HIT)
+		return .
+
 	var/blocked = check_projectile_armor(def_zone, proj, is_silent = TRUE)
 	if(blocked >= 100)
-		if(. == BULLET_ACT_HIT && proj.is_hostile_projectile())
+		if(proj.is_hostile_projectile())
 			apply_projectile_effects(proj, def_zone, blocked)
 		return .
 
@@ -103,9 +106,6 @@
 	var/organ_hit_text = ""
 	if (hit_limb_zone)
 		organ_hit_text = "in \the [parse_zone_with_bodypart(hit_limb_zone)]"
-
-	if (. != BULLET_ACT_HIT)
-		return .
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
