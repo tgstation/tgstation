@@ -73,7 +73,7 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 	var/list/all_catchables = list()
 	for(var/source_type as anything in GLOB.preset_fish_sources)
 		var/datum/fish_source/source = GLOB.preset_fish_sources[source_type]
-		if(source.include_catchables)
+		if(!(source.fish_source_flags & FISH_SOURCE_FLAG_SKIP_CATCHABLES))
 			all_catchables |= source.fish_table
 	for(var/thing in all_catchables)
 		if(!ispath(thing, /obj/item/fish))
