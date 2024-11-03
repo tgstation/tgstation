@@ -31,7 +31,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -76,7 +76,7 @@
 		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -89,7 +89,7 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
@@ -104,7 +104,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/portal
 	fish_table = list(
@@ -240,8 +240,9 @@
 	catalog_description = null // it'd make a bad entry in the catalog.
 	radial_name = "Randomizer"
 	overlay_state = "portal_randomizer"
-	var/static/list/all_portal_fish_sources_at_once
 	radial_state = "misaligned_question_mark"
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
+	var/static/list/all_portal_fish_sources_at_once
 
 ///Generate the fish table if we don't have one already.
 /datum/fish_source/portal/random/on_fishing_spot_init(datum/component/fishing_spot/spot)
@@ -350,12 +351,12 @@
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
-	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
-		return "You'll need reinforced fishing line to fish in there"
+	if(!HAS_TRAIT(rod, TRAIT_ROD_LAVA_USABLE))
+		return "You'll need reinforced fishing line to fish in there."
 
 /datum/fish_source/lavaland/icemoon
 	catalog_description = "Liquid plasma vents"
@@ -416,6 +417,7 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...

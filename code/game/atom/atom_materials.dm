@@ -10,11 +10,11 @@
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	var/replace_mats = length(materials)
 	if(length(custom_materials))
-		remove_material_effects()
+		remove_material_effects(replace_mats)
 
-	if(!length(materials))
-		custom_materials = null
+	if(!replace_mats)
 		return
 
 	initialize_materials(materials, multiplier)
@@ -31,27 +31,30 @@
 			materials[current_material] *= multiplier
 
 	apply_material_effects(materials)
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
 
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!materials || !(material_flags & MATERIAL_EFFECTS))
-		return
-	var/list/material_effects = get_material_effects_list(materials)
-	finalize_material_effects(material_effects)
+	if(material_flags & MATERIAL_EFFECTS)
+		var/list/material_effects = get_material_effects_list(materials)
+		finalize_material_effects(material_effects)
+
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials)
 
 /// Proc responsible for removing material effects when setting materials.
-/atom/proc/remove_material_effects()
+/atom/proc/remove_material_effects(replace_mats = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	//Only runs if custom materials existed at first and affected src.
-	if(!custom_materials || !(material_flags & MATERIAL_EFFECTS))
-		return
-	var/list/material_effects = get_material_effects_list(custom_materials)
-	finalize_remove_material_effects(material_effects)
+	if(material_flags & MATERIAL_EFFECTS)
+		var/list/material_effects = get_material_effects_list(custom_materials)
+		finalize_remove_material_effects(material_effects)
+
+	if(!replace_mats)
+		custom_materials = null
 
 /atom/proc/get_material_effects_list(list/materials)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 	var/list/material_effects = list()
 	var/index = 1
 	for(var/current_material in materials)
