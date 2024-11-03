@@ -16,29 +16,32 @@
 /datum/preference/loadout/deserialize(input, datum/preferences/preferences)
 	. = ..()
 	// For loadout purposes, donator_level is updated in middleware on select
-	var/donator_level = preferences.parent.donator_level
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/preference/loadout, loadout_process), input, preferences, .)
+
+/datum/preference/loadout/proc/loadout_process(input, datum/preferences/preferences, result)
+	var/donator_level = preferences.parent.get_donator_level()
 	var/total_cost = 0
 	var/removed_items = list()
 	var/left_points = preferences.get_loadout_points()
 
 	// Подсчёт общей стоимости всех предметов в лодауте
-	for(var/path in .)
+	for(var/path in result)
 		var/datum/loadout_item/item = GLOB.all_loadout_datums[path]
 		total_cost += item.cost
 
 	// Если общая стоимость превышает доступные очки, очищаем весь лодаут
 	if (total_cost > left_points)
-		. = list()  // Полностью очищаем список
-		removed_items = .  // Добавляем все элементы в список удалённых предметов
+		result = list()  // Полностью очищаем список
+		removed_items = result  // Добавляем все элементы в список удалённых предметов
 		to_chat(preferences.parent.mob, span_warning("У вас недостаточно очков, для вашего набора. Он был отчищен."))
 	else
 		// Если всё в порядке, выполняем стандартные проверки
 		left_points -= total_cost
-		for(var/path in .)
+		for(var/path in result)
 			var/datum/loadout_item/item = GLOB.all_loadout_datums[path]
 			if(donator_level <= item.donator_level)
 				//Убираем предметы, на которые не хватает донат-уровня
-				. -= path
+				result -= path
 				removed_items += item.name
 
 	preferences.loadout_points = left_points
