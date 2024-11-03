@@ -11,7 +11,7 @@
 		/obj/structure/bed = 0.7,
 	))
 	. = 0.5
-	for(var/obj/thingy as anything in get_turf(located_mob))
+	for(var/obj/thingy in get_turf(located_mob))
 		. = max(., modifiers[thingy.type])
 
 
