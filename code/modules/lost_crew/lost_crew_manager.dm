@@ -127,15 +127,17 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	/// The mind needed to unlock the box
 	var/datum/mind/mind
 	/// Or the enzyme (dna) needed to unlock the box
-	var/datum/dna/dna_sample
+	var/dna_sample
 
 /obj/item/storage/lockbox/mind/attack_self(mob/user, modifiers)
 	. = ..()
 
+	var/datum/dna/user_dna = user.has_dna()
+
 	if(user.mind == mind)
 		unlock()
 
-	if(user.has_dna() == dna_sample)
+	if(user_dna?.unique_enzymes == dna_sample)
 		unlock()
 
 /obj/item/storage/lockbox/mind/proc/unlock(mob/user)

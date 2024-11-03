@@ -30,10 +30,10 @@
 		object.forceMove(src)
 
 	// Spawn a mind lockbox with job stuffs for them to work with when they return
-	if(protected_items.len && corpse.mind && corpse.dna)
+	if(protected_items.len && corpse.mind && corpse.dna?.unique_enzymes)
 		var/obj/item/storage/lockbox/mind/box = new(src)
 		box.mind = corpse.mind
-		box.dna_sample = corpse.dna
+		box.dna_sample = corpse.dna.unique_enzymes
 		for(var/obj/object in protected_items)
 			object.forceMove(box)
 
