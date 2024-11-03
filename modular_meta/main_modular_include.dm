@@ -3,9 +3,13 @@
 // Keep in mind, that module may not be only in modular folder but also embedded directly in TG code and covered with #ifdef - #endif structure
 
 #include "_modpack.dm" //modpack obj
-#include "_modpacks_subsystem.dm" //actually mods subsystem
+#include "_modpacks_subsystem.dm" //actually mods subsystem + tgui in "tgui/packages/tgui/interfaces/Modpacks.tsx"
 
 /// FEATURES
+
+#if ADDITIONAL_CIRCUITS
+	#include "features\additional_circuit\includes.dm"
+#endif
 #if CHEBUREK_CAR
 	#include "features\cheburek_car\includes.dm"
 #endif

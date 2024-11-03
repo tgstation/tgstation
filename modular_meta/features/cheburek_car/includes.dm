@@ -4,7 +4,6 @@
 #include "code\nukeops_uplink.dm"
 #include "code\vehicle_actions.dm"
 
-
 /datum/modpack/cheburek_car
 	name = "Жигуль машинка"
 	desc = "Хуярит все и вся, хардбасс тоже!"

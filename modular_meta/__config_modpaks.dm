@@ -5,6 +5,7 @@
 
 
 /// FEATURES
+#define ADDITIONAL_CIRCUITS 1
 #define CHEBUREK_CAR 1
 /// PEREVODY
 #define RU_CRAYONS 1

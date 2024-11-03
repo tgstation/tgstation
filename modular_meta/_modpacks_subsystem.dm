@@ -1,28 +1,5 @@
 #define INIT_ORDER_MODPACKS 84
 
-/datum/modpack/ui_state()
-	return GLOB.always_state
-
-/datum/modpack/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "Modpacks")
-		ui.open()
-
-/datum/modpack/ui_data(mob/user)
-	var/list/data = list()
-	var/list/all_modpacks = list()
-	for(var/datum/modpack/package as anything in SSmodpacks.loaded_modpacks)
-		var/list/this_mod = list()
-		this_mod["name"] = package.name
-		this_mod["desc"] = package.desc
-		this_mod["author"] = package.author
-		all_modpacks += list(this_mod)
-	data["modpacks"] = all_modpacks
-
-	return data
-
-
 // Subsystem of modpacks
 SUBSYSTEM_DEF(modpacks)
 	name = "Modpacks"
