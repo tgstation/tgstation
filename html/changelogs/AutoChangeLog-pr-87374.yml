@@ -1,4 +1,0 @@
-author: "larentoun"
-delete-after: True
-changes:
-  - refactor: "Species detection on scanner gate has been updated from hardcoded list to a variable. You can VarEdit using species' id"

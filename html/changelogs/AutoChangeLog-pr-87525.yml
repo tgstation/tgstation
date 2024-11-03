@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "gas analyzer won't scan the floor when placing it on a table"
-  - bugfix: "gas analyzer won't scan storage items when placing it inside them"

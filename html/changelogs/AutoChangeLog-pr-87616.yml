@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "NTNRC channel user list is sorted by status again. It goes operator>online>away>offline."
-  - qol: "NTNRC channel user list is now alphabetically sorted under its status subcategories."
