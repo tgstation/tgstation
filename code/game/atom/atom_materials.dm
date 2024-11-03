@@ -110,7 +110,7 @@
 		var/previous_alpha = alpha
 		alpha *= (total_alpha / length(materials))/255
 
-		if(alpha_value < previous_alpha * 0.9)
+		if(alpha < previous_alpha * 0.9)
 			opacity = FALSE
 
 		if(material_flags & MATERIAL_GREYSCALE)
