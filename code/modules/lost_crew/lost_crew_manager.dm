@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 	if(!HAS_TRAIT(new_body, TRAIT_HUSK))
 		paper.name = "DO NOT REMOVE BRAIN"
-		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain acid have been administered to enforce stipend.")
+		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain acid has been administered to enforce stipend.")
 		var/obj/item/organ/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/brain)
 		//I swear to fuck I will explode you. you're not clever
 		//everyone thought of this, but I am the fool for having any faith
@@ -123,7 +123,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 /// A box for recovered items that can only be opened by the new crewmember
 /obj/item/storage/lockbox/mind
 	name = "mind lockbox"
-	desc = "A locked box, openable only by one mind."
+	desc = "A locked box, it is binded to someone's DNA makeup or mind"
 
 	/// The mind needed to unlock the box
 	var/datum/mind/mind
