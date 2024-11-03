@@ -52,7 +52,7 @@
 /obj/effect/nettingportal/singularity_act()
 	return
 
-/obj/effect/nettingportal/singularity_pull()
+/obj/effect/nettingportal/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/item/dragnet_beacon

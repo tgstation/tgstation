@@ -15,8 +15,8 @@
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 
-/datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -81,8 +81,8 @@
 	r_hand = /obj/item/mop
 	l_hand = /obj/item/reagent_containers/cup/bucket
 
-/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/reagent_containers/cup/bucket/bucket = H.get_item_for_held_index(1)
@@ -160,8 +160,8 @@
 	r_pocket = /obj/item/bikehorn
 	l_hand = /obj/item/fireaxe
 
-/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -206,11 +206,11 @@
 	l_pocket = /obj/item/melee/energy/sword/saber
 	l_hand = /obj/item/storage/briefcase/secure
 
-/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
 	U.attach_accessory(new /obj/item/clothing/accessory/waistcoat(H))
 
-	if(visualsOnly)
+	if(visuals_only)
 		return
 
 	//Could use a type
@@ -250,8 +250,8 @@
 	l_pocket = /obj/item/ammo_box/a357
 	r_pocket = /obj/item/lighter
 
-/datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -303,8 +303,8 @@
 	r_pocket = /obj/item/teleportation_scroll
 	l_hand = /obj/item/staff
 
-/datum/outfit/wizard/post_equip(mob/living/carbon/human/wizard, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/wizard/post_equip(mob/living/carbon/human/wizard, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/spellbook/new_spellbook = locate() in wizard.back
@@ -315,7 +315,7 @@
 	name = "Wizard - Bookless"
 	backpack_contents = list()
 
-/datum/outfit/wizard/bookless/post_equip(mob/living/carbon/human/wizard, visualsOnly)
+/datum/outfit/wizard/bookless/post_equip(mob/living/carbon/human/wizard, visuals_only)
 	return
 
 /datum/outfit/wizard/apprentice
@@ -362,8 +362,8 @@
 	head = /obj/item/clothing/head/costume/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 
-/datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -387,8 +387,8 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/gun/ballistic/automatic/tommygun
 
-/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
@@ -404,7 +404,7 @@
 	mask = /obj/item/clothing/mask/breath
 	back = /obj/item/mod/control/pre_equipped/chrono
 
-/datum/outfit/chrono_agent/post_equip(mob/living/carbon/human/agent, visualsOnly)
+/datum/outfit/chrono_agent/post_equip(mob/living/carbon/human/agent, visuals_only)
 	. = ..()
 	var/obj/item/mod/control/mod = agent.back
 	if(!istype(mod))
@@ -437,7 +437,7 @@
 	box = /obj/item/storage/box/debugtools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/debug/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/debug/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
@@ -469,7 +469,7 @@
 	box = /obj/item/storage/box/debugtools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/admin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/admin/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()

@@ -351,8 +351,10 @@
 
 	if(isliving(talking_movable))
 		var/mob/living/talking_living = talking_movable
-		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
-			SEND_SOUND(talking_living, 'sound/items/radio/radio_talk.ogg')
+		if(radio_noise && talking_living.can_hear() && talking_living.client?.prefs.read_preference(/datum/preference/toggle/radio_noise) && signal.frequency != FREQ_COMMON)
+			var/sound/radio_noise = sound('sound/items/radio/radio_talk.ogg')
+			radio_noise.frequency = get_rand_frequency_low_range()
+			SEND_SOUND(talking_living, radio_noise)
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -435,10 +437,14 @@
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_receive.ogg')
+		var/sound/radio_receive = sound('sound/items/radio/radio_receive.ogg')
+		radio_receive.frequency = get_rand_frequency_low_range()
+		SEND_SOUND(holder, radio_noise)
 	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
 		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_important.ogg')
+		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg')
+		radio_important.frequency = get_rand_frequency_low_range()
+		SEND_SOUND(holder, radio_important)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -655,6 +661,9 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+
+/obj/item/radio/entertainment/speakers/proc/toggle_mute()
+	should_be_listening = !should_be_listening
 
 /obj/item/radio/entertainment/speakers/Initialize(mapload)
 	. = ..()

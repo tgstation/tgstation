@@ -51,13 +51,15 @@
 	thealert.owner = src
 
 	if(new_master)
-		var/old_layer = new_master.layer
-		var/old_plane = new_master.plane
-		new_master.layer = FLOAT_LAYER
-		new_master.plane = FLOAT_PLANE
-		thealert.add_overlay(new_master)
-		new_master.layer = old_layer
-		new_master.plane = old_plane
+		var/mutable_appearance/master_appearance = new(new_master)
+		master_appearance.appearance_flags = KEEP_TOGETHER
+		master_appearance.layer = FLOAT_LAYER
+		master_appearance.plane = FLOAT_PLANE
+		master_appearance.dir = SOUTH
+		master_appearance.pixel_x = new_master.base_pixel_x
+		master_appearance.pixel_y = new_master.base_pixel_y
+		master_appearance.pixel_z = new_master.base_pixel_z
+		thealert.add_overlay(strip_appearance_underlays(master_appearance))
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
 	else
@@ -127,7 +129,7 @@
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:
-// * /obj/item/organ/internal/lungs/proc/check_breath()
+// * /obj/item/organ/lungs/proc/check_breath()
 // * /mob/living/carbon/check_breath()
 // * /mob/living/carbon/human/check_breath()
 // * /datum/element/atmos_requirements/proc/on_non_stasis_life()
@@ -484,7 +486,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
-		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+		if(HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 			return
 	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return

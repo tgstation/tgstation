@@ -115,7 +115,7 @@
 		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
 		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
 		balloon_alert_to_viewers("scanning...")
-		playsound(src, 'sound/effects/genetics.ogg', 40, FALSE)
+		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		COOLDOWN_START(src, scanning_person, 4 SECONDS)
 		if(!do_after(user, 4 SECONDS, interacting_with))
 			return ITEM_INTERACT_BLOCKING

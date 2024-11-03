@@ -15,7 +15,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	attack_verb_continuous = "weakly tackles"
-	attack_verb_simple = "weakly tackles"
+	attack_verb_simple = "weakly tackle"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "passes between the bodies of the"
@@ -29,7 +29,7 @@
 
 /mob/living/basic/mining/hivelord/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/organ/internal/monster_core/regenerative_core)
+	var/static/list/death_loot = list(/obj/item/organ/monster_core/regenerative_core)
 	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") // They writhe so much.

@@ -348,7 +348,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -434,7 +433,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	fishing_modifier = -1
+	fishing_modifier = -2
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
@@ -442,7 +441,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	icon_state = "carp_mask"
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
-	fishing_modifier = -3
+	fishing_modifier = -4
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
@@ -455,7 +454,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
-	fishing_modifier = -2
+	fishing_modifier = -4
 	var/list/tikimask_designs = list()
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
@@ -497,7 +496,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = "gas_atmos"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
-	fishing_modifier = -2
+	fishing_modifier = -4
 
 /obj/item/clothing/mask/gas/prop
 	name = "prop gas mask"

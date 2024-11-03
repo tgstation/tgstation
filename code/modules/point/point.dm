@@ -114,8 +114,14 @@
 /// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
 /// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
 /mob/proc/_pointed(atom/pointing_at)
-	if(client && !(pointing_at in view(client.view, src)))
-		return FALSE
+	if(client) //Clientless mobs can just go ahead and point
+		if(ismovable(pointing_at))
+			var/atom/movable/pointed_movable = pointing_at
+			if(pointed_movable.flags_1 & IS_ONTOP_1)
+				pointing_at = pointed_movable.loc
+
+		if(!(pointing_at in view(client.view, src)))
+			return FALSE
 
 	point_at(pointing_at, TRUE)
 

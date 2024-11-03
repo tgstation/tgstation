@@ -161,7 +161,9 @@
 		if(computer.obj_flags & EMAGGED)
 			return "STDERR:UNDF"
 		return FALSE
-	return ID.registered_name
+	. = "[ID.registered_name]"
+	if(ID.assignment)
+		. = "[.], [ID.assignment]"
 
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"

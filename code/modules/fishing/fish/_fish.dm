@@ -20,7 +20,7 @@
 	pickup_sound = SFX_FISH_PICKUP
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME
-	item_flags = IMMUTABLE_SLOW|SLOWS_WHILE_IN_HAND
+	item_flags = SLOWS_WHILE_IN_HAND
 
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE
@@ -520,7 +520,7 @@
 	if(make_edible)
 		make_edible()
 
-	if(weight >= FISH_WEIGHT_SLOWDOWN)
+	if(weight >= FISH_WEIGHT_SLOWDOWN && !HAS_TRAIT(src, TRAIT_SPEED_POTIONED))
 		slowdown = round(((weight/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
 		drag_slowdown = round(slowdown * 0.5, 1)
 	else
@@ -1323,24 +1323,6 @@
 /obj/item/fish/update_atom_colour()
 	. = ..()
 	aquarium_vc_color = color || initial(aquarium_vc_color)
-
-/obj/item/fish/get_infusion_entry()
-	var/amphibious = required_fluid_type == AQUARIUM_FLUID_AIR || HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS)
-	var/list/possible_infusions = list()
-	for(var/type in fish_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[type]
-		if(!trait.infusion_entry)
-			continue
-		possible_infusions |= trait.infusion_entry
-	if(!length(possible_infusions) && !amphibious)
-		return GLOB.infuser_entries[/datum/infuser_entry/fish]
-	var/datum/infuser_entry/fish/entry = new
-	if(amphibious)
-		entry.output_organs -= /obj/item/organ/internal/lungs/fish
-	for(var/key in possible_infusions)
-		var/datum/infuser_entry/infusion = GLOB.infuser_entries[key]
-		entry.output_organs |= infusion.output_organs
-	return entry
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)
