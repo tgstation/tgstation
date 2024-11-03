@@ -10,15 +10,6 @@ export const darkened_flash: FeatureToggle = {
   component: CheckboxInput,
 };
 
-export const surgery_noise: FeatureToggle = {
-  name: 'Disable surgery sounds',
-  category: 'ACCESSIBILITY',
-  description: `
-    Disable surgery sounds?
-  `,
-  component: CheckboxInput,
-};
-
 export const screen_shake_darken: FeatureToggle = {
   name: 'Darken screen shake',
   category: 'ACCESSIBILITY',
