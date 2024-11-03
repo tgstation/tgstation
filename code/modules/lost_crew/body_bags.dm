@@ -21,7 +21,7 @@
 	var/list/recovered_items = list()
 	var/list/protected_items = list()
 	var/list/lost_crew_data = list()
-	var/mob/living/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
+	var/mob/living/carbon/human/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = TRUE, recovered_items = recovered_items, protected_items = protected_items, body_data = lost_crew_data)
 	corpse.mind_initialize()
 	corpse.forceMove(src)
 
@@ -30,9 +30,10 @@
 		object.forceMove(src)
 
 	// Spawn a mind lockbox with job stuffs for them to work with when they return
-	if(protected_items.len && corpse.mind)
+	if(protected_items.len && corpse.mind && corpse.dna)
 		var/obj/item/storage/lockbox/mind/box = new(src)
 		box.mind = corpse.mind
+		box.dna_sample = corpse.dna
 		for(var/obj/object in protected_items)
 			object.forceMove(box)
 

@@ -1,7 +1,7 @@
 /**
  * ## DANGEROUS ORGAN REMOVAL ELEMENT
  *
- * Makes the organ explode when removed (potentially surgically!).
+ * Makes the organ corrode instantly when removed (potentially surgically!).
  * That's about it.
  */
 /datum/element/dangerous_organ_removal
@@ -33,9 +33,9 @@
 	if(surgical && source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return
 	if(user?.Adjacent(source))
-		source.audible_message("[source] explodes on [user]'s face!")
+		source.audible_message("[source] corrosive acid explodes on [user]'s face!")
 		user.take_bodypart_damage(15)
 	else
-		source.audible_message("[source] explodes into tiny pieces!")
-	explosion(source, light_impact_range = 1, explosion_cause = source)
+		source.audible_message("[source] corrodes into tiny pieces!")
+	source.AddComponent(/datum/component/acid, MOVABLE_ACID_DAMAGE_MAX, MOB_ACID_VOLUME_MAX, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
 	qdel(source)
