@@ -3,7 +3,7 @@
 	/// Species type to spawn with
 	var/datum/species/species_type = /datum/species/human
 
-/datum/corpse_character/proc/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy)
+/datum/corpse_character/proc/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)
 	fashionable_corpse.set_species(species_type)
 	fashionable_corpse.fully_replace_character_name(fashionable_corpse.real_name, fashionable_corpse.generate_random_mob_name())
 
@@ -17,7 +17,7 @@
 		/datum/species/human/felinid = 1.
 		)
 
-/datum/corpse_character/mostly_roundstart/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy)
+/datum/corpse_character/mostly_roundstart/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)
 	species_type = pick_weight(possible_species)
 	..()
 
@@ -27,7 +27,7 @@
 /// used by the morgue trays to spawn bodies (obeying three different configs???????????????????? yes please daddy give me more config for benign features)
 /datum/corpse_character/morgue
 
-/datum/corpse_character/morgue/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/datum/callback/on_revive_and_player_occupancy)
+/datum/corpse_character/morgue/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)
 	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability) * use_species
 	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
@@ -43,3 +43,11 @@
 			species_type = initial(species_type)
 
 	return ..()
+
+/datum/corpse_character/pod
+	species_type = /datum/species/pod
+
+/datum/corpse_character/pod/apply_character(mob/living/carbon/human/fashionable_corpse, list/saved_objects, list/recovered_items, list/datum/callback/on_revive_and_player_occupancy)
+	. = ..()
+
+	recovered_items += new /obj/item/plant_analyzer () //needed to properly healthscan them
