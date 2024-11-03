@@ -411,6 +411,7 @@
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
+	cast_projectile.decayedRange = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
