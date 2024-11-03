@@ -54,6 +54,7 @@
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
 ///key that holds our less priority hunting target
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
+///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
 ///Basic Mob Keys
 
