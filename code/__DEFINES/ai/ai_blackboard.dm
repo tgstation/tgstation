@@ -52,8 +52,7 @@
 ///Hunting BB keys
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
-#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
-
+#define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
 ///Basic Mob Keys
 
 ///Targeting subtrees
