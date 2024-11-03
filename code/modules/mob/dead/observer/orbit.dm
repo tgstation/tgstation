@@ -294,7 +294,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if(!potential_mob_poi.mind && !potential_mob_poi.ckey)
 		if(!mob_allowed_typecache)
 			mob_allowed_typecache = typecacheof(list(
-				/mob/camera,
+				/mob/eye,
 				/mob/living/basic/regal_rat,
 				/mob/living/simple_animal/bot,
 				/mob/living/simple_animal/hostile/megafauna,
