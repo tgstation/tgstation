@@ -581,7 +581,7 @@
 /atom/movable/screen/lobby/button/collapse/proc/expand_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_EXPANDED)
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
-	SEND_SOUND(hud.mymob, sound('sound/misc/menu/menu_rolldown1.ogg', volume = )
+	SEND_SOUND(hud.mymob, sound('sound/misc/menu/menu_rolldown1.ogg'))
 
 /atom/movable/screen/lobby/shutter
 	icon = 'icons/hud/lobby/shutter.dmi'
