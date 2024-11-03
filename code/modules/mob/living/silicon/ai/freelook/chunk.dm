@@ -16,7 +16,7 @@
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
-	///camera mobs that can see turfs in our grid
+	///eye mobs that can see turfs in our grid
 	var/list/seenby = list()
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()

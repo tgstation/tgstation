@@ -285,7 +285,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
  *
  * Provides extended validation above and beyond standard, limiting mob POIs without minds or ckeys
- * unless they're mobs, camera mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
+ * unless they're mobs, eye mobs or megafauna. Also allows exceptions for mobs that are deadchat controlled.
  *
  * If they satisfy that requirement, falls back to default validation for the POI.
  */
