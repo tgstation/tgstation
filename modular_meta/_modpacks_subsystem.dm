@@ -10,15 +10,17 @@
 		ui.open()
 
 /datum/modpack/ui_data(mob/user)
-	var/list/modpacks = list()
+	var/list/data = list()
+	var/list/all_modpacks = list()
 	for(var/datum/modpack/package as anything in SSmodpacks.loaded_modpacks)
-		modpacks += list(list(
-			"name" = package.name,
-			"desc" = package.desc,
-			"author" = package.author,
-			))
+		var/list/this_mod = list()
+		this_mod["name"] = package.name
+		this_mod["desc"] = package.desc
+		this_mod["author"] = package.author
+		all_modpacks += list(this_mod)
+	data["modpacks"] = all_modpacks
 
-	return modpacks
+	return data
 
 
 // Subsystem of modpacks
@@ -60,33 +62,6 @@ SUBSYSTEM_DEF(modpacks)
 		GLOB.modpacks_tgui = new /datum/modpack()
 
 	GLOB.modpacks_tgui.ui_interact(mob)
-/*
-	if(!mob || !SSmodpacks.initialized)
-		return
-	
-	// WHERE MYH FANCY TGUI, HUH!&!??
-	// Need to make groops: Features, Perevody, Reverts
-	if(length(SSmodpacks.loaded_modpacks))
-		. = "<hr><br><center><b><font size = 3>Список модификаций</font></b></center><br><hr><br>"
-		for(var/datum/modpack/M as anything in SSmodpacks.loaded_modpacks)
-			if(M.name)
-				. += "<div class = 'statusDisplay'>"
-				. += "<center><b>[M.name]</b></center>"
-
-				if(M.desc || M.author)
-					. += "<br>"
-					if(M.desc)
-						. += "<br>Описание: [M.desc]"
-					if(M.author)
-						. += "<br><i>Автор: [M.author]</i>"
-				. += "</div><br>"
-
-		var/datum/browser/popup = new(mob, "modpacks_list", "Список Модификаций", 480, 580)
-		popup.set_content(.)
-		popup.open()
-	else
-		to_chat(src, "Этот сервер не использует какие-либо модификации.")
-*/
 
 //Show modpacks button on lobby screen
 //ORIGINAL FILE: code/_onclick/hud/new_player.dm

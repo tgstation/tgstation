@@ -1,35 +1,49 @@
 // THIS IS A MASSMETA UI FILE
 
 import { useBackend } from '../backend';
-import { Button, Table } from '../components';
+import { Section, Table, NoticeBox, Tabs } from '../components';
 import { Window } from '../layouts';
 
-type Modpack = {
-  name: string;
-  desc: string;
-  author: string;
-};
-
-type Data = {
-  modpacks: Modpack[];
-};
 
 export const Modpacks = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { modpacks } = data;
+  const { act, data } = useBackend();
+  const { modpacks = [] } = data;
 
   return (
     <Window title="Список модификаций" width={480} height={580}>
       <Window.Content scrollable>
-	    <Table>
-		  {modpacks.map(([name, desc, author]) => (
-		    <Table.Row key={name} className="candystripe">
-              <Table.Cell bold>{name}</Table.Cell>
-              <Table.Cell>({desc})</Table.Cell>
-              <Table.Cell>({author})</Table.Cell>
-            </Table.Row>
-          ))}
-		</Table>
+        {(modpacks.length === 0 && (
+          <NoticeBox>Этот сервер не использует какие-либо модификации</NoticeBox>
+        )) || (
+          <Section>
+            <Table>
+              <Table.Row header>
+                <Table.Cell bold>
+                  Модуль
+                </Table.Cell>
+                <Table.Cell bold>
+                  Описание
+                </Table.Cell>
+                <Table.Cell bold>
+                  Автор
+                </Table.Cell>
+              </Table.Row>
+              {data.modpacks.map((modpack) => (
+                <Table.Row key={modpack.name}>
+                  <Table.Cell>
+                    {modpack.name}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {modpack.desc}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {modpack.author}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );
