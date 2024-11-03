@@ -69,7 +69,7 @@
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
 	/// how many times this projectile can pierce something before deleting
-	var/max_pierces = -1
+	var/max_pierces = 0
 
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -461,7 +461,7 @@
 
 		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
 		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
-		if (result != BULLET_ACT_FORCE_PIERCE && pierces >= max_pierces)
+		if (result != BULLET_ACT_FORCE_PIERCE && max_pierces && pierces >= max_pierces)
 			qdel(src)
 			return
 
