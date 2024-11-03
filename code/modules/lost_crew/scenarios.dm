@@ -50,9 +50,9 @@
 	weight = 0
 	possible_character_types = list(/datum/corpse_character/morgue = 1)
 	possible_character_assignments = list()
+	possible_flavor_types = list()
 
 /// Non-roundstart species
 /datum/corpse_damage_class/station/exotic_species
 	possible_character_types = list(/datum/corpse_character/pod = 1)
 	weight = 1
-

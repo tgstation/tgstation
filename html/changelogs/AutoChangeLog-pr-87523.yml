@@ -1,4 +1,4 @@
 author: "grungussuss"
 delete-after: True
 changes:
-  - sound: "emote pitch shifting has been fixed"
+  - sound: "The lobby menu now click sounds."

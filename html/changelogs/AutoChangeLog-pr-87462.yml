@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - qol: "manufacturing assembling machines instead craft using the resources on top of them, they are no longer block movement and have new sprites"

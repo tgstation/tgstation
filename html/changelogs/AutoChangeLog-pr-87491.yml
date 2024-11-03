@@ -1,8 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - rscadd: "Added more causes of death to recovered crew"
-  - rscadd: "Added double death causes to recovered crew, and even meaner space vultures!"
-  - rscadd: "Adds a small chance to roll quirks on recovered crew"
-  - rscadd: "Adds a small chance to spawn as a podperson to recovered crew"
-  - bugfix: "Fixes a harddel caused by quirks never being cleared on delete"

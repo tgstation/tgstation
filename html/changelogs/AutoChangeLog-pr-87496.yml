@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - code_imp: "Moved the reagent deletion signal below updating the total volume of containers. If any bugs seem related please report them!"
-  - bugfix: "BVAK injectors have their middleground icon state once more"

@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "thermal insulation tags are correctly formatted if they're only cold or hot insulated"

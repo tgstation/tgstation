@@ -1,6 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed a runtime when spawning in a kiltborg"
-  - bugfix: "fixed spawned-in borgs with a pre-selected model not having their correct model select icon"
-  - image: "KILTBORGS ONCE AGAIN HAVE THEIR OWN MODEL SELECT ICON!!!!!!!"
