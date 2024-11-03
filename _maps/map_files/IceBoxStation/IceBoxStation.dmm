@@ -52616,7 +52616,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
 "pgN" = (
-/obj/item/organ/external/tail/monkey,
+/obj/item/organ/tail/monkey,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -56829,7 +56829,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qrj" = (
@@ -71065,6 +71065,7 @@
 	c_tag = "Medbay Mid-South";
 	network = list("ss13","medbay")
 	},
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "uzs" = (
@@ -78726,6 +78727,7 @@
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/light/cold/directional/east,
+/obj/structure/sign/eyechart/directional/east,
 /turf/open/floor/iron/large,
 /area/station/medical/treatment_center)
 "wRI" = (
@@ -81160,7 +81162,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/blue/filled/end,
-/obj/structure/sign/warning/no_smoking/circle/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/directional/west,
 /obj/structure/window/spawner/directional/south,

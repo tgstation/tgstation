@@ -128,7 +128,7 @@
 	if(visuals_only)
 		return
 	if(!equipped.get_quirk(/datum/quirk/body_purist))
-		var/obj/item/organ/internal/tongue/robot/cybernetic = new()
+		var/obj/item/organ/tongue/robot/cybernetic = new()
 		cybernetic.Insert(equipped, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		//you only get respect if you go all the way, man.
 		ADD_TRAIT(equipped, TRAIT_COMMISSIONED, INNATE_TRAIT)

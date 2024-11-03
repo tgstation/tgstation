@@ -693,7 +693,7 @@
 		return
 
 	//The bonus to success chance that the user gets for being a command role
-	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
 
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means

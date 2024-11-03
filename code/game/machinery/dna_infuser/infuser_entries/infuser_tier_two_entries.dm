@@ -22,9 +22,9 @@
 		/obj/item/food/meat/slab/gondola,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/heart/gondola,
-		/obj/item/organ/internal/tongue/gondola,
-		/obj/item/organ/internal/liver/gondola,
+		/obj/item/organ/heart/gondola,
+		/obj/item/organ/tongue/gondola,
+		/obj/item/organ/liver/gondola,
 	)
 	infusion_desc = "observant"
 	tier = DNA_MUTANT_TIER_TWO

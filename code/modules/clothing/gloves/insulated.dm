@@ -64,6 +64,7 @@
 	icon_state = "sprayon"
 	inhand_icon_state = null
 	item_flags = DROPDEL
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	armor_type = /datum/armor/none
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
