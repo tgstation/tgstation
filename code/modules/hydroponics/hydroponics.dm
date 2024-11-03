@@ -298,7 +298,6 @@
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
-		return
 	return ..()
 
 /obj/machinery/hydroponics/power_change()
