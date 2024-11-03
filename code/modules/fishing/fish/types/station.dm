@@ -140,7 +140,7 @@
 	///How long does it take for us to grow up?
 	var/growth_time = 3.5 MINUTES
 
-/obj/item/fish/fryish/Initialize(mapload)
+/obj/item/fish/fryish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	if(is_bait)
 		add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GREAT_QUALITY_BAIT), INNATE_TRAIT)

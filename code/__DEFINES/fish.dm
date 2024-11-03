@@ -168,7 +168,7 @@
 #define FISH_RARITY_BASIC 1000
 #define FISH_RARITY_RARE 400
 #define FISH_RARITY_VERY_RARE 200
-#define FISH_RARITY_GOOD_LUCK_FINDING_THIS 5
+#define FISH_RARITY_GOOD_LUCK_FINDING_THIS 50
 #define FISH_RARITY_NOPE 0
 
 ///Aquarium fluid variables. The fish' required fluid has to match this, or it'll slowly die.
