@@ -68,15 +68,15 @@
 		return
 
 	var/list/removable_organs = list()
-	for(var/obj/item/organ/internal/bodypart_organ in organ_storage.contents)
-		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
+	for(var/obj/item/organ/bodypart_organ in organ_storage.contents)
+		if(bodypart_organ.organ_flags & (ORGAN_EXTERNAL|ORGAN_UNREMOVABLE))
 			continue
 		removable_organs += bodypart_organ
 
 	if (!length(removable_organs))
 		return // This one is a little more possible but they're probably already in pretty bad shape by this point
 
-	var/obj/item/organ/internal/removing_organ = pick(removable_organs)
+	var/obj/item/organ/removing_organ = pick(removable_organs)
 
 	if (carbon_owner.vomit(vomit_flags = VOMIT_CATEGORY_BLOOD))
 		carbon_owner.visible_message(span_boldwarning("[carbon_owner] vomits out [carbon_owner.p_their()] [removing_organ]"))

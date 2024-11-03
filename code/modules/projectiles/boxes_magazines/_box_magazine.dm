@@ -49,7 +49,10 @@
 	update_icon_state()
 
 /obj/item/ammo_box/Destroy(force)
-	QDEL_LIST(stored_ammo)
+	for (var/obj/item/ammo_casing/casing as anything in stored_ammo)
+		if (!ispath(casing))
+			qdel(casing)
+	stored_ammo = null
 	return ..()
 
 /obj/item/ammo_box/Exited(atom/movable/gone, direction)
@@ -71,12 +74,21 @@
 		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
 		\nAccidentally discharging any of these projectiles may void your insurance contract."
 
-	var/obj/item/ammo_casing/mag_ammo = get_round(TRUE)
+	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 
 	if(istype(mag_ammo))
 		readout += "\n[mag_ammo.add_notes_ammo()]"
 
 	return readout.Join("\n")
+
+///list of every bullet in the box
+///forces all bullets to lazyload
+/obj/item/ammo_box/proc/ammo_list()
+	for (var/i in 1 to length(stored_ammo))
+		if (ispath(stored_ammo[i]))
+			var/casing_type = stored_ammo[i]
+			stored_ammo[i] = new casing_type(src)
+	return stored_ammo.Copy()
 
 /**
  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
@@ -95,68 +107,84 @@
 		return
 
 	for(var/i in max(1, stored_ammo.len + 1) to max_ammo)
-		stored_ammo += new round_check(src)
+		stored_ammo += starting ? round_check : new round_check(src)
 	update_appearance()
 
-///gets a round from the magazine, if keep is TRUE the round will be moved to the bottom of the list.
-/obj/item/ammo_box/proc/get_round(keep = FALSE)
+///gets a round from the magazine
+/obj/item/ammo_box/proc/get_round()
 	var/ammo_len = length(stored_ammo)
 	if (!ammo_len)
 		return null
 	var/casing = stored_ammo[ammo_len]
-	if (keep)
-		stored_ammo -= casing
-		stored_ammo.Insert(1,casing)
+	if (ispath(casing))
+		casing = new casing(src)
+		stored_ammo[ammo_len] = casing
+	return casing
+
+/// Gets a round from the magazine and puts it back at the bottom of the ammo list
+/obj/item/ammo_box/proc/get_and_shuffle_round()
+	var/casing = get_round()
+	if (!casing)
+		return null
+	stored_ammo -= casing
+	stored_ammo.Insert(1, casing)
 	return casing
 
 ///puts a round into the magazine
-/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/new_round, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
-	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
+	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)))
 		return FALSE
 
 	if (stored_ammo.len < max_ammo)
-		stored_ammo += R
-		R.forceMove(src)
+		stored_ammo += new_round
+		new_round.forceMove(src)
 		return TRUE
 
-	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
-	else if(replace_spent)
-		for(var/obj/item/ammo_casing/AC in stored_ammo)
-			if(!AC.loaded_projectile)//found a spent ammo
-				stored_ammo -= AC
-				AC.forceMove(get_turf(src.loc))
+	if(!replace_spent)
+		return FALSE
 
-				stored_ammo += R
-				R.forceMove(src)
-				return TRUE
+	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
+	for(var/obj/item/ammo_casing/casing as anything in stored_ammo)
+		if(ispath(casing) || casing.loaded_projectile)
+			continue
+		//found a spent ammo
+		stored_ammo -= casing
+		casing.forceMove(get_turf(src))
+
+		stored_ammo += new_round
+		new_round.forceMove(src)
+		return TRUE
 	return FALSE
 
 ///Whether or not the box can be loaded, used in overrides
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return TRUE
 
-/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
+/obj/item/ammo_box/attackby(obj/item/tool, mob/user, params, silent = FALSE, replace_spent = 0)
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
-	if(istype(A, /obj/item/ammo_box))
-		var/obj/item/ammo_box/AM = A
-		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			var/did_load = give_round(AC, replace_spent)
+
+	if(istype(tool, /obj/item/ammo_box))
+		var/obj/item/ammo_box/other_box = tool
+		for(var/obj/item/ammo_casing/casing in other_box.ammo_list())
+			var/did_load = give_round(casing, replace_spent)
 			if(did_load)
-				AM.stored_ammo -= AC
+				other_box.stored_ammo -= casing
 				num_loaded++
 			if(!did_load || !multiload)
 				break
+
 		if(num_loaded)
-			AM.update_appearance()
-	if(isammocasing(A))
-		var/obj/item/ammo_casing/AC = A
-		if(give_round(AC, replace_spent))
-			user.transferItemToLoc(AC, src, TRUE)
+			other_box.update_appearance()
+
+	if(isammocasing(tool))
+		var/obj/item/ammo_casing/casing = tool
+		if(give_round(casing, replace_spent))
+			user.transferItemToLoc(casing, src, TRUE)
 			num_loaded++
-			AC.update_appearance()
+			casing.update_appearance()
 
 	if(num_loaded)
 		if(!silent)
@@ -225,18 +253,15 @@
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
 	var/boolets = 0
-	for(var/obj/item/ammo_casing/bullet in stored_ammo)
-		if(bullet && (bullet.loaded_projectile || countempties))
+	for(var/obj/item/ammo_casing/bullet as anything in stored_ammo)
+		if(ispath(bullet) || bullet && (bullet.loaded_projectile || countempties))
 			boolets++
 	return boolets
 
-///list of every bullet in the magazine
-/obj/item/ammo_box/magazine/proc/ammo_list()
-	return stored_ammo.Copy()
-
 ///drops the entire contents of the magazine on the floor
 /obj/item/ammo_box/magazine/proc/empty_magazine()
-	var/turf_mag = get_turf(src)
-	for(var/obj/item/ammo in stored_ammo)
-		ammo.forceMove(turf_mag)
-		stored_ammo -= ammo
+	var/turf/turf_mag = get_turf(src)
+	var/obj/item/ammo_casing/casing = get_round()
+	while (casing)
+		casing.forceMove(turf_mag)
+		casing = get_round()

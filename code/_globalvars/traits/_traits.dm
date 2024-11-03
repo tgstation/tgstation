@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_LIVING_HEART" = TRAIT_LIVING_HEART,
 		"TRAIT_USED_ORGAN" = TRAIT_USED_ORGAN,
 	),
-	/obj/item/organ/internal/liver = list(
+	/obj/item/organ/liver = list(
 		"TRAIT_BALLMER_SCIENTIST" = TRAIT_BALLMER_SCIENTIST,
 		"TRAIT_COMEDY_METABOLISM" = TRAIT_COMEDY_METABOLISM,
 		"TRAIT_CORONER_METABOLISM" = TRAIT_CORONER_METABOLISM,
@@ -684,7 +684,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_PRETENDER_ROYAL_METABOLISM" = TRAIT_PRETENDER_ROYAL_METABOLISM,
 		"TRAIT_ROYAL_METABOLISM" = TRAIT_ROYAL_METABOLISM,
 	),
-	/obj/item/organ/internal/lungs = list(
+	/obj/item/organ/lungs = list(
 		"TRAIT_SPACEBREATHING" = TRAIT_SPACEBREATHING,
 	),
 	/obj/machinery/modular_computer = list(
