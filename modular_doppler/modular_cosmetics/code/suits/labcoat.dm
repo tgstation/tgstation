@@ -17,3 +17,4 @@
 	icon_state = "labcoat_lalunevest"
 	icon = 'modular_doppler/modular_cosmetics/icons/obj/suit/labcoat.dmi'
 	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/suit/labcoat.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
