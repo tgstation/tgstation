@@ -12,9 +12,7 @@
 	))
 	. = 0.5
 	for(var/obj/thingy as anything in get_turf(located_mob))
-		var/modifier = modifiers[thingy.type]
-		if(!isnull(modifier))
-			. = max(., modifier)
+		. = max(., modifiers[thingy.type])
 
 
 /proc/get_location_accessible(mob/located_mob, location)
