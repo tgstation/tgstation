@@ -103,8 +103,7 @@
 		signals +=  COMSIG_ATOM_EXAMINE
 	signals += COMSIG_OBJ_DECONSTRUCT
 
-	if(signals.len)
-		UnregisterSignal(parent, signals)
+	UnregisterSignal(parent, signals)
 
 /datum/component/material_container/proc/drop_sheets()
 	SIGNAL_HANDLER
