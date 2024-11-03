@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if(M.mind)
 			count_only = FALSE
 			mob_data["ckey"] = M.mind.key
-			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
+			if(M.stat != DEAD && !isbrain(M) && !iseyemob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
 					num_escapees++

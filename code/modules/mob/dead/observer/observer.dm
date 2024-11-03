@@ -704,7 +704,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
-	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
+	if (isobserver(user) && user.client.holder && (isliving(over) || iseyemob(over)))
 		user.client.holder.cmd_ghost_drag(src, over)
 
 /mob/dead/observer/Topic(href, href_list)

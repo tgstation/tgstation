@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define issentientdisease(A) (istype(A, /mob/eye/disease))
 
-#define iscameramob(A) (istype(A, /mob/eye))
+#define iseyemob(A) (istype(A, /mob/eye))
 
 #define isaicamera(A) (istype(A, /mob/eye/ai_eye))
 

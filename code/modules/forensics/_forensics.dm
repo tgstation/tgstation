@@ -109,7 +109,7 @@
 /// Adds a single fingerprint
 /datum/forensics/proc/add_fingerprint(mob/living/suspect, ignoregloves = FALSE)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
 			var/mob/eye/ai_eye/ai_camera = suspect
@@ -190,7 +190,7 @@
 /// Adds a single hiddenprint
 /datum/forensics/proc/add_hiddenprint(mob/suspect)
 	if(!isliving(suspect))
-		if(!iscameramob(suspect))
+		if(!iseyemob(suspect))
 			return
 		if(isaicamera(suspect))
 			var/mob/eye/ai_eye/ai_camera = suspect
