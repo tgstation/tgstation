@@ -437,10 +437,14 @@
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_receive.ogg')
+		var/sound/radio_receive = sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier)
+		radio_receive.frequency = get_rand_frequency_low_range()
+		SEND_SOUND(holder, radio_noise)
 	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
 		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, 'sound/items/radio/radio_important.ogg')
+		var/sound/radio_important = sound('sound/items/radio/radio_important.ogg', volume = volume_modifier)
+		radio_important.frequency = get_rand_frequency_low_range()
+		SEND_SOUND(holder, radio_important)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
