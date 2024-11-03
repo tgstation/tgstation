@@ -209,6 +209,10 @@
 /proc/get_rand_frequency_low_range()
 	return rand(38000, 45000)
 
+///get_rand_frequency but lower range.
+/proc/get_rand_frequency_low_range()
+	return rand(38000, 45000)
+
 ///Used to convert a SFX define into a .ogg so we can add some variance to sounds. If soundin is already a .ogg, we simply return it
 /proc/get_sfx(soundin)
 	if(!istext(soundin))
@@ -326,9 +330,9 @@
 				)
 		if(SFX_CAN_OPEN)
 			soundin = pick(
-				'sound/effects/can/can_open1.ogg',
-				'sound/effects/can/can_open2.ogg',
-				'sound/effects/can/can_open3.ogg',
+				'sound/items/can/can_open1.ogg',
+				'sound/items/can/can_open2.ogg',
+				'sound/items/can/can_open3.ogg',
 				)
 		if(SFX_BULLET_MISS)
 			soundin = pick(

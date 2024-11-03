@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "MODules don't create visual overlays when their required part isn't deployed"

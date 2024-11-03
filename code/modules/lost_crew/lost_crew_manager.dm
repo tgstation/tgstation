@@ -15,13 +15,14 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
  *
  * Arguments:
  * * revivable - Whether or not we can be revived to grand a ghost controle
+ * * container - Humans really dont like not having a loc, so please either give the container where you want to spawn it or a turf
  * * forced_class - To force a specific damage class for some specific lore reason
  * * recovered_items - Items recovered, such as some organs, dropped directly with the body
  * * protected_items - Items that can only be recovered by the revived player
  * * body_data - Debug data we can use to get a readout of what has been done
  */
 /datum/lost_crew_manager/proc/create_lost_crew(revivable = TRUE, datum/corpse_damage_class/forced_class, list/recovered_items, list/protected_items, list/body_data = list())
-	var/mob/living/carbon/human/new_body = new(null)
+	var/mob/living/carbon/human/new_body = new()
 	new_body.death()
 
 	var/static/list/scenarios = list()
@@ -35,7 +36,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	var/datum/corpse_damage_class/scenario = forced_class || pick_weight(scenarios)
 	scenario = new scenario ()
 
-	scenario.apply_character(new_body, protected_items, on_revive_and_player_occupancy, body_data)
+	scenario.apply_character(new_body, protected_items, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.apply_injuries(new_body, recovered_items, on_revive_and_player_occupancy, body_data)
 	scenario.death_lore += "I should get a formalized assignment!"
 
@@ -56,7 +57,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	if(!HAS_TRAIT(new_body, TRAIT_HUSK))
 		paper.name = "DO NOT REMOVE BRAIN"
 		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain explosives have been administered to enforce stipend.")
-		var/obj/item/organ/internal/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/brain)
 		//I swear to fuck I will explode you. you're not clever
 		//everyone thought of this, but I am the fool for having any faith
 		//in people actually wanting to play the job in an interesting manner
@@ -67,7 +68,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		paper.name = "BODYSWAPPING PERMITTED"
 		paper.add_raw_text("Body swapping is covered by medical insurance in case of husking and a lack of skill in the practictioner.")
 
-	var/obj/item/organ/internal/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/hersens = new_body.get_organ_by_type(/obj/item/organ/brain)
 	hersens.AddComponent(
 		/datum/component/ghostrole_on_revive, \
 		/* refuse_revival_if_failed = */ TRUE, \
@@ -75,7 +76,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	)
 
 /// Set a timer for awarding succes and drop some awesome deathlore
-/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/internal/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
+/datum/lost_crew_manager/proc/on_succesful_revive(obj/item/organ/brain/brain, list/death_lore, list/datum/callback/on_revive_and_player_occupancy)
 	var/mob/living/carbon/human/owner = brain.owner
 
 	owner.mind.add_antag_datum(/datum/antagonist/recovered_crew) //for tracking mostly

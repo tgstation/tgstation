@@ -17,10 +17,10 @@
 		prepare_mob(parent)
 		return
 
-	if(!istype(parent, /obj/item/organ/internal/brain))
+	if(!istype(parent, /obj/item/organ/brain))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/organ/internal/brain/brein = parent
+	var/obj/item/organ/brain/brein = parent
 	if(brein.owner)
 		prepare_mob(brein.owner)
 	else
@@ -34,7 +34,7 @@
 
 	if(iscarbon(liver))
 		var/mob/living/carbon/carbon = liver
-		var/obj/item/organ/brain = carbon.get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain = carbon.get_organ_by_type(/obj/item/organ/brain)
 		if(brain)
 			RegisterSignal(brain, COMSIG_ORGAN_REMOVED, PROC_REF(on_remove))
 
@@ -57,7 +57,7 @@
 	RegisterSignal(brein, COMSIG_ORGAN_IMPLANTED, PROC_REF(prepare_mob_from_brain))
 	UnregisterSignal(brein, COMSIG_ORGAN_REMOVED)
 
-/datum/component/ghostrole_on_revive/proc/prepare_mob_from_brain(obj/item/organ/internal/brain/brein, mob/living/owner)
+/datum/component/ghostrole_on_revive/proc/prepare_mob_from_brain(obj/item/organ/brain/brein, mob/living/owner)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(brein, COMSIG_ORGAN_IMPLANTED)
@@ -111,8 +111,8 @@
 	var/mob/living/living
 	if(isliving(parent))
 		living = parent
-	else if(istype(parent, /obj/item/organ/internal/brain))
-		var/obj/item/organ/internal/brain/brain = parent
+	else if(istype(parent, /obj/item/organ/brain))
+		var/obj/item/organ/brain/brain = parent
 		living = brain.owner
 	living?.med_hud_set_status()
 

@@ -275,11 +275,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
-				Pewgun.chambered = Pewgun.magazine.get_round(0)
+				Pewgun.chambered = Pewgun.magazine.get_round()
 				Pewgun.chambered.forceMove(Pewgun)
 			Pewgun.update_appearance()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
-			Pewgun.chambered = Pewgun.magazine.get_round(0)
+			Pewgun.chambered = Pewgun.magazine.get_round()
 			Pewgun.chambered.forceMove(Pewgun)
 			visible_message(span_danger("The <b>[src]</b> cocks itself!"))
 	else
