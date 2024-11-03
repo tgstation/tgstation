@@ -7,7 +7,7 @@ def downmix_to_mono(file_path):
         audio = AudioSegment.from_file(file_path)
         if audio.channels != 1:  # Check if audio is not already mono
             mono_audio = audio.set_channels(1)
-            mono_file_path = os.path.splitext(file_path)[0] + "_mono.ogg"
+            mono_file_path = os.path.splitext(file_path)[0] + ".ogg"
             mono_audio.export(mono_file_path, format="ogg")
             print(f"Converted {file_path} to {mono_file_path}")
     except Exception as e:
