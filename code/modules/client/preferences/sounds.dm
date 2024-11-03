@@ -128,6 +128,3 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ai_vox"
 	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/numeric/sound_tts_volume/create_default_value()
-	return maximum/2
