@@ -89,7 +89,6 @@ jobs:
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           bash tools/ci/install_ripgrep.sh
           tools/bootstrap/python -c ''
-          sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Give Linters A Go
         id: linter-setup
         run: ':'
@@ -107,6 +106,11 @@ jobs:
       - name: Check Trait Validity
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m trait_validity.check
+      - name: Run Sample Rate Check
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: |
+          sudo apt-get install ffmpeg
+          tools/ci/enforce_ogg_sample_rate.sh
       - name: Run DreamChecker
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         shell: bash
@@ -284,28 +288,6 @@ jobs:
         with:
           dmb-location: tgstation.dmb
           max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
-
-  test_ogg_files:
-    name: Check OGG Sample Rate
-    needs: start_gate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Check OGG sample rates
-        run: |
-          for file in $(find . -type f -name '*.ogg'); do
-          sample_rate=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "$file")
-          if [ "$sample_rate" != "44100" ]; then
-            fail = true
-            echo "Error: $file has sample rate $sample_rate Hz (expected 44100 Hz)"
-            fi
-            done
-          if(fail); then
-            exit 1
-          echo "All OGG files have the correct sample rate."
-          exit 0
 
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()
