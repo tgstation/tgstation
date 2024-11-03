@@ -474,26 +474,55 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
-	desc = "Shuffle off this mortal coil."
+	desc = "Shuffle off this mortal coil.<br/>Right-Click to succumb silently."
 	icon_state = ALERT_SUCCUMB
+	var/static/list/death_titles = list(
+		"Goodnight, Sweet Prince",
+		"Game Over, Man",
+		"End Of The Road",
+		"Live Long And Prosper",
+		"See You Space Cowboy...",
+		"It's Been An Honor",
+		"The Curtains Close",
+		"All Good Things Must End"
+	)
 
-/atom/movable/screen/alert/succumb/Click()
+#define FASTSUCCUMB_YES "Yes"
+#define FASTSUCCUMB_WAIT "Wait, I have last words!"
+#define FASTSUCCUMB_NO "No"
+
+/atom/movable/screen/alert/succumb/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper
-	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
+	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE)) //checked again in [mob/living/verb/succumb()]
+		return
+
+	var/title = pick(death_titles)
+
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		//Succumbing without a message
+		var/choice = tgui_alert(living_owner, "Are you sure you want to succumb?", title, list(FASTSUCCUMB_NO, FASTSUCCUMB_WAIT, FASTSUCCUMB_YES))
+		switch(choice)
+			if(FASTSUCCUMB_NO, null)
+				return
+			if(FASTSUCCUMB_YES)
+				living_owner.succumb()
+				return
+			//if(FASTSUCCUMB_WAIT), we continue to last words
+
+	//Succumbing with a message
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", title, max_length = CHAT_MESSAGE_MAX_LENGTH, encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
-		if(HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-			return
-	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
+#undef FASTSUCCUMB_NO
+#undef FASTSUCCUMB_WAIT
+#undef FASTSUCCUMB_YES
 //ALIENS
 
 /atom/movable/screen/alert/alien_plas
