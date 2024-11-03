@@ -130,7 +130,7 @@
 		/datum/heretic_knowledge/painting,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
@@ -216,19 +216,23 @@
 	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-	// Roughly 1/5th of the station will rise up as lunatics to the heretic
-	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
-		// How many lunatics we have
-		var/amount_of_lunatics = 0
-		// Where the crewmate is, used to check their z-level
+	var/amount_of_lunatics = 0
+	var/list/lunatic_candidates = list()
+	for(var/mob/living/carbon/human/crewmate as anything in shuffle(GLOB.human_list))
+		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS)
+			continue
 		var/turf/crewmate_turf = get_turf(crewmate)
 		var/crewmate_z = crewmate_turf?.z
-		if(isnull(crewmate.mind))
-			continue
-		if(crewmate.stat != CONSCIOUS)
-			continue
 		if(!is_station_level(crewmate_z))
 			continue
+		lunatic_candidates += crewmate
+
+	// Roughly 1/5th of the station will rise up as lunatics to the heretic.
+	// We use either the (locked) manifest for the maximum, or the amount of candidates, whichever is larger.
+	// If there's more eligible humans than crew, more power to them I guess.
+	var/max_lunatics = ceil(max(length(GLOB.manifest.locked), length(lunatic_candidates)) * 0.2)
+
+	for(var/mob/living/carbon/human/crewmate as anything in lunatic_candidates)
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 		if(IS_HERETIC_OR_MONSTER(crewmate))
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
@@ -237,12 +241,12 @@
 		if(HAS_MIND_TRAIT(crewmate, TRAIT_UNCONVERTABLE) || crewmate.can_block_magic(MAGIC_RESISTANCE))
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
-		if(amount_of_lunatics > length(GLOB.human_list) * 0.2)
-			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
+		if(amount_of_lunatics > max_lunatics)
+			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you."))
 			continue
 		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
 		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate_turf)
+		var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(crewmate.drop_location())
 		var/static/list/slots = list(
 			"neck" = ITEM_SLOT_NECK,
 			"hands" = ITEM_SLOT_HANDS,
@@ -252,7 +256,7 @@
 		)
 		crewmate.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
 		crewmate.emote("laugh")
-		amount_of_lunatics += 1
+		amount_of_lunatics++
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader

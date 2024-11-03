@@ -209,8 +209,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_MALE_SIGH "male_sigh"
 #define SFX_FEMALE_SIGH "female_sigh"
 
-// Default is 45kbps
-#define MIN_EMOTE_PITCH 42000
-#define MAX_EMOTE_PITCH 50000
+// Standard is 44.1khz
+#define MIN_EMOTE_PITCH 40000
+#define MAX_EMOTE_PITCH 48000
 // ~0.6 - 1.4 at 0.12
 #define EMOTE_TTS_PITCH_MULTIPLIER 0.12

@@ -39,6 +39,10 @@
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
+	/// Are all parts needed active- have we ran on_part_activation
+	var/part_activated = FALSE
+	/// Do we need the parts to be extended to run process
+	var/part_process = TRUE
 	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
 	/// flags that let the module ability be used in odd circumstances
@@ -79,14 +83,14 @@
 		. += span_notice("Complexity level: [complexity]")
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
-/obj/item/mod/module/proc/has_required_parts(list/parts, need_extended = FALSE)
+/obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)
 	if(!length(required_slots))
 		return TRUE
 	var/total_slot_flags = NONE
 	for(var/part_slot in parts)
-		if(need_extended)
+		if(need_active)
 			var/datum/mod_part/part_datum = parts[part_slot]
-			if(part_datum.part_item.loc == mod)
+			if(!part_datum.sealed)
 				continue
 		total_slot_flags |= text2num(part_slot)
 	var/list/needed_slots = required_slots.Copy()
@@ -110,7 +114,7 @@
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
-	if(!has_required_parts(mod.mod_parts, need_extended = TRUE))
+	if(!has_required_parts(mod.mod_parts, need_active = TRUE))
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "required parts inactive!")
 			var/list/slot_strings = list()
@@ -169,7 +173,6 @@
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	mod.wearer.update_clothing(mod.slot_flags)
-	start_cooldown()
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	on_activation()
 	return TRUE
@@ -231,6 +234,8 @@
 
 /// Called on the MODsuit's process
 /obj/item/mod/module/proc/on_process(seconds_per_tick)
+	if(part_process && !part_activated)
+		return FALSE
 	if(active)
 		if(!drain_power(active_power_cost * seconds_per_tick))
 			deactivate()
@@ -265,11 +270,11 @@
 	return
 
 /// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
+/obj/item/mod/module/proc/on_part_activation()
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/proc/on_part_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -337,7 +342,7 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
-	if(!mod.active || !has_required_parts(mod.mod_parts, need_extended = TRUE))
+	if(!mod.active || !has_required_parts(mod.mod_parts, need_active = TRUE))
 		return
 	var/used_overlay = get_current_overlay_state()
 	if (!used_overlay)

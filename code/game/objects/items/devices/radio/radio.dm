@@ -352,7 +352,9 @@
 		var/mob/living/talking_living = talking_movable
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
 		if(radio_noise && talking_living.can_hear() && volume_modifier && signal.frequency != FREQ_COMMON)
-			SEND_SOUND(talking_living, sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
+			var/sound/radio_noise = sound(sound('sound/items/radio/radio_talk.ogg', volume = volume_modifier))
+			radio_noise.frequency = get_rand_frequency_low_range()
+			SEND_SOUND(talking_living, radio_noise)
 
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
@@ -435,10 +437,10 @@
 	var/list/spans = data["spans"]
 	if(COOLDOWN_FINISHED(src, audio_cooldown))
 		COOLDOWN_START(src, audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
+		SEND_SOUND(holder, 'sound/items/radio/radio_receive.ogg')
 	if((SPAN_COMMAND in spans) && COOLDOWN_FINISHED(src, important_audio_cooldown))
 		COOLDOWN_START(src, important_audio_cooldown, 0.5 SECONDS)
-		SEND_SOUND(holder, sound('sound/items/radio/radio_receive.ogg', volume = volume_modifier))
+		SEND_SOUND(holder, 'sound/items/radio/radio_important.ogg')
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state

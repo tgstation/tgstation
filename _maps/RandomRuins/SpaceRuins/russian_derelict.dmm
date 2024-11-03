@@ -152,7 +152,7 @@
 /area/ruin/space/solars/ks13/aft_solars)
 "bC" = (
 /obj/effect/decal/cleanable/glass/plasma,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "bE" = (
 /obj/structure/table_frame,
@@ -424,7 +424,7 @@
 "dU" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /obj/structure/cable,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "dY" = (
 /obj/machinery/door/window/left/directional/south{
@@ -449,7 +449,7 @@
 "ek" = (
 /obj/item/shard/plasma,
 /obj/effect/decal/cleanable/greenglow/radioactive,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "eu" = (
 /obj/structure/rack,
@@ -2025,7 +2025,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "sK" = (
 /obj/structure/grille/broken,
@@ -2119,7 +2119,7 @@
 /area/ruin/space/ks13/service/hydro)
 "te" = (
 /obj/effect/decal/cleanable/greenglow/radioactive,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "th" = (
 /obj/structure/cable,
@@ -3423,7 +3423,7 @@
 "Al" = (
 /obj/item/shard/plasma,
 /obj/effect/decal/cleanable/glass/plasma,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "Am" = (
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -4387,7 +4387,7 @@
 /area/ruin/space/ks13/engineering/grav_gen)
 "Fp" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "Fq" = (
 /obj/structure/frame/computer{
@@ -4636,10 +4636,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
-"GF" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/ai/corridor)
 "GG" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/stack/cable_coil/cut,
@@ -5016,7 +5012,7 @@
 	name = "Engine Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "IF" = (
 /turf/open/floor/plating/airless,
@@ -6748,7 +6744,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
 "RI" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "RJ" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -7118,7 +7114,7 @@
 /area/ruin/space/ks13/science/genetics)
 "Tg" = (
 /obj/item/shard/plasma,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "Th" = (
 /obj/structure/cable,
@@ -7513,7 +7509,7 @@
 /area/ruin/space/ks13/engineering/atmos)
 "Vh" = (
 /obj/structure/door_assembly/door_assembly_eng,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "Vj" = (
 /obj/machinery/door/poddoor/preopen{
@@ -7577,7 +7573,7 @@
 "Vx" = (
 /obj/effect/decal/cleanable/greenglow/radioactive,
 /obj/effect/decal/cleanable/glass/plasma,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/supermatter)
 "VB" = (
 /obj/structure/cable,
@@ -16168,14 +16164,14 @@ HC
 DU
 yz
 yz
-GF
-GF
-GF
-GF
-GF
-GF
-GF
-GF
+yz
+yz
+yz
+yz
+yz
+yz
+yz
+yz
 dT
 dT
 dT
