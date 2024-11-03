@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "NT Software Hub no longer displays >100% completion on downloads sometimes."
-  - bugfix: "NT Software Hub no longer displays NaN% or Infinite% completion on files with a size of 0 sometimes."

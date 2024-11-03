@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "drones can no longer speak pirate if they have a pirate hat on"
