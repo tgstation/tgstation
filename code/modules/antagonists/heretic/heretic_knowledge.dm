@@ -187,26 +187,26 @@
 /datum/heretic_knowledge/spell
 	abstract_parent_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/cooldown/spell_to_add
+	var/datum/action/action_to_add
 	/// The spell we actually created.
-	var/datum/weakref/created_spell_ref
+	var/datum/weakref/created_action_ref
 
 /datum/heretic_knowledge/spell/Destroy()
-	QDEL_NULL(created_spell_ref)
+	QDEL_NULL(created_action_ref)
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
-	created_spell.Grant(user)
-	created_spell_ref = WEAKREF(created_spell)
+	var/datum/action/created_action = created_action_ref?.resolve() || new action_to_add(user)
+	created_action.Grant(user)
+	created_action_ref = WEAKREF(created_action)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	if(created_spell?.owner == user)
-		created_spell.Remove(user)
+	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
+	if(created_action?.owner == user)
+		created_action.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
