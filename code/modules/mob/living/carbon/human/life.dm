@@ -79,7 +79,7 @@
 		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(human_lungs)
 		return human_lungs.check_breath(breath, src)
 

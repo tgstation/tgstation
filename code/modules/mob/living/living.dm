@@ -44,6 +44,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
+	QDEL_LIST(quirks)
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
@@ -65,14 +66,14 @@
 	// multiplier for the damage taken from falling
 	var/damage_softening_multiplier = 1
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
 
 	// If you are incapped, you probably can't brace yourself
 	var/can_help_themselves = !INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS)
 	if(levels <= 1 && can_help_themselves)
-		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
+		var/obj/item/organ/wings/gliders = get_organ_by_type(/obj/item/organ/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 			var/graceful_landing = HAS_TRAIT(src, TRAIT_CATLIKE_GRACE)
 
@@ -697,7 +698,7 @@
 
 	var/get_up_time = 1 SECONDS
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		get_up_time *= potential_spine.athletics_boost_multiplier
 

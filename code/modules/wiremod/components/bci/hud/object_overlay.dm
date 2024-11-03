@@ -12,7 +12,7 @@
 	desc = "Requires a BCI shell. A component that shows an overlay on top of an object."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
+	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	var/datum/port/input/option/object_overlay_options
 
@@ -28,7 +28,7 @@
 	var/datum/port/input/signal_off
 
 	/// Reference to the BCI we're implanted inside
-	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/organ/cyberimp/bci/bci
 
 	/// Assoc list of REF to the target atom to the overlay alt appearance it is using
 	var/list/active_overlays = list()
@@ -66,7 +66,7 @@
 	options_map = component_options
 
 /obj/item/circuit_component/object_overlay/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
 		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 

@@ -43,7 +43,7 @@
 	return list("cooked crab" = 2)
 
 ///A chasm crab growth speed is determined by its initial weight and size, ergo bigger crabs for faster lobstrosities
-/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+/obj/item/fish/chasm_crab/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	var/multiplier = 1
 	switch(size)
@@ -136,6 +136,10 @@
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
 	beauty = FISH_BEAUTY_UGLY
+
+/obj/item/fish/boned/Initialize(mapload, apply_qualities = TRUE)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
 
 /obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.

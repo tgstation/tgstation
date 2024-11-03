@@ -49,7 +49,7 @@
 
 /datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	var/obj/item/organ/internal/tongue/robot/robotongue = new ()
+	var/obj/item/organ/tongue/robot/robotongue = new ()
 	robotongue.Insert(equipped, movement_flags = DELETE_IF_REPLACED)
 
 /datum/outfit/job/assistant/gimmick/skater
