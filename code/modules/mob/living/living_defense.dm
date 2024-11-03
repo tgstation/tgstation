@@ -104,6 +104,9 @@
 	if (hit_limb_zone)
 		organ_hit_text = "in \the [parse_zone_with_bodypart(hit_limb_zone)]"
 
+	if (. != BULLET_ACT_HIT)
+		return .
+
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
 			to_chat(src, span_userdanger("You're shot by \a [proj] [organ_hit_text]!"))
@@ -113,7 +116,7 @@
 			if(is_blind())
 				to_chat(src, span_userdanger("You feel something hit you [organ_hit_text]!"))
 
-	if(. == BULLET_ACT_HIT && proj.is_hostile_projectile())
+	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
 
 /mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
@@ -148,8 +151,6 @@
 
 	if (proj.damage && armor_check < 100)
 		create_projectile_hit_effects(proj, def_zone, armor_check)
-
-	return BULLET_ACT_HIT
 
 /mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)

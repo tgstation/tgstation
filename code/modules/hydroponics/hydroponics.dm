@@ -290,7 +290,7 @@
 		return ..()
 	if(istype(proj, /obj/projectile/energy/flora/mut))
 		mutate()
-		return ..()
+		return BULLET_HIT_ACT
 	if(istype(proj, /obj/projectile/energy/flora/yield))
 		return myseed.bullet_act(proj)
 	if(istype(proj, /obj/projectile/energy/flora/evolution))
@@ -298,6 +298,7 @@
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
+		return BULLET_HIT_ACT
 	return ..()
 
 /obj/machinery/hydroponics/power_change()
