@@ -1,5 +1,0 @@
-author: "Xackii"
-delete-after: True
-changes:
-  - qol: "Purchased perks now shown in hud."
-  - bugfix: "Perks purchased by a wizard now shown in roundend report."
