@@ -25,10 +25,13 @@ SUBSYSTEM_DEF(sounds)
 
 	/// All valid sound files in the sound directory
 	var/list/all_sounds
+	/// All valid sound files excluding the /ambience, /announcer, /music folder
+	var/list/all_sounds_except_long
 
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
-	find_all_available_sounds()
+	find_all_sfx_except_long()
+	finish_finding_all_available_sounds()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
@@ -41,8 +44,8 @@ SUBSYSTEM_DEF(sounds)
 	channel_random_low = 1
 	channel_reserve_high = length(channel_list)
 
-/datum/controller/subsystem/sounds/proc/find_all_available_sounds()
-	all_sounds = list()
+/datum/controller/subsystem/sounds/proc/finish_finding_all_available_sounds()
+	all_sounds = all_sounds_except_long
 	// Put more common extensions first to speed this up a bit
 	var/static/list/valid_file_extensions = list(
 		".ogg",
@@ -59,7 +62,35 @@ SUBSYSTEM_DEF(sounds)
 		".aiff",
 	)
 
-	all_sounds = pathwalk("sound/", valid_file_extensions)
+	all_sounds += pathwalk("sound/ambience", valid_file_extensions)
+	all_sounds += pathwalk("sound/music", valid_file_extensions)
+	all_sounds += pathwalk("sound/announcer", valid_file_extensions)
+
+	/datum/controller/subsystem/sounds/proc/find_all_sfx_except_long()
+	all_sounds_except_long = list()
+	// Put more common extensions first to speed this up a bit
+	var/static/list/valid_file_extensions = list(
+		".ogg",
+		".wav",
+		".mid",
+		".midi",
+		".mod",
+		".it",
+		".s3m",
+		".xm",
+		".oxm",
+		".raw",
+		".wma",
+		".aiff",
+	)
+
+	all_sounds_except_long += pathwalk("sound/effects", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/items", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/machines", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/misc", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/mobs", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/runtime", valid_file_extensions)
+	all_sounds_except_long += pathwalk("sound/vehicles", valid_file_extensions)
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)

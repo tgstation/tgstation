@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	UnregisterSignal(SSsounds, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/dream/hear_something/proc/PlayRandomSound(mob/living/carbon/dreamer)
-	var/sound/random_sound = sound(pick(SSsounds.all_sounds), channel=reserved_sound_channel)
+	var/sound/random_sound = sound(pick(SSsounds.all_sounds_except_long), channel=reserved_sound_channel)
 	random_sound.status = SOUND_STREAM
 	SEND_SOUND(dreamer, random_sound)
 	return "you hear something you weren't expecting!"

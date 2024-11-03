@@ -35,9 +35,8 @@
 
 /mob/living/basic/migo/Initialize(mapload)
 	. = ..()
-	//hahahaha fuck you code divers
-	// whoever you are FUCK you and I hate you.
-	// in memory of the 200 something sound path list that was here
+	migo_sounds = SSsounds.find_all_sfx_except_long
+	//hahahaha fuck you code divers, sadboysuss: whoever you are FUCK you and I hate you. in memory of the 200 something sound path list that was here
 
 	if(!istype(src, /mob/living/basic/migo/hatsune) && prob(0.1)) // chance on-load mi-gos will spawn with a miku wig on (shiny variant)
 		new /mob/living/basic/migo/hatsune(get_turf(loc), mapload)
@@ -51,7 +50,7 @@
 	dodge_prob = LERP(50, 10, health_ratio)
 
 /mob/living/basic/migo/proc/make_migo_sound()
-	playsound(src, pick(SSsounds.all_sounds), 50, TRUE)
+	playsound(src, pick(migo_sounds), 50, TRUE)
 
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
