@@ -40,6 +40,9 @@
 	var/turf/here = get_turf(owner)
 	var/turf/there = get_turf(scan_target)
 
+	if(isnull(there))
+		scan_target = null
+		return
 	if(here.z != there.z)
 		linked_alert.icon_state = "pinonnull"
 		return

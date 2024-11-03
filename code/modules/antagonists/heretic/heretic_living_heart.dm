@@ -80,6 +80,8 @@
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
+	/// Navigator to our target that we have.
+	var/datum/status_effect/agent_pinpointer/scan/heretic/heretic_pinpointer
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -144,6 +146,9 @@
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
+	if(isliving(owner))
+		pinpointer_check(owner, tracked_mob)
+
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
 		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
@@ -151,6 +156,23 @@
 
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/track_target/proc/pinpointer_check(mob/living/give_me_navigator, mob/living/carbon/human/tracked_mob)
+	if(isnull(tracked_mob))
+		null_navigator()
+		return
+	if(isnull(heretic_pinpointer))
+		heretic_pinpointer = give_me_navigator.apply_status_effect(/datum/status_effect/agent_pinpointer/scan/heretic)
+		heretic_pinpointer.scan_target = tracked_mob
+		return
+	if(heretic_pinpointer.scan_target != tracked_mob)
+		heretic_pinpointer.scan_target = tracked_mob
+
+/datum/action/cooldown/track_target/proc/null_navigator(mob/living/give_me_navigator, mob/living/carbon/human/tracked_mob)
+	if(isnull(heretic_pinpointer))
+		return
+	give_me_navigator.remove_status_effect(/datum/status_effect/agent_pinpointer/scan/heretic)
+	heretic_pinpointer = null
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -218,3 +240,12 @@
 		balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
+
+/datum/status_effect/agent_pinpointer/scan/heretic
+	duration = 5 SECONDS
+	tick_interval = 1 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/heretic
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/heretic
+	name = "Track Target"
+	desc = "Your heart points you where your next sacrifice is."
