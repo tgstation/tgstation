@@ -241,16 +241,22 @@
  */
 /datum/award/score/progress
 	///The id of table we're looking for, the one containing the progress objects.
-	var/table_id = ""
+	VAR_PROTECTED/table_id = ""
 	/**
 	 * When get_changed_rows is called, this list gets filled with the entries to be mass-inserted
 	 * in the table associated with this progress score.
 	 */
-	var/list/changed_entries = list()
+	VAR_FINAL/list/changed_entries = list()
 
 /datum/award/score/progress/New()
 	. = ..()
 	RegisterSignal(SSachievements, COMSIG_ACHIEVEMENTS_SAVED_TO_DB, PROC_REF(insert_entries))
+
+/datum/award/score/progress/vv_edit_var(var_name, var_value)
+	//These two variables are associated with sql queries. We can't allow them to be edited.
+	if(var_name == NAMEOF(src, changed_entries) || var_name == NAMEOF(src, table_id))
+		return FALSE
+	return ..()
 
 /datum/award/score/progress/unlock(mob/user, datum/achievement_data/holder, value)
 	var/list/entries = holder.data[type]
