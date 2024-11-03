@@ -410,10 +410,14 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	current_initializing_subsystem = subsystem
 	rustg_time_reset(SS_INIT_TIMER_KEY)
 
+#ifndef UNIT_TESTS
 	var/old_usr = usr
 	usr = subsystem.tracker
+#endif
 	var/result = subsystem.Initialize()
+#ifndef UNIT_TESTS
 	usr = old_usr
+#endif
 
 	// Capture end time
 	var/time = rustg_time_milliseconds(SS_INIT_TIMER_KEY)

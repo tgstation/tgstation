@@ -362,11 +362,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	SSticker.delay_end = TRUE
 	for(var/unit_path in tests_to_run)
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		// Avoid some jank related to usr-based subsystem tracking in unit tests
-		var/old_usr = usr
-		usr = null
 		RunUnitTest(unit_path, test_results)
-		usr = old_usr
 	SSticker.delay_end = FALSE
 
 	var/file_name = "data/unit_tests.json"
