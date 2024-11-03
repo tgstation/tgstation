@@ -441,7 +441,7 @@
 		Do <b>not</b> spin while the light is still <b>red</b>.<br><br>\
 		That's all, best of luck to your angling journey."
 
-///A modified mining capsule from the black market
+///A modified mining capsule from the black market and sometimes random loot.
 /obj/item/survivalcapsule/fishing
 	name = "fishing spot capsule"
 	desc = "An illegally modified mining capsule containing a small fishing spot connected to some faraway place."
@@ -455,6 +455,7 @@
 
 /obj/item/survivalcapsule/fishing/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
 	register_context()
 
 	if(SStts.tts_enabled) //This capsule informs you on why it cannot be deployed in a sliiiiightly different way.
@@ -514,7 +515,7 @@
 		if(SHELTER_DEPLOY_ANCHORED_OBJECTS)
 			say("Get these anchored objects out of the way! I need [template.width]x[template.height] area to deploy.")
 		if(SHELTER_DEPLOY_BANNED_OBJECTS)
-			say("Remove all cables and pipes in a [template.width]x[template.height] area or I won't deploy.")
+			say("Remove all cables and pipes around me in a [template.width]x[template.height] area or I won't deploy.")
 		if(SHELTER_DEPLOY_OUTSIDE_MAP)
 			say("For fucks sake, deploy me somewhere less far fatched!")
 
@@ -528,6 +529,9 @@
 	if(!area.outdoors)
 		message_admins("[ADMIN_LOOKUPFLW(triggerer)] activated an unsafe fishing capsule at [ADMIN_VERBOSEJMP(trigger_loc)]")
 	log_admin("[key_name(triggerer)] activated an unsafe fishing capsule at [AREACOORD(trigger_loc)]")
+
+/obj/item/survivalcapsule/fishing/hacked
+	obj_flags = parent_type::obj_flags | EMAGGED
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

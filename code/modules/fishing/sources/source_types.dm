@@ -130,6 +130,10 @@
 		/obj/item/fish/greenchromis = 10,
 		/obj/item/fish/squid = 8,
 		/obj/item/fish/plaice = 8,
+		/obj/item/survivalcapsule/fishing = 1,
+	)
+	fish_counts = list(
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
@@ -400,9 +404,11 @@
 		/obj/item/fish/sludgefish = 18,
 		/obj/item/fish/slimefish = 4,
 		/obj/item/storage/wallet/money = 2,
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
@@ -631,13 +637,15 @@
 	radial_state = "onsen"
 	overlay_state = "portal_ocean"
 	fish_table = list(
-		FISHING_DUD = 10,
-		/obj/item/fish/bumpy = 5,
-		/obj/item/fish/sacabambaspis = 5,
-		/mob/living/basic/frog = 1,
+		FISHING_DUD = 20,
+		/obj/item/fish/bumpy = 10,
+		/obj/item/fish/sacabambaspis = 10,
+		/mob/living/basic/frog = 2,
+		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fish_counts = list(
 		/obj/item/fish/sacabambaspis = 5,
+		/obj/item/fishing_rod/telescopic/master = 2,
 	)
 	fish_count_regen = list(
 		/obj/item/fish/sacabambaspis = 4 MINUTES,
