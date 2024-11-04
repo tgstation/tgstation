@@ -196,7 +196,7 @@
 	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
 	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
 	if(height_mod > 1)
-		bait_height_mult *= bait_height_mod**0.75
+		bait_height_mult *= height_mod**0.75
 
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
@@ -211,7 +211,7 @@
 	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
 	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
 	if(height_mod > 1)
-		bait_height_mult *= 1/(bait_height_mod**0.75)
+		bait_height_mult *= 1/(height_mod**0.75)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
