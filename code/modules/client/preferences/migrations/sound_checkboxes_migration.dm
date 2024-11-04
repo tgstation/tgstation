@@ -18,5 +18,4 @@
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_announcements], announcement_pref*100)
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_ship_ambience_volume], ship_ambience_pref*100)
 	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_lobby], lobby_music_pref*100)
-	write_preference(GLOB.preference_entries[/datum/preference/numeric/sound_radio_noise], radio_noise_pref*100)
 	return

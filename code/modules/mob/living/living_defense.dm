@@ -161,7 +161,7 @@
 		create_splatter(angle2dir(proj.angle))
 		if(prob(33))
 			add_splatter_floor(get_turf(src))
-		return
+	//	return DOPPLER EDIT REMOVAL
 
 	if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
 		var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks

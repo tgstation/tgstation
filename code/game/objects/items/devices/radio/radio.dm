@@ -431,8 +431,7 @@
 		return
 
 	var/mob/living/holder = loc
-	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise))
-	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/sound_radio_noise)) //DOPPLER EDIT CHANGE - Original: if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
+	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/toggle/radio_noise))
 		return
 
 	var/list/spans = data["spans"]

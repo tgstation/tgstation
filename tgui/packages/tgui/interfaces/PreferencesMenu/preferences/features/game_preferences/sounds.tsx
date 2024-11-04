@@ -128,18 +128,13 @@ export const sound_achievement: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-// BEGIN DOPPLER EDIT - VOLUME MIXER
-// export const sound_radio_noise: FeatureToggle = {
-//   name: 'Enable radio noise',
-export const sound_radio_noise: Feature<number> = {
-  name: 'Radio noise volume',
+export const sound_radio_noise: FeatureToggle = {
+  name: 'Enable radio noise',
   category: 'SOUND',
   description:
     'When enabled, hear sounds of talking and hearing radio chatter.',
-  //  component: CheckboxInput,
-  component: FeatureSliderInput,
+  component: CheckboxInput,
 };
-// END DOPPLER EDIT
 
 export const sound_ai_vox: FeatureToggle = {
   name: 'Enable AI VOX announcements',
