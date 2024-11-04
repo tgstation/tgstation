@@ -196,7 +196,6 @@
 		should_play_sound_callback = should_play_sound
 
 	for(var/mob/target in players)
-		var/volume_modifier = (target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements)) //DOPPLER EDIT ADDITION
 		if(isnewplayer(target) || !target.can_hear())
 			continue
 
@@ -204,8 +203,8 @@
 		if(!should_play_sound || (should_play_sound_callback && !should_play_sound_callback.Invoke(target)))
 			continue
 
-		if(target.client?.prefs.read_preference(/datum/preference/numeric/sound_announcements)) //DOPPLER EDIT CHANGE - Original: if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			SEND_SOUND(target, sound(sound_to_play, volume = volume_modifier)) //DOPPLER EDIT CHANGE - Original: SEND_SOUND(target, sound(sound_to_play))
+		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			SEND_SOUND(target, sound(sound_to_play))
 
 #undef MAJOR_ANNOUNCEMENT_TITLE
 #undef MAJOR_ANNOUNCEMENT_TEXT

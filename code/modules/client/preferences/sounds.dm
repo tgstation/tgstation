@@ -3,8 +3,6 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ambience_volume"
 	savefile_identifier = PREFERENCE_PLAYER
-	minimum = 0
-	maximum = 200
 
 	minimum = 0
 	maximum = 200
@@ -22,17 +20,10 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing announcement sounds
-/datum/preference/numeric/sound_announcements //DOPPLER EDIT CHANGE - Original: /datum/preference/toggle/sound_announcements
+/datum/preference/toggle/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_announcements"
 	savefile_identifier = PREFERENCE_PLAYER
-	minimum = 0
-	maximum = 200
-
-//BEGIN DOPPLER ADDITION - VOLUME MIXER
-/datum/preference/numeric/sound_announcements/create_default_value()
-	return maximum/2
-///END DOPPLER ADD
 
 /// Controls hearing the combat mode toggle sound
 /datum/preference/toggle/sound_combatmode
@@ -106,8 +97,6 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_lobby_volume"
 	savefile_identifier = PREFERENCE_PLAYER
-	minimum = 0
-	maximum = 200
 
 	minimum = 0
 	maximum = 200
@@ -133,8 +122,6 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience_volume"
 	savefile_identifier = PREFERENCE_PLAYER
-	minimum = 0
-	maximum = 200
 
 	minimum = 0
 	maximum = 200

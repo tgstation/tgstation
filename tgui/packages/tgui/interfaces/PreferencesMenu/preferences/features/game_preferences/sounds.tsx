@@ -13,7 +13,6 @@ export const sound_ambience_volume: Feature<number> = {
   description: `Ambience refers to the more noticeable ambient sounds that play on occasion.`,
   component: FeatureSliderInput,
 };
-// END DOPPLER EDIT
 
 export const sound_breathing: FeatureToggle = {
   name: 'Enable breathing sounds',
@@ -22,15 +21,11 @@ export const sound_breathing: FeatureToggle = {
   component: CheckboxInput,
 };
 
-// BEGIN DOPPLER EDIT - VOLUME MIXER
-// export const sound_announcements: FeatureToggle = {
-//  name: 'Enable announcement sounds',
-export const sound_announcements: Feature<number> = {
-  name: 'Announcement volume',
+export const sound_announcements: FeatureToggle = {
+  name: 'Enable announcement sounds',
   category: 'SOUND',
   description: 'When enabled, hear sounds for command reports, notices, etc.',
-  //  component: CheckboxInput,
-  component: FeatureSliderInput,
+  component: CheckboxInput,
 };
 
 export const sound_combatmode: FeatureToggle = {
@@ -83,7 +78,6 @@ export const sound_lobby_volume: Feature<number> = {
   category: 'SOUND',
   component: FeatureSliderInput,
 };
-// END DOPPLER EDIT
 
 export const sound_midi: FeatureToggle = {
   name: 'Enable admin music',
@@ -98,7 +92,6 @@ export const sound_ship_ambience_volume: Feature<number> = {
   description: `Ship ambience refers to the low ambient buzz that plays on loop.`,
   component: FeatureSliderInput,
 };
-// END DOPPLER EDIT
 
 export const sound_elevator: FeatureToggle = {
   name: 'Enable elevator music',
