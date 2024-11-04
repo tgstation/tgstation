@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Glass floors can now be crowbarred."
-  - code_imp: "Removed deprecated crowbar code for tiles"
