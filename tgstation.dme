@@ -2674,6 +2674,7 @@
 #include "code\game\objects\items\storage\boxes\cargo_boxes.dm"
 #include "code\game\objects\items\storage\boxes\clothes_boxes.dm"
 #include "code\game\objects\items\storage\boxes\engineering_boxes.dm"
+#include "code\game\objects\items\storage\boxes\flat_boxes.dm"
 #include "code\game\objects\items\storage\boxes\food_boxes.dm"
 #include "code\game\objects\items\storage\boxes\implant_boxes.dm"
 #include "code\game\objects\items\storage\boxes\job_boxes.dm"
