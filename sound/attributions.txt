@@ -209,3 +209,5 @@ https://freesound.org/people/C_Rogers/sounds/203368/ -- glass-shattering-hit_01.
 https://freesound.org/people/Czarcazas/sounds/330800/ -- Audio reversal/fading of Shattering Glass (Small) by Czarcazas -- https://freesound.org/s/330800/ -- License: Attribution 3.0
 
 sound/effects/bonk.ogg - recorded by oranges on a coke zero bottle, edited by ninjanomnom, released to public domain
+
+sound\items\weapons\hammer_death_scream.ogg - Undefeatablesos' scream recorded by Niron3206, edited by Niron3206, License: Creative Commons 0
