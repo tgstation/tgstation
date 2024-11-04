@@ -3908,6 +3908,7 @@
 #include "code\modules\clothing\head\mind_monkey_helmet.dm"
 #include "code\modules\clothing\head\moth.dm"
 #include "code\modules\clothing\head\papersack.dm"
+#include "code\modules\clothing\head\perceptomatrix.dm"
 #include "code\modules\clothing\head\pirate.dm"
 #include "code\modules\clothing\head\religious.dm"
 #include "code\modules\clothing\head\soft_caps.dm"

@@ -30,6 +30,10 @@
 	if(!friend.client && friend_initialized)
 		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
+	if(HAS_TRAIT(owner, TRAIT_PERCEPTUAL_TRAUMA_BYPASS))
+		QDEL_NULL(friend)
+		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(reroll_friend))//, override = TRUE)
+
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
 	qdel(src) //friend goes down with the ship
