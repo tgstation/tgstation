@@ -474,7 +474,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
-	desc = "Shuffle off this mortal coil.<br/>Right-Click to succumb silently."
+	desc = "Shuffle off this mortal coil."
 	icon_state = ALERT_SUCCUMB
 	var/static/list/death_titles = list(
 		"Goodnight, Sweet Prince",
@@ -486,6 +486,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		"The Curtains Close",
 		"All Good Things Must End"
 	)
+
+/atom/movable/screen/alert/succumb/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/alert/succumb/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_LMB] = "Succumb With Last Words"
+	context[SCREENTIP_CONTEXT_RMB] = "Succumb Silently"
+	return CONTEXTUAL_SCREENTIP_SET
 
 #define FASTSUCCUMB_YES "Yes"
 #define FASTSUCCUMB_WAIT "Wait, I have last words!"
