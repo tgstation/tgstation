@@ -33,9 +33,9 @@
 	var/suppressed = SUPPRESSED_NONE
 	/// Original clicked target
 	var/atom/original = null
-	/// Initial pixel_x offset of the projectile
+	/// Initial target x coordinate offset of the projectile
 	var/xo = null
-	/// Initial pixel_y offset of the projectile
+	/// Initial target y coordinate offset of the projectile
 	var/yo = null
 	/// Projectile's starting turf
 	var/turf/starting = null
@@ -52,10 +52,10 @@
 	var/last_projectile_move = 0
 	/// Last time the projectile was processed, also used for lag compensation
 	var/last_process = 0
-	/// Lag compensation offset
-	var/time_offset = 0
-	/// Projectile's movement vector
-	var/datum/movement_vector/movement_vector
+	/// How many pixels we missed last tick due to lag or speed cap
+	var/overrun = 0
+	/// Projectile's movement vector - this caches sine/cosine of our angle to cut down on trig calculations
+	var/datum/vector/movement_vector
 	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
 	var/list/impacted = list()
 	/// If TRUE, we can hit our firer.
@@ -92,7 +92,7 @@
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
 	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
-	/// is divided by this var and multiplied by SSprojectiles.pixels_per_tick in order to get
+	/// is divided by this var and multiplied by SSprojectiles.pixels_per_decisecond in order to get
 	/// the amount of pixels this projectile moves per tick
 	var/speed = 0.8
 
@@ -132,12 +132,12 @@
 	// Hitscan logic
 	/// Wherever this projectile is hitscan. Hitscan projectiles are processed until the end of their path instantly upon being fired and leave a tracer in their path
 	var/hitscan = FALSE
-	/// Assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
-	var/list/beam_segments
-	/// Last turf an angle was changed in for hitscan projectiles.
-	var/turf/last_angle_set_hitscan_store
-	/// Latest tracer point
-	var/datum/point/beam_index
+	/// Associated list of coordinate points in which we changed trajectories in order to calculate hitscan tracers
+	/// TRUE value means that we should generate a tracer to the next point, and FALSE means that we skip a segment
+	var/list/datum/point/beam_points
+	/// Next forceMove will not create a skipped segment
+	var/dont_skip_next_segment = FALSE
+
 	/// Hitscan tracer effect left behind the projectile
 	var/tracer_type
 	/// Hitscan muzzle effect spawned on the firer
@@ -161,7 +161,8 @@
 	var/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
-	/// Angles per tick
+	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
+	/// With pixels_per_decisecond set to 16 and homing_turn_speed, the projectile can turn up to 20 pixels per turf passed
 	var/homing_turn_speed = 10
 	// Allowed leeway in pixels
 	var/homing_inaccuracy_min = 0
@@ -221,6 +222,8 @@
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
 	var/turf/last_tick_turf
+	/// Remaining pixel movement last tick - used for precise range calculations
+	var/pixels_moved_last_tile = 0
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -252,12 +255,27 @@
 /obj/projectile/Initialize(mapload)
 	. = ..()
 	maximum_range = range
-	if(get_embed())
+	if (get_embed())
 		AddElement(/datum/element/embed)
 	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
+/obj/projectile/Destroy()
+	/* TODO: THIS BULLSHIT
+	if (hitscan)
+		finalize_hitscan()
+	*/
+	STOP_PROCESSING(SSprojectiles, src)
+	firer = null
+	original = null
+	if (movement_vector)
+		QDEL_NULL(movement_vector)
+	if (beam_points)
+		QDEL_LIST(beam_points)
+	return ..()
+
 /obj/projectile/proc/reduce_range()
 	range--
+	pixels_moved_last_tile -= ICON_SIZE_ALL
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
@@ -406,11 +424,6 @@
 		set_angle(get_angle(src, unlucky_sob.loc))
 		original = unlucky_sob
 
-/obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
-	beam_segments[beam_index] = point_cache
-	beam_index = point_cache
-	beam_segments[beam_index] = null
-
 /obj/projectile/Bump(atom/bumped_atom)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom)
 	if (can_hit_target(bumped_atom, bumped_atom == original, TRUE, TRUE))
@@ -440,8 +453,10 @@
 		damage *= ricochet_decay_damage
 		stamina *= ricochet_decay_damage
 		range = maximum_range
-		if(hitscan && trajectory)
-			store_hitscan_collision(trajectory.copy_to())
+	/* TODO: THIS BULLSHIT
+		if(hitscan && beam_points)
+			store_hitscan_collision()
+	*/
 		return
 
 	var/turf/target_turf = get_turf(target)
@@ -726,77 +741,213 @@
 	if(spread)
 		set_angle(angle + (rand() - 0.5) * spread)
 	original_angle = angle
-	trajectory_ignore_forcemove = TRUE
+	movement_vector = new(speed, angle)
+	if (hitscan)
+		beam_points = list()
+	dont_skip_next_segment = TRUE
 	forceMove(starting)
-	trajectory_ignore_forcemove = FALSE
-	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, angle, speed)
 	last_projectile_move = world.time
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
+	/* TODO: THIS BULLSHIT
 	if(hitscan)
 		process_hitscan()
 		if(QDELETED(src))
 			return
-		return
+	*/
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
+	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!hitscan)
-		// move it now to avoid potentially hitting yourself with firer-hitting projectiles
-		pixel_move(pixel_speed_multiplier, FALSE)
+		process_movement(max(FLOOR(1 / speed, 1), 1), tile_limit = TRUE)
+
+/obj/projectile/proc/set_homing_target(atom/target)
+	if(!target || (!isturf(target) && !isturf(target.loc)))
+		return FALSE
+	homing = TRUE
+	homing_target = target
+	homing_offset_x = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	homing_offset_y = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	if(prob(50))
+		homing_offset_x = -homing_offset_x
+	if(prob(50))
+		homing_offset_y = -homing_offset_y
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
+	if (angle == new_angle)
+		return
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
-	if(trajectory)
-		trajectory.set_angle(new_angle)
-	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
-		last_angle_set_hitscan_store = loc
-		var/datum/point/point_cache = new (src)
-		point_cache = trajectory.copy_to()
-		store_hitscan_collision(point_cache)
-	return TRUE
+	if(movement_vector)
+		movement_vector.set_angle(new_angle)
+	/* TODO: THIS BULLSHIT
+	if(fired && hitscan && isturf(loc))
+		create_hitscan_point()
+	*/
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
-	if(trajectory)
-		trajectory.set_angle(new_angle)
-
-	var/list/coordinates = trajectory.return_coordinates()
-	trajectory.set_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to the center of the tile it bounced at
-
-	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store)) // Handles hitscan projectiles
-		last_angle_set_hitscan_store = loc
-		var/datum/point/point_cache = new (src)
-		point_cache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
-		store_hitscan_collision(point_cache)
-	return TRUE
+	if(movement_vector)
+		movement_vector.set_angle(new_angle)
+	/* TODO: THIS BULLSHIT
+	if(fired && hitscan && isturf(loc))
+		create_hitscan_point(tile_center = TRUE)
+	*/
 
 /obj/projectile/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if(NAMEOF(src, angle))
-			set_angle(var_value)
-			return TRUE
-		else
-			return ..()
-
-/obj/projectile/proc/set_pixel_speed(new_speed)
-	if(trajectory)
-		trajectory.set_speed(new_speed)
+	if(var_name == NAMEOF(src, angle))
+		set_angle(var_value)
 		return TRUE
-	return FALSE
-
-/obj/projectile/proc/record_hitscan_start(datum/point/point_cache)
-	if(point_cache)
-		beam_segments = list()
-		beam_index = point_cache
-		beam_segments[beam_index] = null //record start.
+	return ..()
 
 /*
+ * Projectile's process calculates the amount of pixels that it needs to move per tick and calls moveloop processing
+ * There is a strict cap on how many pixels it can move in a tick to prevent them from turning into hitscans during lag
+ * Path that the projectile could not finish would be stored in the overrun variable to be processed next tick
+ */
+
+/obj/projectile/process()
+	last_process = world.time
+	if(!loc || !fired || !movement_vector)
+		fired = FALSE
+		return PROCESS_KILL
+
+	if(paused || !isturf(loc))
+		// Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+		last_projectile_move = last_process
+		return
+
+	var/elapsed_time = world.time - last_projectile_move
+	var/pixels_to_move = speed > 0 ? elapsed_time * SSprojectiles.pixels_per_decisecond / speed + overrun : SSprojectiles.max_pixels_per_tick
+	overrun = 0
+
+	if (pixels_to_move > SSprojectiles.max_pixels_per_tick)
+		overrun = pixels_to_move - SSprojectiles.max_pixels_per_tick
+		pixels_to_move = SSprojectiles.max_pixels_per_tick
+
+	overrun += MODULUS(pixels_to_move, 1)
+	pixels_to_move = FLOOR(pixels_to_move, 1)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
+
+	if (last_tick_turf)
+		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
+	process_movement(pixels_to_move)
+
+	if (!QDELETED(src) && isturf(loc))
+		RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+		last_tick_turf = loc
+
+/*
+ * Main projectile movement loop.
+ * Normal behavior moves projectiles in a straight line through tiles, but it gets trickier with homing.
+ * Every pixels_per_decisecond we will stop and call process_homing(), which while a bit rough, does not have a significant performance impact
+ *
+ * pixels_to_move determines how many pixels the projectile should move
+ * hitscan prevents animation logic from running
+ * tile_limit prevents any movements past the first tile change
+ */
+/obj/projectile/proc/process_movement(pixels_to_move, hitscan = FALSE, tile_limit = -1)
+	if (!isturf(loc) || !movement_vector)
+		return
+	last_projectile_move = world.time
+	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src))
+		// Figure out how much we need to travel to hit the border
+		var/distance_to_border = -1
+		var/x_to_border = -1
+		var/y_to_border = -1
+
+		if (movement_vector.pixel_x)
+			x_to_border = movement_vector.pixel_x > 0 ? (ICON_SIZE_ALL - pixel_x) / movement_vector.pixel_x : pixel_x / movement_vector.pixel_x
+			distance_to_border = x_to_border
+
+		if (movement_vector.pixel_y)
+			y_to_border = movement_vector.pixel_y > 0 ? (ICON_SIZE_ALL - pixel_y) / movement_vector.pixel_y : pixel_y / movement_vector.pixel_y
+			distance_to_border = (distance_to_border < 0 ? y_to_border : min(distance_to_border, y_to_border))
+
+		// Something went extremely wrong
+		if (distance_to_border < 0)
+			to_chat(world, "SHIT angle: [angle] movement_vector.angle: [movement_vector.angle] movement_vector.pixel_x: [movement_vector.pixel_x] movement_vector.pixel_y: [movement_vector.pixel_y]")
+			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
+			qdel(src)
+			return
+
+		pixels_moved_last_tile += distance_to_border
+		// We cannot move more than one turf worth of distance per tick, so this is a safe solution
+		if (pixels_moved_last_tile >= ICON_SIZE_ALL)
+			reduce_range()
+			if (QDELETED(src))
+				return
+
+		var/distance_to_move = min(distance_to_border, pixels_to_move)
+		// For homing we cap the maximum distance to move every loop
+		if (homing && distance_to_move > SSprojectiles.pixels_per_decisecond)
+			distance_to_move = SSprojectiles.pixels_per_decisecond
+
+		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
+		var/x_shift = SIGN(movement_vector.pixel_x) * (x_to_border > 0 && distance_to_move >= x_to_border)
+		var/y_shift = SIGN(movement_vector.pixel_y) * (y_to_border > 0 && distance_to_move >= y_to_border)
+		to_chat(world, "[pixels_to_move] [x_to_border] [y_to_border] [distance_to_border] [distance_to_move] [x_shift] [y_shift]")
+		pixels_to_move -= distance_to_move
+
+		if (x_shift || y_shift)
+			var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
+			// We've hit an invalid turf, end of a z level or smth went wrong
+			if (!istype(new_turf))
+				qdel(src)
+				return
+
+			// Move to the next tile
+			step_towards(src, new_turf)
+			SEND_SIGNAL(src, COMSIG_PROJECTILE_MOVE_PROCESS_STEP)
+			// We hit something and got deleted, stop the loop
+			if (QDELETED(src))
+				return
+
+		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
+		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_ALL
+		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_ALL
+		pixel_x -= x_shift * ICON_SIZE_ALL
+		pixel_y -= y_shift * ICON_SIZE_ALL
+		animate(src, pixel_x = actual_x, pixel_y = actual_y, time = 0.5, flags = ANIMATION_CONTINUE)
+
+		if (homing)
+			process_homing()
+
+		// Prevents long-range high-speed projectiles from ruining the server performance by moving 100 tiles per tick when subsystem is set to a high cap
+		if (CHECK_TICK)
+			// If we ran out of time, add whatever distance we're yet to pass to overrun debt to be processed next tick and break the loop
+			overrun += pixels_to_move
+
+/obj/projectile/proc/process_homing()
+	if(!homing_target)
+		return
+	var/datum/point/new_point = RETURN_PRECISE_POINT(homing_target)
+	new_point.x += clamp(homing_offset_x, 1, world.maxx)
+	new_point.y += clamp(homing_offset_y, 1, world.maxy)
+	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
+	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
+
+/*
+
+/obj/projectile/forceMove(atom/target)
+	if(!isloc(target) || !isloc(loc) || !z)
+		return ..()
+	. = ..()
+	if(QDELETED(src)) // we coulda bumped something
+		return
+	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
+		if(hitscan)
+			finalize_hitscan_and_generate_tracers(FALSE)
+		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
+		if(hitscan)
+			record_hitscan_start(RETURN_PRECISE_POINT(src))
+
+
 /obj/projectile/proc/process_hitscan()
 	var/safety = range * 10
 	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
@@ -819,120 +970,41 @@
 		if(CHECK_TICK && QDELETED(src))
 			return
 
-/obj/projectile/process()
-	last_process = world.time
-	if(!loc || !fired || !trajectory)
-		fired = FALSE
-		return PROCESS_KILL
-	if(paused || !isturf(loc))
-		last_projectile_move += world.time - last_process //Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+/obj/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
+	if(!length(beam_segments))
 		return
-	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
-	time_offset = 0
-	var/required_moves = speed > 0 ? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN //Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
-	if(required_moves == MOVES_HITSCAN)
-		required_moves = SSprojectiles.global_max_tick_moves
-	else
-		if(required_moves > SSprojectiles.global_max_tick_moves)
-			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
-			required_moves = SSprojectiles.global_max_tick_moves
-			time_offset += overrun * speed
-		time_offset += MODULUS(elapsed_time_deciseconds, speed)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
-	if (last_tick_turf)
-		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
-	for(var/i in 1 to required_moves)
-		pixel_move(pixel_speed_multiplier, FALSE)
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
-	last_tick_turf = loc
+	if(tracer_type)
+		var/tempref = REF(src)
+		for(var/datum/point/beam_point in beam_segments)
+			generate_tracer_between_points(beam_point, beam_segments[beam_point], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
+	if(muzzle_type && duration > 0)
+		var/datum/point/beam_point = beam_segments[1]
+		var/atom/movable/thing = new muzzle_type
+		beam_point.move_atom_to_src(thing)
+		var/matrix/matrix = new
+		matrix.Turn(original_angle)
+		thing.transform = matrix
+		thing.color = color
+		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
+		QDEL_IN(thing, duration)
+	if(impacting && impact_type && duration > 0)
+		var/datum/point/beam_point = beam_segments[beam_segments[beam_segments.len]]
+		var/atom/movable/thing = new impact_type
+		beam_point.move_atom_to_src(thing)
+		var/matrix/matrix = new
+		matrix.Turn(angle)
+		thing.transform = matrix
+		thing.color = color
+		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
+		QDEL_IN(thing, duration)
+	if(cleanup)
+		cleanup_beam_segments()
 
-/obj/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
-	if(!loc || !trajectory)
-		return
-	last_projectile_move = world.time
-	if(homing)
-		process_homing()
-	var/forcemoved = FALSE
-	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
-		if(QDELETED(src))
-			return
-		trajectory.increment(trajectory_multiplier)
-		var/turf/cur_turf = trajectory.return_turf()
-		if(!istype(cur_turf))
-			// step back to the last valid turf before we Destroy
-			trajectory.increment(-trajectory_multiplier)
-			qdel(src)
-			return
-		if (cur_turf == loc)
-			continue
-		if (cur_turf.z == loc.z)
-			step_towards(src, cur_turf)
-			SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
-			continue
-		var/old = loc
-		before_z_change(loc, cur_turf)
-		trajectory_ignore_forcemove = TRUE
-		forceMove(cur_turf)
-		trajectory_ignore_forcemove = FALSE
-		after_z_change(old, loc)
-		if(!hitscanning)
-			pixel_x = trajectory.return_px()
-			pixel_y = trajectory.return_py()
-		forcemoved = TRUE
-		SEND_SIGNAL(src, COMSIG_PROJECTILE_PIXEL_STEP)
-	if(QDELETED(src)) //deleted on last move
-		return
-	if(!hitscanning && !forcemoved)
-		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
-		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
-		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
-	reduce_range()
+/obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
+	beam_segments[beam_index] = point_cache
+	beam_index = point_cache
+	beam_segments[beam_index] = null
 
-/obj/projectile/proc/process_homing() //may need speeding up in the future performance wise.
-	if(!homing_target)
-		return FALSE
-	var/datum/point/new_point = RETURN_PRECISE_POINT(homing_target)
-	new_point.x += clamp(homing_offset_x, 1, world.maxx)
-	new_point.y += clamp(homing_offset_y, 1, world.maxy)
-	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
-	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
-
-/obj/projectile/proc/set_homing_target(atom/target)
-	if(!target || (!isturf(target) && !isturf(target.loc)))
-		return FALSE
-	homing = TRUE
-	homing_target = target
-	homing_offset_x = rand(homing_inaccuracy_min, homing_inaccuracy_max)
-	homing_offset_y = rand(homing_inaccuracy_min, homing_inaccuracy_max)
-	if(prob(50))
-		homing_offset_x = -homing_offset_x
-	if(prob(50))
-		homing_offset_y = -homing_offset_y
-
-/obj/projectile/forceMove(atom/target)
-	if(!isloc(target) || !isloc(loc) || !z)
-		return ..()
-	var/zc = target.z != z
-	var/old = loc
-	if(zc)
-		before_z_change(old, target)
-	. = ..()
-	if(QDELETED(src)) // we coulda bumped something
-		return
-	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
-		if(hitscan)
-			finalize_hitscan_and_generate_tracers(FALSE)
-		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
-		if(hitscan)
-			record_hitscan_start(RETURN_PRECISE_POINT(src))
-	if(zc)
-		after_z_change(old, target)
-
-/obj/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
-	return
-
-/obj/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
-	return
 */
 
 /**
@@ -955,19 +1027,24 @@
 
 	var/turf/source_loc = get_turf(source)
 	var/turf/target_loc = get_turf(target)
+
 	if(isnull(source_loc))
 		stack_trace("WARNING: Projectile [type] fired from nullspace.")
 		qdel(src)
 		return FALSE
 
-	trajectory_ignore_forcemove = TRUE
-	forceMove(source_loc)
-	trajectory_ignore_forcemove = FALSE
+	if(fired)
+		stack_trace("WARNING: Projectile [type] was aimed after already being fired.")
+		qdel(src)
+		return FALSE
 
+	dont_skip_next_segment = TRUE
+	forceMove(source_loc)
 	starting = source_loc
 	pixel_x = source.pixel_x
 	pixel_y = source.pixel_y
 	original = target
+
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
 		p_x = calculated[2]
@@ -1033,58 +1110,6 @@
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 
-/obj/projectile/Destroy()
-	if(hitscan)
-		finalize_hitscan_and_generate_tracers()
-	STOP_PROCESSING(SSprojectiles, src)
-	cleanup_beam_segments()
-	firer = null
-	original = null
-	if(trajectory)
-		QDEL_NULL(trajectory)
-	return ..()
-
-/obj/projectile/proc/cleanup_beam_segments()
-	QDEL_LIST_ASSOC(beam_segments)
-	beam_segments = list()
-	QDEL_NULL(beam_index)
-
-/obj/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
-	if(trajectory && beam_index)
-		var/datum/point/point_cache = trajectory.copy_to()
-		beam_segments[beam_index] = point_cache
-	generate_hitscan_tracers(null, null, impacting)
-
-/obj/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
-	if(!length(beam_segments))
-		return
-	if(tracer_type)
-		var/tempref = REF(src)
-		for(var/datum/point/beam_point in beam_segments)
-			generate_tracer_between_points(beam_point, beam_segments[beam_point], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
-	if(muzzle_type && duration > 0)
-		var/datum/point/beam_point = beam_segments[1]
-		var/atom/movable/thing = new muzzle_type
-		beam_point.move_atom_to_src(thing)
-		var/matrix/matrix = new
-		matrix.Turn(original_angle)
-		thing.transform = matrix
-		thing.color = color
-		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
-		QDEL_IN(thing, duration)
-	if(impacting && impact_type && duration > 0)
-		var/datum/point/beam_point = beam_segments[beam_segments[beam_segments.len]]
-		var/atom/movable/thing = new impact_type
-		beam_point.move_atom_to_src(thing)
-		var/matrix/matrix = new
-		matrix.Turn(angle)
-		thing.transform = matrix
-		thing.color = color
-		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
-		QDEL_IN(thing, duration)
-	if(cleanup)
-		cleanup_beam_segments()
-
 /obj/projectile/experience_pressure_difference()
 	return
 
@@ -1123,7 +1148,7 @@
 	firer = hit_atom
 	yo = new_y - current_tile.y
 	xo = new_x - current_tile.x
-	var/new_angle_s = angle + rand(120,240)
+	var/new_angle_s = angle + rand(120, 240)
 	while(new_angle_s > 180) // Translate to regular projectile degrees
 		new_angle_s -= 360
 	set_angle(new_angle_s)

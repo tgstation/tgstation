@@ -121,39 +121,40 @@
 /datum/point/proc/return_py()
 	return MODULUS(y, ICON_SIZE_Y) - (ICON_SIZE_Y/2) - 1
 
-/datum/movement_vector
-	var/speed = 1
+/datum/vector
+	var/magnitude = 1
 	var/angle = 0
-	// Calculated movement amounts to prevent having to do trig every step.
+	// Calculated coordinate amounts to prevent having to do trig every step.
 	var/pixel_x = 0
 	var/pixel_y = 0
 	var/total_x = 0
 	var/total_y = 0
 
-/datum/movement_vector/New(new_speed, new_angle)
+/datum/vector/New(new_magnitude, new_angle)
 	. = ..()
-	initialize_trajectory(new_speed, new_angle)
+	initialize_trajectory(new_magnitude, new_angle)
 
-/datum/movement_vector/proc/initialize_trajectory(new_speed, new_angle)
-	if(!isnull(new_speed))
-		speed = new_speed
+/datum/vector/proc/initialize_trajectory(new_magnitude, new_angle)
+	if(!isnull(new_magnitude))
+		magnitude = new_magnitude
 	set_angle(new_angle)
 
 /// Calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
-/datum/movement_vector/proc/set_angle(new_angle)
+/datum/vector/proc/set_angle(new_angle)
 	if(isnull(angle))
 		return
 	angle = new_angle
 	update_offsets()
 
-/datum/movement_vector/proc/update_offsets()
+/datum/vector/proc/update_offsets()
 	pixel_x = sin(angle)
 	pixel_y = cos(angle)
-	total_x = pixel_x * speed
-	total_y = pixel_y * speed
+	total_x = pixel_x * magnitude
+	total_y = pixel_y * magnitude
 
-/datum/movement_vector/proc/set_speed(new_speed)
-	if(isnull(new_speed) || speed == new_speed)
+/datum/vector/proc/set_speed(new_magnitude)
+	if(isnull(new_magnitude) || magnitude == new_magnitude)
 		return
-	speed = new_speed
-	update_offsets()
+	magnitude = new_magnitude
+	total_x = pixel_x * magnitude
+	total_y = pixel_y * magnitude

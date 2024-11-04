@@ -393,8 +393,8 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
-///from /obj/projectile/pixel_move(): ()
-#define COMSIG_PROJECTILE_PIXEL_STEP "projectile_pixel_step"
+///from /obj/projectile/process_movement(): ()
+#define COMSIG_PROJECTILE_MOVE_PROCESS_STEP "projectile_move_process_step"
 ///sent to self during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
 ///from the base of /obj/projectile/reduce_range(): ()

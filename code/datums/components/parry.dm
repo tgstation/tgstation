@@ -41,13 +41,13 @@
 	. = ..()
 
 /datum/component/parriable_projectile/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PROJECTILE_PIXEL_STEP, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_PROJECTILE_MOVE_PROCESS_STEP, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(before_move))
 	RegisterSignal(parent, COMSIG_PROJECTILE_BEFORE_MOVE, PROC_REF(before_move))
 	RegisterSignal(parent, COMSIG_PROJECTILE_SELF_PREHIT, PROC_REF(before_hit))
 
 /datum/component/parriable_projectile/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PROJECTILE_PIXEL_STEP, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_BEFORE_MOVE, COMSIG_PROJECTILE_SELF_PREHIT))
+	UnregisterSignal(parent, list(COMSIG_PROJECTILE_MOVE_PROCESS_STEP, COMSIG_MOVABLE_MOVED, COMSIG_PROJECTILE_BEFORE_MOVE, COMSIG_PROJECTILE_SELF_PREHIT))
 
 /datum/component/parriable_projectile/proc/before_move(obj/projectile/source)
 	SIGNAL_HANDLER
@@ -71,7 +71,7 @@
 
 /datum/component/parriable_projectile/proc/on_moved(obj/projectile/source)
 	SIGNAL_HANDLER
-	if (!isturf(source.loc))
+	if (!isturf(source.loc) || parry_turfs[source.loc])
 		return
 	parry_turfs[source.loc] = world.time + grace_period
 	RegisterSignal(source.loc, COMSIG_CLICK, PROC_REF(on_turf_click))

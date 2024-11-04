@@ -81,9 +81,6 @@
 #define RETURN_PRECISE_POSITION(A) new /datum/position(A)
 #define RETURN_PRECISE_POINT(A) new /datum/point(A)
 
-#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
-#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
-
 ///The self charging rate of energy guns that magically recharge themselves, in watts.
 #define STANDARD_ENERGY_GUN_SELF_CHARGE_RATE (0.05 * STANDARD_CELL_CHARGE)
 

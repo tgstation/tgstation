@@ -419,6 +419,8 @@
 		return FALSE
 	return ..()
 
+/* TODO: THIS BULLSHIT
+
 /obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(trail)
@@ -439,6 +441,7 @@
 	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
+*/
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"

@@ -217,11 +217,13 @@ Difficulty: Hard
 /obj/projectile/colossus/wendigo_shockwave/wave/alternate
 	wave_speed = -10
 
+/* TODO: THIS BULLSHIT
 /obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	. = ..()
 	if(wave_movement)
 		pixel_moves++
 		set_angle(original_angle + pixel_moves * wave_speed)
+*/
 
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"
