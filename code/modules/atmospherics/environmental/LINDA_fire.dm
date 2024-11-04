@@ -411,15 +411,11 @@
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
 /datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
-	var/choose_a_group
-	var/datum/hot_group/saving_group
-	var/datum/hot_group/sacrificial_group
-
 	if(length(spot_list) >= tiles_limit || length(enemy_group.spot_list) >= tiles_limit)
 		return
-	if(length(spot_list) == length(enemy_group.spot_list))
-		choose_a_group = rand(0,1)
-	if(length(spot_list) > length(enemy_group.spot_list) || choose_a_group)//we're bigger take all of their territory!
+	var/datum/hot_group/saving_group
+	var/datum/hot_group/sacrificial_group
+	if(length(spot_list) > length(enemy_group.spot_list) || (length(spot_list) == length(enemy_group.spot_list) && prob(50)))//we're bigger take all of their territory!
 		saving_group = src
 		sacrificial_group = enemy_group
 	else
@@ -444,14 +440,11 @@
 	var/turf/open/sound_turf = locate(average_x, average_y, average_Z)
 	if(sound)
 		sound.falloff_distance = drop_off_dist
-		if(sound_turf == current_sound_loc)
-			return
-		else
+		if(sound_turf != current_sound_loc)
 			sound.parent = sound_turf
-			return
-	else
-		sound = new(sound_turf, TRUE)
-		sound.falloff_distance = drop_off_dist
-		current_sound_loc = sound_turf
+		return
+	sound = new(sound_turf, TRUE)
+	sound.falloff_distance = drop_off_dist
+	current_sound_loc = sound_turf
 
 #undef INSUFFICIENT
