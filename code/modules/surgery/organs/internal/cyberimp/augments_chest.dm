@@ -317,8 +317,22 @@
 		core_applied = TRUE
 		name = "\improper Atlas gravitonic spinal implant"
 		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
-			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation."
+			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation. \
+			Not only can you walk with your feet planted firmly on the ground even during a loss of enviromental gravity, but you also \
+			carry heavier loads with relative ease."
 		icon_state = "herculean_implant_core"
 		update_appearance()
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/cyberimp/chest/spine/atlas
+	name = "\improper Atlas gravitonic spinal implant"
+	desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+		This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation. \
+		Not only can you walk with your feet planted firmly on the ground even during a loss of enviromental gravity, but you also \
+		carry heavier loads with relative ease."
+	icon_state = "herculean_implant_core"
+	athletics_boost_multiplier = 0.25
+	added_throw_speed = 6
+	added_throw_range = 8
+	core_applied = TRUE
