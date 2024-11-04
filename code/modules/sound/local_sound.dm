@@ -48,18 +48,24 @@
 
 	var/list/mob/listeners = list()
 	for(var/mob/listening_mob in get_listeners())
+		if(source == GLOBAL_SOUND) // if the sound is global, don't spend time calculating local sound properties
+			SEND_SOUND(listening_mob, sound)
+			listeners += listening_mob
+			continue
+
 		var/sound/local_sound = calculate_mob_local_sound(listening_mob)
 		if(!local_sound)
 			continue
 		SEND_SOUND(listening_mob, local_sound)
 		listeners += listening_mob
 
-	return listeners
+	. = listeners
+	qdel(src) // qdel the sound after it's done being sent to all listeners
 
 /// Updates a mob's local sound. Position, Falloff, blah blah blah.
 /// Does NOT resend the entire sound we just tell the client to update it via flags.
 /datum/playsound/proc/update_local_mob_sound(mob/mob, sound/update_target = null)
-	if(!source)
+	if(source == GLOBAL_SOUND)
 		CRASH("Attempted to call [__PROC__] on a global sound.")
 
 	var/turf/source_turf = get_turf(source)

@@ -155,16 +155,24 @@
 		sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 		SEND_SOUND(parent, sound_to_play)
 	else
-		create_sound(parent, sound_to_play)\
-			.volume(volume)\
-			.vary(vary)\
-			.extra_range(extra_range)\
-			.falloff_exponent(falloff_exponent)\
-			.atmospherics_affected(pressure_affected)\
-			.ignore_walls(ignore_walls)\
-			.falloff_distance(falloff_distance)\
-			.use_reverb(use_reverb)\
-			.play()
+		var/datum/playsound/why_on_god = create_sound(parent, sound_to_play)
+		if(volume_override)
+			why_on_god.volume(volume_override)
+		if(vary)
+			why_on_god.vary(TRUE)
+		if(extra_range)
+			why_on_god.extra_range(extra_range)
+		if(falloff_exponent)
+			why_on_god.falloff_exponent(falloff_exponent)
+		if(pressure_affected)
+			why_on_god.atmospherics_affected(TRUE)
+		if(ignore_walls)
+			why_on_god.ignore_walls(TRUE)
+		if(falloff_distance)
+			why_on_god.falloff_distance(falloff_distance)
+		if(use_reverb)
+			why_on_god.use_reverb(TRUE)
+		why_on_god.play()
 
 /// Returns the sound we should now be playing.
 /datum/looping_sound/proc/get_sound(_mid_sounds)

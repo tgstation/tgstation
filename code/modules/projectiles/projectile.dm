@@ -306,7 +306,7 @@
 		hity = target.pixel_y + rand(-8, 8)
 
 	if(isturf(target) && hitsound_wall)
-		create_sound(src, hitsound_wall).volume(clamp(vol_by_damage() + (suppressed ? 0 : 20))).vary(TRUE).extra_range(-1).play()
+		create_sound(src, hitsound_wall).volume(clamp(vol_by_damage() + 20, 0, 100)).vary(TRUE).extra_range(-1).play()
 
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
