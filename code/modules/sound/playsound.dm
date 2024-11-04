@@ -51,11 +51,6 @@
 	/// What is the penalty modifier for crossing a Z level?
 	VAR_PRIVATE/z_traversal_modifier = 0.75
 
-	/// Does the sound follow the source atom as it moves?
-	VAR_PRIVATE/spatial_aware = FALSE
-	VAR_PRIVATE/list/datum/sound_spatial_cache/spatial_tracking_by_mob_tag = list()
-	VAR_PRIVATE/list/datum/spatial_grid_cell/registered_spatial_grid_cells = list()
-
 /datum/playsound/New(source, sound)
 	..()
 
@@ -84,7 +79,6 @@
 	src.sound = sound
 
 /datum/playsound/Destroy(force)
-	kill_spatial_tracking()
 	source = null
 	sound = null
 	return ..()
@@ -107,7 +101,6 @@ WITH_X(atmospherics_affected)
 WITH_X(ignore_walls)
 WITH_X(z_traversal_allowed)
 WITH_X(z_traversal_modifier)
-WITH_X(spatial_aware)
 
 #undef WITH_X
 
