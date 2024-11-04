@@ -52,6 +52,9 @@
 	electrogenesis_power = 0.9 MEGA JOULES
 	beauty = FISH_BEAUTY_UGLY
 
+/obj/item/fish/jumpercable/get_export_price(price, percent)
+	return ..() * 0.4 //without this, they'd sell for over 6000 each, and require no maintance or partner to farm.
+
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."

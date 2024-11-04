@@ -33,6 +33,9 @@
 /obj/item/fish/mastodon/make_edible(weight_val)
 	return //it's all bones and gibs.
 
+/obj/item/fish/mastodon/get_export_price(price, percent)
+	return ..() * 1.2 //This should push its soft-capped (it's pretty big) price a bit above the rest
+
 ///From the cursed spring
 /obj/item/fish/soul
 	name = "soulfish"

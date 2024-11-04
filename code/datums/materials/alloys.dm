@@ -80,7 +80,7 @@
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 	fish_weight_modifier = 1.1
-	fishing_difficulty_modifier = -10
+	fishing_difficulty_modifier = -7
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.95
 
@@ -204,7 +204,7 @@
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 	added_slowdown = 0.1
 	fish_weight_modifier = 2.4
-	fishing_difficulty_modifier = -25
+	fishing_difficulty_modifier = -20
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 0.5
 	fishing_completion_speed = 2
