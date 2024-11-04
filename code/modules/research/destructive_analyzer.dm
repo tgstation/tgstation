@@ -45,7 +45,7 @@
 		return ..()
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	busy = TRUE
 	loaded_item = weapon
