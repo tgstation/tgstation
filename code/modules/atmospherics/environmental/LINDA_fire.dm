@@ -151,6 +151,7 @@
 		our_hot_group = new
 		our_hot_group.add_to_group(src)
 /obj/effect/hotspot/set_smoothed_icon_state(new_junction)
+
 	smoothing_junction = new_junction
 
 	update_color()
@@ -365,6 +366,8 @@
 	volume = 100
 	mid_length = 2 SECONDS
 	falloff_distance = 1
+
+#define MIN_SIZE_SOUND 2
 ///handle the grouping of hotspot and then determining an average center to play sound in
 /datum/hot_group
 	var/list/obj/effect/hotspot/spot_list = list()
@@ -406,7 +409,7 @@
 	x_coord += target_turf.x
 	y_coord += target_turf.y
 	z_coord += target_turf.z
-	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > 2)//arbitrary size to start playing the sound
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > MIN_SIZE_SOUND)//arbitrary size to start playing the sound
 		update_sound()
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
@@ -427,7 +430,7 @@
 	saving_group.x_coord += sacrificial_group.x_coord
 	saving_group.y_coord += sacrificial_group.y_coord
 	qdel(sacrificial_group)
-	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > 2)//arbitrary size to start playing the sound
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > MIN_SIZE_SOUND)//arbitrary size to start playing the sound
 		update_sound()
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
@@ -447,4 +450,5 @@
 	sound.falloff_distance = drop_off_dist
 	current_sound_loc = sound_turf
 
+#undef MIN_SIZE_SOUND
 #undef INSUFFICIENT

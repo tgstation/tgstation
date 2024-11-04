@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(air)
 	msg += "RB:[rebuild_queue.len]|"
 	msg += "EP:[expansion_queue.len]|"
 	msg += "AJ:[adjacent_rebuild.len]|"
-	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]|"
+	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
 

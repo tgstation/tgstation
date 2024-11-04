@@ -61,7 +61,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 	var/list/connected_turfs = list(source)
 	. = connected_turfs
 	while(length(connected_turfs))
-		var/list/turf/adjacent_turfs = source.atmos_adjacent_turfs // get a tile in each cardinal direction at once and add that to the list
+		var/list/turf/adjacent_turfs = list(
+			get_step(connected_turfs[counter], NORTH),
+			get_step(connected_turfs[counter], SOUTH),
+			get_step(connected_turfs[counter], EAST),
+			get_step(connected_turfs[counter], WEST)
+		)// get a tile in each cardinal direction at once and add that to the list
 		for(var/turf/valid_turf in adjacent_turfs)//loop through the list and check for atmos adjacency
 			var/turf/reference_turf = connected_turfs[counter]
 			if(valid_turf in connected_turfs)//if the turf is already added, skip

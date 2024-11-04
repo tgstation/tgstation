@@ -288,7 +288,6 @@
 #define SSAIR_HIGHPRESSURE 6
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
-#define SSAIR_PROCESS_HOT_GROUP 9
 
 // Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
