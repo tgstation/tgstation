@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "brings back the AI detector HUD that was silently removed by a PR 3 years ago, use inhand to toggle hud or use RMB to see static temporarily"
