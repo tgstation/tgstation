@@ -365,7 +365,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/west,
+/obj/structure/sign/eyechart/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "ahj" = (
@@ -3484,7 +3484,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "bjP" = (
@@ -25358,6 +25358,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "jaj" = (
@@ -26637,6 +26638,7 @@
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "jws" = (
@@ -46582,9 +46584,9 @@
 "qCL" = (
 /obj/structure/cable,
 /obj/structure/sink/directional/east,
-/obj/machinery/airalarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "qCM" = (
