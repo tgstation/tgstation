@@ -335,4 +335,5 @@
 	athletics_boost_multiplier = 0.25
 	added_throw_speed = 6
 	added_throw_range = 8
+	strength_bonus = 8
 	core_applied = TRUE
