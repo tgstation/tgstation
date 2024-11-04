@@ -1,8 +1,3 @@
-/datum/quirk/item_quirk/breather
-	abstract_parent_type = /datum/quirk/item_quirk/breather
-	icon = FA_ICON_LUNGS_VIRUS
-	var/breath_type = "oxygen"
-
 /datum/quirk/item_quirk/breather/nitrogen_breather
 	name = "Nitrogen Breather"
 	desc = "You breathe nitrogen, even if you might not normally breathe it. Oxygen is poisonous."
@@ -13,8 +8,12 @@
 	breath_type = "nitrogen"
 
 /datum/quirk/item_quirk/breather/nitrogen_breather/add_unique(client/client_source)
-	var/mob/living/carbon/human/target = quirk_holder
-	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(target))
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/organ/internal/lungs/target_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(quirk_holder))
 	target_tag.breath_type = breath_type
 
 	give_item_to_holder(target_tag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -27,10 +26,6 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS
 		)
 	)
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(!target_lungs)
-		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
-		return
 	// set lung vars
 	target_lungs.safe_oxygen_min = 0 //Dont need oxygen
 	target_lungs.safe_oxygen_max = 2 //But it is quite toxic
