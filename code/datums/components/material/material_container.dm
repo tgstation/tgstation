@@ -495,7 +495,7 @@
 
 	user_insert(weapon, user)
 
-	return COMPONENT_NO_AFTERATTACK
+	return ITEM_INTERACT_SUCCESS
 //===============================================================================================
 
 
