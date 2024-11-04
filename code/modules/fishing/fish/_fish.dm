@@ -1339,7 +1339,7 @@
 	var/size_weight_exponentation = (size * weight * 0.01)^0.85
 	var/calculated_price = price + size_weight_exponentation * percent
 	if(calculated_price > 6000) //it's become possible to grow fish that, without this cap, would sell for over 22k each.
-		var/soft_cap = (calculated_price - 6000)^0.85
+		var/soft_cap = (calculated_price - 6000)^0.86
 		calculated_price = 6000 + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
 		calculated_price *= 0.05
