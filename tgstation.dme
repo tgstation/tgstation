@@ -3859,6 +3859,7 @@
 #include "code\modules\client\preferences\migrations\convert_to_json_savefile.dm"
 #include "code\modules\client\preferences\migrations\legacy_sound_toggles_migration.dm"
 #include "code\modules\client\preferences\migrations\quirk_loadout_migration.dm"
+#include "code\modules\client\preferences\migrations\sound_checkboxes_migration.dm"
 #include "code\modules\client\preferences\migrations\tgui_prefs_migration.dm"
 #include "code\modules\client\preferences\migrations\tts_blip_migration.dm"
 #include "code\modules\client\preferences\species_features\basic.dm"
