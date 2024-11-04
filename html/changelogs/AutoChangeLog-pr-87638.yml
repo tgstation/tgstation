@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Some fish should be ever so slightly less rare to get from non-specific fish cases."
-  - bugfix: "Armorfish should now taste like prawn."
