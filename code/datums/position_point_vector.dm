@@ -121,111 +121,39 @@
 /datum/point/proc/return_py()
 	return MODULUS(y, ICON_SIZE_Y) - (ICON_SIZE_Y/2) - 1
 
-/datum/point/vector
-	/// Pixels per iteration
-	var/speed = ICON_SIZE_ALL
-	var/iteration = 0
+/datum/movement_vector
+	var/speed = 1
 	var/angle = 0
-	/// Calculated x movement amounts to prevent having to do trig every step.
-	var/mpx = 0
-	/// Calculated y movement amounts to prevent having to do trig every step.
-	var/mpy = 0
-	var/starting_x = 0 //just like before, pixels from EDGE of map! This is set in initialize_location().
-	var/starting_y = 0
-	var/starting_z = 0
+	// Calculated movement amounts to prevent having to do trig every step.
+	var/pixel_x = 0
+	var/pixel_y = 0
+	var/total_x = 0
+	var/total_y = 0
 
-/datum/point/vector/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0, _angle, _speed, initial_increment = 0)
-	..()
-	initialize_trajectory(_speed, _angle)
-	if(initial_increment)
-		increment(initial_increment)
-
-/datum/point/vector/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
+/datum/movement_vector/New(new_speed, new_angle)
 	. = ..()
-	starting_x = x
-	starting_y = y
-	starting_z = z
+	initialize_trajectory(new_speed, new_angle)
 
-/// Same effect as initiliaze_location, but without setting the starting_x/y/z
-/datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
-	if(!isnull(tile_x))
-		x = ((tile_x - 1) * ICON_SIZE_X) + ICON_SIZE_X * 0.5 + p_x + 1
-	if(!isnull(tile_y))
-		y = ((tile_y - 1) * ICON_SIZE_Y) + ICON_SIZE_Y * 0.5 + p_y + 1
-	if(!isnull(tile_z))
-		z = tile_z
-
-/datum/point/vector/copy_to(datum/point/vector/v = new)
-	..(v)
-	v.speed = speed
-	v.iteration = iteration
-	v.angle = angle
-	v.mpx = mpx
-	v.mpy = mpy
-	v.starting_x = starting_x
-	v.starting_y = starting_y
-	v.starting_z = starting_z
-	return v
-
-/datum/point/vector/proc/initialize_trajectory(pixel_speed, new_angle)
-	if(!isnull(pixel_speed))
-		speed = pixel_speed
+/datum/movement_vector/proc/initialize_trajectory(new_speed, new_angle)
+	if(!isnull(new_speed))
+		speed = new_speed
 	set_angle(new_angle)
 
 /// Calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
-/datum/point/vector/proc/set_angle(new_angle)
+/datum/movement_vector/proc/set_angle(new_angle)
 	if(isnull(angle))
 		return
 	angle = new_angle
 	update_offsets()
 
-/datum/point/vector/proc/update_offsets()
-	mpx = sin(angle) * speed
-	mpy = cos(angle) * speed
+/datum/movement_vector/proc/update_offsets()
+	pixel_x = sin(angle)
+	pixel_y = cos(angle)
+	total_x = pixel_x * speed
+	total_y = pixel_y * speed
 
-/datum/point/vector/proc/set_speed(new_speed)
+/datum/movement_vector/proc/set_speed(new_speed)
 	if(isnull(new_speed) || speed == new_speed)
 		return
 	speed = new_speed
 	update_offsets()
-
-/datum/point/vector/proc/increment(multiplier = 1)
-	iteration++
-	x += mpx * (multiplier)
-	y += mpy * (multiplier)
-
-/datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
-	var/datum/point/vector/v = copy_to()
-	if(force_simulate)
-		for(var/i in 1 to amount)
-			v.increment(multiplier)
-	else
-		v.increment(multiplier * amount)
-	return v
-
-/datum/point/vector/proc/on_z_change()
-	return
-
-/datum/point/vector/processed //pixel_speed is per decisecond.
-	var/last_process = 0
-	var/last_move = 0
-	var/paused = FALSE
-
-/datum/point/vector/processed/Destroy()
-	STOP_PROCESSING(SSprojectiles, src)
-	return ..()
-
-/datum/point/vector/processed/proc/start()
-	last_process = world.time
-	last_move = world.time
-	START_PROCESSING(SSprojectiles, src)
-
-/datum/point/vector/processed/process()
-	if(paused)
-		last_move += world.time - last_process
-		last_process = world.time
-		return
-	var/needed_time = world.time - last_move
-	last_process = world.time
-	last_move = world.time
-	increment(needed_time / SSprojectiles.wait)

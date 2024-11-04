@@ -224,10 +224,10 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/proj, atom/movable/firer, atom/target, Angle, hit_zone)
 	SIGNAL_HANDLER
 
-	pellets -= P
+	pellets -= proj
 	terminated++
 	hits++
 	var/obj/item/bodypart/hit_part
@@ -237,34 +237,34 @@
 		hit_part = hit_carbon.get_bodypart(hit_zone)
 		if(hit_part)
 			target = hit_part
-			if(P.wound_bonus != CANT_WOUND) // handle wounding
+			if(proj.wound_bonus != CANT_WOUND) // handle wounding
 				// unfortunately, due to how pellet clouds handle finalizing only after every pellet is accounted for, that also means there might be a short delay in dealing wounds if one pellet goes wide
 				// while buckshot may reach a target or miss it all in one tick, we also have to account for possible ricochets that may take a bit longer to hit the target
 				if(isnull(wound_info_by_part[hit_part]))
 					wound_info_by_part[hit_part] = list(0, 0, 0)
-				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += P.damage // these account for decay
-				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += P.wound_bonus
-				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += P.bare_wound_bonus
-				P.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
+				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += proj.damage // these account for decay
+				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += proj.wound_bonus
+				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += proj.bare_wound_bonus
+				proj.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
 	else if(isobj(target))
 		var/obj/hit_object = target
-		if(hit_object.damage_deflection > P.damage || !P.damage)
+		if(hit_object.damage_deflection > proj.damage || !proj.damage)
 			damage = FALSE
 
 	LAZYADDASSOC(targets_hit[target], "hits", 1)
 	LAZYSET(targets_hit[target], "damage", damage)
 	if(targets_hit[target]["hits"] == 1)
-		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
-	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdel), override = TRUE)
+	UnregisterSignal(proj, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
 ///One of our pellets disappeared due to hitting their max range (or just somehow got qdel'd), remove it from our list and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_range(obj/projectile/P)
+/datum/component/pellet_cloud/proc/pellet_range(obj/projectile/proj)
 	SIGNAL_HANDLER
-	pellets -= P
+	pellets -= proj
 	terminated++
-	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+	UnregisterSignal(proj, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
@@ -279,7 +279,7 @@
 	pellet.firer = parent // don't hit ourself that would be really annoying
 	pellet.impacted = list(WEAKREF(parent) = TRUE) // don't hit the target we hit already with the flak
 	pellet.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-	pellet.preparePixelProjectile(target, parent)
+	pellet.aim_projectile(target, parent)
 	RegisterSignal(pellet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
 	RegisterSignals(pellet, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
 	pellets += pellet

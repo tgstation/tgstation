@@ -278,12 +278,12 @@
 		ActivationReaction(user, ACTIVATE_WEAPON)
 	..()
 
-/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/P, def_zone)
+/obj/machinery/anomalous_crystal/bullet_act(obj/projectile/proj, def_zone)
 	. = ..()
-	if(istype(P, /obj/projectile/magic))
-		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
+	if(istype(proj, /obj/projectile/magic))
+		ActivationReaction(proj.firer, ACTIVATE_MAGIC, proj.damage_type)
 		return
-	ActivationReaction(P.firer, P.armor_flag, P.damage_type)
+	ActivationReaction(proj.firer, proj.armor_flag, proj.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))

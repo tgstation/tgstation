@@ -165,7 +165,7 @@
 		return
 	var/atom/movable/fired_organ = pop(organ_list)
 	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
-	projectile.preparePixelProjectile(target, mod.wearer)
+	projectile.aim_projectile(target, mod.wearer)
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))

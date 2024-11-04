@@ -75,8 +75,8 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/projectile/proj, pdir, turf/ploc, pangle)
 	proj.ignore_source_check = TRUE
-	proj.range = proj.decayedRange
-	proj.decayedRange = max(proj.decayedRange--, 0)
+	proj.range = proj.maximum_range
+	proj.maximum_range = max(proj.maximum_range--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -241,8 +241,8 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/box/auto_reflect(obj/projectile/P)
-	P.set_angle_centered(rotation_angle)
+/obj/structure/reflector/box/auto_reflect(obj/projectile/proj)
+	proj.set_angle_centered(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()

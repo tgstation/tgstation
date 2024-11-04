@@ -90,3 +90,6 @@
 /// Macro to turn a number of laser shots into an energy cost, based on the above define
 /// e.g. LASER_SHOTS(12, STANDARD_CELL_CHARGE) means 12 shots
 #define LASER_SHOTS(X, MAX_CHARGE) (((100 * MAX_CHARGE) - ((100 * MAX_CHARGE) % X)) / (100 * X)) // I wish I could just use round, but it can't be used in datum members
+
+/// How far do the projectile hits the prone mob
+#define MAX_RANGE_HIT_PRONE_TARGETS 10

@@ -96,7 +96,7 @@
 	if(!.)
 		return
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc, src)
-	tether.preparePixelProjectile(target, mod.wearer)
+	tether.aim_projectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))

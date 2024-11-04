@@ -48,7 +48,7 @@
 		span_bold("You spit ink."),
 	)
 	var/obj/projectile/ink_spit/ink = new /obj/projectile/ink_spit(caller.loc)
-	ink.preparePixelProjectile(target, caller, modifiers)
+	ink.aim_projectile(target, caller, modifiers)
 	ink.firer = caller
 	ink.fire()
 	playsound(caller, 'sound/items/weapons/pierce.ogg', 20, TRUE, -1)

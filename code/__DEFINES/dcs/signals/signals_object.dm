@@ -397,7 +397,7 @@
 #define COMSIG_PROJECTILE_PIXEL_STEP "projectile_pixel_step"
 ///sent to self during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
-///from the base of /obj/projectile/Range(): ()
+///from the base of /obj/projectile/reduce_range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"

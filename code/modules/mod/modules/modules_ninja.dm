@@ -323,7 +323,7 @@
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
 		mod.wearer.say("Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
-	net.preparePixelProjectile(target, mod.wearer)
+	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/punchmiss.ogg', 25, TRUE)
 	INVOKE_ASYNC(net, TYPE_PROC_REF(/obj/projectile, fire))

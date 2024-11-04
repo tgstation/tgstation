@@ -106,7 +106,7 @@
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
 
-/obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
+/obj/projectile/bullet/pellet/shotgun_rubbershot/reduce_range()
 	if(ricochet_chance > 0)
 		ricochet_chance -= tile_dropoff_ricochet
 	. = ..()

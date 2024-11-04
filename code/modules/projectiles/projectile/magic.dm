@@ -238,7 +238,8 @@
 
 /obj/projectile/magic/locker/Destroy()
 	locker_suck = FALSE
-	RemoveElement(/datum/element/connect_loc, projectile_connections) //We do this manually so the forcemoves don't "hit" us. This behavior is kinda dumb, someone refactor this
+	if (last_tick_turf)
+		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
@@ -401,7 +402,7 @@
 	/// The icon state the trail uses.
 	var/trail_icon_state = "arrow"
 
-/obj/projectile/magic/aoe/Range()
+/obj/projectile/magic/aoe/reduce_range()
 	if(trigger_range >= 1)
 		for(var/mob/living/nearby_guy in range(trigger_range, get_turf(src)))
 			if(nearby_guy.stat == DEAD)
@@ -513,8 +514,7 @@
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 100
-	speed = 1
-	pixel_speed_multiplier = 0.2
+	speed = 5
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
@@ -540,8 +540,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
 	range = 105
-	speed = 1
-	pixel_speed_multiplier = 1/7
+	speed = 7
 
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

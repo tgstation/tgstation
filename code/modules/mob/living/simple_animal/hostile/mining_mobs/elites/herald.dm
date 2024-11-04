@@ -135,7 +135,7 @@
 		H = new /obj/projectile/herald(startloc)
 	else
 		H = new /obj/projectile/herald/teleshot(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = src
 	if(target)
 		H.original = target
@@ -276,7 +276,7 @@
 	var/turf/startloc = get_turf(owner)
 	var/obj/projectile/herald/H = null
 	H = new /obj/projectile/herald(startloc)
-	H.preparePixelProjectile(marker, startloc)
+	H.aim_projectile(marker, startloc)
 	H.firer = owner
 	H.fire(set_angle)
 

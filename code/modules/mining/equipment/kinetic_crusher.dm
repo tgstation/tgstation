@@ -157,7 +157,7 @@
 	destabilizer.icon_state = "[projectile_icon]"
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
-	destabilizer.preparePixelProjectile(target, user, modifiers)
+	destabilizer.aim_projectile(target, user, modifiers)
 	destabilizer.firer = user
 	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
 	destabilizer.fire()
