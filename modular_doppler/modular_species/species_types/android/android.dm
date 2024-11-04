@@ -36,9 +36,9 @@
 	)
 	reagent_flags = PROCESS_SYNTHETIC
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
-	mutantheart = /obj/item/organ/internal/heart/cybernetic/tier2
-	mutantstomach = /obj/item/organ/internal/stomach/cybernetic/tier2
-	mutantliver = /obj/item/organ/internal/liver/cybernetic/tier2
+	mutantheart = /obj/item/organ/heart/cybernetic/tier2
+	mutantstomach = /obj/item/organ/stomach/cybernetic/tier2
+	mutantliver = /obj/item/organ/liver/cybernetic/tier2
 	exotic_blood = /datum/reagent/synth_blood
 	exotic_bloodtype = "R*"
 

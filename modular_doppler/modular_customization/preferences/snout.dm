@@ -2,7 +2,7 @@
 	. = ..()
 	if(target.dna.features["snout"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["snout"] != /datum/sprite_accessory/snouts/none::name && target.dna.features["snout"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/snout)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/snout)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT)

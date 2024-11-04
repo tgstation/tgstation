@@ -15,7 +15,7 @@
 	 * Set when created via the ling decoy component.
 	 * If the brain ends up being qdelled, this action will also be qdelled, and thus this ref is cleared.
 	 */
-	VAR_FINAL/obj/item/organ/internal/brain/brain_ref
+	VAR_FINAL/obj/item/organ/brain/brain_ref
 
 	/// A map view of the area around the MMI.
 	VAR_FINAL/atom/movable/screen/map_view/mmi_view

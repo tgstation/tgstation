@@ -20,7 +20,7 @@
 
 
 /// === BASE ORGAN TYPE.  HELPS WITH THE BULLSHITTERY ===
-/obj/item/organ/external/nsfw
+/obj/item/organ/nsfw
 	name = "nsfw organ"
 	desc = "If you see this, yell at Naaka. Shit's fucked."
 	icon = 'modular_doppler/enterprise_resource_planning/icons/organs.dmi'
@@ -74,14 +74,14 @@
 		return
 
 	var/list/part_list = list()
-	for(var/obj/item/organ/external/nsfw/part in organs)
+	for(var/obj/item/organ/nsfw/part in organs)
 		part_list += part
 
 	if(!part_list.len) //There is nothing to expose
 		update_body()
 		return
 
-	var/obj/item/organ/external/nsfw/picked_organ = tgui_input_list(src, "Choose which part to adjust", "Part Adjuster", part_list)
+	var/obj/item/organ/nsfw/picked_organ = tgui_input_list(src, "Choose which part to adjust", "Part Adjuster", part_list)
 
 	if(!picked_organ || !(picked_organ in organs))
 		update_body()

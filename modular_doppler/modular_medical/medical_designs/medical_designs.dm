@@ -23,7 +23,7 @@
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 20 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/botany
+	build_path = /obj/item/organ/cyberimp/arm/botany
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
 	)
@@ -40,7 +40,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 20 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/janitor
+	build_path = /obj/item/organ/cyberimp/arm/janitor
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
 	)
@@ -57,7 +57,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 20 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/mining_drill
+	build_path = /obj/item/organ/cyberimp/arm/mining_drill
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
 	)
@@ -74,7 +74,7 @@
 		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 30 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/mining_drill/diamond
+	build_path = /obj/item/organ/cyberimp/arm/mining_drill/diamond
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
 	)
@@ -97,7 +97,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	construction_time = 20 SECONDS
-	build_path = /obj/item/organ/internal/cyberimp/arm/razor_claws
+	build_path = /obj/item/organ/cyberimp/arm/razor_claws
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_TOOLS,
 	)

@@ -21,7 +21,7 @@
 
 
 /// The boobage in question
-/obj/item/organ/external/nsfw/breasts
+/obj/item/organ/nsfw/breasts
 	name = "breasts"
 	desc = "Super-effective at deterring ice dragons."
 	icon_state = "breasts"
@@ -111,7 +111,7 @@
 		//to_chat(world, "Boobs are in the features list, adding [target.dna.features["breasts"]]")
 		if(target.dna.features["breasts"] != "Bare")
 			//to_chat(world, "Boob type valid, trying to insert [target.dna.features["breasts"]]")
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/nsfw/breasts)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/nsfw/breasts)
 			//to_chat(world, "Inserted boobage exists: [replacement]")
 			//replacement.build_from_dna(target.dna, "breasts") //TODO: do we need to add this
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)

@@ -4,7 +4,7 @@
 	savefile_key = "antennae_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	//relevant_external_organ = /obj/item/organ/external/wings
+	//relevant_external_organ = /obj/item/organ/wings
 
 /datum/preference/tri_color/antennae_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),

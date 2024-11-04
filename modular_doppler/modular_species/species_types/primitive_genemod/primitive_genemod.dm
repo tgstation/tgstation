@@ -15,8 +15,8 @@
 	id = SPECIES_GENEMOD_PRIMITIVE
 	preview_outfit = /datum/outfit/genemod_primitive_preview
 
-	mutantlungs = /obj/item/organ/internal/lungs/icebox_adapted
-	mutanteyes = /obj/item/organ/internal/eyes/low_light_adapted
+	mutantlungs = /obj/item/organ/lungs/icebox_adapted
+	mutanteyes = /obj/item/organ/eyes/low_light_adapted
 
 	species_language_holder = /datum/language_holder/primitive_genemod
 	language_prefs_whitelist = list(/datum/language/primitive_genemod)

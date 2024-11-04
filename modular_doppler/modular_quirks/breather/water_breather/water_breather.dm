@@ -13,7 +13,7 @@
 	if(!.)
 		return
 
-	var/obj/item/organ/internal/lungs/target_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/target_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(quirk_holder))
 	target_tag.breath_type = breath_type
 
@@ -28,7 +28,7 @@
 		), "Be sure to equip your vaporizer, or you may end up choking to death!"
 	)
 	// if your lungs already have this trait, no need to update
-	if(target_lungs.type == /obj/item/organ/internal/lungs/fish)
+	if(target_lungs.type == /obj/item/organ/lungs/fish)
 		return
 	target_lungs.safe_oxygen_min = 0
 	// update lung procs

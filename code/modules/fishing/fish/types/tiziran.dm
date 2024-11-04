@@ -79,8 +79,8 @@
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GOOD_QUALITY_BAIT), INNATE_TRAIT)
 
-/obj/item/fish/chasm_crab/get_fish_taste()
+/obj/item/fish/armorfish/get_fish_taste()
 	return list("raw prawn" = 2)
 
-/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+/obj/item/fish/armorfish/get_fish_taste_cooked()
 	return list("cooked prawn" = 2)

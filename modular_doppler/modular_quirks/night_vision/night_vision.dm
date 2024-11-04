@@ -21,7 +21,7 @@
 
 /datum/quirk/night_vision/proc/refresh_quirk_holder_eyes()
 	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
-	var/obj/item/organ/internal/eyes/eyes = human_quirk_holder.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = human_quirk_holder.get_organ_by_type(/obj/item/organ/eyes)
 	if(!eyes)
 		return
 	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.
@@ -50,7 +50,7 @@
 	var/mob/living/carbon/human/target = quirk_holder
 
 	// if we have more sensitive eyes, increase the power
-	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if (!istype(target_eyes))
 		return
 	var/infravision_multiplier = max(0, (-(target_eyes.flash_protect) * DOPPLER_NIGHT_VISION_SENSITIVITY_MULT)) + 1
@@ -104,7 +104,7 @@
 			severity = 2
 		if ("Sensitive")
 			severity = 1
-	var/obj/item/organ/internal/eyes/holder_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/holder_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
 	restore_eyes(holder_eyes) // add_unique() happens after add() so we need to jank reset this to ensure sensitivity is properly applied at roundstart
 	check_eyes(holder_eyes)
 
