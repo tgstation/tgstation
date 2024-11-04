@@ -5,7 +5,7 @@
 	if(islist(direct_listeners))
 		return direct_listeners
 
-	if(isnull(source))
+	if(source == GLOBAL_SOUND)
 		return GLOB.player_list - GLOB.new_player_list
 
 	var/turf/source_location = get_turf(source)

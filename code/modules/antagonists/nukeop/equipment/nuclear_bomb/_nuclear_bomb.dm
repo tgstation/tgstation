@@ -536,7 +536,7 @@ GLOBAL_VAR(station_nuke_source)
 	yes_code = FALSE
 	safety = TRUE
 	update_appearance()
-	create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').volume(70).play()
+	create_sound(GLOBAL_SOUND, 'sound/announcer/alarm/nuke_alarm.ogg').play()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 
