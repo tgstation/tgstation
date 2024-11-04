@@ -7002,6 +7002,7 @@
 #include "modular_doppler\modular_mood\code\mood_events\hotspring.dm"
 #include "modular_doppler\modular_mood\code\mood_events\race_drink.dm"
 #include "modular_doppler\modular_quirks\breather\accessories.dm"
+#include "modular_doppler\modular_quirks\breather\breather_quirk.dm"
 #include "modular_doppler\modular_quirks\breather\nitrogen_breather\nitrogen_breather.dm"
 #include "modular_doppler\modular_quirks\breather\nitrogen_breather\nitrogen_tanks.dm"
 #include "modular_doppler\modular_quirks\breather\water_breather\water_breather.dm"
