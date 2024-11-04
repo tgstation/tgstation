@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixing transparency for materials, especially glass walls and their unwanted opacity."
+  - bugfix: "Custom material walls are no longer so dark."

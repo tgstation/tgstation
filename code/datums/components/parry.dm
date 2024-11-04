@@ -101,8 +101,8 @@
 
 	parried = TRUE
 	if (source.firer != user)
-		if (abs(source.Angle - dir2angle(user)) < 15)
-			source.set_angle((source.Angle + 180) % 360 + rand(-3, 3))
+		if (abs(source.angle - dir2angle(user)) < 15)
+			source.set_angle((source.angle + 180) % 360 + rand(-3, 3))
 		else
 			source.set_angle(dir2angle(user) + rand(-3, 3))
 		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))

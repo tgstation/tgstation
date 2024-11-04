@@ -13,12 +13,10 @@
 		/obj/item/fish/stingray = 8,
 		/obj/item/fish/plaice = 8,
 		/obj/item/fish/monkfish = 5,
-		/obj/item/fish/stingray = 10,
 		/obj/item/fish/lanternfish = 7,
 		/obj/item/fish/zipzap = 7,
 		/obj/item/fish/clownfish/lube = 5,
 		/obj/item/fish/swordfish = 5,
-		/obj/item/fish/swordfish = 3,
 		/obj/structure/mystery_box/fishing = 2,
 	)
 	fish_counts = list(
@@ -31,7 +29,7 @@
 		/obj/item/fish/swordfish = 5 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
@@ -76,7 +74,7 @@
 		/obj/item/fish/pike = 4 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/sand
 	catalog_description = "Sand"
@@ -89,7 +87,7 @@
 		/obj/item/coin/gold = 3,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/cursed_spring
 	catalog_description = null //it's a secret (sorta, I know you're reading this)
@@ -104,7 +102,7 @@
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 25
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/portal
 	fish_table = list(
@@ -240,8 +238,9 @@
 	catalog_description = null // it'd make a bad entry in the catalog.
 	radial_name = "Randomizer"
 	overlay_state = "portal_randomizer"
-	var/static/list/all_portal_fish_sources_at_once
 	radial_state = "misaligned_question_mark"
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
+	var/static/list/all_portal_fish_sources_at_once
 
 ///Generate the fish table if we don't have one already.
 /datum/fish_source/portal/random/on_fishing_spot_init(datum/component/fishing_spot/spot)
@@ -350,12 +349,12 @@
 	)
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
-	explosive_malus = TRUE
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
 
 /datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
-	if(!rod.line || !(rod.line.fishing_line_traits & FISHING_LINE_REINFORCED))
-		return "You'll need reinforced fishing line to fish in there"
+	if(!HAS_TRAIT(rod, TRAIT_ROD_LAVA_USABLE))
+		return "You'll need reinforced fishing line to fish in there."
 
 /datum/fish_source/lavaland/icemoon
 	catalog_description = "Liquid plasma vents"
@@ -375,10 +374,12 @@
 		/obj/item/stack/sheet/mineral/adamantine = 3,
 		/obj/item/stack/sheet/mineral/runite = 2,
 	)
+	overlay_state = "portal_plasma"
 
 /datum/fish_source/moisture_trap
 	catalog_description = "Moisture trap basins"
 	radial_state = "garbage"
+	overlay_state = "portal_river" // placeholder
 	fish_table = list(
 		FISHING_DUD = 20,
 		/obj/item/fish/ratfish = 10,
@@ -390,6 +391,7 @@
 	catalog_description = "Station toilets"
 	radial_state = "toilet"
 	duds = list("ewww... nothing", "it was nothing", "it was toilet paper", "it was flushed away", "the hook is empty", "where's the damn money?!")
+	overlay_state = "portal_river" // placeholder
 	fish_table = list(
 		FISHING_DUD = 18,
 		/obj/item/fish/sludgefish = 18,
@@ -413,6 +415,7 @@
 		/obj/item/fish/holo/halffish = 5,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY
+	fish_source_flags = FISH_SOURCE_FLAG_NO_BLUESPACE_ROD
 
 /datum/fish_source/holographic/on_fishing_spot_init(datum/component/fishing_spot/spot)
 	ADD_TRAIT(spot.parent, TRAIT_UNLINKABLE_FISHING_SPOT, REF(src)) //You would have to be inside the holodeck anyway...
@@ -473,6 +476,7 @@
 /datum/fish_source/hydro_tray
 	catalog_description = "Hydroponics trays"
 	radial_state = "hydro"
+	overlay_state = "portal_tray"
 	fish_table = list(
 		FISHING_DUD = 25,
 		/obj/item/food/grown/grass = 25,
@@ -581,6 +585,7 @@
 /datum/fish_source/carp_rift
 	catalog_description = "Space Dragon Rifts"
 	radial_state = "carp"
+	overlay_state = "portal_rift"
 	fish_table = list(
 		FISHING_DUD = 3,
 		/obj/item/fish/baby_carp = 5,
@@ -600,6 +605,7 @@
 /datum/fish_source/deepfryer
 	catalog_description = "Deep Fryers"
 	radial_state = "fryer"
+	overlay_state = "portal_fry" // literally resprited lava. better than nothing
 	fish_table = list(
 		/obj/item/food/badrecipe = 15,
 		/obj/item/food/nugget = 5,

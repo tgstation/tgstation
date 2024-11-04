@@ -54,7 +54,7 @@
 				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+			victim.create_splatter(victim.dir)
 			victim.bleed(blood_bled)
 		if(20 to INFINITY)
 			victim.visible_message(
@@ -63,7 +63,7 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			victim.bleed(blood_bled)
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+			victim.create_splatter(victim.dir)
 			victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
@@ -263,7 +263,7 @@
 	var/right_side = FALSE
 
 /datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
-	var/obj/item/organ/internal/eyes/eyes = locate() in limb
+	var/obj/item/organ/eyes/eyes = locate() in limb
 	if (!istype(eyes))
 		return FALSE
 	. = ..()
@@ -295,7 +295,7 @@
 	can_be_randomly_generated = FALSE
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/eye/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types, datum/wound/old_wound, random_roll, duplicates_allowed, care_about_existing_wounds)
-	if (isnull(locate(/obj/item/organ/internal/eyes) in limb))
+	if (isnull(locate(/obj/item/organ/eyes) in limb))
 		return FALSE
 	return ..()
 

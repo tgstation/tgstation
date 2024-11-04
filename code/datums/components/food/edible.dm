@@ -212,10 +212,12 @@ Behavior that's still missing from this component that original food items had t
 
 	for(var/rid in reagents)
 		var/amount = reagents[rid]
-		if(length(tastes) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-			owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
-		else
-			owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
+		if(length(tastes) && ispath(rid, /datum/reagent/consumable/nutriment))
+			var/datum/reagent/consumable/nutriment/nid = rid
+			if(initial(nid.carry_food_tastes))
+				owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
+				continue
+		owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -282,7 +284,7 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_notice("It could use a little more Sodium Chloride...")
 	if (isliving(user))
 		var/mob/living/living_user = user
-		living_user.taste(owner.reagents)
+		living_user.taste_container(owner.reagents)
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -499,7 +501,7 @@ Behavior that's still missing from this component that original food items had t
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
@@ -686,7 +688,7 @@ Behavior that's still missing from this component that original food items had t
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
-	doggy.taste(food.reagents) // why should carbons get all the fun?
+	doggy.taste_container(food.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
 		doggy.manual_emote(satisfaction_text)

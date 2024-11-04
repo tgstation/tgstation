@@ -1,13 +1,17 @@
 /datum/element/spooky
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	var/too_spooky = TRUE //will it spawn a new instrument?
+	///will it spawn a new instrument
+	var/too_spooky = TRUE
+	///Once used, the element is detached
+	var/single_use = FALSE
 
-/datum/element/spooky/Attach(datum/target, too_spooky = TRUE)
+/datum/element/spooky/Attach(datum/target, too_spooky = TRUE, single_use = FALSE)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	src.too_spooky = too_spooky
+	src.single_use = single_use
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(spectral_attack))
 
 /datum/element/spooky/Detach(datum/source)
@@ -26,6 +30,9 @@
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
 				INVOKE_ASYNC(src, PROC_REF(spectral_change), U)
+			if(single_use)
+				to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
+				Detach(source)
 			return
 
 	if(ishuman(C))
@@ -42,6 +49,9 @@
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
 		to_chat(C, span_robot("<font size='4'>You're feeling more bony.</font>"))
 		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
+		if(single_use)
+			to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
+			Detach(source)
 
 	else //the sound will spook monkeys.
 		C.set_jitter_if_lower(30 SECONDS)

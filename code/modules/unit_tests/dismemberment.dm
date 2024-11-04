@@ -14,7 +14,7 @@
 
 	// Abnormal situation: We're holding an undroppable item and get dismembered.
 	ADD_TRAIT(testing_item, TRAIT_NODROP, TRAIT_GENERIC)
-	test_item(dummy, testing_item, status_text = "after applying TRAIT_NODROP to the testing item")
+	test_item(dummy, testing_item, status_text = " after applying TRAIT_NODROP to the testing item")
 
 
 /datum/unit_test/dismemberment/proc/test_item(mob/living/carbon/human/dummy, obj/item/testing_item, status_text = "")
@@ -31,7 +31,7 @@
 	var/obj/item/held_item = dummy.get_item_for_held_index(dismembered_limb.held_index)
 
 	dismembered_limb.dismember()
-	TEST_ASSERT(held_item in dummy.loc, "Dummy did not drop [held_item] when [dismembered_limb] was dismembered [status_text].")
+	TEST_ASSERT(held_item in dummy.loc, "Dummy did not drop [held_item] when [dismembered_limb] was dismembered[status_text].")
 	// Clean up after ourselves
 	qdel(dismembered_limb)
 	dummy.fully_heal(HEAL_ALL)
