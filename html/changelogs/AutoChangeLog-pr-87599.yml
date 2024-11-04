@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - refactor: "Actions will no longer by default apply a melee cooldown equal to action cooldown."
-  - bugfix: "Fixed various abilities causing melee jank, most noticeably venus man eaters"

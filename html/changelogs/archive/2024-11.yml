@@ -22,3 +22,159 @@
   - code_imp: added debug portal with all fish locations
   - qol: Modsuit actions no longer go on cooldown when selected
   - balance: microwave beam module is on a 4s cooldown not 10s
+2024-11-02:
+  00-Steven:
+  - bugfix: NTNRC muting actually works again.
+  13spacemen:
+  - bugfix: alert polls work past roundend
+  Aliceee2ch:
+  - bugfix: you can now place material iron tiles in space like regular iron tiles
+  - rscadd: Added new botany module in mechfabricator designs. Gives service cyborg
+      plant bag and plant analyzer.
+  - rscadd: Added cyborg botanical omni-tool.
+  - qol: 'Service apparatus (another existing module) can now hold: seeds, fish, grafts.'
+  - qol: Secondary beaker storage can now hold any beakers. It used to spawn with
+      one, but when you dropped it - you could no longer pick it back.
+  - image: New gardener skin for service cyborg.
+  Ben10Omintrix:
+  - bugfix: monkeys can now pick up and eat nearby food
+  Jewelry-x:
+  - code_imp: removed two one letter variables
+  - admin: clearing the pod bay will not remove the light emitters.
+  - admin: doing a latejoin injection no longer causes a midround one as well
+  Sealed101:
+  - bugfix: fixed pure inacusiate not giving you ungarbled whisper hearing at full
+      range
+  - qol: pure inacusiate will also provide chat messages when its boost is gained/lost
+  - bugfix: the Derelict vault doors are once again unhackable
+  - qol: the Derelict vault doors provide chat feedback when you try to hack them
+      so you can stop poking them with your tools
+  - bugfix: fixed Make Cyborg admin verb and player panel Make AI not putting the
+      ghosted player in control if they weren't an observer
+  - bugfix: sanity dropping below zero should now properly slowly recover back to
+      zero instead of dropping even further
+  SmArtKar:
+  - bugfix: Fixed pressure-proof clothing not preventing plasmamen self-combustion
+  SyncIt21:
+  - bugfix: HPLC can purify inverted chems.
+  carlarctg:
+  - qol: syndicate (and all) climbing hooks are small-sized
+  - code_imp: acetone oxide is blue!!!
+  - bugfix: Fixed being unable to aghost while corpselocked
+  - refactor: Actions will no longer by default apply a melee cooldown equal to action
+      cooldown.
+  - bugfix: Fixed various abilities causing melee jank, most noticeably venus man
+      eaters
+  mc-oofert:
+  - bugfix: fixes cyborg apc frame attachment
+2024-11-03:
+  00-Steven:
+  - bugfix: NTNRC channel user list is sorted by status again. It goes operator>online>away>offline.
+  - qol: NTNRC channel user list is now alphabetically sorted under its status subcategories.
+  - refactor: Refactored tasting code. Please report any jank tasting behaviours.
+  - bugfix: You taste what you eat instead of the contents of your own stomach.
+  - bugfix: Other basic nutriment subtypes also carry food flavours, instead of outweighing
+      the food flavours with their lack of flavour.
+  - bugfix: Basic nutriment subtypes have a flavour they default to, in case of not
+      carrying any food flavours.
+  - bugfix: Oils taste like oil instead of tasting indescribable.
+  - bugfix: Clothing eaten by moths actually carries its flavours instead of tasting
+      indescribable.
+  - bugfix: Organs use organ tissue instead of nutriment.
+  - bugfix: You can actually taste organ tissue.
+  - qol: Mineral slurry tastes like minerals instead of tasting indescribable.
+  - bugfix: Tasted flavours can actually be "strong" in addition to mild or "a hint
+      of", as intended.
+  - qol: Flavours are only strong when their percentage of what you're tasting is
+      more than 4x taste sensitivity instead of 3x, for most default tongues being
+      60% and lizards 40% of the drink.
+  - qol: Tasted flavours are sorted by strength, stronger flavours coming first.
+  - qol: Tasted flavours are grouped into "strong", "mild", and "hint" in the message,
+      replacing "You can taste a hint of bitterness, alcohol, a hint of sweetness,
+      and a hint of cola" with "You can taste alcohol and a hint of bitterness, sweetness,
+      and cola".
+  - bugfix: NT Software Hub no longer displays >100% completion on downloads sometimes.
+  - bugfix: NT Software Hub no longer displays NaN% or Infinite% completion on files
+      with a size of 0 sometimes.
+  Absolucy:
+  - bugfix: Moon heretic ascension now properly turns 20% of the crew into lunatics,
+      rather than ALL ELIGIBLE CREW.
+  Autisem:
+  - rscadd: A new cirucit component allows NFC communications
+  Melbert:
+  - rscadd: Eyecharts to Medbay
+  Sealed101:
+  - bugfix: fixed a runtime when spawning in a kiltborg
+  - bugfix: fixed spawned-in borgs with a pre-selected model not having their correct
+      model select icon
+  - image: KILTBORGS ONCE AGAIN HAVE THEIR OWN MODEL SELECT ICON!!!!!!!
+  - bugfix: fixed active turfs on The Derelict
+  SmArtKar:
+  - bugfix: Fixed Keykeeper's Burden being usable on centcom/away z levels
+  SyncIt21:
+  - code_imp: Improved code for RTD
+  - bugfix: HPLC computes lower & upper mass ranges & ETA for reagents correctly
+  - bugfix: gas analyzer won't scan the floor when placing it on a table
+  - bugfix: gas analyzer won't scan storage items when placing it inside them
+  Time-Green:
+  - bugfix: Fixes sec and command coms not working correctly
+  - rscadd: Added more causes of death to recovered crew
+  - rscadd: Added double death causes to recovered crew, and even meaner space vultures!
+  - rscadd: Adds a small chance to roll quirks on recovered crew
+  - rscadd: Adds a small chance to spawn as a podperson to recovered crew
+  - bugfix: Fixes a harddel caused by quirks never being cleared on delete
+  Vekter:
+  - bugfix: Fixed the maintenance area in the upstairs cargo bay of Wawastation not
+      being flagged as maintenance.
+  Xackii:
+  - qol: Purchased perks now shown in hud.
+  - bugfix: Perks purchased by a wizard now shown in roundend report.
+  Zytolg:
+  - map: Additional signage to help spacefolk navigate Birdshot Station
+  carlarctg:
+  - code_imp: Moved the reagent deletion signal below updating the total volume of
+      containers. If any bugs seem related please report them!
+  - bugfix: BVAK injectors have their middleground icon state once more
+  grungussuss:
+  - sound: emote pitch shifting has been fixed
+  - sound: bike horn sound volume has been reduced
+  - bugfix: drones can no longer speak pirate if they have a pirate hat on
+  - sound: radio noise will now vary in pitch
+  larentoun:
+  - refactor: Species detection on scanner gate has been updated from hardcoded list
+      to a variable. You can VarEdit using species' id
+  mc-oofert:
+  - bugfix: brings back the AI detector HUD that was silently removed by a PR 3 years
+      ago, use inhand to toggle hud or use RMB to see static temporarily
+  - qol: manufacturing assembling machines instead craft using the resources on top
+      of them, they are no longer block movement and have new sprites
+  r3dj4ck0424:
+  - bugfix: Retooled kinetic crushers now have proper sprites for when they're on
+      your back or in your suit storage.
+  tontyGH:
+  - bugfix: thermal insulation tags are correctly formatted if they're only cold or
+      hot insulated
+2024-11-04:
+  Ghommie:
+  - balance: Some fish should be ever so slightly less rare to get from non-specific
+      fish cases.
+  - bugfix: Armorfish should now taste like prawn.
+  - bugfix: You won't get wet while floating or flying on water. Otherwise, water
+      will keep you wet even if you stay still.
+  - rscadd: Autolathes can now print fishing rods of different materials, which can
+      increase or decrease fishing difficulty, casting range, and experience gained,
+      and can have other interesting effects.
+  SmArtKar:
+  - code_imp: Cleaned up projectile and projectile-adjacent code.
+  - bugfix: Fixed a couple of projectile runtimes and visuals/sound-related issues
+  SyncIt21:
+  - bugfix: some broken borg omni tools should work again
+  Time-Green:
+  - bugfix: Fixes voidwalker having an instant kidnap
+  grungussuss:
+  - sound: The lobby menu now click sounds.
+  junkgle01:
+  - image: resprited a few hairstyles
+  timothymtorres:
+  - bugfix: Glass floors can now be crowbarred.
+  - code_imp: Removed deprecated crowbar code for tiles

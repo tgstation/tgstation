@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "the Derelict vault doors are once again unhackable"
-  - qol: "the Derelict vault doors provide chat feedback when you try to hack them so you can stop poking them with your tools"

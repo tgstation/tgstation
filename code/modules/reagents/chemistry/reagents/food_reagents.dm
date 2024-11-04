@@ -70,6 +70,9 @@
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+	/// Whether this reagent should get the tastes of food it's in applied onto it
+	var/carry_food_tastes = TRUE
+
 	var/brute_heal = 1
 	var/burn_heal = 0
 
@@ -121,11 +124,14 @@
 	data = taste_amounts
 
 /datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
-	return data
+	if(length(data))
+		return data
+	return ..()
 
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	brute_heal = 1
@@ -140,6 +146,7 @@
 /datum/reagent/consumable/nutriment/protein
 	name = "Protein"
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
+	taste_description = "chalk"
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 //45% as calorie dense as oil.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -212,6 +219,7 @@
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
+	carry_food_tastes = FALSE
 	nutriment_factor = 7 //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	penetrates_skin = NONE
@@ -239,9 +247,15 @@
 	taste_description = "rich earthy pungent"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining
+	name = "Stomach Lining"
+	description = "Natural tissue that keeps your stomach safe."
+	carry_food_tastes = FALSE // Don't want stomachs to leech the flavours of what they eat
+
 /datum/reagent/consumable/nutriment/cloth_fibers
 	name = "Cloth Fibers"
 	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
+	taste_description = "cloth"
 	nutriment_factor = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	brute_heal = 0
@@ -266,6 +280,7 @@
 /datum/reagent/consumable/nutriment/mineral
 	name = "Mineral Slurry"
 	description = "Minerals pounded into a paste, nutritious only if you too are made of rocks."
+	taste_description = "minerals"
 	color = COLOR_WEBSAFE_DARK_GRAY
 	chemical_flags = NONE
 	brute_heal = 0
