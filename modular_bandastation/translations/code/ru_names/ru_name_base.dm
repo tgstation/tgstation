@@ -59,10 +59,8 @@ GLOBAL_LIST_EMPTY(ru_names)
 	return name
 
 /// Used for getting initial values, such as for recipies where resulted atom is not yet created.
-/proc/declent_ru_initial(atom/target, declent, override_backup)
-	if(!istype(target) && !ispath(target, /atom))
-		return override_backup
-	var/list/declented_list = ru_names_toml(target::name)
+/proc/declent_ru_initial(target_name, declent, override_backup)
+	var/list/declented_list = ru_names_toml(target_name)
 	if(length(declented_list) && declented_list[declent])
 		return declented_list[declent]
-	return override_backup || target::name
+	return override_backup || target_name
