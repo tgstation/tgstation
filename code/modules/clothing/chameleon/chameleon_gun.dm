@@ -16,7 +16,7 @@
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-	recharge_newshot()
+	//recharge_newshot()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 	// Init order shenanigans dictate we have to do this last so we can't just use `active_type`
 	var/datum/action/item_action/chameleon/change/gun/gun_action = locate() in actions
