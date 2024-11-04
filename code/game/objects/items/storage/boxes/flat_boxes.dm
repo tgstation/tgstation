@@ -14,7 +14,7 @@
 		return
 
 	var/obj/flat_box = new /obj/item/storage/box/flat(drop_location())
-	playsound(src, 'sound/items/handling/materials/cardboard_drop.ogg', 50, TRUE)
+	create_sound(src, 'sound/items/handling/materials/cardboard_drop.ogg').volume(50).vary(TRUE).play()
 
 	flat_box.pixel_x = pixel_x
 	flat_box.pixel_y = pixel_y

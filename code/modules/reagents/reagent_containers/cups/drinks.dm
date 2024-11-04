@@ -264,12 +264,12 @@
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_open.ogg', 50, TRUE)
+			create_sound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_open.ogg').volume(50).vary(TRUE).play()
 	else
 		cap_on = TRUE
 		spillable = FALSE
 		to_chat(user, span_notice("You put the cap on [src]."))
-		playsound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_close.ogg', 50, TRUE)
+		create_sound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_close.ogg').volume(50).vary(TRUE).play()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

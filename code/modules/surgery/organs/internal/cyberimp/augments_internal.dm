@@ -264,7 +264,7 @@
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/connector/proc/remove_brain(obj/item/organ/brain/chippy_brain, severity = 1)
-	playsound(owner, 'sound/effects/meatslap.ogg', 25, TRUE)
+	create_sound(owner, 'sound/effects/meatslap.ogg').volume(25).vary(TRUE).play()
 	if(!chippy_brain)
 		return
 	chippy_brain.apply_organ_damage(20 * severity)

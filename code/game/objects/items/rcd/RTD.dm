@@ -299,9 +299,9 @@
 	var/beam
 	if(ranged)
 		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+		create_sound(loc, 'sound/effects/light_flicker.ogg').volume(50).vary(FALSE).play()
 	else
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(loc, 'sound/machines/click.ogg').volume(50).vary(TRUE).play()
 	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
@@ -371,9 +371,9 @@
 	var/beam
 	if(ranged)
 		beam = user.Beam(floor, icon_state = "light_beam", time = delay)
-		playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+		create_sound(loc, 'sound/effects/light_flicker.ogg').volume(50).vary(FALSE).play()
 	else
-		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+		create_sound(loc, 'sound/machines/click.ogg').volume(50).vary(TRUE).play()
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)

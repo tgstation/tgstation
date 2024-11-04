@@ -186,7 +186,7 @@
 			addtimer(CALLBACK(src, PROC_REF(restore_comp), user), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+			create_sound(src, SFX_TERMINAL_TYPE).play()
 			var/obj/machinery/power/apc/remote_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			connect_apc(remote_target, user)
 		if("check-logs")

@@ -221,7 +221,7 @@
 		return ..()
 	if(active)
 		balloon_alert(wearer, "deactivate the suit first!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
@@ -234,7 +234,7 @@
 		return
 	if(active)
 		balloon_alert(wearer, "deactivate the suit first!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)

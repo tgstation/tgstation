@@ -92,7 +92,7 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = reagent_consumption_method)
 	checkLiked(fraction, target_mob)
-	playsound(target_mob.loc, consumption_sound, rand(10,50), TRUE)
+	create_sound(target_mob, consumption_sound).volume(rand(10, 50)).vary(TRUE).play()
 	if(!iscarbon(target_mob))
 		return
 	var/mob/living/carbon/carbon_drinker = target_mob

@@ -110,9 +110,8 @@
 		// Can remotely scan objects and mobs.
 		if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check))
 			return TRUE
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	create_sound(src, SFX_INDUSTRIAL_SCAN).volume(20).vary(TRUE).extra_range(-2).atmospherics_affected(TRUE).play()
 	scanner_busy = TRUE
-
 
 	user.visible_message(
 		span_notice("\The [user] points the [src.name] at \the [scanned_atom] and performs a forensic scan."),

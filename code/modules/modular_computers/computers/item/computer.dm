@@ -560,7 +560,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		create_sound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg')).vary(TRUE).play()
 	else
-		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+		create_sound(src, 'sound/machines/beep/twobeep_high.ogg').vary(TRUE).play()
 	ringtone = "*[ringtone]*"
 	audible_message(ringtone)
 	for(var/mob/living/alertee in balloon_alertees)

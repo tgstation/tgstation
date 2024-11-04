@@ -70,7 +70,7 @@
 	else
 		human_target.set_facial_hair_gradient_style(new_grad_style, update = FALSE)
 		human_target.set_facial_hair_gradient_color(new_grad_color, update = TRUE)
-	playsound(src, 'sound/effects/spray.ogg', 10, vary = TRUE)
+	create_sound(src, 'sound/effects/spray.ogg').volume(10).vary(TRUE).play()
 
 /obj/item/dyespray/proc/dye_organ(mob/living/carbon/human/target, mob/user)
 	var/list/dyables = list()

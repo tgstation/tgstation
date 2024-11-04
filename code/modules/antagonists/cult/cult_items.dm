@@ -244,7 +244,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!do_after(user, 6 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))
 		return
-	playsound(user, 'sound/effects/pray_chaplain.ogg',60,TRUE)
+	create_sound(user, 'sound/effects/pray_chaplain.ogg').volume(60).vary(TRUE).play()
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_cultist_handle(mob/living/user, actiontype)
@@ -258,7 +258,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!do_after(user, 6 SECONDS, src))
 		to_chat(user, span_notice("You were interrupted!"))
 		return
-	playsound(user, 'sound/items/weapons/slice.ogg', 30, TRUE)
+	create_sound(user, 'sound/items/weapons/slice.ogg').volume(30).vary(TRUE).play()
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_heresy_handle(mob/living/user, actiontype)
@@ -316,7 +316,7 @@ Striking a noncultist, however, will tear their flesh."}
 	light_range += 3
 	trapped_entity.update_mob_action_buttons()
 
-	playsound(src ,'sound/misc/insane_low_laugh.ogg', 200, TRUE) //quiet
+	create_sound(src, 'sound/misc/insane_low_laugh.ogg').volume(2000).vary(TRUE).play()
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
@@ -332,7 +332,7 @@ Striking a noncultist, however, will tear their flesh."}
 		wielder_spell.Remove(user)
 	trapped_entity.update_mob_action_buttons()
 
-	playsound(src ,'sound/effects/hallucinations/wail.ogg', 20, TRUE)	// add BOUND alert and UNBOUND
+	create_sound(src, 'sound/effects/hallucinations/wail.ogg').volume(20).vary(TRUE).play()
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)

@@ -275,7 +275,7 @@
 		return AI_BEHAVIOR_INSTANT
 	living_pawn.manual_emote(emote)
 	if(speech_sound) // Only audible emotes will pass in a sound
-		playsound(living_pawn, speech_sound, 80, vary = TRUE, pressure_affected =TRUE, ignore_walls = FALSE)
+		create_sound(living_pawn, speech_sound).volume(80).vary(TRUE).atmospherics_affected(TRUE).play()
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/perform_speech

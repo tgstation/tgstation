@@ -389,7 +389,7 @@
 	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
 	for(var/splatter_dir in GLOB.alldirs)
 		owner.create_splatter(splatter_dir)
-	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
+	create_sound(owner, SFX_DESECRATION).volume(100).vary(TRUE).extra_range(-1).play()
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"

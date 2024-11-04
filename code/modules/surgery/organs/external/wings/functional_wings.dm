@@ -232,7 +232,7 @@
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
 
 /obj/item/organ/wings/functional/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
+	create_sound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg').volume(50).vary(TRUE).play()
 
 ///mothra wings, which relate to moths.
 /obj/item/organ/wings/functional/moth/mothra

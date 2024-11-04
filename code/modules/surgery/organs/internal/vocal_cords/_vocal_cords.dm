@@ -78,7 +78,7 @@
 	return owner.can_speak()
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
+	create_sound(owner, 'sound/effects/magic/clockwork/invoke_general.ogg').volume(300).vary(TRUE).extra_range(5).play()
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)

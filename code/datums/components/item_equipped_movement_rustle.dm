@@ -61,4 +61,4 @@
 		move_counter = 0
 
 /datum/component/item_equipped_movement_rustle/proc/play_rustle_sound(mob/source)
-	playsound(source, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+	create_sound(source, rustle_sounds).volume(volume).vary(sound_vary).extra_range(sound_extra_range).falloff_exponent(sound_falloff_exponent).falloff_distance(sound_falloff_distance).play()

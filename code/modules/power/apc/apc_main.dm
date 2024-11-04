@@ -438,8 +438,8 @@
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
 	if(!mute)
 		say("Remote access canceled. Interface locked.")
-		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
-		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+		create_sound(src, 'sound/machines/terminal/terminal_off.ogg').volume(25).play()
+		create_sound(src, 'sound/machines/terminal/terminal_alert.ogg').play()
 	update_appearance()
 	remote_control_user = null
 

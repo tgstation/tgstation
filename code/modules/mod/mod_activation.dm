@@ -22,7 +22,7 @@
 		return
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return
 	var/parts_to_check = parts - part
 	if(part.loc == src)
@@ -48,7 +48,7 @@
 /obj/item/mod/control/proc/quick_deploy(mob/user)
 	if(activating)
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return FALSE
 	var/deploy = FALSE
 	for(var/obj/item/part as anything in get_parts())
@@ -59,7 +59,7 @@
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	for(var/obj/item/part as anything in get_parts())
 		if(deploy && part.loc == src)
 			if(!deploy(null, part))
@@ -123,7 +123,7 @@
 		if(!user)
 			return FALSE
 		balloon_alert(user, "[part.name] already retracted!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 		return FALSE
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
@@ -138,7 +138,7 @@
 	wearer.visible_message(span_notice("[wearer]'s [part.name] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_notice("[part] retract[part.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
-	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /// Starts the activation sequence, where parts of the suit activate one by one until the whole suit is on.
@@ -179,7 +179,7 @@
 	//deploy the control unit
 	if(original_active_status)
 		if(delayed_activation())
-			playsound(src, 'sound/machines/synth/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+			create_sound(src, 'sound/machines/synth/synth_no.ogg').volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).frequency(6000).play()
 			to_chat(wearer, span_notice("Control unit offline. Module capability removed."))
 		else
 			activating = FALSE
@@ -197,13 +197,13 @@
 			if(original_active_status)
 				control_activation(is_on = TRUE)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			return
 		sealed_parts += part
 
 	if(!original_active_status)
 		if(delayed_activation())
-			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+			create_sound(src, 'sound/machines/synth/synth_yes.ogg').volume(50).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).frequency(6000).play()
 			if(!malfunctioning)
 				create_sound(get_turf(src), 'sound/vehicles/mecha/nominal.ogg').direct_listeners(wearer).play()
 		else
@@ -211,7 +211,7 @@
 			for(var/obj/item/sealed_part as anything in sealed_parts)
 				seal_part(sealed_part, is_sealed = !get_part_datum(sealed_part).sealed)
 			to_chat(wearer, span_notice("Critical error in sealing systems. Reverting process."))
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			create_sound(src, 'sound/machines/scanner/scanbuzz.ogg').volume(25).vary(TRUE).extra_range(SILENCED_SOUND_EXTRARANGE).play()
 			return
 
 	to_chat(wearer, span_notice("Systems [active ? "started up. Parts sealed. Welcome" : "shut down. Parts unsealed. Goodbye"], [wearer]."))
@@ -227,7 +227,7 @@
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
 		if(!silent)
 			to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
-			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			create_sound(src, 'sound/vehicles/mecha/mechmove03.ogg').volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 		seal_part(part, is_sealed = !part_datum.sealed)
 		return TRUE
 

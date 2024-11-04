@@ -276,7 +276,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
 
-	playsound(src, SFX_REEL, 50, vary = FALSE)
+	create_sound(src, SFX_REEL).play()
 	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS * bait_speed_mult
 	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
