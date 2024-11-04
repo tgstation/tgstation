@@ -240,8 +240,6 @@
  * It also has an unique tab in the UI that lets you review the progress.
  */
 /datum/award/score/progress
-	///The id of table we're looking for, the one containing the progress objects.
-	VAR_PROTECTED/table_id = ""
 	/**
 	 * When get_changed_rows is called, this list gets filled with the entries to be mass-inserted
 	 * in the table associated with this progress score.
@@ -250,11 +248,21 @@
 
 /datum/award/score/progress/New()
 	. = ..()
+	if(!get_table())
+		CRASH("get_table() wasn't set for [type]!")
 	RegisterSignal(SSachievements, COMSIG_ACHIEVEMENTS_SAVED_TO_DB, PROC_REF(insert_entries))
 
+/**
+ * Getter proc for the table used to save the entries - ckey association.
+ * so we an be extra-safe that data won't be ever inserted in the wrong table.
+ * Remember to set this
+ */
+/datum/award/score/progress/proc/get_table()
+	return
+
 /datum/award/score/progress/vv_edit_var(var_name, var_value)
-	//These two variables are associated with sql queries. We can't allow them to be edited.
-	if(var_name == NAMEOF(src, changed_entries) || var_name == NAMEOF(src, table_id))
+	//These variable is associated for sql queries. We can't allow it to be edited.
+	if(var_name == NAMEOF(src, changed_entries))
 		return FALSE
 	return ..()
 
@@ -291,7 +299,7 @@
 
 ///Along with the changed rows for the main table, this also populates changed_entries with the entries list
 /datum/award/score/progress/get_changed_rows(datum/achievement_data/holder)
-	if(!database_id || !holder || !name || !table_id)
+	if(!database_id || !holder || !name || !get_table())
 		return
 	var/list/entries = holder.data[type]
 	for(var/entry in (entries - holder.original_cached_data[type]))
@@ -310,7 +318,7 @@
 /datum/award/score/progress/get_raw_value(key)
 	var/list/entries = list()
 	var/datum/db_query/get_entries_load = SSdbcore.NewQuery(
-		"SELECT progress_entry FROM [format_table_name(table_id)] WHERE ckey = :ckey",
+		"SELECT progress_entry FROM [format_table_name(get_table())] WHERE ckey = :ckey",
 		list("ckey" = key)
 	)
 	if(!get_entries_load.Execute())
@@ -323,7 +331,6 @@
 
 /datum/award/score/progress/parse_value(raw_value)
 	return islist(raw_value) ? raw_value : list()
-
 
 //Proc that returns a value upon db connection failure, in case we need to new instances too
 /datum/award/score/progress/default_value()
@@ -349,4 +356,4 @@
 	SIGNAL_HANDLER
 	if(!length(changed_entries))
 		return
-	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, MassInsert), format_table_name(table_id), changed_entries, duplicate_key = TRUE)
+	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, MassInsert), format_table_name(get_table()), changed_entries, duplicate_key = TRUE)

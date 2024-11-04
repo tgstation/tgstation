@@ -25,13 +25,15 @@
 /datum/award/score/progress/fish
 	name = "Fish Species Caught"
 	desc = "How many different species of fish you've caught so far. Gotta fish 'em all."
-	table_id = "fish_progress"
 	database_id = FISH_SCORE
 	var/list/early_entries_to_validate = list()
 
 /datum/award/score/progress/fish/New()
 	. = ..()
 	RegisterSignal(SSfishing, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(validate_early_joiners))
+
+/datum/award/score/progress/fish/get_table()
+	return "fish_progress"
 
 /datum/award/score/progress/fish/proc/validate_early_joiners(datum/source)
 	for(var/client/client as anything in GLOB.clients)
