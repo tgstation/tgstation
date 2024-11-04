@@ -198,13 +198,9 @@
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
-/* BEGIN DOPPLER EDIT - VOLUME MIXER
-	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) */
-	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby)
+	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby_volume)
 	if((prefs && volume_modifier) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = volume_modifier, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
-///END DOPPLER EDIT
 
 ///get a random frequency.
 /proc/get_rand_frequency()
