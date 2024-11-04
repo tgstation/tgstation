@@ -36,10 +36,10 @@
 		return
 	suit.allowed -= (guns_typecache - already_allowed_guns)
 
-/obj/item/mod/module/magnetic_harness/on_suit_activation()
+/obj/item/mod/module/magnetic_harness/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
 
-/obj/item/mod/module/magnetic_harness/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/magnetic_harness/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM)
 
 /obj/item/mod/module/magnetic_harness/proc/check_dropped_item(datum/source, obj/item/dropped_item, force, new_location)
@@ -74,10 +74,10 @@
 	overlay_state_use = "module_pepper_used"
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 
-/obj/item/mod/module/pepper_shoulders/on_suit_activation()
+/obj/item/mod/module/pepper_shoulders/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
 
-/obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/pepper_shoulders/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
@@ -157,7 +157,6 @@
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/megaphone)
-	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 	/// List of spans we add to the speaker.
 	var/list/voicespan = list(SPAN_COMMAND)
@@ -387,10 +386,10 @@
 	for(var/i in 1 to radar_slices)
 		sorted_creatures += list(list())
 
-/obj/item/mod/module/active_sonar/on_suit_activation()
+/obj/item/mod/module/active_sonar/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(sort_all_creatures))
 
-/obj/item/mod/module/active_sonar/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/active_sonar/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
 /// Detects all living creatures within world.view, and returns the amount.
@@ -547,10 +546,10 @@
 	if(!.)
 		set_shooting_mode(SHOOTING_ASSISTANT_OFF)
 
-/obj/item/mod/module/shooting_assistant/on_suit_activation()
+/obj/item/mod/module/shooting_assistant/on_part_activation()
 	apply_mode_effects()
 
-/obj/item/mod/module/shooting_assistant/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/shooting_assistant/on_part_deactivation(deleting = FALSE)
 	remove_mode_effects()
 
 /obj/item/mod/module/shooting_assistant/proc/stormtrooper_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
@@ -582,10 +581,10 @@
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 
-/obj/item/mod/module/shove_blocker/on_suit_activation()
+/obj/item/mod/module/shove_blocker/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
-/obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/shove_blocker/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/locked
@@ -601,10 +600,10 @@
 	complexity = 0
 	required_slots = list(ITEM_SLOT_GLOVES)
 
-/obj/item/mod/module/quick_cuff/on_suit_activation()
+/obj/item/mod/module/quick_cuff/on_part_activation()
 	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)
 
-/obj/item/mod/module/quick_cuff/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/quick_cuff/on_part_deactivation(deleting = FALSE)
 	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, MOD_TRAIT)

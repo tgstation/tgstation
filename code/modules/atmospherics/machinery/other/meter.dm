@@ -152,7 +152,7 @@
 	else
 		to_chat(user, status())
 
-/obj/machinery/meter/singularity_pull(S, current_size)
+/obj/machinery/meter/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()

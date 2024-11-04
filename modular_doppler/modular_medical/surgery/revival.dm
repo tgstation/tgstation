@@ -17,7 +17,7 @@
 /datum/surgery/revival/carbon/mechanic/is_valid_target(mob/living/carbon/patient)
 	if (!(patient.mob_biotypes & (MOB_ROBOTIC|MOB_HUMANOID)))
 		return FALSE
-	var/obj/item/organ/internal/brain/target_brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/target_brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
 	return !isnull(target_brain)
 
 /datum/surgery_step/revive/carbon/mechanic

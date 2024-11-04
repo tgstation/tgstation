@@ -24,6 +24,9 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	var/running = TRUE
 
 /datum/controller/failsafe/New()
+	// Ensure usr is null, to prevent any potential weirdness resulting from the failsafe having a usr if it's manually restarted.
+	usr = null
+
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	if(Failsafe != src)
 		if(istype(Failsafe))

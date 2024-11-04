@@ -18,7 +18,7 @@
 
 		var/mob/living/carbon/human/dummy/consistent/dummy = new
 		dummy.set_species(species_type)
-		dummy.equipOutfit(dummy.dna.species.preview_outfit, visualsOnly = TRUE) // DOPPLER EDIT, Custom preview outfits - old code: dummy.equipOutfit(/datum/outfit/job/assistant/consistent, visualsOnly = TRUE)
+		dummy.equipOutfit(dummy.dna.species.preview_outfit, visuals_only = TRUE) // DOPPLER EDIT, Custom preview outfits - old code: dummy.equipOutfit(/datum/outfit/job/assistant/consistent, visuals_only = TRUE)
 		dummy.dna.species.prepare_human_for_preview(dummy)
 
 		var/icon/dummy_icon = getFlatIcon(dummy)

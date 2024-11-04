@@ -149,6 +149,9 @@
 	var/flags_inv
 	///you can see someone's mask through their transparent visor, but you can't reach it
 	var/transparent_protection = NONE
+	///Name of a mask in icons\mob\human\hair_masks.dmi to apply to hair when this item is worn
+	///Used by certain hats to give the appearance of squishing down tall hairstyles without hiding the hair completely
+	var/hair_mask = ""
 
 	///flags for what should be done when you click on the item, default is picking it up
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
@@ -470,7 +473,7 @@
 	var/list/parent_tags = ..()
 	parent_tags.Insert(1, weight_class_to_text(w_class)) // To make size display first, otherwise it looks goofy
 	. = parent_tags
-	.[weight_class_to_text(w_class)] = "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
+	.[weight_class_to_text(w_class)] = weight_class_to_tooltip(w_class)
 
 	if(item_flags & CRUEL_IMPLEMENT)
 		.[span_red("morbid")] = "It seems quite practical for particularly <font color='red'>morbid</font> procedures and experiments."
@@ -866,10 +869,10 @@
 /obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
-/obj/item/singularity_pull(S, current_size)
+/obj/item/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FOUR)
-		throw_at(S,14,3, spin=0)
+		throw_at(singularity, 14, 3, spin=0)
 	else
 		return
 
@@ -895,6 +898,8 @@
 		playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE, vary = sound_vary)
 		return
 	var/volume = get_volume_by_throwforce_and_or_w_class()
+	if(.) //it's been caught.
+		return
 	if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 		if (mob_throw_hit_sound)
 			playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
@@ -1836,13 +1841,13 @@
 
 /obj/item/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown += GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 
 /obj/item/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !slowdown)
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || (material_flags & MATERIAL_NO_SLOWDOWN) || !material.added_slowdown)
 		return
 	slowdown -= GET_MATERIAL_MODIFIER(material.added_slowdown * mat_amount, multiplier)
 

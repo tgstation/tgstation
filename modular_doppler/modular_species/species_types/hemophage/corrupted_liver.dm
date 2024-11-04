@@ -2,7 +2,7 @@
 #define MINIMUM_BLOOD_REGENING_REAGENT_RATIO 0.75
 
 /datum/component/organ_corruption/liver
-	corruptable_organ_type = /obj/item/organ/internal/liver
+	corruptable_organ_type = /obj/item/organ/liver
 	corrupted_icon_state = "liver"
 
 
@@ -23,7 +23,7 @@
 /datum/component/organ_corruption/liver/UnregisterFromParent()
 	. = ..()
 
-	var/obj/item/organ/internal/liver/parent_liver = parent
+	var/obj/item/organ/liver/parent_liver = parent
 
 	if(parent_liver.owner)
 		UnregisterSignal(parent_liver.owner, COMSIG_GLASS_DRANK)

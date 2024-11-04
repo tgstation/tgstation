@@ -261,7 +261,7 @@
 			candidates -= player
 		else if(is_centcom_level(player.z))
 			candidates -= player // We don't autotator people in CentCom
-		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		else if(player.mind && (player.mind.special_role || player.mind.can_roll_midround()))
 			candidates -= player // We don't autotator people with roles already
 		// DOPPLER ADDITION START
 		else if(player in rejected_traitor)
@@ -316,7 +316,7 @@
 			continue
 		if(isnull(player.mind))
 			continue
-		if(player.mind.special_role || length(player.mind.antag_datums))
+		if(player.mind.special_role || player.mind.can_roll_midround())
 			continue
 		candidates += player
 
@@ -485,7 +485,7 @@
 			candidates -= player
 			continue
 
-		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
+		if(player.mind && (player.mind.special_role || player.mind.can_roll_midround()))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/from_living/blob_infection/execute()
@@ -849,7 +849,7 @@
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
 		if( \
-			!candidate.get_organ_by_type(/obj/item/organ/internal/brain) \
+			!candidate.get_organ_by_type(/obj/item/organ/brain) \
 			|| candidate.mind.has_antag_datum(/datum/antagonist/obsessed) \
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \

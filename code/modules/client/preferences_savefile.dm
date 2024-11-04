@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 46 //DOPPLER EDIT CHANGE - Original: #define SAVEFILE_VERSION_MAX 45
+#define SAVEFILE_VERSION_MAX 46
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -110,10 +110,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			new_typepath = /obj/item/clothing/accessory/pride,
 			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
 		)
-//BEGIN DOPPLER ADDITION - VOLUME MIXER
 	if (current_version < 46)
 		migrate_boolean_sound_prefs_to_default_volume()
-//END DOPPLER ADD
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

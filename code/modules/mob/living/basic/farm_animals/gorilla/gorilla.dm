@@ -146,7 +146,7 @@
 	obj_damage = 15
 	ai_controller = /datum/ai_controller/basic_controller/gorilla/lesser
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
-	current_size = 0.75
+	initial_size = 0.75
 
 /// Cargo's wonderful mascot, the tranquil box-carrying ape
 /mob/living/basic/gorilla/cargorilla
@@ -175,7 +175,7 @@
 	obj_damage = 25
 	speed = 0.1
 	paralyze_chance = 0
-	current_size = 0.9
+	initial_size = 0.9
 
 /mob/living/basic/gorilla/genetics/Initialize(mapload)
 	. = ..()

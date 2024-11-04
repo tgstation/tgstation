@@ -28,13 +28,13 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
 	mutant_organs = list(
-		/obj/item/organ/internal/ears = "Ramatan",
-		/obj/item/organ/external/frills = "None",
-		/obj/item/organ/external/snout = "Ramatan",
-		/obj/item/organ/external/tail/alien = "Ramatan",
+		/obj/item/organ/ears = "Ramatan",
+		/obj/item/organ/frills = "None",
+		/obj/item/organ/snout = "Ramatan",
+		/obj/item/organ/tail/alien = "Ramatan",
 	)
 	payday_modifier = 1.0
-	mutanttongue = /obj/item/organ/internal/tongue/ramatan
+	mutanttongue = /obj/item/organ/tongue/ramatan
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	death_sound = 'modular_doppler/modular_species/species_types/ramatae/sounds/scugdeath.ogg'
 	species_language_holder = /datum/language_holder/ramatan
@@ -154,8 +154,8 @@
 
 /datum/species/ramatan/get_sigh_sound(mob/living/carbon/human/ramatan)
 	if(ramatan.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sigh/female_sigh.ogg'
-	return 'sound/mobs/humanoids/human/sigh/male_sigh.ogg'
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
 
 /datum/species/ramatan/get_sniff_sound(mob/living/carbon/human/ramatan)
 	if(ramatan.physique == FEMALE)

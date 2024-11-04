@@ -27,7 +27,7 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS
 		)
 	)
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!target_lungs)
 		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
 		return
