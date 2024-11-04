@@ -1,6 +1,7 @@
 ///From oil puddles from the elephant graveyard. Also an evolution of the "unmarine bonemass"
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
+	fish_id = "mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
@@ -36,6 +37,7 @@
 ///From the cursed spring
 /obj/item/fish/soul
 	name = "soulfish"
+	fish_id = "soulfish"
 	desc = "A distant yet vaguely close critter, like a long lost relative. You feel your soul rejuvenated just from looking at it... Also, what the fuck is this shit?!"
 	icon_state = "soulfish"
 	sprite_width = 7
@@ -69,6 +71,7 @@
 ///From the cursed spring
 /obj/item/fish/skin_crab
 	name = "skin crab"
+	fish_id = "skin_crab"
 	desc = "<i>\"And on the eighth day, a demential mockery of both humanity and crabity was made.\"<i> Fascinating."
 	icon_state = "skin_crab"
 	sprite_width = 7
