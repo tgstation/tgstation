@@ -1,5 +1,3 @@
-actions/checkout@v2
-$fail=0
 for file in $(find . -type f -name '*.ogg'); do
   sample_rate=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of default=noprint_wrappers=1:nokey=1 "$file")
   if [ "$sample_rate" != "44100" ]; then
