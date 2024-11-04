@@ -427,7 +427,7 @@
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
 		/obj/item/multitool,
-		/obj/item/organ/internal/monster_core,
+		/obj/item/organ/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/cup/glass,
@@ -471,7 +471,7 @@
 	for(var/i in 1 to 2)
 		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
 	for(var/i in 1 to 2)
-		var/obj/item/organ/internal/monster_core/core = new /obj/item/organ/internal/monster_core/regenerative_core/legion(src)
+		var/obj/item/organ/monster_core/core = new /obj/item/organ/monster_core/regenerative_core/legion(src)
 		core.preserve()
 
 /obj/item/storage/belt/mining/primitive

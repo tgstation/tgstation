@@ -40,7 +40,7 @@
 	cast_on.adjust_temp_blindness(moon_smile_duration + 1 SECONDS)
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 2 SECONDS)
 
-	var/obj/item/organ/internal/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
 	//adjustEarDamage takes deafness duration parameter in one unit per two seconds, instead of the normal time, so we divide by two seconds
 	ears?.adjustEarDamage(0, (moon_smile_duration + 1 SECONDS) / (2 SECONDS))
 

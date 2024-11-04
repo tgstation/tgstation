@@ -192,11 +192,11 @@
 	else
 		return ..()
 
-/obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/foam_dart)) && ismonkey(P.firer))
+/obj/item/toy/balloon/bullet_act(obj/projectile/proj)
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
 		pop_balloon(monkey_pop = TRUE)
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	create_sound(src, 'sound/effects/cartoon_sfx/cartoon_pop.ogg').vary(TRUE).play()

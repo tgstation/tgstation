@@ -4,18 +4,6 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
-/proc/init_alcohol_containers()
-	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
-	for(var/typepath in containers)
-		containers -= typepath
-		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
-		if(!length(instance.list_reagents))
-			qdel(instance)
-			continue
-		containers[typepath] = instance
-	return containers
-
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -705,7 +693,7 @@
 		return
 
 	//The bonus to success chance that the user gets for being a command role
-	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
 
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means

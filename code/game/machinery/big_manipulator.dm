@@ -1,6 +1,5 @@
 #define DROP_ITEM_MODE 1
-#define USE_ITEM_MODE 2
-#define THROW_ITEM_MODE 3
+#define THROW_ITEM_MODE 2
 
 #define TAKE_ITEMS 1
 #define TAKE_CLOSETS 2
@@ -36,7 +35,6 @@
 	var/manipulate_mode = DROP_ITEM_MODE
 	/// Priority settings depending on the manipulator mode that are available to this manipulator. Filled during Initialize.
 	var/list/priority_settings_for_drop = list()
-	var/list/priority_settings_for_use = list()
 	/// What priority settings are available to use at the moment.
 	/// We also use this list to sort priorities from ascending to descending.
 	var/list/allowed_priority_settings = list()
@@ -78,8 +76,6 @@
 /obj/machinery/big_manipulator/proc/set_up_priority_settings()
 	for(var/datum/manipulator_priority/priority_for_drop as anything in subtypesof(/datum/manipulator_priority/for_drop))
 		priority_settings_for_drop += new priority_for_drop
-	for(var/datum/manipulator_priority/priority_for_use as anything in subtypesof(/datum/manipulator_priority/for_use))
-		priority_settings_for_use += new priority_for_use
 	update_priority_list()
 
 /obj/machinery/big_manipulator/examine(mob/user)
@@ -277,8 +273,6 @@
 	switch(manipulate_mode)
 		if(DROP_ITEM_MODE)
 			addtimer(CALLBACK(src, PROC_REF(drop_thing), target), working_speed)
-		if(USE_ITEM_MODE)
-			addtimer(CALLBACK(src, PROC_REF(use_thing), target), working_speed)
 		if(THROW_ITEM_MODE)
 			addtimer(CALLBACK(src, PROC_REF(throw_thing), target), working_speed)
 
@@ -296,61 +290,6 @@
 	else
 		target.forceMove(where_we_drop)
 	finish_manipulation()
-
-/// 3.2 take and drop proc from [take and drop procs loop]:
-/// Use our item on random atom in drop turf contents then
-/// Starts manipulator hand backward animation by defualt, but
-/// You can also set the setting in ui so that it does not return to its privious position and continues to use object in its hand.
-/// Checks the priority so that you can configure which object it will select: mob/obj/turf.
-/// Also can use filter to interact only with obj in filter.
-/obj/machinery/big_manipulator/proc/use_thing(atom/movable/target)
-	var/obj/obj_resolve = containment_obj?.resolve()
-	if(isnull(obj_resolve))
-		finish_manipulation()
-		return
-	/// If we forceMoved from manipulator we are free now.
-	if(obj_resolve.loc != src)
-		finish_manipulation()
-		return
-	if(!isitem(target))
-		target.forceMove(drop_turf) /// We use only items
-		target.dir = get_dir(get_turf(target), get_turf(src))
-		finish_manipulation()
-		return
-	var/obj/item/im_item = target
-	var/atom/type_to_use = search_type_by_priority_in_drop_turf(allowed_priority_settings)
-	if(isnull(type_to_use))
-		check_end_of_use(im_item, target, item_was_used = FALSE)
-		return
-	var/mob/living/carbon/human/dummy/living_manipulator_lmfao = create_abstract_living()
-	living_manipulator_lmfao.put_in_active_hand(im_item)
-	if(!type_to_use.attackby(im_item, living_manipulator_lmfao))
-		im_item.melee_attack_chain(living_manipulator_lmfao, type_to_use)
-	do_attack_animation(drop_turf)
-	manipulator_hand.do_attack_animation(drop_turf)
-	if(LAZYLEN(living_manipulator_lmfao.do_afters))
-		RegisterSignal(living_manipulator_lmfao, COMSIG_DO_AFTER_ENDED, PROC_REF(manipulator_finish_do_after))
-	else
-		im_item.forceMove(src)
-		qdel(living_manipulator_lmfao)
-	check_end_of_use(im_item, item_was_used = TRUE)
-
-/// Wait whan manipulator finish do_after and kill em.
-/obj/machinery/big_manipulator/proc/manipulator_finish_do_after(mob/living/carbon/human/dummy/abstract_manipulator)
-	SIGNAL_HANDLER
-
-	var/obj/item/my_item = abstract_manipulator.get_active_held_item()
-	my_item.forceMove(src)
-	qdel(abstract_manipulator)
-
-/// Check what we gonna do next with our item. Drop it or use again.
-/obj/machinery/big_manipulator/proc/check_end_of_use(obj/item/my_item, item_was_used)
-	if(drop_item_after_use && item_was_used)
-		my_item.forceMove(drop_turf)
-		my_item.dir = get_dir(get_turf(my_item), get_turf(src))
-		finish_manipulation()
-		return
-	addtimer(CALLBACK(src, PROC_REF(use_thing), my_item), working_speed)
 
 /// 3.3 take and drop proc from [take and drop procs loop]:
 /// Throw item away!!!
@@ -390,27 +329,21 @@
 /obj/machinery/big_manipulator/proc/finish_rotate_animation(backward)
 	animate(manipulator_hand, transform = matrix(180 * backward, MATRIX_ROTATE), working_speed*0.5)
 
-/obj/machinery/big_manipulator/proc/check_filter(obj/item/what_item)
-	var/filtered_obj = filter_obj?.resolve()
-	if(!istype(what_item, selected_type))
-		return
+/obj/machinery/big_manipulator/proc/check_filter(atom/movable/target)
+	if (target.anchored || HAS_TRAIT(target, TRAIT_NODROP))
+		return FALSE
+	if(!istype(target, selected_type))
+		return FALSE
 	/// We use filter only on items. closets, humans and etc don't need filter check.
-	if(istype(what_item, /obj/item))
-		if((filtered_obj && !istype(what_item, filtered_obj)))
-			return FALSE
+	if(!isitem(target))
+		return TRUE
+	var/obj/item/target_item = target
+	if (target_item.item_flags & (ABSTRACT|DROPDEL))
+		return FALSE
+	var/filtered_obj = filter_obj?.resolve()
+	if((filtered_obj && !istype(target_item, filtered_obj)))
+		return FALSE
 	return TRUE
-
-/// Create dummy to force him use our item and then delete him.
-/obj/machinery/big_manipulator/proc/create_abstract_living()
-	var/mob/living/carbon/human/dummy/abstract_living = new /mob/living/carbon/human/dummy(get_turf(src))
-	abstract_living.alpha = 0
-	abstract_living.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	ADD_TRAIT(abstract_living, TRAIT_UNDENSE, INNATE_TRAIT)
-	abstract_living.move_resist = INFINITY
-	abstract_living.invisibility = INVISIBILITY_ABSTRACT
-	abstract_living.real_name = abstract_living.name = name
-	abstract_living.mind_initialize()
-	return abstract_living
 
 /// Proc called when we changing item interaction mode.
 /obj/machinery/big_manipulator/proc/change_mode()
@@ -426,8 +359,6 @@
 	var/list/priority_mode_list
 	if(manipulate_mode == DROP_ITEM_MODE)
 		priority_mode_list = priority_settings_for_drop.Copy()
-	if(manipulate_mode == USE_ITEM_MODE)
-		priority_mode_list = priority_settings_for_use.Copy()
 	if(isnull(priority_mode_list))
 		return
 	for(var/we_need_increasing in 1 to length(priority_mode_list))
@@ -479,15 +410,12 @@
 	switch(manipulate_mode)
 		if(DROP_ITEM_MODE)
 			mode = "Drop"
-		if(USE_ITEM_MODE)
-			mode = "Use"
 		if(THROW_ITEM_MODE)
 			mode = "Throw"
 	data["active"] = on
 	data["item_as_filter"] = filter_obj?.resolve()
 	data["selected_type"] = selected_type.name
 	data["manipulate_mode"] = mode
-	data["drop_after_use"] = drop_item_after_use
 	data["highest_priority"] = only_highest_priority
 	data["throw_range"] = manipulator_throw_range
 	var/list/priority_list = list()
@@ -543,9 +471,6 @@
 			filter_obj = WEAKREF(get_active_held_item)
 			get_active_held_item.forceMove(src)
 			is_work_check()
-			return TRUE
-		if("drop_use_change")
-			drop_item_after_use = !drop_item_after_use
 			return TRUE
 		if("highest_priority_change")
 			only_highest_priority = !only_highest_priority
@@ -647,23 +572,7 @@
 	what_type = /obj/item/storage
 	number = 2
 
-/datum/manipulator_priority/for_use/on_living
-	name = "Use on Living"
-	what_type = /mob/living
-	number = 1
-
-/datum/manipulator_priority/for_use/on_structure
-	name = "Use on Structure"
-	what_type = /obj/structure
-	number = 2
-
-/datum/manipulator_priority/for_use/on_machinery
-	name = "Use on Machinery"
-	what_type = /obj/machinery
-	number = 3
-
 #undef DROP_ITEM_MODE
-#undef USE_ITEM_MODE
 #undef THROW_ITEM_MODE
 
 #undef TAKE_ITEMS

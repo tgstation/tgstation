@@ -258,7 +258,7 @@
 	heavy_storm = new(user, 10)
 	if(ishuman(user))
 		var/mob/living/carbon/human/ascended_human = user
-		var/obj/item/organ/internal/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
 		heretic_eyes?.color_cutoffs = list(30, 30, 30)
 		ascended_human.update_sight()
 

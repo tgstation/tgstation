@@ -56,9 +56,7 @@
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, unique = unique_tamer)
 
 /mob/living/basic/pony/tamed(mob/living/tamer, atom/food)
-	can_buckle = TRUE
-	buckle_lying = 0
-	create_sound(src, 'sound/mobs/non-humanoids/pony/snort.ogg').play()
+	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
 	new /obj/effect/temp_visual/heart(loc)

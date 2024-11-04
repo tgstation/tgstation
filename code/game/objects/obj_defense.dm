@@ -28,7 +28,6 @@
 	if(. != BULLET_ACT_HIT)
 		return .
 
-	create_sound(src, hitting_projectile.hitsound).vary(TRUE).play()
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(

@@ -163,7 +163,7 @@
 		return
 	var/mob/living/carbon/jedi = user
 	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
-	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.organs
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	jedi.ghostize(jedi)
 	if(rip_u)
 		qdel(rip_u)

@@ -37,6 +37,8 @@
 	var/datum/material/glass_material_datum = /datum/material/glass
 	/// Whether or not we're disappearing but dramatically
 	var/dramatically_disappearing = FALSE
+	/// If we added a leaning component to ourselves
+	var/added_leaning = FALSE
 
 /datum/armor/structure_window
 	melee = 50
@@ -78,6 +80,15 @@
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
+	. = ..()
+	if (added_leaning || (flags_1 & ON_BORDER_1))
+		return
+	/// For performance reasons and to cut down on init times we are "lazy-loading" the leaning component when someone drags their sprite onto us, and then calling dragging code again to trigger the component
+	AddComponent(/datum/component/leanable, 11)
+	added_leaning = TRUE
+	dropping.base_mouse_drop_handler(src, null, null, params)
+
 /obj/structure/window/examine(mob/user)
 	. = ..()
 
@@ -106,7 +117,7 @@
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/singularity_pull(S, current_size)
+/obj/structure/window/singularity_pull(atom/singularity, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)
 		set_anchored(FALSE)

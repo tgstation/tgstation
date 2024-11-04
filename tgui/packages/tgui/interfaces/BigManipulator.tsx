@@ -26,7 +26,6 @@ export const BigManipulator = (props) => {
     active,
     manipulate_mode,
     settings_list,
-    drop_after_use,
     highest_priority,
     throw_range,
     item_as_filter,
@@ -69,14 +68,6 @@ export const BigManipulator = (props) => {
               tooltip="click on this button with item in hands to add filter on this item."
               onClick={() => act('add_filter')}
             />
-            {manipulate_mode === 'Use' && (
-              <Button
-                content="Drop Use"
-                tooltip="drop item after use. othewise manipulator will use this item after cooldown."
-                selected={drop_after_use}
-                onClick={() => act('drop_use_change')}
-              />
-            )}
             {manipulate_mode === 'Throw' && (
               <Button
                 content={`Throw range: ${throw_range}`}

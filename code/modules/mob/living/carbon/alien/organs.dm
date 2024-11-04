@@ -1,14 +1,14 @@
-/obj/item/organ/internal/alien
+/obj/item/organ/alien
 	icon_state = "acid"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/acid = 10)
 
-/obj/item/organ/internal/alien/plasmavessel
+/obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
 	icon_state = "plasma"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_XENO_PLASMAVESSEL
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/plasma = 10)
 	actions_types = list(
 		/datum/action/cooldown/alien/make_structure/plant_weeds,
 		/datum/action/cooldown/alien/transfer,
@@ -23,7 +23,7 @@
 	/// The rate this organ regenerates plasma at per second.
 	var/plasma_rate = 5
 
-/obj/item/organ/internal/alien/plasmavessel/large
+/obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
 	w_class = WEIGHT_CLASS_BULKY
@@ -31,10 +31,10 @@
 	max_plasma = 500
 	plasma_rate = 7.5
 
-/obj/item/organ/internal/alien/plasmavessel/large/queen
+/obj/item/organ/alien/plasmavessel/large/queen
 	plasma_rate = 10
 
-/obj/item/organ/internal/alien/plasmavessel/small
+/obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
 	w_class = WEIGHT_CLASS_SMALL
@@ -42,14 +42,14 @@
 	max_plasma = 150
 	plasma_rate = 2.5
 
-/obj/item/organ/internal/alien/plasmavessel/small/tiny
+/obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
 	icon_state = "plasma_tiny"
 	w_class = WEIGHT_CLASS_TINY
 	max_plasma = 100
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
-/obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 	//Instantly healing to max health in a single tick would be silly. If it takes 8 seconds to fire, then something's fucked.
 	var/delta_time_capped = min(delta_time, 8)
@@ -68,27 +68,27 @@
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
-/obj/item/organ/internal/alien/plasmavessel/on_mob_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/alien/plasmavessel/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
 		organ_owner_alien.updatePlasmaDisplay()
 	UnregisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
 
-/obj/item/organ/internal/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
+/obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
-/obj/item/organ/internal/alien/hivenode
+/obj/item/organ/alien/hivenode
 	name = "hive node"
 	icon_state = "hivenode"
 	zone = BODY_ZONE_HEAD
@@ -99,17 +99,17 @@
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
 
-/obj/item/organ/internal/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	if(organ_owner)
 		organ_owner.faction -= ROLE_ALIEN
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
-/obj/item/organ/internal/alien/hivenode/proc/queen_death()
+/obj/item/organ/alien/hivenode/proc/queen_death()
 	if(!owner || owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
@@ -132,7 +132,7 @@
 	addtimer(CALLBACK(src, PROC_REF(clear_queen_death)), QUEEN_DEATH_DEBUFF_DURATION)
 
 
-/obj/item/organ/internal/alien/hivenode/proc/clear_queen_death()
+/obj/item/organ/alien/hivenode/proc/clear_queen_death()
 	if(QDELETED(src)) //In case the node is deleted
 		return
 	recent_queen_death = FALSE
@@ -143,7 +143,7 @@
 
 #undef QUEEN_DEATH_DEBUFF_DURATION
 
-/obj/item/organ/internal/alien/resinspinner
+/obj/item/organ/alien/resinspinner
 	name = "resin spinner"
 	icon_state = "spinner-x"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -151,7 +151,7 @@
 	actions_types = list(/datum/action/cooldown/alien/make_structure/resin)
 
 
-/obj/item/organ/internal/alien/acid
+/obj/item/organ/alien/acid
 	name = "acid gland"
 	icon_state = "acid"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -159,7 +159,7 @@
 	actions_types = list(/datum/action/cooldown/alien/acid/corrosion)
 
 
-/obj/item/organ/internal/alien/neurotoxin
+/obj/item/organ/alien/neurotoxin
 	name = "neurotoxin gland"
 	icon_state = "neurotox"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -167,7 +167,7 @@
 	actions_types = list(/datum/action/cooldown/alien/acid/neurotoxin)
 
 
-/obj/item/organ/internal/alien/eggsac
+/obj/item/organ/alien/eggsac
 	name = "egg sac"
 	icon_state = "eggsac"
 	zone = BODY_ZONE_PRECISE_GROIN
@@ -176,18 +176,18 @@
 	actions_types = list(/datum/action/cooldown/alien/make_structure/lay_egg)
 
 /// The stomach that lets aliens eat people/things
-/obj/item/organ/internal/stomach/alien
+/obj/item/organ/stomach/alien
 	name = "alien stomach"
 	icon_state = "stomach-x"
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/cooldown/alien/regurgitate)
 	var/list/atom/movable/stomach_contents = list()
 
-/obj/item/organ/internal/stomach/alien/Destroy()
+/obj/item/organ/stomach/alien/Destroy()
 	QDEL_LIST(stomach_contents)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/alien/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!owner || SSmobs.times_fired % 3 != 0)
 		return
@@ -198,7 +198,7 @@
 			continue
 		thing.acid_act(75, 10)
 
-/obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
+/obj/item/organ/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
@@ -206,30 +206,30 @@
 	stomach_contents += thing
 	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
 
-/obj/item/organ/internal/stomach/alien/proc/content_died(atom/movable/source)
+/obj/item/organ/stomach/alien/proc/content_died(atom/movable/source)
 	SIGNAL_HANDLER
 	qdel(source)
 
-/obj/item/organ/internal/stomach/alien/proc/content_deleted(atom/movable/source)
+/obj/item/organ/stomach/alien/proc/content_deleted(atom/movable/source)
 	SIGNAL_HANDLER
 	stomach_contents -= source
 
-/obj/item/organ/internal/stomach/alien/proc/content_moved(atom/movable/source)
+/obj/item/organ/stomach/alien/proc/content_moved(atom/movable/source)
 	SIGNAL_HANDLER
 	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
-/obj/item/organ/internal/stomach/alien/mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
+/obj/item/organ/stomach/alien/mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+/obj/item/organ/stomach/alien/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(loc == null && owner)
 		for(var/atom/movable/thing as anything in contents)
@@ -238,12 +238,12 @@
 		for(var/atom/movable/thing as anything in contents)
 			thing.forceMove(src)
 
-/obj/item/organ/internal/stomach/alien/proc/something_moved(mob/living/source, mob/living/user, direction)
+/obj/item/organ/stomach/alien/proc/something_moved(mob/living/source, mob/living/user, direction)
 	SIGNAL_HANDLER
 	relaymove(user, direction)
 	return COMSIG_BLOCK_RELAYMOVE
 
-/obj/item/organ/internal/stomach/alien/relaymove(mob/living/user, direction)
+/obj/item/organ/stomach/alien/relaymove(mob/living/user, direction)
 	if(!(user in src.stomach_contents))
 		return
 	if(!prob(40))
@@ -327,7 +327,7 @@
 		owner.gib(DROP_ALL_REMAINS)
 	qdel(src)
 
-/obj/item/organ/internal/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
+/obj/item/organ/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
 	var/atom/spit_as = owner || src
 	// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)

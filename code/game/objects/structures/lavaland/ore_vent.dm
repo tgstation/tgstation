@@ -9,6 +9,7 @@
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
 	icon = 'icons/obj/mining_zones/terrain.dmi'
 	icon_state = "ore_vent"
+	base_icon_state = "ore_vent"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //This thing will take a beating.
 	anchored = TRUE
@@ -91,7 +92,7 @@
 
 /obj/structure/ore_vent/Destroy()
 	SSore_generation.possible_vents -= src
-	node = null
+	reset_drone(success = FALSE)
 	if(tapped)
 		SSore_generation.processed_vents -= src
 	return ..()
@@ -266,28 +267,40 @@
  * Arguments:
  * - force: Set to true if you want to just skip all checks and make the vent start producing boulders.
  */
-/obj/structure/ore_vent/proc/handle_wave_conclusion(force = FALSE)
+/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source, force = FALSE)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
 
-	if(QDELETED(node) && !force)
-		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
-		icon_state = initial(icon_state)
-		update_appearance(UPDATE_ICON_STATE)
-		node = null
-		return //Bad end, try again.
-	else if(!QDELETED(node) && get_turf(node) != get_turf(src) && !force)
-		visible_message(span_danger("The [node] detaches from the [src], and the vent closes back up!"))
-		icon_state = initial(icon_state)
-		update_appearance(UPDATE_ICON_STATE)
-		UnregisterSignal(node, COMSIG_MOVABLE_MOVED)
-		node.pre_escape(success = FALSE)
-		node = null
+	if(force)
+		initiate_wave_win()
+		return
+
+	if(QDELETED(node))
+		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
+		return
+
+	if(get_turf(node) != get_turf(src))
+		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
 		return //Start over!
 
+	initiate_wave_win()
+
+/**
+ * Handles reseting our ore vent to its original state so we can start over
+ */
+/obj/structure/ore_vent/proc/initiate_wave_loss(loss_message)
+	visible_message(span_danger(loss_message))
+	icon_state = base_icon_state
+	update_appearance(UPDATE_ICON_STATE)
+	reset_drone(success = FALSE)
+
+/**
+ * Handles winning the event, gives everyone a payout and start boulder production
+ */
+/obj/structure/ore_vent/proc/initiate_wave_win()
 	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
 	SSore_generation.processed_vents += src
 	log_game("Ore vent [key_name_and_tag(src)] was tapped")
@@ -296,7 +309,6 @@
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
 	qdel(GetComponent(/datum/component/gps))
-	UnregisterSignal(node, COMSIG_QDELETING)
 
 	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
 		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
@@ -308,9 +320,17 @@
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
-	node?.pre_escape() //Visually show the drone is done and flies away.
-	node = null
+	reset_drone(success = TRUE)
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER))
+
+/**
+ * Sends our node back to base and cleans up after the reference
+ */
+/obj/structure/ore_vent/proc/reset_drone(success)
+	if(!QDELETED(node))
+		node.pre_escape(success = success)
+		UnregisterSignal(node, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
+	node = null
 
 /**
  * Called when the ore vent is tapped by a scanning device.

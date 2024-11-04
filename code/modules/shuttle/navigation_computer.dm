@@ -59,6 +59,20 @@
 	else
 		QDEL_NULL(my_port)
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname in list(NAMEOF(src, view_range), NAMEOF(src, x_offset), NAMEOF(src, y_offset), NAMEOF(src, see_hidden)))
+		refresh_eye()
+
+/// Destroys the eyeobj of this console, safely refreshing it if the console is currently being used.
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/refresh_eye()
+	var/mob/living/user = current_user
+	if(user)
+		remove_eye_control(user)
+	QDEL_NULL(eyeobj)
+	if(user)
+		attack_hand(user)
+
 /// "Initializes" any default port ids we have, done so add_jumpable_port can be a proper setter
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/set_init_ports()
 	var/list/init_ports = jump_to_ports.Copy()

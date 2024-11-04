@@ -122,10 +122,9 @@
 	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
 	var/backstabbed = FALSE
 	var/combined_damage = detonation_damage
-	var/backstab_dir = get_dir(user, target)
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
-	if((user.dir & backstab_dir) && (target.dir & backstab_dir) || boosted_mark)
+	if(check_behind(user, target) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
 		create_sound(user, 'sound/items/weapons/kinetic_accel.ogg').volume(100).vary(TRUE).play() //Seriously who spelled it wrong
@@ -524,6 +523,8 @@
 		pkc.projectile_icon = retool_projectile_icon
 		if(iscarbon(pkc.loc))
 			var/mob/living/carbon/holder = pkc.loc
+			holder.update_worn_back()
+			holder.update_suit_storage()
 			holder.update_held_items()
 		pkc.update_appearance()
 
@@ -533,6 +534,8 @@
 	pkc.projectile_icon = initial(pkc.projectile_icon)
 	if(iscarbon(pkc.loc))
 		var/mob/living/carbon/holder = pkc.loc
+		holder.update_worn_back()
+		holder.update_suit_storage()
 		holder.update_held_items()
 	pkc.update_appearance()
 	..()

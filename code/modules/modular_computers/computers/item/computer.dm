@@ -554,14 +554,17 @@
 	create_sound(src, sound).vary(TRUE).play()
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
-/obj/item/modular_computer/proc/ring(ringtone) // bring bring
+/obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		create_sound(src, pick('sound/machines/beep/twobeep_voice1.ogg', 'sound/machines/beep/twobeep_voice2.ogg')).vary(TRUE).play()
 	else
-		create_sound(src, 'sound/machines/beep/twobeep_high.ogg').vary(TRUE).play()
-	audible_message("*[ringtone]*")
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
+	ringtone = "*[ringtone]*"
+	audible_message(ringtone)
+	for(var/mob/living/alertee in balloon_alertees)
+		alertee.balloon_alert(alertee, ringtone)
 
 /obj/item/modular_computer/proc/send_sound()
 	create_sound(src, 'sound/machines/terminal/terminal_success.ogg').volume(15).vary(TRUE).play()

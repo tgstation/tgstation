@@ -14,7 +14,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	if(stat != DEAD)
-		if(health <= -maxHealth || !get_organ_by_type(/obj/item/organ/internal/brain))
+		if(health <= -maxHealth || !get_organ_by_type(/obj/item/organ/brain))
 			death()
 			return
 		if((HAS_TRAIT(src, TRAIT_KNOCKEDOUT)))

@@ -100,7 +100,7 @@
 
 /obj/machinery/dna_infuser/proc/end_infuse(fail_explanation, fail_title)
 	var/mob/living/carbon/human/human_occupant = occupant
-	if(human_occupant.infuse_organ(infusing_into))
+	if(human_occupant.infuse_organ(infusing_into, infusing_from))
 		check_tier_progression(human_occupant)
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE

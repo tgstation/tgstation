@@ -337,6 +337,7 @@
 
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
+	static_data["remote_silicon"] = (isAI(user) || iscyborg(user)) && !istype(computer, /obj/item/modular_computer/pda/silicon) //Silicon is accessing a PDA on the ground, not their internal one. Avoiding pAIs in this check.
 	static_data["alert_able"] = alert_able
 
 	return static_data
@@ -718,7 +719,7 @@
 		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, sender_title, inbound_message, photo_message)
 
 	if (alert_able && (!alert_silenced || is_rigged))
-		computer.ring(ringtone)
+		computer.ring(ringtone, receievers)
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()

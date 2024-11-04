@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - spellcheck: "Medical Kiosks no longer recommends improper treatments for hallucinations. Now recommends \"anti-psychotics\" and provides examples."
-  - spellcheck: "Health analyzers recommends example \"anti-psychotics\" for treating hallucinations, rather than forcing you to figure it out."
-  - bugfix: "Health analyzers don't report someone is hallucinating due to low sanity, and thus won't suggest patients are \"double hallucinating\"."

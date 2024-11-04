@@ -233,29 +233,24 @@
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
-	for(var/obj/item/tool as anything in omni_toolkit)
-		radial_menu_options[initial(tool.tool_behaviour)] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+	for(var/obj/item as anything in omni_toolkit)
+		radial_menu_options[initial(item.name)] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
 
 	//assign the new tool behaviour
-	var/new_tool_behaviour = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
-	if(isnull(new_tool_behaviour) || new_tool_behaviour == tool_behaviour)
-		return
-	tool_behaviour = new_tool_behaviour
+	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 
 	//set the reference & update icons
 	for(var/obj/item/tool as anything in omni_toolkit)
-		if(initial(tool.tool_behaviour) == new_tool_behaviour)
+		if(initial(tool.name) == toolkit_menu)
 			reference = tool
+			tool_behaviour = initial(tool.tool_behaviour)
 			update_appearance(UPDATE_ICON_STATE)
 			create_sound(src, 'sound/items/tools/change_jaws.ogg').vary(TRUE).play()
 			break
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
-	icon_state = initial(icon_state)
-
-	if (tool_behaviour)
-		icon_state += "_[sanitize_css_class_name(tool_behaviour)]"
-
+	if (reference)
+		icon_state = reference.icon_state
 	return ..()
 
 /**
@@ -306,6 +301,20 @@
 		for(var/obj/item/multitool/tool in atoms)
 			. += "Its multitool buffer contains [tool.buffer]"
 			break
+
+/obj/item/borg/cyborg_omnitool/botany
+	name = "botanical omni-toolset"
+	desc = "A set of botanical tools used by cyborgs to do gardening."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "sili"
+
+	omni_toolkit = list(
+		/obj/item/secateurs/cyborg,
+		/obj/item/cultivator/cyborg,
+		/obj/item/hatchet/cyborg,
+		/obj/item/shovel/spade/cyborg,
+	)
+
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

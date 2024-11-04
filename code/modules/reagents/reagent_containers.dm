@@ -72,7 +72,7 @@
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
 	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
 		var/mob/living/living_user = user
-		living_user.taste(reagents)
+		living_user.taste_container(reagents)
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
@@ -301,5 +301,5 @@
 
 /obj/item/reagent_containers/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	if((slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
-		create_sound(src, reagent_container_liquid_sound).volume(LIQUID_SLOSHING_SOUND_VOLUME).vary(TRUE).play()
+	if(!initial && (slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
+		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)

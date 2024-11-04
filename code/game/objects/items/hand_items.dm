@@ -559,7 +559,7 @@
 
 	return ..()
 
-/obj/projectile/kiss/Impact(atom/A)
+/obj/projectile/kiss/impact(atom/A)
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 
 	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
@@ -633,7 +633,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
 	dont_go_breakin_my_heart.apply_organ_damage(999)
 
 // Based on energy gun characteristics

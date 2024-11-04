@@ -151,7 +151,7 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(can_see(user, interacting_with, ranged_scan_distance))
+	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, ranged_scan_distance))
 		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
 	return NONE // Non-blocking
 

@@ -212,10 +212,12 @@ Behavior that's still missing from this component that original food items had t
 
 	for(var/rid in reagents)
 		var/amount = reagents[rid]
-		if(length(tastes) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-			owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
-		else
-			owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
+		if(length(tastes) && ispath(rid, /datum/reagent/consumable/nutriment))
+			var/datum/reagent/consumable/nutriment/nid = rid
+			if(initial(nid.carry_food_tastes))
+				owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
+				continue
+		owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -282,7 +284,7 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_notice("It could use a little more Sodium Chloride...")
 	if (isliving(user))
 		var/mob/living/living_user = user
-		living_user.taste(owner.reagents)
+		living_user.taste_container(owner.reagents)
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -499,7 +501,7 @@ Behavior that's still missing from this component that original food items had t
 	//Invoke the eater's stomach's after_eat callback if valid
 	if(iscarbon(eater))
 		var/mob/living/carbon/carbon_eater = eater
-		var/obj/item/organ/internal/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/stomach = carbon_eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
@@ -565,10 +567,7 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	var/food_quality = get_perceived_food_quality(gourmand)
-	if(food_quality <= FOOD_QUALITY_DANGEROUS && (foodtypes & gourmand.get_allergic_foodtypes())) // Only cause anaphylaxis if we're ACTUALLY allergic, otherwise it just tastes horrible
-		if(gourmand.ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-			to_chat(gourmand, span_warning("You feel your throat start to itch."))
-			gourmand.add_mood_event("allergic_food", /datum/mood_event/allergic_food)
+	if(food_quality <= FOOD_QUALITY_DANGEROUS && gourmand.check_allergic_reaction(foodtypes, chance = 100, histamine_add = 10))
 		return
 
 	if(food_quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
@@ -689,7 +688,7 @@ Behavior that's still missing from this component that original food items had t
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
-	doggy.taste(food.reagents) // why should carbons get all the fun?
+	doggy.taste_container(food.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [food] was.")
 		doggy.manual_emote(satisfaction_text)
@@ -725,7 +724,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[src] eats [food]!"), span_notice("You eat [food]."))
-		create_sound(eater, 'sound/items/eatfood.ogg').volume(rand(30,50)).vary(TRUE).play()
+		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
+		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN

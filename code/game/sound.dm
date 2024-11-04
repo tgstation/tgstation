@@ -37,8 +37,13 @@
 	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
+///get a random frequency.
 /proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+	return rand(32000, 55000)
+
+///get_rand_frequency but lower range.
+/proc/get_rand_frequency_low_range()
+	return rand(38000, 45000)
 
 ///Used to convert a SFX define into a .ogg so we can add some variance to sounds. If soundin is already a .ogg, we simply return it
 /proc/get_sfx(soundin)
@@ -157,9 +162,9 @@
 				)
 		if(SFX_CAN_OPEN)
 			soundin = pick(
-				'sound/effects/can/can_open1.ogg',
-				'sound/effects/can/can_open2.ogg',
-				'sound/effects/can/can_open3.ogg',
+				'sound/items/can/can_open1.ogg',
+				'sound/items/can/can_open2.ogg',
+				'sound/items/can/can_open3.ogg',
 				)
 		if(SFX_BULLET_MISS)
 			soundin = pick(
@@ -570,5 +575,17 @@
 				'sound/effects/industrial_scan/industrial_scan1.ogg',
 				'sound/effects/industrial_scan/industrial_scan2.ogg',
 				'sound/effects/industrial_scan/industrial_scan3.ogg',
+			)
+		if(SFX_MALE_SIGH)
+			soundin = pick(
+				'sound/mobs/humanoids/human/sigh/male_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/male_sigh3.ogg',
+			)
+		if(SFX_FEMALE_SIGH)
+			soundin = pick(
+				'sound/mobs/humanoids/human/sigh/female_sigh1.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
+				'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
 			)
 	return soundin

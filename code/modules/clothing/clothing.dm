@@ -379,7 +379,7 @@
 				cold_desc = "very low"
 			if (0 to 71)
 				cold_desc = "extremely low"
-		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc), " and ")] temperatures."
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -430,7 +430,11 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
-			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+			if(body_parts_covered & ARMS|HANDS)
+				parts_covered += "arms"
+			if(body_parts_covered & LEGS|FEET)
+				parts_covered += "legs"
+			if(length(parts_covered))
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
