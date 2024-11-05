@@ -11,5 +11,5 @@ if [ "$fail" = 1 ]; then
   exit 1
 else
 	echo "All OGG files have the correct sample rate."
-	exit 0
 fi
+exit 0
