@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	flags = SS_BACKGROUND | SS_NO_INIT
 	wait = 1 SECONDS
-	runlevels = RUNLEVEL_GAME
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
@@ -173,8 +173,10 @@ SUBSYSTEM_DEF(polling)
 
 	// Sleep until the time is up
 	UNTIL(new_poll.finished)
-	if(!(amount_to_pick > 0))
+	if(!amount_to_pick)
 		return new_poll.signed_up
+	if (!length(new_poll.signed_up))
+		return null
 	for(var/pick in 1 to amount_to_pick)
 		// There may be less people signed up than amount_to_pick
 		// pick_n_take returns the default return value of null if passed an empty list, so just break in that case rather than adding null to the list.

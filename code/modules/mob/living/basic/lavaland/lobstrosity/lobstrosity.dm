@@ -22,7 +22,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 2,
 		/obj/item/stack/sheet/bone = 2,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
@@ -55,6 +55,8 @@
 	charge = new charge_type(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
+	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
+	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -144,7 +146,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab/rawcrab = 1,
 		/obj/item/stack/sheet/bone = 1,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	crusher_loot = null
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity/juvenile

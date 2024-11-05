@@ -132,31 +132,31 @@
 		list(
 			// Arms
 			list(
-				/obj/item/organ/internal/cyberimp/arm/combat = 1,
-				/obj/item/organ/internal/cyberimp/arm/surgery = 1000000,
-				/obj/item/organ/internal/cyberimp/arm/toolset = 1500000,
+				/obj/item/organ/cyberimp/arm/combat = 1,
+				/obj/item/organ/cyberimp/arm/surgery = 1000000,
+				/obj/item/organ/cyberimp/arm/toolset = 1500000,
 			) = 15,
 			// Eyes
 			list(
-				/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic = 1,
-				/obj/item/organ/internal/cyberimp/eyes/hud/medical = 1,
-				/obj/item/organ/internal/eyes/robotic/glow = 1,
-				/obj/item/organ/internal/eyes/robotic/shield = 2,
+				/obj/item/organ/cyberimp/eyes/hud/diagnostic = 1,
+				/obj/item/organ/cyberimp/eyes/hud/medical = 1,
+				/obj/item/organ/eyes/robotic/glow = 1,
+				/obj/item/organ/eyes/robotic/shield = 2,
 			) = 15,
 			// Chest
 			list(
-				/obj/item/organ/internal/cyberimp/chest/reviver = 1,
-				/obj/item/organ/internal/cyberimp/chest/thrusters = 2,
+				/obj/item/organ/cyberimp/chest/reviver = 1,
+				/obj/item/organ/cyberimp/chest/thrusters = 2,
 			) = 9,
 			// Brain / Head
 			list(
-				/obj/item/organ/internal/cyberimp/brain/anti_drop = 50,
-				/obj/item/organ/internal/cyberimp/brain/connector = 50,
-				/obj/item/organ/internal/cyberimp/brain/anti_stun = 10,
+				/obj/item/organ/cyberimp/brain/anti_drop = 50,
+				/obj/item/organ/cyberimp/brain/connector = 50,
+				/obj/item/organ/cyberimp/brain/anti_stun = 10,
 			) = 10,
 			// Misc
 			list(
-				/obj/item/organ/internal/cyberimp/mouth/breathing_tube = 1,
+				/obj/item/organ/cyberimp/mouth/breathing_tube = 1,
 			) = 5,
 		)
 	)
@@ -264,7 +264,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
-	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
 		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
@@ -272,12 +272,12 @@
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/internal/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
-	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/neweyes = new
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
 	neweyes.Insert(user, special = TRUE)
 
 /datum/religion_rites/adapted_food

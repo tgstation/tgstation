@@ -11,6 +11,7 @@
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define FLIGHTPOTION_TRAIT "flightpotion"
+#define SLIME_POTION_TRAIT "slime_potion"
 /// Trait inherited by experimental surgeries
 #define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
 #define DISEASE_TRAIT "disease"
@@ -231,6 +232,7 @@
 #define SPEED_TRAIT "speed_trait"
 /// Trait given to mobs that have been autopsied
 #define AUTOPSY_TRAIT "autopsy_trait"
+#define EYE_SCARRING_TRAIT "eye_scarring_trait"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -271,7 +273,7 @@
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
-* granted/removed by [/obj/item/organ/internal/tongue]
+* granted/removed by [/obj/item/organ/tongue]
 * Used for ensuring that carbons without tongues cannot taste anything
 * so it is added in Initialize, and then removed when a tongue is inserted
 * and readded when a tongue is removed.
