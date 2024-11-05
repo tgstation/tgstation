@@ -39,12 +39,6 @@
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
-		var/secondary_result = A.attack_robot_secondary(src, modifiers)
-		if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return
-		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
-			CRASH("attack_robot_secondary did not return a SECONDARY_ATTACK_* define.")
 
 	if(next_move >= world.time)
 		return
@@ -53,7 +47,15 @@
 
 	var/obj/item/W = get_active_held_item()
 
-	if(!W && get_dist(src,A) <= interaction_range)
+	//wireless interaction with an atom
+	if(!W && get_dist(src, A) <= interaction_range)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+			var/secondary_result = A.attack_robot_secondary(src, modifiers)
+			if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+				return
+			if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+				CRASH("attack_robot_secondary did not return a SECONDARY_ATTACK_* define.")
+
 		A.attack_robot(src, modifiers)
 		return
 
@@ -197,12 +199,13 @@
 
 	return A.attack_robot(src, modifiers)
 
-/mob/living/silicon/robot/RangedAttack(atom/A, modifiers)
-	A.attack_robot(src, modifiers)
-
-/mob/living/silicon/robot/ranged_secondary_attack(atom/A, modifiers)
-	A.attack_robot_secondary(src,)
-
+/**
+ * What happens when the cyborg holds left-click on an item.
+ *
+ * Arguments:
+ * * user The mob holding the right click
+ * * modifiers The list of the custom click modifiers
+ */
 /atom/proc/attack_robot(mob/user, modifiers)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
