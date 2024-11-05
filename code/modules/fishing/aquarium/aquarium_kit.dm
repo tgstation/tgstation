@@ -58,7 +58,12 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable, /obj/item/fish/chainsawfish)
+	var/datum/fish_source/portal/syndicate = GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate]
+	var/list/picks = syndicate.fish_table.Copy()
+	for(var/fish in picks)
+		if(!ispath(fish, /obj/item/fish))
+			picks -= fish
+	return pick(picks)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
@@ -79,16 +84,19 @@
 
 /obj/item/storage/fish_case/blackmarket/get_fish_type()
 	var/static/list/weighted_list = list(
-		/obj/item/fish/boned = 1,
-		/obj/item/fish/clownfish/lube = 3,
-		/obj/item/fish/emulsijack = 1,
-		/obj/item/fish/jumpercable = 1,
-		/obj/item/fish/sludgefish/purple = 1,
-		/obj/item/fish/pufferfish = 3,
+		/obj/item/fish/clownfish/lube = 2,
+		/obj/item/fish/pufferfish = 2,
+		/obj/item/fish/emulsijack = 2,
+		/obj/item/fish/sludgefish/purple = 2,
 		/obj/item/fish/slimefish = 2,
 		/obj/item/fish/ratfish = 2,
-		/obj/item/fish/chasm_crab/ice = 2,
-		/obj/item/fish/chasm_crab = 2,
+		/obj/item/fish/zipzap = 2,
+		/obj/item/fish/jumpercable = 2,
+		/obj/item/fish/chasm_crab/ice = 1,
+		/obj/item/fish/chasm_crab = 1,
+		/obj/item/fish/boned = 1,
+		/obj/item/fish/pike = 1,
+		/obj/item/fish/swordfish = 1,
 	)
 	return pick_weight(weighted_list)
 

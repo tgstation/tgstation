@@ -1,0 +1,4 @@
+author: "Contrabang"
+delete-after: True
+changes:
+  - code_imp: "Removes S"

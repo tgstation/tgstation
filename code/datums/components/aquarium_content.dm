@@ -179,13 +179,9 @@
 	remove_visual_from_aquarium()
 	current_aquarium = null
 
-///The visual overlay of the aquarium content. It holds a few vars that we can modity them during signals.
+///The visual overlay of the aquarium content. It can hold a couple vars that we can modify through signal procs.
 /obj/effect/aquarium
 	layer = 0 //set on set_vc_base_position
-	/// Base px offset of the visual object in current aquarium aka current base position
-	var/base_px = 0
-	/// Base px offset of the visual object in current aquarium aka current base position
-	var/base_py = 0
 	/// How the visual will be layered
 	var/layer_mode = AQUARIUM_LAYER_MODE_AUTO
 

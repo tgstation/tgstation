@@ -2,6 +2,7 @@
 
 /obj/item/fish/moonfish
 	name = "zagoskian moonfish"
+	fish_id = "moonfish"
 	desc = "A disc-shaped fish native of the less shallow areas of Tizira's oceans, roughly the size of a tuna. Highly prized in lizard cuisine for their large eggs."
 	icon_state = "tizira_moonfish"
 	sprite_height = 7
@@ -46,6 +47,7 @@
 
 /obj/item/fish/moonfish/dwarf
 	name = "dwarf moonfish"
+	fish_id = "dwarf_moonfish"
 	desc = "Ordinarily in the wild, the Zagoskian moonfish is around the size of a tuna, however through selective breeding a smaller breed suitable for being kept as an aquarium pet has been created."
 	icon_state = "dwarf_moonfish"
 	sprite_height = 6
@@ -67,6 +69,7 @@
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
+	fish_id = "gunner_jellyfish"
 	desc = "So called due to their resemblance to an artillery shell, the gunner jellyfish is native to Tizira, where it is enjoyed as a delicacy. Produces a mild hallucinogen that is destroyed by cooking."
 	icon_state = "gunner_jellyfish"
 	sprite_height = 4
@@ -95,6 +98,7 @@
 
 /obj/item/fish/needlefish
 	name = "needlefish"
+	fish_id = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
 	icon_state = "needlefish"
 	sprite_height = 3
@@ -115,6 +119,7 @@
 
 /obj/item/fish/armorfish
 	name = "armorfish"
+	fish_id = "armorfish"
 	desc = "A small shellfish native to Tizira's oceans, known for its exceptionally hard shell. Consumed similarly to prawns."
 	icon_state = "armorfish"
 	sprite_height = 5
@@ -133,8 +138,8 @@
 	. = ..()
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_GOOD_QUALITY_BAIT), INNATE_TRAIT)
 
-/obj/item/fish/chasm_crab/get_fish_taste()
+/obj/item/fish/armorfish/get_fish_taste()
 	return list("raw prawn" = 2)
 
-/obj/item/fish/chasm_crab/get_fish_taste_cooked()
+/obj/item/fish/armorfish/get_fish_taste_cooked()
 	return list("cooked prawn" = 2)
