@@ -1,12 +1,14 @@
 /datum/component/item_killsound
 	/// list of allowed types, not null/empty
-	var/allowed_mobs
+	var/list/allowed_mobs
 	/// list of blacklisted types
-	var/blacklisted_mobs
+	var/list/blacklisted_mobs
 	var/killsound
 	var/killsound_volume = 100
-	/// on true will act as replacement for mob's death sound,
-	/// otherwise it will just play sound on death
+	/**
+	 * on true will act as replacement for mob's death sound,
+	 * otherwise it will just play sound on death
+	 */
 	var/replace_default_death_sound
 
 /datum/component/item_killsound/Initialize(
