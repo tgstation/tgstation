@@ -171,6 +171,4 @@
 	. = ..()
 	if(. != ITEM_INTERACT_SUCCESS)
 		return
-	if(locate(/obj/item/mod/module/waddle) in controlunit.modules)
-		return
 	controlunit.install(new /obj/item/mod/module/waddle(get_turf(user)), user)
