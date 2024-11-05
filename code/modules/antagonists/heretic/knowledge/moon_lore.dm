@@ -65,6 +65,10 @@
 
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
+	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
+		to_chat(carbon_target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
+		return
+
 	source.apply_status_effect(/datum/status_effect/moon_grasp_hide)
 
 	if(!iscarbon(target))
@@ -155,6 +159,9 @@
 	if(source == target || !isliving(target))
 		return
 
+	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
+		return
+
 	target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 100)
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
@@ -219,7 +226,7 @@
 	var/amount_of_lunatics = 0
 	var/list/lunatic_candidates = list()
 	for(var/mob/living/carbon/human/crewmate as anything in shuffle(GLOB.human_list))
-		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS)
+		if(QDELETED(crewmate) || isnull(crewmate.client) || isnull(crewmate.mind) || crewmate.stat != CONSCIOUS || crewmate.can_block_magic(MAGIC_RESISTANCE_MIND))
 			continue
 		var/turf/crewmate_turf = get_turf(crewmate)
 		var/crewmate_z = crewmate_turf?.z
@@ -273,6 +280,8 @@
 		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
+			continue
+		if(tcarbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
