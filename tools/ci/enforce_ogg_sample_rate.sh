@@ -4,10 +4,12 @@ for file in $(find . -type f -name '*.ogg'); do
   if [ "$sample_rate" != "44100" ]; then
     fail=1
     echo "Error: $file has sample rate $sample_rate Hz (expected 44100 Hz)"
-    fi
-    done
-if($fail==1); then
+  fi
+done
+if [ "$fail" = 1 ]; then
   echo "Files are not up to sample rate standard, see standard.dm in the sound folder."
   exit 1
-echo "All OGG files have the correct sample rate."
-exit 0
+else
+	echo "All OGG files have the correct sample rate."
+	exit 0
+fi
