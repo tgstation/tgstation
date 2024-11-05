@@ -843,7 +843,7 @@
 		last_tick_turf = loc
 
 /*
- * Main projectile movement loop.
+ * Main projectile movement cycle.
  * Normal behavior moves projectiles in a straight line through tiles, but it gets trickier with homing.
  * Every pixels_per_decisecond we will stop and call process_homing(), which while a bit rough, does not have a significant performance impact
  *
@@ -857,8 +857,8 @@
 	last_projectile_move = world.time
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src))
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
-		var/pixel_x_actual = (pixel_x + 16) % 32
-		var/pixel_y_actual = (pixel_y + 16) % 32
+		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X / 2 ? pixel_x : (pixel_x + ICON_SIZE_X / 2) % ICON_SIZE_X
+		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y / 2 ? pixel_y : (pixel_y + ICON_SIZE_Y / 2) % ICON_SIZE_Y
 		// What distances do we need to move to hit the horizontal/vertical turf border
 		var/x_to_border
 		var/y_to_border
@@ -909,15 +909,13 @@
 		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
 		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
-
 		if (hitscan)
 			pixel_x = actual_x
 			pixel_y = actual_y
 		else
 			pixel_x -= x_shift * ICON_SIZE_X
 			pixel_y -= y_shift * ICON_SIZE_Y
-			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_END_NOW)
-
+			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
 		if (homing)
 			process_homing()
 
