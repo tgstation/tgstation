@@ -74,6 +74,9 @@
 /// It should not be used simply to silence CI.
 #define SS_OK_TO_FAIL_INIT (1 << 6)
 
+/// Do not initialize a tracker for this subsystem.
+#define SS_NO_TRACKER (1 << 7)
+
 //! SUBSYSTEM STATES
 #define SS_IDLE 0 /// ain't doing shit.
 #define SS_QUEUED 1 /// queued to run
@@ -87,9 +90,26 @@
 #define INITSTAGE_MAIN 2 //! Main init stage
 #define INITSTAGE_MAX 2 //! Highest initstage.
 
+#define TRACKER_GUARD(instance, expression) \
+	var/_old_usr; \
+	var/_tracker = instance.tracker; \
+	if(!isnull(_tracker)) { \
+		_old_usr = usr; \
+		usr = _tracker; \
+	} \
+	expression; \
+	if(!isnull(_tracker)) { \
+		usr = _old_usr; \
+	}
+
+
 #ifndef UNIT_TESTS
 /// Sets up the abstract usr tracker for the subsystem, and uses it for PreInit()
-#define SETUP_SS_TRACKER_AND_PREINIT tracker = new(src); var/_old_usr = usr; usr = tracker; PreInit(); usr = _old_usr;
+#define SETUP_SS_TRACKER_AND_PREINIT \
+	if(!(flags & SS_NO_TRACKER)) { \
+		src.tracker = new(src); \
+	} \
+	TRACKER_GUARD(src, PreInit())
 #else
 #define SETUP_SS_TRACKER_AND_PREINIT PreInit();
 #endif

@@ -2,7 +2,7 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	name = "Input"
 	init_order = INIT_ORDER_INPUT
 	init_stage = INITSTAGE_EARLY
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_NO_TRACKER
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 

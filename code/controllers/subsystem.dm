@@ -138,12 +138,9 @@
 	. = SS_SLEEPING
 
 #ifndef UNIT_TESTS
-	var/old_usr = usr
-	usr = tracker
-#endif
+	TRACKER_GUARD(src, fire(resumed))
+#else
 	fire(resumed)
-#ifndef UNIT_TESTS
-	usr = old_usr
 #endif
 
 	. = state

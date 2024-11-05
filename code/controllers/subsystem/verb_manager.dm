@@ -22,7 +22,7 @@
 SUBSYSTEM_DEF(verb_manager)
 	name = "Verb Manager"
 	wait = 1
-	flags = SS_TICKER | SS_NO_INIT
+	flags = SS_TICKER | SS_NO_INIT | SS_NO_TRACKER
 	priority = FIRE_PRIORITY_DELAYED_VERBS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 

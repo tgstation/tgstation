@@ -411,12 +411,9 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	rustg_time_reset(SS_INIT_TIMER_KEY)
 
 #ifndef UNIT_TESTS
-	var/old_usr = usr
-	usr = subsystem.tracker
-#endif
+	TRACKER_GUARD(subsystem, var/result = subsystem.Initialize())
+#else
 	var/result = subsystem.Initialize()
-#ifndef UNIT_TESTS
-	usr = old_usr
 #endif
 
 	// Capture end time
