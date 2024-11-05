@@ -851,31 +851,31 @@
  * hitscan prevents animation logic from running
  * tile_limit prevents any movements past the first tile change
  */
-/obj/projectile/proc/process_movement(pixels_to_move, hitscan = FALSE, tile_limit = -1)
+/obj/projectile/proc/process_movement(pixels_to_move, hitscan = FALSE, tile_limit = FALSE)
 	if (!isturf(loc) || !movement_vector)
 		return
 	last_projectile_move = world.time
+	var/say_something = TRUE
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src))
-		// Figure out how much we need to travel to hit the border
-		var/distance_to_border = -1
-		var/x_to_border = -1
-		var/y_to_border = -1
-
+		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
+		var/pixel_x_actual = (pixel_x + 16) % 32
+		var/pixel_y_actual = (pixel_y + 16) % 32
+		// What distances do we need to move to hit the horizontal/vertical turf border
+		var/x_to_border
+		var/y_to_border
+		// If we're moving strictly up/down/left/right then one of these can be 0 and produce div by zero
 		if (movement_vector.pixel_x)
-			x_to_border = movement_vector.pixel_x > 0 ? (ICON_SIZE_ALL - pixel_x) / movement_vector.pixel_x : pixel_x / movement_vector.pixel_x
-			distance_to_border = x_to_border
-
+			x_to_border = movement_vector.pixel_x > 0 ? (ICON_SIZE_X - pixel_x_actual) / movement_vector.pixel_x : pixel_x_actual / -movement_vector.pixel_x
 		if (movement_vector.pixel_y)
-			y_to_border = movement_vector.pixel_y > 0 ? (ICON_SIZE_ALL - pixel_y) / movement_vector.pixel_y : pixel_y / movement_vector.pixel_y
-			distance_to_border = (distance_to_border < 0 ? y_to_border : min(distance_to_border, y_to_border))
+			y_to_border = movement_vector.pixel_y > 0 ? (ICON_SIZE_Y - pixel_y_actual) / movement_vector.pixel_y : pixel_y_actual / -movement_vector.pixel_y
 
+		// Figure out how much we need to travel to hit the border
+		var/distance_to_border = !isnull(x_to_border) ? (!isnull(y_to_border) ? min(x_to_border, y_to_border) : x_to_border) : -1
 		// Something went extremely wrong
 		if (distance_to_border < 0)
-			to_chat(world, "SHIT angle: [angle] movement_vector.angle: [movement_vector.angle] movement_vector.pixel_x: [movement_vector.pixel_x] movement_vector.pixel_y: [movement_vector.pixel_y]")
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
 			return
-
 		pixels_moved_last_tile += distance_to_border
 		// We cannot move more than one turf worth of distance per tick, so this is a safe solution
 		if (pixels_moved_last_tile >= ICON_SIZE_ALL)
@@ -889,9 +889,10 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = SIGN(movement_vector.pixel_x) * (x_to_border > 0 && distance_to_move >= x_to_border)
-		var/y_shift = SIGN(movement_vector.pixel_y) * (y_to_border > 0 && distance_to_move >= y_to_border)
-		to_chat(world, "[pixels_to_move] [x_to_border] [y_to_border] [distance_to_border] [distance_to_move] [x_shift] [y_shift]")
+		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
+		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
+		if (say_something)
+			to_chat(world, "pixels_to_move: [pixels_to_move] distance_to_move: [distance_to_move] x_to_border: [x_to_border] y_to_border: [y_to_border] x_shift: [x_shift] y_shift: [y_shift]")
 		pixels_to_move -= distance_to_move
 
 		if (x_shift || y_shift)
@@ -909,11 +910,20 @@
 				return
 
 		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
-		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_ALL
-		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_ALL
-		pixel_x -= x_shift * ICON_SIZE_ALL
-		pixel_y -= y_shift * ICON_SIZE_ALL
-		animate(src, pixel_x = actual_x, pixel_y = actual_y, time = 0.5, flags = ANIMATION_CONTINUE)
+		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
+		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
+
+		if (say_something)
+			to_chat(world, "actual_x: [actual_x] actual_y: [actual_y]")
+			say_something = FALSE
+
+		if (hitscan)
+			pixel_x = actual_x
+			pixel_y = actual_y
+		else
+			pixel_x -= x_shift * ICON_SIZE_X
+			pixel_y -= y_shift * ICON_SIZE_Y
+			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = 0.5, flags = ANIMATION_CONTINUE)
 
 		if (homing)
 			process_homing()
@@ -922,6 +932,10 @@
 		if (CHECK_TICK)
 			// If we ran out of time, add whatever distance we're yet to pass to overrun debt to be processed next tick and break the loop
 			overrun += pixels_to_move
+			return
+
+		if (tile_limit && (x_shift || y_shift))
+			return
 
 /obj/projectile/proc/process_homing()
 	if(!homing_target)
@@ -1044,6 +1058,23 @@
 	pixel_x = source.pixel_x
 	pixel_y = source.pixel_y
 	original = target
+
+	// Trim off excess pixel_x/y by converting them into turf offset
+	if (abs(pixel_x) > ICON_SIZE_X / 2)
+		for (var/i = 1 to floor(abs(pixel_x) + ICON_SIZE_X / 2) / ICON_SIZE_X)
+			var/turf/new_loc = get_step(source_loc, pixel_x > 0 ? EAST : WEST)
+			if (!istype(new_loc))
+				break
+			source_loc = new_loc
+		pixel_x = pixel_x % (ICON_SIZE_X / 2)
+
+	if (abs(pixel_y) > ICON_SIZE_Y / 2)
+		for (var/i = 1 to floor(abs(pixel_y) + ICON_SIZE_Y / 2) / ICON_SIZE_Y)
+			var/turf/new_loc = get_step(source_loc, pixel_y > 0 ? NORTH : SOUTH)
+			if (!istype(new_loc))
+				break
+			source_loc = new_loc
+		pixel_y = pixel_y % (ICON_SIZE_X / 2)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
