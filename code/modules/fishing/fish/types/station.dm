@@ -1,5 +1,6 @@
 /obj/item/fish/ratfish
 	name = "ratfish"
+	fish_id = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
 	icon_state = "ratfish"
 	sprite_width = 7
@@ -41,6 +42,7 @@
 
 /obj/item/fish/sludgefish
 	name = "sludgefish"
+	fish_id = "sludgefish"
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
 	icon_state = "sludgefish"
 	sprite_width = 7
@@ -68,7 +70,8 @@
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
 
 /obj/item/fish/slimefish
-	name = "acquatic slime"
+	name = "aquatic slime"
+	fish_id = "slimefish"
 	desc = "Kids, this is what happens when a slime overcomes its hydrophobic nature. It goes glug glug."
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
@@ -103,6 +106,7 @@
 
 /obj/item/fish/fryish
 	name = "fryish"
+	fish_id = "fryish"
 	desc = "A youngling of the Fritterish family of <u>delicious</u> extremophile, piscine lifeforms. Just don't tell 'Mankind for Ethical Animal Treatment' you ate it."
 	icon_state = "fryish"
 	sprite_width = 3
@@ -176,6 +180,7 @@
 
 /obj/item/fish/fryish/fritterish
 	name = "fritterish"
+	fish_id = "fritterish"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one looks like a taiyaki."
 	icon_state = "fritterish"
 	average_size = 50
@@ -230,6 +235,7 @@
 
 /obj/item/fish/fryish/nessie
 	name = "nessie-fish"
+	fish_id = "nessie"
 	desc = "A <u>deliciously</u> extremophile alien fish. This one is so big, you could write legends about it."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "nessiefish"

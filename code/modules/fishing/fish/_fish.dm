@@ -164,6 +164,13 @@
 	 */
 	var/bites_amount = 0
 
+	/**
+	 * An identifier for this fish used to track progress for fish caught between rounds in
+	 * a way that's resilient to repathing (and removing paths). Only catchable fish need it.
+	 * Once set, the value shouldn't be changed, so don't make typos.
+	 */
+	var/fish_id
+
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	base_icon_state = icon_state

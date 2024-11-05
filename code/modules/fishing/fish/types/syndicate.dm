@@ -1,6 +1,7 @@
 ///Contains fish that can be found in the syndicate fishing portal setting as well as the ominous fish case.
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
+	fish_id = "emulsijack"
 	desc = "Ah, the terrifying emulsijack. Created in a laboratory, the only real use of this slimey, scaleless fish is for completely ruining a tank."
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
@@ -18,6 +19,7 @@
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
+	fish_id = "donkfish"
 	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
 	icon_state = "donkfish"
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -32,6 +34,7 @@
 
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
+	fish_id = "jumpercable"
 	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
 		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
 	icon_state = "jumpercable"
@@ -54,6 +57,7 @@
 
 /obj/item/fish/chainsawfish
 	name = "chainsawfish"
+	fish_id = "chainsawfish"
 	desc = "A very, very angry bioweapon, whose sole purpose is to rip and tear."
 	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "chainsawfish"
@@ -175,6 +179,7 @@
 
 /obj/item/fish/pike/armored
 	name = "armored pike"
+	fish_id = "armored_pike"
 	desc = "A long-bodied, metal-clad predator with a snout that almost looks like an halberd. Definitely a weapon to swing around."
 	icon_state = "armored_pike"
 	inhand_icon_state = "armored_pike"

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "You won't get wet while floating or flying on water. Otherwise, water will keep you wet even if you stay still."
