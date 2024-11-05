@@ -1,6 +1,10 @@
 /datum/unit_test/omnitools
+	abstract_type = /datum/unit_test/omnitools
+
 	//The borg model tot ransform to
-	var/borg_model = /obj/item/robot_model/engineering
+	var/borg_model = /obj/item/robot_model
+	//Tool type
+	var/tool_type = /obj/item/borg/cyborg_omnitool
 
 ///Setup global vars for the test
 /datum/unit_test/omnitools/proc/Setup()
@@ -9,7 +13,7 @@
 	return
 
 ///Test the current tool in the toolkit
-/datum/unit_test/omnitools/proc/TestTool(mob/living/silicon/robot/borg, obj/item/held_item)
+/datum/unit_test/omnitools/proc/TestTool(mob/living/silicon/robot/borg, obj/item/borg/cyborg_omnitool)
 	PROTECTED_PROC(TRUE)
 
 	return
@@ -19,32 +23,36 @@
 
 	//transform to engiborg
 	borg.model.transform_to(borg_model, forced = TRUE, transform = FALSE)
-	var/obj/item/borg/cyborg_omnitool/engineering/engi_tool = null
+	var/obj/item/borg/cyborg_omnitool/omnitool = null
 	for(var/obj/item/borg/tool as anything in borg.model.modules)
-		if(istype(tool, /obj/item/borg/cyborg_omnitool/engineering))
-			engi_tool = tool
+		if(istype(tool, tool_type))
+			omnitool = tool
 			break
+	TEST_ASSERT_NOTNULL(omnitool, "Could not find [tool_type] in borg inbuilt modules!")
 	borg.shown_robot_modules = TRUE //stops hud from updating which would runtime cause our mob does not have one
-	borg.equip_module_to_slot(engi_tool, 1)
+	borg.equip_module_to_slot(omnitool, 1)
 	borg.select_module(1)
-	var/obj/item/held_item = borg.get_active_held_item()
+
+	//these must match
+	TEST_ASSERT_EQUAL(borg.get_active_held_item(), omnitool, "Borg held tool is not the selected omnitool!")
 
 	Setup()
 
-	for(var/obj/item/internal_tool as anything in engi_tool.omni_toolkit)
+	for(var/obj/item/internal_tool as anything in omnitool.omni_toolkit)
 		//Initialize the tool
-		engi_tool.reference = internal_tool
-		engi_tool.tool_behaviour = initial(internal_tool.tool_behaviour)
+		omnitool.reference = internal_tool
+		omnitool.tool_behaviour = initial(internal_tool.tool_behaviour)
 
 		//Test it
-		TestTool(borg, held_item)
+		TestTool(borg, omnitool)
 
-	borg.unequip_module_from_slot(engi_tool, 1)
+	borg.unequip_module_from_slot(omnitool, 1)
 
 
 /// Tests for engiborg omnitool
 /datum/unit_test/omnitools/engiborg
 	borg_model = /obj/item/robot_model/engineering
+	tool_type = /obj/item/borg/cyborg_omnitool/engineering
 
 	/// frame to test wirecutter & screwdriver
 	var/obj/structure/frame/machine/test_frame
@@ -52,8 +60,7 @@
 /datum/unit_test/omnitools/engiborg/Setup()
 	test_frame = allocate(__IMPLIED_TYPE__)
 
-/datum/unit_test/omnitools/engiborg/TestTool(mob/living/silicon/robot/borg, obj/item/held_item)
-
+/datum/unit_test/omnitools/engiborg/TestTool(mob/living/silicon/robot/borg, obj/item/borg/cyborg_omnitool/held_item)
 	var/tool_behaviour = held_item.tool_behaviour
 
 	switch(tool_behaviour)
