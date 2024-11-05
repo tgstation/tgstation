@@ -142,8 +142,8 @@
 		return
 	qdel(query_del_message)
 	if(logged)
-		var/m1 = "[user_key_name] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]: [text]"
-		var/m2 = "[user_name_admin] has deleted a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]:<br>[text]"
+		var/m1 = "[user_key_name] has deleted a [secret ? "secret " : ""][type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]: [text]"
+		var/m2 = "[user_name_admin] has deleted a [secret ? "secret " : ""][type][(type == "note" || type == "message" || type == "watchlist entry") ? " for" : " made by"] [target_key]:<br>[text]"
 		log_admin_private(m1)
 		message_admins(m2)
 		if(browse)
@@ -193,8 +193,8 @@
 			qdel(query_edit_message)
 			return
 		qdel(query_edit_message)
-		log_admin_private("[kn] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_text] to [new_text]")
-		message_admins("[kna] has edited a [type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from<br>[old_text]<br>to<br>[new_text]")
+		log_admin_private("[kn] has edited a [secret ? "secret " : ""][type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from [old_text] to [new_text]")
+		message_admins("[kna] has edited a [secret ? "secret " : ""][type] [(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""] made by [admin_key] from<br>[old_text]<br>to<br>[new_text]")
 		if(browse)
 			browse_messages("[type]")
 		else
