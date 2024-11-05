@@ -287,7 +287,7 @@
 /obj/projectile/magic/flying/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
-		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
+		var/atom/throw_target = get_edge_target_turf(target, angle2dir(angle))
 		target.throw_at(throw_target, 200, 4)
 
 /obj/projectile/magic/bounty

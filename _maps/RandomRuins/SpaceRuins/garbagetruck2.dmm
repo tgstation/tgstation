@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bb" = (
-/obj/item/organ/external/wings/moth,
+/obj/item/organ/wings/moth,
 /obj/structure/closet/crate/trashcart,
 /obj/item/bodypart/arm/left/skeleton,
 /obj/item/bodypart/arm/right/skeleton,
 /obj/item/evidencebag,
-/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
 /obj/structure/broken_flooring/pile,
 /obj/item/stack/sheet/animalhide/human/five,
 /turf/open/floor/plating,
@@ -183,7 +183,7 @@
 /obj/item/trash/syndi_cakes,
 /obj/item/trash/syndi_cakes,
 /obj/item/poster/random_contraband,
-/obj/item/organ/internal/tongue/zombie,
+/obj/item/organ/tongue/zombie,
 /obj/structure/closet/crate/trashcart,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -298,8 +298,8 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/sticky_tape/surgical,
 /obj/structure/broken_flooring/corner,
-/obj/item/organ/internal/cyberimp/arm/surgery,
-/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+/obj/item/organ/cyberimp/arm/surgery,
+/obj/item/organ/cyberimp/eyes/hud/medical,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "zu" = (
@@ -417,7 +417,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Gp" = (
-/obj/item/organ/internal/eyes/robotic/basic,
+/obj/item/organ/eyes/robotic/basic,
 /obj/item/kitchen/spoon,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -437,9 +437,9 @@
 "IM" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/structure/closet/crate/freezer,
-/obj/item/organ/internal/liver/roach,
-/obj/item/organ/internal/stomach,
-/obj/item/organ/internal/tongue/robot,
+/obj/item/organ/liver/roach,
+/obj/item/organ/stomach,
+/obj/item/organ/tongue/robot,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "IS" = (

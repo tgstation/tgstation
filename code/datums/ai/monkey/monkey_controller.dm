@@ -19,11 +19,8 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),
-		BB_MONKEY_PICKUPTARGET = null,
 		BB_MONKEY_PICKPOCKETING = FALSE,
 		BB_MONKEY_DISPOSING = FALSE,
-		BB_MONKEY_TARGET_DISPOSAL = null,
-		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
@@ -126,8 +123,8 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
+	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/brain/primate/monkeybrain = brain
 		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon

@@ -26,7 +26,7 @@
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	var/obj/item/organ/legion_tumour/cancer = new()
 	cancer.Insert(spawned_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /// Returns the outfit worn by our corpse
