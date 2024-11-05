@@ -45,8 +45,6 @@
 	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action
 	/// If we have a core or not
 	var/core_installed = FALSE
-	/// if disabled by spellcasting.
-	var/temporarily_deactivated = FALSE
 	var/list/active_components
 
 // weaker overall but better against energy
@@ -69,14 +67,10 @@
 	// some-fucking-how, RemoveElement fails to find the element in below proc if i try to remove it. so whatever.
 	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
 
-/obj/item/clothing/head/helmet/perceptomatrix/proc/update_anomaly_state(temporary_update)
-
-	// If argument has value, set temp_deac to it.
-	if(!isnull(temporary_update))
-		temporarily_deactivated = temporary_update
+/obj/item/clothing/head/helmet/perceptomatrix/proc/update_anomaly_state()
 
 	// If the core isn't installed, or it's temporarily deactivated, disable special functions.
-	if(!core_installed || temporarily_deactivated)
+	if(!core_installed)
 		clothing_flags = initial(clothing_flags) & ~CASTING_CLOTHES
 		detach_clothing_traits(clothing_traits)
 		QDEL_LIST(active_components)
@@ -101,15 +95,15 @@
 
 /obj/item/clothing/head/helmet/perceptomatrix/examine(mob/user)
 	. = ..()
-	if (!active)
+	if (!core_installed)
 		. += span_warning("It requires a hallucination anomaly core in order to function.")
 
 /obj/item/clothing/head/helmet/perceptomatrix/item_action_slot_check(slot, mob/user, datum/action/action)
 	return slot & ITEM_SLOT_HEAD
 
 /obj/item/clothing/head/helmet/perceptomatrix/update_icon_state()
-	icon_state = base_icon_state + (active ? "" : "_inactive")
-	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
+	icon_state = base_icon_state + (core_installed ? "" : "_inactive")
+	worn_icon_state = base_icon_state + (core_installed ? "" : "_inactive")
 	return ..()
 
 /obj/item/clothing/head/helmet/perceptomatrix/attackby(obj/item/weapon, mob/user, params)
@@ -119,13 +113,14 @@
 	if (!do_after(user, delay = 3 SECONDS, target = src))
 		return
 	qdel(weapon)
-	update_anomaly_state(active_update = TRUE)
+	core_installed = TRUE
+	update_anomaly_state()
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
 
 /// Pre-activated polymorph belt
 /obj/item/clothing/head/helmet/perceptomatrix/functioning
-	active = TRUE
+	core_installed = TRUE
 
 /datum/action/cooldown/spell/pointed/percept_hallucination
 	name = "Hallucinate"
@@ -135,7 +130,7 @@
 
 	sound = 'sound/items/weapons/emitter2.ogg'
 	school = SCHOOL_PSYCHIC
-	cooldown_time = 1 SECONDS
+	cooldown_time = 25 SECONDS
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -169,6 +164,21 @@
 		return FALSE
 
 	return cast_on
+
+/datum/action/cooldown/spell/pointed/percept_hallucination/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return .
+
+	if(!linked_helmet)
+		stack_trace("casting w/o linked perceptomatrix!")
+
+	if(linked_helmet && !(linked_helmet.core_installed))
+		if(feedback)
+			to_chat(owner, span_warning("You must install a hallucination core first!"))
+		return
+
+	return .
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
 	. = ..()
