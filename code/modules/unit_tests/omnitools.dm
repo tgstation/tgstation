@@ -67,9 +67,10 @@
 		if(TOOL_WIRECUTTER)
 			//Test 1: is holding wirecutters for wires
 			TEST_ASSERT(borg.is_holding_tool_quality(TOOL_WIRECUTTER), "Cannot find borg omnitool wirecutters in borgs hand!")
+
+			//Test 2: frame wires must be cut
 			if(isnull(test_frame))
 				test_frame = allocate(__IMPLIED_TYPE__)
-			//Test 2: frame wires must be cut
 			test_frame.state = FRAME_STATE_WIRED
 			held_item.melee_attack_chain(borg, test_frame)
 			TEST_ASSERT_EQUAL(test_frame.state, FRAME_STATE_EMPTY, "Machine frame's wires were not cut by the borg omnitool wirecutters!")
