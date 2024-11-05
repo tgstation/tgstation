@@ -1,7 +1,7 @@
 // THIS IS A MASSMETA UI FILE
 
 import { useBackend } from '../backend';
-import { Section, Table, NoticeBox, Tabs } from '../components';
+import { Box, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 
@@ -12,39 +12,37 @@ export const Modpacks = (props) => {
   return (
     <Window title="Список модификаций" width={480} height={580}>
       <Window.Content scrollable>
-        {(modpacks.length === 0 && (
+        {modpacks.length === 0 ? (
           <NoticeBox>Этот сервер не использует какие-либо модификации</NoticeBox>
-        )) || (
-          <Section>
-            <Table>
-              <Table.Row header>
-                <Table.Cell bold>
-                  Модуль
-                </Table.Cell>
-                <Table.Cell bold>
-                  Описание
-                </Table.Cell>
-                <Table.Cell bold>
-                  Автор
-                </Table.Cell>
-              </Table.Row>
-              {data.modpacks.map((modpack) => (
-                <Table.Row key={modpack.name}>
-                  <Table.Cell>
-                    {modpack.name}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {modpack.desc}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {modpack.author}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table>
-          </Section>
+        ) : (
+          <ModpackList modpacks={modpacks} />
         )}
       </Window.Content>
     </Window>
   );
 };
+
+const ModpackList = ({ modpacks }) => (
+  <Section>
+    <LabeledList>
+      {modpacks.map((modpack) => (
+        <Box key={modpack.id} style={{
+          borderBottom: '1px solid #888',
+          paddingBottom: '10px',
+          fontSize: '14px',
+          textAlign: 'center',
+        }}>
+          <ModpackItem key={modpack.id} modpack={modpack} />
+        </Box>
+      ))}
+    </LabeledList>
+  </Section>
+);
+
+const ModpackItem = ({ modpack }) => (
+  <>
+    <LabeledList.Item label="Модуль">{modpack.name}</LabeledList.Item>
+    <LabeledList.Item label="Описание">{modpack.desc}</LabeledList.Item>
+    <LabeledList.Item label="Автор">{modpack.author}</LabeledList.Item>
+  </>
+);

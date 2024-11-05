@@ -47,6 +47,7 @@
 	var/list/all_modpacks = list()
 	for(var/datum/modpack/package as anything in SSmodpacks.loaded_modpacks)
 		var/list/this_mod = list()
+		this_mod["id"] = package.id
 		this_mod["name"] = package.name
 		this_mod["desc"] = package.desc
 		this_mod["author"] = package.author
