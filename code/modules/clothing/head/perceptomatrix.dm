@@ -41,7 +41,6 @@
 	armor_type = /datum/armor/head_helmet_matrix
 	actions_types = list(/datum/action/cooldown/spell/pointed/percept_hallucination)
 
-	/// Our current transformation action
 	var/datum/action/cooldown/spell/shapeshift/polymorph_belt/transform_action
 	/// If we have a core or not
 	var/core_installed = FALSE
