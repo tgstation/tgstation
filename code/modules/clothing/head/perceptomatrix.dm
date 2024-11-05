@@ -191,9 +191,4 @@
 	cast_on.apply_status_effect(/datum/status_effect/hallucination, hallucination_duration, \
 		hallucination_duration * 0.2, hallucination_duration) // lower/upper hallucination freq. bound
 
-	// Te mporarily disable it.
-	if(linked_helmet)
-		linked_helmet.update_anomaly_state(active_update = FALSE)
-		addtimer(CALLBACK(linked_helmet, TYPE_PROC_REF(/obj/item/clothing/head/helmet/perceptomatrix, update_anomaly_state), TRUE), 5 SECONDS)
-
 	return TRUE
