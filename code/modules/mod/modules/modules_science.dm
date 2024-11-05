@@ -21,16 +21,22 @@
 
 /obj/item/mod/module/reagent_scanner/advanced
 	name = "MOD advanced reagent scanner module"
+	desc = "An advanced module with all the features of research-oriented Nanotrasen HUDs, this is capable of scanning \
+		the contents of containers and projecting the information in an easy-to-read format on the wearer's display. \
+		It also contains a research scanner and an explosion sensor that gives details on nearby explosions. \
+		No improvements have been made to allow it to detect flavors so that's still up to you."
 	complexity = 0
 	removable = FALSE
 	var/explosion_detection_dist = 21
 
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
 /obj/item/mod/module/reagent_scanner/advanced/proc/sense_explosion(datum/source, turf/epicenter,
