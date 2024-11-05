@@ -1352,7 +1352,7 @@
 	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
 	var/raw_price = price + size_weight_exponentation
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
-		var/soft_cap = (calculated_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
+		var/soft_cap = (raw_price - FISH_PRICE_SOFT_CAP_THRESHOLD)^FISH_PRICE_SOFT_CAP_EXPONENT
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_FROM_CASE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
