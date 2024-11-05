@@ -361,8 +361,15 @@
 	return
 
 /datum/looping_sound/fire
-	mid_sounds = list('sound/effects/fireclip1.ogg' = 1, 'sound/effects/fireclip2.ogg' = 1, 'sound/effects/fireclip3.ogg' = 1, 'sound/effects/fireclip4.ogg' = 1,
-	'sound/effects/fireclip5.ogg' = 1, 'sound/effects/fireclip6.ogg' = 1, 'sound/effects/fireclip7.ogg' = 1)
+	mid_sounds = list(
+		'sound/effects/fireclip1.ogg' = 1,
+		'sound/effects/fireclip2.ogg' = 1,
+		'sound/effects/fireclip3.ogg' = 1,
+		'sound/effects/fireclip4.ogg' = 1,
+		'sound/effects/fireclip5.ogg' = 1,
+		'sound/effects/fireclip6.ogg' = 1,
+		'sound/effects/fireclip7.ogg' = 1,
+	)
 	volume = 100
 	mid_length = 2 SECONDS
 	falloff_distance = 1
