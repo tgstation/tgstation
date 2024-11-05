@@ -512,7 +512,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 		//Succumbing without a message
-		var/choice = tgui_alert(living_owner, "Are you sure you want to succumb?", title, list(FASTSUCCUMB_NO, FASTSUCCUMB_WAIT, FASTSUCCUMB_YES))
+		var/choice = tgui_alert(living_owner, "Are you sure you want to succumb?", title, list(FASTSUCCUMB_YES, FASTSUCCUMB_WAIT, FASTSUCCUMB_NO))
 		switch(choice)
 			if(FASTSUCCUMB_NO, null)
 				return
