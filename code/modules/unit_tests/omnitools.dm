@@ -6,12 +6,6 @@
 	//Tool type
 	var/tool_type = /obj/item/borg/cyborg_omnitool
 
-///Setup global vars for the test
-/datum/unit_test/omnitools/proc/Setup()
-	PROTECTED_PROC(TRUE)
-
-	return
-
 ///Test the current tool in the toolkit
 /datum/unit_test/omnitools/proc/TestTool(mob/living/silicon/robot/borg, obj/item/borg/cyborg_omnitool)
 	PROTECTED_PROC(TRUE)
@@ -36,8 +30,6 @@
 	//these must match
 	TEST_ASSERT_EQUAL(borg.get_active_held_item(), omnitool, "Borg held tool is not the selected omnitool!")
 
-	Setup()
-
 	for(var/obj/item/internal_tool as anything in omnitool.omni_toolkit)
 		//Initialize the tool
 		omnitool.reference = internal_tool
@@ -57,9 +49,6 @@
 	/// frame to test wirecutter & screwdriver
 	var/obj/structure/frame/machine/test_frame
 
-/datum/unit_test/omnitools/engiborg/Setup()
-	test_frame = allocate(__IMPLIED_TYPE__)
-
 /datum/unit_test/omnitools/engiborg/TestTool(mob/living/silicon/robot/borg, obj/item/borg/cyborg_omnitool/held_item)
 	var/tool_behaviour = held_item.tool_behaviour
 
@@ -69,15 +58,17 @@
 			var/obj/machinery/cell_charger/charger = allocate(__IMPLIED_TYPE__)
 			//Test 1: charger must be anchored
 			held_item.melee_attack_chain(borg, charger)
-			TEST_ASSERT(!charger.anchored, "Cell charger was not anchored by borg omnitool wrench!")
+			TEST_ASSERT(!charger.anchored, "Cell charger was not unanchored by borg omnitool wrench!")
 			//Test 2: charger must be unanchored
 			held_item.melee_attack_chain(borg, charger)
-			TEST_ASSERT(charger.anchored, "Cell charger was not unanchored by borg omnitool wrench!")
+			TEST_ASSERT(charger.anchored, "Cell charger was not anchored by borg omnitool wrench!")
 
 		//Tests for omnitool wirecutter
 		if(TOOL_WIRECUTTER)
 			//Test 1: is holding wirecutters for wires
 			TEST_ASSERT(borg.is_holding_tool_quality(TOOL_WIRECUTTER), "Cannot find borg omnitool wirecutters in borgs hand!")
+			if(isnull(test_frame))
+				test_frame = allocate(__IMPLIED_TYPE__)
 			//Test 2: frame wires must be cut
 			test_frame.state = FRAME_STATE_WIRED
 			held_item.melee_attack_chain(borg, test_frame)
