@@ -279,8 +279,8 @@
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
-	if(embed_falloff_tile && get_embed())
-		set_embed(embed_data.generate_with_values(embed_data.embed_chance + embed_falloff_tile)) // Should be rewritten in projecitle refactor
+	if(embed_falloff_tile && get_embed()) //TODO: THIS BULLSHIT
+		set_embed(embed_data.generate_with_values(embed_data.embed_chance + embed_falloff_tile))
 	if(damage_falloff_tile && damage >= 0)
 		damage += damage_falloff_tile
 	if(stamina_falloff_tile && stamina >= 0)
@@ -855,7 +855,6 @@
 	if (!isturf(loc) || !movement_vector)
 		return
 	last_projectile_move = world.time
-	var/say_something = TRUE
 	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src))
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
 		var/pixel_x_actual = (pixel_x + 16) % 32
@@ -891,8 +890,6 @@
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
 		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
 		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
-		if (say_something)
-			to_chat(world, "pixels_to_move: [pixels_to_move] distance_to_move: [distance_to_move] x_to_border: [x_to_border] y_to_border: [y_to_border] x_shift: [x_shift] y_shift: [y_shift]")
 		pixels_to_move -= distance_to_move
 
 		if (x_shift || y_shift)
@@ -913,17 +910,13 @@
 		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
 
-		if (say_something)
-			to_chat(world, "actual_x: [actual_x] actual_y: [actual_y]")
-			say_something = FALSE
-
 		if (hitscan)
 			pixel_x = actual_x
 			pixel_y = actual_y
 		else
 			pixel_x -= x_shift * ICON_SIZE_X
 			pixel_y -= y_shift * ICON_SIZE_Y
-			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = 0.5, flags = ANIMATION_CONTINUE)
+			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_END_NOW)
 
 		if (homing)
 			process_homing()
