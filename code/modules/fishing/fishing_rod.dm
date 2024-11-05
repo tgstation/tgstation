@@ -115,7 +115,7 @@
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(bait)
-		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait"
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
