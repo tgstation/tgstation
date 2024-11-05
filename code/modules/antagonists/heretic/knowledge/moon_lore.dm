@@ -66,7 +66,7 @@
 /datum/heretic_knowledge/moon_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
-		to_chat(carbon_target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
+		to_chat(target, span_danger("You hear echoing laughter from above..but it is dull and distant."))
 		return
 
 	source.apply_status_effect(/datum/status_effect/moon_grasp_hide)
@@ -281,7 +281,7 @@
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
-		if(tcarbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
+		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
 		new moon_effect(get_turf(carbon_view))
 		carbon_view.adjust_confusion(2 SECONDS)
