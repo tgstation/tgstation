@@ -1,4 +1,6 @@
 
+#define PERCEPTOMATRIX_INACTIVE_FLAGS SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
+#define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASING_CLOTHES // we love casting spells
 
 /// Belt which can turn you into a beast, once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
@@ -16,7 +18,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 8 SECONDS
-	clothing_flags = SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT | CASTING_CLOTHES // we love casting spells
+	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
 	clothing_traits = list(
 		/* eye/ear protection */
 		TRAIT_NOFLASH,
@@ -43,6 +45,7 @@
 
 	/// If we have a core or not
 	var/core_installed = FALSE
+	/// Active components to add onto the mob, deleted and created on core installation/removal
 	var/list/active_components
 
 // weaker overall but better against energy
@@ -65,16 +68,23 @@
 	// some-fucking-how, RemoveElement fails to find the element in below proc if i try to remove it. so whatever.
 	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
 
+	RegisterSignal(spell, COMSIG_SPELL_BEFORE_CAST, PROC_REF(check_core))
+
+/obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(/datum/spell)
+	if(!core_installed && is_type_in_list(spell, actions_types))
+		to_chat(caster, "You can't zap minds without a core installd!")
+		return SPELL_CANCEL_CAST
+
 /obj/item/clothing/head/helmet/perceptomatrix/proc/update_anomaly_state()
 
 	// If the core isn't installed, or it's temporarily deactivated, disable special functions.
 	if(!core_installed)
-		clothing_flags = initial(clothing_flags) & ~CASTING_CLOTHES
+		clothing_flags = PERCEPTOMATRIX_INACTIVE_FLAGS
 		detach_clothing_traits(clothing_traits)
 		QDEL_LIST(active_components)
 		return
 
-	clothing_flags = initial(clothing_flags)
+	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
 	attach_clothing_traits(initial(clothing_traits))
 
 	LAZYADD(active_components, AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD)))
@@ -104,17 +114,18 @@
 	worn_icon_state = base_icon_state + (core_installed ? "" : "_inactive")
 	return ..()
 
-/obj/item/clothing/head/helmet/perceptomatrix/attackby(obj/item/weapon, mob/user, params)
+/obj/item/clothing/head/helmet/perceptomatrix/item_interaction(obj/item/weapon, mob/user, params)
 	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/hallucination))
-		return ..()
+		return NONE
 	balloon_alert(user, "inserting...")
 	if (!do_after(user, delay = 3 SECONDS, target = src))
-		return
+		return ITEM_INTERACT_BLOCKING
 	qdel(weapon)
 	core_installed = TRUE
 	update_anomaly_state()
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /// Pre-activated polymorph belt
 /obj/item/clothing/head/helmet/perceptomatrix/functioning
@@ -128,7 +139,7 @@
 
 	sound = 'sound/items/weapons/emitter2.ogg'
 	school = SCHOOL_PSYCHIC
-	cooldown_time = 25 SECONDS
+	cooldown_time = 15 SECONDS
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -144,15 +155,14 @@
 	var/hallucination_duration = 25 SECONDS
 	/// Helmet the spell's bound to.
 	var/obj/item/clothing/head/helmet/perceptomatrix/linked_helmet
-	var/datum/effect_system/spark_spread/quantum/spark_sys = new /datum/effect_system/spark_spread/quantum
+	/// Spark system
+	var/datum/effect_system/spark_spread/quantum/spark_sys
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/New(Target)
 	. = ..()
 
-	linked_helmet = Target
-
+	linked_helmet = target
 	spark_sys = new /datum/effect_system/spark_spread/quantum
-
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/is_valid_target(atom/cast_on)
 	. = ..()
@@ -161,7 +171,7 @@
 	if(!ishuman(cast_on))
 		return FALSE
 
-	return cast_on
+	return TRUE
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/can_cast_spell(feedback = TRUE)
 	. = ..()
@@ -170,11 +180,6 @@
 
 	if(!linked_helmet)
 		stack_trace("casting w/o linked perceptomatrix!")
-
-	if(linked_helmet && !(linked_helmet.core_installed))
-		if(feedback)
-			to_chat(owner, span_warning("You must install a hallucination core first!"))
-		return
 
 	return .
 

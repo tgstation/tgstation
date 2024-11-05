@@ -32,7 +32,7 @@
 
 	if(HAS_TRAIT(owner, TRAIT_PERCEPTUAL_TRAUMA_BYPASS))
 		QDEL_NULL(friend)
-		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(reroll_friend))//, override = TRUE)
+		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(reroll_friend))
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
