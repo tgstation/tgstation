@@ -202,7 +202,7 @@
 	SIGNAL_HANDLER
 	playsound(result, result.attack_sound, 50, TRUE) // reeeeeeeeeeeeeee...
 
-/obj/item/fish/tadpole/get_export_price(price, percent)
+/obj/item/fish/tadpole/get_export_price(price, elasticity_percent)
 	return 2 //two credits. Tadpoles aren't really that valueable.
 
 /obj/item/fish/perch
