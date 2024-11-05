@@ -122,7 +122,7 @@
 
 /datum/action/cooldown/spell/pointed/percept_hallucination
 	name = "Hallucinate"
-	desc = "Redirect perceptual energies towards a target, staggering them. Temporarily disables the perceptomatrix helmet."
+	desc = "Redirect perceptual energies towards a target, staggering them."
 	button_icon_state = "blind"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 
