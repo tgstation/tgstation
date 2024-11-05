@@ -407,7 +407,6 @@
 	y_coord -= target_turf.y
 	if(!length(spot_list))
 		qdel(src)
-		return
 
 /datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
 	spot_list += target
