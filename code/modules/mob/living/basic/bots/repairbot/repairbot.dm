@@ -264,10 +264,10 @@
 /mob/living/basic/bot/repairbot/generate_speak_list()
 	return neutral_voicelines + emagged_voicelines
 
-/mob/living/basic/bot/repairbot/attempt_access(mob/bot, obj/door_attempt)
+/mob/living/basic/bot/repairbot/Bumped(atom/movable/bumped_object)
 	. = ..()
-	if(istype(door_attempt, /obj/machinery/door/firedoor) && door_attempt.density)
-		INVOKE_ASYNC(our_crowbar, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, door_attempt)
+	if(istype(bumped_object, /obj/machinery/door/firedoor) && bumped_object.density)
+		our_crowbar.melee_attack_chain(src, bumped_object)
 
 /mob/living/basic/bot/repairbot/ui_data(mob/user)
 	var/list/data = ..()
