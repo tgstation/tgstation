@@ -61,7 +61,7 @@
 	fish_traits = list()
 	evolution_types = list(/datum/fish_evolution/moonfish)
 
-/obj/item/fish/moonfish/dwarf/update_size_and_weight(new_size = average_size, new_weight = average_weight)
+/obj/item/fish/moonfish/dwarf/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	var/multiplier = (size / (average_size * 1.5)) * (weight / (average_weight * 1.5))
 
