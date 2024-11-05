@@ -178,3 +178,32 @@
   timothymtorres:
   - bugfix: Glass floors can now be crowbarred.
   - code_imp: Removed deprecated crowbar code for tiles
+2024-11-05:
+  Ghommie:
+  - rscadd: Added a new score that keeps track of all different fish that you've caught
+      between shifts.
+  - server: Added a new schema table to store the aforementioned entries and the ckeys
+      associated to them, with an additional timestamp column.
+  - bugfix: Fixing transparency for materials, especially glass walls and their unwanted
+      opacity.
+  - bugfix: Custom material walls are no longer so dark.
+  Jewelry-x:
+  - bugfix: fixed a rare runtime with lost crew having no organs
+  carlarctg:
+  - qol: mining resonator clips to belt slot
+  carpotoxin:
+  - rscadd: ' Adds flat boxes, which are simple cardboard boxes that can be hidden
+      beneath tiles'
+  - code_imp: Undertile element has a new variable which can tilt a tile if something
+      is beneath it
+  grungussuss:
+  - sound: the volume that ship ambience, ambience, radio noise and announcements
+      play at can now be tweaked in preferences, check your preferences!
+  zxaber:
+  - rscdel: SiliConnect, a tool meant for Roboticists, is no longer included by default
+      on borgs.
+  - rscadd: RoboTact, the borg self-status app, now shows the status of other borgs
+      synced to the same AI. Syndicate borgs can likewise see eachother's status,
+      even without an AI.
+  - balance: RoboTact also shows their synced AI's very basic status of functional
+      or offline.

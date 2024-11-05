@@ -1,5 +1,0 @@
-author: "carpotoxin"
-delete-after: True
-changes:
-  - rscadd: " Adds flat boxes, which are simple cardboard boxes that can be hidden beneath tiles"
-  - code_imp: "Undertile element has a new variable which can tilt a tile if something is beneath it"

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a new score that keeps track of all different fish that you've caught between shifts."
-  - server: "Added a new schema table to store the aforementioned entries and the ckeys associated to them, with an additional timestamp column."
