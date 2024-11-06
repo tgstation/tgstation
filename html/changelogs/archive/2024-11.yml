@@ -207,3 +207,17 @@
       even without an AI.
   - balance: RoboTact also shows their synced AI's very basic status of functional
       or offline.
+2024-11-06:
+  Absolucy:
+  - balance: Alien operating tables now have a 20% surgery speed bonus.
+  - refactor: Refactored how table/bed surgery speed modifiers are calculated, so
+      it's hopefully more efficient now.
+  Contrabang:
+  - code_imp: Removes S
+  Shadow-Quill:
+  - admin: When a secret note is applied, it'll now be logged as a secret note (instead
+      of appearing like a regular note).
+  SmArtKar:
+  - bugfix: Fixed MODsuit deactivation not disabling modules
+  thegrb93:
+  - bugfix: Fix borg throwing not working

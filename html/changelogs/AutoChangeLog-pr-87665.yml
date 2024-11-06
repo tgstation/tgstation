@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Alien operating tables now have a 20% surgery speed bonus."
-  - refactor: "Refactored how table/bed surgery speed modifiers are calculated, so it's hopefully more efficient now."
