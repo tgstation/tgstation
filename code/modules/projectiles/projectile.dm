@@ -39,10 +39,18 @@
 	var/yo = null
 	/// Projectile's starting turf
 	var/turf/starting = null
-	/// pixel_x where the player clicked. Default is the center
+	/// pixel_x where the player clicked. Default is the center.
 	var/p_x = 16
 	/// pixel_y where the player clicked. Default is the center
 	var/p_y = 16
+	/// X coordinate at which the projectile entered a new turf
+	var/entry_x
+	/// Y coordinate at which the projectile entered a new turf
+	var/entry_y
+	/// X coordinate at which the projectile visually impacted the target
+	var/impact_x
+	/// Y coordinate at which the projectile visually impacted the target
+	var/impact_y
 
 	/// If the projectile was fired already
 	var/fired = FALSE
@@ -334,14 +342,12 @@
 		return BULLET_ACT_BLOCK
 
 	var/turf/target_turf = get_turf(target)
-	var/hitx
-	var/hity
 	if(target == original)
-		hitx = target.pixel_x + p_x - 16
-		hity = target.pixel_y + p_y - 16
+		impact_x = target.pixel_x + p_x - 16
+		impact_y = target.pixel_y + p_y - 16
 	else
-		hitx = target.pixel_x + rand(-8, 8)
-		hity = target.pixel_y + rand(-8, 8)
+		impact_x = entry_x + movement_vector.pixel_x * rand(0, 16)
+		impact_y = entry_y + movement_vector.pixel_y * rand(0, 16)
 
 	if(isturf(target) && hitsound_wall)
 		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)
@@ -349,9 +355,9 @@
 	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
 		var/turf/closed/wall/target_wall = target_turf
 		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_wall, hitx, hity)
+			new impact_effect_type(target_wall, impact_x, impact_y)
 
-		target_wall.add_dent(WALL_DENT_SHOT, hitx, hity)
+		target_wall.add_dent(WALL_DENT_SHOT, impact_x, impact_y)
 		return BULLET_ACT_HIT
 
 	if (hitsound)
@@ -359,11 +365,11 @@
 
 	if (!isliving(target))
 		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_turf, hitx, hity)
+			new impact_effect_type(target_turf, impact_x, impact_y)
 		return BULLET_ACT_HIT
 
 	if((blocked >= 100 || (damage && damage_type != BRUTE)) && impact_effect_type && !hitscan)
-		new impact_effect_type(target_turf, hitx, hity)
+		new impact_effect_type(target_turf, impact_x, impact_y)
 
 	var/mob/living/living_target = target
 	var/reagent_note
@@ -906,10 +912,13 @@
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
 		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
 		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
+		var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
+		// Calculate where in the turf we will be when we cross the edge, for impact VFX
+		entry_x = pixel_x + distance_to_move * movement_vector.pixel_x - ICON_SIZE_X * x_shift
+		entry_y = pixel_y + distance_to_move * movement_vector.pixel_y - ICON_SIZE_Y * y_shift
 		var/delete_distance
 
 		if (x_shift || y_shift)
-			var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
 			// We've hit an invalid turf, end of a z level or smth went wrong
 			if (!istype(new_turf))
 				qdel(src)
@@ -924,7 +933,7 @@
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
 			if (deletion_queued)
-				delete_distance = distance_to_move
+				delete_distance = clamp(distance_to_move + sqrt(abs(entry_x - impact_x) ** 2 + abs(entry_y - impact_y) ** 2), 0, pixels_to_move)
 
 		// We cannot move more than one turf worth of distance per loop, so this is a safe solution
 		pixels_moved_last_tile += distance_to_move
@@ -937,15 +946,15 @@
 				delete_distance = distance_to_move - (pixels_moved_last_tile - ICON_SIZE_ALL)
 
 		if (deletion_queued)
-			pixel_x -= x_shift * ICON_SIZE_X
-			pixel_y -= y_shift * ICON_SIZE_Y
+			//pixel_x -= x_shift * ICON_SIZE_X
+			//pixel_y -= y_shift * ICON_SIZE_Y
 			// Similarly to normal animate code, but use lowered deletion distance instead.
-			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance - x_shift * ICON_SIZE_X
-			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance - y_shift * ICON_SIZE_Y
+			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance - (loc == new_turf) ? x_shift * ICON_SIZE_X : 0
+			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance - (loc == new_turf) ? y_shift * ICON_SIZE_Y : 0
 			// In order to keep a consistent speed, calculate at what point between ticks we get deleted
 			var/animate_time = world.tick_lag * (total_move_distance - pixels_to_move + delete_distance) / total_move_distance
 			// We can use animation chains to visually disappear between ticks
-			animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_PARALLEL)
+			animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_END_NOW)
 			animate(alpha = 0, time = 0)
 			return
 
@@ -962,6 +971,7 @@
 			pixel_y -= y_shift * ICON_SIZE_Y
 			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
 
+		// Homing caps our movement speed per loop while leaving per tick speed intact, so we can just call process_homing every loop here
 		if (homing)
 			process_homing()
 
