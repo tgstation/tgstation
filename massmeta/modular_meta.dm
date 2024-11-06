@@ -12,7 +12,6 @@
 // Modular files (covered with tests)
 
 // BEGIN_INCLUDE
-#include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\includes.dm"
 #include "features\kvass\includes.dm"
 #include "features\smites\includes.dm"

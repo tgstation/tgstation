@@ -4,8 +4,7 @@
 #include "code\nukeops_uplink.dm"
 #include "code\vehicle_actions.dm"
 
-
 /datum/modpack/cheburek_car
-	name = "Жигуль машинка"
-	desc = "Хуярит все и вся, хардбасс тоже!"
-	author = "Some Specimes"
+	name = "Жигуль 2106, корч, машинка"
+	desc = "Межгалактическое ведро с болтами не догнившее еще с тех лет, Вау!"
+	author = "Artemchik542"
