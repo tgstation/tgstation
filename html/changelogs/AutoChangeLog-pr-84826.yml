@@ -1,0 +1,4 @@
+author: "Kiko"
+delete-after: True
+changes:
+  - rscadd: "Nebulastation, new station map"
