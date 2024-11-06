@@ -419,8 +419,6 @@
 		return FALSE
 	return ..()
 
-/* TODO: THIS BULLSHIT
-
 /obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(trail)
@@ -431,17 +429,15 @@
 	if(!trajectory)
 		return
 
-	var/datum/point/vector/previous = trajectory.return_vector_after_increments(1, -1)
-	var/obj/effect/overlay/trail = new /obj/effect/overlay(previous.return_turf())
-	trail.pixel_x = previous.return_px()
-	trail.pixel_y = previous.return_py()
+	var/obj/effect/overlay/trail = new /obj/effect/overlay(loc)
+	trail.pixel_x = pixel_x + movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond / speed
+	trail.pixel_y = pixel_y + movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond / speed
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
 	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
-*/
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
