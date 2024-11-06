@@ -801,11 +801,11 @@
 
 /obj/item/fishing_rod/material/Initialize(mapload)
 	. = ..()
-	name = "fishing_rod"
+	name = "fishing rod"
 
 /obj/item/fishing_rod/material/finalize_remove_material_effects(list/materials)
 	. = ..()
-	name = "fishing_rod" //so it doesn't reset to "material fishing rod"
+	name = "fishing rod" //so it doesn't reset to "material fishing rod"
 
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
