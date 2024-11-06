@@ -136,7 +136,6 @@
 	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
 	return ITEM_INTERACT_SUCCESS
 
-/// Pre-activated polymorph belt
 /obj/item/clothing/head/helmet/perceptomatrix/functioning
 	core_installed = TRUE
 
@@ -184,7 +183,7 @@
 		return FALSE
 	if(ishuman(cast_on))
 		return TRUE
-	if(!istype(cast_on, /obj/item/food/pancakes))
+	if(istype(cast_on, /obj/item/food/pancakes))
 		return TRUE
 
 	return FALSE
@@ -241,11 +240,12 @@
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	cast_fx(cast_on)
 
 	if(istype(cast_on, /obj/item/food/pancakes))
 		blows_up_pancakes_with_mind(cast_on)
 		return
+
+	cast_fx(cast_on)
 
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("You feel psychic energies reflecting off you."))
