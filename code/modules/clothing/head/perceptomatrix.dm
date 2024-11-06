@@ -1,6 +1,6 @@
 
 #define PERCEPTOMATRIX_INACTIVE_FLAGS SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
-#define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASING_CLOTHES // we love casting spells
+#define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASTING_CLOTHES // we love casting spells
 
 /// Belt which can turn you into a beast, once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
@@ -28,6 +28,7 @@
 		TRAIT_GOOD_HEARING,
 		/* mental protection */
 		TRAIT_PERCEPTUAL_TRAUMA_BYPASS, //wip
+		TRAIT_RDS_SUPPRESSED,
 		TRAIT_MADNESS_IMMUNE,
 		/* psychic protection */
 		TRAIT_NO_MINDSWAP,
@@ -68,9 +69,18 @@
 	// some-fucking-how, RemoveElement fails to find the element in below proc if i try to remove it. so whatever.
 	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, forced = TRUE)
 
-	RegisterSignal(spell, COMSIG_SPELL_BEFORE_CAST, PROC_REF(check_core))
+/obj/item/clothing/head/helmet/perceptomatrix/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HEAD)
+		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(pre_cast_core_check))
 
-/obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(/datum/spell)
+/obj/item/clothing/head/helmet/perceptomatrix/dropped(mob/living/user, slot)
+	if(!(slot & ITEM_SLOT_HEAD))
+		UnregisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST)
+	..()
+
+// Prevent casting the spell w/o the core.
+/obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, datum/spell)
 	if(!core_installed && is_type_in_list(spell, actions_types))
 		to_chat(caster, "You can't zap minds without a core installd!")
 		return SPELL_CANCEL_CAST
@@ -97,7 +107,6 @@
 	update_icon_state()
 
 /obj/item/clothing/head/helmet/perceptomatrix/Destroy(force)
-	QDEL_NULL(transform_action)
 	QDEL_NULL(active_components)
 	return ..()
 
@@ -164,14 +173,21 @@
 	linked_helmet = target
 	spark_sys = new /datum/effect_system/spark_spread/quantum
 
+/datum/action/cooldown/spell/pointed/percept_hallucination/Destroy()
+	linked_helmet = null
+	QDEL_NULL(spark_sys)
+	..()
+
 /datum/action/cooldown/spell/pointed/percept_hallucination/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!ishuman(cast_on))
-		return FALSE
+	if(ishuman(cast_on))
+		return TRUE
+	if(!istype(cast_on, /obj/item/food/pancakes))
+		return TRUE
 
-	return TRUE
+	return FALSE
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/can_cast_spell(feedback = TRUE)
 	. = ..()
@@ -183,14 +199,53 @@
 
 	return .
 
-/datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
-	. = ..()
+/datum/action/cooldown/spell/pointed/percept_hallucination/proc/blows_up_pancakes_with_mind(obj/item/food/pancakes/pancakes)
+	cast_fx(pancakes)
+
+
+	owner.visible_message(
+		span_userdanger("[owner] blows up [pancakes] with [owner.p_their()] mind!"),
+		span_userdanger("You blow up [pancakes] with your mind!")
+	)
+
+	for(var/mob/chef in get_hearers_in_view(7, pancakes))
+		if(!chef.mind)
+			continue
+		if(!HAS_TRAIT_FROM(pancakes, TRAIT_FOOD_CHEF_MADE, REF(chef.mind)))
+			continue
+		if(prob(5) || check_holidays(APRIL_FOOLS))
+			chef.say("Ma fuckin' pancakes!")
+			playsound(pancakes, 'sound/effects/fuse.ogg', 80)
+			animate(pancakes, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
+			animate(pancakes, time = 1, pixel_z = 0, easing = BOUNCE_EASING)
+			for(var/i in 1 to 15)
+				animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
+
+			addtimer(CALLBACK(src, PROC_REF(pancake_explosion), pancakes), 1.5 SECONDS)
+			return
+
+	pancake_explosion(pancakes)
+
+/datum/action/cooldown/spell/pointed/percept_hallucination/proc/pancake_explosion(obj/pancakes)
+	explosion(pancakes, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1, flame_range = 2)
+	qdel(pancakes)
+	StartCooldown()
+
+/datum/action/cooldown/spell/pointed/percept_hallucination/proc/cast_fx(atom/cast_on)
 	owner.Beam(cast_on, icon_state = "greyscale_lightning", beam_color = COLOR_FADED_PINK, time = 0.5 SECONDS)
 
 	spark_sys.set_up(2, 1, get_turf(owner))
 	spark_sys.start()
 	spark_sys.set_up(4, 1, get_turf(cast_on))
 	spark_sys.start()
+
+/datum/action/cooldown/spell/pointed/percept_hallucination/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	cast_fx(cast_on)
+
+	if(istype(cast_on, /obj/item/food/pancakes))
+		blows_up_pancakes_with_mind(cast_on)
+		return
 
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("You feel psychic energies reflecting off you."))
@@ -205,3 +260,6 @@
 		hallucination_duration * 0.2, hallucination_duration) // lower/upper hallucination freq. bound
 
 	return TRUE
+
+#undef PERCEPTOMATRIX_INACTIVE_FLAGS
+#undef PERCEPTOMATRIX_ACTIVE_FLAGS

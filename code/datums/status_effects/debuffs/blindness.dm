@@ -91,7 +91,7 @@
 		on_remove()
 		return
 
-	if(HAS_TRAIT(TRAIT_SIGHT_BYPASS))
+	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
 		make_unblind()
 		return
 	make_blind()
