@@ -90,3 +90,15 @@
 
 /// How far do the projectile hits the prone mob
 #define MAX_RANGE_HIT_PRONE_TARGETS 10
+
+/// Queued for impact deletion (simple qdel)
+#define PROJECTILE_IMPACT_DELETE "impact_delete"
+/// Queued for range deletion (on_range call)
+#define PROJECTILE_RANGE_DELETE "range_sdelete"
+
+/// Projectile either hasn't impacted anything, or pierced through the target
+#define PROJECTILE_IMPACT_PASSED "impact_passed"
+/// Projectile has been "deleted" before bullet_act call has occured
+#define PROJECTILE_IMPACT_INTERRUPTED "impact_interrupted"
+/// Projectile has successfully impacted something and is scheduled for deletion
+#define PROJECTILE_IMPACT_SUCCESSFUL "impact_successful"

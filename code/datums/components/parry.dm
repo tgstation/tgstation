@@ -96,6 +96,9 @@
 	attempt_parry(source, user)
 
 /datum/component/parriable_projectile/proc/attempt_parry(obj/projectile/source, mob/user)
+	if (QDELETED(source) || source.deletion_queued)
+		return
+
 	if (SEND_SIGNAL(user, COMSIG_LIVING_PROJECTILE_PARRIED, source) & INTERCEPT_PARRY_EFFECTS)
 		return
 

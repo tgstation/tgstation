@@ -224,6 +224,9 @@
 	var/turf/last_tick_turf
 	/// Remaining pixel movement last tick - used for precise range calculations
 	var/pixels_moved_last_tile = 0
+	/// In order to preserve animations, projectiles are only deleted the tick *after* they impact something.
+	/// Same is applied to reaching the range limit
+	var/deletion_queued = NONE
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -288,10 +291,10 @@
 
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
-		on_range()
+		deletion_queued = PROJECTILE_RANGE_DELETE
 
 	if(damage_falloff_tile && damage <= 0 || stamina_falloff_tile && stamina <= 0)
-		on_range()
+		deletion_queued = PROJECTILE_RANGE_DELETE
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE_OUT)
@@ -327,7 +330,7 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
 
-	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
+	if(QDELETED(src) || deletion_queued) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
 
 	var/turf/target_turf = get_turf(target)
@@ -441,7 +444,11 @@
  * Also, we select_target to find what to process_hit first.
  */
 /obj/projectile/proc/impact(atom/target)
-	if(impacted[target.weak_reference]) // never doublehit, otherwise someone may end up running into a projectile from the back
+	// Don't impact anything if we've been queued for deletion
+	if (deletion_queued)
+		return
+	// never doublehit, otherwise someone may end up running into a projectile from the back
+	if(impacted[target.weak_reference])
 		return
 
 	if(ricochets < ricochets_max && check_ricochet_flag(target) && check_ricochet(target) && target.handle_ricochet(src))
@@ -462,7 +469,10 @@
 	var/turf/target_turf = get_turf(target)
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(target_turf, starting)), 5, 100))
-	process_hit_loop(select_target(target_turf, target))
+	var/impact_result = process_hit_loop(select_target(target_turf, target))
+	if (impact_result == PROJECTILE_IMPACT_PASSED)
+		return
+	deletion_queued = PROJECTILE_IMPACT_DELETE
 
 /*
  * Main projectile hit loop code
@@ -473,14 +483,17 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	// Don't impact anything if we've been queued for deletion
+	if (deletion_queued)
+		return PROJECTILE_IMPACT_PASSED
+
 	var/turf/target_turf = get_turf(target)
-	while (target && !QDELETED(src))
+	while (target && !QDELETED(src) && !deletion_queued)
 		// Doublehitting can be an issue with slow projectiles or when the server is chugging
 		impacted[WEAKREF(target)] = TRUE
 		var/mode = prehit_pierce(target)
 		if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
-			qdel(src)
-			return
+			return PROJECTILE_IMPACT_INTERRUPTED
 
 		// If we've phasing through a target, first set ourselves as phasing and then try to locate a new one
 		if(mode == PROJECTILE_PIERCE_PHASE)
@@ -491,12 +504,10 @@
 			continue
 
 		if (SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args, src) & PROJECTILE_INTERRUPT_HIT)
-			qdel(src)
-			return
+			return PROJECTILE_IMPACT_INTERRUPTED
 
 		if (SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_PREHIT, args) & PROJECTILE_INTERRUPT_HIT)
-			qdel(src)
-			return
+			return PROJECTILE_IMPACT_INTERRUPTED
 
 		if(mode == PROJECTILE_PIERCE_HIT)
 			pierces += 1
@@ -504,13 +515,11 @@
 		// Targets should handle their impact logic on our own and if they decide that we hit them, they call our on_hit
 		var/result = target.bullet_act(src, def_zone, mode == PROJECTILE_PIERCE_HIT)
 		if (result != BULLET_ACT_FORCE_PIERCE && max_pierces && pierces >= max_pierces)
-			qdel(src)
-			return
+			return PROJECTILE_IMPACT_SUCCESSFUL
 
 		// If we're not piercing or phasing, delete ourselves
 		if (result != BULLET_ACT_FORCE_PIERCE && mode != PROJECTILE_PIERCE_HIT && mode != PROJECTILE_PIERCE_PHASE)
-			qdel(src)
-			return
+			return PROJECTILE_IMPACT_SUCCESSFUL
 
 		// We've piercing though this one, go look for a new target
 		if(!(movement_type & PHASING))
@@ -518,6 +527,8 @@
 			movement_type |= PHASING
 
 		target = select_target(target_turf, target)
+
+	return PROJECTILE_IMPACT_PASSED
 
 /**
  * Selects a target to hit from a turf
@@ -726,7 +737,7 @@
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit_loop(direct_target)
-		if(QDELETED(src))
+		if(QDELETED(src) || deletion_queued)
 			return
 	var/turf/starting = get_turf(src)
 	if(isnum(fire_angle))
@@ -789,6 +800,8 @@
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
+	if (angle == new_angle)
+		return
 	if(!nondirectional_sprite)
 		transform = transform.TurnTo(angle, new_angle)
 	angle = new_angle
@@ -817,6 +830,14 @@
 		fired = FALSE
 		return PROCESS_KILL
 
+	if (deletion_queued == PROJECTILE_IMPACT_DELETE)
+		qdel(src)
+		return
+
+	if (deletion_queued == PROJECTILE_RANGE_DELETE)
+		on_range()
+		return
+
 	if(paused || !isturf(loc))
 		// Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		last_projectile_move = last_process
@@ -838,7 +859,7 @@
 		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
 	process_movement(pixels_to_move)
 
-	if (!QDELETED(src) && isturf(loc))
+	if (!QDELETED(src) && !deletion_queued && isturf(loc))
 		RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 		last_tick_turf = loc
 
@@ -854,8 +875,9 @@
 /obj/projectile/proc/process_movement(pixels_to_move, hitscan = FALSE, tile_limit = FALSE)
 	if (!isturf(loc) || !movement_vector)
 		return
+	var/total_move_distance = pixels_to_move
 	last_projectile_move = world.time
-	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src))
+	while (pixels_to_move > 0 && isturf(loc) && !QDELETED(src) && !deletion_queued)
 		// Because pixel_x/y represents offset and not actual visual position of the projectile, we add 16 pixels to each and cut the excess because projectiles are not meant to be highly offset by default
 		var/pixel_x_actual = abs(pixel_x) == ICON_SIZE_X / 2 ? pixel_x : (pixel_x + ICON_SIZE_X / 2) % ICON_SIZE_X
 		var/pixel_y_actual = abs(pixel_y) == ICON_SIZE_Y / 2 ? pixel_y : (pixel_y + ICON_SIZE_Y / 2) % ICON_SIZE_Y
@@ -875,12 +897,6 @@
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
 			return
-		pixels_moved_last_tile += distance_to_border
-		// We cannot move more than one turf worth of distance per tick, so this is a safe solution
-		if (pixels_moved_last_tile >= ICON_SIZE_ALL)
-			reduce_range()
-			if (QDELETED(src))
-				return
 
 		var/distance_to_move = min(distance_to_border, pixels_to_move)
 		// For homing we cap the maximum distance to move every loop
@@ -890,7 +906,7 @@
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
 		var/x_shift = SIGN(movement_vector.pixel_x) * (!isnull(x_to_border) && distance_to_move >= x_to_border)
 		var/y_shift = SIGN(movement_vector.pixel_y) * (!isnull(y_to_border) && distance_to_move >= y_to_border)
-		pixels_to_move -= distance_to_move
+		var/delete_distance
 
 		if (x_shift || y_shift)
 			var/turf/new_turf = locate(x + x_shift, y + y_shift, z)
@@ -905,10 +921,39 @@
 			// We hit something and got deleted, stop the loop
 			if (QDELETED(src))
 				return
+			// If we've impacted something, we need to animate our movement until the actual hit
+			// Otherwise the projectile visually disappears slightly before the actual impact
+			if (deletion_queued)
+				delete_distance = distance_to_move
 
+		// We cannot move more than one turf worth of distance per loop, so this is a safe solution
+		pixels_moved_last_tile += distance_to_move
+		if (!deletion_queued && pixels_moved_last_tile >= ICON_SIZE_ALL)
+			reduce_range()
+			if (QDELETED(src))
+				return
+			// Similarly with range out deletion, need to calculate how many pixels we can actually move before deleting
+			if (deletion_queued)
+				delete_distance = distance_to_move - (pixels_moved_last_tile - ICON_SIZE_ALL)
+
+		if (deletion_queued)
+			pixel_x -= x_shift * ICON_SIZE_X
+			pixel_y -= y_shift * ICON_SIZE_Y
+			// Similarly to normal animate code, but use lowered deletion distance instead.
+			var/delete_x = pixel_x + movement_vector.pixel_x * delete_distance - x_shift * ICON_SIZE_X
+			var/delete_y = pixel_y + movement_vector.pixel_y * delete_distance - y_shift * ICON_SIZE_Y
+			// In order to keep a consistent speed, calculate at what point between ticks we get deleted
+			var/animate_time = world.tick_lag * (total_move_distance - pixels_to_move + delete_distance) / total_move_distance
+			// We can use animation chains to visually disappear between ticks
+			animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_PARALLEL)
+			animate(alpha = 0, time = 0)
+			return
+
+		pixels_to_move -= distance_to_move
 		// animate() instantly changes pixel_x/y values and just interpolates them client-side so next loop processes properly
 		var/actual_x = pixel_x + movement_vector.pixel_x * distance_to_move - x_shift * ICON_SIZE_X
 		var/actual_y = pixel_y + movement_vector.pixel_y * distance_to_move - y_shift * ICON_SIZE_Y
+
 		if (hitscan)
 			pixel_x = actual_x
 			pixel_y = actual_y
@@ -916,6 +961,7 @@
 			pixel_x -= x_shift * ICON_SIZE_X
 			pixel_y -= y_shift * ICON_SIZE_Y
 			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
+
 		if (homing)
 			process_homing()
 
