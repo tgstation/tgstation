@@ -5,11 +5,6 @@
 	gender_specific = FALSE
 	var/body_zones
 
-/datum/sprite_accessory/body_marking/none
-	name = SPRITE_ACCESSORY_NONE
-	icon_state = SPRITE_ACCESSORY_NONE
-	body_zones = FULL_BODY
-
 /datum/sprite_accessory/body_marking/other
 	icon = 'modular_doppler/modular_customization/markings/icons/markings/other_markings.dmi'
 

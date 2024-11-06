@@ -14,6 +14,7 @@
 	var/datum/bodypart_overlay/simple/body_marking/body_markings/markings = new /datum/bodypart_overlay/simple/body_marking/body_markings()
 	var/list/returnval = list()
 	var/list/allmarkings = assoc_to_keys_features(SSaccessories.body_markings)
+	returnval += "None"
 	for(var/i in allmarkings)
 		var/datum/sprite_accessory/body_marking/accessory = markings.get_accessory(i)
 		if(accessory.body_zones & body_zone)
