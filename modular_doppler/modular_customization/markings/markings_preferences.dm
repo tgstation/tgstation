@@ -128,28 +128,3 @@
 	return preferences.read_preference(/datum/preference/choiced/markings/markings_r_leg2) != SPRITE_ACCESSORY_NONE
 
 #undef MARKING_LIST_LEN
-
-#undef MARKING_HEAD
-#undef MARKING_HEAD2
-#undef MARKING_HEAD3
-#undef MARKING_CHEST
-#undef MARKING_CHEST2
-#undef MARKING_CHEST3
-#undef MARKING_RARM
-#undef MARKING_RARM2
-#undef MARKING_RARM3
-#undef MARKING_LARM
-#undef MARKING_LARM2
-#undef MARKING_LARM3
-#undef MARKING_LHAND
-#undef MARKING_LHAND2
-#undef MARKING_LHAND3
-#undef MARKING_RHAND
-#undef MARKING_RHAND2
-#undef MARKING_RHAND3
-#undef MARKING_LLEG
-#undef MARKING_LLEG2
-#undef MARKING_LLEG3
-#undef MARKING_RLEG
-#undef MARKING_RLEG2
-#undef MARKING_RLEG3

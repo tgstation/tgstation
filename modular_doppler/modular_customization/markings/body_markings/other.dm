@@ -1,5 +1,5 @@
 /datum/sprite_accessory/body_marking
-	icon = 'modular_doppler/modular_customization/augmentsplus/icons/markings/other_markings.dmi'
+	icon = 'modular_doppler/modular_customization/markings/icons/markings/other_markings.dmi'
 	color_src = "#CCCCCC"
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = SPRITE_ACCESSORY_NONE
@@ -146,7 +146,7 @@
 /datum/sprite_accessory/body_marking/bands_hand
 	name = "Color Bands (Hand)"
 	icon_state = "bands_hand"
-	body_zone = HAND_RIGHT | HAND_LEFT
+	body_zones = HAND_RIGHT | HAND_LEFT
 
 /datum/sprite_accessory/body_marking/anklet
 	name = "Anklet"
