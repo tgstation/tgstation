@@ -163,22 +163,3 @@
 		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_left)
 	else
 		living.add_mood_event("hot_spring", /datum/mood_event/hot_spring_hater_left)
-
-/particles/hotspring_steam
-	icon = 'icons/effects/particles/smoke.dmi'
-	icon_state = list(
-		"steam_1" = 2,
-		"steam_2" = 2,
-		"steam_3" = 1,
-	)
-	width = 64
-	height = 64
-	count = 5
-	spawning = 0.2
-	lifespan = 1 SECONDS
-	fade = 0.5 SECONDS
-	color = "#ffffff"
-	position = generator(GEN_BOX, list(-32,-32,0), list(32,32,0), NORMAL_RAND)
-	scale = generator(GEN_VECTOR, list(0.9,0.9), list(1.1,1.1), NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(-0.1,0), list(0.1,0.025), UNIFORM_RAND)
-	spin = generator(GEN_NUM, list(-15,15), NORMAL_RAND)
