@@ -169,6 +169,6 @@
 
 /obj/item/mod/skin_applier/honkerative/interact_with_atom(obj/item/mod/control/controlunit, mob/living/user, params)
 	. = ..()
-	if(. != ITEM_INTERACT_SUCCESS)
+	if(!(. & ITEM_INTERACT_SUCCESS))
 		return
 	controlunit.install(new /obj/item/mod/module/waddle(get_turf(user)), user)
