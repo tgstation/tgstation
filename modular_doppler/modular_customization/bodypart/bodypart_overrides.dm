@@ -1,7 +1,4 @@
 /// If you need to make edits to existing bodyparts, do so in here.
-/obj/item/bodypart
-	/// Override of the base bodypart datum to add a seperate list for customization markings. This is to avoid the dimorphic marking system while trying to keep the code as modular as possible using overrides.
-	var/list/markings = list()
 
 /obj/item/bodypart/head
 	/// Override of the eyes icon file - used for ramatae as test dummies, followed by teshies, vox, possibly moths & insects, and more!

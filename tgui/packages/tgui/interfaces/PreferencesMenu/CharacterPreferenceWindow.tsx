@@ -8,7 +8,6 @@ import {
   Stack,
 } from '../../components'; /* DOPPLER EDIT: Adds in Dropdown and Flex */
 import { Window } from '../../layouts';
-import { LimbManagerPage } from '../_LimbManager'; /* DOPPLER ADDITION */
 import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
@@ -27,7 +26,6 @@ enum Page {
   // DOPPLER EDIT
   Lore,
   Languages,
-  Limbs,
   // DOPPLER EDIT END
   Species,
   Quirks,
@@ -109,10 +107,6 @@ export const CharacterPreferenceWindow = (props) => {
       break;
     /* DOPPLER ADDITION END */
 
-    case Page.Limbs:
-      pageContents = <LimbManagerPage />;
-      break;
-
     default:
       exhaustiveCheck(currentPage);
   }
@@ -164,16 +158,6 @@ export const CharacterPreferenceWindow = (props) => {
                   setPage={setCurrentPage}
                 >
                   Lore
-                </PageButton>
-              </Stack.Item>
-
-              <Stack.Item grow>
-                <PageButton
-                  currentPage={currentPage}
-                  page={Page.Limbs}
-                  setPage={setCurrentPage}
-                >
-                  Limbs
                 </PageButton>
               </Stack.Item>
 
