@@ -90,6 +90,17 @@
 	speed = 0.3
 	range = 16
 
+/obj/projectile/bullet/p50/penetrator/shuttle/prehit_pierce(atom/target)
+	. = ..()
+	if(!isliving(target))
+		return .
+
+	var/mob/living/our_target = target
+	if(IS_NUKE_OP(our_target))
+		do_sparks(2, FALSE, src)
+		visible_message("[src] beeps, and self-detonates right before it hits [our_target]!")
+		return PROJECTILE_DELETE_WITHOUT_HITTING
+
 /obj/projectile/bullet/p50/marksman
 	name = ".50 BMG marksman round"
 	damage = 50
