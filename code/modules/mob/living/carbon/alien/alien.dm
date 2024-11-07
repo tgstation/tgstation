@@ -162,7 +162,7 @@ Des: Removes all infected images from the alien.
 	if(!unique_name)
 		return
 
-	if(old_number != 0)
+	if(old_identifier != 0)
 		identifier = old_identifier
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
 
