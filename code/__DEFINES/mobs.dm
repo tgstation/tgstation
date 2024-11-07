@@ -735,6 +735,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
 #define BODYPARTS_HIGH_LAYER 24
+// For hand markings :3c - DOPPLER ADDITION
+#define BODY_HAND_LAYER 23.99
 /// Gloves layer
 #define GLOVES_LAYER 23
 /// Shoes layer
@@ -854,6 +856,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define EXTERNAL_BEHIND (1 << 6)
 #define EXTERNAL_BEHIND_2 (1 << 7)
 #define EXTERNAL_BEHIND_3 (1 << 8)
+//Hand markings
+#define EXTERNAL_HAND (1 << 9)
 /// DOPPLER SHIFT ADDITION END
 /// Draws organ on all EXTERNAL layers
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND

@@ -62,21 +62,32 @@
 ///
 
 /datum/species/proc/add_doppler_markings(mob/living/carbon/human/target, value, colorvalue, bodypart)
+	var/handlayer = FALSE
 	bodypart = marking_zones(bodypart)
-	bodypart = bodypart
+	if(bodypart == BODY_ZONE_PRECISE_L_HAND)
+		handlayer = EXTERNAL_HAND
+		bodypart = BODY_ZONE_L_ARM
+	else if(bodypart == BODY_ZONE_PRECISE_R_HAND)
+		handlayer = EXTERNAL_HAND
+		bodypart = BODY_ZONE_R_ARM
 	var/obj/item/bodypart/people_part =  target.get_bodypart(bodypart)
 	if(people_part)
-		var/datum/bodypart_overlay/simple/body_marking/body_markings/markings = new /datum/bodypart_overlay/simple/body_marking/body_markings()
-		var/accessory_name = value
-		var/datum/sprite_accessory/accessory = markings.get_accessory(accessory_name)
-		var/datum/bodypart_overlay/simple/body_marking/overlay = new /datum/bodypart_overlay/simple/body_marking()
+		var/datum/bodypart_overlay/simple/body_marking/body_markings/overlay = new /datum/bodypart_overlay/simple/body_marking/body_markings()
+		var/datum/sprite_accessory/accessory = overlay.get_accessory(value)
 
 		if(isnull(accessory))
-			CRASH("Value: [accessory_name] did not have a corresponding sprite accessory!")
+			CRASH("Value: [value] did not have a corresponding sprite accessory!")
 
 		overlay.icon = accessory.icon
 		overlay.icon_state = accessory.icon_state
-		overlay.use_gender = accessory.gender_specific
+		if(handlayer)
+			overlay.ishand = TRUE
+			overlay.layers = handlayer
+		if(bodypart == BODY_ZONE_HEAD)
+			overlay.use_gender = FALSE
+		else
+			overlay.use_gender = accessory.gender_specific
+
 		overlay.draw_color = colorvalue || accessory.color_src
 		people_part.add_bodypart_overlay(overlay)
 
@@ -89,8 +100,18 @@
 			if(markingslist[i] && markingslist[i] != SPRITE_ACCESSORY_NONE)
 				add_doppler_markings(target, target.dna.features["markings_list"][i], target.dna.features["markings_list_colors"][i], target.dna.features["markings_list_zones"][i])
 
+/datum/bodypart_overlay/simple/body_marking/body_markings
+	var/ishand = FALSE
+
 /datum/bodypart_overlay/simple/body_marking/body_markings/get_accessory(name)
 	return SSaccessories.body_markings[name]
+
+/datum/bodypart_overlay/simple/body_marking/body_markings/get_image(layer, obj/item/bodypart/limb)
+	var/gender_string = (use_gender && limb.is_dimorphic) ? (limb.gender == MALE ? MALE : FEMALE + "_") : "" //we only got male and female sprites
+	var/zonestring = limb.body_zone
+	if(ishand)
+		zonestring = limb.aux_zone
+	return image(icon, gender_string + icon_state + "_" + zonestring, layer = layer)
 
 /datum/preference/color/markings/markings_r_leg3/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
@@ -101,26 +122,22 @@
 
 //cover_flags2body_zones is funky with hand bitflags for some reason. this is more efficient for what we want to do anyway
 /datum/species/proc/marking_zones(zone)
-	var/returnval
-
 	if(!zone)
 		return
 	switch(zone)
 		if(HEAD)
-			returnval = BODY_ZONE_HEAD
+			return BODY_ZONE_HEAD
 		if(CHEST)
-			returnval = BODY_ZONE_CHEST
+			return BODY_ZONE_CHEST
 		if(ARM_LEFT)
-			returnval = BODY_ZONE_L_ARM
+			return BODY_ZONE_L_ARM
 		if(ARM_RIGHT)
-			returnval = BODY_ZONE_R_ARM
+			return BODY_ZONE_R_ARM
 		if(HAND_LEFT)
-			returnval = BODY_ZONE_L_ARM
+			return BODY_ZONE_PRECISE_L_HAND
 		if(HAND_RIGHT)
-			returnval = BODY_ZONE_R_ARM
+			return BODY_ZONE_PRECISE_R_HAND
 		if(LEG_LEFT)
-			returnval = BODY_ZONE_L_LEG
+			return BODY_ZONE_L_LEG
 		if(LEG_RIGHT)
-			returnval = BODY_ZONE_R_LEG
-
-	return returnval
+			return BODY_ZONE_R_LEG

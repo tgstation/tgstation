@@ -101,12 +101,7 @@
 /datum/sprite_accessory/body_marking/other/pilot
 	name = "Pilot"
 	icon_state = "pilot"
-	body_zones = HEAD | ARM_LEFT | ARM_RIGHT
-
-/datum/sprite_accessory/body_marking/other/pilot_hand
-	name = "Pilot Hand"
-	icon_state = "pilot_hand"
-	body_zones = HAND_LEFT | HAND_RIGHT
+	body_zones = HEAD | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT
 
 /datum/sprite_accessory/body_marking/other/big_ol_eyes
 	name = "Large Eyes"
@@ -132,18 +127,13 @@
 /datum/sprite_accessory/body_marking/other/bands
 	name = "Color Bands"
 	icon_state = "bands"
-	body_zones = CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT
+	body_zones = CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT | HAND_LEFT | HAND_RIGHT
+
 
 /datum/sprite_accessory/body_marking/other/bands_foot
 	name = "Color Bands (Foot)"
 	icon_state = "bands_foot"
 	body_zones = LEG_RIGHT | LEG_LEFT
-
-
-/datum/sprite_accessory/body_marking/other/bands_hand
-	name = "Color Bands (Hand)"
-	icon_state = "bands_hand"
-	body_zones = HAND_RIGHT | HAND_LEFT
 
 /datum/sprite_accessory/body_marking/other/anklet
 	name = "Anklet"

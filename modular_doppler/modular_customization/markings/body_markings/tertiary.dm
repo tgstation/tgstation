@@ -21,12 +21,12 @@
 /datum/sprite_accessory/body_marking/tertiary/fox
 	name = "Fox Sock"
 	icon_state = "fox"
-	body_zones = ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/goat
 	name = "Goat Hoof"
 	icon_state = "goat"
-	body_zones = LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/raccoon
 	name = "Raccoon Spot"
@@ -41,12 +41,12 @@
 /datum/sprite_accessory/body_marking/tertiary/possum
 	name = "Possum Sock"
 	icon_state = "possum"
-	body_zones = LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/tiger
 	name = "Tiger Stripe"
 	icon_state = "tiger"
-	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/otter
 	name = "Otter Head"
@@ -56,7 +56,7 @@
 /datum/sprite_accessory/body_marking/tertiary/otie
 	name = "Otie Spot"
 	icon_state = "otie"
-	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/hawk
 	name = "Hawk Talon"
@@ -71,7 +71,7 @@
 /datum/sprite_accessory/body_marking/tertiary/deer
 	name = "Deer Hoof"
 	icon_state = "deer"
-	body_zones =  LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/hyena
 	name = "Hyena Side"
@@ -91,7 +91,7 @@
 /datum/sprite_accessory/body_marking/tertiary/floofer
 	name = "Floofer Sock"
 	icon_state = "floofer"
-	body_zones = ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT | HAND_LEFT | HAND_RIGHT
 
 /datum/sprite_accessory/body_marking/tertiary/rat
 	name = "Rat Spot"
@@ -111,7 +111,7 @@
 /datum/sprite_accessory/body_marking/tertiary/guilmon
 	name = "Guilmon Mark"
 	icon_state = "guilmon"
-	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT // | HAND_LEFT | HAND_RIGHT
+	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/tertiary/xeno
 	name = "Xeno Head"
@@ -132,3 +132,4 @@
 	name = "Light Belly"
 	icon_state = "lbelly"
 	body_zones = CHEST
+
