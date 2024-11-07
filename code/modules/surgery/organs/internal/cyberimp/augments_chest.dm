@@ -310,17 +310,13 @@
 
 	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
 		user.balloon_alert(user, "core installed.")
-		athletics_boost_multiplier = 0.25
-		added_throw_speed += 5
-		added_throw_range += 4
-		strength_bonus += 4
+		name = /obj/item/organ/cyberimp/chest/spine/atlas::name
+		desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
+		athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier
+		added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_range
+		added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
+		strength_bonus = added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
 		core_applied = TRUE
-		name = "\improper Atlas gravitonic spinal implant"
-		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
-			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation. \
-			Not only can you walk with your feet planted firmly on the ground even during a loss of enviromental gravity, but you also \
-			carry heavier loads with relative ease."
-		icon_state = "herculean_implant_core"
 		update_appearance()
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
