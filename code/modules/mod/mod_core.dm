@@ -259,11 +259,11 @@
 	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return FALSE
 	if(!mod.open)
-		mod.balloon_alert(user, "open the cover first!")
+		mod.balloon_alert(user, "cover closed!")
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(cell)
-		mod.balloon_alert(user, "cell already installed!")
+		mod.balloon_alert(user, "already has cell!")
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	install_cell(attacking_item)
@@ -318,14 +318,14 @@
 
 /obj/item/mod/core/ethereal/add_charge(amount)
 	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	if(isnull(charge_source))
 		return FALSE
 	charge_source.adjust_charge(amount * charge_modifier)
 	return TRUE
 
 /obj/item/mod/core/ethereal/subtract_charge(amount)
 	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
-	if(!charge_source)
+	if(isnull(charge_source))
 		return FALSE
 	return -charge_source.adjust_charge(-amount * charge_modifier)
 
@@ -333,7 +333,7 @@
 	return charge_amount() >= amount * charge_modifier
 
 /obj/item/mod/core/ethereal/get_charge_icon_state()
-	return charge_source() ? "0" : "missing"
+	return isnull(charge_source()) ? "missing" : "0"
 
 /obj/item/mod/core/ethereal/get_chargebar_color()
 	if(isnull(charge_source()))
@@ -345,11 +345,12 @@
 			return "average"
 		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_FULL)
 			return "good"
-		if(ETHEREAL_CHARGE_OVERLOAD to INFINITY)
+		if(ETHEREAL_CHARGE_FULL to INFINITY)
 			return "teal"
 
-/obj/item/mod/core/standard/get_chargebar_string()
-	if(isnull(charge_source()))
+/obj/item/mod/core/ethereal/get_chargebar_string()
+	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
+	if(isnull(charge_source()) || isnull(charge_source.cell))
 		return "Biological Battery Missing"
 	return ..()
 

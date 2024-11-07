@@ -81,7 +81,7 @@
 	if(part.loc != src)
 		if(!user)
 			return FALSE
-		balloon_alert(user, "[part.name] already deployed!")
+		balloon_alert(user, "already deployed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
@@ -154,7 +154,7 @@
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	if(!wearer)
 		if(!force_deactivate)
-			balloon_alert(user, "equip suit first!")
+			balloon_alert(user, "not equipped!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!force_deactivate && (SEND_SIGNAL(src, COMSIG_MOD_ACTIVATE, user) & MOD_CANCEL_ACTIVATE))
@@ -165,16 +165,16 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!get_charge() && !force_deactivate)
-		balloon_alert(user, "suit not powered!")
+		balloon_alert(user, "no power source!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(open && !force_deactivate)
-		balloon_alert(user, "close the suit panel!")
+		balloon_alert(user, "panel open!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(activating)
 		if(!force_deactivate)
-			balloon_alert(user, "suit already [active ? "shutting down" : "starting up"]!")
+			balloon_alert(user, "already [active ? "shutting down" : "starting up"]!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)

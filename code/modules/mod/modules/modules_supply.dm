@@ -61,7 +61,7 @@
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
-		balloon_alert(mod.wearer, "picked up [picked_crate]")
+		balloon_alert(mod.wearer, "picked up crate")
 		drain_power(use_energy_cost)
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)

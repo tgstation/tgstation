@@ -93,7 +93,7 @@
 		if("lock")
 			if(!locked || allowed(ui.user))
 				locked = !locked
-				balloon_alert(ui.user, "[locked ? "locked" : "unlocked"]!")
+				balloon_alert(ui.user, "[locked ? "locked" : "unlocked"]")
 			else
 				balloon_alert(ui.user, "access insufficent!")
 				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)

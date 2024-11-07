@@ -491,7 +491,7 @@
 		balloon_alert(user, "no core!")
 		return
 	if(!core_removable)
-		balloon_alert(user, "can't remove core!")
+		balloon_alert(user, "already has core!")
 		return
 	balloon_alert(user, "removing core...")
 	if(!do_after(user, 3 SECONDS, target = src))

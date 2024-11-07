@@ -952,7 +952,7 @@
 	if(!istype(tool, /obj/item/fishing_rod))
 		return ..()
 	if(equipped)
-		balloon_alert(user, "remove current rod first!")
+		balloon_alert(user, "already has rod!")
 	if(!user.transferItemToLoc(tool, src))
 		user.balloon_alert(user, "it's stuck!")
 	equipped = tool

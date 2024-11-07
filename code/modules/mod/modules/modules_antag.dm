@@ -269,16 +269,12 @@
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
+	name = /obj/item/mod/module/dna_lock::name
+	desc = /obj/item/mod/module/dna_lock::desc
+	icon_state = /obj/item/mod/module/dna_lock::icon_state
+	complexity = /obj/item/mod/module/dna_lock::complexity
+	use_energy_cost = /obj/item/mod/module/dna_lock::use_energy_cost
 	step_change = 0.1
-
-/obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
-	. = ..()
-	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
-	name = initial(the_dna_lock_behind_the_slaughter.name)
-	desc = initial(the_dna_lock_behind_the_slaughter.desc)
-	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
-	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
-	use_energy_cost = initial(the_dna_lock_behind_the_slaughter.use_energy_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_part_activation()
 	..()
@@ -573,7 +569,7 @@
 		balloon_alert(mod.wearer, "can't reach that!")
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
-		balloon_alert(mod.wearer, "cant disable apc!")
+		balloon_alert(mod.wearer, "can't disable apc!")
 		return
 
 	var/list/things_to_disrupt = list(target)
