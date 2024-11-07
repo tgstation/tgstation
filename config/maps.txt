@@ -51,6 +51,14 @@ map nebulastation
 	votable
 endmap
 
+map pubbystation
+	votable
+endmap
+
+map kilostation
+	maxplayers 35
+	votable
+
 map wawastation
 	votable
 	minplayers 40
