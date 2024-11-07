@@ -54,7 +54,7 @@
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
-		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, WEAKREF(src))
 	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
@@ -73,7 +73,7 @@
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
-		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
+		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, WEAKREF(src))
 	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
@@ -184,10 +184,10 @@
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/anti_magic/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), WEAKREF(src))
 
 /obj/item/mod/module/anti_magic/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_HOLY), WEAKREF(src))
 
 /obj/item/mod/module/anti_magic/wizard
 	name = "MOD magic neutralizer module"
@@ -199,10 +199,10 @@
 	required_slots = list()
 
 /obj/item/mod/module/anti_magic/wizard/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), WEAKREF(src))
 
 /obj/item/mod/module/anti_magic/wizard/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_ANTIMAGIC, TRAIT_ANTIMAGIC_NO_SELFBLOCK), WEAKREF(src))
 
 ///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
@@ -262,10 +262,10 @@
 	required_slots = list(ITEM_SLOT_FEET)
 
 /obj/item/mod/module/noslip/on_part_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, WEAKREF(src))
 
 /obj/item/mod/module/noslip/on_part_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NO_SLIP_WATER, WEAKREF(src))
 
 //Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
@@ -514,7 +514,7 @@
 	mod.item_flags &= ~EXAMINE_SKIP
 
 /obj/item/mod/module/infiltrator/on_part_activation()
-	mod.wearer.add_traits(traits_to_add, MOD_TRAIT)
+	mod.wearer.add_traits(traits_to_add, WEAKREF(src))
 	RegisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH, PROC_REF(on_speech_modification))
 	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = "states"
@@ -523,7 +523,7 @@
 		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 
 /obj/item/mod/module/infiltrator/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(traits_to_add, MOD_TRAIT)
+	mod.wearer.remove_traits(traits_to_add, WEAKREF(src))
 	UnregisterSignal(mod.wearer, COMSIG_TRY_MODIFY_SPEECH)
 	var/obj/item/organ/tongue/user_tongue = mod.wearer.get_organ_slot(ORGAN_SLOT_TONGUE)
 	user_tongue.temp_say_mod = initial(user_tongue.temp_say_mod)

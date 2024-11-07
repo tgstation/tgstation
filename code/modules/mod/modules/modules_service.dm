@@ -80,7 +80,7 @@
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes)
 		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, WEAKREF(src), /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
@@ -88,6 +88,6 @@
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes && !deleting)
 		qdel(shoes.GetComponent(/datum/component/squeak))
-	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, WEAKREF(src))
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")
