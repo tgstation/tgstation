@@ -185,8 +185,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
-	if(starts_lit)
-		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
@@ -207,6 +205,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
 	)
+	if(starts_lit)
+		light()
 
 /obj/item/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
