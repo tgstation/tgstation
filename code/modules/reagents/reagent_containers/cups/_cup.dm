@@ -561,7 +561,7 @@
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = list(0)
 
-///Test tubes creagrinded =ted by chem master and pandemic and placed in racks
+///Test tubes created by chem master and pandemic and placed in racks
 /obj/item/reagent_containers/cup/tube
 	name = "tube"
 	desc = "A small test tube."
