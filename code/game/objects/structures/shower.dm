@@ -253,14 +253,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	take_his_status_effect.remove_status_effect(/datum/status_effect/shower_regen)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
-	target.wash(CLEAN_RAD | CLEAN_WASH)
+	var/datum/reagent/blood/bloody_shower = locate(/datum/reagent/blood) in reagents.reagent_list
+	if(bloody_shower)
+		target.wash(CLEAN_RAD)
+	else
+		target.wash(CLEAN_RAD | CLEAN_WASH)
+
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
 	check_heat(living_target)
-	living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
-	living_target.apply_status_effect(/datum/status_effect/shower_regen)
+
+	if(bloody_shower)
+		living_target.add_mood_event("shower", /datum/mood_event/bloody_shower)
+		living_target.apply_status_effect(/datum/status_effect/shower_regen_blood)
+	else
+		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+		living_target.apply_status_effect(/datum/status_effect/shower_regen)
 
 /**
  * Toggle whether shower is actually on and outputting water.
