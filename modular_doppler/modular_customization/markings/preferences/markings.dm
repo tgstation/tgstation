@@ -170,7 +170,7 @@
 
 /datum/preference/color/markings/markings_l_arm
 	savefile_key = "markings_l_arm_color"
-	markingval = MARKING_LARM2
+	markingval = MARKING_LARM
 
 /datum/preference/choiced/markings/markings_l_arm2
 	savefile_key = "markings_l_arm2"
