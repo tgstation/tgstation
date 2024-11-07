@@ -267,3 +267,11 @@
 /datum/loadout_item/undersuit/gear_harness
 	name = "Gear Harness"
 	item_path = /obj/item/clothing/under/misc/gear_harness
+
+/datum/loadout_item/undersuit/jumpsuit
+	name = "Colorable Jumpsuit"
+	item_path = /obj/item/clothing/under/color
+
+/datum/loadout_item/undersuit/jumpskirt
+	name = "Colorable Jumpskirt"
+	item_path = /obj/item/clothing/under/color/jumpskirt
