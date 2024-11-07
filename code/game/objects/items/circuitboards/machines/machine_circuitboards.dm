@@ -1803,6 +1803,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/manufacturing/user
 	req_components = list(
-		/obj/item/food/meat = 1,
+		/obj/item/food/meat/slab = 1,
 		/datum/stock_part/servo = 1,
 	)
