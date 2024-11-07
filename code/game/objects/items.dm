@@ -1079,7 +1079,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	. = FALSE
-	if(on_juice() == -1 || !reagents?.total_volume || target_holder.holder_full())
+	if(on_juice() == -1 || !reagents?.total_volume)
 		return
 
 	. = juice_atom(target_holder, user)
@@ -1101,11 +1101,15 @@
 /obj/item/proc/juice_atom(datum/reagents/target_holder, mob/user)
 	PROTECTED_PROC(TRUE)
 
+	. = FALSE
+
 	if(ispath(juice_typepath))
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
+		. = TRUE
 
-	return reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(!QDELETED(target_holder))
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
 ///What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
 /atom/movable/proc/blended(obj/item/blended_item, grinded)
