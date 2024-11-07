@@ -9,7 +9,10 @@
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
-	throw_range = 2
+	w_class = WEIGHT_CLASS_HUGE
+	throwforce = 30 // Under normal circumstances, pretty much nobody can throw this.
+	throw_range = 0
+	tk_throw_range = 1 // Sorry, this is too cheesy, but maybe you can smash down doors with it.
 	throw_speed = 0.5
 	slowdown = 1.5
 	drag_slowdown = 1.5 // It's still a big rock.
@@ -28,6 +31,7 @@
 	register_context()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
 	AddComponent(/datum/component/sisyphus_awarder)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL, added_damage = 20, requires_combat_mode = FALSE)
 
 /obj/item/boulder/Destroy(force)
 	SSore_generation.available_boulders -= src
@@ -144,6 +148,7 @@
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
 		playsound(src, 'sound/effects/rock/rock_break.ogg', 50)
 		user.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
+		user.mind?.adjust_experience(/datum/skill/athletics, MINING_SKILL_BOULDER_SIZE_XP * 0.2)
 		qdel(src)
 		return
 	var/msg = (durability == 1 ? "is crumbling!" : "looks weaker!")
