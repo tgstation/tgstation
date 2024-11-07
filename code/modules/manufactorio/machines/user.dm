@@ -27,7 +27,7 @@
 	name = "manufacturing user"
 	desc = "Experimental prototype biological machine capable of adapting to use an item on the first (untouched) item infront of it. Items will be sent to a tile diagonal to the machine. It may also receive an item from a conveyor to equip them if one is missing."
 	icon_state = "user"
-	circuit = /obj/item/circuitboard/machine/manusmelter
+	circuit = /obj/item/circuitboard/machine/manuuser
 	/// power per interaction
 	var/power_cost = 4 KILO WATTS
 	/// held object we use to interact with stuff infront of us

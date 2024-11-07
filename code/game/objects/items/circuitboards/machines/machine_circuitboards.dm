@@ -1797,3 +1797,12 @@
 	req_components = list(
 		/obj/item/stack/sheet/iron = 5,
 	)
+
+/obj/item/circuitboard/machine/manuuser
+	name = /obj/machinery/power/manufacturing/user::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/user
+	req_components = list(
+		/obj/item/food/meat = 1,
+		/datum/stock_part/servo = 1,
+	)

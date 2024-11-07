@@ -155,6 +155,7 @@
 		"manulathe",
 		"manusorter",
 		"manurouter",
+		"manuuser",
 	)
 
 /datum/techweb_node/energy_manipulation
