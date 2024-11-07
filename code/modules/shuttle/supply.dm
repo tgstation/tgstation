@@ -146,8 +146,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//already got let down by the botanists. So to open a new chance for cargo to also screw them over any more than is necessary is bad.
 	if(SSshuttle.chef_groceries.len)
 		var/obj/structure/closet/crate/freezer/grocery_crate = new(pick_n_take(empty_turfs))
-		grocery_crate.name = "Kitchen produce freezer"
-		grocery_crate.desc = "Produce order for the Kitchen, deliver to the chef ASAP"
+		grocery_crate.name = "kitchen produce freezer"
+		grocery_crate.desc = "Produce order for the Kitchen, deliver to the chef ASAP."
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
 			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
