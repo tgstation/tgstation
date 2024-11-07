@@ -10,7 +10,7 @@
 	damage_type = BURN
 	damage = 10
 	paralyze = 20
-	flight_speed = 0.5
+	speed = 0.5
 	range = 16
 	var/datum/beam/arm
 	var/handedness = 0
@@ -69,7 +69,7 @@
 	name = "Hel's grasp"
 	damage = 5
 	paralyze = 0 //Lets not stun people!
-	flight_speed = 1
+	speed = 1
 	range = 20
 	color = "#ff7e7e"//Tint it slightly
 

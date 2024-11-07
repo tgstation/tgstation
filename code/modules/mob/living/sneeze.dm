@@ -53,7 +53,7 @@
 
 	suppressed = SUPPRESSED_VERY
 	range = 4
-	flight_speed = 0.25
+	speed = 0.25
 	spread = 40
 	damage_type = BRUTE
 	damage = 0

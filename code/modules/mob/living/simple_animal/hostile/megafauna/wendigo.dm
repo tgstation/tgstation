@@ -198,7 +198,7 @@ Difficulty: Hard
 
 /obj/projectile/colossus/wendigo_shockwave
 	name = "wendigo shockwave"
-	flight_speed = 0.5
+	speed = 0.5
 	/// Amount the angle changes every pixel move
 	var/wave_speed = 15
 	/// Amount of movements this projectile has made
@@ -208,7 +208,7 @@ Difficulty: Hard
 	damage = 15
 
 /obj/projectile/colossus/wendigo_shockwave/wave
-	flight_speed = 0.125
+	speed = 0.125
 	homing = TRUE
 	wave_speed = 10
 

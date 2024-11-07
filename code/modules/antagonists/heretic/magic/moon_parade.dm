@@ -26,7 +26,7 @@
 	icon_state = "lunar_parade"
 	damage = 0
 	damage_type = BURN
-	flight_speed = 0.2
+	speed = 0.2
 	range = 75
 	ricochets_max = 40
 	ricochet_chance = 500

@@ -102,7 +102,7 @@
 	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
 	/// is divided by this var and multiplied by SSprojectiles.pixels_per_decisecond in order to get
 	/// the amount of pixels this projectile moves per tick
-	var/flight_speed = 1.25
+	var/speed = 1.25
 
 	/// The current angle of the projectile. Initially null, so if the arg is missing from [/fire()], we can calculate it from firer and target as fallback.
 	var/angle
@@ -769,7 +769,7 @@
 	if(spread)
 		set_angle(angle + (rand() - 0.5) * spread)
 	original_angle = angle
-	movement_vector = new(flight_speed, angle)
+	movement_vector = new(speed, angle)
 	if (hitscan)
 		beam_points = list()
 	free_hitscan_forceMove = TRUE
@@ -788,7 +788,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!hitscan)
-		process_movement(max(FLOOR(flight_speed, 1), 1), tile_limit = TRUE)
+		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
 
 /obj/projectile/proc/set_homing_target(atom/target)
 	if(!target || (!isturf(target) && !isturf(target.loc)))
@@ -857,7 +857,7 @@
 		return
 
 	var/elapsed_time = world.time - last_projectile_move
-	var/pixels_to_move = flight_speed > 0 ? elapsed_time * SSprojectiles.pixels_per_decisecond * flight_speed + overrun : SSprojectiles.max_pixels_per_tick
+	var/pixels_to_move = speed > 0 ? elapsed_time * SSprojectiles.pixels_per_decisecond * speed + overrun : SSprojectiles.max_pixels_per_tick
 	overrun = 0
 
 	if (pixels_to_move > SSprojectiles.max_pixels_per_tick)

@@ -163,7 +163,7 @@
 
 	tracked[projectile] = projectile.damage
 	projectile.damage *= projectile_damage_coefficient
-	projectile.flight_speed *= projectile_speed_coefficient
+	projectile.speed *= projectile_speed_coefficient
 	projectile.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
@@ -171,7 +171,7 @@
 
 	tracked -= projectile
 	projectile.damage /= projectile_damage_coefficient
-	projectile.flight_speed /= projectile_speed_coefficient
+	projectile.speed /= projectile_speed_coefficient
 	projectile.cut_overlay(projectile_effect)
 
 //bare minimum omni-toolset for modularity

@@ -339,14 +339,14 @@
 	projectile.stamina *= damage_multiplier
 	projectile.stun *= debuff_multiplier
 	projectile.knockdown *= debuff_multiplier
-	projectile.flight_speed *= speed_multiplier
+	projectile.speed *= speed_multiplier
 	projectile.add_overlay(projectile_effect)
 
 /obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
 	projectile.damage /= damage_multiplier
-	projectile.flight_speed /= speed_multiplier
+	projectile.speed /= speed_multiplier
 	projectile.stamina /= damage_multiplier
 	projectile.stun /= debuff_multiplier
 	projectile.knockdown /= debuff_multiplier

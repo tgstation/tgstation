@@ -530,4 +530,4 @@ effective or pretty fucking useless.
 
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
-	flight_speed = 1.6
+	speed = 1.6

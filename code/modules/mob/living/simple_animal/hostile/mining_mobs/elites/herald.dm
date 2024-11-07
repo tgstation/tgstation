@@ -228,7 +228,7 @@
 	icon_state= "chronobolt"
 	damage = 20
 	armour_penetration = 60
-	flight_speed = 0.5
+	speed = 0.5
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 

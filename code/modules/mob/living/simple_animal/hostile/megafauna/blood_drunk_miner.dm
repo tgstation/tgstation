@@ -106,7 +106,7 @@ Difficulty: Medium
 
 /obj/projectile/kinetic/miner
 	damage = 20
-	flight_speed = 1.1
+	speed = 1.1
 	icon_state = "ka_tracer"
 	range = 4
 

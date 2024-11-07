@@ -2,7 +2,7 @@
 
 /obj/projectile/bullet/p50
 	name =".50 BMG bullet"
-	flight_speed = 2.5
+	speed = 2.5
 	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
 	damage = 70
 	paralyze = 100
@@ -87,7 +87,7 @@
 	name = ".50 BMG aggression dissuasion round"
 	icon_state = "gaussstrong"
 	damage = 25
-	flight_speed = 0.33
+	speed = 0.33
 	range = 16
 
 /obj/projectile/bullet/p50/marksman

@@ -45,7 +45,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	damage = 9
 	wound_bonus = -40
-	flight_speed = 0.9
+	speed = 0.9
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
@@ -53,7 +53,7 @@
 	icon_state = "hellfire"
 	wound_bonus = 0
 	damage = 30
-	flight_speed = 1.6
+	speed = 1.6
 	light_color = "#FF969D"
 
 /obj/projectile/beam/laser/heavylaser

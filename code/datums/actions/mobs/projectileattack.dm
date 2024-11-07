@@ -48,7 +48,7 @@
 		our_projectile = new projectile_type(startloc)
 	if(!isnum(speed_multiplier))
 		speed_multiplier = projectile_speed_multiplier
-	our_projectile.flight_speed *= speed_multiplier
+	our_projectile.speed *= speed_multiplier
 	our_projectile.aim_projectile(endloc, startloc, null, projectile_spread)
 	our_projectile.firer = firer
 	if(target)

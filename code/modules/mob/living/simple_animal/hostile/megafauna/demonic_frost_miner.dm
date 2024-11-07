@@ -198,7 +198,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_1"
 	damage = 20
 	armour_penetration = 100
-	flight_speed = 0.1
+	speed = 0.1
 	range = 500
 	homing_turn_speed = 3
 	damage_type = BURN
@@ -213,7 +213,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	flight_speed = 0.33
+	speed = 0.33
 	range = 150
 	damage_type = BRUTE
 	explode_hit_objects = FALSE
@@ -223,7 +223,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	flight_speed = 0.33
+	speed = 0.33
 	range = 150
 	damage_type = BRUTE
 

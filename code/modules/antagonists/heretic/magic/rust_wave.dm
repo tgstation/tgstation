@@ -94,7 +94,7 @@
 	trigger_range = 0
 	ignored_factions = list(FACTION_HERETIC)
 	range = 15
-	flight_speed = 1
+	speed = 1
 
 /obj/projectile/magic/aoe/rust_wave/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -119,4 +119,4 @@
 
 /obj/projectile/magic/aoe/rust_wave/short
 	range = 7
-	flight_speed = 0.5
+	speed = 0.5

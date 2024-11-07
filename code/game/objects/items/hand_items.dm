@@ -545,7 +545,7 @@
 	hitsound = 'sound/effects/emotes/kiss.ogg'
 	hitsound_wall = 'sound/effects/emotes/kiss.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	flight_speed = 0.66
+	speed = 0.66
 	damage_type = BRUTE
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate

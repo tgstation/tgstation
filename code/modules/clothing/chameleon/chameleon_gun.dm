@@ -113,7 +113,7 @@
 	chameleon_projectile_vars["name"] = template_projectile.name
 	chameleon_projectile_vars["icon"] = template_projectile.icon
 	chameleon_projectile_vars["icon_state"] = default_state
-	chameleon_projectile_vars["speed"] = template_projectile.flight_speed
+	chameleon_projectile_vars["speed"] = template_projectile.speed
 	chameleon_projectile_vars["color"] = template_projectile.color
 	chameleon_projectile_vars["hitsound"] = template_projectile.hitsound
 	chameleon_projectile_vars["impact_effect_type"] = template_projectile.impact_effect_type
@@ -128,7 +128,7 @@
 		cartridge.loaded_projectile.name = template_projectile.name
 		cartridge.loaded_projectile.icon = template_projectile.icon
 		cartridge.loaded_projectile.icon_state = default_state
-		cartridge.loaded_projectile.flight_speed = template_projectile.flight_speed
+		cartridge.loaded_projectile.speed = template_projectile.speed
 		cartridge.loaded_projectile.color = template_projectile.color
 		cartridge.loaded_projectile.hitsound = template_projectile.hitsound
 		cartridge.loaded_projectile.impact_effect_type = template_projectile.impact_effect_type

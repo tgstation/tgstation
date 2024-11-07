@@ -6,7 +6,7 @@
 	light_range = 2
 	armor_flag = ENERGY
 	light_color = LIGHT_COLOR_DIM_YELLOW
-	flight_speed = 0.66
+	speed = 0.66
 	hitsound = 'sound/items/weapons/sear.ogg'
 	hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE

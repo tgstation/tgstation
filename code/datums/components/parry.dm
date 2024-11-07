@@ -112,7 +112,7 @@
 	else
 		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
 	source.firer = user
-	source.flight_speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
+	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
 	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
 	source.add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	if (!isnull(parry_callback))

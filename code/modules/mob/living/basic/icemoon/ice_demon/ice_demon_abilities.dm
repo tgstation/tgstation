@@ -4,7 +4,7 @@
 	damage = 5
 	damage_type = BURN
 	armor_flag = ENERGY
-	flight_speed = 0.25
+	speed = 0.25
 	temperature = -75
 
 /datum/action/cooldown/mob_cooldown/ice_demon_teleport
