@@ -6,7 +6,7 @@
 	var/max_stuff = 16
 
 /obj/machinery/power/manufacturing/request_resource() //returns last inserted item
-	var/list/real_contents = contents - circuit
+	var/list/real_contents = contents - component_parts
 	if(!length(real_contents))
 		return
 	return (real_contents)[length(real_contents)]
@@ -14,7 +14,7 @@
 /obj/machinery/power/manufacturing/storagebox/receive_resource(atom/movable/receiving, atom/from, receive_dir)
 	if(iscloset(receiving) && length(receiving.contents))
 		return MANUFACTURING_FAIL
-	if(length(contents - circuit) >= max_stuff && !may_merge_in_contents_and_do_so(receiving))
+	if(length(contents - component_parts) >= max_stuff && !may_merge_in_contents_and_do_so(receiving))
 		return MANUFACTURING_FAIL_FULL
 	receiving.Move(src,receive_dir)
 	return MANUFACTURING_SUCCESS

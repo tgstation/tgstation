@@ -16,7 +16,7 @@
 	. += generate_io_overlays(turn(dir, flip_side ? 90 : -90), COLOR_ORANGE) // OUT -- empty crate
 
 /obj/machinery/power/manufacturing/unloader/request_resource() //returns held crate if someone wants to do that for some reason
-	var/list/real_contents = contents - circuit
+	var/list/real_contents = contents - component_parts
 	if(!length(real_contents))
 		return
 	return (real_contents)[1]
@@ -30,7 +30,7 @@
 /obj/machinery/power/manufacturing/unloader/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(surplus() < power_to_unload_crate || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	var/list/real_contents = contents - circuit
+	var/list/real_contents = contents - component_parts
 	if(length(real_contents))
 		return MANUFACTURING_FAIL_FULL
 
@@ -46,7 +46,7 @@
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/unloader/process(seconds_per_tick)
-	var/list/real_contents = contents - circuit
+	var/list/real_contents = contents - component_parts
 	if(!length(real_contents))
 		return PROCESS_KILL
 	if(surplus() < power_to_unload_crate)

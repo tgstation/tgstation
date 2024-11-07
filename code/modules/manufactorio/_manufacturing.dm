@@ -28,8 +28,8 @@
 	. = ..()
 	if(may_be_moved)
 		. += "It receives power via cable, but certain buildings do not need power."
-	. += length(contents - circuit) ? "It contains:" : "It contains no items."
-	for(var/atom/movable/thing as anything in contents - circuit)
+	. += length(contents - component_parts) ? "It contains:" : "It contains no items."
+	for(var/atom/movable/thing as anything in contents - component_parts)
 		var/text = thing.name
 		var/obj/item/stack/possible_stack = thing
 		if(istype(possible_stack))
@@ -124,7 +124,7 @@
 /obj/machinery/power/manufacturing/proc/may_merge_in_contents(obj/item/stack/stack)
 	if(!istype(stack))
 		return
-	for(var/obj/item/stack/other in contents - circuit)
+	for(var/obj/item/stack/other in contents - component_parts)
 		if(!stack.can_merge(other))
 			continue
 		if(other.amount + stack.amount <= other.max_amount)

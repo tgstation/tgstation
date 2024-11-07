@@ -16,7 +16,7 @@
 /obj/machinery/power/manufacturing/smelter/receive_resource(obj/receiving, atom/from, receive_dir)
 	if(!isitem(receiving) || surplus() < power_cost  || receive_dir != REVERSE_DIR(dir))
 		return MANUFACTURING_FAIL
-	var/list/stacks = contents - circuit
+	var/list/stacks = contents - component_parts
 	if(length(stacks) >= 5 && !may_merge_in_contents_and_do_so(receiving))
 		return MANUFACTURING_FAIL_FULL
 	receiving.Move(src, get_dir(receiving, src))
@@ -32,11 +32,11 @@
 	return ..()
 
 /obj/machinery/power/manufacturing/smelter/process(seconds_per_tick)
-	var/list/stacks = contents - circuit
+	var/list/stacks = contents - component_parts
 	if(!length(stacks))
 		return
 
-	var/list/stacks_preprocess = contents - circuit
+	var/list/stacks_preprocess = contents - component_parts
 	var/obj/item/stack/ore/ore = stacks_preprocess[length(stacks_preprocess)]
 	if(isnull(ore))
 		return
@@ -55,5 +55,5 @@
 		icon_state = "smelter"
 	if(send_resource(withheld, dir))
 		withheld = null // nullspace thumbs down
-	if(!length(contents - circuit))
+	if(!length(contents - component_parts))
 		return PROCESS_KILL //we finished
