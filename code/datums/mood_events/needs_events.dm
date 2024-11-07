@@ -78,7 +78,7 @@
 
 /datum/mood_event/shower/add_effects(bloody_shower)
 	if(bloody_shower)
-		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL))
+		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || (owner.mob_biotypes & MOB_UNDEAD))
 			description = "The sensation of a lovely blood shower felt good."
 			mood_change = 6 // you sicko
 		else

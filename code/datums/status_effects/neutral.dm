@@ -648,7 +648,7 @@
 	. = ..()
 
 	if(bloody_shower)
-		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL))
+		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || (owner.mob_biotypes & MOB_UNDEAD))
 			alert_type = /atom/movable/screen/alert/status_effect/shower_regen/bloody_like
 		else
 			alert_type  = /atom/movable/screen/alert/status_effect/shower_regen/bloody_dislike
