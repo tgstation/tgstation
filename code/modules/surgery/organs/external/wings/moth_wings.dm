@@ -1,4 +1,5 @@
-#define MOTH_WING_FORCE 1 NEWTONS
+#define MOTH_WING_FORCE 2 NEWTONS
+#define MOTH_WING_STABILIZATON 3 NEWTONS
 
 ///Moth wings! They can flutter in low-grav and burn off in heat
 /obj/item/organ/wings/moth
@@ -64,7 +65,7 @@
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_FORCE * (seconds_per_tick * 1 SECONDS))
+	owner.drift_handler.stabilize_drift(owner.client.intended_direction ? dir2angle(owner.client.intended_direction) : null, owner.client.intended_direction ? max_drift_force : 0, MOTH_WING_STABILIZATON * (seconds_per_tick * 1 SECONDS))
 
 /obj/item/organ/wings/moth/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
@@ -142,3 +143,4 @@
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
 #undef MOTH_WING_FORCE
+#undef MOTH_WING_STABILIZATON

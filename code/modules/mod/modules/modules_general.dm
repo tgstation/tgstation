@@ -112,9 +112,9 @@
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback
 	/// How much force this module can apply per tick
-	var/drift_force = 1.5 NEWTONS
+	var/drift_force = 2 NEWTONS
 	/// How much force this module's stabilizier can put out
-	var/stabilizer_force = 1.2 NEWTONS
+	var/stabilizer_force = 2.5 NEWTONS
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -184,8 +184,8 @@
 	icon_state = "jetpack_advanced"
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
-	drift_force = 2 NEWTONS
-	stabilizer_force = 2 NEWTONS
+	drift_force = 3.5 NEWTONS
+	stabilizer_force = 5 NEWTONS
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
