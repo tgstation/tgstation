@@ -144,6 +144,7 @@
 	speed = 0.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	max_pierces = 3
 	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
@@ -155,7 +156,7 @@
 	embed_falloff_tile = -3
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
-/obj/projectile/bullet/rebar/hydrogen/Impact(atom/A)
+/obj/projectile/bullet/rebar/hydrogen/impact(atom/A)
 	. = ..()
 	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
@@ -166,11 +167,6 @@
 	if(isAI(target))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
-
-/obj/projectile/bullet/rebar/hydrogen/process_hit(turf/T, atom/target, atom/bumped, hit_something)
-	. = ..()
-	if(pierces >= 3)
-		qdel(src)
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"

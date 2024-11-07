@@ -226,6 +226,17 @@
 /obj/item/trash/cheesie,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
+"ll" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	name = "birdshot emergency shuttle";
+	port_direction = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "lp" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -607,6 +618,23 @@
 "De" = (
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
+"Df" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/bodypart/arm/left/moth,
+/obj/item/bodypart/arm/left/moth,
+/obj/item/organ/tail/lizard,
+/obj/item/bodypart/leg/right/digitigrade,
+/obj/item/bodypart/leg/right/digitigrade,
+/obj/item/bodypart/leg/left/fly,
+/obj/item/bodypart/leg/left/fly,
+/obj/item/bodypart/arm/right,
+/obj/item/bodypart/arm/right,
+/obj/item/organ/tail/cat,
+/obj/effect/turf_decal/stripes/white/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "DH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium,
@@ -789,17 +817,6 @@
 "MW" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
-"NE" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 8;
-	name = "birdshot emergency shuttle";
-	port_direction = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "Oq" = (
 /obj/structure/chair{
 	dir = 1;
@@ -899,23 +916,6 @@
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"Ve" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/bodypart/arm/left/moth,
-/obj/item/bodypart/arm/left/moth,
-/obj/item/organ/external/tail/lizard,
-/obj/item/bodypart/leg/right/digitigrade,
-/obj/item/bodypart/leg/right/digitigrade,
-/obj/item/bodypart/leg/left/fly,
-/obj/item/bodypart/leg/left/fly,
-/obj/item/bodypart/arm/right,
-/obj/item/bodypart/arm/right,
-/obj/item/organ/external/tail/cat,
-/obj/effect/turf_decal/stripes/white/end{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "Vo" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
@@ -1153,7 +1153,7 @@ LX
 rZ
 rZ
 LX
-Ve
+Df
 pj
 Bm
 lI
@@ -1504,7 +1504,7 @@ nQ
 nQ
 nQ
 LX
-NE
+ll
 LX
 lp
 rZ

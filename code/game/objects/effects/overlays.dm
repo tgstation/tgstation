@@ -4,7 +4,7 @@
 /obj/effect/overlay/singularity_act()
 	return
 
-/obj/effect/overlay/singularity_pull()
+/obj/effect/overlay/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
