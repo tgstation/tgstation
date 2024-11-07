@@ -401,6 +401,8 @@
 	var/trail_icon = 'icons/effects/magic.dmi'
 	/// The icon state the trail uses.
 	var/trail_icon_state = "arrow"
+	/// Can we spawn a trail effect again?
+	COOLDOWN_DECLARE(trail_cooldown)
 
 /obj/projectile/magic/aoe/reduce_range()
 	if(trigger_range >= 1)
@@ -414,31 +416,24 @@
 
 	return ..()
 
-/obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+/obj/projectile/magic/aoe/prehit_pierce(atom/target)
 	if(can_only_hit_target && target != original)
-		return FALSE
+		return PROJECTILE_PIERCE_PHASE
 	return ..()
 
-/obj/projectile/magic/aoe/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(trail)
-		create_trail()
-
-/// Creates and handles the trail that follows the projectile.
-/obj/projectile/magic/aoe/proc/create_trail()
-	if(!movement_vector)
+/obj/projectile/magic/aoe/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
+	if(!trail || !movement_vector || !COOLDOWN_FINISHED(src, trail_cooldown))
 		return
 
-	// TODO: FIX THIS
-	var/obj/effect/overlay/trail = new /obj/effect/overlay(loc)
-	trail.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond * speed
-	trail.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond * speed
-	trail.icon = trail_icon
-	trail.icon_state = trail_icon_state
-	//might be changed to temp overlay
-	trail.set_density(FALSE)
-	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	QDEL_IN(trail, trail_lifespan)
+	var/obj/effect/overlay/trail_effect = new /obj/effect/overlay(loc)
+	trail_effect.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond * speed
+	trail_effect.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond * speed
+	trail_effect.icon = trail_icon
+	trail_effect.icon_state = trail_icon_state
+	trail_effect.set_density(FALSE)
+	trail_effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	QDEL_IN(trail_effect, trail_lifespan)
+	COOLDOWN_START(src, trail_cooldown, trail_lifespan)
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"

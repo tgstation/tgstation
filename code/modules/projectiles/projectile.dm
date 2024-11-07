@@ -99,9 +99,7 @@
 	/// If objects are below this layer, we pass through them
 	var/hit_threshhold = PROJECTILE_HIT_THRESHHOLD_LAYER
 
-	/// During each fire of SSprojectiles, the number of deciseconds since the last fire of SSprojectiles
-	/// is divided by this var and multiplied by SSprojectiles.pixels_per_decisecond in order to get
-	/// the amount of pixels this projectile moves per tick
+	/// How many tiles we pass in a single SSprojectiles tick
 	var/speed = 1.25
 
 	/// The current angle of the projectile. Initially null, so if the arg is missing from [/fire()], we can calculate it from firer and target as fallback.
@@ -790,6 +788,7 @@
 	if (!hitscan)
 		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
 
+/// Makes projectile home onto the passed target with minor inaccuracy
 /obj/projectile/proc/set_homing_target(atom/target)
 	if(!target || (!isturf(target) && !isturf(target.loc)))
 		return FALSE
@@ -802,7 +801,7 @@
 	if(prob(50))
 		homing_offset_y = -homing_offset_y
 
-/obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
+/obj/projectile/proc/set_angle(new_angle)
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
@@ -843,6 +842,7 @@
 		fired = FALSE
 		return PROCESS_KILL
 
+	// If last tick the projectile impacted something or reached its range, don't process it
 	if (deletion_queued == PROJECTILE_IMPACT_DELETE)
 		qdel(src)
 		return
@@ -856,6 +856,7 @@
 		last_projectile_move = last_process
 		return
 
+	// Calculates how many pixels should be moved this tick, including overrun debt from the previous tick
 	var/elapsed_time = world.time - last_projectile_move
 	var/pixels_to_move = speed > 0 ? elapsed_time * SSprojectiles.pixels_per_decisecond * speed + overrun : SSprojectiles.max_pixels_per_tick
 	overrun = 0
@@ -868,8 +869,10 @@
 	pixels_to_move = FLOOR(pixels_to_move, 1)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 
+	// Registering turf entries is done here instead of a connect_loc because else it could be called multiple times per tick and waste performance
 	if (last_tick_turf)
 		UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
+
 	process_movement(pixels_to_move)
 
 	if (!QDELETED(src) && !deletion_queued && isturf(loc))
@@ -962,8 +965,9 @@
 			// In order to keep a consistent speed, calculate at what point between ticks we get deleted
 			var/animate_time = world.tick_lag * (total_move_distance - pixels_to_move + delete_distance) / total_move_distance
 			// We can use animation chains to visually disappear between ticks. Using ANIMATION_END_NOW because homing doesn't matter anymore
-			animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_END_NOW)
-			animate(alpha = 0, time = 0)
+			if (!move_animate(delete_x, delete_y, animate_time, deleting = TRUE))
+				animate(src, pixel_x = delete_x, pixel_y = delete_y, time = animate_time, flags = ANIMATION_END_NOW)
+				animate(alpha = 0, time = 0)
 			return
 
 		pixels_to_move -= distance_to_move
@@ -977,7 +981,8 @@
 		else
 			pixel_x -= x_shift * ICON_SIZE_X
 			pixel_y -= y_shift * ICON_SIZE_Y
-			animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
+			if (!move_animate(actual_x, actual_y))
+				animate(src, pixel_x = actual_x, pixel_y = actual_y, time = world.tick_lag, flags = ANIMATION_PARALLEL)
 
 		// Homing caps our movement speed per loop while leaving per tick speed intact, so we can just call process_homing every loop here
 		if (homing)
@@ -996,6 +1001,12 @@
 		if (tile_limit && (x_shift || y_shift))
 			return
 
+/// Called every time projectile animates its movement, in case child wants to have custom animations.
+/// Returning TRUE cancels normal animation
+/obj/projectile/proc/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
+	return
+
+/// Called every projectile loop for homing or alternatively, custom trajectory changes.
 /obj/projectile/proc/process_homing()
 	if(!homing_target)
 		return
