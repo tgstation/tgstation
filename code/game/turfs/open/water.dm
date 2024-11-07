@@ -69,6 +69,7 @@
  */
 /turf/open/water/hot_spring
 	name = "hot spring"
+	icon_state = "pool"
 	desc = "Water kept warm through some unknown heat source, possibly a geothermal heat source far underground. \
 		Whatever it is, it feels pretty damn nice to swim in given the rest of the environment around here, and you \
 		can even catch a glimpse of the odd fish darting through the water."
@@ -76,31 +77,23 @@
 	fishing_datum = /datum/fish_source/hot_spring
 	planetary_atmos = FALSE
 	/// Holder for the steam particles that show up sometimes
-	var/obj/effect/abstract/particle_holder/particle_effect
+	var/obj/effect/abstract/particle_holder/cached/particle_effect
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
-	if(prob(50))
-		particle_effect = new(src, /particles/hotspring_steam)
-		particle_effect.vis_flags &= ~VIS_INHERIT_PLANE //render the steam over mobs and objects on the game plane
-	addtimer(CALLBACK(src, PROC_REF(toggle_steam)), rand(4 MINUTES, 6 MINUTES))
+	particle_effect = new(src, /particles/hotspring_steam, 4)
+	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE //render the steam over mobs and objects on the game plane
+	var/static/icon/waves_mask = icon('icons/effects/cut.dmi', "pool_waves")
+	add_filter("hot_spring_waves", 1, displacement_map_filter(waves_mask, x = 0, y = 0, size = 1))
 	/**
 	 * turf/Initialize() calls Entered on its contents, however
 	 * we need to wait for movables that still need to be initialized.
 	 */
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(enter_initialized_movable))
 
-///Toggle the steam at random intervals, for a more, umh... dynamic look.
-/turf/open/water/hot_spring/proc/toggle_steam()
-	if(particle_effect)
-		QDEL_NULL(particle_effect)
-	else
-		particle_effect = new(src, /particles/hotspring_steam)
-		particle_effect.vis_flags &= ~VIS_INHERIT_PLANE //render the steam over mobs and objects on the game plane
-	addtimer(CALLBACK(src, PROC_REF(toggle_steam)), rand(4, 6 MINUTES))
-
 /turf/open/water/hot_spring/Destroy()
 	QDEL_NULL(particle_effect)
+	remove_filter("hot_spring_waves")
 	for(var/atom/movable/movable as anything in contents)
 		exit_hot_spring(movable)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)

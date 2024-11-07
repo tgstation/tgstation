@@ -101,9 +101,11 @@
 /particles/hotspring_steam
 	icon = 'icons/effects/particles/smoke.dmi'
 	icon_state = list(
-		"steam_1" = 2,
-		"steam_2" = 2,
-		"steam_3" = 1,
+		"steam_cloud_1" = 1,
+		"steam_cloud_2" = 1,
+		"steam_cloud_3" = 1,
+		"steam_cloud_4" = 1,
+		"steam_cloud_5" = 1,
 	)
 	width = 64
 	height = 64
