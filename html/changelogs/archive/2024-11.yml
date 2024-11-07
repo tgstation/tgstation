@@ -221,3 +221,19 @@
   - bugfix: Fixed MODsuit deactivation not disabling modules
   thegrb93:
   - bugfix: Fix borg throwing not working
+2024-11-07:
+  Ghommie:
+  - bugfix: You can actually catch custom material fish with custom material fishing
+      rods.
+  - balance: Tweaked some values of custom material fishing rods.
+  - balance: Soft-capped the selling price per unit for fish at 6k (the value of the
+      fish plateaus even faster past that threshold).
+  Kiko:
+  - rscadd: Nebulastation, new station map
+  grungussuss:
+  - bugfix: duct tape will now properly make sounds
+  mc-oofert:
+  - rscadd: honkerative skin applier adds a waddling module
+  - bugfix: mod skin applier works now
+  oranges:
+  - balance: Nuclear disk no longer needs to be secured at sub 10 population

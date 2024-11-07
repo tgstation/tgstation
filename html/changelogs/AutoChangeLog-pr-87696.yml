@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "You can actually catch custom material fish with custom material fishing rods."
-  - balance: "Tweaked some values of custom material fishing rods."
-  - balance: "Soft-capped the selling price per unit for fish at 6k (the value of the fish plateaus even faster past that threshold)."
