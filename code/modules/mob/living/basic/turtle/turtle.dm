@@ -43,7 +43,7 @@
 		/datum/reagent/plantnutriment/left4zednutriment = PATH_PLANT_MUTATOR,
 		/datum/reagent/uranium = PATH_PLANT_MUTATOR,
 		//pest killers
-		/datum/reagent/toxin = PATH_PEST_KILLER,
+		/datum/reagent/toxin/pestkiller = PATH_PEST_KILLER,
 	)
 	///if we are fully grown, what is our path
 	var/developed_path
@@ -54,7 +54,7 @@
 	. = ..()
 
 	desc = pick(
-		"Likey Dog...",
+		"Likely Dog...",
 		"Praise the Dog!",
 		"Dog ahead.",
 		"Could this be a Dog?",
@@ -74,10 +74,20 @@
 		last_direction = REVERSE_DIR(last_direction)
 	return ..()
 
+/mob/living/basic/turtle/proc/retrieve_destined_path()
+	var/current_max_growth = 0
+	var/destined_path
+	for(var/evolution_path in path_growth_progress)
+		if(path_growth_progress[evolution_path] > current_max_growth)
+			destined_path = evolution_path
+			current_max_growth = path_growth_progress[evolution_path]
+	if(isnull(destined_path))
+		destined_path = PATH_PLANT_HEALER
+	return destined_path
 
 /mob/living/basic/turtle/process(seconds_per_tick)
 	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to being a plant healer
-		set_plant_growth(PATH_PLANT_HEALER, 0.5)
+		set_plant_growth(retrieve_destined_path(), 0.5)
 		return
 
 	for(var/datum/reagent/existing_reagent as anything in reagents.reagent_list)
@@ -96,7 +106,7 @@
 /mob/living/basic/turtle/proc/set_plant_growth(evolution_path, amount)
 	path_growth_progress[evolution_path] += amount
 	if(path_growth_progress[evolution_path] >= REQUIRED_TREE_GROWTH)
-		evolve_turtle()
+		evolve_turtle(evolution_path)
 
 /mob/living/basic/turtle/examine(mob/user)
 	. = ..()
@@ -105,13 +115,8 @@
 		. += span_notice("Its tree seems to be all withered...")
 		return
 
-	var/destined_path
-	var/current_max_growth = 0
-
-	for(var/evolution_path in path_growth_progress)
-		if(path_growth_progress[evolution_path] > current_max_growth)
-			destined_path = evolution_path
-			current_max_growth = path_growth_progress[evolution_path]
+	var/destined_path = retrieve_destined_path()
+	var/current_max_growth = path_growth_progress[destined_path]
 
 	var/text_to_display = "Its tree seems to be exuding "
 	switch(destined_path)
@@ -172,21 +177,21 @@
 	icon_state = resting ? "[base_icon_state]_rest" : base_icon_state
 	regenerate_icons()
 
-/mob/living/basic/turtle/attackby(obj/item/used_item, mob/living/user, params)
+/mob/living/basic/turtle/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
 	if(istype(used_item, /obj/item/seeds) && stat == CONSCIOUS)
 		melee_attack(used_item)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(used_item, /obj/item/reagent_containers))
-		return ..()
+		return NONE
 
 	if(isnull(used_item.reagents))
 		balloon_alert(user, "empty!")
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(stat == DEAD)
 		balloon_alert(user, "its dead!")
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	var/should_transfer = FALSE
 	for(var/reagent in path_requirements)
@@ -196,10 +201,11 @@
 
 	if(!should_transfer)
 		balloon_alert(user, "refuses to drink!")
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	used_item.reagents.trans_to(reagents, 5)
 	balloon_alert(user, "drinks happily")
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/turtle/proc/pre_eat_food(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
