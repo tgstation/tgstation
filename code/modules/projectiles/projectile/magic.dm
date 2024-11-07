@@ -429,9 +429,10 @@
 	if(!movement_vector)
 		return
 
+	// TODO: FIX THIS
 	var/obj/effect/overlay/trail = new /obj/effect/overlay(loc)
-	trail.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond / speed
-	trail.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond / speed
+	trail.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond * flight_speed
+	trail.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond * flight_speed
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
@@ -444,7 +445,7 @@
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
-	speed = 0.3
+	flight_speed = 3.5
 
 	/// The power of the zap itself when it electrocutes someone
 	var/zap_power = 2e4
@@ -513,7 +514,7 @@
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 100
-	speed = 5
+	flight_speed = 0.2
 	trigger_range = 0
 	can_only_hit_target = TRUE
 	paralyze = 6 SECONDS
@@ -539,7 +540,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list(FACTION_CULT)
 	range = 105
-	speed = 7
+	flight_speed = 0.15
 
 /obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

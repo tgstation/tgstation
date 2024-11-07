@@ -30,7 +30,7 @@
 	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	damage = 50
-	speed = 1
+	flight_speed = 1
 	range = 25
 	shrapnel_type = null
 	embed_type = /datum/embed_data/arrow
@@ -60,7 +60,7 @@
 	desc = "Quite the sticky situation..."
 	icon_state = "sticky_arrow_projectile"
 	damage = 30
-	speed = 0.75
+	flight_speed = 1.3
 	range = 20
 	embed_type = /datum/embed_data/arrow/sticky
 

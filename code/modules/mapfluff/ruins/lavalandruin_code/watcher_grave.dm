@@ -254,7 +254,7 @@
 	icon_state = "ice_2"
 	damage = 10
 	damage_type = BRUTE // Mining mobs don't take a lot of burn damage so we'll pretend
-	speed = 2
+	flight_speed = 0.5
 
 /obj/projectile/baby_watcher_blast/Initialize(mapload)
 	. = ..()

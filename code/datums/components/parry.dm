@@ -23,7 +23,7 @@
 	/// Callback for special effects upon parrying
 	var/datum/callback/parry_callback
 
-/datum/component/parriable_projectile/Initialize(parry_speed_mult = 0.8, parry_damage_mult = 1.15, boost_speed_mult = 0.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
+/datum/component/parriable_projectile/Initialize(parry_speed_mult = 1.25, parry_damage_mult = 1.15, boost_speed_mult = 1.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
 	if(!isprojectile(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.parry_speed_mult = parry_speed_mult
@@ -112,7 +112,7 @@
 	else
 		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
 	source.firer = user
-	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
+	source.flight_speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
 	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
 	source.add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	if (!isnull(parry_callback))

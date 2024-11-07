@@ -64,7 +64,7 @@
 	loaded_projectile.name = projectile_vars["name"]
 	loaded_projectile.icon = projectile_vars["icon"]
 	loaded_projectile.icon_state = projectile_vars["icon_state"]
-	loaded_projectile.speed = projectile_vars["speed"]
+	loaded_projectile.flight_speed = projectile_vars["speed"]
 	loaded_projectile.color = projectile_vars["color"]
 	loaded_projectile.hitsound = projectile_vars["hitsound"]
 	loaded_projectile.impact_effect_type = projectile_vars["impact_effect_type"]

@@ -100,7 +100,7 @@
 	name = "blade"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "dio_knife"
-	speed = 2
+	flight_speed = 0.5
 	damage = 25
 	armour_penetration = 100
 	sharpness = SHARP_EDGED

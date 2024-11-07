@@ -38,7 +38,7 @@
 	 * Speed coefficient
 	 * Higher the coefficient slower the projectile.
 	*/
-	var/projectile_speed_coefficient = 1.5
+	var/projectile_speed_coefficient = 0.66
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	/// Projectile sent out by the dampener
@@ -163,15 +163,15 @@
 
 	tracked[projectile] = projectile.damage
 	projectile.damage *= projectile_damage_coefficient
-	projectile.speed *= projectile_speed_coefficient
+	projectile.flight_speed *= projectile_speed_coefficient
 	projectile.add_overlay(projectile_effect)
 
 /obj/item/borg/projectile_dampen/proc/restore_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
 	tracked -= projectile
-	projectile.damage *= (1 / projectile_damage_coefficient)
-	projectile.speed *= (1 / projectile_speed_coefficient)
+	projectile.damage /= projectile_damage_coefficient
+	projectile.flight_speed /= projectile_speed_coefficient
 	projectile.cut_overlay(projectile_effect)
 
 //bare minimum omni-toolset for modularity

@@ -310,7 +310,7 @@
 	/// Debuff multiplier on projectiles.
 	var/debuff_multiplier = 0.66
 	/// Speed multiplier on projectiles, higher means slower.
-	var/speed_multiplier = 2.5
+	var/speed_multiplier = 0.4
 	/// List of all tracked projectiles.
 	var/list/tracked_projectiles = list()
 	/// Effect image on projectiles.
@@ -339,14 +339,14 @@
 	projectile.stamina *= damage_multiplier
 	projectile.stun *= debuff_multiplier
 	projectile.knockdown *= debuff_multiplier
-	projectile.speed *= speed_multiplier
+	projectile.flight_speed *= speed_multiplier
 	projectile.add_overlay(projectile_effect)
 
 /obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
 	projectile.damage /= damage_multiplier
-	projectile.speed /= speed_multiplier
+	projectile.flight_speed /= speed_multiplier
 	projectile.stamina /= damage_multiplier
 	projectile.stun /= debuff_multiplier
 	projectile.knockdown /= debuff_multiplier

@@ -1,4 +1,4 @@
-#define MULTIPLY_SPEED 1.25
+#define MULTIPLY_SPEED 0.8
 
 /obj/projectile/energy/photon
 	name = "photon bolt"
@@ -8,7 +8,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	damage = 5 //It's literally a weaker tesla bolt, which is already weak. Don't worry, we'll fix that.
 	range = 20
-	speed = 1
+	flight_speed = 1
 	projectile_piercing = PASSMOB
 	light_color = LIGHT_COLOR_DEFAULT
 	light_system = OVERLAY_LIGHT
@@ -45,7 +45,7 @@
 
 /obj/projectile/energy/photon/reduce_range()
 	. = ..()
-	speed *= MULTIPLY_SPEED
+	flight_speed *= MULTIPLY_SPEED
 
 /obj/projectile/energy/photon/on_range()
 	do_sparks(rand(4, 9), FALSE, src)
