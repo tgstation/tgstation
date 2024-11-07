@@ -62,8 +62,8 @@
 ///
 
 /datum/species/proc/add_doppler_markings(mob/living/carbon/human/target, value, colorvalue, bodypart)
-	bodypart = cover_flags2body_zones(bodypart)
-	bodypart = bodypart[1]
+	bodypart = marking_zones(bodypart)
+	bodypart = bodypart
 	var/obj/item/bodypart/people_part =  target.get_bodypart(bodypart)
 	if(people_part)
 		var/datum/bodypart_overlay/simple/body_marking/body_markings/markings = new /datum/bodypart_overlay/simple/body_marking/body_markings()
@@ -98,3 +98,29 @@
 	return preferences.read_preference(/datum/preference/choiced/markings/markings_r_leg2) != SPRITE_ACCESSORY_NONE
 
 #undef MARKING_LIST_LEN
+
+//cover_flags2body_zones is funky with hand bitflags for some reason. this is more efficient for what we want to do anyway
+/datum/species/proc/marking_zones(zone)
+	var/returnval
+
+	if(!zone)
+		return
+	switch(zone)
+		if(HEAD)
+			returnval = BODY_ZONE_HEAD
+		if(CHEST)
+			returnval = BODY_ZONE_CHEST
+		if(ARM_LEFT)
+			returnval = BODY_ZONE_L_ARM
+		if(ARM_RIGHT)
+			returnval = BODY_ZONE_R_ARM
+		if(HAND_LEFT)
+			returnval = BODY_ZONE_L_ARM
+		if(HAND_RIGHT)
+			returnval = BODY_ZONE_R_ARM
+		if(LEG_LEFT)
+			returnval = BODY_ZONE_L_LEG
+		if(LEG_RIGHT)
+			returnval = BODY_ZONE_R_LEG
+
+	return returnval
