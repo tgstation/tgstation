@@ -509,8 +509,9 @@
 	if(!I.blend_requirements(src))
 		to_chat(user, span_warning("Cannot grind this!"))
 		return
-	I.forceMove(src)
-	grinded = I
+	if(length(I.grind_results) || I.reagents?.total_volume)
+		I.forceMove(src)
+		grinded = I
 
 /obj/item/reagent_containers/cup/mortar/blended(obj/item/blended_item, grinded)
 	src.grinded = null
