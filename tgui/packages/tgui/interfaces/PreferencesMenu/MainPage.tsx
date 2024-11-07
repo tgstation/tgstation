@@ -700,7 +700,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
               </Stack.Item>
 
               <Stack.Item grow basis={0}>
-                {/* SKYRAT EDIT BEGIN: Swappable pref menus */}
+                {/* DOPPLER EDIT BEGIN */}
                 <Stack>
                   <Stack.Item grow>
                     <PageButton
@@ -752,6 +752,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                   </PreferenceList>
                 </Stack>
               </Stack.Item>
+              {/* DOPPLER EDIT END */}
             </Stack>
           </>
         );
