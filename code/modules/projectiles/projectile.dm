@@ -779,9 +779,8 @@
 	if(hitscan)
 		record_hitscan_start()
 		process_hitscan()
-		if (!QDELETED(src))
-			qdel(src)
-		return
+		if (QDELETED(src))
+			return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
@@ -854,6 +853,10 @@
 	if(paused || !isturf(loc))
 		// Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		last_projectile_move = last_process
+		return
+
+	if (hitscan)
+		process_hitscan()
 		return
 
 	// Calculates how many pixels should be moved this tick, including overrun debt from the previous tick
@@ -1015,30 +1018,31 @@
 	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
 	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
 
+/// Attempts to force the projectile to move until the subsystem runs out of processing time, the projectile impacts something or gets frozen by timestop
 /obj/projectile/proc/process_hitscan()
 	if (isnull(movement_vector))
 		qdel(src)
 		return
 
 	while (isturf(loc) && !QDELETED(src))
-		if(paused)
-			stoplag(1)
-			continue
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (CHECK_TICK || QDELETED(src))
+		if (CHECK_TICK || paused || QDELETED(src))
 			return
 
-/obj/projectile/proc/record_hitscan_start()
+/// Creates (or wipes clean) list of tracer keypoints and creates a first point.
+/obj/projectile/proc/record_hitscan_start(offset = TRUE)
 	if (isnull(beam_points))
 		beam_points = list()
 	else
 		QDEL_LIST_ASSOC(beam_points)
 		QDEL_NULL(last_point)
 	last_point = RETURN_PRECISE_POINT(src)
-	if (!isnull(movement_vector))
+	// If moving, increment its position a bit to prevent it from looking like its coming from firer's ass
+	if (offset && !isnull(movement_vector))
 		last_point.increment(movement_vector.pixel_x * MUZZLE_EFFECT_PIXEL_INCREMENT, movement_vector.pixel_y * MUZZLE_EFFECT_PIXEL_INCREMENT)
 	beam_points[last_point] = null
 
+/// Creates a new keypoint in which the tracer will split
 /obj/projectile/proc/create_hitscan_point(tile_center = null, broken_segment = FALSE)
 	var/datum/point/new_point = RETURN_PRECISE_POINT(tile_center || src)
 	if (!broken_segment)
@@ -1054,9 +1058,10 @@
 		return .
 	if (!hitscan || isnull(movement_vector) || isnull(beam_points) || free_hitscan_forceMove)
 		return .
+	// Create firing VFX and start a new chain because we most likely got teleported
 	generate_hitscan_tracers(impact = FALSE)
 	original_angle = angle
-	record_hitscan_start()
+	record_hitscan_start(offset = FALSE)
 
 /obj/projectile/proc/generate_hitscan_tracers(impact = TRUE)
 	if (!length(beam_points))
