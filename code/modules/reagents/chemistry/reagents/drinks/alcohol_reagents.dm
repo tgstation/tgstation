@@ -81,7 +81,7 @@
 				if(liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * heavy_drinker_multiplier * seconds_per_tick, 0))/150)))
 					return UPDATE_MOB_HEALTH
 
-/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, methods=TOUCH, reac_volume, show_message=TRUE)
 	if(istype(exposed_obj, /obj/item/paper))
 		var/obj/item/paper/paperaffected = exposed_obj
 		paperaffected.clear_paper()

@@ -220,7 +220,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		. |= R.expose_obj(src, reagents[R])
+		var/reac_volume = reagents[R]
+		. |= R.expose_obj(src, methods, reac_volume, show_message)
 
 /// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()

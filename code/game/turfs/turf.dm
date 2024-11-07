@@ -697,7 +697,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		. |= R.expose_turf(src, reagents[R])
+		var/reac_volume = reagents[R]
+		. |= R.expose_turf(src, reac_volume)
 
 /**
  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals

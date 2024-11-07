@@ -362,7 +362,7 @@
 	mytray.adjust_toxic(round(volume * 6))
 	mytray.adjust_weedlevel(-rand(4,8))
 
-/datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, methods=TOUCH, reac_volume, show_message=TRUE)
 	. = ..()
 	if(istype(exposed_obj, /obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
@@ -1097,7 +1097,7 @@
 		return
 	exposed_carbon.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, methods=TOUCH, reac_volume, show_message=TRUE)
 	. = ..()
 	if(ismob(exposed_obj.loc)) //handled in human acid_act()
 		return
