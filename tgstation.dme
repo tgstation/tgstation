@@ -4635,6 +4635,7 @@
 #include "code\modules\manufactorio\machines\sorter_filters.dm"
 #include "code\modules\manufactorio\machines\storagebox.dm"
 #include "code\modules\manufactorio\machines\unloader.dm"
+#include "code\modules\manufactorio\machines\user.dm"
 #include "code\modules\mapfluff\centcom\nuke_ops.dm"
 #include "code\modules\mapfluff\ruins\generic.dm"
 #include "code\modules\mapfluff\ruins\lavaland_ruin_code.dm"

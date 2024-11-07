@@ -59,6 +59,7 @@
 
 /obj/machinery/power/manufacturing/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -96,23 +97,26 @@
 	CRASH("Unimplemented!") //check can_receive_resource here
 
 //use dir please
-/obj/machinery/power/manufacturing/proc/send_resource(atom/movable/sending, atom/what_or_dir)
+/obj/machinery/power/manufacturing/proc/send_resource(atom/movable/sending, atom/what_or_dir, atom/dir_proxy)
+	if(isnull(dir_proxy)) //tldr diagonals shenanigans and these machines dont support input from those dirs
+		dir_proxy = src
+
 	if(isobj(what_or_dir))
 		var/obj/machinery/power/manufacturing/target = what_or_dir
-		return target.receive_resource(sending, src, get_step(src, what_or_dir))
-	var/turf/next_turf = isturf(what_or_dir) ? what_or_dir : get_step(src, what_or_dir)
+		return target.receive_resource(sending, src, get_dir(dir_proxy, what_or_dir))
+	var/turf/next_turf = isturf(what_or_dir) ? what_or_dir : get_step(dir_proxy, what_or_dir)
 	var/obj/machinery/power/manufacturing/manufactury = locate(/obj/machinery/power/manufacturing) in next_turf
 	if(!isnull(manufactury))
 		if(!manufactury.anchored)
 			return MANUFACTURING_FAIL
-		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(src, what_or_dir) : what_or_dir)
+		return manufactury.receive_resource(sending, src, isturf(what_or_dir) ? get_dir(dir_proxy, what_or_dir) : what_or_dir)
 	if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = sending))
 		return MANUFACTURING_FAIL
 	if(length(next_turf.contents) >= MANUFACTURING_TURF_LAG_LIMIT)
 		return MANUFACTURING_FAIL_FULL
 	if(isnull(sending))
 		return MANUFACTURING_SUCCESS // for the sake of being used as a check
-	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(src, next_turf)))
+	if(isnull(sending.loc) || !sending.Move(next_turf, get_dir(dir_proxy, next_turf)))
 		sending.forceMove(next_turf)
 	return MANUFACTURING_SUCCESS
 
