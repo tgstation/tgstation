@@ -354,7 +354,6 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
