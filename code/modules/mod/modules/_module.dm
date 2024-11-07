@@ -376,7 +376,7 @@
 /obj/item/mod/module/anomaly_locked
 	name = "MOD anomaly locked module"
 	desc = "A form of a module, locked behind an anomalous core to function."
-	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
+	incompatible_modules = list()
 	/// The core item the module runs off.
 	var/obj/item/assembly/signaler/anomaly/core
 	/// Accepted types of anomaly cores.

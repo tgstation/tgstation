@@ -50,9 +50,9 @@
 	desc = "A module that uses a gravitational core to make the user completely weightless."
 	icon_state = "antigrav"
 	module_type = MODULE_TOGGLE
-	complexity = 3
+	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.7
-	incompatible_modules = list(/obj/item/mod/module/anomaly_locked, /obj/item/mod/module/atrocinator)
+	incompatible_modules = list(/obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
@@ -84,20 +84,32 @@
 	icon_state = "teleporter"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
-	cooldown_time = 5 SECONDS
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 25
+	cooldown_time = 4 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Time it takes to teleport
-	var/teleport_time = 3 SECONDS
+	var/teleport_time = 1 SECONDS
+	/// Maximum turf range
+	var/max_range = 9
 
 /obj/item/mod/module/anomaly_locked/teleporter/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
 	var/turf/open/target_turf = get_turf(target)
-	if(!istype(target_turf) || target_turf.is_blocked_turf_ignore_climbable() || !(target_turf in view(mod.wearer)))
+	if(get_dist(target_turf, mod.wearer) > max_range)
+		balloon_alert(mod.wearer, "too far!")
+		return
+	if(!istype(target_turf))
 		balloon_alert(mod.wearer, "invalid target!")
+		return
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		balloon_alert(mod.wearer, "blocked destination!")
+		return
+	// check early so we don't go through the whole loops
+	if(!check_teleport_valid(mod.wearer, target_turf, channel = TELEPORT_CHANNEL_BLUESPACE, original_destination = target_turf))
+		balloon_alert(mod.wearer, "something holds you back!")
 		return
 	balloon_alert(mod.wearer, "teleporting...")
 	var/matrix/pre_matrix = matrix()

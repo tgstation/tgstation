@@ -17,11 +17,11 @@
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Range of the knesis grab.
-	var/grab_range = 5
+	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
 	var/hit_cooldown_time = 1 SECONDS
 	/// Stat required for us to grab a mob.
-	var/stat_required = DEAD
+	var/stat_required = SOFT_CRIT
 	/// Atom we grabbed with kinesis.
 	var/atom/movable/grabbed_atom
 	/// Ref of the beam following the grabbed atom.
