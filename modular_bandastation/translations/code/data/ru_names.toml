@@ -1206,6 +1206,82 @@ instrumental = "беспроводной микроволновкой"
 nominative = "беспроводная микроволновка"
 prepositional = "беспроводной микроволновке"
 
+[wrench]
+accusative = "гаечный ключ"
+dative = "гаечному ключу"
+genitive = "гаечного ключа"
+instrumental = "гаечным ключом"
+nominative = "гаечный ключ"
+prepositional = "гаечном ключе"
+
+["briefcase"]
+nominative = "портфель"
+genitive = "портфеля"
+dative = "портфелю"
+accusative = "портфель"
+instrumental = "портфелем"
+prepositional = "портфеле"
+
+["suture"]
+nominative = "шов"
+genitive = "шва"
+dative = "шву"
+accusative = "шов"
+instrumental = "швом"
+prepositional = "шве"
+
+# MARK: Machinery
+
+["slot machine"]
+nominative = "слот-машина"
+genitive = "слот-машины"
+dative = "слот-машине"
+accusative = "слот-машину"
+instrumental = "слот-машиной"
+prepositional = "слот-машине"
+
+["restaurant portal"]
+nominative = "ресторанный портал"
+genitive = "ресторанного портала"
+dative = "ресторанному порталу"
+accusative = "ресторанный портал"
+instrumental = "ресторанным порталом"
+prepositional = "ресторанном портале"
+
+["hydroponics tray"]
+nominative = "ботанический лоток"
+genitive = "ботанического лотка"
+dative = "ботаническому лотку"
+accusative = "ботанический лоток"
+instrumental = "ботаническим лотком"
+prepositional = "ботаническом лотке"
+
+["seed extractor"]
+nominative = "экстрактор семян"
+genitive = "экстрактора семян"
+dative = "экстрактору семян"
+accusative = "экстрактор семян"
+instrumental = "экстрактором семян"
+prepositional = "экстракторе семян"
+
+["biogenerator"]
+nominative = "биогенератор"
+genitive = "биогенератора"
+dative = "биогенератору"
+accusative = "биогенератор"
+instrumental = "биогенератором"
+prepositional = "биогенераторе"
+
+["chem dispenser"]
+nominative = "химический раздатчик"
+genitive = "химического раздатчика"
+dative = "химическому раздатчику"
+accusative = "химического раздатчика"
+instrumental = "химическим раздатчиком"
+prepositional = "химическом раздатчике"
+
+# MARK: Materials
+
 ["wooden plank"]
 accusative = "деревянную доску"
 dative = "деревянной доске"
@@ -1214,10 +1290,370 @@ instrumental = "деревянной доской"
 nominative = "деревянная доска"
 prepositional = "деревянной доске"
 
-[wrench]
-accusative = "гаечный ключ"
-dative = "гаечному ключу"
-genitive = "гаечного ключа"
-instrumental = "гаечным ключом"
-nominative = "гаечный ключ"
-prepositional = "гаечном ключе"
+# MARK: Engineering
+
+# MARK: Structures
+
+["stool"]
+nominative = "табурет"
+genitive = "табурета"
+dative = "табурету"
+accusative = "табурет"
+instrumental = "табуретом"
+prepositional = "табурете"
+
+["water tank"]
+nominative = "бак с водой"
+genitive = "бака с водой"
+dative = "баку с водой"
+accusative = "бак с водой"
+instrumental = "баком с водой"
+prepositional = "баке с водой"
+
+["fuel tank"]
+nominative = "бак с топливом"
+genitive = "бака с топливом"
+dative = "баку с топливом"
+accusative = "бак с топливом"
+instrumental = "баком с топливом"
+prepositional = "баке с топливом"
+
+# MARK: Weapons
+
+["temperature gun"]
+nominative = "температурная винтовка"
+genitive = "температурной винтовки"
+dative = "температурной винтовке"
+accusative = "температурную винтовку"
+instrumental = "температурной винтовкой"
+prepositional = "температурной винтовке"
+
+["security temperature gun"]
+nominative = "температурная винтовка охраны"
+genitive = "температурной винтовки охраны"
+dative = "температурной винтовке охраны"
+accusative = "температурную винтовку охраны"
+instrumental = "температурной винтовкой охраны"
+prepositional = "температурной винтовке охраны"
+
+["X-01 MultiPhase Energy Gun"]
+nominative = "X-01 мультифазовый энергетический пистолет"
+genitive = "X-01 мультифазового энергетического пистолета"
+dative = "X-01 мультифазовому энергетическому пистолету"
+accusative = "X-01 мультифазовый энергетический пистолет"
+instrumental = "X-01 мультифазовым энергетическим пистолетом"
+prepositional = "X-01 мультифазовом энергетическом пистолете"
+
+["ion rifle"]
+nominative = "ионная винтовка"
+genitive = "ионной винтовки"
+dative = "ионной винтовке"
+accusative = "ионную винтовку"
+instrumental = "ионной винтовкой"
+prepositional = "ионной винтовке"
+
+["ion carbine"]
+nominative = "ионный карабин"
+genitive = "ионного карабина"
+dative = "ионному карабину"
+accusative = "ионный карабин"
+instrumental = "ионным карабином"
+prepositional = "ионном карабине"
+
+["X-ray laser gun"]
+nominative = "рентгеновский карабин"
+genitive = "рентгеновского карабина"
+dative = "рентгеновскому карабину"
+accusative = "рентгеновский карабин"
+instrumental = "рентгеновским карабином"
+prepositional = "рентгеновском карабине"
+
+["advanced energy gun"]
+nominative = "продвинутый энергетический карабин"
+genitive = "продвинутого энергетического карабина"
+dative = "продвинутому энергетическому карабину"
+accusative = "продвинутый энергетический карабин"
+instrumental = "продвинутым энергетическим карабином"
+prepositional = "продвинутом энергетическом карабине"
+
+["proto-kinetic accelerator"]
+nominative = "протокинетический акселератор"
+genitive = "протокинетического акселератора"
+dative = "протокинетическому акселератору"
+accusative = "протокинетический акселератор"
+instrumental = "протокинетическим акселератором"
+prepositional = "протокинетическом акселераторе"
+
+["disabler"]
+nominative = "дизейблер"
+genitive = "дизейблера"
+dative = "дизейблеру"
+accusative = "дизейблера"
+instrumental = "дизейблером"
+prepositional = "дизейблере"
+
+["energy gun"]
+nominative = "энергетический карабин"
+genitive = "энергетического карабина"
+dative = "энергетическому карабину"
+accusative = "энергетический карабин"
+instrumental = "энергетическим карабином"
+prepositional = "энергетическом карабине"
+
+["laser gun"]
+nominative = "лазерный карабин"
+genitive = "лазерного карабина"
+dative = "лазерному карабину"
+accusative = "лазерный карабин"
+instrumental = "лазерным карабином"
+prepositional = "лазерном карабине"
+
+["laser carbine"]
+nominative = "автоматический лазерный карабин"
+genitive = "автоматического лазерного карабина"
+dative = "автоматическому лазерному карабину"
+accusative = "автоматический лазерный карабин"
+instrumental = "автоматическим лазерным карабином"
+prepositional = "автоматическом лазерном карабине"
+
+["miniature energy gun"]
+nominative = "миниатюрный энергетический пистолет"
+genitive = "миниатюрного энергетического пистолета"
+dative = "миниатюрному энергетическому пистолету"
+accusative = "миниатюрный энергетический пистолет"
+instrumental = "миниатюрным энергетическим пистолетом"
+prepositional = "миниатюрном энергетическом пистолете"
+
+["antique laser gun"]
+nominative = "антикварный лазерный пистолет"
+genitive = "антикварного лазерного пистолета"
+dative = "антикварному лазерному пистолету"
+accusative = "антикварный лазерный пистолет"
+instrumental = "антикварным лазерным пистолетом"
+prepositional = "антикварном лазерном пистолете"
+
+["floral somatoray"]
+nominative = "цветочный соматолуч"
+genitive = "цветочного соматолуча"
+dative = "цветочному соматолучу"
+accusative = "цветочный соматолуч"
+instrumental = "цветочным соматолучом"
+prepositional = "цветочном соматолуче"
+
+["bluespace wormhole projector"]
+nominative = "блуспейс проектор червоточин"
+genitive = "блуспейс проектора червоточи"
+dative = "блуспейс проектору червоточин"
+accusative = "блуспейс проектор червоточин"
+instrumental = "блуспейс проектором червоточин"
+prepositional = "блуспейс проекторе червоточин"
+
+["energy crossbow"]
+nominative = "энергетический арбалет"
+genitive = "энергетического арбалета"
+dative = "энергетическому арбалету"
+accusative = "энергетический арбалет"
+instrumental = "энергетическим арбалетом"
+prepositional = "энергетическом арбалете"
+
+["mini energy crossbow"]
+nominative = "мини-энергетический арбалет"
+genitive = "мини-энергетического арбалета"
+dative = "мини-энергетическому арбалету"
+accusative = "мини-энергетический арбалет"
+instrumental = "мини-энергетическим арбалетом"
+prepositional = "мини-энергетическом арбалете"
+
+["pulse rifle"]
+nominative = "пульсовый карабин"
+genitive = "пульсового карабина"
+dative = "пульсовому карабину"
+accusative = "пульсовый карабин"
+instrumental = "пульсовым карабином"
+prepositional = "пульсовом карабине"
+
+["laser musket"]
+nominative = "лазерный мушкет"
+genitive = "лазерного мушкета"
+dative = "лазерному мушкету"
+accusative = "лазерный мушкет"
+instrumental = "лазерным мушкетом"
+prepositional = "лазерном мушкете"
+
+["heroic laser musket"]
+nominative = "героический лазерный мушкет"
+genitive = "героического лазерного мушкета"
+dative = "героическому лазерному мушкету"
+accusative = "героический лазерный мушкет"
+instrumental = "героическим лазерным мушкетом"
+prepositional = "героическом лазерном мушкете"
+
+["smoothbore disabler"]
+nominative = "гладкоствольный дизейблер"
+genitive = "гладкоствольного дизейблера"
+dative = "гладкоствольному дизейблеру"
+accusative = "гладкоствольного дизейблера"
+instrumental = "гладкоствольным дизейблером"
+prepositional = "гладкоствольном дизейблере"
+
+["elite smoothbore disabler"]
+nominative = "элитный гладкоствольный дизейблер"
+genitive = "элитного гладкоствольного дизейблера"
+dative = "элитному гладкоствольному дизейблеру"
+accusative = "элитного гладкоствольного дизейблера"
+instrumental = "элитным гладкоствольным дизейблером"
+prepositional = "элитном гладкоствольном дизейблере"
+
+["alien pistol"]
+nominative = "инопланетный пистолет"
+genitive = "инопланетного пистолета"
+dative = "инопланетному пистолету"
+accusative = "инопланетный пистолет"
+instrumental = "инопланетным пистолетом"
+prepositional = "инопланетном пистолете"
+
+["riot shotgun"]
+nominative = "служебный дробовик"
+genitive = "служебного дробовика"
+dative = "служебному дробовику"
+accusative = "служебный дробовик"
+instrumental = "служебным дробовиком"
+prepositional = "служебном дробовике"
+
+["combat shotgun"]
+nominative = "боевой дробовик"
+genitive = "боевого дробовика"
+dative = "боевому дробовику"
+accusative = "боевой дробовик"
+instrumental = "боевым дробовиком"
+prepositional = "боевом дробовике"
+
+["stun baton"]
+nominative = "оглушающая дубинка"
+genitive = "оглушающей дубинки"
+dative = "оглушающей дубинке"
+accusative = "оглушающую дубинку"
+instrumental = "оглушающей дубинкой"
+prepositional = "оглушающей дубинке"
+
+["stunprod"]
+nominative = "оглушающий прут"
+genitive = "оглушающего прута"
+dative = "оглушающему пруту"
+accusative = "оглушающий прут"
+instrumental = "оглушающим прутом"
+prepositional = "оглушающем пруте"
+
+["advanced baton"]
+nominative = "высокотехнологическая дубинка"
+genitive = "высокотехнологической дубинки"
+dative = "высокотехнологической дубинке"
+accusative = "высокотехнологическую дубинку"
+instrumental = "высокотехнологической дубинкой"
+prepositional = "высокотехнологической дубинке"
+
+["plasma cutter"]
+nominative = "плазменный резак"
+genitive = "плазменного резака"
+dative = "плазменному резаку"
+accusative = "плазменного резака"
+instrumental = "плазменным резаком"
+prepositional = "плазменном резаке"
+
+["advanced plasma cutter"]
+nominative = "продвинутый плазменный резак"
+genitive = "продвинутого плазменного резака"
+dative = "продвинутому плазменному резаку"
+accusative = "продвинутого плазменного резака"
+instrumental = "продвинутым плазменным резаком"
+prepositional = "продвинутом плазменном резаке"
+
+["disabler smg"]
+nominative = "дизейблер пистолет-пулемёт"
+genitive = "дизейблера пистолет-пулемёт"
+dative = "дизейблеру пистолет-пулемёт"
+accusative = "дизейблера пистолет-пулемёт"
+instrumental = "дизейблером пистолет-пулемёт"
+prepositional = "дизейблере пистолет-пулемёт"
+
+["kitchen knife"]
+nominative = "кухонный нож"
+genitive = "кухонного ножа"
+dative = "кухонному ножу"
+accusative = "кухонный нож"
+instrumental = "кухонным ножом"
+prepositional = "кухонном ноже"
+
+["survival knife"]
+nominative = "нож для выживания"
+genitive = "ножа для выживания"
+dative = "ножу для выживания"
+accusative = "нож для выживания"
+instrumental = "ножом для выживания"
+prepositional = "ноже для выживания"
+
+["combat knife"]
+nominative = "боевой нож"
+genitive = "боевого ножа"
+dative = "боевому ножу"
+accusative = "боевой нож"
+instrumental = "боевым ножом"
+prepositional = "боевом ноже"
+
+# MARK: Other
+
+["pepper mill"]
+nominative = "перцемолка"
+genitive = "перцемолки"
+dative = "перцемолке"
+accusative = "перцемолку"
+instrumental = "перцемолкой"
+prepositional = "перцемолке"
+
+["watering can"]
+nominative = "лейка"
+genitive = "лейки"
+dative = "лейке"
+accusative = "лейку"
+instrumental = "лейкой"
+prepositional = "лейке"
+
+["cultivator"]
+nominative = "рыхлитель"
+genitive = "рыхлителя"
+dative = "рыхлителю"
+accusative = "рыхлитель"
+instrumental = "рыхлителем"
+prepositional = "рыхлителе"
+
+["spade"]
+nominative = "лопатка"
+genitive = "лопатки"
+dative = "лопатке"
+accusative = "лопатку"
+instrumental = "лопаткой"
+prepositional = "лопатке"
+
+["hatchet"]
+nominative = "топорик"
+genitive = "топорика"
+dative = "топорику"
+accusative = "топорик"
+instrumental = "топориком"
+prepositional = "топорике"
+
+["plant bag"]
+nominative = "сумка для растений"
+genitive = "сумки для растений"
+dative = "сумке для растений"
+accusative = "сумку для растений"
+instrumental = "сумкой для растений"
+prepositional = "сумке для растений"
+
+["secateurs"]
+nominative = "секатор"
+genitive = "секатора"
+dative = "секатору"
+accusative = "секатор"
+instrumental = "секатором"
+prepositional = "секаторе"
