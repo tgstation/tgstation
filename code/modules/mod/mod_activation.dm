@@ -26,7 +26,7 @@
 		return
 	var/parts_to_check = parts - part
 	if(part.loc == src)
-		if(!deploy(user, part) || (active && !delayed_seal_part(part)))
+		if(!deploy(user, part))
 			return
 		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
@@ -35,7 +35,7 @@
 			choose_deploy(user)
 			break
 	else
-		if((active && !delayed_seal_part(part, silent = TRUE)) || !retract(user, part))
+		if(!retract(user, part))
 			return
 		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 		for(var/obj/item/checking_part as anything in parts_to_check)
@@ -64,12 +64,7 @@
 		if(deploy && part.loc == src)
 			if(!deploy(null, part))
 				continue
-			if(active && !delayed_seal_part(part))
-				retract(null, part)
-				return
 		else if(!deploy && part.loc != src)
-			if(active && !delayed_seal_part(part))
-				return
 			retract(null, part)
 	if(deploy)
 		SEND_SIGNAL(src, COMSIG_MOD_DEPLOYED, user)
@@ -78,7 +73,7 @@
 	return TRUE
 
 /// Deploys a part of the suit onto the user.
-/obj/item/mod/control/proc/deploy(mob/user, obj/item/part)
+/obj/item/mod/control/proc/deploy(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(!wearer)
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -97,14 +92,18 @@
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags)
-		if(!user)
-			return TRUE
-		wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
-			span_notice("[part] deploy[part.p_s()] with a mechanical hiss."),
-			span_hear("You hear a mechanical hiss."))
-		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		SEND_SIGNAL(src, COMSIG_MOD_PART_DEPLOYED, user, part)
-		return TRUE
+		if(user)
+			wearer.visible_message(span_notice("[wearer]'s [part.name] deploy[part.p_s()] with a mechanical hiss."),
+				span_notice("[part] deploy[part.p_s()] with a mechanical hiss."),
+				span_hear("You hear a mechanical hiss."))
+			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		if(!active || part_datum.sealed)
+			return TRUE
+		if((instant && seal_part(part, is_sealed = TRUE)) || (!instant && delayed_seal_part(part)))
+			return TRUE
+		balloon_alert(user, "can't seal, retracting!")
+		retract(user, part)
 	else
 		if(part_datum.overslotting)
 			var/obj/item/overslot = part_datum.overslotting
@@ -117,14 +116,19 @@
 	return FALSE
 
 /// Retract a part of the suit from the user.
-/obj/item/mod/control/proc/retract(mob/user, obj/item/part)
+/obj/item/mod/control/proc/retract(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(part.loc == src)
 		if(!user)
 			return FALSE
-		balloon_alert(user, "[part.name] already retracted!")
+		balloon_alert(user, "already retracted!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
+	if(active && part_datum.sealed)
+		if((instant && !seal_part(part, is_sealed = FALSE)) || (!instant && !delayed_seal_part(part, silent = TRUE)))
+			balloon_alert(user, "can't unseal!")
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			return FALSE
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
 	if(part_datum.overslotting)
@@ -308,12 +312,8 @@
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()
+	control_activation(is_on = TRUE)
 	for(var/obj/item/part as anything in get_parts())
 		deploy(null, part)
-	for(var/obj/item/part as anything in get_parts())
-		if(part.loc == src)
-			continue
-		seal_part(part, is_sealed = TRUE)
-	control_activation(is_on = TRUE)
 
 #undef MOD_ACTIVATION_STEP_FLAGS

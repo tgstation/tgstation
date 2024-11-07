@@ -104,7 +104,7 @@
 
 /obj/item/mod/module/tether/get_configuration()
 	. = ..()
-	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "pin", TRUE)
+	.["cut_tethers"] = add_ui_configuration("Cut Tethers", "button", "scissors")
 
 /obj/item/mod/module/tether/configure_edit(key, value)
 	if (key != "cut_tethers")

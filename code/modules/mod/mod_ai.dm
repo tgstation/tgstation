@@ -3,19 +3,19 @@
 	if(!.)
 		return
 	if(!open) //mod must be open
-		balloon_alert(user, "suit must be open to transfer!")
+		balloon_alert(user, "panel closed!")
 		return
 	switch(interaction)
 		if(AI_TRANS_TO_CARD)
 			if(!ai_assistant)
-				balloon_alert(user, "no ai in suit!")
+				balloon_alert(user, "no ai in unit!")
 				return
 			balloon_alert(user, "transferring to card...")
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
 				return
 			if(!ai_assistant)
-				balloon_alert(user, "no ai in suit!")
+				balloon_alert(user, "no ai in unit!")
 				return
 			balloon_alert(user, "ai transferred to card")
 			ai_exit_mod(card)
@@ -33,13 +33,13 @@
 			if(intAI.stat || !intAI.client)
 				balloon_alert(user, "ai unresponsive!")
 				return
-			balloon_alert(user, "transferring to suit...")
+			balloon_alert(user, "transferring to unit...")
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
 				return
 			if(ai_assistant)
 				return
-			balloon_alert(user, "ai transferred to suit")
+			balloon_alert(user, "ai transferred to unit")
 			ai_enter_mod(intAI)
 			card.AI = null
 
@@ -74,14 +74,14 @@
 	if (isnull(card.pai?.mind))
 		balloon_alert(user, "pAI unresponsive!")
 		return FALSE
-	balloon_alert(user, "transferring to suit...")
+	balloon_alert(user, "transferring to unit...")
 	if (!do_after(user, 5 SECONDS, target = src))
 		balloon_alert(user, "interrupted!")
 		return FALSE
 	if (!user.transferItemToLoc(card, src))
 		balloon_alert(user, "transfer failed!")
 		return FALSE
-	balloon_alert(user, "pAI transferred to suit")
+	balloon_alert(user, "pAI transferred to unit")
 	var/mob/living/silicon/pai/pai_assistant = card.pai
 	pai_assistant.can_transmit = TRUE
 	pai_assistant.can_receive = TRUE
@@ -99,14 +99,14 @@
 		return FALSE
 	if (!forced)
 		if (!open)
-			balloon_alert(user, "suit panel closed!")
+			balloon_alert(user, "panel closed!")
 			return FALSE
 		balloon_alert(user, "uninstalling card...")
 		if (!do_after(user, 5 SECONDS, target = src))
 			balloon_alert(user, "interrupted!")
 			return FALSE
 
-	balloon_alert(user, "pAI removed from suit")
+	balloon_alert(user, "pAI removed")
 	var/mob/living/silicon/pai/pai_helper = ai_assistant
 	pai_helper.can_holo = TRUE
 	pai_helper.card.forceMove(get_turf(src))
@@ -115,7 +115,7 @@
 /// Called when a new ai assistant is inserted
 /obj/item/mod/control/proc/on_gained_assistant(mob/living/silicon/new_helper)
 	ai_assistant = new_helper
-	balloon_alert(new_helper, "transferred to a suit")
+	balloon_alert(new_helper, "transferred to a mod unit")
 	for(var/datum/action/action as anything in actions)
 		action.Grant(new_helper)
 

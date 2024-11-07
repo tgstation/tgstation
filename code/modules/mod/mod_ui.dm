@@ -9,8 +9,10 @@
 	// Suit information
 	var/suit_status = list(
 		"core_name" = core?.name,
-		"cell_charge_current" = get_charge(),
-		"cell_charge_max" = get_max_charge(),
+		"charge_current" = get_charge(),
+		"charge_max" = get_max_charge(),
+		"chargebar_color" = get_chargebar_color(),
+		"chargebar_string" = get_chargebar_string(),
 		"active" = active,
 		"ai_name" = ai_assistant?.name,
 		"has_pai" = ispAI(ai_assistant),
@@ -56,21 +58,22 @@
 			"configuration_data" = module.get_configuration(user),
 		))
 	data["module_custom_status"] = module_custom_status
-	data["module_info"] = module_info
-	return data
-
-/obj/item/mod/control/ui_static_data(mob/user)
-	var/data = list()
-	data["ui_theme"] = ui_theme
 	data["control"] = name
-	data["complexity_max"] = complexity_max
+	data["module_info"] = module_info
 	var/part_info = list()
 	for(var/obj/item/part as anything in get_parts())
 		part_info += list(list(
 			"slot" = english_list(parse_slot_flags(part.slot_flags)),
 			"name" = part.name,
+			"deployed" = part.loc != src,
 		))
 	data["parts"] = part_info
+	return data
+
+/obj/item/mod/control/ui_static_data(mob/user)
+	var/data = list()
+	data["ui_theme"] = ui_theme
+	data["complexity_max"] = complexity_max
 	return data
 
 /obj/item/mod/control/ui_state(mob/user)
@@ -115,6 +118,14 @@
 			if(!module)
 				return
 			module.pin(ui.user)
+		if("deploy")
+			var/obj/item/mod_part = get_part_datum_from_slot(params["slot"])
+			if(!mod_part)
+				return
+			if(mod_part.loc == src)
+				deploy(ui.user, mod_part)
+			else
+				retract(ui.user, mod_part)
 		if("eject_pai")
 			if (!ishuman(ui.user))
 				return

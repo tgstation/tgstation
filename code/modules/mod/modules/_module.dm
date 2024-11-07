@@ -300,7 +300,7 @@
 /obj/item/mod/module/proc/add_ui_data()
 	return list()
 
-/// Creates a list of configuring options for this module
+/// Creates a list of configuring options for this module, possible configs include number, bool, color, list, button.
 /obj/item/mod/module/proc/get_configuration(mob/user)
 	return list()
 
