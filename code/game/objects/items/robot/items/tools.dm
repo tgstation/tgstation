@@ -36,7 +36,7 @@
 	var/projectile_damage_tick_ecost_coefficient = 10
 	/**
 	 * Speed coefficient
-	 * Higher the coefficient slower the projectile.
+	 * Higher the coefficient faster the projectile.
 	*/
 	var/projectile_speed_coefficient = 0.66
 	/// Energy cost per tracked projectile per second
