@@ -620,6 +620,16 @@
 	desc = "Waaater... Fuck this WATER!!"
 	icon_state = "shower_regen_catgirl"
 
+/atom/movable/screen/alert/status_effect/shower_regen/bloody_like
+	name = "Washing"
+	desc = "Mhhhmmmm... the crimson red drops of life. How delightful."
+	icon_state = "shower_regen_blood_happy"
+
+/atom/movable/screen/alert/status_effect/shower_regen/bloody_dislike
+	name = "Washing"
+	desc = "Is that... blood? What the fuck!"
+	icon_state = "shower_regen_blood_bad"
+
 /datum/status_effect/shower_regen
 	id = "shower_regen"
 	duration = -1
@@ -627,10 +637,22 @@
 	alert_type = /atom/movable/screen/alert/status_effect/shower_regen
 	/// How many heals from washing.
 	var/stamina_heal_per_tick = 4
+	/// Is this the shower raining blood?
+	var/bloody_shower = FALSE
+
+/datum/status_effect/shower_regen/on_creation(mob/living/new_owner, _bloody_shower = FALSE)
+	bloody_shower = _bloody_shower
+	return ..()
 
 /datum/status_effect/shower_regen/on_apply()
 	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
+
+	if(bloody_shower)
+		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL))
+			alert_type = /atom/movable/screen/alert/status_effect/shower_regen/bloody_like
+		else
+			alert_type  = /atom/movable/screen/alert/status_effect/shower_regen/bloody_dislike
+	else if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
 		alert_type = /atom/movable/screen/alert/status_effect/shower_regen/hater
 
 /datum/status_effect/shower_regen/tick(seconds_between_ticks)
