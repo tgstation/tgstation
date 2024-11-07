@@ -73,11 +73,11 @@
 
 /obj/item/mod/module/stealth/ninja/on_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, WEAKREF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 
 /obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, WEAKREF(src))
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 
 ///Camera Vision - Prevents flashes, blocks tracking.
 /obj/item/mod/module/welding/camera_vision
@@ -173,10 +173,10 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), WEAKREF(src))
+	mod.wearer.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), REF(src))
 
 /obj/item/mod/module/weapon_recall/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), WEAKREF(src))
+	mod.wearer.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), REF(src))
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)

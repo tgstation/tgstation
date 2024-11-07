@@ -522,11 +522,11 @@
 			idle_power_cost = 0
 		if(STORMTROOPER_MODE)
 			idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
-			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), WEAKREF(src))
+			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), REF(src))
 			RegisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN, PROC_REF(stormtrooper_fired_gun))
 		if(SHARPSHOOTER_MODE)
 			idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.6
-			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), WEAKREF(src))
+			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), REF(src))
 			RegisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN, PROC_REF(sharpshooter_fired_gun))
 			RegisterSignal(mod.wearer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(apply_ricochet))
 			mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
@@ -535,10 +535,10 @@
 	switch(selected_mode)
 		if(STORMTROOPER_MODE)
 			UnregisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN)
-			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), WEAKREF(src))
+			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), REF(src))
 		if(SHARPSHOOTER_MODE)
 			UnregisterSignal(mod.wearer, list(COMSIG_MOB_FIRED_GUN, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE))
-			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), WEAKREF(src))
+			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), REF(src))
 			mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
 
 /obj/item/mod/module/shooting_assistant/drain_power(amount)
@@ -582,10 +582,10 @@
 	required_slots = list(ITEM_SLOT_OCLOTHING)
 
 /obj/item/mod/module/shove_blocker/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), WEAKREF(src))
+	mod.wearer.add_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), REF(src))
 
 /obj/item/mod/module/shove_blocker/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), WEAKREF(src))
+	mod.wearer.remove_traits(list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), REF(src))
 
 /obj/item/mod/module/shove_blocker/locked
 	name = "superglued MOD bulwark module"
@@ -602,8 +602,8 @@
 
 /obj/item/mod/module/quick_cuff/on_part_activation()
 	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, WEAKREF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, REF(src))
 
 /obj/item/mod/module/quick_cuff/on_part_deactivation(deleting = FALSE)
 	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, WEAKREF(src))
+	REMOVE_TRAIT(mod.wearer, TRAIT_FAST_CUFFING, REF(src))
