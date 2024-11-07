@@ -1006,7 +1006,7 @@
 	)
 
 //Clarke
-/datum/design/clarke_chassis
+/datum/design/clarke_chassis //XANTODO how many points to change this by? 
 	name = "Exosuit Chassis (\"Clarke\")"
 	id = "clarke_chassis"
 	build_type = MECHFAB

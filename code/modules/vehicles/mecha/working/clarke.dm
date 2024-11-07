@@ -1,11 +1,11 @@
-///Lavaproof, fireproof, fast mech with low armor and higher energy consumption, cannot strafe and has an internal ore box.
+///Lavaproof, fireproof, fast mech with low armor and higher energy consumption and has an internal ore box.
 /obj/vehicle/sealed/mecha/clarke
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
 	icon_state = "clarke"
 	base_icon_state = "clarke"
 	max_temperature = 65000
-	max_integrity = 200
+	max_integrity = 250
 	movedelay = 1.25
 	overclock_coeff = 1.25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -29,9 +29,8 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	mech_type = EXOSUIT_MODULE_CLARKE
 	enter_delay = 40
-	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	accesses = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
-	allow_diagonal_movement = FALSE
 	pivot_step = TRUE
 
 /datum/armor/mecha_clarke
@@ -55,6 +54,7 @@
 /obj/vehicle/sealed/mecha/clarke/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/clarke_scoop_body)
 
 //Ore Box Controls
 
@@ -108,6 +108,16 @@
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/clarke //The Clarke subtype of the sleeper is a built-in utility module
+	equipment_slot = MECHA_UTILITY
+	detachable = FALSE
+
+/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(trigger_flags)
+	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
+	//XANTODO Find a way to make this target an adjacent human, for some reason I can't remember how to do this.
+	var/mob/living/carbon/human/human_target
+	sleeper.action(atomtarget = human_target)
 
 #define SEARCH_COOLDOWN (1 MINUTES)
 

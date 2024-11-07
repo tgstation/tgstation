@@ -259,6 +259,11 @@
 /obj/projectile/kinetic/mech
 	range = 5
 
+/obj/projectile/kinetic/mech/on_hit(atom/target, blocked, pierce_hit)
+	if(ishostile(target))
+		damage *= 1.5
+	return ..()
+
 //Modkits
 /obj/item/borg/upgrade/modkit
 	name = "kinetic accelerator modification kit"
