@@ -185,9 +185,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/Initialize(mapload)
 	. = ..()
-	create_reagents(chem_volume, INJECTABLE | NO_REACT)
-	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
@@ -201,11 +198,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		initial_reagents = list_reagents,\
 		food_flags = FOOD_NO_EXAMINE,\
 		foodtypes = JUNKFOOD,\
-		volume = 50,\
+		volume = chem_volume,\
 		eat_time = 0 SECONDS,\
 		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
 		eatverbs = list("taste"),\
-		bite_consumption = 50,\
+		bite_consumption = chem_volume,\
 		junkiness = 0,\
 		reagent_purity = null,\
 		on_consume = CALLBACK(src, PROC_REF(on_consume)),\
