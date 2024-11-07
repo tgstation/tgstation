@@ -102,3 +102,6 @@
 #define PROJECTILE_IMPACT_INTERRUPTED "impact_interrupted"
 /// Projectile has successfully impacted something and is scheduled for deletion
 #define PROJECTILE_IMPACT_SUCCESSFUL "impact_successful"
+
+/// For how long projectile tracers linger
+#define PROJECTILE_TRACER_DURATION 0.3 SECONDS

@@ -141,10 +141,12 @@
 	/// Wherever this projectile is hitscan. Hitscan projectiles are processed until the end of their path instantly upon being fired and leave a tracer in their path
 	var/hitscan = FALSE
 	/// Associated list of coordinate points in which we changed trajectories in order to calculate hitscan tracers
-	/// TRUE value means that we should generate a tracer to the next point, and FALSE means that we skip a segment
+	/// Value points to the next point in the beam
 	var/list/datum/point/beam_points
-	/// Next forceMove will not create a skipped segment
-	var/dont_skip_next_segment = FALSE
+	/// Last point in the beam
+	var/datum/point/last_point
+	/// Next forceMove will not create tracer end/start effects
+	var/free_hitscan_forceMove = FALSE
 
 	/// Hitscan tracer effect left behind the projectile
 	var/tracer_type
@@ -271,10 +273,8 @@
 	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
 /obj/projectile/Destroy()
-	/* TODO: THIS BULLSHIT
 	if (hitscan)
-		finalize_hitscan()
-	*/
+		generate_hitscan_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
 	original = null
@@ -282,6 +282,8 @@
 		QDEL_NULL(movement_vector)
 	if (beam_points)
 		QDEL_LIST(beam_points)
+	if (last_point)
+		QDEL_NULL(last_point)
 	return ..()
 
 /obj/projectile/proc/reduce_range()
@@ -299,9 +301,15 @@
 
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
+		if (hitscan)
+			qdel(src)
+			return
 		deletion_queued = PROJECTILE_RANGE_DELETE
 
 	if(damage_falloff_tile && damage <= 0 || stamina_falloff_tile && stamina <= 0)
+		if (hitscan)
+			qdel(src)
+			return
 		deletion_queued = PROJECTILE_RANGE_DELETE
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -415,7 +423,7 @@
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
 	if(!ricochet_auto_aim_angle || !ricochet_auto_aim_range)
-		return
+		return FALSE
 
 	var/mob/living/unlucky_sob
 	var/best_angle = ricochet_auto_aim_angle
@@ -432,6 +440,8 @@
 	if(unlucky_sob)
 		set_angle(get_angle(src, unlucky_sob.loc))
 		original = unlucky_sob
+		return TRUE
+	return FALSE
 
 /obj/projectile/Bump(atom/bumped_atom)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom)
@@ -453,12 +463,14 @@
 	// Don't impact anything if we've been queued for deletion
 	if (deletion_queued)
 		return
+
 	// never doublehit, otherwise someone may end up running into a projectile from the back
 	if(impacted[target.weak_reference])
 		return
 
 	if(ricochets < ricochets_max && check_ricochet_flag(target) && check_ricochet(target) && target.handle_ricochet(src))
-		on_ricochet(target)
+		if(!on_ricochet(target) && hitscan && beam_points)
+			create_hitscan_point()
 		impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
 		ignore_source_check = TRUE // Firer is no longer immune
 		maximum_range = max(0, maximum_range - reflect_range_decrease)
@@ -466,10 +478,6 @@
 		damage *= ricochet_decay_damage
 		stamina *= ricochet_decay_damage
 		range = maximum_range
-	/* TODO: THIS BULLSHIT
-		if(hitscan && beam_points)
-			store_hitscan_collision()
-	*/
 		return
 
 	var/turf/target_turf = get_turf(target)
@@ -477,6 +485,9 @@
 	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(target_turf, starting)), 5, 100))
 	var/impact_result = process_hit_loop(select_target(target_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
+		return
+	if (hitscan)
+		qdel(src)
 		return
 	deletion_queued = PROJECTILE_IMPACT_DELETE
 
@@ -761,18 +772,18 @@
 	movement_vector = new(speed, angle)
 	if (hitscan)
 		beam_points = list()
-	dont_skip_next_segment = TRUE
+	free_hitscan_forceMove = TRUE
 	forceMove(starting)
 	last_projectile_move = world.time
 	fired = TRUE
 	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
-	/* TODO: THIS BULLSHIT
 	if(hitscan)
+		record_hitscan_start()
 		process_hitscan()
-		if(QDELETED(src))
-			return
-	*/
+		if (!QDELETED(src))
+			qdel(src)
+		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
@@ -799,13 +810,11 @@
 	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
-	/* TODO: THIS BULLSHIT
 	if(fired && hitscan && isturf(loc))
 		create_hitscan_point()
-	*/
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
-/obj/projectile/proc/set_angle_centered(new_angle)
+/obj/projectile/proc/set_angle_centered(new_angle, center_turf)
 	if (angle == new_angle)
 		return
 	if(!nondirectional_sprite)
@@ -813,10 +822,8 @@
 	angle = new_angle
 	if(movement_vector)
 		movement_vector.set_angle(new_angle)
-	/* TODO: THIS BULLSHIT
 	if(fired && hitscan && isturf(loc))
-		create_hitscan_point(tile_center = TRUE)
-	*/
+		create_hitscan_point(tile_center = center_turf)
 
 /obj/projectile/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, angle))
@@ -897,9 +904,10 @@
 			y_to_border = movement_vector.pixel_y > 0 ? (ICON_SIZE_Y - pixel_y_actual) / movement_vector.pixel_y : pixel_y_actual / -movement_vector.pixel_y
 
 		// Figure out how much we need to travel to hit the border
-		var/distance_to_border = !isnull(x_to_border) ? (!isnull(y_to_border) ? min(x_to_border, y_to_border) : x_to_border) : -1
+		var/distance_to_border = !isnull(x_to_border) ? (!isnull(y_to_border) ? min(x_to_border, y_to_border) : x_to_border) : (!isnull(y_to_border) ? y_to_border : -1)
 		// Something went extremely wrong
 		if (distance_to_border < 0)
+			to_chat(world, "x_to_border: [x_to_border] y_to_border: [y_to_border] angle: [movement_vector.angle] pixel_x: [movement_vector.pixel_x] pixel_y: [movement_vector.pixel_y]")
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
 			return
@@ -975,6 +983,10 @@
 		if (homing)
 			process_homing()
 
+		// We've hit a timestop field, abort any remaining movement
+		if (paused)
+			return
+
 		// Prevents long-range high-speed projectiles from ruining the server performance by moving 100 tiles per tick when subsystem is set to a high cap
 		if (CHECK_TICK)
 			// If we ran out of time, add whatever distance we're yet to pass to overrun debt to be processed next tick and break the loop
@@ -993,80 +1005,106 @@
 	var/new_angle = closer_angle_difference(angle, angle_between_points(RETURN_PRECISE_POINT(src), new_point))
 	set_angle(angle + clamp(new_angle, -homing_turn_speed, homing_turn_speed))
 
-/*
-
-/obj/projectile/forceMove(atom/target)
-	if(!isloc(target) || !isloc(loc) || !z)
-		return ..()
-	. = ..()
-	if(QDELETED(src)) // we coulda bumped something
-		return
-	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
-		if(hitscan)
-			finalize_hitscan_and_generate_tracers(FALSE)
-		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
-		if(hitscan)
-			record_hitscan_start(RETURN_PRECISE_POINT(src))
-
-
 /obj/projectile/proc/process_hitscan()
-	var/safety = range * 10
-	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
-	while(loc && !QDELETED(src))
-		if(paused)
-			stoplag(1)
-			continue
-		if(safety-- <= 0)
+	if (isnull(movement_vector))
+		qdel(src)
+		return
+
+	while (isturf(loc) && !QDELETED(src))
+		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
+		if (CHECK_TICK)
 			if(loc)
 				Bump(loc)
 			if(!QDELETED(src))
 				qdel(src)
-			return //Kill!
-		if (last_tick_turf)
-			UnregisterSignal(last_tick_turf, COMSIG_ATOM_ENTERED)
-		pixel_move(1, TRUE)
-		RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
-		last_tick_turf = loc
-		// No kevinz I do not care that this is a hitscan weapon, it is not allowed to travel 100 turfs in a tick
-		if(CHECK_TICK && QDELETED(src))
 			return
 
-/obj/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
-	if(!length(beam_segments))
+/obj/projectile/proc/record_hitscan_start()
+	if (isnull(beam_points))
+		beam_points = list()
+	else
+		QDEL_LIST_ASSOC(beam_points)
+		QDEL_NULL(last_point)
+	last_point = RETURN_PRECISE_POINT(src)
+	if (!isnull(movement_vector))
+		last_point.increment(movement_vector.pixel_x * MUZZLE_EFFECT_PIXEL_INCREMENT, movement_vector.pixel_y * MUZZLE_EFFECT_PIXEL_INCREMENT)
+	beam_points[last_point] = null
+
+/obj/projectile/proc/create_hitscan_point(tile_center = null, broken_segment = FALSE)
+	var/datum/point/new_point = RETURN_PRECISE_POINT(tile_center || src)
+	if (!broken_segment)
+		beam_points[last_point] = new_point
+	beam_points[new_point] = null
+	last_point = new_point
+
+/obj/projectile/forceMove(atom/target)
+	if (hitscan && !isnull(beam_points))
+		create_hitscan_point()
+	. = ..()
+	if(!isturf(loc) || !isturf(target) || !z || QDELETED(src) || deletion_queued)
+		return .
+	if (!hitscan || isnull(movement_vector) || isnull(beam_points) || free_hitscan_forceMove)
+		return .
+	generate_hitscan_tracers(impact = FALSE)
+	original_angle = angle
+	record_hitscan_start()
+
+/obj/projectile/proc/generate_hitscan_tracers(impact = TRUE)
+	if (!length(beam_points))
 		return
-	if(tracer_type)
-		var/tempref = REF(src)
-		for(var/datum/point/beam_point in beam_segments)
-			generate_tracer_between_points(beam_point, beam_segments[beam_point], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity, tempref)
-	if(muzzle_type && duration > 0)
-		var/datum/point/beam_point = beam_segments[1]
-		var/atom/movable/thing = new muzzle_type
-		beam_point.move_atom_to_src(thing)
+
+	if (impact)
+		create_hitscan_point()
+
+	if (tracer_type)
+		for (var/beam_point in beam_points)
+			generate_tracer(beam_point)
+
+	if (muzzle_type)
+		var/datum/point/start_point = beam_points[1]
+		var/atom/movable/muzzle_effect = new muzzle_type(loc)
+		start_point.move_atom_to_src(muzzle_effect)
 		var/matrix/matrix = new
 		matrix.Turn(original_angle)
-		thing.transform = matrix
-		thing.color = color
-		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)
-		QDEL_IN(thing, duration)
-	if(impacting && impact_type && duration > 0)
-		var/datum/point/beam_point = beam_segments[beam_segments[beam_segments.len]]
-		var/atom/movable/thing = new impact_type
-		beam_point.move_atom_to_src(thing)
+		muzzle_effect.transform = matrix
+		muzzle_effect.color =  color
+		muzzle_effect.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override || color)
+		QDEL_IN(muzzle_effect, PROJECTILE_TRACER_DURATION)
+
+	if (impact_type)
+		var/atom/movable/impact_effect = new impact_type(loc)
+		last_point.move_atom_to_src(impact_effect)
 		var/matrix/matrix = new
 		matrix.Turn(angle)
-		thing.transform = matrix
-		thing.color = color
-		thing.set_light(impact_light_range, impact_light_intensity, impact_light_color_override? impact_light_color_override : color)
-		QDEL_IN(thing, duration)
-	if(cleanup)
-		cleanup_beam_segments()
+		impact_effect.transform = matrix
+		impact_effect.color =  color
+		impact_effect.set_light(impact_light_range, impact_light_intensity, impact_light_color_override || color)
+		QDEL_IN(impact_effect, PROJECTILE_TRACER_DURATION)
 
-/obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
-	beam_segments[beam_index] = point_cache
-	beam_index = point_cache
-	beam_segments[beam_index] = null
+/obj/projectile/proc/generate_tracer(datum/point/start_point)
+	if (isnull(beam_points[start_point]))
+		return
 
-*/
+	var/datum/point/end_point = beam_points[start_point]
+	var/datum/point/midpoint = point_midpoint_points(start_point, end_point)
+	var/obj/effect/projectile/tracer/tracer_effect = new tracer_type(midpoint.return_turf())
+	tracer_effect.apply_vars(angle_between_points(start_point, end_point), midpoint.pixel_x, midpoint.pixel_y, color, pixel_length_between_points(start_point, end_point) / ICON_SIZE_ALL)
+	QDEL_IN(tracer_effect, PROJECTILE_TRACER_DURATION)
+
+	if (!hitscan_light_range || !hitscan_light_intensity)
+		return
+
+	var/self_ref = REF(src)
+	var/list/turf/light_line = get_line(start_point.return_turf(), end_point.return_turf())
+	for (var/turf/light_turf as anything in light_line)
+		var/located_effect = FALSE
+		for(var/obj/effect/projectile_lighting/light_effect in light_turf)
+			if(light_effect.owner == self_ref)
+				located_effect = TRUE
+				break
+		if (located_effect)
+			continue
+		QDEL_IN(new /obj/effect/projectile_lighting(light_turf, hitscan_light_color_override || color, hitscan_light_range, hitscan_light_intensity, self_ref), PROJECTILE_TRACER_DURATION)
 
 /**
  * Aims the projectile at a target.
@@ -1099,7 +1137,7 @@
 		qdel(src)
 		return FALSE
 
-	dont_skip_next_segment = TRUE
+	free_hitscan_forceMove = TRUE
 	forceMove(source_loc)
 	starting = source_loc
 	pixel_x = source.pixel_x

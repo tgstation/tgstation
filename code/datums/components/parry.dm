@@ -89,7 +89,7 @@
 /datum/component/parriable_projectile/proc/before_hit(obj/projectile/source, list/bullet_args)
 	SIGNAL_HANDLER
 
-	var/mob/user = bullet_args[2]
+	var/mob/user = bullet_args[1]
 	if (!istype(user) || !parriers[user] || parried)
 		return
 	parriers -= user

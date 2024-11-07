@@ -426,12 +426,12 @@
 
 /// Creates and handles the trail that follows the projectile.
 /obj/projectile/magic/aoe/proc/create_trail()
-	if(!trajectory)
+	if(!movement_vector)
 		return
 
 	var/obj/effect/overlay/trail = new /obj/effect/overlay(loc)
-	trail.pixel_x = pixel_x + movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond / speed
-	trail.pixel_y = pixel_y + movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond / speed
+	trail.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond / speed
+	trail.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond / speed
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
