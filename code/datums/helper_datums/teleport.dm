@@ -96,11 +96,14 @@
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
+	//We need to be sure that the buckled mobs can teleport too
 	if(teleatom.has_buckled_mobs())
 		for(var/mob/living/rider in teleatom.buckled_mobs)
+			//just in case it fails, but the mob gets unbuckled anyways even if it passes
+			teleatom.unbuckle_mob(rider, TRUE, FALSE)
+
 			var/rider_success = do_teleport(rider, destturf, precision, channel=channel, no_effects=TRUE)
 			if(!rider_success)
-				to_chat(rider, span_warning("Oh. Well, there goes [teleatom]..."))
 				continue
 
 			if(get_turf(rider) != destturf) //precision made them teleport somewhere else
