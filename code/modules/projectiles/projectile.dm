@@ -910,7 +910,6 @@
 		var/distance_to_border = !isnull(x_to_border) ? (!isnull(y_to_border) ? min(x_to_border, y_to_border) : x_to_border) : (!isnull(y_to_border) ? y_to_border : -1)
 		// Something went extremely wrong
 		if (distance_to_border < 0)
-			to_chat(world, "x_to_border: [x_to_border] y_to_border: [y_to_border] angle: [movement_vector.angle] pixel_x: [movement_vector.pixel_x] pixel_y: [movement_vector.pixel_y]")
 			stack_trace("WARNING: Projectile had an empty movement vector and tried to process")
 			qdel(src)
 			return
