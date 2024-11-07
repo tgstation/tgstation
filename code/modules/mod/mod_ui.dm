@@ -66,6 +66,7 @@
 			"slot" = english_list(parse_slot_flags(part.slot_flags)),
 			"name" = part.name,
 			"deployed" = part.loc != src,
+			"ref" = REF(part),
 		))
 	data["parts"] = part_info
 	return data
@@ -119,7 +120,7 @@
 				return
 			module.pin(ui.user)
 		if("deploy")
-			var/obj/item/mod_part = get_part_datum_from_slot(params["slot"])
+			var/obj/item/mod_part = locate(params["ref"]) in get_parts()
 			if(!mod_part)
 				return
 			if(mod_part.loc == src)

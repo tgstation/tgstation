@@ -100,10 +100,13 @@
 			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(!active || part_datum.sealed)
 			return TRUE
-		if((instant && seal_part(part, is_sealed = TRUE)) || (!instant && delayed_seal_part(part)))
+		if(instant)
+			seal_part(part, is_sealed = TRUE)
+			return TRUE
+		else if(delayed_seal_part(part))
 			return TRUE
 		balloon_alert(user, "can't seal, retracting!")
-		retract(user, part)
+		retract(user, part, instant = TRUE)
 	else
 		if(part_datum.overslotting)
 			var/obj/item/overslot = part_datum.overslotting
@@ -125,7 +128,9 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(active && part_datum.sealed)
-		if((instant && !seal_part(part, is_sealed = FALSE)) || (!instant && !delayed_seal_part(part, silent = TRUE)))
+		if(instant)
+			seal_part(part, is_sealed = FALSE)
+		else if(!delayed_seal_part(part))
 			balloon_alert(user, "can't unseal!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
@@ -225,13 +230,12 @@
 	SEND_SIGNAL(src, COMSIG_MOD_TOGGLED, user)
 	return TRUE
 
-/obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part, silent = FALSE)
+/obj/item/mod/control/proc/delayed_seal_part(obj/item/clothing/part)
 	. = FALSE
 	var/datum/mod_part/part_datum = get_part_datum(part)
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer)), hidden = TRUE))
-		if(!silent)
-			to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
-			playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(wearer, span_notice("[part] [!part_datum.sealed ? part_datum.sealed_message : part_datum.unsealed_message]."))
+		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		seal_part(part, is_sealed = !part_datum.sealed)
 		return TRUE
 
@@ -314,6 +318,6 @@
 /obj/item/mod/control/proc/quick_activation()
 	control_activation(is_on = TRUE)
 	for(var/obj/item/part as anything in get_parts())
-		deploy(null, part)
+		deploy(null, part, instant = TRUE)
 
 #undef MOD_ACTIVATION_STEP_FLAGS

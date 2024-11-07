@@ -39,6 +39,7 @@ type PartData = {
   slot: string;
   name: string;
   deployed: BooleanLike;
+  ref: string;
 };
 
 type SuitStatus = {
@@ -510,7 +511,7 @@ const ModParts = (props) => {
                 selected={part.deployed}
                 icon={part.deployed ? 'arrow-down' : 'arrow-up'}
                 content={part.deployed ? 'Retract' : 'Deploy'}
-                onClick={() => act('deploy', { slot: part.slot })}
+                onClick={() => act('deploy', { ref: part.ref })}
               />
             }
           >

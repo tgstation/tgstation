@@ -513,7 +513,7 @@
 		for(var/obj/item/part as anything in get_parts())
 			seal_part(part, is_sealed = FALSE)
 	for(var/obj/item/part as anything in get_parts())
-		retract(null, part)
+		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /*instant =*/ TRUE)
 	if(active)
 		control_activation(is_on = FALSE)
 		mod_link?.end_call()
@@ -725,7 +725,7 @@
 		if(!wearer)
 			part.forceMove(src)
 			return
-		retract(wearer, part)
+		INVOKE_ASYNC(src, PROC_REF(retract), wearer, part, /*instant =*/ TRUE)
 
 /obj/item/mod/control/proc/on_part_destruction(obj/item/part, damage_flag)
 	SIGNAL_HANDLER
