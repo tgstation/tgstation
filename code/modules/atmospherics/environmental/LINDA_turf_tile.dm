@@ -696,6 +696,5 @@ Then we space some of our heat, and think about if we should stop conducting.
 	sharer.temperature -= heat / sharer.heat_capacity
 
 
-
 #undef LAST_SHARE_CHECK
 #undef PLANET_SHARE_CHECK
