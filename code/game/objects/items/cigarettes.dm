@@ -200,7 +200,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		foodtypes = JUNKFOOD,\
 		volume = chem_volume,\
 		eat_time = 0 SECONDS,\
-		tastes = list("a never before experienced flavour.", "finally sitting down after standing your entire life"),\
+		tastes = list("a never before experienced flavour", "finally sitting down after standing your entire life"),\
 		eatverbs = list("taste"),\
 		bite_consumption = chem_volume,\
 		junkiness = 0,\
