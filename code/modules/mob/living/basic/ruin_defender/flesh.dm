@@ -1,7 +1,7 @@
 /// Chance per second to print a warning text
 #define LIVING_FLESH_WARN_CHANCE 3
 /// Chance per second to perform an unwanted interaction
-#define LIVING_FLESH_INTERFERENCE_CHANCE 100
+#define LIVING_FLESH_INTERFERENCE_CHANCE 1.5
 /// Chance to caress instead of grab something nearby without combat mode
 #define LIVING_FLESH_TOUCH_CHANCE 30
 /// Chance to punch instead of grab something nearby in combat mode
@@ -84,7 +84,7 @@
 	for(var/atom/movable/movable in orange(victim, 1))
 		if(movable == victim)
 			continue
-		if(!victim.CanReach(movable) || !can_see(victim, movable))
+		if(!victim.CanReach(movable) || movable.invisibility)
 			continue
 		candidates += movable
 	if(!length(candidates))
