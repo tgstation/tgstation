@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///What sound will be played on loop when the shower is on and pouring water.
 	var/datum/looping_sound/showering/soundloop
 	///What reagent should the shower be filled with when initially built.
-	var/reagent_id = /datum/reagent/blood // /datum/reagent/water
+	var/reagent_id = /datum/reagent/water
 	///How much reagent capacity should the shower begin with when built.
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
