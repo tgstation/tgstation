@@ -426,8 +426,8 @@
 		return
 
 	var/obj/effect/overlay/trail_effect = new /obj/effect/overlay(loc)
-	trail_effect.pixel_x = pixel_x - movement_vector.pixel_x * SSprojectiles.pixels_per_decisecond * speed
-	trail_effect.pixel_y = pixel_y - movement_vector.pixel_y * SSprojectiles.pixels_per_decisecond * speed
+	trail_effect.pixel_x = pixel_x
+	trail_effect.pixel_y = pixel_y
 	trail_effect.icon = trail_icon
 	trail_effect.icon_state = trail_icon_state
 	trail_effect.set_density(FALSE)
