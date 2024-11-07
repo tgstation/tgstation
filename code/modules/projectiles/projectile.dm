@@ -352,8 +352,8 @@
 		impact_x = target.pixel_x + p_x - 16
 		impact_y = target.pixel_y + p_y - 16
 	else
-		impact_x = entry_x + movement_vector.pixel_x * rand(0, 16)
-		impact_y = entry_y + movement_vector.pixel_y * rand(0, 16)
+		impact_x = entry_x + movement_vector?.pixel_x * rand(0, 16)
+		impact_y = entry_y + movement_vector?.pixel_y * rand(0, 16)
 
 	if(isturf(target) && hitsound_wall)
 		playsound(src, hitsound_wall, clamp(vol_by_damage() + (suppressed ? 0 : 20), 0, 100), TRUE, -1)

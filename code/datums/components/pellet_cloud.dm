@@ -289,8 +289,8 @@
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
-	var/obj/projectile/P = projectile_type
-	var/proj_name = initial(P.name)
+	var/obj/projectile/proj_type = projectile_type
+	var/proj_name = initial(proj_type.name)
 
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]["hits"]
@@ -303,24 +303,24 @@
 				hit_part = null //so the visible_message later on doesn't generate extra text.
 			else
 				target = hit_part.owner
-				if(wound_info_by_part[hit_part] && (initial(P.damage_type) == BRUTE || initial(P.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
+				if(wound_info_by_part[hit_part] && (initial(proj_type.damage_type) == BRUTE || initial(proj_type.damage_type) == BURN)) // so a cloud of disablers that deal stamina don't inadvertently end up causing burn wounds)
 					var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
 					var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
 					var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
-					var/wounding_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
+					var/wounding_type = (initial(proj_type.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
 					wound_info_by_part -= hit_part
 
 					// technically this only checks armor worn the moment that all the pellets resolve rather than as each one hits you,
 					// but this isn't important enough to warrant all the extra loops of mostly redundant armor checks
 					var/mob/living/carbon/hit_carbon = target
-					var/armor_factor = hit_carbon.getarmor(hit_part, initial(P.armor_flag))
+					var/armor_factor = hit_carbon.getarmor(hit_part, initial(proj_type.armor_flag))
 					armor_factor = min(ARMOR_MAX_BLOCK, armor_factor) //cap damage reduction at 90%
 					if(armor_factor > 0)
-						if(initial(P.weak_against_armour) && armor_factor >= 0)
+						if(initial(proj_type.weak_against_armour) && armor_factor >= 0)
 							armor_factor *= ARMOR_WEAKENED_MULTIPLIER
 						damage_dealt *= max(0, 1 - armor_factor*0.01)
 
-					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
+					hit_part.painless_wound_roll(wounding_type, damage_dealt, w_bonus, bw_bonus, initial(proj_type.sharpness))
 
 		var/limb_hit_text = ""
 		if(hit_part)

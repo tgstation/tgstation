@@ -134,25 +134,25 @@
 	if(!teleport(O, TRUE))
 		return ..()
 
-/obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
-	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+/obj/effect/portal/proc/teleport(atom/movable/target, force = FALSE)
+	if(!force && (!istype(target) || iseffect(target) || (ismecha(target) && !mech_sized) || (!isobj(target) && !ismob(target)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
+	if(!force && (!ismecha(target) && !isprojectile(target) && target.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
 	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	var/turf/start_turf = get_turf(M)
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
-		if(isprojectile(M))
-			var/obj/projectile/P = M
-			P.ignore_source_check = TRUE
-		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
+	var/turf/start_turf = get_turf(target)
+	if(do_teleport(target, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
+		if(isprojectile(target))
+			var/obj/projectile/proj = target
+			proj.ignore_source_check = TRUE
+		new /obj/effect/temp_visual/portal_animation(start_turf, src, target)
 		playsound(start_turf, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(real_target, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
