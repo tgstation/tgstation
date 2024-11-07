@@ -1011,12 +1011,11 @@
 		return
 
 	while (isturf(loc) && !QDELETED(src))
+		if(paused)
+			stoplag(1)
+			continue
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (CHECK_TICK)
-			if(loc)
-				Bump(loc)
-			if(!QDELETED(src))
-				qdel(src)
+		if (CHECK_TICK || QDELETED(src))
 			return
 
 /obj/projectile/proc/record_hitscan_start()
