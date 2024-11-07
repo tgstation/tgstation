@@ -46,13 +46,10 @@ map tramstation
 	votable
 endmap
 
-map pubbystation
+map nebulastation
+	minplayers 35
 	votable
 endmap
-
-map kilostation
-	maxplayers 35
-	votable
 
 map wawastation
 	votable

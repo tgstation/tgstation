@@ -10,18 +10,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/the_outlet/storefront)
-"ao" = (
-/obj/structure/rack,
-/obj/item/clothing/head/cowboy/brown,
-/obj/item/clothing/shoes/cowboy,
-/obj/item/clothing/under/costume/dutch,
-/obj/item/clothing/suit/costume/poncho,
-/obj/item/cigarette/cigar,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/eighties,
-/area/ruin/space/has_grav/the_outlet/storefront)
 "ar" = (
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-46"
@@ -97,6 +85,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"cL" = (
+/obj/effect/rune/apocalypse{
+	req_cultists = 999
+	},
+/obj/structure/destructible/cult/pants_altar,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "cZ" = (
 /obj/structure/kitchenspike,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -252,18 +247,6 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/syringe,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
-"gU" = (
-/obj/structure/closet/secure_closet/freezer/empty,
-/obj/item/organ/internal/tongue/lizard,
-/obj/item/food/meat/slab/human/mutant/lizard,
-/obj/item/organ/external/tail/lizard,
-/obj/item/organ/internal/heart,
-/obj/item/organ/internal/brain,
-/obj/item/organ/internal/liver,
-/obj/item/organ/internal/lungs,
-/obj/item/organ/internal/stomach,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
 "gX" = (
@@ -560,6 +543,18 @@
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"oI" = (
+/obj/structure/rack,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/shoes/cowboy,
+/obj/item/clothing/under/costume/dutch,
+/obj/item/clothing/suit/costume/poncho,
+/obj/item/cigarette/cigar,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
 "ps" = (
 /obj/structure/rack,
 /obj/item/clothing/under/misc/bouncer,
@@ -999,6 +994,18 @@
 /obj/effect/decal/cleanable/crayon,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"yA" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/organ/tongue/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/organ/tail/lizard,
+/obj/item/organ/heart,
+/obj/item/organ/brain,
+/obj/item/organ/liver,
+/obj/item/organ/lungs,
+/obj/item/organ/stomach,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "yG" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing,
@@ -1015,13 +1022,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"yX" = (
-/obj/effect/rune/apocalypse{
-	req_cultists = 999
-	},
-/obj/structure/destructible/cult/pants_altar,
-/turf/open/floor/cult,
-/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "zc" = (
 /obj/effect/decal/cleanable/crayon,
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -2486,7 +2486,7 @@ UF
 fX
 HZ
 Vx
-gU
+yA
 RV
 Fm
 Pg
@@ -3430,7 +3430,7 @@ HV
 xI
 TM
 nq
-ao
+oI
 HH
 HH
 Kp
@@ -3635,7 +3635,7 @@ qy
 wl
 RO
 PE
-yX
+cL
 ML
 RO
 zc

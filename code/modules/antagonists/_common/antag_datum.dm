@@ -63,6 +63,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
+	/// Whether this antag datum blocks rolling new antag datums
+	var/block_midrounds = TRUE
 
 	//ANTAG UI
 
@@ -468,7 +470,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
-	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	dummy.equipOutfit(outfit, visuals_only = TRUE)
 	dummy.wear_suit?.update_greyscale()
 	var/icon = getFlatIcon(dummy)
 
