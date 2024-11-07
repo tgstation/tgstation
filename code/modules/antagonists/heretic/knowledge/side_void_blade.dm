@@ -162,7 +162,7 @@
 		/obj/item/stack/sheet/mineral/titanium = 5,
 		/obj/item/clothing/suit/armor = 1,
 		/obj/item/assembly/flash = 1,
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 	)
 	cost = 1
 	route = PATH_SIDE

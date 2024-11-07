@@ -66,15 +66,12 @@
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
-/datum/atom_hud/sentient_disease
-	hud_icons = list(SENTIENT_DISEASE_HUD)
-
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
 /datum/atom_hud/ai_detector/show_to(mob/new_viewer)
-	..()
-	if(!new_viewer || hud_users.len != 1)
+	. = ..()
+	if(!new_viewer || hud_users_all_z_levels.len != 1)
 		return
 	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
 		eye.update_ai_detect_hud()
@@ -207,6 +204,8 @@ Medical HUD! Basic mode needs suit sensors on.
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		if(HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || can_defib_client())
 			holder.icon_state = "huddefib"
+		else if(HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
+			holder.icon_state = "hudghost"
 		else
 			holder.icon_state = "huddead"
 	else
