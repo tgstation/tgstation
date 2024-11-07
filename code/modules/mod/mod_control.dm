@@ -97,7 +97,6 @@
 	theme.set_up_parts(src, new_skin)
 	for(var/obj/item/part as anything in get_parts())
 		RegisterSignal(part, COMSIG_ATOM_DESTRUCTION, PROC_REF(on_part_destruction))
-		RegisterSignal(part, COMSIG_QDELETING, PROC_REF(on_part_deletion))
 	set_wires(new /datum/wires/mod(src))
 	if(length(req_access))
 		locked = TRUE
@@ -122,7 +121,8 @@
 		part_datum.part_item = null
 		part_datum.overslotting = null
 		mod_parts -= part_datum
-		qdel(part_item)
+		if(!QDELING(part_item))
+			qdel(part_item)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -448,12 +448,11 @@
 	CRASH("get_part_datum called with incorrect item [part] passed.")
 
 /obj/item/mod/control/proc/get_part_from_slot(slot)
-	slot = "[slot]"
-	for(var/part_slot in mod_parts)
-		if(slot != part_slot)
-			continue
-		var/datum/mod_part/part = mod_parts[part_slot]
-		return part.part_item
+	var/datum/mod_part/part = mod_parts["[slot]"]
+	return part?.part_item
+
+/obj/item/mod/control/proc/get_part_datum_from_slot(slot)
+	return mod_parts["[slot]"]
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	if(wearer == user)
@@ -709,6 +708,9 @@
 		uninstall(part)
 		return
 	if(part in get_parts())
+		if(QDELING(part) && !QDELING(src))
+			qdel(src)
+			return
 		var/datum/mod_part/part_datum = get_part_datum(part)
 		if(part_datum.sealed)
 			seal_part(part, is_sealed = FALSE)
@@ -725,14 +727,6 @@
 	if(QDELING(src))
 		return
 	atom_destruction(damage_flag)
-
-/obj/item/mod/control/proc/on_part_deletion(obj/item/part)
-	SIGNAL_HANDLER
-
-	if(QDELING(src))
-		return
-	part.moveToNullspace()
-	qdel(src)
 
 /obj/item/mod/control/proc/on_overslot_exit(obj/item/part, atom/movable/overslot, direction)
 	SIGNAL_HANDLER
