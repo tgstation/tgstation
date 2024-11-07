@@ -1107,7 +1107,7 @@
 
 	return reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
-///What should The atom that grinded a object do with it afterwards? Default behaviour is to delete it
+///What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
 /atom/movable/proc/blended(obj/item/blended_item, grinded)
 	qdel(blended_item)
 
