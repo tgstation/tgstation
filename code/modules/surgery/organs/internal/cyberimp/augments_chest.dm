@@ -315,7 +315,7 @@
 		athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier
 		added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_range
 		added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
-		strength_bonus = added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
+		strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
 		core_applied = TRUE
 		update_appearance()
 		qdel(tool)
