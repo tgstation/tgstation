@@ -146,8 +146,6 @@
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
 
-	if(isliving(owner))
-		pinpointer_check(owner, tracked_mob)
 
 	// Let them know how to sacrifice people if they're able to be sac'd
 	if(tracked_mob.stat == DEAD)
@@ -157,22 +155,24 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/track_target/proc/pinpointer_check(mob/living/give_me_navigator, mob/living/carbon/human/tracked_mob)
-	if(isnull(tracked_mob))
-		null_navigator()
+/datum/action/cooldown/track_target/proc/make_navigate_arrow(turf/tracked_turf)
+	var/datum/hud/user_hud = owner.hud_used
+	if(!user_hud)
 		return
-	if(isnull(heretic_pinpointer))
-		heretic_pinpointer = give_me_navigator.apply_status_effect(/datum/status_effect/agent_pinpointer/scan/heretic)
-		heretic_pinpointer.scan_target = tracked_mob
-		return
-	if(heretic_pinpointer.scan_target != tracked_mob)
-		heretic_pinpointer.scan_target = tracked_mob
+	var/atom/movable/screen/heretic_arrow/arrow = new /atom/movable/screen/heretic_arrow(null, user_hud)
+	animate(arrow, transform = matrix(dir2angle(get_dir(owner, tracked_turf)), MATRIX_ROTATE), 0.2 SECONDS)
+	arrow.screen_loc = around_player
+	user_hud.infodisplay += arrow
+	user_hud.show_hud(user_hud.hud_version)
+	addtimer(CALLBACK(src, PROC_REF(end_effect), user_hud, arrow), 1.6 SECONDS)
 
-/datum/action/cooldown/track_target/proc/null_navigator(mob/living/give_me_navigator, mob/living/carbon/human/tracked_mob)
-	if(isnull(heretic_pinpointer))
-		return
-	give_me_navigator.remove_status_effect(/datum/status_effect/agent_pinpointer/scan/heretic)
-	heretic_pinpointer = null
+/datum/action/cooldown/track_target/proc/end_effect(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	arrow.icon_state = "heretic_arrow_disappear"
+	addtimer(CALLBACK(src, PROC_REF(null_arrow), user_hud, arrow), 0.4 SECONDS)
+
+/datum/action/cooldown/track_target/proc/null_arrow(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	user_hud.infodisplay -= arrow
+	user_hud.show_hud(user_hud.hud_version)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -236,16 +236,16 @@
 			else
 				balloon_message = "very far!"
 
+		make_navigate_arrow(their_turf)
+
 	if(tracked_mob.stat == DEAD)
 		balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
 
-/datum/status_effect/agent_pinpointer/scan/heretic
-	duration = 5 SECONDS
-	tick_interval = 1 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/heretic
-
-/atom/movable/screen/alert/status_effect/agent_pinpointer/heretic
-	name = "Track Target"
-	desc = "Your heart points you where your next sacrifice is."
+/atom/movable/screen/heretic_arrow
+	icon = 'icons/effects/96x96.dmi'
+	name = "heretic arrow"
+	icon_state = "heretic_arrow_appear"
+	pixel_x = -32
+	pixel_y = -32
