@@ -40,7 +40,7 @@
 	tier2 = /datum/heretic_knowledge/spell/burglar_finesse
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
 	tier3 =	/datum/heretic_knowledge/spell/caretaker_refuge
-	ascension =	/datum/heretic_knowledge/ultimate/lock_final
+	ascension = /datum/heretic_knowledge/ultimate/lock_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_knock
 	name = "A Steward's Secret"

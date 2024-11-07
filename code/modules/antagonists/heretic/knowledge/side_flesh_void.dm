@@ -7,7 +7,7 @@
 
 	tier1 = /datum/heretic_knowledge/void_cloak
 	tier2 = /datum/heretic_knowledge/spell/blood_siphon
-	tier3 = list(/datum/heretic_knowledge/spell/void_prison,/datum/heretic_knowledge/spell/cleave)
+	tier3 = list(/datum/heretic_knowledge/spell/void_prison, /datum/heretic_knowledge/spell/cleave)
 
 // Sidepaths for knowledge between Flesh and Void.
 

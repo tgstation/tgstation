@@ -45,7 +45,7 @@
 	tier2 = /datum/heretic_knowledge/duel_stance
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
 	tier3 =	 /datum/heretic_knowledge/spell/furious_steel
-	ascension =	/datum/heretic_knowledge/ultimate/blade_final
+	ascension = /datum/heretic_knowledge/ultimate/blade_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"

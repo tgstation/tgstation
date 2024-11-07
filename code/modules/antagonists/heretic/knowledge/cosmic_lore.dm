@@ -41,7 +41,7 @@
 	tier2 = /datum/heretic_knowledge/spell/star_blast
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
 	tier3 =	 /datum/heretic_knowledge/spell/cosmic_expansion
-	ascension =	/datum/heretic_knowledge/ultimate/cosmic_final
+	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	name = "Eternal Gate"

@@ -43,7 +43,7 @@
 	tier2 = /datum/heretic_knowledge/spell/void_phase
 	blade = /datum/heretic_knowledge/blade_upgrade/void
 	tier3 =	/datum/heretic_knowledge/spell/void_pull
-	ascension =	/datum/heretic_knowledge/ultimate/void_final
+	ascension = /datum/heretic_knowledge/ultimate/void_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"

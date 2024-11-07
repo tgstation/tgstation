@@ -6,7 +6,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/spell/mind_gate
-	tier2 = list(/datum/heretic_knowledge/unfathomable_curio,/datum/heretic_knowledge/painting)
+	tier2 = list(/datum/heretic_knowledge/unfathomable_curio, /datum/heretic_knowledge/painting)
 	tier3 = /datum/heretic_knowledge/dummy_moon_to_lock
 
 // Sidepaths for knowledge between Knock and Moon.

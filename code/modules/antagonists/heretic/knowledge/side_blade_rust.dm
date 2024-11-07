@@ -6,7 +6,7 @@
 	route = PATH_SIDE
 
 	tier1 = /datum/heretic_knowledge/armor
-	tier2 = list(/datum/heretic_knowledge/crucible,/datum/heretic_knowledge/rifle)
+	tier2 = list(/datum/heretic_knowledge/crucible, /datum/heretic_knowledge/rifle)
 	tier3 = /datum/heretic_knowledge/spell/rust_charge
 
 // Sidepaths for knowledge between Rust and Blade.

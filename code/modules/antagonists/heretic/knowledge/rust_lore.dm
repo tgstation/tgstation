@@ -45,7 +45,7 @@
 	tier2 = /datum/heretic_knowledge/spell/area_conversion
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
 	tier3 =	/datum/heretic_knowledge/spell/entropic_plume
-	ascension =	/datum/heretic_knowledge/ultimate/rust_final
+	ascension = /datum/heretic_knowledge/ultimate/rust_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"

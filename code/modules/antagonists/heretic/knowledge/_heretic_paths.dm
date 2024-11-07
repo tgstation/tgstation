@@ -49,7 +49,7 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[type][HKT_DEPTH] = 1
 
 		var/datum/heretic_knowledge/knowledge = type
-		if(initial(knowledge.is_starting_knowledge) == TRUE)
+		if(initial(knowledge.is_starting_knowledge))
 			heretic_research_tree[type][HKT_ROUTE] = PATH_START
 			continue
 
@@ -150,7 +150,7 @@ GLOBAL_LIST(heretic_research_tree)
 		//blacklist
 		heretic_research_tree[main_column.start][HKT_BAN] += (start_blacklist - main_column.start) + (asc_blacklist - main_column.ascension)
 		heretic_research_tree[main_column.grasp][HKT_BAN] += (grasp_blacklist - main_column.grasp)
-		heretic_research_tree[main_column.mark][HKT_BAN] += (mark_blacklist  - main_column.mark)
+		heretic_research_tree[main_column.mark][HKT_BAN] += (mark_blacklist - main_column.mark)
 		heretic_research_tree[main_column.blade][HKT_BAN] += (blade_blacklist - main_column.blade)
 
 		//route stuff
@@ -163,8 +163,8 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[main_column.ascension][HKT_ROUTE] = main_column.route
 
 		//depth stuff
-		heretic_research_tree[main_column.start][HKT_DEPTH]	= 2
-		heretic_research_tree[main_column.grasp][HKT_DEPTH]	= 3
+		heretic_research_tree[main_column.start][HKT_DEPTH] = 2
+		heretic_research_tree[main_column.grasp][HKT_DEPTH] = 3
 		heretic_research_tree[main_column.mark][HKT_DEPTH] = 5
 		heretic_research_tree[main_column.ritual_of_knowledge][HKT_DEPTH] = 6
 		heretic_research_tree[main_column.unique_ability][HKT_DEPTH] = 7

@@ -46,7 +46,7 @@
 	tier2 = /datum/heretic_knowledge/summon/raw_prophet
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh
 	tier3 = /datum/heretic_knowledge/summon/stalker
-	ascension =	/datum/heretic_knowledge/ultimate/flesh_final
+	ascension = /datum/heretic_knowledge/ultimate/flesh_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"

@@ -42,7 +42,7 @@
 	tier2 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
 	tier3 =	/datum/heretic_knowledge/spell/moon_ringleader
-	ascension =	/datum/heretic_knowledge/ultimate/moon_final
+	ascension = /datum/heretic_knowledge/ultimate/moon_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon
 	name = "Moonlight Troupe"
