@@ -71,15 +71,26 @@
 	timeout = 4 MINUTES
 
 //Generic needs events
-/datum/mood_event/nice_shower
+/datum/mood_event/shower
 	description = "I have recently had a nice shower."
 	mood_change = 4
 	timeout = 5 MINUTES
 
-/datum/mood_event/shower_hater
-	description = "I hate being wet!"
-	mood_change = -2
-	timeout = 3 MINUTES
+/datum/mood_event/shower/add_effects(bloody_shower)
+	if(bloody_shower)
+		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL))
+			description = "The sensation of a lovely blood shower felt good."
+			mood_change = 6 // you sicko
+		else
+			description = "I have recently had a horrible shower raining blood!"
+			mood_change = -3
+			timeout = 3 MINUTES
+	else if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
+		description = "I hate being wet!"
+		mood_change = -2
+		timeout = 3 MINUTES
+	else
+		return // just normal status effect
 
 /datum/mood_event/fresh_laundry
 	description = "There's nothing like the feeling of a freshly laundered jumpsuit."
