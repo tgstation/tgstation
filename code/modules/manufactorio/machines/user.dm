@@ -6,7 +6,8 @@
 	name = target.name
 	real_name = target.name
 	add_traits(list(TRAIT_TEMPORARY_BODY, TRAIT_HANDS_BLOCKED, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), INNATE_TRAIT)
-	// runtimes on bodypart life without this
+	// used to runtime in Life without this but now that i overrided that its probably pointless
+	// best keep this to avoid any problems with limbs
 	create_bodyparts() // FUCK
 	return ..()
 
