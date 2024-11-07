@@ -657,6 +657,9 @@
 
 /datum/status_effect/shower_regen/tick(seconds_between_ticks)
 	. = ..()
+	if(bloody_shower)
+		return
+
 	var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
 	var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
 	var/healed = 0
