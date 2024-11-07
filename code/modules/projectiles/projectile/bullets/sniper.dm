@@ -96,7 +96,7 @@
 		return .
 
 	var/mob/living/our_target = target
-	if(IS_NUKE_OP(our_target))
+	if(ACCESS_SYNDICATE in our_target.get_access())
 		do_sparks(2, FALSE, src)
 		visible_message("[src] beeps, and self-detonates right before it hits [our_target]!")
 		return PROJECTILE_DELETE_WITHOUT_HITTING
