@@ -65,12 +65,8 @@
 		return
 	switch(action)
 		if("del_filter")
-			var/datum/sortrouter_filter/filter = locate(params["ref"])
+			var/datum/sortrouter_filter/filter = locate(params["ref"]) in sort_filters
 			if(isnull(filter))
-				return
-			if(!(filter in sort_filters)) //severe
-				message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to delete [filter] ref:[params["ref"]] via [src]")
-				usr.log_message("possibly trying to href exploit - attempted to delete [filter] ref:[params["ref"]] via [src]", LOG_ADMIN)
 				return
 			sort_filters -= filter
 			qdel(filter)
