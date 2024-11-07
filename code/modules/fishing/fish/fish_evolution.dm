@@ -48,6 +48,8 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 	if(aquarium)
 		//chances are halved if only one parent has this evolution.
 		var/real_probability = (mate && (type in mate.evolution_types)) ? probability : probability/2
+		if(HAS_TRAIT(source, TRAIT_FISH_MUTAGENIC) || (mate && HAS_TRAIT(mate, TRAIT_FISH_MUTAGENIC)))
+			real_probability *= 3
 		if(!prob(real_probability))
 			return FALSE
 		if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
@@ -82,24 +84,11 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 		. += " [conditions_note]"
 	return .
 
-///Proc called to let evolution register signals that are needed for various conditions.
-/datum/fish_evolution/proc/register_fish(obj/item/fish/fish)
-	return
-
 /datum/fish_evolution/lubefish
 	probability = 25
 	new_fish_type = /obj/item/fish/clownfish/lube
 	new_traits = list(/datum/fish_trait/lubed)
 	conditions_note = "The fish must be fed lube beforehand."
-
-/datum/fish_evolution/lubefish/register_fish(obj/item/fish/fish)
-	RegisterSignal(fish, COMSIG_FISH_FED, PROC_REF(check_for_lube))
-
-/datum/fish_evolution/lubefish/proc/check_for_lube(obj/item/fish/source, datum/reagents/fed_reagents, wrong_reagent_type)
-	SIGNAL_HANDLER
-	if((wrong_reagent_type == /datum/reagent/lube) || fed_reagents.remove_reagent(/datum/reagent/lube, 0.1))
-		ADD_TRAIT(source, TRAIT_FISH_FED_LUBE, FISH_EVOLUTION)
-		addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_FED_LUBE, FISH_EVOLUTION), source.feeding_frequency)
 
 /datum/fish_evolution/lubefish/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
 	if(!HAS_TRAIT(source, TRAIT_FISH_FED_LUBE))

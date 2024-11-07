@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	///What sound will be played on loop when the shower is on and pouring water.
 	var/datum/looping_sound/showering/soundloop
 	///What reagent should the shower be filled with when initially built.
-	var/reagent_id = /datum/reagent/water
+	var/reagent_id = /datum/reagent/blood // /datum/reagent/water
 	///How much reagent capacity should the shower begin with when built.
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
@@ -264,13 +264,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return
 	var/mob/living/living_target = target
 	check_heat(living_target)
-
-	if(bloody_shower)
-		living_target.add_mood_event("shower", /datum/mood_event/bloody_shower)
-		living_target.apply_status_effect(/datum/status_effect/shower_regen_blood)
-	else
-		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
-		living_target.apply_status_effect(/datum/status_effect/shower_regen)
+	living_target.apply_status_effect(/datum/status_effect/shower_regen, bloody_shower)
+	living_target.add_mood_event("shower", /datum/mood_event/shower, bloody_shower)
 
 /**
  * Toggle whether shower is actually on and outputting water.

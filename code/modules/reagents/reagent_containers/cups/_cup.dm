@@ -9,6 +9,7 @@
 	icon_state = "bottle"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
 
 	///Like Edible's food type, what kind of drink is this?
 	var/drink_type = NONE
@@ -18,6 +19,10 @@
 	var/gulp_size = 5
 	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
+	///What kind of chem transfer method does this cup use. Defaults to INGEST
+	var/reagent_consumption_method = INGEST
+	///What sound does our consumption play on consuming from the container?
+	var/consumption_sound = 'sound/items/drink.ogg'
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
@@ -85,9 +90,9 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
+	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = reagent_consumption_method)
 	checkLiked(fraction, target_mob)
-	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	playsound(target_mob.loc, consumption_sound, rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
 		return
 	var/mob/living/carbon/carbon_drinker = target_mob

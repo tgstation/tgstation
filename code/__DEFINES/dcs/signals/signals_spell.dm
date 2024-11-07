@@ -66,6 +66,10 @@
 // Touch spells
 /// Sent from /datum/action/cooldown/spell/touch/do_hand_hit: (atom/hit, mob/living/carbon/caster, obj/item/melee/touch_attack/hand)
 #define COMSIG_SPELL_TOUCH_HAND_HIT "spell_touch_hand_cast"
+/// Sent from /datum/action/cooldown/spell/touch/cast: (mob/living/carbon/cast_on)
+#define COMSIG_TOUCH_HANDLESS_CAST "spell_touch_handless_cast"
+	/// Return this to prevent the hand spawning/unspawning
+	#define COMPONENT_CAST_HANDLESS (1<<0)
 
 // Jaunt Spells
 /// Sent from datum/action/cooldown/spell/jaunt/before_cast, before the mob enters jaunting as a pre-check: (datum/action/cooldown/spell/spell)

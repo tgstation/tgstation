@@ -45,7 +45,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/internal/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
+		rods[/obj/item/organ/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
 									allowing you to conjure forth a vorpal scythe. \
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
@@ -826,21 +826,12 @@
 	else if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		successful_sneak_attack = TRUE
 
-	// traits that render you unable to defend yourself properly from an attack
-	else if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
+	// blocked hands renders you unable to defend yourself properly from an attack
+	else if(HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 		successful_sneak_attack = TRUE
 
-	// We'll take "same tile" as "behind" for ease
-	else if(living_target.loc == user.loc)
-		successful_sneak_attack = TRUE
-
-	// We'll also assume lying down is vulnerable, as mob directions when lying are unclear and you have trouble defending yourself from prone
-	else if(living_target.body_position == LYING_DOWN)
-		successful_sneak_attack = TRUE
-
-	// Now check for if we're behind
-	var/dir_living_target_to_user = get_dir(living_target, user)
-	if(living_target.dir & REVERSE_DIR(dir_living_target_to_user))
+	// Check for various positional outcomes to determine a sneak attack. We want to sneak attack whenever our target is behind.
+	else if(check_behind(user, living_target))
 		successful_sneak_attack = TRUE
 
 	/// Now we'll check for things that STOP a sneak attack. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.

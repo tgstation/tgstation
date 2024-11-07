@@ -11,7 +11,6 @@
 	cooldown_time = 20 SECONDS
 	click_to_activate = FALSE
 	shared_cooldown = NONE
-	melee_cooldown_time = 0 SECONDS
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages

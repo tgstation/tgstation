@@ -113,7 +113,7 @@
 	playsound(loc, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
 
-/obj/effect/portal/singularity_pull()
+/obj/effect/portal/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/portal/singularity_act()

@@ -23,9 +23,21 @@
 	name = "reinforced fishing line reel"
 	desc = "Essential for fishing in extreme environments."
 	icon_state = "reel_green"
-	fishing_line_traits = FISHING_LINE_REINFORCED
 	line_color = "#2b9c2b"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
+
+/obj/item/fishing_line/reinforced/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/reinforced/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /obj/item/fishing_line/cloaked
 	name = "cloaked fishing line reel"
@@ -47,9 +59,22 @@
 	name = "fishing sinew"
 	desc = "An all-natural fishing line made of stretched out sinew. A bit stiff, but usable to fish in extreme enviroments."
 	icon_state = "reel_sinew"
-	fishing_line_traits = FISHING_LINE_REINFORCED|FISHING_LINE_STIFF
+	fishing_line_traits = FISHING_LINE_STIFF
 	line_color = "#d1cca3"
 	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
+
+/obj/item/fishing_line/sinew/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	ADD_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
+
+/obj/item/fishing_line/sinew/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(rod, TRAIT_ROD_LAVA_USABLE, REF(src))
 
 /**
  * A special line reel that let you skip the biting phase of the minigame, netting you a completion bonus,
@@ -68,17 +93,16 @@
 
 /obj/item/fishing_line/auto_reel/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(line_equipped))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-/obj/item/fishing_line/auto_reel/proc/line_equipped(datum/source, obj/item/fishing_rod/rod)
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
 	RegisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM, PROC_REF(on_hooked_item))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
 
-/obj/item/fishing_line/auto_reel/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/fishing_line/auto_reel/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(old_loc, COMSIG_FISHING_ROD_HOOKED_ITEM)
+	UnregisterSignal(rod, COMSIG_FISHING_ROD_HOOKED_ITEM)
 
 /obj/item/fishing_line/auto_reel/proc/on_hooked_item(obj/item/fishing_rod/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -176,18 +200,16 @@
 
 /obj/item/fishing_hook/magnet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_FISHING_EQUIPMENT_SLOTTED, PROC_REF(hook_equipped))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
 
-///We make sure that the fishng rod doesn't need a bait to reliably catch non-fish loot.
-/obj/item/fishing_hook/magnet/proc/hook_equipped(datum/source, obj/item/fishing_rod/rod)
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_removed))
+	ADD_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
-/obj/item/fishing_hook/magnet/proc/on_removed(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/fishing_hook/magnet/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(old_loc, TRAIT_ROD_REMOVE_FISHING_DUD, type)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	REMOVE_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	if(fish_type == FISHING_DUD || ispath(fish_type, /obj/item/fish))
@@ -199,9 +221,23 @@
 /obj/item/fishing_hook/shiny
 	name = "shiny lure hook"
 	icon_state = "gold_shiny"
-	fishing_hook_traits = FISHING_HOOK_SHINY
 	rod_overlay_icon_state = "hook_shiny_overlay"
 	wiki_desc = "It's used to attract shiny-loving fish and make them easier to catch."
+
+/obj/item/fishing_hook/shiny/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_SLOTTED, PROC_REF(on_fishing_rod_slotted))
+	RegisterSignal(src, COMSIG_ITEM_FISHING_ROD_UNSLOTTED, PROC_REF(on_fishing_rod_unslotted))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	rod.material_fish_chance += 15 //Increases the chance of catching a shiny po... erh, material fish
+	ADD_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
+
+/obj/item/fishing_hook/shiny/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
+	SIGNAL_HANDLER
+	rod.material_fish_chance -= 15
+	REMOVE_TRAIT(rod, TRAIT_ROD_ATTRACT_SHINY_LOVERS, REF(src))
 
 /obj/item/fishing_hook/weighted
 	name = "weighted hook"
@@ -289,7 +325,7 @@
 	material_flags = NONE
 	custom_price = PAYCHECK_CREW * 3
 	///How much holding this affects fishing difficulty
-	var/fishing_modifier = -2
+	var/fishing_modifier = -4
 
 /obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
@@ -298,7 +334,7 @@
 		/obj/item/fishing_rod,
 	))
 	atom_storage.exception_hold = exception_cache
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2, ITEM_SLOT_HANDS)
+	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier, ITEM_SLOT_HANDS)
 
 /obj/item/storage/toolbox/fishing/PopulateContents()
 	new /obj/item/bait_can/worm(src)
@@ -326,10 +362,10 @@
 
 /obj/item/storage/toolbox/fishing/master
 	name = "super fishing toolbox"
-	desc = "Contains EVERYTHING (almost) you need for your fishing trip."
+	desc = "Contains (almost) EVERYTHING you need for your fishing trip."
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
-	fishing_modifier = -7
+	fishing_modifier = -10
 
 /obj/item/storage/toolbox/fishing/master/PopulateContents()
 	new /obj/item/fishing_rod/telescopic/master(src)
@@ -339,7 +375,6 @@
 	new /obj/item/fish_feed(src)
 	new /obj/item/aquarium_kit(src)
 	new /obj/item/fish_analyzer(src)
-	new /obj/item/experi_scanner(src)
 
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"

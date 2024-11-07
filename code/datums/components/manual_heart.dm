@@ -56,7 +56,7 @@
 	pump_action.Grant(parent)
 
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
 	if(parent_heart && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD)
 		START_PROCESSING(SSdcs, src)
 		COOLDOWN_START(src, heart_timer, pump_delay)
@@ -126,7 +126,7 @@
 /datum/component/manual_heart/proc/check_added_organ(mob/organ_owner, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/heart/new_heart = new_organ
+	var/obj/item/organ/heart/new_heart = new_organ
 
 	if(!istype(new_heart) || !check_valid())
 		return
@@ -141,7 +141,7 @@
 /datum/component/manual_heart/proc/check_removed_organ(mob/organ_owner, obj/item/organ/removed_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/heart/removed_heart = removed_organ
+	var/obj/item/organ/heart/removed_heart = removed_organ
 
 	if(istype(removed_heart))
 		pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
@@ -150,7 +150,7 @@
 ///Helper proc to check if processing can be restarted.
 /datum/component/manual_heart/proc/check_valid()
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
 	return !isnull(parent_heart) && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD
 
 ///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
@@ -171,7 +171,7 @@
 	var/mob/living/carbon/heart_haver = owner
 	if(!istype(heart_haver) || HAS_TRAIT(heart_haver, TRAIT_NOBLOOD) || heart_haver.stat == DEAD)
 		return FALSE
-	var/obj/item/organ/internal/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(heart_havers_heart))
 		return FALSE
 	return ..()

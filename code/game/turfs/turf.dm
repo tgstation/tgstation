@@ -668,7 +668,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	clear_reagents_to_vomit_pool(vomiter, throw_up, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
-	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
 	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
@@ -769,6 +769,23 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	explosive_resistance -= get_explosive_block()
 	inherent_explosive_resistance = explosion_block
 	explosive_resistance += get_explosive_block()
+
+/turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
+	. = ..()
+	if(alpha < 255)
+		AddElement(/datum/element/turf_z_transparency)
+		main_material.setup_glow(src)
+	rust_resistance = main_material.mat_rust_resistance
+
+/turf/remove_main_material_effects(datum/material/custom_material, amount, multipier)
+	. = ..()
+	rust_resistance = initial(rust_resistance)
+	if(alpha == 255)
+		return
+	RemoveElement(/datum/element/turf_z_transparency)
+	// yeets glow
+	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+	set_light(0, 0, null)
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)

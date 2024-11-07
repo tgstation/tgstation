@@ -408,7 +408,7 @@
 	r_hand = /obj/item/gun/energy/recharge/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-/datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visuals_only)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items
 	if(sword.flags_1 & INITIALIZED_1)
 		sword.attack_self()

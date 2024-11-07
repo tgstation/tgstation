@@ -81,7 +81,7 @@
 				continue
 
 		var/mob/living/carbon/human/targets_current = possible_target.current
-		if(!targets_current.get_organ_by_type(/obj/item/organ/internal/eyes))
+		if(!targets_current.get_organ_by_type(/obj/item/organ/eyes))
 			continue
 
 		possible_targets += possible_target
@@ -110,7 +110,7 @@
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	return TRUE
 
-/datum/traitor_objective/target_player/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
+/datum/traitor_objective/target_player/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
 	SIGNAL_HANDLER
 
 	if(!istype(removed))
@@ -159,7 +159,7 @@
 	if(used || !istype(target) || !target.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
-	var/obj/item/organ/internal/eyes/eyeballies = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyeballies = target.get_organ_slot(ORGAN_SLOT_EYES)
 	var/obj/item/bodypart/head/head = target.get_bodypart(BODY_ZONE_HEAD)
 
 	if(!head || !eyeballies || target.is_eyes_covered())
@@ -224,7 +224,7 @@
 	if(used)
 		. += span_notice("It has been used up.")
 
-/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/target)
+/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/target)
 	if(!eyeballies || QDELETED(eyeballies))
 		return FALSE
 	if(!head || QDELETED(head))
@@ -232,7 +232,7 @@
 
 	if(eyeballies.owner != target)
 		return FALSE
-	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	//got different eyes or doesn't own the head... somehow
 	if(head.owner != target || eyes != eyeballies)
 		return FALSE

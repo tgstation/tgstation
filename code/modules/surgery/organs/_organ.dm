@@ -46,6 +46,10 @@
 
 	/// Food reagents if the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	/// Foodtypes if the organ is edible
+	var/foodtype_flags = RAW | MEAT | GORE
+	/// Overrides tastes if the organ is edible
+	var/food_tastes
 	/// The size of the reagent container if the organ is edible
 	var/reagent_vol = 10
 
@@ -74,8 +78,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
-			foodtypes = RAW | MEAT | GORE,\
+			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
+			tastes = food_tastes,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
 	if(bodypart_overlay)
@@ -244,20 +249,20 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		set_heartattack(FALSE)
 
 		// Ears have aditional vаr "deaf", need to update it too
-		var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
 
 		return
 
 	// Default organ fixing handling
 	// May result in kinda cursed stuff for mobs which don't need these organs
-	var/obj/item/organ/internal/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
 
-	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(heart)
 		set_heartattack(FALSE)
 	else
@@ -265,19 +270,19 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		heart.Insert(src)
 	heart.set_organ_damage(0)
 
-	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		tongue = new()
 		tongue.Insert(src)
 	tongue.set_organ_damage(0)
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		eyes = new()
 		eyes.Insert(src)
 	eyes.set_organ_damage(0)
 
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		ears = new()
 		ears.Insert(src)

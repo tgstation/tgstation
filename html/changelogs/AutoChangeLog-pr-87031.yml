@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "The pre-emagged fishing portal circuitboard now actually gives you an emagged fishing portal generator."

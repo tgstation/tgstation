@@ -13,7 +13,7 @@
 	. = ..()
 	set_light(set_luminosity, set_cap)
 
-/obj/effect/light_emitter/singularity_pull()
+/obj/effect/light_emitter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/light_emitter/singularity_act()
@@ -138,6 +138,10 @@
 /obj/docking_port/stationary/mining_home/northstar
 	roundstart_template = /datum/map_template/shuttle/mining/northstar
 	height = 6
+
+/obj/docking_port/stationary/mining_home/nebula
+	roundstart_template = /datum/map_template/shuttle/mining/nebula
+	height = 10
 
 /obj/docking_port/stationary/mining_home/common
 	name = "SS13: Common Mining Dock"

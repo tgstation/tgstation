@@ -6,6 +6,8 @@
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/items/weapons/smash.ogg'
+	pickup_sound = 'sound/items/handling/gas_tank/gas_tank_pick_up.ogg'
+	drop_sound = 'sound/items/handling/gas_tank/gas_tank_drop.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -47,6 +49,9 @@
 	var/cooling_power = 2
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
+	///The sound a fire extinguisher makes when picked up, dropped if there is liquid inside.
+	var/fire_extinguisher_reagent_sloshing_sound = SFX_DEFAULT_LIQUID_SLOSH
+
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
@@ -65,6 +70,17 @@
 	context[SCREENTIP_CONTEXT_LMB] = "Engage nozzle"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Empty"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/extinguisher/dropped(mob/user, silent)
+	. = ..()
+	if(fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
+		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+/obj/item/extinguisher/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	if((slot & ITEM_SLOT_HANDS) && fire_extinguisher_reagent_sloshing_sound && reagents.total_volume > 0)
+		playsound(src, fire_extinguisher_reagent_sloshing_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
 
 /obj/item/extinguisher/empty
 	starting_water = FALSE

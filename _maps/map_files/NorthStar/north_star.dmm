@@ -6123,6 +6123,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "bxk" = (
 /obj/structure/rack,
+/obj/item/toy/crayon/spraycan/roboticist,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "bxl" = (
@@ -86467,6 +86468,7 @@
 /area/station/security/brig)
 "wms" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/fishing_portal_generator,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "wmt" = (
