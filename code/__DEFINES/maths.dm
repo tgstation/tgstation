@@ -1,4 +1,3 @@
-#define IS_INF(a) (isnum(a) && isinf(a))
 #define IS_FINITE__UNSAFE(a) (!isinf(a) && !isnan(a))
 #define IS_FINITE(a) (isnum(a) && IS_FINITE__UNSAFE(a))
 
