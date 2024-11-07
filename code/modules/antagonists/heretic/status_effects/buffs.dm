@@ -148,7 +148,7 @@
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
 	/// What blade type to create
-	var/blade_type = /obj/effect/floating_blade
+	var/obj/effect/floating_blade/blade_type
 	/// A list of blade effects orbiting / protecting our owner
 	var/list/obj/effect/floating_blade/blades = list()
 
@@ -190,8 +190,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	var/obj/effect/floating_blade/blade
-	blade = new blade_type(get_turf(owner))
+	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
