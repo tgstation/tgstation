@@ -42,8 +42,11 @@
 		var/mob/living/carbon/human/human_owner = owner
 		if (human_owner.get_eye_scars())
 			return TRUE
-	var/good_eyesight = HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED) || HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS)
-	return !good_eyesight
+	if(HAS_TRAIT(owner, TRAIT_NEARSIGHTED_CORRECTED))
+		return TRUE
+	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
+		return TRUE
+	return FALSE
 
 /// Updates our nearsightd overlay, either removing it if we have the trait or adding it if we don't
 /datum/status_effect/grouped/nearsighted/proc/update_nearsighted_overlay()
@@ -69,7 +72,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/blind
 	var/list/static/update_signals = list(
 		SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS),
-		SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS)
+		SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS),
 	)
 	// This is not "remove on fullheal" as in practice,
 	// fullheal should instead remove all the sources and in turn cure this
@@ -79,8 +82,7 @@
 		return FALSE
 
 
-	RegisterSignals(owner, update_signals,
-		PROC_REF(update_blindness))
+	RegisterSignals(owner, update_signals, PROC_REF(update_blindness))
 
 	update_blindness()
 
@@ -88,7 +90,7 @@
 
 /datum/status_effect/grouped/blindness/proc/update_blindness()
 	if(!CAN_BE_BLIND(owner)) // future proofing
-		on_remove()
+		qdel(src)
 		return
 
 	if(HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
@@ -107,7 +109,7 @@
 
 /datum/status_effect/grouped/blindness/on_remove()
 	make_unblind()
-	UnregisterSignal(src, update_signals)
+	UnregisterSignal(owner, update_signals)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/blind

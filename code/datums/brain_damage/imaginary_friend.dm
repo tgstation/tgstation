@@ -10,6 +10,8 @@
 	gain_text = span_notice("You feel in good company, for some reason.")
 	lose_text = span_warning("You feel lonely again.")
 	var/mob/camera/imaginary_friend/friend
+	/// If TRUE the trauma won't delete without a friend.
+	var/keep_without_friend = FALSE
 	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
@@ -20,6 +22,10 @@
 	..()
 	make_friend()
 	get_ghost()
+	if(HAS_TRAIT(owner, TRAIT_PERCEPTUAL_TRAUMA_BYPASS))
+		temporary_bypass()
+		return
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(temporary_bypass))
 
 /datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick, times_fired)
 	if(get_dist(owner, friend) > 9)
@@ -32,7 +38,6 @@
 
 	if(HAS_TRAIT(owner, TRAIT_PERCEPTUAL_TRAUMA_BYPASS))
 		QDEL_NULL(friend)
-		RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(reroll_friend))
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -40,7 +45,15 @@
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
+	UnregisterSignal(owner, list(SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), SIGNAL_ADDTRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS)))
 	QDEL_NULL(friend)
+
+/datum/brain_trauma/special/imaginary_friend/proc/temporary_bypass()
+	if(keep_without_friend) // if two trait sources
+		return
+	keep_without_friend = TRUE
+	qdel(friend)
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_PERCEPTUAL_TRAUMA_BYPASS), PROC_REF(reroll_friend))
 
 //If the friend goes afk, make a brand new friend. Plenty of fish in the sea of imagination.
 /datum/brain_trauma/special/imaginary_friend/proc/reroll_friend()
@@ -50,6 +63,7 @@
 	QDEL_NULL(friend)
 	make_friend()
 	get_ghost()
+	keep_without_friend = FALSE // we made a friend so we don't need this anymore
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner))

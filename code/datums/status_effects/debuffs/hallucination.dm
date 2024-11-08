@@ -26,19 +26,26 @@
 /datum/status_effect/hallucination/on_apply()
 	if(owner.mob_biotypes & barred_biotypes)
 		return FALSE
+	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_IMMUNE))
+		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HALLUCINATION_IMMUNE), PROC_REF(delete_self))
 	if(iscarbon(owner))
 		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, PROC_REF(on_check_bodypart))
 		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump_airlock))
 
 	return TRUE
 
+/datum/status_effect/hallucination/proc/delete_self()
+	qdel(src)
+
 /datum/status_effect/hallucination/on_remove()
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_HEALTHSCAN,
 		COMSIG_CARBON_CHECKING_BODYPART,
 		COMSIG_CARBON_BUMPED_AIRLOCK_OPEN,
+		SIGNAL_ADDTRAIT(TRAIT_HALLUCINATION_IMMUNE),
 	))
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
