@@ -146,7 +146,6 @@
 					var/datum/computer_file/program/messenger/our_messenger = locate() in stored_files
 					if(isnull(our_messenger))
 						return TRUE
-					active_program.kill_program(usr)
 					open_program(usr, our_messenger)
 
 				else if(istype(active_program, /datum/computer_file/program/messenger))
@@ -156,7 +155,6 @@
 					if(!get_ntnet_status()) // Can't swap to NTNRC without NTNet.
 						to_chat(usr, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 						return TRUE
-					active_program.kill_program(usr)
 					open_program(usr, our_chat_client)
 
 			// DOPPLER EDIT ADDITION END - NTNRC_FOR_ALL
