@@ -1,4 +1,0 @@
-author: "Rengan"
-delete-after: True
-changes:
-  - bugfix: "fixes singularity eating containtment field"

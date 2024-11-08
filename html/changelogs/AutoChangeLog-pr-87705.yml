@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "No runtime when clicking on a fire alarm's mounted wall as a borg"
-  - bugfix: "You can turn the fire alarm on & off (And not just on) as a borg via left & right click on its mounted wall"
-  - bugfix: "certain secondary interactions of items & borgs now respect the borgs interaction range"
