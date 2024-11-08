@@ -48,8 +48,8 @@ module.exports = (env = {}, argv) => {
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx'],
       alias: {
-        "tgui": path.resolve(__dirname, "packages/tgui"),
-        "common": path.resolve(__dirname, "packages/common"),
+        tgui: path.resolve(__dirname, 'packages/tgui'),
+        common: path.resolve(__dirname, 'packages/common'),
       },
     },
     module: {
