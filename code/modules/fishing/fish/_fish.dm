@@ -205,7 +205,7 @@
 	if(src == held_item)
 		context[SCREENTIP_CONTEXT_LMB] = "Pet"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/fish_feed))
+	if(istype(held_item, /obj/item/reagent_containers/cup/fish_feed))
 		context[SCREENTIP_CONTEXT_LMB] = "Feed"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/fish_analyzer))
@@ -412,7 +412,7 @@
 	return ..()
 
 /obj/item/fish/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item, /obj/item/fish_feed))
+	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
 		balloon_alert(user, "[item.name] is empty!")
