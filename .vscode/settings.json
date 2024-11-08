@@ -1,9 +1,4 @@
 {
-	"eslint.nodePath": "./tgui/.yarn/sdks",
-	"eslint.workingDirectories": ["./tgui"],
-	"prettier.prettierPath": "./tgui/.yarn/sdks/prettier/index.cjs",
-	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
-  	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"**/.yarn": true,
 		"**/.pnp.*": true
@@ -18,27 +13,7 @@
 	"git.branchProtection": ["master"],
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
-	"[javascript]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[javascriptreact]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[typescript]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[typescriptreact]": {
-		"editor.rulers": [80],
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[scss]": {
+	"[javascript][javascriptreact][typescript][typescriptreact][scss][css][markdown][html][json][jsonc][yaml]": {
 		"editor.rulers": [80],
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"editor.formatOnSave": true

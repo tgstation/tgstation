@@ -7,23 +7,21 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": false,
     "jsx": "preserve",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext",
-      "ScriptHost"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ScriptHost"],
+
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "tgui/*": ["packages/tgui/*"],
+      "common/*": ["packages/common/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
     "strictNullChecks": true,
     "target": "ES5"
   },
-  "include": [
-    "./*.d.ts",
-    "./packages"
-  ]
+  "include": ["./*.d.ts", "./packages"]
 }
