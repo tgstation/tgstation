@@ -14,6 +14,14 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"l" = (
+/obj/structure/chair/plastic,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"G" = (
+/obj/item/storage/toolbox/fishing,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 b
@@ -70,7 +78,7 @@ b
 (5,1,1) = {"
 b
 a
-a
+G
 c
 c
 c
@@ -83,7 +91,7 @@ b
 (6,1,1) = {"
 b
 a
-a
+l
 c
 c
 c

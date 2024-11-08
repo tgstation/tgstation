@@ -21,13 +21,15 @@
 	 * and we're kinda trying to offset that issue.
 	 */
 	var/immerse_overlay_color = "#5AAA88"
+	///The transparency of the immerse element's overlay
+	var/immerse_overlay_alpha = 180
 
 	/// Fishing element for this specific water tile
 	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
 	AddElement(/datum/element/watery_tile)
 	if(!isnull(fishing_datum))
 		AddElement(/datum/element/lazy_fishing_spot, fishing_datum)
@@ -69,22 +71,31 @@
  */
 /turf/open/water/hot_spring
 	name = "hot spring"
-	icon_state = "pool"
+	icon_state = "pool_1"
 	desc = "Water kept warm through some unknown heat source, possibly a geothermal heat source far underground. \
-		Whatever it is, it feels pretty damn nice to swim in given the rest of the environment around here, and you \
-		can even catch a glimpse of the odd fish darting through the water."
+		Whatever it is, it feels pretty damn nice to swim, and you can even catch a glimpse of \
+		the odd fish darting through the water."
 	baseturfs = /turf/open/water/hot_spring
-	fishing_datum = /datum/fish_source/hot_spring
 	planetary_atmos = FALSE
-	/// Holder for the steam particles that show up sometimes
+	immerse_overlay_color = "#A0E2DE"
+	immerse_overlay_alpha = 190
+	fishing_datum = /datum/fish_source/hot_spring
+	/// Holder for the steam particles
 	var/obj/effect/abstract/particle_holder/cached/particle_effect
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
+	icon_state = "pool_[rand(1, 4)]"
 	particle_effect = new(src, /particles/hotspring_steam, 4)
-	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE //render the steam over mobs and objects on the game plane
-	var/static/icon/waves_mask = icon('icons/effects/cut.dmi', "pool_waves")
-	add_filter("hot_spring_waves", 1, displacement_map_filter(waves_mask, x = 0, y = 0, size = 1))
+	//render the steam over mobs and objects on the game plane
+	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE
+	//And be unaffected by ambient occlusions, which would render the steam grey
+	particle_effect.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
+	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
+	var/filter = get_filter("hot_spring_waves")
+	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
+	animate(offset = -1, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
+
 	/**
 	 * turf/Initialize() calls Entered on its contents, however
 	 * we need to wait for movables that still need to be initialized.

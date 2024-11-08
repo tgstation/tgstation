@@ -498,7 +498,8 @@
 		voice = pick(SStts.available_speakers)
 
 /obj/item/survivalcapsule/fishing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change fishing spot"
+	if(!held_item || held_item == src)
+		context[SCREENTIP_CONTEXT_RMB] = "Change fishing spot"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/survivalcapsule/fishing/examine(mob/user)
@@ -517,10 +518,13 @@
 	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
-/obj/item/survivalcapsule/fishing/click_alt(mob/user)
+/obj/item/survivalcapsule/fishing/attack_self_secondary(mob/living/user)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(used)
-		return CLICK_ACTION_BLOCKING
+		return
 	var/list/choices = list()
 	var/list/spot_ids_by_name = list()
 	for(var/datum/map_template/shelter/fishing/spot as anything in typesof(/datum/map_template/shelter/fishing))
@@ -530,12 +534,12 @@
 		spot_ids_by_name[spot::name] = spot::shelter_id
 	var/choice = show_radial_menu(user, src, choices, radius = 38, custom_check = CALLBACK(src, TYPE_PROC_REF(/atom, can_interact), user), tooltips = TRUE)
 	if(!choice || used || !can_interact(user))
-		return CLICK_ACTION_BLOCKING
+		return
 	template_id = spot_ids_by_name[choice]
 	template = SSmapping.shelter_templates[template_id]
 	to_chat(user, span_notice("You change [src]'s selected fishing spot to [choice]."))
 	playsound(src, 'sound/items/pen_click.ogg', 20, TRUE, -3)
-	return CLICK_ACTION_SUCCESS
+	return
 
 /obj/item/survivalcapsule/fishing/get_ignore_flags()
 	. = ..()

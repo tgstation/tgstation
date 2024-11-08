@@ -52,7 +52,7 @@
 /area/template_noop)
 "m" = (
 /obj/effect/turf_decal/siding/yellow/corner{
-	dir = 9
+	dir = 2
 	},
 /turf/template_noop,
 /area/template_noop)

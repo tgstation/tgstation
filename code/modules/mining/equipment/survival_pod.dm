@@ -42,7 +42,7 @@
 	. += "This capsule has the [template.name] stored."
 	. += template.description
 
-/obj/item/survivalcapsule/interact(mob/user)
+/obj/item/survivalcapsule/interact(mob/living/user)
 	. = ..()
 	if(.)
 		return .
@@ -55,6 +55,9 @@
 	loc.visible_message(span_warning("[src] begins to shake. Stand back!"))
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon = user
+		carbon.throw_mode_on(THROW_MODE_TOGGLE)
 	return TRUE
 
 /// Expands the capsule into a full shelter, placing the template at the item's location (NOT triggerer's location)

@@ -107,16 +107,16 @@
 		"steam_cloud_4" = 1,
 		"steam_cloud_5" = 1,
 	)
-	width = 64
-	height = 64
+	color = "#FFFFFFAA"
 	count = 6
-	spawning = 0.2
-	lifespan = 1 SECONDS
-	fade = 0.6 SECONDS
-	fadein = 0.2 SECONDS
-	position = generator(GEN_BOX, list(-29,-20,0), list(29,20,0), NORMAL_RAND)
+	spawning = 0.5
+	lifespan = 3 SECONDS
+	fade = 1.2 SECONDS
+	fadein = 0.4 SECONDS
+	position = generator(GEN_BOX, list(-17,-15,0), list(24,15,0), NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.9,0.9), list(1.1,1.1), NORMAL_RAND)
-	drift = generator(GEN_VECTOR, list(-0.1,0), list(0.1,0.025), UNIFORM_RAND)
+	drift = generator(GEN_SPHERE, list(-0.01,0), list(0.01,0.01), UNIFORM_RAND)
 	spin = generator(GEN_NUM, list(-3,3), NORMAL_RAND)
-	gravity = list(0, 0.5)
-	grow = 0.0125
+	gravity = list(0.05, 0.28)
+	friction = 0.3
+	grow = 0.037
