@@ -55,7 +55,7 @@
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(head_cover)
 		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
-		seal_helmet(mod, head_cover, head_cover.sealed)
+		seal_helmet(mod, head_cover)
 	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
@@ -93,7 +93,7 @@
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
 
-/obj/item/mod/module/armor_booster/proc/seal_helmet(datum/source, mob/user, datum/mod_part/part)
+/obj/item/mod/module/armor_booster/proc/seal_helmet(datum/source, datum/mod_part/part)
 	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
 	if(part != head_cover)
 		return
