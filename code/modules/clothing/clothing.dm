@@ -118,33 +118,34 @@
 	moth_snack.name = name
 	moth_snack.clothing = WEAKREF(src)
 
-/obj/item/clothing/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, repairable_by))
-		return ..()
+/obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = NONE
+	if(!istype(weapon, repairable_by))
+		return
 
 	switch(damaged_clothes)
 		if(CLOTHING_PRISTINE)
-			return..()
+			return
+
 		if(CLOTHING_DAMAGED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			cloth_repair.use(1)
-			repair(user, params)
-			return TRUE
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
+
 		if(CLOTHING_SHREDDED)
-			var/obj/item/stack/cloth_repair = W
+			var/obj/item/stack/cloth_repair = weapon
 			if(cloth_repair.amount < 3)
 				to_chat(user, span_warning("You require 3 [cloth_repair.name] to repair [src]."))
-				return TRUE
+				return ITEM_INTERACT_BLOCKING
 			to_chat(user, span_notice("You begin fixing the damage to [src] with [cloth_repair]..."))
 			if(!do_after(user, 6 SECONDS, src) || !cloth_repair.use(3))
-				return TRUE
-			repair(user, params)
-			return TRUE
-
-	return ..()
+				return ITEM_INTERACT_BLOCKING
+			repair(user)
+			return ITEM_INTERACT_SUCCESS
 
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
-/obj/item/clothing/proc/repair(mob/user, params)
+/obj/item/clothing/proc/repair(mob/user)
 	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	atom_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
