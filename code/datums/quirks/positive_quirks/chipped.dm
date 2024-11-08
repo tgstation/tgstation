@@ -26,24 +26,21 @@
 
 	if(isnull(chip_pref))
 		return ..()
-
-	gain_text = span_notice("The [chip_pref] in your head itches a bit.")
+	installed_chip = GLOB.quirk_chipped_choice[chip_pref] || GLOB.quirk_chipped_choice[pick(GLOB.quirk_chipped_choice)]
+	gain_text = span_notice("The [installed_chip::name] in your head itches a bit.")
 	lose_text = span_notice("Your head stops itching so much.")
 	return ..()
 
 /datum/quirk/chipped/add_unique(client/client_source)
 
-	var/preferred_chip = GLOB.quirk_chipped_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/chipped)]
-	if(isnull(preferred_chip))  //Client is gone or they chose a random chip
-		preferred_chip = GLOB.quirk_chipped_choice[pick(GLOB.quirk_chipped_choice)]
 
 	var/mob/living/carbon/quirk_holder_carbon = quirk_holder
 	if(iscarbon(quirk_holder))
-		installed_chip = new preferred_chip()
+		installed_chip = new installed_chip()
 		quirk_holder_carbon.implant_skillchip(installed_chip, force = TRUE)
 	installed_chip.try_activate_skillchip(silent = FALSE, force = TRUE)
 
-	var/obj/item/organ/internal/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
 	itchy_timer_id = addtimer(CALLBACK(src, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES), TIMER_UNIQUE | TIMER_STOPPABLE) // they get The Itch from a poor quality install every so often
 
 /datum/quirk/chipped/remove()
