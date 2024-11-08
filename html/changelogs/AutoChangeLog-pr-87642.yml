@@ -1,4 +1,0 @@
-author: "thegrb93"
-delete-after: True
-changes:
-  - bugfix: "Fix borg throwing not working"

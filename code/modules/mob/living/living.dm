@@ -373,7 +373,7 @@
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
-	if(!(AM.can_be_pulled(src, state, force)))
+	if(!(AM.can_be_pulled(src, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
@@ -533,10 +533,10 @@
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
-				to_chat(src, text="You are unable to succumb to death! Unless you just press the UI button.", type=MESSAGE_TYPE_INFO)
+				to_chat(src, span_notice("Your immortal body is keeping you alive. If you want to accept death, you must do so [span_bold("quietly")]."), type=MESSAGE_TYPE_INFO)
 				return
 		else
-			to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
+			to_chat(src, span_warning("You are unable to succumb to death! This life continues."), type=MESSAGE_TYPE_INFO)
 			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -1890,7 +1890,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 						"[C] leaps out of [src]'s way!")))
 	C.Paralyze(40)
 
-/mob/living/can_be_pulled()
+/mob/living/can_be_pulled(user, force)
 	return ..() && !(buckled?.buckle_prevents_pull)
 
 
@@ -1961,10 +1961,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
-	if(numba == 0)
-		numba = rand(1, 1000)
-	ru_names_rename(RU_NAMES_LIST("[name] ([numba])", "[declent_ru(NOMINATIVE)] ([numba])", "[declent_ru(GENITIVE)] ([numba])", "[declent_ru(DATIVE)] ([numba])", "[declent_ru(ACCUSATIVE)] ([numba])", "[declent_ru(INSTRUMENTAL)] ([numba])", "[declent_ru(PREPOSITIONAL)] ([numba])"))
-	name = "[name] ([numba])"
+	if(identifier == 0)
+		identifier = rand(1, 999)
+	ru_names_rename(RU_NAMES_LIST("[name] ([identifier])", "[declent_ru(NOMINATIVE)] ([identifier])", "[declent_ru(GENITIVE)] ([identifier])", "[declent_ru(DATIVE)] ([identifier])", "[declent_ru(ACCUSATIVE)] ([identifier])", "[declent_ru(INSTRUMENTAL)] ([identifier])", "[declent_ru(PREPOSITIONAL)] ([identifier])"))
+	name = "[name] ([identifier])"
 	real_name = declent_ru(NOMINATIVE)
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)

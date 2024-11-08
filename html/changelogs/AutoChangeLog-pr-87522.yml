@@ -1,4 +1,0 @@
-author: "Shadow-Quill"
-delete-after: True
-changes:
-  - admin: "When a secret note is applied, it'll now be logged as a secret note (instead of appearing like a regular note)."
