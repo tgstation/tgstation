@@ -251,9 +251,13 @@
  * * turf/open/floor/floor - the turf we are trying to put plating on
  * * mob/living/user - the mob trying to do the plating
  */
-/obj/item/construction/rtd/proc/try_tiling(turf/open/floor/floor, mob/living/user)
-	PROTECTED_PROC(TRUE)
+/obj/item/construction/rtd/proc/try_tiling(atom/interacting_with, mob/living/user)
+	PRIVATE_PROC(TRUE)
 
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
+
+	var/turf/open/floor/floor = interacting_with
 	if(!istype(floor))
 		return NONE
 
