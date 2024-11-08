@@ -139,6 +139,7 @@
 /// We only speak telepathically to blobs
 /datum/component/blob_minion/proc/on_try_speech(mob/living/minion, message, ignore_spam, forced)
 	SIGNAL_HANDLER
+	minion.log_talk(message, LOG_SAY, tag = "blob hivemind telepathy")
 	var/spanned_message = minion.say_quote(message)
 	var/rendered = span_blob("<b>\[Blob Telepathy\] [minion.real_name]</b> [spanned_message]")
 	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, minion)
