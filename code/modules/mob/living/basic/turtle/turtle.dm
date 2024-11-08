@@ -66,6 +66,7 @@
 	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(pre_eat_food)) //signal sent by the element, no support for callbacks sadly (to do)
 	update_appearance()
 	create_reagents(150, REAGENT_HOLDER_ALIVE)
+	add_verb(src, /mob/living/proc/toggle_resting)
 	START_PROCESSING(SSprocessing, src)
 
 /mob/living/basic/turtle/setDir(newdir)
@@ -158,6 +159,12 @@
 	STOP_PROCESSING(SSprocessing, src)
 	update_appearance()
 
+/mob/living/basic/turtle/update_icon_state()
+	. = ..()
+	if(stat == DEAD)
+		return
+	icon_state = resting ? "[base_icon_state]_resting" : base_icon_state
+
 /mob/living/basic/turtle/update_overlays()
 	. = ..()
 	if(stat == DEAD)
@@ -170,12 +177,11 @@
 	living_tree.pixel_y = pixel_offset
 	. += living_tree
 
-/mob/living/basic/turtle/toggle_resting()
+/mob/living/basic/turtle/update_resting()
 	. = ..()
 	if(stat == DEAD)
 		return
-	icon_state = resting ? "[base_icon_state]_rest" : base_icon_state
-	regenerate_icons()
+	update_appearance()
 
 /mob/living/basic/turtle/item_interaction(mob/living/user, obj/item/used_item, list/modifiers)
 	if(istype(used_item, /obj/item/seeds) && stat == CONSCIOUS)
