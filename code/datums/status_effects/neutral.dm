@@ -620,6 +620,11 @@
 	desc = "Waaater... Fuck this WATER!!"
 	icon_state = "shower_regen_catgirl"
 
+/atom/movable/screen/alert/status_effect/shower_regen/dislike
+	name = "Washing"
+	desc = "This water feels dirty..."
+	icon_state = "shower_regen_dirty"
+
 /atom/movable/screen/alert/status_effect/shower_regen/bloody_like
 	name = "Washing"
 	desc = "Mhhhmmmm... the crimson red drops of life. How delightful."
@@ -637,38 +642,42 @@
 	alert_type = /atom/movable/screen/alert/status_effect/shower_regen
 	/// How many heals from washing.
 	var/stamina_heal_per_tick = 4
-	/// Is this the shower raining blood?
-	var/bloody_shower = FALSE
+	/// The main reagent used for the shower (if no reagent is at least 70% of volume then it's null)
+	var/datum/reagent/shower_reagent
 
-/datum/status_effect/shower_regen/on_creation(mob/living/new_owner, _bloody_shower = FALSE)
-	bloody_shower = _bloody_shower
+/datum/status_effect/shower_regen/on_creation(mob/living/new_owner, shower_reagent)
+	src.shower_reagent = shower_reagent
 	return ..()
 
 /datum/status_effect/shower_regen/on_apply()
 	. = ..()
 
-	if(bloody_shower)
+	if(istype(shower_reagent, /datum/reagent/blood))
 		if(HAS_TRAIT(owner, TRAIT_MORBID) || HAS_TRAIT(owner, TRAIT_EVIL) || (owner.mob_biotypes & MOB_UNDEAD))
 			alert_type = /atom/movable/screen/alert/status_effect/shower_regen/bloody_like
 		else
 			alert_type  = /atom/movable/screen/alert/status_effect/shower_regen/bloody_dislike
-	else if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
-		alert_type = /atom/movable/screen/alert/status_effect/shower_regen/hater
+	else if(istype(shower_reagent, /datum/reagent/water))
+		if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
+			alert_type = /atom/movable/screen/alert/status_effect/shower_regen/hater
+		else
+			alert_type = /atom/movable/screen/alert/status_effect/shower_regen
+	else if(!shower_reagent) // we have dirty shower
+		alert_type  = /atom/movable/screen/alert/status_effect/shower_regen/dislike
 
 /datum/status_effect/shower_regen/tick(seconds_between_ticks)
 	. = ..()
-	if(bloody_shower)
-		return
 
-	var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
-	var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
-	var/healed = 0
-	if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
-		healed += owner.adjustOxyLoss(-1.5 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		healed += owner.adjustFireLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		healed += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-		healed += owner.adjustBruteLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		heal_or_deal *= 1.5
-	healed += owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks, updating_stamina = FALSE)
-	if(healed)
-		owner.updatehealth()
+	if(istype(shower_reagent, /datum/reagent/water))
+		var/water_adaptation = HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION)
+		var/heal_or_deal = HAS_TRAIT(owner, TRAIT_WATER_HATER) && !water_adaptation ? 1 : -1
+		var/healed = 0
+		if(water_adaptation) //very mild healing for those with the water adaptation trait (fish infusion)
+			healed += owner.adjustOxyLoss(-1.5 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjustFireLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			healed += owner.adjustToxLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+			healed += owner.adjustBruteLoss(-1 * seconds_between_ticks, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+			heal_or_deal *= 1.5
+		healed += owner.adjustStaminaLoss(stamina_heal_per_tick * heal_or_deal * seconds_between_ticks, updating_stamina = FALSE)
+		if(healed)
+			owner.updatehealth()
