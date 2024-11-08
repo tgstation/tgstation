@@ -190,7 +190,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	var/obj/effect/floating_blade/blade = new(get_turf(owner))
+	var/obj/effect/floating_blade/blade = new blade_type(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
@@ -260,8 +260,8 @@
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
-	blade_recharge_time = 1 MINUTES,
 	blade_type = /obj/effect/floating_blade,
+	blade_recharge_time = 1 MINUTES,
 )
 
 	src.blade_recharge_time = blade_recharge_time
