@@ -52,22 +52,24 @@
 		return NONE
 	return dig_hole(user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/turf/open/misc/ice/proc/dig_hole(mob/living/user)
+/turf/open/misc/ice/proc/digging_hole(mob/living/user)
 	if(!can_make_hole)
 		return FALSE
-	if(user)
-		balloon_alert(user, "digging...")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
-		if(!do_after(user, 5 SECONDS, src))
-			return FALSE
-		balloon_alert(user, "dug hole")
+	balloon_alert(user, "digging...")
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
+	if(!do_after(user, 5 SECONDS, src))
+		return FALSE
+	balloon_alert(user, "dug hole")
+	spawn_hole()
+	return TRUE
+
+/turf/open/misc/ice/proc/spawn_hole()
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/ice_fishing])
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
 	add_overlay(mutable_appearance('icons/turf/overlays.dmi', "ice_hole"))
 	can_make_hole = FALSE
 	RemoveElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	flags_1 &= ~HAS_CONTEXTUAL_SCREENTIPS_1
-	return TRUE
 
 /turf/open/misc/ice/smooth
 	icon_state = "ice_turf-255"
@@ -89,7 +91,7 @@
 
 /turf/open/misc/ice/icemoon/no_planet_atmos/holed/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(dig_hole))
+	spawn_hole()
 
 /turf/open/misc/ice/temperate
 	baseturfs = /turf/open/misc/ice/temperate

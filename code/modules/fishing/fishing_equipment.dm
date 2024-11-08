@@ -504,7 +504,7 @@
 
 /obj/item/survivalcapsule/fishing/examine(mob/user)
 	. = ..()
-	. += span_info("[EXAMINE_HINT("Alt-Click")] to change the selected fishing spot.")
+	. += span_info("[EXAMINE_HINT("Right-Click")] to change the selected fishing spot when held.")
 
 /obj/item/survivalcapsule/fishing/examine_more(mob/user)
 	. = ..()
