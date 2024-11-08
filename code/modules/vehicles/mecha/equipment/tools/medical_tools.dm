@@ -119,6 +119,7 @@
 		"toxin_loss" = patient.getToxLoss(),
 		"oxygen_loss" = patient.getOxyLoss(),
 	)
+	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
 	data["has_traumas"] = length(patient.get_traumas()) != 0
 
@@ -144,16 +145,17 @@
 		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		patient = null
-	if(ex_patient.health < 0)
-		ex_patient.adjustOxyLoss(-0.5 * seconds_per_tick)
+	ex_patient.adjustOxyLoss(-2 * seconds_per_tick)
 	ex_patient.AdjustStun(-40 * seconds_per_tick)
 	ex_patient.AdjustKnockdown(-40 * seconds_per_tick)
 	ex_patient.AdjustParalyzed(-40 * seconds_per_tick)
 	ex_patient.AdjustImmobilized(-40 * seconds_per_tick)
 	ex_patient.AdjustUnconscious(-40 * seconds_per_tick)
-	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5 && ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/c2/penthrite) <= 0)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5 \
+	&& ex_patient.reagents.get_reagent_amount(/datum/reagent/medicine/c2/penthrite) <= 0 \
+	&& ex_patient.stat >= SOFT_CRIT)
 		ex_patient.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
-	if(ex_patient.stat == DEAD || ex_patient.reagents.get_reagent_amount(/datum/reagent/toxin/formaldehyde) <= 0)
+	if(ex_patient.reagents.get_reagent_amount(/datum/reagent/toxin/formaldehyde) <= 0 && ex_patient.stat == DEAD)
 		ex_patient.reagents.add_reagent(/datum/reagent/toxin/formaldehyde, 3)
 	chassis.use_energy(energy_drain)
 
@@ -170,7 +172,6 @@
 	var/list/data = ..()
 	if(isnull(patient))
 		return data
-	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/shooter = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
 	if(shooter)
 		data["injectible_reagents"] = get_reagent_data(shooter.reagents.reagent_list)
