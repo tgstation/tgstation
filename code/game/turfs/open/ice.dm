@@ -52,7 +52,7 @@
 		return NONE
 	return dig_hole(user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/turf/open/misc/ice/proc/digging_hole(mob/living/user)
+/turf/open/misc/ice/proc/dig_hole(mob/living/user)
 	if(!can_make_hole)
 		return FALSE
 	balloon_alert(user, "digging...")
