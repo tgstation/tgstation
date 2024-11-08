@@ -404,9 +404,11 @@
 "pumps" = "фильтрует"
 "siphon" = "откачиваете"
 "siphons" = "откачивает"
+"slash" = "режете"
+"slashes" = "режет"
 # MARK: Organs
 "bashed" = "колотите"
-"slashed" = "режите"
+"slashed" = "режете"
 "kicked" = "пинаете"
 "stomped" = "растаптываете"
 "thump" = "стучите"
@@ -635,18 +637,23 @@
 "stares down" = "пристально смотрит на"
 "growl at" = "рычите на"
 "growls at" = "рычит на"
-# MARK: Obj
 "ineffectively pierce" = "неэффективно пробиваете"
 "ineffectively pierces" = "неэффективно пробивает"
 
 # MARK: Eat Verbs
 [eat_verbs]
-"bite" = "кусает"
-"chew" = "жуёт"
-"nibble" = "покусывает"
-"gnaw" = "грызёт"
-"gobble" = "пожирает"
-"chomp" = "лопает"
+"bite" = "кусаете"
+"bites" = "кусает"
+"chew" = "жуёте"
+"chews" = "жуёт"
+"nibble" = "покусываете"
+"nibbles" = "покусывает"
+"gnaw" = "грызёте"
+"gnaws" = "грызёт"
+"gobble" = "пожираете"
+"gobbles" = "пожирает"
+"chomp" = "лопаете"
+"chomps" = "лопает"
 
 # MARK: Say Verbs
 [say_verbs]
