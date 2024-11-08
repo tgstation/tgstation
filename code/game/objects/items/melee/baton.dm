@@ -28,6 +28,10 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
+	/// How much armor does our baton ignore? This operates as armour penetration, but only applies to the stun attack.
+	var/stun_armour_penetration = 15
+	/// What armor does our stun attack check before delivering the attack?
+	var/armour_type_against_stun = MELEE
 	/// Chance of causing force_say() when stunning a human mob
 	var/force_say_chance = 33
 	/// Can we stun cyborgs?
@@ -209,7 +213,10 @@
 			var/mob/living/carbon/human/human_target = target
 			if(prob(force_say_chance))
 				human_target.force_say()
-		target.apply_damage(stamina_damage, STAMINA)
+		var/effective_armour_penetration = get_stun_penetration_value()
+		var/chest = target.get_bodypart(BODY_ZONE_CHEST)
+		var/armour_block = target.run_armor_check(chest, armour_type_against_stun, null, null, effective_armour_penetration)
+		target.apply_damage(stamina_damage, STAMINA, chest, armour_block)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
@@ -293,6 +300,10 @@
 	if(stun_animation)
 		user.do_attack_animation(user)
 	return
+
+/// Handles the penetration value of our baton, called during baton_effect()
+/obj/item/melee/baton/proc/get_stun_penetration_value()
+	return stun_armour_penetration
 
 /obj/item/conversion_kit
 	name = "conversion kit"
@@ -390,6 +401,24 @@
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/obj/item/melee/baton/telescopic/bronze
+	name = "bronze-capped telescopic baton"
+	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked BRONZE, and thus has mediocre penetrative power."
+	icon_state = "telebaton_bronze"
+	stun_armour_penetration = 20
+
+/obj/item/melee/baton/telescopic/silver
+	name = "silver-capped telescopic baton"
+	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked SILVER, and thus has decent penetrative power."
+	icon_state = "telebaton_silver"
+	stun_armour_penetration = 40
+
+/obj/item/melee/baton/telescopic/gold
+	name = "gold-capped telescopic baton"
+	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked GOLD, and thus has exceptional penetrative power."
+	icon_state = "telebaton_gold"
+	stun_armour_penetration = 60
+
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
@@ -405,6 +434,7 @@
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
+	stun_armour_penetration = 100 //not really interested in messing iwth the effectiveness of syndicate gear rn
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/items/weapons/contractor_baton/contractorbatonhit.ogg'
@@ -439,6 +469,9 @@
 	throwforce = 7
 	force_say_chance = 50
 	stamina_damage = 60
+	armour_type_against_stun = ENERGY
+	// This value is added to our stun armour penetration when called by get_stun_penetration_value(). For giving some batons extra OOMPH.
+	var/additional_stun_armour_penetration = 0
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 2.5 SECONDS
@@ -649,6 +682,14 @@
 	stun_override = 0 //Avoids knocking people down prematurely.
 	return ..()
 
+/obj/item/melee/baton/security/get_stun_penetration_value()
+	if(cell)
+		var/chargepower = cell.maxcharge
+		var/zap_pen = (chargepower/STANDARD_CELL_CHARGE)
+		return zap_pen + additional_stun_armour_penetration
+	else
+		return stun_armour_penetration + additional_stun_armour_penetration
+
 /*
  * After a target is hit, we apply some status effects.
  * After a period of time, we then check to see what stun duration we give.
@@ -714,6 +755,25 @@
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
+
+/obj/item/melee/baton/security/stunsword
+	name = "\improper NT-20 'Excalibur' stun sword"
+	desc = "A special modification reserved only for the most important of security personnel aboard Nanotrasen stations. It's a sword. It stuns. What more could you want?"
+	icon_state = "stunsword"
+	inhand_icon_state = "stunsword"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	obj_flags = CONDUCTS_ELECTRICITY
+	slot_flags = ITEM_SLOT_BELT
+	sharpness = SHARP_EDGED
+	force = 15
+	throwforce = 10
+	wound_bonus = 0
+	bare_wound_bonus = 15
+	additional_stun_armour_penetration = 30
+	convertible = FALSE
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
