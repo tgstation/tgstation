@@ -775,6 +775,9 @@
 	additional_stun_armour_penetration = 30
 	convertible = FALSE
 
+/obj/item/melee/baton/security/stunsword/loaded
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
+
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
