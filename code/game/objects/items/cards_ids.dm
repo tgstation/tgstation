@@ -1879,6 +1879,7 @@
 /obj/item/card/cardboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.can_write(tool, TRUE))
 		INVOKE_ASYNC(src, PROC_REF(modify_card), user, tool)
+		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		return ITEM_INTERACT_SUCCESS
 
 ///Lets the user write a name, assignment or trim on the card, or reset it. Only the name is important for the component.
