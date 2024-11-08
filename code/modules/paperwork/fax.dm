@@ -1,4 +1,5 @@
-GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
+//GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept")) // ORIGINAL
+GLOBAL_VAR_INIT(nt_fax_department, pick("PA HR Department", "PA Legal Department", "PA Complaint Department", "PA Customer Relations", "Port Authority Tech Support", "PA Internal Affairs Dept")) // DOPPLER EDIT - NT -> PA
 
 /obj/machinery/fax
 	name = "Fax Machine"
@@ -56,7 +57,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
-		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+		//nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE), // ORIGINAL
+		nanotrasen = list(fax_name = "PA HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE), // DOPPLER EDIT - NT -> PA
 		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 

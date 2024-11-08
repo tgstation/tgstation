@@ -36,6 +36,40 @@
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
+	var/static/list/spiking_booze = list(
+		// Your "common" spiking booze
+		/datum/reagent/consumable/ethanol/vodka = 5,
+		/datum/reagent/consumable/ethanol/beer = 5,
+		/datum/reagent/consumable/ethanol/whiskey = 5,
+		/datum/reagent/consumable/ethanol/gin = 5,
+		/datum/reagent/consumable/ethanol/rum = 5,
+		// A bit rarer, can be dangerous if you take too much
+		/datum/reagent/consumable/ethanol/thirteenloko = 3,
+		/datum/reagent/consumable/ethanol/absinthe = 3,
+		/datum/reagent/consumable/ethanol/hooch = 3,
+		/datum/reagent/consumable/ethanol/moonshine = 3,
+		// Gets funky here
+		/datum/reagent/consumable/ethanol/beepsky_smash = 1,
+		/datum/reagent/consumable/ethanol/gargle_blaster = 1,
+		/datum/reagent/consumable/ethanol/neurotoxin = 1,
+		)
+
+/obj/machinery/vending/cola/on_dispense(obj/item/vended_item)
+	// 35% chance that your drink will be safe, as safe pure acid and sugar that these drinks probably are can be
+	if(!onstation || !HAS_TRAIT(SSstation, STATION_TRAIT_SPIKED_DRINKS) || !prob(65))
+		return
+	// Don't fill booze with more booze
+	if (isnull(vended_item.reagents) || vended_item.reagents.has_reagent(/datum/reagent/consumable/ethanol, check_subtypes = TRUE))
+		return
+	var/removed_volume = vended_item.reagents.remove_all(rand(5, vended_item.reagents.maximum_volume * 0.5))
+	if (!removed_volume)
+		return
+	// Don't want bubbling sodas when we add some rum to cola
+	ADD_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
+	vended_item.reagents.add_reagent(pick_weight(spiking_booze), removed_volume)
+	vended_item.reagents.handle_reactions()
+	REMOVE_TRAIT(vended_item, TRAIT_SILENT_REACTIONS, VENDING_MACHINE_TRAIT)
+
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"

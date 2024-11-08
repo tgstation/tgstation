@@ -291,7 +291,7 @@
 		var/list/missing_organs = list()
 		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
 			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
-		if(!humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+		if(humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
 			missing_organs[ORGAN_SLOT_HEART] = "Heart"
 		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
 			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
@@ -337,7 +337,7 @@
 
 		// Cybernetics
 		var/list/cyberimps
-		for(var/obj/item/organ/internal/cyberimp/cyberimp in humantarget.organs)
+		for(var/obj/item/organ/cyberimp/cyberimp in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
 				LAZYADD(cyberimps, cyberimp.examine_title(user))
 		if(LAZYLEN(cyberimps))
@@ -479,7 +479,7 @@
 			render_block.Cut()
 
 		// Stomach reagents
-		var/obj/item/organ/internal/stomach/belly = target.get_organ_slot(ORGAN_SLOT_STOMACH)
+		var/obj/item/organ/stomach/belly = target.get_organ_slot(ORGAN_SLOT_STOMACH)
 		if(belly)
 			if(belly.reagents.reagent_list.len)
 				for(var/bile in belly.reagents.reagent_list)

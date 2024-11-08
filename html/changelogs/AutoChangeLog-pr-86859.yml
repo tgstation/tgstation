@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Add missing signal to reagent dispenser RMB interactions."
-  - sound: "Fix missing pour sounds from reagent dispensers"

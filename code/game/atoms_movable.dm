@@ -468,7 +468,7 @@
 	var/static/list/not_falsey_edits = list(NAMEOF_STATIC(src, bound_width) = TRUE, NAMEOF_STATIC(src, bound_height) = TRUE)
 	if(banned_edits[var_name])
 		return FALSE //PLEASE no.
-	if(careful_edits[var_name] && (var_value % world.icon_size) != 0)
+	if(careful_edits[var_name] && (var_value % ICON_SIZE_ALL) != 0)
 		return FALSE
 	if(not_falsey_edits[var_name] && !var_value)
 		return FALSE
@@ -1130,7 +1130,7 @@
 	RESOLVE_ACTIVE_MOVEMENT
 
 	var/atom/oldloc = loc
-	var/is_multi_tile = bound_width > world.icon_size || bound_height > world.icon_size
+	var/is_multi_tile = bound_width > ICON_SIZE_X || bound_height > ICON_SIZE_Y
 
 	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
 
@@ -1153,8 +1153,8 @@
 				var/list/new_locs = block(
 					destination,
 					locate(
-						min(world.maxx, destination.x + ROUND_UP(bound_width / 32)),
-						min(world.maxy, destination.y + ROUND_UP(bound_height / 32)),
+						min(world.maxx, destination.x + ROUND_UP(bound_width / ICON_SIZE_X)),
+						min(world.maxy, destination.y + ROUND_UP(bound_height / ICON_SIZE_Y)),
 						destination.z
 					)
 				)
@@ -1263,11 +1263,14 @@
 	if(!isturf(loc))
 		return TRUE
 
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+	if (handle_spacemove_grabbing())
 		return TRUE
 
 	return FALSE
 
+/atom/movable/proc/handle_spacemove_grabbing()
+	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
+		return TRUE
 
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
@@ -1633,8 +1636,14 @@
 
 /* End language procs */
 
-//Returns an atom's power cell, if it has one. Overload for individual items.
-/atom/movable/proc/get_cell()
+/**
+ * Returns an atom's power cell, if it has one. Overload for individual items.
+ * Args
+ *
+ * * /atom/movable/interface - the atom that is trying to interact with this cell
+ * * mob/user - the mob that is holding the interface
+ */
+/atom/movable/proc/get_cell(atom/movable/interface, mob/user)
 	return
 
 /atom/movable/proc/can_be_pulled(user, grab_state, force)

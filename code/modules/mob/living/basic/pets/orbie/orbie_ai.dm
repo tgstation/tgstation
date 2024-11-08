@@ -3,7 +3,7 @@
 
 /datum/ai_controller/basic_controller/orbie
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TRICK_NAME = "Trick",
 	)
@@ -13,7 +13,6 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/find_playmates,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/relay_pda_message,
 		/datum/ai_planning_subtree/pet_planning,
 	)

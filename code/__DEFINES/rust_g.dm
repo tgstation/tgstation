@@ -15,25 +15,36 @@
 // On Windows, looks in the standard places for `rust_g.dll`.
 // On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
 // `librust_g.so` (preferred) or `rust_g` (old).
+// On OpenDream, `rust_g64.dll` / `librust_g64.so` are used instead.
 
 /* This comment bypasses grep checks */ /var/__rust_g
 
+#ifndef OPENDREAM
+#define RUST_G_BASE	"rust_g"
+#else
+#define RUST_G_BASE	"rust_g64"
+#endif
+
 /proc/__detect_rust_g()
 	if (world.system_type == UNIX)
-		if (fexists("./librust_g.so"))
+		if (fexists("./lib[RUST_G_BASE].so"))
 			// No need for LD_LIBRARY_PATH badness.
-			return __rust_g = "./librust_g.so"
-		else if (fexists("./rust_g"))
+			return __rust_g = "./lib[RUST_G_BASE].so"
+#ifndef OPENDREAM
+		else if (fexists("./[RUST_G_BASE]"))
 			// Old dumb filename.
-			return __rust_g = "./rust_g"
-		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g"))
+			return __rust_g = "./[RUST_G_BASE]"
+		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/[RUST_G_BASE]"))
 			// Old dumb filename in `~/.byond/bin`.
-			return __rust_g = "rust_g"
+			return __rust_g = RUST_G_BASE
+#endif
 		else
 			// It's not in the current directory, so try others
-			return __rust_g = "librust_g.so"
+			return __rust_g = "lib[RUST_G_BASE].so"
 	else
-		return __rust_g = "rust_g"
+		return __rust_g = RUST_G_BASE
+
+#undef RUST_G_BASE
 
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif

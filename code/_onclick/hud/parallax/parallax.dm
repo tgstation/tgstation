@@ -191,7 +191,7 @@
 	if(!offset_x && !offset_y && !force)
 		return
 
-	var/glide_rate = round(world.icon_size / screenmob.glide_size * world.tick_lag, world.tick_lag)
+	var/glide_rate = round(ICON_SIZE_ALL / screenmob.glide_size * world.tick_lag, world.tick_lag)
 	C.previous_turf = posobj
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
@@ -297,8 +297,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-
-	var/static/parallax_scaler = world.icon_size / 480
+	var/static/pixel_grid_size = ICON_SIZE_ALL * 15
+	var/static/parallax_scaler = ICON_SIZE_ALL / pixel_grid_size
 
 	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(view)
@@ -311,8 +311,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
-			texture_overlay.pixel_w += 480 * x
-			texture_overlay.pixel_z += 480 * y
+			texture_overlay.pixel_w += pixel_grid_size * x
+			texture_overlay.pixel_z += pixel_grid_size * y
 			new_overlays += texture_overlay
 	cut_overlays()
 	add_overlay(new_overlays)

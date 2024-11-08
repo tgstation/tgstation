@@ -93,6 +93,7 @@
 
 	return preview_job
 
+/* DOPPLER EDIT REMOVAL - MOVED TO MASTER FILES
 /datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin, show_job_clothes = TRUE)
 	var/datum/job/no_job = SSjob.get_job_type(/datum/job/unassigned)
 	var/datum/job/preview_job = get_highest_priority_job() || no_job
@@ -127,3 +128,4 @@
 			mannequin.add_quirk(quirk_type, parent)
 
 	return mannequin.appearance
+*/

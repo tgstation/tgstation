@@ -50,7 +50,6 @@
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PHASED
 	panel = "Spells"
-	melee_cooldown_time = 0 SECONDS
 
 	/// The sound played on cast.
 	var/sound = null
@@ -108,6 +107,7 @@
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_SPEECH_ONLY_MUTE), SIGNAL_REMOVETRAIT(TRAIT_SPEECH_ONLY_MUTE)), PROC_REF(update_status_on_signal)) // DOPPLER EDIT ADDITION - speech only mute
 
 	RegisterSignals(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_status_on_signal))
 	owner.client?.stat_panel.send_message("check_spells")
@@ -125,6 +125,8 @@
 		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
 		SIGNAL_ADDTRAIT(TRAIT_MUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
+		SIGNAL_ADDTRAIT(TRAIT_SPEECH_ONLY_MUTE), // DOPPLER EDIT ADDITION - speech only mute
+		SIGNAL_REMOVETRAIT(TRAIT_SPEECH_ONLY_MUTE), // DOPPLER EDIT ADDITION - speech only mute
 	))
 
 	return ..()

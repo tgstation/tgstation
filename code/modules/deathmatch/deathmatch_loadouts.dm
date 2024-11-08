@@ -12,7 +12,7 @@
 	/// This outfit will grant these mutations if applied
 	var/list/mutations_to_add = list()
 
-/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/deathmatch_loadout/pre_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	if(isdummy(user))
 		return
@@ -606,7 +606,7 @@
 	l_hand = /obj/item/melee/energy/sword
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	l_pocket = /obj/item/soap/syndie
-	belt = /obj/item/gun/ballistic/revolver/syndicate
+	belt = /obj/item/gun/ballistic/revolver
 
 /datum/outfit/deathmatch_loadout/nukie
 	name = "Deathmatch: Nuclear Operative"
@@ -768,7 +768,7 @@
 	id_trim = /datum/id_trim/job/bridge_assistant // half tider half command
 	id = /obj/item/card/id/advanced/chameleon
 	uniform = /obj/item/clothing/under/trek/command/next
-	l_pocket = /obj/item/gun/energy/e_gun/mini
+	l_pocket = /obj/item/gun/energy/e_gun/mini // they are thej best race in the end. not as impactful as you may think
 	r_pocket = /obj/item/extinguisher/mini
 	gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/utility/full/inducer
@@ -846,9 +846,10 @@
 	back = /obj/item/storage/backpack/science
 
 	backpack_contents = list(
-		/obj/item/dnainjector/shock,
 		/obj/item/etherealballdeployer,
 	)
+
+	mutations_to_add = list(/obj/item/dnainjector/shock) // pretend ethereals are interesting
 
 /datum/outfit/deathmatch_loadout/plasmamen
 	name = "Deathmatch: Plasmaman Species"
@@ -907,25 +908,19 @@
 
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/costume/wellworn_shirt/graphic
-	back = /obj/item/storage/backpack
+	r_pocket = /obj/item/stack/rods/twentyfive
+	l_pocket = /obj/item/stack/rods/twentyfive
 	r_hand = /obj/item/wirecutters
-
-	backpack_contents = list(
-		/obj/item/stack/rods/fifty,
-		/obj/item/stack/rods/fifty,
-		/obj/item/stack/rods/fifty,
-		/obj/item/stack/rods/fifty,
-	)
 
 // We don't want them to just punch each other to death
 
-/datum/outfit/deathmatch_loadout/lattice_battles/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/lattice_battles/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_PACIFISM, REF(src))
 
 // Ragnarok: Fight between religions!
 
-/datum/outfit/deathmatch_loadout/cultish/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/cultish/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_CULTIST, REF(src))
 	user.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
@@ -983,7 +978,6 @@
 	back = /obj/item/storage/backpack/cultpack
 
 	backpack_contents = list(
-		/obj/item/cult_shift,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
 		/obj/item/reagent_containers/cup/beaker/unholywater,
@@ -991,22 +985,21 @@
 
 	spells_to_add = list(
 		/datum/action/innate/cult/blood_spell/horror,
-		/datum/action/innate/cult/blood_spell/horror,
 		/datum/action/innate/cult/blood_spell/stun,
 		/datum/action/innate/cult/blood_spell/stun,
 		/datum/action/innate/cult/blood_spell/manipulation,
 	)
 
-/datum/outfit/deathmatch_loadout/cultish/artificer/post_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/cultish/artificer/post_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
-	var/datum/action/innate/cult/blood_spell/manipulation/magick = locate() in user
+	var/datum/action/innate/cult/blood_spell/manipulation/magick = locate() in user.get_all_contents()
 	magick.charges = 300
 
 /datum/outfit/deathmatch_loadout/heresy
 	/// Grants the effects of these knowledges to the DMer
 	var/list/knowledge_to_grant
 
-/datum/outfit/deathmatch_loadout/heresy/pre_equip(mob/living/carbon/human/user, visualsOnly)
+/datum/outfit/deathmatch_loadout/heresy/pre_equip(mob/living/carbon/human/user, visuals_only)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_ACT_AS_HERETIC, REF(src))
 	user.AddElement(/datum/element/leeching_walk)
@@ -1018,13 +1011,10 @@
 
 // Heretic Warrior
 
-// Has spells of Ash, Blade, and Rust. Overall aggressive
-
 /datum/outfit/deathmatch_loadout/heresy/warrior
 	name = "Deathmatch: Heretic Warrior"
 	display_name = "Heretic Warrior"
-	desc = "Prove the furious strength of the Mansus."
-	//species_override = /datum/species/plasmaman
+	desc = "Prove the furious strength of the Mansus!"
 
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	neck = /obj/item/clothing/neck/heretic_focus
@@ -1032,7 +1022,7 @@
 	suit_store = /obj/item/melee/sickly_blade/dark
 	uniform = /obj/item/clothing/under/color/darkgreen
 	id_trim = null
-	belt = /obj/item/melee/sickly_blade/ash
+	belt = /obj/item/melee/sickly_blade/rust
 	gloves = null
 	shoes = /obj/item/clothing/shoes/sandal
 	l_pocket = /obj/item/flashlight/lantern/jade/on
@@ -1061,15 +1051,11 @@
 		/datum/action/cooldown/spell/touch/mansus_grasp,
 		/datum/action/cooldown/spell/realignment,
 		/datum/action/cooldown/spell/pointed/projectile/furious_steel,
-		/datum/action/cooldown/spell/charged/beam/fire_blast,
-		/datum/action/cooldown/spell/aoe/fiery_rebirth,
 		/datum/action/cooldown/spell/cone/staggered/entropic_plume,
 		/datum/action/cooldown/spell/pointed/rust_construction,
 	)
 
 // Heretic Scribe
-
-// Has spells of Void, Moon, and Cosmos. Overall defensive/mobile
 
 /datum/outfit/deathmatch_loadout/heresy/scribe
 	name = "Deathmatch: Heretic Scribe"
@@ -1087,29 +1073,27 @@
 	gloves = null
 	shoes = /obj/item/clothing/shoes/winterboots/ice_boots
 	l_pocket = /obj/item/ammo_box/strilka310/lionhunter
-	r_pocket = /obj/item/codex_cicatrix
+	r_pocket = /obj/item/ammo_box/strilka310/lionhunter
 
 	back = /obj/item/gun/ballistic/rifle/lionhunter // for his neutral b, he wields a gun
 
 	belt_contents = list(
 		/obj/item/heretic_labyrinth_handbook,
 		/obj/item/heretic_labyrinth_handbook,
-		/obj/item/eldritch_potion/crucible_soul,
-		/obj/item/clothing/neck/heretic_focus/moon_amulet = 3,
+		/obj/item/eldritch_potion/duskndawn,
+		/obj/item/eldritch_potion/duskndawn,
 	)
 
 	knowledge_to_grant = list(
 		/datum/heretic_knowledge/cosmic_grasp,
 		/datum/heretic_knowledge/moon_grasp,
-		/datum/heretic_knowledge/mark/moon_mark,
 	)
 
 	spells_to_add = list(
 		/datum/action/cooldown/spell/touch/mansus_grasp,
-		/datum/action/cooldown/spell/conjure/cosmic_expansion,
 		/datum/action/cooldown/spell/pointed/projectile/star_blast,
 		/datum/action/cooldown/spell/touch/star_touch,
-		/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void,
+		/datum/action/cooldown/spell/pointed/mind_gate,
 		/datum/action/cooldown/spell/aoe/void_pull,
 	)
 
@@ -1127,7 +1111,7 @@
 	suit_store = /obj/item/book/bible/booze
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	id_trim = null
-	belt = /obj/item/nullrod // choose any!
+	belt = /obj/item/nullrod/non_station // choose any!
 	gloves = /obj/item/clothing/gloves/plate
 	shoes = /obj/item/clothing/shoes/plate
 	l_pocket = /obj/item/flashlight/lantern/on
@@ -1150,7 +1134,6 @@
 	name = "Deathmatch: Clock Cultist"
 	display_name = "Rat'var Apostate"
 	desc = "You're in a fight between the servants of gods, and yours is dead. Good luck?"
-	//species_override = /datum/species/plasmaman
 
 	head = /obj/item/clothing/head/costume/bronze
 	suit = /obj/item/clothing/suit/costume/bronze
@@ -1160,5 +1143,5 @@
 	belt = /obj/item/brass_spear
 	gloves = /obj/item/clothing/gloves/tinkerer
 	shoes = /obj/item/clothing/shoes/bronze
-	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh // they used to turn their dmg into tox with a spell. close enough
-	r_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh
+	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named // they used to turn their dmg into tox with a spell. close enough
+	r_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named

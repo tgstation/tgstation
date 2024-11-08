@@ -56,7 +56,7 @@ export function LootBox(props: Props) {
           });
         }}
       >
-        <IconDisplay item={item} />
+        <IconDisplay item={item} size={{ height: 3, width: 3 }} />
         {amount > 1 && <div className="SearchItem--amount">{amount}</div>}
       </div>
       {!is_blind && <span className="SearchItem--text">{name}</span>}

@@ -5,7 +5,7 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
 	return data
 
-/datum/preference/choiced/tail_human/compile_constant_data()
+/datum/preference/choiced/tail_felinid/compile_constant_data()
 	var/list/data = ..()
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
 	return data
@@ -65,6 +65,11 @@
 	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
 	return data
 
+/datum/preference/choiced/alien_tail/compile_constant_data()
+	var/list/data = ..()
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/tri_color/tail_color::savefile_key
+	return data
+
 
 /// Tail colors!
 /datum/preference/tri_color/tail_color
@@ -72,7 +77,7 @@
 	savefile_key = "tail_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	//relevant_external_organ = /obj/item/organ/external/tail
+	//relevant_external_organ = /obj/item/organ/tail
 
 /datum/preference/tri_color/tail_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),

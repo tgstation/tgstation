@@ -245,7 +245,7 @@
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.handle_dreams()
 
-	if(prob(2) && owner.health > owner.crit_threshold)
+	if(prob(8) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
 /atom/movable/screen/alert/status_effect/asleep
@@ -386,11 +386,10 @@
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
-	var/turf/T = get_turf(owner)
-	new /obj/effect/temp_visual/bleed/explode(T)
-	for(var/d in GLOB.alldirs)
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-	playsound(T, SFX_DESECRATION, 100, TRUE, -1)
+	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	for(var/splatter_dir in GLOB.alldirs)
+		owner.create_splatter(splatter_dir)
+	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"

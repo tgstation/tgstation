@@ -241,7 +241,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	contraband = list(
 		/obj/item/clothing/under/costume/mech_suit = 2,
 		/obj/item/clothing/suit/hooded/techpriest = 2,
-		/obj/item/organ/internal/tongue/robot = 2,
+		/obj/item/organ/tongue/robot = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 	extra_price = PAYCHECK_COMMAND * 1.2
@@ -479,6 +479,12 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/plunger = 2,
 		/obj/item/wirebrush = 2,
 		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/head/hats/janitor_doppler = 3,
+		/obj/item/clothing/shoes/galoshes/doppler = 2,
+		/obj/item/clothing/gloves/botanic_leather/janitor = 3,
+		/obj/item/clothing/suit/apron/janitor_cloak = 3,
+		/obj/item/clothing/under/rank/civilian/janitor/doppler = 3,
+		/obj/item/clothing/under/rank/civilian/janitor/doppler_ct = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_CREW

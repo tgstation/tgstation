@@ -14,6 +14,10 @@
 	var/visor_flags_cover = NONE //same as above, but for flags_cover
 	///What to toggle when toggled with adjust_visor()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	///Sound this item makes when its visor is flipped down
+	var/visor_toggle_down_sound = null
+	///Sound this item makes when its visor is flipped up
+	var/visor_toggle_up_sound = null
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -375,7 +379,7 @@
 				cold_desc = "very low"
 			if (0 to 71)
 				cold_desc = "extremely low"
-		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc), " and ")] temperatures."
+		.["thermally insulated"] = "Protects the wearer from [jointext(list(heat_desc, cold_desc) - null, " and ")] temperatures."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -426,7 +430,11 @@
 				parts_covered += "head"
 			if(body_parts_covered & CHEST)
 				parts_covered += "torso"
-			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+			if(body_parts_covered & ARMS|HANDS)
+				parts_covered += "arms"
+			if(body_parts_covered & LEGS|FEET)
+				parts_covered += "legs"
+			if(length(parts_covered))
 				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
@@ -532,6 +540,12 @@ BLIND     // can't see anything
 	visor_toggling()
 
 	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+
+	//play sounds when toggling the visor up or down (if there is any)
+	if(visor_toggle_up_sound && up)
+		playsound(src, visor_toggle_up_sound, 20, TRUE, -1)
+	if(visor_toggle_down_sound && !up)
+		playsound(src, visor_toggle_down_sound, 20, TRUE, -1)
 
 	update_item_action_buttons()
 

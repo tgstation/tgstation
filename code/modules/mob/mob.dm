@@ -178,7 +178,7 @@
 			hud_list[hud] = list()
 
 		else
-			var/image/I = image('icons/mob/huds/hud.dmi', src, "")
+			var/image/I = image('modular_doppler/overwrites/huds/hud.dmi', src, "") // DOPPLER EDIT, old code: var/image/I = image('icons/mob/huds/hud.dmi', src, "")
 			I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			hud_list[hud] = I
 		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
@@ -555,7 +555,7 @@
 			var/list/result = examinify.examine_more(src)
 			if(!length(result))
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
-			result_combined = jointext(result, "<br>")
+			result_combined = examine_block(jointext(result, "<br>"))
 
 		else
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
@@ -1189,7 +1189,11 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
+		if(client) // DOPPLER EDIT ADDITION - Update the mob chat color list, removing the old name
+			GLOB.chat_colors_by_mob_name -= oldname // DOPPLER EDIT ADDITION
 
+	if(client) // DOPPLER EDIT ADDITION - Update the mob chat color list, adding the new name
+		GLOB.chat_colors_by_mob_name[name] = list(chat_color, chat_color_darkened) // DOPPLER EDIT ADDITION
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
 	return TRUE
@@ -1365,6 +1369,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GODMODE, "Toggle Godmode")
 	VV_DROPDOWN_OPTION(VV_HK_DROP_ALL, "Drop Everything")
 	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS, "Regenerate Icons")
+	VV_DROPDOWN_OPTION(VV_HK_REGEN_ICONS_FULL, "Regenerate Icons & Clear Stuck Overlays")
 	VV_DROPDOWN_OPTION(VV_HK_PLAYER_PANEL, "Show player panel")
 	VV_DROPDOWN_OPTION(VV_HK_BUILDMODE, "Toggle Buildmode")
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
@@ -1381,6 +1386,12 @@
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
+		regenerate_icons()
+
+	if(href_list[VV_HK_REGEN_ICONS_FULL])
+		if(!check_rights(NONE))
+			return
+		cut_overlays()
 		regenerate_icons()
 
 	if(href_list[VV_HK_PLAYER_PANEL])

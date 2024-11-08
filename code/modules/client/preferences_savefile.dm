@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 45
+#define SAVEFILE_VERSION_MAX 46
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -110,6 +110,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			new_typepath = /obj/item/clothing/accessory/pride,
 			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
 		)
+	if (current_version < 46)
+		migrate_boolean_sound_prefs_to_default_volume()
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -307,6 +309,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
+	/// DOPPLER SHIFT ADDITION BEGIN
+	var/list/save_languages = SANITIZE_LIST(save_data?["languages"])
+	for(var/language in save_languages)
+		var/value = save_languages[language]
+		save_languages -= language
+
+		if(istext(language))
+			language = _text2path(language)
+		save_languages[language] = value
+	languages = save_languages
+	/// DOPPLER SHIFT ADDITION END
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -317,6 +330,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomise = SANITIZE_LIST(randomise)
 	job_preferences = SANITIZE_LIST(job_preferences)
 	all_quirks = SANITIZE_LIST(all_quirks)
+	languages = SANITIZE_LIST(languages) /// DOPPLER SHIFT ADDITION
 
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -325,6 +339,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
+	sanitize_languages() /// DOPPLER SHIFT ADDITION
 
 	return TRUE
 
@@ -365,6 +380,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
+	save_data["languages"] = languages /// DOPPLER SHIFT ADDITION - we might want to migrate this
 
 	return TRUE
 

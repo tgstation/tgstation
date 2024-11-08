@@ -111,7 +111,7 @@
 		to_chat(affected_human, span_warning("Your chin itches."))
 		affected_human.set_facial_hairstyle("Beard (Full)", update = TRUE)
 	//Only like gross food
-	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes = GROSS
@@ -124,7 +124,7 @@
 		return
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
-	var/obj/item/organ/internal/eyes/empowered_eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/empowered_eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
 	if(empowered_eyes)
 		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 		empowered_eyes?.refresh()
@@ -146,7 +146,7 @@
 	. = ..()
 	affected_carbon.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	//restore tongue's tastes
-	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 		tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
@@ -155,7 +155,7 @@
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
-	var/obj/item/organ/internal/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/eyes)
 	eyes?.refresh()
 
 ///Makes you a hypochondriac - I'd like to call it hypochondria, but "I could use some hypochondria" doesn't work
@@ -195,7 +195,7 @@
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
 		possibilities += /datum/hallucination/fake_alert/cold
 
-	var/obj/item/organ/internal/lungs/lungs = affected_carbon.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lungs = affected_carbon.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs)
 		if(lungs.safe_oxygen_min)
 			possibilities += /datum/hallucination/fake_alert/need_oxygen
@@ -280,16 +280,20 @@
 
 /datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(10 SECONDS * seconds_per_tick)
+	//DOPPLER REMOVAL: affected_carbon.set_jitter_if_lower(10 SECONDS * seconds_per_tick)
 
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(20 SECONDS * seconds_per_tick)
-	if(SPT_PROB(2, seconds_per_tick))
-		affected_carbon.emote("cough")
+	//BEGIN DOPPLER REMOVAL
+	//affected_carbon.set_jitter_if_lower(20 SECONDS * seconds_per_tick)
+	//if(SPT_PROB(2, seconds_per_tick))
+		//affected_carbon.emote("cough")
+	//END DOPPLER REMOVAL
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
-	if(SPT_PROB(5, seconds_per_tick))
-		affected_carbon.emote("cough")
+	//BEGIN DOPPLER REMOVAL
+	//affected_carbon.set_jitter_if_lower(30 SECONDS * seconds_per_tick)
+	//if(SPT_PROB(5, seconds_per_tick))
+		//affected_carbon.emote("cough")
+	//END DOPPLER REMOVAL

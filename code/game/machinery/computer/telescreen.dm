@@ -45,6 +45,14 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
+/obj/machinery/vending/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle mute button"
+
+/obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
+	. = ..()
+	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
+	speakers.toggle_mute()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/item/wallframe/telescreen/entertainment
@@ -65,6 +73,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
 	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
+	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"]")
 
 /obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
 	return GLOB.always_state
@@ -535,7 +544,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_sto
 		"Thank you for tuning in to the slaughter!",
 		"What a show! And we guarantee next one will be bigger!",
 		"Celebrate the results with Thundermerch!",
-		"This show was brought to you by Nanotrasen.",
+		//"This show was brought to you by Nanotrasen.", // ORIGINAL
+		"This show was brought to you by the Port Authority.", // DOPPLER EDIT - NT -> PA
 	)
 
 /obj/item/assembly/control/showtime/activate()

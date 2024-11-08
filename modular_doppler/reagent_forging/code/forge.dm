@@ -156,7 +156,7 @@
 
 	. += span_notice("<br>[src] is currently [forge_temperature] degrees hot, going towards [target_temperature] degrees.<br>")
 
-	if(reagent_forging && (is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/genemod/primitive)))
+	if(reagent_forging && (is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/human/genemod/primitive)))
 		. += span_warning("[src] has a fine gold trim, it is ready to imbue chemicals into reagent objects.")
 
 	return .
@@ -408,7 +408,7 @@
 
 		if(SKILL_LEVEL_LEGENDARY)
 			if(!forced)
-				if(is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/genemod/primitive))
+				if(is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/human/genemod/primitive))
 					to_chat(user, span_notice("With just the right heat treating technique, metal could be made to accept reagents..."))
 					create_reagent_forge()
 				if(forge_level == FORGE_LEVEL_MASTER)
@@ -573,7 +573,7 @@
 		return
 
 	var/mob/living/carbon/human/human_user = user
-	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/genemod/primitive))
+	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/human/genemod/primitive))
 		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
 		return
 
@@ -623,7 +623,7 @@
 		return
 
 	var/mob/living/carbon/human/human_user = user
-	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/genemod/primitive))
+	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/human/genemod/primitive))
 		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
 		return
 

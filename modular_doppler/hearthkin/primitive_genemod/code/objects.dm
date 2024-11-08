@@ -9,7 +9,7 @@
 	var/being_used = FALSE
 
 /obj/item/anointing_oil/attack(mob/living/target_mob, mob/living/user, params)
-	if (!is_species(user, /datum/species/genemod/primitive))
+	if (!is_species(user, /datum/species/human/genemod/primitive))
 		to_chat(user, span_warning("You have no idea what this disgusting concoction is used for."))
 		return
 	if(being_used || !ismob(target_mob)) //originally this was going to check if the mob was friendly, but if an icecat wants to name some terror mob while it's tearing chunks out of them, why not?
@@ -48,7 +48,7 @@
 
 /obj/item/anointing_oil/examine(mob/user)
 	. = ..()
-	if(is_species(user, /datum/species/genemod/primitive))
+	if(is_species(user, /datum/species/human/genemod/primitive))
 		. += span_info("Using this on the local wildlife will allow you to give them a name.")
 
 /datum/crafting_recipe/anointing_oil
@@ -74,12 +74,12 @@
     w_class = WEIGHT_CLASS_TINY
 
 /obj/item/frozen_breath/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-    if (!is_species(user, /datum/species/genemod/primitive))
+    if (!is_species(user, /datum/species/human/genemod/primitive))
         to_chat(user, span_warning("You have no idea how to use this freezing concoction."))
         return
 
-    if(istype(interacting_with, /obj/item/organ/internal/lungs))
-        var/obj/item/organ/internal/lungs/target_lungs = interacting_with
+    if(istype(interacting_with, /obj/item/organ/lungs))
+        var/obj/item/organ/lungs/target_lungs = interacting_with
         if(IS_ROBOTIC_ORGAN(target_lungs))
             user.balloon_alert(user, "The lungs have to be organic!")
             return
@@ -87,14 +87,14 @@
         playsound(location, 'sound/effects/slosh.ogg', 25, TRUE)
         user.visible_message(span_notice("[user] pours a strange blue liquid over the set of lungs. The flesh starts glistening in a strange cyan light, transforming before your very eyes!"),
             span_notice("Recalling the instructions for the lung transfiguration ritual, you pour the liquid over the flesh of the organ. Soon, the lungs glow in a mute cyan light, before they turn dim and change form before your very eyes!"))
-        var/obj/item/organ/internal/lungs/icebox_adapted/new_lungs = new(location)
+        var/obj/item/organ/lungs/icebox_adapted/new_lungs = new(location)
         new_lungs.damage = target_lungs.damage
         qdel(target_lungs)
         qdel(src)
 
 /obj/item/frozen_breath/examine(mob/user)
     . = ..()
-    if(is_species(user, /datum/species/genemod/primitive))
+    if(is_species(user, /datum/species/human/genemod/primitive))
         . += span_info("Using this on a pair of organic lungs transforms them into hardy lungs. This will remove any other special features from the old lungs, if there were any.")
 
 /datum/crafting_recipe/frozen_breath

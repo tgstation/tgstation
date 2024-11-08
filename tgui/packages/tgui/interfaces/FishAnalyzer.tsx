@@ -216,7 +216,7 @@ const FishItem = (props) => {
                 Hunger:{' '}
                 <ProgressBar
                   width="95%"
-                  value={fish.fish_hunger / 100}
+                  value={fish.fish_hunger}
                   ranges={{
                     good: [0.9, Infinity],
                     average: [0.5, 0.9],

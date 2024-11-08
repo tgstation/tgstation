@@ -211,7 +211,7 @@
 
 	return ..()
 
-/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = world.icon_size / 2, stick_py = world.icon_size / 2)
+/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = ICON_SIZE_X / 2, stick_py = ICON_SIZE_Y / 2)
 	applying_to.AddComponent( \
 		/datum/component/sticker, \
 		stickering_atom = src, \

@@ -15,4 +15,28 @@
 	icon_state = "omgkittyhiii"
 	icon = 'modular_doppler/hearthkin/primitive_genemod/icons/language_icon.dmi'
 	default_priority = 94
-	// secret = TRUE     //this needs a dedicated module for language
+	secret = TRUE
+
+/datum/language/primitive_genemod/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+
+	if(gender == FEMALE)
+		return "[pick(GLOB.hearthkin_names_female)][random_name_spacer][pick_lastname()]"
+	if(gender == MALE)
+		return "[pick(GLOB.hearthkin_names_male)][random_name_spacer][pick_lastname()]"
+	if(gender == NEUTER || gender == PLURAL)
+		return "[pick(GLOB.hearthkin_names_neutral)][random_name_spacer][pick_lastname()]"
+
+/proc/pick_lastname()
+	var/surname = pick(TRUE,FALSE)
+	if(surname)
+		return pick(GLOB.hearthkin_names_surname)
+	else
+		return pick(GLOB.hearthkin_names_title)

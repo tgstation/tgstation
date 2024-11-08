@@ -1,12 +1,7 @@
-/*STUFF WE CAN'T USE YET BECAUSE WE HAVEN'T PORTED THEIR PRECURSORS
-
-// Modular Booze REAGENTS, see the following file for the mixes: modular_nova\modules\customization\modules\food_and_drinks\recipes\drinks_recipes.dm
-
 /datum/reagent/consumable/ethanol/whiskey
 	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC //let's not force the detective to change his alcohol brand
-*/
 
-/*SYNTHETIC DRINKS
+//SYNTHETIC DRINKS
 /datum/reagent/consumable/ethanol/synthanol
 	name = "Synthanol"
 	description = "A runny liquid with conductive capacities. Its effects on synthetics are similar to those of alcohol on organics."
@@ -120,9 +115,9 @@
 	icon_state = "synthignonglass"
 	name = "glass of synthignon"
 	desc = "Someone mixed good wine and robot booze. Romantic, but atrocious."
-*/
-// Other Booze
 
+
+// Other Booze
 /datum/reagent/consumable/ethanol/bloody_mary
 	chemical_flags_doppler = REAGENT_BLOOD_REGENERATING
 
@@ -374,7 +369,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-/*
+
 /datum/reagent/consumable/ethanol/oil_drum
 	name = "Oil Drum"
 	color = "#000000" //(0, 0, 0)
@@ -395,7 +390,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-*/
+
 /datum/reagent/consumable/ethanol/nord_king
 	name = "Nord King"
 	color = "#EB1010" //(235, 16, 16)
@@ -445,7 +440,7 @@
 	. = ..()
 	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 		drinker.blood_volume = min(drinker.blood_volume + (1 * REM * seconds_per_tick), BLOOD_VOLUME_NORMAL) //Same as Bloody Mary, as it is roughly the same difficulty to make.  Gives hemophages a bit more choices to supplant their blood levels.
-/*
+
 /datum/reagent/consumable/ethanol/abduction_fruit
 	name = "Abduction Fruit"
 	color = "#DEFACD" //(222, 250, 205)
@@ -461,12 +456,12 @@
 	desc = "Mixed fruits that were never meant to be mixed..."
 
 /datum/reagent/consumable/ethanol/abduction_fruit/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isabductor(exposed_mob) || isxenohybrid(exposed_mob))
+	if(isabductor(exposed_mob)) // isxenohybrid(exposed_mob)
 		quality = RACE_DRINK
 	else
 		quality = DRINK_GOOD
 	return ..()
-*/
+
 /datum/reagent/consumable/ethanol/bug_zapper
 	name = "Bug Zapper"
 	color = "#F5882A" //(222, 250, 205)
@@ -529,7 +524,7 @@
 	else
 		quality = DRINK_GOOD
 	return ..()
-/*
+
 /datum/reagent/consumable/ethanol/jell_wyrm
 	name = "Jell Wyrm"
 	color = "#FF6200" //(255, 98, 0)
@@ -553,14 +548,14 @@
 #define JELLWYRM_DISGUST 25
 
 /datum/reagent/consumable/ethanol/jell_wyrm/expose_mob(mob/living/exposed_mob, methods, reac_volume)
-	if(isjellyperson(exposed_mob) || isslimeperson(exposed_mob) || isluminescent(exposed_mob))
+	if(isjellyperson(exposed_mob))
 		quality = RACE_DRINK
 	else //if youre not a slime, jell wyrm should be GROSS
 		exposed_mob.adjust_disgust(JELLWYRM_DISGUST)
 	return ..()
 
 #undef JELLWYRM_DISGUST
-*/
+
 /datum/reagent/consumable/ethanol/laval_spit //Yes Laval
 	name = "Laval Spit"
 	color = "#DE3009" //(222, 48, 9)

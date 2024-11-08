@@ -1,5 +1,5 @@
 /// Horns fixing
-/obj/item/organ/external/horns
+/obj/item/organ/horns
 	name = "horns"
 
 /datum/bodypart_overlay/mutant/horns
@@ -53,11 +53,18 @@
 /datum/preference/toggle/horns/create_default_value()
 	return FALSE
 
+/datum/preference/toggle/horns/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
-	if(target.dna.features["horns"])
+	if(target.dna.features["horns"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["horns"] != /datum/sprite_accessory/horns/none::name && target.dna.features["horns"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/horns)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/horns)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_HORNS)
@@ -71,6 +78,9 @@
 
 /datum/preference/choiced/lizard_horns/is_accessible(datum/preferences/preferences)
 	. = ..()
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species.type in GLOB.species_blacklist_no_mutant)
+		return FALSE
 	var/has_horns = preferences.read_preference(/datum/preference/toggle/horns)
 	if(has_horns == TRUE)
 		return TRUE

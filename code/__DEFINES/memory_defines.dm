@@ -1,7 +1,7 @@
 ///name of the file that has all the memory strings
 #define MEMORY_FILE "memories.json"
 ///name of the file that has all the saved engravings
-#define ENGRAVING_SAVE_FILE "data/engravings/[SSmapping.config.map_name]_engravings.json"
+#define ENGRAVING_SAVE_FILE "data/engravings/[SSmapping.current_map.map_name]_engravings.json"
 ///name of the file that has all the prisoner tattoos
 #define PRISONER_TATTOO_SAVE_FILE "data/engravings/prisoner_tattoos.json"
 ///Current version of the engraving persistence json

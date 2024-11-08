@@ -15,17 +15,19 @@
 /mob/living/basic/alien/maid/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/cleaning)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 ///Handles the maid attacking other players, cancelling the attack to clean up instead.
-/mob/living/basic/alien/maid/proc/pre_attack(mob/living/puncher, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/alien/maid/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	target.wash(CLEAN_SCRUB)
 	if(istype(target, /obj/effect/decal/cleanable))
 		visible_message(span_notice("[src] cleans up \the [target]."))
 	else
 		visible_message(span_notice("[src] polishes \the [target]."))
-	return COMPONENT_HOSTILE_NO_ATTACK
+	return FALSE
 
 /**
  * Barmaid special type

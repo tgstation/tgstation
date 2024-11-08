@@ -64,7 +64,7 @@
 /datum/component/chuunibyou/proc/on_try_speech(datum/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 
-	if(casting_spell && !HAS_TRAIT(src, TRAIT_MUTE))
+	if(casting_spell && !HAS_TRAIT(src, TRAIT_MUTE) && !HAS_TRAIT(src, TRAIT_SPEECH_ONLY_MUTE)) // DOPPLER EDIT CHANGE - speech only mute - ORIGINAL: if(casting_spell && !HAS_TRAIT(src, TRAIT_MUTE))
 		return COMPONENT_IGNORE_CAN_SPEAK
 
 ///signal sent when the parent casts a spell that has a projectile

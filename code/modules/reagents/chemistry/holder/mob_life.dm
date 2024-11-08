@@ -19,8 +19,8 @@
 		expose_temperature(owner.bodytemperature, 0.25)
 
 	var/need_mob_update = FALSE
-	var/obj/item/organ/internal/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/obj/item/organ/internal/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/stomach/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/liver/liver = owner.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/liver_tolerance = 0
 	var/liver_damage = 0
 	var/provide_pain_message
@@ -40,7 +40,7 @@
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
-			if(amount <= liver_tolerance)
+			if(amount <= liver_tolerance * toxin.liver_tolerance_multiplier)
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
 				continue
 
@@ -92,6 +92,14 @@
 
 	if(!owner)
 		owner = reagent.holder.my_atom
+
+	//DOPPLER ADDITION BEGIN
+	var/can_process = reagent_process_flags_valid(owner, reagent)
+	//If the mob can't process it, remove the reagent at it's normal rate without doing any addictions, overdoses, or on_mob_life() for the reagent
+	if(!can_process)
+		reagent.holder.remove_reagent(reagent.type, reagent.metabolization_rate)
+		return
+	//DOPPLER ADDITION END
 
 	if(owner && reagent && (!dead || (reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
 		if(owner.reagent_check(reagent, seconds_per_tick, times_fired))

@@ -19,7 +19,7 @@
 	. = ..()
 	/// Weirdness Check Zone
 	if(randomize_features)
-		if(istype(species, /datum/species/genemod))
+		if(istype(species, /datum/species/human/genemod))
 			var/skin_tone = pick(GLOB.skin_tones)
 			features["mcolor"] = skintone2hex(skin_tone) //spoof
 		if(species.id != /datum/species/human/felinid::id)

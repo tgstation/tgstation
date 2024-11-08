@@ -302,7 +302,8 @@
 /datum/station_trait/scarves/New()
 	. = ..()
 	report_message = pick(
-		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
+		//"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.", // ORIGINAL
+		"The Port Authority is experimenting with seeing if neck warmth improves employee morale.", // DOPPLER EDIT - NT -> PA
 		"After Space Fashion Week, scarves are the hot new accessory.",
 		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
 		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
@@ -544,3 +545,47 @@
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
+
+
+/datum/station_trait/pet_day
+	name = "Bring Your Pet To Work Day"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+
+/datum/station_trait/pet_day/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/pet_day/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	lobby_button.desc = "Want to bring your innocent pet to a giant metal deathtrap? Click here to customize it!"
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	return ..()
+
+/datum/station_trait/pet_day/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/datum/station_trait/pet_day/on_round_start()
+	return
+
+/datum/station_trait/pet_day/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	var/mob/our_player = lobby_button.get_mob()
+	var/client/player_client = our_player.client
+	if(isnull(player_client))
+		return
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		customization = new(player_client)
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum, ui_interact), our_player)
+
+/datum/station_trait/pet_day/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		return
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum/pet_customization, create_pet), spawned, player_client)
+
+/datum/station_trait/pet_day/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	overlays += "select_pet"

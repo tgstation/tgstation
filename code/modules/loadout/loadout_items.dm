@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/can_be_greyscale = FALSE
 	/// Whether this item can be renamed.
 	/// I recommend you apply this sparingly becuase it certainly can go wrong (or get reset / overridden easily)
-	var/can_be_named = FALSE
+	var/can_be_named = TRUE // DOPPLER EDIT - Everything can be renamed in the loadout - ORIGINAL: var/can_be_named = FALSE
 	/// Whether this item can be reskinned.
 	/// Only works if the item has a "unique reskin" list set.
 	var/can_be_reskinned = FALSE
@@ -255,6 +255,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(can_be_named && item_details?[INFO_NAMED] && !visuals_only)
 		equipped_item.name = trim(item_details[INFO_NAMED], PREVENT_CHARACTER_TRIM_LOSS(MAX_NAME_LEN))
 		ADD_TRAIT(equipped_item, TRAIT_WAS_RENAMED, "Loadout")
+		equipped_item.on_loadout_custom_named() // DOPPLER EDIT ADDITION - Loadout item names
 
 	// DOPPLER EDIT ADDITION START - Loadout item descriptions
 	if(can_be_named && item_details?[INFO_DESCRIBED] && !visuals_only)
@@ -315,8 +316,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(can_be_greyscale)
 		displayed_text += "Recolorable"
 
+	/* DOPPLER EDIT REMOVAL - Everything can be renamed in the loadout
 	if(can_be_named)
 		displayed_text += "Renamable"
+	*/ // DOPPLER EDIT END
 
 	if(can_be_reskinned)
 		displayed_text += "Reskinnable"

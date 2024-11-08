@@ -1,5 +1,5 @@
 /// Frills fixing
-/obj/item/organ/external/frills
+/obj/item/organ/frills
 	name = "frills"
 
 /datum/bodypart_overlay/mutant/frills
@@ -35,11 +35,18 @@
 /datum/preference/toggle/frills/create_default_value()
 	return FALSE
 
+/datum/preference/toggle/frills/is_accessible(datum/preferences/preferences)
+	. = ..()
+	var/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species in GLOB.species_blacklist_no_mutant)
+		return FALSE
+	return TRUE
+
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
-	if(target.dna.features["frills"])
+	if(target.dna.features["frills"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["frills"] != /datum/sprite_accessory/frills/none::name && target.dna.features["frills"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/frills)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/frills)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_FRILLS)
@@ -53,6 +60,9 @@
 
 /datum/preference/choiced/lizard_frills/is_accessible(datum/preferences/preferences)
 	. = ..()
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	if(species.type in GLOB.species_blacklist_no_mutant)
+		return FALSE
 	var/has_frills = preferences.read_preference(/datum/preference/toggle/frills)
 	if(has_frills == TRUE)
 		return TRUE

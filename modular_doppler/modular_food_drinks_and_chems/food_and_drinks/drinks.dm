@@ -76,12 +76,12 @@
 	list_reagents = list(/datum/reagent/fuel = 25, /datum/reagent/carbondioxide = 5)
 	custom_price = PAYCHECK_LOWER * 1.2
 
-/*/obj/item/reagent_containers/cup/soda_cans/doppler/synthanolcan
+/obj/item/reagent_containers/cup/soda_cans/doppler/synthanolcan
 	name = "Silly Cone's Synthanol"
 	desc = "A recompiling can of synthanol."
 	icon_state = "synthanolcan"
 	list_reagents = list(/datum/reagent/consumable/ethanol/synthanol = 30)
-	custom_price = PAYCHECK_CREW*/
+	custom_price = PAYCHECK_CREW
 
 #undef SODA_FIZZINESS_THROWN
 #undef SODA_FIZZINESS_SHAKE

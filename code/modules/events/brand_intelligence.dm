@@ -4,7 +4,7 @@
 	weight = 5
 	category = EVENT_CATEGORY_AI
 	description = "Vending machines will attack people until the Patient Zero is disabled."
-	min_players = 15
+	min_players = 10
 	max_occurrences = 1
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6

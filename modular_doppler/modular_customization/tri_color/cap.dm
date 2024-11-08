@@ -10,7 +10,7 @@
 	savefile_key = "caps_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	//relevant_external_organ = /obj/item/organ/external/tail
+	//relevant_external_organ = /obj/item/organ/tail
 
 /datum/preference/tri_color/caps_color/create_default_value()
 	return list(sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"),

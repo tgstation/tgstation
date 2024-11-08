@@ -19,19 +19,37 @@
 	var/conspicuous
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
+	/**
+	* list of lists that are arguments for readding decals when the linked trapdoor comes back. pain.
+	*
+	* we are storing this data FOR the trapdoor component we are linked to. kinda like a multitool.
+	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
+	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
+	* so any other case the elements will be changed but not recorded.
+	*/
+	var/list/stored_decals = list()
+	/// Trapdoor shuts close automatically
+	var/autoclose = TRUE
+	/// Delay before trapdoor shuts close
+	var/autoclose_delay = 5 SECONDS
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, list/carried_decals = null, autoclose = TRUE)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.conspicuous = conspicuous
 	src.assembly = assembly
+	src.autoclose = autoclose
+	if(carried_decals)
+		stored_decals = carried_decals.Copy()
 
 	if(!trapdoor_overlay)
 		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
 
 	if(IS_OPEN(parent))
 		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
+		if(autoclose)
+			addtimer(CALLBACK(src, PROC_REF(try_closing)), autoclose_delay)
 	else
 		tile_trapdoor_setup(trapdoor_turf_path, assembly)
 
@@ -45,7 +63,7 @@
 ///initializing as a closed trapdoor, we need to take data from the tile we're on to give it to the open state to store
 /datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path)
 	src.trapdoor_turf_path = parent.type
-	if(assembly && assembly.stored_decals.len)
+	if(stored_decals.len)
 		reapply_all_decals()
 	if(conspicuous)
 		var/turf/parent_turf = parent
@@ -60,6 +78,7 @@
 	else
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_link))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -69,6 +88,7 @@
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
+	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -81,14 +101,44 @@
 	INVOKE_ASYNC(src, PROC_REF(async_try_unlink), source, user, tool)
 	return
 
+/datum/component/trapdoor/proc/try_link(turf/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	if(!istype(tool, /obj/item/trapdoor_remote))
+		return
+	var/obj/item/trapdoor_remote/remote = tool
+	if(!remote.internals)
+		source.balloon_alert(user, "missing internals")
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't link trapdoor when its open")
+		return
+	if(assembly)
+		source.balloon_alert(user, "already linked")
+		return
+	source.balloon_alert(user, "linking trapdoor")
+	INVOKE_ASYNC(src, PROC_REF(async_try_link), source, user, tool)
+
+/datum/component/trapdoor/proc/async_try_link(turf/source, mob/user, obj/item/trapdoor_remote/remote)
+	if(!do_after(user, 2 SECONDS, target=source))
+		return
+	if(IS_OPEN(parent))
+		source.balloon_alert(user, "can't link trapdoor when its open")
+		return
+	src.assembly = remote.internals
+	++assembly.linked
+	source.balloon_alert(user, "trapdoor linked")
+	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
+	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
+
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
 	if(!do_after(user, 5 SECONDS, target=source))
 		return
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
-	assembly.linked = FALSE
-	assembly.stored_decals = list()
+	assembly.linked = max(assembly.linked - 1, 0)
+	stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
@@ -98,7 +148,7 @@
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
 	///so it adds the list to the list, not appending it to the end. thank you byond, very cool.
-	assembly.stored_decals += list(list(description, cleanable, directional, pic))
+	stored_decals += list(list(description, cleanable, directional, pic))
 
 /**
  * ## reapply_all_decals
@@ -106,9 +156,9 @@
  * changing turfs does not bring over decals, so we must perform a little bit of element reapplication.
  */
 /datum/component/trapdoor/proc/reapply_all_decals()
-	for(var/list/element_data as anything in assembly.stored_decals)
+	for(var/list/element_data as anything in stored_decals)
 		apply_decal(element_data[1], element_data[2], element_data[3], element_data[4])
-	assembly.stored_decals = list()
+	stored_decals = list()
 
 /// small proc that takes passed arguments and drops it into a new element
 /datum/component/trapdoor/proc/apply_decal(description, cleanable, directional, pic)
@@ -117,11 +167,11 @@
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
 	SIGNAL_HANDLER
-	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE || assembly.linked)
+	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE)
 		return
 	. = LINKED_UP
 	src.assembly = assembly
-	assembly.linked = TRUE
+	++assembly.linked
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
@@ -129,6 +179,8 @@
 ///signal called by our assembly being pulsed
 /datum/component/trapdoor/proc/toggle_trapdoor(datum/source)
 	SIGNAL_HANDLER
+	if(assembly)
+		autoclose = assembly.autoclose
 	if(!IS_OPEN(parent))
 		try_opening()
 	else
@@ -145,8 +197,8 @@
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
 		if(assembly)
-			assembly.linked = FALSE
-			assembly.stored_decals.Cut()
+			assembly.linked = max(assembly.linked - 1, 0)
+			stored_decals.Cut()
 			assembly = null
 		return
 	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
@@ -158,7 +210,7 @@
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
 /datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous, stored_decals, autoclose)
 
 /**
  * ## on_examine
@@ -213,20 +265,12 @@
 	var/search_cooldown_time = 10 SECONDS
 	///if true, a trapdoor in the world has a reference to this assembly and is listening for when it is pulsed.
 	var/linked = FALSE
-	/**
-	* list of lists that are arguments for readding decals when the linked trapdoor comes back. pain.
-	*
-	* we are storing this data FOR the trapdoor component we are linked to. kinda like a multitool.
-	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
-	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
-	* so any other case the elements will be changed but not recorded.
-	*/
-	var/list/stored_decals = list()
-
+	/// Linked trapdoors will automatically close
+	var/autoclose = TRUE
 
 /obj/item/assembly/trapdoor/pulsed(mob/pulser)
 	. = ..()
-	if(linked)
+	if(linked > 0)
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		if(loc && pulser)
@@ -272,8 +316,12 @@
 	. += span_notice("The internals can be removed with a screwdriver.")
 	if(!internals.linked)
 		. += span_warning("[src] is not linked to a trapdoor.")
+		. += span_notice("[src] will link to nearby trapdoors when used.")
 		return
-	. += span_notice("[src] is linked to a trapdoor.")
+	. += span_notice("[src] is linked to [internals.linked] trapdoor(s).")
+	. += span_notice("It can be linked to additional trapdoor(s) by using it on a trapdoor.")
+	. += span_notice("Trapdoor can be unlinked with multitool.")
+	. += span_notice("Autoclose is [internals.autoclose ? "enabled" : "disabled"], ctrl-click to toggle.")
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		. += span_warning("It is on a short cooldown.")
 
@@ -310,7 +358,7 @@
 		internals.pulsed(user)
 		// The pulse linked successfully
 		if(internals.linked)
-			user.balloon_alert(user, "linked")
+			user.balloon_alert(user, "linked [internals.linked] trapdoors")
 		// The pulse failed to link
 		else
 			user.balloon_alert(user, "link failed!")
@@ -327,6 +375,17 @@
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)
 	internals.pulsed(user)
 	return TRUE
+
+/obj/item/trapdoor_remote/item_ctrl_click(mob/user)
+	if (!user.is_holding(src))
+		return CLICK_ACTION_BLOCKING
+	if(!internals)
+		user.balloon_alert(user, "no device!")
+		return CLICK_ACTION_BLOCKING
+
+	internals.autoclose = !internals.autoclose
+	user.balloon_alert(user, "autoclose [internals.autoclose ? "enabled" : "disabled"]")
+	return CLICK_ACTION_SUCCESS
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE
 

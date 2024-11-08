@@ -27,7 +27,7 @@
 		job = SSjob.get_job_type(job)
 
 	if(isnull(job_changes))
-		job_changes = SSmapping.config.job_changes
+		job_changes = SSmapping.current_map.job_changes
 
 	if(!length(job_changes))
 		refresh_trim_access()
@@ -75,6 +75,9 @@
 		access |= list(ACCESS_MAINT_TUNNELS)
 
 	return TRUE
+
+/datum/id_trim/job/find_job()
+	return job
 
 /datum/id_trim/job/assistant
 	assignment = JOB_ASSISTANT
@@ -914,6 +917,7 @@
 		ACCESS_COMMAND,
 		ACCESS_EVA,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_WEAPONS, // DOPPLER EDIT ADDITION
 		)
 	extra_access = list(
 		ACCESS_TELEPORTER,
@@ -965,6 +969,7 @@
 		ACCESS_TECH_STORAGE,
 		ACCESS_TELEPORTER,
 		ACCESS_XENOBIOLOGY,
+		ACCESS_WEAPONS, // DOPPLER EDIT ADDITION
 		)
 	minimal_wildcard_access = list(
 		ACCESS_RD,

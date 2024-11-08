@@ -56,6 +56,10 @@
 	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
 	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
+		// DOPPLER EDIT ADDITION START
+		if(treatable_target.mob_biotypes & MOB_ROBOTIC)
+			continue
+		// DOPPLER EDIT ADDITION END
 		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
 			continue
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
@@ -217,6 +221,13 @@
 /datum/ai_planning_subtree/find_patrol_beacon/medbot
 	///travel towards beacon behavior
 	travel_behavior = /datum/ai_behavior/travel_towards/beacon/medbot
+
+/datum/ai_planning_subtree/find_patrol_beacon/medbot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
+		return
+	return ..()
+
 
 /datum/ai_behavior/travel_towards/beacon/medbot
 	new_movement_type = /datum/ai_movement/jps/bot/medbot/travel_to_beacon

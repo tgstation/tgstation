@@ -16,6 +16,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/mob/living/basic/frog = FISH_ICON_CRITTER,
 		/mob/living/basic/carp = FISH_ICON_DEF,
 		/mob/living/basic/mining = FISH_ICON_HOSTILE,
+		/mob/living/basic/skeleton = FISH_ICON_BONE,
+		/mob/living/basic/stickman = FISH_ICON_HOSTILE,
 		/obj/effect/decal/remains = FISH_ICON_BONE,
 		/obj/effect/mob_spawn/corpse = FISH_ICON_BONE,
 		/obj/effect/spawner/message_in_a_bottle = FISH_ICON_BOTTLE,
@@ -41,6 +43,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/stingray = FISH_ICON_WEAPON,
 		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
 		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/instrument/trumpet/spectral = FISH_ICON_BONE,
+		/obj/item/instrument/saxophone/spectral = FISH_ICON_BONE,
+		/obj/item/instrument/trombone/spectral = FISH_ICON_BONE,
+		/obj/item/knife/carp = FISH_ICON_WEAPON,
 		/obj/item/seeds/grass = FISH_ICON_SEED,
 		/obj/item/seeds/random = FISH_ICON_SEED,
 		/obj/item/storage/wallet = FISH_ICON_COIN,
@@ -78,14 +84,14 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/catalog_description
 	/// Background image name from /datum/asset/simple/fishing_minigame
 	var/background = "background_default"
-	/// It true, repeated and large explosions won't be as efficient. This is usually for fish sources that cover multiple turfs (i.e. rivers, oceans).
-	var/explosive_malus = FALSE
-	/// If explosive_malus is true, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
+	var/fish_source_flags = NONE
+	/// If FISH_SOURCE_FLAG_EXPLOSIVE_MALUS is set, this will be used to keep track of the turfs where an explosion happened for when we'll spawn the loot.
 	var/list/exploded_turfs
 	///When linked to a fishing portal, this will be the icon_state of this option in the radial menu
 	var/radial_state = "default"
 	///When selected by the fishing portal, this will be the icon_state of the overlay shown on the machine.
 	var/overlay_state = "portal_aquarium"
+
 	/// Mindless mobs that can fish will never pull up items on this list
 	var/static/list/profound_fisher_blacklist = typecacheof(list(
 		/mob/living/basic/mining/lobstrosity,
@@ -240,7 +246,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(reward)
 		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = reward.name)
 	SEND_SIGNAL(challenge.used_rod, COMSIG_FISHING_ROD_CAUGHT_FISH, reward, user)
-	challenge.used_rod.consume_bait(reward)
+	challenge.used_rod.on_reward_caught(reward, user)
 
 /// Gives out the reward if possible
 /datum/fish_source/proc/dispense_reward(reward_path, mob/fisherman, turf/fishing_spot)
@@ -338,8 +344,8 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
 		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
-		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
-		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
+		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
+		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 
 		if(ispath(result, /obj/item/fish))
 			if(bait)
@@ -407,25 +413,47 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/known_fishes = list()
 
 	var/obj/item/fishing_rod/rod = user.get_active_held_item()
-	if(!istype(rod))
+	var/list/final_table
+	if(!istype(rod) || !rod.hook)
 		rod = null
+	else
+		final_table = get_modified_fish_table(rod, user, location)
 
+	var/total_weight = 0
+	var/list/rodless_weights = list()
+	var/total_rod_weight = 0
+	var/list/rod_weights = list()
 	for(var/reward in fish_table)
+		var/weight = fish_table[reward]
+		var/final_weight
+		if(rod)
+			total_weight += weight
+			final_weight = final_table[reward]
+			total_rod_weight += final_weight
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
-		if(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG)
+		if(!(initial(prototype.fish_flags) & FISH_FLAG_SHOW_IN_CATALOG))
+			continue
+		if(rod)
+			rodless_weights[reward] = weight
+			rod_weights[reward] = final_weight
+		else
+			known_fishes += initial(prototype.name)
+
+	if(rod)
+		for(var/reward in rodless_weights)
+			var/percent_weight = rodless_weights[reward] / total_weight
+			var/percent_rod_weight = rod_weights[reward] / total_rod_weight
+			var/obj/item/fish/prototype = reward
 			var/init_name = initial(prototype.name)
-			if(rod)
-				var/init_weight = fish_table[reward]
-				var/weight = (rod.bait ? rod.bait.check_bait(prototype) : 1)
-				weight = get_fish_trait_catch_mods(weight, reward, rod, user, location)
-				if(weight > init_weight)
-					init_name = span_bold(init_name)
-					if(weight/init_weight >= 3.5)
-						init_name = "<u>init_name</u>"
-				else if(weight < init_weight)
-					init_name = span_small(init_name)
+			var/ratio = percent_weight/percent_rod_weight
+			if(ratio < 0.9)
+				init_name = span_bold(init_name)
+				if(ratio < 0.3)
+					init_name = "<u>[init_name]</u>"
+			else if(ratio > 1.1)
+				init_name = span_small(init_name)
 			known_fishes += init_name
 
 	if(!length(known_fishes))
@@ -438,7 +466,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	examine_text += span_info("[info]: [english_list(known_fishes)].")
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
-	if(!explosive_malus)
+	if(!(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS))
 		explosive_spawn(location, severity)
 		return
 	if(isnull(exploded_turfs))

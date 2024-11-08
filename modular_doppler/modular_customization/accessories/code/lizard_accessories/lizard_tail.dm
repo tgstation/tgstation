@@ -30,6 +30,8 @@
 	icon = 'modular_doppler/modular_customization/accessories/icons/lizard/lizard_tail_big.dmi'
 	name = "Shadekin (Big)"
 	icon_state = "shadekin_large"
+	dimension_x = 64
+	center = TRUE
 
 /datum/sprite_accessory/tails/lizard/big/shadekin_long
 	name = "Shadekin (Big)(Long)"

@@ -1340,10 +1340,10 @@
 2023-11-12T09:04:14.5463020Z 	/obj/item/stack/medical/bruise_pack does not have an inhand_icon_state value - Possible matching sprites for "brutepack" found in: 'icons/mob/inhands/equipment/medical_lefthand.dmi' & 'icons/mob/inhands/equipment/medical_righthand.dmi'
 2023-11-12T09:04:14.5465143Z 	/obj/item/stack/medical/ointment does not have an inhand_icon_state value - Possible matching sprites for "ointment" found in: 'icons/mob/inhands/equipment/medical_lefthand.dmi' & 'icons/mob/inhands/equipment/medical_righthand.dmi'
 2023-11-12T09:04:14.5467227Z 	/obj/item/stack/tile/fairygrass does not have an inhand_icon_state value - Possible matching sprites for "tile_fairygrass" found in: 'icons/mob/inhands/items/tiles_righthand.dmi' & 'icons/mob/inhands/items/tiles_lefthand.dmi'
-2023-11-12T09:04:14.5469256Z 	/obj/item/organ/internal/heart/gland/blood does not have an inhand_icon_state value - Possible matching sprites for "egg" found in: 'icons/mob/inhands/items/food_righthand.dmi' & 'icons/mob/inhands/items/food_lefthand.dmi'
-2023-11-12T09:04:14.5471272Z 	/obj/item/organ/internal/heart/gland/egg does not have an inhand_icon_state value - Possible matching sprites for "egg" found in: 'icons/mob/inhands/items/food_righthand.dmi' & 'icons/mob/inhands/items/food_lefthand.dmi'
-2023-11-12T09:04:14.5473406Z 	/obj/item/organ/internal/heart/gland/quantum does not have an inhand_icon_state value - Possible matching sprites for "emp" found in: 'icons/mob/inhands/equipment/security_lefthand.dmi' & 'icons/mob/inhands/equipment/security_righthand.dmi'
-2023-11-12T09:04:14.5475638Z 	/obj/item/organ/internal/heart/gland/trauma does not have an inhand_icon_state value - Possible matching sprites for "emp" found in: 'icons/mob/inhands/equipment/security_lefthand.dmi' & 'icons/mob/inhands/equipment/security_righthand.dmi'
+2023-11-12T09:04:14.5469256Z 	/obj/item/organ/heart/gland/blood does not have an inhand_icon_state value - Possible matching sprites for "egg" found in: 'icons/mob/inhands/items/food_righthand.dmi' & 'icons/mob/inhands/items/food_lefthand.dmi'
+2023-11-12T09:04:14.5471272Z 	/obj/item/organ/heart/gland/egg does not have an inhand_icon_state value - Possible matching sprites for "egg" found in: 'icons/mob/inhands/items/food_righthand.dmi' & 'icons/mob/inhands/items/food_lefthand.dmi'
+2023-11-12T09:04:14.5473406Z 	/obj/item/organ/heart/gland/quantum does not have an inhand_icon_state value - Possible matching sprites for "emp" found in: 'icons/mob/inhands/equipment/security_lefthand.dmi' & 'icons/mob/inhands/equipment/security_righthand.dmi'
+2023-11-12T09:04:14.5475638Z 	/obj/item/organ/heart/gland/trauma does not have an inhand_icon_state value - Possible matching sprites for "emp" found in: 'icons/mob/inhands/equipment/security_lefthand.dmi' & 'icons/mob/inhands/equipment/security_righthand.dmi'
 2023-11-12T09:04:14.5477679Z 	/obj/item/minespawner does not have an inhand_icon_state value - Possible matching sprites for "beacon" found in: 'icons/mob/inhands/items/devices_righthand.dmi' & 'icons/mob/inhands/items/devices_lefthand.dmi'
 2023-11-12T09:04:14.5479615Z 	/obj/item/boxcutter does not have an inhand_icon_state value - Possible matching sprites for "boxcutter" found in: 'icons/mob/inhands/equipment/boxcutter_righthand.dmi' & 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
 2023-11-12T09:04:14.5482091Z 	/obj/item/boxcutter/extended does not have an inhand_icon_state value - Possible matching sprites for "boxcutter" found in: 'icons/mob/inhands/equipment/boxcutter_righthand.dmi' & 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
@@ -1881,10 +1881,10 @@
 2023-11-12T09:05:34.7458044Z 	28 - /obj/item/key/janitor using invalid icon_state, "keyjanitor"
 2023-11-12T09:05:34.8393427Z 	29 - /obj/item/universal_scanner using invalid icon_state, "export scanner"
 2023-11-12T09:05:34.8476665Z 	30 - /obj/item/nullrod/tribal_knife using invalid icon_state, "crysknife"
-2023-11-12T09:05:34.8491387Z 	31 - /obj/item/organ/internal/monster_core using invalid icon_state, "hivelord_core"
-2023-11-12T09:05:34.8493709Z 	32 - /obj/item/organ/internal/monster_core/brimdust_sac using invalid icon_state, "brim_sac"
-2023-11-12T09:05:34.8496411Z 	33 - /obj/item/organ/internal/monster_core/regenerative_core/legion using invalid icon_state, "legion_core"
-2023-11-12T09:05:34.8498777Z 	34 - /obj/item/organ/internal/monster_core/rush_gland using invalid icon_state, "lobster_gland"
+2023-11-12T09:05:34.8491387Z 	31 - /obj/item/organ/monster_core using invalid icon_state, "hivelord_core"
+2023-11-12T09:05:34.8493709Z 	32 - /obj/item/organ/monster_core/brimdust_sac using invalid icon_state, "brim_sac"
+2023-11-12T09:05:34.8496411Z 	33 - /obj/item/organ/monster_core/regenerative_core/legion using invalid icon_state, "legion_core"
+2023-11-12T09:05:34.8498777Z 	34 - /obj/item/organ/monster_core/rush_gland using invalid icon_state, "lobster_gland"
 2023-11-12T09:05:34.8538527Z 	35 - /obj/item/abductor/gizmo using invalid icon_state, "gizmo_scan"
 2023-11-12T09:05:34.8540751Z 	36 - /obj/item/abductor/silencer using invalid icon_state, "silencer"
 2023-11-12T09:05:34.8543252Z 	37 - /obj/item/abductor/mind_device using invalid icon_state, "mind_device_message"
