@@ -171,7 +171,7 @@
 	for(var/obj/machinery/shower/cursed_shower in victim)
 		new /obj/effect/temp_visual/revenant(victim)
 		cursed_shower.has_water_reclaimer = FALSE
-		cursed_shower.reagents.remove_all()
+		cursed_shower.reagents.remove_all(1, relative=TRUE)
 		cursed_shower.reagents.add_reagent(/datum/reagent/blood, initial(cursed_shower.reagent_capacity))
 		if(prob(50))
 			cursed_shower.intended_on = TRUE
