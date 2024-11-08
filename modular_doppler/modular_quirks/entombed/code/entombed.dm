@@ -109,7 +109,7 @@
 	if (force_dropped_items)
 		var/obj/item/old_bag = locate() in force_dropped_items
 		if (old_bag.atom_storage)
-			old_bag.atom_storage.dump_content_at(modsuit, human_holder)
+			old_bag.atom_storage.dump_content_at(modsuit, null, human_holder)
 
 /datum/quirk/equipping/entombed/post_add()
 	. = ..()
