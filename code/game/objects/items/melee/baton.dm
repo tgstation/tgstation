@@ -687,8 +687,7 @@
 		var/chargepower = cell.maxcharge
 		var/zap_pen = (chargepower/STANDARD_CELL_CHARGE)
 		return zap_pen + additional_stun_armour_penetration
-	else
-		return stun_armour_penetration + additional_stun_armour_penetration
+	return stun_armour_penetration + additional_stun_armour_penetration
 
 /*
  * After a target is hit, we apply some status effects.
