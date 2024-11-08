@@ -422,7 +422,7 @@
 	return ..()
 
 /obj/projectile/magic/aoe/move_animate(animate_x, animate_y, animate_time = world.tick_lag, deleting = FALSE)
-	if(!trail || !movement_vector || !COOLDOWN_FINISHED(src, trail_cooldown))
+	if(!trail || !movement_vector || deleting || !COOLDOWN_FINISHED(src, trail_cooldown))
 		return
 
 	var/obj/effect/overlay/trail_effect = new /obj/effect/overlay(loc)
