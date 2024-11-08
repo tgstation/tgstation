@@ -1,8 +1,8 @@
-import { round } from 'common/math';
 import { useState } from 'react';
+import { Button, Dropdown, Input, Stack, Table } from 'tgui-core/components';
+import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Button, Dropdown, Input, Stack, Table } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 

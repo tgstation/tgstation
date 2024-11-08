@@ -1,7 +1,3 @@
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +8,11 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { TableCell } from '../components/Table';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';

@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { filter, sortBy } from 'tgui-core/collections';
 import {
   Box,
   Button,
