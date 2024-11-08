@@ -779,6 +779,11 @@ function checkchangelog($payload) {
 					$tags[] = 'Administration';
 				}
 				break;
+			case 'test':
+				if($item != 'write unit tests for your code'){
+					$tags[] = 'Unit Tests';
+				}
+				break;
 		}
 	}
 	return $tags;
