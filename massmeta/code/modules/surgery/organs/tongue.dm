@@ -1,4 +1,4 @@
-/obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
 	var/static/regex/lizard_kss = new(@"(\w)x", "g")
