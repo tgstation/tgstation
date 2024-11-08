@@ -172,7 +172,7 @@
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/Destroy()
 	QDEL_NULL(spark_sys)
-	..()
+	return ..()
 
 /datum/action/cooldown/spell/pointed/percept_hallucination/is_valid_target(atom/cast_on)
 	. = ..()

@@ -70,7 +70,7 @@
 	id = "blindness"
 	tick_interval = -1
 	alert_type = /atom/movable/screen/alert/status_effect/blind
-	var/list/static/update_signals = list(
+	var/static/list/update_signals = list(
 		SIGNAL_REMOVETRAIT(TRAIT_SIGHT_BYPASS),
 		SIGNAL_ADDTRAIT(TRAIT_SIGHT_BYPASS),
 	)
