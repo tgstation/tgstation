@@ -227,7 +227,7 @@
 		balloon_alert(user, "it's stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "releasing fish...")
-	if(!do_after(src, 3 SECONDS, interacting_with))
+	if(!do_after(user, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "fish released")
 	var/goodbye_text = "Bye bye [name]."
