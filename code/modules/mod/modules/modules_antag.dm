@@ -52,9 +52,10 @@
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(mod.wearer, "armor boosted, EVA lost")
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
-		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
+	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
+	if(head_cover)
+		RegisterSignal(mod, COMSIG_MOD_PART_SEALED, PROC_REF(seal_helmet))
+		seal_helmet(mod, head_cover, head_cover.sealed)
 	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
@@ -71,8 +72,9 @@
 	if(!deleting)
 		playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert(mod.wearer, "armor retracts, EVA ready")
-	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
-	if(istype(head_cover))
+	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
+	if(head_cover)
+		UnregisterSignal(mod, COMSIG_MOD_PART_SEALED)
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 	var/list/mod_parts = mod.get_parts(all = TRUE)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
@@ -90,6 +92,15 @@
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
+
+/obj/item/mod/module/armor_booster/proc/seal_helmet(datum/source, mob/user, datum/mod_part/part)
+	var/datum/mod_part/head_cover = mod.get_part_datum_from_slot(ITEM_SLOT_HEAD) || mod.get_part_datum_from_slot(ITEM_SLOT_MASK) || mod.get_part_datum_from_slot(ITEM_SLOT_EYES)
+	if(part != head_cover)
+		return
+	if(part.sealed)
+		ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
+	else
+		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
@@ -400,7 +411,7 @@
 
 /obj/item/mod/module/chameleon/used()
 	if(mod.active || mod.activating)
-		balloon_alert(mod.wearer, "suit active!")
+		balloon_alert(mod.wearer, "unit active!")
 		return FALSE
 	return ..()
 
