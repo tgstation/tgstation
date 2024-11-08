@@ -610,14 +610,14 @@
 		if(NTNET_ETHERNET_SIGNAL)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
+	var/list/program_headers = list()
 	if(length(idle_threads))
-		var/list/program_headers = list()
 		for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
 			if(!idle_programs.ui_header)
 				continue
 			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
 
-		data["PC_programheaders"] = program_headers
+	data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
 	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
