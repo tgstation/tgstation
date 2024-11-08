@@ -685,7 +685,7 @@
 /obj/item/melee/baton/security/get_stun_penetration_value()
 	if(cell)
 		var/chargepower = cell.maxcharge
-		var/zap_pen = (chargepower/STANDARD_CELL_CHARGE)
+		var/zap_pen = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
 		return zap_pen + additional_stun_armour_penetration
 	return stun_armour_penetration + additional_stun_armour_penetration
 
