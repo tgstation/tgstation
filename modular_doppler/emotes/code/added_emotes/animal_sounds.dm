@@ -106,7 +106,7 @@
 	message = "meows!"
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
-	sound = 'modular_doppler/emotes/sound/meow.ogg'
+	sound = SFX_CAT_MEOW
 
 // Expanded feline content
 
