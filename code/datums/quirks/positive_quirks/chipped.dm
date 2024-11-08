@@ -64,8 +64,8 @@
 
 /datum/status_effect/itchy_skillchip_quirk
 	id = "itchy skillchip"
-	tick_interval_lowerbound = 1 MINUTES
-	tick_interval_upperbound = 2 MINUTES
+	tick_interval_lowerbound = 5 SECONDS
+	tick_interval_upperbound = 10 MINUTES
 	///lower damage we apply to our itchy owner
 	var/minimum_damage = 1
 	///upper damage we apply to our itchy owner
