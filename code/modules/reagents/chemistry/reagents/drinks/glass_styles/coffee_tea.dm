@@ -4,7 +4,7 @@
 	required_drink_type = /datum/reagent/consumable/coffee
 	name = "glass of coffee"
 	desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
-	icon_state = "glass_brown"
+	icon_state = "glass_brown2"
 
 /datum/glass_style/drinking_glass/tea
 	required_drink_type = /datum/reagent/consumable/tea

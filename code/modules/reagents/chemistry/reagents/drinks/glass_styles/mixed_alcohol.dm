@@ -473,7 +473,7 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
 	desc = "A million hazing lawsuits and alcohol poisonings have started with this humble ingredient."
-	icon_state = "glass_brown"
+	icon_state = "glass_brown2"
 
 /datum/glass_style/drinking_glass/creme_de_coconut
 	required_drink_type = /datum/reagent/consumable/ethanol/creme_de_coconut
