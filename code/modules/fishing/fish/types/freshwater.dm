@@ -253,4 +253,4 @@
 	fish_traits = list(/datum/fish_trait/necrophage, /datum/fish_trait/wary)
 
 /obj/item/fish/sacabambaspis/get_export_price(price, percent)
-	return ..() * 3.5
+	return ..() * 4.5
