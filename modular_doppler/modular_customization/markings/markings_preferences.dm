@@ -109,8 +109,11 @@
 /datum/bodypart_overlay/simple/body_marking/body_markings/get_image(layer, obj/item/bodypart/limb)
 	var/gender_string = (use_gender && limb.is_dimorphic) ? (limb.gender == MALE ? MALE : FEMALE + "_") : "" //we only got male and female sprites
 	var/zonestring = limb.body_zone
+	if(limb.bodyshape & BODYSHAPE_DIGITIGRADE)
+		zonestring = "digitigrade_1_" + limb.body_zone
 	if(ishand)
 		zonestring = limb.aux_zone
+	testing("zonestring is [zonestring]")
 	return image(icon, gender_string + icon_state + "_" + zonestring, layer = layer)
 
 /datum/preference/color/markings/markings_r_leg3/is_accessible(datum/preferences/preferences)
