@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - rscadd: "honkerative skin applier adds a waddling module"
-  - bugfix: "mod skin applier works now"

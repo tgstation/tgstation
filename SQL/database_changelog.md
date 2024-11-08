@@ -12,7 +12,7 @@ or
 ```sql
 INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 28);
 ```
-
+In any query remember to add a prefix to the table names if you use one.
 -----------------------------------------------------
 Version 5.28, 1 November 2024, by Ghommie
 Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
@@ -25,8 +25,6 @@ CREATE TABLE `fish_progress` (
   PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 ```
-
-In any query remember to add a prefix to the table names if you use one.
 -----------------------------------------------------
 Version 5.27, 26 April 2024, by zephyrtfa
 Add the ip intel whitelist table
