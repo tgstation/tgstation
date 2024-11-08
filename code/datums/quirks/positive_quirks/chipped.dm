@@ -14,16 +14,17 @@
 	)
 	/// Variable that holds the chip, used on removal.
 	var/obj/item/skillchip/installed_chip
-	var/datum/callback/itchy_timer
+	///our itchy callback proc id
+	var/itchy_timer_id
 
 /datum/quirk_constant_data/chipped
 	associated_typepath = /datum/quirk/chipped
 	customization_options = list(/datum/preference/choiced/chipped)
 
 /datum/quirk/chipped/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)
-	var/obj/item/skillchip/chip_pref = GLOB.quirk_chipped_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/chipped)]
+	var/chip_pref = client_source?.prefs?.read_preference(/datum/preference/choiced/chipped)
 
-	if(!chip_pref)
+	if(isnull(chip_pref))
 		return ..()
 
 	gain_text = span_notice("The [chip_pref] in your head itches a bit.")
@@ -42,16 +43,16 @@
 		quirk_holder_carbon.implant_skillchip(installed_chip, force = TRUE)
 	installed_chip.try_activate_skillchip(silent = FALSE, force = TRUE)
 
-	var/obj/item/organ/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
-	itchy_timer = addtimer(CALLBACK(src, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES)) // they get The Itch from a poor quality install every so often
+	var/obj/item/organ/internal/brain/itchy_brain = quirk_holder.get_organ_by_type(ORGAN_SLOT_BRAIN)
+	itchy_timer_id = addtimer(CALLBACK(src, PROC_REF(cause_itchy), itchy_brain), rand(5 SECONDS, 10 MINUTES), TIMER_UNIQUE | TIMER_STOPPABLE) // they get The Itch from a poor quality install every so often
 
 /datum/quirk/chipped/remove()
-	qdel(installed_chip)
-	deltimer(itchy_timer)
-	. = ..()
+	QDEL_NULL(installed_chip)
+	deltimer(itchy_timer_id)
+	return ..()
 
 /datum/quirk/chipped/proc/cause_itchy(obj/item/organ/brain/itchy_brain)
 
 	itchy_brain.apply_organ_damage(rand(1, 5), maximum = itchy_brain.maxHealth * 0.3)
 	to_chat(itchy_brain.owner, span_warning("Your [itchy_brain] itches."))
-	itchy_timer = addtimer(CALLBACK(itchy_brain, PROC_REF(cause_itchy)), rand(5 SECONDS, 10 MINUTES)) // it will never end
+	itchy_timer_id = addtimer(CALLBACK(itchy_brain, PROC_REF(cause_itchy)), rand(5 SECONDS, 10 MINUTES)) // it will never end
