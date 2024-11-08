@@ -252,6 +252,9 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 /datum/preference/choiced/leg_l_type/apply_to_human(mob/living/carbon/human/target, value)
 	if(value == "none")
+		for(var/obj/item/bodypart/whatever as anything in target.bodyparts)
+			whatever.change_exempt_flags &= ~BP_BLOCK_CHANGE_SPECIES
+		target.dna?.species?.replace_body(target)
 		return
 	LAZYADDASSOC(target.dna.features["frame_list"], BODY_ZONE_L_LEG, text2path("/obj/item/bodypart/leg/left/robot/android/[value]"))
 
