@@ -122,6 +122,10 @@
 	name = "Plush (Rouny)"
 	item_path = /obj/item/toy/plush/rouny
 
+/datum/loadout_item/pocket_items/plush/shark
+	name = "Plush (Shark)"
+	item_path = /obj/item/toy/plush/shark
+
 /datum/loadout_item/pocket_items/plush/snake
 	name = "Plush (Snake)"
 	item_path = /obj/item/toy/plush/snakeplushie
