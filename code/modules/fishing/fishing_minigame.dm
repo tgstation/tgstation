@@ -506,6 +506,8 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	else
 		mover = new /datum/fish_movement(src)
 
+	SEND_SIGNAL(src, COMSIG_FISHING_CHALLENGE_MOVER_INITIALIZED, mover)
+
 	if(auto_reel)
 		completion *= 1.3
 	else
