@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(ambience)
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	/// gets the length of the sound about to play in SECONDS
+	/// gets the length of the sound about to play in deciseconds
 	var/sound_length = new_sound.len
 	/// choose a random cooldown amount to give time between playing ambiences
 	var/ambience_cooldown = rand(min_ambience_cooldown, max_ambience_cooldown)
