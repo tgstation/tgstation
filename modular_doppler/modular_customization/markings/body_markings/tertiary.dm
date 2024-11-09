@@ -1,7 +1,6 @@
 
 /datum/sprite_accessory/body_marking/tertiary
 	icon = 'modular_doppler/modular_customization/markings/icons/markings/tertiary_markings.dmi'
-	gender_specific = TRUE
 
 /datum/sprite_accessory/body_marking/tertiary/redpanda
 	name = "Red Panda Head"

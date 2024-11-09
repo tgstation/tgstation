@@ -107,13 +107,14 @@
 	return SSaccessories.body_markings[name]
 
 /datum/bodypart_overlay/simple/body_marking/body_markings/get_image(layer, obj/item/bodypart/limb)
-	var/gender_string = (use_gender && limb.is_dimorphic) ? (limb.gender == MALE ? MALE : FEMALE + "_") : "" //we only got male and female sprites
+	var/gender_string = ""
+	if(use_gender)
+		gender_string = (limb.is_dimorphic) ? (limb.limb_gender == "m" ? MALE + "_" : FEMALE + "_") : "male_" // defaults to male so that andros dont get tiddies
 	var/zonestring = limb.body_zone
 	if(limb.bodyshape & BODYSHAPE_DIGITIGRADE)
 		zonestring = "digitigrade_1_" + limb.body_zone
 	if(ishand)
 		zonestring = limb.aux_zone
-	testing("zonestring is [zonestring]")
 	return image(icon, gender_string + icon_state + "_" + zonestring, layer = layer)
 
 /datum/preference/color/markings/markings_r_leg3/is_accessible(datum/preferences/preferences)

@@ -1,6 +1,5 @@
 /datum/sprite_accessory/body_marking/secondary
 	icon = 'modular_doppler/modular_customization/markings/icons/markings/secondary_markings.dmi'
-	gender_specific = TRUE
 
 /datum/sprite_accessory/body_marking/secondary/tajaran
 	name = "Tajaran"

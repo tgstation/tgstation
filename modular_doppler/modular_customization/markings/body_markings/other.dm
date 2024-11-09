@@ -2,28 +2,31 @@
 	color_src = "#CCCCCC"
 	name = SPRITE_ACCESSORY_NONE
 	icon_state = SPRITE_ACCESSORY_NONE
-	gender_specific = FALSE
+	gender_specific = TRUE
 	var/body_zones
 
 /datum/sprite_accessory/body_marking/other
 	icon = 'modular_doppler/modular_customization/markings/icons/markings/other_markings.dmi'
 
-/datum/sprite_accessory/body_marking/other/pilot_jaw
-	name = "Pilot Jaw"
-	icon_state = "pilot_jaw"
-	body_zones = HEAD
+/datum/sprite_accessory/body_marking/other/drake_bone
+	name = "Drake Bone"
+	icon_state = "drakebone"
+	body_zones = CHEST | HAND_LEFT | HAND_RIGHT
+	gender_specific = FALSE
 
 /datum/sprite_accessory/body_marking/other/tonage
 	name = "Body Tonage"
 	icon_state = "tonage"
-	gender_specific = FALSE
+	color_src = "#555555"
 	body_zones = CHEST
+	gender_specific = FALSE
 
 /datum/sprite_accessory/body_marking/other/belly_slim_toned
 	name = "Belly Slim (Alt) + Tonage"
 	icon_state = "bellyslimtoned"
-	gender_specific = FALSE
+	color_src = "#555555"
 	body_zones = CHEST
+	gender_specific = FALSE
 
 /datum/sprite_accessory/body_marking/other/flushed_cheeks
 	name = "Flushed Cheeks"
@@ -52,13 +55,14 @@
 
 /datum/sprite_accessory/body_marking/other/monster_mouth2
 	name = "Monster Mouth (White)"
-	icon_state = "pilot_jaw"
+	icon_state = "monster2"
 	body_zones = HEAD
 
 /datum/sprite_accessory/body_marking/other/monster_mouth3
 	name = "Monster Mouth (White, eye-compatible)"
-	icon_state = "monster2"
+	icon_state = "monster3"
 	body_zones = HEAD
+//you're welcome -- iska
 
 /datum/sprite_accessory/body_marking/other/nose_blemish
 	name = "Nose Blemish"
@@ -75,6 +79,11 @@
 	icon_state = "ears"
 	body_zones = HEAD
 
+/datum/sprite_accessory/body_marking/other/insect_antennae
+	name = "Insect Antennae"
+	icon_state = "insect_antennae"
+	body_zones = HEAD
+
 /datum/sprite_accessory/body_marking/other/eyeliner
 	name = "Eyeliner"
 	icon_state = "eyeliner"
@@ -84,51 +93,76 @@
 	name = "Top Surgery Scars"
 	icon_state = "topscars"
 	body_zones = CHEST
-	gender_specific = TRUE
 
 /datum/sprite_accessory/body_marking/other/weight
 	name = "Body Weight"
 	icon_state = "weight"
 	body_zones = CHEST
-	gender_specific = TRUE
 
 /datum/sprite_accessory/body_marking/other/weight2
 	name = "Body Weight (Greyscale)"
 	icon_state = "weight2"
 	body_zones = CHEST
-	gender_specific = TRUE
 
 /datum/sprite_accessory/body_marking/other/pilot
 	name = "Pilot"
 	icon_state = "pilot"
 	body_zones = HEAD | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT
 
+/datum/sprite_accessory/body_marking/other/pilot_jaw
+	name = "Pilot Jaw"
+	icon_state = "pilot_jaw"
+	body_zones = HEAD
+
+/datum/sprite_accessory/body_marking/other/drake_eyes
+	name = "Drake Eyes"
+	icon_state = "drakeeyes"
+	color_src = "#FF0000"
+	body_zones = HEAD
+
 /datum/sprite_accessory/body_marking/other/big_ol_eyes
 	name = "Large Eyes"
 	icon_state = "bigoleyes"
+	color_src = "#FF0000"
 	body_zones = HEAD
 
 /datum/sprite_accessory/body_marking/other/three_eyes
 	name = "Three Eyes"
 	icon_state = "3eyes"
+	color_src = "#FF0000"
 	body_zones = HEAD
 
 /datum/sprite_accessory/body_marking/other/four_eyes
 	name = "Four Eyes"
 	icon_state = "4eyes"
+	color_src = "#FF0000"
 	body_zones = HEAD
 
 /datum/sprite_accessory/body_marking/other/claws
 	name = "Claw Tips"
 	icon_state = "claws"
-	gender_specific = FALSE
 	body_zones = HAND_LEFT | HAND_RIGHT
+	gender_specific = FALSE
+
+/datum/sprite_accessory/body_marking/other/splotches
+	name = "Splotches"
+	icon_state = "splotches"
+	body_zones = HEAD | CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/other/splotcheswap
+	name = "Splotches Swapped"
+	icon_state = "splotcheswap"
+	body_zones = HEAD
 
 /datum/sprite_accessory/body_marking/other/bands
 	name = "Color Bands"
 	icon_state = "bands"
-	body_zones = CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT | HAND_LEFT | HAND_RIGHT
+	body_zones = CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
+/datum/sprite_accessory/body_marking/other/chitin
+	name = "Chitin"
+	icon_state = "chitin"
+	body_zones = CHEST | ARM_LEFT | ARM_RIGHT | HAND_LEFT | HAND_RIGHT | LEG_RIGHT | LEG_LEFT
 
 /datum/sprite_accessory/body_marking/other/bands_foot
 	name = "Color Bands (Foot)"
@@ -144,3 +178,36 @@
 	name = "Leg Band"
 	icon_state = "legband"
 	body_zones = LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/other/protogenlegs
+	name = "Protogen Leg - Digitigrade"
+	icon_state = "protogen"
+	body_zones = LEG_RIGHT | LEG_LEFT
+
+/datum/sprite_accessory/body_marking/other/protogenarms
+	name = "Protogen Arm"
+	icon_state = "protogen"
+	body_zones = ARM_RIGHT | ARM_LEFT
+
+/datum/sprite_accessory/body_marking/other/protogenchest
+	name = "Protogen Chest"
+	icon_state = "protogen"
+	body_zones = CHEST
+
+/datum/sprite_accessory/body_marking/other/jackal_fur
+	name = "Jackal Back Fur"
+	icon_state = "jackalfur"
+	body_zones = CHEST | ARM_RIGHT | ARM_LEFT
+	gender_specific = FALSE
+
+/datum/sprite_accessory/body_marking/other/jackal_back
+	name = "Jackal Back Fur Accents"
+	icon_state = "jackalback"
+	body_zones = CHEST | ARM_RIGHT | ARM_LEFT
+	gender_specific = FALSE
+
+/datum/sprite_accessory/body_marking/other/sixnips
+	name = "Six Nips"
+	icon_state = "nips"
+	body_zones = CHEST
+	gender_specific = FALSE
