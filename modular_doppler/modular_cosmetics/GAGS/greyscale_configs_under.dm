@@ -292,3 +292,21 @@
 /datum/greyscale_config/skimpypants/worn/digi
 	name = "Skimpy Pants (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/medium_skirt
+	name = "Medium Skirt"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/medium_skirt.json'
+
+/datum/greyscale_config/medium_skirt/worn
+	name = "Medium Skirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+
+/datum/greyscale_config/long_skirt
+	name = "Long Skirt"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/long_skirt.json'
+
+/datum/greyscale_config/long_skirt/worn
+	name = "Long Skirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'

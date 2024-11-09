@@ -117,6 +117,22 @@
 	name = "Simple Skirt"
 	item_path = /obj/item/clothing/under/shorts/shorter/skirt
 
+/datum/loadout_item/undersuit/pants/skirt/medium
+	name = "Medium Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/medium
+
+/datum/loadout_item/undersuit/pants/skirt/long
+	name = "Long Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/long
+
+/datum/loadout_item/undersuit/pants/skirt/loincloth
+	name = "Loincloth"
+	item_path = /obj/item/clothing/under/dress/skirt/loincloth
+
+/datum/loadout_item/undersuit/pants/skirt/loincloth/alt
+	name = "Loincloth, Alt"
+	item_path = /obj/item/clothing/under/dress/skirt/loincloth/loincloth_alt
+
 /*
 *	BUTTONDOWNS
 */
@@ -275,3 +291,7 @@
 /datum/loadout_item/undersuit/jumpskirt
 	name = "Colorable Jumpskirt"
 	item_path = /obj/item/clothing/under/color/jumpskirt
+
+/datum/loadout_item/under/jumpsuit/frontier
+	name = "Frontier Jumpsuit"
+	item_path = /obj/item/clothing/under/frontier_colonist

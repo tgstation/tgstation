@@ -11,3 +11,15 @@
 	icon_state = "lalune_long"
 	strip_delay = 40
 	equip_delay_other = 20
+
+/obj/item/clothing/gloves/bracer/wraps
+	name = "cloth arm wraps"
+	desc = "Used for aesthetics, used for wiping sweat from the brow, used for... well, what about you?"
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/hands/gloves.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/hands/gloves.dmi'
+	icon_state = "arm_wraps"
+	inhand_icon_state = "greyscale_gloves"
+	greyscale_config = /datum/greyscale_config/armwraps
+	greyscale_config_worn = /datum/greyscale_config/armwraps/worn
+	greyscale_colors = "#FFFFFF"
+	flags_1 = IS_PLAYER_COLORABLE_1

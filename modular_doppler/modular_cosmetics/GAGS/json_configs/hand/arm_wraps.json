@@ -1,0 +1,10 @@
+{
+	"arm_wraps": [
+		{
+			"type": "icon_state",
+			"icon_state": "arm_wraps",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
