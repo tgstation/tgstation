@@ -125,6 +125,8 @@
 				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 				the_eye.placement_images[I] = list(x_off, y_off)
 
+	return TRUE
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	..()
 	if(!QDELETED(user) && user.client)

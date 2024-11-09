@@ -8,9 +8,9 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
 	status_flags = NONE
-	/// Toggles if the camera can move on shuttles
+	/// Toggles if the eye can move on shuttles
 	var/move_on_shuttle = FALSE
-	/// Toggles if the camera can use emotes
+	/// Toggles if the eye can use emotes
 	var/has_emotes = FALSE
 
 /mob/eye/Initialize(mapload)

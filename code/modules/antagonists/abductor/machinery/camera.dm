@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
-	..()
+	. = ..()
 	eyeobj.set_user_icon('icons/mob/eyemob.dmi', "abductor_camera")
 	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 

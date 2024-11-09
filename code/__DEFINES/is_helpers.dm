@@ -214,6 +214,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isaicamera(A) (istype(A, /mob/eye/camera/ai))
 
+#define isremotecamera(A) (istype(A, /mob/eye/camera/remote))
+
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 

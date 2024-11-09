@@ -77,8 +77,7 @@
 
 	if(user_image && user.client)
 		user.client.images -= user_image
-		user_image = image(icon,loc,icon_state, FLY_LAYER) //TODO: remove this and see if it works
-		SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
+		SET_PLANE(user_image, ABOVE_GAME_PLANE, destination) //incase we move a z-level 
 		user.client.images += user_image
 
 /mob/eye/camera/remote/relaymove(mob/living/user, direction)

@@ -1,6 +1,6 @@
 /**
  * An invisible (no icon) mob used to look around the cameranet. \
- * It streams chunks as it moves around, which will show what the user can and cannot see.
+ * As it moves, it makes requests to the network to update what the user can and cannot see.
  */
 /mob/eye/camera
 	name = "Inactive Camera Eye"
@@ -12,6 +12,7 @@
 	/// If TRUE, the eye will cover turfs hidden to the cameranet with static.
 	var/use_visibility = TRUE
 	/// List of [/datum/camerachunk]s seen by this camera.
+	/// Please don't interface with this directly. Use the cameranet.
 	VAR_FINAL/list/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
@@ -20,6 +21,13 @@
 	. = ..()
 	GLOB.camera_eyes += src
 	setLoc(loc, TRUE)
+
+/mob/eye/camera/Destroy()
+	for(var/V in visibleCameraChunks)
+		var/datum/camerachunk/c = V
+		c.remove(src)
+	GLOB.camera_eyes -= src
+	return ..()
 
 /**
  * Getter proc for getting the current user's client.
@@ -32,32 +40,6 @@
 	SHOULD_BE_PURE(TRUE)
 
 	return null
-
-/**
- * Returns a list of turfs visible to the client's viewsize. \
- * Note that this will return an empty list if the camera's loc is not a turf.
- */
-/mob/eye/camera/proc/get_visible_turfs()
-	RETURN_TYPE(/list/turf)
-	SHOULD_BE_PURE(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(!isturf(loc))
-		return list()
-	var/client/C = GetViewerClient()
-	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
-	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
-	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
-	return block(lowerleft, upperright)
-
-/// Used in cases when the eye is located in a movable object (i.e. mecha)
-/mob/eye/camera/proc/update_visibility()
-	SIGNAL_HANDLER
-	PROTECTED_PROC(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(use_visibility)
-		GLOB.cameranet.visibility(src)
 
 /**
  * Use this instead of when setting the camera eye's location. \
@@ -80,6 +62,15 @@
 		update_visibility()
 	update_parallax_contents()
 
+/// Used in cases when the eye is located in a movable object (i.e. mecha)
+/mob/eye/camera/proc/update_visibility()
+	SIGNAL_HANDLER
+	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(use_visibility)
+		GLOB.cameranet.visibility(src)
+
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()
 	if(.)
@@ -88,10 +79,3 @@
 /mob/eye/camera/Move()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	return
-
-/mob/eye/camera/Destroy()
-	for(var/V in visibleCameraChunks)
-		var/datum/camerachunk/c = V
-		c.remove(src)
-	GLOB.camera_eyes -= src
-	return ..()

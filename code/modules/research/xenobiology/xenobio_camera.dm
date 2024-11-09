@@ -85,6 +85,8 @@
 	eyeobj = new /mob/eye/camera/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
 
+	return TRUE
+
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_CTRL_CLICKED, PROC_REF(XenoClickCtrl))

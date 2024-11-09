@@ -76,6 +76,11 @@
 /obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return //For syndie nuke shuttle, to spy for station.
 
+/**
+ * Initializes a camera eye.
+ * Returns TRUE if initialization was successful.
+ * Will return nothing if it runtimes.
+ */
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	if(eyeobj)
 		CRASH("Tried to make another eyeobj for some reason. Why?")
@@ -89,7 +94,7 @@
 		to_grant.Grant(user)
 
 /obj/machinery/proc/remove_eye_control(mob/living/user)
-	CRASH("[type] does not implement ai eye handling")
+	CRASH("[type] does not implement camera eye handling")
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	if(isnull(user?.client))

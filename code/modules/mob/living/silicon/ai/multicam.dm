@@ -128,25 +128,28 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
 /mob/eye/camera/ai/pic_in_pic
 	name = "Secondary AI Eye"
+	icon_state = "ai_pip_camera"
 	invisibility = INVISIBILITY_OBSERVER
 	mouse_opacity = MOUSE_OPACITY_ICON
-	icon_state = "ai_pip_camera"
+	ai_detector_color = COLOR_ORANGE
+
 	var/atom/movable/screen/movable/pic_in_pic/ai/screen
 	var/list/cameras_telegraphed = list()
 	var/telegraph_cameras = TRUE
 	var/telegraph_range = 7
-	ai_detector_color = COLOR_ORANGE
 
 /mob/eye/camera/ai/pic_in_pic/GetViewerClient()
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
-	. = ..()
+/mob/eye/camera/ai/pic_in_pic/update_visibility()
 	if(screen?.ai)
 		screen.ai.camera_visibility(src)
 	else
-		GLOB.cameranet.visibility(src)
+		..()
+
+/mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
+	. = ..()
 	update_camera_telegraphing()
 	update_ai_detect_hud()
 

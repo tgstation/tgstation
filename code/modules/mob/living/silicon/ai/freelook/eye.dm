@@ -3,9 +3,13 @@
 	icon_state = "ai_camera"
 
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
+	/// The AI who owns this eye.
 	var/mob/living/silicon/ai/ai = null
+	/// Whether this eye will transmit speech near it to the AI.
 	var/relay_speech = FALSE
+	/// Whether this eye can be found with AI detectors.
 	var/ai_detector_visible = TRUE
+	/// The color of the area if the eye is detectable.
 	var/ai_detector_color = COLOR_RED
 
 /mob/eye/camera/ai/Initialize(mapload)
@@ -24,6 +28,28 @@
 		. += "<b>[ai] has the following laws:</b>"
 		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
 			. += law
+
+/mob/eye/camera/ai/update_visibility()
+	if(ai)
+		ai.camera_visibility(src)
+	else
+		..()
+/**
+ * Returns a list of turfs visible to the client's viewsize. \
+ * Note that this will return an empty list if the camera's loc is not a turf.
+ */
+/mob/eye/camera/ai/proc/get_visible_turfs()
+	RETURN_TYPE(/list/turf)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!isturf(loc))
+		return list()
+	var/client/C = GetViewerClient()
+	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
+	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
+	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
+	return block(lowerleft, upperright)
 
 /mob/eye/camera/ai/proc/update_ai_detect_hud()
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
