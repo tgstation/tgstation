@@ -71,12 +71,12 @@ $scrollbar-color-multiplier: 1;
   }
 
   .Section {
-    &__titleText {
-      color: black;
-    }
     color: black;
     background-color: #c0c0c0;
     outline: base.em(2px) outset #c3c3c3;
+    &__titleText {
+      color: black;
+    }
   }
 
   .Input {
