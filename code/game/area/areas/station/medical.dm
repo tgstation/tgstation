@@ -4,8 +4,8 @@
 	ambience_index = AMBIENCE_MEDICAL
 	airlock_wires = /datum/wires/airlock/medbay
 	sound_environment = SOUND_AREA_STANDARD_STATION
-	min_ambience_cooldown = 90 SECONDS
-	max_ambience_cooldown = 180 SECONDS
+	min_ambience_cooldown = 15 SECONDS
+	max_ambience_cooldown = 45 SECONDS
 
 /area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"

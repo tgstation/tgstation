@@ -95,9 +95,9 @@
 	///The volume of the ambient buzz
 	var/ambient_buzz_vol = 35
 	///Used to decide what the minimum time between ambience is
-	var/min_ambience_cooldown = 30 SECONDS
+	var/min_ambience_cooldown = 7 SECONDS
 	///Used to decide what the maximum time between ambience is
-	var/max_ambience_cooldown = 60 SECONDS
+	var/max_ambience_cooldown = 15 SECONDS
 
 	flags_1 = CAN_BE_DIRTY_1
 

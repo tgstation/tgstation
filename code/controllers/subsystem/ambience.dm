@@ -59,16 +59,16 @@ SUBSYSTEM_DEF(ambience)
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume*volume_modifier, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 
-	return rand(min_ambience_cooldown, max_ambience_cooldown)
+	/// gets the length of the sound about to play in SECONDS and then multiplies it to deciseconds
+	var/sound_length = new_sound.len * 10
+	/// choose a random cooldown amount to give time between playing ambiences
+	var/ambience_cooldown = rand(min_ambience_cooldown, max_ambience_cooldown)
+	return rand(sound_length, ambience_cooldown)
 
 /datum/controller/subsystem/ambience/proc/remove_ambience_client(client/to_remove)
 	ambience_listening_clients -= to_remove
 	client_old_areas -= to_remove
 	currentrun -= to_remove
-
-/area/station/maintenance
-	min_ambience_cooldown = 20 SECONDS
-	max_ambience_cooldown = 35 SECONDS
 
 	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
