@@ -157,7 +157,7 @@
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
-		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
+		force_dismount(yeet_mob, gentle=!user.combat_mode) // gentle on help, byeeee if not
 
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
@@ -298,7 +298,7 @@
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 
-/datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider)
+/datum/component/riding/creature/human/force_dismount(mob/living/dismounted_rider, throw_range = 8, throw_speed = 3, gentle = FALSE)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(dismounted_rider)
 	dismounted_rider.Paralyze(1 SECONDS)

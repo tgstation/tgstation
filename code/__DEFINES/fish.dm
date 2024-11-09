@@ -157,7 +157,7 @@
 ///This fish can be scanned to complete fish scanning experiments
 #define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
 ///It lets us know that fish/update_size_and_weight() is currently running.
-#define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<3)
+#define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<4)
 
 
 #define MIN_AQUARIUM_TEMP T0C
@@ -232,6 +232,11 @@
 #define FISH_SOURCE_FLAG_EXPLOSIVE_MALUS (1<<0)
 /// The fish source is not elegible for random rewards from bluespace fishing rods
 #define FISH_SOURCE_FLAG_NO_BLUESPACE_ROD (1<<1)
+/**
+ * If present, fish that can be caught from this source won't be included in the 'fish caught' score, unless
+ * present in other sources without this flag as well.
+ */
+#define FISH_SOURCE_FLAG_SKIP_CATCHABLES (1<<2)
 
 /**
  * A macro to ensure the wikimedia filenames of fish icons are unique, especially since there're a couple fish that have

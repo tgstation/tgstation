@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Autolathes can now print fishing rods of different materials, which can increase or decrease fishing difficulty, casting range, and experience gained, and can have other interesting effects."

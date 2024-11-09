@@ -949,6 +949,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return TRUE
 
 /obj/item/vape/attack_self(mob/user)
+	if(!screw)
+		balloon_alert(user, "open the cap first!")
+		return
 	if(reagents.total_volume > 0)
 		to_chat(user, span_notice("You empty [src] of all reagents."))
 		reagents.clear_reagents()

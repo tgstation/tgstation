@@ -13,6 +13,8 @@
 	var/organs_to_take = round(min_organs + (max_organs - min_organs) * severity)
 	var/list/organs_we_can_take = body.organs - body.get_organ_slot(ORGAN_SLOT_BRAIN)
 
+	if (!length(organs_we_can_take))
+		return
 	for(var/i in 1 to organs_to_take)
 		var/obj/organ = pick(organs_we_can_take)
 		if(prob(organ_save_chance) && saved_movables) //if lucky, we can save the organ and have it be delivered with the body

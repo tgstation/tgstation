@@ -66,6 +66,7 @@
 	var/datum/component/singularity/new_component = AddComponent(
 		singularity_component_type, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \
+		roaming = (move_self && current_size >= STAGE_TWO), \
 	)
 
 	singularity_component = WEAKREF(new_component)
