@@ -68,10 +68,9 @@
 
 	var/mob/living/carbon/human/affected_human = eye_owner
 	if(eye_color_left)
-		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY)
-
+		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	if(eye_color_right)
-		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY)
+		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
@@ -86,8 +85,7 @@
 
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
-		if (!QDESTROYING(human_owner))
-			human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY)
+		human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
