@@ -6,6 +6,8 @@
 #instrumental = "творительный"
 #prepositional = "предложный"
 
+# MARK: Uncategorized
+
 ["jaws of life"]
 nominative = "челюсти жизни"
 genitive = "челюстей жизни"
@@ -94,14 +96,6 @@ instrumental = "воздушной сигнализацией"
 nominative = "воздушная сигнализация"
 prepositional = "воздушной сигнализации"
 
-[alien]
-accusative = "чужого"
-dative = "чужому"
-genitive = "чужого"
-instrumental = "чужим"
-nominative = "чужой"
-prepositional = "чужом"
-
 ["alien crowbar"]
 accusative = "инопланетный лом"
 dative = "инопланетному лому"
@@ -118,38 +112,6 @@ instrumental = "эмбрионом Чужих"
 nominative = "эмбрион Чужих"
 prepositional = "эмбрионе Чужих"
 
-["alien hunter"]
-accusative = "охотника Чужих"
-dative = "охотнику Чужих"
-genitive = "охотника Чужих"
-instrumental = "охотником Чужих"
-nominative = "охотник Чужих"
-prepositional = "охотнике Чужих"
-
-["alien larva"]
-accusative = "грудолома Чужих"
-dative = "грудолому Чужих"
-genitive = "грудолома Чужих"
-instrumental = "грудоломом Чужих"
-nominative = "грудолом Чужих"
-prepositional = "грудоломе Чужих"
-
-["alien praetorian"]
-accusative = "преторианца Чужих"
-dative = "преторианцу Чужих"
-genitive = "преторианца Чужих"
-instrumental = "преторианцем Чужих"
-nominative = "преторианец Чужих"
-prepositional = "преторианце Чужих"
-
-["alien queen"]
-accusative = "королеву Чужих"
-dative = "королеве Чужих"
-genitive = "королевы Чужих"
-instrumental = "королевой Чужих"
-nominative = "королева Чужих"
-prepositional = "королеве Чужих"
-
 ["alien screwdriver"]
 accusative = "инопланетную отвёртку"
 dative = "инопланетной отвёртке"
@@ -157,14 +119,6 @@ genitive = "инопланетной отвёртки"
 instrumental = "инопланетной отвёрткой"
 nominative = "инопланетная отвёртка"
 prepositional = "инопланетной отвёртке"
-
-["alien sentinel"]
-accusative = "стража Чужих"
-dative = "стражу Чужих"
-genitive = "стража Чужих"
-instrumental = "стражем Чужих"
-nominative = "страж Чужих"
-prepositional = "страже Чужих"
 
 ["alien welding tool"]
 accusative = "инопланетный сварочный инструмент"
@@ -1230,7 +1184,67 @@ accusative = "шов"
 instrumental = "швом"
 prepositional = "шве"
 
-# MARK: Machinery
+# MARK: Mobs. Uncategorized
+
+# MARK: Mobs. Aliens
+
+[alien]
+nominative = "чужой"
+genitive = "чужого"
+dative = "чужому"
+accusative = "чужого"
+instrumental = "чужим"
+prepositional = "чужом"
+
+["alien drone"]
+nominative = "дрон Чужих"
+genitive = "дрона Чужих"
+dative = "дрону Чужих"
+accusative = "дрона Чужих"
+instrumental = "дроном Чужих"
+prepositional = "дроне Чужих"
+
+["alien sentinel"]
+nominative = "страж Чужих"
+genitive = "стража Чужих"
+dative = "стражу Чужих"
+accusative = "стража Чужих"
+instrumental = "стражем Чужих"
+prepositional = "страже Чужих"
+
+["alien hunter"]
+nominative = "охотник Чужих"
+genitive = "охотника Чужих"
+dative = "охотнику Чужих"
+accusative = "охотника Чужих"
+instrumental = "охотником Чужих"
+prepositional = "охотнике Чужих"
+
+["alien larva"]
+nominative = "грудолом Чужих"
+genitive = "грудолома Чужих"
+dative = "грудолому Чужих"
+accusative = "грудолома Чужих"
+instrumental = "грудоломом Чужих"
+prepositional = "грудоломе Чужих"
+
+["alien praetorian"]
+nominative = "преторианец Чужих"
+genitive = "преторианца Чужих"
+dative = "преторианцу Чужих"
+accusative = "преторианца Чужих"
+instrumental = "преторианцем Чужих"
+prepositional = "преторианце Чужих"
+
+["alien queen"]
+nominative = "королева Чужих"
+genitive = "королевы Чужих"
+dative = "королеве Чужих"
+accusative = "королеву Чужих"
+instrumental = "королевой Чужих"
+prepositional = "королеве Чужих"
+
+# MARK: Machinery Uncategorized
 
 ["slot machine"]
 nominative = "слот-машина"
@@ -1247,30 +1261,6 @@ dative = "ресторанному порталу"
 accusative = "ресторанный портал"
 instrumental = "ресторанным порталом"
 prepositional = "ресторанном портале"
-
-["hydroponics tray"]
-nominative = "ботанический лоток"
-genitive = "ботанического лотка"
-dative = "ботаническому лотку"
-accusative = "ботанический лоток"
-instrumental = "ботаническим лотком"
-prepositional = "ботаническом лотке"
-
-["seed extractor"]
-nominative = "экстрактор семян"
-genitive = "экстрактора семян"
-dative = "экстрактору семян"
-accusative = "экстрактор семян"
-instrumental = "экстрактором семян"
-prepositional = "экстракторе семян"
-
-["biogenerator"]
-nominative = "биогенератор"
-genitive = "биогенератора"
-dative = "биогенератору"
-accusative = "биогенератор"
-instrumental = "биогенератором"
-prepositional = "биогенераторе"
 
 ["chem dispenser"]
 nominative = "химический раздатчик"
@@ -1289,8 +1279,6 @@ genitive = "деревянной доски"
 instrumental = "деревянной доской"
 nominative = "деревянная доска"
 prepositional = "деревянной доске"
-
-# MARK: Engineering
 
 # MARK: Structures
 
@@ -1600,7 +1588,7 @@ accusative = "боевой нож"
 instrumental = "боевым ножом"
 prepositional = "боевом ноже"
 
-# MARK: Other
+# MARK: Kitchen
 
 ["pepper mill"]
 nominative = "перцемолка"
@@ -1609,6 +1597,8 @@ dative = "перцемолке"
 accusative = "перцемолку"
 instrumental = "перцемолкой"
 prepositional = "перцемолке"
+
+# MARK: Botany
 
 ["watering can"]
 nominative = "лейка"
@@ -1657,3 +1647,29 @@ dative = "секатору"
 accusative = "секатор"
 instrumental = "секатором"
 prepositional = "секаторе"
+
+["hydroponics tray"]
+nominative = "ботанический лоток"
+genitive = "ботанического лотка"
+dative = "ботаническому лотку"
+accusative = "ботанический лоток"
+instrumental = "ботаническим лотком"
+prepositional = "ботаническом лотке"
+
+["seed extractor"]
+nominative = "экстрактор семян"
+genitive = "экстрактора семян"
+dative = "экстрактору семян"
+accusative = "экстрактор семян"
+instrumental = "экстрактором семян"
+prepositional = "экстракторе семян"
+
+["biogenerator"]
+nominative = "биогенератор"
+genitive = "биогенератора"
+dative = "биогенератору"
+accusative = "биогенератор"
+instrumental = "биогенератором"
+prepositional = "биогенераторе"
+
+# MARK: Tools
