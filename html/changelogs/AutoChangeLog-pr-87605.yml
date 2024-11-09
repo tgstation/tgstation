@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "sanity dropping below zero should now properly slowly recover back to zero instead of dropping even further"

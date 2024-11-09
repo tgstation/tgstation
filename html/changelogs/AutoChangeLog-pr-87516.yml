@@ -1,5 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - code_imp: "removed two one letter variables"
-  - admin: "clearing the pod bay will not remove the light emitters."

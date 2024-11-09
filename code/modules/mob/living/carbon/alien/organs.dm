@@ -1,6 +1,6 @@
 /obj/item/organ/alien
 	icon_state = "acid"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/acid = 10)
 
 /obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_XENO_PLASMAVESSEL
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/toxin/plasma = 10)
 	actions_types = list(
 		/datum/action/cooldown/alien/make_structure/plant_weeds,
 		/datum/action/cooldown/alien/transfer,

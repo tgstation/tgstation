@@ -1,4 +1,0 @@
-author: "Jewelry-x"
-delete-after: True
-changes:
-  - admin: "doing a latejoin injection no longer causes a midround one as well"
