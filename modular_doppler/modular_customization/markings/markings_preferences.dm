@@ -19,7 +19,7 @@
 		var/datum/sprite_accessory/body_marking/accessory = markings.get_accessory(i)
 		if(accessory.body_zones & body_zone)
 			returnval += i
-	return returnval
+	return sort_list(returnval)
 
 /datum/preference/choiced/markings/create_default_value()
 	return SPRITE_ACCESSORY_NONE

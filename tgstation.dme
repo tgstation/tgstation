@@ -6877,6 +6877,7 @@
 #include "modular_doppler\modular_customization\markings\body_markings\secondary.dm"
 #include "modular_doppler\modular_customization\markings\body_markings\tattoos.dm"
 #include "modular_doppler\modular_customization\markings\body_markings\tertiary.dm"
+#include "modular_doppler\modular_customization\markings\body_markings\vox.dm"
 #include "modular_doppler\modular_customization\markings\preferences\markings.dm"
 #include "modular_doppler\modular_customization\organs\_organs.dm"
 #include "modular_doppler\modular_customization\organs\external\fluff.dm"
