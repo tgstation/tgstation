@@ -575,7 +575,7 @@
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
-	force = 14
+	force = 10
 	block_chance = 40
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
@@ -603,6 +603,10 @@
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
+/obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 
