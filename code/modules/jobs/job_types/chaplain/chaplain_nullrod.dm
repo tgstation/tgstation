@@ -300,6 +300,7 @@
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
@@ -399,6 +400,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = null
 	item_flags = ABSTRACT
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
@@ -522,6 +524,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
