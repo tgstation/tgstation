@@ -12,7 +12,6 @@
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
-	equip_sound = 'sound/items/equip/glove_equip.ogg'
 	drop_sound = 'sound/items/handling/glove_drop.ogg'
 	pickup_sound = 'sound/items/handling/glove_pick_up.ogg'
 	attack_verb_continuous = list("challenges")
