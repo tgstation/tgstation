@@ -281,10 +281,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	if(!item_chair || has_buckled_mobs())
 		return
 	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
-	var/obj/item/C = new item_chair(loc)
-	C.set_custom_materials(custom_materials)
-	TransferComponents(C)
-	user.put_in_hands(C)
+	var/obj/item/chair_item = new item_chair(loc)
+
+	if(flags_1 & HOLOGRAM_1)
+		var/area/station/holodeck/holo_area = get_area(loc)
+		if(!istype(holo_area))
+			to_chat(user, span_notice("You try to pick up [src], but it fades away!"))
+			qdel(chair_item)
+			return
+		holo_area.linked.add_to_spawned(chair_item)
+
+	chair_item.set_custom_materials(custom_materials)
+	TransferComponents(chair_item)
+	user.put_in_hands(chair_item)
 	qdel(src)
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
@@ -362,10 +371,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 			return
 
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
-	var/obj/structure/chair/C = new origin_type(get_turf(loc))
-	C.set_custom_materials(custom_materials)
-	TransferComponents(C)
-	C.setDir(user.dir)
+	var/obj/structure/chair/chair = new origin_type(get_turf(loc))
+
+	if(flags_1 & HOLOGRAM_1)
+		var/area/station/holodeck/holo_area = get_area(loc)
+		if(!istype(holo_area))
+			to_chat(user, span_notice("You try to place down the [src], but it fades away!"))
+			qdel(chair)
+			return
+		holo_area.linked.add_to_spawned(chair)
+
+	chair.set_custom_materials(custom_materials)
+	TransferComponents(chair)
+	chair.setDir(user.dir)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
