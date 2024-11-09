@@ -39,7 +39,7 @@
 	RETURN_TYPE(/client)
 	SHOULD_BE_PURE(TRUE)
 
-	return null
+	CRASH("GetViewerClient() for [src.type] hasn't been overloaded.")
 
 /**
  * Use this instead of when setting the camera eye's location. \
@@ -62,7 +62,8 @@
 		update_visibility()
 	update_parallax_contents()
 
-/// Used in cases when the eye is located in a movable object (i.e. mecha)
+/// Sends a visibility query to the cameranet.
+/// Can be used as a signal handler.
 /mob/eye/camera/proc/update_visibility()
 	SIGNAL_HANDLER
 	PROTECTED_PROC(TRUE)

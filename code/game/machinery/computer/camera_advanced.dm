@@ -168,7 +168,7 @@
 	/* We're attempting to initialize the eye past this point */
 
 	if(!CreateEye())
-		to_chat(user, "\The [src] flashes a bunch of never-ending errors on the display. Something is really wrong.")
+		to_chat(user, span_warning("\The [src] flashes a bunch of never-ending errors on the display. Something is really wrong."))
 		return
 
 	var/camera_location
