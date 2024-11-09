@@ -62,7 +62,7 @@
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/eye/ai_eye/eyeobj
+	var/mob/eye/camera/ai/eyeobj
 	var/sprint = 10
 	var/last_moved = 0
 	var/acceleration = TRUE
@@ -1139,7 +1139,7 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 	. = ..()
 
-/mob/living/silicon/ai/proc/camera_visibility(mob/eye/ai_eye/moved_eye)
+/mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
 
 /mob/living/silicon/ai/forceMove(atom/destination)

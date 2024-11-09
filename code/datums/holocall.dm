@@ -1,4 +1,4 @@
-/mob/eye/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/ai/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
 	if(!H?.move_hologram(eye_user, destination))
@@ -24,7 +24,7 @@
 	var/list/dialed_holopads
 
 	///user's eye, once connected
-	var/mob/eye/ai_eye/remote/holo/eye
+	var/mob/eye/camera/ai/remote/holo/eye
 	///user's hologram, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram
 	///hangup action

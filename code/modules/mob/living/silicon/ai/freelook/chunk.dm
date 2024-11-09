@@ -28,7 +28,7 @@
 	var/upper_z
 
 /// Add an AI eye to the chunk, then update if changed.
-/datum/camerachunk/proc/add(mob/eye/ai_eye/eye)
+/datum/camerachunk/proc/add(mob/eye/camera/ai/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
@@ -39,7 +39,7 @@
 		client.images += active_static_images
 
 /// Remove an AI eye from the chunk
-/datum/camerachunk/proc/remove(mob/eye/ai_eye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/eye/camera/ai/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
@@ -89,7 +89,7 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
+	for(var/mob/eye/camera/ai/client_eye as anything in seenby)
 		var/client/client = client_eye.ai?.client || client_eye.client
 		if(!client)
 			continue
@@ -119,7 +119,7 @@
 
 	changed = FALSE
 
-	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
+	for(var/mob/eye/camera/ai/client_eye as anything in seenby)
 		var/client/client = client_eye.ai?.client || client_eye.client
 		if(!client)
 			continue

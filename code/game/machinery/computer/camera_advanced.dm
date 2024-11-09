@@ -8,7 +8,7 @@
 
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
-	var/mob/eye/ai_eye/remote/eyeobj
+	var/mob/eye/camera/ai/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list(CAMERANET_NETWORK_SS13)
 	/// Typepath of the action button we use as "off"
@@ -188,7 +188,7 @@
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
-/mob/eye/ai_eye/remote
+/mob/eye/camera/ai/remote
 	name = "Inactive Camera Eye"
 	ai_detector_visible = FALSE
 	var/sprint = 10
@@ -200,24 +200,24 @@
 	var/visible_icon = 0
 	var/image/user_image = null
 
-/mob/eye/ai_eye/remote/update_remote_sight(mob/living/user)
+/mob/eye/camera/ai/remote/update_remote_sight(mob/living/user)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	user.set_sight(SEE_TURFS)
 	return TRUE
 
-/mob/eye/ai_eye/remote/Destroy()
+/mob/eye/camera/ai/remote/Destroy()
 	if(origin && eye_user)
 		origin.remove_eye_control(eye_user,src)
 	origin = null
 	. = ..()
 	eye_user = null
 
-/mob/eye/ai_eye/remote/GetViewerClient()
+/mob/eye/camera/ai/remote/GetViewerClient()
 	if(eye_user)
 		return eye_user.client
 	return null
 
-/mob/eye/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
+/mob/eye/camera/ai/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		destination = get_turf(destination)
 		if (destination)
@@ -237,7 +237,7 @@
 				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
 				eye_user.client.images += user_image
 
-/mob/eye/ai_eye/remote/relaymove(mob/living/user, direction)
+/mob/eye/camera/ai/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -263,7 +263,7 @@
 /datum/action/innate/camera_off/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/camera/ai/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
 	console.remove_eye_control(owner)
 
@@ -275,7 +275,7 @@
 /datum/action/innate/camera_jump/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/camera/ai/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 
 	var/list/L = list()
@@ -320,7 +320,7 @@
 /datum/action/innate/camera_multiz_up/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/camera/ai/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(UP))
 		to_chat(owner, span_notice("You move upwards."))
 	else
@@ -334,7 +334,7 @@
 /datum/action/innate/camera_multiz_down/Activate()
 	if(!owner || !isliving(owner))
 		return
-	var/mob/eye/ai_eye/remote/remote_eye = owner.remote_control
+	var/mob/eye/camera/ai/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(DOWN))
 		to_chat(owner, span_notice("You move downwards."))
 	else

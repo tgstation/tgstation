@@ -65,7 +65,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	else
 		other_eyes = list()
 
-	for(var/mob/eye/ai_eye/eye as anything in moved_eyes)
+	for(var/mob/eye/camera/ai/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
 		//Get the eye's turf in case its located in an object like a mecha
 		var/turf/eye_turf = get_turf(eye)
