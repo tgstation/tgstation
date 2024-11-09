@@ -26,7 +26,7 @@
 /obj/effect/bump_teleporter/singularity_act()
 	return
 
-/obj/effect/bump_teleporter/singularity_pull()
+/obj/effect/bump_teleporter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/bump_teleporter/Bumped(atom/movable/bumper)

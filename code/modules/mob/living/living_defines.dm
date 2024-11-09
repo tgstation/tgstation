@@ -6,8 +6,11 @@
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
 
-	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
+	///Tracks the scale of the mob transformation matrix in relation to its identity. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
+	///How the mob transformation matrix is scaled on init.
+	var/initial_size = RESIZE_DEFAULT_SIZE
+
 	var/lastattacker = null
 	var/lastattackerckey = null
 
@@ -145,7 +148,7 @@
 	///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/unique_name = FALSE
 	///the id a mob gets when it's created
-	var/numba = 0
+	var/identifier = 0
 
 	///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
 	var/list/butcher_results = null

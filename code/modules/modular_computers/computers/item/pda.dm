@@ -79,10 +79,6 @@
 	if(inserted_pai)
 		. += mutable_appearance(initial(icon), "pai_inserted")
 
-/obj/item/modular_computer/pda/attack_ai(mob/user)
-	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
-	return // we don't want ais or cyborgs using a private role tablet
-
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
@@ -322,11 +318,16 @@
 	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
 	var/mob/living/silicon/silicon_owner
 
+/obj/item/modular_computer/pda/silicon/pai
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/chatclient,
+	)
+
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
-		/datum/computer_file/program/borg_monitor,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/crew_manifest,
 	)

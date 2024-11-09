@@ -143,7 +143,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/open = FALSE
-		var/obj/item/organ/external/wings/functional/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+		var/obj/item/organ/wings/functional/wings = human_user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 
 		// open/close functional wings
 		if(istype(wings))
@@ -152,7 +152,7 @@
 				wings.close_wings()
 			else
 				wings.open_wings()
-			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/external/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/external/wings/functional, close_wings)), wing_time)
+			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings/functional, close_wings)), wing_time)
 
 		// play a flapping noise if the wing has this implemented
 		wings.make_flap_sound(human_user)
@@ -193,8 +193,15 @@
 
 	var/mob/living/carbon/human/human_user = user
 	if(human_user.physique == FEMALE)
-		return pick('sound/mobs/humanoids/human/gasp/gasp_female1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female2.ogg', 'sound/mobs/humanoids/human/gasp/gasp_female3.ogg')
-	return pick('sound/mobs/humanoids/human/gasp/gasp_male1.ogg', 'sound/mobs/humanoids/human/gasp/gasp_male2.ogg')
+		return pick(
+			'sound/mobs/humanoids/human/gasp/gasp_female1.ogg',
+			'sound/mobs/humanoids/human/gasp/gasp_female2.ogg',
+			'sound/mobs/humanoids/human/gasp/gasp_female3.ogg',
+			)
+	return pick(
+		'sound/mobs/humanoids/human/gasp/gasp_male1.ogg',
+		'sound/mobs/humanoids/human/gasp/gasp_male2.ogg',
+		)
 
 /datum/emote/living/gasp/shock
 	key = "gaspshock"
@@ -263,7 +270,7 @@
 	message = "laughs."
 	message_mime = "laughs silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	audio_cooldown = 5 SECONDS
+	specific_emote_audio_cooldown = 8 SECONDS
 	vary = TRUE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional, params)
@@ -312,7 +319,6 @@
 	message = "sneezes."
 	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	audio_cooldown = 5 SECONDS
 	vary = TRUE
 
 /datum/emote/living/sneeze/get_sound(mob/living/carbon/human/user)
@@ -326,7 +332,6 @@
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
 	vary = TRUE
-	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional, params)
@@ -436,7 +441,6 @@
 		return
 	return user.dna.species.get_sniff_sound(user)
 
-
 /datum/emote/living/snore
 	key = "snore"
 	key_third_person = "snores"
@@ -444,6 +448,12 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+
+// eventually we want to give species their own "snoring" sounds
+/datum/emote/living/snore/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_snore_sound(user)
 
 /datum/emote/living/stare
 	key = "stare"
@@ -738,7 +748,6 @@
 	key_third_person = "whistles"
 	message = "whistles."
 	message_mime = "whistles silently!"
-	audio_cooldown = 5 SECONDS
 	vary = TRUE
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 

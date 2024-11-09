@@ -4,7 +4,7 @@
 	pointed_reaction = "and blorbles"
 	refuse_reaction = "jiggles sadly"
 
-	var/hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/slime
+	var/hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/slime
 
 /datum/pet_command/point_targeting/attack/slime/execute_action(datum/ai_controller/controller)
 

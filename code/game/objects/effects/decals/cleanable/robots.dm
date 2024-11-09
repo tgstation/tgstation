@@ -5,7 +5,8 @@
 	desc = "It's a useless heap of junk... <i>or is it?</i>"
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "gib1"
-	layer = LOW_OBJ_LAYER
+	plane = GAME_PLANE
+	layer = BELOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL

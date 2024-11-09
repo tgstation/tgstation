@@ -607,7 +607,13 @@
 	smoke.start()
 	sleep(0.2 SECONDS)
 	for(var/i in 1 to 4)
-		playsound(borg, pick('sound/items/tools/drill_use.ogg', 'sound/items/tools/jaws_cut.ogg', 'sound/items/tools/jaws_pry.ogg', 'sound/items/tools/welder.ogg', 'sound/items/tools/ratchet.ogg'), 80, TRUE, -1)
+		playsound(borg, pick(
+			'sound/items/tools/drill_use.ogg',
+			'sound/items/tools/jaws_cut.ogg',
+			'sound/items/tools/jaws_pry.ogg',
+			'sound/items/tools/welder.ogg',
+			'sound/items/tools/ratchet.ogg',
+			), 80, TRUE, -1)
 		sleep(1.2 SECONDS)
 	if(!prev_lockcharge)
 		borg.SetLockdown(FALSE)
@@ -648,7 +654,7 @@
 	name = "Internal inducer"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	cell_type = null
+	powerdevice = null
 
 /obj/item/inducer/cyborg/get_cell()
 	var/obj/item/robot_model/possible_model = loc
@@ -657,7 +663,7 @@
 		. = silicon_friend.cell
 
 /obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return NONE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
@@ -802,6 +808,17 @@
 	model_flags = BORG_MODEL_SERVICE
 
 	items_to_add = list(/obj/item/borg/cookbook)
+
+/obj/item/borg/upgrade/botany_upgrade
+	name = "Service Cyborg Botany Tools"
+	desc = "An upgrade to the service model cyborg, that let them do gardening and plant processing."
+	icon_state = "module_service"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+	items_to_add = list(/obj/item/storage/bag/plants/cyborg, /obj/item/borg/cyborg_omnitool/botany, /obj/item/plant_analyzer)
+
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.

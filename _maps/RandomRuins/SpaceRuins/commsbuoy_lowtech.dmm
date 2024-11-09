@@ -1,0 +1,283 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/space/nearstation)
+"d" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"j" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/space/nearstation)
+"m" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"n" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"o" = (
+/obj/structure/fluff/sat_dish{
+	pixel_y = -15;
+	pixel_x = -11
+	},
+/obj/structure/fluff/sat_dish{
+	pixel_y = -9;
+	pixel_x = 12
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"p" = (
+/obj/structure/fluff/tram_rail/end,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"s" = (
+/obj/structure/fluff/sat_dish{
+	pixel_x = 15;
+	dir = 8;
+	pixel_y = -7
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"t" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"x" = (
+/obj/structure/fluff/tram_rail/anchor,
+/turf/template_noop,
+/area/space/nearstation)
+"z" = (
+/obj/structure/fluff/commsbuoy_broadcaster,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/space/nearstation)
+"C" = (
+/obj/structure/fluff/sat_dish{
+	pixel_y = 11;
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"D" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"E" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"F" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"G" = (
+/turf/template_noop,
+/area/space/nearstation)
+"I" = (
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"K" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"L" = (
+/turf/closed/wall/mineral/titanium,
+/area/space/nearstation)
+"M" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/unpowered)
+"N" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space/unpowered)
+"O" = (
+/obj/structure/fluff/commsbuoy_receiver,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/space/nearstation)
+"P" = (
+/obj/structure/fluff/tram_rail/end,
+/turf/template_noop,
+/area/space/nearstation)
+"S" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"U" = (
+/obj/structure/fluff/commsbuoy_processor,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"X" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Y" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/fluff/sat_dish{
+	pixel_y = 9;
+	dir = 1;
+	pixel_x = 8
+	},
+/obj/structure/fluff/sat_dish{
+	pixel_y = 15;
+	dir = 1;
+	pixel_x = -11
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/turf/open/floor/iron/solarpanel/airless,
+/area/space/nearstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+n
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+n
+o
+N
+C
+K
+a
+a
+a
+"}
+(3,1,1) = {"
+m
+K
+s
+N
+X
+O
+Z
+Z
+a
+"}
+(4,1,1) = {"
+I
+S
+M
+N
+c
+L
+j
+Z
+Z
+"}
+(5,1,1) = {"
+I
+F
+N
+N
+G
+p
+a
+a
+a
+"}
+(6,1,1) = {"
+x
+U
+j
+N
+M
+D
+a
+a
+a
+"}
+(7,1,1) = {"
+x
+t
+X
+N
+N
+Y
+Z
+Z
+a
+"}
+(8,1,1) = {"
+I
+d
+a
+N
+j
+X
+Z
+Z
+Z
+"}
+(9,1,1) = {"
+P
+P
+a
+z
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+E
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+P
+a
+a
+a
+a
+a
+"}

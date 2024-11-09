@@ -59,7 +59,7 @@
 	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = AREA_PLANE
+	var/overlay_plane = WEATHER_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
 	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
@@ -99,7 +99,7 @@
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type))
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_TELEGRAPH(type), src)
 	stage = STARTUP_STAGE
 	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
@@ -129,14 +129,14 @@
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type))
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_START(type), src)
 	stage = MAIN_STAGE
 	update_areas()
 	send_alert(weather_message, weather_sound)
 	if(!perpetual)
 		addtimer(CALLBACK(src, PROC_REF(wind_down)), weather_duration)
 	for(var/area/impacted_area as anything in impacted_areas)
-		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type))
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_BEGAN_IN_AREA(type), src)
 
 /**
  * Weather enters the winding down phase, stops effects
@@ -148,7 +148,7 @@
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type))
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_WINDDOWN(type), src)
 	stage = WIND_DOWN_STAGE
 	update_areas()
 	send_alert(end_message, end_sound)
@@ -164,12 +164,12 @@
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
 		return
-	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type))
+	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type), src)
 	stage = END_STAGE
 	SSweather.processing -= src
 	update_areas()
 	for(var/area/impacted_area as anything in impacted_areas)
-		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type))
+		SEND_SIGNAL(impacted_area, COMSIG_WEATHER_ENDED_IN_AREA(type), src)
 
 // handles sending all alerts
 /datum/weather/proc/send_alert(alert_msg, alert_sfx)
@@ -260,12 +260,12 @@
 		// I prefer it to creating 2 extra plane masters however, so it's a cost I'm willing to pay
 		// LU
 		if(use_glow)
-			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, ABOVE_LIGHTING_PLANE, 100, offset_const = offset)
+			var/mutable_appearance/glow_overlay = mutable_appearance('icons/effects/glow_weather.dmi', weather_state, overlay_layer, null, WEATHER_GLOW_PLANE, 100, offset_const = offset)
 			glow_overlay.color = weather_color
 			gen_overlay_cache += glow_overlay
 
-		var/mutable_appearance/weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, offset_const = offset)
-		weather_overlay.color = weather_color
-		gen_overlay_cache += weather_overlay
+		var/mutable_appearance/new_weather_overlay = mutable_appearance('icons/effects/weather_effects.dmi', weather_state, overlay_layer, plane = overlay_plane, offset_const = offset)
+		new_weather_overlay.color = weather_color
+		gen_overlay_cache += new_weather_overlay
 
 	return gen_overlay_cache

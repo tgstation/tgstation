@@ -376,7 +376,7 @@
 /obj/item/storage/box/lights/bulbs,
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/gift{
-	contains_type = /obj/item/gun/ballistic/automatic/toy/unrestricted
+	contains_type = /obj/item/gun/ballistic/automatic/toy
 	},
 /obj/item/gift{
 	contains_type = /obj/item/gun/ballistic/automatic/pistol/toy
