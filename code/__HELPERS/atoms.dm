@@ -325,7 +325,7 @@ rough example of the "cone" made by the 3 dirs checked
  * * target = End point.
  * * pass_args = pass_flags given to dummy object to allow it to ignore certain types of blockades.
  */
-/atom/proc/los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE)
+/proc/los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE)
 	var/turf/user_turf = user.loc
 	if(!istype(user_turf))
 		return FALSE
@@ -360,7 +360,7 @@ rough example of the "cone" made by the 3 dirs checked
  * This part of the los_check proc is meant to be overriden by subtypes for things they specially need to check or do.
  * args are always the same as passed in los_check, but with the turf being checked and the dummy obj passed at the end too.
  */
-/datum/proc/mid_los_check(atom/movable/user, mob/target, pass_args, turf/next_step, dummy)
+/atom/proc/mid_los_check(atom/movable/user, mob/target, pass_args, turf/next_step, dummy)
 	return TRUE
 
 ///Returns true if the src countain the atom target

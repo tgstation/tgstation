@@ -155,7 +155,7 @@
 
 	last_check = world.time
 
-	if(!owner.los_check(owner, current_target))
+	if(!los_check(owner, current_target))
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 
