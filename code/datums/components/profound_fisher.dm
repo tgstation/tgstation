@@ -2,14 +2,18 @@
 /datum/component/profound_fisher
 	///the fishing rod this mob will use
 	var/obj/item/fishing_rod/mob_fisher/our_rod
+	///Wether we should delete the fishing rod along with the component or replace it if it's somehow removed from the parent
+	var/delete_rod_when_deleted = TRUE
 
-/datum/component/profound_fisher/Initialize(our_rod)
+/datum/component/profound_fisher/Initialize(our_rod, delete_rod_when_deleted = TRUE)
 	var/isgloves = istype(parent, /obj/item/clothing/gloves)
 	if(!isliving(parent) && !isgloves)
 		return COMPONENT_INCOMPATIBLE
 	src.our_rod = our_rod || new(parent)
 	src.our_rod.internal = TRUE
-	RegisterSignal(src.our_rod, COMSIG_QDELETING, PROC_REF(on_rod_qdel))
+	src.delete_rod_when_deleted = delete_rod_when_deleted
+	ADD_TRAIT(src.our_rod, TRAIT_NOT_BARFABLE, REF(src))
+	RegisterSignal(src.our_rod, COMSIG_MOVABLE_MOVED, PROC_REF(on_rod_moved))
 
 	if(!isgloves)
 		RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
@@ -36,13 +40,26 @@
 	examine_list += span_info("When [EXAMINE_HINT("held")] or [EXAMINE_HINT("equipped")], [EXAMINE_HINT("right-click")] with a empty hand to open the integrated fishing rod interface.")
 	examine_list += span_tinynoticeital("To fish, you need to turn combat mode off.")
 
-/datum/component/profound_fisher/proc/on_rod_qdel(datum/source)
+///Handles replacing the fishing rod if somehow removed from the parent movable if delete_rod_when_deleted is TRUE, otherwise delete the component.
+/datum/component/profound_fisher/proc/on_rod_moved(datum/source)
 	SIGNAL_HANDLER
-	qdel(src)
+	if(QDELETED(src) || our_rod.loc == parent)
+		return
+	if(delete_rod_when_deleted)
+		UnregisterSignal(our_rod, COMSIG_MOVABLE_MOVED)
+		if(!QDELETED(our_rod))
+			qdel(our_rod)
+		our_rod = new our_rod.type(parent)
+	else
+		qdel(src)
 
 /datum/component/profound_fisher/Destroy()
-	our_rod.internal = FALSE
-	UnregisterSignal(our_rod, COMSIG_QDELETING)
+	UnregisterSignal(our_rod, COMSIG_MOVABLE_MOVED)
+	if(!delete_rod_when_deleted)
+		our_rod.internal = FALSE
+		REMOVE_TRAIT(our_rod, TRAIT_NOT_BARFABLE, REF(src))
+	else if(!QDELETED(our_rod))
+		QDEL_NULL(our_rod)
 	our_rod = null
 	return ..()
 

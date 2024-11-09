@@ -55,12 +55,6 @@
 	return MANUFACTURING_FAIL_FULL
 
 /obj/machinery/power/manufacturing/router/proc/handle_stack(obj/item/stack/stack, direction)
-	. = stack
-	var/potential_output_count = length(GLOB.cardinals - direction - disabled_dirs)
-	if(potential_output_count <= 1)
-		return
-	var/split_amount = round(stack.amount / potential_output_count, 1)
-	if(stack.amount == potential_output_count)
-		return
-	var/atom/movable/new_stack = stack.split_stack(amount = min(stack.amount, split_amount))
-	return new_stack
+	if(stack.amount <= 1) // last implementation was just not good so lets cheap out
+		return stack
+	return stack.split_stack(amount = 1)

@@ -72,6 +72,8 @@
 		if(screen.needs_offsetting)
 			screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
 
+INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
+
 /atom/movable/screen/fullscreen
 	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "default"

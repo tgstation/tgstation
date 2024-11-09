@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/fedora/carpskin/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -6)
 
 /obj/item/clothing/head/fedora/beige/press
 	name = "press fedora"

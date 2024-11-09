@@ -71,3 +71,6 @@
 
 	UnregisterSignal(owner, COMSIG_QDELETING)
 	owner = null
+
+/obj/item/toy/plush/carpplushie/dehy_carp/peaceful
+	mobtype = /mob/living/basic/carp/passive

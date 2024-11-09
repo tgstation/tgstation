@@ -7,17 +7,6 @@
 #define SCANGATE_NUTRITION "Nutrition"
 #define SCANGATE_CONTRABAND "Contraband"
 
-#define SCANGATE_HUMAN "human"
-#define SCANGATE_LIZARD "lizard"
-#define SCANGATE_FELINID "felinid"
-#define SCANGATE_FLY "fly"
-#define SCANGATE_PLASMAMAN "plasma"
-#define SCANGATE_MOTH "moth"
-#define SCANGATE_JELLY "jelly"
-#define SCANGATE_POD "pod"
-#define SCANGATE_GOLEM "golem"
-#define SCANGATE_ZOMBIE "zombie"
-
 /obj/machinery/scanner_gate
 	name = "scanner gate"
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
@@ -35,7 +24,7 @@
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
 	///If scanning for a specific species, what species is it looking for?
-	var/detect_species = SCANGATE_HUMAN
+	var/detect_species_id = SPECIES_HUMAN
 	///Flips all scan results for inverse scanning. Signals if scan returns false.
 	var/reverse = FALSE
 	///If scanning for nutrition, what level of nutrition will trigger the scanner?
@@ -52,7 +41,21 @@
 	var/base_false_beep = 5
 	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
 	var/obj/item/inspector/n_spect = null
-
+	///List of species that can be scanned by the gate. Supports adding more species' IDs during in-game.
+	var/list/available_species = list(
+		SPECIES_HUMAN,
+		SPECIES_LIZARD,
+		SPECIES_FLYPERSON,
+		SPECIES_FELINE,
+		SPECIES_PLASMAMAN,
+		SPECIES_MOTH,
+		SPECIES_JELLYPERSON,
+		SPECIES_PODPERSON,
+		SPECIES_GOLEM,
+		SPECIES_ZOMBIE,
+	)
+	/// Overlay object we're using for scanlines
+	var/obj/effect/overlay/scanline = null
 
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
@@ -63,6 +66,10 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	register_context()
+
+/obj/machinery/scanner_gate/Destroy(force)
+	QDEL_NULL(scanline)
+	return ..()
 
 /obj/machinery/scanner_gate/RefreshParts()
 	. = ..()
@@ -104,12 +111,30 @@
 	if(!(machine_stat & (BROKEN|NOPOWER)) && anchored && !panel_open)
 		perform_scan(thing)
 
-/obj/machinery/scanner_gate/proc/set_scanline(type, duration)
-	cut_overlays()
+/obj/machinery/scanner_gate/proc/set_scanline(scanline_type, duration)
+	if (!isnull(scanline))
+		vis_contents -= scanline
+	else
+		scanline = new(src)
+		scanline.icon = icon
+		scanline.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		scanline.layer = layer
 	deltimer(scanline_timer)
-	add_overlay(type)
+	if (isnull(scanline_type))
+		if(duration)
+			scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
+		return
+	scanline.icon_state = scanline_type
+	vis_contents += scanline
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
+
+/obj/machinery/scanner_gate/power_change()
+	. = ..()
+	if (machine_stat & (NOPOWER | BROKEN))
+		set_scanline(null)
+		return
+	set_scanline("passive")
 
 /obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/inspector))
@@ -177,6 +202,7 @@
 	var/beep = FALSE
 	var/color = null
 	var/detected_thing = null
+	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
@@ -204,37 +230,12 @@
 			if(ishuman(thing))
 				var/mob/living/carbon/human/scanned_human = thing
 				var/datum/species/scan_species = /datum/species/human
-				switch(detect_species)
-					if(SCANGATE_LIZARD)
-						detected_thing = "Lizardperson"
-						scan_species = /datum/species/lizard
-					if(SCANGATE_FLY)
-						detected_thing = "Flyperson"
-						scan_species = /datum/species/fly
-					if(SCANGATE_FELINID)
-						detected_thing = "Felinid"
-						scan_species = /datum/species/human/felinid
-					if(SCANGATE_PLASMAMAN)
-						detected_thing = "Plasmaman"
-						scan_species = /datum/species/plasmaman
-					if(SCANGATE_MOTH)
-						detected_thing = "Mothperson"
-						scan_species = /datum/species/moth
-					if(SCANGATE_JELLY)
-						detected_thing = "Jellyperson"
-						scan_species = /datum/species/jelly
-					if(SCANGATE_POD)
-						detected_thing = "Podperson"
-						scan_species = /datum/species/pod
-					if(SCANGATE_GOLEM)
-						detected_thing = "Golem"
-						scan_species = /datum/species/golem
-					if(SCANGATE_ZOMBIE)
-						detected_thing = "Zombie"
-						scan_species = /datum/species/zombie
+				if(detect_species_id && (detect_species_id in available_species))
+					scan_species = GLOB.species_list[detect_species_id]
+					detected_thing = scan_species.name
 				if(is_species(scanned_human, scan_species))
 					beep = TRUE
-				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
+				if(detect_species_id == SPECIES_ZOMBIE) //Can detect dormant zombies
 					detected_thing = "Romerol infection"
 					if(scanned_human.get_organ_slot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
@@ -320,15 +321,25 @@
 		ui = new(user, src, "ScannerGate", name)
 		ui.open()
 
+/obj/machinery/scanner_gate/ui_static_data(mob/user)
+	. = ..()
+	for(var/species_id in available_species)
+		var/datum/species/specie = GLOB.species_list[species_id]
+		.["available_species"] += list(list(
+			"specie_name" = capitalize(format_text(specie.name)),
+			"specie_id" = species_id,
+		))
+
 /obj/machinery/scanner_gate/ui_data()
 	var/list/data = list()
 	data["locked"] = locked
 	data["scan_mode"] = scangate_mode
 	data["reverse"] = reverse
 	data["disease_threshold"] = disease_threshold
-	data["target_species"] = detect_species
+	data["target_species_id"] = detect_species_id
 	data["target_nutrition"] = detect_nutrition
 	data["contraband_enabled"] = !!n_spect
+	data["target_zombie"] = (detect_species_id == SPECIES_ZOMBIE)
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -352,10 +363,11 @@
 			var/new_threshold = params["new_threshold"]
 			disease_threshold = new_threshold
 			. = TRUE
-		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
-			var/new_species = params["new_species"]
-			detect_species = new_species
+			var/new_specie_id = params["new_species_id"]
+			if(!(new_specie_id in available_species))
+				return
+			detect_species_id = new_specie_id
 			. = TRUE
 		if("set_target_nutrition")
 			var/new_nutrition = params["new_nutrition"]
@@ -384,14 +396,3 @@
 #undef SCANGATE_SPECIES
 #undef SCANGATE_NUTRITION
 #undef SCANGATE_CONTRABAND
-
-#undef SCANGATE_HUMAN
-#undef SCANGATE_LIZARD
-#undef SCANGATE_FELINID
-#undef SCANGATE_FLY
-#undef SCANGATE_PLASMAMAN
-#undef SCANGATE_MOTH
-#undef SCANGATE_JELLY
-#undef SCANGATE_POD
-#undef SCANGATE_GOLEM
-#undef SCANGATE_ZOMBIE
