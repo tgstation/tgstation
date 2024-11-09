@@ -21,6 +21,6 @@
 	name = "Medium Setaceous Antenna"
 	icon_state = "setaceousm"
 
-/datum/sprite_accessory/ears/mutant/geniculate
+/datum/sprite_accessory/ears_more/bug/geniculate
 	name = "Geniculate Antenna"
 	icon_state = "geniculate"

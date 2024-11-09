@@ -30,6 +30,11 @@
 	name = "Azulean"
 	icon_state = "akula"
 
+/datum/sprite_accessory/tails/fish/shrimp
+	name = "Shrimp (Fish)"
+	icon = 'modular_doppler/modular_customization/accessories/icons/insectoid/insect_tail.dmi'
+	icon_state = "segmentedtail"
+
 /datum/sprite_accessory/tails/fish/big // big .dmi starts here
 	name = "Sea Slug"
 	icon = 'modular_doppler/modular_customization/accessories/icons/aquatic/aquatic_tail_big.dmi'
