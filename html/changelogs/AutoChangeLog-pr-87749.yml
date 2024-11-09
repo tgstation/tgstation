@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - admin: "Admins can now add/remove TRAIT_EVIL from mobs."
