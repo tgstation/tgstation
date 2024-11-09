@@ -633,7 +633,7 @@
 	//This should get you below zero difficulty and skip the minigame phase, unless you're wearing something that counteracts this.
 	fishing_difficulty = -20
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
-	wait_time_range = list(8 SECONDS, 13 SECONDS)
+	wait_time_range = list(6 SECONDS, 12 SECONDS)
 
 /datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot)
 	if(istype(fishing_spot, /obj/machinery/fishing_portal_generator))
