@@ -692,7 +692,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(collection_mode == COLLECT_ONE)
-		attempt_insert(thing, user)
+		if(user.temporarilyRemoveItemFromInventory(thing, newloc = parent))
+			attempt_insert(thing, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!isturf(thing.loc))
