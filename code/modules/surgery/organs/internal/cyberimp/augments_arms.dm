@@ -290,11 +290,11 @@
 		/obj/item/stamp/denied,
 		/obj/item/hand_labeler,
 		/obj/item/clipboard,
+		/obj/item/lighter,
 	)
 
 /obj/item/organ/cyberimp/arm/paperwork/l
 	zone = BODY_ZONE_L_ARM
-
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
