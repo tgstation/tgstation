@@ -90,6 +90,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
+"bp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/syndibiodome)
 "bu" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
@@ -216,9 +223,15 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
-/obj/machinery/smartfridge/organ,
-/obj/item/organ/internal/alien/resinspinner,
-/obj/item/organ/internal/eyes/night_vision,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/clothing/gloves/latex/coroner{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_x = 6;
+	pixel_y = 10
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "cE" = (
@@ -498,9 +511,10 @@
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/syndibiodome)
-"gX" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/warm/directional/west,
+"gZ" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "ha" = (
@@ -647,6 +661,9 @@
 "ir" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/dim/directional/east,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "iG" = (
@@ -723,16 +740,6 @@
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
-/obj/item/clothing/gloves/latex/coroner{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_x = 6;
-	pixel_y = 10
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "jd" = (
@@ -771,9 +778,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"jQ" = (
-/turf/closed/indestructible/syndicate/nodiagonal,
-/area/icemoon/surface/outdoors/noteleport)
 "jR" = (
 /obj/effect/decal/cleanable/blood/trails{
 	dir = 4
@@ -1025,9 +1029,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
-"mK" = (
-/turf/open/misc/asteroid/snow/icemoon,
-/area/ruin/syndibiodome)
 "mV" = (
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1040,6 +1041,9 @@
 "mW" = (
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "mZ" = (
@@ -1112,6 +1116,13 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/effect/turf_decal/trimline/dark_red/line,
 /turf/open/floor/iron/dark,
+/area/ruin/syndibiodome)
+"on" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "oq" = (
 /obj/effect/decal/cleanable/blood/trails{
@@ -1434,7 +1445,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mapping_helpers/broken_machine,
 /turf/open/floor/iron/dark/herringbone,
 /area/ruin/syndibiodome)
 "td" = (
@@ -1700,6 +1710,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/syndibiodome)
+"vH" = (
+/obj/effect/spawner/random/trash,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "vJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2235,6 +2253,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
+"Az" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/syndibiodome)
 "AA" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
@@ -2262,9 +2287,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/belt/security/webbing,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/gun/ballistic/automatic/pistol,
-/obj/item/ammo_box/magazine/m10mm,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/gun/ballistic/automatic/pistol/contraband,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Ba" = (
@@ -2810,6 +2835,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
+"Iq" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/syndibiodome)
 "IF" = (
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /obj/effect/turf_decal/siding/wideplating/dark/end{
@@ -2946,6 +2979,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/herringbone,
+/area/ruin/syndibiodome)
+"Kl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/layer3,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "Kn" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -3087,6 +3127,9 @@
 "LA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/dim/directional/west,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "LB" = (
@@ -3192,6 +3235,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/syndibiodome)
 "Mr" = (
+/obj/machinery/light/warm/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "Mt" = (
@@ -3364,7 +3409,6 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 6
 	},
-/obj/effect/gibspawner/generic,
 /obj/machinery/digital_clock/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
@@ -3379,11 +3423,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndibiodome)
 "Os" = (
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/tram/filled,
-/turf/open/floor/pod/dark,
+/turf/closed/indestructible/syndicate/nodiagonal,
 /area/ruin/syndibiodome)
 "Oy" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -3428,8 +3469,8 @@
 /obj/machinery/light/warm/directional/east,
 /obj/item/storage/belt/security/webbing,
 /obj/item/gun/ballistic/automatic/pistol/contraband,
-/obj/item/ammo_box/magazine/m10mm,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "OM" = (
@@ -3446,6 +3487,9 @@
 "ON" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/dim/directional/south,
+/obj/structure/cable,
+/obj/structure/cable/layer1,
+/obj/structure/cable/layer3,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "OO" = (
@@ -3661,6 +3705,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark,
 /mob/living/basic/gorilla/genetics,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/gibspawner/generic,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndibiodome)
 "Se" = (
@@ -3823,6 +3868,10 @@
 	dir = 1
 	},
 /area/ruin/syndibiodome)
+"To" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/iron/dark,
+/area/ruin/syndibiodome)
 "Tu" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -3897,6 +3946,7 @@
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/syndibiodome)
 "TL" = (
@@ -4690,7 +4740,7 @@ oq
 Mc
 zM
 zM
-mK
+ys
 ys
 ys
 tL
@@ -4727,8 +4777,8 @@ ck
 ys
 ys
 zM
-Ut
-vx
+Kl
+on
 xi
 kw
 wL
@@ -4820,8 +4870,8 @@ jS
 ys
 ys
 zM
-Ut
-Ut
+Kl
+Kl
 zM
 Sr
 zM
@@ -4867,7 +4917,7 @@ pg
 pg
 zM
 zM
-Ut
+Kl
 zM
 zM
 Ab
@@ -4914,7 +4964,7 @@ zd
 ys
 zM
 Db
-Ut
+Kl
 zM
 kK
 MB
@@ -4961,7 +5011,7 @@ pg
 pg
 zM
 ic
-Ut
+Kl
 zM
 rK
 YZ
@@ -5008,7 +5058,7 @@ uD
 ys
 zM
 wY
-Ut
+Kl
 zM
 cB
 ja
@@ -5102,10 +5152,10 @@ AI
 ys
 ys
 zM
-Ut
-Ut
-zM
-zM
+Kl
+Kl
+Iq
+Ro
 zM
 zM
 zM
@@ -5151,8 +5201,8 @@ Hi
 zM
 zM
 Ut
-LA
-Ro
+Kl
+Ut
 zM
 qN
 qU
@@ -5198,10 +5248,10 @@ ys
 ys
 zM
 zM
-Ut
-Ut
-Ut
-vx
+Kl
+Kl
+Kl
+gZ
 je
 kt
 XC
@@ -5664,13 +5714,13 @@ ys
 ck
 zM
 zM
-mW
-Ut
+vH
+bp
 ir
-Ut
-Ut
-Ut
-vx
+bp
+bp
+bp
+Az
 kw
 Eq
 CV
@@ -5711,7 +5761,7 @@ ys
 ys
 zM
 MP
-Ut
+bp
 zM
 zM
 Ut
@@ -5758,7 +5808,7 @@ ys
 ys
 zM
 qa
-Ut
+bp
 zM
 zM
 dS
@@ -5805,7 +5855,7 @@ ys
 zM
 zM
 Sv
-Ut
+bp
 zM
 wx
 RH
@@ -5852,7 +5902,7 @@ zM
 zM
 rZ
 Ut
-Ut
+bp
 zM
 Ra
 RX
@@ -5899,7 +5949,7 @@ zM
 zM
 zM
 zM
-Ut
+bp
 zM
 Pw
 Oi
@@ -5993,12 +6043,12 @@ Uc
 qp
 sR
 zM
-Ut
-Ut
+bp
+bp
 LA
-mW
-Ut
-vx
+vH
+bp
+Az
 Nt
 uW
 Vv
@@ -6049,7 +6099,7 @@ qN
 pY
 XC
 XC
-qN
+To
 Ut
 zM
 Vj
@@ -6188,8 +6238,8 @@ zM
 zM
 zM
 zM
-Vv
 zM
+To
 zM
 LU
 qN
@@ -6235,8 +6285,8 @@ zM
 ek
 Dc
 zM
-zM
-zM
+Mr
+Ut
 Mr
 Ut
 qN
@@ -6283,7 +6333,7 @@ MM
 bu
 zM
 Kz
-gX
+Ut
 Ut
 Ut
 zM
@@ -6428,7 +6478,7 @@ zM
 zM
 zM
 ys
-jQ
+zM
 zM
 zM
 zM
