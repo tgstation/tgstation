@@ -12,7 +12,7 @@
 	/// If TRUE, the eye will cover turfs hidden to the cameranet with static.
 	var/use_visibility = TRUE
 	/// List of [/datum/camerachunk]s seen by this camera.
-	var/list/visibleCameraChunks = list()
+	VAR_FINAL/list/visibleCameraChunks = list()
 	/// NxN Range of a single camera chunk.
 	var/static_visibility_range = 16
 
@@ -20,6 +20,18 @@
 	. = ..()
 	GLOB.camera_eyes += src
 	setLoc(loc, TRUE)
+
+/**
+ * Getter proc for getting the current user's client.
+ *
+ * The base version of this proc returns null. \
+ * Subtypes are expected to overload this proc and make it return something meaningful.
+ */
+/mob/eye/camera/proc/GetViewerClient()
+	RETURN_TYPE(/client)
+	SHOULD_BE_PURE(TRUE)
+
+	return null
 
 /**
  * Returns a list of turfs visible to the client's viewsize. \
@@ -41,12 +53,14 @@
 /// Used in cases when the eye is located in a movable object (i.e. mecha)
 /mob/eye/camera/proc/update_visibility()
 	SIGNAL_HANDLER
+	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(use_visibility)
 		GLOB.cameranet.visibility(src)
+
 /**
- * Use this when setting the camera eye's location. \
+ * Use this instead of when setting the camera eye's location. \
  * It will also attempt to update visible chunks.
  */
 /mob/eye/camera/proc/setLoc(destination, force_update = FALSE)
@@ -71,23 +85,11 @@
 	if(.)
 		setLoc(loc, force_update = TRUE)
 
-/mob/eye/camera/ai/Move()
+/mob/eye/camera/Move()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	return
 
-/**
- * Getter proc for getting the current user's client.
- *
- * The base version of this proc returns null. \
- * Subtypes are expected to overload this proc and make it return something meaningful.
- */
-/mob/eye/camera/proc/GetViewerClient()
-	RETURN_TYPE(/client)
-	SHOULD_BE_PURE(TRUE)
-
-	return null
-
-/mob/eye/camera/ai/Destroy()
+/mob/eye/camera/Destroy()
 	for(var/V in visibleCameraChunks)
 		var/datum/camerachunk/c = V
 		c.remove(src)

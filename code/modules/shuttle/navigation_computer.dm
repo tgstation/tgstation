@@ -317,7 +317,6 @@
 	return TRUE
 
 /mob/eye/camera/remote/shuttle_docker
-	visible_icon = FALSE
 	use_visibility = FALSE
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()

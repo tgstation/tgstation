@@ -1,8 +1,6 @@
 //Xenobio control console
 /mob/eye/camera/remote/xenobio
-	visible_icon = TRUE
-	icon = 'icons/mob/eyemob.dmi'
-	icon_state = "generic_camera"
+	visible_to_user = TRUE
 	var/allowed_area = null
 
 /mob/eye/camera/remote/xenobio/Initialize(mapload)
@@ -86,9 +84,6 @@
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/eye/camera/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
-	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/eyemob.dmi'
-	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	. = ..()
