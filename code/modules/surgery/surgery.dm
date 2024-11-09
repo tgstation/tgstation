@@ -120,7 +120,7 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		try_to_fail = TRUE
 
-	var/datum/surgery_step/step = get_surgery_step()
+	var/datum/surgery_step/step = GLOB.surgery_steps[steps[status]]
 	if(isnull(step))
 		return FALSE
 	var/obj/item/tool = user.get_active_held_item()
@@ -133,10 +133,6 @@
 		return TRUE
 
 	return FALSE
-
-/datum/surgery/proc/get_surgery_step()
-	var/step_type = steps[status]
-	return new step_type
 
 /datum/surgery/proc/get_surgery_next_step()
 	if(status < steps.len)
