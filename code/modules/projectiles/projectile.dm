@@ -341,8 +341,8 @@
 		hit_limb_zone = victim.check_hit_limb_zone_name(def_zone)
 
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, angle, hit_limb_zone, blocked)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, angle, hit_limb_zone, blocked, pierce_hit)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, angle, hit_limb_zone, blocked, pierce_hit)
 
 	if(QDELETED(src) || deletion_queued) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
@@ -421,7 +421,7 @@
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
 	if(!ricochet_auto_aim_angle || !ricochet_auto_aim_range)
-		return FALSE
+		return
 
 	var/mob/living/unlucky_sob
 	var/best_angle = ricochet_auto_aim_angle
@@ -438,8 +438,6 @@
 	if(unlucky_sob)
 		set_angle(get_angle(src, unlucky_sob.loc))
 		original = unlucky_sob
-		return TRUE
-	return FALSE
 
 /obj/projectile/Bump(atom/bumped_atom)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, bumped_atom)
@@ -467,8 +465,7 @@
 		return
 
 	if(ricochets < ricochets_max && check_ricochet_flag(target) && check_ricochet(target) && target.handle_ricochet(src))
-		if(!on_ricochet(target) && hitscan && beam_points)
-			create_hitscan_point()
+		on_ricochet(target)
 		impacted = list() // Shoot a x-ray laser at a pair of mirrors I dare you
 		ignore_source_check = TRUE // Firer is no longer immune
 		maximum_range = max(0, maximum_range - reflect_range_decrease)
@@ -1112,13 +1109,13 @@
 	var/list/turf/light_line = get_line(start_point.return_turf(), end_point.return_turf())
 	for (var/turf/light_turf as anything in light_line)
 		var/located_effect = FALSE
-		for(var/obj/effect/projectile_lighting/light_effect in light_turf)
+		for(var/obj/effect/abstract/projectile_lighting/light_effect in light_turf)
 			if(light_effect.owner == self_ref)
 				located_effect = TRUE
 				break
 		if (located_effect)
 			continue
-		QDEL_IN(new /obj/effect/projectile_lighting(light_turf, hitscan_light_color_override || color, hitscan_light_range, hitscan_light_intensity, self_ref), PROJECTILE_TRACER_DURATION)
+		QDEL_IN(new /obj/effect/abstract/projectile_lighting(light_turf, hitscan_light_color_override || color, hitscan_light_range, hitscan_light_intensity, self_ref), PROJECTILE_TRACER_DURATION)
 
 /**
  * Aims the projectile at a target.
