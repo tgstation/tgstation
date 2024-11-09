@@ -25,7 +25,7 @@
 			I.forceMove(get_turf(spore))
 			I.throw_at(get_edge_target_turf(spore,pick(GLOB.alldirs)), 6, 5, spore, TRUE, FALSE, null, 3)
 
-/datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O, coefficient = 1) //when the blob expands, do this
+/datum/blobstrain/debris_devourer/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/eye/blob/O, coefficient = 1) //when the blob expands, do this
 	for (var/obj/item/I in T)
 		I.forceMove(overmind.blob_core)
 
