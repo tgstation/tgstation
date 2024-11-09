@@ -4,8 +4,7 @@
 	///The description of the surgery, what it does.
 	var/desc
 
-	///From __DEFINES/surgery.dm
-	///Selection: SURGERY_IGNORE_CLOTHES | SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
+	///Bitfield for flags that determine different behaviors and requirement for the surgery. See __DEFINES/surgery.dm
 	var/surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	///The surgery step we're currently on, increases each time we do a step.
 	var/status = 1
@@ -128,7 +127,10 @@
 		tool = tool.get_proxy_attacker_for(target, user)
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
-	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if(!tool)
+		return FALSE
+	//Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	if((surgery_flags & SURGERY_CHECK_TOOL_BEHAVIOUR) ? tool.tool_behaviour : (tool.item_flags & SURGICAL_TOOL))
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
 
