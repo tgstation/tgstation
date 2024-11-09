@@ -14,7 +14,6 @@
 	button_icon = 'icons/obj/ore.dmi'
 	button_icon_state = "bluespace_crystal"
 	cooldown_time = 3 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	///time delay before teleport
 	var/time_delay = 0.5 SECONDS
 
@@ -38,7 +37,6 @@
 	button_icon_state = "ice_cube"
 	cooldown_time = 2 SECONDS
 	click_to_activate = FALSE
-	melee_cooldown_time = 0 SECONDS
 	///perimeter we will spawn the iced floors on
 	var/radius = 1
 	///intervals we will spawn the ice floors in

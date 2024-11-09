@@ -261,7 +261,7 @@
 			candidates -= player
 		else if(is_centcom_level(player.z))
 			candidates -= player // We don't autotator people in CentCom
-		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		else if(player.mind && (player.mind.special_role || player.mind.can_roll_midround()))
 			candidates -= player // We don't autotator people with roles already
 		// DOPPLER ADDITION START
 		else if(player in rejected_traitor)
@@ -299,7 +299,7 @@
 	exclusive_roles = list(JOB_AI)
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
-	minimum_players = 25
+	minimum_players = 10
 	weight = 2
 	cost = 10
 	required_type = /mob/living/silicon/ai
@@ -316,7 +316,7 @@
 			continue
 		if(isnull(player.mind))
 			continue
-		if(player.mind.special_role || length(player.mind.antag_datums))
+		if(player.mind.special_role || player.mind.can_roll_midround())
 			continue
 		candidates += player
 
@@ -439,7 +439,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 8
-	minimum_players = 25
+	minimum_players = 20
 	repeatable = TRUE
 	signup_item_path = /obj/structure/blob/normal
 
@@ -473,7 +473,7 @@
 	minimum_round_time = 35 MINUTES
 	weight = 3
 	cost = 10
-	minimum_players = 25
+	minimum_players = 20
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_living/blob_infection/trim_candidates()
@@ -485,7 +485,7 @@
 			candidates -= player
 			continue
 
-		if(player.mind && (player.mind.special_role || length(player.mind.antag_datums) > 0))
+		if(player.mind && (player.mind.special_role || player.mind.can_roll_midround()))
 			candidates -= player
 
 /datum/dynamic_ruleset/midround/from_living/blob_infection/execute()
@@ -513,7 +513,7 @@
 	minimum_round_time = 40 MINUTES
 	weight = 5
 	cost = 10
-	minimum_players = 25
+	minimum_players = 20
 	repeatable = TRUE
 	signup_item_path = /mob/living/basic/alien
 	var/list/vents = list()
@@ -562,7 +562,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 5
-	minimum_players = 15
+	minimum_players = 5
 	repeatable = TRUE
 	signup_item_path = /obj/item/light_eater
 
@@ -599,7 +599,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 7
-	minimum_players = 25
+	minimum_players = 20
 	repeatable = TRUE
 	signup_item_path = /mob/living/basic/space_dragon
 	var/list/spawn_locs = list()
@@ -641,7 +641,7 @@
 	required_applicants = 2
 	weight = 4
 	cost = 7
-	minimum_players = 25
+	minimum_players = 10
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 
@@ -678,7 +678,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 8
-	minimum_players = 30
+	minimum_players = 15
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY) // I mean, no one uses the nets anymore but whateva
 	signup_item_path = /obj/item/energy_katana
@@ -720,7 +720,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 8
-	minimum_players = 27
+	minimum_players = 20
 	repeatable = TRUE
 	var/spawncount = 2
 
@@ -739,7 +739,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 5
-	minimum_players = 15
+	minimum_players = 5
 	repeatable = TRUE
 	signup_item_path = /mob/living/basic/revenant
 	var/dead_mobs_required = 20
@@ -791,7 +791,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 8
-	minimum_players = 20
+	minimum_players = 10
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat_level=0)
@@ -814,7 +814,7 @@
 	required_candidates = 0
 	weight = 3
 	cost = 8
-	minimum_players = 25
+	minimum_players = 15
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat_level=0)
@@ -849,7 +849,7 @@
 	candidates = living_players
 	for(var/mob/living/carbon/human/candidate in candidates)
 		if( \
-			!candidate.get_organ_by_type(/obj/item/organ/internal/brain) \
+			!candidate.get_organ_by_type(/obj/item/organ/brain) \
 			|| candidate.mind.has_antag_datum(/datum/antagonist/obsessed) \
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
@@ -886,7 +886,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 7
-	minimum_players = 15
+	minimum_players = 10
 	repeatable = TRUE
 	signup_item_path = /obj/effect/meteor/meaty/changeling
 
@@ -981,7 +981,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 5
-	minimum_players = 40
+	minimum_players = 5
 	repeatable = TRUE
 	signup_item_path = /obj/item/cosmic_skull
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)

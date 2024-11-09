@@ -92,6 +92,15 @@
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	beauty = -100
 
+//create_splatter overwrite
+/mob/living/create_splatter(splatter_dir)
+	if(hasblueblood(src))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter/blue(get_turf(src), splatter_dir)
+	else if(hasgreenblood(src))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter/green(get_turf(src), splatter_dir)
+	else
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir)
+
 //getTrail overwrite
 /mob/living/carbon/human/getTrail()
 	if((hasgreenblood(src)))

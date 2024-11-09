@@ -9,7 +9,7 @@
 	. = ..()
 	if(target.dna.features["fluff"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["fluff"] != /datum/sprite_accessory/fluff/none::name && target.dna.features["fluff"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/fluff)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/fluff)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_FLUFF)

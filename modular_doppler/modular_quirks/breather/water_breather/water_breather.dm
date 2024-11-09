@@ -9,8 +9,12 @@
 	breath_type = "water"
 
 /datum/quirk/item_quirk/breather/water_breather/add_unique(client/client_source)
-	var/mob/living/carbon/human/target = quirk_holder
-	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(target))
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/organ/lungs/target_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/clothing/accessory/breathing/target_tag = new(get_turf(quirk_holder))
 	target_tag.breath_type = breath_type
 
 	give_item_to_holder(target_tag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
@@ -23,13 +27,8 @@
 			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK
 		), "Be sure to equip your vaporizer, or you may end up choking to death!"
 	)
-	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
-	if(!target_lungs || !target_chest)
-		to_chat(target, span_warning("Your [name] quirk couldn't properly execute due to your species/body lacking a pair of lungs!"))
-		return
 	// if your lungs already have this trait, no need to update
-	if(target_lungs.type == /obj/item/organ/internal/lungs/fish)
+	if(target_lungs.type == /obj/item/organ/lungs/fish)
 		return
 	target_lungs.safe_oxygen_min = 0
 	// update lung procs
@@ -39,4 +38,7 @@
 	// flavor
 	target_lungs.AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve a set of gills on %PRONOUN_their neck.", BODY_ZONE_PRECISE_MOUTH)
 	target_lungs.AddComponent(/datum/component/bubble_icon_override, "fish", BUBBLE_ICON_PRIORITY_ORGAN)
-	target_chest.add_bodypart_overlay(new /datum/bodypart_overlay/simple/gills)
+	// add the gills overlay
+	var/obj/item/bodypart/chest/target_chest = quirk_holder.get_bodypart(BODY_ZONE_CHEST)
+	if(target_chest) // just to be sure
+		target_chest.add_bodypart_overlay(new /datum/bodypart_overlay/simple/gills)

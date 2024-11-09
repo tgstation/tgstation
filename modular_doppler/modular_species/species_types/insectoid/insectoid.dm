@@ -31,10 +31,10 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/insectoid,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/insectoid,
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/bug
-	mutantstomach = /obj/item/organ/internal/stomach/roach
-	mutantliver = /obj/item/organ/internal/liver/roach
-	mutantappendix = /obj/item/organ/internal/appendix/roach
+	mutanttongue = /obj/item/organ/tongue/bug
+	mutantstomach = /obj/item/organ/stomach/roach
+	mutantliver = /obj/item/organ/liver/roach
+	mutantappendix = /obj/item/organ/appendix/roach
 
 /datum/outfit/insect_preview
 	name = "Insectoid (Species Preview)"

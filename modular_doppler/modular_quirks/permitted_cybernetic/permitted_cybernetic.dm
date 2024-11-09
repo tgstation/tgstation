@@ -1,10 +1,10 @@
 GLOBAL_LIST_INIT(possible_quirk_implants, list(
-	"Engineering Toolset" = /obj/item/organ/internal/cyberimp/arm/toolset,
-	"Surgery Toolset" = /obj/item/organ/internal/cyberimp/arm/surgery,
-	"Hydroponics Toolset" = /obj/item/organ/internal/cyberimp/arm/botany,
-	"Sanitation Toolset" = /obj/item/organ/internal/cyberimp/arm/janitor,
-	"Razorclaw Implant" = /obj/item/organ/internal/cyberimp/arm/razor_claws,
-	"Excavator Implant" = /obj/item/organ/internal/cyberimp/arm/mining_drill,
+	"Engineering Toolset" = /obj/item/organ/cyberimp/arm/toolset,
+	"Surgery Toolset" = /obj/item/organ/cyberimp/arm/surgery,
+	"Hydroponics Toolset" = /obj/item/organ/cyberimp/arm/botany,
+	"Sanitation Toolset" = /obj/item/organ/cyberimp/arm/janitor,
+	"Razorclaw Implant" = /obj/item/organ/cyberimp/arm/razor_claws,
+	"Excavator Implant" = /obj/item/organ/cyberimp/arm/mining_drill,
 ))
 
 /datum/quirk/permitted_cybernetic
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 		to_chat(human_holder, span_warning("Due to your job, the [name] quirk has been disabled."))
 		return
 
-	var/obj/item/organ/internal/cybernetic = new desired_implant()
+	var/obj/item/organ/cybernetic = new desired_implant()
 	cybernetic.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	medical_record_text = "Patient has a company approved [cybernetic.name] installed within their body."
 

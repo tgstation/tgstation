@@ -34,12 +34,12 @@
 	},
 /area/station/hallway/secondary/entry)
 "n" = (
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 1
 	},
+/obj/machinery/computer/cryopod/directional/north,
 /turf/open/floor/iron/small,
 /area/station/commons/cryopods)
 "p" = (

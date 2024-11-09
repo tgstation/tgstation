@@ -1,0 +1,2 @@
+/obj/item/organ/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}
+/obj/item/organ/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}

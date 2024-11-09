@@ -12,7 +12,7 @@
 /datum/component/organ_corruption
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The type of organ affected by this specific type of organ corruption.
-	var/corruptable_organ_type = /obj/item/organ/internal
+	var/corruptable_organ_type = /obj/item/organ
 	/// If this type of organ has a unique sprite for what its corrupted
 	/// version should look like, this will be the icon file it will be pulled
 	/// from.
@@ -77,7 +77,7 @@
  * Arguments:
  * * corruption_target - The organ that will get corrupted.
  */
-/datum/component/organ_corruption/proc/corrupt_organ(obj/item/organ/internal/corruption_target)
+/datum/component/organ_corruption/proc/corrupt_organ(obj/item/organ/corruption_target)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!corruption_target)
 		return FALSE

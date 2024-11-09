@@ -1,4 +1,4 @@
-/obj/item/organ/external/fluff
+/obj/item/organ/fluff
 	name = "fluff"
 	desc = ""
 	icon_state = "severedtail"

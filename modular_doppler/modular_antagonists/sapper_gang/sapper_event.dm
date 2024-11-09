@@ -66,7 +66,7 @@
 	name = "Space Sappers"
 	typepath = /datum/round_event/ghost_role/sappers
 	max_occurrences = 1
-	min_players = 10
+	min_players = 15
 	earliest_start = 1 HOURS
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION

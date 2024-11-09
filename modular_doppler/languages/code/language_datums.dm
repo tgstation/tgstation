@@ -1,4 +1,4 @@
-/obj/item/organ/internal/tongue/get_possible_languages()
+/obj/item/organ/tongue/get_possible_languages()
 	var/list/langs = ..()
 	langs += /datum/language/konjin
 	langs += /datum/language/gutter

@@ -1,5 +1,5 @@
 /// The defines of each animal type who have their respective organ and list of sprite accessories beholding to them
-//	The string has to much the type name of the organ they represent, i.e. /obj/item/organ/external/tail/dog
+//	The string has to much the type name of the organ they represent, i.e. /obj/item/organ/tail/dog
 #define NO_VARIATION "none"
 #define ALIEN "alien"
 #define BIRD "bird"

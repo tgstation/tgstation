@@ -36,7 +36,7 @@
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organizer)
-	cooldown_time = 10 SECONDS
+	cooldown_time = 4 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
@@ -76,7 +76,7 @@
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 	required_slots = list(ITEM_SLOT_FEET)
 
-/obj/item/mod/module/waddle/on_suit_activation()
+/obj/item/mod/module/waddle/on_part_activation()
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes)
 		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
@@ -84,7 +84,7 @@
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/waddle/on_part_deactivation(deleting = FALSE)
 	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
 	if(shoes && !deleting)
 		qdel(shoes.GetComponent(/datum/component/squeak))

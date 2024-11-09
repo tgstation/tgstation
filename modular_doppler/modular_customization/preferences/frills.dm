@@ -1,5 +1,5 @@
 /// Frills fixing
-/obj/item/organ/external/frills
+/obj/item/organ/frills
 	name = "frills"
 
 /datum/bodypart_overlay/mutant/frills
@@ -46,7 +46,7 @@
 	. = ..()
 	if(target.dna.features["frills"] && !(type in GLOB.species_blacklist_no_mutant))
 		if(target.dna.features["frills"] != /datum/sprite_accessory/frills/none::name && target.dna.features["frills"] != /datum/sprite_accessory/blank::name)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/external/frills)
+			var/obj/item/organ/replacement = SSwardrobe.provide_type(/obj/item/organ/frills)
 			replacement.Insert(target, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 			return .
 	var/obj/item/organ/old_part = target.get_organ_slot(ORGAN_SLOT_EXTERNAL_FRILLS)

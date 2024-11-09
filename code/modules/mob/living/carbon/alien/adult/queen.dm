@@ -65,11 +65,11 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/large/queen
-	organs += new /obj/item/organ/internal/alien/resinspinner
-	organs += new /obj/item/organ/internal/alien/acid
-	organs += new /obj/item/organ/internal/alien/neurotoxin
-	organs += new /obj/item/organ/internal/alien/eggsac
+	organs += new /obj/item/organ/alien/plasmavessel/large/queen
+	organs += new /obj/item/organ/alien/resinspinner
+	organs += new /obj/item/organ/alien/acid
+	organs += new /obj/item/organ/alien/neurotoxin
+	organs += new /obj/item/organ/alien/eggsac
 	return ..()
 
 //Queen verbs
