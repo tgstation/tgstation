@@ -646,20 +646,15 @@
 	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
 	for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-		if(!ispath(operation.steps[operation.status], /datum/surgery_step/manipulate_organs))
+		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
+		if(!istype(manip_step))
 			continue
-		var/obj/item/bodypart/bodypart = operation.operated_bodypart
-		for(var/step_path in operation.steps) //the steps list is populated with paths, so we cannot use locate()
-			if(!ispath(step_path, /datum/surgery_step/manipulate_organs))
+		for(var/obj/item/organ/organ in operation.operated_bodypart)
+			if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
 				continue
-			var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[step_path]
-			for(var/obj/item/organ/organ in bodypart)
-				if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
-					continue
-				possible_organs |= organ
-			break
+			possible_organs |= organ
 
-	if(length(possible_organs))
+	if(!length(possible_organs))
 		return null
 	var/obj/item/organ/chosen = pick(possible_organs)
 	chosen.Remove(chosen.owner)
