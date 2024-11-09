@@ -110,7 +110,7 @@
 				qdel(meteor_to_destroy)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
-	src.balloon_alert(user, "You're looking for the on button on the [src]}")
+	src.balloon_alert(user, "You're looking for the [active ? "off" : "on"] button on the [src]}")
 	if(user && !do_after(user, 2 SECONDS, src, IGNORE_HELD_ITEM))
 		return FALSE;
 	if(!..(user))
