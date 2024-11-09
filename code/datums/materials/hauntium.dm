@@ -18,7 +18,7 @@
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 1, ACID = 0.7)
 	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -30 //Only the undead and the coroner can game this.
+	fishing_difficulty_modifier = -25 //Only the undead and the coroner can game this.
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 1.5
 	fishing_completion_speed = 1.1

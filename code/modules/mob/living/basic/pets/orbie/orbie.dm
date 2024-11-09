@@ -77,7 +77,7 @@
 	happy_state = !happy_state
 	update_appearance()
 
-/mob/living/basic/orbie/can_be_pulled(user, grab_state, force)
+/mob/living/basic/orbie/can_be_pulled(user, force)
 	return FALSE
 
 /mob/living/basic/orbie/proc/on_level_up(datum/source, new_level)
