@@ -111,7 +111,7 @@
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(user)
-		src.balloon_alert(user, "You're looking for the [active ? "off" : "on"] button on the [src]")
+		src.balloon_alert(user, "you're looking for the [active ? "off" : "on"] button on the [src]")
 	if(user && !do_after(user, 2 SECONDS, src, IGNORE_HELD_ITEM))
 		return FALSE;
 	if(!..(user))
@@ -189,6 +189,7 @@
 		meteors.weight *= mod
 	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
 		stray_meteor.weight *= mod
+
 
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_ONE
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_TWO
