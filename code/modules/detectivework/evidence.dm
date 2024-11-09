@@ -8,6 +8,9 @@
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
+	drop_sound = 'sound/items/evidence_bag/evidence_bag_drop.ogg'
+	pickup_sound = 'sound/items/evidence_bag/evidence_bag_pickup.ogg'
+	sound_vary = TRUE
 
 /obj/item/evidencebag/Initialize(mapload)
 	. = ..()
@@ -17,6 +20,8 @@
 	)
 	RegisterSignal(atom_storage, COMSIG_STORAGE_STORED_ITEM, PROC_REF(on_insert))
 	RegisterSignal(atom_storage, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(on_remove))
+	atom_storage.rustle_sound = 'sound/items/evidence_bag/evidence_bag_zip.ogg'
+	atom_storage.remove_rustle_sound = 'sound/items/evidence_bag/evidence_bag_unzip.ogg'
 
 /obj/item/evidencebag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(interacting_with == loc || !isitem(interacting_with) || HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
