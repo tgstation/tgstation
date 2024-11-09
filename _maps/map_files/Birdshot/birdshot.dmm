@@ -20066,6 +20066,11 @@
 	name = "Pharmacy Shutters Control";
 	req_access = list("pharmacy")
 	},
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/cup/bottle/formaldehyde,
+/obj/item/reagent_containers/cup/bottle/acidic_buffer,
+/obj/item/reagent_containers/cup/bottle/basic_buffer,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "hdT" = (
