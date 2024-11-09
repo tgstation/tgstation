@@ -5,6 +5,7 @@
 #accusative = "винительный"
 #instrumental = "творительный"
 #prepositional = "предложный"
+#gender = "male"
 
 # MARK: Uncategorized
 
@@ -15,6 +16,7 @@ dative = "челюстям жизни"
 accusative = "челюсти жизни"
 instrumental = "челюстями жизни"
 prepositional = "челюстях жизни"
+gender = "plural"
 
 [holopad]
 nominative = "голопад"
@@ -23,6 +25,7 @@ dative = "голопаду"
 accusative = "голопад"
 instrumental = "голопадом"
 prepositional = "голопаде"
+gender = "male"
 
 ["secure holopad"]
 nominative = "защищенный голопад"
@@ -1184,6 +1187,33 @@ accusative = "шов"
 instrumental = "швом"
 prepositional = "шве"
 
+["slice of"]
+nominative = "кусочек"
+genitive = "кусочка"
+dative = "кусочку"
+accusative = "кусочек"
+instrumental = "кусочком"
+prepositional = "кусочке"
+gender = "male"
+
+["hologram"]
+nominative = "голограмма"
+genitive = "голограммы"
+dative = "голограмме"
+accusative = "голограмму"
+instrumental = "голограммой"
+prepositional = "голограмме"
+gender = "female"
+
+["sawn-off"]
+nominative = "обрез"
+genitive = "обреза"
+dative = "обрезу"
+accusative = "обрез"
+instrumental = "обрезом"
+prepositional = "обрезе"
+gender = "male"
+
 # MARK: Mobs. Uncategorized
 
 # MARK: Mobs. Aliens
@@ -1243,6 +1273,14 @@ dative = "королеве Чужих"
 accusative = "королеву Чужих"
 instrumental = "королевой Чужих"
 prepositional = "королеве Чужих"
+
+["alien princess"]
+nominative = "принцесса Чужих"
+genitive = "принцессы Чужих"
+dative = "принцессе Чужих"
+accusative = "принцессу Чужих"
+instrumental = "принцессой Чужих"
+prepositional = "принцессе Чужих"
 
 # MARK: Machinery Uncategorized
 
@@ -1673,3 +1711,104 @@ instrumental = "биогенератором"
 prepositional = "биогенераторе"
 
 # MARK: Tools
+
+# MARK: Organs
+
+["chest"]
+nominative = "грудь"
+genitive = "груди"
+dative = "груди"
+accusative = "грудь"
+instrumental = "грудью"
+prepositional = "груди"
+gender = "female"
+
+["head"]
+nominative = "голова"
+genitive = "головы"
+dative = "голове"
+accusative = "голову"
+instrumental = "голове"
+prepositional = "биогенераторе"
+gender = "female"
+
+["right arm"]
+nominative = "правая рука"
+genitive = "правой руки"
+dative = "правой руке"
+accusative = "правую руку"
+instrumental = "правой рукой"
+prepositional = "правой руке"
+gender = "female"
+
+["right hand"]
+nominative = "правое запястье"
+genitive = "правого запястья"
+dative = "правому запястью"
+accusative = "правое запястье"
+instrumental = "правым запястьем"
+prepositional = "правом запястье"
+gender = "female"
+
+["left arm"]
+nominative = "левая рука"
+genitive = "левой руки"
+dative = "левой руке"
+accusative = "левую руку"
+instrumental = "левой рукой"
+prepositional = "левой руке"
+gender = "female"
+
+["left hand"]
+nominative = "левое запястье"
+genitive = "левое запястье"
+dative = "левой руке"
+accusative = "левую руку"
+instrumental = "левой рукой"
+prepositional = "левой руке"
+gender = "female"
+
+["left leg"]
+nominative = "левая нога"
+genitive = "левой ноги"
+dative = "левой ноге"
+accusative = "левую ногу"
+instrumental = "левой ногой"
+prepositional = "левой ноге"
+gender = "female"
+
+["left foot"]
+nominative = "левая стопа"
+genitive = "левой стопы"
+dative = "левой стопе"
+accusative = "левую стопу"
+instrumental = "левой стопой"
+prepositional = "левой стопе"
+gender = "female"
+
+["right leg"]
+nominative = "правая нога"
+genitive = "правой ноги"
+dative = "правой ноге"
+accusative = "правую ногу"
+instrumental = "правой ногой"
+prepositional = "правой ноге"
+gender = "female"
+
+["right foot"]
+nominative = "правая стопа"
+genitive = "правой стопы"
+dative = "правой стопе"
+accusative = "правую стопу"
+instrumental = "правой стопой"
+prepositional = "правой стопе"
+gender = "female"
+
+["groin"]
+nominative = "паховая область"
+genitive = "паховой области"
+dative = "паховой области"
+accusative = "паховую область"
+instrumental = "паховой областью"
+prepositional = "паховой области"
+gender = "female"

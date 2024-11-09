@@ -164,8 +164,8 @@ Des: Removes all infected images from the alien.
 
 	if(old_identifier != 0)
 		identifier = old_identifier
-		ru_names_rename(ru_names_toml(src::name))
 		name = initial(name) // prevent chicanery like two different numerical identifiers tied to the same mob
+		ru_names_rename(ru_names_toml(name))
 
 	set_name()
 

@@ -314,7 +314,7 @@ Behavior that's still missing from this component that original food items had t
 	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1)
 
 	if(original_atom.name != initial(original_atom.name))
-		this_food.ru_names_rename(RU_NAMES_LIST("slice of [original_atom.name]", "кусочек [original_atom.declent_ru(GENITIVE)]", "кусочка [original_atom.declent_ru(GENITIVE)]", "кусочку [original_atom.declent_ru(GENITIVE)]", "кусочек [original_atom.declent_ru(GENITIVE)]", "кусочком [original_atom.declent_ru(GENITIVE)]", "кусочке [original_atom.declent_ru(GENITIVE)]"))
+		this_food.ru_names_rename(ru_names_toml("slice of", suffix = " [original_atom.declent_ru(GENITIVE)]", override_base = "slice of [original_atom.name]"))
 		this_food.name = "slice of [original_atom.name]"
 	if(original_atom.desc != initial(original_atom.desc))
 		this_food.desc = "[original_atom.desc]"
