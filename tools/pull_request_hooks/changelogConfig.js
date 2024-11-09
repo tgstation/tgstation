@@ -108,13 +108,6 @@ export const CHANGELOG_ENTRIES = [
 			placeholders: ["something server ops should know"],
 		},
 	],
-
-	[
-		["test"],
-		{
-			placeholders: ["write unit tests for your code"],
-		},
-	],
 ];
 
 // Valid changelog openers
