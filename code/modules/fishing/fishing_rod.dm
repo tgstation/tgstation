@@ -122,7 +122,7 @@
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(bait)
-		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait."
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
@@ -817,11 +817,11 @@
 
 /obj/item/fishing_rod/material/Initialize(mapload)
 	. = ..()
-	name = "fishing_rod"
+	name = "fishing rod"
 
 /obj/item/fishing_rod/material/finalize_remove_material_effects(list/materials)
 	. = ..()
-	name = "fishing_rod" //so it doesn't reset to "material fishing rod"
+	name = "fishing rod" //so it doesn't reset to "material fishing rod"
 
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
