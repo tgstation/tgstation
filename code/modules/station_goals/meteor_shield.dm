@@ -190,13 +190,6 @@
 	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
 		stray_meteor.weight *= mod
 
-
-/obj/machinery/satellite/meteor_shield/active
-
-/obj/machinery/satellite/meteor_shield/active/Initialize(mapload)
-	. = ..()
-	toggle()
-
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_ONE
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_TWO
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_THREE
