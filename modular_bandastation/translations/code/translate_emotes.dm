@@ -15,3 +15,13 @@
 	message_monkey = ru_emote_message(message_monkey)
 	message_animal_or_basic = ru_emote_message(message_animal_or_basic)
 	message_param = ru_emote_message(message_param)
+
+/datum/keybinding/emote
+	var/datum/emote/faketype
+
+/datum/keybinding/emote/link_to_emote(datum/emote/faketype)
+	. = ..()
+	src.faketype = faketype
+
+/datum/keybinding/emote/proc/update_to_ru()
+	full_name = capitalize(ru_emote_name(faketype::name || faketype::key))
