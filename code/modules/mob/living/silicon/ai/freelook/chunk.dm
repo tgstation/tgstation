@@ -35,16 +35,16 @@
 		update()
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_static)
+	if(client && eye.use_visibility)
 		client.images += active_static_images
 
 /// Remove an AI eye from the chunk
-/datum/camerachunk/proc/remove(mob/eye/camera/ai/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/eye/camera/ai/eye)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_static)
+	if(client && eye.use_visibility)
 		client.images -= active_static_images
 
 /// Called when a chunk has changed. I.E: A wall was deleted.

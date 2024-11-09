@@ -156,7 +156,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != FALSE)
+		if(eyeobj.use_visibility)
 			if((!length(z_lock) || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -218,24 +218,17 @@
 	return null
 
 /mob/eye/camera/ai/remote/setLoc(turf/destination, force_update = FALSE)
-	if(eye_user)
-		destination = get_turf(destination)
-		if (destination)
-			abstract_move(destination)
-		else
-			moveToNullspace()
+	if(!eye_user)
+		return
 
-		update_ai_detect_hud()
+	. = ..()
 
-		if(use_static)
-			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
-
-		if(visible_icon)
-			if(eye_user.client)
-				eye_user.client.images -= user_image
-				user_image = image(icon,loc,icon_state, FLY_LAYER)
-				SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
-				eye_user.client.images += user_image
+	if(visible_icon)
+		if(eye_user.client)
+			eye_user.client.images -= user_image
+			user_image = image(icon,loc,icon_state, FLY_LAYER)
+			SET_PLANE(user_image, ABOVE_GAME_PLANE, destination)
+			eye_user.client.images += user_image
 
 /mob/eye/camera/ai/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)

@@ -142,10 +142,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		return screen.ai.client
 
 /mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
-	if (destination)
-		abstract_move(destination)
-	else
-		moveToNullspace()
+	. = ..()
 	if(screen?.ai)
 		screen.ai.camera_visibility(src)
 	else
@@ -154,6 +151,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	update_ai_detect_hud()
 
 /mob/eye/camera/ai/pic_in_pic/get_visible_turfs()
+	SHOULD_CALL_PARENT(FALSE) //we do our own thing here
 	return screen ? screen.get_visible_turfs() : list()
 
 /mob/eye/camera/ai/pic_in_pic/proc/update_camera_telegraphing()

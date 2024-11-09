@@ -318,7 +318,7 @@
 
 /mob/eye/camera/ai/remote/shuttle_docker
 	visible_icon = FALSE
-	use_static = FALSE
+	use_visibility = FALSE
 	var/list/image/placement_images = list()
 	var/list/image/placed_images = list()
 

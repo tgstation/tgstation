@@ -10,9 +10,7 @@
 
 /mob/eye/camera/ai/Initialize(mapload)
 	. = ..()
-	GLOB.camera_eyes += src
 	update_ai_detect_hud()
-	setLoc(loc, TRUE)
 
 /mob/eye/camera/ai/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -65,42 +63,19 @@
 	active_hud_list[AI_DETECT_HUD] = new_images
 	hud.add_atom_to_hud(src)
 
-/mob/eye/camera/ai/proc/get_visible_turfs()
-	if(!isturf(loc))
-		return list()
-	var/client/C = GetViewerClient()
-	var/view = C ? getviewsize(C.view) : getviewsize(world.view)
-	var/turf/lowerleft = locate(max(1, x - (view[1] - 1)/2), max(1, y - (view[2] - 1)/2), z)
-	var/turf/upperright = locate(min(world.maxx, lowerleft.x + (view[1] - 1)), min(world.maxy, lowerleft.y + (view[2] - 1)), lowerleft.z)
-	return block(lowerleft, upperright)
-
-/// Used in cases when the eye is located in a movable object (i.e. mecha)
-/mob/eye/camera/ai/proc/update_visibility()
-	SIGNAL_HANDLER
-	if(use_static)
-		ai.camera_visibility(src)
-
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
-
-/mob/eye/camera/ai/proc/setLoc(destination, force_update = FALSE)
+/mob/eye/camera/ai/setLoc(destination, force_update = FALSE)
 	if(!ai)
 		return
 	if(!isturf(ai.loc))
 		return
-	destination = get_turf(destination)
-	if(!force_update && (destination == get_turf(src)))
-		return //we are already here!
-	if (destination)
-		abstract_move(destination)
-	else
-		moveToNullspace()
-	if(use_static)
-		ai.camera_visibility(src)
+
+	. = ..()
+
 	if(ai.client && !ai.multicam_on)
 		ai.client.set_eye(src)
 	update_ai_detect_hud()
-	update_parallax_contents()
 	//Holopad
 	if(istype(ai.current, /obj/machinery/holopad))
 		var/obj/machinery/holopad/H = ai.current
@@ -112,15 +87,7 @@
 	if(ai.master_multicam)
 		ai.master_multicam.refresh_view()
 
-/mob/eye/camera/ai/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
-	. = ..()
-	if(.)
-		setLoc(loc, force_update = TRUE)
-
-/mob/eye/camera/ai/Move()
-	return
-
-/mob/eye/camera/ai/proc/GetViewerClient()
+/mob/eye/camera/ai/GetViewerClient()
 	if(ai)
 		return ai.client
 	return null
@@ -129,10 +96,6 @@
 	if(ai)
 		ai.all_eyes -= src
 		ai = null
-	for(var/V in visibleCameraChunks)
-		var/datum/camerachunk/c = V
-		c.remove(src)
-	GLOB.camera_eyes -= src
 	if(ai_detector_visible)
 		var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 		hud.remove_atom_from_hud(src)
