@@ -39,7 +39,7 @@
 	RETURN_TYPE(/client)
 	SHOULD_BE_PURE(TRUE)
 
-	CRASH("GetViewerClient() for [src.type] hasn't been overloaded.")
+	return null
 
 /**
  * Use this instead of when setting the camera eye's location. \
