@@ -57,7 +57,7 @@
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.7
-	incompatible_modules = list(/obj/item/mod/module/atrocinator)
+	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/anomaly_locked/antigrav)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 
@@ -90,6 +90,7 @@
 	complexity = 3
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 25
 	cooldown_time = 4 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/teleporter)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Time it takes to teleport
@@ -108,7 +109,7 @@
 	if(!istype(target_turf))
 		balloon_alert(mod.wearer, "invalid target!")
 		return
-	if(target_turf.is_blocked_turf_ignore_climbable())
+	if(target_turf.is_blocked_turf_ignore_climbable() || !los_check(mod.wearer, target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE|PASSMOB|PASSMACHINE|PASSSTRUCTURE|PASSFLAPS|PASSWINDOW))
 		balloon_alert(mod.wearer, "blocked destination!")
 		return
 	// check early so we don't go through the whole loops
