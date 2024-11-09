@@ -86,7 +86,8 @@
 
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
-		human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY)
+		if (!QDELETED(human_owner))
+			human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY)
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
