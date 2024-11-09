@@ -69,6 +69,13 @@
 	var/bounciness_mult = 1
 	/// The multiplier of negative velocity that pulls the bait/bobber down when not holding the click
 	var/gravity_mult = 1
+	/**
+	 * The multiplier of the bait height. Influenced by the strength_modifier of a material,
+	 * unlike the other variables, lest we add too many vars to materials.
+	 * Also materials with a strength_modifier lower than 1 don't do anything, since
+	 * they're already likely to be quite bad
+	 */
+	var/bait_height_mult = 1
 
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
@@ -115,7 +122,7 @@
 	if(hook)
 		equipped_stuff += "[icon2html(hook, user)] <b>[hook.name]</b>"
 	if(bait)
-		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b> as bait."
+		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
 		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
@@ -187,6 +194,9 @@
 	deceleration_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
 	bounciness_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
 	gravity_mult *= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
+	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
+	if(height_mod > 1)
+		bait_height_mult *= height_mod**0.75
 
 
 /obj/item/fishing_rod/remove_single_mat_effect(datum/material/custom_material, amount, multiplier)
@@ -199,6 +209,9 @@
 	deceleration_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_deceleration_mult, multiplier)
 	bounciness_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_bounciness_mult, multiplier)
 	gravity_mult /= GET_MATERIAL_MODIFIER(custom_material.fishing_gravity_mult, multiplier)
+	var/height_mod = GET_MATERIAL_MODIFIER(custom_material.strength_modifier, multiplier)
+	if(height_mod > 1)
+		bait_height_mult *= 1/(height_mod**0.75)
 
 /**
  * Is there a reason why this fishing rod couldn't fish in target_fish_source?
@@ -254,6 +267,7 @@
 		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 			material_chance += 4
 	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
+	return material_chance
 
 ///Fishing rodss should only bane fish DNA-infused spessman
 /obj/item/fishing_rod/proc/attempt_bane(datum/source, mob/living/fish)
@@ -411,6 +425,7 @@
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
+	cast_projectile.decayedRange = get_cast_range(user)
 	cast_projectile.owner = src
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
@@ -747,10 +762,11 @@
 	hook = /obj/item/fishing_hook/weighted
 	completion_speed_mult = 1.55
 	bait_speed_mult = 1.2
-	deceleration_mult = 1.55
+	deceleration_mult = 1.2
 	bounciness_mult = 0.3
 	gravity_mult = 1.2
 	material_fish_chance = 33 //if somehow you metalgen it.
+	bait_height_mult = 1.4
 
 /obj/item/fishing_rod/tech
 	name = "advanced fishing rod"
@@ -801,11 +817,11 @@
 
 /obj/item/fishing_rod/material/Initialize(mapload)
 	. = ..()
-	name = "fishing_rod"
+	name = "fishing rod"
 
 /obj/item/fishing_rod/material/finalize_remove_material_effects(list/materials)
 	. = ..()
-	name = "fishing_rod" //so it doesn't reset to "material fishing rod"
+	name = "fishing rod" //so it doesn't reset to "material fishing rod"
 
 #undef ROD_SLOT_BAIT
 #undef ROD_SLOT_LINE
