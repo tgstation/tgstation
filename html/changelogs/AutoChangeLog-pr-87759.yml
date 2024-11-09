@@ -1,0 +1,4 @@
+author: "harryob"
+delete-after: True
+changes:
+  - bugfix: "the abductor console now correctly loads images of equipment"

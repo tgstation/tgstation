@@ -16,7 +16,7 @@
 	///list of all turfs, associative with that turf's static image
 	///turf -> /image
 	var/list/turfs = list()
-	///camera mobs that can see turfs in our grid
+	///eye mobs that can see turfs in our grid
 	var/list/seenby = list()
 	///images currently in use on obscured turfs.
 	var/list/active_static_images = list()
@@ -28,7 +28,7 @@
 	var/upper_z
 
 /// Add an AI eye to the chunk, then update if changed.
-/datum/camerachunk/proc/add(mob/camera/ai_eye/eye)
+/datum/camerachunk/proc/add(mob/eye/ai_eye/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
@@ -39,7 +39,7 @@
 		client.images += active_static_images
 
 /// Remove an AI eye from the chunk
-/datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/eye/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
@@ -89,7 +89,7 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
+	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
 		var/client/client = client_eye.ai?.client || client_eye.client
 		if(!client)
 			continue
@@ -119,7 +119,7 @@
 
 	changed = FALSE
 
-	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
+	for(var/mob/eye/ai_eye/client_eye as anything in seenby)
 		var/client/client = client_eye.ai?.client || client_eye.client
 		if(!client)
 			continue
