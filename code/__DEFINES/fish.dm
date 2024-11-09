@@ -157,7 +157,7 @@
 ///This fish can be scanned to complete fish scanning experiments
 #define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
 ///It lets us know that fish/update_size_and_weight() is currently running.
-#define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<3)
+#define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<4)
 
 
 #define MIN_AQUARIUM_TEMP T0C

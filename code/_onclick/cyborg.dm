@@ -39,12 +39,6 @@
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
-		var/secondary_result = A.attack_robot_secondary(src, modifiers)
-		if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return
-		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
-			CRASH("attack_robot_secondary did not return a SECONDARY_ATTACK_* define.")
 
 	if(next_move >= world.time)
 		return
@@ -53,8 +47,16 @@
 
 	var/obj/item/W = get_active_held_item()
 
-	if(!W && get_dist(src,A) <= interaction_range)
-		A.attack_robot(src)
+	//wireless interaction with an atom
+	if(!W && get_dist(src, A) <= interaction_range)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+			var/secondary_result = A.attack_robot_secondary(src, modifiers)
+			if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+				return
+			if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+				CRASH("attack_robot_secondary did not return a SECONDARY_ATTACK_* define.")
+
+		A.attack_robot(src, modifiers)
 		return
 
 	if(W)
@@ -191,17 +193,24 @@
 /mob/living/silicon/robot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!can_unarmed_attack())
 		return
-	A.attack_robot(src)
 
-/mob/living/silicon/robot/RangedAttack(atom/A)
-	A.attack_robot(src)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return A.attack_robot_secondary(src, modifiers)
 
-/atom/proc/attack_robot(mob/user)
-	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	return A.attack_robot(src, modifiers)
+
+/**
+ * What happens when the cyborg holds left-click on an item.
+ *
+ * Arguments:
+ * * user The mob holding the right click
+ * * modifiers The list of the custom click modifiers
+ */
+/atom/proc/attack_robot(mob/user, modifiers)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 
 	attack_ai(user)
-	return
 
 /**
  * What happens when the cyborg without active module holds right-click on an item. Returns a SECONDARY_ATTACK_* value.
@@ -211,7 +220,7 @@
  * * modifiers The list of the custom click modifiers
  */
 /atom/proc/attack_robot_secondary(mob/user, list/modifiers)
-	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return attack_ai_secondary(user, modifiers)

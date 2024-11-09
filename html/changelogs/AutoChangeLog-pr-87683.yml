@@ -1,8 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - qol: "you can now right-click the succumb action button to succumb silently"
-  - qol: "the succumb inputs have a few more titles to choose from now"
-  - bugfix: "the succumb text input now shows the actual correct number of characters you can say"
-  - bugfix: "attempting to cancel a succumb will no longer kill you"
-  - spellcheck: "the text for failing to succumb is now spanned"
