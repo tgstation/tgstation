@@ -57,7 +57,7 @@
 		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/camera/ai/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -101,7 +101,7 @@
 		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/camera/ai/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -151,7 +151,7 @@
 		return
 
 	var/mob/living/carbon/human/C = owner
-	var/mob/eye/camera/ai/remote/remote_eye = C.remote_control
+	var/mob/eye/camera/remote/remote_eye = C.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)
