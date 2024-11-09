@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	page_holder = new(client)
 	show_page()
 
-	tape_audio = new(client)
+	tape_audio = new(client, TRUE, TRUE)
 	tape_audio.start()
 
 	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_client_qdel))
@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	plane_master_controller.remove_filter("escape_menu_blur")
 
 	tape_audio.stop()
-	QDEL_NULL(tape_audio)
 
 	return ..()
 
