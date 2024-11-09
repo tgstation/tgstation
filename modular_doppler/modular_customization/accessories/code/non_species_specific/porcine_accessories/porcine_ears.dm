@@ -1,4 +1,3 @@
-
 /datum/sprite_accessory/ears_more/deer/pig
 	name = "Floppy"
 	icon_state = "floppy"
