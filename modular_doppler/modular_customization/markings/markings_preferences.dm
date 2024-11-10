@@ -95,10 +95,11 @@
 	. = ..()
 
 	if(target.dna.features["markings_list"])
-		var/list/markingslist = target.dna.features["markings_list"]
-		for(var/i in 1 to markingslist.len)
-			if(markingslist[i] && markingslist[i] != SPRITE_ACCESSORY_NONE)
-				add_doppler_markings(target, target.dna.features["markings_list"][i], target.dna.features["markings_list_colors"][i], target.dna.features["markings_list_zones"][i])
+		if(islist(target.dna.features["markings_list"]) && islist(target.dna.features["markings_list_colors"]) && islist(target.dna.features["markings_list_zones"]))
+			var/list/markingslist = target.dna.features["markings_list"]
+			for(var/i in 1 to markingslist.len)
+				if(markingslist[i] && markingslist[i] != SPRITE_ACCESSORY_NONE)
+					add_doppler_markings(target, target.dna.features["markings_list"][i], target.dna.features["markings_list_colors"][i], target.dna.features["markings_list_zones"][i])
 
 /datum/bodypart_overlay/simple/body_marking/body_markings
 	var/ishand = FALSE
@@ -108,7 +109,7 @@
 
 /datum/bodypart_overlay/simple/body_marking/body_markings/get_image(layer, obj/item/bodypart/limb)
 	var/gender_string = ""
-	if(use_gender)
+	if(use_gender && !(limb.body_zone in GLOB.limb_zones))
 		gender_string = (limb.is_dimorphic) ? (limb.limb_gender == "m" ? MALE + "_" : FEMALE + "_") : "male_" // defaults to male so that andros dont get tiddies
 	var/zonestring = limb.body_zone
 	if(limb.bodyshape & BODYSHAPE_DIGITIGRADE)
