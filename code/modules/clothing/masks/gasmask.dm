@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/valid_wearer = ismob(loc)
 	var/mob/wearer = loc
 	if(istype(tool, /obj/item/cigarette))
-		if(flags_cover & MASKCOVERSMOUTH)
+		if(flags_cover)
 			balloon_alert(user, "mask's mouth is covered!")
 			return ..()
 
