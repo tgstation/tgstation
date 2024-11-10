@@ -156,9 +156,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/hud/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+	alpha = 255
+	plane = LIGHTING_PLANE
+	layer = LIGHTING_ABOVE_ALL + 1 //Infinity plus one (not actually)
+	blend_mode = BLEND_MULTIPLY
 
 /atom/movable/screen/fullscreen/color_vision
 	icon = 'icons/hud/screen_gen.dmi'
