@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Blob Overmind/Minion/Blobbernaut speech is now logged. Beware."
