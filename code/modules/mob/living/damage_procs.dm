@@ -458,11 +458,12 @@
 	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	var/delta = old_amount - staminaloss
-	if(delta <= 0)
-		// need to check for stamcrit AFTER canadjust but BEFORE early return here
-		received_stamina_damage(staminaloss, -1 * delta)
 	if(delta == 0) // no change, no need to update
 		return 0
+	else if(delta < 0)
+		// need to check for stamcrit AFTER canadjust but BEFORE early return here
+		received_stamina_damage(staminaloss, -1 * delta)
+
 	if(updating_stamina)
 		updatehealth()
 	return delta
