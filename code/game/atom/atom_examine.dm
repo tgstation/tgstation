@@ -61,11 +61,22 @@
 /*
  * A list of "tags" displayed after atom's description in examine.
  * This should return an assoc list of tags -> tooltips for them. If item if null, then no tooltip is assigned.
+ *
+ * * TGUI tooltips (not the main text) in chat cannot use HTML stuff at all, so
+ * trying something like `<b><big>ffff</big></b>` will not work for tooltips.
+ *
  * For example:
- * list("small" = "This is a small size class item.", "fireproof" = "This item is impervious to fire.")
+ * ```byond
+ * . = list()
+ * .["small"] = "It is a small item."
+ * .["fireproof"] = "It is made of fire-retardant materials."
+ * .["and conductive"] = "It's made of conductive materials and whatnot. Blah blah blah."
+ * ```
  * will result in
- * This is a small, fireproof item.
- * where "item" is pulled from examine_descriptor() proc
+ *
+ * It is a *small*, *fireproof* *and conductive* item.
+ *
+ * where "item" is pulled from [/atom/proc/examine_descriptor]
  */
 /atom/proc/examine_tags(mob/user)
 	. = list()
