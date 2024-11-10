@@ -288,7 +288,7 @@
 		/obj/item/pen/fourcolor,
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
-		/obj/item/hand_labeler,
+		/obj/item/laser_pointer,
 		/obj/item/clipboard,
 		/obj/item/lighter,
 	)
