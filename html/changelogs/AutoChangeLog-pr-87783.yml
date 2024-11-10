@@ -1,0 +1,4 @@
+author: "harryob"
+delete-after: True
+changes:
+  - bugfix: "you can no longer send newscaster messages to channels you don't have permissions for"
