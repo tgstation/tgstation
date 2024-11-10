@@ -287,10 +287,12 @@
 		/obj/item/pen/fountain,
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
+		/obj/item/taperecorder,
 		/obj/item/laser_pointer,
-		/obj/item/clipboard,
-        /obj/item/folder,
 		/obj/item/lighter,
+        /obj/item/folder,
+		/obj/item/clipboard,
+
 	)
 
 /obj/item/organ/cyberimp/arm/paperwork/l
