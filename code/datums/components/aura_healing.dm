@@ -132,7 +132,7 @@
 
 			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
 
-			if(stamina_heal)
+			if(stamina_heal) // this prevents an infinite stunlock if stamina_heal is 0 due to the stamina recovery timer always getting reset
 				candidate.adjustStaminaLoss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
 
 			for (var/organ in organ_healing)
