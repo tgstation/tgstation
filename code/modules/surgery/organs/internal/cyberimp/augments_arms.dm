@@ -300,12 +300,12 @@
 
 /obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
-		var/obj/contraband = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon & /obj/item/dest_tagger/borg, contraband))
+		var/obj/potential_tool = created_item.resolve()
+		if(istype(/obj/item/stamp/chameleon, /obj/item/dest_tagger/borg, potential_tool))
 			return FALSE
 
 	balloon_alert(user, "integrated tools unlocked")
-	items_list += WEAKREF(new /obj/item/stamp/chameleon & /obj/item/dest_tagger/borg,(src))
+	items_list += WEAKREF(new /obj/item/stamp/chameleon, new /obj/item/dest_tagger/borg,(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
