@@ -26,6 +26,18 @@
 	greyscale_colors = "#cc0000#5f5f5f"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/under/dress/doppler/giant_scarf
+	name = "giant scarf"
+	desc = "An absurdly massive scarf, worn as the main article of clothing over the body. Ironically, not very suitable for the cold."
+	icon_state = "giant_scarf"
+	body_parts_covered = CHEST|GROIN|LEGS
+	greyscale_config = /datum/greyscale_config/giant_scarf
+	greyscale_config_worn = /datum/greyscale_config/giant_scarf/worn
+	greyscale_colors = "#EEEEEE"
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /obj/item/clothing/under/dress/doppler/flower
 	name = "flower dress"
 	desc = "Lovely dress. Colored like the autumn leaves."

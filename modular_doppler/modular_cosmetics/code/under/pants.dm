@@ -108,3 +108,26 @@
 	name = "simple skirt"
 	desc = "A lone skirt, suitable to combo with your favorite getup."
 	icon_state = "skirt"
+
+/obj/item/clothing/under/dress/skirt/medium
+	name = "medium skirt"
+	desc = "An appealing medium-length skirt. Top not included."
+	icon_state = "medium_skirt"
+	body_parts_covered = GROIN
+	greyscale_config = /datum/greyscale_config/medium_skirt
+	greyscale_config_worn = /datum/greyscale_config/medium_skirt/worn
+	greyscale_colors = "#3a3c45"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/under/dress/skirt/long
+	name = "long skirt"
+	desc = "An appealing long skirt. At this point does it qualify as a dress?"
+	icon_state = "long_skirt"
+	body_parts_covered = GROIN|LEGS
+	greyscale_config = /datum/greyscale_config/long_skirt
+	greyscale_config_worn = /datum/greyscale_config/long_skirt/worn
+	greyscale_colors = "#3a3c45"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	flags_1 = IS_PLAYER_COLORABLE_1

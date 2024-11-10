@@ -131,6 +131,16 @@
 	name = "Pentagram Strapped Dress (Worn)"
 	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
 
+/datum/greyscale_config/giant_scarf
+	name = "Giant Scarf"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/obj/under.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/giant_scarf.json'
+
+/datum/greyscale_config/giant_scarf/worn
+	name = "Giant Scarf (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/GAGS/icons/mob/under.dmi'
+
+
 /// LUNAR JAPANESE SECTION
 
 /datum/greyscale_config/lunar_japanese
@@ -282,3 +292,21 @@
 /datum/greyscale_config/skimpypants/worn/digi
 	name = "Skimpy Pants (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/medium_skirt
+	name = "Medium Skirt"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/medium_skirt.json'
+
+/datum/greyscale_config/medium_skirt/worn
+	name = "Medium Skirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
+
+/datum/greyscale_config/long_skirt
+	name = "Long Skirt"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/miscellania.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/long_skirt.json'
+
+/datum/greyscale_config/long_skirt/worn
+	name = "Long Skirt (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/miscellania.dmi'
