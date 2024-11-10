@@ -285,11 +285,11 @@
 	actions_types = list(/datum/action/item_action/organ_action/toggle/toolkit)
 	items_to_create = list(
 		/obj/item/pen/fountain,
-		/obj/item/pen/fourcolor,
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
 		/obj/item/laser_pointer,
 		/obj/item/clipboard,
+        /obj/item/folder,
 		/obj/item/lighter,
 	)
 
