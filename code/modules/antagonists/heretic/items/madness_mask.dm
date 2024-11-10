@@ -56,6 +56,9 @@
 		if(IS_HERETIC_OR_MONSTER(human_in_range) || human_in_range.is_blind())
 			continue
 
+		if(human_in_range.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+			continue
+
 		human_in_range.mob_mood.direct_sanity_drain(rand(-2, -20) * seconds_per_tick)
 
 		if(SPT_PROB(60, seconds_per_tick))

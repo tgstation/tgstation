@@ -711,7 +711,8 @@
 
 /datum/component/personal_crafting/machine/get_environment(atom/crafter, list/blacklist = null, radius_range = 1)
 	. = list()
-	for(var/atom/movable/content in crafter.contents)
+	var/turf/crafter_loc = get_turf(crafter)
+	for(var/atom/movable/content as anything in crafter_loc.contents)
 		if((content.flags_1 & HOLOGRAM_1) || (blacklist && (content.type in blacklist)))
 			continue
 		if(isitem(content))
