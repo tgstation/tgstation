@@ -128,6 +128,10 @@
 		/obj/item/fish/greenchromis = 10,
 		/obj/item/fish/squid = 8,
 		/obj/item/fish/plaice = 8,
+		/obj/item/survivalcapsule/fishing = 1,
+	)
+	fish_counts = list(
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	catalog_description = "Beach dimension (Fishing portal generator)"
 	radial_name = "Beach"
@@ -160,14 +164,15 @@
 		/obj/effect/spawner/message_in_a_bottle = 2,
 		/obj/item/fish/lanternfish = 5,
 		/obj/item/fish/firefish = 5,
-		/obj/item/fish/dwarf_moonfish = 5,
 		/obj/item/fish/gunner_jellyfish = 5,
+		/obj/item/fish/moonfish/dwarf = 4,
 		/obj/item/fish/needlefish = 5,
 		/obj/item/fish/armorfish = 5,
 		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/stingray = 4,
 		/obj/item/fish/monkfish = 4,
 		/obj/item/fish/swordfish = 3,
+		/obj/item/fish/moonfish = 1,
 	)
 	fish_counts = list(
 		/obj/item/fish/swordfish = 2,
@@ -358,6 +363,7 @@
 
 /datum/fish_source/lavaland/icemoon
 	catalog_description = "Liquid plasma vents"
+	radial_state = "plasma"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 30,
@@ -397,9 +403,11 @@
 		/obj/item/fish/sludgefish = 18,
 		/obj/item/fish/slimefish = 4,
 		/obj/item/storage/wallet/money = 2,
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
+		/obj/item/survivalcapsule/fishing = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
@@ -623,3 +631,39 @@
 		/obj/item/fish/fryish/fritterish = 6 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 13
+
+/datum/fish_source/hot_spring
+	catalog_description = "Hot Springs"
+	radial_state = "onsen"
+	overlay_state = "portal_ocean"
+	fish_table = list(
+		FISHING_DUD = 20,
+		/obj/item/fish/bumpy = 10,
+		/obj/item/fish/sacabambaspis = 10,
+		/mob/living/basic/frog = 2,
+		/obj/item/fishing_rod/telescopic/master = 1,
+	)
+	fish_counts = list(
+		/obj/item/fish/sacabambaspis = 5,
+		/obj/item/fishing_rod/telescopic/master = 2,
+	)
+	fish_count_regen = list(
+		/obj/item/fish/sacabambaspis = 4 MINUTES,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
+
+/datum/fish_source/tizira
+	catalog_description = "Tiziran Sea"
+	radial_state = "planet"
+	overlay_state = "portal_beach"
+	fish_table = list(
+		FISHING_DUD = 10,
+		/obj/item/fish/needlefish = 5,
+		/obj/item/fish/armorfish = 5,
+		/obj/item/fish/gunner_jellyfish = 4,
+		/obj/item/fish/moonfish/dwarf = 2,
+		/obj/item/fish/moonfish = 2,
+	)
+	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
