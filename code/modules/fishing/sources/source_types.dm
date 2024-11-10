@@ -276,7 +276,7 @@
 
 ///In the spirit of randomness, we skew a few values here and there
 /datum/fish_source/portal/random/pre_challenge_started(obj/item/fishing_rod/rod, mob/user, datum/fishing_challenge/challenge)
-	challenge.bait_bounce_mult = clamp(challenge.bait_bounce_mult + (rand(-3, 3) * 0.1), 0.1, 1)
+	challenge.bait_bounce_mult = max(challenge.bait_bounce_mult + rand(-3, 3) * 0.1, 0.1)
 	challenge.completion_loss = max(challenge.completion_loss + rand(-2, 2), 0)
 	challenge.completion_gain = max(challenge.completion_gain + rand(-1, 1), 2)
 	challenge.mover.short_jump_velocity_limit += rand(-100, 100)
@@ -285,6 +285,12 @@
 	for(var/effect in active_effects)
 		if(prob(30))
 			challenge.special_effects |= effect
+	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_MOVER_INITIALIZED, PROC_REF(randomize_mover_velocity))
+
+/datum/fish_source/portal/random/proc/randomize_mover_velocity(datum/source, datum/fish_movement/mover)
+	SIGNAL_HANDLER
+	mover.short_jump_velocity_limit += rand(-100, 100)
+	mover.long_jump_velocity_limit += rand(-100, 100)
 
 ///Cherry on top, fish caught from the randomizer portal also have (almost completely) random traits
 /datum/fish_source/portal/random/spawn_reward(reward_path, atom/movable/spawn_location, turf/fishing_spot)
@@ -300,7 +306,7 @@
 
 	var/obj/item/fish/caught_fish = new reward_path(spawn_location, FALSE)
 	var/list/new_traits = list()
-	for(var/iteration in rand(1, 4))
+	for(var/iteration in 1 to rand(1, 4))
 		new_traits |= pick_weight(weighted_traits)
 	caught_fish.inherit_traits(new_traits)
 	caught_fish.randomize_size_and_weight(deviation = 0.3)
