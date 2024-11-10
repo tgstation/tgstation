@@ -1225,6 +1225,7 @@ dative = "чужому"
 accusative = "чужого"
 instrumental = "чужим"
 prepositional = "чужом"
+gender = "female"
 
 ["alien drone"]
 nominative = "дрон Чужих"
@@ -1233,6 +1234,7 @@ dative = "дрону Чужих"
 accusative = "дрона Чужих"
 instrumental = "дроном Чужих"
 prepositional = "дроне Чужих"
+gender = "female"
 
 ["alien sentinel"]
 nominative = "страж Чужих"
@@ -1241,6 +1243,7 @@ dative = "стражу Чужих"
 accusative = "стража Чужих"
 instrumental = "стражем Чужих"
 prepositional = "страже Чужих"
+gender = "female"
 
 ["alien hunter"]
 nominative = "охотник Чужих"
@@ -1249,6 +1252,7 @@ dative = "охотнику Чужих"
 accusative = "охотника Чужих"
 instrumental = "охотником Чужих"
 prepositional = "охотнике Чужих"
+gender = "female"
 
 ["alien larva"]
 nominative = "грудолом Чужих"
@@ -1257,6 +1261,7 @@ dative = "грудолому Чужих"
 accusative = "грудолома Чужих"
 instrumental = "грудоломом Чужих"
 prepositional = "грудоломе Чужих"
+gender = "female"
 
 ["alien praetorian"]
 nominative = "преторианец Чужих"
@@ -1265,6 +1270,7 @@ dative = "преторианцу Чужих"
 accusative = "преторианца Чужих"
 instrumental = "преторианцем Чужих"
 prepositional = "преторианце Чужих"
+gender = "female"
 
 ["alien queen"]
 nominative = "королева Чужих"
@@ -1273,6 +1279,7 @@ dative = "королеве Чужих"
 accusative = "королеву Чужих"
 instrumental = "королевой Чужих"
 prepositional = "королеве Чужих"
+gender = "female"
 
 ["alien princess"]
 nominative = "принцесса Чужих"
@@ -1281,6 +1288,7 @@ dative = "принцессе Чужих"
 accusative = "принцессу Чужих"
 instrumental = "принцессой Чужих"
 prepositional = "принцессе Чужих"
+gender = "female"
 
 # MARK: Machinery Uncategorized
 
@@ -1728,8 +1736,8 @@ nominative = "голова"
 genitive = "головы"
 dative = "голове"
 accusative = "голову"
-instrumental = "голове"
-prepositional = "биогенераторе"
+instrumental = "головой"
+prepositional = "голове"
 gender = "female"
 
 ["right arm"]
