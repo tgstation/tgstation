@@ -515,7 +515,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	balloon_alert(user, "safeties disabled")
-	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	create_sound(src, SFX_SPARKS).volume(25).vary(TRUE).extra_range(SHORT_RANGE_SOUND_EXTRARANGE).play()
 	return TRUE
 
 /obj/item/survivalcapsule/fishing/attack_self_secondary(mob/living/user)
@@ -538,7 +538,7 @@
 	template_id = spot_ids_by_name[choice]
 	template = SSmapping.shelter_templates[template_id]
 	to_chat(user, span_notice("You change [src]'s selected fishing spot to [choice]."))
-	playsound(src, 'sound/items/pen_click.ogg', 20, TRUE, -3)
+	create_sound(src, 'sound/items/pen_click.ogg').volume(20).vary(TRUE).extra_range(-3).play()
 	return
 
 /obj/item/survivalcapsule/fishing/get_ignore_flags()
