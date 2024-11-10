@@ -24,6 +24,7 @@
 		TRAIT_NOFLASH,
 		TRAIT_TRUE_NIGHT_VISION,
 		TRAIT_SIGHT_BYPASS,
+		TRAIT_HEARING_BYPASS,
 		TRAIT_EXPANDED_FOV,
 		TRAIT_GOOD_HEARING,
 		/* mental protection */
@@ -79,7 +80,7 @@
 // Prevent casting the spell w/o the core.
 /obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, datum/action/cooldown/spell/spell)
 	if((!core_installed) && spell.school == SCHOOL_PSYCHIC)
-		to_chat(caster, "You can't zap minds through [src]'s shielding without a core installed!")
+		to_chat(caster, span_warning("You can't zap minds through [src]'s shielding without a core installed!"))
 		return SPELL_CANCEL_CAST
 
 /obj/item/clothing/head/helmet/perceptomatrix/proc/update_anomaly_state()
@@ -96,7 +97,7 @@
 	attach_clothing_traits(initial(clothing_traits))
 
 	active_components += AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
-	active_components +=  AddComponent(
+	active_components += AddComponent(
 		/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = ITEM_SLOT_HEAD, \
