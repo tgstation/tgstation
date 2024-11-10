@@ -7,7 +7,7 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #00ff00,
+  $primary: hsl(120, 100%, 50%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
@@ -25,16 +25,16 @@
     '../components/Button.scss',
     $with: (
       'color-default': colors.$primary,
-      'color-disabled': #4a6a4a,
-      'color-selected': #00ff00
+      'color-disabled': hsl(120, 17.78%, 35.29%),
+      'color-selected': hsl(120, 100%, 50%)
     )
   );
   @include meta.load-css(
     '../components/Tabs.scss',
     $with: (
       'color-default': colors.$primary,
-      'tab-color-selected': #00ff003f,
-      'text-color': #e7e7e7
+      'tab-color-selected': hsla(120, 100%, 50%, 0.25),
+      'text-color': hsl(0, 0%, 90.59%)
     )
   );
   @include meta.load-css(
@@ -60,7 +60,7 @@
     font-family: monospace;
     border-width: base.em(2px);
     border-style: outset;
-    border-color: #00aa00;
+    border-color: hsl(120, 100%, 33.33%);
     outline: base.em(1px) solid rgb(0, 122, 0);
   }
 
