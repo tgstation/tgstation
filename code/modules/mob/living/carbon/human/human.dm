@@ -1056,8 +1056,9 @@
 	var/eye_color = eye_color_right
 	var/priority
 	for (var/override_priority in eye_color_right_overrides)
-		if (text2num(override_priority) > priority)
-			priority = text2num(override_priority)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
 			eye_color = eye_color_right_overrides[override_priority]
 	return eye_color
 
@@ -1068,8 +1069,9 @@
 	var/eye_color = eye_color_left
 	var/priority
 	for (var/override_priority in eye_color_left_overrides)
-		if (text2num(override_priority) > priority)
-			priority = text2num(override_priority)
+		var/new_priority = text2num(override_priority)
+		if (new_priority > priority)
+			priority = new_priority
 			eye_color = eye_color_left_overrides[override_priority]
 	return eye_color
 
