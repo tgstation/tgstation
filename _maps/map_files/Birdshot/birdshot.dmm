@@ -29342,7 +29342,7 @@
 "jYr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/mecha_part_fabricator{
-	dir = 8
+	drop_direction = 8
 	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark,

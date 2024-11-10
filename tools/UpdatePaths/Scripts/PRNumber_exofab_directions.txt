@@ -1,0 +1,10 @@
+/obj/machinery/mecha_part_fabricator{dir = 1} : /obj/machinery/mecha_part_fabricator{@OLD;dir=@SKIP;drop_direction=1}
+/obj/machinery/mecha_part_fabricator{dir = 2} : /obj/machinery/mecha_part_fabricator{@OLD;dir=@SKIP}
+/obj/machinery/mecha_part_fabricator{dir = 4} : /obj/machinery/mecha_part_fabricator{@OLD;dir=@SKIP;drop_direction=4}
+/obj/machinery/mecha_part_fabricator{dir = 8} : /obj/machinery/mecha_part_fabricator{@OLD;dir=@SKIP;drop_direction=8}
+
+
+/obj/machinery/mecha_part_fabricator/@SUBTYPES{dir = 1} : /obj/machinery/mecha_part_fabricator/@SUBTYPES{@OLD;dir=@SKIP;drop_direction=1}
+/obj/machinery/mecha_part_fabricator/@SUBTYPES{dir = 2} : /obj/machinery/mecha_part_fabricator/@SUBTYPES{@OLD;dir=@SKIP}
+/obj/machinery/mecha_part_fabricator/@SUBTYPES{dir = 4} : /obj/machinery/mecha_part_fabricator/@SUBTYPES{@OLD;dir=@SKIP;drop_direction=4}
+/obj/machinery/mecha_part_fabricator/@SUBTYPES{dir = 8} : /obj/machinery/mecha_part_fabricator/@SUBTYPES{@OLD;dir=@SKIP;drop_direction=8}
