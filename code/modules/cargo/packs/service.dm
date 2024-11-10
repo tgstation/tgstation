@@ -288,7 +288,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/book/manual/fish_catalog,
 					/obj/item/storage/fish_case/random/freshwater = 3,
-					/obj/item/fish_feed,
+					/obj/item/reagent_containers/cup/fish_feed,
 					/obj/item/storage/box/aquarium_props,
 					/obj/item/aquarium_kit,
 				)
