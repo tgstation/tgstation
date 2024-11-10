@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - server: "mob/camera has been renamed to mob/eye, which may break downstreams"
