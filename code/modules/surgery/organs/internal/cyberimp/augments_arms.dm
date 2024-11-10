@@ -301,21 +301,21 @@
 /obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/contraband = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon, /obj/item/dest_tagger/borg, contraband))
+		if(istype(/obj/item/stamp/chameleon & /obj/item/dest_tagger/borg, contraband))
 			return FALSE
 
 	balloon_alert(user, "integrated tools unlocked")
-	items_list += WEAKREF(new /obj/item/stamp/chameleon, /obj/item/dest_tagger/borg(src))
+	items_list += WEAKREF(new /obj/item/stamp/chameleon & /obj/item/dest_tagger/borg,(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
-		if(istype(/obj/item/knife/combat/cyborg, /obj/item/dest_tagger/borg, potential_knife))
+		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
 	balloon_alert(user, "integrated knife unlocked")
-	items_list += WEAKREF(new /obj/item/knife/combat/cyborg, /obj/item/dest_tagger/borg,(src))
+	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
