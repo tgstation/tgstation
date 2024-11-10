@@ -77,7 +77,7 @@
 	..()
 
 // Prevent casting the spell w/o the core.
-/obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, /datum/action/cooldown/spell/spell)
+/obj/item/clothing/head/helmet/perceptomatrix/proc/pre_cast_core_check(mob/caster, datum/action/cooldown/spell/spell)
 	if((!core_installed) && spell.school == SCHOOL_PSYCHIC)
 		to_chat(caster, "You can't zap minds through [src]'s shielding without a core installed!")
 		return SPELL_CANCEL_CAST
