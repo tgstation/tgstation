@@ -372,7 +372,7 @@
 	new /obj/item/storage/box/fishing_hooks/master(src)
 	new /obj/item/storage/box/fishing_lines/master(src)
 	new /obj/item/bait_can/super_baits(src)
-	new /obj/item/fish_feed(src)
+	new /obj/item/reagent_containers/cup/fish_feed(src)
 	new /obj/item/aquarium_kit(src)
 	new /obj/item/fish_analyzer(src)
 

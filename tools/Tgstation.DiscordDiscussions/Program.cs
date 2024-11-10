@@ -174,7 +174,7 @@ namespace Tgstation.DiscordDiscussions
 				var isReopen = Boolean.Parse(args[7]);
 				var joinLink = args.Length > 8 ? args[8] : null;
 
-				var prTitle = Environment.GetEnvironmentVariable("GITHUB_PULL_REQUEST_TITLE");
+				var prTitle = Environment.GetEnvironmentVariable("GITHUB_PULL_REQUEST_TITLE")!;
 
 				var gitHubClient = new GitHubClient(new ProductHeaderValue("Tgstation.DiscordDiscussions"))
 				{
@@ -213,6 +213,12 @@ namespace Tgstation.DiscordDiscussions
 
 					var prLink = $"https://github.com/{repoOwner}/{repoName}/pull/{prNumber}";
 					var messageContent = $"#{prNumber} - {prTitle}";
+
+					// thread titles can only be 100 long
+					if (messageContent.Length > 100)
+					{
+						messageContent = $"#{prNumber} - {prTitle[..^(messageContent.Length - 97)]}...";
+					}
 
 					var channelsClient = serviceProvider.GetRequiredService<IDiscordRestChannelAPI>();
 

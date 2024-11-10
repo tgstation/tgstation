@@ -1027,36 +1027,93 @@
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
+	PROTECTED_PROC(TRUE)
+
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
-/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user, atom/movable/grinder = loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = FALSE
-	if(on_grind() == -1)
+	if(on_grind() == -1 || target_holder.holder_full())
 		return
 
+	. = grind_atom(target_holder, user)
+
+	//reccursive grinding to get all them juices
+	var/result
+	for(var/obj/item/ingredient as anything in get_all_contents_type(/obj/item))
+		if(ingredient == src)
+			continue
+
+		result = ingredient.grind(target_holder, user)
+		if(!.)
+			. = result
+
+	if(. && istype(grinder))
+		return grinder.blended(src, grinded = TRUE)
+
+///Subtypes override his proc for custom grinding
+/obj/item/proc/grind_atom(datum/reagents/target_holder, mob/user)
+	PROTECTED_PROC(TRUE)
+
+	. = FALSE
 	if(length(grind_results))
 		target_holder.add_reagent_list(grind_results)
 		. = TRUE
-	if(reagents?.total_volume)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user))
 		. = TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
+	PROTECTED_PROC(TRUE)
+
 	if(!juice_typepath)
 		return -1
+
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
 ///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
-/obj/item/proc/juice(datum/reagents/target_holder, mob/user)
+/obj/item/proc/juice(datum/reagents/target_holder, mob/user, atom/movable/juicer = loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	. = FALSE
 	if(on_juice() == -1 || !reagents?.total_volume)
-		return FALSE
+		return
+
+	. = juice_atom(target_holder, user)
+
+	//reccursive juicing to get all them juices
+	var/result
+	for(var/obj/item/ingredient as anything in get_all_contents_type(/obj/item))
+		if(ingredient == src)
+			continue
+
+		result = ingredient.juice(target_holder, user)
+		if(!.)
+			. = result
+
+	if(. && istype(juicer))
+		return juicer.blended(src, grinded = FALSE)
+
+///Subtypes override his proc for custom juicing
+/obj/item/proc/juice_atom(datum/reagents/target_holder, mob/user)
+	PROTECTED_PROC(TRUE)
+
+	. = FALSE
 
 	if(ispath(juice_typepath))
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
 		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
-	reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+		. = TRUE
+
+	if(!QDELETED(target_holder))
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
+///What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
+/atom/movable/proc/blended(obj/item/blended_item, grinded)
+	qdel(blended_item)
 
 	return TRUE
 
