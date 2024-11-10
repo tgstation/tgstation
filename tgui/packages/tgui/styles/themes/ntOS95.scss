@@ -6,19 +6,19 @@
 @use 'sass:color';
 @use 'sass:meta';
 
-$light-gray: #c3c3c3;
-$dark-gray: #858585;
+$light-gray: hsl(0, 0%, 76%);
+$dark-gray: hsl(0, 0%, 52%);
 $scrollbar-color-multiplier: 1;
 
 @use '../colors.scss' with (
-  $primary: #000000,
-  $good: #007c11,
-  $average: #f0ec11,
-  $bad: #db2828,
-  $label: #000000
+  $primary: hsl(0, 0%, 0%),
+  $good: hsl(134, 100%, 24.3%),
+  $average: hsl(56, 88%, 50%),
+  $bad: hsl(0, 72%, 50%),
+  $label: hsl(0, 0%, 0%)
 );
 @use '../base.scss' with (
-  $color-bg: #008081,
+  $color-bg: hsl(180, 100%, 25.3%),
   $color-bg-grad-spread: 0%,
   $border-radius: 0
 );

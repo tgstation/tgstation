@@ -7,7 +7,8 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $primary: #1596b6,
+  // convert to hsl
+  $primary: hsl(191.93, 79.31%, 39.8%),
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
