@@ -32,6 +32,9 @@
 // Keycard Authenticator
 #include "keycard_auth/code/keycard_auth.dm"
 
+// Microwave
+#include "kitchen/code/microwave.dm"
+
 // Light Switch
 #include "lightswitch/code/lightswitch.dm"
 
@@ -43,6 +46,9 @@
 
 // Radio
 #include "radio/code/radio.dm"
+
+// Railings
+#include "railings/code/railings.dm"
 
 // Supply Pods
 #include "supply_pods/code/supply_pods.dm"
