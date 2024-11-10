@@ -162,6 +162,33 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	layer = LIGHTING_ABOVE_ALL + 1 //Infinity plus one (not actually)
 	blend_mode = BLEND_MULTIPLY
 
+/atom/movable/screen/fullscreen/high/New(...)
+
+	. = ..()
+
+	alpha = 0
+
+	animate(
+		src,
+		alpha = 255,
+		time = 10 SECONDS
+	)
+
+	animate(
+		src,
+		color = color_matrix_rotate_hue(0),
+		loop = -1,
+		time = 2 SECONDS
+	)
+
+	var/step_precision = 18 //Larger is more precise rotations.
+	for(var/current_step=1,current_step<=step_precision-1,current_step++) //We do the -1 here because 360 == 0 when it comes to angles.
+		animate(
+			color = color_matrix_rotate_hue(current_step * 360/step_precision),
+			time = 2 SECONDS,
+		)
+
+
 /atom/movable/screen/fullscreen/color_vision
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
