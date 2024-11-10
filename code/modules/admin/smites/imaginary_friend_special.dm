@@ -138,8 +138,8 @@
 		if(isliving(client_mob))
 			client_mob.ghostize()
 
-		var/mob/camera/imaginary_friend/friend_mob = client_mob.change_mob_type(
-			new_type = /mob/camera/imaginary_friend,
+		var/mob/eye/imaginary_friend/friend_mob = client_mob.change_mob_type(
+			new_type = /mob/eye/imaginary_friend,
 			location = get_turf(client_mob),
 			delete_old_mob = TRUE,
 		)

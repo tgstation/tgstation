@@ -43,6 +43,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/fish/stingray = FISH_ICON_WEAPON,
 		/obj/item/fish/swordfish = FISH_ICON_WEAPON,
 		/obj/item/fish/zipzap = FISH_ICON_ELECTRIC,
+		/obj/item/fishing_rod = FISH_ICON_COIN,
 		/obj/item/instrument/trumpet/spectral = FISH_ICON_BONE,
 		/obj/item/instrument/saxophone/spectral = FISH_ICON_BONE,
 		/obj/item/instrument/trombone/spectral = FISH_ICON_BONE,
@@ -53,6 +54,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/obj/item/stack/sheet/bone = FISH_ICON_BONE,
 		/obj/item/stack/sheet/mineral = FISH_ICON_GEM,
 		/obj/item/stack/ore = FISH_ICON_GEM,
+		/obj/item/survivalcapsule/fishing = FISH_ICON_COIN,
 		/obj/structure/closet/crate = FISH_ICON_COIN,
 		/obj/structure/mystery_box = FISH_ICON_COIN,
 	))
@@ -97,7 +99,6 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		/mob/living/basic/mining/lobstrosity,
 		/obj/structure/closet/crate/necropolis/tendril,
 	))
-
 
 	///List of multipliers used to make fishes more common compared to everything else depending on bait quality, indexed from best to worst.
 	var/static/weight_result_multiplier = list(

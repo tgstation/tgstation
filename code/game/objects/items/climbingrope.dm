@@ -68,6 +68,7 @@
 	if(do_after(user, final_climb_time, target))
 		user.forceMove(target)
 		uses--
+		user.mind?.adjust_experience(/datum/skill/athletics, 50) //get some experience for our trouble, especially since this costs us a climbing rope use
 
 	if(uses <= 0)
 		user.visible_message(span_warning("[src] snaps and tears apart!"))

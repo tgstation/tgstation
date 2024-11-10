@@ -3330,10 +3330,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "aSq" = (
@@ -11244,10 +11243,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "cPR" = (
@@ -43703,10 +43701,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "loa" = (
@@ -51275,10 +51272,9 @@
 	desc = "This is in our water? Gross!";
 	name = "algae mass"
 	},
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "nhV" = (
@@ -86666,10 +86662,9 @@
 /area/station/maintenance/department/engine/atmos)
 "wor" = (
 /obj/machinery/light/red/dim/directional/south,
-/turf/open/water/jungle{
+/turf/open/water/no_planet_atmos{
 	desc = "Filthy.";
-	name = "untreated water";
-	planetary_atmos = 0
+	name = "untreated water"
 	},
 /area/station/maintenance/floor1/port/aft)
 "wot" = (

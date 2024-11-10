@@ -265,8 +265,10 @@
 	slot = ORGAN_SLOT_SPINE
 	/// How much faster does the spinal implant improve our lifting speed, workout ability, reducing falling damage and improving climbing and standing speed
 	var/athletics_boost_multiplier = 0.8
+	/// How much additional throwing speed does our spinal implant grant us.
+	var/added_throw_speed = 1
 	/// How much additional throwing range does our spinal implant grant us.
-	var/added_throw_range = 2
+	var/added_throw_range = 4
 	/// How much additional boxing damage and tackling power do we add?
 	var/strength_bonus = 4
 	/// Whether or not a gravity anomaly core has been installed, improving the effectiveness of the spinal implant.
@@ -285,16 +287,20 @@
 	. = ..()
 	stone_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "stone")
 	organ_owner.add_overlay(stone_overlay)
+	add_organ_trait(TRAIT_BOULDER_BREAKER)
 	if(core_applied)
 		organ_owner.AddElement(/datum/element/forced_gravity, 1)
+		add_organ_trait(TRAIT_STURDY_FRAME)
 
 /obj/item/organ/cyberimp/chest/spine/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
+	remove_organ_trait(TRAIT_BOULDER_BREAKER)
 	if(stone_overlay)
 		organ_owner.cut_overlay(stone_overlay)
 		stone_overlay = null
 	if(core_applied)
 		organ_owner.RemoveElement(/datum/element/forced_gravity, 1)
+		remove_organ_trait(TRAIT_STURDY_FRAME)
 
 /obj/item/organ/cyberimp/chest/spine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -304,14 +310,26 @@
 
 	if(istype(tool, /obj/item/assembly/signaler/anomaly/grav))
 		user.balloon_alert(user, "core installed.")
-		athletics_boost_multiplier = 0.25
-		added_throw_range += 2
-		strength_bonus += 4
+		name = /obj/item/organ/cyberimp/chest/spine/atlas::name
+		desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
+		athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier
+		added_throw_range = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_range
+		added_throw_speed = /obj/item/organ/cyberimp/chest/spine/atlas::added_throw_speed
+		strength_bonus = /obj/item/organ/cyberimp/chest/spine/atlas::strength_bonus
 		core_applied = TRUE
-		name = "\improper Atlas gravitonic spinal implant"
-		desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
-			This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation."
-		icon_state = "herculean_implant_core"
 		update_appearance()
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/cyberimp/chest/spine/atlas
+	name = "\improper Atlas gravitonic spinal implant"
+	desc = "This gravitronic spinal interface is able to improve the athletics of a user, allowing them greater physical ability. \
+		This one has been improved through the installation of a gravity anomaly core, allowing for personal gravity manipulation. \
+		Not only can you walk with your feet planted firmly on the ground even during a loss of enviromental gravity, but you also \
+		carry heavier loads with relative ease."
+	icon_state = "herculean_implant_core"
+	athletics_boost_multiplier = 0.25
+	added_throw_speed = 6
+	added_throw_range = 8
+	strength_bonus = 8
+	core_applied = TRUE

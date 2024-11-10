@@ -1,6 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - rscdel: "SiliConnect, a tool meant for Roboticists, is no longer included by default on borgs."
-  - rscadd: "RoboTact, the borg self-status app, now shows the status of other borgs synced to the same AI. Syndicate borgs can likewise see eachother's status, even without an AI."
-  - balance: "RoboTact also shows their synced AI's very basic status of functional or offline."

@@ -262,9 +262,9 @@
 	wearer.update_obscured_slots(part.visor_flags_inv)
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
 		wearer.cutoff_internals()
-	if(!active)
-		return
 	if(is_sealed)
+		if (!active)
+			return
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
@@ -293,10 +293,13 @@
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
-			if(!module.part_activated || module.has_required_parts(mod_parts, need_active = TRUE))
+			if(!module.part_activated)
 				continue
 			module.on_part_deactivation()
 			module.part_activated = FALSE
+			if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
+				continue
+			module.deactivate(display_message = FALSE)
 	update_speed()
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)

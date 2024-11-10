@@ -40,10 +40,6 @@
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
-	/// The color of the previous left eye before this one was inserted
-	var/old_eye_color_left = "fff"
-	/// The color of the previous right eye before this one was inserted
-	var/old_eye_color_right = "fff"
 
 	/// Glasses cannot be worn over these eyes. Currently unused
 	var/no_glasses = FALSE
@@ -55,14 +51,7 @@
 	var/scarring = NONE
 
 /obj/item/organ/eyes/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
-	if(ishuman(receiver))
-		var/mob/living/carbon/human/human_recipient = receiver
-		old_eye_color_left = human_recipient.eye_color_left
-		old_eye_color_right = human_recipient.eye_color_right
-
 	. = ..()
-
 	receiver.cure_blind(NO_EYES)
 	apply_damaged_eye_effects()
 	refresh(receiver, call_update = TRUE)
@@ -78,14 +67,11 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = eye_owner
-	if(initial(eye_color_left))
-		affected_human.eye_color_left = eye_color_left
-	else
-		eye_color_left = affected_human.eye_color_left
-	if(initial(eye_color_right))
-		affected_human.eye_color_right = eye_color_right
-	else
-		eye_color_right = affected_human.eye_color_right
+	if(eye_color_left)
+		affected_human.add_eye_color_left(eye_color_left, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
+	if(eye_color_right)
+		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
+
 	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
 		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
@@ -99,10 +85,7 @@
 
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
-		if(initial(eye_color_left))
-			human_owner.eye_color_left = old_eye_color_left
-		if(initial(eye_color_right))
-			human_owner.eye_color_right = old_eye_color_right
+		human_owner.remove_eye_color(EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
@@ -207,8 +190,8 @@
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		if(IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || (parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT)))
 			// show the eyes as open
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+			eye_right.color = parent.get_right_eye_color()
+			eye_left.color = parent.get_left_eye_color()
 		else
 			// show the eyes as closed, and as such color them like eyelids wound be colored
 			var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
@@ -569,8 +552,8 @@
 /// Set the initial color of the eyes on insert to be the mob's previous eye color.
 /obj/item/organ/eyes/robotic/glow/mob_insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
-	left_eye_color_string = old_eye_color_left
-	right_eye_color_string = old_eye_color_right
+	left_eye_color_string = eye_color_left
+	right_eye_color_string = eye_color_right
 	update_mob_eye_color(eye_recipient)
 
 /obj/item/organ/eyes/robotic/glow/on_mob_insert(mob/living/carbon/eye_recipient)

@@ -170,6 +170,13 @@
 		if(start_T && end_T)
 			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 	var/power_throw = 0
+	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		power_throw += potential_spine.added_throw_speed
+		extra_throw_range += potential_spine.added_throw_range
+
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		power_throw++
 	if(HAS_TRAIT(src, TRAIT_DWARF))
@@ -205,11 +212,6 @@
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
-	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		extra_throw_range += potential_spine.added_throw_range
 
 	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
 	if (isitem(thrown_thing))

@@ -110,13 +110,14 @@ SUBSYSTEM_DEF(tts)
 		if(QDELING(listening_mob))
 			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
-		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
+		/// volume modifier for TTS as set by the player in preferences.
+		var/volume_modifier = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)/100
 		var/tts_pref = listening_mob.client?.prefs.read_preference(/datum/preference/choiced/sound_tts)
-		if(volume_to_play_at == 0 || (tts_pref == TTS_SOUND_OFF))
+		if(volume_modifier == 0 || (tts_pref == TTS_SOUND_OFF))
 			continue
 
 		var/sound_volume = ((listening_mob == target)? 60 : 85) + volume_offset
-		sound_volume = sound_volume * (volume_to_play_at / 100)
+		sound_volume = sound_volume*volume_modifier
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		var/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
 		if(!holder.has_language(language))

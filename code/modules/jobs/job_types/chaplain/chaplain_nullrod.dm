@@ -300,6 +300,7 @@
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
@@ -399,6 +400,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = null
 	item_flags = ABSTRACT
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
@@ -522,6 +524,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT
+	resistance_flags = FIRE_PROOF|ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
@@ -572,7 +575,7 @@
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
-	force = 14
+	force = 10
 	block_chance = 40
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
@@ -600,6 +603,10 @@
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
+/obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 
