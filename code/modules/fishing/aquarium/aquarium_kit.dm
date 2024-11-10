@@ -1,15 +1,18 @@
 ///Fish feed can
-/obj/item/fish_feed
+/obj/item/reagent_containers/cup/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/fish_feed/Initialize(mapload)
-	. = ..()
-	create_reagents(5, OPENCONTAINER)
-	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2.5) //Default fish diet
+	spillable = FALSE
+	volume = 5
+	amount_per_transfer_from_this = 2.5
+	has_variable_transfer_amount = FALSE
+	reagent_flags = OPENCONTAINER
+	reagent_container_liquid_sound = null
+	list_reagents = list(/obj/item/fish::food = 2.5) //Default fish diet
+	gulp_size = 1
 
 /**
  * Stasis fish case container for moving fish between aquariums safely.

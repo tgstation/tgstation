@@ -43172,7 +43172,7 @@
 /area/station/ai_monitored/aisat/exterior)
 "pqI" = (
 /obj/structure/lattice/catwalk,
-/obj/item/fish_feed,
+/obj/item/reagent_containers/cup/fish_feed,
 /turf/open/space/basic,
 /area/space/nearstation)
 "prc" = (
