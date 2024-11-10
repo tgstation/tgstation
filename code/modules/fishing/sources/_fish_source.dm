@@ -471,7 +471,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 /datum/fish_source/proc/spawn_reward_from_explosion(atom/location, severity)
 	if(!(fish_source_flags & FISH_SOURCE_FLAG_EXPLOSIVE_MALUS))
-		explosive_spawn(location.drop_location(), severity)
+		explosive_spawn(isturf(location) ? location : location.drop_location(), severity)
 		return
 	if(isnull(exploded_turfs))
 		exploded_turfs = list()
