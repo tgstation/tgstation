@@ -454,6 +454,11 @@
 			//are we printing a valid container
 			var/container_found = FALSE
 			for(var/category in printable_containers)
+				//container found in previous iteration
+				if(container_found)
+					break
+
+				//find for matching typepath
 				for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
 					if(target == container)
 						container_found = TRUE
