@@ -43,15 +43,8 @@
 	var/aquarium_zone_min_py = 10
 	var/aquarium_zone_max_py = 28
 
-	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
-
-	var/panel_open = FALSE
-
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
-
-	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
-	var/list/tracked_fish_by_type
 
 	/// Var used to keep track of the current beauty of the aquarium, which can be throughfully changed by aquarium content.
 	var/current_beauty = 150
@@ -59,90 +52,11 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	AddComponent(src, /datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(track_if_fish))
 	AddElement(/datum/element/relay_attackers)
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
-	create_reagents(6, SEALED_CONTAINER)
-	RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
-	if(current_beauty)
-		AddElement(/datum/element/beauty, current_beauty)
-	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
-
-/obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
-	SIGNAL_HANDLER
-	if(isfish(initialized))
-		LAZYADDASSOCLIST(tracked_fish_by_type, initialized.type, initialized)
-
-/obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(isfish(arrived))
-		LAZYADDASSOCLIST(tracked_fish_by_type, arrived.type, arrived)
-
-/obj/structure/aquarium/Exited(atom/movable/gone, direction)
-	. = ..()
-	LAZYREMOVEASSOC(tracked_fish_by_type, gone.type, gone)
-
-/obj/structure/aquarium/proc/start_autofeed(datum/source, new_reagent, amount, reagtemp, data, no_react)
-	SIGNAL_HANDLER
-	START_PROCESSING(SSobj, src)
-	UnregisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT)
-
-/obj/structure/aquarium/process(seconds_per_tick)
-	if(!reagents.total_volume)
-		RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
-		return PROCESS_KILL
-	if(world.time < last_feeding + feeding_interval)
-		return
-	last_feeding = world.time
-	var/list/fishes = get_fishes()
-	for(var/obj/item/fish/fish as anything in fishes)
-		fish.feed(reagents)
-
-/// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
-/obj/structure/aquarium/proc/get_fishes(shuffle = FALSE, blacklist)
-	. = list()
-	for(var/fish_type in tracked_fish_by_type)
-		. += tracked_fish_by_type[fish_type]
-	. -= blacklist
-	if(shuffle)
-		. = shuffle(.)
-	return .
-
-/obj/structure/aquarium/proc/request_layer(layer_type)
-	/**
-	 * base aq layer
-	 * min_offset = this value is returned on bottom layer mode
-	 * min_offset + 0.1 fish1
-	 * min_offset + 0.2 fish2
-	 * ... these layers are returned for auto layer mode and tracked by used_layers
-	 * min_offset + max_offset = this value is returned for top layer mode
-	 * min_offset + max_offset + 1 = this is used for glass overlay
-	 */
-	//optional todo: hook up sending surface changed on aquarium changing layers
-	switch(layer_type)
-		if(AQUARIUM_LAYER_MODE_BEHIND_GLASS)
-			return layer + AQUARIUM_BELOW_GLASS_LAYER
-		if(AQUARIUM_LAYER_MODE_BOTTOM)
-			return layer + AQUARIUM_MIN_OFFSET
-		if(AQUARIUM_LAYER_MODE_TOP)
-			return layer + AQUARIUM_MAX_OFFSET
-		if(AQUARIUM_LAYER_MODE_AUTO)
-			var/chosen_layer = AQUARIUM_MIN_OFFSET + AQUARIUM_LAYER_STEP
-			while((chosen_layer in used_layers) && (chosen_layer <= AQUARIUM_MAX_OFFSET))
-				chosen_layer += AQUARIUM_LAYER_STEP
-			used_layers += chosen_layer
-			return layer + chosen_layer
-
-/obj/structure/aquarium/proc/free_layer(value)
-	used_layers -= value
-
-/obj/structure/aquarium/proc/get_surface_properties()
-	. = list()
-	.[AQUARIUM_PROPERTIES_PX_MIN] = aquarium_zone_min_px
-	.[AQUARIUM_PROPERTIES_PX_MAX] = aquarium_zone_max_px
-	.[AQUARIUM_PROPERTIES_PY_MIN] = aquarium_zone_min_py
-	.[AQUARIUM_PROPERTIES_PY_MAX] = aquarium_zone_max_py
 
 /obj/structure/aquarium/update_icon()
 	. = ..()
@@ -151,7 +65,7 @@
 
 /obj/structure/aquarium/update_overlays()
 	. = ..()
-	if(panel_open)
+	if(HAS_TRAIT(src, TRAIT_AQUARIUM_PANEL_OPEN))
 		. += icon_prefix + "_panel"
 
 	///The glass overlay
@@ -162,35 +76,10 @@
 	. += mutable_appearance(icon, icon_prefix + "_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
 	. += mutable_appearance(icon, icon_prefix + "_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
-/obj/structure/aquarium/examine(mob/user)
-	. = ..()
-	. += span_notice("<b>Alt-click</b> to [panel_open ? "close" : "open"] the control and feed panel.")
-	if(panel_open && reagents.total_volume)
-		. += span_notice("You can use a plunger to empty the feed storage.")
-
-/obj/structure/aquarium/click_alt(mob/living/user)
-	panel_open = !panel_open
-	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
-	if(panel_open)
-		reagents.flags |= TRANSPARENT|REFILLABLE
-	else
-		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
-	update_appearance()
-	return CLICK_ACTION_SUCCESS
-
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/structure/aquarium/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	if(!panel_open)
-		return
-	user.balloon_alert_to_viewers("plunging...")
-	if(do_after(user, 3 SECONDS, target = src))
-		user.balloon_alert_to_viewers("finished plunging")
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
 
 /obj/structure/aquarium/attackby(obj/item/item, mob/living/user, params)
 	if(broken)
@@ -206,32 +95,7 @@
 				atom_integrity = max_integrity
 				update_appearance()
 			return TRUE
-	else
-		var/insert_attempt = SEND_SIGNAL(item, COMSIG_TRY_INSERTING_IN_AQUARIUM, src)
-		switch(insert_attempt)
-			if(COMSIG_CAN_INSERT_IN_AQUARIUM)
-				if(!user.transferItemToLoc(item, src))
-					user.balloon_alert(user, "stuck to your hand!")
-					return TRUE
-				balloon_alert(user, "added to aquarium")
-				update_appearance()
-				return TRUE
-			if(COMSIG_CANNOT_INSERT_IN_AQUARIUM)
-				balloon_alert(user, "cannot add to aquarium!")
-				return TRUE
 
-	if(istype(item, /obj/item/reagent_containers/cup/fish_feed) && !panel_open)
-		if(!item.reagents.total_volume)
-			balloon_alert(user, "[item] is empty!")
-			return TRUE
-		var/list/fishes = get_fishes()
-		if(!length(fishes))
-			balloon_alert(user, "no fish to feed!")
-			return TRUE
-		for(var/obj/item/fish/fish as anything in fishes)
-			fish.feed(item.reagents)
-		balloon_alert(user, "fed the fish")
-		return TRUE
 	if(istype(item, /obj/item/aquarium_upgrade))
 		var/obj/item/aquarium_upgrade/upgrade = item
 		if(upgrade.upgrade_from_type != type)
@@ -247,13 +111,8 @@
 		qdel(upgrade)
 		qdel(src)
 		return
-	return ..()
 
-/obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
-	var/list/fishes = get_fishes()
-	//I wish this were an aquarium signal, but the aquarium_content component got in the way.
-	for(var/obj/item/fish/fish as anything in fishes)
-		SEND_SIGNAL(fish, COMSIG_FISH_STIRRED)
+	return ..()
 
 /obj/structure/aquarium/interact(mob/user)
 	if(panel_open)

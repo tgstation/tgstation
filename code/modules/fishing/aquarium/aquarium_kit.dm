@@ -135,14 +135,20 @@
 	. = ..()
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
-	AddComponent(/datum/component/aquarium_content, beauty = beauty)
+	AddComponent(/datum/component/aquarium_content)
 	ADD_TRAIT(src, TRAIT_UNIQUE_AQUARIUM_CONTENT, INNATE_TRAIT)
+
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 
 /obj/item/aquarium_prop/proc/generate_aquarium_appearance(datum/source, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
 	visual.icon = icon
 	visual.icon_state = icon_state
 	visual.layer_mode = layer_mode
+
+/obj/item/aquarium_proc/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	beauty_holder += beauty
 
 /obj/item/aquarium_prop/rocks
 	name = "decorative rocks"

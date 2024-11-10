@@ -158,6 +158,12 @@
 #define FISH_FLAG_EXPERIMENT_SCANNABLE (1<<3)
 ///It lets us know that fish/update_size_and_weight() is currently running.
 #define FISH_FLAG_UPDATING_SIZE_AND_WEIGHT (1<<4)
+///Flag added when the population of this fish type exceeeds the stable population inside the aquarium
+#define FISH_FLAG_OVERPOPULATED (1<<5)
+///Flag added when in an aquarium which temperature is within its safe limits
+#define FISH_FLAG_SAFE_TEMPERATURE (1<<6)
+///Flag added when in an aquarium with the right fluid type.
+#define FISH_FLAG_SAFE_FLUID (1<<7)
 
 
 #define MIN_AQUARIUM_TEMP T0C

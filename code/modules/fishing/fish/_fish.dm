@@ -178,8 +178,9 @@
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
 	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(update_aquarium_appearance))
-	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED), beauty)
+	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED))
 
+	RegisterSignal(src, COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY, PROC_REF(get_aquarium_beauty))
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 	if(fish_flags & FISH_DO_FLOP_ANIM)
 		RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
@@ -828,14 +829,13 @@
 
 ///Proc that should be called when the fish is fed. By default, it grows the fish depending on various variables.
 /obj/item/fish/proc/sate_hunger()
-	if(isaquarium(loc))
-		var/obj/structure/aquarium/aquarium = loc
-		if(!aquarium.reproduction_and_growth)
-			return
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH))
+		last_feeding = world.time
+		return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
+		last_feeding = world.time
 		return
-	last_feeding = world.time
 	var/new_size = size
 	var/new_weight = weight
 	var/hunger_mult
@@ -997,45 +997,42 @@
 
 /obj/item/fish/proc/randomize_aquarium_position(datum/source, obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
-	var/list/aq_properties = current_aquarium.get_surface_properties()
 	var/avg_width = round(sprite_width * 0.5)
 	var/avg_height = round(sprite_height * 0.5)
-	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
-	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
-	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
-	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_height - 16
+	var/px_min = visual.aquarium_zone_min_px + avg_width - 16
+	var/px_max = visual.aquarium_zone_max_px - avg_width - 16
+	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
+	var/py_max = visual.aquarium_zone_max_py - avg_height - 16
 
 	visual.pixel_x = visual.base_pixel_x = rand(px_min,px_max)
 	visual.pixel_y = visual.base_pixel_y = rand(py_min,py_max)
 
-/obj/item/fish/proc/get_aquarium_animation()
-	var/obj/structure/aquarium/aquarium = loc
-	if(!istype(aquarium) || aquarium.fluid_type == AQUARIUM_FLUID_AIR || status == FISH_DEAD)
-		return AQUARIUM_ANIMATION_FISH_DEAD
-	else
-		return AQUARIUM_ANIMATION_FISH_SWIM
-
-/obj/item/fish/proc/update_aquarium_animation(datum/source, current_animation, obj/structure/current_aquarium, obj/effect/visual)
+/obj/item/fish/proc/update_aquarium_animation(datum/source, current_animation, obj/effect/visual, fluid_type)
 	SIGNAL_HANDLER
-	var/animation = get_aquarium_animation()
+	var/animation = get_aquarium_animation(fluid_type)
 	if(animation == current_animation)
 		return
 	switch(animation)
 		if(AQUARIUM_ANIMATION_FISH_SWIM)
-			swim_animation(current_aquarium, visual)
+			swim_animation(aquarium_properties, visual)
 		if(AQUARIUM_ANIMATION_FISH_DEAD)
-			dead_animation(current_aquarium, visual)
+			dead_animation(aquarium_properties, visual)
+
+/obj/item/fish/proc/get_aquarium_animation(fluid_type)
+	if(fluid_type == AQUARIUM_FLUID_AIR || status == FISH_DEAD)
+		return AQUARIUM_ANIMATION_FISH_DEAD
+	else
+		return AQUARIUM_ANIMATION_FISH_SWIM
 
 /// Create looping random path animation, pixel offsets parameters include offsets already
-/obj/item/fish/proc/swim_animation(obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+/obj/item/fish/proc/swim_animation(list/aquarium_properties, obj/effect/aquarium/visual)
 	var/avg_width = round(sprite_width / 2)
 	var/avg_height = round(sprite_height / 2)
 
-	var/list/aq_properties = current_aquarium.get_surface_properties()
-	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
-	var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
-	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
-	var/py_max = aq_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
+	var/px_min = aquarium_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
+	var/px_max = aquarium_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
+	var/py_min = aquarium_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
+	var/py_max = aquarium_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
 
 	var/origin_x = visual.base_pixel_x
 	var/origin_y = visual.base_pixel_y
@@ -1060,22 +1057,37 @@
 		animate(transform = dir_mx, time = 0, loop = -1)
 		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
 
-/obj/item/fish/proc/dead_animation(obj/structure/aquarium/current_aquarium, obj/effect/aquarium/visual)
+/obj/item/fish/proc/dead_animation(list/aquarium_properties, obj/effect/aquarium/visual)
 	//Set base_pixel_y to lowest possible value
 	var/avg_height = round(sprite_height / 2)
-	var/list/aq_properties = current_aquarium.get_surface_properties()
-	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
+	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
 	visual.base_pixel_y = py_min
 	animate(visual, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
 
+///Malus to the beauty value if the fish content is dead
+#define DEAD_FISH_BEAUTY -500
+///Prevents more impressive fishes from providing a positive beauty even when dead.
+#define MAX_DEAD_FISH_BEAUTY -200
+///Some fish are already so ugly, they can't get much worse when dead
+#define MIN_DEAD_FISH_BEAUTY -600
+
+/obj/item/fish/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+	SIGNAL_HANDLER
+	var/actual_beauty = beauty
+	if(source.status == FISH_DEAD)
+		actual_beauty = clamp(beauty + DEAD_FISH_BEAUTY, MIN_DEAD_FISH_BEAUTY, MAX_DEAD_FISH_BEAUTY)
+
+	beauty_holder += actual_beauty
+
+#undef DEAD_FISH_BEAUTY
+#undef MIN_DEAD_FISH_BEAUTY
+#undef MAX_DEAD_FISH_BEAUTY
+
 /// Checks if our current environment lets us live.
 /obj/item/fish/proc/proper_environment(temp_range_min = required_temperature_min, temp_range_max = required_temperature_max)
-	var/obj/structure/aquarium/aquarium = loc
-	if(istype(aquarium))
-		if(!compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
-			if(aquarium.fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
-				return FALSE
-		if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
+	if(isaquarium(loc))
+		var/required_flags = FISH_FLAG_SAFE_TEMPERATURE|FISH_FLAG_SAFE_FLUID
+		if((fish_flags & required_flags) != required_flags)
 			return FALSE
 		return TRUE
 
@@ -1129,54 +1141,48 @@
 	bites_amount -= amount
 	generate_fish_reagents(amount)
 
+/// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
+/obj/item/fish/proc/get_fishes(shuffle = FALSE, blacklist)
+	. = list()
+	for(var/obj/item/fish in loc)
+		. += fish
+	. -= blacklist
+	if(shuffle)
+		. = shuffle(.)
+	return .
+
 /obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
-	var/obj/structure/aquarium/aquarium = loc
-	if(!istype(aquarium))
+	if(!isaquarium(loc))
 		return FALSE
 	if(being_targeted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		return FALSE
-	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
+	if(!being_targeted && length(get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return aquarium.reproduction_and_growth && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
-	var/obj/structure/aquarium/aquarium = loc
-	if(!istype(aquarium))
+	if(!isaquarium(loc))
 		return FALSE
 
 	var/obj/item/fish/second_fish
 
-	/**
-	 * Fishes with this trait cannot mate, but could still reproduce asexually, so don't early return.
-	 * Also mating takes priority over that.
-	 */
+	///Fishes with this trait cannot mate, but could still reproduce asexually, so don't early return.
 	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		var/list/available_fishes = list()
-		var/types_to_mate_with = aquarium.tracked_fish_by_type
-		if(!HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
-			var/list/types_to_check = list(src)
-			if(compatible_types)
-				types_to_check |= compatible_types
-			types_to_mate_with = types_to_mate_with & types_to_check
-
-		for(var/obj/item/fish/fish_type as anything in types_to_mate_with)
-			var/list/type_fishes = types_to_mate_with[fish_type]
-			if(length(type_fishes) >= initial(fish_type.stable_population))
-				continue
-			available_fishes += type_fishes
-
-		available_fishes -= src //no self-mating.
+		SEND_SIGNAL(loc, COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES, src, available_fishes)
 		if(length(available_fishes))
-			for(var/obj/item/fish/other_fish as anything in shuffle(available_fishes))
+			//make sure we check if the fish can reproduce with itself last, since that should've lower priority
+			available_fishes = shuffle(available_fishes) - src
+			available_fishes += src
+			for(var/obj/item/fish/other_fish as anything in available_fishes)
 				if(other_fish.ready_to_reproduce(TRUE))
 					second_fish = other_fish
 					break
 
-	if(!second_fish)
+	if(!second_fish || second_fish == src) //check if the fish can self-reproduce in these cases.
 		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
 			return FALSE
-		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
-			return FALSE
+		second_fish = null //set it to null, since this will make the following operations a bit easier
 
 	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
 		return create_offspring(second_fish.type, second_fish)
@@ -1186,13 +1192,13 @@
 	var/list/possible_evolutions = list()
 	for(var/evolution_type in evolution_types)
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-		if(evolution.check_conditions(src, second_fish, aquarium))
+		if(evolution.check_conditions(src, second_fish, loc))
 			possible_evolutions += evolution
 	if(second_fish?.evolution_types)
 		var/secondary_evolutions = (second_fish.evolution_types - evolution_types)
 		for(var/evolution_type in secondary_evolutions)
 			var/datum/fish_evolution/evolution = GLOB.fish_evolutions[evolution_type]
-			if(evolution.check_conditions(second_fish, src, aquarium))
+			if(evolution.check_conditions(second_fish, src, loc))
 				possible_evolutions += evolution
 
 	var/list/types = spawn_types || list(type)
@@ -1203,7 +1209,7 @@
 		var/list/second_fish_types = second_fish.spawn_types || list(second_fish.type)
 		var/recessive = HAS_TRAIT(src, TRAIT_FISH_RECESSIVE)
 		var/recessive_partner = HAS_TRAIT(second_fish, TRAIT_FISH_RECESSIVE)
-		if(length(aquarium.tracked_fish_by_type[type]) >= stable_population)
+		if(fish_flags & FISH_FLAG_OVERPOPULATED)
 			if(recessive_partner && !recessive)
 				return FALSE
 			chosen_type = pick(second_fish_types)
@@ -1333,7 +1339,7 @@
 	var/fish_zap_range = 1
 	var/fish_zap_power = 1 KILO JOULES // ~5 damage, just a little friendly "yeeeouch!"
 	var/fish_zap_flags = ZAP_MOB_DAMAGE
-	if(istype(loc, /obj/structure/aquarium/bioelec_gen))
+	if(HAS_TRAIT(loc, TRAIT_BIOELECTRIC_GENERATOR))
 		fish_zap_range = 5
 		fish_zap_power = GET_FISH_ELECTROGENESIS(src)
 		if(HAS_TRAIT(src, TRAIT_FISH_ON_TESLIUM))
@@ -1376,13 +1382,13 @@
 		happiness_value++
 	if(get_hunger() < 0.5)
 		happiness_value++
-	var/obj/structure/aquarium/aquarium = loc
-	if(!istype(aquarium))
-		return happiness_value
-	if(compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
-		happiness_value++
-	if(ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
-		happiness_value++
+	if(isaquarium(loc))
+		if(fish_flags & FISH_FLAG_SAFE_FLUID)
+			happiness_value++
+		if(fish_flags & FISH_FLAG_SAFE_TEMPERATURE)
+			happiness_value++
+	else if(proper_environment())
+		happiness_value += 2
 	if(bites_amount) // ouch
 		happiness_value -= 2
 	if(health < initial(health) * 0.6)

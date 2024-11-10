@@ -26,6 +26,10 @@
 
 	current_beauty = 0
 
+/obj/structure/aquarium/bioelec_gen/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BIOELECTRIC_GENERATOR, INNATE_TRAIT)
+
 /obj/structure/aquarium/bioelec_gen/zap_act(power, zap_flags)
 	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
 	if(!explosive)

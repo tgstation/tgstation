@@ -43,20 +43,16 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
  * Keep in mind the mate and aquarium arguments may be null if
  * the fish is self-reproducing or this evolution is a result of a fish_growth component
  */
-/datum/fish_evolution/proc/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)
+/datum/fish_evolution/proc/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	SHOULD_CALL_PARENT(TRUE)
-	if(aquarium)
-		//chances are halved if only one parent has this evolution.
-		var/real_probability = (mate && (type in mate.evolution_types)) ? probability : probability/2
-		if(HAS_TRAIT(source, TRAIT_FISH_MUTAGENIC) || (mate && HAS_TRAIT(mate, TRAIT_FISH_MUTAGENIC)))
-			real_probability *= 3
-		if(!prob(real_probability))
+	var/aquarium_return_flag = SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS, source, mate, src)
+	switch(aquarium_return_flag)
+		if(COMPONENT_STOP_EVOLUTION)
 			return FALSE
-		if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
-			return FALSE
-	else if(!source.proper_environment(required_temperature_min, required_temperature_max))
-		return FALSE
-	return TRUE
+		if(COMPONENT_ALLOW_EVOLUTION)
+			return TRUE
+		else
+			return source.proper_environment(required_temperature_min, required_temperature_max)
 
 ///This is called when the evolution is set as the result type of a fish_growth component
 /datum/fish_evolution/proc/growth_checks(obj/item/fish/source, seconds_per_tick, growth)

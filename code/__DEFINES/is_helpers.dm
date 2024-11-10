@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isstructure(A) (istype(A, /obj/structure))
 
-#define isaquarium(A) (istype(A, /obj/structure/aquarium))
+#define isaquarium(A) (A.GetComponent(/datum/component/aquarium))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 

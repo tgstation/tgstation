@@ -64,7 +64,7 @@
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
-	if(isfish(target) || istype(target, /obj/structure/aquarium))
+	if(isfish(target) || isaquarium(target))
 		scanned_item = WEAKREF(target)
 		SEND_SIGNAL(src, COMSIG_FISH_ANALYZER_ANALYZE_STATUS, target, user)
 		ui_interact(user)
