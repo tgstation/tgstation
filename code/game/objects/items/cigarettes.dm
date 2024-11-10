@@ -408,7 +408,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!isturf(smoker.loc))
 		return
 
-	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
+	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker, /particles/smoke/cig/big)
 	update_particle_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
 
