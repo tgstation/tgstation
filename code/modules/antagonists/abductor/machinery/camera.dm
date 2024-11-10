@@ -23,7 +23,7 @@
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/eyemob.dmi'
 	eyeobj.icon_state = "abductor_camera"
 	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
@@ -57,7 +57,7 @@
 		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -101,7 +101,7 @@
 		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
@@ -151,7 +151,7 @@
 		return
 
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/eye/ai_eye/remote/remote_eye = C.remote_control
 
 	var/obj/machinery/abductor/console/console = target
 	console.SetDroppoint(remote_eye.loc,owner)

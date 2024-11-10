@@ -220,7 +220,7 @@
 		if(!result)
 			result = target.mass
 		else
-			result = smallest ? min(result, reagent.mass) : max(result, reagent.mass)
+			result = smallest ? min(result, target.mass) : max(result, target.mass)
 	return smallest ? FLOOR(result, 50) : CEILING(result, 50)
 
 /*
@@ -259,15 +259,17 @@
 
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		var/datum/reagent/target = reagent
+		var/inverse = FALSE
 
 		//inverted chems are dealt with diffrently
 		if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
 			target = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			inverse = TRUE
 		//out of our selected range
 		if(target.mass < lower_mass_range || target.mass > upper_mass_range)
 			continue
 		//already at max purity
-		if((initial(reagent.purity) - reagent.purity) <= 0)
+		if(!inverse && (initial(reagent.purity) - reagent.purity) <= 0)
 			continue
 		///Roughly 10 - 30s?
 		delay_time += (((target.mass * reagent.volume) + (target.mass * reagent.get_inverse_purity() * 0.1)) * 0.0035) + 10

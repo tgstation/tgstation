@@ -283,7 +283,6 @@
 	complexity = 2
 	active_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
-	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
