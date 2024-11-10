@@ -301,7 +301,7 @@
 /obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_tool = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon, /obj/item/dest_tagger/borg, potential_tool))
+		if(istype(/obj/item/stamp/chameleon || /obj/item/dest_tagger/borg, potential_tool))
 			return FALSE
 
 	balloon_alert(user, "integrated tools unlocked")
