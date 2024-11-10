@@ -22,8 +22,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	/// The client that owns this escape menu
 	var/client/client
 
-	var/datum/looping_sound/escape_menu_sound/tape_audio
-
 	VAR_PRIVATE
 		ckey
 
@@ -46,11 +44,10 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	page_holder = new(client)
 	show_page()
 
-	tape_audio = new(client, TRUE, TRUE)
-	tape_audio.start()
-
 	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_client_qdel))
 	RegisterSignal(client, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_client_mob_login))
+
+	SEND_SOUND(client, 'sound/misc/escape_menu/esc_open.ogg')
 
 	if (!isnull(ckey))
 		GLOB.escape_menus[ckey] = src
@@ -62,7 +59,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	GLOB.escape_menus -= ckey
 	plane_master_controller.remove_filter("escape_menu_blur")
 
-	tape_audio.stop()
+	SEND_SOUND(client, 'sound/misc/escape_menu/esc_close.ogg')
 
 	return ..()
 

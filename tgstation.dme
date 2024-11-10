@@ -1658,7 +1658,6 @@
 #include "code\datums\looping_sounds\burning.dm"
 #include "code\datums\looping_sounds\choking.dm"
 #include "code\datums\looping_sounds\cyborg.dm"
-#include "code\datums\looping_sounds\escape_menu.dm"
 #include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\looping_sounds\machinery_sounds.dm"
 #include "code\datums\looping_sounds\music.dm"
