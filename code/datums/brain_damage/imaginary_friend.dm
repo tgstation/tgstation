@@ -9,6 +9,8 @@
 	scan_desc = "partial schizophrenia"
 	gain_text = span_notice("You feel in good company, for some reason.")
 	lose_text = span_warning("You feel lonely again.")
+	/// If TRUE the trauma won't delete without a friend.
+	var/keep_without_friend = FALSE
 	var/mob/eye/imaginary_friend/friend
 	var/friend_initialized = FALSE
 
