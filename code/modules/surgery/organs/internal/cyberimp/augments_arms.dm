@@ -288,11 +288,9 @@
 		/obj/item/stamp,
 		/obj/item/stamp/denied,
 		/obj/item/taperecorder,
-		/obj/item/laser_pointer,
 		/obj/item/lighter,
         /obj/item/folder,
 		/obj/item/clipboard,
-
 	)
 
 /obj/item/organ/cyberimp/arm/paperwork/l
@@ -301,11 +299,11 @@
 /obj/item/organ/cyberimp/arm/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_tool = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon || /obj/item/dest_tagger/borg, potential_tool))
+		if(istype(/obj/item/laser_pointer/emagged_implant, potential_tool))
 			return FALSE
 
-	balloon_alert(user, "integrated tools unlocked")
-	items_list += WEAKREF(new /obj/item/stamp/chameleon, new /obj/item/dest_tagger/borg,(src))
+	balloon_alert(user, "integrated laser pointer unlocked")
+	items_list += WEAKREF(new /obj/item/laser_pointer/emagged_implant(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
