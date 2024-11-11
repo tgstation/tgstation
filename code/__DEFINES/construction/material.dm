@@ -47,8 +47,8 @@
 #define MATCONTAINER_ANY_INTENT (1<<2)
 ///If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
-///Material container won't block item interactions
-#define MATCONTAINER_LOW_PRIORITY (1<<4)
+///Material container preceeds all interactions
+#define MATCONTAINER_HIGH_PRIORITY (1<<4)
 
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)

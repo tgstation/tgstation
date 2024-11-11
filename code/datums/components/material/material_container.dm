@@ -81,7 +81,8 @@
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 
 		//to insert stuff into the container
-		RegisterSignal(atom_target, (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+		var/signal = (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
+		RegisterSignal(atom_target, signal, signal == COMSIG_ATOM_ATTACKBY ? PROC_REF(on_attack_by) : PROC_REF(on_item_insert))
 
 		//screen tips for inserting items
 		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -98,7 +99,7 @@
 	var/list/signals = list()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		signals += (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION
+		signals += (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		signals +=  COMSIG_ATOM_EXAMINE
@@ -129,9 +130,9 @@
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
 			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
-		var/signal = (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION
+		var/signal = (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, signal, PROC_REF(on_item_insert))
+			RegisterSignal(parent, signal, signal == COMSIG_ATOM_ATTACKBY ? PROC_REF(on_attack_by) : PROC_REF(on_item_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
 			UnregisterSignal(parent, signal)
 
@@ -488,17 +489,8 @@
 			qdel(deleting)
 
 /// Proc that allows players to fill the parent with mats, its dual functioning with attackby & item interaction signals
-/datum/component/material_container/proc/on_item_insert(datum/source, atom/paramA, atom/paramB, list/modifiers)
+/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
-
-	var/mob/living/user
-	var/obj/item/weapon
-	if(isliving(paramA)) //item interaction
-		user = paramA
-		weapon = paramB
-	else //attackby if that item interaction is non blocking
-		user = paramB
-		weapon = paramA
 
 	//Allows you to attack the machine with iron sheets for e.g.
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
@@ -507,6 +499,12 @@
 	user_insert(weapon, user)
 
 	return ITEM_INTERACT_SUCCESS
+
+/datum/component/material_container/proc/on_attack_by(datum/source, obj/item/weapon, mob/living/user, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(on_item_insert(source, user, weapon, modifiers))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 //===============================================================================================
 
 
