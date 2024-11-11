@@ -70,7 +70,7 @@
  * . = list()
  * .["small"] = "It is a small item."
  * .["fireproof"] = "It is made of fire-retardant materials."
- * .["and conductive"] = "It's made of conductive materials and whatnot. Blah blah blah."
+ * .["and conductive"] = "It's made of conductive materials and whatnot. Blah blah blah." // having "and " in the end tag's main text/key works too!
  * ```
  * will result in
  *
