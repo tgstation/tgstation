@@ -33,7 +33,7 @@
     color.channel($color, 'saturation', $space: hsl),
     color.channel($color, 'lightness', $space: hsl) * (1 + num($percent))
   );
-  $mixed: color.mix(#ffffff, $color, 100% * num($percent));
+  $mixed: color.mix(hsl(0, 0%, 100%), $color, 100% * num($percent));
   @return color.mix($scaled, $mixed, 75%);
 }
 

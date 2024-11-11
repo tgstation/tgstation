@@ -48,7 +48,7 @@
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #381608)
+    $with: ('background-color': hsl(17.5, 75%, 12.5%))
   );
 
   .Button {

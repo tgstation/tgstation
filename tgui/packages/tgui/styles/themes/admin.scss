@@ -13,7 +13,7 @@
   $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #29333a,
+  $color-bg: hsl(204.7, 17.2%, 19.4%),
   $color-bg-grad-spread: 6%,
   $border-radius: 2px
 );

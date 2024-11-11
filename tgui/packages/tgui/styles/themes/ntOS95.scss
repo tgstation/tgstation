@@ -31,11 +31,11 @@ $scrollbar-color-multiplier: 1;
   @include meta.load-css(
     '../components/Button.scss',
     $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #707070,
-      'color-selected': #007c11,
-      'color-caution': #be6209,
-      'color-danger': #9d0808
+      'color-default': hsl(52.3, 40.3%, 84.9%),
+      'color-disabled': hsl(0, 0%, 43.9%),
+      'color-selected': hsl(128.2, 100%, 24.3%),
+      'color-caution': hsl(29.5, 91%, 39%),
+      'color-danger': hsl(0, 90.3%, 32.4%)
     )
   );
   @include meta.load-css(
@@ -49,31 +49,31 @@ $scrollbar-color-multiplier: 1;
 
   @include meta.load-css(
     '../components/Tooltip.scss',
-    $with: ('background-color': #ecee9e)
+    $with: ('background-color': hsl(61.5, 70.2%, 77.6%))
   );
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': #000080)
+    $with: ('background-color': hsl(240, 100%, 25.1%))
   );
 
   .Button {
-    color: #161613;
-    background-color: #c2c2c2;
-    //border: base.em(2px) outset #E8E4C9;
-    outline: base.em(2px) outset #c3c3c3;
+    color: hsl(60, 7.3%, 8%);
+    background-color: hsl(0, 0%, 76.1%);
+    //border: base.em(2px) outset hsl(52.3, 40.3%, 84.9%);
+    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
   }
   .Button:hover {
-    background-color: #002ead;
+    background-color: hsl(224, 100%, 33.9%);
     transition: 0.1s;
   }
 
   .Section {
     color: black;
-    background-color: #c0c0c0;
-    outline: base.em(2px) outset #c3c3c3;
+    background-color: hsl(0, 0%, 75.3%);
+    outline: base.em(2px) outset hsl(0, 0%, 76.5%);
     &__titleText {
       color: black;
     }
@@ -81,7 +81,7 @@ $scrollbar-color-multiplier: 1;
 
   .Input {
     background-color: white;
-    outline: base.em(2px) inset #c3c3c3;
+    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
     color: black;
     &__input:-ms-input-placeholder {
       color: black;
@@ -90,7 +90,7 @@ $scrollbar-color-multiplier: 1;
 
   .TextArea {
     background-color: white;
-    outline: base.em(2px) inset #c3c3c3;
+    outline: base.em(2px) inset hsl(0, 0%, 76.5%);
   }
 
   .Layout__content {
@@ -131,13 +131,13 @@ $scrollbar-color-multiplier: 1;
   }
 
   .Tab {
-    color: #000000;
-    background-color: #ecee9e;
+    color: hsl(0, 0%, 0%);
+    background-color: hsl(61.5, 70.2%, 77.6%);
   }
 
   .Tab--selected {
-    color: #9d0808;
-    background-color: #c3c3c3;
+    color: hsl(0, 90.3%, 32.4%);
+    background-color: hsl(0, 0%, 76.5%);
   }
 
   body {
@@ -151,11 +151,11 @@ $scrollbar-color-multiplier: 1;
   .Table__cell {
     display: table-cell;
     padding: 0 0.25em;
-    background-color: #c3c3c3;
-    //outline: base.em(3px) outset #c0c0c0
+    background-color: hsl(0, 0%, 76.5%);
+    //outline: base.em(3px) outset hsl(0.0, 0.0%, 75.3%)
   }
   .Box {
-    outline: base.em(3px) outset #c0c0c0;
+    outline: base.em(3px) outset hsl(0, 0%, 75.3%);
   }
   .Tooltip {
     color: black;
