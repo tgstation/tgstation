@@ -39,7 +39,7 @@
 		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("Left-Click")].")
 
 /obj/machinery/rnd/destructive_analyzer/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
-	if(user.combat_mode)
+	if(weapon.tool_behaviour || user.combat_mode)
 		return ..()
 	if(!is_insertion_ready(user))
 		return ..()
