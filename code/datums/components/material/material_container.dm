@@ -98,7 +98,6 @@
 	var/list/signals = list()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		var/atom/atom_target = parent
 		signals += (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
