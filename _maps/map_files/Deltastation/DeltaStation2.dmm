@@ -44023,6 +44023,7 @@
 /obj/item/folder/red,
 /obj/item/lighter,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "kWE" = (
@@ -49572,6 +49573,7 @@
 "msx" = (
 /obj/item/kirbyplants/random,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/electronic_marketing_den)
 "msB" = (
@@ -58618,7 +58620,6 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "oLz" = (
-/obj/structure/cable,
 /obj/structure/chair/office{
 	dir = 4
 	},
@@ -59132,7 +59133,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "oRD" = (
-/obj/structure/cable,
 /obj/item/circuitboard/computer/secure_data,
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -72633,6 +72633,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/dim/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics/garden/abandoned)
 "sgh" = (
@@ -85739,7 +85740,6 @@
 /obj/item/reagent_containers/cup/watering_can,
 /obj/item/plant_analyzer,
 /obj/structure/sign/poster/contraband/kudzu/directional/south,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/green{
 	dir = 8
