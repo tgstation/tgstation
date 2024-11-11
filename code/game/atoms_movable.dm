@@ -517,7 +517,7 @@
 /atom/movable/proc/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE)
 	if(QDELETED(pulled_atom))
 		return FALSE
-	if(!(pulled_atom.can_be_pulled(src, state, force)))
+	if(!(pulled_atom.can_be_pulled(src, force)))
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -1646,7 +1646,7 @@
 /atom/movable/proc/get_cell(atom/movable/interface, mob/user)
 	return
 
-/atom/movable/proc/can_be_pulled(user, grab_state, force)
+/atom/movable/proc/can_be_pulled(user, force)
 	if(src == user || !isturf(loc))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_BE_PULLED, user) & COMSIG_ATOM_CANT_PULL)

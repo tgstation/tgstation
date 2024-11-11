@@ -351,6 +351,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(win)
 		if(reward_path != FISHING_DUD)
 			playsound(location, 'sound/effects/bigsplash.ogg', 100)
+		if(ispath(reward_path, /obj/item/fish))
+			var/obj/item/fish/fish_reward = reward_path
+			var/fish_id = initial(fish_reward.fish_id)
+			if(fish_id)
+				user.client?.give_award(/datum/award/score/progress/fish, user, initial(fish_reward.fish_id))
 	SEND_SIGNAL(user, COMSIG_MOB_COMPLETE_FISHING, src, win)
 	if(!QDELETED(src))
 		qdel(src)
@@ -472,7 +477,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	//early return if the difficulty is the same or we crush the minigame all the way to 0 difficulty
 	if(!get_difficulty() || difficulty == old_difficulty)
 		return
-	bait_height = initial(bait_height)
+	bait_height = initial(bait_height) * used_rod.bait_height_mult
 	experience_multiplier -= difficulty * FISHING_SKILL_DIFFIULTY_EXP_MULT
 	mover.reset_difficulty_values()
 	adjust_to_difficulty()
