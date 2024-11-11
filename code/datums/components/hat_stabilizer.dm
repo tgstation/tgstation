@@ -14,27 +14,32 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/atom/movable/source = parent
+	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+
 	src.use_worn_icon = use_worn_icon
 	src.pixel_y_offset = pixel_y_offset
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_qdel))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_secondary_attack_hand))
-	RegisterSignals(parent, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
+	RegisterSignal(source, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(source, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
+	RegisterSignal(source, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_secondary_attack_hand))
+	RegisterSignals(source, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
+	RegisterSignal(source, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	if (add_overlay)
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+		RegisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 /datum/component/hat_stabilizer/UnregisterFromParent()
 	if (attached_hat)
 		remove_hat()
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACKBY,
 	COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_MODULE_GENERATE_WORN_OVERLAY,
-	COMSIG_ITEM_GET_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING))
+	COMSIG_ITEM_GET_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING,
+	COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/component/hat_stabilizer/proc/on_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
 	if(attached_hat)
-		base_examine += span_notice("There's \a [attached_hat] placed on [parent]. Right-click to remove it.")
+		base_examine += span_notice("There's \a [attached_hat] placed on [parent].")
 	else
 		base_examine += span_notice("There's nothing placed on [parent]. Yet.")
 
@@ -86,7 +91,7 @@
 	RegisterSignal(hat, COMSIG_MOVABLE_MOVED, PROC_REF(remove_hat))
 
 	if (!isnull(user))
-		movable_parent.balloon_alert(user, "hat attached, right-click to remove")
+		movable_parent.balloon_alert(user, "hat attached")
 
 	if (!istype(parent, /obj/item/clothing))
 		movable_parent.update_appearance()
@@ -146,3 +151,17 @@
 	if (ismob(apparel.loc))
 		var/mob/wearer = apparel.loc
 		wearer.update_clothing(wearer.get_slot_by_item(apparel))
+
+// maybe we don't need the item context proc but instead the hand one? since we don't need to check held_item
+/datum/component/hat_stabilizer/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(attached_hat)
+		context[SCREENTIP_CONTEXT_RMB] = "Remove hat"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/clothing/head))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach hat"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
