@@ -3186,6 +3186,7 @@
 #include "code\modules\antagonists\heretic\items\labyrinth_handbook.dm"
 #include "code\modules\antagonists\heretic\items\madness_mask.dm"
 #include "code\modules\antagonists\heretic\items\unfathomable_curio.dm"
+#include "code\modules\antagonists\heretic\knowledge\_heretic_paths.dm"
 #include "code\modules\antagonists\heretic\knowledge\ash_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\blade_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\cosmic_lore.dm"
