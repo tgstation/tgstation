@@ -51,7 +51,7 @@
 /datum/status_effect/watery_tile_wetness
 	id = "watery_tile_wetness"
 	alert_type = null
-	duration = STAUS_EFFECT_PERMANENT
+	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_UNIQUE
 
 /datum/status_effect/washing_regen/tick(seconds_between_ticks)

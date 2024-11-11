@@ -84,7 +84,7 @@
 
 /datum/status_effect/void_chill/lasting
 	id = "lasting_void_chill"
-	duration = STAUS_EFFECT_PERMANENT
+	duration = STATUS_EFFECT_PERMANENT
 
 /datum/movespeed_modifier/void_chill
 	variable = TRUE

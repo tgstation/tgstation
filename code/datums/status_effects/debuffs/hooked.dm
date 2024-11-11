@@ -1,7 +1,7 @@
 ///Status effect applied when casting a fishing rod at someone, provided the attached fishing hook allows it.
 /datum/status_effect/grouped/hooked
 	id = "hooked"
-	duration = STAUS_EFFECT_PERMANENT
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/hooked

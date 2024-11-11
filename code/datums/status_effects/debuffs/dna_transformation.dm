@@ -16,7 +16,7 @@
 	QDEL_NULL(old_dna)
 
 /datum/status_effect/temporary_transformation/on_creation(mob/living/new_owner, new_duration = 1 MINUTES, datum/dna/dna_to_copy)
-	src.duration = (new_duration == INFINITY) ? -1 : new_duration
+	src.duration = new_duration
 	src.new_dna = new()
 	src.old_dna = new()
 	dna_to_copy.copy_dna(new_dna)
@@ -79,11 +79,11 @@
 
 	// Pause if we're dead, appear dead, or in stasis
 	if(source.stat == DEAD || HAS_TRAIT(source, TRAIT_DEATHCOMA) || HAS_TRAIT(source, TRAIT_STASIS))
-		if(duration == STAUS_EFFECT_PERMANENT)
+		if(duration == STATUS_EFFECT_PERMANENT)
 			return // Already paused
 
 		time_before_pause = duration - world.time
-		duration = STAUS_EFFECT_PERMANENT
+		duration = STATUS_EFFECT_PERMANENT
 
 	// Resume if we're none of the above and also were paused
 	else if(time_before_pause != -1)

@@ -6,7 +6,7 @@
 /datum/status_effect/bioware
 	id = "bioware"
 	alert_type = null
-	duration = STAUS_EFFECT_PERMANENT
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/bioware/on_apply()

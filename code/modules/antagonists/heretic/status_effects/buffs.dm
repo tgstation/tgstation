@@ -154,7 +154,7 @@
 
 /datum/status_effect/protective_blades/on_creation(
 	mob/living/new_owner,
-	new_duration = STAUS_EFFECT_PERMANENT,
+	new_duration = STATUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
@@ -256,7 +256,7 @@
 
 /datum/status_effect/protective_blades/recharging/on_creation(
 	mob/living/new_owner,
-	new_duration = STAUS_EFFECT_PERMANENT,
+	new_duration = STATUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
@@ -278,7 +278,7 @@
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = STAUS_EFFECT_PERMANENT
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 

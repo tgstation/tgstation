@@ -8,7 +8,7 @@
 #define STATUS_EFFECT_REFRESH 3
 
 /// Use in status effect "duration" to make it last forever
-#define STAUS_EFFECT_PERMANENT -1
+#define STATUS_EFFECT_PERMANENT -1
 /// Use in status effect "tick_interval" to prevent it from calling tick()
 #define STATUS_EFFECT_NO_TICK -1
 
