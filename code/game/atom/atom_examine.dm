@@ -1,7 +1,7 @@
 /atom
 	/// If non-null, overrides a/an/some in all cases
 	var/article
-	/// Text that appears preceding the name in examine()
+	/// Text that appears preceding the name in [/atom/proc/examine_title]
 	var/examine_thats = "That's"
 
 /mob/living/carbon/human
@@ -11,7 +11,7 @@
 	examine_thats = "This is"
 
 /**
- * Called when a mob examines this atom: [/mob/verb/examine]
+ * Called when a mob examines this atom: [/mob/verb/examinate]
  *
  * Default behaviour is to get the name and icon of the object and its reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
