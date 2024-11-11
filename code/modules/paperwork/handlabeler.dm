@@ -119,7 +119,7 @@
 /obj/item/hand_labeler/examine()
 	. = ..()
 	switch(labels_left)
-		if(2 to INFINITE)
+		if(2 to INFINITY)
 			. += span_notice("It looks like it could label [labels_left] more things.")
 		if(1)
 			. += span_notice("It looks like it could label [labels_left] more thing.")
