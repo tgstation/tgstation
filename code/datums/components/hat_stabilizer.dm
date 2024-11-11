@@ -155,7 +155,7 @@
 /datum/component/hat_stabilizer/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 
-	if(attached_hat)
+	if(attached_hat && !held_item)
 		context[SCREENTIP_CONTEXT_RMB] = "Remove hat"
 		return CONTEXTUAL_SCREENTIP_SET
 
