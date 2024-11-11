@@ -79,8 +79,9 @@
 
 	//can we insert into this container
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+
 		//to insert stuff into the container
-		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+		RegisterSignal(atom_target, (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY, PROC_REF(on_item_insert))
 
 		//screen tips for inserting items
 		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -97,7 +98,7 @@
 	var/list/signals = list()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		signals += COMSIG_ATOM_ITEM_INTERACTION
+		signals += (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		signals +=  COMSIG_ATOM_EXAMINE
