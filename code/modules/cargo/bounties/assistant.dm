@@ -173,8 +173,8 @@
 /datum/bounty/item/assistant/crayons
 	name = "Crayons"
 	description = "Dr. Jones's kid ate all of our crayons again. Please send us yours."
-	reward = CARGO_CRATE_VALUE * 4
-	required_count = 24
+	reward = CARGO_CRATE_VALUE * 3
+	required_count = 8
 	wanted_types = list(/obj/item/toy/crayon = TRUE)
 
 /datum/bounty/item/assistant/pens
