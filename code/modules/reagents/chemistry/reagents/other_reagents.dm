@@ -17,7 +17,6 @@
 	required_drink_type = /datum/reagent/blood
 	name = "glass of tomato juice"
 	desc = "Are you sure this is tomato juice?"
-	icon_state = "glass_red"
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -2120,7 +2119,7 @@
 	name = "Acetone Oxide"
 	description = "Enslaved oxygen"
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#966199cb"
 	taste_description = "acid"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2167,7 +2166,7 @@
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
-	color = "#C8A5DC"
+	color = COLOR_GRAY
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2203,7 +2202,7 @@
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
 	var/list/potential_colors = list("#00aadd","#aa00ff","#ff7733","#dd1144","#dd1144","#00bb55","#00aadd","#ff7733","#ffcc22","#008844","#0055ee","#dd2222","#ffaa00") // fucking hair code
-	color = "#C8A5DC"
+	color = COLOR_GRAY
 	taste_description = "sourness"
 	penetrates_skin = NONE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

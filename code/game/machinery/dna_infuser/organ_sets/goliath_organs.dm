@@ -102,6 +102,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/goliath_hammer_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/goliath_hammer_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 0

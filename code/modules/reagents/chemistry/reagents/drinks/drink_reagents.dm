@@ -30,7 +30,7 @@
 /datum/reagent/consumable/limejuice
 	name = "Lime Juice"
 	description = "The sweet-sour juice of limes."
-	color = "#365E30" // rgb: 54, 94, 48
+	color = "#a6f19a" // rgb: 166, 241, 154
 	taste_description = "unbearable sourness"
 	ph = 2.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -73,14 +73,14 @@
 /datum/reagent/consumable/applejuice
 	name = "Apple Juice"
 	description = "The sweet juice of an apple, fit for all ages."
-	color = "#ECFF56" // rgb: 236, 255, 86
+	color = "#fff06b" // rgb: 255, 240, 107
 	taste_description = "apples"
 	ph = 3.2 // ~ 2.7 -> 3.7
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."
-	color = "#863353" // rgb: 134, 51, 83
+	color = "#792b49" // rgb: 121, 43, 73
 	taste_description = "berries"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -92,14 +92,14 @@
 /datum/reagent/consumable/watermelonjuice
 	name = "Watermelon Juice"
 	description = "Delicious juice made from watermelon."
-	color = "#863333" // rgb: 134, 51, 51
+	color = "#af5e5e" // rgb: 175, 94, 94
 	taste_description = "juicy watermelon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/lemonjuice
 	name = "Lemon Juice"
 	description = "This juice is VERY sour."
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#ebeb9e" // rgb: 235, 235, 158
 	taste_description = "sourness"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -107,7 +107,7 @@
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
 	description = "The raw essence of a banana. HONK"
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#FFFCB9" // rgb: 255, 252, 185
 	taste_description = "banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -167,7 +167,7 @@
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
 	nutriment_factor = 2
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#E8A856" // rgb: 234, 157, 58
 	taste_description = "irish sadness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -175,7 +175,7 @@
 	name = "Pickle Juice"
 	description = "More accurately, this is the brine the pickle was floating in"
 	nutriment_factor = 2
-	color = "#302000" // rgb: 48, 32, 0
+	color = "#cde65e" // rgb: 205, 230, 94
 	taste_description = "vinegar brine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -225,6 +225,12 @@
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
+
+/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
+		fish.adjust_health(fish.health + initial(fish.health) * max(fish.get_hunger() * 0.5, 0.12))
+		fish.sate_hunger()
+		return TRUE
 
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
@@ -356,7 +362,7 @@
 /datum/reagent/consumable/icecoffee
 	name = "Iced Coffee"
 	description = "Coffee and ice, refreshing and cool."
-	color = "#102838" // rgb: 16, 40, 56
+	color = "#462b15" // rgb: 70, 43, 21
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitter coldness"
@@ -377,7 +383,7 @@
 /datum/reagent/consumable/hot_ice_coffee
 	name = "Hot Ice Coffee"
 	description = "Coffee with pulsing ice shards"
-	color = "#102838" // rgb: 16, 40, 56
+	color = "#462b15" // rgb: 70, 43, 21
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitter coldness and a hint of smoke"
@@ -944,7 +950,7 @@
 	name = "Hot Coco"
 	description = "Made with love! And coco beans."
 	nutriment_factor = 4
-	color = "#403010" // rgb: 64, 48, 16
+	color = "#3b240e" // rgb: 59, 36, 14
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1089,7 +1095,7 @@
 
 /datum/reagent/consumable/aloejuice
 	name = "Aloe Juice"
-	color = "#A3C48B"
+	color = "#b3c5a7" // rgb: 179, 197, 167
 	description = "A healthy and refreshing juice."
 	taste_description = "vegetable"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1133,7 +1139,7 @@
 /datum/reagent/consumable/toechtauese_juice
 	name = "Töchtaüse Juice"
 	description = "An unpleasant juice made from töchtaüse berries. Best made into a syrup, unless you enjoy pain."
-	color = "#554862"
+	color = "#554862" // rgb: 85, 72, 98
 	nutriment_factor = 0
 	taste_description = "fiery itchy pain"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1141,7 +1147,7 @@
 /datum/reagent/consumable/toechtauese_syrup
 	name = "Töchtaüse Syrup"
 	description = "A harsh spicy and bitter syrup, made from töchtaüse berries. Useful as an ingredient, both for food and cocktails."
-	color = "#554862"
+	color = "#554862" // rgb: 85, 72, 98
 	nutriment_factor = 0
 	taste_description = "sugar, spice, and nothing nice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1197,14 +1203,14 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a"
+	color = "#B1D861" // rgb: 177, 216, 97
 	taste_description = "light cucumber"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cucumberlemonade
 	name = "Cucumber Lemonade"
 	description = "Cucumber juice, sugar, and soda; what else do I need?"
-	color = "#6cd87a"
+	color = "#cbe248" // rgb: 203, 226, 72
 	quality = DRINK_GOOD
 	taste_description = "citrus soda with cucumber"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
