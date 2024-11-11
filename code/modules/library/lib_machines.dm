@@ -319,25 +319,6 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	if(mapload)
 		dynamic_inv_load = TRUE //Only load in stuff if we were placed during mapload
 
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_static_data(mob/user)
-	var/list/data = list()
-	data["inventory"] = list()
-	var/inventory_len = length(inventory)
-	if(inventory_len)
-		for(var/id in ((INVENTORY_PER_PAGE * inventory_page) + 1) to min(INVENTORY_PER_PAGE * (inventory_page + 1), inventory_len))
-			var/book_ref = inventory[id]
-			var/datum/book_info/info = inventory[book_ref]
-			data["inventory"] += list(list(
-				"id" = id,
-				"ref" = book_ref,
-				"title" = info.get_title(),
-				"author" = info.get_author(),
-			))
-	data["has_inventory"] = !!inventory_len
-	data["inventory_page"] = inventory_page + 1
-	data["inventory_page_count"] = inventory_page_count + 1
-	return data
-
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_data(mob/user)
 	var/list/data = list()
 	data["can_db_request"] = can_db_request()
@@ -349,6 +330,23 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		load_nearby_books()
 
 	switch(screen_state)
+		if(LIBRARY_INVENTORY)
+			data["inventory"] = list()
+			var/inventory_len = length(inventory)
+			if(inventory_len)
+				for(var/id in ((INVENTORY_PER_PAGE * inventory_page) + 1) to min(INVENTORY_PER_PAGE * (inventory_page + 1), inventory_len))
+					var/book_ref = inventory[id]
+					var/datum/book_info/info = inventory[book_ref]
+					data["inventory"] += list(list(
+						"id" = id,
+						"ref" = book_ref,
+						"title" = info.get_title(),
+						"author" = info.get_author(),
+					))
+			data["has_inventory"] = !!inventory_len
+			data["inventory_page"] = inventory_page + 1
+			data["inventory_page_count"] = inventory_page_count + 1
+
 		if(LIBRARY_CHECKOUT)
 			data["checkouts"] = list()
 			var/checkout_len = length(checkouts)
