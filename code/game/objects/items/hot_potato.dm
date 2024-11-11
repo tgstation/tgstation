@@ -17,8 +17,8 @@
 	var/forceful_attachment = TRUE
 	var/stimulant = TRUE
 	var/detonate_explosion = TRUE
-	var/detonate_dev_range = 0
-	var/detonate_heavy_range = 0
+	var/detonate_dev_range = 1
+	var/detonate_heavy_range = 1
 	var/detonate_light_range = 2
 	var/detonate_flash_range = 5
 	var/detonate_fire_range = 5
