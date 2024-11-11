@@ -58,7 +58,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
-/*
+/**
  * A list of "tags" displayed after atom's description in examine.
  * This should return an assoc list of tags -> tooltips for them. If item if null, then no tooltip is assigned.
  *
