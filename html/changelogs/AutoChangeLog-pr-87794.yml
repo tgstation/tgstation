@@ -1,5 +1,0 @@
-author: "carlarctg, Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixes the randomizer fishing portal not working as intended. Fish from it should now receive random traits."
-  - bugfix: "Fish names are no longer partially shown in the aquarium UI if they contain a space character."

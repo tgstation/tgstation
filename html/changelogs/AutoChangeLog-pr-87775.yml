@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Abstract nullrod types can no longer be burned or melted with acid."
-  - bugfix: "Monk staff now properly does not block projectiles, and uses the correct force before being wielded."
