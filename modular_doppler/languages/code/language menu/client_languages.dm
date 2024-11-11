@@ -125,7 +125,7 @@
  */
 /datum/preference_middleware/languages/proc/give_language(list/params)
 	var/language_name = params["language_name"]
-	var/max_languages = preferences.all_quirks.Find(TRAIT_LINGUIST) ? MAX_LANGUAGES_LINGUIST : MAX_LANGUAGES_NORMAL
+	var/max_languages = preferences.all_quirks.Find(/datum/quirk/linguist::name) ? MAX_LANGUAGES_LINGUIST : MAX_LANGUAGES_NORMAL
 
 	if(preferences.languages && preferences.languages.len == max_languages) // too many languages
 		return TRUE
