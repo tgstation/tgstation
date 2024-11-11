@@ -44,13 +44,13 @@
 		return
 	if(attached_hat)
 		var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		worn_overlay.pixel_y = pixel_y_offset
+		worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
 		overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_update_overlays(atom/movable/source, list/overlays)
 	SIGNAL_HANDLER
 	var/mutable_appearance/worn_overlay = use_worn_icon ? attached_hat.build_worn_icon(default_layer = ABOVE_OBJ_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi') : mutable_appearance(attached_hat, layer = ABOVE_OBJ_LAYER)
-	worn_overlay.pixel_y = pixel_y_offset
+	worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
 	overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_qdel(atom/movable/source)
