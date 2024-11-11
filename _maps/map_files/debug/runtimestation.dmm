@@ -216,6 +216,10 @@
 /obj/machinery/announcement_system,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"bs" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "bu" = (
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
@@ -1640,10 +1644,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"xN" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
-/area/station/construction)
 "xY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -2292,6 +2292,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Pe" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/station/construction)
 "Pk" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -6542,7 +6546,7 @@ dn
 dn
 dn
 dn
-xN
+Pe
 dn
 dn
 dn
@@ -7015,7 +7019,7 @@ Rb
 fg
 aa
 aa
-aa
+bs
 aa
 aa
 aa
