@@ -488,7 +488,7 @@
 		if(!QDELETED(deleting)) //deleting parents also delete their children so we check
 			qdel(deleting)
 
-/// Proc that allows players to fill the parent with mats, its dual functioning with attackby & item interaction signals
+/// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
 
