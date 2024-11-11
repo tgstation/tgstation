@@ -52,7 +52,7 @@
 	var/atom/location = loc
 	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger("[src] activates! You've ran out of time!"))
 	if(detonate_explosion)
-		guy.gib()
+		victim.gib()
 		explosion(src, detonate_dev_range, detonate_heavy_range, detonate_light_range, detonate_fire_range, detonate_flash_range)
 	deactivate()
 	if(!reusable)
