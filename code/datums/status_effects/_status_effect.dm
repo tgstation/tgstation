@@ -6,7 +6,7 @@
 	/// When set initially / in on_creation, this is how long the status effect lasts in deciseconds.
 	/// While processing, this becomes the world.time when the status effect will expire.
 	/// -1 = infinite duration.
-	var/duration = -1
+	var/duration = STAUS_EFFECT_PERMANENT
 	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
 	/// Note that this cannot be faster than the processing subsystem you choose to fire the effect on. (See: [var/processing_speed])
 	/// While processing, this becomes the world.time when the next tick will occur.
@@ -50,9 +50,9 @@
 		LAZYADD(owner.status_effects, src)
 		RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_effect_on_heal))
 
-	if(duration != -1)
+	if(duration != STAUS_EFFECT_PERMANENT)
 		duration = world.time + duration
-	if(tick_interval != -1)
+	if(tick_interval != STATUS_EFFECT_NO_TICK)
 		tick_interval = world.time + tick_interval
 
 	if(alert_type)
@@ -170,7 +170,7 @@
 /// has its duration refreshed in apply_status_effect - is passed New() args
 /datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
-	if(original_duration == -1)
+	if(original_duration == STAUS_EFFECT_PERMANENT)
 		return
 	duration = world.time + original_duration
 
@@ -194,7 +194,7 @@
 
 /// Remove [seconds] of duration from the status effect, qdeling / ending if we eclipse the current world time.
 /datum/status_effect/proc/remove_duration(seconds)
-	if(duration == -1) // Infinite duration
+	if(duration == STAUS_EFFECT_PERMANENT) // Infinite duration
 		return FALSE
 
 	duration -= seconds

@@ -138,7 +138,7 @@
 	id = "Silver Knives"
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.
@@ -154,7 +154,7 @@
 
 /datum/status_effect/protective_blades/on_creation(
 	mob/living/new_owner,
-	new_duration = -1,
+	new_duration = STAUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
@@ -257,7 +257,7 @@
 
 /datum/status_effect/protective_blades/recharging/on_creation(
 	mob/living/new_owner,
-	new_duration = -1,
+	new_duration = STAUS_EFFECT_PERMANENT,
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
@@ -279,7 +279,7 @@
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = -1
+	duration = STAUS_EFFECT_PERMANENT
 	alert_type = null
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 

@@ -7,10 +7,10 @@
 		if(checking_tick == -1)
 			continue
 		if(checking_tick == INFINITY)
-			TEST_FAIL("Status effect [checking] has tick_interval set to INFINITY, this is not how you prevent ticks - use tick_interval = -1 instead.")
+			TEST_FAIL("Status effect [checking] has tick_interval set to INFINITY, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
 			continue
 		if(checking_tick == 0)
-			TEST_FAIL("Status effect [checking] has tick_interval set to 0, this is not how you prevent ticks - use tick_interval = -1 instead.")
+			TEST_FAIL("Status effect [checking] has tick_interval set to 0, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
 			continue
 		switch(initial(checking.processing_speed))
 			if(STATUS_EFFECT_FAST_PROCESS)

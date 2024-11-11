@@ -7,6 +7,9 @@
 /// if it only allows one, and new instances just instead refresh the timer
 #define STATUS_EFFECT_REFRESH 3
 
+#define STAUS_EFFECT_PERMANENT -1
+#define STATUS_EFFECT_NO_TICK -1
+
 ///Processing flags - used to define the speed at which the status will work
 ///This is fast - 0.2s between ticks (I believe!)
 #define STATUS_EFFECT_FAST_PROCESS 0
