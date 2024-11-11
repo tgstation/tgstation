@@ -39,11 +39,11 @@
 		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("Left-Click")].")
 
 /obj/machinery/rnd/destructive_analyzer/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return ..()
 	if(user.combat_mode)
 		return ..()
 	if(!is_insertion_ready(user))
-		return ..()
-	if(weapon.tool_behaviour == TOOL_SCREWDRIVER || weapon.tool_behaviour == TOOL_CROWBAR) //only for machine deconstruction. We don't want to insert them
 		return ..()
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
