@@ -9,7 +9,7 @@
 
 /// Use in status effect "duration" to make it last forever
 #define STAUS_EFFECT_PERMANENT -1
-/// Use in status effect "duration" to prevent it from calling tick()
+/// Use in status effect "tick_interval" to prevent it from calling tick()
 #define STATUS_EFFECT_NO_TICK -1
 
 ///Processing flags - used to define the speed at which the status will work
