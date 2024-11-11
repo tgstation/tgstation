@@ -68,7 +68,7 @@
 	if(.)
 		anger -= min(anger, 6.5)
 
-/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth)
+/obj/item/fish/chasm_crab/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
 	if(health <= initial(health) * 0.6 || hunger >= 0.6) //if too hurt or hungry, don't grow.
