@@ -176,7 +176,7 @@
 	base_icon_state = icon_state
 	//It's important that we register the signals before the component is attached.
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_DO_ANIMATION, PROC_REF(update_aquarium_animation))
-	RegisterSignal(src, AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
+	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(update_aquarium_appearance))
 	AddComponent(/datum/component/aquarium_content, list(COMSIG_FISH_STIRRED))
 
@@ -1014,9 +1014,9 @@
 		return
 	switch(animation)
 		if(AQUARIUM_ANIMATION_FISH_SWIM)
-			swim_animation(aquarium_properties, visual)
+			swim_animation(visual)
 		if(AQUARIUM_ANIMATION_FISH_DEAD)
-			dead_animation(aquarium_properties, visual)
+			dead_animation(visual)
 
 /obj/item/fish/proc/get_aquarium_animation(fluid_type)
 	if(fluid_type == AQUARIUM_FLUID_AIR || status == FISH_DEAD)
@@ -1025,14 +1025,14 @@
 		return AQUARIUM_ANIMATION_FISH_SWIM
 
 /// Create looping random path animation, pixel offsets parameters include offsets already
-/obj/item/fish/proc/swim_animation(list/aquarium_properties, obj/effect/aquarium/visual)
+/obj/item/fish/proc/swim_animation(obj/effect/aquarium/visual)
 	var/avg_width = round(sprite_width / 2)
 	var/avg_height = round(sprite_height / 2)
 
-	var/px_min = aquarium_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
-	var/px_max = aquarium_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
-	var/py_min = aquarium_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
-	var/py_max = aquarium_properties[AQUARIUM_PROPERTIES_PY_MAX] - avg_width - 16
+	var/px_min = visual.aquarium_zone_min_px + avg_width - 16
+	var/px_max = visual.aquarium_zone_max_px - avg_width - 16
+	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
+	var/py_max = visual.aquarium_zone_max_py - avg_width - 16
 
 	var/origin_x = visual.base_pixel_x
 	var/origin_y = visual.base_pixel_y
@@ -1057,7 +1057,7 @@
 		animate(transform = dir_mx, time = 0, loop = -1)
 		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
 
-/obj/item/fish/proc/dead_animation(list/aquarium_properties, obj/effect/aquarium/visual)
+/obj/item/fish/proc/dead_animation(obj/effect/aquarium/visual)
 	//Set base_pixel_y to lowest possible value
 	var/avg_height = round(sprite_height / 2)
 	var/py_min = visual.aquarium_zone_min_py + avg_height - 16
@@ -1074,7 +1074,7 @@
 /obj/item/fish/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
 	var/actual_beauty = beauty
-	if(source.status == FISH_DEAD)
+	if(status == FISH_DEAD)
 		actual_beauty = clamp(beauty + DEAD_FISH_BEAUTY, MIN_DEAD_FISH_BEAUTY, MAX_DEAD_FISH_BEAUTY)
 
 	beauty_holder += actual_beauty
@@ -1142,7 +1142,7 @@
 	generate_fish_reagents(amount)
 
 /// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
-/obj/item/fish/proc/get_fishes(shuffle = FALSE, blacklist)
+/obj/item/fish/proc/get_aquarium_fishes(shuffle = FALSE, blacklist)
 	. = list()
 	for(var/obj/item/fish in loc)
 		. += fish
@@ -1156,7 +1156,7 @@
 		return FALSE
 	if(being_targeted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		return FALSE
-	if(!being_targeted && length(get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
+	if(!being_targeted && length(get_aquarium_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && health >= initial(health) * 0.8 && stable_population >= 1 && world.time >= breeding_wait
 

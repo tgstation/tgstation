@@ -201,8 +201,7 @@
 	var/hunger = get_hunger()
 	if(hunger >= 0.7) //too hungry to grow
 		return COMPONENT_DONT_GROW
-	var/obj/structure/aquarium/aquarium = loc
-	if(istype(aquarium) && !aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/tadpole/proc/on_growth(datum/source, mob/living/basic/frog/result)

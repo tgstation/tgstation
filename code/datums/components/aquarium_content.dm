@@ -34,12 +34,9 @@
 	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
 
-	if(isfish(parent))
-		RegisterSignal(parent, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
-
 	//If component is added to something already in aquarium at the time initialize it properly.
 	var/atom/movable/movable_parent = parent
-	if(isaquarium(movable_parentloc))
+	if(isaquarium(movable_parent.loc))
 		on_inserted(movable_parent.loc)
 
 /datum/component/aquarium_content/PreTransfer()
@@ -71,7 +68,6 @@
 
 /datum/component/aquarium_content/proc/on_inserted(atom/movable/aquarium)
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(on_removed))
-	RegisterSignal(aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, PROC_REF(on_surface_changed))
 	RegisterSignal(aquarium, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_fluid_changed))
 
 	if(processing)
@@ -87,12 +83,6 @@
 
 	//Finally add it to to objects vis_contents
 	aquarium.vis_contents |= vc_obj
-
-/// Aquarium surface changed in some way, we need to recalculate base position and aninmation
-/datum/component/aquarium_content/proc/on_surface_changed()
-	SIGNAL_HANDLER
-	set_vc_base_position()
-	generate_animation(reset = TRUE) //our animation start point changed, gotta redo
 
 /datum/component/aquarium_content/proc/on_fluid_changed(datum/source, new_fluid_type)
 	SIGNAL_HANDLER
@@ -122,7 +112,7 @@
 	remove_from_aquarium(aquarium)
 
 /datum/component/aquarium_content/proc/remove_from_aquarium(atom/movable/aquarium)
-	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXITED))
+	UnregisterSignal(aquarium, list(COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXITED))
 	SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_REMOVE_VISUAL, vc_obj)
 
 ///The visual overlay of the aquarium content. It can hold a few vars with values about the component of the aquarium it's in.

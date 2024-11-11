@@ -146,7 +146,7 @@
 	visual.icon_state = icon_state
 	visual.layer_mode = layer_mode
 
-/obj/item/aquarium_proc/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
+/obj/item/aquarium_prop/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER
 	beauty_holder += beauty
 

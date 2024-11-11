@@ -98,10 +98,19 @@
 #define AQUARIUM_ANIMATION_FISH_SWIM "fish"
 #define AQUARIUM_ANIMATION_FISH_DEAD "dead"
 
-#define AQUARIUM_PROPERTIES_PX_MIN "px_min"
-#define AQUARIUM_PROPERTIES_PX_MAX "px_max"
-#define AQUARIUM_PROPERTIES_PY_MIN "py_min"
-#define AQUARIUM_PROPERTIES_PY_MAX "py_max"
+//standard layer defines for aquariums
+
+///The distance that should separate each layer of the aquarium
+#define AQUARIUM_LAYER_STEP 0.01
+/// Aquarium content layer offsets
+#define AQUARIUM_MIN_OFFSET 0.02
+#define AQUARIUM_MAX_OFFSET 1
+/// The layer of the glass overlay
+#define AQUARIUM_GLASS_LAYER 0.02
+/// The layer of the aquarium pane borders
+#define AQUARIUM_BORDERS_LAYER AQUARIUM_MAX_OFFSET + AQUARIUM_LAYER_STEP
+/// Layer for stuff rendered below the glass overlay
+#define AQUARIUM_BELOW_GLASS_LAYER 0.01
 
 #define AQUARIUM_LAYER_MODE_BOTTOM "bottom"
 #define AQUARIUM_LAYER_MODE_TOP "top"

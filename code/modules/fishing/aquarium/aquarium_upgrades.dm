@@ -22,9 +22,9 @@
 	desc = "An unconventional type of generator that boosts and harvests the energy produced by bioelectric fish."
 
 	icon_state = "bioelec_map"
-	icon_prefix = "bioelec"
+	base_icon_state = "bioelec"
 
-	current_beauty = 0
+	default_beauty = 0
 
 /obj/structure/aquarium/bioelec_gen/Initialize(mapload)
 	. = ..()

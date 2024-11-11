@@ -81,12 +81,11 @@
 	if(!isaquarium(loc))
 		return
 
-	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
-	if(!locate(/obj/item/aquarium_prop) in aquarium) //the aquarium deco is quite barren
+	if(!locate(/obj/item/aquarium_prop) in loc) //the aquarium deco is quite barren
 		anger += growth * 0.25
-	var/fish_count = length(aquarium.get_fishes())
+	var/fish_count = length(get_aquarium_fishes())
 	if(!ISINRANGE(fish_count, 3, AQUARIUM_MAX_BREEDING_POPULATION * 0.5)) //too lonely or overcrowded
 		anger += growth * 0.3
 	if(fish_count > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.

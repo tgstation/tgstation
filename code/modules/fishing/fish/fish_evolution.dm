@@ -45,13 +45,13 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
  */
 /datum/fish_evolution/proc/check_conditions(obj/item/fish/source, obj/item/fish/mate, atom/movable/aquarium)
 	SHOULD_CALL_PARENT(TRUE)
-	var/aquarium_return_flag = SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS, source, mate, src)
+	var/aquarium_return_flag = aquarium && SEND_SIGNAL(aquarium, COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS, source, mate, src)
 	switch(aquarium_return_flag)
-		if(COMPONENT_STOP_EVOLUTION)
-			return FALSE
 		if(COMPONENT_ALLOW_EVOLUTION)
 			return TRUE
-		else
+		if(COMPONENT_STOP_EVOLUTION)
+			return FALSE
+		else //the fish don't reproduce outside of aquariums but can still grow there, so we just check if the temperature is right.
 			return source.proper_environment(required_temperature_min, required_temperature_max)
 
 ///This is called when the evolution is set as the result type of a fish_growth component
@@ -62,20 +62,17 @@ GLOBAL_LIST_EMPTY(fishes_by_fish_evolution)
 		return COMPONENT_DONT_GROW
 	if(source.get_hunger() >= 0.5) //too hungry to grow
 		return COMPONENT_DONT_GROW
-	var/obj/structure/aquarium/aquarium = source.loc
-	if(istype(aquarium) && !aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(source.loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
-	else
-		aquarium = null
-	if(!check_conditions(source, aquarium = aquarium))
+	if(!check_conditions(source))
 		return COMPONENT_DONT_GROW
 
 ///Called by the fish analyzer right click function. Returns a text string used as tooltip.
 /datum/fish_evolution/proc/get_evolution_tooltip()
 	. = ""
 	if(required_temperature_min > 0 || required_temperature_max < INFINITY)
-		var/max_temp = required_temperature_max < INFINITY ? " and [required_temperature_max]" : ""
-		. = "An aquarium temperature between [required_temperature_min][max_temp] is required."
+		var/max_temp = required_temperature_max < INFINITY ? " to [required_temperature_max]" : ""
+		. = "An aquarium temperature of [required_temperature_min][max_temp] is required."
 	if(conditions_note)
 		. += " [conditions_note]"
 	return .

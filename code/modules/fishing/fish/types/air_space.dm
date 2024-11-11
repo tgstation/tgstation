@@ -176,10 +176,9 @@
 	if(!isaquarium(loc))
 		return
 
-	var/obj/structure/aquarium/aquarium = loc
-	if(!aquarium.reproduction_and_growth) //the aquarium has breeding disabled
+	if(HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH)) //the aquarium has breeding disabled
 		return COMPONENT_DONT_GROW
-	if(length(aquarium.get_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
+	if(length(get_aquarium_fishes()) > AQUARIUM_MAX_BREEDING_POPULATION * 0.5) //check if there's enough room to maturate.
 		return COMPONENT_DONT_GROW
 
 /obj/item/fish/baby_carp/proc/on_growth(datum/source, mob/living/basic/carp/result)

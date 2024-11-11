@@ -427,8 +427,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	SIGNAL_HANDLER
 	if(source.get_hunger() > 0.75 || !isaquarium(source.loc))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
 			continue
 		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
@@ -533,11 +532,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	SIGNAL_HANDLER
 	if(!isaquarium(source.loc) || !SPT_PROB(1, seconds_per_tick))
 		return
-	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
 			continue
-		aquarium.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
+		source.loc.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
 		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
 		victim.adjust_health(victim.health - damage)
 		return

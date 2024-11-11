@@ -1,17 +1,28 @@
 // Aquarium related signals
-#define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
+
+///From /datum/component/aquarium/ui_act, when changing the fluid of the aquarium: (fluid_type)
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
-///Called on aquarium/attackby: (aquarium)
+///From component/aquarium/on_item_interaction: (atom/movable/aquarium)
 #define COMSIG_TRY_INSERTING_IN_AQUARIUM "item_try_inserting_in_aquarium"
 	///The item will be inserted into the aquarium
 	#define COMSIG_CAN_INSERT_IN_AQUARIUM (1<<0)
 	///The item won't be inserted into the aquarium, but will early return attackby anyway.
 	#define COMSIG_CANNOT_INSERT_IN_AQUARIUM (1<<1)
+///From /datum/component/aquarium_content/set_vc_base_position: (obj/effect/aquarium/visual)
+#define COMSIG_AQUARIUM_SET_VISUAL "aquarium_set_visual"
+///From /datum/component/aquarium_content/remove_from_aquarium: (obj/effect/aquarium/visual)
+#define COMSIG_AQUARIUM_REMOVE_VISUAL "aquarium_remove_visual"
+///From /obj/item/fish/try_to_reproduce: (fish, candidates)
+#define COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES "aquarium_get_reproduction_candidates"
+///From /datum/fish_evolution/check_conditions: (fish, mate, evolution)
+#define COMSIG_AQUARIUM_CHECK_EVOLUTION_CONDITIONS "aquarium_check_evolution_conditions"
+	#define COMPONENT_ALLOW_EVOLUTION (1<<0)
+	#define COMPONENT_STOP_EVOLUTION (1<<1)
 
 ///Updates the appearance of a newly generated aquarium content visual:(visual)
 #define COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE "aquarium_content_apply_appearance"
 ///Updates the base position of an aquarium content visual:(aquarium, visual)
-#define AQUARIUM_CONTENT_RANDOMIZE_POSITION "aquarium_content_randomize_position"
+#define COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION "aquarium_content_randomize_position"
 ///Updates the animation of an aquarium content visual:(aquarium, visual)
 #define COMSIG_AQUARIUM_CONTENT_DO_ANIMATION "aquarium_content_do_animation"
 
