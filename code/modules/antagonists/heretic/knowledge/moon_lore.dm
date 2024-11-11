@@ -1,37 +1,10 @@
-/**
- * # The path of Moon.
- *
- * Goes as follows:
- *
- * Moonlight Troupe
- * Grasp of Lunacy
- * Smile of the moon
- * > Sidepaths:
- *   Mind Gate
- *   Ashen Eyes
- *
- * Mark of Moon
- * Ritual of Knowledge
- * Lunar Parade
- * Moonlight Amulet
- * > Sidepaths:
- *   Curse of Paralasys
- *   Unfathomable Curio
- * 	 Unsealed Arts
- *
- * Moonlight blade
- * Ringleaders Rise
- * > Sidepaths:
- *   Ashen Ritual
- *
- * Last Act
- */
+
 /datum/heretic_knowledge_tree_column/main/moon
-	id = HKT_UUID_MOON
-	neighbour_id_0 = HKT_UUID_ASH_TO_MOON
-	neighbour_id_1 = HKT_UUID_MOON_TO_LOCK
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/ash_to_moon
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/moon_to_lock
 
 	route = PATH_MOON
+	ui_bgr = "node_moon"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	grasp = /datum/heretic_knowledge/moon_grasp

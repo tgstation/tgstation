@@ -1,38 +1,10 @@
-/**
- * # The path of VOID.
- *
- * Goes as follows:
- *
- * Glimmer of Winter
- * Grasp of Void
- * Aristocrat's Way
- * > Sidepaths:
- *   Void Cloak
- *   Shattered Ritual
- *
- * Mark of Void
- * Ritual of Knowledge
- * Void Conduit
- * Void Phase
- * > Sidepaths:
- *   Void Stasis
- *   Carving Knife
- *   Blood Siphon
- *
- * Seeking blade
- * Void Pull
- * > Sidepaths:
- *   Cleave
- *   Maid in the Mirror
- *
- * Waltz at the End of Time
- */
+
 /datum/heretic_knowledge_tree_column/main/void
-	id = HKT_UUID_VOID
-	neighbour_id_0 = HKT_UUID_FLESH_TO_VOID
-	neighbour_id_1 = HKT_UUID_VOID_TO_BLADE
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/flesh_to_void
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/void_to_blade
 
 	route = PATH_VOID
+	ui_bgr = "node_void"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	grasp = /datum/heretic_knowledge/void_grasp

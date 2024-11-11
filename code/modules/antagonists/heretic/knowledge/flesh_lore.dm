@@ -3,39 +3,12 @@
 /// The max amount of health a voiceless dead has.
 #define MUTE_MAX_HEALTH 50
 
-/**
- * # The path of Flesh.
- *
- * Goes as follows:
- *
- * Principle of Hunger
- * Grasp of Flesh
- * Imperfect Ritual
- * > Sidepaths:
- *   Void Cloak
- *
- * Mark of Flesh
- * Ritual of Knowledge
- * Flesh Surgery
- * Raw Ritual
- * > Sidepaths:
- *   Blood Siphon
- *   Opening Blast
- *
- * Bleeding Steel
- * Lonely Ritual
- * > Sidepaths:
- *   Cleave
- *   Aptera Vulnera
- *
- * Priest's Final Hymn
- */
 /datum/heretic_knowledge_tree_column/main/flesh
-	id = HKT_UUID_FLESH
-	neighbour_id_0 = HKT_UUID_LOCK_TO_FLESH
-	neighbour_id_1 = HKT_UUID_FLESH_TO_VOID
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/lock_to_flesh
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/flesh_to_void
 
 	route = PATH_FLESH
+	ui_bgr = "node_flesh"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	grasp = /datum/heretic_knowledge/limited_amount/flesh_grasp

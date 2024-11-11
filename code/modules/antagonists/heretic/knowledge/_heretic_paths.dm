@@ -9,20 +9,21 @@ GLOBAL_LIST(heretic_research_tree)
 	var/route
 	///Used to determine if this is a side path or a main path
 	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
-	///unique identifier, please use defines here for sanity reasons
-	var/id
 	///IDs od neighbours (to left and right)
-	var/neighbour_id_0
-	var/neighbour_id_1
+	var/neighbour_type_left
+	var/neighbour_type_right
 	///Tier1 knowledge (or knowledges)
 	var/tier1
 	///Tier2 knowledge (or knowledges)
 	var/tier2
 	///Tier3 knowledge (or knowledges)
 	var/tier3
+	///UI background
+	var/ui_bgr = "node_side"
 
 /datum/heretic_knowledge_tree_column/main
 	abstract_parent_type = /datum/heretic_knowledge_tree_column/main
+
 	///Starting knowledge - first thing you pick
 	var/start
 	///Grasp upgrade
@@ -47,6 +48,7 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[type][HKT_NEXT] = list()
 		heretic_research_tree[type][HKT_BAN] = list()
 		heretic_research_tree[type][HKT_DEPTH] = 1
+		heretic_research_tree[type][HKT_UI_BGR] = "node_side"
 
 		var/datum/heretic_knowledge/knowledge = type
 		if(initial(knowledge.is_starting_knowledge))
@@ -62,7 +64,7 @@ GLOBAL_LIST(heretic_research_tree)
 			continue
 
 		var/datum/heretic_knowledge_tree_column/column = new type()
-		paths[column.id] = column
+		paths[column.type] = column
 
 	var/list/start_blacklist = list()
 	var/list/grasp_blacklist = list()
@@ -85,9 +87,8 @@ GLOBAL_LIST(heretic_research_tree)
 
 	for(var/id in paths)
 		var/datum/heretic_knowledge_tree_column/this_column = paths[id]
-		var/datum/heretic_knowledge_tree_column/neighbour_0 = paths[this_column.neighbour_id_0]
-		var/datum/heretic_knowledge_tree_column/neighbour_1 = paths[this_column.neighbour_id_1]
-
+		var/datum/heretic_knowledge_tree_column/neighbour_0 = paths[this_column.neighbour_type_left]
+		var/datum/heretic_knowledge_tree_column/neighbour_1 = paths[this_column.neighbour_type_right]
 		//horizontal (two way)
 		var/list/tier1 = this_column.tier1
 		var/list/tier2 = this_column.tier2
@@ -107,18 +108,21 @@ GLOBAL_LIST(heretic_research_tree)
 			heretic_research_tree[t1_knowledge][HKT_NEXT] += neighbour_0.tier1
 			heretic_research_tree[t1_knowledge][HKT_NEXT] += neighbour_1.tier1
 			heretic_research_tree[t1_knowledge][HKT_ROUTE] = this_column.route
+			heretic_research_tree[t1_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t1_knowledge][HKT_DEPTH] = 4
 
 		for(var/t2_knowledge in tier2)
 			heretic_research_tree[t2_knowledge][HKT_NEXT] += neighbour_0.tier2
 			heretic_research_tree[t2_knowledge][HKT_NEXT] += neighbour_1.tier2
 			heretic_research_tree[t2_knowledge][HKT_ROUTE] = this_column.route
+			heretic_research_tree[t2_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t2_knowledge][HKT_DEPTH] = 8
 
 		for(var/t3_knowledge in tier3)
 			heretic_research_tree[t3_knowledge][HKT_NEXT] += neighbour_0.tier3
 			heretic_research_tree[t3_knowledge][HKT_NEXT] += neighbour_1.tier3
 			heretic_research_tree[t3_knowledge][HKT_ROUTE] = this_column.route
+			heretic_research_tree[t3_knowledge][HKT_UI_BGR] = this_column.ui_bgr
 			heretic_research_tree[t3_knowledge][HKT_DEPTH] = 10
 
 		//Everything below this line is considered to be a "main path" and not a side path
@@ -162,6 +166,13 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[main_column.blade][HKT_ROUTE] = main_column.route
 		heretic_research_tree[main_column.ascension][HKT_ROUTE] = main_column.route
 
+		heretic_research_tree[main_column.start][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.grasp][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.mark][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.ritual_of_knowledge][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.unique_ability][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.blade][HKT_UI_BGR] = main_column.ui_bgr
+		heretic_research_tree[main_column.ascension][HKT_UI_BGR] = main_column.ui_bgr
 		//depth stuff
 		heretic_research_tree[main_column.start][HKT_DEPTH] = 2
 		heretic_research_tree[main_column.grasp][HKT_DEPTH] = 3

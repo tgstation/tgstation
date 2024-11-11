@@ -1,9 +1,8 @@
 // Sidepaths for knowledge between Void and Blade.
 
 /datum/heretic_knowledge_tree_column/void_to_blade
-	id = HKT_UUID_VOID_TO_BLADE
-	neighbour_id_0 = HKT_UUID_VOID
-	neighbour_id_1 = HKT_UUID_BLADE
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/void
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/blade
 
 	route = PATH_SIDE
 

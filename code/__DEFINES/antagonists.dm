@@ -94,24 +94,8 @@
 #define HKT_BAN "ban"
 #define HKT_DEPTH "depth"
 #define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
 
-//path uuids used for generating the heretic tree
-#define HKT_UUID_ASH "ash"
-#define HKT_UUID_ASH_TO_MOON "ash2moon"
-#define HKT_UUID_MOON "moon"
-#define HKT_UUID_MOON_TO_LOCK "moon2lock"
-#define HKT_UUID_LOCK "lock"
-#define HKT_UUID_LOCK_TO_FLESH "lock2flesh"
-#define HKT_UUID_FLESH "flesh"
-#define HKT_UUID_FLESH_TO_VOID "flesh2void"
-#define HKT_UUID_VOID "void"
-#define HKT_UUID_VOID_TO_BLADE "voide2blade"
-#define HKT_UUID_BLADE "blade"
-#define HKT_UUID_BLADE_TO_RUST "blade2rust"
-#define HKT_UUID_RUST "rust"
-#define HKT_UUID_RUST_TO_COSMIC "rust2cosmic"
-#define HKT_UUID_COSMIC "cosmic"
-#define HKT_UUID_COSMIC_TO_ASH 	"cosmic2ash"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1

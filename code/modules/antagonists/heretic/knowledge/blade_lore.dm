@@ -1,40 +1,10 @@
-/**
- * # The path of Blades. Stab stab.
- *
- * Goes as follows:
- *
- * The Cutting Edge
- * Grasp of the Blade
- * Dance of the Brand
- * > Sidepaths:
- *   Shattered Risen
- *   Armorer's Ritual
- *
- * Mark of the Blade
- * Ritual of Knowledge
- * Realignment
- * > Sidepaths:
- *   Lionhunter Rifle
- *
- * Stance of the Scarred Duelist
- * > Sidepaths:
- *   Carving Knife
- *   Mawed Crucible
- *
- * Swift Blades
- * Furious Steel
- * > Sidepaths:
- *   Maid in the Mirror
- *   Rust Charge
- *
- * Maelstrom of Silver
- */
+
 /datum/heretic_knowledge_tree_column/main/blade
-	id = HKT_UUID_BLADE
-	neighbour_id_0 = HKT_UUID_VOID_TO_BLADE
-	neighbour_id_1 = HKT_UUID_BLADE_TO_RUST
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/void_to_blade
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/blade_to_rust
 
 	route = PATH_BLADE
+	ui_bgr = "node_blade"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	grasp = /datum/heretic_knowledge/blade_grasp

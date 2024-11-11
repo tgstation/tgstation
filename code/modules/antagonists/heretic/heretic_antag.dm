@@ -60,19 +60,6 @@
 	var/rust_strength = 0
 	/// Wether we are allowed to ascend
 	var/feast_of_owls = FALSE
-	/// Static list of what each path converts to in the UI (colors are TGUI colors)
-	var/static/list/path_to_ui_bgr = list(
-		PATH_START = "node_side",
-		PATH_SIDE = "node_side",
-		PATH_RUST = "node_rust",
-		PATH_FLESH = "node_flesh",
-		PATH_ASH = "node_ash",
-		PATH_VOID = "node_void",
-		PATH_BLADE = "node_blade",
-		PATH_COSMIC = "node_cosmos",
-		PATH_LOCK = "node_lock",
-		PATH_MOON = "node_moon",
-	)
 
 	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
 	var/list/unlocked_heretic_items = list(
@@ -150,7 +137,7 @@
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
-	knowledge_data["bgr"] = (path_to_ui_bgr[GLOB.heretic_research_tree[knowledge][HKT_ROUTE]] || "side")
+	knowledge_data["bgr"] = GLOB.heretic_research_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 

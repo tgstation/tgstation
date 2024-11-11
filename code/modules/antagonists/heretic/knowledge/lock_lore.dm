@@ -1,35 +1,10 @@
-/**
- * # The path of Lock.
- *
- * Goes as follows:
- *
- * A Steward's Secret
- * Grasp of Lock
- * Key Keeper’s Burden
- * > Sidepaths:
- *   Mindgate
- * Concierge's Rite
- * Mark Of Lock
- * Ritual of Knowledge
- * Burglar's Finesse
- * > Sidepaths:
- *   Opening Blast
- *   Unfathomable Curio
- * 	 Unsealed arts
- *
- * Opening Blade
- * Caretaker’s Last Refuge
- * > Sidepaths:
- * 	 Apetra Vulnera
- *
- * Unlock the Labyrinth
- */
+
 /datum/heretic_knowledge_tree_column/main/lock
-	id = HKT_UUID_LOCK
-	neighbour_id_0 = HKT_UUID_MOON_TO_LOCK
-	neighbour_id_1 = HKT_UUID_LOCK_TO_FLESH
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/moon_to_lock
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/lock_to_flesh
 
 	route = PATH_LOCK
+	ui_bgr = "node_lock"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
 	grasp = /datum/heretic_knowledge/lock_grasp

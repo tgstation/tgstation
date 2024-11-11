@@ -1,39 +1,10 @@
-/**
- * # The path of Ash.
- *
- * Goes as follows:
- *
- * Nightwatcher's Secret
- * Grasp of Ash
- * Ashen Passage
- * > Sidepaths:
- *   Scorching Shark
- *   Ashen Eyes
- *
- * Mark of Ash
- * Ritual of Knowledge
- * Fire Blast
- * Mask of Madness
- * > Sidepaths:
- *   Space Phase
- *   Curse of Paralysis
- *
- * Fiery Blade
- * Nightwatcher's Rebirth
- * > Sidepaths:
- *   Ashen Ritual
- *   Eldritch Coin
- *
- * Ashlord's Rite
- */
 
 /datum/heretic_knowledge_tree_column/main/ash
-	id = HKT_UUID_ASH
-	neighbour_id_0 = HKT_UUID_COSMIC_TO_ASH
-	neighbour_id_1 = HKT_UUID_ASH_TO_MOON
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/cosmic_to_ash
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/ash_to_moon
 
 	route = PATH_ASH
-
+	ui_bgr = "node_ash"
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	grasp = /datum/heretic_knowledge/ashen_grasp
 	tier1 = /datum/heretic_knowledge/spell/ash_passage

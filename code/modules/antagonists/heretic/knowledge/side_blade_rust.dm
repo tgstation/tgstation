@@ -1,7 +1,6 @@
 /datum/heretic_knowledge_tree_column/blade_to_rust
-	id = HKT_UUID_BLADE_TO_RUST
-	neighbour_id_0 = HKT_UUID_BLADE
-	neighbour_id_1 = HKT_UUID_RUST
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/blade
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/rust
 
 	route = PATH_SIDE
 

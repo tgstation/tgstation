@@ -1,7 +1,6 @@
 /datum/heretic_knowledge_tree_column/cosmic_to_ash
-	id = HKT_UUID_COSMIC_TO_ASH
-	neighbour_id_0 = HKT_UUID_COSMIC
-	neighbour_id_1 = HKT_UUID_ASH
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/main/cosmic
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/main/ash
 
 	route = PATH_SIDE
 

@@ -1,36 +1,10 @@
-/**
- * # The path of Cosmos.
- *
- * Goes as follows:
- *
- * Eternal Gate
- * Grasp of Cosmos
- * Cosmic Runes
- * > Sidepaths:
- *   Priest's Ritual
- *   Scorching Shark
- *
- * Mark of Cosmos
- * Ritual of Knowledge
- * Star Touch
- * Star Blast
- * > Sidepaths:
- *   Curse of Corrosion
- *   Space Phase
- *
- * Cosmic Blade
- * Cosmic Expansion
- * > Sidepaths:
- *   Eldritch Coin
- *
- * Creators's Gift
- */
+
 /datum/heretic_knowledge_tree_column/main/cosmic
-	id = HKT_UUID_COSMIC
-	neighbour_id_0 = HKT_UUID_RUST_TO_COSMIC
-	neighbour_id_1 = HKT_UUID_COSMIC_TO_ASH
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/rust_to_cosmic
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/cosmic_to_ash
 
 	route = PATH_COSMIC
+	ui_bgr = "node_cosmos"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	grasp = /datum/heretic_knowledge/cosmic_grasp

@@ -1,40 +1,10 @@
-/**
- * # The path of Rust.
- *
- * Goes as follows:
- *
- * Blacksmith's Tale
- * Grasp of Rust
- * Leeching Walk
- * > Sidepaths:
- *   Priest's Ritual
- *   Armorer's Ritual
- *
- * Mark of Rust
- * Ritual of Knowledge
- * Rust Construction
- * > Sidepaths:
- *   Lionhunter Rifle
- *
- * Aggressive Spread
- * > Sidepaths:
- *   Curse of Corrosion
- *   Mawed Crucible
- *
- * Toxic Blade
- * Entropic Plume
- * > Sidepaths:
- *   Rusted Ritual
- *   Rust Charge
- *
- * Rustbringer's Oath
- */
+
 /datum/heretic_knowledge_tree_column/main/rust
-	id = HKT_UUID_RUST
-	neighbour_id_0 = HKT_UUID_BLADE_TO_RUST
-	neighbour_id_1 = HKT_UUID_RUST_TO_COSMIC
+	neighbour_type_left = /datum/heretic_knowledge_tree_column/blade_to_rust
+	neighbour_type_right = /datum/heretic_knowledge_tree_column/rust_to_cosmic
 
 	route = PATH_RUST
+	ui_bgr = "node_rust"
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
 	grasp = /datum/heretic_knowledge/rust_fist
