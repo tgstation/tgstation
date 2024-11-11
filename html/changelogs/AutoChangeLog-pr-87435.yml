@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - image: "The animation for being dusted now takes into account your sprite, rather than being a normal nude spaceman"
