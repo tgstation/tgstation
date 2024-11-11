@@ -43,7 +43,7 @@
 		return ..()
 	if(!is_insertion_ready(user))
 		return ..()
-	if(weapon.tool_behaviour == TOOL_SCREWDRIVER || weapon.tool_behaviour == TOOL_CROWBAR) //to only machine deconstruction. We don't want to insert them
+	if(weapon.tool_behaviour == TOOL_SCREWDRIVER || weapon.tool_behaviour == TOOL_CROWBAR) //only for machine deconstruction. We don't want to insert them
 		return ..()
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
