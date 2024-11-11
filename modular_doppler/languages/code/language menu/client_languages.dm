@@ -65,7 +65,7 @@
 
 	var/list/data = list()
 
-	var/max_languages = preferences.all_quirks.Find(TRAIT_LINGUIST) ? MAX_LANGUAGES_LINGUIST : MAX_LANGUAGES_NORMAL
+	var/max_languages = preferences.all_quirks.Find(/datum/quirk/linguist::name) ? MAX_LANGUAGES_LINGUIST : MAX_LANGUAGES_NORMAL
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type()
 	var/datum/language_holder/lang_holder = preferences.get_adjusted_language_holder()
