@@ -118,13 +118,10 @@
 
 /obj/item/hand_labeler/examine()
 	. = ..()
-	switch(labels_left)
-		if(2 to INFINITY)
-			. += span_notice("It looks like it could label [labels_left] more things.")
-		if(1)
-			. += span_notice("It looks like it could label [labels_left] more thing.")
-		if(0)
-			. += span_notice("It's out of labels.")
+	if(labels_left > 0)
+		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+	else
+		. += span_notice("It's out of labels.")
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
