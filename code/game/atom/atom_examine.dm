@@ -11,12 +11,12 @@
 	examine_thats = "This is"
 
 /**
- * Called when a mob examines (shift click or verb) this atom
+ * Called when a mob examines this atom: [/mob/verb/examine]
  *
  * Default behaviour is to get the name and icon of the object and its reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
- * Produces a signal [COMSIG_ATOM_EXAMINE]
+ * Produces a signal [COMSIG_ATOM_EXAMINE], for modifying the list returned from this proc
  */
 /atom/proc/examine(mob/user)
 	. = list()
@@ -60,7 +60,7 @@
 
 /**
  * A list of "tags" displayed after atom's description in examine.
- * This should return an assoc list of tags -> tooltips for them. If item if null, then no tooltip is assigned.
+ * This should return an assoc list of tags -> tooltips for them. If item is null, then no tooltip is assigned.
  *
  * * TGUI tooltips (not the main text) in chat cannot use HTML stuff at all, so
  * trying something like `<b><big>ffff</big></b>` will not work for tooltips.
