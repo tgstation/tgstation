@@ -208,7 +208,7 @@
  */
 /obj/item/construction/rcd/proc/rcd_create(atom/target, mob/user)
 	var/list/rcd_results = target.rcd_vals(user, src) // does this atom allow for rcd actions?
-	if(!rcd_results) // deconstruct storages that don't have rcd interactions
+	if(!rcd_results) // nope
 		return NONE
 
 	//straight up can't touch this
