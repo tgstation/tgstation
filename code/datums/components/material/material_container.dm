@@ -81,7 +81,7 @@
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 
 		//to insert stuff into the container
-		RegisterSignal(atom_target, (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY, PROC_REF(on_item_insert))
+		RegisterSignal(atom_target, (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 
 		//screen tips for inserting items
 		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -98,7 +98,8 @@
 	var/list/signals = list()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		signals += (mat_container_flags & MATCONTAINER_HIGH_PRIORITY) ? COMSIG_ATOM_ITEM_INTERACTION : COMSIG_ATOM_ATTACKBY
+		var/atom/atom_target = parent
+		signals += (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		signals +=  COMSIG_ATOM_EXAMINE
@@ -129,10 +130,11 @@
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
 			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
+		var/signal = (mat_container_flags & MATCONTAINER_LOW_PRIORITY) ? COMSIG_ATOM_ATTACKBY : COMSIG_ATOM_ITEM_INTERACTION
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+			RegisterSignal(parent, signal, PROC_REF(on_item_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
+			UnregisterSignal(parent, signal)
 
 /**
  * 3 Types of Procs
@@ -486,9 +488,18 @@
 		if(!QDELETED(deleting)) //deleting parents also delete their children so we check
 			qdel(deleting)
 
-/// Proc that allows players to fill the parent with mats
-/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
+/// Proc that allows players to fill the parent with mats, its dual functioning with attackby & item interaction signals
+/datum/component/material_container/proc/on_item_insert(datum/source, atom/paramA, atom/paramB, list/modifiers)
 	SIGNAL_HANDLER
+
+	var/mob/living/user
+	var/obj/item/weapon
+	if(isliving(paramA))
+		user = paramA
+		weapon = paramB
+	else
+		user = paramB
+		weapon = paramA
 
 	//Allows you to attack the machine with iron sheets for e.g.
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)

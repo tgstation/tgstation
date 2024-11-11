@@ -23,7 +23,7 @@
 		/datum/component/material_container, \
 		list(/datum/material/bananium), \
 		100 * SHEET_MATERIAL_AMOUNT, \
-		MATCONTAINER_EXAMINE | MATCONTAINER_ANY_INTENT | MATCONTAINER_SILENT | MATCONTAINER_HIGH_PRIORITY, \
+		MATCONTAINER_EXAMINE | MATCONTAINER_ANY_INTENT | MATCONTAINER_SILENT, \
 		allowed_items = /obj/item/stack, \
 	)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75, falloff_exponent = 20)
