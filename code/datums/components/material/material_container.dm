@@ -493,10 +493,10 @@
 
 	var/mob/living/user
 	var/obj/item/weapon
-	if(isliving(paramA))
+	if(isliving(paramA)) //item interaction
 		user = paramA
 		weapon = paramB
-	else
+	else //attackby if that item interaction is non blocking
 		user = paramB
 		weapon = paramA
 
