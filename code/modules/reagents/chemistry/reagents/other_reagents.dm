@@ -316,7 +316,8 @@
 		exposed_mob.adjust_jitter(-4 SECONDS)
 		exposed_mob.AdjustSleeping(-150)
 		exposed_mob.AdjustUnconscious(-80)
-		exposed_mob.adjust_drunk_effect(-0.1)
+		var/drunkness_restored = HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) ? -0.5 : -0.25
+		exposed_mob.adjust_drunk_effect(drunkness_restored)
 
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
