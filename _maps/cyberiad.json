@@ -1,0 +1,27 @@
+{
+	"version": 1,
+	"map_name": "Cyberiad",
+	"map_path": "map_files/Cyberiad",
+	"map_file": "Cyberiad.dmm",
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_delta",
+		"emergency": "emergency_delta"
+	},
+	"traits": [
+		{
+			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge", "/area/station/service/kitchen"]
+		}
+	}
+}
