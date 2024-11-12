@@ -198,8 +198,9 @@
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
-	if(prefs && (prefs.read_preference(/datum/preference/toggle/sound_lobby)) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = vol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby_volume)
+	if((prefs && volume_modifier) && !CONFIG_GET(flag/disallow_title_music))
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = volume_modifier, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 ///get a random frequency.
 /proc/get_rand_frequency()
@@ -751,5 +752,15 @@
 				'sound/mobs/humanoids/human/sigh/female_sigh1.ogg',
 				'sound/mobs/humanoids/human/sigh/female_sigh2.ogg',
 				'sound/mobs/humanoids/human/sigh/female_sigh3.ogg',
+			)
+		if(SFX_WRITING_PEN)
+			soundin = pick(
+				'sound/effects/writing_pen/writing_pen1.ogg',
+				'sound/effects/writing_pen/writing_pen2.ogg',
+				'sound/effects/writing_pen/writing_pen3.ogg',
+				'sound/effects/writing_pen/writing_pen4.ogg',
+				'sound/effects/writing_pen/writing_pen5.ogg',
+				'sound/effects/writing_pen/writing_pen6.ogg',
+				'sound/effects/writing_pen/writing_pen7.ogg',
 			)
 	return soundin

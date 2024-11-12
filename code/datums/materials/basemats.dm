@@ -105,10 +105,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -5
 	fishing_experience_multiplier = 0.85
 	fishing_completion_speed = 1.1
-	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 1.1
 	fishing_bounciness_mult = 0.9
-	fishing_gravity_mult = 1.15
+	fishing_gravity_mult = 1.1
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -138,14 +137,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -10
+	fishing_difficulty_modifier = -8
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.75
 	fishing_completion_speed = 1.2
-	fishing_bait_speed_mult = 1.3
+	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 1.2
 	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.25
+	fishing_gravity_mult = 1.2
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -177,14 +176,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -13
+	fishing_difficulty_modifier = -12
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 0.7
 	fishing_completion_speed = 1.25
-	fishing_bait_speed_mult = 1.3
+	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 1.25
 	fishing_bounciness_mult = 0.8
-	fishing_gravity_mult = 1.2
+	fishing_gravity_mult = 1.1
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -216,7 +215,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_bait_speed_mult = 0.8
 	fishing_deceleration_mult = 1.4
 	fishing_bounciness_mult = 0.6
-	fishing_gravity_mult = 1.6
+	fishing_gravity_mult = 1.4
 
 /datum/material/uranium/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -313,7 +312,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_cast_range = 5 //space-bending scifi magic
 	fishing_experience_multiplier = 0.85
 	fishing_completion_speed = 1.1
-	fishing_bait_speed_mult = 1.2
+	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 0.9
 	fishing_bounciness_mult = 1.1
 
@@ -439,7 +438,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 1
 	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.15
+	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 1.3
 	fishing_bounciness_mult = 0.75
 	fishing_gravity_mult = 1.1
@@ -466,13 +465,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -18
+	fishing_difficulty_modifier = -13
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 3.2 //grind all the way to level 100 in no time.
 	fishing_completion_speed = 1.3
 	fishing_bait_speed_mult = 0.9
 	fishing_deceleration_mult = 1.2
-	fishing_gravity_mult = 1.25
+	fishing_gravity_mult = 1.2
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -512,7 +511,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_difficulty_modifier = -5
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 1.2
-	fishing_bait_speed_mult = 1.3
+	fishing_bait_speed_mult = 1.2
 	fishing_deceleration_mult = 0.8
 	fishing_bounciness_mult = 1.3
 	fishing_gravity_mult = 0.85
@@ -594,14 +593,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.6
-	fishing_difficulty_modifier = -23
+	fishing_difficulty_modifier = -17
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.6
 	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.3
+	fishing_bait_speed_mult = 1.2
 	fishing_deceleration_mult = 1.3
 	fishing_bounciness_mult = 0.7
-	fishing_gravity_mult = 1.4
+	fishing_gravity_mult = 1.3
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -636,14 +635,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED //Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	fish_weight_modifier = 1.4
-	fishing_difficulty_modifier = -25
+	fishing_difficulty_modifier = -20
 	fishing_cast_range = 2
 	fishing_experience_multiplier = 0.5
 	fishing_completion_speed = 1.35
-	fishing_bait_speed_mult = 1.35
+	fishing_bait_speed_mult = 1.2
 	fishing_deceleration_mult = 1.35
 	fishing_bounciness_mult = 0.65
-	fishing_gravity_mult = 1.4
+	fishing_gravity_mult = 1.3
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -678,11 +677,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.2
 	fish_weight_modifier = 0.9
-	fishing_difficulty_modifier = -10
+	fishing_difficulty_modifier = -8
 	fishing_cast_range = 1
 	fishing_experience_multiplier = 0.9
 	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.5
+	fishing_bait_speed_mult = 1.3
 	fishing_deceleration_mult = 0.5
 	fishing_bounciness_mult = 0.3
 	fishing_gravity_mult = 0.8
@@ -719,11 +718,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
 	fish_weight_modifier = 0.6 //It may be metallic, but it's just "denser" hydrogen at the end of the day, no?
-	fishing_difficulty_modifier = -15
+	fishing_difficulty_modifier = -13
 	fishing_cast_range = 4
 	fishing_experience_multiplier = 0.8
 	fishing_completion_speed = 1.4
-	fishing_bait_speed_mult = 1.6
+	fishing_bait_speed_mult = 1.3
 	fishing_deceleration_mult = 0.8
 	fishing_bounciness_mult = 1.7
 	fishing_gravity_mult = 0.7
@@ -838,9 +837,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 	fish_weight_modifier = 1.5
-	fishing_difficulty_modifier = -12
-	fishing_experience_multiplier = 0.9
-	fishing_completion_speed = 1.2
+	fishing_difficulty_modifier = -6.66
+	fishing_experience_multiplier = 0.666
+	fishing_completion_speed = 1.666
 	fishing_bait_speed_mult = 1.666
 	fishing_deceleration_mult = 1.666
 	fishing_bounciness_mult = 0.666
@@ -1041,7 +1040,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_cast_range = -1
 	fishing_experience_multiplier = 1.3
 	fishing_completion_speed = 1.15
-	fishing_bait_speed_mult = 1.2
+	fishing_bait_speed_mult = 1.1
 	fishing_deceleration_mult = 0.8
 	fishing_bounciness_mult = 0.7
 	fishing_gravity_mult = 0.7
@@ -1061,13 +1060,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
 	beauty_modifier = 0.001
 	fish_weight_modifier = 1.2
-	fishing_difficulty_modifier = -16
+	fishing_difficulty_modifier = -14
 	fishing_experience_multiplier = 0.9
 	fishing_completion_speed = 1.3
-	fishing_bait_speed_mult = 1.3
+	fishing_bait_speed_mult = 1.2
 	fishing_deceleration_mult = 1.3
 	fishing_bounciness_mult = 1.1
-	fishing_gravity_mult = 1.35
+	fishing_gravity_mult = 1.3
 
 /datum/material/zaukerite/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
