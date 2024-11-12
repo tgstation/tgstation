@@ -707,7 +707,7 @@
 	heal_per_tick = -0.4
 	shower_reagent = /datum/reagent/water
 
-/datum/status_effect/washing_regen/on_apply()
+/datum/status_effect/washing_regen/hot_spring/on_apply()
 	. = ..()
 	if(HAS_TRAIT(owner, TRAIT_WATER_HATER) && !HAS_TRAIT(owner, TRAIT_WATER_ADAPTATION))
 		alert_type = /atom/movable/screen/alert/status_effect/washing_regen/hotspring/hater
