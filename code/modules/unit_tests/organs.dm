@@ -18,7 +18,7 @@
 		var/abort = FALSE
 		for(var/zone in GLOB.all_body_zones)
 			var/obj/item/bodypart/bodypart = get_bodypart(zone)
-			if(QDELETED(bodypart)
+			if(QDELETED(bodypart))
 				TEST_FAIL("Couldn't find [zone] after [organ_type] was tested")
 				abort = TRUE
 		//we cannot proceed with the loop as that would probably lead to a fuckton of other runtimes if a bodypart is missing.
