@@ -141,8 +141,8 @@
 		ash_type = /obj/effect/decal/cleanable/ash/large
 
 	var/obj/effect/decal/cleanable/ash/ash = new ash_type(loc)
-	ash.pixel_y = -5
-	ash.pixel_x = rand(-1, 1)
+	ash.pixel_z = -5
+	ash.pixel_w = rand(-1, 1)
 
 /*
  * Called when the mob dies. Can also be called manually to kill a mob.

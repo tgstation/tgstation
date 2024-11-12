@@ -6,8 +6,8 @@
 		return ..()
 
 	var/obj/effect/decal/remains/robot/robones = new(loc)
-	robones.pixel_y = -6
-	robones.pixel_x = rand(-1, 1)
+	robones.pixel_z = -6
+	robones.pixel_w = rand(-1, 1)
 
 /mob/living/silicon/death(gibbed)
 	diag_hud_set_status()

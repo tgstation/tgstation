@@ -12,5 +12,5 @@
 		return ..()
 
 	var/obj/effect/decal/remains/xeno/bones = new(loc)
-	bones.pixel_y = -6
-	bones.pixel_x = rand(-1, 1)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)

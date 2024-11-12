@@ -19,8 +19,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		bone_type = /obj/effect/decal/remains/plasma
 
 	var/obj/effect/decal/remains/human/bones = new bone_type(loc)
-	bones.pixel_y = -6
-	bones.pixel_x = rand(-1, 1)
+	bones.pixel_z = -6
+	bones.pixel_w = rand(-1, 1)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
