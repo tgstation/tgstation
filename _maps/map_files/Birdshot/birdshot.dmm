@@ -52596,7 +52596,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rVI" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
 	dir = 8
 	},
 /turf/open/floor/iron,
