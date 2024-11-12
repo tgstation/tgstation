@@ -21826,9 +21826,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/command/gateway)
 "hIm" = (
-/obj/machinery/libraryscanner,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/bookbinder,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "hIE" = (
@@ -44195,6 +44195,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"phk" = (
+/obj/structure/table/wood,
+/obj/machinery/libraryscanner,
+/turf/open/floor/carpet,
+/area/station/service/library)
 "phm" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -94921,7 +94926,7 @@ sXD
 qSa
 feR
 aZh
-jdx
+phk
 pOQ
 wKr
 wKr
