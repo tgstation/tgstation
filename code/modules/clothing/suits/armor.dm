@@ -803,7 +803,6 @@
 	equip_delay_other = 40
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	var/decayed = FALSE
 
 /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -811,9 +810,6 @@
 
 /obj/item/clothing/suit/armor/durability/holymelon/Initialize(mapload)
 	. = ..()
-	if(decayed)
-		decay()
-		return
 
 	AddComponent(
 		/datum/component/anti_magic, \

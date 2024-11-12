@@ -685,7 +685,6 @@
 	dog_fashion = /datum/dog_fashion/head/holymelon
 	armor_type = /datum/armor/helmet_watermelon
 	max_integrity = 15
-	var/decayed = FALSE
 
 /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -693,9 +692,6 @@
 
 /obj/item/clothing/head/helmet/durability/holymelon/Initialize(mapload)
 	. = ..()
-	if(decayed)
-		decay()
-		return
 
 	AddComponent(
 		/datum/component/anti_magic, \
