@@ -60,3 +60,8 @@
 /obj/item/ammo_box/magazine/internal/shot/single/musket
 	name = "donk co musket internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/fletchette
+
+/obj/item/ammo_box/magazine/internal/shot/spes12
+	name = "spes12 internal magazine"
+	max_ammo = 8 // The SPAS-12 holds 8+1 rounds
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot

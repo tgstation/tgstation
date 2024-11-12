@@ -99,6 +99,30 @@
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
+// spes-12
+/datum/uplink_item/weapon_kits/low_cost/spes12
+	name = "SPES-12 Shotgun Case (Moderate)"
+	desc = "A fully-loaded pump-action or semi-auto shotgun, complete with a bandolier with: 20 buckshot shells, 4 breacher shells and 6 slugs. The gun fires in a tighter spread and more accurately in pump-action mode. Attachable to your suit storage and back."
+	item = /obj/item/storage/toolbox/guncase/spes12
+
+/datum/uplink_item/ammo_nuclear/basic/buck_box
+	name = "12g Buckshot Box (SPES-12)"
+	desc = "A box of 7 buckshot shells."
+	item = /obj/item/storage/box/lethalshot
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
+/datum/uplink_item/ammo_nuclear/basic/slug_box
+	name = "12g Slug Box (SPES-12)"
+	desc = "A box of 7 slug shells."
+	item = /obj/item/storage/box/slugs
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
+/datum/uplink_item/ammo_nuclear/special/breacher
+	name = "12g Breacher Shell Box (SPES-12)"
+	desc = "A box of 7 breacher shells, great for damaging windows and airlocks alike, or perhaps more mechanical opponents."
+	item = /obj/item/storage/box/breacherslug
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
 // ~~ Ansem Pistol ~~
 
 /datum/uplink_item/weapon_kits/low_cost/clandestine

@@ -384,3 +384,66 @@
 	bolt_wording = "bolt"
 	internal_magazine = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/single/musket
+
+// Legally distinct nukie SPAS-12, a slightly more accurate and powerful shotgun. ACTUALLY useful for tighter corridors because you usually hit walls in maint with buck anyway
+/obj/item/gun/ballistic/shotgun/spes12
+	name = "SPES-12"
+	desc = "Aussec Armories SPES-12 shotgun. An ancient shotgun design improved upon countless times, it can be set to pump action enabling it to fire more accurately and powerfully with a tighter choke and propel projectiles further, or in semi-auto, well, fire in semi-auto. Advances in recoil tech allow the stock to be mostly absent. Coupled with a good enough ammo belt, this weapon packs a punch in tight maintenance corridors and elsewhere if the user knows how to quickly draw ammo from their belt."
+	icon_state = "spes12"
+	inhand_icon_state = "shotgun_spes"
+	worn_icon_state = "spes12"
+	fire_sound = 'sound/items/weapons/gun/shotgun/shotgun_fire1.ogg'
+	load_sound = 'sound/items/weapons/gun/shotgun/shell_insert2.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/shotgun/shotgun_click1.ogg'
+	force = 13 // have you ever got hit in the face with a shotgun? thankfully havent experienced but probably hurts
+	projectile_damage_multiplier = 1.2 // on par with a bulldog
+	can_suppress = FALSE
+	fire_delay = 4
+	pin = /obj/item/firing_pin/implant/pindicate
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/spes12
+
+/obj/item/gun/ballistic/shotgun/spes12/examine(mob/user)
+	. = ..()
+	. += "It is currently firing in [semi_auto ? "semi-auto" : "pump-action"] mode. Right-click to toggle mode."
+
+/obj/item/gun/ballistic/shotgun/spes12/equipped(mob/user, slot, initial)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
+	RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(held_stuff_changed))
+
+/obj/item/gun/ballistic/shotgun/spes12/dropped(mob/user, silent)
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM))
+
+/obj/item/gun/ballistic/shotgun/spes12/proc/held_stuff_changed(datum/source)
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/gun/ballistic/shotgun/spes12/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!semi_auto)
+		bonus_spread -= 25
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/spes12/before_firing(atom/target, mob/user)
+	if(!semi_auto && chambered && chambered.variance > 0)
+		chambered.variance = initial(chambered.variance) / 2.5
+	return ..()
+
+/obj/item/gun/ballistic/shotgun/spes12/attack_self_secondary(mob/user, modifiers)
+	playsound(src, 'sound/items/weapons/empty.ogg', 50, TRUE)
+	semi_auto = !semi_auto
+	balloon_alert(user, "now [semi_auto ? "semi-auto" : "pump-action"]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/ballistic/shotgun/spes12/unrestricted
+	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/shotgun/spes12/update_icon_state()
+	var/mob/living/carbon/human/human = loc
+	if(!istype(human))
+		inhand_icon_state = initial(inhand_icon_state) // no longer held
+		return ..()
+	inhand_icon_state = "[initial(inhand_icon_state)][human.get_num_held_items() != 1 ? "" : "_w"]"
+	human.update_held_items()
+	return ..()

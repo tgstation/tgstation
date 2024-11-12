@@ -748,6 +748,39 @@
 		/obj/item/ammo_casing/junk,
 	))
 
+/obj/item/storage/belt/bandolier/tactical
+	name = "tactical waist bandolier"
+	desc = "Tactical waist strap bandolier to hold 30 rounds of shotgun-sized ammo."
+	icon_state = "tactibandolier"
+	worn_icon_state = "tactibandolier"
+
+/obj/item/storage/belt/bandolier/tactical/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	atom_storage.max_slots = 30
+	atom_storage.max_total_storage = 30
+	atom_storage.do_rustle = FALSE
+	update_appearance()
+
+/obj/item/storage/belt/bandolier/tactical/update_icon_state() // Looks like an assault belt if empty, otherwise normal icon state
+	if(length(contents))
+		icon_state = initial(icon_state)
+		worn_icon_state = initial(worn_icon_state)
+		return ..()
+	icon_state = /obj/item/storage/belt/military/assault::icon_state
+	worn_icon_state = /obj/item/storage/belt/military/assault::worn_icon_state
+	return ..()
+
+/obj/item/storage/belt/bandolier/tactical/full
+
+/obj/item/storage/belt/bandolier/tactical/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_casing/shotgun = 6, // slug
+		/obj/item/ammo_casing/shotgun/breacher = 4,
+		/obj/item/ammo_casing/shotgun/buckshot = 20,
+	), src)
+	update_appearance()
+
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in. Concealed enough, or ugly enough to avert their eyes, that others won't see what you put in or take out easily."

@@ -441,6 +441,15 @@
 	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine (src)
 	new /obj/item/clothing/under/rank/prisoner/nosensor (src)
 
+/obj/item/storage/toolbox/guncase/spes12
+	name = "SPES-12 gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/shotgun/spes12
+	extra_to_spawn = /obj/item/storage/belt/bandolier/tactical/full
+
+/obj/item/storage/toolbox/guncase/spes12/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+
 /obj/item/storage/toolbox/guncase/soviet
 	name = "ancient gun case"
 	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
