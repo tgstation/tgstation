@@ -15,11 +15,14 @@
 /obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_insert(receiver, special, movement_flags)
+	if(!mob_insert(receiver, special, movement_flags))
+		return FALSE
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
 	if(!special && !(receiver.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		receiver.update_body_parts()
+
+	return TRUE
 
 /*
  * Remove the organ from the select mob.
@@ -47,12 +50,14 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!iscarbon(receiver))
-		stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
-		return
+		//We try to insert the organ in a corgi when running the test, expecting it to return FALSE.
+		if(!PERFORM_ALL_TESTS(organ_sanity))
+			stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
+		return FALSE
 
 	if(owner == receiver)
 		stack_trace("Organ receiver is already organ owner")
-		return
+		return FALSE
 
 	var/obj/item/organ/replaced = receiver.get_organ_slot(slot)
 	if(replaced)
