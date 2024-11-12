@@ -831,9 +831,11 @@
 	if(isaquarium(loc))
 		var/obj/structure/aquarium/aquarium = loc
 		if(!aquarium.reproduction_and_growth)
+			last_feeding = world.time
 			return
 	var/hunger = get_hunger()
 	if(hunger < 0.05) //don't bother growing for very small amounts.
+		last_feeding = world.time
 		return
 	last_feeding = world.time
 	var/new_size = size
