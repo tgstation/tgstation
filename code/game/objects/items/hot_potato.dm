@@ -48,7 +48,7 @@
 		current = WEAKREF(target)
 		target.add_atom_colour(color_val? "#ffff00" : "#00ffff", FIXED_COLOUR_PRIORITY)
 
-/obj/item/hot_potato/proc/detonate(mob/living/victim)
+/obj/item/hot_potato/proc/detonate()
 	var/atom/location = loc
 	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger("[src] activates! You've ran out of time!"))
 	if(detonate_explosion)
