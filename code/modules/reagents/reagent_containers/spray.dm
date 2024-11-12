@@ -402,6 +402,7 @@
 	spray_range = 2
 	spray_sound = 'sound/effects/snap.ogg'
 	possible_transfer_amounts = list(5)
+	reagent_container_liquid_sound = null
 
 /obj/item/reagent_containers/spray/chemsprayer/party/spray(atom/A, mob/user)
 	. = ..()
