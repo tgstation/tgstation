@@ -196,7 +196,7 @@
 	else
 		deltimer(del_timerid)
 
-/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth)
+/obj/item/fish/tadpole/proc/growth_checks(datum/source, seconds_per_tick, growth, result_path)
 	SIGNAL_HANDLER
 	var/hunger = get_hunger()
 	if(hunger >= 0.7) //too hungry to grow
@@ -234,3 +234,23 @@
 	/obj/item/fish,
 	/obj/item/fishing_lure, //they love lures in general.
 	)
+
+///Memetic fish from a paleontologically inaccurate, goofy replica of a specimen. Sells decently for its size.
+/obj/item/fish/sacabambaspis
+	name = "sacabambaspis"
+	fish_id = "sacabambaspis"
+	desc = "A jawless fish ought to be extinct by the end of the Ordovician period. Some speculate alien intervention may have been behind its survival and inevitable evolution as a dweller of hot springs."
+	icon_state = "sacabambaspis"
+	sprite_width = 5
+	sprite_height = 3
+	stable_population = 7
+	average_size = 27
+	average_weight = 500
+	required_temperature_min = MIN_AQUARIUM_TEMP+20
+	required_temperature_max = MIN_AQUARIUM_TEMP+45
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	beauty = FISH_BEAUTY_GOOD
+	fish_traits = list(/datum/fish_trait/necrophage, /datum/fish_trait/wary)
+
+/obj/item/fish/sacabambaspis/get_export_price(price, percent)
+	return ..() * 4.5

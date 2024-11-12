@@ -39,7 +39,7 @@
 		in_view -= GLOB.dead_mob_list
 		in_view.Remove(user)
 
-		for(var/mob/camera/ai_eye/ai_eye in in_view)
+		for(var/mob/eye/ai_eye/ai_eye in in_view)
 			in_view.Remove(ai_eye)
 
 		var/list/targets = list(SUBTLE_ONE_TILE_TEXT, SUBTLE_SAME_TILE_TEXT) + in_view

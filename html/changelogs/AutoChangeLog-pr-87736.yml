@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Living Limbs no longer try to grab things that are under the floor."
-  - spellcheck: "Living Limb feedback messages now don't redundantly specify that they are flesh arms."

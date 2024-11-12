@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - bugfix: "Airlock shells are properly assigned circuit cameras modules"

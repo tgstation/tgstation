@@ -135,13 +135,9 @@
 		return
 	return TRUE
 
-/obj/item/stack/grind(datum/reagents/target_holder, mob/user)
+/obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
 	var/current_amount = get_amount()
 	if(current_amount <= 0 || QDELETED(src)) //just to get rid of this 0 amount/deleted stack we return success
-		return TRUE
-	if(on_grind() == -1)
-		return FALSE
-	if(isnull(target_holder))
 		return TRUE
 
 	if(reagents)
