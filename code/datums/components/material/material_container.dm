@@ -79,7 +79,6 @@
 
 	//can we insert into this container
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-
 		//to insert stuff into the container
 		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 
@@ -497,7 +496,6 @@
 	user_insert(weapon, user)
 
 	return ITEM_INTERACT_SUCCESS
-
 //===============================================================================================
 
 
