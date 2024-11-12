@@ -37,21 +37,18 @@
 	if(movable_parent.loc && HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
-/datum/component/aquarium_content/PreTransfer()
-	. = ..()
-	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
-
 /datum/component/aquarium_content/Destroy(force)
 	var/atom/movable/movable = parent
 	if(movable.loc && HAS_TRAIT(movable.loc, TRAIT_IS_AQUARIUM))
 		remove_from_aquarium(movable.loc)
 	QDEL_NULL(vc_obj)
+	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 	return ..()
 
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
-	if(HAS_TRAIT(movable_parent, TRAIT_IS_AQUARIUM))
+	if(HAS_TRAIT(movable_parent.loc, TRAIT_IS_AQUARIUM))
 		on_inserted(movable_parent.loc)
 
 /datum/component/aquarium_content/proc/is_ready_to_insert(datum/source, atom/movable/aquarium)
