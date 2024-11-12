@@ -18610,7 +18610,7 @@
 	id = "maint_house";
 	name = "Storage Shutters";
 	pixel_x = -24;
-	req_access = list("cmo")
+	req_access = list("command")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -55323,7 +55323,7 @@
 	id = "maint_house";
 	name = "Storage Shutters";
 	pixel_x = 24;
-	req_access = list("cmo")
+	req_access = list("command")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
