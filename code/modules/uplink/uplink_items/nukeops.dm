@@ -109,19 +109,16 @@
 	name = "12g Buckshot Box (SPES-12)"
 	desc = "A box of 7 buckshot shells."
 	item = /obj/item/storage/box/lethalshot
-	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/basic/slug_box
 	name = "12g Slug Box (SPES-12)"
 	desc = "A box of 7 slug shells."
 	item = /obj/item/storage/box/slugs
-	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/breacher
 	name = "12g Breacher Shell Box (SPES-12)"
 	desc = "A box of 7 breacher shells, great for damaging windows and airlocks alike, or perhaps more mechanical opponents."
 	item = /obj/item/storage/box/breacherslug
-	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 // ~~ Ansem Pistol ~~
 
